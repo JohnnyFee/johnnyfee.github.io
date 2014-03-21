@@ -4,8 +4,7 @@ title: "JavaScript Promise"
 category : JavaScript
 tagline: ""
 tags : [javascript, async]
----
-### 
+--- 
 ## 简介
 
 Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供[统一接口](http://wiki.commonjs.org/wiki/Promises/A)。

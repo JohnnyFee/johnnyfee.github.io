@@ -3,8 +3,7 @@ layout: post
 title: "JavaScript 技巧"
 category: JavaScript
 tags: [javascript,performance]
----
-### 
+--- 
 
 > Original: [7 JavaScript Basics Many Developers Aren't Using (Properly)](http://tech.pro/tutorial/1453/7-javascript-basics-many-developers-aren-t-using-properly)
 > 

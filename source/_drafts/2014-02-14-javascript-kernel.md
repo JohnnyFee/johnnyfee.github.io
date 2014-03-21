@@ -3,8 +3,7 @@ layout: post
 title: "JavaScript 核心"
 category: JavaScript
 tags: [javascript]
----
-### 
+--- 
 ##核心概念
 
 - [推荐10款优秀的JavaScript Web UI库 框架和套件](http://www.admin10000.com/document/3740.html)

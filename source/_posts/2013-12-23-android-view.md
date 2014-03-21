@@ -4,8 +4,7 @@ title: "Android Views"
 description: ""
 category: Android
 tags: [android]
----
-### 
+--- 
 本片文章针对比较流行的UI方面的开源项目进行初步分类，关于非UI方便的类库，请参考姐妹篇 [Android Views](http://johnnyfee.github.io/android/2013/12/27/android-library)。
 
 ## Navigation

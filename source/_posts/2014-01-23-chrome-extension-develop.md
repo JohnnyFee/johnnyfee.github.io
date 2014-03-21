@@ -4,8 +4,7 @@ title: "Chrome 扩展开发"
 description: ""
 category: Chrome
 tags: [chrome]
----
-### 
+--- 
 ##概述
 
 为了着手创建你的扩展程序，你只需要为你的扩展创建一个文件夹。程序所必须的文件只有manifest.json.，不过也推荐准备一些图片用作图标，和至少一个JavaScript以提供功能。一般来说还会包含HTML文档、样式表、图片等等其他的资源。

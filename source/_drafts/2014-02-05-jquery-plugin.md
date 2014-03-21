@@ -4,8 +4,7 @@ title: "Jquery Plugin"
 description: ""
 category: Jquery
 tags: [jquery]
----
-### 
+--- 
 ##编写插件的模板
 
 参考：[我最喜欢的jQuery插件模板 - OurJS.com](http://ourjs.com/detail/52be911dd17d41eb0b000025)

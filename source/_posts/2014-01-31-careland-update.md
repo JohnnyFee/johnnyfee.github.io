@@ -4,8 +4,7 @@ title: "凯立德地图升级"
 description: "升级到2013冬季版"
 category: Car
 tags: [car,map]
----
-### 
+--- 
 到官网下载导航助手 <http://www.kldjy.com/tempDown/KLDdhzs.exe>。下载后安装运行，插入导航TF卡，点击导航助手的“我的设备”，便可查看设备特征码、激活码、版本号等信息。
 
 <!--more-->

@@ -4,8 +4,7 @@ title: "Qt Tutorial"
 description: ""
 category: Qt
 tags: [qt, tutorial]
----
-### 
+--- 
 ## Tutorial
 
 - [Qt开发者专区](http://qt.csdn.net/)

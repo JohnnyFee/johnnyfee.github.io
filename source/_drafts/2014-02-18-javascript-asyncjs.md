@@ -4,8 +4,7 @@ title: "JavaScript Async.js"
 description: ""
 category: JavaScript
 tags: [javascript]
----
-### 
+--- 
 
 ## Async programming
 

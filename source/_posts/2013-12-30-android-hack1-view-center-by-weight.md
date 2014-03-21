@@ -4,8 +4,7 @@ title: "Android绝招一——利用weight属性居中View"
 description: ""
 category: Android
 tags: [weight,center,hack]
----
-### 
+--- 
 ##前言
 
 从[salttiger](http://www.salttiger.com/)上看到一本书，[《[50.Android.Hacks(2013.6)].Carlos.Sessa.文字版》](http://www.salttiger.com/50-android-hacks/)，个人认为都是Android的开发中都会碰到的问题。完了本人看书从来都是要写笔记的，因为看过的书很少有耐心再看第二遍，不用就忘。这可能会是一个系列文章，如果我能坚持的话。本人不会翻译这本书，因为我现在没有这么多的时间和精力，我只是尽量提及其中最最核心的点。如果你有兴趣或者有疑虑可以直接看书中对应的点。另外，[KOST-昱东](http://blog.csdn.net/u011418185/article/category/1706265)哥哥翻译了前七篇，可能就此终止了，呵呵。所以前七篇可以直接看他的翻译。

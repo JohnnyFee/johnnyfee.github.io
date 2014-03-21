@@ -3,8 +3,7 @@ layout: post
 title: "JavaScript 核心"
 category: JavaScript
 tags: [javascript]
----
-### 
+--- 
 >译者: JeremyWei 
 
 >翻译原文: http://weizhifeng.net/javascript-the-core.html 

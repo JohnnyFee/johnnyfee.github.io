@@ -4,8 +4,7 @@ title: "Android WebView WebSocket"
 description: ""
 category: Android
 tags: [android,webview,websocket]
----
-### 
+--- 
 ###WebSocket
 
 WebSocket是HTML5开始提供的一种浏览器与服务器间进行全双工通讯的网络技术。在推送的性能上相对较早的轮训技术和[Comet](http://zh.wikipedia.org/wiki/Comet_(web%E6%8A%80%E6%9C%AF))技术性能得到很大的提升。

@@ -4,8 +4,7 @@ title: "JavaScript 常见问题"
 description: ""
 category: JavaScript
 tags: [javascript]
----
-### 
+--- 
 ##toString
 
 In JavaScript, when an object is passed to a function expecting a string (like [window.alert](https://developer.mozilla.org/en-US/docs/Web/API/window.alert) or [document.write](https://developer.mozilla.org/en-US/docs/Web/API/document.write)), the object's toString() method is called and the returned value is passed to the function. This can make the object appear to be a string when used with other functions when it is really an object with properties and methods.

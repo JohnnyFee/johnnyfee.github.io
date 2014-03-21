@@ -4,8 +4,7 @@ title: "提问的智慧"
 description: ""
 category: Node
 tags: [node]
----
-### 
+--- 
 >译文原文：[提问的智慧](http://www.wapm.cn/smart-questions/smart-questions-zh.html)
 
 >译者：王刚 <yafrank@126.com> 

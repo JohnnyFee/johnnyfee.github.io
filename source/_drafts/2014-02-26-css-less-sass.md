@@ -4,8 +4,7 @@ title: "Less Sass"
 description: ""
 category: Css
 tags: [css]
----
-### 
+--- 
 ##比较
 
 参考：[LESS vs Sass？是时侯选择Sass了 - OurJS.com](http://ourjs.com/detail/52e096ce4534c0d806000003)

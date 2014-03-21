@@ -3,8 +3,7 @@ layout: post
 title: "C# RDLC报表 "
 category : C#
 tags : [csharp, report]
----
-### 
+--- 
 本文原发表在[ITEYE](http://feiqiang.iteye.com/blog/1490634)上,均为本作者原创。
 
 <!--more-->

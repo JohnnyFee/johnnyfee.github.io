@@ -4,8 +4,7 @@ title: "ExtJS 设计规范"
 category : ExtJS
 tagline: "设计规范和优化"
 tags : [extjs, bestpractice]
----
-### 
+--- 
 ##设计
 ###模版方法
 - [Components](http://docs.sencha.com/extjs/4.2.1/#!/guide/components)

@@ -3,8 +3,7 @@ layout: post
 title: "Android绝招五——TextSwitcher和ImageSwitcher"
 category: android
 tags: [android,hack]
----
-### 
+--- 
 ##概述
 
 对于EditText，我们通常使用setText()来更换其文本内容，如果你想玩儿点花样，可以使用TextSwitcher来让文本变化增加动画效果，如淡入淡出等。对于ImageSwitcher同理，只不过它是用来为图片的更换添加动画的。

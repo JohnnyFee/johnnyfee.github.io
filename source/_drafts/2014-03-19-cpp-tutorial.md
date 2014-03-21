@@ -3,8 +3,7 @@ layout: post
 title: "C++ Tutorial"
 category: Tool
 tags: [tool]
----
-### 
+--- 
 ## FAQ
 
 ### friend

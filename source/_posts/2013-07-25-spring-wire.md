@@ -4,8 +4,7 @@ title: "Spring 装配"
 tagline: ""
 category: Spring
 tags: [spring,wire]
----
-### 
+--- 
 ###装配属性
 ####装配简单类型
 

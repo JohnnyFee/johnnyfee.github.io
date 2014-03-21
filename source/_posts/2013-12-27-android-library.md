@@ -4,8 +4,7 @@ title: "Android Library"
 description: ""
 category: Android
 tags: [android]
----
-### 
+--- 
 本篇文章针对相对比较流行的开源项目进行分类，这些项目中不涉及UI，如果查看UI方面的，请参考这篇文章的姐妹篇 [Android Views](http://johnnyfee.github.io/android/2013/12/23/android-view)。
 下一步会进行初步比较。
 

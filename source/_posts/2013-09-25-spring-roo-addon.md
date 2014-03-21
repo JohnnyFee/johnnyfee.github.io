@@ -4,8 +4,7 @@ title: "Spring Roo 插件"
 description: ""
 category: Spring
 tags: [spring,roo,addon]
----
-### 
+--- 
 ###插件实现原理
 
 Roo add-ons are “tool-time” features—they’re wired into the shell as **OSGi** bundles,

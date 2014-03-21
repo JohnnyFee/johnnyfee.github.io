@@ -4,8 +4,7 @@ title: "Qt WebView"
 description: ""
 category: Qt
 tags: [qt, webview]
----
-### 
+--- 
 “我们将在Chromium基础之上建立未来的Web引擎——Qt WebEngine。Qt 5.2发布之后，我们将会集中精力开发新的Qt Web Engine。如果您需要让您的应用或设备支持所有最新最好的HTML5特性，在我们发布了您所需要的API特性时，您就应该考虑移植到Qt WebEngine。第一个完整支持的版本有可能同明年春季的Qt 5.3一起发布。第一个版本我们计划使新的Qt WebEngine模块支持Windows、Mac OS X、Linux和嵌入式Linux。”——[Qt将引入Qt WebEngine | Qt Chinese blog](http://blog.qt.digia.com/cn/2013/09/25/introducing-the-qt-webengine/)
 
 <!--more-->

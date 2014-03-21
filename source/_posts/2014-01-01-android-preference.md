@@ -3,8 +3,7 @@ layout: post
 title: "Android Preferences"
 category: Android
 tags: [android]
----
-### 
+--- 
 ##Preference
 
 官方描述：Represents the basic Preference UI building block displayed by a PreferenceActivity in the form of a ListView. This class provides the View to be displayed in the activity and associates with a SharedPreferences to store/retrieve the preference data.

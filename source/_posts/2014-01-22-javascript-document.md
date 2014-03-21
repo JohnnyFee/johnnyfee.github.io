@@ -3,8 +3,7 @@ layout: post
 title: "JavaScript 文档生成工具"
 category : JavaScript
 tags : [js, doc]
----
-### 
+--- 
 ##概述
 
 当前比较流行的JS文档生成器有以下几种：

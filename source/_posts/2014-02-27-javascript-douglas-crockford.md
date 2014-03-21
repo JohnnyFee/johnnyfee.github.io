@@ -4,8 +4,7 @@ title: "JavaScript 大牛 Douglas Crockford"
 description: ""
 category: JavaScript
 tags: [javascript]
----
-### 
+--- 
 ![douglas](http://johnnyimages.qiniudn.com/douglas.jpg)
 
 <!--more-->

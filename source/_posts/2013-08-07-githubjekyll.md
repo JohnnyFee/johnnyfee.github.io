@@ -4,8 +4,7 @@ title: "基于GitHub搭建jekyll博客"
 description: ""
 category: Jekyll
 tags: [github, jekyll]
----
-### 
+--- 
 
 ## GitHub Pages
 

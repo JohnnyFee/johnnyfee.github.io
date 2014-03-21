@@ -3,8 +3,7 @@ layout: post
 title: "EcmaScript 6.0"
 category: JavaScript
 tags: [javascript]
----
-### 
+--- 
 ##Tutorial
 
 - [FalsyValues. Dmitry Soshnikov - ECMAScript 6](http://www.slideshare.net/dmitrysoshnikov/falsyvalues-dmitry-soshnikov-ecmascript-6)

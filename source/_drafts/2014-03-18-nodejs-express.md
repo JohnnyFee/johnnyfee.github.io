@@ -3,8 +3,7 @@ layout: post
 title: "Node Express"
 category: Node
 tags: [node]
----
-### 
+--- 
 Node 的框架：<http://nodeframework.com/>。
 
 其中比较流行的MVC框架是 Ruby's Sinatra 风格的 [visionmedia/express](https://github.com/visionmedia/express)，和 Ruby's Rack 风格的 [senchalabs/connect](https://github.com/senchalabs/connect) 。其中 Connect 的领导者为Sencha的[visionmedia (TJ Holowaychuk)](https://github.com/visionmedia)，Express的领导者为还是TJ Holowaychuk，可以看看这个的 Git 首页，无语的。Express 和 Connect 相互补充，而不是取代关系。Express v1.0.0 便是基于 Connect 开发的，时至今日，他们之间仍然维持着这样的关系：Express=Connect+基于Connect的额外功能。Connect的任何修改都会反映到Express。

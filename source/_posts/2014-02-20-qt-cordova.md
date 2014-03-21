@@ -4,8 +4,7 @@ title: "Qt Cordova"
 description: ""
 category: Qt
 tags: [qt, cordova]
----
-### 
+--- 
 ##QT 桌面环境搭建
 
 如果你想在Windows上使用QtCreator开发应用，你至少需要安装以下这些东东：

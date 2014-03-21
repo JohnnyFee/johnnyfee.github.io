@@ -3,8 +3,7 @@ layout: post
 title: "Android UI Tips"
 category: android
 tags: [android]
----
-### 
+--- 
 ##The power of TextView: Drawables
 
 当你需要在TextView（包括所有TextView的子类，如Buttons, EditTexts, RadioButtons ）的中放置一个图标时，我们可以借助这些属性：rawableLeft, drawableRight, drawableTop and drawableBottom. 我们还可以借助drawablePadding来调节text and the images之间的padding。

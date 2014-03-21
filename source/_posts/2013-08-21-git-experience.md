@@ -4,8 +4,7 @@ title: "Git Experience"
 description: ""
 category: Git
 tags: [git]
----
-### 
+--- 
 ###新增远程库[^1]
 
 	git remote add repo_b username@host:path/to/repository.git

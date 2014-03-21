@@ -4,8 +4,7 @@ title: "ExtJS 快速入门"
 description: ""
 category: ExtJS
 tags: [extjs, quickstart]
----
-### 
+--- 
 ###简介
 
 Ext JS is a great library to create RIAs that require a lot of interactivity with the user.Ext JS is best suited for enterprise or intranet applications; it's a great tool to develop

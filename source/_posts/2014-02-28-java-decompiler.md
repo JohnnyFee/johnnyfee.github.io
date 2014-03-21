@@ -3,8 +3,7 @@ layout: post
 title: "Java 反编译"
 category: Java
 tags: [java, decompile]
----
-### 
+--- 
 Java 反编译工具当前比较好用的有JadClipse和JD-Eclipse，其中JadClipse需要配合外部命令jad.exe。网上据说JD反编译出来的源码更精确，也有说JadClipse好的。各有千秋。
 
 注意，Android官方class反编译出来的源代码看不到方法体，只能看到一堆"stub"

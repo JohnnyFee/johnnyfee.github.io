@@ -4,8 +4,7 @@ title: "理解JavaScript中的Function.prototype.bind"
 description: ""
 category: JavaScript
 tags: [javascript]
----
-### 
+--- 
 >本文由 [伯乐在线](http://blog.jobbole.com/) - [陈 鑫伟](http://blog.jobbole.com/author/owenchen/) 翻译自 [Smashing Magazine](http://coding.smashingmagazine.com/2014/01/23/understanding-javascript-function-prototype-bind/)。
 
 <!--more-->

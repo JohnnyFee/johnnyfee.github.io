@@ -4,8 +4,7 @@ title: "ExtJS Chart"
 category : ExtJS
 tagline: "ExtJS 图形"
 tags : [extjs, chart]
----
-### 
+--- 
 ##图画和图形
 ###图画
 

@@ -3,8 +3,7 @@ layout: post
 title: "变量对象（Variable object）"
 category: JavaScript
 tags: [javascript, kernel]
----
-### 
+--- 
 > 译文原文：[[JavaScript]ECMA-262-3 深入解析.第二章.变量对象 - Justin - 博客园](http://www.cnblogs.com/justinw/archive/2010/04/23/1718733.html)
 > 
 > 原文：[ECMA-262 » ECMA-262-3 in detail. Chapter 2. Variable object.](http://dmitrysoshnikov.com/ecmascript/chapter-2-variable-object/)

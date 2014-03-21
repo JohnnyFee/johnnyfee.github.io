@@ -3,8 +3,7 @@ layout: post
 title: "JavaScript 效率"
 category: JavaScript
 tags: [javascript,performance]
----
-### 
+--- 
 > **本文由 [伯乐在线](http://blog.jobbole.com/) - 翻译自 [net.tutsplus](http://net.tutsplus.com/tutorials/JavaScript-ajax/24-JavaScript-best-practices-for-beginners/)。欢迎加入[技术翻译小组](http://www.jobbole.com/groups/6/)。转载请参见文章末尾处的要求。**作为“[30 HTML和CSS最佳实践”](http://net.tutsplus.com/tutorials/html-css-techniques/30-html-best-practices-for-beginners/)的后续，这篇文章将回顾JavaScript的知识 ！如果你看完了下面的内容，请务必让我们知道你掌握的小技巧！
 
 ## 1.使用 === 代替 ==

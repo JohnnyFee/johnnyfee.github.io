@@ -4,8 +4,7 @@ title: "JavaScript 单元测试"
 description: ""
 category: JavaScript
 tags: [javascript]
----
-### 
+--- 
 随着单元测试的普及，尤其是敏捷开发的推动，涌现了许多优秀的JavaScript单元测试框架，如QUnit、Jasmine等。
 
 <!--more-->

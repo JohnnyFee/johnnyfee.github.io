@@ -3,8 +3,7 @@ layout: post
 title: "JavaScript 线程机制"
 category: JavaScript
 tags: [javascript]
----
-### 
+--- 
 
 浏览器内核实现允许多个线程异步执行，这些线程在内核制控下相互配合以保持同步。假设某一浏览器内核的实现至少有四个常驻线程：__javascript引擎线程__、__界面渲染线程__、__浏览器事件触发线程__、Event Loop线程。除些以外，也有一些执行完就终止的线程：如Http请求线程等，这些异步线程都会产生不同的异步事件。
 

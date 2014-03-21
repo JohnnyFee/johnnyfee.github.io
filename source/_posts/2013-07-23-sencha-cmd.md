@@ -4,8 +4,7 @@ title: "Sencha Cmd"
 category : ExtJS
 tagline: "安装和常用命令"
 tags : [extjs, cmd]
----
-### 
+--- 
 ##安装步骤
 
 - [System Setup](http://docs.sencha.com/extjs/4.2.1/#!/guide/command)

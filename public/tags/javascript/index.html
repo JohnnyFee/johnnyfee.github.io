@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Tag: javascript | 道法自然</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="og:type" content="blog">
+<meta name="og:title">
+<meta name="og:url" content="http://http://johnnyfee.github.io/blog-migrate//tags/javascript/">
+<meta name="og:image">
+<meta name="og:site_name" content="道法自然">
+<meta name="og:description">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="道法自然" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">道法自然</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Healthy, Happy, Peaceful</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://http://johnnyfee.github.io/blog-migrate/"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-javascript-use-strict" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/02/21/javascript-use-strict/" class="article-date">
+  <time datetime="2014-02-20T16:00:00.000Z" itemprop="datePublished">Feb 21 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/21/javascript-use-strict/">Javascript 严格模式详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>原文：<a href="http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html" target="_blank">Javascript 严格模式详解 - 阮一峰的网络日志</a></p>
+<h2 id="-">一、概述</h2>
+<p>除了正常运行模式，ECMAscript 5添加了第二种运行模式：<a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Functions_and_function_scope/Strict_mode" target="_blank">&quot;严格模式&quot;</a>（strict mode）。顾名思义，这种模式使得Javascript在更严格的条件下运行。</p>
+<p><img src="http://image.beekka.com/blog/201301/bg2013011401.jpg" alt=""></p>
+<p>设立&quot;严格模式&quot;的目的，主要有以下几个：</p>
+<ul>
+<li>消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;</li>
+<li>消除代码运行的一些不安全之处，保证代码运行的安全；</li>
+<li>提高编译器效率，增加运行速度；</li>
+<li>为未来新版本的Javascript做好铺垫。
+&quot;严格模式&quot;体现了Javascript更合理、更安全、更严谨的发展方向，包括IE 10在内的主流浏览器，都已经<a href="http://kangax.github.com/es5-compat-table" target="_blank">支持</a>它，许多大项目已经开始全面拥抱它。</li>
+</ul>
+<p>另一方面，同样的代码，在&quot;严格模式&quot;中，可能会有不一样的运行结果；一些在&quot;正常模式&quot;下可以运行的语句，在&quot;严格模式&quot;下将不能运行。掌握这些内容，有助于更细致深入地理解Javascript，让你变成一个更好的程序员。</p>
+<p>本文将对&quot;严格模式&quot;做详细介绍。</p>
+<h2 id="-">二、进入标志</h2>
+<p>进入&quot;严格模式&quot;的标志，是下面这行语句：</p>
+<pre><code>&quot;use strict&quot;;
+</code></pre><p>老版本的浏览器会把它当作一行普通字符串，加以忽略。</p>
+<h2 id="-">三、如何调用</h2>
+<p>&quot;严格模式&quot;有两种调用方法，适用于不同的场合。</p>
+<h3 id="3-1-">3.1 针对整个脚本文件</h3>
+<p>将&quot;use strict&quot;放在脚本文件的第一行，则整个脚本都将以&quot;严格模式&quot;运行。如果这行语句不在第一行，则无效，整个脚本以&quot;正常模式&quot;运行。如果不同模式的代码文件合并成一个文件，这一点需要特别注意。</p>
+<p>(严格地说，只要前面不是产生实际运行结果的语句，&quot;use strict&quot;可以不在第一行，比如直接跟在一个空的分号后面。)</p>
+<pre><code>&lt;script&gt;  
+&quot;use strict&quot;;  
+console.log(&quot;这是严格模式。&quot;);  
+&lt;/script&gt;
+
+&lt;script&gt;  
+console.log(&quot;这是正常模式。&quot;);  
+&lt;/script&gt;
+</code></pre><p>上面的代码表示，一个网页中依次有两段Javascript代码。前一个script标签是严格模式，后一个不是。</p>
+<h3 id="3-2-">3.2 针对单个函数</h3>
+<p>将&quot;use strict&quot;放在函数体的第一行，则整个函数以&quot;严格模式&quot;运行。</p>
+<pre><code>function strict(){  
+    &quot;use strict&quot;;  
+    return &quot;这是严格模式。&quot;;  
+}
+
+function notStrict() {  
+    return &quot;这是正常模式。&quot;;  
+}
+</code></pre><h3 id="3-3-">3.3 脚本文件的变通写法</h3>
+<p>因为第一种调用方法不利于文件合并，所以更好的做法是，借用第二种方法，将整个脚本文件放在一个立即执行的匿名函数之中。</p>
+<pre><code>(function (){  
+    &quot;use strict&quot;;
+     // some code here  
+})();
+</code></pre><h2 id="-">四、语法和行为改变</h2>
+<p>严格模式对Javascript的语法和行为，都做了一些改变。</p>
+<h3 id="4-1-">4.1 全局变量显式声明</h3>
+<p>在正常模式中，如果一个变量没有声明就赋值，默认是全局变量。严格模式禁止这种用法，全局变量必须显式声明。</p>
+<pre><code>&quot;use strict&quot;;
+v = 1; // 报错，v未声明
+for(i = 0; i &lt; 2; i++) { // 报错，i未声明  
+}
+</code></pre><p>因此，严格模式下，变量都必须先用var命令声明，然后再使用。</p>
+<h3 id="4-2-">4.2 静态绑定</h3>
+<p>Javascript语言的一个特点，就是允许&quot;动态绑定&quot;，即某些属性和方法到底属于哪一个对象，不是在编译时确定的，而是在运行时（runtime）确定的。</p>
+<p>严格模式对动态绑定做了一些限制。某些情况下，只允许静态绑定。也就是说，属性和方法到底归属哪个对象，在编译阶段就确定。这样做有利于编译效率的提高，也使得代码更容易阅读，更少出现意外。</p>
+<p>具体来说，涉及以下几个方面。</p>
+<p><strong>（1）禁止使用with语句</strong></p>
+<p>因为with语句无法在编译时就确定，属性到底归属哪个对象。</p>
+<pre><code>&quot;use strict&quot;;
+var v = 1;
+with (o){ // 语法错误   
+     v = 2;  
+}
+</code></pre><p><strong>（2）创设eval作用域</strong></p>
+<p>正常模式下，Javascript语言有两种变量作用域（scope）：全局作用域和函数作用域。严格模式创设了第三种作用域：eval作用域。</p>
+<p>正常模式下，eval语句的作用域，取决于它处于全局作用域，还是处于函数作用域。严格模式下，eval语句本身就是一个作用域，不再能够生成全局变量了，它所生成的变量只能用于eval内部。</p>
+<pre><code>&quot;use strict&quot;;
+var x = 2;
+console.info(eval(&quot;var x = 5; x&quot;)); // 5
+console.info(x); // 2
+</code></pre><h3 id="4-3-">4.3 增强的安全措施</h3>
+<p><strong>（1）禁止this关键字指向全局对象</strong></p>
+<pre><code>function f(){  
+ return !this;  
+}   
+// 返回false，因为&quot;this&quot;指向全局对象，&quot;!this&quot;就是false
+
+function f(){   
+    &quot;use strict&quot;;  
+    return !this;  
+}   
+// 返回true，因为严格模式下，this的值为undefined，所以&quot;!this&quot;为true。
+</code></pre><p>因此，使用构造函数时，如果忘了加new，this不再指向全局对象，而是报错。</p>
+<pre><code>function f(){ 
+    &quot;use strict&quot;;
+    this.a = 1;
+};
+f();// 报错，this未定义
+</code></pre><p><strong>（2）禁止在函数内部遍历调用栈</strong></p>
+<pre><code>function f1(){
+    &quot;use strict&quot;;
+    f1.caller; // 报错
+    f1.arguments; // 报错
+}
+f1();
+</code></pre><h3 id="4-4-">4.4 禁止删除变量</h3>
+<p>严格模式下无法删除变量。只有configurable设置为true的对象属性，才能被删除。</p>
+<pre><code>&quot;use strict&quot;;
+var x;
+delete x; // 语法错误
+var o = Object.create(null, &#39;x&#39;, {  
+    value: 1,  
+    configurable: true  
+});
+delete o.x; // 删除成功
+</code></pre><h3 id="4-5-">4.5 显式报错</h3>
+<p>正常模式下，对一个对象的只读属性进行赋值，不会报错，只会默默地失败。严格模式下，将报错。</p>
+<pre><code>&quot;use strict&quot;;  
+var o = {};
+Object.defineProperty(o, &quot;v&quot;, { value: 1, writable: false });
+o.v = 2; // 报错
+</code></pre><p>严格模式下，对一个使用getter方法读取的属性进行赋值，会报错。</p>
+<pre><code>&quot;use strict&quot;;  
+var o = {  
+    get v() { return 1; } 
+};
+o.v = 2; // 报错
+</code></pre><p>严格模式下，对禁止扩展的对象添加新属性，会报错。</p>
+<pre><code>&quot;use strict&quot;;
+var o = {};
+Object.preventExtensions(o);
+o.v = 1; // 报错
+</code></pre><p>严格模式下，删除一个不可删除的属性，会报错。</p>
+<pre><code>&quot;use strict&quot;;
+delete Object.prototype; // 报错
+</code></pre><h3 id="4-6-">4.6 重名错误</h3>
+<p>严格模式新增了一些语法错误。</p>
+<p><strong>（1）对象不能有重名的属性</strong></p>
+<p>正常模式下，如果对象有多个重名属性，最后赋值的那个属性会覆盖前面的值。严格模式下，这属于语法错误。</p>
+<pre><code>&quot;use strict&quot;;
+
+var o = {  
+    p: 1,  
+    p: 2  
+}; // 语法错误
+</code></pre><p><strong>（2）函数不能有重名的参数</strong></p>
+<p>正常模式下，如果函数有多个重名的参数，可以用arguments[i]读取。严格模式下，这属于语法错误。</p>
+<pre><code>&quot;use strict&quot;;
+    function f(a, a, b) { // 语法错误 
+    return ; 
+}
+</code></pre><h3 id="4-7-">4.7 禁止八进制表示法</h3>
+<p>正常模式下，整数的第一位如果是0，表示这是八进制数，比如0100等于十进制的64。严格模式禁止这种表示法，整数第一位为0，将报错。</p>
+<pre><code>&quot;use strict&quot;;
+var n = 0100; // 语法错误
+</code></pre><h3 id="4-8-arguments-">4.8 arguments对象的限制</h3>
+<p>arguments是函数的参数对象，严格模式对它的使用做了限制。</p>
+<p><strong>（1）不允许对arguments赋值</strong></p>
+<pre><code>&quot;use strict&quot;;
+arguments++; // 语法错误
+var obj = { set p(arguments) { } }; // 语法错误
+try { } catch (arguments) { } // 语法错误
+function arguments() { } // 语法错误
+var f = new Function(&quot;arguments&quot;, &quot;&#39;use strict&#39;; return 17;&quot;); // 语法错误
+</code></pre><p><strong>（2）arguments不再追踪参数的变化</strong></p>
+<pre><code>function f(a) {
+    a = 2;
+    return [a, arguments[0]];
+}
+f(1); // 正常模式为[2,2]
+
+function f(a) {
+    &quot;use strict&quot;; 
+    a = 2;
+    return [a, arguments[0]];
+}
+
+f(1); // 严格模式为[2,1]
+</code></pre><p><strong>（3）禁止使用arguments.callee</strong></p>
+<p>这意味着，你无法在匿名函数内部调用自身了。</p>
+<pre><code>&quot;use strict&quot;;
+var f = function() { return arguments.callee; };
+f(); // 报错
+</code></pre><h3 id="4-9-">4.9 函数必须声明在顶层</h3>
+<p>将来Javascript的新版本会引入&quot;块级作用域&quot;。为了与新版本接轨，严格模式只允许在全局作用域或函数作用域的顶层声明函数。也就是说，不允许在非函数的代码块内声明函数。</p>
+<pre><code>&quot;use strict&quot;;
+if (true) {
+function f() { } // 语法错误
+}
+
+for (var i = 0; i &lt; 5; i++) {
+function f2() { } // 语法错误
+}
+</code></pre><h3 id="4-10-">4.10 保留字</h3>
+<p>为了向将来Javascript的新版本过渡，严格模式新增了一些保留字：implements, interface, let, package, private, protected, public, static, yield。</p>
+<p>使用这些词作为变量名将会报错。</p>
+<pre><code>function package(protected) { // 语法错误
+&quot;use strict&quot;;
+var implements; // 语法错误
+
+}
+</code></pre><p>此外，ECMAscript第五版本身还规定了另一些保留字（class, enum, export, extends, import, super），以及各大浏览器自行增加的const保留字，也是不能作为变量名的。</p>
+<h2 id="-">五、参考链接</h2>
+<ul>
+<li>MDN, <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Functions_and_function_scope/Strict_mode" target="_blank">Strict mode</a>  </li>
+<li>Dr. Axel Rauschmayer，<a href="http://www.2ality.com/2011/01/javascripts-strict-mode-summary.html" target="_blank">JavaScript&#39;s strict mode: a summary</a>  </li>
+<li>Douglas Crockford, <a href="http://java-script.limewebs.com/strictMode/test_hosted.html" target="_blank">Strict Mode Is Coming To Town</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2014/02/21/javascript-use-strict/" data-id="j5k6xojyqt6ztqxo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-pos-specification" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/02/19/pos-specification/" class="article-date">
+  <time datetime="2014-02-18T16:00:00.000Z" itemprop="datePublished">Feb 19 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/19/pos-specification/">POS Specification</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="-arts-http-www-nrf-arts-org-learn-more-about-arts-"><a href="http://www.nrf-arts.org/" title="Learn more about ARTS." target="_blank">ARTS</a></h2>
+<p>The Association for Retail Technology Standards (ARTS) of the National Retail Federation is an international membership organization dedicated to reducing the costs of technology through standards. Since 1993, ARTS has been delivering application standards exclusively to the retail industry. ARTS has four standards: </p>
+<ul>
+<li>The Standard Relational Data Model</li>
+<li>UnifiedPOS</li>
+<li>XML</li>
+<li>the Standard RFPs (in partnership with NRF). </li>
+</ul>
+<p>Membership is open to all members of the international technology community-- retailers from all industry segments, application developers and hardware companies.Their work has a major impact on the development of retail technology that retailers can trust to be flexible and cost-effective.</p>
+<p>ARTS standards help retailers do everything from integrating POS data from social networking sites with their CRM systems to tracking the produce sold in grocery stores back to the farm that grew it.</p>
+<p>描述ARTS的动画片：<a href="http://blog.nrf.com/2013/10/25/charting-the-value-of-arts/" target="_blank">Retail&#39;s BIG Blog | Charting the value of ARTS</a></p>
+<h3 id="-arts-data-model-http-www-nrf-arts-org-content-arts-data-model-home-page-"><a href="http://www.nrf-arts.org/content/arts-data-model-home-page" target="_blank">ARTS Data Model</a></h3>
+<p>The <a href="http://www.nrf-arts.org/content/arts-operational-data-model-overview" target="_blank">ARTS Operational Data Model</a> represents a relational transaction-oriented view of retail enterprise data. It is normalized and designed to support the day-to-day transactional functions performed by a retail enterprise. This model is referred to the Operational Data Model.</p>
+<p>The <a href="http://www.nrf-arts.org/content/arts-data-warehouse-model-overview" target="_blank">ARTS Data Warehouse Model (DWM)</a> supports business reporting and analysis. The DWM is designed around a star schema approach that supports end-user data query, reporting and analysis.</p>
+<p>参考：<a href="http://www.nrf-arts.org/content/arts-data-model-home-page" target="_blank">ARTS Data Model Home Page | NRF ARTS</a></p>
+<h3 id="-unifiedpos-http-www-nrf-arts-org-content-unifiedpos-"><a href="http://www.nrf-arts.org/content/unifiedpos" target="_blank">UnifiedPOS</a></h3>
+<p>UnifiedPOS is the acronym for <strong>Unified Point of Service</strong> and version 1.14 is the current standard. </p>
+<p>It is an architectural specification for application interfaces to point-of-service devices that are used in the retail environment. This standard, which has been in existence for several years, is both operating system-independent and language neutral and defines: </p>
+<ul>
+<li>An architecture for application interface to retail devices.</li>
+<li>A set of retail device behaviors sufficient to support a range of POS solutions.</li>
+</ul>
+<p>ARTS has published a new release of its <strong>Unified Point of Service (UnifiedPOS) 1.14</strong>, which includes expanded content to the Scale and Electronic Value Reader/Writer devices. </p>
+<p><strong>Web Services for Point of Service (WS-POS)</strong> is a technical document intended to provide retail devices, terminals and servers with the capabilities necessary to interoperate in a detached, dynamic network as well as more typical retail LANs by leveraging these W3C specifications. </p>
+<p><strong>Download:</strong></p>
+<p><strong>UnifiedPOS 1.14:</strong> Version1.14 is now the standard and is available for download. <a href="http://www.nrf-arts.org/sites/default/files/UnifiedPOS%20Version%201_14_Released_07_15_2013_0.zip" target="_blank">Download UnifiedPOS 1.14</a> (12 mb pdf)</p>
+<p><strong>WS-POS 1.2:</strong> Download the latest version of Web Services for Point of Service in English (Japanese to follow soon). ARTS thanks our partners, OPOS-J in Japan,for their support and for translation services. </p>
+<ul>
+<li><a href="http://www.nrf-arts.org/sites/default/files/WS-POS1.2_Files_Released_07152013.zip" target="_blank">Download WS-POS 1.2 English</a> (9mb PDF)  </li>
+<li><a href="http://www.nrf-arts.org/sites/default/files/WSPOS1_2_Technical_Specification_2013_July_15_JP_20130730.pdf" target="_blank">Download WS-POS 1.2 Japanese</a> (2.3mb PDF)</li>
+<li><a href="http://www.nrf-arts.org/sites/default/files/WSPOS_Refer_Impl_v3_20130909.zip" target="_blank">Download WS-POS 1.2 Reference Implementation Files</a>(55mb English and Japanese)</li>
+</ul>
+<h2 id="globalplatform">GlobalPlatform</h2>
+<p>GlobalPlatform is a cross industry, non-profit association which identifies, develops and publishes specifications that promote the secure and interoperable deployment and management of multiple applications on <strong>secure chip technology</strong>.</p>
+<p>GlobalPlatform&#39;s objective is to create a standardized infrastructure that accelerates the deployment of secure applications and their associated assets, such as data and cryptographic keys, while protecting them from physical or software attacks. It achieves this by publishing and advancing specifications which address:</p>
+<ul>
+<li><p>SE(Secure Element). <strong>A secure element (SE) is a tamper-resistant platform (typically a one chip secure microcontroller)</strong> capable of securely hosting applications and their confidential and cryptographic data (e.g. key management) in accordance with the rules and security requirements set forth by a set of well-identified trusted authorities. The SE is comprised of software and tamper resistant hardware. It allows high levels of security and can even work in tandem with the TEE. The SE is mandatory for hosting proximity payment applications or official electronic signatures where the highest level of security is required. The TEE may also offer a trusted user interface to securely transmit a personal identification number (PIN), which is required in order to make high value transactions. It also filters access to applications stored directly on the SE.</p>
+</li>
+<li><p>TEE(Trusted Execution Environment). GlobalPlatform&#39;s work to standardize the TEE -<strong> a secure area that resides in the main processor of a connected device which ensures that sensitive data is stored, processed and protected in a trusted environment</strong> - supports the needs of smart device stakeholders, such as smartphone and tablet application developers and device manufacturers. The advancement of this technology is crucial for mobile wallets, NFC payment implementations, premium content protection and bring your own device (BYOD) initiatives.For example, the TEE is the ideal environment for content providers offering a video for a limited period of time that need to keep their premium content (e.g. HD video) secure so that it cannot be shared for free. </p>
+</li>
+<li><p>Messaging. GlobalPlatform clarifies how market participants from the finance, mobile NFC, government and transit sectors can connect their backend systems to the SE, TEE and any other actor within a secure application&#39;s ecosystem. This is achieved by defining &#39;who&#39; is responsible for &#39;what&#39; and agreeing the &#39;language&#39; (messages) that will be used. GlobalPlatform Mobile Messaging can be used over-the-air via a mobile network as well as over-the-internet using the cloud environment. This supports trusted service managers (TSMs), as well as the issuance and personalization of secure chip and TEE technology.</p>
+</li>
+</ul>
+<p><img src="http://www.globalplatform.org/images/tee-spot-img.png" alt=""></p>
+<p>参考：<a href="http://www.globalplatform.org/mediaguidetee.asp" target="_blank">Trusted Execution Environment (TEE) Guide</a></p>
+<h3 id="-">内容</h3>
+<p>其提供的规范包括：</p>
+<ul>
+<li><a href="http://www.globalplatform.org/specificationscard.asp" target="_blank">Card</a>  </li>
+<li><a href="http://www.globalplatform.org/specificationsdevice.asp" target="_blank">Device</a>  </li>
+<li><a href="http://www.globalplatform.org/specificationssystems.asp" target="_blank">Systems</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2014/02/19/pos-specification/" data-id="8cslu1jm4zw0pzr0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-javascript-promise" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/02/17/javascript-promise/" class="article-date">
+  <time datetime="2014-02-16T16:00:00.000Z" itemprop="datePublished">Feb 17 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/17/javascript-promise/">JavaScript Promise</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="-">简介</h2>
+<p>Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供<a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank">统一接口</a>。</p>
+<p>那么，什么是Promises？首先，它是一个对象，也就是说与其他JavaScript对象的用法，没有什么两样；其次，它起到代理作用（proxy），使得异步操作具备同步操作（synchronous code）的接口，即充当异步操作与回调函数之间的中介，使得程序具备正常的同步运行的流程，回调函数不必再一层层包裹起来。</p>
+<p>简单说，它的思想是，每一个异步任务立刻返回一个Promise对象，由于是立刻返回，所以可以采用同步操作的流程。这个Promises对象有一个then方法，允许指定回调函数，在异步任务完成后调用。比如，f1的回调函数f2,可以写成：</p>
+<pre><code>(new Promise(f1)).then(f2);
+</code></pre><p>这种写法对于嵌套的回调函数尤其有用。</p>
+<pre><code>// 传统写法
+step1(function (value1) {
+    step2(value1, function(value2) {
+        step3(value2, function(value3) {
+            step4(value3, function(value4) {
+                // ...
+            });
+        });
+    });
+});
+
+// Promises的写法
+(new Promise(step1))
+.then(step2)
+.then(step3)
+.then(step4);
+</code></pre><p>从上面代码可以看到，采用Promises接口以后，程序流程变得非常清楚，十分易读。</p>
+<p>总的来说，传统的回调函数写法使得代码混成一团，变得横向发展而不是向下发展。Promises规范就是为了解决这个问题而提出的，目标是使用正常的程序流程（同步），来处理异步操作。它先返回一个Promise对象，后面的操作以同步的方式，寄存在这个对象上面。等到异步操作有了结果，再执行前期寄放在它上面的其他操作。</p>
+<p>Promises原本只是社区提出的一个构想，一些外部函数库率先实现了这个功能，目前ECMAScript 6正在考虑将其写入语言标准，Chrome和Firefox浏览器的最新版本都初步部署了这个功能。</p>
+<h2 id="promises-">Promises接口</h2>
+<p>当异步任务返回一个promise对象（小写表示这是Promise的实例）时，该对象只有三种状态：未完成（pending）、已完成（fulfilled）、失败（rejected）。</p>
+<p>这三种的状态的变化途径只有两个，且只能发生一次：从“未完成”到“已完成”，或者从“未完成”到“失败”。一旦当前状态变为“已完成”或“失败”，就意味着不会再发生状态变化了。</p>
+<p>promise对象的then方法用来添加回调函数。它可以接受两个回调函数，第一个是操作成功（fulfilled）时的回调函数，第二个是操作失败（rejected）时的回调函数（可以不提供）。一旦状态改变，就调用相应的回调函数。</p>
+<pre><code>(new Promise(step1))
+.then(step2)
+.then(step3)
+.then(step4)
+.then(console.log, console.error);
+</code></pre><p>再来看上面的代码就很清楚，step1是一个耗时很长的异步任务，然后使用then方法，依次绑定了三个step1操作成功后的回调函数step2、step3、step4，最后再用then方法绑定两个回调函数：操作成功时的回调函数console.log，操作失败时的回调函数console.error。</p>
+<p>console.log和console.error这两个最后的回调函数，用法上有一点重要的区别。console.log只显示回调函数step4的返回值，而console.error可以显示step2、step3、step4之中任何一个发生的错误。也就是说，假定step2操作失败，抛出一个错误，这时step3和step4都不会再运行了，promises对象开始寻找接下来的第一个错误回调函数，在上面代码中是console.error。所以，结论就是Promises对象的错误有传递性。</p>
+<h2 id="promises-">Promises对象的实现</h2>
+<p>Promises只是一个规范，JavaScript语言原生还未提供支持。一般来说，总是选用现成的函数库。为了真正理解Promises对象，下面我们自己动手写一个Promises的实现。</p>
+<p>首先，将Promise定义成构造函数。</p>
+<pre><code>var Promise = function () {
+  this.state = &#39;pending&#39;;
+  this.thenables = [];
+};
+</code></pre><p>上面代码表示，Promise的实例对象的state属性默认为“未完成”状态（pending），还有一个thenables属性指向一个数组，用来存放then方法生成的内部对象。</p>
+<p>接下来，部署实例对象的resolve方法，该方法用来将实例对象的状态从“未完成”变为“已完成”。</p>
+<pre><code>Promise.prototype.resolve = function (value) {
+  if (this.state != &#39;pending&#39;) return;
+
+  this.state = &#39;fulfilled&#39;;
+  this.value = value;
+  this._handleThen();
+  return this;
+}
+</code></pre><p>上面代码除了改变实例的状态，还将异步任务的返回值存入实例对象的value属性，然后调用内部方法_handleThen，最后返回实例对象本身。</p>
+<p>类似地，部署实例对象的reject方法。</p>
+<pre><code>Promise.prototype.reject = function (reason) {
+  if (this.state != &#39;pending&#39;) return;
+
+  this.state = &#39;rejected&#39;;
+  this.reason = reason;
+  this._handleThen();
+  return this;
+};
+</code></pre><p>然后，部署实例对象的then方法。它接受两个参数，分别是异步任务成功时的回调函数（onFulfilled）和出错时的回调函数（onRejected）。为了可以部署链式操作，它必须返回一个新的Promise对象。</p>
+<pre><code>Promise.prototype.then = function (onFulfilled, onRejected) {
+  var thenable = {};
+
+  if (typeof onFulfilled == &#39;function&#39;) {
+    thenable.fulfill = onFulfilled;
+  };
+
+  if (typeof onRejected == &#39;function&#39;) {
+    thenable.reject = onRejected;
+  };
+
+  if (this.state != &#39;pending&#39;) {
+    setImmediate(function () {
+      this._handleThen();
+    }.bind(this));
+  }
+
+  thenable.promise = new Promise();
+  this.thenables.push(thenable);
+
+  return thenable.promise;
+}
+</code></pre><p>上面代码首先定义了一个内部变量thenable对象，将then方法的两个参数都加入这个对象的属性。然后，检查当前状态，如果不等于“未完成”，则在当前操作结束后，立即调用_handleThen方法。接着，在thenable对象的promise属性上生成一个新的Promise对象，并在稍后返回这个对象。最后，将thenable对象加入实例对象的thenables数组。</p>
+<p>下一步就要部署内部方法_handleThen，它用来处理通过then方法绑定的回调函数。</p>
+<pre><code>Promise.prototype._handleThen = function () {
+  if (this.state === &#39;pending&#39;) return;
+
+  if (this.thenables.length) {
+    for (var i = 0; i &lt; this.thenables.length; i++) {
+      var thenPromise = this.thenables[i].promise;
+      var returnedVal;
+      try {
+        // 运行回调函数
+      } catch (e) {
+        thenPromise.reject(e);
+      }
+    }
+    this.thenables = [];
+  }
+}
+</code></pre><p>上面代码的逻辑是这样的：如果实例对象的状态是“未完成”，就返回，否则检查thenables属性是否有值。如果有值，表明里面储存了需要执行的回调函数，则依次运行回调函数。</p>
+<p>之所以把回调函数的执行放在try...catch结构中，是因为一旦出错，就会自动执行catch代码块，从而可以运行下一个Promise实例对象的reject方法，这使得调用reject方法变得很简单。下面是try代码块中的代码。</p>
+<pre><code>try {
+        switch (this.state) {
+          case &#39;fulfilled&#39;:
+            if (this.thenables[i].fulfill) {
+              returnedVal = this.thenables[i].fulfill(this.value);
+            } else {
+              thenPromise.resolve(this.value);
+            }
+            break;
+          case &#39;rejected&#39;:
+            if (this.thenables[i].reject) {
+              returnedVal = this.thenables[i].reject(this.reason);
+            } else {
+              thenPromise.reject(this.reason);
+            }
+            break;
+        }
+
+          if (returnedVal === null) { 
+            this.thenables[i].promise.resolve(returnedVal);
+          }
+          else if (returnedVal instanceof Promise || typeof returnedVal.then === &#39;function&#39;) {
+            returnedVal.then(thenPromise.resolve.bind(thenPromise), thenPromise.reject.bind(thenPromise));
+          }
+          else {
+            this.thenables[i].promise.resolve(returnedVal);
+          }
+} 
+</code></pre><p>上面代码首先根据实例对象的状态，分别调用fulfill或reject回调函数，并传入相应的参数，并将返回值存入returnVal变量。然后再去改变this.thenables[i].promise对象的状态，触发下一个Promise对象的resolve或者reject方法。</p>
+<p>最后，由于我们写的是供调用的函数库，需要将构造函数输出。</p>
+<pre><code>module.exports = Promise;
+</code></pre><h2 id="usage">Usage</h2>
+<h3 id="-">值的处理</h3>
+<p>你可以对结果做些修改然后返回一个新值：</p>
+<pre><code>var promise = new Promise(function(resolve, reject) {
+  resolve(1);
+});
+
+promise.then(function(val) {
+  console.log(val); // 1
+  return val + 2;
+}).then(function(val) {
+  console.log(val); // 3
+});
+
+// 既然 JSON.parse 只接收一个参数，并返回转换后的结果，我们可以使用以下写法，注意第一个than。
+// 其中get为以下实例中的代码，表示一个XHR操作。
+get(&#39;story.json&#39;).then(JSON.parse).then(function(response) {
+  console.log(&quot;Yey JSON!&quot;, response);
+});
+</code></pre><h3 id="-">错误处理</h3>
+<p><code>then</code>接受两个参数，一个处理成功，一个处理失败（或者说确认和否定，按 Promise 术语）：</p>
+<pre><code>get(&#39;story.json&#39;).then(function(response) {
+  console.log(&quot;Success!&quot;, response);
+}, function(error) {
+  console.log(&quot;Failed!&quot;, error);
+});
+</code></pre><p>你还可以使用 catch：</p>
+<pre><code>get(&#39;story.json&#39;).then(function(response) {
+  console.log(&quot;Success!&quot;, response);
+}).catch(function(error) {
+  console.log(&quot;Failed!&quot;, error);
+});
+</code></pre><p>这里的 catch 并无任何特殊之处，只是 then(undefined, func) 的语法糖衣，更直观一点而已。注意上面两段代码的行为<strong>并不相同</strong>，后者相当于：</p>
+<pre><code>get(&#39;story.json&#39;).then(function(response) {
+  console.log(&quot;Success!&quot;, response);
+}).then(undefined, function(error) {
+  console.log(&quot;Failed!&quot;, error);
+});
+</code></pre><p>Promise 的否定回调可以由 Promise.reject() 触发，也可以由构造器回调中抛出的错误触发：</p>
+<pre><code>var jsonPromise = new Promise(function(resolve, reject) {
+  // JSON.parse throws an error if you feed it some
+  // 抛出异常后，也会被后续的catch捕获到。
+  resolve(JSON.parse(&quot;This ain&#39;t JSON&quot;));
+});
+</code></pre><p>有个比较复杂的例子：</p>
+<pre><code>asyncThing1().then(function() {
+  return asyncThing2();
+}).then(function() {
+  return asyncThing3();
+}).catch (function(err) {
+  return asyncRecovery1();
+}).then(function() {
+  return asyncThing4();
+}, function(err) {
+  return asyncRecovery2();
+}).catch (function(err) {
+  console.log(&quot;Don&#39;t worry about it&quot;);
+}).then(function() {
+  console.log(&quot;All done!&quot;);
+});
+</code></pre><p>这段流程非常像 JavaScript 的 try/catch 组合，try 代码块中发生的错误会径直跳转到 catch 代码块，流程图如下：</p>
+<p><img src="http://www.html5rocks.com/en/tutorials/es6/promises/promise-flow.svg" alt="Promise Flow"></p>
+<h2 id="-ajax-">实例：Ajax操作</h2>
+<p>Ajax操作是典型的异步操作，传统上往往写成下面这样。</p>
+<pre><code>function get(url, onload, onerror) {
+    var xhr, results, url;
+
+    xhr = new XMLHttpRequest();
+    xhr.open(&#39;GET&#39;, url, true);
+
+    xhr.onload = function (e) {
+        if (this.status === 200) {
+            results = JSON.parse(this.responseText);
+            onload(results);
+        }
+    };
+
+    xhr.onerror = function (e) {
+        onerror(e);
+    };
+
+    xhr.send();
+}
+
+get(&quot;Hello World&quot;, f1, f2);
+</code></pre><p>上面代码的回调函数，必须直接传入。如果使用Promises方法，就可以写成下面这样。</p>
+<pre><code>function get(url) {
+
+    var p = new Promise();
+    var xhr = new XMLHttpRequest();
+    var result;
+
+    xhr.open(&#39;GET&#39;, url, true);
+
+    xhr.onload = function (e) {
+        if (this.status === 200) {
+            results = JSON.parse(this.responseText);
+            p.resolve(results);
+        }
+    };
+
+    xhr.onerror = function (e) {
+        p.reject(e);
+    };
+
+    xhr.send();
+
+    return p;
+}
+
+get(&quot;http://www.google.com.hk&quot;).then(f1, f2);
+</code></pre><p>用了Promises以后，回调函数就可以用then方法加载。</p>
+<h2 id="-">小结</h2>
+<p>Promises的优点在于，让回调函数变成了变成了规范的链式写法，程序流程可以看得很清楚。它的一整套接口，可以实现许多强大的功能，比如为多个异步操作部署一个回调函数、为多个回调函数中抛出的错误统一指定处理方法等等。</p>
+<p>而且，它还有一个前面三种方法都没有的好处：如果一个任务已经完成，再添加回调函数，该回调函数会立即执行。所以，你不用担心是否错过了某个事件或信号。这种方法的缺点就是，编写和理解都相对比较难。</p>
+<p>实际可以使用的Promises实现，参见jQuery的deferred对象一节。</p>
+<h2 id="-">实现</h2>
+<ul>
+<li><a href="https://github.com/kriskowal/q" target="_blank">Q</a></li>
+<li><a href="https://github.com/cujojs/when" target="_blank">when</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/windows/apps/br211867.aspx" target="_blank">WinJS</a></li>
+<li><a href="https://github.com/tildeio/rsvp.js" target="_blank">RSVP.js</a></li>
+</ul>
+<p>请参考以上各种实现对应的用法</p>
+<h2 id="-">参考链接</h2>
+<ul>
+<li><a href="http://javascript.ruanyifeng.com/advanced/asynchronous.html#toc4" target="_blank">JavaScript异步编程的模式 -- JavaScript 标准参考教程（alpha）</a></li>
+<li><a href="http://www.oschina.net/translate/what-is-the-point-of-promises?cmp" target="_blank">什么是Promises的重点 - 开源中国社区</a></li>
+<li>Sebastian Porto, <a href="http://sporto.github.com/blog/2012/12/09/callbacks-listeners-promises/" target="_blank">Asynchronous JS: Callbacks, Listeners, Control Flow Libs and Promises</a></li>
+<li>Rhys Brett-Bowen, <a href="http://modernjavascript.blogspot.com/2013/08/promisesa-understanding-by-doing.html" target="_blank">Promises/A+ - understanding the spec through implementation</a></li>
+<li>Matt Podwysocki, Amanda Silver, <a href="http://blogs.msdn.com/b/ie/archive/2011/09/11/asynchronous-programming-in-javascript-with-promises.aspx" target="_blank">Asynchronous Programming in JavaScript with “Promises”</a></li>
+<li>Marc Harter, <a href="https://gist.github.com//wavded/5692344" target="_blank">Promise A+ Implementation</a></li>
+<li>Bryan Klimt, <a href="http://blog.parse.com/2013/01/29/whats-so-great-about-javascript-promises/" target="_blank">What’s so great about JavaScript Promises?</a></li>
+<li>Jake Archibald, <a href="http://www.html5rocks.com/en/tutorials/es6/promises/" target="_blank">JavaScript Promises There and back again</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2014/02/17/javascript-promise/" data-id="7pmccj9oswtovzo2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-javascript-thread" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/02/16/javascript-thread/" class="article-date">
+  <time datetime="2014-02-15T16:00:00.000Z" itemprop="datePublished">Feb 16 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/16/javascript-thread/">JavaScript 线程机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>浏览器内核实现允许多个线程异步执行，这些线程在内核制控下相互配合以保持同步。假设某一浏览器内核的实现至少有四个常驻线程：<strong>javascript引擎线程</strong>、<strong>界面渲染线程</strong>、<strong>浏览器事件触发线程</strong>、Event Loop线程。除些以外，也有一些执行完就终止的线程：如Http请求线程等，这些异步线程都会产生不同的异步事件。</p>
+<h2 id="javascript-">JavaScript引擎</h2>
+<p><strong>JavaScript引擎是单线程运行的,浏览器无论在什么时候都只且只有一个线程在运行JavaScript程序。</strong></p>
+<p>下面通过一个图来阐明单线程的JavaScript引擎与另外那些线程是怎样互动通信的。虽然每个浏览器内核 （流行浏览器内核有：Trident[IE内核]、Gecko[Firefox内核]、Presto[Opera内核]、Webkit[Chrome、Safari] 等） 实现细节不同，但这其中的调用原理都是大同小异。</p>
+<p><img src="http://julying.com/blog/uploadfile/2012/05/javascript-thread.png" alt="JavaScript定时机制、以及浏览器渲染机制 浅谈 javascript-thread"></p>
+<p>上图Time1-Time2..Timen表示不同的时间点,Timen下面对应的小方块代表该时间点的任务,假设现在是Time1时刻,引擎运行在Time1对应的任务方块代码内,在这个时间点内,我们来描述一下浏览器内核其它线程的状态。</p>
+<p><strong>浏览器中的JavaScript引擎是基于事件驱动的。</strong>这里的事件可看作是浏览器派给它的各种任务，如调用setTimeout 添加一个任务，也可来自浏览器内核的其它线程，如界面元素鼠标点击事件、定时触发器时间到达通知、异步请求状态变更通知等。</p>
+<p>从代码角度看来任务实体就是各种回调函数，JavaScript引擎一直等待着任务队列中任务的到来。由于单线程关系,这些任务得进行排队，一个接着一个被引擎处理。</p>
+<h2 id="-">图形界面渲染线程</h2>
+<p>该线程负责渲染浏览器界面HTML元素，当界面需要重绘(Repaint)或由于某种操作引发回流(Reflow)时，该线程就会执行。
+<strong>渲染线程与JavaScript引擎线程是互斥的！</strong>因为JavaScript脚本是可操纵DOM元素，在修改这些元素属性同时渲染界面，那么渲染线程前后获得的元素数据就可能不一致了。在JavaScript引擎运行脚本期间，浏览器渲染线程都是处于挂起状态的。所以,在脚本中执行对界面进行更新操作,如添加结点，删除结点或改变结点的外观等更新并不会立即体现出来,这些操作将保存在一个队列中，待JavaScript引擎空闲时才有机会渲染出来。</p>
+<h2 id="gui-">GUI事件触发线程</h2>
+<p>JavaScript脚本的执行不影响html元素事件的触发，在Time1时间段内，用户点击鼠标键，点击事件被浏览器事件触发线程捕捉后，形成一个鼠标点击事件，对于JavaScript引擎线程来说，这事件是由其它线程异步传到任务队列尾的，由于引擎正在处理 Time1 时的任务，这个鼠标点击事件就会排队。</p>
+<h2 id="-">定时触发线程</h2>
+<p>注意这里的浏览器模型定时计数器并不是由JavaScript引擎计数的，因为JavaScript引擎是单线程的，如果处于阻塞线程状态就不能计时，它必须依赖外部来计时并触发定时，所以队列中的定时事件也是异步事件。</p>
+<h2 id="event-loop-">Event Loop线程</h2>
+<p>参考：<a href="http://www.ruanyifeng.com/blog/2013/10/event_loop.html?from=ourjs.com" target="_blank">什么是 Event Loop？ - 阮一峰的网络日志</a></p>
+<p>Event Loop 是一个很重要的概念，指的是计算机系统的一种运行机制。<a href="http://en.wikipedia.org/wiki/Event_loop" target="_blank">Wikipedia</a>这样定义：</p>
+<blockquote>
+<p>Event Loop是一个程序结构，用于等待和发送消息和事件。 （a programming construct that waits for and dispatches events or messages in a program.）</p>
+</blockquote>
+<p>简单说，就是在程序中设置两个线程：一个负责程序本身的运行，称为&quot;主线程&quot;；另一个负责主线程与其他进程（主要是各种I/O操作）的通信，被称为&quot;Event Loop线程&quot;（可以译为&quot;消息线程&quot;）。</p>
+<p><img src="http://image.beekka.com/blog/201310/2013102004.png" alt="asynchronous mode"></p>
+<p>上图主线程的绿色部分，还是表示运行时间，而橙色部分表示空闲时间。每当遇到I/O的时候，主线程就让Event Loop线程去通知相应的I/O程序，然后接着往后运行，所以不存在红色的等待时间。等到I/O程序完成操作，Event Loop线程再把结果返回主线程。主线程就调用事先设定的回调函数，完成整个任务。
+可以看到，由于多出了橙色的空闲时间，所以主线程得以运行更多的任务，这就提高了效率。这种运行方式称为&quot;异步模式&quot;（asynchronous I/O）或&quot;非堵塞模式&quot;（non-blocking mode）。</p>
+<h2 id="-">工作线程</h2>
+<p>既然JavaScript是单线程运行，那XMLHttpRequest 的异步链接是怎么回事？
+其实异步请求是由浏览器新开一个线程请求！当请求的状态变更时，如果先前已设置回调，这异步线程就产生状态变更事件放到JavaScript引擎的处理队列中等待处理！
+所以当任务被处理时，JavaScript引擎始终是单线程运行回调函数！</p>
+<h2 id="-">参考</h2>
+<ul>
+<li><a href="http://julying.com/blog/javascript-settimeout-thread/" target="_blank">JavaScript定时机制、以及浏览器渲染机制 浅谈 | 前端攻城师王子墨</a></li>
+<li><a href="http://www.iamued.com/qianduan/1645.html" target="_blank">javascript线程解释（setTimeout,setInterval你不知道的事）</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2014/02/16/javascript-thread/" data-id="a377oiee9gw6xft3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-javascript-module" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/02/15/javascript-module/" class="article-date">
+  <time datetime="2014-02-14T16:00:00.000Z" itemprop="datePublished">Feb 15 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/15/javascript-module/">JavaScript 模块规范</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="commonjs">CommonJS</h2>
+<p>CommonJS规范为JavaScript制定了一个美好的愿景——希望JavaScript能够在任何地方运行。CommonJS是服务器端模块的规范，Node.js采用了这个规范。</p>
+<p>Web在发展，浏览器中出现了更多的标准API，这些过程发生在前端，后端JavaScript的规范却远远落后。对于JavaScript自身而言，它的规范依然是薄弱的，还有以下缺陷。</p>
+<ul>
+<li>没有模块系统。</li>
+<li>标准库较少。ECMAScript仅定义了部分核心库，对于文件系统，I/O流等常见需求却没有标准的API。就HTML5的发展状况而言，W3C标准化在一定意义上是在推进这个过程，但是它仅限于浏览器端。</li>
+<li>没有标准接口。在JavaScript中，几乎没有定义过如Web服务器或者数据库之类的标准统一接口。</li>
+<li>缺乏包管理系统。这导致JavaScript应用中基本没有自动加载和安装依赖的能力。</li>
+</ul>
+<p>CommonJS规范的提出，主要是为了弥补当前JavaScript没有标准的缺陷，以达到像Python、Ruby和Java具备开发大型应用的基础能力，而不是停留在小脚本程序的阶段。他们期望那些用CommonJS API写出的应用可以具备跨宿主环境执行的能力，这样不仅可以利用JavaScript开发富客户端应用，而且还可以编写以下应用。</p>
+<ul>
+<li>服务器端JavaScript应用程序。</li>
+<li>命令行工具。</li>
+<li>桌面图形界面应用程序。</li>
+<li>混合应用（Titanium和Adobe AIR等形式的应用）。</li>
+</ul>
+<p>CommonJS 规范包括了模块（modules）、包（packages）、系统（system）、二进制（binary）、控制台（console）、编码（encodings）、文件系统（filesystems）、套接字（sockets）、单元测试（unit testing）等部分。目前大部分标准都在拟定和讨论之中，已经发布的标准有 Modules/1.0、Modules/1.1、Modules/1.1.1、Packages/1.0、System/1.0。</p>
+<p><strong>参考：</strong></p>
+<ul>
+<li><a href="http://book.douban.com/reading/29343570/" target="_blank">《深入浅出Node.js》试读：2.1　CommonJS规范</a>。</li>
+<li><a href="http://www.ituring.com.cn/article/5793" target="_blank">图灵社区 : 图书 : 1.6　CommonJS</a></li>
+</ul>
+<h3 id="-">文档</h3>
+<ul>
+<li><a href="http://www.commonjs.org/" target="_blank">CommonJS: JavaScript Standard Library</a></li>
+<li><a href="http://www.commonjs.org/specs/" target="_blank">CommonJS: CommonJS API</a></li>
+<li><a href="http://wiki.commonjs.org/wiki/CommonJS" target="_blank">CommonJS Spec Wiki</a></li>
+<li><a href="http://wiki.commonjs.org/wiki/Implementations" target="_blank">Implementations - CommonJS Spec Wiki</a></li>
+</ul>
+<h2 id="-commonjs-modules-http-wiki-commonjs-org-wiki-modules-"><a href="http://wiki.commonjs.org/wiki/Modules" target="_blank">CommonJS Modules</a></h2>
+<p>提供CommonJS的模块加载规范。目前有三个版本，其中1.1.1还在制定中。</p>
+<ul>
+<li><a href="http://wiki.commonjs.org/wiki/Modules/1.0" title="Modules/1.0" target="_blank">1.0</a></li>
+<li><a href="/wiki/Modules/1.1" title="Modules/1.1">1.1</a> (<a href="/wiki/Modules/1.0" title="Modules/1.0">1.0</a> + <a href="/wiki/Modules/Meta" title="Modules/Meta">Module Meta-object Amendment</a>).</li>
+<li><a href="/wiki/Modules/1.1.1" title="Modules/1.1.1">1.1.1</a> relaxes details for &quot;main&quot; and enumerability requirements.</li>
+</ul>
+<p>Modules/1.1较1.0仅增加了标示符module，require函数增加了main和paths属性。而仔细比对1.1与1.1.1后发现除了格式调整了下几乎没有变化。</p>
+<p>Nodejs实现了其中的1.0版本，参考<a href="http://wiki.commonjs.org/wiki/Implementations/node.js" target="_blank">Implementations/node.js - CommonJS Spec Wiki</a>。</p>
+<h3 id="-">规范内容</h3>
+<p>CommonJS module基本要求如下</p>
+<p>1.require仅有一个参数为字符串，该字符串须遵守<a href="http://wiki.commonjs.org/wiki/Modules/1.0#Module_Identifiers" target="_blank">Module Identifiers</a>的6点规定</p>
+<ol>
+<li>require方法返回指定的模块API</li>
+<li>如果存在依赖的其它模块，那么依次加载</li>
+<li>require不能返回，则抛异常</li>
+<li>仅能使用标示符exports导出API</li>
+</ol>
+<h3 id="-">定义模块</h3>
+<p><strong>根据CommonJS规范，一个单独的文件就是一个模块。</strong>加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象。下面就是一个简单的模块文件example.js。</p>
+<pre><code>console.log(&quot;evaluating example.js&quot;);
+
+var invisible = function () {
+  console.log(&quot;invisible&quot;);
+}
+
+exports.message = &quot;hi&quot;;
+
+exports.say = function () {
+  console.log(message);
+}
+</code></pre><p>再看一个复杂一点的例子。</p>
+<pre><code>// foobar.js
+function foobar(){
+        this.foo = function(){
+                console.log(&#39;Hello foo&#39;);
+        }
+
+        this.bar = function(){
+                console.log(&#39;Hello bar&#39;);
+        }
+}
+
+exports.foobar = foobar;
+</code></pre><h3 id="-">加载模块</h3>
+<p>不论是核心模块还是文件模块，require()方法对相同模块的二次加载都一律采用缓存优先的方式，这是第一优先级的。不同之处在于核心模块的缓存检查先于文件模块的缓存检查。</p>
+<p>调用该模块的方法如下：</p>
+<pre><code>var foobar = require(&#39;./foobar&#39;).foobar,
+    test   = new foobar();
+
+test.bar(); // &#39;Hello bar&#39;
+</code></pre><p>js文件名前面需要加上路径，可以是相对路径（相对于使用require方法的文件），也可以是绝对路径。如果省略路径，node.js会认为，你要加载一个核心模块，或者已经安装在本地 node_modules 目录中的模块。如果加载的是一个目录，node.js会首先寻找该目录中的 package.json 文件，加载该文件 main 属性提到的模块，否则就寻找该目录下的 index.js 文件。</p>
+<p>有时，不需要exports返回一个对象，只需要它返回一个函数。这时，就要写成module.exports。</p>
+<pre><code>module.exports = function () {
+  console.log(&quot;hello world&quot;)
+}
+</code></pre><h3 id="-">参考</h3>
+<ul>
+<li><a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism" target="_blank">深入浅出Node.js（三）：深入Node.js的模块机制</a></li>
+<li><a href="http://www.cnblogs.com/snandy/archive/2012/03/08/2378441.html" target="_blank">JavaScript中模块“写法” - snandy - 博客园</a></li>
+</ul>
+<h2 id="-modules-transport-http-wiki-commonjs-org-wiki-modules-transport-"><a href="http://wiki.commonjs.org/wiki/Modules/Transport" target="_blank">Modules/Transport</a></h2>
+<p>提供模块从服务器到浏览器的多种传中方式。参考<a href="">Modules/Transport - CommonJS Spec Wiki</a>  A variety of ways to transport a module from a server to a browser。</p>
+<p>Modules/1.1.1 规范里，只定义了模块的基本特性，并没有定义模块的存在形态。为了让模块能在不同的环境下都适用，CommonJS 需要定义 Module/Transport 规范，同时支持同步和异步。</p>
+<h3 id="-">参考</h3>
+<ul>
+<li><a href="http://www.zhihu.com/question/20789867" target="_blank">CommonJS 的 Modules/Transport 和 Modules/Wrappings 规范有什么区别？</a></li>
+</ul>
+<h2 id="-modules-wrappings-http-wiki-commonjs-org-wiki-modules-wrappings-"><a href="http://wiki.commonjs.org/wiki/Modules/Wrappings" target="_blank">Modules/Wrappings</a></h2>
+<p>Modules/Wrappings是CommonJS提出的另外一个基于浏览器模块加载器。CMD其实就是基于这个规范发展而来的，因为SeaJS实现了Modules/Wrappings，参考<a href="http://wiki.commonjs.org/wiki/Implementations/SeaJS" target="_blank">Implementations/SeaJS - CommonJS Spec Wiki</a>。</p>
+<p>简单说，Modules/Wrappings是出于对Node.js模块格式的偏好而包装下使其在浏览器中得以实现，并通过某些工具（如<a href="https://github.com/jrburke/r.js" target="_blank">r.js</a>）也能运行在Node.js中。</p>
+<p>如果想要实现前后端统一的模块加载方式，面临以下问题：</p>
+<ol>
+<li>服务器端JS模块文件就在本地，浏览器端则需要通过网络请求。</li>
+<li>服务器端可以很容易的实现同步或异步请求模块，浏览器端则问题多多。</li>
+</ol>
+<p>如下：</p>
+<pre><code>var event = require(&quot;event&quot;);
+event.bind(el, &#39;click&#39;, function() {
+    // todo
+});
+</code></pre><p>这段代码中require如果是异步执行的，则event.bind的执行有可能会出错。</p>
+<p>虽然可以使用 XHR 实现同步载入模块JS文件。但XHR的缺点也是明显的，它不能跨域，这点让人很难接受，因为有些场景需要模块部署在不同的服务器。</p>
+<p><a href="http://wiki.commonjs.org/wiki/Modules/Wrappings" target="_blank">Modules/Wrappings</a>的诞生就是为了解决这个问题。</p>
+<p><a href="http://wiki.commonjs.org/wiki/Modules/Wrappings" target="_blank">Modules/Wrappings</a>的出现使得浏览器中实现它变得可能，包裹的函数作为回调。即使用script tag作为模块加载器，script完全下载后去回调，回调中进行模块定义。</p>
+<h3 id="-">规范内容</h3>
+<p>该规范约定如下：</p>
+<ol>
+<li>定义模块用module变量，它有一个方法declare</li>
+<li>declare接受一个函数类型的参数，如称为factory</li>
+<li>factory有三个参数分别为require、exports、module</li>
+<li>factory使用返回值和exports导出API</li>
+<li>factory如果是对象类型，则将该对象作为模块输出</li>
+</ol>
+<h3 id="-">定义模块</h3>
+<pre><code>// 一个基本的模块定义
+module.declare(function(require, exports, module)
+{
+    exports.foo = &quot;bar&quot;; 
+});
+
+// 直接使用对象作为模块
+module.declare(
+{
+    foo: &quot;bar&quot;
+});
+</code></pre><h3 id="-amd-">和AMD的区别</h3>
+<ul>
+<li>使用module.declare来申明模块。</li>
+<li>Wrappings 和 AMD 最大的不同，在于 Wrappings 方案里，factory 的参数更简单，和 dependencies 无对应关系。</li>
+</ul>
+<p>也就是说，可以如下写代码：</p>
+<pre><code>module.declare([&#39;a&#39;], function(require, exports) {
+  var add = require(&#39;a&#39;).add;
+  exports.increment = function(n) {
+    return add(n, 1);
+  };
+});
+</code></pre><p>这个看似非常小的差异，可以让下面的代码合理存在并达到预期目的：</p>
+<pre><code>module.declare(function(require, exports) {
+  ...
+  var a;
+  if(someCondition) {
+    a = require(&#39;a1&#39;);
+  } else {
+    a = require(&#39;a2&#39;);
+  }
+  ...
+});
+</code></pre><h3 id="-">参考</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/snandy/archive/2012/03/09/2386092.html" target="_blank">Node.js模块风格在浏览器中的尝试 - snandy - 博客园</a></li>
+</ul>
+<h2 id="-amd-https-github-com-amdjs-amdjs-api-wiki-amd-"><a href="https://github.com/amdjs/amdjs-api/wiki/AMD" target="_blank">AMD</a></h2>
+<p>AMD是专门为浏览器中JavaScript环境设计的规范。它吸取了CommonJS的一些优点，但又不照搬它的格式。开始AMD作为CommonJS的 <a href="http://wiki.commonjs.org/wiki/Modules/Transport/C" target="_blank">Modules/Transport/C</a> 存在，因无法与CommonJS开发者达成一致而独立出来。它有自己的<a href="http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition" target="_blank">wiki</a> 和<a href="https://groups.google.com/group/amd-implement" target="_blank">讨论组</a> 。</p>
+<p>CommonJS规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。AMD规范则是非同步加载模块，允许指定回调函数。由于Node.js主要用于服务器编程，模块文件一般都已经存在于本地硬盘，所以加载起来比较快，不用考虑非同步加载的方式，所以<strong>CommonJS规范比较适用于Node.js</strong>。但是，如果是浏览器环境，要从服务器端加载模块，这时就必须采用非同步模式，因此<strong>浏览器端一般采用AMD规范</strong>。</p>
+<h3 id="-">规范内容</h3>
+<p>MD设计出一个简洁的写模块API：</p>
+<pre><code>define(id?, dependencies?, factory);
+</code></pre><p>其中：</p>
+<ul>
+<li>id: 模块标识，可以省略。</li>
+<li>dependencies: 所依赖的模块，可以省略。</li>
+<li>factory: 模块的实现，或者一个JavaScript对象。</li>
+</ul>
+<p>id遵循CommonJS <a href="http://wiki.commonjs.org/wiki/Modules/1.1.1#Module_Identifiers" target="_blank">Module Identifiers</a> 。dependencies元素的顺序和factory参数一一对应。</p>
+<h3 id="-">定义模块</h3>
+<pre><code>// 1. 定义无依赖的模块
+define(function() {
+    return {
+        mix: function(source, target) {
+        }
+    };
+});
+
+// 2. 定义有依赖的模块
+define([&#39;base&#39;], function(base) {
+    return {
+        show: function() {
+            // todo with module base
+        }
+    }
+});
+
+// 3. 定义数据对象模块
+define({
+    users: [],
+    members: []
+});
+
+// 4. 具名模块
+define(&#39;index&#39;, [&#39;data&#39;,&#39;base&#39;], function(data, base) {
+ // todo
+});
+
+// 5. 前面提到dependencies元素的顺序和factory一一对应，其实不太严谨。AMD开始为摆脱CommonJS的束缚，开创性的提出了自己的模块风格。但后来又做了妥协，兼容了 CommonJS [Modules/Wrappings](http://wiki.commonjs.org/wiki/Modules/Wrappings) 。即又可以这样写
+// 不考虑多了一层函数外，格式和Node.js是一样的。使用require获取依赖模块，使用exports导出API。
+define(function(require, exports, module) {
+    var base = require(&#39;base&#39;);
+    exports.show = function() {
+        // todo with module base
+    } 
+});
+</code></pre><p>除了define外，AMD还保留一个关键字require。require 作为规范保留的全局标识符，可以实现为 module loader。也可以不实现。</p>
+<h3 id="-">加载模块</h3>
+<pre><code>require([&#39;foo&#39;, &#39;bar&#39;], function ( foo, bar ) {
+        // 这里写其余的代码
+        foo.doSomething();
+});
+
+// 动态加载的依赖项
+define(function ( require ) {
+    var isReady = false, foobar;
+
+    // 请注意在模块定义内部内联的 require 语句
+    require([&#39;foo&#39;, &#39;bar&#39;], function (foo, bar) {
+        isReady = true;
+        foobar = foo() + bar();
+    });
+
+    // 我们仍可以返回一个模块
+    return {
+        isReady: isReady,
+        foobar: foobar
+    };
+});
+</code></pre><h3 id="-">文档</h3>
+<ul>
+<li><a href="http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition" target="_blank">Modules/AsynchronousDefinition - CommonJS Spec Wiki</a></li>
+</ul>
+<h3 id="-">实现</h3>
+<h4 id="-chenmnkken-seed-http-stylechen-com-"><a href="http://stylechen.com/" target="_blank">chenmnkken / seed</a></h4>
+<h4 id="-requirejs-http-requirejs-org-"><a href="http://requirejs.org/" target="_blank">RequireJS</a></h4>
+<p>RequireJS是一个工具库，主要用于客户端的模块管理。它可以让客户端的代码分成一个个模块，实现异步或动态加载，从而提高代码的性能和可维护性。它的模块管理遵守<a href="https://github.com/amdjs/amdjs-api/wiki/AMD" target="_blank">AMD规范</a>（Asynchronous Module Definition）。</p>
+<p>RequireJS的基本思想是，通过define方法，将代码定义为模块；通过require方法，实现代码的模块加载。</p>
+<p>使用方法参考 <a href="http://javascript.ruanyifeng.com/tool/requirejs.html" target="_blank">RequireJS和AMD规范 -- JavaScript 标准参考教程（alpha）</a>。</p>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>文件太大，用 google closure compiler 压缩后，12.2k. 这是在页头必须引入的脚本，还是希望越小越好。</li>
+<li>功能太多。这本是优点，比如能够在各种环境下跑。但对于真实的 web 应用来说，还是希望用情专一，尽量无无用代码。</li>
+<li>给 require 方法赋予了双重含义。一重含义是 CommonJS/Modules/1.1.1 规范里定义的 require, 另一重是 RequireJS 里用来加载模块和调用回调。这导致 require 的 dependencies 参数的格式，和 define 中的 dependencies 参数的格式不一致。我刚用的时候，没意识到这一点，经常很迷惑。</li>
+<li>目前不支持 availability 模式。</li>
+</ul>
+<p>参考 ：<a href="http://blogread.cn/it/article/2957" target="_blank">CommonJS 的模块系统，AMD 和 Wrappings, 以及 RequireJS</a></p>
+<h3 id="-">其他实现</h3>
+<ul>
+<li><a href="https://github.com/cujojs/curl" target="_blank">cujojs/curl</a></li>
+</ul>
+<h3 id="-">参考</h3>
+<ul>
+<li><a href="https://github.com/jrburke/r.js" target="_blank">jrburke/r.js</a></li>
+<li><a href="https://groups.google.com/forum/#!topic/commonjs/lqCWO8tMp48" target="_blank">Split off AMD? (was Re: [CommonJS] New amd-implement list)</a></li>
+<li><a href="http://justineo.github.io/singles/writing-modular-js/" target="_blank">使用 AMD、CommonJS 及 ES Harmony 编写模块化的 JavaScript</a></li>
+<li><a href="http://www.cnblogs.com/snandy/archive/2012/03/12/2390782.html" target="_blank">AMD：浏览器中的模块规范 - snandy - 博客园</a></li>
+</ul>
+<h2 id="-cmd-https-github-com-cmdjs-specification-blob-master-draft-module-md-"><a href="https://github.com/cmdjs/specification/blob/master/draft/module.md" target="_blank">CMD</a></h2>
+<p>CMD规范由国内的<a href="http://lifesinger.github.com/" target="_blank">玉伯</a>提出。</p>
+<p>AMD 是 RequireJS 在推广过程中对模块定义的规范化产出。CMD 是 SeaJS 在推广过程中对模块定义的规范化产出。类似的还有 CommonJS Modules/2.0 规范，是 BravoJS 在推广过程中对模块定义的规范化产出。这些规范的目的都是为了 JavaScript 的模块化开发，特别是在浏览器端的。目前这些规范的实现都能达成浏览器端模块化开发的目的。</p>
+<h3 id="-">定义模块</h3>
+<ul>
+<li><a href="https://github.com/seajs/seajs/issues/242" target="_blank">CMD 模块定义规范 · Issue #242 · seajs/seajs</a></li>
+</ul>
+<h3 id="-amd-">与AMD的区别</h3>
+<ol>
+<li><p>对于依赖的模块，AMD 是提前执行，CMD 是延迟执行。不过 RequireJS 从 2.0 开始，也改成可以延迟执行（根据写法不同，处理方式不同）。CMD 推崇 as lazy as possible.</p>
+</li>
+<li><p>CMD 推崇依赖就近，AMD 推崇依赖前置。看下面的代码说明。虽然 AMD 也支持 CMD 的写法，同时还支持将 require 作为依赖项传递，但 RequireJS 的作者默认是最喜欢上面的写法，也是官方文档里默认的模块定义写法。CMD 推崇依赖就近需要遍历所有的require关键字，找出后面的依赖。具体做法是将function toString后，用正则匹配出require关键字后面的依赖。显然，这是一种牺牲性能来换取更多开发便利的方法。</p>
+</li>
+<li><p>AMD 的 API 默认是一个当多个用，CMD 的 API 严格区分，推崇职责单一。比如 AMD 里，require 分全局 require 和局部 require，都叫 require。CMD 里，没有全局 require，而是根据模块系统的完备性，提供 seajs.use 来实现模块系统的加载启动。CMD 里，每个 API 都简单纯粹。</p>
+</li>
+</ol>
+<p>代码说明：</p>
+<pre><code>// CMD
+define(function(require, exports, module) {
+    var a = require(&#39;./a&#39;)
+    a.doSomething()
+    // 此处略去 100 行
+    var b = require(&#39;./b&#39;) // 依赖可以就近书写
+    b.doSomething()
+    // ... 
+})
+
+// AMD 默认推荐的是
+define([&#39;./a&#39;, &#39;./b&#39;], function(a, b) { // 依赖必须一开始就写好
+    a.doSomething()
+    // 此处略去 100 行
+    b.doSomething()
+    ...
+}) 
+</code></pre><p>参考：</p>
+<ul>
+<li><a href="http://www.zhihu.com/question/20351507" target="_blank">AMD 和 CMD 的区别有哪些？</a></li>
+<li><a href="https://github.com/seajs/seajs/issues/277" target="_blank">与 RequireJS 的异同 · Issue #277 · seajs/seajs</a></li>
+<li><a href="http://www.douban.com/note/283566440/" target="_blank">Sea.js 与 RequireJS 最大的区别</a></li>
+<li><a href="http://blog.youyo.name/archives/commonjs-amd-cmd-my-opinion.html" target="_blank">commonJS\AMD\CMD和我的看法</a></li>
+<li><a href="http://lifesinger.wordpress.com/2011/05/17/the-difference-between-seajs-and-requirejs/" target="_blank">SeaJS 和 RequireJS 的异同 | 岁月如歌</a></li>
+</ul>
+<h3 id="-seajs-https-github-com-seajs-"><a href="https://github.com/seajs" target="_blank">seajs</a></h3>
+<p>SeaJS 同时实现了<a href="http://wiki.commonjs.org/wiki/Modules/1.1.1" title="Modules/1.1.1" target="_blank">Modules/1.1.1</a>和
+<a href="/wiki/Modules/Wrappings" title="Modules/Wrappings">Modules/Wrappings</a>
+。参考<a href="http://wiki.commonjs.org/wiki/Implementations/SeaJS" target="_blank">Implementations/SeaJS - CommonJS Spec Wiki</a>。</p>
+<p>但没有完全最从这两种规范：</p>
+<p>1，SeaJS未实现全部的 Modules 1.1.1。如require函数的main，paths属性在SeaJS中没有。但SeaJS给require添加了async、resolve、load、constructor。</p>
+<p>2，SeaJS没有使用 Modules/Wrappings 中的module.declare定义模块，而是使用define函数（看起来象<a href="http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition" target="_blank">AMD</a>中的define，实则不然）。</p>
+<p>可能是因为这个原因，才为Sea.js重新指定了一个规范CMD。参考<a href="http://www.cnblogs.com/snandy/archive/2012/03/09/2386092.html" target="_blank">Node.js模块风格在浏览器中的尝试 - snandy - 博客园</a>。</p>
+<h3 id="-requirejs-">与 RequireJS 的异同</h3>
+<p><strong>相同之处：</strong></p>
+<p>RequireJS 和 Sea.js 都是模块加载器，倡导模块化开发理念，核心价值是让 JavaScript 的模块化开发变得简单自然。</p>
+<p><strong>不同之处：</strong></p>
+<p>两者的主要区别如下：</p>
+<ol>
+<li><strong>定位有差异</strong>。RequireJS 想成为浏览器端的模块加载器，同时也想成为 Rhino / Node 等环境的模块加载器。Sea.js 则专注于 Web 浏览器端，同时通过 Node 扩展的方式可以很方便跑在 Node 环境中。</li>
+<li><strong>遵循的规范不同</strong>。RequireJS 遵循 AMD（异步模块定义）规范，Sea.js 遵循 CMD （通用模块定义）规范。规范的不同，导致了两者 API 不同。Sea.js 更贴近 CommonJS Modules/1.1 和 Node Modules 规范。</li>
+<li><strong>推广理念有差异</strong>。RequireJS 在尝试让第三方类库修改自身来支持 RequireJS，目前只有少数社区采纳。Sea.js 不强推，采用自主封装的方式来“海纳百川”，目前已有较成熟的封装策略。</li>
+<li><strong>对开发调试的支持有差异</strong>。Sea.js 非常关注代码的开发调试，有 nocache、debug 等用于调试的插件。RequireJS 无这方面的明显支持。</li>
+<li><strong>插件机制不同</strong>。RequireJS 采取的是在源码中预留接口的形式，插件类型比较单一。Sea.js 采取的是通用事件机制，插件类型更丰富。</li>
+</ol>
+<p>还有不少差异，涉及具体使用方式和源码实现，欢迎有兴趣者研究并发表看法。</p>
+<p>总之，如果说 RequireJS 是 Prototype 类库的话，则 Sea.js 致力于成为 jQuery 类库。</p>
+<p><strong>教程：</strong></p>
+<ul>
+<li>教程 <a href="https://github.com/seajs/seajs/issues/916" target="_blank">https://github.com/seajs/seajs/issues/916</a></li>
+<li>github <a href="https://github.com/seajs/seajs" target="_blank">https://github.com/seajs/seajs</a></li>
+<li>官网 <a href="http://seajs.org" target="_blank">http://seajs.org</a></li>
+<li>社区 <a href="https://spmjs.org/" target="_blank">https://spmjs.org/</a></li>
+<li>github document <a href="https://github.com/seajs/seajs/issues?labels=documentation&amp;page=1&amp;state=closed" target="_blank">https://github.com/seajs/seajs/issues?labels=documentation&amp;page=1&amp;state=closed</a></li>
+<li>教程 <a href="https://github.com/island205/HelloSea.js/blob/master/01-contents.md" target="_blank">https://github.com/island205/HelloSea.js/blob/master/01-contents.md</a></li>
+</ul>
+<h2 id="-umd-https-github-com-umdjs-umd-"><a href="https://github.com/umdjs/umd" target="_blank">UMD</a></h2>
+<p>AMD以浏览器为第一（browser-first）的原则发展，选择异步加载模块。它的模块支持对象（objects）、函数（functions）、构造器（constructors）、字符串（strings）、JSON等各种类型的模块。因此在浏览器中它非常灵活。</p>
+<p>CommonJS module以服务器端为第一（server-first）的原则发展，选择同步加载模块。它的模块是无需包装的（unwrapped modules）且贴近于ES.next/Harmony的模块格式。但它仅支持对象类型（objects）模块。</p>
+<p>这迫使一些人又想出另一个更通用格式 <a href="https://github.com/umdjs/umd" target="_blank">UMD</a>(Universal Module Definition)。希望提供一个前后端跨平台的解决方案。</p>
+<p>UMD 定义那些既能在客户端又能在服务器端工作的模块，这样的模块同时也能和目前可用的主流脚本加载器一同工作。</p>
+<h3 id="-">实现</h3>
+<p>UMD的实现很简单，先判断是否支持Node.js模块格式（exports是否存在），存在则使用Node.js模块格式。</p>
+<p>再判断是否支持AMD（define是否存在），存在则使用AMD方式加载模块。前两个都不存在，则将模块公开到全局（window或global）。</p>
+<pre><code>// eventUtil.js
+(function (root, factory) {
+    if (typeof exports === &#39;object&#39;) {
+        module.exports = factory();
+
+    } else if (typeof define === &#39;function&#39; &amp;&amp; define.amd) {
+        define(factory);
+
+    } else {
+        root.eventUtil = factory();
+    }
+})(this, function() {
+    // module
+    return {
+        addEvent: function(el, type, handle) {
+            //...
+        },
+        removeEvent: function(el, type, handle) {
+
+        },
+    };
+});
+</code></pre><p> 虽然UMD八字还没有一撇，有些开源库却开始支持UMD了，如大名鼎鼎的《JavaScript设计模式》作者<a href="http://dustindiaz.com/" target="_blank">Dustin Diaz</a>开发的 <a href="https://github.com/ded/qwery" target="_blank">qwery</a> 。 代码如下</p>
+<p><img src="http://pic002.cnblogs.com/images/2012/114013/2012031920341233.png" alt=""></p>
+<h3 id="-">参考</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/snandy/archive/2012/03/19/2406596.html" target="_blank">UMD和ECMAScript模块 - snandy - 博客园</a></li>
+<li><a href="http://justineo.github.io/singles/writing-modular-js/" target="_blank">使用 AMD、CommonJS 及 ES Harmony 编写模块化的 JavaScript</a></li>
+</ul>
+<h2 id="-es-harmony-modules-http-wiki-ecmascript-org-doku-php-id-harmony-modules-"><a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules" target="_blank">ES Harmony/Modules</a></h2>
+<p>ECMAScript的下一个版本Harmony已经考虑到了模块化的需求，目前还在努力指定中。</p>
+<p>在 ES.next 中，用import和export导入和导出模块：</p>
+<ul>
+<li><strong>import</strong>声明把某个模块的导出绑定为本地变量，并可以重命名来避免命名冲突。</li>
+<li><strong>export</strong>声明声明了某个模块的本地绑定是外部可见的，这样其它模块就能够读取它们但却无法进行修改。有趣的是，模块可以导出子模块，却无法导出已经在别处定义过的模块。你同样可以给导出重命名来让它们不同于本地的名字。</li>
+</ul>
+<h3 id="-">定义模块</h3>
+<p>使用module关键字来定义一个模块。</p>
+<pre><code>module math {
+    export function sum(x, y) {
+        return x + y;
+    }
+    export var pi = 3.141593;
+}   
+</code></pre><h3 id="-">加载模块</h3>
+<p>使用import关键字来加载外部模块</p>
+<pre><code>// we can import in script code, not just inside a module
+import {sum, pi} from math;
+alert(&quot;2π = &quot; + sum(pi, pi));
+
+// 引入所有API
+import * from math;
+alert(&quot;2π = &quot; + sum(pi, pi));
+
+// 使用另一个引用作为别名
+// a static module reference
+module M = math;
+
+// reify M as an immutable &quot;module instance object&quot;
+alert(&quot;2π = &quot; + M.sum(M.pi, M.pi));
+
+//局部重命名
+import { draw: drawShape } from shape;
+import { draw: drawGun } from cowboy;
+
+// 嵌套模块
+module widgets {
+    export module button { ... }
+    export module alert { ... }
+    export module textarea { ... }
+    ...
+}
+
+import { messageBox, confirmDialog } from widgets.alert;
+...
+
+// 从服务器上请求的模块
+&lt;script type=&quot;harmony&quot;&gt;
+// loading from a URL
+module JSON at &#39;http://json.org/modules/json2.js&#39;;
+alert(JSON.stringify({&#39;hi&#39;: &#39;world&#39;}));
+
+// 动态载入一个模块
+Loader.load(&#39;http://json.org/modules/json2.js&#39;, function(JSON) {
+    alert(JSON.stringify([0, {a: true}]));
+});
+</code></pre><p>除此之外，还可以远程载入的模块、异步加载模块等，请参考<a href="http://justineo.github.io/singles/writing-modular-js/" target="_blank">使用 AMD、CommonJS 及 ES Harmony 编写模块化的 JavaScript</a>。</p>
+<h3 id="-">参考</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/snandy/archive/2012/03/19/2406596.html" target="_blank">UMD和ECMAScript模块 - snandy - 博客园</a></li>
+<li><a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules" target="_blank">harmony:modules</a></li>
+<li><a href="http://wiki.ecmascript.org/doku.php?id=harmony:module_loaders" target="_blank">harmony:module_loaders</a></li>
+</ul>
+<h2 id="-">参考链接</h2>
+<ul>
+<li><a href="http://justineo.github.io/singles/writing-modular-js/" target="_blank">使用 AMD、CommonJS 及 ES Harmony 编写模块化的 JavaScript</a></li>
+<li><a href="http://nuysoft.com/2014/01/26/learning-modules/" target="_blank">学习 Javascript 模块化编程</a></li>
+<li><a href="http://javascript.ruanyifeng.com/nodejs/commonjs.html" target="_blank">CommonJS规范 -- JavaScript 标准参考教程（alpha）</a></li>
+<li>Addy Osmani, <a href="http://addyosmani.com/writing-modular-js/" target="_blank">Writing Modular JavaScript With AMD, CommonJS &amp; ES Harmony</a></li>
+<li><a href="http://www.udpwork.com/item/3978.html" target="_blank">IT牛人博客聚合 - CommonJS 的模块系统，AMD 和 Wrappings, 以及 RequireJS</a></li>
+<li><a href="https://github.com/seajs/seajs/issues/269" target="_blank">从 CommonJS 到 Sea.js · Issue #269 · seajs/seajs</a></li>
+<li><a href="https://github.com/seajs/seajs/issues/588" target="_blank">前端模块化开发那点历史 · Issue #588 · seajs/seajs</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2014/02/15/javascript-module/" data-id="9g2n1wzrjyzpnmr3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-javascript-unit-test" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/02/14/javascript-unit-test/" class="article-date">
+  <time datetime="2014-02-13T16:00:00.000Z" itemprop="datePublished">Feb 14 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/14/javascript-unit-test/">JavaScript 单元测试</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>随着单元测试的普及，尤其是敏捷开发的推动，涌现了许多优秀的JavaScript单元测试框架，如QUnit、Jasmine等。</p>
+<h2 id="qunit">QUnit</h2>
+<p>QUnit是jQuery团队开发的JavaScript单元测试工具，功能强大且使用简单。目前所有的JQuery代码都使用QUnit进行测试，原生的JavaScript也可以使用QUnit。QUnit所有的API可以分为三类：Setup，Assertions，Asynchronous Testing。</p>
+<ul>
+<li><a href="http://qunitjs.com/" target="_blank">QUnit</a></li>
+<li><a href="http://qunitjs.com/intro/" target="_blank">Introduction to Unit Testing | QUnit</a></li>
+<li><a href="http://api.qunitjs.com/" target="_blank">QUnit API Documentation</a></li>
+<li><a href="http://qunitjs.com/cookbook/" target="_blank">Cookbook | QUnit</a></li>
+</ul>
+<h3 id="-">优点</h3>
+<ul>
+<li>有漂亮的外观和完整的测试功能（包括异步测试）；</li>
+<li>非常简单，容易上手，目前公开的API只有19个；</li>
+<li>不需要依赖其它任何软件包或框架，只要能运行JS的地方就可以，QUnit本身只有一个JS文件和CSS文件，当然如果需要可以和jQuery等其它框架集成；</li>
+<li>不仅支持在浏览器中测试，还支持在Rhino和node.js等后端测试。</li>
+</ul>
+<h3 id="-">缺点</h3>
+<p>对自动化支持不好，很难和Ant、Maven或自动构建等工具集成，主要用在浏览器中进行测试。</p>
+<h2 id="demo">Demo</h2>
+<p>以下Demo用于异步测试：</p>
+<pre><code>test( &quot;a test&quot;, function() {
+    stop();
+    var result = null;
+    $.ajax(
+        url,
+        {},
+        function(data){
+            result = data;
+        }
+    );
+    setTimeout(function() {
+        equals(result, &quot;success&quot; );
+        start();
+    }, 150 );
+});
+</code></pre><h2 id="jasmine-">Jasmine框架</h2>
+<p>Jasmine是一个有名的JavaScript单元测试框架，它是独立的<strong>行为驱动</strong>开发框架，语法清晰易懂。</p>
+<ul>
+<li>源码：<a href="https://github.com/pivotal/jasmine" target="_blank">pivotal/jasmine</a></li>
+<li>文档：<a href="http://jasmine.github.io/2.0/introduction.html" target="_blank">introduction.js</a></li>
+</ul>
+<h3 id="-">优点</h3>
+<ul>
+<li>它是基于行为驱动开发实现的测试框架，它的语法非常贴近自然语言，简单明了，容易理 解。</li>
+<li>能很方便的和Ant、Maven等进行集成进行自动化测试，也可以方便和Jekins等持续集成工- 具进行集成，可以生成测试结果的XMl文档。</li>
+<li>它有丰富的API，同时用户也支持用户扩展它的API，这一点很少有其它框架能够做到。</li>
+<li>使用方便简单，只需要引入两个js文件即可</li>
+<li>不仅支持在浏览器中测试，还支持在Rhino和node.js等后端测试。</li>
+<li>对于Ruby语言有特别的支持，能够非常方便的集成到Ruby项目中去</li>
+</ul>
+<h3 id="-">缺点</h3>
+<p>在浏览器中的测试界面不如QUnit美观、详细。</p>
+<h3 id="demo">Demo</h3>
+<pre><code>describe(&quot;测试add()函数&quot;, function() {
+    it(&quot;1 + 1 = 2&quot;, function(){
+        expect(add(1, 1)).toBe(2);
+    });
+});
+</code></pre><h2 id="jstestdriver">JsTestDriver</h2>
+<p>JsTestDriver是一个JavaScript单元测试工具，易于与持续构建系统相集成并能够在多个浏览器上运行测试轻松实现TDD风格的开发。当在项目中配置好JsTestDriver以后，如同junit测试java文件一般，JsTestDriver可以直接通过运行js文件来进行单元测试。JsTestDriver框架本身就是JAVA的jar包，需要在本地运行并监听一个端口。</p>
+<h3 id="-">优点</h3>
+<ul>
+<li>可以一次测试多个浏览器，使用方法是在启动服务时可以将多个浏览器的路径作为参数传- 进去。可以在多台机器上的浏览器中运行，包括移动设备。</li>
+<li>测试运行得很快，因为不需要将结果添加到DOM中呈现出来，它们能够同时在任意多的浏览- 器中运行，未修改的文件浏览器会从缓存提取。</li>
+<li>不需要HTML配件文件，仅仅只需提供一个或多个脚本和测试脚本，测试运行器运行时会创- 建一个空文件。</li>
+<li>能很方便的和Ant、Maven等进行集成进行自动化测试，也可以方便和Jekins等持续集成工- 具进行集成，可以生成测试结果的XML文档。</li>
+<li>有Eclipse和IntelliJ插件，可以很方便的在这两个IDE中进行测试，和JUnit很像。</li>
+<li>支持其它测试框架，可以测试其它测试框架写的测试代码，比如有对应的插件可以将QUnit- 和Jasmine测试代码转换成JsTestDriver的测试代码。</li>
+</ul>
+<h3 id="-">缺点</h3>
+<p>不能在浏览器中测试，只能通过自动化工具或控制台运行。生成的结果不够直观。
+安装使用稍微有点麻烦，依赖于JAVA环境。</p>
+<h3 id="-">测试步骤</h3>
+<ul>
+<li>cmd 进入目录</li>
+<li>运行命令”java –jar JsTestDriver.jar –port 9876”</li>
+<li>打开页面<a href="http://localhost:9876，点击“捕获浏览器”。" target="_blank">http://localhost:9876，点击“捕获浏览器”。</a></li>
+<li>新打开一个终端，运行命令”java –jar JsTestDriver.jar –tests - all”，运行所有测试用例</li>
+<li>也可以单独运行某一个用例，如运行命令” java –jar JsTestDriver.jar –tests addTest.testA”</li>
+</ul>
+<h3 id="reference">Reference</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html" target="_blank">javascript单元测试 - 溤淋 - 博客园</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2014/02/14/javascript-unit-test/" data-id="63tul9h1owpw2z9d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-javascript-clipboard" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/02/02/javascript-clipboard/" class="article-date">
+  <time datetime="2014-02-01T16:00:00.000Z" itemprop="datePublished">Feb 2 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/02/javascript-clipboard/">JavaScript 剪切板</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="-">概述</h2>
+<p>为了阻止恶意脚本攻击访问者的电脑，Web应用程序均运行在沙箱环境中。该沙箱环境限制了对本地资源的访问，如文件系统、系统剪切板。<a href="http://news.cnet.com/8301-1009_3-10021715-83.html" target="_blank">这篇文章</a>说明了限制访问剪切板的原因。幸运的是，有些方法可以间接访问系统剪切板，不幸的是，但每个方法都有瑕疵，而且至今没有非常完美的方法。</p>
+
+        
+          <p class="article-more-link">
+            <a href="/2014/02/02/javascript-clipboard/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2014/02/02/javascript-clipboard/" data-id="mb02swjseuj8rix1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-javascript-getselection" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/01/30/javascript-getselection/" class="article-date">
+  <time datetime="2014-01-29T16:00:00.000Z" itemprop="datePublished">Jan 30 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/01/30/javascript-getselection/">JavaScript 获取选取范围</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="-">概述</h2>
+<p>获取选中的功能有如下应用场景：</p>
+<ul>
+<li>网页划词翻译 </li>
+<li>选中内容发送到微博 </li>
+<li>转载功能 </li>
+<li>网易的选中纠错 </li>
+</ul>
+<p>参考 <a href="http://classjs.com/2011/11/17/%E7%94%A8getselection%E6%9D%A5%E8%8E%B7%E5%8F%96%E7%BD%91%E9%A1%B5%E7%9A%84%E9%80%89%E4%B8%AD%E5%86%85%E5%AE%B9/" target="_blank">用getSelection来获取网页的选中内容</a></p>
+
+        
+          <p class="article-more-link">
+            <a href="/2014/01/30/javascript-getselection/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2014/01/30/javascript-getselection/" data-id="l3ldrfkmwlpwkri1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-bootstrap" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/09/02/bootstrap/" class="article-date">
+  <time datetime="2013-09-01T16:00:00.000Z" itemprop="datePublished">Sep 2 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/09/02/bootstrap/">Bootstrap</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="-">工具</h2>
+<ul>
+<li><a href="http://www.admin10000.com/document/3889.html" target="_blank">15个最好的Bootstrap设计工具推荐 - WEB开发者</a></li>
+</ul>
+<h3 id="-">参考</h3>
+<ul>
+<li><a href="http://pan.baidu.com/share/link?shareid=2071051253&amp;uk=2214641459" target="_blank">Bootstrap(2013.5).Jake.Spurlock</a></li>
+<li><a href="http://www.bootcss.com/#" target="_blank">Bootstrap 中文网</a></li>
+<li><a href="http://www.cnblogs.com/lhb25/archive/2012/09/11/resources-that-complement-twitter-bootstrap.html" target="_blank">Twitter Bootstrap 组件和工具</a></li>
+<li><a href="http://www.open-open.com/news/view/146bdda" target="_blank">Twitter Bootstrap 模板</a></li>
+</ul>
+
+        
+          <p class="article-more-link">
+            <a href="/2013/09/02/bootstrap/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2013/09/02/bootstrap/" data-id="hsisbgaapxv4qm4c" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-web-front" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/08/30/web-front/" class="article-date">
+  <time datetime="2013-08-29T16:00:00.000Z" itemprop="datePublished">Aug 30 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/08/30/web-front/">前端</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="-">模板</h2>
+<h3 id="html5-boilerplate">HTML5 Boilerplate</h3>
+<ul>
+<li><a href="https://github.com/h5bp/html5-boilerplate" target="_blank">h5bp/html5-boilerplate</a></li>
+<li><a href="http://html5boilerplate.com/" target="_blank">http://html5boilerplate.com/</a></li>
+</ul>
+<h2 id="-">布局</h2>
+<h3 id="card">Card</h3>
+<ul>
+<li><a href="http://css.dzone.com/articles/implementing-card-ui-pattern" target="_blank">Implementing the “Card” UI Pattern in PhoneGap/HTML5 Applications</a></li>
+<li><a href="https://github.com/triceam/cards-ui" target="_blank">triceam / cards-ui</a></li>
+</ul>
+<h2 id="-">移动开发框架</h2>
+<ul>
+<li><a href="http://www.gajotres.net/top-7-mobile-application-html5-frameworks/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=top-7-mobile-application-html5-frameworks" target="_blank">Top 7 Mobile application HTML5 frameworks</a></li>
+</ul>
+<h2 id="-">技巧</h2>
+<ul>
+<li><a href="http://webaim.org/techniques/skipnav/" target="_blank">Skip Navigation links</a></li>
+</ul>
+<h2 id="-">工具</h2>
+<ul>
+<li><a href="http://www.2fz1.com/?p=396" target="_blank">使用weinre远程调试手机网页</a></li>
+</ul>
+<h2 id="-">资源</h2>
+<ul>
+<li><a href="w3cfuns.com">w3cfuns</a></li>
+<li><a href="http://www.admin10000.com/?sp=14686" target="_blank">admin10000</a></li>
+</ul>
+
+        
+          <p class="article-more-link">
+            <a href="/2013/08/30/web-front/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2013/08/30/web-front/" data-id="2ojge6vsf04xrb5m" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webkit/">webkit</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/activex/">activex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/addon/">addon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bestpractice/">bestpractice</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c#/">c#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c++/">c++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/car/">car</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cef/">cef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/center/">center</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chart/">chart</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/">chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/class/">class</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cordova/">cordova</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data/">data</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/doc/">doc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entity/">entity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/extjs/">extjs</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/format/">format</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack/">hack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/i18n/">i18n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jni/">jni</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ndk/">ndk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/package/">package</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quickstart/">quickstart</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/report/">report</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/riding/">riding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/roo/">roo</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spel/">spel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stduy/">stduy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/template/">template</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tutorial/">tutorial</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/view/">view</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webkit/">webkit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webview/">webview</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weight/">weight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wire/">wire</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/activex/" style="font-size: 10.00px;">activex</a><a href="/tags/addon/" style="font-size: 10.00px;">addon</a><a href="/tags/android/" style="font-size: 16.67px;">android</a><a href="/tags/animation/" style="font-size: 10.00px;">animation</a><a href="/tags/bestpractice/" style="font-size: 10.00px;">bestpractice</a><a href="/tags/c#/" style="font-size: 10.00px;">c#</a><a href="/tags/c++/" style="font-size: 10.00px;">c++</a><a href="/tags/car/" style="font-size: 10.00px;">car</a><a href="/tags/cef/" style="font-size: 10.00px;">cef</a><a href="/tags/center/" style="font-size: 10.00px;">center</a><a href="/tags/chart/" style="font-size: 11.67px;">chart</a><a href="/tags/chrome/" style="font-size: 10.00px;">chrome</a><a href="/tags/class/" style="font-size: 10.00px;">class</a><a href="/tags/cmd/" style="font-size: 10.00px;">cmd</a><a href="/tags/cordova/" style="font-size: 10.00px;">cordova</a><a href="/tags/csharp/" style="font-size: 10.00px;">csharp</a><a href="/tags/css/" style="font-size: 10.00px;">css</a><a href="/tags/data/" style="font-size: 10.00px;">data</a><a href="/tags/database/" style="font-size: 10.00px;">database</a><a href="/tags/doc/" style="font-size: 10.00px;">doc</a><a href="/tags/entity/" style="font-size: 10.00px;">entity</a><a href="/tags/extjs/" style="font-size: 18.33px;">extjs</a><a href="/tags/format/" style="font-size: 10.00px;">format</a><a href="/tags/git/" style="font-size: 10.00px;">git</a><a href="/tags/github/" style="font-size: 10.00px;">github</a><a href="/tags/hack/" style="font-size: 15.00px;">hack</a><a href="/tags/i18n/" style="font-size: 10.00px;">i18n</a><a href="/tags/javascript/" style="font-size: 20.00px;">javascript</a><a href="/tags/jekyll/" style="font-size: 10.00px;">jekyll</a><a href="/tags/jni/" style="font-size: 10.00px;">jni</a><a href="/tags/js/" style="font-size: 10.00px;">js</a><a href="/tags/map/" style="font-size: 10.00px;">map</a><a href="/tags/markdown/" style="font-size: 11.67px;">markdown</a><a href="/tags/maven/" style="font-size: 10.00px;">maven</a><a href="/tags/ndk/" style="font-size: 10.00px;">ndk</a><a href="/tags/package/" style="font-size: 10.00px;">package</a><a href="/tags/qt/" style="font-size: 13.33px;">qt</a><a href="/tags/quickstart/" style="font-size: 10.00px;">quickstart</a><a href="/tags/report/" style="font-size: 10.00px;">report</a><a href="/tags/riding/" style="font-size: 10.00px;">riding</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02">February 2014</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01">January 2014</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12">December 2013</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09">September 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08">August 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07">July 2013</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">April 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/02/21/javascript-use-strict/">Javascript 严格模式详解</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/20/qt-cordova/">Qt Cordova</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/20/mooc/">JavaScript SetTimeout和SetInterval</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/19/pos-specification/">POS Specification</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/17/javascript-promise/">JavaScript Promise</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 Johnny Fee<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script type="text/javascript" src="/js/script.js"></script>
+  </div>
+</body>
+</html>

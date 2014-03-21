@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android绝招四——Android Preferences | 道法自然</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="og:type" content="blog">
+<meta name="og:title" content="Android绝招四——Android Preferences">
+<meta name="og:url" content="http://http://johnnyfee.github.io/blog-migrate//2014/01/01/android-hack4-preference/">
+<meta name="og:image" content="http://developer.android.com/images/ui/settings/settings-subscreen.png">
+<meta name="og:site_name" content="道法自然">
+<meta name="og:description" content="Preference
+官方描述：Represents the basic Preference UI building block displayed by a PreferenceActivity in the form of a ListView. This class provides the View to be displayed in the activity and associat">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="道法自然" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">道法自然</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Healthy, Happy, Peaceful</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://http://johnnyfee.github.io/blog-migrate/"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-android-hack4-preference" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/01/01/android-hack4-preference/" class="article-date">
+  <time datetime="2013-12-31T16:00:00.000Z" itemprop="datePublished">Jan 1 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android绝招四——Android Preferences
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="preference">Preference</h2>
+<p>官方描述：Represents the basic Preference UI building block displayed by a PreferenceActivity in the form of a ListView. This class provides the View to be displayed in the activity and associates with a SharedPreferences to store/retrieve the preference data.</p>
+<p>也就是说，Preferences为用于存储用户设置提供UI控件，而SharedPreferences用户持久化用户设置。</p>
+<p>Preferences的使用方法如下：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;PreferenceScreen xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+    &lt;CheckBoxPreference
+        android:key=&quot;pref_sync&quot;
+        android:title=&quot;@string/pref_sync&quot;
+        android:summary=&quot;@string/pref_sync_summ&quot;
+        android:defaultValue=&quot;true&quot; /&gt;
+    &lt;ListPreference
+        android:dependency=&quot;pref_sync&quot;
+        android:key=&quot;pref_syncConnectionType&quot;
+        android:title=&quot;@string/pref_syncConnectionType&quot;
+        android:dialogTitle=&quot;@string/pref_syncConnectionType&quot;
+        android:entries=&quot;@array/pref_syncConnectionTypes_entries&quot;
+        android:entryValues=&quot;@array/pref_syncConnectionTypes_values&quot;
+        android:defaultValue=&quot;@string/pref_syncConnectionTypes_default&quot; /&gt;
+&lt;/PreferenceScreen&gt;
+</code></pre><a id="more"></a>
+
+<p>A Preference object is the building block for a single setting. Each Preference appears as an item in a list and provides the appropriate UI for users to modify the setting. Each Preference you add has a corresponding key-value pair that the system uses to save the setting in a default SharedPreferences file for your app&#39;s settings. When the user changes a setting, the system updates the corresponding value in the SharedPreferences file for you. <strong>The only time you should directly interact with the associated SharedPreferences file is when you need to read the value in order to determine your app&#39;s behavior based on the user&#39;s setting.</strong> The value saved in SharedPreferences for each setting can be one of the following data types:</p>
+<ul>
+<li>Boolean</li>
+<li>Float</li>
+<li>Int</li>
+<li>Long</li>
+<li>String</li>
+<li>String Set</li>
+</ul>
+<p>You must save the XML file in the res/xml/ directory. Although you can name the file anything you want, it&#39;s traditionally named <strong>preferences.xml</strong>. You usually need only one file, because branches in the hierarchy (that open their own list of settings) are declared using nested instances of PreferenceScreen.</p>
+<h2 id="-preference">常用的Preference</h2>
+<h3 id="-preference">二选一类Preference</h3>
+<p>CheckBoxPreference和SwitchPreference提供二选一组件，用来存储一个boolean类型的值。</p>
+<ul>
+<li><a href="http://developer.android.com/reference/android/preference/CheckBoxPreference.html" target="_blank">CheckBoxPreference</a></li>
+<li><a href="http://developer.android.com/reference/android/preference/SwitchPreference.html" target="_blank">SwitchPreference</a></li>
+</ul>
+<h3 id="-preference">列表类Preference</h3>
+<p>ListPreference和MultiSelectListPrefe分别以Dialog的方式显示列表，ListPreference将存储一个String值，而MultiSelectListPrefe将存储一个String集合。也就是说ListPreference为列表单选，而MultiSelectListPrefe为列表多选。</p>
+<ul>
+<li><a href="http://developer.android.com/reference/android/preference/ListPreference.html" target="_blank">ListPreference</a> </li>
+<li><a href="http://developer.android.com/reference/android/preference/MultiSelectListPreference.html" target="_blank">MultiSelectListPrefe</a> A Preference that displays a list of entries as a dialog. This preference will store a set of strings into the SharedPreferences. </li>
+</ul>
+<h3 id="-preference">编辑类Preference</h3>
+<p>EditTextPreference是以Dialog的方式用于输入文本。</p>
+<ul>
+<li><a href="http://developer.android.com/reference/android/preference/EditTextPreference.html" target="_blank">EditTextPreference</a></li>
+</ul>
+<h3 id="-preference">容器类Preference</h3>
+<p>PreferenceScreen和PreferenceCategory可以理解为Preference容器。一次只能显示一个PreferenceScreen，当你有些Preference要在单独的Screen中显示时，需要将这些Preference放置到单独的PreferenceScreen，这样的PreferenceScreen称为subscreen。PreferenceCategory为Preference组件提供分组特性。</p>
+<p><strong>使用subscreen的效果：</strong></p>
+<p><img src="http://developer.android.com/images/ui/settings/settings-subscreen.png" alt="subscreen"></p>
+<p><strong>使用subscreen的例子：</strong></p>
+<pre><code>&lt;PreferenceScreen  xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+    &lt;!-- opens a subscreen of settings --&gt;
+    &lt;PreferenceScreen
+        android:key=&quot;button_voicemail_category_key&quot;
+        android:title=&quot;@string/voicemail&quot;
+        android:persistent=&quot;false&quot;&gt;
+        &lt;ListPreference
+            android:key=&quot;button_voicemail_provider_key&quot;
+            android:title=&quot;@string/voicemail_provider&quot; ... /&gt;
+        &lt;!-- opens another nested subscreen --&gt;
+        &lt;PreferenceScreen
+            android:key=&quot;button_voicemail_setting_key&quot;
+            android:title=&quot;@string/voicemail_settings&quot;
+            android:persistent=&quot;false&quot;&gt;
+            ...
+        &lt;/PreferenceScreen&gt;
+        &lt;RingtonePreference
+            android:key=&quot;button_voicemail_ringtone_key&quot;
+            android:title=&quot;@string/voicemail_ringtone_title&quot;
+            android:ringtoneType=&quot;notification&quot; ... /&gt;
+        ...
+    &lt;/PreferenceScreen&gt;
+    ...
+&lt;/PreferenceScreen&gt;
+</code></pre><p><strong>使用PreferenceCategory的例子：</strong></p>
+<pre><code>&lt;PreferenceScreen xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+    &lt;PreferenceCategory 
+        android:title=&quot;@string/pref_sms_storage_title&quot;
+        android:key=&quot;pref_key_storage_settings&quot;&gt;
+        &lt;CheckBoxPreference
+            android:key=&quot;pref_key_auto_delete&quot;
+            android:summary=&quot;@string/pref_summary_auto_delete&quot;
+            android:title=&quot;@string/pref_title_auto_delete&quot;
+            android:defaultValue=&quot;false&quot;... /&gt;
+        &lt;Preference 
+            android:key=&quot;pref_key_sms_delete_limit&quot;
+            android:dependency=&quot;pref_key_auto_delete&quot;
+            android:summary=&quot;@string/pref_summary_delete_limit&quot;
+            android:title=&quot;@string/pref_title_sms_delete&quot;... /&gt;
+        &lt;Preference 
+            android:key=&quot;pref_key_mms_delete_limit&quot;
+            android:dependency=&quot;pref_key_auto_delete&quot;
+            android:summary=&quot;@string/pref_summary_delete_limit&quot;
+            android:title=&quot;@string/pref_title_mms_delete&quot; ... /&gt;
+    &lt;/PreferenceCategory&gt;
+    ...
+&lt;/PreferenceScreen&gt;
+</code></pre><ul>
+<li><a href="http://developer.android.com/reference/android/preference/PreferenceScreen.html" target="_blank">PreferenceScreen</a></li>
+<li><a href="http://developer.android.com/reference/android/preference/PreferenceCategory.html" target="_blank">PreferenceCategory</a></li>
+</ul>
+<h3 id="intent-preference">Intent类的Preference</h3>
+<p>In some cases, you might want a preference item to open a different activity instead of a settings screen, such as a web browser to view a web page. To invoke an Intent when the user selects a preference item, add an <code>&lt;intent&gt;</code> element as a child of the corresponding <code>&lt;Preference&gt;</code> element.</p>
+<p>For example, here&#39;s how you can use a preference item to open a web page:</p>
+<pre><code>&lt;Preference android:title=&quot;@string/prefs_web_page&quot; &gt;
+    &lt;intent android:action=&quot;android.intent.action.VIEW&quot;
+            android:data=&quot;http://www.example.com&quot; /&gt;
+&lt;/Preference&gt;
+</code></pre><h3 id="-">其他</h3>
+<p>RingtonePreference是以Dialog的方式用于铃声选择。</p>
+<ul>
+<li><a href="http://developer.android.com/reference/android/preference/RingtonePreference.html" target="_blank">RingtonePreference</a></li>
+</ul>
+<p>其他子类请参考<a href="http://developer.android.com/reference/android/preference/Preference.html" target="_blank">Preference</a>。
+当现有的Preference无法满足需求时，可以<a href="http://developer.android.com/guide/topics/ui/settings.html#Custom" target="_blank">自定义Preference</a>。</p>
+<h2 id="preferences-">Preferences常用属性</h2>
+<ul>
+<li><p>android:key
+This attribute is required for preferences that persist a data value. It specifies the unique key (a string) the system uses when saving this setting&#39;s value in the SharedPreferences.
+The only instances in which this attribute is not required is when the preference is a PreferenceCategory or PreferenceScreen, or the preference specifies an Intent to invoke (with an <code>&lt;intent&gt;</code> element) or a Fragment to display (with an android:fragment attribute).</p>
+</li>
+<li><p>android:title</p>
+</li>
+<li>android:defaultValue</li>
+</ul>
+<h2 id="preferences-sharedpreferences-">Preferences的持久化(SharedPreferences)</h2>
+<p><a href="http://developer.android.com/reference/android/content/SharedPreferences.html" target="_blank">SharedPreferences</a> 通常作为Preferences的持久化方式，它以键值对的方式，存储在xml文件中，这些xml文件位于<code>/data/data/&lt;package name&gt;/shared_prefs</code> 目录下。</p>
+<p>Android中可通过以下三种方式获取SharedPreferences，分别对应着三种不同的作用范围。</p>
+<ul>
+<li><p>public SharedPreferences getPreferences(int mode)。该方法属于Activity，获取的是本Activity私有的Preferences，使用当前类不带包名的类名作为文件的名称，Activity最多对应一个这样的xml存储文件。如果一个Activity想访问另一个Activity的私有的Preferences，则可以</p>
+</li>
+<li><p>public SharedPreferences getSharedPreferences(String name, int mode)。该方法也可以在Activity中调用，从Activity的父类ContextWrapper继承。整个应用程序共享这些SharedPreferences，可以有多个，以第一参数的name为文件名保存在系统中。在一个Activity中，可以通过指定不同的name来读写不同的xml持久化文件。</p>
+</li>
+<li><p>public static SharedPreferences getDefaultSharedPreferences(Context context)。 PreferenceManager的静态函数，用于保存PreferenceActivity中的设置。一个应用程序只有一个，名字为<code>&lt;com.package.name&gt;_preferences.xml</code>。从PreferenceManager源码可得出此结论：</p>
+<p> public static SharedPreferences getDefaultSharedPreferences(Context context) {</p>
+<pre><code> return context.getSharedPreferences(getDefaultSharedPreferencesName(context),
+     getDefaultSharedPreferencesMode());
+</code></pre><p> }</p>
+<p> private static String getDefaultSharedPreferencesName(Context context) {</p>
+<pre><code> return context.getPackageName() + &quot;_preferences&quot;;
+</code></pre><p> }</p>
+<p> private static int getDefaultSharedPreferencesMode() {</p>
+<pre><code> return Context.MODE_PRIVATE;
+</code></pre><p> }</p>
+</li>
+</ul>
+<h3 id="-preferences">应用程序间共享Preferences</h3>
+<p>如果访问其他应用中的Preference，前提条件是：该preference创建时指定了Context.MODE_WORLD_READABLE或者Context.MODE_WORLD_WRITEABLE权限。如：有个<code>&lt;package name&gt;</code>为com.ljq.action的应用使用下面语句创建了preference。</p>
+<pre><code>getSharedPreferences(&quot;ljq&quot;, Context.MODE_WORLD_READABLE);
+</code></pre><p>其他应用要访问上面应用的preference，首先需要创建上面应用的Context，然后通过Context访问其Preference ，访问Preference时会在应用所在包下的shared_prefs目录找到preference ：</p>
+<pre><code>Context otherAppsContext = createPackageContext(&quot;com.ljq.action&quot;, Context.CONTEXT_IGNORE_SECURITY);
+SharedPreferences sharedPreferences = otherAppsContext.getSharedPreferences(&quot;ljq&quot;, Context.MODE_WORLD_READABLE);
+String name = sharedPreferences.getString(&quot;name&quot;, &quot;&quot;);
+int age = sharedPreferences.getInt(&quot;age&quot;, 0);
+</code></pre><p>如果不通过创建Context访问其他应用的preference，也可以以读取xml文件方式直接访问其他应用preference对应的xml文件，如：</p>
+<pre><code>File xmlFile = new File(&quot;/data/data/&lt;package name&gt;/shared_prefs/itcast.xml&quot;);//&lt;package name&gt;应替换成应用的包名
+</code></pre><p>参考 <a href="http://www.cnblogs.com/linjiqin/archive/2011/05/26/2059133.html" target="_blank">使用SharedPreferences进行数据存储</a></p>
+<h2 id="-preferences">在界面中显示Preferences</h2>
+<p>我们可以在Activity或者Fragment中显示Prefrences，并且当Preferences在界面上被用户改变时，更改将被自动持久化。在Android 3.0+我们使用PreferenceFragement来实现，在Android 3.0之前，我们使用PreferenceActivity来实现。不管是在PrererencesFragment中还是在PreferenceActivity，加载layout文件均不是使用setContent方法，而是使用addPreferencesFromResource加载一个xml资源文件。</p>
+<p>定义PreferenceActivity方法为：</p>
+<pre><code>public class SettingsActivity extends PreferenceActivity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.preferences);
+    }
+}
+</code></pre><p>定义PrererencesFragment方法为：</p>
+<pre><code>public static class SettingsFragment extends PreferenceFragment {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Load the preferences from an XML resource
+        addPreferencesFromResource(R.xml.preferences);
+    }
+    ...
+}
+</code></pre><p>You can then add this fragment to an Activity just as you would for any other Fragment. For example:</p>
+<pre><code>public class SettingsActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Display the fragment as the main content.
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new SettingsFragment())
+                .commit();
+    }
+}
+</code></pre><h3 id="-">设置默认值</h3>
+<p>为Preference设置默认值需要以下两步：</p>
+<ol>
+<li><p>在Preference的xml中通过android:defaultValue指定默认值，如：</p>
+<p> <!-- default value is a boolean --></p>
+<pre><code> &lt;CheckBoxPreference android:defaultValue=&quot;true&quot; 
+     ... /&gt;
+
+ &lt;!-- default value is a string --&gt;
+ &lt;ListPreference
+     android:defaultValue=&quot;@string/pref_syncConnectionTypes_default&quot;
+     ... /&gt;
+</code></pre></li>
+<li><p>在该Actvity(或者其他Activty)的onCreate方法中调用以下方法：</p>
+<p> PreferenceManager.setDefaultValues(this, R.xml.advanced_preferences, false); </p>
+</li>
+</ol>
+<p>第三个参数指定默认值是否可以设置多次。false表示默认值只被设置一次，多次调用该方法不会覆盖用户设置的值；true表示每次调用该API时，所有设置都将恢复为默认值。</p>
+<h3 id="-preference-headers">使用Preference Headers</h3>
+<p>通常，我们可能会这样设置设置界面，在第一个设置界面使用一个PreferenceScreen列出所有设置项，然后每个设置项对应一个subscreen。但在Android 3.0+，这种做法已经被淘汰，取而代之的是Preference Headers特性。这种方法的最大优势在于，在较大屏幕上点击一个设置项时，对应的设置界面将在第二个Panel上显示，也是就是使用two-pane展现方式。而在较小屏幕，则跟subscreen的展现效果类似。</p>
+<p><img src="http://developer.android.com/images/ui/settings/settings-headers-tablet.png" alt="settings-headers-tablet"></p>
+<p><img src="http://developer.android.com/images/ui/settings/settings-headers-handset.png" alt="settings-headers-handset    "></p>
+<p>实现方式参考 <a href="http://developer.android.com/guide/topics/ui/settings.html#PreferenceHeaders" target="_blank">Using Preference Headers</a>。</p>
+<h3 id="-">读取默认值</h3>
+<p>默认情况下PreferenceFragment和PreferenceActivity都将存储到DefaultSharedReference中，可以在任意地方通过静态方法<a href="http://developer.android.com/reference/android/preference/PreferenceManager.html#getDefaultSharedPreferences(android.content.Context" target="_blank">PreferenceManager.getDefaultSharedPreferences()</a>获取SharedReference实例，并读取其中的值。</p>
+<p>使用方法如下：</p>
+<pre><code>SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+String syncConnPref = sharedPref.getString(SettingsActivity.KEY_PREF_SYNC_CONN, &quot;&quot;);
+</code></pre><p>监听Preference的变化可参考 <a href="http://developer.android.com/guide/topics/ui/settings.html#ReadingPrefs" target="_blank">Reading Preferences</a>    </p>
+<h2 id="-">参考</h2>
+<ul>
+<li><a href="http://blog.csdn.net/ichliebephone/article/details/5916320" target="_blank">Android的设置界面及Preference使用</a></li>
+<li><a href="http://developer.android.com/guide/topics/ui/settings.html" target="_blank">Setting Doc</a></li>
+<li><a href="http://developer.android.com/design/patterns/settings.html" target="_blank">Settings Design</a></li>
+<li><a href="http://blog.csdn.net/kost_/article/details/13510369" target="_blank">Hack4-自定义PreferenceActivity界面</a></li>
+<li><a href="http://www.salttiger.com/50-android-hacks/" target="_blank">《[50.Android.Hacks(2013.6)].Carlos.Sessa.文字版》</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2014/01/01/android-hack4-preference/" data-id="k61ikmogtcxd6y4t" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hack/">hack</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/01/14/android-animation/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Android动画
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/01/01/android-hack3-custom-view-group/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android绝招三——自定义ViewGroup</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webkit/">webkit</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/activex/">activex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/addon/">addon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bestpractice/">bestpractice</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c#/">c#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c++/">c++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/car/">car</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cef/">cef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/center/">center</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chart/">chart</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/">chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/class/">class</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cordova/">cordova</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data/">data</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/doc/">doc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entity/">entity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/extjs/">extjs</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/format/">format</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack/">hack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/i18n/">i18n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jni/">jni</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ndk/">ndk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/package/">package</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quickstart/">quickstart</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/report/">report</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/riding/">riding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/roo/">roo</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spel/">spel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stduy/">stduy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/template/">template</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tutorial/">tutorial</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/view/">view</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webkit/">webkit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webview/">webview</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weight/">weight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wire/">wire</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/activex/" style="font-size: 10.00px;">activex</a><a href="/tags/addon/" style="font-size: 10.00px;">addon</a><a href="/tags/android/" style="font-size: 16.67px;">android</a><a href="/tags/animation/" style="font-size: 10.00px;">animation</a><a href="/tags/bestpractice/" style="font-size: 10.00px;">bestpractice</a><a href="/tags/c#/" style="font-size: 10.00px;">c#</a><a href="/tags/c++/" style="font-size: 10.00px;">c++</a><a href="/tags/car/" style="font-size: 10.00px;">car</a><a href="/tags/cef/" style="font-size: 10.00px;">cef</a><a href="/tags/center/" style="font-size: 10.00px;">center</a><a href="/tags/chart/" style="font-size: 11.67px;">chart</a><a href="/tags/chrome/" style="font-size: 10.00px;">chrome</a><a href="/tags/class/" style="font-size: 10.00px;">class</a><a href="/tags/cmd/" style="font-size: 10.00px;">cmd</a><a href="/tags/cordova/" style="font-size: 10.00px;">cordova</a><a href="/tags/csharp/" style="font-size: 10.00px;">csharp</a><a href="/tags/css/" style="font-size: 10.00px;">css</a><a href="/tags/data/" style="font-size: 10.00px;">data</a><a href="/tags/database/" style="font-size: 10.00px;">database</a><a href="/tags/doc/" style="font-size: 10.00px;">doc</a><a href="/tags/entity/" style="font-size: 10.00px;">entity</a><a href="/tags/extjs/" style="font-size: 18.33px;">extjs</a><a href="/tags/format/" style="font-size: 10.00px;">format</a><a href="/tags/git/" style="font-size: 10.00px;">git</a><a href="/tags/github/" style="font-size: 10.00px;">github</a><a href="/tags/hack/" style="font-size: 15.00px;">hack</a><a href="/tags/i18n/" style="font-size: 10.00px;">i18n</a><a href="/tags/javascript/" style="font-size: 20.00px;">javascript</a><a href="/tags/jekyll/" style="font-size: 10.00px;">jekyll</a><a href="/tags/jni/" style="font-size: 10.00px;">jni</a><a href="/tags/js/" style="font-size: 10.00px;">js</a><a href="/tags/map/" style="font-size: 10.00px;">map</a><a href="/tags/markdown/" style="font-size: 11.67px;">markdown</a><a href="/tags/maven/" style="font-size: 10.00px;">maven</a><a href="/tags/ndk/" style="font-size: 10.00px;">ndk</a><a href="/tags/package/" style="font-size: 10.00px;">package</a><a href="/tags/qt/" style="font-size: 13.33px;">qt</a><a href="/tags/quickstart/" style="font-size: 10.00px;">quickstart</a><a href="/tags/report/" style="font-size: 10.00px;">report</a><a href="/tags/riding/" style="font-size: 10.00px;">riding</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02">February 2014</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01">January 2014</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12">December 2013</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09">September 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08">August 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07">July 2013</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">April 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/02/21/javascript-use-strict/">Javascript 严格模式详解</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/20/qt-cordova/">Qt Cordova</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/20/mooc/">JavaScript SetTimeout和SetInterval</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/19/pos-specification/">POS Specification</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/17/javascript-promise/">JavaScript Promise</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 Johnny Fee<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script type="text/javascript" src="/js/script.js"></script>
+  </div>
+</body>
+</html>

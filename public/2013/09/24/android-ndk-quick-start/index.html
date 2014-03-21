@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android NDK Quick Start | 道法自然</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="og:type" content="blog">
+<meta name="og:title" content="Android NDK Quick Start">
+<meta name="og:url" content="http://http://johnnyfee.github.io/blog-migrate//2013/09/24/android-ndk-quick-start/">
+<meta name="og:image" content="/assets/images/ndk/h.png">
+<meta name="og:site_name" content="道法自然">
+<meta name="og:description" content="以下配置均在Windows8 x64系统下配置。
+搭建NDK环境
+
+下载并安装jdk
+下载ADT Bundle的最新版本http://developer.android.com/sdk/index.html
+下载NDK最新版本http://developer.android.com/tools/sdk/ndk/index.html
+配置ADT Bundle的ndk路径， Eclipse/Windo">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="道法自然" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">道法自然</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Healthy, Happy, Peaceful</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://http://johnnyfee.github.io/blog-migrate/"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-android-ndk-quick-start" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/09/24/android-ndk-quick-start/" class="article-date">
+  <time datetime="2013-09-23T16:00:00.000Z" itemprop="datePublished">Sep 24 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android NDK Quick Start
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>以下配置均在Windows8 x64系统下配置。</strong></p>
+<h3 id="-ndk-">搭建NDK环境</h3>
+<ul>
+<li>下载并安装jdk</li>
+<li>下载ADT Bundle的最新版本<a href="http://developer.android.com/sdk/index.html" target="_blank">http://developer.android.com/sdk/index.html</a></li>
+<li>下载NDK最新版本<a href="http://developer.android.com/tools/sdk/ndk/index.html" target="_blank">http://developer.android.com/tools/sdk/ndk/index.html</a></li>
+<li>配置ADT Bundle的ndk路径， Eclipse/Window/Preference/Android/NDK</li>
+<li>使用ndk提供的sample测试配置是否正确。</li>
+<li>设置NDK Location为ndk的解压路径，如C:/android-ndk-r8e。</li>
+</ul>
+<p><strong>注意</strong></p>
+<p>使用NDK 7以上不再需要安装cygwin，这可以节约你不少折腾的时间。</p>
+<p>运行hello-jni时，如果你发现在C/C++代码中下的断点无效，可能是因为GDB初始化的速度没赶上代码的执行速度，请在Android界面添加一个按钮来调用JNI代码。</p>
+<p>JDK、ADT Bundle、NDK的平台一定要一致，本人都是用x86版本，亲测可以单步调试C/C++代码。</p>
+<a id="more"></a>
+
+<h3 id="-h-">生成.h文件</h3>
+<p>根据native方法生成JNI对应的头文件，可以直接使用javah命令，也可以将改命令配置为Eclipse的外部工具，便于调用。</p>
+<p>对应的jdk命令：</p>
+<pre><code>javah -classpath bin/classes -jni com.example.hellojni.HelloJni
+</code></pre><p>配置Eclipse工具，javah来生成.h文件
+Open the Eclipse IDE, and choose <strong>Run --&gt; External Tools--&gt;External Tools Configurations</strong> from the top
+menu bar. Using the External Tools Configurations dialog, select Program, and then click the New
+launch configuration button. Using the Main tab, fill in the tool information as follows:</p>
+<ul>
+<li>Name: Generate C and C++ Header File</li>
+<li>Location: C:\Program Files (x86)\Java\jdk1.7.0_25\bin\javah.exe</li>
+<li>Working Directory: ${project_loc}/jni</li>
+<li>Arguments: -classpath &quot;${project_classpath};${env_var:ANDROID_SDK_HOME}/platforms/android-14/android.jar&quot; ${java_type_name}</li>
+</ul>
+<p>其中Location需要根据自己的jdk路径调整。</p>
+<p>Switch to the Refresh tab; put a checkmark next to the “Refresh resource upon completion” and
+select “The project containing the selected resource” from the list.</p>
+<p><img src="/assets/images/ndk/h.png" alt="javah"></p>
+<p>Switch to the Common tab, and put a checkmark next to the External Tools under the “Display in
+favorites menu” group.</p>
+<p><img src="/assets/images/ndk/extern-tools.png" alt="extern-tools"></p>
+<p>Click the OK button to save the external tool configuration. In order to test the new configuration,
+using the Project Explorer view, select the HelloJni class, then choose <strong>Run --&gt; External Tools--&gt;Generate C and C++ Header File</strong>. The javah tool will parse the selected class file for native
+methods, and it will generate a C/C++ header file called com_example_hellojni_HelloJni.h under
+the jni directory with the method descriptions.</p>
+<p>Now that you have automated the way to generate the native method declarations, let’s look into the
+generated method declarations more in detail.</p>
+<h3 id="-">生成方法签名</h3>
+<p>在C/C++中调用Java方法，需要知道Java方法或者属性的签名，我们可以使用javap命令方便地得到签名信息。为了方便调用javap命令，我同样提供讲javap配置为Eclipse的外部工具的方法。</p>
+<p>对应的jdk命令：</p>
+<pre><code>javap -classpath bin/classes -p -s com.example.hellojni.HelloJni
+</code></pre><p>Open the Eclipse IDE, and choose <strong>Run --&gt; External Tools Configurations</strong> from the top menu
+bar. Using the <strong>External Tool Configurations</strong> dialog, select Program, and then click the New launch
+configuration button. Using the Main tab, fill in the tool information as follows、:</p>
+<ul>
+<li>Name: Java Class File Disassembler</li>
+<li>Location:  C:\Program Files (x86)\Java\jdk1.7.0_25\bin\javap.exe</li>
+<li>Working Directory: ${project_loc}</li>
+<li>Arguments: -classpath &quot;${project_classpath};${env_var:ANDROID_SDK_HOME}/platforms/android-14/android.jar&quot; -p -s ${java_type_name}</li>
+</ul>
+<p>Click the OK button to save the external tool configuration. In order to test the new configuration, using
+the Project Explorer view, select the HelloJni class, then choose <strong>Run --&gt; External Tools --&gt; Java Class</strong>.</p>
+<p><img src="/assets/images/ndk/javap.png" alt="javah"></p>
+<h3 id="-">类型转换</h3>
+<p>JNI的基本类型可以直接当做Java对应的类型使用，可以通过Eclipse的F3(代码导航)看看JNI的基本类型对应的C/C++类型。JNI的引用类型通过需要通过JNI提供的特定方法转化之后才能被C/C++代码消费。</p>
+<h4 id="-">基本类型对应表</h4>
+<p>C++中直接可以使用JNI的基本类型，不需要将JNI类型转化为C++的类型。</p>
+<p><img src="/assets/images/ndk/basic-type.png" alt="基本类型"></p>
+<h4 id="-">引用类型</h4>
+<p>C++中直接不可以使用JNI的引用类型，需要将JNI类型转化为C++的相应类型后再使用。</p>
+<p><img src="/assets/images/ndk/object-type.png" alt="引用类型"></p>
+<h4 id="-">字符串</h4>
+<p>创建（C字符串转化为Java字符串）：</p>
+<pre><code>jstring javaString = pEnv-&gt;NewStringUTF(&quot;Hello World!&quot;);
+</code></pre><p>Java字符串转C字符串：</p>
+<pre><code>const char* str;
+str = pEnv-&gt;GetStringUTFChars(javaString, &amp;isCopy);
+</code></pre><p>释放内存</p>
+<pre><code>pEnv-&gt;ReleaseStringUTFChars(javaString, str);
+</code></pre><h4 id="-">数组</h4>
+<p>创建数组：</p>
+<pre><code>jintArray javaArray;
+javaArray = pEnv-&gt;NewIntArray(10);
+if (0 != javaArray) {
+/* You can now use the array. */
+}
+</code></pre><p>拷贝Java数组到C数组：</p>
+<pre><code>jint nativeArray[10];
+// 建议使用以下方法，无需涉及内存管理
+pEnv-&gt;GetIntArrayRegion(javaArray, 0, 10, nativeArray);
+</code></pre><p>拷贝C数组到Java数组：</p>
+<pre><code>pEnv-&gt;SetIntArrayRegion(javaArray, 0, 10, nativeArray);
+</code></pre><p>直接使用指针：</p>
+<pre><code>jint* nativeDirectArray;
+jboolean isCopy;
+nativeDirectArray = pEnv-&gt;GetIntArrayElements(javaArray, &amp;isCopy);
+// 使用该方法需要释放内存
+pEnv-&gt;ReleaseIntArrayElements(javaArray, nativeDirectArray, 0);
+</code></pre><p>将jbyteArray转化为<code>char*</code></p>
+<pre><code>// 转化为jbyte数组
+jsize length = pEnv-&gt;GetArrayLength(javaContent);
+jbyte* jniContent = pEnv-&gt;GetByteArrayElements(javaContent,
+        JNI_FALSE);
+
+// 将jbyte数组存储到本地数组
+char* nativeContent = new char[length + 1];
+
+memset(nativeContent, 0, length + 1);
+memcpy(nativeContent, jniContent, length);
+
+// 释放由GetByteArrayElements获取到的数组。
+pEnv-&gt;ReleaseByteArrayElements(javaContent, jniContent, 0);
+pEnv-&gt;DeleteLocalRef(src);
+</code></pre><p><code>nativeContent</code>为输出结果。        </p>
+<h3 id="c-java-">C++与Java互调</h3>
+<h4 id="java-ndk-">Java调用NDK步骤</h4>
+<ul>
+<li>在Java中编写native方法</li>
+<li>使用javah（参考“生成.h文件”）生成对应的C/C++头文件</li>
+<li>实现C/C++</li>
+<li>在需要调用native方法的类，load相应的so，使用System.loadLibrary(&quot;JniStudy&quot;);</li>
+</ul>
+<p>其中JniStudy为模块名，对应的文件为libs/assembly/libJniStudy.so</p>
+<h4 id="ndk-java">NDK调用Java</h4>
+<p>注意：以下方法均在.C中实现，如果在.CPP中，调用JNIEnv的方法为env-&gt;(args)。
+NDK的方法签名如：
+类的非静态方法对应的JNI形式如：</p>
+<pre><code>Java_com_landi_applib_jni_NativeLog_log(JNIEnv *jobject instance, args);
+</code></pre><p>类的静态方法对应的JNI形式如：</p>
+<pre><code>Java_com_landi_applib_jni_NativeLog_log(JNIEnv *jclass instance, args);
+</code></pre><p>其中env相当于虚拟机，每个线程拥有单独的env，线程间不能共享env。instance为Java对象，对于静态方法，该参数为jclass。</p>
+<p>对于静态方法对应的C/C++代码中不能调用JAVA端的任何非静态方法。<a href="http://stackoverflow.com/questions/6584269/android-ndk-problem-for-call-of-java-method-from-c-with-jni" target="_blank">Problem for call of Java method from c++ with jni</a></p>
+<h4 id="-">获取类的属性：</h4>
+<p>根据jobject获取jclass</p>
+<pre><code>jclass clazz;
+clazz = pEnv-&gt;GetObjectClass(instance);
+</code></pre><p>获取fieldId</p>
+<pre><code>jfieldID instanceFieldId;
+instanceFieldId = pEnv-&gt;GetFieldID(clazz,&quot;instanceField&quot;, &quot;Ljava/lang/String;&quot;);
+</code></pre><p>获取值</p>
+<pre><code>jstring instanceField;
+instanceField = pEnv-&gt;GetObjectField(instance, instanceFieldId);
+</code></pre><p>对于static域，使用GetStaticFieldID和GetStaticObjectField方法。</p>
+<h4 id="-">执行类的方法：</h4>
+<p>获取MethodId</p>
+<pre><code>jmethodID instanceMethodId;
+instanceMethodId = pEnv-&gt;GetMethodID(clazz,&quot;instanceMethod&quot;, &quot;()Ljava/lang/String;&quot;);
+</code></pre><p>执行方法：</p>
+<pre><code>jstring instanceMethodResult;
+instanceMethodResult = pEnv-&gt;CallStringMethod(env,instance, instanceMethodId);
+</code></pre><p>对于static方法，分别使用GetStaticMethodID和CallStaticStringMethod方法。</p>
+<p>参考：<a href="http://developer.51cto.com/art/201204/332810.htm" target="_blank">http://developer.51cto.com/art/201204/332810.htm</a></p>
+<h4 id="-">调用构造方法</h4>
+<pre><code>// 先获得class对象  
+jclass classMyCallback = env-&gt;FindClass(&quot;com/landi/jnistudy/MyCallback&quot;);
+
+// 调用默认构造函数  
+jobject obj =  env-&gt;AllocObject(classMyCallback);
+构造函数也是方法, 类似调用方法的方式.
+
+// 调用指定的构造函数, 构造函数的名字叫做&lt;init&gt;  
+mid = pEnv-&gt;GetMethodID(env, cls, &quot;&lt;init&gt;&quot;, &quot;()V&quot;);  
+obj = pEnv-&gt;NewObject(env, cls, mid);  
+</code></pre><p>来自 <a href="http://developer.51cto.com/art/201204/332810.htm" target="_blank">http://developer.51cto.com/art/201204/332810.htm</a> </p>
+<h3 id="-">全局变量</h3>
+<p>通常class信息，object变量，方法ID等获取之后通常要保存到全局变量中，可以通过以下方法创建全局变量，详情请参考<code>参考/最贱实践</code>。</p>
+<p>从一个local变量初始化全局变量</p>
+<pre><code>jclass localClazz;
+jclass globalClazz;
+...
+localClazz = pEnv-&gt;FindClass(&quot;java/lang/String&quot;);
+globalClazz = pEnv-&gt;NewGlobalRef(localClazz);
+</code></pre><p>删除全局变量</p>
+<pre><code>pEnv-&gt;DeleteLocalRef(localClazz);
+</code></pre><p>对于一些不再使用的局部变量，也可以显示调用<code>pEnv-&gt;DeleteLocalRef</code>来删除，以提高效率。</p>
+<h3 id="-">异常处理</h3>
+<h4 id="-">捕获异常</h4>
+<p>NDK调用Java方法，Java方法抛出异常时（此时Java VM挂起），使用ExceptionOccurred来检查是否有异常，处理完后调用ExceptionClear清除异常。</p>
+<pre><code>jthrowable ex;
+...
+pEnv-&gt;CallVoidMethod(instance, throwingMethodId);
+ex = pEnv-&gt;ExceptionOccurred(env);
+if (0 != ex) {
+    pEnv-&gt;ExceptionClear(env);
+    /* Exception handler. */
+}
+</code></pre><h4 id="-">抛出异常</h4>
+<p>As the code execution of native functions are not under the control of the virtual machine, throwing
+an exception does not stop the execution of the native function and transfer control to the exception
+handler.</p>
+<pre><code>jclass clazz;
+...
+clazz = pEnv-&gt;FindClass(&quot;java/lang/NullPointerException&quot;);
+if (0 ! = clazz) {
+pEnv-&gt;ThrowNew(clazz, &quot;Exception message.&quot;);
+// 是否会return，是否会抛到调用者的最外层
+}
+</code></pre><h3 id="-">线程</h3>
+<h4 id="-java">子线程中调用Java</h4>
+<p>在C++的字线程中需要调用Java相关的类、方法、属性，需要调用</p>
+<pre><code>JNIEnv *pEnv = NULL;
+int ret = pJvm-&gt;AttachCurrentThread(&amp;pNULL);
+if (ret != JNI_OK) {
+    return;
+}
+</code></pre><p>否则会崩溃。</p>
+<p>即使如此，也不能用获取的pEnv的FindClass来查找Java，需要将object保存到全局变量</p>
+<pre><code>gs_object=env-&gt;NewGlobalRef(obj)，
+</code></pre><p>然后通过</p>
+<pre><code>jclass cls = env-&gt;GetObjectClass(gs_object);
+</code></pre><p>来获取jclass信息，再调用java方法或属性。</p>
+<h4 id="-">创建子线程</h4>
+<pre><code>pthread_t pth;
+pthread_create(&amp;pth, NULL, startServer, NULL);
+pthread_join(pth, NULL);
+</code></pre><p>来自 <a href="http://stackoverflow.com/questions/8230361/jni-crashing-after-repeatedly-calling-a-method" target="_blank">http://stackoverflow.com/questions/8230361/jni-crashing-after-repeatedly-calling-a-method</a> </p>
+<h4 id="-c-">用C实现延时</h4>
+<pre><code>struct timespec delay;
+delay.tv_sec = 2;
+delay.tv_nsec = 0;
+pthread_delay_np( &amp;delay );
+</code></pre><p>来自 <a href="http://blog.csdn.net/sojohn/article/details/334719" target="_blank">http://blog.csdn.net/sojohn/article/details/334719</a> </p>
+<h3 id="-android-mk-">构建系统(Android.mk)</h3>
+<p>以下若无说明，都是修改Android.mk</p>
+<h4 id="-">预编译宏</h4>
+<pre><code>LOCAL_CFLAGS := -DUSE_FILE32API 
+LOCAL_EXPORT_CFLAGS := -DUSE_FILE32API
+</code></pre><p>To define additional options or flags in import modules that should be appended to clients options. For
+example, if a module A defines</p>
+<pre><code>LOCAL_EXPORT_LDLIBS := -llog
+</code></pre><p><strong>LOCAL_EXPORT_CFLAGS,LOCAL_EXPORT_CPPFLAGS,LOCAL_EXPORT_LDLIBS</strong></p>
+<p>because it needs an Android logging module, then a module B that depends on A will be automatically linked to –llog. LOCAL<em>EXPORT</em> variables are not used when compiling the module that exports them. If required, they also need to be specified in their LOCAL counterpart.</p>
+<p><strong>LOCAL_CFLAGS,LOCAL_CPPFLAGS,LOCAL_LDLIBS</strong></p>
+<p>To specify any options, flags, or macro definitions, forcompilation and linking. The first one works for bothC and C++, the second one is for C++ only, and the lastone is for the linker.</p>
+<h4 id="-">构建动态库</h4>
+<pre><code>LOCAL_PATH := $(call my-dir)
+include $(CLEAR_VARS)
+LOCAL_MODULE := avilib
+LOCAL_SRC_FILES := avilib.c platform_posix.c
+#放在最后一行
+include $(BUILD_SHARED_LIBRARY)
+</code></pre><p>在C++消费动态库</p>
+<pre><code>include $(CLEAR_VARS)
+LOCAL_MODULE := module
+LOCAL_SRC_FILES := module.c
+LOCAL_SHARED_LIBRARIES += avilib
+</code></pre><h4 id="-">构建静态库</h4>
+<p>将构建动态库中的最后一行修改为</p>
+<pre><code>include $(BUILD_STATIC_LIBRARY)
+</code></pre><p>在C++消费静态库</p>
+<pre><code>include $(CLEAR_VARS)
+LOCAL_MODULE := module
+LOCAL_SRC_FILES := module.c
+LOCAL_STATIC_LIBRARIES += avilib
+</code></pre><p>也可以通过</p>
+<pre><code>LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
+</code></pre><p>使用LOCAL_WHOLE_STATIC_LIBRARIES后，编译器会将静态库完整链接而不会进行删减优化。</p>
+<p>注：不可以直接在Android应用程序中使用静态库，需要编译到动态库中才能被Android应用程序消费。</p>
+<h4 id="-ndk-">在同一个NDK工程中构建多个动态库</h4>
+<pre><code>LOCAL_PATH := $(call my-dir)
+#
+# Module 1
+#
+include $(CLEAR_VARS)
+LOCAL_MODULE := module1
+LOCAL_SRC_FILES := module1.c
+CHAPTER 2: Exploring the Android NDK 55
+include $(BUILD_SHARED_LIBRARY)
+#
+# Module 2
+#
+include $(CLEAR_VARS)
+LOCAL_MODULE := module2
+LOCAL_SRC_FILES := module2.c
+include $(BUILD_SHARED_LIBRARY)
+</code></pre><h4 id="-mk-">添加子文件夹中所有的mk文件</h4>
+<pre><code>include $(call all-subdir-makefiles)
+
+来自 &lt;http://stackoverflow.com/questions/6942730/android-ndk-how-to-include-android-mk-into-another-android-mk&gt; 
+</code></pre><h4 id="-">使用预编译方法引用第三方库</h4>
+<pre><code>#------------------
+#预编译app-lib
+include $(CLEAR_VARS)
+LOCAL_MODULE := app-lib
+LOCAL_SRC_FILES := ../../../app-lib/src/app-lib/libs/armeabi/libapp-lib.so
+include $(PREBUILT_SHARED_LIBRARY)
+#------------------
+</code></pre><p>引用第三方库</p>
+<pre><code>LOCAL_SHARED_LIBRARIES += app-lib
+</code></pre><p>也可以通过LOCAL_LDFLAGS引用第三方库的方式导入预编译后的so。</p>
+<p>通过该方法导入的库如果不存在于Android系统中，则必须存在于<code>libs/armeabi/</code>目录下，且要在Java端通过loadLibrary加载该库。
+来自 <a href="http://www.kandroid.org/ndk/docs/IMPORT-MODULE.html" target="_blank">http://www.kandroid.org/ndk/docs/IMPORT-MODULE.html</a> </p>
+<h4 id="-local_ldflags-">通过LOCAL_LDFLAGS引用第三方库：</h4>
+<pre><code>LOCAL_LDFLAGS +=  -L$(LOCAL_PATH)/../../../../app-lib/src/app-lib/libs/$(TARGET_ARCH_ABI)/ -lapp-lib
+</code></pre><p>其中，-L指定动态库的路径，-l指定动态库的名称。通过该方法导入的库如果不存在于Android系统中，则必须存在于libs/armeabi/目录下，且要在Java端通过loadLibrary加载该库。</p>
+<h4 id="-ndk-">多个NDK工程共享模块</h4>
+<p>该种方式未经实践，仅供参考。</p>
+<p>共享库的Android.mk，假设位于<code>C:\android\shared-modules\transcode\avilib</code>.</p>
+<pre><code>LOCAL_PATH := $(call my-dir)
+#
+# 3rd party AVI library
+#
+include $(CLEAR_VARS)
+LOCAL_MODULE := avilib
+LOCAL_SRC_FILES := avilib.c platform_posix.c
+include $(BUILD_SHARED_LIBRARY)
+</code></pre><p>NDK工程的Android.mk，引用第三方库（未实现）
+可参考Link shared library under Android NDK
+    LOCAL_SHARED_LIBRARIES := avilib
+    include $(BUILD_SHARED_LIBRARY)</p>
+<pre><code>#位于最后一行
+$(call import-module,transcode/avilib)    
+</code></pre><p>The import-module function macro needs to first locate the shared module and then import it into the NDK project. By default, only the &lt; Android NDK&gt; sources directory is searched by the import-module function macro. In order to include the <code>c:\android\shared-modules</code> directory into the search, define a new environment variable called NDK_MODULE_PATH and set it to the root directory of shared modules, such as <code>c:\android\shared-modules</code>.</p>
+<p><strong>如添加工程中下的libjpeg库</strong>
+来自 <a href="http://www.cfanz.cn/?c=article&amp;a=read&amp;id=38462" target="_blank">http://www.cfanz.cn/?c=article&amp;a=read&amp;id=38462</a></p>
+<p>添加外部导入库目录 </p>
+<pre><code>$(call import-add-path,$(LOCAL_PATH)) 
+</code></pre><p>添加导入库（基于上一行添加的导入库目录） </p>
+<pre><code>$(call import-module,platform/third_party/android/prebuilt/libjpeg)
+</code></pre><h3 id="faq">FAQ</h3>
+<h4 id="-android-mk-">在Android.mk中输入变量</h4>
+<pre><code>$(warning $(LOCAL_PATH))
+</code></pre><h4 id="referencetable-overflow-">ReferenceTable overflow问题</h4>
+<p>对于频繁调用的方法，其中的一些局部变量需要及时释放，否会导致ReferenceTable overflow问题，如FindClass返回值，jbyteArray类型，通过NewString/NewStringUTF/NewObject/GetObjectField生成的变量。</p>
+<p>参考 <a href="http://bbs.csdn.net/topics/380134134?page=1#post-393496160" target="_blank">http://bbs.csdn.net/topics/380134134?page=1#post-393496160</a> </p>
+<h4 id="-">批量添加工程文件</h4>
+<p><a href="http://www.cfanz.cn/?c=article&amp;a=read&amp;id=38462" target="_blank">http://www.cfanz.cn/?c=article&amp;a=read&amp;id=38462</a></p>
+<h4 id="-stl">添加STL</h4>
+<p>在jni目录下添加Application.mk，并添加以下内容：</p>
+<pre><code>APP_STL := stlport_static
+APP_PLATFORM = android-10
+</code></pre><p>修改Android.mk</p>
+<pre><code>LOCAL_SHARED_LIBRARIES := libstlport
+</code></pre><h4 id="eclipse-">Eclipse的编译器问题</h4>
+<p>对于可以通过ndk-build命令编译成功，而Eclipse中报编译错误的原因为，Java对于C/C++的编译器存在问题，可以通过禁用Eclispe一个错误提示来解决。</p>
+<p><img src="/assets/images/ndk/eclipse.png" alt="Eclipse的编译器问题"></p>
+<p>将所有的勾去掉。</p>
+<h3 id="-">参考</h3>
+<ul>
+<li><a href="http://dl.dbank.com/c0z1lurn5u" target="_blank">Apress.Pro.Android.CPP.with.the.NDK.Dec.2012.pdf</a></li>
+<li><p><a href="http://www.salttiger.com/android-native-development-kit-cookbook/" target="_blank">Android Native Development Kit Cookbook</a></p>
+</li>
+<li><p>我的收藏 <a href="https://delicious.com/johnnyfee/ndk" target="_blank">https://delicious.com/johnnyfee/ndk</a></p>
+</li>
+<li>最佳实践 <a href="http://www.ibm.com/developerworks/cn/java/j-jni/" target="_blank">http://www.ibm.com/developerworks/cn/java/j-jni/</a></li>
+<li>系列教程 <a href="http://www.cnblogs.com/oxgen/tag/Android%20JNI/" target="_blank">http://www.cnblogs.com/oxgen/tag/Android%20JNI/</a></li>
+<li>NDK-Home <a href="http://www.kandroid.org/ndk/docs/IMPORT-MODULE.html" target="_blank">http://www.kandroid.org/ndk/docs/IMPORT-MODULE.html</a></li>
+<li><p>Oracle DOC <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html" target="_blank">http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html</a></p>
+</li>
+<li><p><a href="http://www.tudou.com/programs/view/edkMm1D6gjY/" target="_blank">NDK 视频教程</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2013/09/24/android-ndk-quick-start/" data-id="68ziubm5u6ueyh09" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jni/">jni</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ndk/">ndk</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/09/24/spring-roo-i18n/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spring Roo 国际化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/09/22/riding-leading/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">山地车领骑</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webkit/">webkit</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/activex/">activex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/addon/">addon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bestpractice/">bestpractice</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c#/">c#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c++/">c++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/car/">car</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cef/">cef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/center/">center</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chart/">chart</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/">chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/class/">class</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cordova/">cordova</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data/">data</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/doc/">doc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entity/">entity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/extjs/">extjs</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/format/">format</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack/">hack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/i18n/">i18n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jni/">jni</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ndk/">ndk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/package/">package</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quickstart/">quickstart</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/report/">report</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/riding/">riding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/roo/">roo</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spel/">spel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stduy/">stduy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/template/">template</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tutorial/">tutorial</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/view/">view</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webkit/">webkit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webview/">webview</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weight/">weight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wire/">wire</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/activex/" style="font-size: 10.00px;">activex</a><a href="/tags/addon/" style="font-size: 10.00px;">addon</a><a href="/tags/android/" style="font-size: 16.67px;">android</a><a href="/tags/animation/" style="font-size: 10.00px;">animation</a><a href="/tags/bestpractice/" style="font-size: 10.00px;">bestpractice</a><a href="/tags/c#/" style="font-size: 10.00px;">c#</a><a href="/tags/c++/" style="font-size: 10.00px;">c++</a><a href="/tags/car/" style="font-size: 10.00px;">car</a><a href="/tags/cef/" style="font-size: 10.00px;">cef</a><a href="/tags/center/" style="font-size: 10.00px;">center</a><a href="/tags/chart/" style="font-size: 11.67px;">chart</a><a href="/tags/chrome/" style="font-size: 10.00px;">chrome</a><a href="/tags/class/" style="font-size: 10.00px;">class</a><a href="/tags/cmd/" style="font-size: 10.00px;">cmd</a><a href="/tags/cordova/" style="font-size: 10.00px;">cordova</a><a href="/tags/csharp/" style="font-size: 10.00px;">csharp</a><a href="/tags/css/" style="font-size: 10.00px;">css</a><a href="/tags/data/" style="font-size: 10.00px;">data</a><a href="/tags/database/" style="font-size: 10.00px;">database</a><a href="/tags/doc/" style="font-size: 10.00px;">doc</a><a href="/tags/entity/" style="font-size: 10.00px;">entity</a><a href="/tags/extjs/" style="font-size: 18.33px;">extjs</a><a href="/tags/format/" style="font-size: 10.00px;">format</a><a href="/tags/git/" style="font-size: 10.00px;">git</a><a href="/tags/github/" style="font-size: 10.00px;">github</a><a href="/tags/hack/" style="font-size: 15.00px;">hack</a><a href="/tags/i18n/" style="font-size: 10.00px;">i18n</a><a href="/tags/javascript/" style="font-size: 20.00px;">javascript</a><a href="/tags/jekyll/" style="font-size: 10.00px;">jekyll</a><a href="/tags/jni/" style="font-size: 10.00px;">jni</a><a href="/tags/js/" style="font-size: 10.00px;">js</a><a href="/tags/map/" style="font-size: 10.00px;">map</a><a href="/tags/markdown/" style="font-size: 11.67px;">markdown</a><a href="/tags/maven/" style="font-size: 10.00px;">maven</a><a href="/tags/ndk/" style="font-size: 10.00px;">ndk</a><a href="/tags/package/" style="font-size: 10.00px;">package</a><a href="/tags/qt/" style="font-size: 13.33px;">qt</a><a href="/tags/quickstart/" style="font-size: 10.00px;">quickstart</a><a href="/tags/report/" style="font-size: 10.00px;">report</a><a href="/tags/riding/" style="font-size: 10.00px;">riding</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02">February 2014</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01">January 2014</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12">December 2013</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09">September 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08">August 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07">July 2013</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">April 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/02/21/javascript-use-strict/">Javascript 严格模式详解</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/20/qt-cordova/">Qt Cordova</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/20/mooc/">JavaScript SetTimeout和SetInterval</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/19/pos-specification/">POS Specification</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/17/javascript-promise/">JavaScript Promise</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 Johnny Fee<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script type="text/javascript" src="/js/script.js"></script>
+  </div>
+</body>
+</html>

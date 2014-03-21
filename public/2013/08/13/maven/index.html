@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Maven Tutorial | 道法自然</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="og:type" content="blog">
+<meta name="og:title" content="Maven Tutorial">
+<meta name="og:url" content="http://http://johnnyfee.github.io/blog-migrate//2013/08/13/maven/">
+<meta name="og:image">
+<meta name="og:site_name" content="道法自然">
+<meta name="og:description" content="安装
+下载Maven
+设置环境变量
+
+M2_HOME=maven根目录
+添加Path %M2_HOME%\bin
+可以添加MAVEN_OPTS=-Xms128m -Xmx512m设置JDK内存使用情况
+将%MAVEN_HOME%/conf/settings.xml拷贝到%USERPROFILE%/.m2下，并定期备份，以便升级和重装时不会覆盖配置
+
+安装m2eclipse插件
+
+配置Eclipse">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="道法自然" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">道法自然</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Healthy, Happy, Peaceful</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://http://johnnyfee.github.io/blog-migrate/"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-maven" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/08/13/maven/" class="article-date">
+  <time datetime="2013-08-12T16:00:00.000Z" itemprop="datePublished">Aug 13 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/maven/">maven</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Maven Tutorial
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="-">安装</h2>
+<p><a href="http://maven.apache.org/download.cgi" target="_blank">下载Maven</a></p>
+<p><strong>设置环境变量</strong></p>
+<ul>
+<li>M2_HOME=maven根目录</li>
+<li>添加Path %M2_HOME%\bin</li>
+<li>可以添加MAVEN_OPTS=-Xms128m -Xmx512m设置JDK内存使用情况</li>
+<li>将%MAVEN_HOME%/conf/settings.xml拷贝到%USERPROFILE%/.m2下，并定期备份，以便升级和重装时不会覆盖配置</li>
+</ul>
+<p><strong>安装m2eclipse插件</strong></p>
+<ul>
+<li>配置Eclipse使用指定版本的Maven Windows/Preferences/Installations/选择External...</li>
+<li>通过Eclipse Supermarket安装
+<a href="http://m2eclipse.sonatype.org/sites/m2e" target="_blank">官方网站</a>|
+<a href="http://m2eclipse.sonatype.org/sites/m2e-extras" target="_blank">其他相关插件site</a></li>
+</ul>
+<p><strong>创建Maven工程</strong>
+:    根据对Maven源码结构的分析，一个项目通常包括N+1个Maven工程。其中N为模块个数，每个工程的名字为模块名，命名规则为项目名-模块名，如maven-core；1为聚合工程，即父工程，通常为项目的名称如maven。</p>
+<a id="more"></a>
+
+<h2 id="maven">Maven</h2>
+<h3 id="maven-">Maven常用指令(在项目根目录下执行)</h3>
+<ul>
+<li>clean 清除编译的内容，删除target文件夹。</li>
+<li>compile 编译源码，不包括测试代码</li>
+<li>package 根据打包类型打包</li>
+<li>install 将项目输出如jar安装到本地仓库</li>
+<li>archetype:generate 选择骨架类型，从而声称相应的骨架。</li>
+</ul>
+<p>坐标
+:    </p>
+<ul>
+<li>groupId：项目名称，如com.nexus</li>
+<li>artifactId：项目模块名称，如nenux-indexer，命名规则通常是“项目名-模块名”</li>
+<li>version：版本，如2.0.0、SNAPSHOT</li>
+<li>packaging：打包方式，如jar、war，默认为jar</li>
+<li>classfier：附属构建，不能直接定义</li>
+</ul>
+<h2 id="-">依赖</h2>
+<p>依赖范围
+:    compile/编译、测试、运行均有效（默认），test/编译、测试，runtime/测试、运行，provided/编译、测试，system/同provided（不使用），import/合并依赖构建的dependencyManage。</p>
+<p>传递性
+:    P56。可选依赖（<code>&lt;optional&gt;true &lt;optional/&gt;</code>）都不会被传递，需要在POM中声明，用于解决类型针对同一项目中可选依赖不同驱动的问题。</p>
+<p>依赖调解
+:    路径最短优先、路径相同时，使用第一声明者优先。</p>
+<p>排除依赖
+:    排除某个被传递进来的依赖，用于修改传递依赖的版本，与法见P69。</p>
+<p>归类依赖
+:    使用properties声明版本变量，在同一个项目的不同模块中引用相同的版本，用于依赖类型spring的各个模块（通常模块的版本时相同的），P70代码清单5-12。</p>
+<p>优化依赖
+:    dependency:list/查看依赖列表；dependency:tree/查看依赖树形结构；dependency:analyze/分析依赖，可以根据结果进行优化。</p>
+<h2 id="-">仓库</h2>
+<p>本地仓库
+:    默认路径为%userprofile%/.m2/repository。可以通过修改.m2/settings.xml来更改路径，修改<code>&lt;localRepositoty&gt;</code>的值。当依赖某个构件时，先从本地仓库查找，如未找到，再从远程仓库查找。</p>
+<p>远处仓库
+:    包括私服、中央仓库等。中央仓库的默认地址为<a href="http://repo1.maven.org/maven2。配置远程仓库见P82，代码6-2。" target="_blank">http://repo1.maven.org/maven2。配置远程仓库见P82，代码6-2。</a></p>
+<p>镜像
+:    可以用于私服配置，用私服仓库作为所有远程仓库的镜像，开发人员只需配置私服仓库即可。配置如P39 6-8。
+搜索：<a href="https://repository.sonatype.org" target="_blank">https://repository.sonatype.org</a></p>
+<p><strong>推荐使用镜像：</strong></p>
+<pre><code>  &lt;mirror&gt;
+  &lt;id&gt;ibiblio&lt;/id&gt;
+  &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;
+  &lt;name&gt;ibiblio&lt;/name&gt;
+  &lt;url&gt;http://mirrors.ibiblio.org/maven2/&lt;/url&gt;
+&lt;/mirror&gt;
+</code></pre><h2 id="-">生命周期</h2>
+<p>clean
+:    pre-clean、clean、post-clean</p>
+<p>default
+:    validate、generate-sources、compile、test-compile、package、install、deploy</p>
+<p>site
+:    pre-ste、site（生成项目文档）、post-site、site-deploy（讲生成的项目站点发布到服务器上）
+用命令行执行时，会执行所在生命周期上的对应阶段之前的所有阶段。如mvn clean deploy会执行clean生命周期的pre-clean、clean，和default阶段的所有阶段。</p>
+<h2 id="-">插件</h2>
+<p>开启对Java5的支持（使用Java5编译、编译成Java5的目标代码）</p>
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-compile-plugin&lt;/artifactId&gt;
+    &lt;configuration&gt;
+        &lt;srouce&gt;1.5&lt;/srouce&gt;
+        &lt;target&gt;1.5&lt;/target&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</code></pre><p>可以项目级别pom.xml和全局设置settings.xml。</p>
+<ul>
+<li>配置可运行的jar，P35。</li>
+<li>配置生成源码插件目标绑定P102 7-3。</li>
+<li>搜索网址：
+  <a href="http://maven.apache.org/plugins/index.html" target="_blank">http://maven.apache.org/plugins/index.html</a>
+  <a href="http://mojo.codehaus.org/plugins.html" target="_blank">http://mojo.codehaus.org/plugins.html</a></li>
+</ul>
+<p>mvn help
+:    mvn help –Dplugin=compile/获取插件的帮助
+    mvn –h查看mvn命令格式</p>
+<p>聚合和继承
+:    子模块可以继承父模块（项目）中的pom配置，通常子项目中不再显示声明groupId和version，从父模块中继承，而只需要显示声明子模块的artifactId。 在子模块中声明父模块的代码如下：</p>
+<pre><code>&lt;parent&gt;
+  &lt;groupId&gt;org.apache.maven&lt;/groupId&gt;
+  &lt;artifactId&gt;maven&lt;/artifactId&gt;
+  &lt;version&gt;3.1-SNAPSHOT&lt;/version&gt;
+&lt;/parent&gt;
+</code></pre><p>其中省略了<code>&lt;relativePath&gt;</code>，其默认值../pom.xml，如果在上级目录中没有父模块的pom，则需要通过<code>&lt;relativePath&gt;</code>声明pom的相对路径。</p>
+<p>聚合
+:    将各个模块聚合起来，如</p>
+<pre><code>&lt;modules&gt;
+&lt;module&gt;architect-core&lt;/module&gt;
+&lt;/modules&gt;
+</code></pre><p>父模块的packaging类型必须是pom。modules包括所有的子模块和父模块（N +1）。
+注：修改模块的打包类型之后，需要更新项目的配置，右击项目/Maven/Update Project Configuration。</p>
+<p>继承
+:    继承父模块中的pom配置。
+通常通过<code>&lt;dependencyManagement&gt;</code>在父模块中声明依赖，该依赖声明不会引入实际的依赖，这样可以避免每个子模块加载不必要的依赖。当子模块需要使用父模块中声明的依赖时，只需要在子模块的dependenty中通过groupId和artifactId来声明，其他属性可以从父模块的配置中继承。</p>
+<p>可以在父模块中声明pluginManagement申明插件，原理同依赖。</p>
+<p>反应堆
+:    模块的总和，即moduels中的内容。构建时，默认情况下打包所有的子模块。可以通过命令：</p>
+<pre><code>mvn clean install –pl account–email, account-persist来指定构建的模块
+mvn clean install –pl account-email –am 构建指定模块所依赖的模块（account-parent）
+mvn clean install –pl account-parent –amd 构建依赖指定模块的所有模块（account-email等）
+
+其他裁剪请参考P146。
+</code></pre><h2 id="-">私服</h2>
+<p>作为企业的仓库服务器，可以减少客户端配置，加快访问速度等。
+Apache的Archiva，JFrog的Artifactory和Sonatype的Nexus。</p>
+<h3 id="-">安装</h3>
+<p><strong>下载</strong>
+<a href="http://www.sonatype.org/nexus/" target="_blank">http://www.sonatype.org/nexus/</a>
+    </p>
+<h3 id="-">常用命令：</h3>
+<ul>
+<li>从命令行启动/nexus console</li>
+<li>安装服务/nexus install</li>
+<li>启动服务/nexus start </li>
+<li>重启服务/nexus restart</li>
+<li>停止服务/nexus stop</li>
+</ul>
+<p>访问站点<a href="http://localhost:8081/nexus/index.html#welcome" target="_blank">http://localhost:8081/nexus/index.html#welcome</a>
+超级管理员：admin/admin123</p>
+<h3 id="-">仓库</h3>
+<p>代理仓库（proxy）
+:    如Central、Google Code、Codehaus等</p>
+<p>宿主（hosted）
+:    用来存放公司安装的构建，供其他项目使用。分为Release版和Snapshorts两个仓库，分别用于存放发布版本和快照版本。</p>
+<p>第三方仓库（3rd party）
+:    用来存放如Oracle Jdbc在仓库中找不到，需要从第三方公司下载的构建。</p>
+<p>仓库组
+:    可用仓库的有序组合，查找构建时按照顺序查找。</p>
+<p>配置文件中repository和pluginrepository的区别：</p>
+<blockquote>
+<p>Technical no. It&#39;s for having different configurations->behavior for plugins in contrary to normal artifacts. For example you want to use different update policy or you want no SNAPSHOT plugins.</p>
+</blockquote>
+<p>参考<a href="http://stackoverflow.com/questions/12044909/maven-terms-dependency-and-plugin-repository-vs-pluginrepository/12045065#12045065" target="_blank">Maven terms — dependency and plugin, repository vs. pluginRepository</a></p>
+<h3 id="-">索引</h3>
+<p>需要下载远程仓库的索引才能执行搜索。下载索引需要一定的时间，可以在“Scheduled Tasks”中查看当前任务的状态。</p>
+<h3 id="-">使用私服</h3>
+<p>    在settings.xml中配置添“私服”为远程服务器，使用<code>&lt;profile&gt;</code>， 并且设置仓库的id为central，覆盖超类的仓库id，使“私服”成为构建下载的唯一服务器。</p>
+<pre><code>&lt;repository&gt;
+    &lt;id&gt;central&lt;/id&gt;
+    &lt;name&gt;Nexus&lt;/name&gt;
+    &lt;url&gt;http://localhost:8081/nexus/content/groups/public/&lt;/url&gt;
+    &lt;release&gt;
+        &lt;enable&gt;true&lt;/enable&gt;
+    &lt;/release&gt;
+    &lt;snapshots&gt;
+        &lt;enable&gt;true&lt;/enable&gt;
+    &lt;/snapshots&gt;
+&lt;/repository&gt;
+</code></pre><p>其中url的地址无所谓，因为下一步会将所有的仓库转为nuxus私服代理。插件的配置与此类似。</p>
+<p>为所有仓库添加镜像，镜像地址为nexus public仓库地址，使对所有仓库的请求都转为对nexus私服的请求。</p>
+<pre><code>&lt;mirror&gt;
+&lt;id&gt;nexus&lt;/id&gt;
+&lt;mirrorOf&gt;*&lt;/mirrorOf&gt;
+&lt;url&gt;http://localhost:8081/nexus/content/groups/public/&lt;/url&gt;
+&lt;/mirror&gt;
+</code></pre><p><strong>发布</strong>
+在POM中配置发布仓库</p>
+<pre><code>&lt;distributionManagement&gt;
+    &lt;repository&gt;
+        &lt;id&gt;nexus-releases&lt;/id&gt;
+        &lt;name&gt;Nexus Releases Repository&lt;/name&gt;
+        &lt;url&gt;http://localhost:8081/nexus/content/repositories/releases/&lt;/url&gt;
+    &lt;/repository&gt;
+    &lt;snapshotRepository&gt;
+        &lt;id&gt;nexus-snapshots&lt;/id&gt;
+        &lt;name&gt;Nexus Releases Repository&lt;/name&gt;
+        &lt;url&gt;http://localhost:8081/nexus/content/repositories/snapshots/&lt;/url&gt;
+    &lt;/snapshotRepository&gt;
+&lt;/distributionManagement&gt;
+</code></pre><p>在settings.xml中配置验证信息</p>
+<pre><code>&lt;servers&gt;
+    &lt;server&gt;
+        &lt;id&gt;nexus-releases&lt;/id&gt;
+        &lt;username&gt;admin&lt;/username&gt;
+        &lt;password&gt;admin123&lt;/password&gt;
+    &lt;/server&gt;
+    &lt;server&gt;
+        &lt;id&gt;nexus-snapshots&lt;/id&gt;
+        &lt;username&gt;admin&lt;/username&gt;
+        &lt;password&gt;123&lt;/password&gt;
+    &lt;/server&gt;
+&lt;/servers&gt;
+</code></pre><p>如果是快照版本，需要在版本后加上-SNAPSHOT，发布时会自动发布到nexussnapshorts仓库。
+可以访问<a href="http://localhost:8081/nexus/content/repositories/releases/查看发布版本；http://localhost:8081/nexus/content/repositories/snapshots/查看快照版本；也可以从http://localhost:8081/nexus/index.html查看相关仓库中的发布。" target="_blank">http://localhost:8081/nexus/content/repositories/releases/查看发布版本；http://localhost:8081/nexus/content/repositories/snapshots/查看快照版本；也可以从http://localhost:8081/nexus/index.html查看相关仓库中的发布。</a></p>
+<h3 id="-">权限控制</h3>
+<p>默认用户admin/admin123、deployment/deployment123、anonymous
+为项目创建仓库<code>Repositories/Add</code>
+<code>&lt;TODO&gt;</code> 图片
+其中，repositoryId的命名规则和Maven项目的命名规则一样，单词全部小些，用-分隔，设置Repository Name，设置Deployment Policy为Allow Redeploy，选择Repository Type（Releases或者Snapshorts），其他使用默认。</p>
+<p><strong>创建权限（增删改查）</strong>
+Privilege/Ad/输入Name、Description、选择Repository、选择Repository Target（Maven2），保存后即生成相关项目（S960 Releases）的增删改查权限。
+    添加角色
+Role/Add</p>
+<p><strong>将权限分配给相关用户</strong></p>
+<h3 id="-">调度任务</h3>
+<p>Administration/Scheduled Tasks，各调度任务的说明见P170。</p>
+<h2 id="-">测试</h2>
+<h3 id="-">常用命令</h3>
+<pre><code>mvn packae –DskipTests/跳过测试
+mvn package –Dmaven.test.skip=true/跳过本次测试的编译和运行
+mvn test –Dtest = RandomGenratorTest/只有RandomGeneratorTest被执行，可以通过“,”指定多个类，也可以使用通配符*。
+</code></pre><h3 id="-">重用测试代码</h3>
+<p>有时需要将测试代码工具包打包，在不同项目的测试工程中引用，并且不被主工程引用。
+配置test-jar目标：</p>
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;
+    &lt;version&gt;2.2&lt;/version&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;test-jar&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+&lt;/plugin&gt;
+</code></pre><p>配置后打包时，会生成两个构建，一个普通构建，一个以tests结尾的构建。
+依赖测试包构建，跟以来普通构建一样，只是type需要设置成test-jar，scope设置为test。</p>
+<h3 id="-">过滤测试类</h3>
+<p>可以通过配置org.apache.maven.plugins：maven-surefire-plugin的includes和excludes属性来包含和排除测试类。</p>
+<h3 id="-">测试报告</h3>
+<p>运行测试之后再target/surefire-reports中查看测试报告，测试报告提供两种形式，简单文本格式和JUnit兼容的XML格式，可以使用JUnit视图打开改XML。</p>
+<h3 id="-">测试覆盖率</h3>
+<pre><code>mvn cobertura:cobertura
+</code></pre><p>在target/site/cobertura目录下查看报告。</p>
+<h2 id="-">持续集成</h2>
+<h3 id="-">安装</h3>
+<p>官网：<a href="http://hudson-ci.org/" target="_blank">http://hudson-ci.org/</a>
+下载地址：<a href="http://eclipse.org/downloads/download.php?file=/hudson/war/hudson-3.0.0.war" target="_blank">http://eclipse.org/downloads/download.php?file=/hudson/war/hudson-3.0.0.war</a></p>
+<p><strong>运行</strong>
+    java -jar hudson-3.0.0.war [--httpPort=8082]
+<br>访问网址<a href="http://localhost:8080/" target="_blank">http://localhost:8080/</a></p>
+<p>首次运行需要选择更新和插件/安装。
+配置JDK和Maven路径，一般不采用自动安装。</p>
+<h3 id="-">资源</h3>
+<p><a href="http://www.eclipse.org/hudson/the-hudson-book/book-hudson.pdf" target="_blank">http://www.eclipse.org/hudson/the-hudson-book/book-hudson.pdf</a></p>
+<p>注：本文章中的引用页数指的均为《Maven实战-许晓斌》一书。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2013/08/13/maven/" data-id="t9e6busln8wcgv6b" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/maven/">maven</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/08/21/git-experience/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Git Experience
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/08/07/githubjekyll/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">基于GitHub搭建jekyll博客</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webkit/">webkit</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/activex/">activex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/addon/">addon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bestpractice/">bestpractice</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c#/">c#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c++/">c++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/car/">car</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cef/">cef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/center/">center</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chart/">chart</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/">chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/class/">class</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cordova/">cordova</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data/">data</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/doc/">doc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entity/">entity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/extjs/">extjs</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/format/">format</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack/">hack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/i18n/">i18n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jni/">jni</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ndk/">ndk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/package/">package</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quickstart/">quickstart</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/report/">report</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/riding/">riding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/roo/">roo</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spel/">spel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stduy/">stduy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/template/">template</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tutorial/">tutorial</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/view/">view</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webkit/">webkit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webview/">webview</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weight/">weight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wire/">wire</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/activex/" style="font-size: 10.00px;">activex</a><a href="/tags/addon/" style="font-size: 10.00px;">addon</a><a href="/tags/android/" style="font-size: 16.67px;">android</a><a href="/tags/animation/" style="font-size: 10.00px;">animation</a><a href="/tags/bestpractice/" style="font-size: 10.00px;">bestpractice</a><a href="/tags/c#/" style="font-size: 10.00px;">c#</a><a href="/tags/c++/" style="font-size: 10.00px;">c++</a><a href="/tags/car/" style="font-size: 10.00px;">car</a><a href="/tags/cef/" style="font-size: 10.00px;">cef</a><a href="/tags/center/" style="font-size: 10.00px;">center</a><a href="/tags/chart/" style="font-size: 11.67px;">chart</a><a href="/tags/chrome/" style="font-size: 10.00px;">chrome</a><a href="/tags/class/" style="font-size: 10.00px;">class</a><a href="/tags/cmd/" style="font-size: 10.00px;">cmd</a><a href="/tags/cordova/" style="font-size: 10.00px;">cordova</a><a href="/tags/csharp/" style="font-size: 10.00px;">csharp</a><a href="/tags/css/" style="font-size: 10.00px;">css</a><a href="/tags/data/" style="font-size: 10.00px;">data</a><a href="/tags/database/" style="font-size: 10.00px;">database</a><a href="/tags/doc/" style="font-size: 10.00px;">doc</a><a href="/tags/entity/" style="font-size: 10.00px;">entity</a><a href="/tags/extjs/" style="font-size: 18.33px;">extjs</a><a href="/tags/format/" style="font-size: 10.00px;">format</a><a href="/tags/git/" style="font-size: 10.00px;">git</a><a href="/tags/github/" style="font-size: 10.00px;">github</a><a href="/tags/hack/" style="font-size: 15.00px;">hack</a><a href="/tags/i18n/" style="font-size: 10.00px;">i18n</a><a href="/tags/javascript/" style="font-size: 20.00px;">javascript</a><a href="/tags/jekyll/" style="font-size: 10.00px;">jekyll</a><a href="/tags/jni/" style="font-size: 10.00px;">jni</a><a href="/tags/js/" style="font-size: 10.00px;">js</a><a href="/tags/map/" style="font-size: 10.00px;">map</a><a href="/tags/markdown/" style="font-size: 11.67px;">markdown</a><a href="/tags/maven/" style="font-size: 10.00px;">maven</a><a href="/tags/ndk/" style="font-size: 10.00px;">ndk</a><a href="/tags/package/" style="font-size: 10.00px;">package</a><a href="/tags/qt/" style="font-size: 13.33px;">qt</a><a href="/tags/quickstart/" style="font-size: 10.00px;">quickstart</a><a href="/tags/report/" style="font-size: 10.00px;">report</a><a href="/tags/riding/" style="font-size: 10.00px;">riding</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02">February 2014</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01">January 2014</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12">December 2013</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09">September 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08">August 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07">July 2013</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">April 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/02/21/javascript-use-strict/">Javascript 严格模式详解</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/20/qt-cordova/">Qt Cordova</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/20/mooc/">JavaScript SetTimeout和SetInterval</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/19/pos-specification/">POS Specification</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/17/javascript-promise/">JavaScript Promise</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 Johnny Fee<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script type="text/javascript" src="/js/script.js"></script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ExtJS MVC | 道法自然</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="og:type" content="blog">
+<meta name="og:title" content="ExtJS MVC">
+<meta name="og:url" content="http://http://johnnyfee.github.io/blog-migrate//2013/07/21/extjs-mvc/">
+<meta name="og:image" content="http://docs.sencha.com/extjs/4.2.1/guides/data/data-package.png">
+<meta name="og:site_name" content="道法自然">
+<meta name="og:description" content="MVC架构
+
+MVC Architecture
+
+概念
+Model：定义模型的域、数据、持久化
+View：视图组件
+Controller：逻辑代码，包括显示组件、初始化模型、以及业务逻辑。
+Data Package
+
+    
+
+工程文件结构
+
+配置
+Application中stores，views，models，controllers配置，相关文件会被加载，并且初始化store和controll">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="道法自然" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">道法自然</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Healthy, Happy, Peaceful</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://http://johnnyfee.github.io/blog-migrate/"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-extjs-mvc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/07/21/extjs-mvc/" class="article-date">
+  <time datetime="2013-07-20T16:00:00.000Z" itemprop="datePublished">Jul 21 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/extjs/">extjs</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ExtJS MVC
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="mvc-">MVC架构</h2>
+<ul>
+<li><a href="http://docs.sencha.com/extjs/4.2.1/#!/guide/application_architecture" target="_blank">MVC Architecture</a></li>
+</ul>
+<h3 id="-">概念</h3>
+<p>Model：定义模型的域、数据、持久化
+View：视图组件
+Controller：逻辑代码，包括显示组件、初始化模型、以及业务逻辑。</p>
+<h3 id="data-package">Data Package</h3>
+<p><img src="http://docs.sencha.com/extjs/4.2.1/guides/data/data-package.png" alt="Data Package In ExtJS4"></p>
+<a id="more"></a>    
+
+<h3 id="-">工程文件结构</h3>
+<p><img src="http://docs.sencha.com/extjs/4.2.1/guides/application_architecture/folderStructure.png" alt="文件结构"></p>
+<h3 id="-">配置</h3>
+<p>Application中stores，views，models，controllers配置，相关文件会被加载，并且初始化store和controllers实例(并且调用controller的init方法，以完成事件的绑定等操作)。之后便可以使用getXXXStore和getXXXController()返回相应的实例；调用models和views相关的get方法，则只返回class。Store和Controller如果不被创建新实例，则它们为单实例。</p>
+<p>Controler中这四个属性的配置和Application的用法完全一致。可以使用Controller模版方法onLaunch完成文件加载完后的初始化工作，如加载数据。</p>
+<h3 id="-">应用入口</h3>
+<pre><code>Ext.application({
+    requires: [&#39;Ext.container.Viewport&#39;],
+
+    // This automatically sets up a global variable AM for us, and registers the namespace to Ext.Loader, 
+    // with the corresponding path of &#39;app&#39; set via the appFolder config option. 
+    // All Ext JS 4 applications should only use a single global variable, with all of the application&#39;s classes nested inside it
+    name: &#39;AM&#39;, 
+
+    // 源码类相对路径(相对工程根目录)
+    appFolder: &#39;app&#39;, 
+
+    // 函数入口， which is run automatically when everything is loaded
+    launch: function() {
+        Ext.create(&#39;Ext.container.Viewport&#39;, {
+            layout: &#39;fit&#39;,
+            items: [
+                {
+                    xtype: &#39;panel&#39;,
+                    title: &#39;Users&#39;,
+                    html : &#39;List of users will go here&#39;
+                }
+            ]
+        });
+    }
+});
+</code></pre><h2 id="controller">Controller</h2>
+<p>Controllers are the glue that binds an application together.</p>
+<h4 id="control">control</h4>
+<p>使用模版方法init完成Controller的初始化工作，主要包括事件绑定。使用control方法完成事件的绑定：</p>
+<p>app/controller/Users.js:</p>
+<pre><code>Ext.define(&#39;AM.controller.Users&#39;, {
+    extend: &#39;Ext.app.Controller&#39;,
+
+    init: function() {
+        // 定义监听器
+        this.control({
+            &#39;viewport &gt; panel&#39;: {
+                render: this.onPanelRendered
+            }
+        });
+    },
+
+    onPanelRendered: function() {
+        console.log(&#39;The panel was rendered&#39;);
+    }
+});
+</code></pre><p>app.js:</p>
+<pre><code>Ext.application({
+    ...
+
+    controllers: [
+        &#39;Users&#39;
+    ],
+
+    ...
+});    
+</code></pre><p>When we load our application by visiting index.html inside a browser, the Users controller is automatically loaded (because we specified it in the Application definition above), and <strong>its init function is called just before the Application&#39;s launch function</strong>.</p>
+<h4 id="ref">ref</h4>
+<p>ref属性会自动产生get方法，如果实例不存在，则返回null。</p>
+<pre><code>refs: [
+        {
+            ref: &#39;list&#39;,
+            selector: &#39;grid&#39;
+        }
+    ]
+</code></pre><h4 id="-controller-">多个Controller之间的协作</h4>
+<p>为了避免多个Controller同时监听一个view中的相同组建，可以只在一个Controller中监听改组建，然后产生一个application级别的事件，this.application.fireEvent(&#39;stationstart&#39;, selection[0]);其他controller都可以监听这个事件。</p>
+<p>在Controller中，可以使用this.application获取Application实例。</p>
+<p>在运行时创建Controller时，调用方法this.getController(&#39;AnotherController&#39;);获取Controller实例，并且调用其init方法。    </p>
+<h2 id="views">Views</h2>
+<h4 id="-views">定义Views</h4>
+<p>app/view/user/List.js:
+    Ext.define(&#39;AM.view.user.List&#39; ,{
+        extend: &#39;Ext.grid.Panel&#39;,
+        // 定义别名，可以通过xtype引用。
+        alias: &#39;widget.userlist&#39;,</p>
+<pre><code>    title: &#39;All Users&#39;,
+
+    initComponent: function() {
+        // 创建内联Store
+        this.store = {
+            fields: [&#39;name&#39;, &#39;email&#39;],
+            data  : [
+                {name: &#39;Ed&#39;,    email: &#39;ed@sencha.com&#39;},
+                {name: &#39;Tommy&#39;, email: &#39;tommy@sencha.com&#39;}
+            ]
+        };
+
+        this.columns = [
+            {header: &#39;Name&#39;,  dataIndex: &#39;name&#39;,  flex: 1},
+            {header: &#39;Email&#39;, dataIndex: &#39;email&#39;, flex: 1}
+        ];
+
+        this.callParent(arguments);
+    }
+});
+
+Ext.define(&#39;AM.controller.Users&#39;, {
+    extend: &#39;Ext.app.Controller&#39;,
+
+    views: [
+        &#39;user.List&#39;
+    ],
+
+    init: ...
+
+    onPanelRendered: ...
+});
+</code></pre><p>AM.controller.Users:</p>
+<pre><code>Ext.define(&#39;AM.controller.Users&#39;, {
+    extend: &#39;Ext.app.Controller&#39;,
+
+    views: [
+        &#39;user.List&#39;
+    ],
+
+    init: function() {
+        this.control({
+            &#39;userlist&#39;: {
+                itemdblclick: this.editUser
+            }
+        });
+    },
+
+    editUser: function(grid, record) {
+        console.log(&#39;Double clicked on &#39; + record.get(&#39;name&#39;));
+    }
+});    
+</code></pre><p>app.js:</p>
+<pre><code>Ext.application({
+    ...
+
+    launch: function() {
+        Ext.create(&#39;Ext.container.Viewport&#39;, {
+            layout: &#39;fit&#39;,
+            items: {
+                xtype: &#39;userlist&#39;
+            }
+        });
+    }
+});
+</code></pre><h2 id="model">Model</h2>
+<h3 id="model-">Model定义:</h3>
+<pre><code>Ext.define(&#39;Panda.model.Station&#39;, {
+extend: &#39;Ext.data.Model&#39;,
+fields: [&#39;id&#39;, &#39;name&#39;, &#39;played_date&#39;],
+
+proxy: {
+        type: &#39;ajax&#39;,
+        url: &#39;data/stations.json&#39;,
+        reader: {
+            type: &#39;json&#39;,
+            root: &#39;results&#39;
+        }
+    }
+});
+</code></pre><p>可以设置其idProperty属性来设置store中数据的唯一性，idgen用来控制id产生的机制，这在实例化新的Model的时候可以用上。</p>
+<h3 id="models-and-stores">Models and Stores</h3>
+<p><img src="http://docs.sencha.com/extjs/4.2.1/guides/data/model.png" alt="Models and Stores"></p>
+<h3 id="-">关系</h3>
+<p>Examples:</p>
+<ul>
+<li><a href="http://docs.sencha.com/extjs/4.2.1/guides/data/examples/associations_validations/index.html" target="_blank">Associations and Validations</a></li>
+<li><a href="http://docs.sencha.com/extjs/4.2.1/guides/data/examples/lazy_associations/index.html" target="_blank">Lazy Associations</a></li>
+</ul>
+<p>可以通过hasMany、hasOne、belongTo来表达。框架会根据关系类型生成相应的get和set方法。</p>
+<ul>
+<li>primaryKey 主键，默认为id。</li>
+<li>foreignKey 外键，默认为关联的Model的名字的小些+_id，如user_id。</li>
+</ul>
+<p>定制主键和外键</p>
+<pre><code>Ext.define(&#39;Product&#39;, {
+    fields: [...],
+
+    associations: [
+        { type: &#39;belongsTo&#39;, model: &#39;Category&#39;, primaryKey: &#39;unique_id&#39;, foreignKey: &#39;cat_id&#39; }
+    ]
+});
+</code></pre><p>Model的关联的对象可以直接被加载，也可以懒加载（由后台决定）。如果是懒加载，则需要调用相应的load方法来加载关联对象，如:</p>
+<pre><code>// Loads User with ID 1 User&#39;s Proxy
+User.load(1, {
+    success: function(user) {
+        console.log(&quot;User: &quot; + user.get(&#39;name&#39;));
+
+        // Loads posts for user 1 using Post&#39;s Proxy
+        user.posts().load({
+            callback: function(posts, operation) {
+                Ext.each(posts, function(post) {
+                    console.log(&quot;Comments for post: &quot; + post.get(&#39;title&#39;));
+
+                    post.comments().each(function(comment) {
+                        console.log(comment.get(&#39;message&#39;));
+                    });
+                });
+            }
+        });
+    }
+});
+</code></pre><h4 id="-model">例子中用到的Model</h4>
+<p>User:</p>
+<pre><code>Ext.define(&#39;User&#39;, {
+    extend: &#39;Ext.data.Model&#39;,
+    fields: [
+        {name: &#39;id&#39;,   type: &#39;int&#39;},
+        {name: &#39;name&#39;, type: &#39;string&#39;}
+    ],
+    // we can use the hasMany shortcut on the model to create a hasMany association
+    hasMany: {model: &#39;Product&#39;, name: &#39;products&#39;}
+});
+</code></pre><p>Product:</p>
+<pre><code>Ext.define(&#39;Product&#39;, {
+    extend: &#39;Ext.data.Model&#39;,
+    fields: [
+        {name: &#39;id&#39;,      type: &#39;int&#39;},
+        {name: &#39;user_id&#39;, type: &#39;int&#39;},
+        {name: &#39;name&#39;,    type: &#39;string&#39;}
+    ]，
+
+    associations: [
+        { type: &#39;belongsTo&#39;, model: &#39;Category&#39;, primaryKey: &#39;unique_id&#39;, foreignKey: &#39;cat_id&#39; }
+    ]
+});
+</code></pre><p>Category:</p>
+<pre><code>Ext.define(&#39;Category&#39;, {
+    extend: &#39;Ext.data.Model&#39;,
+    fields: [
+        { name: &#39;id&#39;,   type: &#39;int&#39; },
+        { name: &#39;name&#39;, type: &#39;string&#39; }
+    ]
+});    
+</code></pre><h4 id="-">多对一</h4>
+<ul>
+<li><a href="http://docs.sencha.com/extjs/4.2.1/#!/api/Ext.data.association.BelongsTo" target="_blank">Ext.data.association.BelongsTo</a></li>
+</ul>
+<p>当数据加载上来后，数据会被缓存，第二次调用不会再与后台交互。可以设置reload来控制是否每次调用都与后台交互；setCategory()，可以传入category_id的值或者Category实例。关系的primaryKey默认为id，一般为Model中定义的idProperty。</p>
+<ul>
+<li><p>产生的Getter方法</p>
+<p>  product.getCategory(function(category, operation) {</p>
+<pre><code>  // do something with the category object
+  alert(category.get(&#39;id&#39;)); // alerts 20
+</code></pre><p>  }, this);</p>
+</li>
+</ul>
+<p>也可以传入配置对象：</p>
+<pre><code>product.getCategory({
+    reload: true, // force a reload if the owner model is already cached
+    callback: function(category, operation) {}, // a function that will always be called
+    success : function(category, operation) {}, // a function that will only be called if the load succeeded
+    failure : function(category, operation) {}, // a function that will only be called if the load did not succeed
+    scope   : this // optionally pass in a scope object to execute the callbacks in
+});
+</code></pre><p>This uses the Category&#39;s configured proxy to load the Category asynchronously, calling the provided callback when it has loaded.</p>
+<p>Once the getter has been called on the model, it will be cached if the getter is called a second time. To force the model to reload, specify <code>reload: true</code> in the options object.</p>
+<ul>
+<li><p>产生的Setter 方法
+如果只传入一个参数，则作为外键处理</p>
+<p>  // this call...
+  product.setCategory(10);</p>
+<p>  // is equivalent to this call:
+  product.set(&#39;category_id&#39;, 10);    </p>
+</li>
+</ul>
+<p>也可以传入一个对象，被解析为关联对象</p>
+<pre><code>product.setCategory(10, function(product, operation) {
+    // the product has been saved
+    alert(product.get(&#39;category_id&#39;)); //now alerts 10
+});
+
+//alternative syntax:
+product.setCategory(10, {
+    callback: function(product, operation), // a function that will always be called
+    success : function(product, operation), // a function that will only be called if the load succeeded
+    failure : function(product, operation), // a function that will only be called if the load did not succeed
+    scope   : this //optionally pass in a scope object to execute the callbacks in
+})    
+</code></pre><h4 id="-">一对多</h4>
+<ul>
+<li><p><a href="http://docs.sencha.com/extjs/4.2.1/#!/api/Ext.data.association.HasMany" target="_blank">Ext.data.association.HasMany</a></p>
+<p>  //first, we load up a User with id of 1
+  var user = Ext.create(&#39;User&#39;, {id: 1, name: &#39;Ed&#39;});</p>
+<p>  //the user.products function was created automatically by the association and returns a Store
+  //the created store is automatically scoped to the set of Products for the User with id of 1
+  var products = user.products();</p>
+<p>  //we still have all of the usual Store functions, for example it&#39;s easy to add a Product for this User
+  products.add({</p>
+<pre><code>  name: &#39;Another Product&#39;
+</code></pre><p>  });</p>
+<p>  //saves the changes to the store - this automatically sets the new Product&#39;s user_id to 1 before saving
+  products.sync();</p>
+</li>
+</ul>
+<p>生成的get方法为category.products()，加载products时，默认按id来过滤，也可以自定义过滤属性：    </p>
+<pre><code>var store = Ext.create(&#39;Ext.data.Store&#39;, {
+    model: &#39;Tweet&#39;,
+    filters: [
+        {
+            property: &#39;query&#39;,
+            value   : &#39;Sencha Touch&#39;
+        }
+    ]
+});    
+</code></pre><p>枚举</p>
+<pre><code>// Loads User with ID 1 and related posts and comments using User&#39;s Proxy
+User.load(1, {
+    success: function(user) {
+        console.log(&quot;User: &quot; + user.get(&#39;name&#39;));
+
+        user.posts().each(function(post) {
+            console.log(&quot;Comments for post: &quot; + post.get(&#39;title&#39;));
+
+            post.comments().each(function(comment) {
+                console.log(comment.get(&#39;message&#39;));
+            });
+        });
+    }
+});    
+</code></pre><h4 id="-">一对一</h4>
+<ul>
+<li><a href="http://docs.sencha.com/extjs/4.2.1/#!/api/Ext.data.association.HasOne" target="_blank">Ext.data.association.HasOne</a></li>
+</ul>
+<p>生成的get和set方法如多对一中描述。</p>
+<h3 id="-">验证</h3>
+<ul>
+<li><p><a href="http://docs.sencha.com/extjs/4.2.1/#!/guide/data" target="_blank">Data Package</a></p>
+<p>  Ext.define(&#39;User&#39;, {</p>
+<pre><code>  extend: &#39;Ext.data.Model&#39;,
+  fields: ...,
+
+  validations: [
+      {type: &#39;presence&#39;, name: &#39;name&#39;},
+      {type: &#39;length&#39;,   name: &#39;name&#39;, min: 5},
+      {type: &#39;format&#39;,   name: &#39;age&#39;, matcher: /\d+/},
+      {type: &#39;inclusion&#39;, name: &#39;gender&#39;, list: [&#39;male&#39;, &#39;female&#39;]},
+      {type: &#39;exclusion&#39;, name: &#39;name&#39;, list: [&#39;admin&#39;]}
+  ],
+
+  proxy: ...
+</code></pre><p>  });</p>
+</li>
+</ul>
+<p>常用的验证规则:</p>
+<ul>
+<li>presence simply ensures that the field has a value. Zero counts as a valid value but empty strings do not.</li>
+<li>length ensures that a string is between a min and max length. Both constraints are optional.</li>
+<li>format ensures that a string matches a regular expression format. In the example above we ensure that the age field consists only of numbers.</li>
+<li>inclusion ensures that a value is within a specific set of values (e.g. ensuring gender is either male or female).</li>
+<li>exclusion ensures that a value is not one of the specific set of values (e.g. blacklisting usernames like &#39;admin&#39;).</li>
+</ul>
+<p>验证:</p>
+<pre><code>// run some validation on the new user we just created
+var errors = newUser.validate();
+
+console.log(&#39;Is User valid?&#39;, errors.isValid()); //returns &#39;false&#39; as there were validation errors
+console.log(&#39;All Errors:&#39;, errors.items); //returns the array of all errors found on this model instance
+
+console.log(&#39;Age Errors:&#39;, errors.getByField(&#39;age&#39;)); //returns the errors for the age field    
+</code></pre><h3 id="model-">Model和后台交互</h3>
+<pre><code>// Gives us a reference to the User class
+var User = Ext.ModelMgr.getModel(&#39;User&#39;);
+var ed = Ext.create(&#39;User&#39;, {
+    name: &#39;Ed Spencer&#39;,
+    age : 25
+});
+// We can save Ed directly without having to add him to a Store first because we
+// configured a RestProxy this will automatically send a POST request to the url /users
+ed.save({
+    success: function(ed) {
+        console.log(&quot;Saved Ed! His ID is &quot;+ ed.getId());
+    }
+});
+// Load User 1 and do something with it (performs a GET request to /users/1)
+User.load(1, {
+    success: function(user) {
+        console.log(&quot;Loaded user 1: &quot; + user.get(&#39;name&#39;));
+    }
+});
+</code></pre><p><a href="http://docs.sencha.com/extjs/4.2.1/guides/data/examples/model_with_proxy/index.html" target="_blank">Example of a Model that uses a Proxy directly</a></p>
+<h2 id="store">Store</h2>
+<h4 id="-">内联数据</h4>
+<p>测试时使用本地数据可以使用data属性，当data为对象数据时，可以不设置reader属性，也就是说不需要proxy。如果数据需要处理，如数据嵌套在users中，则需要使用memery proxy中的reader属性来格式数据。如</p>
+<pre><code>//note how we set the &#39;root&#39; in the reader to match the data structure above
+var store = Ext.create(&#39;Ext.data.Store&#39;, {
+    autoLoad: true,
+    model: &#39;User&#39;,
+    data : data,
+    proxy: {
+        type: &#39;memory&#39;,
+        reader: {
+            type: &#39;json&#39;,
+            root: &#39;users&#39;
+        }
+    }
+});
+</code></pre><h4 id="-model-store">使用内联Model定义Store</h4>
+<pre><code>Ext.define(&#39;AM.store.Users&#39;, {
+    extend: &#39;Ext.data.Store&#39;,
+    fields: [&#39;name&#39;, &#39;email&#39;],
+    data: [
+        {name: &#39;Ed&#39;,    email: &#39;ed@sencha.com&#39;},
+        {name: &#39;Tommy&#39;, email: &#39;tommy@sencha.com&#39;}
+    ]
+});
+</code></pre><h4 id="-model-store">使用Model类定义Store</h4>
+<p>AM.model.User:</p>
+<pre><code>Ext.define(&#39;AM.model.User&#39;, {
+    extend: &#39;Ext.data.Model&#39;,
+    fields: [&#39;name&#39;, &#39;email&#39;]
+});    
+</code></pre><p>AM.store.Users:</p>
+<pre><code>Ext.define(&#39;AM.store.Users&#39;, {
+    extend: &#39;Ext.data.Store&#39;,
+    model: &#39;AM.model.User&#39;,
+
+    data: [
+        {name: &#39;Ed&#39;,    email: &#39;ed@sencha.com&#39;},
+        {name: &#39;Tommy&#39;, email: &#39;tommy@sencha.com&#39;}
+    ]
+});
+</code></pre><h4 id="registering-with-storemanager">Registering with StoreManager</h4>
+<p>Any Store that is instantiated with a storeId will automatically be registered with the <a href="http://docs.sencha.com/extjs/4.2.1/#!/api/Ext.data.StoreManager" target="_blank">StoreManager</a>. This makes it easy to reuse the same store in multiple views:    </p>
+<pre><code>//this store can be used several times
+Ext.create(&#39;Ext.data.Store&#39;, {
+    model: &#39;User&#39;,
+    storeId: &#39;usersStore&#39;
+});
+
+new Ext.List({
+    store: &#39;usersStore&#39;,
+    //other config goes here
+});
+
+new Ext.view.View({
+    store: &#39;usersStore&#39;,
+});   
+</code></pre><h4 id="-">和服务器交互</h4>
+<pre><code>Ext.define(&#39;AM.store.Users&#39;, {
+    extend: &#39;Ext.data.Store&#39;,
+    model: &#39;AM.model.User&#39;,
+    autoLoad: true,
+
+    proxy: {
+        type: &#39;ajax&#39;,
+        url: &#39;data/users.json&#39;,
+        reader: {
+            type: &#39;json&#39;,
+            root: &#39;users&#39;,
+            successProperty: &#39;success&#39;
+        }
+    }
+});    
+</code></pre><p>其中proxy.url表示所有的操作（CRUD）都使用该地址，如果需要配置不同的操作使用不同的url，可以使用Proxy.api属性:</p>
+<pre><code>api: {
+        read: &#39;data/users.json&#39;,
+        update: &#39;data/updateUsers.json&#39;
+    }
+</code></pre><p>动态加载</p>
+<pre><code>store.load({
+    params: {
+        group: 3,
+        type: &#39;user&#39;
+    },
+    callback: function(records, operation, success) {
+        // do something after the load finishes
+    },
+    scope: this
+});        
+</code></pre><h4 id="-">分组和排序</h4>
+<p>例子</p>
+<ul>
+<li><a href="http://docs.sencha.com/extjs/4.2.1/guides/data/examples/sorting_grouping_filtering_store/index.html" target="_blank">Sorting Grouping Filtering</a></li>
+</ul>
+<p>可以使用分组和排序静态配置sorters和filters，也可以调用filte和sort方法动态分组和排序。</p>
+<ul>
+<li><p>静态配置</p>
+<p>  Ext.create(&#39;Ext.data.Store&#39;, {</p>
+<pre><code>  model: &#39;User&#39;,
+
+  sorters: [&#39;name&#39;, &#39;id&#39;],
+  filters: {
+      property: &#39;name&#39;,
+      value   : &#39;Ed&#39;
+  },
+  groupField: &#39;age&#39;,
+  groupDir: &#39;DESC&#39;
+</code></pre><p>  });</p>
+</li>
+<li><p>动态分组和排序
+Calling filter adds another filter to the Store and automatically filters the dataset (<strong>calling filter with no arguments simply re-applies all existing filters</strong>). <strong>Note that by default sortOnFilter is set to true, which means that your sorters are automatically reapplied if using local sorting</strong>.</p>
+<p>  store.filter(&#39;eyeColor&#39;, &#39;Brown&#39;);
+  store.sort(&#39;height&#39;, &#39;ASC&#39;);</p>
+</li>
+<li><p>远程分组和排序</p>
+<p>  remoteSort : true
+  remoteFilter : true    </p>
+</li>
+</ul>
+<h4 id="-controller-store">在Controller中引用Store</h4>
+<p>AM.controller.Users:</p>
+<pre><code>Ext.define(&#39;AM.controller.Users&#39;, {
+    extend: &#39;Ext.app.Controller&#39;,
+    stores: [&#39;Users&#39;],
+    models: [&#39;User&#39;],
+    ...
+});
+</code></pre><p>By including the stores that our Users controller cares about in its definition they are automatically loaded onto the page and <strong>given a storeId</strong>, which makes them really easy to reference in our views (by simply configuring store: &#39;Users&#39; in this case).</p>
+<h2 id="proxy">Proxy</h2>
+<p>here are two main types of Proxy - Client and Server. The Client proxies save their data locally and include the following subclasses:</p>
+<ul>
+<li>LocalStorageProxy - saves its data to localStorage if the browser supports it</li>
+<li>SessionStorageProxy - saves its data to sessionStorage if the browsers supports it</li>
+<li>MemoryProxy - holds data in memory only, any data is lost when the page is refreshed</li>
+</ul>
+<p>The Server proxies save their data by sending requests to some remote server. These proxies include:</p>
+<ul>
+<li>Ajax - sends requests to a server on the same domain</li>
+<li>JsonP - uses JSON-P to send requests to a server on a different domain</li>
+<li>Rest - uses RESTful HTTP methods (GET/PUT/POST/DELETE) to communicate with server</li>
+<li>Direct - uses Ext.direct.Manager to send requests</li>
+</ul>
+<h3 id="ajaxproxy">AjaxProxy</h3>
+<p>可以使用ationMethods来定义请求方法，默认读取使用GET，写使用POST。AjaxProxy不能跨域访问，如果需要跨域访问，需要使用JsonPProxy。与后台交互时，默认会使用proxy的api属性定义的请求路径，如果该路径未找到，则用url指定的路径。可以定义通过sorters和filters定义排序器和过滤器，并且设置传递给后台的参数名和参数格式，例子参看AjaxProxy文档。</p>
+<p>Proxy可以定义在Model中，也可以定义在Store中，如：</p>
+<pre><code>Ext.define(&#39;User&#39;, {
+    extend: &#39;Ext.data.Model&#39;,
+    fields: [&#39;id&#39;, &#39;name&#39;, &#39;age&#39;, &#39;gender&#39;],
+    proxy: {
+        type: &#39;rest&#39;,
+        url : &#39;data/users&#39;,
+        reader: {
+            type: &#39;json&#39;,
+            root: &#39;users&#39;
+        }
+    }
+});
+</code></pre><p>Proxy定义在Model中有如下好处：</p>
+<p>首先，不同的Store都可以使用Model中配置的Proxy，而不需要重新配置。其次，Model可以脱离Store，直接和后台发生数据交互。当store中proxy和其Model的proxy不一样时，可以重定义Store的proxy，以覆盖Model中定义的proxy。    </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://http://johnnyfee.github.io/blog-migrate/2013/07/21/extjs-mvc/" data-id="1c9kah3klo6rqn0k" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/extjs/">extjs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/package/">package</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/07/22/extjs-quickstart/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ExtJS 快速入门
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/07/20/extjs-class-system/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ExtJS Class System</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Car/">Car</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/activex/">activex</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/csharp/">csharp</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/extjs/">extjs</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/financial/">financial</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/less/">less</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/maven/">maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/riding/">riding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webkit/">webkit</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/activex/">activex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/addon/">addon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bestpractice/">bestpractice</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c#/">c#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c++/">c++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/car/">car</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cef/">cef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/center/">center</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chart/">chart</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/">chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/class/">class</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cordova/">cordova</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data/">data</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/doc/">doc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entity/">entity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/extjs/">extjs</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/format/">format</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack/">hack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/i18n/">i18n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jni/">jni</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ndk/">ndk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/package/">package</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quickstart/">quickstart</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/report/">report</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/riding/">riding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/roo/">roo</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spel/">spel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stduy/">stduy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/template/">template</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tutorial/">tutorial</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/view/">view</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webkit/">webkit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webview/">webview</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weight/">weight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wire/">wire</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/activex/" style="font-size: 10.00px;">activex</a><a href="/tags/addon/" style="font-size: 10.00px;">addon</a><a href="/tags/android/" style="font-size: 16.67px;">android</a><a href="/tags/animation/" style="font-size: 10.00px;">animation</a><a href="/tags/bestpractice/" style="font-size: 10.00px;">bestpractice</a><a href="/tags/c#/" style="font-size: 10.00px;">c#</a><a href="/tags/c++/" style="font-size: 10.00px;">c++</a><a href="/tags/car/" style="font-size: 10.00px;">car</a><a href="/tags/cef/" style="font-size: 10.00px;">cef</a><a href="/tags/center/" style="font-size: 10.00px;">center</a><a href="/tags/chart/" style="font-size: 11.67px;">chart</a><a href="/tags/chrome/" style="font-size: 10.00px;">chrome</a><a href="/tags/class/" style="font-size: 10.00px;">class</a><a href="/tags/cmd/" style="font-size: 10.00px;">cmd</a><a href="/tags/cordova/" style="font-size: 10.00px;">cordova</a><a href="/tags/csharp/" style="font-size: 10.00px;">csharp</a><a href="/tags/css/" style="font-size: 10.00px;">css</a><a href="/tags/data/" style="font-size: 10.00px;">data</a><a href="/tags/database/" style="font-size: 10.00px;">database</a><a href="/tags/doc/" style="font-size: 10.00px;">doc</a><a href="/tags/entity/" style="font-size: 10.00px;">entity</a><a href="/tags/extjs/" style="font-size: 18.33px;">extjs</a><a href="/tags/format/" style="font-size: 10.00px;">format</a><a href="/tags/git/" style="font-size: 10.00px;">git</a><a href="/tags/github/" style="font-size: 10.00px;">github</a><a href="/tags/hack/" style="font-size: 15.00px;">hack</a><a href="/tags/i18n/" style="font-size: 10.00px;">i18n</a><a href="/tags/javascript/" style="font-size: 20.00px;">javascript</a><a href="/tags/jekyll/" style="font-size: 10.00px;">jekyll</a><a href="/tags/jni/" style="font-size: 10.00px;">jni</a><a href="/tags/js/" style="font-size: 10.00px;">js</a><a href="/tags/map/" style="font-size: 10.00px;">map</a><a href="/tags/markdown/" style="font-size: 11.67px;">markdown</a><a href="/tags/maven/" style="font-size: 10.00px;">maven</a><a href="/tags/ndk/" style="font-size: 10.00px;">ndk</a><a href="/tags/package/" style="font-size: 10.00px;">package</a><a href="/tags/qt/" style="font-size: 13.33px;">qt</a><a href="/tags/quickstart/" style="font-size: 10.00px;">quickstart</a><a href="/tags/report/" style="font-size: 10.00px;">report</a><a href="/tags/riding/" style="font-size: 10.00px;">riding</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02">February 2014</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01">January 2014</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12">December 2013</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09">September 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08">August 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07">July 2013</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">April 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/02/21/javascript-use-strict/">Javascript 严格模式详解</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/20/qt-cordova/">Qt Cordova</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/20/mooc/">JavaScript SetTimeout和SetInterval</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/19/pos-specification/">POS Specification</a>
+          </li>
+        
+          <li>
+            <a href="/2014/02/17/javascript-promise/">JavaScript Promise</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 Johnny Fee<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script type="text/javascript" src="/js/script.js"></script>
+  </div>
+</body>
+</html>

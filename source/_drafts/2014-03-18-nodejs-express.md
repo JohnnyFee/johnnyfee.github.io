@@ -23,7 +23,7 @@ Koa号称为Node下一代的 Web 框架。但是在官方的FAQ中提到它不�
 
 但不管怎么样，哥刚入门 Node，还是从 Express 入手。
 
-## Quite Start
+## Install
 
 安装 Express ：
 
@@ -130,6 +130,91 @@ If we were to rewrite the forbidder middleware as a Node module, we would need t
 
     var forbidder = require('./forbidder.js');
     app.use(forbidder('Wednesday'));
+
+
+### Router
+
+The destinations of the HTTP request URIs are defined via routesin the app. Routes are how you tell your app "for this URI, execute this piece of JavaScript code". The corresponding JavaScript function for a route is called a route handler. It is the responsibility of the route handler to respond to an HTTP request, or pass it on to another handler function if it does not. Route handlers may be defined in the app.js file or loaded as a Node module.
+
+Here is a working example of some routes and their handlers defined right in the app.jsfile:
+
+    var http = require('http');
+    var express = require('express');
+    var app = express();
+
+    app.get('/', function(req, res) {
+        res.send('Welcome!');
+    });
+
+    app.get('/hello.text', function(req, res) {
+        res.send('Hola!');
+    });
+    app.get('/contact', function(req, res) {
+        res.render('contact');
+    });
+
+    http.createServer(app).listen(3000, function(){
+        console.log('Express server listening on port ' + 3000);
+    });
+
+Defining the routes and their handlers in the app.js file may work fine if the number of routes is relatively few. It becomes messy if the number of routes starts growing. That's where defining the routes and their handlers in a Node module comes in handy. If we were to modularize the routes we defined earlier, here is how it would look like.
+
+The following is the content of the `routes.js` Node module:
+
+    module.exports = function(app) {
+        app.get('/', function(req, res) {
+            // Send a plain text response
+            res.send('Welcome!');
+        });
+
+        app.get('/hello.text', function(req, res) {
+            // Send a plain text response
+            res.send('Hola!');
+        });
+        
+        app.get('/contact', function(req, res) {
+            // Render a view
+            res.render('contact');
+        });
+    };
+
+The modified `app.js` file would look like the following now:
+
+    var http = require('http');
+    var express = require('express');
+    var app = express();
+    var routes = require('./routes')(app);
+    http.createServer(app).listen(3000, function(){
+        console.log('Express server listening on port ' + 3000);
+    });
+
+The act of sending a response effectively terminates the request flow to any other route handler.
+
+## Quick Start
+
+### package.json
+
+In Chapter 1, What is Express?, we learned that Express apps are actually Node modules, which means our app also would need a manifest file. So, create a file named package.jsonin the app directory.
+
+    {
+        "name": "test-app",
+        "version": "0.0.1",
+        "private": true,
+        "scripts": {
+            "start": "node app"
+        },
+        "dependencies": {
+        "express": "3.2.6",
+        "jade": "*"
+        }
+    }
+
+参数：
+
+- `private` Indicates whether this module is meant to be published on the 
+npmregistry or not.
+- `scripts` npm commands for the module. In our case, we will support only 
+the startcommand. npm startwill call the node app.
 
 ## Library
 

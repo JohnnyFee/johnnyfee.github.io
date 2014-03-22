@@ -10,7 +10,7 @@ tags : [extjs, class]
 
 - Class names may only contain alphanumeric characters. 
 - Class names should be grouped into packages where appropriate and properly namespaced using object property dot-notation.
-
+s
 	`MyCompany.data.CoolProxy`
 	
 	`MyCompany.Application`

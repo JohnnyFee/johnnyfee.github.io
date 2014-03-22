@@ -192,9 +192,13 @@ The act of sending a response effectively terminates the request flow to any oth
 
 ## Quick Start
 
-### package.json
+    $ cd ~
+    $ mkdir express-app
+    $ cd express-app
 
-In Chapter 1, What is Express?, we learned that Express apps are actually Node modules, which means our app also would need a manifest file. So, create a file named package.jsonin the app directory.
+### create `package.json`
+
+What is Express?, we learned that Express apps are actually Node modules, which means our app also would need a manifest file. So, create a file named `package.json` in the app directory.
 
     {
         "name": "test-app",
@@ -204,8 +208,8 @@ In Chapter 1, What is Express?, we learned that Express apps are actually Node m
             "start": "node app"
         },
         "dependencies": {
-        "express": "3.2.6",
-        "jade": "*"
+            "express": "3.2.6",
+            "jade": "*"
         }
     }
 
@@ -215,6 +219,421 @@ In Chapter 1, What is Express?, we learned that Express apps are actually Node m
 npmregistry or not.
 - `scripts` npm commands for the module. In our case, we will support only 
 the startcommand. npm startwill call the node app.
+
+在`package.json`所在的文件夹中执行：
+
+    $ npm install
+
+You will find a new directory named node_modulesin the directory; that's where all the dependencies are installed.
+
+### create app.js
+
+Create a file called app.js and put the following code in it:
+
+    // Include the Node HTTP library
+    var http = require('http');
+
+    // Include the Express module
+    var express = require('express');
+
+    // Create an instance of Express
+    var app = express();
+
+    // Start the app
+    http.createServer(app).listen(3000, function() {
+        console.log('Express app started');
+    });
+
+    // A route for the home page
+    app.get('/', function(req, res) {
+        res.send('Welcome!');
+    });
+
+You might have noticed that the route in the app is defined after the code for starting the server, but it works anyway. The reason it works is because routes are defined on the appobject, which is passed to the HTTP API as a reference—any time you make a change on the appobject, it is reflected on the server.
+
+### start & stop
+
+Since Express apps are Node programs, starting an Express app is similar to executing a Node program. In our case, the program resides in a file named app.js, so this is how you will start the server:
+
+    $ node app
+    $ node app
+
+> Express app started
+
+To stop the server, press Ctrl+ C.
+
+To send HTML response, just change `res.send('Welcome!')` to `res.send('<h1>Welcome!</h1>')`, and restart the server. 
+
+For the changes made in application files to reflect, you need to restart the server. This can be a tedious process; you can make it easier for yourself by using __supervisor__, a Node module that will watch the application files and restart the server when any one of them changes. You can learn more about supervisor at <https://github.com/ isaacs/node-supervisor>.
+
+### views
+
+Any changes made in the views will be reflected in the HTML output without requiring the server to be restarted. 
+
+Let go ahead and create a directory for our views, named views:
+
+    $ mkdir views
+
+Now create two view files in the `views` directory: one named `index.jade` for the home page, another named `hello.jade` for the hello web page.
+
+Note that Jade is just one of the many templating languages that is supported by Express.
+
+Here is the content for index.jade:
+
+    html
+        head
+            title Welcome
+        body Welcome!
+
+And here is the content for hello.jade:
+
+    html
+    head
+        title Hello
+    body
+        b Hello!
+
+Make sure to consistently use spaces or tabs for indentation, or else Jade will throw an error.
+
+Let's update app.jsto use our newly created views: 
+
+    var http = require('http');
+    var express = require('express');
+    var app = express();
+    
+    // Set the view engine
+    app.set('view engine', 'jade');
+
+    // Where to find the view files
+    app.set('views', './views');
+
+    // A route for the home page - will render a view
+    app.get('/', function(req, res) {
+        res.render('index');
+    });
+
+    // A route for /say-hello - will render a view
+    app.get('/say-hello', function(req, res) {
+        res.render('hello');
+    });
+
+    app.get('/test', function(req, res) {
+        res.send('this is a test');
+    });
+
+    http.createServer(app).listen(3000, function() {
+        console.log('App started');
+    });
+
+For a matched route, `res.render()` will look for the view in the `views` directory and render it accordingly
+
+### public directory for the app
+
+Express has a middleware called _static_, using which we can mark a directory in the filesystem for serving static files for the app. Any file kept in these directories can be directly accessed via the browser.
+
+This is how you use the _static_ middleware to set a directory for static resources:
+
+    app.use(express.static('./public'));
+
+Let's create a static directory named publicand use it for our static content:
+
+    $ mkdir public
+    $ mkdir public/images
+    $ mkdir public/javascripts
+    $ mkdir public/stylesheets
+
+Create a file named `main.js` in the javascriptsdirectory with the following content:
+
+    window.onload = function() {
+        document.getElementById('smile').innerHTML = ':)';
+    };
+
+Create a file named `style.css` in the `styles` heetsdirectory with the following content:
+
+    #content {
+        width: 220px;
+        margin: 0 auto;
+        text-align: center;
+        border: 1px solid #ccc;
+        box-shadow: 0 3px 4px #ccc;
+        padding: 5px;
+    }
+
+Update `index.jade` to include the newly added files:
+
+    html
+        head
+            title Welcome
+            script(src='javascripts/main.js')
+            link(rel='stylesheet', href='stylesheets/style.css')
+        body
+            #content
+                img(src='images/logo.png')
+                p WELCOME
+                #smile
+
+Update `app.js` to set a static directory:
+
+    // ...
+    app.set('view engine', 'jade');
+    app.set('views', './views');
+    
+    // Mark the public dir as a static dir
+    app.use(express.static('./public'));
+
+    // ...
+
+    
+![effective](http://johnnyimages.qiniudn.com/express-public.png)
+
+### auto generate experss app skeleton
+
+Using its help option (-h), let's ask express how it works and what its options are:
+
+    $ express –h
+
+Let's create a new app using our newfound knowledge of express:
+
+    $ express --sessions ~/auto-express
+
+run the app:
+    
+    $ node app
+
+Take a look at the content of the directory auto generated:
+
+    ![express-skeleton](http://johnnyimages.qiniudn.com/express-skeleton.png)
+
+
+### Empowering Express with middlewares
+
+For your reference, the following is the list of the middlewares that are available in Express, by default:
+
+Middleware             | Description
+-----------------------|-------------
+router                 | The app's routing system
+logger                 | Log requests to the server
+compress gzip/deflate  | support on the server
+basicAuth              | Basic HTTP authentication
+json                   | Parse application/json
+urlencoded             | Parse application/x-www-formurlencoded
+multipart              | Parse multipart/form-data
+bodyParser             | Parse request body. Bundles json, urlencoded, and multipart middlewares together
+timeout                | Request timeout
+cookieParser           | Cookie parser
+session                | Session support
+cookieSession          | Cookie-based sessions
+methodOverride         | HTTP method support
+responseTime           | Show server response time
+static                 | Static assets directory for the website
+staticCache            | Cache for the static middleware
+directory              | Directory listing
+vhost                  | Enable vhost
+favicon                | Favicon for the website
+limit                  | Limit the size of request body
+query                  | The GET query parser
+error                  | Handler Generate HTML-formatted stack trace of errors in the server
+
+For this example, we will use the `responseTime` middleware.
+
+Modify `app.js` to use this middleware:
+
+    var http = require('http');
+    var express = require('express');
+    var app = express();
+    app.set('view engine', 'jade');
+    app.set('views', './views');
+    app.use(express.static('./public'));
+
+    // Add the responseTime middleware
+    app.use(express.responseTime());
+    app.get('/', function(req, res) {
+        res.render('index');
+    });
+
+    http.createServer(app).listen(3000, function() {
+        console.log('App started');
+    });
+
+
+When we enable the _responseTime_ middleware, Express sends the time taken to process a request in the HTTP response header (__X-Response-Time__). You can see it highlighted in the preceding screenshot.
+
+![express-response-time.png](http://johnnyimages.qiniudn.com/express-response-time.png)
+
+Now let's try using the _errorHandler_ middleware.
+
+Edit app.jsto include the middleware and generate the error:
+
+    var http = require('http');
+    var express = require('express');
+    var app = express();
+    app.set('view engine', 'jade');
+    app.set('views', './views');
+    app.use(express.static('./public'));
+    app.use(express.responseTime());
+
+    // Add the errorHander middleware
+    app.use(express.errorHandler());
+    app.get('/', function(req, res) {
+        // Call an undefined function to generate an error
+        fail();
+    });
+
+    http.createServer(app).listen(3000, function() {
+        console.log('App started');
+    });
+
+Restart the server and load the home page, you'll get an error message, as shown in the following screenshot:
+
+
+![express-response-time.png](http://johnnyimages.qiniudn.com/express-error-handle.png)
+
+In fact, you can confirm it is not HTML by looking at the source code. Why is the errorHandlermiddleware not working?  The most important requirement of errorHandler is that it should be added after the routermiddleware. No wonder it didn't work as expected.
+
+so let's modify app.jsto include the `router` middleware explicitly:
+
+    // ...
+    app.use(express.static('./public'));
+    app.use(express.responseTime());
+
+    // Explicitly add the router middleware
+    app.use(app.router);
+
+    // Add the errorHander middleware
+    app.use(express.errorHandler());
+    // ...
+
+Now restart the server, refresh the home page, and see the output:
+
+![express-response-time.png](http://johnnyimages.qiniudn.com/express-error-handler-rooter.png)
+
+### Empowering Express with Node modules
+
+You can find a huge list of Node modules at <https://github.com/ joyent/node/wiki/Modules>. From the command line, you can use the `npm search` command or use a module such as `npm-searchor` `npm-research` to search for modules of your interest.
+
+We will install a .inifile parsing module named iniparserand use it in our app:
+
+    $ npm install iniparser
+
+Create config.iniin the app directory with the following content:
+
+    title = My Awesome App
+    port = 3000
+    message = You are awesome!
+
+Now edit `app.js` to include the module and use it in our app:
+
+    // ...
+    var app = express();
+
+    // Load the iniparser module
+    var iniparser = require('iniparser');
+
+    // Read the ini file and populate the content on the config object
+    var config = iniparser.parseSync('./config.ini');
+
+    // ...
+
+    app.get('/', function(req, res) {
+        // Pass two config variables to the view
+        res.render('index', {title:config.title, message:config.message});
+    });
+
+    http.createServer(app).listen(config.port, function() {
+        console.log('App started on port ' + config.port);
+    });
+
+Go ahead and edit `index.jade` too:
+
+    html
+    head
+        title #{title}
+        script(src='javascripts/main.js')
+        link(rel='stylesheet', href='stylesheets/style.css')
+    body
+        #content
+        img(src='images/logo.png')
+        p WELCOME
+        p #{message}
+        #smile
+
+We actually don't need to use an .ini file for configuring our apps, as shown in a previous example. The purpose of the example was just to show you how to use a Node module, not the recommended practice. We will use configuration file below instead.
+
+### logger
+
+Express comes with a built-in logging module called logger, it can be a very useful tool while you are developing the app. You enable it like any other Express module:
+
+    app.use(express.logger());
+
+Without any options, the loggermiddleware will log a detailed log. You can customize the details with the following tokens in the formatoption of the loggermiddleware:
+
+Token           | Content
+----------------|---------
+:req[header]    | The specific HTTP header of the request
+:res[header]    | The specific HTTP header of the response
+:http-version   | The HTTP version
+:response-time  | How long it took to generate the response
+:remote-addr    | The user agent's IP address
+:date           | Date and time of request
+:method         | The HTTP method used for making the request
+:url            | The requested URL
+:referrer       | The URL that referred the current URL
+:user-agent     | The user-agent signature
+:status         | The HTTP status
+
+And this is how you specify the log format using the tokens:
+
+    app.use(express.logger({ format: ':remote-addr :method :url' }));
+
+After adding the loggermiddleware, you can see the log details in the console, when requests are made to the app:
+
+    127.0.0.1 GET /
+    127.0.0.1 GET /favicon.ico
+
+By default the logger outputs the log to the console. We can make it log to a file by specifying the streamoption, as shown here:
+
+    var http = require('http');
+    var express = require('express');
+    var fs = require('fs');
+    var app = express();
+    app.use(express.logger({
+        format: 'tiny',
+        stream: fs.createWriteStream('app.log', {'flags': 'w'})
+    }));
+
+The logger middleware supports four predefined log formats: default, short, tiny, and dev. You can specify one of them this way:
+
+    app.use(express.logger('dev'));
+
+### configuration
+
+As a side effect of how require() works, Node supports JSON-based configuration files by default. Create a file with a JSON object describing the configurations, save it with a .json extension, and then load it in the app file using require().
+
+Here is an example of a JSON-based config file:
+
+    {
+        "development": {
+            "db_host": "localhost",
+            "db_user": "root",
+            "db_pass": "root"
+        },
+        "production": {
+            "db_host": "192.168.1.9",
+            "db_user": "myappdb",
+            "db_pass": "!p4ssw0rd#"
+        }
+    }
+
+This is how you would load it:
+
+    var config = require('./config.json')[app.get('env')];
+
+Usage:
+
+console.log(config.db_host); // 192.168.1.9
+console.log(config.db_user); // myappdb
+console.log(config.db_pass); // !p4ssw0rd#
+
 
 ## Library
 

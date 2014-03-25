@@ -7,6 +7,7 @@ tags: [qt, tutorial]
 --- 
 ## Tutorial
 
+- [Wiki Home SimplifiedChinese | Qt Wiki | Qt Project](http://qt-project.org/wiki/Wiki_Home_SimplifiedChinese)
 - [Qt开发者专区](http://qt.csdn.net/)
 - [Documentation | Qt Project](https://qt-project.org/doc/)
 - [Qt - Cross-platform application and UI development framework](http://qt.digia.com/)
@@ -39,6 +40,7 @@ __控制台调试__：[调试Qt Quick 2 – 控制台API | Qt Chinese blog](http
 - [Enabling Web Inspector in QtWebKit - Palomino Labs Blog](http://blog.palominolabs.com/2012/09/19/enabling-web-inspector-in-qtwebkit/)
 
 ## 动画
+
 - [qt4 qml Flipable、Flickable和状态与动画](http://blog.csdn.net/luck_good/article/details/6992795)
 
 ## 虚拟键盘
@@ -76,3 +78,10 @@ __控制台调试__：[调试Qt Quick 2 – 控制台API | Qt Chinese blog](http
 ###　Q_OBJECT
 
 Q_OBJECT是一个宏，只有加入了Q_OBJECT，你才能使用QT中的signal和slot机制。
+
+### 设置编码
+
+    QTextCodec *defaultCode = QTextCodec::codecForName("GBK");
+    QTextCodec::setCodecForCStrings(defaultCode);
+    QTextCodec::setCodecForLocale(defaultCode);
+    QTextCodec::setCodecForTr(defaultCode);

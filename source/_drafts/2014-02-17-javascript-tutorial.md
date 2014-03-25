@@ -72,6 +72,10 @@ tags: [javascript]
 
 - [Fuse.js](http://github.com/krisk/fuse) Lightweight fuzzy-search, in JavaScript.
 
+### Other
+
+- [2014年3月新鲜出炉的最佳 JavaScript 工具库 - WEB开发者](http://www.admin10000.com/document/4111.html)
+
 ## Performance
 
 - [视频访谈： Stoyan Stefanov 谈JavaScript性能 - 推酷](http://www.tuicool.com/articles/vEn6zm)

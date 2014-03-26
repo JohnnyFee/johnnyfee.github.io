@@ -41,9 +41,9 @@ Koa号称为Node下一代的 Web 框架。但是在官方的FAQ中提到它不�
 
     express –V
 
-##　Express 三大组件
+## Express 三大组件
 
-###　application 对象
+### application 对象
 
 The application object is an instance of Express, conventionally represented by the 
 variable named app. This is the main object of your Express app and the bulk of the 
@@ -54,7 +54,7 @@ functionality is built on it.
     var express = require('express');
     var app = new express();
 
-###  request 对象
+### request 对象
 
 The HTTP request object is created when a client makes a request to the Express app. The object is conventionally represented by a variable named req, which contains a number of properties and methods related to the current request.
 
@@ -110,7 +110,7 @@ use the forbidder middleware:
     // the router middleware goes here
     app.use(app.router);
 
-If we were to rewrite the forbidder middleware as a Node module, we would need to first create the forbidder.jsmodule file with the following content:
+If we were to rewrite the forbidder middleware as a Node module, we would need to first create the `forbidder.js` module file with the following content:
 
     module.exports = function(forbidden_day) {
         var days = ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thursday',
@@ -140,7 +140,7 @@ If we were to rewrite the forbidder middleware as a Node module, we would need t
 
 The destinations of the HTTP request URIs are defined via routes in the app. Routes are how you tell your app " for this URI, execute this piece of JavaScript code". The corresponding JavaScript function for a route is called a route handler. It is the responsibility of the route handler to respond to an HTTP request, or pass it on to another handler function if it does not. Route handlers may be defined in the app.js file or loaded as a Node module.
 
-Here is a working example of some routes and their handlers defined right in the app.jsfile:
+Here is a working example of some routes and their handlers defined right in the app.js file:
 
     var http = require('http');
     var express = require('express');
@@ -299,7 +299,7 @@ And here is the content for hello.jade:
 
 Make sure to consistently use spaces or tabs for indentation, or else Jade will throw an error.
 
-Let's update app.jsto use our newly created views: 
+Let's update app.js to use our newly created views: 
 
     var http = require('http');
     var express = require('express');
@@ -466,7 +466,7 @@ When we enable the _responseTime_ middleware, Express sends the time taken to pr
 
 Now let's try using the _errorHandler_ middleware.
 
-Edit app.jsto include the middleware and generate the error:
+Edit app.js to include the middleware and generate the error:
 
     var http = require('http');
     var express = require('express');
@@ -494,7 +494,7 @@ Restart the server and load the home page, you'll get an error message, as shown
 
 In fact, you can confirm it is not HTML by looking at the source code. Why is the errorHandlermiddleware not working?  The most important requirement of errorHandler is that it should be added after the routermiddleware. No wonder it didn't work as expected.
 
-so let's modify app.jsto include the `router` middleware explicitly:
+so let's modify app.js to include the `router` middleware explicitly:
 
     // ...
     app.use(express.static('./public'));
@@ -611,7 +611,7 @@ The logger middleware supports four predefined log formats: default, short, tiny
 
 ### configuration
 
-As a side effect of how require() works, Node supports JSON-based configuration files by default. Create a file with a JSON object describing the configurations, save it with a .json extension, and then load it in the app file using require().
+As a side effect of how require() works, Node supports JSON-based configuration files by default. Create a file with a JSON object describing the configurations, save it with a .js on extension, and then load it in the app file using require().
 
 Here is an example of a JSON-based config file:
 
@@ -824,7 +824,7 @@ And, here is the content for users.js:
         res.send('Amar, Akbar, Anthony');
     };
 
-Create a new file called routes.jsin the app directory. This file will be responsible for loading the route handlers and defining the routes. Here is the content for the file:
+Create a new file called routes.js in the app directory. This file will be responsible for loading the route handlers and defining the routes. Here is the content for the file:
 
     // Load the route handlers
     var routes = require('./handlers');
@@ -835,7 +835,7 @@ Create a new file called routes.jsin the app directory. This file will be respon
         app.get('/users', user.list);
     };
 
-Now modify the app.jsfile to incorporate the new changes we have made:
+Now modify the app.js file to incorporate the new changes we have made:
 
     var http = require('http');
     var express = require('express');
@@ -856,7 +856,7 @@ Express does not support namespaced routing by default, but it is very easy to e
 
     $ npm install express-namespace
 
-Now, edit app.jsto include express-namespaceand redefine the routes using namespaces:
+Now, edit app.js to include express-namespaceand redefine the routes using namespaces:
 
     var http = require('http');
     var express = require('express');
@@ -955,7 +955,7 @@ Next, we need to create a Node module to handle the resourceful routes. Create a
         res.send('delete user ' + req.params.user);
     };
 
-Now modify app.jsto use the express-resourcemodule and load the 
+Now modify app.js to use the express-resourcemodule and load the 
 route-handling Node module:
 
     var http = require('http');

@@ -14,7 +14,7 @@ tags: [node]
 
 <!--more-->
 
-##　创建 `package.json`
+## 创建 `package.json`
 
     {
       "name": "nw-demo",

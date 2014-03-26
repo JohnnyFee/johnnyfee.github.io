@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "PhotoShop"
-category: PhotoShop
+title: "Windows Bat"
+category: OS
 tags: [ps]
 --- 
 ## 概述

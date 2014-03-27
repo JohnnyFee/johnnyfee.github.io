@@ -85,3 +85,9 @@ Q_OBJECT是一个宏，只有加入了Q_OBJECT，你才能使用QT中的signal�
     QTextCodec::setCodecForCStrings(defaultCode);
     QTextCodec::setCodecForLocale(defaultCode);
     QTextCodec::setCodecForTr(defaultCode);
+
+## Reference
+
+### Example
+
+- [QtDoc 5.0: Qt Examples And Tutorials](http://qt-project.org/doc/qt-5.0/qtdoc/qtexamplesandtutorials.html)

@@ -22,7 +22,6 @@ As with [QWebView](qwebview.html), the item records the browsing history using a
 
 参考：[QGraphicsWebView Class Reference | Documentation | Qt Project](http://qt-project.org/doc/qt-4.8/qgraphicswebview.html#details)
 
-
 ## Reference
 
 - [WebKit is "gone"](https://qt-project.org/forums/viewthread/23506)

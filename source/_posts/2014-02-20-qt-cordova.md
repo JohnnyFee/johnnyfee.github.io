@@ -32,7 +32,57 @@ Qt Cordova对应的开源工程为：[apache/cordova-qt](https://github.com/apac
 
 ## 源码分析
 
+### 通信
 
+cordova.qt.js：
+
+	Cordova.Qt.exec = function( successCallback, errorCallback, pluginName, functionName, parameters ) {
+	    // Check if plugin is enabled
+	    if( Cordova.plugins[pluginName] !== true ) {
+	        return false;
+	    }
+
+	    // Store a reference to the callback functions
+	    var scId = Cordova.callbacks.length;
+	    var ecId = scId + 1;
+	    Cordova.callbacks[scId] = successCallback;
+	    Cordova.callbacks[ecId] = errorCallback;
+
+	    // 将成功回调和失败回调分别再到parameters数组的最前面。
+	    parameters.unshift( ecId );
+	    parameters.unshift( scId );
+
+	    // 调用C++的qmlWrapper.callPluginFunction
+	    window.qmlWrapper.callPluginFunction(pluginName, functionName, JSON.stringify(parameters))
+	    return true;
+	}
+
+`callPluginFunction` 在 `main.xml` 对应的代码为：
+
+	javaScriptWindowObjects: [QtObject{
+	    WebView.windowObjectName: "qmlWrapper"
+
+	    function callPluginFunction(pluginName, functionName, parameters) {
+	        parameters = eval("("+parameters+")")
+	        CordovaWrapper.execMethodOld(pluginName, functionName, parameters)
+	    }
+	}]
+
+### 编写 Plugin
+
+如 console.js：
+
+	function Console() {
+	}
+
+	Console.prototype.log = function( p_message ) {
+	    Cordova.exec( null, null, "com.cordova.Console", "log", [p_message] );
+	}
+
+	Cordova.addConstructor("com.cordova.Console", function() {
+		window.console = new Console();
+	}
+        
 
 ##Reference
 

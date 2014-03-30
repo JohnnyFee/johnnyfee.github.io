@@ -6,6 +6,11 @@ tags: [web]
 --- 
 ## 定义模块
 
+参考：
+
+- [How to use exports in NodeJS - Liang Zan - Blog](http://blog.liangzan.net/blog/2012/06/04/how-to-use-exports-in-nodejs/)
+- [Node.js: Calling one exported function from another in the same module - Stack Overflow](http://stackoverflow.com/questions/12091379/node-js-calling-one-exported-function-from-another-in-the-same-module)
+
 ### exports 
 
 The attachment to exportsapproach is pretty straightforward, as you can 
@@ -16,10 +21,10 @@ mymod.js：
     var name = exports.name = 'Packt';
     var secret = 'zoltan';
     exports.lower = function(input) {
-    return input.toLowerCase();
+    	return input.toLowerCase();
     };
     exports.upper = function(input) {
-    return input.toUpperCase();
+    	return input.toUpperCase();
     }
 
 运行：
@@ -36,10 +41,10 @@ would look like:
         module.exports = {
         name: 'Packt',
         lower: function(input) {
-        return input.toLowerCase();
+        	return input.toLowerCase();
         },
         upper: function(input) {
-        return input.toUpperCase();
+        	return input.toUpperCase();
         }
     }
 

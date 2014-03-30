@@ -10,6 +10,7 @@ tags: [javascript]
 - cmd
 - npm
 - Arale
+- Alice
 - Kissy
 - seajs
 

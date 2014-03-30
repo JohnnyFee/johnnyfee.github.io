@@ -68,6 +68,20 @@ cordova.qt.js：
 	    }
 	}]
 
+
+main.c:
+
+	QScopedPointer<QDeclarativeView> view(new QDeclarativeView());
+	view->rootContext()->setContextProperty("cordova", Cordova::instance());
+	view->setSource(QUrl("qml/main.qml"));
+
+xml/plugins.xml:
+
+	<plugins>
+	    <plugin name="Events" value="com.cordova.Events"/>
+	    <plugin name="Console" value="com.cordova.Console"/>
+	</plugins>
+
 ### 编写 Plugin
 
 如 console.js：

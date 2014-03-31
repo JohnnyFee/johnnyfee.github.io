@@ -9,7 +9,7 @@ tags: [javascript, oo]
 
 > 感谢所有老前辈们，感谢所有同类代码。因为有了你们，世界才丰富多采。
 
-## Douglas Crockford 的尝试与悟道[¶](http://aralejs.org/class/docs/competitors.html#douglas-crockford-的尝试与悟道)
+## Douglas Crockford 的尝试与悟道
 
 关于类继承，Douglas 有一篇经典文章：
 
@@ -67,7 +67,7 @@ tags: [javascript, oo]
 
 上面的代码，你知道问题在哪吗？请继续阅读。
 
-## YUI 之路[¶](http://aralejs.org/class/docs/competitors.html#yui-之路)
+## YUI 之路
 
 YUI 团队是 Douglas 的铁杆粉丝团。从 YUI2 到 YUI3, 都高度贯彻了 Douglas 的精神。在 YUI 里，提供了 extend 方法：
 
@@ -122,7 +122,7 @@ JavaScript 是一门大众语言，在类继承模式当道的今天，直接让
 
 **注**：YUI3 里，除了 extend 方式，也提供了 Base.create 来创建新类，但是该方法比较重量级了，用起来不轻便。
 
-## Dean Edwards 的 Base.js[¶](http://aralejs.org/class/docs/competitors.html#dean-edwards-的-base-js)
+## Dean Edwards 的 Base.js
 
 Dean Edwards 是前端界的一位老前辈。老前辈做过一个当时很著名的 JavaScript 类库： Base.js, 其中有一套非常不错的 OO 实现：
 
@@ -130,7 +130,7 @@ Dean Edwards 是前端界的一位老前辈。老前辈做过一个当时很著�
 
 这个方案开辟了一条阳光大道：通过精心构造的 Base 基类来实现类继承。同一时期，JavaScript 界 OO 模拟蔚然成风，万马奔腾。让我们继续考考古。
 
-## Prototype 的 Class[¶](http://aralejs.org/class/docs/competitors.html#prototype-的-class)
+## Prototype 的 Class
 
 作为一名前端，如果没用过 Prototype, 那么恭喜你，说明你还年轻，潜力无限。来看一名老前端的吐槽：
 
@@ -142,7 +142,7 @@ Prototype 目前已经 v1.7 了。从官方文档来看，Class 继承已经很�
 
 Class.create 的写法已经比较优美。然而悲催的是，$super 的约定真让人无语。super 虽然很难实现，但也不要这样实现呀：代码一压缩就都浮云了。
 
-## John Resig 的实现[¶](http://aralejs.org/class/docs/competitors.html#john-resig-的实现)
+## John Resig 的实现
 
 jQuery 专注于 DOM 操作，因此无论现在还是以后，应该都不会去模拟类继承。但在风云变幻的年代里，jQuery 作者 John Resig 也忍不住掺合一脚：
 
@@ -173,7 +173,7 @@ jQuery 专注于 DOM 操作，因此无论现在还是以后，应该都不会�
 
 很明显，要使用 _super, 必须严格按照固定模式来写。面对灵活的 JavaScript, 所有 super 都是美丽的谎言。
 
-## MooTools Class[¶](http://aralejs.org/class/docs/competitors.html#mootools-class)
+## MooTools Class
 
 MooTools 的全称是 My OO Tools, 有一套口碑很不错的 Class 机制：
 
@@ -201,7 +201,7 @@ super 语法糖，MooTools 采用了 this.parent() 的形式。原理与 John Re
     });
     
 
-## 还有很多很多[¶](http://aralejs.org/class/docs/competitors.html#还有很多很多)
+## 还有很多很多
 
 JavaScript 的世界里，OO 的实现还有很多很多，比较有名气的还有：
 
@@ -217,21 +217,21 @@ JavaScript 的世界里，OO 的实现还有很多很多，比较有名气的还
 
 写文档比写代码还累呀，终于快接近尾声了 —— 最重要的尾声部分。如果你在家里的话，强烈建议去洗把冷水脸，清爽一下后再来看。
 
-## 我们的选择[¶](http://aralejs.org/class/docs/competitors.html#我们的选择)
+## 我们的选择
 
 Arale 2.0 的核心设计原则是 KISS：
 
 1. 如无必要，勿增实体 —— Simple
-1. 一目了然，容易学习 —— Stupid
+2. 一目了然，容易学习 —— Stupid
 
 这两个原则是我们选择的权衡点。从 Simple 原则出发，Y.extend 就很好了。但从 Stupid 的原则考虑，明显 Class.create 的形式更一目了然，同时在功能上也具有 Y.extend 的简洁实用性。
 
 权衡考虑后，我们选择 Class.create 风格，部分细节考虑如下：
 
 1. 主要 API 与 MooTools 保持一致，但不用 new Class, 而用 Class.create 和 SomeClass.extend。
-1. Implements 接收的参数就是普通对象，与 implement 方法保持一致。MooTools 中 Implements 属性需要是类。
-1. 去除 this.parent() 语法糖，需要调用时，和 Backbone 类似，推荐直接使用 SuperClass.prototype.methodName 来调用。
-1. 为了方便调用父类中的方法，提供 superclass 语法糖，与 YUI 类似。
+2. Implements 接收的参数就是普通对象，与 implement 方法保持一致。MooTools 中 Implements 属性需要是类。
+3. 去除 this.parent() 语法糖，需要调用时，和 Backbone 类似，推荐直接使用 SuperClass.prototype.methodName 来调用。
+4. 为了方便调用父类中的方法，提供 superclass 语法糖，与 YUI 类似。
 
 
 

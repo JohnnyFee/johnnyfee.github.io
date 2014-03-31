@@ -492,7 +492,7 @@ Restart the server and load the home page, you'll get an error message, as shown
 
 ![express-response-time.png](http://johnnyimages.qiniudn.com/express-error-handle.png)
 
-In fact, you can confirm it is not HTML by looking at the source code. Why is the errorHandlermiddleware not working?  The most important requirement of errorHandler is that it should be added after the routermiddleware. No wonder it didn't work as expected.
+In fact, you can confirm it is not HTML by looking at the source code. Why is the `errorHandler` middleware not working?  __The most important requirement of errorHandler is that it should be added after the routermiddleware__. No wonder it didn't work as expected.
 
 so let's modify app.js to include the `router` middleware explicitly:
 
@@ -515,7 +515,7 @@ Now restart the server, refresh the home page, and see the output:
 
 You can find a huge list of Node modules at <https://github.com/ joyent/node/wiki/Modules>. From the command line, you can use the `npm search` command or use a module such as `npm-searchor` `npm-research` to search for modules of your interest.
 
-We will install a .inifile parsing module named iniparserand use it in our app:
+We will install a .ini file parsing module named iniparserand use it in our app:
 
     $ npm install iniparser
 
@@ -982,76 +982,17 @@ Start the app and load the following URLs in your browser to see the resourceful
 ## Response From the Server
 
 
-Express can send an HTTP response using one of its response methods: `res.send()`, `res.json()`, `res.jsonp()`, `res.sendfile()`, `res. download()`, `res.render()`, or `res.redirect()`. If none of them is called, the request will be left hanging till the connection times out. If more than one response methods are specified in a route handler, only the first method will take effect, the rest will generate non-fatal, run-time errors.
+Express can send an HTTP response using one of its response methods: 
 
+- res.send()
+- res.json()
+- res.jsonp()
+- res.sendfile()
+- res. download()
+- res.render()
+- res.redirect()`. 
 
-### http response
-
-The data sent by an HTTP server in response to a request is called an __HTTP response message__. It is composed of a status code, headers, and optional associated data, which is technically referred to as the body of the message.
-
-![http-response.png](http://johnnyimages.qiniudn.com/http-response.png)
-
-The body is presented to the user as plain text, rendered HTML, image, file download, and so on. The status code and the headers are hidden from a regular user, but the browser requires them to process the body appropriately.
-
-#### HTTP status codes
-
-Following is a list of all the HTTP status codes for your information and general knowledge:
-
-- 1xx The 1xx series of status codes is classified as __Informational__, and is used for conveying provisional response from the server. 
-
-    The available codes in this series are: 100, 101, and 102.
-
-- 2xx The 2xx series of status codes is classified as __Success__, and is used for conveying a 
-successful request for a resource on the server.
-
-    The available codes in this series are: __200__, 201, 202, 303, 204, 205, 206, 207, 208, 250, 
-and 226.
-
-- 3xx The 3xx series of status codes is classified as __Redirection__, and is used for information 
-by the user agent about taking additional action to retrieve the requested resource.
-
-    The available codes in this series are: 300, 301, 302, 303, 304, 305, 306, 307, and 308.
-
-- 4xx The 4xx series of status codes is classified as __Client Error__, and is used for informing the user agent of its erroneous requests to the server.
-
-    The available codes in this series are: __400__, 401, 402, 403, 404, 405, 406, 407, 408, 409, 
-410, 411, 412, 413, 414, 415, 416, 417, 422, 423, 424, 425, 426, 428, 429, 431, 444, 449, 
-450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 494, 495, 496, 497, and 499.
-
-- 5xx The 5xx series of status codes is classified as Server Error, and is used for informing the user agent that the server has encountered an error because of which the request was not fulfilled. 
-
-    The available codes in this series are: 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 551, 598, and 599.
-
-#### HTTP response headers
-
-HTTP response headers (often referred to as just headers) are key-value pairs sent after the HTTP status code in a HTTP message. These headers are used for conveying various important pieces of information from the server to the user agent.
-
-The following is an example of headers sent by a web server:
-
-    X-Powered-By: Express
-    Accept-Ranges: bytes
-    ETag: "819254-1356021445000"
-    Date: Mon, 11 Mar 2013 21:19:05 GMT
-    Cache-Control: public, max-age=0
-    Last-Modified: Thu, 20 Dec 2012 16:37:25 GMT
-    Content-Type: image/gif
-    Content-Length: 819254
-    Connection: keep-alive
-
-#### Media types
-
-Media type describes the kind of data that is being transferred over the Internet protocol; in our case it would be the HTTP protocol. Media Type is also commonly referred to as MIME Typeor Content Type. You can read more about them at <http://www. iana.org/assignments/media-types>.
-
-Whenever an HTTP server sends a response, it also specifies what kind of data it is sending via the Content-Typeheader, which is shown in the following screenshot:
-
-![http-content-type.png](http://johnnyimages.qiniudn.com/http-content-type.png)
-
-The Content-Typeheader can have an optional parameter, which specifies the encoding for the data being transferred. On the Web, this parameter is most commonly applicable to string data, such as plain text, HTML, and JSON:
-
-    Content-Type: text/html; charset=iso-8859-1
-
-UTF-8 is the most popular encoding format on the Web, and is the default in JavaScript, Node, and Express.
-
+If none of them is called, the request will be left hanging till the connection times out. If more than one response methods are specified in a route handler, only the first method will take effect, the rest will generate non-fatal, run-time errors.
 
 ### Setting the HTTP status code
 
@@ -1483,13 +1424,13 @@ Submitting multiple options is all about setting a common value for the name att
 
 ### Handling POST submissions
 
-Unlike GET submissions, which can be processed right out of the box, we need to enable a built-in middleware named bodyParserbefore we can process POST submissions.
+Unlike GET submissions, which can be processed right out of the box, we need to enable a built-in middleware named `bodyParser` before we can process POST submissions.
 
 Load the bodyParser middleware before the routermiddleware to enable POST data handling:
 
     app.use(express.bodyParser());
 
-Although, the bodyParsermiddleware can be initialized without any parameters, it accepts an optional object with two options that can be used to configure file uploads:
+Although, the `bodyParser` middleware can be initialized without any parameters, it accepts an optional object with two options that can be used to configure file uploads:
 
 - keepExtensions Whether to include the file extension in temporary files. Defaults to false, so as not to overwrite a file with the same name.
 - uploadDir The location where temporary files should be uploaded.
@@ -1501,11 +1442,11 @@ Here is an example of enabling both the options:
         uploadDir: './uploads'
     }));
 
-With the bodyParsermiddleware enabled, we are ready to parse the data submitted by POST forms.
+With the bodyParser middleware enabled, we are ready to parse the data submitted by POST forms.
 
 __Reading form data__
 
-The `bodyParser` middleware will add two new properties: bodyand fileson the request object and populate them with the key-value pairs of the parameters submitted via the POST request. 
+The `bodyParser` middleware will add two new properties: body and files on the request object and populate them with the key-value pairs of the parameters submitted via the POST request. 
 
 Text data from the form is populated in the `req.body` object and files from the form are populated in the req.filesobject.
 
@@ -1670,7 +1611,7 @@ With this middleware enabled, you can find the cookies sent by the browser in th
 
 #### Creating cookies
 
-Cookies are created using the `res.cookie()` method. You pass it the name of the cookie, its value, and an optional object with the cookie options. Let's create a route named counterand use the `res.cookie()` method to create a cookie if it is not there already, and increment its value if it exists already.
+Cookies are created using the `res.cookie()` method. You pass it the name of the cookie, its value, and an optional object with the cookie options. Let's create a route named `counter` and use the `res.cookie()` method to create a cookie if it is not there already, and increment its value if it exists already.
 
     app.get('/counter', function(req, res) {
         var count = req.cookies.count || 0;
@@ -1932,6 +1873,74 @@ The `destroy()` method accepts an optional callback function to be executed afte
     req.session.destroy(function() {
         res.send('Session deleted');
     });
+
+## http response
+
+The data sent by an HTTP server in response to a request is called an __HTTP response message__. It is composed of a status code, headers, and optional associated data, which is technically referred to as the body of the message.
+
+![http-response.png](http://johnnyimages.qiniudn.com/http-response.png)
+
+The body is presented to the user as plain text, rendered HTML, image, file download, and so on. The status code and the headers are hidden from a regular user, but the browser requires them to process the body appropriately.
+
+### HTTP status codes
+
+Following is a list of all the HTTP status codes for your information and general knowledge:
+
+- 1xx The 1xx series of status codes is classified as __Informational__, and is used for conveying provisional response from the server. 
+
+    The available codes in this series are: 100, 101, and 102.
+
+- 2xx The 2xx series of status codes is classified as __Success__, and is used for conveying a 
+successful request for a resource on the server.
+
+    The available codes in this series are: __200__, 201, 202, 303, 204, 205, 206, 207, 208, 250, 
+and 226.
+
+- 3xx The 3xx series of status codes is classified as __Redirection__, and is used for information 
+by the user agent about taking additional action to retrieve the requested resource.
+
+    The available codes in this series are: 300, 301, 302, 303, 304, 305, 306, 307, and 308.
+
+- 4xx The 4xx series of status codes is classified as __Client Error__, and is used for informing the user agent of its erroneous requests to the server.
+
+    The available codes in this series are: __400__, 401, 402, 403, 404, 405, 406, 407, 408, 409, 
+410, 411, 412, 413, 414, 415, 416, 417, 422, 423, 424, 425, 426, 428, 429, 431, 444, 449, 
+450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 494, 495, 496, 497, and 499.
+
+- 5xx The 5xx series of status codes is classified as Server Error, and is used for informing the user agent that the server has encountered an error because of which the request was not fulfilled. 
+
+    The available codes in this series are: 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 551, 598, and 599.
+
+### HTTP response headers
+
+HTTP response headers (often referred to as just headers) are key-value pairs sent after the HTTP status code in a HTTP message. These headers are used for conveying various important pieces of information from the server to the user agent.
+
+The following is an example of headers sent by a web server:
+
+    X-Powered-By: Express
+    Accept-Ranges: bytes
+    ETag: "819254-1356021445000"
+    Date: Mon, 11 Mar 2013 21:19:05 GMT
+    Cache-Control: public, max-age=0
+    Last-Modified: Thu, 20 Dec 2012 16:37:25 GMT
+    Content-Type: image/gif
+    Content-Length: 819254
+    Connection: keep-alive
+
+### Media types
+
+Media type describes the kind of data that is being transferred over the Internet protocol; in our case it would be the HTTP protocol. Media Type is also commonly referred to as MIME Typeor Content Type. You can read more about them at <http://www. iana.org/assignments/media-types>.
+
+Whenever an HTTP server sends a response, it also specifies what kind of data it is sending via the Content-Typeheader, which is shown in the following screenshot:
+
+![http-content-type.png](http://johnnyimages.qiniudn.com/http-content-type.png)
+
+The Content-Typeheader can have an optional parameter, which specifies the encoding for the data being transferred. On the Web, this parameter is most commonly applicable to string data, such as plain text, HTML, and JSON:
+
+    Content-Type: text/html; charset=iso-8859-1
+
+UTF-8 is the most popular encoding format on the Web, and is the default in JavaScript, Node, and Express.
+
 
 ## Express in Production
 

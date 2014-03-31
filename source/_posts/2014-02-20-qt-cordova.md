@@ -82,9 +82,94 @@ xml/plugins.xml:
 	    <plugin name="Console" value="com.cordova.Console"/>
 	</plugins>
 
-### 编写 Plugin
+## 编写 Plugin
 
-如 console.js：
+我们以 Console 为例，提供的功能为在控制台输出一个指定字符串。
+
+### 添加 C++ 类
+
+#### console.h
+
+	#ifndef CONSOLE_H
+	#define CONSOLE_H
+
+	#include "../cplugin.h"
+
+	#include <QString>
+
+	class Console : public CPlugin
+	{
+	    Q_OBJECT
+	public:
+	    explicit Console();
+
+	signals:
+
+	public slots:
+	    void log( int scId, int ecId, QString p_message );
+
+	private:
+	    static Console *m_console;
+	};
+	        
+每个Plugin均为单实例，`m_console`为单实例对象。对于方法：
+
+	void log( int scId, int ecId, QString p_message );
+
+`scId`为成功的回调标志，`ecId`为失败的回调标志。作用是，在执行完 C++ 端的代码之后，用来执行`scId`或者`ecId`指定的回调。如：
+
+	this->callback( scId, "null,12345633");
+
+上述代码表示执行成功回调，如果执行失败回调，则把第一个参数修改为`ecId`，不能同时传入两个。第二参数为传入给回调的参数，以`,`分隔。
+
+所有插件需要继承`CPlugin`。需要暴露都给JS的方法需要置于`public slots:`下。
+
+注意：`Q_OBJECT` 按照如上例子加上。
+
+#### console.cpp
+
+	#include "console.h"
+	#include "../pluginregistry.h"
+	#include <QDebug>
+
+	// Create static instance of ourself
+	Console *Console::m_console = new Console();
+
+	/**
+	 * Constructor - NOTE: Never do anything except registering the plugin
+	 */
+	Console::Console() : CPlugin() {
+	    PluginRegistry::getRegistry()->registerPlugin( "com.cordova.Console", this);
+	}
+
+	void Console::log( int scId, int ecId, QString p_message ) {
+	    Q_UNUSED(scId)
+	    Q_UNUSED(ecId)
+
+	    qDebug() << "[LOG]" << p_message;
+	}
+
+以下代码用于初始化我们在`console.h`中申明的单实例成员变量。
+
+	Console *Console::m_console = new Console();
+
+在构造函数中，使用一下代码向 C++ 端的插件管理器注册该插件。
+
+	Console::Console() : CPlugin() {
+	    PluginRegistry::getRegistry()->registerPlugin( "com.cordova.Console", this);
+	}
+
+在`Console::log`中，我们并不需要执行JavaScript的回调，所以并未调用`this.callback`方法，该方法是由插件的父类`CPlugin`提供的。如果需要执行回调，则按在`console.h`一节中介绍的方法调用。
+
+### 修改`plugins.xml`
+
+修改`xml/plugins.xml`文件，添加渐增的插件：
+
+	<plugin name="Console" value="com.cordova.Console"/>
+
+其中`value`必须和在`Console`的构造函数中注册的`key`值相同。
+
+### 添加`console.js`
 
 	function Console() {
 	}
@@ -93,24 +178,39 @@ xml/plugins.xml:
 	    Cordova.exec( null, null, "com.cordova.Console", "log", [p_message] );
 	}
 
-	Cordova.addConstructor("com.cordova.Console", function() {
-		window.console = new Console();
-	}
-        
+	Cordova.addConstructor( "com.cordova.Console", function() {
+	    window.console = new Console();
+	});
 
-##Reference
+本例添加了一个`Console`构造函数，并且添加的`log`方法，方法的实现为调用 C++ 层对应的方法。
+
+	Cordova.exec( null, null, "com.cordova.Console", "log", [p_message] );
+
+`Cordova.exec`为JavaScript调用 C++ 层的统一入口。`Cordova.exec`的函数定义为：
+
+	Cordova.Qt.exec = function( successCallback, errorCallback, pluginName, functionName, parameters)
+
+参数说明：
+
+- successCallback 成功回调。
+- errorCallback 失败回调。
+- pluginName 插件的名称。`plugins.xml` 和 C++ 注册插件时使用的`key`相同。对于`Console`插件对应的是`com.cordova.Console`。
+- functionName 插件中的方法。
+- parameters 传给方法的参数。类型为数组，如果没有参数，传入空数组`[]`。
+
+## Reference
 
 - [PhoneGap for Qt 5](http://qt-project.org/wiki/PhoneGap-for-Qt-5)
 
-##FAQ
+## FAQ
 
-###[copydeploymentfolders] Error 4
+### [copydeploymentfolders] Error 4
 
 构建成功后，运行时出现以上错误很可能是因为中文路径问题，把“项目/构建目录”的“桌面”改成“desktop”即可，如：
 
 ![Error 4](http://johnnyimages.qiniudn.com/qt-error4.png)
 
-###network error
+### network error
 
 运行时，控制台出现 “network error”，导致该错误的语句外为：
 

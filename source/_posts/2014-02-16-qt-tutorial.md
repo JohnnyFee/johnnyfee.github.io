@@ -131,6 +131,19 @@ Q_OBJECT是一个宏，只有加入了Q_OBJECT，你才能使用QT中的signal�
     QTextCodec::setCodecForLocale(defaultCode);
     QTextCodec::setCodecForTr(defaultCode);
 
+### 路径xml
+
+本代码来自于[apache/cordova-qt](https://github.com/apache/cordova-qt)项目的cordova.cpp的loadFinished方法。
+
+    // 获取工程目录
+    QDir m_workingDir = QApplication::applicationDirPath();
+
+    // 基于QDir建立目录对象。
+    QDir xmlDir( m_workingDir );
+
+    // 切换到xml目录
+    xmlDir.cd( "xml" );
+
 ## Reference
 
 ### Example

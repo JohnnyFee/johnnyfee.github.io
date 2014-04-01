@@ -38,7 +38,106 @@ Qt Cordova对应的开源工程为：[apache/cordova-qt](https://github.com/apac
 
 ![qt-cordova-plugin.png](http://johnnyimages.qiniudn.com/qt-cordova-plugin.png)
 
-cordova.qt.js：
+在每个插件的构造方法中，都将为自己创建一个单实例，然后注册到 C++ 插件管理器（`PluginRegistry`）中，以`Console`为例：
+
+`console.cpp`:
+
+	Console::Console() : CPlugin() {
+	    PluginRegistry::getRegistry()->registerPlugin( "com.cordova.Console", this );
+	}
+
+`key`值需要和`plugins.xml`中的`plugin`的`name`的值相同。
+
+`xml/plugins.xml`:
+
+		<plugins>
+		    <plugin name="Events" value="com.cordova.Events"/>
+		    <plugin name="Console" value="com.cordova.Console"/>
+		</plugins>
+
+
+在主函数（`main.cpp`）中，通过以下方法启动Webkit：
+
+	QScopedPointer<QApplication> app(new QApplication(argc, argv));
+	
+
+	// without this HTMl5 localStorage is not persistent,without this HTMl5 localStorage is not persistent, 
+	// and HTML5 client side database, does not work. 
+	// 貌似只有在symbian有这个问题，在其他平台可酌情删除。
+	QWebSettings::globalSettings()->enablePersistentStorage(Cordova::instance()->workingDir());
+
+	QScopedPointer<QDeclarativeView> view(new QDeclarativeView());
+	Cordova::instance()->setTopLevelEventsReceiver(view.data());
+
+	view->setResizeMode(QDeclarativeView::SizeRootObjectToView);
+
+	// 为QDeclarativeEngine上下文添加cordova属性，绑定到Cordova实例。
+    view->rootContext()->setContextProperty("cordova", Cordova::instance());
+
+    // 加载UI。
+    view->setSource(QUrl("qml/main.qml"));
+
+    // 如果要全屏显示，请使用 view->showFullScreen()
+    view->show();
+    app->exec();
+
+这里边的`cordova`在`main.qml`中将使用到，如设置`cordova`对象的首页：
+
+	url: cordova.mainUrl
+
+将事件绑定到cordova对象的实现等：
+
+	onLoadFinished: cordova.loadFinished(true)
+	onLoadFailed: cordova.loadFinished(false)
+
+在`cordova.cpp`的`loadFinished`方法中实现 C++ 插件的加载：
+
+	// 读取xml/plugins.xml，并且遍历，读取其中的插件名称（name）和插件key（value）
+	// 代码略...
+	// 根据key在C++的插件管理其中查找
+	CPlugin *currPlugin = PluginRegistry::getRegistry()->getPlugin( attribValue );
+	if(currPlugin) {
+		// 初始化插件，并激发pluginWantsToBeAdded信号，交给main.qml来处理。
+	    currPlugin->init();
+	    emit pluginWantsToBeAdded(attribValue, currPlugin, attribName);
+	    execJS( "Cordova.enablePlugin( '" + attribValue + "' )" );
+	}
+
+对应的`main.qml`的代码为：
+
+	Connections {
+	    target: cordova
+	    onJavaScriptExecNeeded: {
+	        console.log("onJavaScriptExecNeeded: " + js)
+	        webView.evaluateJavaScript(js)
+	    }
+
+	    onPluginWantsToBeAdded: {
+	        console.log("onPluginWantsToBeAdded: " + pluginName)
+	        CordovaWrapper.addPlugin(pluginName, pluginObject)
+	    }
+	}
+
+在`onPluginWantsToBeAdded`的槽中，调用`CordovaWrapper.addPlugin(pluginName, pluginObject)`方法添加插件。CordovaWrapper实际上是一个JavaScript对象，在`main.qml`中通过下面的方法注入：
+
+	import "cordova_wrapper.js" as CordovaWrapper
+
+`cordova_wrapper.js`中对应的`addPlugin`方法代码为：
+
+	var pluginObjects = {};
+	function addPlugin(pluginName, pluginObject) {
+	    pluginObjects[pluginName] = pluginObject
+	}
+
+即将所有的对象作为`pluginObjects`的属性，属性名为插件名，属性值对应为 C++ 插件。
+
+至此插件注册已经完成。
+
+### 底层通信机制
+
+![qt-cordova-file-communication.png](http://johnnyimages.qiniudn.com/qt-cordova-file-communication.png)
+
+`cordova.qt.js`：
 
 	Cordova.Qt.exec = function( successCallback, errorCallback, pluginName, functionName, parameters ) {
 	    // Check if plugin is enabled
@@ -56,12 +155,14 @@ cordova.qt.js：
 	    parameters.unshift( ecId );
 	    parameters.unshift( scId );
 
-	    // 调用C++的qmlWrapper.callPluginFunction
+	    // 调用C++的qmlWrapper.callPluginFunction。C++ 如何将`qmlWrapper`注入给window的，请接着往下看。
 	    window.qmlWrapper.callPluginFunction(pluginName, functionName, JSON.stringify(parameters))
 	    return true;
 	}
 
-`callPluginFunction` 在 `main.xml` 对应的代码为：
+这是JavaScript和C++层通信的门面。也就是你要调用任何C++的接口，必须调用此方法。方法参数在下面的`添加插件`一节中将讲到。
+
+`callPluginFunction` 在 `main.qml` 对应的代码为：
 
 	javaScriptWindowObjects: [QtObject{
 	    WebView.windowObjectName: "qmlWrapper"
@@ -72,25 +173,9 @@ cordova.qt.js：
 	    }
 	}]
 
+`javaScriptWindowObjects`指的是将对象数组添加到浏览器（Web Frame）的`window`对象。在这里，我们给`window`添加名称为`qmlWrapper`的属性，该属性有`callPluginFunction`方法，该方法`Cordova.Qt.js`的`exec`调用，用来执行插件的方法。
 
-main.c:
-
-	QScopedPointer<QDeclarativeView> view(new QDeclarativeView());
-	view->rootContext()->setContextProperty("cordova", Cordova::instance());
-	view->setSource(QUrl("qml/main.qml"));
-
-xml/plugins.xml:
-
-	<plugins>
-	    <plugin name="Events" value="com.cordova.Events"/>
-	    <plugin name="Console" value="com.cordova.Console"/>
-	</plugins>
-
-### 底层通信机制
-
-![qt-cordova-file-communication.png](http://johnnyimages.qiniudn.com/qt-cordova-file-communication.png)
-
-## 编写 Plugin
+## 编写插件
 
 我们以 Console 为例，提供的功能为在控制台输出一个指定字符串。
 

@@ -32,7 +32,11 @@ Qt Cordova对应的开源工程为：[apache/cordova-qt](https://github.com/apac
 
 ## 源码分析
 
-### 通信
+![qt-corova-package.png](http://johnnyimages.qiniudn.com/qt-corova-package.png)
+
+### 插件机制
+
+![qt-cordova-plugin.png](http://johnnyimages.qiniudn.com/qt-cordova-plugin.png)
 
 cordova.qt.js：
 
@@ -81,6 +85,10 @@ xml/plugins.xml:
 	    <plugin name="Events" value="com.cordova.Events"/>
 	    <plugin name="Console" value="com.cordova.Console"/>
 	</plugins>
+
+### 底层通信机制
+
+![qt-cordova-file-communication.png](http://johnnyimages.qiniudn.com/qt-cordova-file-communication.png)
 
 ## 编写 Plugin
 

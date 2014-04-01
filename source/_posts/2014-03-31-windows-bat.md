@@ -22,6 +22,8 @@ tags: [ps]
 
 有关启用和禁用命令扩展的详细信息，请参阅“”中的 cmd。
 
+<!--more-->
+
 ### 语法 
 
     call [[Drive:][Path] FileName [BatchParameters]] [:label [arguments]] 

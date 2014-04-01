@@ -27,6 +27,8 @@ tags: [javascript, oo]
 
 由此，老道又写了一篇经典文章，推崇在 JavaScript 里，直接使用原型继承：
 
+<!--more-->
+
 * [Prototypal Inheritance in JavaScript](http://javascript.crockford.com/prototypal.html)
 
 继续悲催的是，老道的实现，依旧有不足之处。可以参考两篇博文：

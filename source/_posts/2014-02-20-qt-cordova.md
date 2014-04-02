@@ -32,6 +32,8 @@ Qt Cordova对应的开源工程为：[apache/cordova-qt](https://github.com/apac
 
 ## 源码分析
 
+### 类图
+
 ![qt-corova-package.png](http://johnnyimages.qiniudn.com/qt-corova-package.png)
 
 ### 插件机制
@@ -103,7 +105,7 @@ Qt Cordova对应的开源工程为：[apache/cordova-qt](https://github.com/apac
 	    execJS( "Cordova.enablePlugin( '" + attribValue + "' )" );
 	}
 
-对应的`main.qml`的代码为：
+其中 `pluginWantsToBeAdded` 对应的`main.qml`的代码为：
 
 	Connections {
 	    target: cordova
@@ -131,7 +133,7 @@ Qt Cordova对应的开源工程为：[apache/cordova-qt](https://github.com/apac
 
 即将所有的对象作为`pluginObjects`的属性，属性名为插件名，属性值对应为 C++ 插件。
 
-至此插件注册已经完成。
+至此插件注册已完成。
 
 ### 底层通信机制
 
@@ -173,7 +175,105 @@ Qt Cordova对应的开源工程为：[apache/cordova-qt](https://github.com/apac
 	    }
 	}]
 
-`javaScriptWindowObjects`指的是将对象数组添加到浏览器（Web Frame）的`window`对象。在这里，我们给`window`添加名称为`qmlWrapper`的属性，该属性有`callPluginFunction`方法，该方法`Cordova.Qt.js`的`exec`调用，用来执行插件的方法。
+`javaScriptWindowObjects`指的是将对象数组添加到浏览器（Web Frame）的`window`对象。在这里，我们给`window`添加名称为`qmlWrapper`的属性，该属性有`callPluginFunction`方法，该方法在`Cordova.Qt.js`的`exec`中被调用，用来执行插件的方法。
+
+### 事件机制
+
+Cordova的事件机制比较简单，使用的其实就是观察者模式。
+
+#### 定义事件类 Event
+
+参考：<http://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-Event>
+
+	Cordova.Event = function() {
+	};
+
+	// 事件触发的三个阶段。参考 <http://help.dottoro.com/ljjeesba.php>
+	Cordova.Event.CAPTURING_PHASE = 1;
+	Cordova.Event.AT_TARGET = 2;
+	Cordova.Event.BUBBLING_PHASE = 3;
+
+	...
+
+	Cordova.Event.prototype.initEvent = function( eventTypeArg, canBubbleArg, cancelableArg ) {
+	    this.type = eventTypeArg;
+	    this.timeStamp = (new Date()).getMilliseconds();
+	};
+
+在Cordova中除了`initEvent`，其他属性均没用。
+
+#### 定义事件处理器
+
+	// 构造函数。
+	Cordova.EventHandler = function( p_type ) {
+		// 事件类型。
+	    this.type = p_type
+	    
+	    // 事件监听者。
+	    this.listeners = []
+	};
+
+	// 事件类型，这个用prototype合适？
+	Cordova.EventHandler.prototype.type = "unknown";
+
+	// 事件监听器。
+	Cordova.EventHandler.prototype.listeners = [];
+
+	// 绑定事件。p_listener 为字符串，表示事件名称。
+	Cordova.EventHandler.prototype.addEventListener = function( p_listener, p_capture ) {
+	    if( p_capture ) {
+	    	// 添加到队列头部。
+	        this.listeners.unshift( p_listener );
+	    }
+	    else {
+	    	// 添加到队列尾部。
+	        this.listeners.push( p_listener );
+	    }
+	};
+
+	// 解绑事件。p_listener 同 addEventListener。p_capture 无作用。
+	Cordova.EventHandler.prototype.removeEventListener = function( p_listener, p_capture ) {
+	    // Try to find the event listener in our list
+	    for( var i = 0; i < this.listeners.length; i++ ) {
+	        if( this.listeners[i] === p_listener ) {
+	            // Remove the listener from our queue
+	            this.listeners.splice( i, 1 );
+	            return;
+	        }
+	    }
+	};
+
+	// 激发事件。
+	Cordova.EventHandler.prototype.dispatchEvent = function() {
+	    var event = new Cordova.Event();
+	    event.initEvent( this.type, false, false );
+
+	    // Notify all listeners about this event
+	    for( var i = 0; i < this.listeners.length; i++ ) {
+	    	// 监听器的作用域为Cordova。
+	        this.listeners[i].apply(Cordova, arguments);
+	    }
+	};
+
+#### 定义Cordova的事件
+
+	Cordova.events = {
+	    deviceready: new Cordova.EventHandler( "deviceready" ),
+	    resume: new Cordova.EventHandler( "resume" ),
+	    ...
+	};
+
+属性名为事件名称，属性值为事件处理器。
+
+#### 定义事件触发方法
+
+	Cordova.deviceready = function() {
+	    Cordova.events.deviceready.dispatchEvent();
+	}
+
+	// ...
+
+这类方法将在 C++ 端直接被调用，以激发指定特定事件。
 
 ## 编写插件
 
@@ -282,6 +382,8 @@ Qt Cordova对应的开源工程为：[apache/cordova-qt](https://github.com/apac
 `Cordova.exec`为JavaScript调用 C++ 层的统一入口。`Cordova.exec`的函数定义为：
 
 	Cordova.Qt.exec = function( successCallback, errorCallback, pluginName, functionName, parameters)
+
+`addConstructor` 表示为Console插件添加一个构造方法，在`cordova.js`的`Cordova.enablePlugin`方法中被调用，即添加插件后自动执行的初始化方法。通常用于实例化对象，并且赋值于`window`对象。
 
 参数说明：
 

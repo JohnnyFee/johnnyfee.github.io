@@ -265,6 +265,28 @@ Cordova的事件机制比较简单，使用的其实就是观察者模式。
 
 属性名为事件名称，属性值为事件处理器。
 
+#### 绑定事件
+
+如在`basic.js`中，为`deviceready`绑定事件：
+
+	document.addEventListener( "deviceready", function() {
+	  console.log("basicjs.deviceReady")
+	  get( "debug_output" ).innerHTML = "Device Ready!<br/>";
+	}, false );
+
+调用`document.addEventListener`经过了重定义：
+
+	ventListener = function( type, listener, useCapture ) {
+	    if( typeof Cordova.events[type] !== "undefined" ) {
+	        Cordova.events[type].addEventListener( listener, useCapture );
+	    }
+	    else {
+	        Cordova.doc_addEventListener.call(document, type, listener, useCapture);
+	    }
+	};
+
+同理：`removeEventListener`和`dispatchEvent`也被重写，以便绑定事件时调用。
+
 #### 定义事件触发方法
 
 	Cordova.deviceready = function() {

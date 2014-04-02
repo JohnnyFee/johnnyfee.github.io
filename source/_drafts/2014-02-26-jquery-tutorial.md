@@ -265,6 +265,55 @@ For even greater convenience, jQuery provides a shorthand for .get(). Instead of
 
 __It's no accident that this syntax appears to treat the jQuery object as an array of DOM elements__; using the square brackets is like peeling away the jQuery layer to get at the node list, and including the index (in this case, 0) is like plucking out the DOM element itself.
 
+## Handling Events
+
+### window.onload vs $(document).ready()
+
+The `window.onload` event fires when a document is __completely downloaded__ to the browser. This means that every element on the page is ready to be manipulated by JavaScript, which is a boon for writing feature-rich code without worrying about load order.
+
+On the other hand, a handler registered using `$(document).ready()` is invoked when the __DOM is completely ready for use__. This also means that all elements are accessible by our scripts, but does not mean that every associated file has been downloaded. As soon as the HTML file has been downloaded and parsed into a DOM tree, the code can run.
+
+To ensure that the page has also been styled before the JavaScript code executes, it is good practice to place the `<link rel="stylesheet">` and `<style>` tags prior to any `<script>` tags within the document's `<head>` element.
+
+Using $(document).ready() is almost always preferred over using an onload handler, but we need to keep in mind that because supporting files may not have loaded, attributes such as image height and width are not necessarily available at this time. If these are needed, we may at times also choose to implement an onload handler (or more likely, use jQuery to bind a handler to the load event); the two mechanisms can coexist peacefully.
+
+Consider, for example, a page that presents an image gallery; such a page may have many large images on it, which we can hide, show, move, and otherwise manipulate with jQuery. If we set up our interface using the onload event, users will have to wait until each and every image is completely downloaded before they can use those features. Even worse, if behaviors are not yet attached to elements that have default behaviors (such as links), user interactions could produce unintended outcomes. However, when we use $(document).ready() for the setup, the interface is ready to be used earlier with the correct behavior.
+
+There are two ways to call ready method:
+
+	(document).ready(function() {
+	  // Our code here...
+	});
+
+and 
+
+	$(function() {
+	  // Our code here...
+	});
+
+jQuery provides a method called `jQuery.noConflict()` to return control of the $ identifier back to other libraries. Typical usage of jQuery.noConflict() follows the following pattern:
+
+	<script src="prototype.js"></script>
+	<script src="jquery.js"></script>
+	<script>
+	  jQuery.noConflict();
+	</script>
+	<script src="myscript.js"></script>
+
+First, the other library (Prototype in this example) is included. Then, jQuery itself is included, taking over $ for its own use. Next, a call to .noConflict() frees up $, so that control of it reverts to the first included library (Prototype). Now in our custom script we can use both libraries—but whenever we want to use a jQuery method, we need to write jQuery instead of $ as an identifier.
+
+The .ready() method has one more trick up its sleeve to help us in this situation. The callback function we pass to it can take a single parameter—the jQuery object itself. This allows us to effectively rename it without fear of conflicts using the following syntax:
+
+	jQuery(document).ready(function($) {
+	  // In here, we can use $ like normal!
+	});
+
+Or we can use the shorter syntax we learned previously:
+
+	jQuery(function($) {
+	  // Code that uses $.
+	});
+
 ##Tutorial
 
 - [8个对程序员来说有用的jQuery小贴士和技巧 - WEB开发者](http://www.admin10000.com/document/3961.html)

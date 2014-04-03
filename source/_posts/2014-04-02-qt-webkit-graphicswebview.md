@@ -29,6 +29,8 @@ Loading, rendering, and laying out are blocking operations. Though barely notice
 
 One way to overcome this issue, is to do all loading, laying out and painting (basically all non-UI related work) in another thread or process, and just blit the result from the web process/thread to the UI. __There is research in progress to enable this for a future version of QtWebKit, using WebKit2__, but for now, freezing the backing store can help when performing a zooming operation, for instance. This will be discussed later, in the Enabling the Tiling section.
 
+> 也就是说，对于WebKit2已经解决了这个问题了，何况现在的Webkit3。在使用Qt Creator 3.0 创建的时候。但使用Qt Creator 创建HTML5应用的时候却是用QGraphicsWebView，这是不是过期了的？
+
 参考：
 
 - [QGraphicsWebView Class Reference](http://qt-project.org/doc/qt-4.8/qgraphicswebview.html#details)
@@ -60,14 +62,6 @@ One way to overcome this issue, is to do all loading, laying out and painting (b
 
 	     return app.exec();
 	 }
-
-## Reference
-
-- [html - How to use a QGraphicsWebView? - Stack Overflow](http://stackoverflow.com/questions/3142132/how-to-use-a-qgraphicswebview)
-- [Kenneth Christiansen's code posts](http://codeposts.blogspot.com/)
-- [QtWebKitTiling – WebKit](http://trac.webkit.org/wiki/QtWebKitTiling)
-- [QtWebKit – WebKit](http://trac.webkit.org/wiki/QtWebKit)
-- [QtWebKitTiling – WebKit](http://trac.webkit.org/wiki/QtWebKitTiling)
 
 ## Demo
 

@@ -6,14 +6,6 @@ tags: [javascript, mvc]
 --- 
 [TodoMVC](http://todomvc.com/)
 
-## Riot.js
-
-Riot is the most minimal approach to MV* world. It weighs 1kb and has only 3 public methods so it's extremely simple and easy to learn.
-
-- [Building modular applications with Riot.js](https://moot.it/riotjs/docs/)
-
-<!--more-->
-
 ## 概念
 
 ### 控制层
@@ -27,6 +19,8 @@ Riot is the most minimal approach to MV* world. It weighs 1kb and has only 3 pub
 * 在对子元素发射事件时，应该是可测试的。
 * 在没有不良反应的任何时候都应该有能力被重新调用
 * 不要用DOM来存储状态——将所有视图的指定状态以实例属性的方式存储在控制器
+
+<!--more-->
 
 ### 视图层
 
@@ -95,6 +89,12 @@ Intuitive, fast & composable MVVM for building interactive interfaces.
 ### Video
 
 - [Ember.js - An Application Framework For The Future on Vimeo](http://vimeo.com/84212105)
+
+## Riot.js
+
+Riot is the most minimal approach to MV* world. It weighs 1kb and has only 3 public methods so it's extremely simple and easy to learn.
+
+- [Building modular applications with Riot.js](https://moot.it/riotjs/docs/)
 
 ## Angular
 

@@ -8,6 +8,8 @@ tags: [javascript, mvc]
 
 ## 概念
 
+参考 <[JavaScript MVC Style Guide](http://blog.sourcing.io/mvc-style-guide)>
+
 ### 控制层
 
 * 控制层是模型层和视图层的粘合剂。处理大部分逻辑问题甚至管理问题。保持瘦控制器

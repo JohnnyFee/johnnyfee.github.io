@@ -5,6 +5,8 @@ category: JavaScript
 tags: [javascript]
 --- 
 
+> 本文为读 [Learning jQuery, 4th Edition](http://www.salttiger.com/learning-jquery-4th-edition/) 的读书笔记。
+
 ## DOM
 
 <http://api.jquery.com/category/selectors/>

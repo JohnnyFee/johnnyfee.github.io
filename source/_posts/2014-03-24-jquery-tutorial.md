@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "JavaScript 面向对象"
+title: "jQuery Tutorial"
 category: JavaScript
 tags: [javascript]
 --- 
@@ -80,7 +80,7 @@ Styling all the other items—those that are not in the top level—can be done 
 		$('#selected-plays li:not(.horizontal)').addClass('sublevel');
 	});
 
-This time we are selecting every list item (<li>) that:
+This time we are selecting every list item (`<li>`) that:
 
 - Is a descendant of the element with an ID of selected-plays (#selected-plays)
 - Does not have a class of horizontal (:not(.horizontal))

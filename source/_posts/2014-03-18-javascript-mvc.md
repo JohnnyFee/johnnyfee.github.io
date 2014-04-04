@@ -61,6 +61,7 @@ tags: [javascript, mvc]
 * Tutorial [https://github.com/jashkenas/backbone/wiki/Tutorials%2C-blog-posts-and-example-sites](https://github.com/jashkenas/backbone/wiki/Tutorials%2C-blog-posts-and-example-sites)
 * Wiki https://github.com/jashkenas/backbone/wiki
 * 中文文档 http://www.csser.com/tools/backbone/backbone.js.html - 插件 - Backbone.localStorage https://github.com/jeromegn/abckbone.localstorage A localStorage adapter for Backbone.js
+* [From Backbone Views To React – Leonardo Garcia Crespo](http://leoasis.github.io/posts/2014/03/22/from_backbone_views_to_react/)
 
 ### Tutorial
 
@@ -85,6 +86,7 @@ Intuitive, fast & composable MVVM for building interactive interfaces.
 * [Ember.JS – What it is and why we need to care about it](https://hacks.mozilla.org/2014/02/ember-js-what-it-is-and-why-we-need-to-care-about-it/)
 * [A Step-by-Step Guide to Your First Ember.js App | Toptal](http://www.toptal.com/javascript/a-step-by-step-guide-to-building-your-first-ember-js-app)
 * [Building a mobile-friendly web app using Ember.js and jQuery Mobile](http://blog.mist.io/post/78757774060/building-a-mobile-friendly-web-app-using-ember-js-and)
+* [From Backbone Views To React – Leonardo Garcia Crespo](http://leoasis.github.io/posts/2014/03/22/from_backbone_views_to_react/)
 
 ### Video
 
@@ -112,7 +114,8 @@ Riot is the most minimal approach to MV* world. It weighs 1kb and has only 3 pub
 * [Cloud Spinners Development Blog: Angular JS localization with Require JS i18n module](http://dev-blog.cloud-spinners.com/2014/02/angular-js-localization-with-require-js.html)
 * [Google's AngularJS Style Guide](https://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html)
 * [AngularJS Scopes: An Introduction | The Carbon Emitter](http://blog.carbonfive.com/2014/02/11/angularjs-scopes-an-introduction/)
-* [mgonto/angular-wizard · GitHub](https://github.com/mgonto/angular-wizard?utm_source=javascriptweekly&utm_medium=email)
+* [mgonto/angular-wizard · GitHub](https://github.com/mgonto/angular-wizard?utm_source=javascriptweekly)
+* [13 Steps to AngularJS Modularization | Safari Books Online's Official Blog](http://blog.safaribooksonline.com/2014/03/27/13-step-guide-angularjs-modularization/)
 
 可以参考的东西，链式编程，DI模式。
 

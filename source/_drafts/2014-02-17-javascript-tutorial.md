@@ -68,6 +68,10 @@ tags: [javascript]
     + [l33t literals in JavaScript - appendTo](http://appendto.com/2014/02/l33t-literals-javascript/)
 - [lloyd/JSONSelect](https://github.com/lloyd/JSONSelect) CSS-like selectors for JSON [http://jsonselect.org](http://jsonselect.org/).
 
+### Collection
+
+- [codedinc/tinyjs](https://github.com/codedinc/tinyjs)
+
 ### Search
 
 - [Fuse.js](http://github.com/krisk/fuse) Lightweight fuzzy-search, in JavaScript.
@@ -92,14 +96,6 @@ tags: [javascript]
 ### 拼音
 - [hotoo/pinyin](https://github.com/hotoo/pinyin) 汉字拼音转换工具 Web 版。<http://pinyin.hotoo.me/>
 - [hotoo/node-pinyin](https://github.com/hotoo/node-pinyin)
-
-### Mobile
-
-#### [Device.js](https://github.com/matthewhudson/device.js)
-
-Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，操作系统或浏览器相关的条件 CSS 或 JavaScript 代码。
-
-[插件下载](https://github.com/matthewhudson/device.js/archive/master.zip "Download")[在线演示](http://matthewhudson.me/projects/device.js/ "Download")
 
 ### 其他
 - [sweet.js](http://sweetjs.org/)
@@ -143,9 +139,11 @@ localForage is a JavaScript library that uses the very simple [localStorage API]
 - [用于展现图表的50种JavaScript库](http://www.infoq.com/cn/news/2013/01/50-javascript-chart-lib)
 
 ### D3
+
 - [Getting Started with D3](http://thinkingonthinking.com/Getting-Started-With-D3/)
 - [Using D3 with Rickshaw and Angular](http://tagtree.tv/d3-with-rickshaw-and-angular)
 - [Cubism.js](http://square.github.io/cubism/)  is a [D3](http://mbostock.github.com/d3/) plugin for visualizing time series
+- [Reusable Charts for D3.js](http://bugzu.github.io/reD3/)
 
 ### cytoscape
 - [cytoscape/cytoscape.js](https://github.com/cytoscape/cytoscape.js) A JavaScript graph library for analysis and visualisation (compatible with CommonJS/Node.js, jQuery 1.4+, and plain JavaScript)
@@ -186,6 +184,7 @@ __参考：__
 ### 代码工具
 - http://jsbin.com/
     + [JavaScript Tools of the Trade: JSBin - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/javascript-tools-of-the-trade-jsbin--net-36843)
+- [JSCritic](http://jscritic.com/)
 
 ### Debug
 

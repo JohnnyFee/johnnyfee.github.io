@@ -65,6 +65,6 @@ Open the repository settings via `Project|Repository Settings`, and on the `Pull
 	
 ## 参考资料：
 
-- [![Syntevo logo](/template/images/syntevo.png)](http://www.syntevo.com/ "Syntevo Home")
+- [SmartGit - Git Client: Documentation](http://www.syntevo.com/smartgithg/documentation/5/show?page=submodules)
 - <http://www.kafeitu.me/git/2012/03/27/git-submodule.html>
 

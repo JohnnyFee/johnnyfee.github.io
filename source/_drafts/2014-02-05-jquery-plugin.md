@@ -5,7 +5,7 @@ description: ""
 category: Jquery
 tags: [jquery]
 --- 
-##编写插件的模板
+## 编写插件的模板
 
 参考：[我最喜欢的jQuery插件模板 - OurJS.com](http://ourjs.com/detail/52be911dd17d41eb0b000025)
 原文：[My Favorite jQuery Plugin Template - Moshe's Blog](http://kolodny.github.io/blog/blog/2013/12/27/my-favorite-jquery-plugin-template/)
@@ -74,10 +74,19 @@ tags: [jquery]
         color: someVarThatMayBeSet ? 'red' : $.fn.borderize.defaults.color
     });
 
-##CSS
+## slick
+
+- [slick - the last carousel you'll ever need](http://kenwheeler.github.io/slick/)
+
+## Table
+
+- [响应式表格jQuery插件 – Responsive tables](http://www.shejidaren.com/responsive-tables-for-bootstrap-3.html)
+
+## CSS
+
 - [JSIZES](http://www.bramstein.com/projects/jsizes/) JQUERY EXTENSION PLUGIN FOR CSS PROPERTIES
 
-##Progress
+## Progress
 
 - [30个jQuery & CSS3加载动画和进度栏插件 - WEB开发者](http://www.admin10000.com/document/3957.html)
 
@@ -89,7 +98,11 @@ NProgress.js 是纳米级的进度条插件。拥有逼真的的涓涓细流动�
 
 [插件下载](https://github.com/rstacruz/nprogress/archive/master.zip "Download")[在线演示](http://ricostacruz.com/nprogress/ "Download")
 
-##Scroll
+### TAG
+
+- [taggingJS](http://sniperwolf.github.io/taggingJS/)
+
+## Scroll
 
 - [20 个用于处理页面滚动效果的 jQuery 插件](http://www.oschina.net/translate/20-jquery-plugins-for-scrolling-effects)
 - [garand / sticky](https://github.com/garand/sticky)
@@ -112,7 +125,7 @@ NProgress.js 是纳米级的进度条插件。拥有逼真的的涓涓细流动�
 
 [插件下载](https://github.com/JoelBesada/scrollpath/zipball/master "Download")  [在线演示](http://joelb.me/scrollpath/ "Demo")
 
-##Toolbar
+## Toolbar
 
 ### [Toolbar.Js](http://paulkinzett.github.io/toolbar/)
 
@@ -243,7 +256,7 @@ FlowType.JS 简化了这一困难，基于 特定元素的宽度改变字体大�
 
 
 
-###Jquery-maskMoney
+### Jquery-maskMoney
 [Jquery-maskMoney](http://plentz.github.io/jquery-maskmoney/) 
     jQuery plugin to mask data entry in the input text in the form of money (currency).
 
@@ -252,7 +265,7 @@ FlowType.JS 简化了这一困难，基于 特定元素的宽度改变字体大�
 - bug: 当输入的值超过浮点值的精度范围后，讲出现溢出的错误
     <https://github.com/plentz/jquery-maskmoney/issues/61>
  
-###设置光标位置
+### 设置光标位置
  
 [jQuery Set Cursor Position in Text Area](http://stackoverflow.com/questions/499126/jquery-set-cursor-position-in-text-area)
  
@@ -270,7 +283,7 @@ FlowType.JS 简化了这一困难，基于 特定元素的宽度改变字体大�
       }
     }(jQuery);
 
-##Templating
+## Templating
 
 10 个强大的JavaScript / jQuery 模板引擎推荐 <http://www.iteye.com/news/24827>
 
@@ -280,6 +293,6 @@ FlowType.JS 简化了这一困难，基于 特定元素的宽度改变字体大�
 - Tempo 2.0 <http://twigkit.github.io/tempo/>
 - janl / mustache.js <https://github.com/janl/mustache.js#readme>
 
-##参考
+## 参考
 
 - [期待已久的2013年度最佳 jQuery 插件揭晓 - WEB开发者](http://www.admin10000.com/document/3847.html)

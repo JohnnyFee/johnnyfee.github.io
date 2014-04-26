@@ -29,11 +29,15 @@ phonegap使用[davebalmer/joDoc](https://github.com/davebalmer/jodoc)来生成�
 
 <!--more-->
 
-##FAQ
+## JsDoc
+
+- [使用jsdoc生成组件API文档—jsdoc实战](http://www.36ria.com/5101)
+
+## JsDuck
 
 jsduck最初是为sencha docs服务的，所有sencha化的写法肯定会被自动识别。下面针对jsduck不能自动识别的内容逐一讨论。
 
-###Class文档化
+### Class文档化
 
 在非ExtJs世界，我们定义类的方法通常有以下几种：
 
@@ -58,7 +62,7 @@ jsduck最初是为sencha docs服务的，所有sencha化的写法肯定会被自
 
 符合这几种写法，jsduc都会自动识别为类，并正确生成文档。对于其他类型的，需要使用`@class`标签，显示标识为类。
 
-###兼容模块化编程
+### 兼容模块化编程
 
 我们以requirejs为例。
 
@@ -114,7 +118,7 @@ utils.js:
 
 即在方法前使用`@member`和在模块声明前使用`@class`标签。
 
-###多个参数的构造函数
+### 多个参数的构造函数
 
 对于ExtJS来说，构造函数为constructor方法。
 
@@ -149,7 +153,7 @@ utils.js:
 
 	};
 
-###Prototype
+### Prototype
 
 默认情况下，prototype方法会被识别为类方法。
 

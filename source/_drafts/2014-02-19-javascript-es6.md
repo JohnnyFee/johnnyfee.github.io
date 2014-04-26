@@ -19,8 +19,17 @@ tags: [javascript]
 - [Playing with iterators and generators in ECMAScript 6](http://macr.ae/article/iterators-and-generators.html)
 - [Replacing callbacks with ES6 Generators | Flippin' Awesome](http://flippinawesome.org/2014/02/10/replacing-callbacks-with-es6-generators/)
 
+## Async
+
+- [ES7 async functions - JakeArchibald.com](http://jakearchibald.com/2014/es7-async-functions/)
+
+## Parser
+
+- [zenparsing/esparse](https://github.com/zenparsing/esparse)
 ## Tutorial
 
 - [Solving riddles with Prolog and ES6 generators — curiosity-driven.org](https://curiosity-driven.org/prolog-interpreter)
-
+- [es6ify by thlorenz](http://thlorenz.github.io/es6ify/)
+- [JustinDrake/node-es6-examples](https://github.com/JustinDrake/node-es6-examples)
+- [Handling required parameters in ECMAScript 6](http://www.2ality.com/2014/04/required-parameters-es6.html)
 

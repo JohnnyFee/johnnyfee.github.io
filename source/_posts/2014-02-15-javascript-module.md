@@ -5,12 +5,13 @@ category: JavaScript
 tags: [javascript]
 ---
 
-### 
 ## CommonJS
 
 CommonJS规范为JavaScript制定了一个美好的愿景——希望JavaScript能够在任何地方运行。CommonJS是服务器端模块的规范，Node.js采用了这个规范。
 
 Web在发展，浏览器中出现了更多的标准API，这些过程发生在前端，后端JavaScript的规范却远远落后。对于JavaScript自身而言，它的规范依然是薄弱的，还有以下缺陷。
+
+规范内容参考： [JavaScript模块化开发（二）——CommonJS规范](http://www.feeldesignstudio.com/2013/09/javascript-module-pattern-commonjs)
 
 <!--more-->
 
@@ -33,14 +34,14 @@ __参考：__
 - [《深入浅出Node.js》试读：2.1　CommonJS规范](http://book.douban.com/reading/29343570/)。
 - [图灵社区 : 图书 : 1.6　CommonJS](http://www.ituring.com.cn/article/5793)
 
-###文档
+### 文档
 
 - [CommonJS: JavaScript Standard Library](http://www.commonjs.org/)
 - [CommonJS: CommonJS API](http://www.commonjs.org/specs/)
 - [CommonJS Spec Wiki](http://wiki.commonjs.org/wiki/CommonJS)
 - [Implementations - CommonJS Spec Wiki](http://wiki.commonjs.org/wiki/Implementations)
 
-##[CommonJS Modules](http://wiki.commonjs.org/wiki/Modules)
+## [CommonJS Modules](http://wiki.commonjs.org/wiki/Modules)
 
 提供CommonJS的模块加载规范。目前有三个版本，其中1.1.1还在制定中。
 
@@ -52,7 +53,7 @@ Modules/1.1较1.0仅增加了标示符module，require函数增加了main和path
 
 Nodejs实现了其中的1.0版本，参考[Implementations/node.js - CommonJS Spec Wiki](http://wiki.commonjs.org/wiki/Implementations/node.js)。
 
-###规范内容
+### 规范内容
 
 CommonJS module基本要求如下
 
@@ -62,7 +63,7 @@ CommonJS module基本要求如下
 4. require不能返回，则抛异常
 5. 仅能使用标示符exports导出API
 
-###定义模块
+### 定义模块
 __根据CommonJS规范，一个单独的文件就是一个模块。__加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象。下面就是一个简单的模块文件example.js。
 
     console.log("evaluating example.js");
@@ -93,7 +94,7 @@ __根据CommonJS规范，一个单独的文件就是一个模块。__加载模�
  
     exports.foobar = foobar;
 
-###加载模块
+### 加载模块
 不论是核心模块还是文件模块，require()方法对相同模块的二次加载都一律采用缓存优先的方式，这是第一优先级的。不同之处在于核心模块的缓存检查先于文件模块的缓存检查。
 
 调用该模块的方法如下：
@@ -111,22 +112,22 @@ js文件名前面需要加上路径，可以是相对路径（相对于使用req
       console.log("hello world")
     }
 
-###参考
+### 参考
 
 - [深入浅出Node.js（三）：深入Node.js的模块机制](http://www.infoq.com/cn/articles/nodejs-module-mechanism)
 - [JavaScript中模块“写法” - snandy - 博客园](http://www.cnblogs.com/snandy/archive/2012/03/08/2378441.html)
 
-##[Modules/Transport](http://wiki.commonjs.org/wiki/Modules/Transport)
+## [Modules/Transport](http://wiki.commonjs.org/wiki/Modules/Transport)
 
 提供模块从服务器到浏览器的多种传中方式。参考[Modules/Transport - CommonJS Spec Wiki]()  A variety of ways to transport a module from a server to a browser。
 
 Modules/1.1.1 规范里，只定义了模块的基本特性，并没有定义模块的存在形态。为了让模块能在不同的环境下都适用，CommonJS 需要定义 Module/Transport 规范，同时支持同步和异步。
 
-###参考
+### 参考
 
 - [CommonJS 的 Modules/Transport 和 Modules/Wrappings 规范有什么区别？](http://www.zhihu.com/question/20789867)
 
-##[Modules/Wrappings](http://wiki.commonjs.org/wiki/Modules/Wrappings)
+## [Modules/Wrappings](http://wiki.commonjs.org/wiki/Modules/Wrappings)
 
 Modules/Wrappings是CommonJS提出的另外一个基于浏览器模块加载器。CMD其实就是基于这个规范发展而来的，因为SeaJS实现了Modules/Wrappings，参考[Implementations/SeaJS - CommonJS Spec Wiki](http://wiki.commonjs.org/wiki/Implementations/SeaJS)。
 
@@ -152,7 +153,7 @@ Modules/Wrappings是CommonJS提出的另外一个基于浏览器模块加载器�
 
 [Modules/Wrappings](http://wiki.commonjs.org/wiki/Modules/Wrappings)的出现使得浏览器中实现它变得可能，包裹的函数作为回调。即使用script tag作为模块加载器，script完全下载后去回调，回调中进行模块定义。
 
-###规范内容
+### 规范内容
 
 该规范约定如下：
 
@@ -162,7 +163,7 @@ Modules/Wrappings是CommonJS提出的另外一个基于浏览器模块加载器�
 4. factory使用返回值和exports导出API
 5. factory如果是对象类型，则将该对象作为模块输出
 
-###定义模块
+### 定义模块
 
     // 一个基本的模块定义
     module.declare(function(require, exports, module)
@@ -176,7 +177,7 @@ Modules/Wrappings是CommonJS提出的另外一个基于浏览器模块加载器�
         foo: "bar"
     });
 
-###和AMD的区别
+### 和AMD的区别
 
 - 使用module.declare来申明模块。
 - Wrappings 和 AMD 最大的不同，在于 Wrappings 方案里，factory 的参数更简单，和 dependencies 无对应关系。
@@ -203,16 +204,19 @@ Modules/Wrappings是CommonJS提出的另外一个基于浏览器模块加载器�
       ...
     });
 
-###参考
+### 参考
 - [Node.js模块风格在浏览器中的尝试 - snandy - 博客园](http://www.cnblogs.com/snandy/archive/2012/03/09/2386092.html)
 
-##[AMD](https://github.com/amdjs/amdjs-api/wiki/AMD)
+## [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD)
 
 AMD是专门为浏览器中JavaScript环境设计的规范。它吸取了CommonJS的一些优点，但又不照搬它的格式。开始AMD作为CommonJS的 [Modules/Transport/C](http://wiki.commonjs.org/wiki/Modules/Transport/C) 存在，因无法与CommonJS开发者达成一致而独立出来。它有自己的[wiki](http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition) 和[讨论组](https://groups.google.com/group/amd-implement) 。
 
 CommonJS规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。AMD规范则是非同步加载模块，允许指定回调函数。由于Node.js主要用于服务器编程，模块文件一般都已经存在于本地硬盘，所以加载起来比较快，不用考虑非同步加载的方式，所以__CommonJS规范比较适用于Node.js__。但是，如果是浏览器环境，要从服务器端加载模块，这时就必须采用非同步模式，因此__浏览器端一般采用AMD规范__。
 
-###规范内容
+### 规范内容
+
+参考：
+[JavaScript模块化开发（三）——AMD规范 | Feeldesign Studio](http://www.feeldesignstudio.com/2013/09/javascript-module-pattern-amd)
 
 MD设计出一个简洁的写模块API：
 
@@ -226,7 +230,7 @@ MD设计出一个简洁的写模块API：
 
 id遵循CommonJS [Module Identifiers](http://wiki.commonjs.org/wiki/Modules/1.1.1#Module_Identifiers) 。dependencies元素的顺序和factory参数一一对应。
 
-###定义模块
+### 定义模块
 
     // 1. 定义无依赖的模块
     define(function() {
@@ -267,7 +271,7 @@ id遵循CommonJS [Module Identifiers](http://wiki.commonjs.org/wiki/Modules/1.1.
 
 除了define外，AMD还保留一个关键字require。require 作为规范保留的全局标识符，可以实现为 module loader。也可以不实现。
 
-###加载模块
+### 加载模块
 
     require(['foo', 'bar'], function ( foo, bar ) {
             // 这里写其余的代码
@@ -291,19 +295,19 @@ id遵循CommonJS [Module Identifiers](http://wiki.commonjs.org/wiki/Modules/1.1.
         };
     });
 
-###文档
+### 文档
 
 - [Modules/AsynchronousDefinition - CommonJS Spec Wiki](http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition)
 
-###工具
+### 工具
 
 - [afc163/cmdize](https://github.com/afc163/cmdize) Convert normal js to CMD module.
 
-###实现
+### 实现
 
-####[chenmnkken / seed](http://stylechen.com/)
+#### [chenmnkken / seed](http://stylechen.com/)
 
-####[RequireJS](http://requirejs.org/)
+#### [RequireJS](http://requirejs.org/)
 
 RequireJS是一个工具库，主要用于客户端的模块管理。它可以让客户端的代码分成一个个模块，实现异步或动态加载，从而提高代码的性能和可维护性。它的模块管理遵守[AMD规范](https://github.com/amdjs/amdjs-api/wiki/AMD)（Asynchronous Module Definition）。
 
@@ -320,28 +324,28 @@ __缺点：__
 
 参考 ：[CommonJS 的模块系统，AMD 和 Wrappings, 以及 RequireJS](http://blogread.cn/it/article/2957)
 
-###其他实现
+### 其他实现
 
 - [cujojs/curl](https://github.com/cujojs/curl)
 
-###参考
+### 参考
 
 - [jrburke/r.js](https://github.com/jrburke/r.js)
 - [Split off AMD? (was Re: [CommonJS] New amd-implement list)](https://groups.google.com/forum/#!topic/commonjs/lqCWO8tMp48)
 - [使用 AMD、CommonJS 及 ES Harmony 编写模块化的 JavaScript](http://justineo.github.io/singles/writing-modular-js/)
 - [AMD：浏览器中的模块规范 - snandy - 博客园](http://www.cnblogs.com/snandy/archive/2012/03/12/2390782.html)
 
-##[CMD](https://github.com/cmdjs/specification/blob/master/draft/module.md)
+## [CMD](https://github.com/cmdjs/specification/blob/master/draft/module.md)
 
 CMD规范由国内的[玉伯](http://lifesinger.github.com/)提出。
 
 AMD 是 RequireJS 在推广过程中对模块定义的规范化产出。CMD 是 SeaJS 在推广过程中对模块定义的规范化产出。类似的还有 CommonJS Modules/2.0 规范，是 BravoJS 在推广过程中对模块定义的规范化产出。这些规范的目的都是为了 JavaScript 的模块化开发，特别是在浏览器端的。目前这些规范的实现都能达成浏览器端模块化开发的目的。
 
-###定义模块
+### 定义模块
 
 - [CMD 模块定义规范 · Issue #242 · seajs/seajs](https://github.com/seajs/seajs/issues/242)
 
-###与AMD的区别
+### 与AMD的区别
 
 1. 对于依赖的模块，AMD 是提前执行，CMD 是延迟执行。不过 RequireJS 从 2.0 开始，也改成可以延迟执行（根据写法不同，处理方式不同）。CMD 推崇 as lazy as possible.
 
@@ -391,7 +395,7 @@ SeaJS 同时实现了[Modules/1.1.1](http://wiki.commonjs.org/wiki/Modules/1.1.1
 
 可能是因为这个原因，才为Sea.js重新指定了一个规范CMD。参考[Node.js模块风格在浏览器中的尝试 - snandy - 博客园](http://www.cnblogs.com/snandy/archive/2012/03/09/2386092.html)。
 
-###与 RequireJS 的异同
+### 与 RequireJS 的异同
 
 __相同之处：__
 
@@ -421,7 +425,7 @@ __教程：__
 - github document <https://github.com/seajs/seajs/issues?labels=documentation&page=1&state=closed>
 - 教程 <https://github.com/island205/HelloSea.js/blob/master/01-contents.md>
 
-##[UMD](https://github.com/umdjs/umd)
+## [UMD](https://github.com/umdjs/umd)
 
 AMD以浏览器为第一（browser-first）的原则发展，选择异步加载模块。它的模块支持对象（objects）、函数（functions）、构造器（constructors）、字符串（strings）、JSON等各种类型的模块。因此在浏览器中它非常灵活。
 
@@ -431,7 +435,7 @@ CommonJS module以服务器端为第一（server-first）的原则发展，选�
 
 UMD 定义那些既能在客户端又能在服务器端工作的模块，这样的模块同时也能和目前可用的主流脚本加载器一同工作。
 
-###实现
+### 实现
 UMD的实现很简单，先判断是否支持Node.js模块格式（exports是否存在），存在则使用Node.js模块格式。
 
 再判断是否支持AMD（define是否存在），存在则使用AMD方式加载模块。前两个都不存在，则将模块公开到全局（window或global）。
@@ -463,11 +467,11 @@ UMD的实现很简单，先判断是否支持Node.js模块格式（exports是否
 
 ![](http://pic002.cnblogs.com/images/2012/114013/2012031920341233.png)
 
-###参考
+### 参考
 - [UMD和ECMAScript模块 - snandy - 博客园](http://www.cnblogs.com/snandy/archive/2012/03/19/2406596.html)
 - [使用 AMD、CommonJS 及 ES Harmony 编写模块化的 JavaScript](http://justineo.github.io/singles/writing-modular-js/)
 
-##[ES Harmony/Modules](http://wiki.ecmascript.org/doku.php?id=harmony:modules)
+## [ES Harmony/Modules](http://wiki.ecmascript.org/doku.php?id=harmony:modules)
 
 ECMAScript的下一个版本Harmony已经考虑到了模块化的需求，目前还在努力指定中。
 
@@ -476,7 +480,7 @@ ECMAScript的下一个版本Harmony已经考虑到了模块化的需求，目前
 * **import**声明把某个模块的导出绑定为本地变量，并可以重命名来避免命名冲突。
 * **export**声明声明了某个模块的本地绑定是外部可见的，这样其它模块就能够读取它们但却无法进行修改。有趣的是，模块可以导出子模块，却无法导出已经在别处定义过的模块。你同样可以给导出重命名来让它们不同于本地的名字。
 
-###定义模块
+### 定义模块
 
 使用module关键字来定义一个模块。
 
@@ -487,7 +491,7 @@ ECMAScript的下一个版本Harmony已经考虑到了模块化的需求，目前
         export var pi = 3.141593;
     }   
 
-###加载模块   
+### 加载模块   
 使用import关键字来加载外部模块
 
     // we can import in script code, not just inside a module
@@ -534,7 +538,7 @@ ECMAScript的下一个版本Harmony已经考虑到了模块化的需求，目前
 
 除此之外，还可以远程载入的模块、异步加载模块等，请参考[使用 AMD、CommonJS 及 ES Harmony 编写模块化的 JavaScript](http://justineo.github.io/singles/writing-modular-js/)。
 
-###参考
+### 参考
 - [UMD和ECMAScript模块 - snandy - 博客园](http://www.cnblogs.com/snandy/archive/2012/03/19/2406596.html)
 - [harmony:modules](http://wiki.ecmascript.org/doku.php?id=harmony:modules)
 - [harmony:module_loaders](http://wiki.ecmascript.org/doku.php?id=harmony:module_loaders)

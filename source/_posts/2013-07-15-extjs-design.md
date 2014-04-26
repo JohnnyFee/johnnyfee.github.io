@@ -5,8 +5,9 @@ category : ExtJS
 tagline: "设计规范和优化"
 tags : [extjs, bestpractice]
 --- 
-##设计
-###模版方法
+## 设计
+### 模版方法
+
 - [Components](http://docs.sencha.com/extjs/4.2.1/#!/guide/components)
 
 用于被子类覆盖的方法，通常需要先调用父方法，如onRender。一般，如果父类提供了模版方法，就不要使用事件响应去实现逻辑，因为事件可能被挂起或者停止。
@@ -46,7 +47,8 @@ tags : [extjs, bestpractice]
 - beforeComponentLayout This method is invoked before the Component is laid out.
 	
 
-###命名规范和工程的文件结构
+## 命名规范和工程的文件结构
+
 - 	命名控件的第一段和类名都采用pascal写法，其他都用小写字母，如MyCompany.data.CoolProxy
 -	缩写字母也采用pascal形式，如Ext.data.JsonProxy instead of Ext.data.JSONProxy
 -	Store使用复数命名，Model使用单数命名。
@@ -54,8 +56,9 @@ tags : [extjs, bestpractice]
 -	方法也用驼峰形式，对于缩写词同样如此。
 -	静态常量用全大写形式，其他同方法命名规则。
 
-##本地化
-####本地化类
+## 本地化
+
+### 本地化类
 
 	Ext.define("Ext.locale.es.form.field.Number", {
 	    override: "Ext.form.field.Number",
@@ -66,11 +69,11 @@ tags : [extjs, bestpractice]
 	    nanText: "{0} no es un número válido"
 	});
 
-####使用本地化
+### 使用本地化
 
 	<script type="text/javascript" src="extjs/locale/ext-lang-es.js"></script>
 
-####在页面加载本地化js
+### 在页面加载本地化js
 
 	<script type="text/javascript" src="extjs/locale/ext-lang-es.js"></script>
 
@@ -78,7 +81,7 @@ tags : [extjs, bestpractice]
 
 - [Class System](http://docs.sencha.com/extjs/4.2.1/#!/guide/class_system)
 
-#### 获得方法名
+### 获得方法名
 
 	// 可以获取所在方法
 	Ext.getDisplayName(arguments.callee)
@@ -86,14 +89,15 @@ tags : [extjs, bestpractice]
 	//抛出异常的方法：
 	throw new Error('['+ Ext.getDisplayName(arguments.callee) +'] Some message here');
 
-####错误堆栈
+### 错误堆栈
+
 当在`Ext.define()`使用上述方式中抛出异常后，可以在Chorme或Firefox的调试器中查看到错误堆栈。
 
-##性能优化
+## 性能优化
 
 - [Optimizing Ext JS 4.1-based Applications](http://docs.sencha.com/extjs/4.2.1/#!/guide/performance)
 
-####监听器
+### 监听器
 对于只需要加载一次的store，则可以使用single属性，避免每次出发事件又重新加载
 
 	listeners: {
@@ -103,19 +107,23 @@ tags : [extjs, bestpractice]
 
 避免在afterrender事件中修改DOM（以及DOM的style）。要达到此目的，可以使用beforerender事件，此时控件大小未确认，如果需要在控件大小确认之后触发，可以使用boxready事件。
 
-####doLayout and doComponentLayout
+### doLayout and doComponentLayout
+
 除了DOM被直接在代码中修改需要调用这两个函数外，其他情况禁止调用该函数。
 
-####尽量减少控件的嵌套
+### 尽量减少控件的嵌套
 
-####尽量使用更基层的控件
+### 尽量使用更基层的控件
+
 因为控件越复杂，代价越高。
 
-####减少border layout嵌套
+### 减少border layout嵌套
+
 可以为一个border layout添加两个west region，并且使用weight属性来决定显示哪一个。
 
-####减少DOM读写
-尽量不要在控件呈现之后去调用setStyle, addCls, removeCls, 添加控件等方法去修改DOM元素。为了减少重新布局，可以使用以下代码进行DOM的批量修改。
+### 减少DOM读写
+
+尽量不要在控件呈现之后去调用setStyle, addCls, removeCls,添加控件等方法去修改DOM元素。为了减少重新布局，可以使用以下代码进行DOM的批量修改。
 
 	{
 	    Ext.suspendLayouts();
@@ -152,11 +160,11 @@ tags : [extjs, bestpractice]
 	// Trigger a layout.
 	containerPanel.doLayout();
 
-####性能分型工具
+### 性能分型工具
 
 可以使用./examples/page-analyzer/page-analyzer.html来分析页面的性能。
 
-####Additional Resources
+### Additional Resources
 
 The following resources are also useful for application performance tuning:
 
@@ -167,34 +175,36 @@ Information about dynaTrace performance management technology for Internet Explo
 Chrome Speed Tracer website and [tutorial](http://www.youtube.com/watch?v=Sn_3rJaexKc)
 Firebug profiler [tutorial](http://michaelsync.net/2007/09/10/firebugtutorial-logging-profiling-and-commandline-part-ii)
 
-##其他
-###浏览器和操作系统
+## 其他
+### 浏览器和操作系统
+
 Ext.env.Browser用来检测浏览器的属性，Ext.env.FeatureDetector用来检测HTML5和CSS3的特性，Ext.env.OS用来检测操作系统的一些属性。
 
-###基础类
+## 基础类
+
 Ext.Function 完成Functions的包装，如改变作用于，延时执行，循环执行等。
 
-###Drawing
+## Drawing
 
 - [Drawing](http://docs.sencha.com/extjs/4.2.1/#!/guide/drawing)
 
-###主题
+## 主题
 
 - [Theming Ext JS](http://docs.sencha.com/extjs/4.2.1/#!/guide/theming)
 
-###拖拽
+## 拖拽
 
 - [Drag and Drop](http://docs.sencha.com/extjs/4.2.1/#!/guide/drag_and_drop)
 
 除了dd包，可以使用工具类ComponentDragger来实现（特别是悬浮控件)拖拽。使用Splitter来实现相邻控件的Resize。
 [参考](http://docs.sencha.com/ext-js/4-1/#!/guide/keyboard_nav)
 
-###键盘导航
+## 键盘导航
 
 - [Keyboard Navigation](http://docs.sencha.com/extjs/4.2.1/#!/guide/keyboard_nav)
 - [Creating Accessible Ext JS Applications](http://docs.sencha.com/extjs/4.2.1/#!/guide/accessibility)
 
-###单元测试
+## 单元测试
 
 - [Unit Testing with Jasmine](http://docs.sencha.com/extjs/4.2.1/#!/guide/testing)
 - [Unit testing MVC Controllers](http://docs.sencha.com/extjs/4.2.1/#!/guide/testing_controllers)

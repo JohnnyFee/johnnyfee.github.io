@@ -6,7 +6,7 @@ category: Qt
 tags: [qt, tutorial]
 --- 
 
-##QT 桌面环境搭建
+## QT 桌面环境搭建
 
 如果你想在Windows上使用QtCreator开发应用，你至少需要安装以下这些东东：
 
@@ -45,6 +45,20 @@ tags: [qt, tutorial]
 
 现在应该可以正常调试了。
 
+目前以下构建配套可以用：
+
+**Desktop Qt 4.8**
+
+只能按照上述方法单步下载并安装，构建信息如下：
+
+![qt4.8bundle.png](http://johnnyimages.qiniudn.com/qt4.8bundle.png)
+
+**Desktop Qt 5.2.0**
+
+该版本可通过官方的离线安装[Qt 5.2.0 for Windows 32-bit (MinGW 4.8, OpenGL, 689 MB)](http://download.qt-project.org/official_releases/qt/5.2/5.2.0/qt-windows-opensource-5.2.0-mingw48_opengl-x86-offline.exe) 包安装。
+
+![qt5.2bundle.png](http://johnnyimages.qiniudn.com/qt5.2bundle.png)
+
 ## Tutorial
 
 ### Official
@@ -66,8 +80,6 @@ tags: [qt, tutorial]
 ## Qt Quick
 
 Qt Quick 是一种高级用户界面技术，使用它可轻松地创建供移动和嵌入式设备使用的动态触摸式界面和轻量级应用程序。三种全新的技术共同构成了 Qt Quick 用户界面创建工具包：一个改进的Qt Creator IDE、一种新增的简便易学的语言 (QML) 和一个新加入 Qt 库中名为 QtDeclarative 的模块，这些使得 Qt 更加便于不熟悉 C++ 的开发人员和设计人员使用。
-
-__教程:__[Qt Quick](http://qt.csdn.net/qtquick/index_4.aspx)
 
 ## Qt Qml
 
@@ -104,6 +116,7 @@ __控制台调试__：[调试Qt Quick 2 – 控制台API | Qt Chinese blog](http
 或者：
 
     QTextCodec::setCodecForLocale(    QTextCodec::codecForName("GBK"));
+    
     // 设置tr的编码方式.
     QTextCodec::setCodecForTr(QTextCodec::codecForName("GBK"));
 
@@ -143,6 +156,15 @@ Q_OBJECT是一个宏，只有加入了Q_OBJECT，你才能使用QT中的signal�
 
     // 切换到xml目录
     xmlDir.cd( "xml" );
+
+### QVariant to `QObject*`
+
+    // From QVariant to QObject *
+    QObject * obj = qvariant_cast<QObject *>(item->data(Qt::UserRole));
+    // from QObject* to myClass*
+    myClass * lmyClass = qobject_cast<myClass *>(obj);
+
+参考：[QVariant to QObject* - Stack Overflow](http://stackoverflow.com/questions/3887064/qvariant-to-qobject)
 
 ## Reference
 

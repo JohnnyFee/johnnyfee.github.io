@@ -5,12 +5,13 @@ category : ExtJS
 tagline: "类系统"
 tags : [extjs, class]
 --- 
-##命名规则
+## 命名规则
+
 [Class System](http://docs.sencha.com/extjs/4.0.7/#!/guide/class_system)
 
 - Class names may only contain alphanumeric characters. 
 - Class names should be grouped into packages where appropriate and properly namespaced using object property dot-notation.
-s
+
 	`MyCompany.data.CoolProxy`
 	
 	`MyCompany.Application`
@@ -35,8 +36,8 @@ s
 
 <!--more-->		
 
-##定义类
-####使用旧的方式
+## 定义类
+### 使用旧的方式
 
 方式一：
 
@@ -50,7 +51,7 @@ s
 	Ext.ns('My.cool');
 	My.cool.Window = Ext.extend(Ext.Window, { ... });
 
-###使用新的方式
+### 使用新的方式
 
 	Ext.define(className, members, onClassCreated);
 
@@ -88,11 +89,12 @@ This is an example:
 
 使用字符串作为类名的有助于自动创建命名控件，动态加载所需要的类，而不产生编译错误。
 
-###创建对象
+### 创建对象
+
 `Ext.create('widget.useredit');` 等价于 `Ext.widget('useredit');`
  
 
-###Configuration
+### Configuration
 
 - Configurations are completely encapsulated from other class members
 - Getter and setter, methods for every config property are automatically generated into the class' prototype during class creation if the class does not have these methods already defined.
@@ -163,7 +165,7 @@ And here's an example of how it can be used:
 	myWindow.setBottomBar({ height: 100 }); // Bottom bar's height is changed to 100
 
 
-###动态加载(设计期)
+### 动态加载(设计期)
 
 当js在方法执行的时候，Ext碰到没有定义的类时，会同步地加载相关的文件。为了避免这种动作导致的延时积累，可以使用requires属性或者在调用Ext.application中调用Ext.require方法来保证加载该文件之前，把其依赖的文件都加载上来。
 
@@ -172,7 +174,7 @@ And here's an example of how it can be used:
 
 框架会根据requires、mixins、uses、extends关键字来动态加载所需要的文件。
 
-###Mixins
+### Mixins
 
 	Ext.define('Sample.Musician', {
 	    extend: 'Sample.Person',
@@ -185,7 +187,7 @@ And here's an example of how it can be used:
 
 如果mixins中的方法和定义类的方法相同，则mixins中的方法被覆盖，但是可以通过mixins中的对象，如this.mixins.canSing.sing.call(this); 参考[这里](http://www.sencha.com/forum/showthread.php?131646-Ask-about-Mixins)。
 
-###Statics和Self
+### `Statics`和`Self`
 参考Ext.Base中两个属性的文档。两者都是作用于独立的，this.self得到的值为子类的Class中的静态变量，而static跟this无关，返回它定义类的Class。
 
 	Ext.define('Computer', {
@@ -208,7 +210,7 @@ And here's an example of how it can be used:
 	var dellComputer = Computer.factory('Dell');
 	alert(Computer.instanceCount); // Alerts "2" 
 
-###Singleton
+### Singleton
 在类中声明singleton:true表示单例，并且框架会自动初始化一个和类名相同的实例。 
 
 	listeners: {
@@ -218,16 +220,17 @@ And here's an example of how it can be used:
 
 如果希望事件只触发一次，则添加single属性。
 
-###Override
+### Override
 - [Compiler-Friendly Code Guidelines](http://localhost:8080/extjs/docs/index.html#!/guide/command_code)
 
-	Ext.define('MyApp.patches.grid.Panel', {
-	    override: 'Ext.grid.Panel',
+		Ext.define('MyApp.patches.grid.Panel', {
+		    override: 'Ext.grid.Panel',
 
-	    ...
-	});
+		    ...
+		});
 
-####Using callParent and callSuper
+#### Using callParent and callSuper
+
 To support all of these new uses cases, callParent was enhanced in Ext JS 4.0 and Sencha Touch 2.0 to "call the next method". The "next method" may be an overridden method or an inherited method. As long as there is a next method, callParent will call it.
 
 Another way to view this is that callParent works the same for all forms of Ext.define, be they classes or overrides.
@@ -236,90 +239,92 @@ While this helped in some areas, it unfortunately made bypassing the original me
 
 In future releases, the compiler will use this semantic difference to perform dead-code elimination of overridden methods.
 
-####Override有以下应用场景
-#####打补丁
+#### Override有以下应用场景
 
-作为补丁时，命名规则如`(Ext -> MyApp.patches).grid.Panel`，表示重写`Ext.grid.Panel`，框架升级时，需要注意是否可以去除这些override。
+- 打补丁
 
-#####作为局部类
-When dealing with code generation (as in Sencha Architect), it is common for a class to consist of two parts: one machine generated and one human edited. In some languages, there is formal support for the notion of a "partial class" or a class-in-two-parts.
+	作为补丁时，命名规则如`(Ext -> MyApp.patches).grid.Panel`，表示重写`Ext.grid.Panel`，框架升级时，需要注意是否可以去除这些override。
 
-Using an override, you can manage this cleanly:
+- 作为局部类
 
-In ./foo/bar/Thing.js:
+	When dealing with code generation (as in Sencha Architect), it is common for a class to consist of two parts: one machine generated and one human edited. In some languages, there is formal support for the notion of a "partial class" or a class-in-two-parts.
 
-	Ext.define('Foo.bar.Thing', {
-	    // NOTE: This class is generated - DO NOT EDIT...
+	Using an override, you can manage this cleanly:
 
-	    requires: [
-	        'Foo.bar.custom.Thing'
-	    ],
+	In `./foo/bar/Thing.js`:
 
-	    method: function () {
-	        // some generated method
-	    },
+		Ext.define('Foo.bar.Thing', {
+		    // NOTE: This class is generated - DO NOT EDIT...
 
-	    ...
-	});
+		    requires: [
+		        'Foo.bar.custom.Thing'
+		    ],
 
-In ./foo/bar/custom/Thing.js:
+		    method: function () {
+		        // some generated method
+		    },
 
-	Ext.define('Foo.bar.custom.Thing', {
-	    override: 'Foo.bar.Thing',
+		    ...
+		});
 
-	    method: function () {
-	        this.callParent(); // calls generated method
-	        ...
-	    },
+	In `./foo/bar/custom/Thing.js`:
 
-	    ...
-	});
+		Ext.define('Foo.bar.custom.Thing', {
+		    override: 'Foo.bar.Thing',
 
-Naming Recommendations:
+		    method: function () {
+		        this.callParent(); // calls generated method
+		        ...
+		    },
 
-- Organize generated vs. hand-edited code by namespace.
-- If not by namespace, consider a common base name with a suffix on one or the other (e.g., "Foo.bar.ThingOverride" or "Foo.bar.ThingGenerated") so that the parts of a class collate together in listings.
+		    ...
+		});
 
-#####Overrides as Aspects
+	Naming Recommendations:
 
-A common problem for base classes in object-oriented designs is the "fat base class". This happens because some behaviors apply across all classes. When these behaviors (or features) are not needed, however, they cannot be readily removed if they are implemented as part of some large base class.
+	- Organize generated vs. hand-edited code by namespace.
+	- If not by namespace, consider a common base name with a suffix on one or the other (e.g., "Foo.bar.ThingOverride" or "Foo.bar.ThingGenerated") so that the parts of a class collate together in listings.
 
-Using overrides, these features can be collected in their own hierarchy and then requires can be used to select these features when needed.
+	- Overrides as Aspects
 
-In ./foo/feature/Component.js:
+		A common problem for base classes in object-oriented designs is the "fat base class". This happens because some behaviors apply across all classes. When these behaviors (or features) are not needed, however, they cannot be readily removed if they are implemented as part of some large base class.
 
-	Ext.define('Foo.feature.Component', {
-	    override: 'Ext.Component',
+	Using overrides, these features can be collected in their own hierarchy and then requires can be used to select these features when needed.
 
-	    ...
-	});
-	
-In ./foo/feature/grid/Panel.js:
+	In ./foo/feature/Component.js:
 
-	Ext.define('Foo.feature.grid.Panel', {
-	    override: 'Ext.grid.Panel',
+		Ext.define('Foo.feature.Component', {
+		    override: 'Ext.Component',
 
-	    requires: [
-	        'Foo.feature.Component' // since overrides do not "extend" each other
-	    ],
+		    ...
+		});
+		
+	In ./foo/feature/grid/Panel.js:
 
-	    ...
-	});
+		Ext.define('Foo.feature.grid.Panel', {
+		    override: 'Ext.grid.Panel',
 
-This feature can be used now by requiring it:
+		    requires: [
+		        'Foo.feature.Component' // since overrides do not "extend" each other
+		    ],
 
-	...
-	requires: [
-	    'Foo.feature.grid.Panel'
-	]
+		    ...
+		});
 
-Or with a proper "bootstrap" file (see [Workspaces in Sencha Cmd](http://docs.sencha.com/extjs/4.2.1/#!/guide/command_workspace) or [Single-Page Ext JS Apps](http://docs.sencha.com/extjs/4.2.1/#!/guide/command_app_single))
+	This feature can be used now by requiring it:
 
-	...
-	requires: [
-	    'Foo.feature.*'
-	]
-	
-Naming Recommendation:
+		...
+		requires: [
+		    'Foo.feature.grid.Panel'
+		]
 
-- Organize generated vs. hand-edited code by namespace. This enables use of wildcards to bring in all aspects of the feature.
+	Or with a proper "bootstrap" file (see [Workspaces in Sencha Cmd](http://docs.sencha.com/extjs/4.2.1/#!/guide/command_workspace) or [Single-Page Ext JS Apps](http://docs.sencha.com/extjs/4.2.1/#!/guide/command_app_single))
+
+		...
+		requires: [
+		    'Foo.feature.*'
+		]
+		
+	Naming Recommendation:
+
+	- Organize generated vs. hand-edited code by namespace. This enables use of wildcards to bring in all aspects of the feature.

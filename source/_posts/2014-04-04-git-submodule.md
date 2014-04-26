@@ -62,7 +62,22 @@ Select the submodule in the Directories view and invoke `Remote|Pull`. On the Pu
 ### Pulling on the Outer Repository
 
 Open the repository settings via `Project|Repository Settings`, and on the `Pull` tab, enable **Update registered submodules**, so that SmartGit/Hg automatically updates all registered submodules when pulling on the outer repository. Additionally, you may also enable **And initialize new submodules**; with this, SmartGit/Hg will update not only registered submodules when pulling, but also uninitialized submodules, after having initialized them. The aforementioned Update option will only fetch commits as needed, i.e. when a commit is referenced by the outer repository as the current state of the submodule. If you want to fetch all new commits instead, enable the option **Always fetch new commits, tags and branches from submodule**. Note that when you do a pull on the outer repository, you need to pull with subsequent rebase or merge, otherwise new submodule commits will only be fetched, without changing the submodule state (i.e. the commit the submodule is currently pointing at).
-	
+
+## git subtree
+
+- [apenwarr/git-subtree](https://github.com/apenwarr/git-subtree)
+- [使用git subtree集成项目到子目录 « XA技术不宅](http://aoxuis.me/posts/2013/08/07/git-subtree/)
+- [git subtree 替代 git submodule // Speaker Deck](https://speakerdeck.com/cloudsben/git-subtree-ti-dai-git-submodule)
+- [Alternatives To Git Submodule: Git Subtree - Atlassian Blogs](http://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/)
+
+## git subrepo
+
+- [ingydotnet/git-subrepo](https://github.com/ingydotnet/git-subrepo)
+
+## 比较
+
+- [Exploring an alternative to git-subtree · mos6581](http://www.mos6581.org/git_subtree_alternative)
+
 ## 参考资料：
 
 - [SmartGit - Git Client: Documentation](http://www.syntevo.com/smartgithg/documentation/5/show?page=submodules)

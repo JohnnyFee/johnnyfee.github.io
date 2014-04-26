@@ -62,8 +62,10 @@ tags: [javascript, mvc]
 * Example [http://backbonejs.org/#examples](http://backbonejs.org/#examples)
 * Tutorial [https://github.com/jashkenas/backbone/wiki/Tutorials%2C-blog-posts-and-example-sites](https://github.com/jashkenas/backbone/wiki/Tutorials%2C-blog-posts-and-example-sites)
 * Wiki https://github.com/jashkenas/backbone/wiki
-* 中文文档 http://www.csser.com/tools/backbone/backbone.js.html - 插件 - Backbone.localStorage https://github.com/jeromegn/abckbone.localstorage A localStorage adapter for Backbone.js
+* 中文文档 <http://www.csser.com/tools/backbone/backbone.js.html> 
 * [From Backbone Views To React – Leonardo Garcia Crespo](http://leoasis.github.io/posts/2014/03/22/from_backbone_views_to_react/)
+* 插件 
+	- [Backbone.localStorage](https://github.com/jeromegn/abckbone.localstorage) A localStorage adapter for Backbone.js
 
 ### Tutorial
 
@@ -120,6 +122,10 @@ Riot is the most minimal approach to MV* world. It weighs 1kb and has only 3 pub
 * [13 Steps to AngularJS Modularization | Safari Books Online's Official Blog](http://blog.safaribooksonline.com/2014/03/27/13-step-guide-angularjs-modularization/)
 
 可以参考的东西，链式编程，DI模式。
+
+### Tutorial
+
+- [OutlawAndy/relativeDate](https://github.com/outlawandy/relativeDate)
 
 ## 框架大小
 

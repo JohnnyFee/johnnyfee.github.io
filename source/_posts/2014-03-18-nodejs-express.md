@@ -1944,8 +1944,23 @@ UTF-8 is the most popular encoding format on the Web, and is the default in Java
 
 ## Express in Production
 
-TODO
+Express looks up the `NODE_ENV` environment variable to determine the environment it is in. If the environment variable is not defined, it assumes it as a development environment.
+
+Since Express depends on the `NODE_ENV` environment variable to determine the environment, it is pretty easy to make Express behave like it is in the production environment. Just start the app with NODE_ENV temporarily set to production:
+
+    $ NODE_ENV=production node app
+
+- [likeastore/maintenance](https://github.com/likeastore/maintenance)
 
 ## Library
 
 - [Express-di by luin](http://luin.github.io/express-di/) Bring dependency injection to the Express.
+    - [Express 框架 middleware 的依赖问题与解决方案 | Zihua Li](http://zihua.li/2014/03/using-dependency-injection-to-optimise-express-middlewares/)
+
+## More
+
+- [StrongLoop | Using Streaming Chunked HTML to Get Node.js to Deliver More Data](http://strongloop.com/strongblog/streaming-chunked-html-node-js-data/)
+
+## Tutorial
+
+- [Build a RESTful API Using Node and Express 4](http://scotch.io/tutorials/javascript/build-a-restful-api-using-node-and-express-4)

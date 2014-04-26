@@ -4,7 +4,7 @@ title: "JavaScript 核心"
 category: JavaScript
 tags: [javascript]
 --- 
-##核心概念
+## 核心概念
 
 - [推荐10款优秀的JavaScript Web UI库 框架和套件](http://www.admin10000.com/document/3740.html)
 - [理解Javascript的闭包](http://www.admin10000.com/document/238.html)
@@ -37,29 +37,30 @@ __From Onenote:__
 * [Video: Douglas Crockford, “Advanced JavaScript”](http://yuiblog.com/blog/2006/11/27/video-crockford-advjs/)  视频在 financeserver 上有。
 * [视频 : Douglas_Crockford_Advanced_JavaScript](http://v.youku.com/v_show/id_XNjA2NDU2NzU2.html) YouKu 上的视频镜像。
 
-##JavaScript辩护
+## JavaScript辩护
 
 - [javascript运行机制之执行顺序详解](http://www.admin10000.com/document/3752.html)
 - [Javascript将统治世界](http://www.admin10000.com/document/3789.html)
 
-##Tutorial
+## Tutorial
 
 - [只有20行Javascript代码！手把手教你写一个页面模板引擎](http://www.admin10000.com/document/3769.html)
 
-##大牛
+## 大牛
+
 - [只有20行Javascript代码！手把手教你写一个页面模板引擎](http://www.admin10000.com/document/3769.html)
 - [JavaScript大牛：Douglas Crockford @ 随网之舞](http://dancewithnet.com/2009/03/29/douglas-crockford/)
 - [深入理解JavaScript系列](http://www.cnblogs.com/TomXu/archive/2011/12/15/2288411.html)
 
-##规范
+## 规范
 
 - [JavaScript程序编码规范 @ 随网之舞](http://dancewithnet.com/snapshot/code-conventions-for-the-javascript-programming-language/)
 
-##经典
+## 经典
 
 - [前端 JavaScript 架构（完结）](http://www.cnblogs.com/nuysoft/)  独立博客：[Hello World!](http://nuysoft.com/)
 
-##Tips
+## Tips
 
 - [泄露你的JavaScript技术很烂的五个表现](http://www.admin10000.com/document/1319.html)
 
@@ -72,18 +73,23 @@ __From Onenote:__
 - [JavaScript Module模式(译文)](http://blog.csdn.net/ustczxf1981/article/details/5275963)
 - [A JavaScript Module Pattern - YUI Blog](http://yuiblog.com/blog/2007/06/12/module-pattern/)
 
-##Debugger
+## Debugger
 
 - [五个你必须知道的JavaScript和web debug技术）](http://www.w3cfuns.com/article-5598996-1-1.html)
 - [以小见大、由浅入深-谈如何面试Javascript工程师](http://www.w3cfuns.com/article-2635-1-1.html)
 
-##其他资料
+## 其他资料
 
 - [45本免费的JavaScript书籍资源](http://www.admin10000.com/document/3672.html)
 - [超实用的JavaScript技巧及最佳实践（上）](http://www.admin10000.com/document/3589.html)
 - [2013 前端技术盘点](http://www.admin10000.com/document/3613.html) 
 
-##TODO
+## Kernal
+
+- [Functional JavaScript, Part 3: .apply(), .call(), and the arguments object - Tech.Pro](http://tech.pro/tutorial/2010/functional-javascript-part-3-apply-call-and-the-arguments-object)
+- [Functional JavaScript, Part 2: What makes a language "functional"? - Tech.Pro](http://tech.pro/tutorial/2009/functional-javascript-part-2-what-makes-a-language-functional)
+
+## TODO
 
 - [Node.js 概述 -- JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/nodejs/basic.html)
 - [ruanyf/jstutorial](https://github.com/ruanyf/jstutorial)

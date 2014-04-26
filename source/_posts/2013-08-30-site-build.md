@@ -19,6 +19,8 @@ tags: [site]
 ## Tutorial
 
 - [听说你要做网站 | 简书](http://jianshu.io/p/aa1294d879fc)
+- [域名和空间 – 如何搭建个人网站](http://keenwon.com/415.html)
+- [后记：上万访问量的考验](http://keenwon.com/980.html)
 
 ## 参考
 

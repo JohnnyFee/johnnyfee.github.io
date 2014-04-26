@@ -57,8 +57,7 @@ tags: [qt]
 
 通过调用 QObject 对象的 connect 函数来将某个对象的信号与另外一个对象的槽函数相关联，这样当发射者发射信号时，接收者的槽函数将被调用。该函数的定义如下：
 
-    bool QObject::connect ( const QObject * sender, const char * signal, 
-     const QObject * receiver, const char * member ) [static]
+    bool QObject::connect (const QObject * sender, const char * signal, const QObject * receiver, const char * member)
 
 这个函数的作用就是将发射者 sender 对象中的信号 signal 与接收者 receiver 中的 member 槽函数联系起来。当指定信号 signal 时必须使用 QT 的宏 SIGNAL()，当指定槽函数时必须使用宏 SLOT()。如果发射者与接收者属于同一个对象的话，那么在 connect 调用中接收者参数可以省略。
 

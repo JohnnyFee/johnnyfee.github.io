@@ -24,3 +24,4 @@ tle=docs/cplat/rt/node.js)
 ## BAE
 
 - [docs/cplat/bae/log - 百度开放云平台](http://developer.baidu.com/wiki/index.php?title=docs/cplat/bae/log)
+- [BAE | BAE技术博客](http://godbae.duapp.com/?author=1)

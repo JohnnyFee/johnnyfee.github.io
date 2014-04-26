@@ -6,11 +6,13 @@ tagline: "表单、表格等常用控件"
 tags : [extjs, view]
 --- 
 ##	Component
-####EXTJS控件层次
+
+### EXTJS控件层次
 
 ![EXTJS控件层次](http://docs.sencha.com/extjs/4.2.1/guides/components/component_hierarchy.png)
 
-####悬浮控件
+### 悬浮控件
+
 Window控件默认是悬浮控件，任何控件都可以通过制定float属性来设置是否为悬浮控件。非悬浮控件需要指定`renderTo`属性，或者作为子控件加载到其他控件中，而悬浮控件不需要这样做，而只需要调用show方法。
 
 	var panel = Ext.create('Ext.panel.Panel', {
@@ -36,7 +38,7 @@ Here are a few other configurations and methods to make note of related to float
 
 For a working demo of floating Component features see the [Floating Panel Example](http://docs.sencha.com/extjs/4.2.1/guides/components/examples/floating_panel).	
 
-####显示和隐藏
+### 显示和隐藏
 
 All Components have built in show and hide methods. The default CSS method used to hide the Component is "display: none", but this can be changed using the hideMode configuration:
 
@@ -50,7 +52,7 @@ All Components have built in show and hide methods. The default CSS method used 
 	panel.hide(); // hide the component
 	panel.show(); // show the component
 
-####实现自定义控件
+### 实现自定义控件
 
 - [Components](http://docs.sencha.com/extjs/4.2.1/#!/guide/components)
 
@@ -109,7 +111,7 @@ Usage:
 
 	image.setSrc('http://www.sencha.com/img/sencha-large.png');
 
-####实现自定义Container
+### 实现自定义Container
 
 If the required UI Component is to contain other Components, but does not need any of the previously mentioned additional capabilities of a Panel, then Ext.container.Container is the appropriate class to extend. At the Container level, it is important to remember which Layout is to be used to render and manage child Components.
 
@@ -121,7 +123,7 @@ Containers have the following additional template methods:
 - beforeLayout This method is invoked before the Container has laid out (and rendered if necessary) its child Components.
 - afterLayout This method is invoked after the Container has laid out (and rendered if necessary) its child Components.
 
-##Panel
+## Panel
 
 Panels have the following additional template methods:
 
@@ -130,7 +132,7 @@ Panels have the following additional template methods:
 - onDockedAdd This method is invoked after a docked item is added to the Panel
 - onDockedRemove This method is invoked after a docked item is removed from the Panel	
 
-##Form
+## Form
 ### 验证
 #### 内置的验证
 
@@ -146,7 +148,7 @@ It's easy to change the location of a Field's error message using the `msgTarget
 
 ![msgTarget](http://docs.sencha.com/extjs/4.2.1/guides/forms/custom_error_message.png)
 
-####自定义验证
+### 自定义验证
 
 The simplest way to implement a custom validation is to use the Text Field's `regex` configuration to apply validation rules, and the `maskRe` configuration to limit which characters can be typed into the field. Here's an example of a Text Field that validates a time.
 
@@ -157,7 +159,8 @@ The simplest way to implement a custom validation is to use the Text Field's `re
 	    maskRe: /[\d\s:amp]/i,
 	    invalidText: 'Not a valid time.  Must be in the format "12:34 PM".'
 	}
-http://docs.sencha.com/extjs/4.2.1/#!/api/Ext.form.field.VTypes
+
+<http://docs.sencha.com/extjs/4.2.1/#!/api/Ext.form.field.VTypes>
 通过[Ext.form.field.VTypes](http://docs.sencha.com/extjs/4.2.1#!/api/Ext.form.field.VTypes)共享验证规则。
 
 	// custom Vtype for vtype:'time'
@@ -182,12 +185,14 @@ Once a custom validator has been created it can be used on Text Fields throughou
 	}
 
 例子：
+
 - [Validation Example](http://docs.sencha.com/extjs/4.2.1/guides/forms/examples/validation)	
 
-####远程验证
+### 远程验证
+
 远程验证可参考UniqueFieldValidation。
 
-###重要属性
+### 重要属性
 #### fieldDefaults
 
 Formpanel使用fieldDefaults属性指定FormPanel中各个Field的默认属性。
@@ -204,9 +209,10 @@ Formpanel使用fieldDefaults属性指定FormPanel中各个Field的默认属性�
 对于在Form中的控制，配置formBind:true之后，如果Form的验证没通过，则该控件为不可用。
 
 ###数据交互
+
 - [Loading, Submitting, and Validating Forms using Ext JS 4](http://www.packtpub.com/article/loading-submitting-and-validating-forms-using-ext-js-4)
 
-####提交数据
+### 提交数据
 
 	Ext.create('Ext.form.Panel', {
 	    ...
@@ -237,9 +243,10 @@ Formpanel使用fieldDefaults属性指定FormPanel中各个Field的默认属性�
 	});
 
 例子：
+
 - [Form Submission Example	](http://docs.sencha.com/extjs/4.2.1/guides/forms/examples/submit/index.html)
 
-####绑定Model
+### 绑定Model
 
 **加载数据**
 
@@ -272,13 +279,14 @@ Formpanel使用fieldDefaults属性指定FormPanel中各个Field的默认属性�
 	}
 
 例子
+
 - [Model Binding Example](http://docs.sencha.com/extjs/4.2.1/guides/forms/examples/model_binding/index.html)
 
-##Grid
+## Grid
 
 - [Grids](http://docs.sencha.com/extjs/4.2.1/#!/guide/grid)
 
-###Renderers
+### Renderers
 
 	columns: [
 	    {
@@ -309,7 +317,7 @@ Formpanel使用fieldDefaults属性指定FormPanel中各个Field的默认属性�
 	    features: [{ ftype: 'grouping' }]
 	});
 
-###SelectionModel
+### SelectionModel
 
 表格的选择器分为行选择器和单元格选择器，分别用于选择整行或者单元格。
 
@@ -328,7 +336,7 @@ Formpanel使用fieldDefaults属性指定FormPanel中各个Field的默认属性�
 
 对于列选择器只有SINGLE值有效，默认只也为Single，所以对于列选择器，该属性的意义不大。
 
-###行编辑
+### 行编辑
 通过为column配置editor属性来控制单元格的编辑器，RowEditing Plugin来实现。
 
 	Ext.create('Ext.grid.Panel', {
@@ -355,7 +363,7 @@ Formpanel使用fieldDefaults属性指定FormPanel中各个Field的默认属性�
 	    renderTo: Ext.getBody()
 	});
 
-###单元格编辑
+### 单元格编辑
 
 #### 配置单元格编辑器
 没有editor属性的field将不允许编辑。
@@ -394,7 +402,7 @@ Formpanel使用fieldDefaults属性指定FormPanel中各个Field的默认属性�
 	    ]
 	});
 
-####为Grid配置行编辑器插件
+#### 为Grid配置行编辑器插件
 
 	Ext.create('Ext.grid.Panel', {
 	    ...
@@ -406,10 +414,11 @@ Formpanel使用fieldDefaults属性指定FormPanel中各个Field的默认属性�
 	    ]
 	});
 
-####例子
+#### 例子
+
 - [Row Editing - Live Example](http://docs.sencha.com/extjs/4.2.1/#!/example/grid/cell-editing.html)	
 
-###分页
+### 分页
 
 为Store添加pageSize属性，并且为其对应的reader设置totalProerty属性；
 
@@ -470,7 +479,7 @@ Grids support buffered rendering of extremely large datasets as an alternative t
 - [Buffered rendering of a loaded store Example](http://docs.sencha.com/extjs/4.2.1/#!/guide/grid)
 - [Buffered store Example](http://docs.sencha.com/extjs/4.2.1/#!/example/grid/infinite-scroll.html)	
 
-###Scrolling数据
+### Scrolling数据
 
 可以使用`Store.buffered: true`来启用缓存。
 
@@ -484,7 +493,7 @@ Grids support buffered rendering of extremely large datasets as an alternative t
 	autoLoad: true,
 
 
-##Tree
+## Tree
 
 - [Trees](http://docs.sencha.com/extjs/4.2.1/#!/guide/tree)
 
@@ -516,7 +525,7 @@ Grids support buffered rendering of extremely large datasets as an alternative t
 
 Tree Panel requires at least one column with an xtype of 'treecolumn'. This type of column has tree-specific visual effects like **depth, lines and expand and collapse icons**. A typical Tree Panel would have only one 'treecolumn'.	
 
-###指定多列
+### 指定多列
 
 	var tree = Ext.create('Ext.tree.Panel', {
 	    renderTo: Ext.getBody(),
@@ -552,7 +561,7 @@ Tree Panel requires at least one column with an xtype of 'treecolumn'. This type
 	    }
 	});
 
-###节点操作
+### 节点操作
 
 运行时指定RootNode
 
@@ -640,7 +649,7 @@ In general loaded and expanded are the only cases where it is recommended for th
 	    ]
 	}
 
-###持久化数据
+### 持久化数据
 
 添加节点
 

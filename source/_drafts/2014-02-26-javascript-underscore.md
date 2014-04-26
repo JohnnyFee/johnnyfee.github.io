@@ -5,8 +5,13 @@ description: ""
 category: JavaScript
 tags: [javascript]
 --- 
-##循环
+## 循环
 
-##参考
+## 参考
+
 - [jQuery Utilities vs Underscore · MrZhang.me](http://mrzhang.me/blog/jquery-utilities-vs-underscore.html)
+
+## Library
+
+- [Underscore.string](http://epeli.github.io/underscore.string/)
 

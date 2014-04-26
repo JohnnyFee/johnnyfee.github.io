@@ -831,7 +831,7 @@ avaScript Promise 的 API 会把任何包含有 then 方法的对象当作“类
 
 ……还好这通常就是你想要的了，至少你能够用这个办法实现想要的。另外还要注意，jQuery 也没有遵循给否定回调函数传递 Error 对象的惯例。
 
-##ES6 Promise
+## ES6 Promise
 
 - [domenic/promises-unwrapping](https://github.com/domenic/promises-unwrapping) The ES6 promises spec, as per September 2013 TC39 meeting
 - [jakearchibald/es6-promise](https://github.com/jakearchibald/es6-promise#readme) A polyfill for ES6-style Promises
@@ -844,6 +844,7 @@ avaScript Promise 的 API 会把任何包含有 then 方法的对象当作“类
 * [JavaScript Promises: There and back again - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/es6/promises/#toc-async)
   - [JavaScript Promises: There and back again - HTML5 Rocks](http://www.html5rocks.com/zh/tutorials/es6/promises/) 翻译。
 * [JavaScript异步编程的模式 -- JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/advanced/asynchronous.html#toc4)
+* [Write Better JavaScript with Promises](http://davidwalsh.name/write-javascript-promises)
 * Sebastian Porto, [Asynchronous JS: Callbacks, Listeners, Control Flow Libs and Promises](http://sporto.github.com/blog/2012/12/09/callbacks-listeners-promises/)
 * Rhys Brett-Bowen, [Promises/A+ - understanding the spec through implementation](http://modernjavascript.blogspot.com/2013/08/promisesa-understanding-by-doing.html)
 * Matt Podwysocki, Amanda Silver, [Asynchronous Programming in JavaScript with “Promises”](http://blogs.msdn.com/b/ie/archive/2011/09/11/asynchronous-programming-in-javascript-with-promises.aspx)

@@ -7,6 +7,8 @@ tags: [webview]
 --- 
 ## Framework
 
+- [JXcore · a Node.JS distribution with additional features](http://jxcore.com/home/)
+
 ### 5 Best Mobile Web App Frameworks
 
 - [Sencha Touch review](http://moduscreate.com/5-best-mobile-web-app-frameworks-sencha-touch/)

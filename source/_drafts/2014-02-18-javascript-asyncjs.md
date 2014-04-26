@@ -16,3 +16,6 @@ This lesson covers asynchronous error handling pitfalls, and shows how promises 
 - [Simplifying Async with Promises](/tutorials/async/simplifying-async-with-promises)
 - [Mastering Async Error Handling with Promises](/tutorials/async/mastering-async-error-handling-with-promises)
 
+## Debug
+
+- [Debugging Asynchronous JavaScript with Chrome DevTools - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/developertools/async-call-stack/)

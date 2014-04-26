@@ -4,6 +4,10 @@ title: "C++ Tutorial"
 category: Tool
 tags: [tool]
 --- 
+## Tutorial
+
+- [C语言的整型溢出问题](http://coolshell.cn/articles/11466.html)
+
 ## FAQ
 
 ### friend

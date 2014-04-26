@@ -4,19 +4,19 @@ title: "Web 前端教程"
 category: Web
 tags: [web]
 --- 
-##教程
+## 教程
 
 - [JacksonTian/fks](https://github.com/JacksonTian/fks)
     + http://html5ify.com/fks/
 - [前端导航站 - 前端工程师专用的导航站](http://123.jser.us/)
 
-##最佳事件
+## 最佳事件
 
 - [Web前端优化最佳实践及工具集锦](http://www.csdn.net/article/2013-09-23/2817020-web-performance-optimization)
 
-##淘宝开源
+## 淘宝开源
 
-###前端
+### 前端
 
 - [Arale - 随心构建互联网应用](http://aralejs.org/) 淘宝前端解决方案。Arale 立足于支付宝的前端需求和国内前端社区，基于 Sea.js 和 CMD 规范，致力发展小而美的前端模块架构，建立了一套从编码测试到部署的开发体系， 是一个开放、简单、易用的前端解决方案。
 - [Sea.js - A Module Loader for the Web](http://seajs.org/docs/) 淘宝模块管理方案。
@@ -29,11 +29,11 @@ Arale、KISSY，包括著名的 YUI 等类库，都是前端组件库。但在�
 
 参考：[Arale 背后的一些设计理念 · Issue #106 · lifesinger/lifesinger.github.com](https://github.com/lifesinger/lifesinger.github.com/issues/106)
 
-##其他
+## 其他
 
 [阿里开源 - Taocode](http://code.taobao.org/opensources/)
 
-##工具
+## 工具
 
 - [Yslow 之 高性能网站建设指南（High.Performance.Web.Sites）](http://julying.com/blog/high-performance-web-siteso-reilly/)
 - [Yahoo前端优化规则规则 十四条军令规则必须严格执行_WEB标准_it动力](http://www.itokit.com/2012/0704/74572.html)

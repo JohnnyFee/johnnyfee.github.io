@@ -20,11 +20,16 @@ tags: [android, tutorial]
 - [Telerik Mobile Application Development Platform](http://www.telerik.com/platform)    
     + [使用Telerik平台构建Web、混合与原生应用 - 推酷](http://www.tuicool.com/articles/2qiI7f)
 
+### FAQ
+
+- [Android Hybrid App四大坑](http://blog.meathill.com/tech/app/web/traps-in-developing-android-hybrid-app.html)
+
 ## 原型设计
 
 - [NinjaMock](http://ninjamock.com/)
 
 ## 混淆
+
 - [Mastering ProGuard for Building Lightweight Android Code | Crashlytics Blog](http://www.crashlytics.com/blog/mastering-proguard-for-building-lightweight-android-code/)
 
 ## 多屏支持
@@ -44,9 +49,10 @@ tags: [android, tutorial]
 ## UI
 - [Performance optimization](http://optimizationtricks.blogspot.in/)
 
-## 设备
+## Device
 
 - [The Ultimate Android Camera Development Guide -](http://www.airpair.com/android/android-camera-development)
+- [Styling Android » Bluetooth LE – Part 3](http://blog.stylingandroid.com/archives/2419)
 
 ### Canvas
 - [Drawing shapes with fingers | ONGOING DEV](http://gmariotti.blogspot.com/2014/01/drawing-shapes-with-fingers.html)

@@ -8,7 +8,9 @@ tags: [javascript]
 
 - [FalsyValues. Dmitry Soshnikov - ECMAScript 6](http://www.slideshare.net/dmitrysoshnikov/falsyvalues-dmitry-soshnikov-ecmascript-6)
 - [Hiding Implementation Details with ECMAScript 6 WeakMaps](http://fitzgeraldnick.com/weblog/53/)
-- [Why I'm Excited About Object.observe](http://amasad.me/2014/03/16/why-im-excited-about-objectobserve/?utm_source=javascriptweekly&utm_medium=email)
+- [Why I'm Excited About Object.observe](http://amasad.me/2014/03/16/why-im-excited-about-objectobserve/)
+- [Technical Leadership at Mozilla](http://andreasgal.com/2014/04/24/technical-leadership-at-mozilla)
+- [Creating defensive objects with ES6 proxies](http://www.nczonline.net/blog/2014/04/22/creating-defensive-objects-with-es6-proxies)
 
 ## Argument
 

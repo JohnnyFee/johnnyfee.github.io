@@ -62,3 +62,18 @@ We use the native DOM API instead of jQuery for this particular case because of 
 ## arguments
 
 - [JavaScript里function函数实现可变参数(多态）](http://www.oschina.net/question/54100_15938)
+
+## String.replaceAll
+
+    function replaceAll(find, replace, str) {
+      return str.replace(new RegExp(find, 'g'), replace);
+    }
+
+Reference: [Replacing all occurrences of a string in javascript? - Stack Overflow](http://stackoverflow.com/questions/1144783/replacing-all-occurrences-of-a-string-in-javascript)
+
+## String.endsWith
+
+
+    String.prototype.endsWith = function(suffix) {
+        return this.indexOf(suffix, this.length - suffix.length) !== -1;
+    };

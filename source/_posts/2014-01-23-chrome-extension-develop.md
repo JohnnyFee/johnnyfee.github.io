@@ -5,17 +5,17 @@ description: ""
 category: Chrome
 tags: [chrome]
 --- 
-##概述
+## 概述
 
 为了着手创建你的扩展程序，你只需要为你的扩展创建一个文件夹。程序所必须的文件只有manifest.json.，不过也推荐准备一些图片用作图标，和至少一个JavaScript以提供功能。一般来说还会包含HTML文档、样式表、图片等等其他的资源。
 
-###Chrome扩展文件
+### Chrome扩展文件
 
 Chrome扩展文件以.crx为后缀名，在Google Chrome扩展官方网站下载扩展时，Chrome会将.crx文件下载到`%LOCALAPPDATA%/Google/Chrome/User Data/Temp`目录下，安装完成或者取消安装，该文件就会被删除。
 
 .crx实际上是一个压缩文件。
 
-###Manifest文件
+### Manifest文件
 
 每个扩展都必须在其根目录下包含一个manifest.json文件。
 
@@ -25,11 +25,11 @@ Google发布的[Manifest v2](http://developer.chrome.com/extensions/manifest.htm
 
 <!--more-->
 
-##核心概念
+## 核心概念
 
 Chrome扩展程序分为Browser Actions和Page Actions。
 
-###[Browser Actions](http://developer.chrome.com/extensions/browserAction.html)
+### [Browser Actions](http://developer.chrome.com/extensions/browserAction.html)
 
 Browser Actions在界面上的表现如:
 
@@ -119,7 +119,7 @@ Page Actions与Browser Actions的区别就是Page Actions不是必须在特定�
 		}
 	});
 
-###[后台页](http://developer.chrome.com/extensions/background_pages.html)
+### [后台页](http://developer.chrome.com/extensions/background_pages.html)
 
 后台页是一个在扩展的进程中生成并运行的页面，存在时间会和扩展的生命周期等长。后台页可用来作为扩展的其他界面的控制器，用来维护某个状态或者保持某些活动。如果你需要用后台页来声明一些标记来用，可以把一个HTML文件名指定给page选项。
 
@@ -424,7 +424,7 @@ Reference: <http://my.oschina.net/hierick/blog/136313>
 
 popup.htm,background.htm,content_scripts 之间大体上分为两种交互方式：直接调用和消息通信。
 
-####直接调用
+#### 直接调用
 popup.htm与background.htm 里面的数据可以直接调用，例如：
 
 	var  backgroundWindow = chrome.extension.getBackgroundPage();
@@ -436,7 +436,7 @@ popup.htm与background.htm 里面的数据可以直接调用，例如：
 		popup.BindEvents();
 	},1000);
 
-####消息通信
+#### 消息通信
 
 Communication between extensions and their content scripts works by using message passing. Either side can listen for messages sent from the other end, and respond on the same channel. 
 
@@ -538,13 +538,13 @@ When establishing a connection, each end is given a [runtime.Port](http://develo
 
 请参考相关文档。
 
-###内容安全策略CSP
+### 内容安全策略CSP
 
 出于安全考略，Chrome扩展系统遵循[Content Security Policy(CSP)](http://dvcs.w3.org/hg/content-security-policy/raw-file/tip/csp-specification.dev.html) 。
 
 默认策略限制：
 
-####Eval和相关函数被禁用
+#### Eval和相关函数被禁用
 
 如以下代码都不起作用：
 
@@ -560,11 +560,11 @@ When establishing a connection, each end is given a [runtime.Port](http://develo
 	window.setInterval(function() { alert('hi'); }, 10);
 	function() { return foo && foo.bar && foo.bar.baz };
 
-####不执行Inline JavaScript
+#### 不执行Inline JavaScript
 
 This restriction bans both inline `<script>` blocks and inline event handlers (e.g. `<button onclick="...">`).
 
-####只加载本地脚本和资源
+#### 只加载本地脚本和资源
 
 只有扩展包内的脚本和资源才会被加载！通过Web即时下载的将不会被加载！ 这确保您的扩展只执行已经打包在扩展之中的可信代码，从而避免了线上的网络攻击者通过恶意重定向您所请求的Web资源所带来的安全隐患。
 
@@ -587,11 +587,11 @@ This restriction bans both inline `<script>` blocks and inline event handlers (e
 	  var result = plugin.PluginMethod(); //调用plugin中定义的方法 
 	</script>
 
-##开发过程
+## 开发过程
 
 **注意：** 出于安全考虑，javascript必须与html分开存放。
 
-###确定扩展类型
+### 确定扩展类型
 
 - 如果扩展时针对所有页面的，请选择BrowserAction；否则选择PageAction。在manifest中声明`browser_action`或者`page_action`。
 - 确定需要使用哪些chrome API，并在`permissions`中声明相应的权限。
@@ -671,9 +671,9 @@ This restriction bans both inline `<script>` blocks and inline event handlers (e
 
 发布请参考 [Publishing Your App - Chrome Web Store](https://developers.google.com/chrome/web-store/docs/publish?hl=zh-CN).
 
-##FAQ
+## FAQ
 
-###权限问题
+### 权限问题
 
 > Refused to execute JavaScript URL because it violates the following Content Security Policy directive: “script-src ‘self’ chrome-extension-resource
 
@@ -683,22 +683,22 @@ This restriction bans both inline `<script>` blocks and inline event handlers (e
 
 第二、在你的html代码里面（如popup.htm,background.htm），a标签之类的在`onclick=""` ，`href="javascript:...;"`,加了Inline(内敛)js脚本。在实际使用中，A标签的`href="javasript:;"`很常见，即使错误控制台有这样的报警也不用理会。
 
-##参考
+## 参考
 
-###文档
+### 文档
 
 - [chrome extensions](http://developer.chrome.com/extensions/index.html)
 - [建立 Chrome 扩展程序](https://crxdoc-zh.appspot.com/extensions/getstarted.html)
 - [360翻译的Chrome扩展开发文档](http://open.chrome.360.cn/extension_dev/overview.html)
 
-###教程
+### 教程
 
 - [如何开发Chrome扩展程序](http://blog.jobbole.com/46608/)
 - [手把手教你开发chrome扩展一：开发Chrome Extenstion其实很简单](http://www.cnblogs.com/walkingp/archive/2011/03/31/2001628.html)
 - [Chrome插件开发进阶](http://blog.csdn.net/my_business/article/details/7711525)
 
 
-###Sample
+### Sample
 
 - [Sample Extensions](http://developer.chrome.com/extensions/samples.html)
 - [kurrik / chrome-extensions](https://github.com/kurrik/chrome-extensions) Simple Chrome extensions that I haven't gotten around to putting into [chromium.org](http://chromium.org).
@@ -708,9 +708,9 @@ This restriction bans both inline `<script>` blocks and inline event handlers (e
 - [sneezry / Dualx](https://github.com/sneezry/Dualx) QQ Client for Chrome.
 - [xiongchuan86 / XPlayer](https://gitcafe.com/xiongchuan86/XPlayer/) 豆瓣音乐播放器。
 
-###Tools
+### Tools
 
-####生成脚手架
+#### 生成脚手架
 
 源码地址：[yeoman / generator-chrome-extension](https://github.com/yeoman/generator-chrome-extension) Yeoman generator for Chrome Extensions 
  <http://yeoman.io>.

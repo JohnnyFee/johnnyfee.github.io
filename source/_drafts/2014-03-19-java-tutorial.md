@@ -13,6 +13,16 @@ tags: [java]
 - [[Google Guava] 6-字符串处理：分割，连接，填充 | 并发编程网 - ifeve.com](http://ifeve.com/google-guava-strings/)
 - [[Google Guava] 4-函数式编程 | 并发编程网 - ifeve.com](http://ifeve.com/google-guava-functional/)
 
+## Concurrence
+
+- [比AtomicLong还高效的LongAdder 源码解析](http://ifeve.com/atomiclong-and-longadder/)
+- [从LongAdder看更高效的无锁实现](http://coolshell.cn/articles/11454.html)
+
+## Java8
+
+- [Java 8 Pocket Guide](http://www.salttiger.com/java-8-pocket-guide/)
+- [Java: The Good Parts](http://www.salttiger.com/java-the-good-parts/)
+
 
 
 

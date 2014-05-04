@@ -589,3 +589,6 @@ _任何对象_都可以做为上下文中的this的值。我想再一次澄清�
 
 祝学习ECMAScript好运！
 
+## 参考
+
+- [JavaScript中的原型和继承 - WEB开发者](http://www.admin10000.com/document/4343.html)

@@ -182,3 +182,7 @@ tags: [node]
   ResHacker.exe -addoverwrite Project.exe, Project1.exe, "html5_logo.ico", ICONGROUP, IDR_MAINFRAME, 1033
 
 参考：[delphi - Using Resource Hacker for changing the icon after the build - Stack Overflow](http://stackoverflow.com/questions/5165594/using-resource-hacker-for-changing-the-icon-after-the-build)
+
+## Reference
+
+- [你所不知道的Node-webkit](http://blog.whattoc.com/2013/12/16/node-webkit01/)

@@ -201,9 +201,9 @@ tags: [web]
 
 - [sandeepmistry/bleno](https://github.com/sandeepmistry/bleno)
 
-## 参考
+## Src
 
-- [使用node.js建markdown静态博客，文章总汇(8篇) - CNode](http://cnodejs.org/topic/4f16442ccae1f4aa27001097)
+- [nodejs代码初探 - CNode](http://cnodejs.org/topic/4f571a16a680d212781ccf9f)
 
 
 

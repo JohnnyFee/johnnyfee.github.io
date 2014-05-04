@@ -30,7 +30,7 @@ tags: [desgin]
 - [iOS7 图标模板PSD （iOS7 icon template）](http://www.shejidaren.com/ios7-icon-template.html)
 - [50套免费icon图标素材精选 – 2014.4月 | 设计达人](http://www.shejidaren.com/free-icon-set-2014-4.html)
 
-## 效果素材：
+## 效果素材
 
 - [100个惊人的CSS、JS代码技术](http://www.shejidaren.com/100-powerful-css-and-js-demo.html)
 - [设计素材：手机锁屏界面-临摹](http://www.zcool.com.cn/gfx/ZMzA0MzMy.html)
@@ -50,6 +50,24 @@ tags: [desgin]
 - [quickLayout.css-快速构建结构兼容的web页面 « 张鑫旭-鑫空间-鑫生活](http://www.zhangxinxu.com/wordpress/2014/03/quicklayout-css-%E5%BF%AB%E9%80%9F%E6%9E%84%E5%BB%BA%E7%BB%93%E6%9E%84%E5%85%BC%E5%AE%B9%E7%9A%84web%E9%A1%B5%E9%9D%A2/)
     + [zhangxinxu/quickLayout](https://github.com/zhangxinxu/quickLayout)
 
+## Logo
+
+- [39个卓越的创意标志设计](http://www.shejidaren.com/chuang-yi-biao-zhi-she-ji.html)
+- [28个多边形风格的Logo设计欣赏](http://www.shejidaren.com/polygon-logo-designs.html)
+
+## Font
+
+- [50个优秀设计素材整理 – 2014.三月](http://www.shejidaren.com/free-design-resources-2014-3.html)
+- [设计师不要错过，免费优质英文字体整理](http://www.shejidaren.com/free-font-downloads-2014-3.html)
+- [高品质免费英文字体 2014年2月](http://www.shejidaren.com/free-english-font-2014-2.html)
+
+## Tips
+
+- [应对紧急情况 27套罕见的独特图标素材包](http://www.shejidaren.com/unique-icon-sets.html)
+
+## Design
+
+- [40个良好用户界面Tips](http://www.shejidaren.com/good-user-interface-design.html)
 
 ## PSD 素材
 
@@ -63,6 +81,28 @@ tags: [desgin]
 
 - [90个免费漂亮的切换开关按钮PSD | 设计达人](http://www.shejidaren.com/switch-and-toggle-button-psds.html)
 
-## 教程
+### Switcher
+
+- [90个免费漂亮的切换开关按钮PSD](http://www.shejidaren.com/switch-and-toggle-button-psds.html)
+
+### Apple
+
+- [30个苹果系列产品模型（Mock Up:iPhone/iMac…）](http://www.shejidaren.com/apple-product-psd-mockups.html)
+
+### Site
+
+- [2014人气网站界面设计免费PSD素材](http://www.shejidaren.com/free-psd-website-templates.html)
+
+### UI kit
+
+- [20个色彩美丽的UI KIT设计素材（PSD）](http://www.shejidaren.com/20-beautiful-ui-kits-for-designer.html)
+
+
+## Tutorial
 
 - [默默图标生成器](http://www.zcool.com.cn/article/ZMzY5ODA=.html)
+- [16个创意Photoshop图像处理教程](http://www.shejidaren.com/photoshop-image-processing-tutorials.html)
+
+## Book
+
+- [完美像素设计指南第三版PDF（免费）](http://www.shejidaren.com/pixel-perfect-precision-v3.html)

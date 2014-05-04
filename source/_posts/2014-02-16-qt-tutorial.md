@@ -61,6 +61,8 @@ tags: [qt, tutorial]
 
 ## Tutorial
 
+- [Qt – 部落格 by Q-Kevin](http://www.qkevin.com/qt)
+
 ### Official
 
 - [QtDoc 5.0: All Modules | Documentation | Qt Project](http://qt-project.org/doc/qt-5.0/qtdoc/modules.html)
@@ -77,32 +79,21 @@ tags: [qt, tutorial]
 - [Qt - jokerjhm的专栏](http://blog.csdn.net/jokerjhm/article/category/839680/3)
 - [qt4 - luck_good的专栏 - 博客频道](http://blog.csdn.net/luck_good/article/category/924891/1)
 
-## Qt Quick
+## i18n
 
-Qt Quick 是一种高级用户界面技术，使用它可轻松地创建供移动和嵌入式设备使用的动态触摸式界面和轻量级应用程序。三种全新的技术共同构成了 Qt Quick 用户界面创建工具包：一个改进的Qt Creator IDE、一种新增的简便易学的语言 (QML) 和一个新加入 Qt 库中名为 QtDeclarative 的模块，这些使得 Qt 更加便于不熟悉 C++ 的开发人员和设计人员使用。
+- [Qt Weekly #2: Localizing Qt Quick Apps](http://blog.qt.digia.com/blog/2014/03/19/qt-weekly-2-localizing-qt-quick-apps/?-weekly-2-localizing-qt-quick-apps)
 
-## Qt Qml
+## Logging
 
-“近9个月来，我们对QML引擎底层做了大量的工作，这在Qt 5.2中已有了一定成效。Qt Qml现在使用我们自己内建的Javascript引擎，而不再依赖V8，因此QtJSBackend动态库已经被移除。新的引擎执行纯Javascript要略慢于V8。”——[Qt 5.2 Alpha可用了 | Qt Chinese blog](http://blog.qt.digia.com/cn/2013/10/04/qt-5-2-alpha-available/)
-
-__控制台调试__：[调试Qt Quick 2 – 控制台API | Qt Chinese blog](http://blog.qt.digia.com/cn/2012/03/08/debugging-qt-quick-2-console-api/)
-
-### UI
-
-- [Qt Quick布局介绍 | Qt Chinese blog](http://blog.qt.digia.com/cn/2013/05/18/introducing-qt-quick-layouts/)
-- [Qt Quick新特性概览 | Qt Chinese blog](http://blog.qt.digia.com/cn/2013/06/24/overview-of-the-new-features-in-qt-quick/)
+- [Qt Weekly #1: Categorized Logging](http://blog.qt.digia.com/blog/2014/03/11/qt-weekly-1-categorized-logging/?-weekly-1-categorized-logging)
 
 ## 调试
 
 - [Enabling Web Inspector in QtWebKit - Palomino Labs Blog](http://blog.palominolabs.com/2012/09/19/enabling-web-inspector-in-qtwebkit/)
 
-## 动画
+## Android
 
-- [qt4 qml Flipable、Flickable和状态与动画](http://blog.csdn.net/luck_good/article/details/6992795)
-
-## 虚拟键盘
-
-- [New Virtual Keyboard for Qt Enterprise | Qt Blog](http://blog.qt.digia.com/blog/2014/02/04/new-virtual-keyboard-for-qt-enterprise/)
+- [Qt Weekly #3: Qt for Android – Tips and Tricks](http://blog.qt.digia.com/blog/2014/03/26/qt-weekly-3-qt-for-android-tips-and-tricks/?-weekly-3-qt-for-android-tips-and-tricks)
 
 ## FAQ
 

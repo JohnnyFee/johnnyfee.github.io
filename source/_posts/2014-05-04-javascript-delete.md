@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "JavaScript 的变量与 delete 操作符"
+title: "JavaScript delete 操作符"
 description: ""
 category: JavaScript
 tags: [javascript, operator]
@@ -25,6 +25,8 @@ delete操作符通常用来删除对象的属性：
 	function x(){}
 	delete x; // false
 	typeof x; // "function"
+
+<!--more-->
 
 注意delete只有在无法删除的情况下才会返回false。为了理解这一点，我们必须解释一下变量初始化以及变量属性的一些基本概念--不幸的是很少有Javascript的书能讲到这些。如果你只想知其然而不是知其所以然的话，你完全可以跳过这一节。
 

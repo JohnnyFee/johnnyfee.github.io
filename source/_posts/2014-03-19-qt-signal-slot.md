@@ -345,3 +345,4 @@ moc 读 C++ 源文件，如果发现有 Q_OBJECT 宏声明的类，它就会生�
 - [Qt 5中信号和槽的新语法](http://blog.qt.digia.com/cn/2012/08/07/new-signals-slots-syntax-in-qt5/)
 - [【深入QT】信号槽机制浅析 - 做一个优雅的程序员 - 博客频道 - CSDN.NET](http://blog.csdn.net/harbinzju/article/details/10813635)
 - [Inside Qt Series (十六)：Event Overview – 部落格 by Q-Kevin](http://www.qkevin.com/archives/146)
+- [信号与槽 - hai200501019的专栏 - 博客频道 - CSDN.NET](http://blog.csdn.net/hai200501019/article/details/9166547)

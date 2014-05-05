@@ -132,9 +132,22 @@ Qt控制台程序很少用到，这里仅仅简单了解。
 
 - [Qt Weekly #3: Qt for Android – Tips and Tricks](http://blog.qt.digia.com/blog/2014/03/26/qt-weekly-3-qt-for-android-tips-and-tricks/?-weekly-3-qt-for-android-tips-and-tricks)
 
+## Data Structure
+
+- [Qt容器类 - hai200501019的专栏 - 博客频道 - CSDN.NET](http://blog.csdn.net/hai200501019/article/details/9247673)
+
 ## Settings
 
 - [QSettings保存程序设置](http://blog.csdn.net/hai200501019/article/details/11179967)
+
+## State Machine
+
+- [Qt状态机框架](http://blog.csdn.net/hai200501019/article/details/9316415)
+
+## Other
+
+- [Qt属性系统 - hai200501019的专栏 - 博客频道 - CSDN.NET](http://blog.csdn.net/hai200501019/article/details/9204215)
+- [Qt国际化相关类 - hai200501019的专栏 - 博客频道 - CSDN.NET](http://blog.csdn.net/hai200501019/article/details/9202807)
 
 ## FAQ
 

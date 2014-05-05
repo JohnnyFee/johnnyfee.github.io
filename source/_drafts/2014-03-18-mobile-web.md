@@ -26,3 +26,11 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 ## Cache
 
 - [mortzdk/jsCache](https://github.com/mortzdk/jsCache)
+
+## Performance
+
+- [Is jQuery Too Big For Mobile?](http://flippinawesome.org/2014/03/10/is-jquery-too-big-for-mobile/)
+
+## Parallax UI
+
+- [Parallax UI for PhoneGap and Mobile Web Apps](http://flippinawesome.org/2013/12/23/parallax-ui-for-phonegap-and-mobile-web-apps/)

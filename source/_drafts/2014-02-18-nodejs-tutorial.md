@@ -146,6 +146,12 @@ tags: [web]
 
 - [basicallydan/interfake · GitHub](https://github.com/basicallydan/interfake)
 - [Intern: A next-generation JavaScript testing stack](http://theintern.io/)
+- [BDD in JavaScript with CucumberJS](http://flippinawesome.org/2014/01/27/bdd-in-javascript-with-cucumberjs/)
+
+## bower
+
+- [Managing Bower Components with Grunt](http://flippinawesome.org/2014/01/27/managing-bower-components-with-grunt/)
+- [Introduction to the Component JavaScript Package Manager](http://flippinawesome.org/2014/02/17/introduction-to-the-component-javascript-package-manager/)
 
 ## IO
 
@@ -192,6 +198,7 @@ tags: [web]
 ## confusion
 
 - [Code Protection and Packaging for Node.js Projects with JXCore | Flippin' Awesome](http://flippinawesome.org/2014/04/21/code-protection-and-packaging-for-node-js-projects-with-jxcore/)
+- [JXcore – A Node.JS Distribution with Multi-threading](http://flippinawesome.org/2014/03/03/jxcore-a-node-js-distribution-with-multi-threading/)
 
 ## ES6
 
@@ -205,6 +212,9 @@ tags: [web]
 
 - [nodejs代码初探 - CNode](http://cnodejs.org/topic/4f571a16a680d212781ccf9f)
 
+## Grunt
+
+- [Using Grunt? Consider Fez](http://flippinawesome.org/2014/02/24/using-grunt-consider-fez/)
 
 
 

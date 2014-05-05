@@ -54,6 +54,10 @@ __注：__如果在主线程中执行webView.loadUrl("javascript:xxx") N次，�
 
 如果在子线程中执行N次，则执行一次Java代码，接着执行一次JavaScript代码，连续N次。
 
+参考：
+
+- [[Android]用WebView访问证书有问题的SSL网页](http://blog.charlee.li/android-load-cert-err-ssl-in-webview/)
+
 ### 处理返回键为返回上一页
 
 如果用webview点链接看了很多页以后，如果不做任何处理，点击系统“Back”键，整个浏览器会调用finish()而结束自身，如果希望浏览的网页回退而不是退出浏览器，需要在当前Activity中处理并消费掉该Back事件，覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法，代码如下：

@@ -59,6 +59,43 @@ tags: [qt, tutorial]
 
 ![qt5.2bundle.png](http://johnnyimages.qiniudn.com/qt5.2bundle.png)
 
+## Quick Start
+
+参考：[Qt开发基础 - hai200501019的专栏](http://blog.csdn.net/hai200501019/article/details/17613411)
+
+Qt主程序主要有两种，一是Qt控制台程序，而是Qt  GUI应用程序。
+
+### Qt控制台程序
+
+Qt控制台程序很少用到，这里仅仅简单了解。
+
+    int main( int argc, char *argv[]){
+        QCoreApplication a(argc, argv);
+        cout<< "helloworld" <<endl;
+        return a.exec();
+    }
+
+以上代码就是简单的Qt控制台程序，创建了一个QCoreApplication 对象a，并输出hello world，最后a调用.exec()。QCoreApplication为非GUI的Qt程序提供主事件循环，负责处理和派发操作系统和其他事件，调用exec()才能启动事件循环。如果去掉第一和第三行代码，其实就是一个普通的C++程序，一样可以运行。
+
+    int main(int argc, char *argv[])
+    {
+           //QCoreApplicationa(argc, argv);
+           cout<<"helloworld"<<endl;
+           //returna.exec();
+    }
+
+### Qt GUI应用程序
+
+    int main( int argc, char *argv[])
+    {
+        QApplication a(argc, argv);
+        QLabel label( "helloworld" );
+        label.show();
+        return a.exec();
+    }
+
+和Qt控制台程序类似，需要创建一个QApplication对象，并调用exec()。QApplication继承QCoreApplication，用于管理GUI程序的控制流和主要的设置。每个GUI程序都只能有一个QApplication对象，而且必须最先被创建。
+
 ## Tutorial
 
 - [Qt – 部落格 by Q-Kevin](http://www.qkevin.com/qt)
@@ -94,6 +131,10 @@ tags: [qt, tutorial]
 ## Android
 
 - [Qt Weekly #3: Qt for Android – Tips and Tricks](http://blog.qt.digia.com/blog/2014/03/26/qt-weekly-3-qt-for-android-tips-and-tricks/?-weekly-3-qt-for-android-tips-and-tricks)
+
+## Settings
+
+- [QSettings保存程序设置](http://blog.csdn.net/hai200501019/article/details/11179967)
 
 ## FAQ
 

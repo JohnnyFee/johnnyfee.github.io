@@ -83,6 +83,11 @@ tags: [web]
 
 - [10个最好的Node.js MVC框架 - WEB开发者](http://www.admin10000.com/document/3931.html)
 
+## Web Service
+
+- [ngrok - secure introspectable tunnels to localhost](https://ngrok.com/)
+	- [Expose Yourself with ngrok](http://flippinawesome.org/2014/04/28/expose-yourself-with-ngrok/?-yourself-with-ngrok)
+
 ## 开源项目
 
 - [［实践经验＋代码］用node.js和express.js和jade搭建轻型cms系统 - CNode](http://cnodejs.org/topic/4f16442ccae1f4aa270010bf)

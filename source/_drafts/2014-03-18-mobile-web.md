@@ -7,6 +7,8 @@ tags: [webview]
 --- 
 ## Framework
 
+- [Ionic: Advanced HTML5 Hybrid Mobile App Framework](http://ionicframework.com/)
+	- [driftyco/ionic](https://github.com/driftyco/ionic)
 - [JXcore · a Node.JS distribution with additional features](http://jxcore.com/home/)
 
 ### 5 Best Mobile Web App Frameworks
@@ -30,6 +32,10 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 ## Performance
 
 - [Is jQuery Too Big For Mobile?](http://flippinawesome.org/2014/03/10/is-jquery-too-big-for-mobile/)
+
+## Gesture
+
+- [GestureKit](http://www.gesturekit.com/) GestureKit (requires registration) is a development kit that allows the creation of gestures across device platforms.
 
 ## Parallax UI
 

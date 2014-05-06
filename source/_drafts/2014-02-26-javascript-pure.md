@@ -10,7 +10,9 @@ tags: [javascript]
 
 - [You Might Not Need jQuery](http://youmightnotneedjquery.com/?utm_source=javascriptweekly&utm_medium=email)
     - [HubSpot/youmightnotneedjquery · GitHub](https://github.com/HubSpot/YouMightNotNeedjQuery)
-* [A DOM Manipulation Class in 100 Lines of JavaScript | Flippin' Awesome](http://flippinawesome.org/2014/03/10/a-dom-manipulation-class-in-100-lines-of-javascript/)
+- [A DOM Manipulation Class in 100 Lines of JavaScript | Flippin' Awesome](http://flippinawesome.org/2014/03/10/a-dom-manipulation-class-in-100-lines-of-javascript/)
+- [Replacing jQuery with Vanilla JavaScript](http://flippinawesome.org/2014/05/05/replacing-jquery-with-vanilla-javascript/?-jquery-with-vanilla-javascript)
+- [barberboy/dom-elements](https://github.com/barberboy/dom-elements) DOM Elements is a polyfill supporting the .query and .queryAll methods recently added to the DOM Standard.
 
 ## jQuery
 
@@ -23,3 +25,13 @@ tags: [javascript]
 - [Native equivalents of jQuery functions](http://www.leebrimelow.com/native-methods-jQuery/)
 - [如何忘却jQuery，开始使用JavaScript原生API - 前端网（W3Cfuns）](http://www.w3cfuns.com/article-5599069-1-1.html)
 
+## Dom
+
+- [A DOM Manipulation Class in 100 Lines of JavaScript](http://flippinawesome.org/2014/03/10/a-dom-manipulation-class-in-100-lines-of-javascript/)
+
+## Router
+
+### page
+
+- [visionmedia/page.js](https://github.com/visionmedia/page.js)
+- [Single-Page Applications with the Page Micro Library](http://flippinawesome.org/2014/04/28/single-page-applications-with-the-page-micro-library/?-page-applications-with-the-page-micro-library)

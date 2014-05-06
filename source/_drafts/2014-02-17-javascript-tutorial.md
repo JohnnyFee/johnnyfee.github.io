@@ -173,9 +173,9 @@ localForage is a JavaScript library that uses the very simple [localStorage API]
 
 - [User Timing API: Understanding your Web App - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/webperformance/usertiming/)
 
-## TODO
+## FAQ
 
-- [You Don’t Know JS: Scope & Closures | SaltTiger](http://www.salttiger.com/you-dont-know-js-scope-and-closures/)
+- [Improving Browser Detection](http://flippinawesome.org/2014/04/07/improving-browser-detection/?-browser-detection)
 
 ## 参考
 

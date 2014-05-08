@@ -211,6 +211,14 @@ Q_OBJECT是一个宏，只有加入了Q_OBJECT，你才能使用QT中的signal�
 
 参考：[QVariant to QObject* - Stack Overflow](http://stackoverflow.com/questions/3887064/qvariant-to-qobject)
 
+### Storing pointer in QVariant
+
+- [Storing pointer in QVariant](http://blog.bigpixel.ro/2010/04/storing-pointer-in-qvariant/)
+
+### Undefined reference to 'vtable for xxx'
+
+删除编译的所有东西，重新编译。
+
 ## Reference
 
 ### Example

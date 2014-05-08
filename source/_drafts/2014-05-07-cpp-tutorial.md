@@ -1,16 +1,27 @@
 ---
 layout: post
 title: "C++ Tutorial"
-category: Tool
-tags: [tool]
+category: C++
+tags: [c++]
 --- 
-## Tutorial
+## 编码规范
+
+- [darcyliu/google-styleguide](https://github.com/darcyliu/google-styleguide)
+- [GNU Coding Standards](http://www.gnu.org/prep/standards/standards.html)
+- [C++ 风格指南 — Google 开源项目风格指南](http://zh-google-styleguide.readthedocs.org/en/latest/google-cpp-styleguide/contents/)
+- [C++STYLE](http://sunsite.ualberta.ca/Documentation/Gnu/libstdc++-2.90.8/html/17_intro/C++STYLE)
+
+## Data Type
 
 - [C语言的整型溢出问题](http://coolshell.cn/articles/11466.html)
 
-## FAQ
+## Program
 
-### friend
+- [让C程序更高效的10种方法 - 博客 - 伯乐在线](http://blog.jobbole.com/1198/)
+
+<!--more-->
+
+## friend
 
 参考：[C++友元friend-jackychu的专栏](http://blog.csdn.net/jackychu/article/details/3020866)
 
@@ -91,3 +102,39 @@ __整个类也可以是另一个类的友元__，该友元也可以称做为友�
         }  
     }
 
+## 类型别名和枚举
+
+typedef为保留字，使用它可以为一个类型定义创建一个别名。比如，如果你不喜欢使用int *来创建整数指针，可以像下面这样定义一个类型别名：
+
+    typedef int * intPointer; 
+
+在此之后，你就可以像下面这样来定义整数指针了：
+
+    intPointer myVar1; 
+
+在C语言里，typedef保留字通常与结构搭配使用（在C语言里创建一个结构类型的变量往往需要打很多字），但typedef保留字其实可以用来为任何一种类型定义一个别名。它的基本语法是：
+
+    typedef typeName newTypeName; 
+
+第二个概念是enum类型；enum是enumeration（枚举）简写。enum保留字用来创建一个可取值列表：
+
+    enum enumName {possible values};  
+    enum weekdays {Monday, Tuesday, Wednesday, Thursday, Friday}; 
+
+在定义了一个枚举类型之后，可以像下面这样创建该类型的变量：
+
+    weekdays today; 
+
+也可以像下面这样对它进行赋值：
+
+    today = Tuesday; 
+
+注意，这里不需要使用引号，因为枚举值不是字符串。（编译器会按照各个枚举值在定义时出现的先后顺序把它们与0～n－1的整数（n是枚举值的总个数）分别关联起来。使用枚举类型好处主要有两个：其一，它们对变量的可取值加以限制；其二，它们可以用做switch条件语句的case标号--字符串是不能这样用的。
+
+## 模板方法
+
+- [Step By Step(C++模板目录) - Stephen_Liu - 博客园](http://www.cnblogs.com/stephen-liu74/archive/2012/09/12/2639736.html)
+
+## Tutorial
+
+- [写给大家看的C++书_读书频道_51CTO.COM_领先的中文IT技术网站](http://book.51cto.com/art/200906/126956.htm#book_content)

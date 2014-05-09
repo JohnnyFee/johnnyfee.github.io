@@ -34,6 +34,7 @@ tags: [web]
 
 - [Building a Node OAuth2 server](http://blog.papersapp.com/oauth-server-in-node-js/)
 - [Passport | Overview](http://passportjs.org/guide/)
+	- [User Authentication with Passport.js - Michael Herman](http://mherman.org/blog/2013/11/11/user-authentication-with-passport-dot-js/#.U2uJwtySzv4)
 - [Building a Login System in Node.js and MongoDB | The choreography of color and code](http://www.quietless.com/kitchen/building-a-login-system-in-node-js-and-mongodb/)
 
 ## Argument

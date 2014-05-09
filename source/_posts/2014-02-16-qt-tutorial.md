@@ -98,6 +98,7 @@ Qt控制台程序很少用到，这里仅仅简单了解。
 
 ## Tutorial
 
+- [Qt学习笔记 - hai200501019的专栏](http://blog.csdn.net/hai200501019/article/category/1316645/1)
 - [Qt – 部落格 by Q-Kevin](http://www.qkevin.com/qt)
 
 ### Official

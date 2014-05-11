@@ -767,6 +767,7 @@ When this sneaky bit of code fetches the content of the pull quote with `$cloned
 * To _remove_ elements inside every matched element, use the following function: * .empty()
 * To _remove_ every matched element and descendants from the document without actually deleting them, use the following functions: * .remove() * .detach()
 
+## FAQ
 
 ## Tutorial
 

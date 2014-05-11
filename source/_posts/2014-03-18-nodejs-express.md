@@ -1409,7 +1409,7 @@ And here is the rendered HTML:
 
 ![express-form-get.png](http://johnnyimages.qiniudn.com/express-form-muilti-checkbox.png)
 
-Now, let's create the route for handling the form submission. The skillsparameter will be available as expected at req.query.skills:
+Now, let's create the route for handling the form submission. The `skills` parameter will be available as expected at req.query.skills:
 
     app.get('/skills-search-result', function(req, res) {
         var skills = req.query.skills;

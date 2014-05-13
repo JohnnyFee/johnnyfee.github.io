@@ -5,6 +5,15 @@ category: Node
 tags: [node, database]
 --- 
 
+SELECT*FROM posts
+INNER JOIN posts_tags ON posts.id= posts_tags.post_id
+INNER JOIN tags ON posts_tags.tag_id== tags.id
+WHERE tags.text= 'politics' AND posts.vote_count > 10;
+
+The equivalent query in MongoDB is specified using a document as a matcher. The
+special $gtkey indicates the greater-than condition.
+db.posts.find({'tags': 'politics','vote_count': {'$gt': 10}});
+
 ## MongoDb
 
 - [MongoDB](http://www.mongodb.org/)
@@ -22,3 +31,4 @@ tags: [node, database]
 - [mongoDB数据库设置用户名及密码 - 我的人生，我做主 - 博客频道 - CSDN.NET](http://blog.csdn.net/wycf1314/article/details/10225921)
 - [MongoDB权限管理之用户名和密码的操作 - 51CTO.COM](http://database.51cto.com/art/201107/278042.htm)
 
+[node.js - Nodejs MongoError: auth fails - Stack Overflow](http://stackoverflow.com/questions/21180643/nodejs-mongoerror-auth-fails)

@@ -220,6 +220,49 @@ Q_OBJECT是一个宏，只有加入了Q_OBJECT，你才能使用QT中的signal�
 
 删除编译的所有东西，重新编译。
 
+### QVariant保存指针数据
+
+## QVariant保存指针数据
+
+参考 [QVariant保存指针数据](http://windrocblog.sinaapp.com/?p=1166)
+
+QVariant默认无法保存指针数据，因为以`void *`为参数的QVariant构造函数是私有的。
+
+但通过QT提供的Meta Type机制，可以将任意指针存放到QVariant中。
+
+需要使用 `Q_DECLARE_METATYPE` 宏注册类型。
+
+    Q_DECLARE_METATYPE(QStandardItemModel*)
+
+之后，就可以使用QVariant::fromValue存放数据，使用QVariant::value获取数据了。
+
+    return QVariant::fromValue(model_);
+    //....
+    QStandardItemModel* model = some_value.value();
+
+使用QVariant和标识项目中数据类型的Qt::ItemDataRole，可以方便地将任意数据存放进QT提供的预定义模型中。
+
+比如，在同一个QStandardItem中使用不同的Role，存放多个数据。
+
+自定义的数据角色
+
+    enum CustomItemRole
+    {
+        LevelModelRole =  Qt::UserRole + 1000,
+        TimeModelRole = Qt::UserRole + 1010,
+        FileModelRole = Qt::UserRole + 1020
+    };
+
+存放特定角色的数据
+
+    type_of_level_item->setData(QVariant::fromValue(level_list_model),LevelModelRole);
+
+获取特定角色的数据
+
+    QVariant data = item->data(Qt::LevelModelRole);
+
+因为QStandardItemModel以行为单位建立树形结构，所以要实现更复杂的树形结构，可以使用自定义的DataRole来存储数据。
+
 ## Reference
 
 ### Example

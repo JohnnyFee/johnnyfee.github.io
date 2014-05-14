@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Node MongoDb"
+title: "MongoDb"
 category: Node
-tags: [node, database]
+tags: [mongodb, database]
 --- 
 
 SELECT*FROM posts
@@ -13,6 +13,16 @@ WHERE tags.text= 'politics' AND posts.vote_count > 10;
 The equivalent query in MongoDB is specified using a document as a matcher. The
 special $gtkey indicates the greater-than condition.
 db.posts.find({'tags': 'politics','vote_count': {'$gt': 10}});
+
+## Tutorial
+
+- [MongoDB Environment](http://www.tutorialspoint.com/mongodb/mongodb_environment.htm)
+- [Getting Started with MongoDB - Part 1 - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/getting-started-with-mongodb-part-1--net-22879)
+
+## Auth
+
+- [MongoDB设置访问权限、设置用户 - [曾恩] - 博客园](http://www.cnblogs.com/zengen/archive/2011/04/23/2025722.html)
+- [mongodb 用户 权限 设置 详解«海底苍鹰(tank)博客](http://blog.51yip.com/nosql/1575.html)
 
 ## MongoDb
 

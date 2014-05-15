@@ -17,6 +17,8 @@ tags: [javascript]
 - [Seven JavaScript Quirks I Wish I’d Known About | Telerik Developer Network](http://developer.telerik.com/featured/seven-javascript-quirks-i-wish-id-known-about/)
 - [Mixins, Forwarding, and Delegation in JavaScript](http://raganwald.com/2014/04/10/mixins-forwarding-delegation.html)
 
+<!--more-->
+
 ## OO
 
 - [Prototypes Are Not Classes](http://raganwald.com/2014/01/19/prototypes-are-not-classes.html)
@@ -46,7 +48,6 @@ tags: [javascript]
 
 - UnderStore
     + [Stop writing For loops. Start using underscore. - @jhooks](http://www.joelhooks.com/blog/2014/02/06/stop-writing-for-loops-start-using-underscorejs/)
-- [lodash/lodash](https://github.com/lodash/lodash) A utility library delivering consistency, customization, performance, & extras. <http://lodash.com/>
 - [landau/is](https://github.com/landau/is) A small predicate library for javascript. [Trevor Landau | Blog](http://trevorlandau.net/posts/is-js)
 - [infusion/BitSet.js](https://github.com/infusion/BitSet.js)
 - [nicholascloud/l33teral](https://github.com/nicholascloud/l33teral) 减少判空的步骤。
@@ -69,6 +70,8 @@ tags: [javascript]
 ## Performance
 
 - [视频访谈： Stoyan Stefanov 谈JavaScript性能 - 推酷](http://www.tuicool.com/articles/vEn6zm)
+- [User Timing API: Understanding your Web App - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/webperformance/usertiming/)
+- [lodash/lodash](https://github.com/lodash/lodash) A utility library delivering consistency, customization, performance, & extras. <http://lodash.com/>
 
 ## Tool
 
@@ -168,10 +171,6 @@ localForage is a JavaScript library that uses the very simple [localStorage API]
 - http://jsbin.com/
     + [JavaScript Tools of the Trade: JSBin - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/javascript-tools-of-the-trade-jsbin--net-36843)
 - [JSCritic](http://jscritic.com/)
-
-### Debug
-
-- [User Timing API: Understanding your Web App - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/webperformance/usertiming/)
 
 ## FAQ
 

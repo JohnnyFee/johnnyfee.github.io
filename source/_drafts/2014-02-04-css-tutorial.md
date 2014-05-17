@@ -12,6 +12,19 @@ tags: [markdown]
 
 - [动起来！好玩的CSS抖动样式 – CSS Shake](http://www.shejidaren.com/css-shake-animation.html)
 - [CSS3文字阴影实现乳白文字效果](http://www.shejidaren.com/css3-milky-font-effect.html)
+- [将鼠标事件绑定到非矩形区域](http://blog.youyo.name/archives/bind-click-event-in-non-rectangular-area.html?-click-event-in-non-rectangular-area)
+
+## Event
+
+- [将鼠标事件绑定到非矩形区域](http://blog.youyo.name/archives/bind-click-event-in-non-rectangular-area.html?-click-event-in-non-rectangular-area)
+
+## Responsive
+
+- [根据移动设备屏幕像素密度，给予不同分辨率的图片](http://blog.youyo.name/archives/mobile-device-screen-pixel-density.html?-device-screen-pixel-density)
+
+## Menu
+
+- [5种实用的移动手机APP导航菜单设计方案](http://www.shejidaren.com/mobile-app-menus-design.html)
 
 ## Study
 

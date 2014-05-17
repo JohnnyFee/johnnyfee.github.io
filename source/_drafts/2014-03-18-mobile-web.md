@@ -40,3 +40,11 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 ## Parallax UI
 
 - [Parallax UI for PhoneGap and Mobile Web Apps](http://flippinawesome.org/2013/12/23/parallax-ui-for-phonegap-and-mobile-web-apps/)
+
+## Event
+
+- [指尖上的事件－touch事件的封装](http://stylechen.com/touch.html)
+
+## Debug
+
+- [jieyou/remote_inspect_web_on_real_device](https://github.com/jieyou/remote_inspect_web_on_real_device) 各种真机远程调试方法汇总。

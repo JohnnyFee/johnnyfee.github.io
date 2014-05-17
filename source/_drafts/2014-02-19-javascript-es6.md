@@ -25,6 +25,10 @@ tags: [javascript]
 
 - [ES7 async functions - JakeArchibald.com](http://jakearchibald.com/2014/es7-async-functions/)
 
+## Array
+
+- [ECMAScript 6’s new array methods](http://www.2ality.com/2014/05/es6-array-methods.html)
+
 ## Parser
 
 - [zenparsing/esparse](https://github.com/zenparsing/esparse)

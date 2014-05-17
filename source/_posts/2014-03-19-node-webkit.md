@@ -187,3 +187,7 @@ tags: [node]
 
 - [你所不知道的Node-webkit](http://blog.whattoc.com/2013/12/16/node-webkit01/)
 - [Build Desktop Apps with JavaScript and Node WebKit](http://flippinawesome.org/2014/02/10/build-desktop-apps-with-javascript-and-node-webkit/)
+
+## Other
+
+- [heX - 指南](http://hex.youdao.com/zh-cn/tutorial/index.html)

@@ -2,7 +2,7 @@
 layout: post
 title: "node.js 的 global variable 和 module.exports"
 category: Node
-tags: [mongodb, database]
+tags: [node, module]
 --- 
 
 原文： <http://blog.csdn.net/kyfxbl/article/details/12587385>

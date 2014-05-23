@@ -246,6 +246,12 @@ noparms（如果这里的if、%1、%2你不明白的话，先跳过去，后面�
 10. 机器重命名: netdom renamecomputer 原机器名 /newname:修改后的机器名 /UserD:user /PasswordD:password
 11. 加入域: net dom join 计算机名/domain:域名 /UserD:域管理员账户 /PasswordD:域管理员密码
 
+## dir
+
+批量列出文件
+
+    dir /s /b /on
+
 ## 参考
 
 - [BAT CMD 批处理文件脚本总结(中文) - 曾令理 - 博客园](http://www.cnblogs.com/linglizeng/archive/2010/01/29/Bat-CMD-ChineseVerion.html)

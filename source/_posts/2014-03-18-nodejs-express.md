@@ -1969,3 +1969,4 @@ Since Express depends on the `NODE_ENV` environment variable to determine the en
 ## Tutorial
 
 - [Build a RESTful API Using Node and Express 4](http://scotch.io/tutorials/javascript/build-a-restful-api-using-node-and-express-4)
+- [Beer Locker: Building a RESTful API with Node - Scott Smith](http://scottksmith.com/blog/2014/05/02/building-restful-apis-with-node)

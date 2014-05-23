@@ -27,6 +27,7 @@ tags: [javascript]
 
 ## Dom
 
+- [Rethinking DOM Traversal](http://flippinawesome.org/2014/05/12/rethinking-dom-traversal)
 - [A DOM Manipulation Class in 100 Lines of JavaScript](http://flippinawesome.org/2014/03/10/a-dom-manipulation-class-in-100-lines-of-javascript/)
 
 ## Router

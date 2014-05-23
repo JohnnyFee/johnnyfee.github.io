@@ -94,3 +94,4 @@ __From Onenote:__
 - [Node.js 概述 -- JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/nodejs/basic.html)
 - [ruanyf/jstutorial](https://github.com/ruanyf/jstutorial)
 - [JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/)
+- [JavaScript中的原型和继承 - WEB开发者](http://www.admin10000.com/document/4343.html)

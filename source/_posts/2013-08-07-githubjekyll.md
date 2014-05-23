@@ -8,22 +8,21 @@ tags: [github, blog]
 
 ## GitHub Pages
 
-- GitHub Pages 概述 
+### GitHub Pages 概述 
 
-	github提供的[GitHub Pages](http://pages.github.com/)服务使用户可以为项目提供漂亮的页面（即wiki），甚至可以利用github.io提供的二级域名实现自己的网站或博客。
-
-
-	GitHub Pages分为User, Organization Pages(博客或网站)和Project Pages(项目doc)。不过所有的页面必须的静态的，也就是说只能使用HTML/CSS/JavaScript等前端技术。但Github后台使用Jekyll[^1][^2]将一些特殊格式的文本文档（[Markdown](http://daringfireball.net/projects/markdown/) ,[Textile](http://textile.sitemonks.com/), [Liquid](http://wiki.shopify.com/Liquid)）转化为html文档。所以我们可以使用[Markdown](http://markdownpad.com/)等编辑器、提交markdown文档到github后，即可正常访问它生成的页面，通常提交之后要等上一会儿，10分钟以内。所以作为新手，可以现在本地搭建一个jekyll服务，实时查看更改。待熟悉之后，就可以使用程序员最喜欢方式写博客了，编辑，提交，编辑，提交...
+github提供的[GitHub Pages](http://pages.github.com/)服务使用户可以为项目提供漂亮的页面（即wiki），甚至可以利用github.io提供的二级域名实现自己的网站或博客。
+	
+GitHub Pages分为User, Organization Pages(博客或网站)和Project Pages(项目doc)。不过所有的页面必须的静态的，也就是说只能使用HTML/CSS/JavaScript等前端技术。但Github后台使用Jekyll[^1][^2]将一些特殊格式的文本文档（[Markdown](http://daringfireball.net/projects/markdown/) ,[Textile](http://textile.sitemonks.com/), [Liquid](http://wiki.shopify.com/Liquid)）转化为html文档。所以我们可以使用[Markdown](http://markdownpad.com/)等编辑器、提交markdown文档到github后，即可正常访问它生成的页面，通常提交之后要等上一会儿，10分钟以内。所以作为新手，可以现在本地搭建一个jekyll服务，实时查看更改。待熟悉之后，就可以使用程序员最喜欢方式写博客了，编辑，提交，编辑，提交...
 
 <!--more-->	
 
-- 创建User Pages
+### 创建User Pages
 
-	创建一个按照USERNAME.github.io命名的GitHub库，其中USERNAME为你的GitHub用户名。在该库的`设置`选项中点击`GitHub Pages`/`Automatic Page Generator`。按照向导编辑首页，选择`网站模版`。再查看该库的`设置`/`GitHub Pages`就可以看到`Your site is published at http://johnnyfee.github.io`的字样。这个就是我所用的github.io二级域名了。通过修改库中的内容，可以编辑我们的静态网站或博客。
+创建一个按照USERNAME.github.io命名的GitHub库，其中USERNAME为你的GitHub用户名。在该库的`设置`选项中点击`GitHub Pages`/`Automatic Page Generator`。按照向导编辑首页，选择`网站模版`。再查看该库的`设置`/`GitHub Pages`就可以看到`Your site is published at http://johnnyfee.github.io`的字样。这个就是我所用的github.io二级域名了。通过修改库中的内容，可以编辑我们的静态网站或博客。
 
-- 创建Project Pages
+### 创建Project Pages
 	
-	创建方法类似于创建User Pages，只是git库是项目库。还有一个区别是，编辑网页的时候，需要切换到gh-pages分支，才能看到项目的文档。
+创建方法类似于创建User Pages，只是git库是项目库。还有一个区别是，编辑网页的时候，需要切换到gh-pages分支，才能看到项目的文档。
  
 
 ## Jekyll
@@ -31,6 +30,7 @@ tags: [github, blog]
 ['dʒekil; 'dʒi:ki]
 
 ### 安装
+
 - 安装[Ruby2.0](http://rubyinstaller.org/)，傻瓜式安装即可。
 - 如果你Windows用户，请安装[RubyInstaller Development Kit (DevKit)](http://github.com/oneclick/rubyinstaller/wiki/Development-Kit)
 - 配置过程请参考[Running Jekyll on Windows](http://www.madhur.co.in/blog/2011/09/01/runningjekyllwindows.html)，做到第5步即可。

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "JavaScript 核心"
+title: "JavaScript 核心之this"
 category: JavaScript
 tags: [javascript]
 --- 
@@ -21,6 +21,8 @@ tags: [javascript]
 * 实函数
 * 构造器
 * 方法
+
+<!--more-->
 
 ### 1.1 在实函数中的 `this`
 

@@ -153,3 +153,4 @@ sammy             |  5.2     |   16     |      N                |     N
 * [Backbone与Angular的比较](http://www.infoq.com/cn/articles/backbone-vs-angular)
 * [Performance Comparisons - vue.js](http://vuejs.org/perf/) 性能比较。
 * [Angular, Ember, And Backbone: Which JavaScript Framework Is Right For You? – ReadWrite](http://readwrite.com/2014/02/06/angular-backbone-ember-best-javascript-framework-for-you)
+* [When to use React.js and when to use Angular?： javascript](http://www.reddit.com/r/javascript/comments/25n7id/when_to_use_reactjs_and_when_to_use_angular)

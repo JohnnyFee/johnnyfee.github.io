@@ -851,3 +851,7 @@ avaScript Promise 的 API 会把任何包含有 then 方法的对象当作“类
 * Marc Harter, [Promise A+ Implementation](https://gist.github.com//wavded/5692344)
 * Bryan Klimt, [What’s so great about JavaScript Promises?](http://blog.parse.com/2013/01/29/whats-so-great-about-javascript-promises/)
 * Jake Archibald, [JavaScript Promises There and back again](http://www.html5rocks.com/en/tutorials/es6/promises/)
+
+## Tutorial
+
+- [getify/native-promise-only](https://github.com/getify/native-promise-only)

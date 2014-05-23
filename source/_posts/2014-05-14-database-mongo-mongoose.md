@@ -8,6 +8,8 @@ tags: [mongodb, database]
 ## Tutorial
 
 - [Mongoose学习参考文档——基础篇 - CNode](http://cnodejs.org/topic/504b4924e2b84515770103dd)
+- [How To Write A Simple Node.js/MongoDB Web Service for an iOS App | Ray Wenderlich](http://www.raywenderlich.com/61078/write-simple-node-jsmongodb-web-service-ios-app)
+
 
 ## Query
 
@@ -29,6 +31,15 @@ tags: [mongodb, database]
 
 - [构建 Node.js 应用之持久化 - 技术翻译 - 开源中国社区](http://www.oschina.net/translate/building-with-nodejs-persistence?print)
 	- [Building with Node.js: Persistence](http://journal.michaelahlers.org/2012/12/building-with-nodejs-persistence.html)
+
+## Promise
+
+- [aheckmann/mpromise](https://github.com/aheckmann/mpromise) A [promises/A+](https://github.com/promises-aplus/promises-spec) conformant implementation, written for [mongoose](http://mongoosejs.com/).
+
+### Tutorial
+
+- [Promises, errors and Express.js](http://www.asyncdev.net/2013/07/promises-errors-and-express-js/)
+- [node.js - How to use mongoose Promise - mongo - Stack Overflow](http://stackoverflow.com/questions/9022099/how-to-use-mongoose-promise-mongo)
 
 ## BAE
 

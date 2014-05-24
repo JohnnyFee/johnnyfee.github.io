@@ -9,16 +9,20 @@ tags: [javascript]
 - [Underscore.js](http://underscorejs.org/)
     + [Stop writing For loops. Start using underscore. - @jhooks](http://www.joelhooks.com/blog/2014/02/06/stop-writing-for-loops-start-using-underscorejs/)
 
-- [landau/is](https://github.com/landau/is) A small predicate library for javascript.
-
-- [nicholascloud/l33teral](https://github.com/nicholascloud/l33teral) 迭代对象，减少判空的步骤。
-    + [l33t literals in JavaScript - appendTo](http://appendto.com/2014/02/l33t-literals-javascript/)
-
 ## Data Type
+
+### is
+- [enricomarino/is](https://github.com/enricomarino/is)
+- [landau/is](https://github.com/landau/is) A small predicate library for javascript.
 
 ### String
 
 - [string.js](http://stringjs.com/)
+
+### Object
+
+- [nicholascloud/l33teral](https://github.com/nicholascloud/l33teral) 迭代对象，减少判空的步骤。
+    + [l33t literals in JavaScript - appendTo](http://appendto.com/2014/02/l33t-literals-javascript/)
 
 ### BitSet
 

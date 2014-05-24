@@ -21,6 +21,8 @@ tags: [node, module]
 
 我主要参考了Slava Akhmechet的_["Functional Programming For The Rest of Us"](http://www.defmacro.org/ramblings/fp.html)_。
 
+<!-- more -->
+
 ## 一、定义
 
 简单说，"函数式编程"是一种["编程范式"](http://en.wikipedia.org/wiki/Programming_paradigm)（programming paradigm），也就是如何编写程序的方法论。

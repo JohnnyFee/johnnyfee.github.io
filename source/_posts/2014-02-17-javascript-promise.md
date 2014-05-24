@@ -854,4 +854,5 @@ avaScript Promise 的 API 会把任何包含有 then 方法的对象当作“类
 
 ## Tutorial
 
+- [在 Node.js 中用 Q 实现 Promise – Callback 之外的另一种选择](http://www.ghostchina.com/promises-in-node-js-with-q-an-alternative-to-callbacks/)
 - [getify/native-promise-only](https://github.com/getify/native-promise-only)

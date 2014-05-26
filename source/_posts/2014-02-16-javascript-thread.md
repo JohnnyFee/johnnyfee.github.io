@@ -15,7 +15,7 @@ __JavaScript引擎是单线程运行的,浏览器无论在什么时候都只且�
 
 下面通过一个图来阐明单线程的JavaScript引擎与另外那些线程是怎样互动通信的。虽然每个浏览器内核 （流行浏览器内核有：Trident[IE内核]、Gecko[Firefox内核]、Presto[Opera内核]、Webkit[Chrome、Safari] 等） 实现细节不同，但这其中的调用原理都是大同小异。
 
-![JavaScript定时机制、以及浏览器渲染机制 浅谈 javascript-thread](http://julying.com/blog/uploadfile/2012/05/javascript-thread.png)
+![JavaScript定时机制、以及浏览器渲染机制 浅谈 javascript-thread](http://johnnyimages.qiniudn.com//javascript-thread.png)
 
 上图Time1-Time2..Timen表示不同的时间点,Timen下面对应的小方块代表该时间点的任务,假设现在是Time1时刻,引擎运行在Time1对应的任务方块代码内,在这个时间点内,我们来描述一下浏览器内核其它线程的状态。
 

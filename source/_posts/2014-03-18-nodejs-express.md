@@ -492,7 +492,7 @@ Restart the server and load the home page, you'll get an error message, as shown
 
 ![express-response-time.png](http://johnnyimages.qiniudn.com/express-error-handle.png)
 
-In fact, you can confirm it is not HTML by looking at the source code. Why is the `errorHandler` middleware not working?  __The most important requirement of errorHandler is that it should be added after the routermiddleware__. No wonder it didn't work as expected.
+In fact, you can confirm it is not HTML by looking at the source code. Why is the `errorHandler` middleware not working?  __The most important requirement of errorHandler is that it should be added after the router middleware__. No wonder it didn't work as expected.
 
 so let's modify app.js to include the `router` middleware explicitly:
 
@@ -644,7 +644,7 @@ Routes are defined using an HTTP verb and a path pattern. Any request to the ser
 
 Even though a total of 13 HTTP verbs are supported by Express, you need not use all of them in your app. In fact, for a basic website, only GETand POSTare likely to be used.
 
-While other Express middlewares are inherited from Connect, _router_ is implemented by Express itself. Connect-inherited middlewares are referred to in Express from the expressobject (express.favicon(), express.bodyParser(), and so on). The routermiddleware is referred to from the instance of the Express app (app.router).
+While other Express middlewares are inherited from Connect, _router_ is implemented by Express itself. Connect-inherited middlewares are referred to in Express from the expressobject (express.favicon(), express.bodyParser(), and so on). The router middleware is referred to from the instance of the Express app (app.router).
 
 There is a method called `app.all()` that is not based on an HTTP verb. It is an Express-specific method for listening to requests to a route using any request method:
 
@@ -1196,11 +1196,11 @@ prompted for download or being downloaded:
 
 #### Serving error pages
 
-The routermiddleware comes with a default 404 error handler, but its output may not be what you would want for your app. Let's find out how to create a custom 404 error handler.
+The router middleware comes with a default 404 error handler, but its output may not be what you would want for your app. Let's find out how to create a custom 404 error handler.
 
 A 404 error handler is technically a generic route handler that handles a request that all other middleware before it has failed to handle. It is implemented by adding a custom middleware at the end of the Express middleware stack.
 
-Add the following middleware code after the routermiddleware:
+Add the following middleware code after the router middleware:
 
     app.use(function(req, res) {
         res.status(400);
@@ -1223,9 +1223,9 @@ In the viewsdirectory, create a file named `404.jade` with the following content
             p #{message}
 
 
-Express also comes with a default 500 error handler that will pass on the control to the next error handler, if there is one beyond it. The 500 error is handled by adding a middleware with an arity of four. Since we want to override the default 500 error handler provided by the routermiddleware, we would need to add our handler after the routermiddleware.
+Express also comes with a default 500 error handler that will pass on the control to the next error handler, if there is one beyond it. The 500 error is handled by adding a middleware with an arity of four. Since we want to override the default 500 error handler provided by the router middleware, we would need to add our handler after the router middleware.
 
-Add the following middleware after the routermiddleware:
+Add the following middleware after the router middleware:
 
     app.use(function(error, req, res, next) {
         res.status(500);
@@ -1426,7 +1426,7 @@ Submitting multiple options is all about setting a common value for the name att
 
 Unlike GET submissions, which can be processed right out of the box, we need to enable a built-in middleware named `bodyParser` before we can process POST submissions.
 
-Load the bodyParser middleware before the routermiddleware to enable POST data handling:
+Load the bodyParser middleware before the router middleware to enable POST data handling:
 
     app.use(express.bodyParser());
 
@@ -1601,7 +1601,7 @@ It is important to note that the files uploaded to the temporary directory would
 
 Cookies can be created by the server backend or the frontend JavaScript. They can then be read or updated by either one of them.
 
-Express provides a cookie API using the `cookieParse` rmiddleware. To enable the cookie functionality in Express, load it before the routermiddleware:
+Express provides a cookie API using the `cookieParse` rmiddleware. To enable the cookie functionality in Express, load it before the router middleware:
 
     app.use(express.cookieParser());
 

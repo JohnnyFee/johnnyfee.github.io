@@ -91,6 +91,7 @@ Intuitive, fast & composable MVVM for building interactive interfaces.
 * [A Step-by-Step Guide to Your First Ember.js App | Toptal](http://www.toptal.com/javascript/a-step-by-step-guide-to-building-your-first-ember-js-app)
 * [Building a mobile-friendly web app using Ember.js and jQuery Mobile](http://blog.mist.io/post/78757774060/building-a-mobile-friendly-web-app-using-ember-js-and)
 * [From Backbone Views To React – Leonardo Garcia Crespo](http://leoasis.github.io/posts/2014/03/22/from_backbone_views_to_react/)
+- [Fixture Adapters - Ember.js With No Server](http://www.sitepoint.com/fixture-adapters-ember-js-server)
 
 ### Video
 
@@ -101,6 +102,10 @@ Intuitive, fast & composable MVVM for building interactive interfaces.
 Riot is the most minimal approach to MV* world. It weighs 1kb and has only 3 public methods so it's extremely simple and easy to learn.
 
 - [Building modular applications with Riot.js](https://moot.it/riotjs/docs/)
+
+## Mithril
+
+- [Mithril](http://lhorie.github.io/mithril)
 
 ## Angular
 
@@ -114,18 +119,20 @@ Riot is the most minimal approach to MV* world. It weighs 1kb and has only 3 pub
 * <http://builtwith.angularjs.org/>
 * [AngularJS Example Applications](http://blog.angularjs.org/2012/11/angularjs-example-applications.html)
 * [Angle Brackets, Rifle Scopes - Pony Foo](http://blog.ponyfoo.com/2014/02/14/angle-brackets-rifle-scopes)
-* [Angular Best Practice for App Structure (Public)](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/pub?utm_source=javascriptweekly&utm_medium=email)
+* [Angular Best Practice for App Structure (Public)](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/pub)
 * [Cloud Spinners Development Blog: Angular JS localization with Require JS i18n module](http://dev-blog.cloud-spinners.com/2014/02/angular-js-localization-with-require-js.html)
 * [Google's AngularJS Style Guide](https://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html)
 * [AngularJS Scopes: An Introduction | The Carbon Emitter](http://blog.carbonfive.com/2014/02/11/angularjs-scopes-an-introduction/)
 * [mgonto/angular-wizard · GitHub](https://github.com/mgonto/angular-wizard?utm_source=javascriptweekly)
 * [13 Steps to AngularJS Modularization | Safari Books Online's Official Blog](http://blog.safaribooksonline.com/2014/03/27/13-step-guide-angularjs-modularization/)
+* [Data-binding Revolutions with Object.observe() - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/es7/observe/)
 
 可以参考的东西，链式编程，DI模式。
 
 ### Tutorial
 
 - [OutlawAndy/relativeDate](https://github.com/outlawandy/relativeDate)
+- [Convention Based Routing In JavaScript Apps](http://flippinawesome.org/2014/05/19/convention-based-routing-in-javascript-apps)
 
 ## 框架大小
 

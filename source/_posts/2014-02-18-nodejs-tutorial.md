@@ -24,7 +24,10 @@ tags: [web]
 
 ### Error Handling
 
-- [Error Handling in Node.js by Jamund Ferguson - YouTube](https://www.youtube.com/watch?v=p-2fzgfk9AA)
+- [Error Handling in Nodejs - Developer Center - Joyent](http://www.joyent.com/developers/node/design/errors)
+- [Node.js下自定义错误类型 - CNode](http://cnodejs.org/topic/52090bc944e76d216af25f6f)
+- [Node.js异常捕获的一些实践](http://www.alloyteam.com/2013/12/node-js-series-exception-caught/)
+- [Massa Labs](http://massalabs.com/dev/2013/10/17/handling-errors-in-nodejs.html)
 
 
 ## Framework

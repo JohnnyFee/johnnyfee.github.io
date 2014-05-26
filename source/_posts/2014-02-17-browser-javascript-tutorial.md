@@ -70,6 +70,10 @@ tags: [javascript]
 - [RequireJS和AMD规范](http://javascript.ruanyifeng.com/tool/requirejs.html)
 - [Source map](http://javascript.ruanyifeng.com/tool/sourcemap.html)
 
+### Debug
+
+- [Amjad Masad: Lesser known Debugging Techniques - YouTube](https://www.youtube.com/watch?v=rcjUR4icvoQ)
+
 ### 代码工具
 
 - http://jsbin.com/

@@ -9,7 +9,8 @@ tags: [responsive, web]
 ## media
 
 - [Using Media Queries in JavaScript | Flippin' Awesome](http://flippinawesome.org/2014/03/24/using-media-queries-in-javascript/)
-- [Using Media Queries in JavaScript](http://flippinawesome.org/2014/03/24/using-media-queries-in-javascript/?-media-queries-in-javascript)
+- [Using Media Queries in JavaScript](http://flippinawesome.org/2014/03/24/using-media-queries-in-javascript/)
+- [Using media queries in JavaScript (AbsurdJS edition) - Tech.pro](http://tech.pro/tutorial/1919/using-media-queries-in-javascript-absurdjs-edition)
 
 ## Grid
 

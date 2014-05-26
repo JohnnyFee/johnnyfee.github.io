@@ -32,6 +32,7 @@ tags: [javascript]
 ## Parser
 
 - [zenparsing/esparse](https://github.com/zenparsing/esparse)
+
 ## Tutorial
 
 - [Solving riddles with Prolog and ES6 generators — curiosity-driven.org](https://curiosity-driven.org/prolog-interpreter)
@@ -39,3 +40,6 @@ tags: [javascript]
 - [JustinDrake/node-es6-examples](https://github.com/JustinDrake/node-es6-examples)
 - [Handling required parameters in ECMAScript 6](http://www.2ality.com/2014/04/required-parameters-es6.html)
 
+## Vidio
+
+- [Ben Newman: Easing into ECMAScript 6 and Beyond - YouTube](https://www.youtube.com/watch?v=kXY9hIPKuLQ)

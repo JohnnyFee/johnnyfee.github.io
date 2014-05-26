@@ -32,6 +32,7 @@ tags: [javascript]
 - [JavaScript原生对象属性和方法详解——Number对象](http://www.feeldesignstudio.com/2013/09/native-javascript-object-properties-and-methods-number)
 - [JavaScript原生对象属性和方法详解——String对象](http://www.feeldesignstudio.com/2013/09/native-javascript-object-properties-and-methods-string)
 - [JavaScript原生对象属性和方法详解——Math对象](http://www.feeldesignstudio.com/2013/09/native-javascript-object-properties-and-methods-math)
+- [The Curious Case of JavaScript NaN](http://ariya.ofilabs.com/2014/05/the-curious-case-of-javascript-nan.html?)
 
 - [What Every JavaScript Developer Should Know About Floating Points | Flippin' Awesome](http://flippinawesome.org/2014/02/17/what-every-javascript-developer-should-know-about-floating-points/)
 - [Enums for JavaScript](http://www.2ality.com/2011/10/enums.html)
@@ -62,6 +63,10 @@ tags: [javascript]
 - [JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/#advanced)
 - [A List of Foundational JavaScript Tools](https://www.codefellows.org/blogs/complete-list-of-javascript-tools)
 - [web开发设计人员不可不用的在线web工具和应用](http://www.qianduan.net/web-development-and-design-staff-can-not-be-without-online-web-tools-and-applications.html)
+
+### Worker
+
+- [Communicating Large Objects with Web Workers in javascript](http://developerblog.redhat.com/2014/05/20/communicating-large-objects-with-web-workers-in-javascript)
 
 ## Books
 

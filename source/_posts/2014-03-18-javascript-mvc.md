@@ -136,9 +136,10 @@ Riot is the most minimal approach to MV* world. It weighs 1kb and has only 3 pub
 
 ## 框架大小
 
-框架名称/大小(k)  |   min+gzip |  min     |todo中是否使用jquery |是否依赖jQuery
+框架名称/大小(k)  | min+gzip |  min     |todo中是否使用jquery 	|是否依赖jQuery
 ------------------|----------|----------|-----------------------|--------------
 jQuery2.0.3       |  27.9    |   81.6   |      N                |     N
+Zepto	    	  |  9.2     |   24.0   |      N                |     N
 jScroll2.1.1      |  1.5     |   3.4    |      N                |     N
 backbone          |  6.3     |   19     |      Y                |     N
 underscore.js     |  4.9     |   14     |      N                |     N 

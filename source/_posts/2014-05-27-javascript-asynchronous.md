@@ -4,6 +4,7 @@ title: "JavaScript 异步编程"
 category: JavaScript
 tags: [javascript]
 --- 
+
 Javascript语言的执行环境是"单线程"（single thread）。所谓"单线程"，就是指一次只能完成一件任务。如果有多个任务，就必须排队，前面一个任务完成，再执行后面一个任务，以此类推。
 
 这种模式的好处是实现起来比较简单，执行环境相对单纯；坏处是只要有一个任务耗时很长，后面的任务都必须排队等着，会拖延整个程序的执行。常见的浏览器无响应（假死），往往就是因为某一段Javascript代码长时间运行（比如死循环），导致整个页面卡在这个地方，其他任务无法执行。
@@ -16,7 +17,9 @@ Javascript语言的执行环境是"单线程"（single thread）。所谓"单线
 
 以下总结了"异步模式"编程的4种方法，理解它们可以让你写出结构更合理、性能更出色、维护更方便的JavaScript程序。
 
-##回调函数
+<!--more-->
+
+## 回调函数
 
 这是异步编程最基本的方法。
 
@@ -50,7 +53,7 @@ __缺点：__
 - 不利于代码的阅读和维护，如果使用内嵌的方式可能使代码非常难看，流程会很混乱，请参考[Callback Hell](http://callbackhell.com/)。不过可以将内联函数作为外部函数来避免这个问题。
 - 每个任务只能指定一个回调函数，这在很多情况下都是不能够满足需求的。
 
-##事件监听
+## 事件监听
 
 另一种思路是采用事件驱动模式。任务的执行不取决于代码的顺序，而取决于某个事件是否发生。
 
@@ -104,7 +107,7 @@ __缺点：__
 ![](http://foter.com/image/display/1036313/495x371/)
 
 
-##发布/订阅
+## 发布/订阅
 
 上一节的"事件"，完全可以理解成"信号"。
 
@@ -133,7 +136,7 @@ jQuery.publish("done")的意思是，f1执行完成后，向"信号中心"jQuery
 
 这种方法的性质与"事件监听"类似，但是明显优于后者。因为我们可以通过查看"消息中心"，了解存在多少信号、每个信号有多少订阅者，从而监控程序的运行。
 
-##Async.js
+## Async.js
 
 Flow control libraries are also a very nice way to deal with asynchronous code. [Async.js](https://github.com/caolan/async) is one of the most popular .
 
@@ -180,7 +183,7 @@ __缺点：__
 
 - If the signatures of the functions don’t match as in the second example then you can argue that the flow control library offers little in terms of readability.
 
-##Promises对象
+## Promises对象
 
 __Promises对象是CommonJS工作组提出的一种规范__，目的是为异步编程提供[统一接口](http://wiki.commonjs.org/wiki/Promises/A)。
 
@@ -261,12 +264,7 @@ __缺点：__
 - The least understood of all these tools.
 - They can get difficult to track when you have lots of aggregated promises with added listeners along the way.
 
-##其他
-
-- [continuation.js](https://github.com/BYVoid/continuation)
-- [JeffreyZhao/wind](https://github.com/JeffreyZhao/wind)
-
-##错误处理
+## 错误处理
 
 前面已经提到了 setTimeout 函数的一些问题，JS 中的 try..catch 机制并不能拿到 setTimeout 函数中出现的错误，一个 throw error 的影响范围有多大呢？我做了一个测试：
 
@@ -300,12 +298,14 @@ __缺点：__
 
 参考：[JavaScript异步编程原理 - Barret Lee - 博客园](http://www.cnblogs.com/hustskyking/p/javascript-asynchronous-programming.html)
 
-##其他
+## 其他
 
 - [短小强悍的JavaScript异步调用库 - WEB开发者](http://www.admin10000.com/document/3917.html)
     + 原文 [7 lines JavaScript library for calling asynchronous functions](http://krasimirtsonev.com/blog/article/7-lines-JavaScript-library-for-calling-asynchronous-functions)
+- [continuation.js](https://github.com/BYVoid/continuation)
+- [JeffreyZhao/wind](https://github.com/JeffreyZhao/wind)
 
-##参考
+## 参考
 
 - [Javascript异步编程的4种方法 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2012/12/asynchronous%EF%BC%BFjavascript.html)
 - [JavaScript异步编程的模式 -- JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/advanced/asynchronous.html)

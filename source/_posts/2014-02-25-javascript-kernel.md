@@ -592,3 +592,4 @@ _任何对象_都可以做为上下文中的this的值。我想再一次澄清�
 ## 参考
 
 - [JavaScript中的原型和继承 - WEB开发者](http://www.admin10000.com/document/4343.html)
+- [Guide to JavaScript Prototypes, Scopes, and Performance](http://www.toptal.com/javascript/javascript-prototypes-scopes-and-performance-what-you-need-to-know)

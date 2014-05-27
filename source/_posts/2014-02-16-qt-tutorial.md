@@ -59,6 +59,12 @@ tags: [qt, tutorial]
 
 ![qt5.2bundle.png](http://johnnyimages.qiniudn.com/qt5.2bundle.png)
 
+### Visual Studio 安装
+
+- [Setting Up Visual Studio 2012, Qt, and OpenGL - YouTube](http://www.youtube.com/watch?v=cLvxLkgHqQs)
+- [详解Visual Studio 2010中的Qt配置使用 - 51CTO.COM](http://developer.51cto.com/art/201012/238726.htm)
+- [在Visual Studio中集成使用 Qt Opensource 版本](http://blog.csdn.net/lonelyforest/article/details/4559954)
+
 ## Quick Start
 
 参考：[Qt开发基础 - hai200501019的专栏](http://blog.csdn.net/hai200501019/article/details/17613411)
@@ -190,7 +196,7 @@ Q_OBJECT是一个宏，只有加入了Q_OBJECT，你才能使用QT中的signal�
     QTextCodec::setCodecForLocale(defaultCode);
     QTextCodec::setCodecForTr(defaultCode);
 
-### 路径xml
+### 读取xml
 
 本代码来自于[apache/cordova-qt](https://github.com/apache/cordova-qt)项目的cordova.cpp的loadFinished方法。
 
@@ -220,9 +226,11 @@ Q_OBJECT是一个宏，只有加入了Q_OBJECT，你才能使用QT中的signal�
 
 删除编译的所有东西，重新编译。
 
-### QVariant保存指针数据
+### QTCreator copy files to output directory with INSTALLS
 
-## QVariant保存指针数据
+[qt - QTCreator copy files to output directory with INSTALLS - Stack Overflow](http://stackoverflow.com/questions/11593165/qtcreator-copy-files-to-output-directory-with-installs)
+
+### QVariant保存指针数据
 
 参考 [QVariant保存指针数据](http://windrocblog.sinaapp.com/?p=1166)
 

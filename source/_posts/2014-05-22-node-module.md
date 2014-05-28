@@ -5,7 +5,7 @@ category: Node
 tags: [node, module]
 --- 
 
-原文： http://bites.goodeggs.com/posts/export-this
+原文： <http://bites.goodeggs.com/posts/export-this>
 
 When you require a module in Node, what are you getting back? When you write a module, what options do you have for designing its interface?
 

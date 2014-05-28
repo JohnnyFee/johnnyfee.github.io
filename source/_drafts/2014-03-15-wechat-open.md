@@ -19,8 +19,9 @@ tags: [微信]
 
 ## 微信公众号
 
-- [微信公众平台 in Node.js - { Fantasy | Blog }](http://blog.fantasyshao.com/2013-10-node-wechat-demo/)
+- [微信公众平台 in Node.js](http://blog.fantasyshao.com/2013-10-node-wechat-demo/)
 tle=docs/cplat/rt/node.js)
+- [微信公众平台开发(76) 无高级接口账号获取用户基本信息](http://www.cnblogs.com/txw1958/p/weixin76-user-info.html)
 
 ## Auth
 

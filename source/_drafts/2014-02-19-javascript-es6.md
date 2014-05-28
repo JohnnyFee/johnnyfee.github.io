@@ -11,6 +11,7 @@ tags: [javascript]
 - [Why I'm Excited About Object.observe](http://amasad.me/2014/03/16/why-im-excited-about-objectobserve/)
 - [Technical Leadership at Mozilla](http://andreasgal.com/2014/04/24/technical-leadership-at-mozilla)
 - [Creating defensive objects with ES6 proxies](http://www.nczonline.net/blog/2014/04/22/creating-defensive-objects-with-es6-proxies)
+- [Practical Workflows for ES6 Modules, Fluent 2014 - YouTube](http://www.youtube.com/watch?v=0VUjM-jJf2U)
 
 ## Argument
 
@@ -20,6 +21,7 @@ tags: [javascript]
 
 - [Playing with iterators and generators in ECMAScript 6](http://macr.ae/article/iterators-and-generators.html)
 - [Replacing callbacks with ES6 Generators | Flippin' Awesome](http://flippinawesome.org/2014/02/10/replacing-callbacks-with-es6-generators/)
+- [StrongLoop](http://strongloop.com/strongblog/how-to-generators-node-js-yield-use-cases)
 
 ## Async
 

@@ -92,6 +92,7 @@ Intuitive, fast & composable MVVM for building interactive interfaces.
 * [Building a mobile-friendly web app using Ember.js and jQuery Mobile](http://blog.mist.io/post/78757774060/building-a-mobile-friendly-web-app-using-ember-js-and)
 * [From Backbone Views To React – Leonardo Garcia Crespo](http://leoasis.github.io/posts/2014/03/22/from_backbone_views_to_react/)
 - [Fixture Adapters - Ember.js With No Server](http://www.sitepoint.com/fixture-adapters-ember-js-server)
+-[Things I wish someone had told me when I was learning Ember.js](http://landongn.com/ember/things-i-wish-someone-had-told-me-when-i-was-learning-ember-js)
 
 ### Video
 
@@ -126,6 +127,7 @@ Riot is the most minimal approach to MV* world. It weighs 1kb and has only 3 pub
 * [mgonto/angular-wizard · GitHub](https://github.com/mgonto/angular-wizard?utm_source=javascriptweekly)
 * [13 Steps to AngularJS Modularization | Safari Books Online's Official Blog](http://blog.safaribooksonline.com/2014/03/27/13-step-guide-angularjs-modularization/)
 * [Data-binding Revolutions with Object.observe() - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/es7/observe/)
+- [Crafting the Perfect AngularJS Model and Making it Real Time - YouTube](https://www.youtube.com/watch?v=lHbWRFpbma4)
 
 可以参考的东西，链式编程，DI模式。
 

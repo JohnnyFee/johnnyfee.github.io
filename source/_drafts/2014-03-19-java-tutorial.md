@@ -23,6 +23,10 @@ tags: [java]
 - [Java 8 Pocket Guide](http://www.salttiger.com/java-8-pocket-guide/)
 - [Java: The Good Parts](http://www.salttiger.com/java-the-good-parts/)
 
+## JavaScript
+
+- [Java 8 Nashorn Tutorial - Benjamin Winterberg](http://winterbe.com/posts/2014/04/05/java8-nashorn-tutorial)
+
 
 
 

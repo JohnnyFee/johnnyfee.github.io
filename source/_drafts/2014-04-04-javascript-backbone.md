@@ -209,7 +209,7 @@ Perform the following steps to handle model events.
 
 #### Avoiding event triggering when working with Backbone objects
 
-There isa way to avoid event triggering when working with Backbone events. This can be helpful if you want to update object properties without making event callbacks know about this fact.
+There is a way to avoid event triggering when working with Backbone events. This can be helpful if you want to update object properties without making event callbacks know about this fact.
 
 For example, you can pass {silent: true} when updating model values.
 
@@ -321,149 +321,161 @@ To check how binding works, export the model to be a global variable, so we can 
 Perform the following steps to bind a collection to a view.
 
 Make sure you have the model and collection definitions.
-  var InvoiceItemModel = Backbone.Model.extend({
 
-  });
+	var InvoiceItemModel = Backbone.Model.extend({
 
-  var InvoiceItemCollection = Backbone.Collection.extend({
-    model: InvoiceItemModel
-  });
+	});
+
+	var InvoiceItemCollection = Backbone.Collection.extend({
+	model: InvoiceItemModel
+	});
+
 Define a view for rendering a single model.
-  // Define new view to render a model.
-  var InvoiceItemView = Backbone.View.extend({
-    
-    // Define element tag name.
-    tagName: 'tr',
 
-    // Render view.
-    render: function() {
+	  // Define new view to render a model.
+	  var InvoiceItemView = Backbone.View.extend({
+	    
+	    // Define element tag name.
+	    tagName: 'tr',
 
-      // Add cells to the table row.
-      $(this.el).html(_.map([
-        this.model.get('quantity'),
-        this.model.get('description'),
-        this.model.get('price'), this.model.calculateAmount(),
-      ], function(val, key){
-        return '<td>' + val + '</td>'
-      }));
+	    // Render view.
+	    render: function() {
 
-      return this;
-    }
-  });
+	      // Add cells to the table row.
+	      $(this.el).html(_.map([
+	        this.model.get('quantity'),
+	        this.model.get('description'),
+	        this.model.get('price'), this.model.calculateAmount(),
+	      ], function(val, key){
+	        return '<td>' + val + '</td>'
+	      }));
+
+	      return this;
+	    }
+	  });
+
 In the initialize() method of the InvoiceItemView object, bind callback to handle the destroy event of the model.
+
     initialize: function() {
       this.listenTo(this.model, 'destroy', this.destroy, this);
     }
+
 Add the destroy() method, which removes the view bound to a model.
+
     destroy: function() {
       this.remove();
     }
+
 Define a view for rendering a collection.
-  // Define new view to render a collection.
-  var InvoiceItemListView = Backbone.View.extend({
 
-    // Define element tag name.
-    tagName: 'table',
+	// Define new view to render a collection.
+	var InvoiceItemListView = Backbone.View.extend({
 
-    // Define element class name.
-    className: 'invoice-item-view',
+	// Define element tag name.
+	tagName: 'table',
 
-    // Render view.
-    render: function() {
+	// Define element class name.
+	className: 'invoice-item-view',
 
-      $(this.el).empty();
+	// Render view.
+	render: function() {
 
-      // Append table with a table header.
-      $(this.el).append($('<tr></tr>').html(
-        _.map(['Quantity', 'Description', 'Price', 'Total'], 
-          function(val, key){
-            return '<th>' + val + '</th>'
-          }
-        )
-      ));
+	  $(this.el).empty();
 
-      // Append table  with a row.
-      _.each(this.collection.models, function(model, key) {
-        this.append(model);
-      }, this);
+	  // Append table with a table header.
+	  $(this.el).append($('<tr></tr>').html(
+	    _.map(['Quantity', 'Description', 'Price', 'Total'], 
+	      function(val, key){
+	        return '<th>' + val + '</th>'
+	      }
+	    )
+	  ));
 
-      return this;
-    },
+	  // Append table  with a row.
+	  _.each(this.collection.models, function(model, key) {
+	    this.append(model);
+	  }, this);
 
-    // Add invoice item row to the table.
-    append: function(model) {
-      $(this.el).append(
-        new InvoiceItemView({ model: model }).render().el
-      );
-    }
-  });
+	  return this;
+	},
+
+	// Add invoice item row to the table.
+	append: function(model) {
+	  $(this.el).append(
+	    new InvoiceItemView({ model: model }).render().el
+	  );
+	}
+	});
+
 Here we used the append() method, which adds InvoiceItemView into the output table. We will use this method later on.
 
 In the initialize() method of the InvoiceItemListView object, bind the callback to handle the add event of the collection.
+
     initialize: function() {
       this.listenTo(
         this.collection, 'add', this.append, this
       );
     },
+
 Here we have called the same append() method.
 
 1. Define the view with Add and Remove controls.
   
-	  var InvoiceItemListControlsView = Backbone.View.extend({
-	    render: function() {
-	      var html = 
-	        '<br><input id="add" type="button"' value="Add" id>' +
-	        ' <input id="remove" type="button" value="Remove">';
+		  var InvoiceItemListControlsView = Backbone.View.extend({
+		    render: function() {
+		      var html = 
+		        '<br><input id="add" type="button"' value="Add" id>' +
+		        ' <input id="remove" type="button" value="Remove">';
 
-	      $(this.el).html(html);
+		      $(this.el).html(html);
 
-	      return this;
-	    },
+		      return this;
+		    },
 
-	    // Handle HTML events.
-	    events: {
-	      'click #add': 'addNewInvoiceItem',
-	      'click #remove': 'removeInvoiceItem',
-	    },
+		    // Handle HTML events.
+		    events: {
+		      'click #add': 'addNewInvoiceItem',
+		      'click #remove': 'removeInvoiceItem',
+		    },
 
-	    // Add button handler.
-	    addNewInvoiceItem: function() {
-	      var description = prompt('Enter item description', '');
-	      var price = prompt('Enter item price', '0');
-	      var quantity = prompt('Enter item quantity', '1');
+		    // Add button handler.
+		    addNewInvoiceItem: function() {
+		      var description = prompt('Enter item description', '');
+		      var price = prompt('Enter item price', '0');
+		      var quantity = prompt('Enter item quantity', '1');
 
-	      this.collection.add([{
-	        description: description,
-	        price: price,
-	        quantity: quantity
-	      }]);
-	    },
+		      this.collection.add([{
+		        description: description,
+		        price: price,
+		        quantity: quantity
+		      }]);
+		    },
 
-	    // Remove button handler.
-	    removeInvoiceItem: function() {
-	      var position =
-	        prompt('Enter position of item to remove', '');
+		    // Remove button handler.
+		    removeInvoiceItem: function() {
+		      var position =
+		        prompt('Enter position of item to remove', '');
 
-	      model = this.collection.at(position);
-	      model.destroy();
-	    }
-	  }); 
+		      model = this.collection.at(position);
+		      model.destroy();
+		    }
+		  }); 
 
 2. Define a view for rendering a whole page.
   
-	  var InvoiceItemListPageView = Backbone.View.extend({
+		var InvoiceItemListPageView = Backbone.View.extend({
 
-	    // Render whole page view.
-	    render: function() {
-	      $(this.el).html(new InvoiceItemListView({
-	        collection: this.collection
-	      }).render().el);
+		// Render whole page view.
+		render: function() {
+		  $(this.el).html(new InvoiceItemListView({
+		    collection: this.collection
+		  }).render().el);
 
-	      $(this.el).append(new InvoiceItemListControlsView({
-	        collection: this.collection
-	      }).render().el);
-	    }
-	  });
+		  $(this.el).append(new InvoiceItemListControlsView({
+		    collection: this.collection
+		  }).render().el);
+		}
+		});
 
 3. Create and initialize the collection instance with data.
 
@@ -497,17 +509,17 @@ Perform the following steps to perform a bidirectional binding.
 
 1. Make sure you have a model defined.
   
-	  var InvoiceItemModel = Backbone.Model.extend({
+		var InvoiceItemModel = Backbone.Model.extend({
 
-	  });
+		});
 
 2. Define the form view.
   
-	  var InvoiceItemFormView = Backbone.View.extend({
+		var InvoiceItemFormView = Backbone.View.extend({
 
-	    // Define class name of view element.
-	    className: 'invoice-item-form-view',
-	  });
+		// Define class name of view element.
+		className: 'invoice-item-form-view',
+		});
 
 3. Add the bindings hash to the view.
    
@@ -545,34 +557,35 @@ Perform the following steps to perform a bidirectional binding.
 	    }
 
 5. Define the other view in a similar way.
-	  var InvoiceItemView = Backbone.View.extend({
+	  
+		var InvoiceItemView = Backbone.View.extend({
 
-	    // Define class name of view element.
-	    className: 'invoice-item-view',
+		// Define class name of view element.
+		className: 'invoice-item-view',
 
-	    // Bind HTML elements to the view model.
-	    bindings: {
-	      '#description': 'description',
-	      '#price': 'price',
-	      '#quantity': 'quantity'
-	    },
+		// Bind HTML elements to the view model.
+		bindings: {
+		  '#description': 'description',
+		  '#price': 'price',
+		  '#quantity': 'quantity'
+		},
 
-	    // Render view.
-	    render: function() {
-	      var html = 'Description:' +
-	        '<span id="description"></span>, ' +
-	        'Price:  <span id="price"></span>, ' +
-	        'Quantity:  <span id="quantity"></span>.';
+		// Render view.
+		render: function() {
+		  var html = 'Description:' +
+		    '<span id="description"></span>, ' +
+		    'Price:  <span id="price"></span>, ' +
+		    'Quantity:  <span id="quantity"></span>.';
 
-	      // Set html for the view element using jQuery.
-	      $(this.el).html(html);
+		  // Set html for the view element using jQuery.
+		  $(this.el).html(html);
 
-	      // Here binding occurs.
-	      this.stickit();
+		  // Here binding occurs.
+		  this.stickit();
 
-	      return this;
-	    },
-	  });
+		  return this;
+		},
+		});
 
 6. Create a new model instance.
 

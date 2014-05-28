@@ -6,8 +6,11 @@ category: JavaScript
 tags: [javascript]
 --- 
 
+
 - [Underscore.js](http://underscorejs.org/)
     + [Stop writing For loops. Start using underscore. - @jhooks](http://www.joelhooks.com/blog/2014/02/06/stop-writing-for-loops-start-using-underscorejs/)
+- [lodash/lodash](https://github.com/lodash/lodash/)
+- [Breaking Bad (Loops in JavaScript Libraries)](http://webapplog.com/breaking-bad-loops-in-javascript-libraries)
 
 ## Data Type
 
@@ -40,6 +43,7 @@ tags: [javascript]
 ### JSON
 
 - [lloyd/JSONSelect](https://github.com/lloyd/JSONSelect) CSS-like selectors for JSON [http://jsonselect.org](http://jsonselect.org/).
+- [originalmachine/distill](https://github.com/originalmachine/distill)
 
 ### Collection
 
@@ -84,9 +88,13 @@ tags: [javascript]
 
 - [joewalnes/filtrex](https://github.com/joewalnes/filtrex) A simple, safe, JavaScript Filter Expression compiler for end-users.
 
-## Other
+## Animation
 
-- [2014年3月新鲜出炉的最佳 JavaScript 工具库 - WEB开发者](http://www.admin10000.com/document/4111.html)
+- [Velocity.js](http://julian.com/research/velocity)
+
+## Web Workers
+
+- [kolodny/webwork](https://github.com/kolodny/webwork)
 
 ## Generator
 

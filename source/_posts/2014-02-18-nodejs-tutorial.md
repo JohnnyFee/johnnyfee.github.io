@@ -97,6 +97,7 @@ tags: [web]
 ### .Net
 
 - [How to leverage SQL Server with Node.js using Edge.js | via @codeship](http://blog.codeship.io/2014/04/22/leverage-sql-server-with-node-js-using-edge-js.html)
+- ["It's just a software issue"- Edge.js brings Node and .NET together on three platforms - Scott Hanselman](http://www.hanselman.com/blog/ItsJustASoftwareIssueEdgejsBringsNodeAndNETTogetherOnThreePlatforms.aspx)
 
 ### IO
 
@@ -173,6 +174,10 @@ Javascript with Cody and Node.js.
 
 - [Using Grunt? Consider Fez](http://flippinawesome.org/2014/02/24/using-grunt-consider-fez/)
 	- [Scaling Node.js with recluster — Medium](https://medium.com/@garychambers108/f04dd346108c)
+
+## Performance
+
+- [StrongLoop](http://strongloop.com/strongblog/node-js-performance-tip-of-the-week-memory-leak-diagnosis)
 
 ## Process
 

@@ -161,23 +161,23 @@ Output:
 - [jekyll-table-of-contents ](https://github.com/ghiculescu/jekyll-table-of-contents)
 - [gfranko / jquery.tocify.js](https://github.com/gfranko/jquery.tocify.js) 建议使用，用于生成TOC。生成TOC没有问题，但是jquery.tocify.css中.tocify和bootstrap3的兼容不是很好。我使用以下代码覆盖其中的某些值：
 
-	.tocify {
-		position: inherit;
-		width:240px;
-	    max-height: 80%;
-	    overflow: auto;
-	}
+		.tocify {
+			position: inherit;
+			width:240px;
+		    max-height: 80%;
+		    overflow: auto;
+		}
 
-然后，使用[bbarakaci / fixto](https://github.com/bbarakaci/fixto)将toc元素的定位变成fixed。同时，加入以下class调整样式以适应自己的页面：
+	然后，使用[bbarakaci / fixto](https://github.com/bbarakaci/fixto)将toc元素的定位变成fixed。同时，加入以下class调整样式以适应自己的页面：
 
-	#toc {
-		    margin: 20px 0px 20px 0px;
-	}
+		#toc {
+			    margin: 20px 0px 20px 0px;
+		}
 
-	.active {
-		color:white;
-		background-color: #dff0d8;
-	}
+		.active {
+			color:white;
+			background-color: #dff0d8;
+		}
 
 ###分页
 

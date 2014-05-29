@@ -142,6 +142,7 @@ Riot is the most minimal approach to MV* world. It weighs 1kb and has only 3 pub
 ------------------|----------|----------|-----------------------|--------------
 jQuery2.0.3       |  27.9    |   81.6   |      N                |     N
 Zepto	    	  |  9.2     |   24.0   |      N                |     N
+Ender             |          |          |      N                |     N
 jScroll2.1.1      |  1.5     |   3.4    |      N                |     N
 backbone          |  6.3     |   19     |      Y                |     N
 underscore.js     |  4.9     |   14     |      N                |     N 

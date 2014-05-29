@@ -68,6 +68,10 @@ tags: [javascript]
 
 - [Communicating Large Objects with Web Workers in javascript](http://developerblog.redhat.com/2014/05/20/communicating-large-objects-with-web-workers-in-javascript)
 
+## Other
+
+- [条件注释判断浏览器](http://www.cnblogs.com/dtdxrk/archive/2012/03/06/2381868.html)
+
 ## Books
 
 - [You Don’t Know JS: Scope & Closures](http://www.salttiger.com/you-dont-know-js-scope-and-closures/)

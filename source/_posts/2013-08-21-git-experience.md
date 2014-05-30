@@ -23,6 +23,8 @@ tags: [git]
 
 ## .gitignore
 
+- <http://www.gitignore.io/> 各种 git 模板。
+
 `.gitignore` 中这样配置 `views/**/*.html` ，可以排除
 
 	view/a.html

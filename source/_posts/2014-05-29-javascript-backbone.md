@@ -1287,10 +1287,7 @@ When calling the remove() method, a model is removed from the models array, and 
 
 Sometimes, we may need to delete all the existing models from a collection and add some others. There is a useful reset() method, which does both these jobs simultaneously. Here is how it works.
 
-    invoiceItemCollection.reset   ([
-        {description: 'Wooden Toy House', price: 22, quantity: 3},
-        {description: 'Farm Animal Set', price: 17, quantity: 1}
-      ]);
+![backbone-collection-snippet.png](http://johnnyimages.qiniudn.com/backbone-collection-snippet.png)
 
 ### Working with a collection as a stack or as a queue
 

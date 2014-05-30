@@ -79,6 +79,8 @@ tags: [javascript]
 - [BDD in JavaScript with CucumberJS](http://flippinawesome.org/2014/01/27/bdd-in-javascript-with-cucumberjs/)
 - [Node.js Handbook - Testing Essentials](http://fredkschott.com/post/2014/05/nodejs-testing-essentials)
 - [Jest](http://facebook.github.io/jest/index.html)
+- [Nightwatch.js](http://nightwatchjs.org/) Browser automated testing done easy. Write efficient and straightforward Javascript End-to-End tests in Node.js which run against a Selenium server.
+- [Mocha - the fun, simple, flexible JavaScript test framework](http://visionmedia.github.io/mocha/) Mocha是一款功能丰富的JavaScript测试框架，可基于node.js及浏览器运行，它使异步测试变得更为简单有趣，支持灵活且准确的输出，捕捉异常现象。
 
 ## Keyboard
 

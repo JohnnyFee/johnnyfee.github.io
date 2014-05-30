@@ -58,21 +58,20 @@ The following diagram shows a typical workflow in a Backbone application:
 
 	Create the main file of the application, which is index.html. It should include third-party libraries and your application files, as shown in the following code:
 
-		<!DOCTYPE html>
-		<html>
-		  <head>
-		    <meta charset="utf-8">
-		    <title>Backbone.js Cookbook – Application Template</title>
-		  
-		    <script src="lib/jquery.js"></script>
-		    <script src="lib/underscore.js"></script>
-		    <script src="lib/backbone.js"></script>
+			<!DOCTYPE html>
+			<html>
+			  <head>
+			    <meta charset="utf-8">
+			    <title>Backbone.js Cookbook – Application Template</title>
+			  
+			    <script src="lib/jquery.js"></script>
+			    <script src="lib/underscore.js"></script>
+			    <script src="lib/backbone.js"></script>
 
-		    <script src="js/main.js"></script>
-		  </head>
-		  <body></body>
-
-		</html>
+			    <script src="js/main.js"></script>
+			  </head>
+			  <body></body>
+			</html>
 
 4. Create the main JavaScript file named main.js that will contain the code of your application.
 

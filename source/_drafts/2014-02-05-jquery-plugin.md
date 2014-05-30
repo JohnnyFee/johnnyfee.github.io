@@ -86,6 +86,10 @@ tags: [jquery]
 
 - [JSIZES](http://www.bramstein.com/projects/jsizes/) JQUERY EXTENSION PLUGIN FOR CSS PROPERTIES
 
+## DOM
+
+- [Kreate.js](http://itsjonq.github.io/kreate/)这款工具有助于对 jQuery对象快速生成DOM。你可以创建单个或多个元素。
+
 ## Progress
 
 - [30个jQuery & CSS3加载动画和进度栏插件 - WEB开发者](http://www.admin10000.com/document/3957.html)

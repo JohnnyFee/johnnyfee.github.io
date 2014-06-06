@@ -48,3 +48,7 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 ## Debug
 
 - [jieyou/remote_inspect_web_on_real_device](https://github.com/jieyou/remote_inspect_web_on_real_device) 各种真机远程调试方法汇总。
+
+## Books
+
+- [Mobile Design Pattern Gallery, 2nd Edition](http://www.salttiger.com/mobile-design-pattern-gallery-2nd-edition/)

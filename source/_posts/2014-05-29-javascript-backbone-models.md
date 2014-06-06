@@ -2,7 +2,7 @@
 layout: post
 title: "Backbone Models"
 category: JavaScript
-tags: [javascript]
+tags: [javascript,backbone,mvc]
 --- 
 
 > 本文为读 [Backbone.js Cookbook](http://www.salttiger.com/backbone-js-cookbook/) 的读书笔记。

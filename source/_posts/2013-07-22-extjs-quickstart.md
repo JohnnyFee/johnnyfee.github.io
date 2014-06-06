@@ -49,9 +49,10 @@ TODO
 - [Tutorials about ExtJS and Sencha Touch](http://www.bleext.com/blog/)
 - [Saki's Extensions, Plugins](http://extjs.eu/)
 
-## 相关书籍
+## Books
 
 - [Learning Ext JS 4](http://pan.baidu.com/share/link?shareid=441592&uk=2214641459)
 - [Ext JS 4 Web Application Development Cookbook](http://www.salttiger.com/ext-js-4-web-application-development-cookbook/)
 - [Ext JS 4 First Look](http://www.salttiger.com/ext-js-4-first-look/)
 - [Sencha Touch 2: Up and Running](http://pan.baidu.com/share/link?shareid=324373&uk=2214641459)
+- [Ext JS in Action, 2nd Edition](http://www.salttiger.com/ext-js-action-2nd-edition/)

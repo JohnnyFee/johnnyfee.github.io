@@ -97,3 +97,12 @@ tags: [android, tutorial]
 ### Android Studio
 
 - [inmite/android-butterknife-zelezny](https://github.com/inmite/android-butterknife-zelezny) Android Studio plug-in for generating ButterKnife injections from selected layout XML.
+
+## Tutorial
+
+- [Android Design Patterns](http://www.salttiger.com/android-design-patterns/)
+
+## Books
+
+- [Android Programming: Pushing the Limits](http://www.salttiger.com/android-programming-pushing-limits/)
+- [Creating Dynamic UI with Android Fragments](http://www.salttiger.com/creating-dynamic-ui-android-fragments/)

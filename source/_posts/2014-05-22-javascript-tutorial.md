@@ -30,6 +30,7 @@ tags: [javascript]
 - [JavaScript原生对象属性和方法详解——Array对象](http://www.feeldesignstudio.com/2013/09/native-javascript-object-properties-and-methods-array)
 - [JavaScript原生对象属性和方法详解——Date对象](http://www.feeldesignstudio.com/2013/09/native-javascript-object-properties-and-methods-date)
 - [JavaScript原生对象属性和方法详解——Number对象](http://www.feeldesignstudio.com/2013/09/native-javascript-object-properties-and-methods-number)
+    + [在JavaScript中判断整型的N种方法 - WEB开发者](http://www.admin10000.com/document/4491.html)
 - [JavaScript原生对象属性和方法详解——String对象](http://www.feeldesignstudio.com/2013/09/native-javascript-object-properties-and-methods-string)
 - [JavaScript原生对象属性和方法详解——Math对象](http://www.feeldesignstudio.com/2013/09/native-javascript-object-properties-and-methods-math)
 - [The Curious Case of JavaScript NaN](http://ariya.ofilabs.com/2014/05/the-curious-case-of-javascript-nan.html?)
@@ -75,3 +76,7 @@ tags: [javascript]
 ## Books
 
 - [You Don’t Know JS: Scope & Closures](http://www.salttiger.com/you-dont-know-js-scope-and-closures/)
+- [JavaScript Programming: Pushing the Limits](http://www.salttiger.com/javascript-programming-pushing-the-limits/)
+- [Data Structures and Algorithms with JavaScript](http://www.salttiger.com/data-structures-and-algorithms-with-javascript/)
+- [Data Structures and Algorithms with JavaScript](http://www.salttiger.com/data-structures-and-algorithms-with-javascript/)
+- [Speaking JavaScript](http://www.salttiger.com/speaking-javascript/)

@@ -5,11 +5,11 @@ description: ""
 category: Android
 tags: [android,framework]
 --- 
-##概述
+## 概述
 
 各框架简短介绍。
 
-##RoboGuice
+## RoboGuice
 
 __Benefits of using RoboGuice:__
 
@@ -22,7 +22,7 @@ __Benefits of using RoboGuice:__
 
 
 
-###Usage of RoboGuice library
+### Usage of RoboGuice library
 
 - Views Injection:: To initialize views, use @InjectViews, for example: - @InjectView(R.id.textView1) TextView textView1;
 - Resources Injection: To initialize and get resources, use @InjectResources, - for example: @InjectResource(R.string.app_name) String name;
@@ -31,7 +31,7 @@ __Benefits of using RoboGuice:__
 
 因为RoboGuice本身需要继承 RoboActivity or RoboFragment 来实现，当碰到类似 ActionBarSherlock 也需要继承来实现的库时，可以使用以下方法解决：我们可以自定义 RoboGuice 的基类，让基类继承自 ActionBarSherlock，最终使该基类具有两者的特性。该解决方案的项目为[rtyley/roboguice-sherlock](https://github.com/rtyley/roboguice-sherlock)。
 
-###Example
+### Example
 
     public class TestActivity extends Activity{
      
@@ -64,8 +64,10 @@ __Benefits of using RoboGuice:__
         }
     }
 
-###参考
+### 参考
 
 - [Be a lazy but a productive android developer - 1 => RoboGuiceTechnoTalkative](http://www.technotalkative.com/lazy-productive-android-developer-1)
 
+## Chart
 
+- [安卓图表引擎AChartEngine(一)](http://blog.csdn.net/lk_blog/article/details/7645509)

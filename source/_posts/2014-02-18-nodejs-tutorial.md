@@ -40,6 +40,7 @@ tags: [web]
 
 - [Top Overlooked Security Threats to Node.js Web Applications](https://speakerdeck.com/ckarande/top-overlooked-security-threats-to-node-dot-js-web-applications)
 - [Node.js Security in the Enterprise - YouTube](https://www.youtube.com/watch?v=Zc8QvuRbdoQ&list=UUXe1qKfGweMKTnmRrMw9yOg&feature=share&index=1)
+- [Node Security](http://www.salttiger.com/node-security/)
 
 ## Communication
 

@@ -18,3 +18,7 @@ tags: [sencha, touch]
 ## Package
 
 - [Sencha Touch 2: Native Packaging Demo](http://www.sencha.com/learn/sencha-touch-2-native-packaging-demo)
+
+## Books
+
+- [Sencha Touch 2 Mobile JavaScript Framework](http://www.salttiger.com/sencha-touch-2-mobile-javascript-framework/)

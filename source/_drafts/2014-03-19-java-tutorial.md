@@ -26,8 +26,12 @@ tags: [java]
 ## JavaScript
 
 - [Java 8 Nashorn Tutorial - Benjamin Winterberg](http://winterbe.com/posts/2014/04/05/java8-nashorn-tutorial)
+- [Client-Server Web Apps with JavaScript and Java](http://www.salttiger.com/client-server-web-apps-with-javascript-and-java/)
 
+## Lamda
 
+- [Functional Programming in Java](http://www.salttiger.com/functional-programming-in-java/)
+- [Java 8 Lambdas](http://www.salttiger.com/java-8-lambdas/)
 
 
 

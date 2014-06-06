@@ -138,3 +138,7 @@ typedef为保留字，使用它可以为一个类型定义创建一个别名。�
 ## Tutorial
 
 - [写给大家看的C++书_读书频道_51CTO.COM_领先的中文IT技术网站](http://book.51cto.com/art/200906/126956.htm#book_content)
+
+## Books
+
+- [Ivor Horton’s Beginning Visual C++ 2013](http://www.salttiger.com/ivor-hortons-beginning-visual-cpp-2013/)

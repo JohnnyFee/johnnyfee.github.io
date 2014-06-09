@@ -396,10 +396,6 @@ TODO
 
 ## Tutorial
 
-- [Create Your First Mobile App with PhoneGap Build – Using PhoneGap Build](http://flippinawesome.org/2013/03/29/phonegap-build-part2/)
-- [Create Your First Mobile App with PhoneGap Build – Setup](http://flippinawesome.org/2013/03/29/phonegap-build-part1/)
-- [Create Your First Mobile App with PhoneGap Build – Connecting to an API](http://flippinawesome.org/2013/03/29/create-your-first-mobile-app-part3/)
-- [Create Your First Mobile App with PhoneGap Build – Adding jQuery Mobile](http://flippinawesome.org/2013/04/08/phonegap-build-part4/)
 - [phonegap - jacob的专栏](http://blog.csdn.net/wangpengch/article/category/1849949)
 
 ## 相关资料

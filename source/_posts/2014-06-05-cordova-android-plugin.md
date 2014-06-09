@@ -5,8 +5,6 @@ category: Cordova
 tags: [phonegap, cordova]
 --- 
 
-## Building a Plugin
-
 ## The JavaScript Interface
 
     cordova.exec(function(winParam) {},
@@ -27,37 +25,39 @@ Here is how each parameter works:
 
 This example shows one way to implement the plugin's JavaScript interface:
 
-        window.echo = function(str, callback) {  
-        cordova.exec(callback, function(err) {  
-            callback('Nothing to echo.');  
-        }, "Echo", "echo", [str]);  
-    };  
+    window.echo = function(str, callback) {  
+        cordova.exec(callback, function(err) {  
+            callback('Nothing to echo.');  
+        }, "Echo", "echo", [str]);  
+    };  
+
 In this example, the plugin attaches itself to the window object as the echo function, which plugin users would call as follows:
 
-        window.echo("echome", function(echoValue) {  
-        alert(echoValue == "echome"); // should alert true.  
-    });
+    window.echo("echome", function(echoValue) {  
+        alert(echoValue == "echome"); // should alert true.  
+    });
 
 ## Android Plugin (Native Interfaces)
 
 Android plugins are based on Cordova-Android, which consists of an Android WebView with hooks attached to it. Plugins are represented as class mappings in the `config.xml` file. A plugin consists of at least one Java class that extends the CordovaPlugin class, overriding one of its execute methods. As best practice, the plugin should also handle `pause` and `resume` events, along with any message passing between plugins. Plugins with long-running requests, background activity such as media playback, listeners, or internal state should implement the `onReset()` method as well. It executes when the WebView navigates to a new page or refreshes, which reloads the JavaScript.
 
-Whether you distribute a plugin as Java file or as a jar file of its own, the plugin must be specified in your Cordova-Android application's res/xml/config.xml file. See Application Plugins for more information on how to use the plugin.xml file to inject this feature element:
+Whether you distribute a plugin as Java file or as a jar file of its own, the plugin must be specified in your Cordova-Android application's `res/xml/config.xml` file. See Application Plugins for more information on how to use the `plugin.xml` file to inject this feature element:
 
     <feature name="<service_name>">
         <param name="android-package" value="<full_name_including_namespace>" />
     </feature>
 
-The service name matches the one used in the JavaScript exec call. The value is the Java class's fully qualified namespace identifier. Otherwise, the plugin may compile but still be unavailable to Cordova.
+The service `name` matches the one used in the JavaScript exec call. The value is the Java class's fully qualified namespace identifier. Otherwise, the plugin may compile but still be unavailable to Cordova.
 
 ### Plugin Initialization and Lifetime
 
-One instance of a plugin object is created for the life of each WebView. Plugins are not instantiated until they are first referenced by a call from JavaScript, unless <param> with an onloadname attribute is set to "true" in config.xml. E.g.:
+One instance of a plugin object is created for the life of each WebView. Plugins are not instantiated until they are first referenced by a call from JavaScript, unless `<param>` with an onloadname attribute is set to "true" in `config.xml`. E.g.:
 
     <feature name="Echo">  
-    <param name="android-package" value="<full_name_including_namespace>" />  
-    <param name="onload" value="true" />  
-</feature>  
+        <param name="android-package" value="<full_name_including_namespace>" />  
+        <param name="onload" value="true" />  
+    </feature>  
+
 Plugins should use the initialize method for their start-up logic.
 
     @override  
@@ -66,9 +66,43 @@ Plugins should use the initialize method for their start-up logic.
         // your init code here
     }
 
+### Threading
+
+    @Override  
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {  
+      if ("beep".equals(action)) {  
+        final long duration = args.getLong(0);  
+        cordova.getActivity().runOnUiThread(new Runnable() {  
+          public void run() {  
+            ...  
+            callbackContext.success(); // Thread-safe.  
+          }  
+        });  
+        return true;  
+      }  
+      return false;  
+    }  
+
+Use the following if you do not need to run on the main interface's thread, but do not want to block the WebCore thread either:
+
+      @Override  
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {  
+      if ("beep".equals(action)) {  
+        final long duration = args.getLong(0);  
+        cordova.getThreadPool().execute(new Runnable() {  
+          public void run() {  
+            ...  
+            callbackContext.success(); // Thread-safe.  
+          }  
+        });  
+        return true;  
+      }  
+      return false;  
+    }
+
 ### Echo Android Plugin Example
 
-To match the JavaScript interface's _echo_ feature described in Application Plugins, use the plugin.xml to inject a feature specification to the local platform's `config.xml` file:
+To match the JavaScript interface's _echo_ feature described in Application Plugins, use the `plugin.xml` to inject a feature specification to the local platform's `config.xml` file:
 
     <platform name="android">
         <config-file target="config.xml" parent="/*">
@@ -78,7 +112,7 @@ To match the JavaScript interface's _echo_ feature described in Application Plug
         </config-file>
     </platform> 
 
-Then add the following to the src/org/apache/cordova/plugin/Echo.java file:
+Then add the following to the `src/org/apache/cordova/plugin/Echo.java` file:
 
     package org.apache.cordova.plugin;
 
@@ -118,10 +152,6 @@ Then add the following to the src/org/apache/cordova/plugin/Echo.java file:
 Android features an Intent system that allows processes to communicate with each other. Plugins have access to a CordovaInterface object, which can access the Android Activity that runs the application. This is the Context required to launch a new Android Intent. The CordovaInterface allows plugins to start an Activity for a result, and to set the callback plugin for when the Intent returns to the application.
 
 As of Cordova 2.0, Plugins can no longer directly access the Context, and the legacy ctx member is deprecated. All ctx methods exist on the Context, so both getContext() and getActivity() can return the required object.
-
-### Android WebViews
-
-[PhoneGap API Documentation](http://docs.phonegap.com/en/edge/guide_platforms_android_webview.md.html#Android%20WebViews)
 
 ### Upgrading Android
 

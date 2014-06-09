@@ -190,7 +190,7 @@ The storage event's storageArea attribute returns the localStorage or sessionSto
 Web SQL是基于浏览器中嵌入的[sqlite](http://www.sqlite.org/)，继承了平面文件（flat-file）数据库的优点（高并发性）但缺少一些特性（存储过程（stored procs）和其它一些高端数据库特性）。
 
 - 优点：快速和功能丰富的sql实现（除了select/insert/update/delete，还能使用joins、inner selects等）。
-- 缺点：Chrome和基于webkit的浏览器（safari等）支持，但Firefox和IE不支持。
+- 缺点：Firefox、IE、Opera mini 不支持。
 
 While common local- or session-based databases are capable of storing complex data structures, [QtWebKit](qtwebkit.html)-based browsers can also rely upon the WebSQL standard, which brings SQLite-based structured database functionality, typically deployed on servers, to client browser applications. Based on SQLite version 3.6.19, WebSQL is appropriate for data-intensive applications requring complex queries rather than simple key/value access.
 
@@ -316,9 +316,13 @@ This API is available in the underlying WebView. Indexed DB offers more features
 IndexedDB是基于简单的平面文件（flat-file）数据库，采用了分层的键值存储（key/value persistence）和基本的索引。
 
 - 优点：如果你熟悉NoSQL，这是再适合不过了。
-- 缺点：还没获得大部分浏览器的支持。不支持SQL，但未来可能会有支持SQL的模块。
+- 缺点：IE、Opera mini 不支持。
 
 ## Reference
 
 - [QtWebKit Guide | Documentation | Qt Project](http://qt-project.org/doc/qt-4.8/qtwebkit-guide.html)
 - [HTML5 Storage Wars - localStorage vs. IndexedDB vs. Web SQL - csimms.botonomy.com](http://csimms.botonomy.com/2011/05/html5-storage-wars-localstorage-vs-indexeddb-vs-web-sql.html)
+
+## Tutorial
+
+- [Storage - HTML5 Rocks](http://www.html5rocks.com/en/features/storage)

@@ -18,6 +18,8 @@ tags: [javascript]
 - [enricomarino/is](https://github.com/enricomarino/is)
 - [landau/is](https://github.com/landau/is) A small predicate library for javascript.
 
+<!--more-->
+
 ### String
 
 - [string.js](http://stringjs.com/)

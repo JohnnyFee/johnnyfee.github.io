@@ -18,6 +18,10 @@ tags: [javascript]
 - [Seven JavaScript Quirks I Wish I’d Known About | Telerik Developer Network](http://developer.telerik.com/featured/seven-javascript-quirks-i-wish-id-known-about/)
 - [Mixins, Forwarding, and Delegation in JavaScript](http://raganwald.com/2014/04/10/mixins-forwarding-delegation.html)
 
+- [JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/#advanced)
+- [A List of Foundational JavaScript Tools](https://www.codefellows.org/blogs/complete-list-of-javascript-tools)
+- [web开发设计人员不可不用的在线web工具和应用](http://www.qianduan.net/web-development-and-design-staff-can-not-be-without-online-web-tools-and-applications.html)
+
 <!--more-->
 
 ## OO
@@ -59,12 +63,6 @@ tags: [javascript]
 - [ECMAScript 6: A Better JavaScript for the Ambient Computing Era](http://www.slideshare.net/allenwb/wdc14-allebwb?)
 
 
-## Tutorial
-
-- [JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/#advanced)
-- [A List of Foundational JavaScript Tools](https://www.codefellows.org/blogs/complete-list-of-javascript-tools)
-- [web开发设计人员不可不用的在线web工具和应用](http://www.qianduan.net/web-development-and-design-staff-can-not-be-without-online-web-tools-and-applications.html)
-
 ### Worker
 
 - [Communicating Large Objects with Web Workers in javascript](http://developerblog.redhat.com/2014/05/20/communicating-large-objects-with-web-workers-in-javascript)
@@ -72,6 +70,10 @@ tags: [javascript]
 ## Other
 
 - [条件注释判断浏览器](http://www.cnblogs.com/dtdxrk/archive/2012/03/06/2381868.html)
+
+## Observer
+
+- [Detect, Undo And Redo DOM Changes With Mutation Observers](http://addyosmani.com/blog/mutation-observers/)
 
 ## Books
 

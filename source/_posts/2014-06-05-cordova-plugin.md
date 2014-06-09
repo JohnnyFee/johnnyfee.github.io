@@ -123,6 +123,10 @@ As of Cordova 2.0, Plugins can no longer directly access the Context, and the le
 
 [PhoneGap API Documentation](http://docs.phonegap.com/en/edge/guide_platforms_android_webview.md.html#Android%20WebViews)
 
+### Upgrading Android
+
+- [PhoneGap API Documentation](http://docs.phonegap.com/en/edge/guide_platforms_android_upgrade.md.html#Upgrading%20Android)
+
 ## Reference
 
 - [Plugin Development Guide](http://docs.phonegap.com/en/edge/guide_hybrid_plugins_index.md.html)

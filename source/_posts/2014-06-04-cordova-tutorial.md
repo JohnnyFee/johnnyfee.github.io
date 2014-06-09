@@ -220,6 +220,8 @@ __常用插件：__
 
         $ cordova plugin add org.apache.cordova.console
 
+参考：[Which Core PhoneGap/Cordova Plugins Do I Need?](http://developer.telerik.com/featured/which-core-phonegapcordova-plugins-do-i-need/)
+
 ### Using merges to Customize Each Platform
 
 工程目录下的 `merges/` 用于为平台指定特殊文件，`build` 时，`merges/` 中的文件将覆盖 `www/` 下对应目录结构的文件。
@@ -383,6 +385,10 @@ TODO
 ## Icons and Splash Screens
 
 为所有平台或者为特殊平台指定图标和启动画面，参考 [PhoneGap API Documentation](http://docs.phonegap.com/en/edge/config_ref_images.md.html)。
+
+## Debug
+
+- [Bringing F5 (or Command+R) to Hybrid Mobile Apps](http://developer.telerik.com/featured/bringing-f5-or-commandr-to-hybrid-mobile-apps/)
 
 ## Storage
 

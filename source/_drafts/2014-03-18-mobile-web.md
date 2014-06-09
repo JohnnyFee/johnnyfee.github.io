@@ -25,6 +25,14 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 
 [插件下载](https://github.com/matthewhudson/device.js/archive/master.zip "Download")[在线演示](http://matthewhudson.me/projects/device.js/ "Download")
 
+## State
+
+- [The State of Hybrid Mobile Development](http://developer.telerik.com/featured/the-state-of-hybrid-mobile-development/)
+
+## IDE
+
+- [5 Ways to Build Mobile Apps with Visual Studio](http://developer.telerik.com/featured/5-ways-to-build-mobile-apps-with-visual-studio/)
+
 ## Cache
 
 - [mortzdk/jsCache](https://github.com/mortzdk/jsCache)
@@ -48,6 +56,8 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 ## Debug
 
 - [jieyou/remote_inspect_web_on_real_device](https://github.com/jieyou/remote_inspect_web_on_real_device) 各种真机远程调试方法汇总。
+- - [A Concise Guide to Remote Debugging on iOS, Android, and Windows Phone](http://developer.telerik.com/featured/a-concise-guide-to-remote-debugging-on-ios-android-and-windows-phone/)
+- [Bringing F5 (or Command+R) to Hybrid Mobile Apps](http://developer.telerik.com/featured/bringing-f5-or-commandr-to-hybrid-mobile-apps/)
 
 ## Books
 

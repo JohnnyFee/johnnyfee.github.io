@@ -23,6 +23,11 @@ tags: [javascript]
 - bower
 - [component/component](https://github.com/component/component) client package management for building better web applications <http://component.io>.
 
+### wankada
+
+- [wakanda](http://www.wakanda.org/)
+- [Creating Custom Widgets with JavaScript in Wakanda](http://flippinawesome.org/2014/06/05/creating-custom-widgets-with-javascript-in-wakanda/?-custom-widgets-with-javascript-in-wakanda)
+
 ## Storage
 
 ### localForage

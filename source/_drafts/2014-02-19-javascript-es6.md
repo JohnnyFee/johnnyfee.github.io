@@ -35,6 +35,10 @@ tags: [javascript]
 
 - [zenparsing/esparse](https://github.com/zenparsing/esparse)
 
+## es7
+
+- [My ECMAScript 7 wishlist](http://www.nczonline.net/blog/2014/06/03/my-ecmascript-7-wishlist/)
+
 ## Tutorial
 
 - [Solving riddles with Prolog and ES6 generators — curiosity-driven.org](https://curiosity-driven.org/prolog-interpreter)

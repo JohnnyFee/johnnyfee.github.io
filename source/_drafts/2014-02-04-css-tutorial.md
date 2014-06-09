@@ -35,6 +35,7 @@ tags: [markdown]
 
 - [CSS Diner - Where we feast on CSS Selectors!](http://flukeout.github.io/)
 - [CSS Diner – 边学CSS选择器，边享受晚餐](http://www.shejidaren.com/css-diner.html)
+- [CSS: Should we change the default for overflow? - Bocoup](http://bocoup.com/weblog/new-overflow-default/)
 
 ## Tutorial
 

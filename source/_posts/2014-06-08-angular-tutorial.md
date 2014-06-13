@@ -56,7 +56,7 @@ Then there’s an attribute-based directive called ng-bind:
 
 - With the double-curly syntax, on the very first page load of your application’s index.html, there’s a chance that your user will see the un-rendered template before Angular has a chance to replace the curlies with your data. Subsequent views won’t suffer from this. The reason is that the browser loads the HTML page, renders it, and only then does Angular get a chance to interpret it as you intended.
 
-- The good news is that you can still use {{ }} in the majority of your templates. For the data binding you do in your index.html page, however, use ng-bind instead. That way, your users will see nothing until the data has loaded.
+- The good news is that you can still use {%raw%}{{ }}{%endraw%} in the majority of your templates. For the data binding you do in your index.html page, however, use ng-bind instead. That way, your users will see nothing until the data has loaded.
 
 ### Form Inputs
 
@@ -259,7 +259,7 @@ In our JavaScript, we just set up some dummy restaurants and create the selectRo
 
 ### Considerations for src and href Attributes
 
-When data binding to an `<img>` or `<a>` tag, the obvious path of using {{ }} in the src or href attributes won’t work well. Because browsers are aggressive about loading images parallel to other content, Angular doesn’t get a chance to intercept data binding requests. While the obvious syntax for an `<img> `might be:
+When data binding to an `<img>` or `<a>` tag, the obvious path of using {%raw%}{{ }}{%endraw%} in the src or href attributes won’t work well. Because browsers are aggressive about loading images parallel to other content, Angular doesn’t get a chance to intercept data binding requests. While the obvious syntax for an `<img> `might be:
 
     <img src="/images/cats/{{favoriteCat}}">
 

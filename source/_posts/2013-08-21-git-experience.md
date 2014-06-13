@@ -25,8 +25,13 @@ tags: [git]
 
 - <http://www.gitignore.io/> 各种 git 模板。
 
-`.gitignore` 中这样配置 `views/**/*.html` ，可以排除
+    `.gitignore` 中这样配置 `views/**/*.html` ，可以排除
 
-	view/a.html
-	view/b/c.html
-	view/d/e/f.html
+    	view/a.html
+    	view/b/c.html
+    	view/d/e/f.html
+
+- 反排除
+
+        node_modules/*
+        !node_modules/app-widget

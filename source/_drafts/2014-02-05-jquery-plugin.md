@@ -300,3 +300,4 @@ FlowType.JS 简化了这一困难，基于 特定元素的宽度改变字体大�
 ## 参考
 
 - [期待已久的2013年度最佳 jQuery 插件揭晓 - WEB开发者](http://www.admin10000.com/document/3847.html)
+- [50个jQuery 插件可将你的网站带到另外一个高度 - WEB开发者](http://www.admin10000.com/document/4551.html)

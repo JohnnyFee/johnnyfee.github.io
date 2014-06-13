@@ -17,6 +17,8 @@ tags: [javascript]
 - [User Timing API: Understanding your Web App - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/webperformance/usertiming/)
 - [lodash/lodash](https://github.com/lodash/lodash) A utility library delivering consistency, customization, performance, & extras. <http://lodash.com/>
 
+<!--more-->
+
 ## Tool
 
 - Grunt
@@ -85,6 +87,10 @@ tags: [javascript]
     + [JavaScript Tools of the Trade: JSBin - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/javascript-tools-of-the-trade-jsbin--net-36843)
 - [JSCritic](http://jscritic.com/)
 
+## Test
+
+- [browser testing](https://ci.testling.com/)
+
 ## FAQ
 
 - [Improving Browser Detection](http://flippinawesome.org/2014/04/07/improving-browser-detection/?-browser-detection)
@@ -98,3 +104,4 @@ tags: [javascript]
 ## Books
 
 - [You Don’t Know JS: Scope & Closures](http://www.salttiger.com/you-dont-know-js-scope-and-closures/)
+- [转载：前端开发经验分享（书籍介绍：javascript） - 徐涛的笔记 - 前端网（W3Cfuns）](http://www.w3cfuns.com/blog-5431260-5398544.html)

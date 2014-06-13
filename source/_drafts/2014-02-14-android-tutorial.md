@@ -82,6 +82,10 @@ tags: [android, tutorial]
 - [PomepuyN/discreet-app-rate](https://github.com/PomepuyN/discreet-app-rate) A lightweight non intrusive app rate reminder for Android 
 <http://nicolaspomepuy.fr/non-intrusive-app-rate>.
 
+## Root
+
+- [案例：Android系统Root原理初探](http://www.imooc.com/view/126?from=admin10000)
+
 ## Tool
 
 - [bearstouch/android_img_resizer](https://github.com/bearstouch/android_img_resizer) <http://www.bearstouch.com>

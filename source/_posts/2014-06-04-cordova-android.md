@@ -13,6 +13,8 @@ If you want to use Cordova's Android-centered shell tools in conjunction with th
 - 添加 `tools/` 和 `platform-tools/` 到环境变量。
 - 可能还需要 将 Java 和 Ant 添加到环境变量。`;%JAVA_HOME%\bin;%ANT_HOME%\bin`
 
+<!--more-->
+
 ## App
 
 - [Getting Started with Creating a Cordova Application](https://netbeans.org/kb/docs/webclient/cordova-gettingstarted.html)

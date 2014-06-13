@@ -707,6 +707,8 @@ This restriction bans both inline `<script>` blocks and inline event handlers (e
 - [CoryG89 / MDNJump](https://github.com/CoryG89/MDNJump) The quickest way to look up something on the Mozilla Developer Network. Chrome extension.
 - [sneezry / Dualx](https://github.com/sneezry/Dualx) QQ Client for Chrome.
 - [xiongchuan86 / XPlayer](https://gitcafe.com/xiongchuan86/XPlayer/) 豆瓣音乐播放器。
+- [krasimir/yez](https://github.com/krasimir/yez) Chrome extension that acts as terminal and task runner. 结合 NodeJS 完成该功能，使用 socket.io 通信。
+    - [Chrome Killed the Terminal Star](http://flippinawesome.org/2014/06/09/chrome-killed-the-terminal-star/?-killed-the-terminal-star)
 
 ### Tools
 

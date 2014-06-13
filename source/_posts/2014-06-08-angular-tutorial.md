@@ -30,6 +30,8 @@ Manage only a part of the page by placing it on some element like a <div>within 
         …
     </html>
 
+<!--more-->
+
 ### Templates and Data Binding
 
 1. A user requests the first page of your application.
@@ -326,6 +328,7 @@ If we wanted to watch a property and then later de-register it, we would use the
 
 Let’s say that we want to apply a $10 discount when the customer adds more than $100 worth of merchandise to her cart. For a template, we’ll use:
 
+ {% raw %}
     <div ng-controller="CartController">
       <div ng-repeat="item in items">
         <span>{{item.title}}</span>
@@ -337,6 +340,7 @@ Let’s say that we want to apply a $10 discount when the customer adds more tha
       <div>Discount: {{bill.discount | currency}}</div>
       <div>Subtotal: {{subtotal() | currency}}</div>
     </div>
+{% endraw %}
 
 With a CartController, it would look like the following:
 
@@ -389,7 +393,7 @@ The preceding example executes correctly, but there is a potential problem with 
 
 Why six? Three of them we can trace pretty easily, as it runs one time each in:
 
-* The template as {{totalCart() | currency}}
+* The template as {% raw %}{{totalCart() | currency}}{% endraw %}
 * The subtotal() function
 * The $watch() function
 
@@ -403,9 +407,11 @@ Now that we know about this issue, there are a few ways we can solve it. One way
 
 To do this, we’d update the template to use these properties:
 
+{% raw %}
     <div>Total: {{bill.total | currency}}</div>
     <div>Discount: {{bill.discount | currency}}</div>
     <div>Subtotal: {{bill.subtotal | currency}}</div>
+{% endraw %}
 
 Then, in JavaScript, we’d watch the items array, and call a function to calculate the totals on any change to that array, like so:
 
@@ -450,13 +456,17 @@ This strategy might work well for your app. However, since we’re watching the 
 
 Filters allow you to declare how to transform data for display to the user within an interpolation in your template. The syntax for using filters is:
 
+{% raw %}
     {{ expression | filterName : parameter1 : ...parameterN }} 
+{% endraw %}
 
 where expression is any Angular expression, filterName is the name of the filter you want to use, and the parameters to the filter are separated by colons. The parameters themselves can be any valid Angular expression.
 
 Angular comes with several filters, like currency, which we’ve seen:
 
+{% raw %}
     {{12.9 | currency}}
+{% endraw %}
 
 This bit of code will display the following: $12.90 We put this declaration in the view (rather than in the controller or model) because the dollar sign in front of the number is only important to humans, and not to the logic we use to process the number.
 
@@ -464,7 +474,9 @@ Other filters that come with Angular include date, number, uppercase, and more.
 
 Filters can also be chained with additional pipe symbols in the binding. For example, we can format the previous example for no digits after the decimal by adding the number filter, which takes the number of decimals to round to as a parameter. So:
 
+{% raw %}
     {{12.9 | currency | number:0 }} 
+{% endraw %}
 
 displays: $13
 
@@ -483,9 +495,11 @@ You’re not limited to the bundled filters, and it is simple to write your own.
     });
 With a template like this:
 
+{% raw %}
     <body ng-app='HomeModule' ng-controller="HomeController">
       <h1>{{pageHeading | titleCase}}</h1>
     </body>
+{% endraw %}
 
 and inserting the pageHeading as a model variable via a controller:
 
@@ -629,6 +643,154 @@ We can prevent form submission in an invalid state by adding ng-disabled to the 
 
     <button ng-disabled='!addUserForm.$valid'>Submit</button>
 
+## Communicating with Servers
+
+### Communicating Over $http
+
+Angular’s core $http service would look something like the following:
+
+    $http.get('api/user', {params: {id: '5'}
+    }).success(function(data, status, headers, config) {
+     // Do something successful.
+    }).error(function(data, status, headers, config) {
+     // Handle the error
+    });
+
+The $http.get method we used in the preceding example is just one of the many convenience methods that the core $http AngularJS service provides. Similarly, if you wanted to make a POST request using AngularJS with the same URL parameters and some POST data, you would do so as follows:
+
+    var postData = {text: 'long blob of text'};
+      // The next line gets appended to the URL as params
+      // so it would become a post request to /api/user?id=5
+      var config = {params: {id: '5'}};
+      $http.post('api/user', postData, config
+    ).success(function(data, status, headers, config) {
+      // Do something successful
+    }).error(function(data, status, headers, config) {
+      // Handle the error
+    });
+
+Similar convenience methods are provided for most of the common request types, including:
+
+* GET
+* HEAD
+* POST
+* DELETE
+* PUT
+* JSONP
+
+### Configuring Your Request Further
+
+At times, the standard request options provided out of the box are not enough. This could be because you want to:
+
+* Add some authorization headers for your request
+* Change how caching is handled for the request
+* Transform the request going out, or the response coming in, in certain set ways
+
+The barebones method call would look something like:
+
+    $http(config)
+
+What follows is a basic pseudo-code template for calling this method:
+
+    $http({
+      method: string,
+      url: string,
+      params: object,
+      data: string or object,
+      headers: object,
+      transformRequest: function transform(data, headersGetter) or
+                        an array of functions,
+      transformResponse: function transform(data, headersGetter) or
+                         an array of functions,
+      cache: boolean or Cache object,
+      timeout: number,
+      withCredentials: boolean
+    });
+
+The GET, POST, and other convenience methods set the method, so you don’t need to. 
+
+### Setting HTTP Headers
+
+These are set in the $httpProvider.defaults.headers configuration object. This step is usually done in the config part of setting up your app. So if you wanted to enable “DO NOT TRACK” for all your GET requests, while removing the Requested-With header for all your requests, you could simply do the following:
+
+    angular.module('MyApp',[]).
+      config(function($httpProvider) {
+        // Remove the default AngularJS X-Request-With header
+        delete $httpProvider.default.headers.common['X-Requested-With'];
+        // Set DO NOT TRACK for all Get requests
+        $httpProvider.default.headers.get['DNT'] = '1';
+     });
+
+If you want to set the headers for only certain requests, but not as a default, then you can pass the header in as part of the config object to $http service. The same custom header can be passed to a GET request as part of the second parameter, which also takes your URL parameters:
+
+    $http.get('api/user', {
+       // Set the Authorization header. In an actual app, you would get the auth
+       // token from a service
+       headers: {'Authorization': 'Basic Qzsda231231'},
+       params: {id: 5}
+    }).success(function() { // Handle success });
+
+### Working with RESTful Resources
+
+The ngResource is a separate, optional module. To use it, you need to:
+
+* Include the _angular-resource.js_ in your script files that are sourced.
+* Include ngResource in your module dependency declaration (such as, angular.module(‘myModule’, [‘ngResource’])).
+* Use inject $resource where needed.
+
+E.g.
+
+    myAppModule.factory('CreditCard', ['$resource', function($resource) {
+      return $resource('/user/:userId/card/:cardId',
+            {userId: 123, cardId: '@id'},
+            {charge: {method:'POST', params:{charge:true}, isArray:false});
+    }]);
+
+Now, whenever we ask for a CreditCard from the AngularJS injector, we get an Angular resource, which by default gives us a few methods to start off with:
+
+Resource Function  | Method | URL Expected |Return
+-------------------|--------|--------------|------------
+CreditCard.get({id: 11})   | GET| /user/123/card/11 |Single JSON
+CreditCard.save({}, ccard) |POST |/user/123/card with post data “ccard” |Single JSON 
+CreditCard.save({id: 11}, ccard) |POST| /user/123/card/11 with post data “ccard” |Single JSON 
+CreditCard.query() |GET| /user/123/card |JSON Array
+CreditCard.remove({id: 11})| DELETE |/user/123/card/11 |Single JSON
+CreditCard.delete({id: 11}) |DELETE| /user/123/card/11 |Single JSON
+
+Let’s take the example of a credit card, which should make things clearer.
+
+    // Let us assume that the CreditCard service is injected here
+
+    // We can retrieve a collection from the server which makes the request
+    // GET: /user/123/card
+    var cards = CreditCard.query();
+
+    // We can get a single card, and work with it from the callback as well
+    CreditCard.get({cardId: 456}, function(card) {
+     // each item is an instance of CreditCard
+     expect(card instanceof CreditCard).toEqual(true);
+     card.name = "J. Smith";
+     // non-GET methods are mapped onto the instances
+     card.$save();
+
+     // our custom method is mapped as well.
+     card.$charge({amount:9.99});
+     // Makes a POST: /user/123/card/456?amount=9.99&charge=true
+     // with data {id:456, number:'1234', name:'J. Smith'}
+    });
+
+The second parameter takes care of the default parameters to be passed along with each request. In this case, we pass in the userId as a constant 123. The cardId parameter is more interesting. We say cardId is "@id.” This denotes that if I am using a returned object from the server, and I call any method on it (such as $save), then the cardId field is to be picked from the id property on the object.
+
+The third argument to the $resource call is optional additional methods you want to expose on your resource.
+
+In this case, we specify a method charge. This can be configured by passing in an object, with the key being the method name to be exposed. The configuration needs to specify the method type of the request (GET, POST, and so on), the parameters that need to be passed as part of that request (charge=true in this case), and if the returned result is an array or not (not, in this case). Once that is done, you are free to start calling CreditCard.charge() whenever you want (as long as the user has charged in real life, of course!).
+
+You would be correct to worry about whether the code will work, but the code is actually correct and will work. What’s happening here is that AngularJS assigned a reference (an object or an array, depending on the expected return type), which will get populated at some point in the future when the server requests returns. In the meantime, the object will remain empty.
+
+Since the most common flow with AngularJS apps is to fetch data from the server, assign it to a variable, and display it in the template, this shortcut is nice. In your controller code, all you have to do is make the server-side call, assign the return value to the right scope variable, and let the template worry about rendering it when it returns.
+
+This approach will not work for you if you have some business logic you want executed on the return value. In such a case, you will have to depend on the callback, which is used in the CreditCard.get() call.
+
 ## Developing in AngularJS
 
 ### Server
@@ -770,252 +932,6 @@ Batarang is a Chrome extension that adds AngularJS knowledge to the built-in Dev
     All these benefits come from just one command:
 
         yeoman build
-
-## Model View Controller
-
-Use primitives as model：
-
-    <html ng-app>
-    <body ng-controller="TextController">
-      <p>{{someText}}</p>
-
-      <script
-          src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js">
-      </script>
-
-      <script>
-        function TextController($scope) {
-          $scope.someText = 'You have started your journey.';
-        }
-      </script>
-    </body>
-    </html>
-
-Though this primitive-style model works in simple cases, for most applications you’ll want to create a model object to contain your data.
-
-    <html ng-app='myApp'>
-    <body ng-controller='TextController'>
-      <p>{{someText.message}}</p>
-
-    <script
-        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js">
-    </script>
-
-    <script>
-      var myAppModule = angular.module('myApp', []);
-
-      myAppModule.controller('TextController',
-          function($scope) {
-        var someText = {};
-        someText.message = 'You have started your journey.';
-        $scope.someText = someText;
-      });
-    </script>
-    </body>
-    </html>
-
-In this version, we told our ng-app element about the name of our module, myApp.
-
-Controllers have three responsibilities in your app:
-
-* Set up the initial state in your application’s model
-* Expose model and functions to the view (UI template) through $scope
-* Watch other parts of the model for changes and take action.
-
-    <div ng-controller="ParentController">
-      <div ng-controller="ChildController">...</div>
-    </div>
-
-Though we express this as nested controllers, the actual nesting happens in scopes. The $scope passed to a nested controller prototypically inherits from its parent controller’s $scope. In this case, this means that the $scope passed to ChildController will have access to all the properties of the $scope passed to ParentController.
-
-You can think of scopes as a context that you use to make changes to your model observable.
-
-### Services
-
-Services are singleton (single-instance) objects that carry out the tasks necessary to support your application’s functionality. Angular comes with many services like $location, for interacting with the browser’s location, $route, for switching views based on location (URL) changes, and $http, for communicating with servers.
-
-With modules, and the dependency injection we get from them, we can write our controller much more simply, like this:
-
-    function ShoppingController($scope, Items) {
-      $scope.items = Items.query();
-    }
-
-You can, and should, create your own services to do all of the tasks unique to your application. Services can be shared across any controllers that need them. As such, they’re a good mechanism to use when you need to communicate across controllers and share state. Angular’s bundled services start with a $, so while you can name them anything you like, its a good idea to avoid starting them with $ to avoid naming collisions.
-
-You define services with the module object’s API. There are three functions for creating generic services, with different levels of complexity and ability:
-
-- `provider(name, Object OR constructor())` A configurable service with complex creation logic. If you pass an Object, it should have a function named $get that returns an instance of the service. Otherwise, Angular assumes you’ve passed a constructor that, when called, creates the instance.
-
-- `factory(name, $getFunction())` A non-configurable service with complex creation logic. You specify a function that, when called, returns the service instance. You could think of this as `provider(name, { $get: $getFunction() } )`.
-
-- `service(name, constructor())` A non-configurable service with simple creation logic. Like the constructor option with provider, Angular calls it to 
-
-We’ll look at the configuration option for provider() later, but let’s discuss an example with factory() for our preceding Items example. We can write the service like this:
-
-    // Create a module to support our shopping views
-    var shoppingModule = angular.module('ShoppingModule', []);
-
-    // Set up the service factory to create our Items interface to the
-    // server-side database
-    shoppingModule.factory('Items', function() {
-      var items = {};
-      items.query = function() {
-        // In real apps, we'd pull this data from the server...
-        return [
-          {title: 'Paint pots', description: 'Pots full of paint', price: 3.95},
-          {title: 'Polka dots', description: 'Dots with polka, price: 2.95},
-          {title: 'Pebbles', description: 'Just little rocks', price: 6.95}
-        ];
-      };
-      return items;
-    });
-
-When Angular creates the ShoppingController, it will pass in $scope and the new Items service that we’ve just defined. This is done by parameter name matching. That is, Angular looks at the function signature for our ShoppingController class, and notices that it is asking for an Items object. Since we’ve defined Items as a service, it knows where to get it.
-
-The result of looking up these dependencies as strings means that the arguments of injectable functions like controller constructors are order-independent. So instead of this:
-
-    function ShoppingController($scope, Items) {...}
-
-we can write this:
-
-    function ShoppingController(Items, $scope) {...}
-
-and it all still functions as we intended.
-To get this to work with our template, we need to tell the ng-app directive the name of our module, like the following:
-
-    <html ng-app='ShoppingModule'>
-
-To complete the example, we could implement the rest of the template as:
-
-    <body ng-controller="ShoppingController">
-      <h1>Shop!</h1>
-      <table>
-          <td>{{item.title}}</td>
-          <td>{{item.description}}</td>
-          <td>{{item.price | currency}}</td>
-        </tr>
-      </table>
-    </div>
-
-Let's look another example:
-
-    // This file is app/scripts/services/services.js
-
-    var services = angular.module('guthub.services', ['ngResource']);
-
-    services.factory('Recipe', ['$resource',
-        function($resource) {
-      return $resource('/recipes/:id', {id: '@id'});
-    }]);
-
-There is a recipe service, which returns what we call an Angular Resource. With just that single line of code—return $resource—(and of course, a dependency on the guthub.services module), we can now put recipe as an argument in any of our controllers, and it will be injected into the controller. Furthermore, each recipe object has the following methods built in:
-
-* Recipe.get()
-* Recipe.save()
-* Recipe.query()
-* Recipe.remove()
-* Recipe.delete()
-
-> If you are going to use Recipe.delete, and want your application to work in IE, you will have to call it like so: Recipe[delete](). This is because delete is a keyword in IE.
-
-The line of code that declares the resource—return $resource—also does a few more nice things for us:
-
-1. Notice the :id in the URL specified for the RESTful resource. It basically says that when you make any query (say, Recipe.get()), if you pass in an object with an id field, then the value of that field will be added to the end of the URL.
-
-  That is, calling Recipe.get({id: 15}) will make a call to _/recipe/15_ .
-
-2. What about that second object? The {id: _@id_}? Well, as they say, a line of code is worth a thousand explanations, so let’s take a simple example.
-
-  Say we have a recipe object, which has the necessary information already stored within it, including an id.
-
-  Then, we can save it by simply doing the following:
-
-        // Assuming existingRecipeObj has all the necessary fields,
-        // including id (say 13)
-        var recipe = new Recipe(existingRecipeObj);
-        recipe.$save();
-
-  This will make a POST request to _/recipe/13_ . The @id tells it to pick the id field from its object and use that as the id parameter. It’s an added convenience that can save a few lines of code.
-
-### Model
-
-As services themselves can have dependencies, the Module API lets you define dependencies for your dependencies.
-
-In most applications, it will work well enough to create a single module for all the code you create and put all of your dependencies in it. If you use services or directives from third-party libraries, they’ll come with their own modules. As your app depends on them, you’d refer to them as dependencies of your application’s module.
-
-For instance, if you include the (fictitious) modules SnazzyUIWidgets and SuperDataSync, your application’s module declaration would look like this:
-
-    var appMod = angular.module('app', ['SnazzyUIWidgets', 'SuperDataSync'];
-
-### Directives
-
-Directives extend HTML syntax, and are the way to associate behavior and DOM transformations with custom elements and attributes. Through them, you can create reusable UI components, configure your application, and do almost anything else you can imagine wanting to do in your UI template.
-
-You can write apps with the built-in directives that come with Angular, but you’ll likely run into situations where you want to write your own. You’ll know it’s time to break into directives when you want to deal with browser events or modify the DOM in a way that isn’t already supported by the built-in directives. This code of yours belongs in a directive that you write, and not in a controller, service, or any other place in your app.
-
-As with services, you define directives through the module object’s API by calling its directive() function, where directiveFunction is a factory function that defines your directive’s features.
-
-    var appModule = angular.module('appModule', [...]);
-    appModule.directive('directiveName', directiveFunction);
-
-We can now move to the directives we will be using in our application. There will be two directives in the app:
-
-- butterbar
-  This directive will be shown and hidden when the routes change and while the page is still loading information. It will hook into the route-changing mechanism and automatically hide and show whatever is within its tag ,based on the state of the page.
-
-- focus
-  The focus directive is used to ensure that specific input fields (or elements) have the focus.
-
-Let’s look at the code:
-
-    // This file is app/scripts/directives/directives.js
-
-    var directives = angular.module('guthub.directives', []);
-
-    directives.directive('butterbar', ['$rootScope',
-        function($rootScope) {
-      return {
-        link: function(scope, element, attrs) {
-          element.addClass('hide');
-
-          $rootScope.$on('$routeChangeStart', function() {
-            element.removeClass('hide');
-          });
-
-          $rootScope.$on('$routeChangeSuccess', function() {
-            element.addClass('hide');
-          });
-        }
-      };
-    }]);
-
-    directives.directive('focus',
-        function() {
-      return {
-        link: function(scope, element, attrs) {
-          element[0].focus();
-        }
-      };
-    });
-
-Here, we’re returning the directive configuration object with its `link` function specified. The `link` function gets a reference to the enclosing scope, the DOM `element` it lives on, an array of any `attributes` passed to the directive, and the `controller` on the DOM element, if it exists. Here, we only need to get at the element and call its focus() method.
-
-For now, all you need to know is the following:
-
-1. Directives go through a two-step process. In the first step (the compile phase), all directives attached to a DOM element are found, and then processed. Any DOM manipulation also happens during the compile step. At the end of this phase, a linking function is produced.
-2. In the second step, the link phase (the phase we used previously), the preceding DOM template produced is linked to the scope. Also, any watchers or listeners are added as needed, resulting in a live binding between the scope and the element. Thus, anything related to the scope happens in the linking phase.
-
-The butterbar directive can be used as follows:
-
-    <div butterbar>My loading text...</div>
-
-It basically hides the element right up front, then adds two watches on the root scope. Every time a route change begins, it shows the element (by changing its class), and every time the route has successfully finished changing, it hides the butterbar again.
-
-Another interesting thing to note is how we inject the $rootScope into the directive. All directives directly hook into the AngularJS dependency injection system, so you can inject your services and whatever else you need into them.
-
-The final thing of note is the API for working with the element. jQuery veterans will be glad to know that it follows a jQuery-like syntax (addClass, removeClass). AngularJS implements a subset of the calls of jQuery so that jQuery is an optional dependency for any AngularJS project. In case you do end up using the full jQuery library in your project, you should know that AngularJS uses that instead of the jQlite implementation it has built-in.
-
-### Controllers
 
 ## UI
 

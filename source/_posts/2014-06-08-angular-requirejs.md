@@ -30,6 +30,8 @@ Let us take a look at the project organization (similar to the skeletons previou
 
 The first thing we need is the main.js file (in the app folder) that RequireJS loads, which then triggers loading of all the other dependencies. In this example, our JS project will depend on jQuery and Twitter Bootstrap in addition to our code.
 
+<!--more-->
+
     // the app/scripts/main.js file, which defines our RequireJS config
     require.config({
       paths: {

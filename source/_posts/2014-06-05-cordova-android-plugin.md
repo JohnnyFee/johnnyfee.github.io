@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Cordova Tutorial"
+title: "Cordova Android Plugin"
 category: Cordova
 tags: [phonegap, cordova]
 --- 
@@ -30,6 +30,8 @@ tags: [phonegap, cordova]
     |
     \---www
             device.js JavaScript 层代码的实现。
+
+<!--more-->
 
 ### plugin.xml
 

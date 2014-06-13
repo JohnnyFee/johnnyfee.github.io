@@ -25,6 +25,8 @@ tags: [phonegap, cordova, webview,android]
             android:layout_width="match_parent"  
             android:layout_height="match_parent" />  
 
+<!--more-->
+
 5. Modify the activity so that it implements the CordovaInterface. It should implement the included methods. You may wish to copy them from `/framework/src/org/apache/cordova/CordovaActivity.java`, or else implement them on your own. The following code fragment shows a basic application that relies on the interface. Note how the referenced view id matches the id attribute specified in the XML fragment shown above:
 
         public class CordovaViewTestActivity extends Activity implements CordovaInterface {  

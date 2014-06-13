@@ -28,6 +28,8 @@ To illustrate the drastic difference, here is an example in which we perform mul
     })
     
 
+<!--more-->
+
 The series example:
 
     async.series([

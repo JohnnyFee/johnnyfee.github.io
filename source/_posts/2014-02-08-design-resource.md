@@ -2,8 +2,8 @@
 layout: post
 title: "设计资源"
 description: ""
-category: Desgin
-tags: [desgin]
+category: Dao
+tags: [dao,web,design]
 --- 
 ## 图标资源
 
@@ -21,6 +21,8 @@ tags: [desgin]
 ## 素材资源
 
 - [站酷-素材](http://www.zcool.com.cn/gfxs/)
+
+<!--more-->
 
 ## 图标素材
 

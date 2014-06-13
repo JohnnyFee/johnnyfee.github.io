@@ -102,6 +102,7 @@ tags: [web]
 
 ### IO
 
+- [substack/stream-handbook](https://github.com/substack/stream-handbook) how to write node programs with streams.
 - [Obvious/sculpt](https://github.com/Obvious/sculpt) Manipulate streams.
 - [mafintosh/torrent-stream](https://github.com/mafintosh/torrent-stream) The low level streaming torrent engine that peerflix uses.
 
@@ -198,6 +199,10 @@ Javascript with Cody and Node.js.
 ## PhantomJS
 
 - [PhantomJS快速入门教程](http://www.woiweb.net/phantomjs-quick-use-tutorials.html)
+
+## Ioc
+
+- [当IoC遇见了Node.js](http://www.infoq.com/cn/articles/ioc-meet-nodejs)
 
 ## Other 
 - [bipio-server/bipio · GitHub](https://github.com/bipio-server/bipio)

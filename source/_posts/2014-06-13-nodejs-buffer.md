@@ -13,7 +13,9 @@ Pure javascript, while great with unicode-encoded strings, does not handle strai
 
 One way to handle this problem is to just use strings _anyway_, which is exactly what Node.js did at first. However, this approach is extremely problematic to work with; It's slow, makes you work with an API designed for strings and not binary data, and has a tendency to break in strange and mysterious ways. 
 
-Don't use binary strings. Use _buffers_ instead! 
+Don't use binary strings. Use _buffers_ instead!
+
+<!--more-->
 
 ## What Are Buffers?
 

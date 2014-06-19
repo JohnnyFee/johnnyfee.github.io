@@ -446,3 +446,63 @@ Another way to achieve many of the same goals as ignore and exclude is the "brow
 
 - [My strategy for client-side package managers (choosing between npm, bower, and component)](http://superbigtree.tumblr.com/post/58075340096/my-strategy-for-client-side-package-managers-choosing)
 - [Browserify vs. Component](www.forbeslindesay.co.uk/post/44144487088/browserify-vs-component)
+
+## FAQ
+
+### 内置模块
+
+如需要覆盖 browserify 的 buffer 模块，可以通过以下方法：
+
+1. 使用相对路径加载模块，如：
+
+        var Buffer = require('./lib/buffer').Buffer;
+        var buffer = new Buffer();
+        buffer.write();
+
+    注意，及时你在 `node_module/` 下放置了 `buffer` 模块，用 `require('buffer').Buffer` 加载的也是 browerify 默认的模块。
+
+2. 使用 `--no-builtins` 命令行参数：
+
+        browserify --no-builtins main.js > bundle.js
+
+    这将关闭所有的内置模块。
+
+3. 使用 API
+
+        var browserify = require('browserify');
+        var b = browserify({builtins: ['path']});
+        b.add('./main.js');
+        var fs = require('fs');
+
+        b.bundle({ debug:true }).pipe(fs.createWriteStream('./bundle.js'));
+
+    使用这种方法可以使用 `builtins` 指定需要使用那些内置模块，源码中对  builtins 的处理方法为：
+
+        if (typeof opts.builtins === 'boolean') {
+            self._builtins = opts.builtins ? builtins : {};
+        }
+        else if (Array.isArray(opts.builtins)) {
+            self._builtins = {};
+            opts.builtins.forEach(function (name) {
+                if (builtins.hasOwnProperty(name)) {
+                    self._builtins[name] = builtins[name];
+                }      
+            });
+        }
+        else if (typeof opts.builtins === 'object') {
+            self._builtins = opts.builtins;
+        }
+        else {
+            self._builtins = builtins;
+        }
+
+    - boolean 值表示是否使用内置模块，相当于命令行的 `--no-builtins` 参数。
+    - 如果是数组，填入的值为需要启用内置模块的名字，如 ['buffer', 'path']
+    - 如果是对象，填入的值为模块的路径。如果想覆盖的内置模块，可以按如下方法：
+
+            var browserify = require('browserify');
+                var b = browserify({builtins: {
+                buffer: require.resolve('buffer')
+            }});
+
+        这样，在使用到 `Buffer` 时，不是加载默认的 Buffer，而是我们指定的 Buffer。

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Angular Tutorial"
+title: "Angular RequireJS"
 category : Angular
 tags : [angular, tutorial]
 --- 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Angular Tutorial"
+title: "Angular MVC"
 category : Angular
 tags : [angular, tutorial]
 --- 
@@ -24,6 +24,8 @@ Use primitives as model：
       </script>
     </body>
     </html>
+
+<!--more-->
 
 Though this primitive-style model works in simple cases, for most applications you’ll want to create a model object to contain your data.
 

@@ -33,7 +33,7 @@ tags: [phonegap, cordova]
 
 <!--more-->
 
-### plugin.xml
+## plugin.xml
 
 `plugin.xml` 的内容如下：
 
@@ -110,11 +110,41 @@ tags: [phonegap, cordova]
 
     安装插件后，`src/android/Device.java` 复制到 android 的 package 包(`src/`)中。
 
-### www/device.js
+## www/device.js
 
 模块的写法采用 CommonJS Module 规范。
 
-### src/android/Device.java
+### The JavaScript Interface
+
+    cordova.exec(function(winParam) {},
+        function(error) {},
+        "service",
+        "action",
+        ["firstArgument", "secondArgument", 42, false]);
+
+Here is how each parameter works:
+
+* `function(winParam) {}`: A success callback function. Assuming your exec call completes successfully, this function executes along with any parameters you pass to it.
+* `function(error) {}`: An error callback function. If the operation does not complete successfully, this function executes with an optional error parameter.
+* `"service"`: The service name to call on the native side. This corresponds to a native class, for which more information is available in the native guides listed below.
+* `"action"`: The action name to call on the native side. This generally corresponds to the native class method. See the native guides listed below.
+* [/* arguments */]: An array of arguments to pass into the native environment.
+
+This example shows one way to implement the plugin's JavaScript interface:
+
+    window.echo = function(str, callback) {  
+        cordova.exec(callback, function(err) {  
+            callback('Nothing to echo.');  
+        }, "Echo", "echo", [str]);  
+    };  
+
+In this example, the plugin attaches itself to the window object as the echo function, which plugin users would call as follows:
+
+    window.echo("echome", function(echoValue) {  
+        alert(echoValue == "echome"); // should alert true.  
+    });
+
+## src/android/Device.java
 
     public class Device extends CordovaPlugin {
         public static String uuid;                                // Device UUID
@@ -175,38 +205,6 @@ tags: [phonegap, cordova]
     + action 用于标识插件的行为。
     + args 参数。
     + callbackContext 和 JavaScript 交互时的上下文。成功的话调用 `callbackContext.success(message)`，失败调用 `callbackContext.error(message)` 方法，分别对应 javascript 文件中的 success 和 error 回调函数。
-
-## The JavaScript Interface
-
-    cordova.exec(function(winParam) {},
-        function(error) {},
-        "service",
-        "action",
-        ["firstArgument", "secondArgument", 42, false]);
-
-Here is how each parameter works:
-
-* `function(winParam) {}`: A success callback function. Assuming your exec call completes successfully, this function executes along with any parameters you pass to it.
-* `function(error) {}`: An error callback function. If the operation does not complete successfully, this function executes with an optional error parameter.
-* `"service"`: The service name to call on the native side. This corresponds to a native class, for which more information is available in the native guides listed below.
-* `"action"`: The action name to call on the native side. This generally corresponds to the native class method. See the native guides listed below.
-* [/* arguments */]: An array of arguments to pass into the native environment.
-
-### Sample JavaScript
-
-This example shows one way to implement the plugin's JavaScript interface:
-
-    window.echo = function(str, callback) {  
-        cordova.exec(callback, function(err) {  
-            callback('Nothing to echo.');  
-        }, "Echo", "echo", [str]);  
-    };  
-
-In this example, the plugin attaches itself to the window object as the echo function, which plugin users would call as follows:
-
-    window.echo("echome", function(echoValue) {  
-        alert(echoValue == "echome"); // should alert true.  
-    });
 
 ## Android Plugin (Native Interfaces)
 

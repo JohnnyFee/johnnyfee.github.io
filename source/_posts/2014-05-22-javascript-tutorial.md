@@ -62,7 +62,6 @@ tags: [javascript]
 - [lukehoban/es6features](https://github.com/lukehoban/es6features) Overview of ECMAScript 6 features.
 - [ECMAScript 6: A Better JavaScript for the Ambient Computing Era](http://www.slideshare.net/allenwb/wdc14-allebwb?)
 
-
 ### Worker
 
 - [Communicating Large Objects with Web Workers in javascript](http://developerblog.redhat.com/2014/05/20/communicating-large-objects-with-web-workers-in-javascript)
@@ -74,6 +73,22 @@ tags: [javascript]
 ## Observer
 
 - [Detect, Undo And Redo DOM Changes With Mutation Observers](http://addyosmani.com/blog/mutation-observers/)
+
+## Tips
+
+### 构造函数
+
+在编写 JavaScript 模块时，经常会看着这样的代码：
+
+    function Buffer (subject, encoding, noZero) {
+      if (!(this instanceof Buffer)){
+        return new Buffer(subject, encoding, noZero);
+      }
+
+      // ...
+    }
+
+这样可以保证用户忘记 `new` 的时候，也返回 JavaScript 对象。 
 
 ## Books
 

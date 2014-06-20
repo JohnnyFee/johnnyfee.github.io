@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "JavaScript Webkit Buffer"
+title: "QT Webkit——JavaScript Buffer"
 category: Qt
 tags: [javascript, qt, buffer]
 --- 
@@ -9,11 +9,11 @@ tags: [javascript, qt, buffer]
 
 在浏览器端，在使用类似 [toots/buffer-browserify](https://github.com/toots/buffer-browserify) 的类库或者使用 [ArrayBuffer - Web API 接口](https://developer.mozilla.org/zh-CN/docs/Web/API/ArrayBuffer)时，我们要考虑如何数据传递给 QT 和 QT 用什么类型来接收。
 
-有以下几种方法将二进制数据传递给 QT HexString、JSON、Base64、Array，我们分别讨论他们的实现和性能。
+我们以[toots/buffer-browserify](https://github.com/toots/buffer-browserify) 为例，讨论以下几种方法将二进制数据传递给 QT HexString、JSON、Base64、Array 的实现和性能。
 
 QT 返回 QByteArray 时，JavaScript 端接收到的类型为 `Uint8ClampedArray`，我们可以很轻松地将这个对象转化为 `Buffer`。
 
-<!---->
+<!--more-->
 
 ## 实现
 
@@ -52,9 +52,9 @@ QByteArray BufferTest::fromArray(QByteArray data){
 
 ### Json
 
-浏览器端，通过 `Buffer.toJSON` 方法转化为一个可 JSON 化的对象，该对象有两个字段，分别为 `type` 和 `data`，其中 `data` 为普通的 Array 对象。所以，在 QT 端以用 `QVariantMap` 类型来接收该对象。然后取中其中的 `data` 字段，`data` 为 `double` 类型的数组，我们需要额外的循环将其转化为 `QByteArray` 对象。
+浏览器端，通过 `Buffer.toJSON` 方法转化为一个可 JSON 化的对象，该对象有两个字段，分别为 `type` 和 `data`，其中 `data` 为普通的 Array 对象。所以，在 QT 端应用 `QVariantMap` 类型来接收该对象。然后取其中的 `data` 字段，`data` 为 `double` 类型的数组，我们需要额外的循环将其转化为 `QByteArray` 对象。
 
-理论上说，我们可以修改 `Buffer.toJson()` 方法， 把 `data` 修改为 `Uint8ClampedArray` 或者 `Uint8Array` 类型，暂未实践。
+理论上说，我们可以修改 JavaScript 的 Buffer 模块的 `toJson()` 方法， 把 `data` 修改为 `Uint8ClampedArray` 或者 `Uint8Array` 类型，暂未实践。
 
 JavaScript:
 
@@ -86,8 +86,6 @@ QByteArray BufferTest::fromJson(QVariantMap json){
 
 ### Base64
 
-这是推荐的一种方式。
-
 JavaScript:
 
 ```javascript
@@ -104,8 +102,6 @@ QByteArray BufferTest::fromBase64(QString base64){
 ```
 
 ### HexString
-
-这是更加推荐的一种方式。
 
 JavaScript:
 
@@ -126,7 +122,7 @@ QByteArray BufferTest::fromHexString(QString hexString){
 
 ### 测试方法
 
-我们用以下方法来分别测试每种通信方式的性能，分别运行 N 次，每次将 1k 的数据传下去再传上来，记录 N 次运行的时间消耗。
+我们用以下方法来分别测试每种方式的性能，分别运行 N 次，每次将 1k 的数据传给 QT，记录 N 次运行的时间消耗。
 
 ```javascript
 var batch = function (tagName) {
@@ -150,6 +146,8 @@ var batch = function (tagName) {
 };
 ```
 
+其中，时间差计算使用的是 [moment/moment](https://github.com/moment/moment)。
+
 ### 测试结果
 
 N 次运行的时间消耗，单位为 ms。
@@ -165,7 +163,7 @@ N 次运行的时间消耗，单位为 ms。
 
     new Buffer(bufferTestNative.fromArray(array));
 
-测试项 | Array | JSON | Base64  | HexString
+运行次数/测试项 | Array | JSON | Base64  | HexString
 -------|-------|------|---------|------------
 1000   | 140   |3416  |841      |1635
 2000   | 206   |5502  |1391     |2454
@@ -173,4 +171,5 @@ N 次运行的时间消耗，单位为 ms。
 
 ### 结论
 
-- 和 QT 交互时，极可能使用 `Uint8ClampedArray` 或者 `Uint8Array` 数组传递。
+- 和 QT 交互时，尽可能使用 `Uint8ClampedArray` 或者 `Uint8Array` 数组传递。JavaScript 中的 Buffer 对象，尽可能转化成这两种类型后和 QT 交互。
+- 将 `Uint8ClampedArray` 或者 `Uint8Array` 封装成 Buffer 有一定的时间消耗。

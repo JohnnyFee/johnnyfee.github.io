@@ -269,7 +269,7 @@ Output:
 
 ###Read More
 
-- [Jekyll - Read More without plugi](http://truongtx.me/2013/05/01/jekyll-read-more-feature-without-any-plugin/)
+- [Jekyll - Read More without plugin](http://truongtx.me/2013/05/01/jekyll-read-more-feature-without-any-plugin/)
 
 ###Jekyll常用命令
 

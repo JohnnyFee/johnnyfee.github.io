@@ -5,17 +5,17 @@ category : ExtJS
 tagline: "安装和常用命令"
 tags : [extjs, cmd]
 --- 
-##安装步骤
+## 安装步骤
 
 - [System Setup](http://docs.sencha.com/extjs/4.2.1/#!/guide/command)
 
-####下载并安装ruby
+#### 下载并安装ruby
 
 [下载地址](http://rubyinstaller.org/)
 
 请安装1.9的最新版，安装2.0在运行sencha build时会出错。
 
-####配置compass
+#### 配置compass
 
 	gem update –system/检查更新
 	gem install compass/安装compass
@@ -24,13 +24,13 @@ tags : [extjs, cmd]
 
 <!--more-->	
 
-####下载Sencha CMD并安装
+#### 下载Sencha CMD并安装
 运行build失败可能跟cygwin有关，卸载cygwin可能解决问题。
 
-##Sencha CMD
+## Sencha CMD
 Sencha CMD最新版提供了很多新特性，请参考[Introduction to Sencha Cmd](http://docs.sencha.com/extjs/4.2.1/#!/guide/command)。
 
-###更新版本
+### 更新版本
 
 Check for new updates to Sencha Cmd:
 
@@ -48,7 +48,7 @@ To install the latest beta version:
 
 	sencha upgrade --beta
 
-###命令基础
+### 命令基础
 
 Sencha Cmd features are arranged in categories (or modules) and commands:
 
@@ -63,13 +63,13 @@ Help is available using the help command.
 	sencha help generate
 	
 
-###常用命令
+### 常用命令
 **注意：未经说明所有命令均在工程根目录下执行。**
 
 - [Sencha Cmd Reference](http://docs.sencha.com/extjs/4.2.1/#!/guide/command_reference)
 - [Advanced Sencha Cmd](http://docs.sencha.com/extjs/4.2.1/#!/guide/command_advanced)
 
-####启动Sencha Cmd Web Server
+#### 启动Sencha Cmd Web Server
 
 The Sencha Cmd web server lets you serve files from your applications directory. Use this command to start the web server:
 
@@ -79,9 +79,9 @@ To access the Sencha Cmd web server, use:
 
 	http://localhost:8000/	
 
-####生成命令
+#### 生成命令
 
-#####生成工程
+##### 生成工程
 
 	sencha -sdk /path/to/SDK generate app MyApp /path/to/MyApp
 
@@ -124,23 +124,23 @@ To access the Sencha Cmd web server, use:
 
 	build/                      # The folder where build output is placed.	
 
-#####添加Model
+##### 添加Model
 
 	cd /path/to/MyApp
 	sencha generate model User id:int,name,email
 
-#####添加Controller
+##### 添加Controller
 
 	cd /path/to/MyApp
 	sencha generate controller Central
 
 There are no other parameters in this case beyond the controller name.
 
-#####添加View
+##### 添加View
 
 	sencha generate view SomeView
 
-####编译
+#### 编译
 
 	sencha app build
 
@@ -161,7 +161,7 @@ Adding directories to this comma-separated list informs the compiler where to fi
 - cmd. -- Check the Sencha Cmd install folder's "sencha.cfg" file.
 
 	
-#####单页工程
+##### 单页工程
 
 首页代码如下：
 
@@ -208,21 +208,21 @@ Adding directories to this comma-separated list informs the compiler where to fi
 具体的指令解释参考Multi-Page Ext JS Apps。
 对于两个以上的页面（如5个）的交集可能比较小，达不到缓存的的目的。可用使用“模糊交集”来实现这一目的。如制定-min=3，则表示只要三个工程使用到某个类，即可把这个类放到common.js中，具体指令参考以上链接。
 
-####更新工程
+#### 更新工程
 当Ext SDK有更新时，可以运行以下指令来更新工程。
 
-#####Upgrading Just The Sencha Cmd Scaffold
+##### Upgrading Just The Sencha Cmd Scaffold
 To bring up a new version of Sencha Cmd with your application produced by a previous version, you can run this command from inside your application:
 
 	sencha app upgrade --noframework
 
-#####Upgrading Frameworks
+##### Upgrading Frameworks
 
 	sencha app upgrade ../downloads/ext-4.2.0	
 
 	sencha app upgrade ../downloads/ext-4.1.2
 	
-####发布
+#### 发布
 generate a manifest of all JavaScript dependencies in the form of a JSB3 (JSBuilder file format) file, and create a custom build containing only the code that your application needs.
 
 	// 对于本地静态页面
@@ -240,7 +240,7 @@ This creates 2 files based on the JSB3 file:
 
 **app-all.js** - This file is a minimized build of your application plus all of the Ext JS classes required to run it. It is the minified and production-ready version of all-classes.js + app.js.
 
-##工作空间
+## 工作空间
 
 - [Workspaces in Sencha Cmd](http://docs.sencha.com/extjs/4.2.1/#!/guide/command_workspace)
 
@@ -248,11 +248,11 @@ This creates 2 files based on the JSB3 file:
 
 - [Multi-page and Mixed Apps](http://docs.sencha.com/extjs/4.2.1/#!/guide/command_app_multi)
 
-###工作空间
+### 工作空间
 
 A workspace is simply a folder that contains one or more pages, frameworks, packages and other shared code or files. The location of the workspace root folder should be chosen to facilitate these needs as well as your source control requirements.
 
-####创建工作空间
+#### 创建工作空间
 
 	sencha generate workspace /path/to/workspace
 
@@ -280,7 +280,7 @@ Once you have a workspace, generating pages ("apps") is the same as before:
 
 	sencha -sdk /path/to/ext generate app ExtApp /path/to/workspace/extApp
 
-####Generating Pages(apps)
+#### Generating Pages(apps)
 
 Once you have a workspace, generating pages ("apps") is the same as before:
 
@@ -323,13 +323,13 @@ Because the target of these generated pages is in a workspace, the following str
 	        native/
 	        package/
 
-####Building Pages
+#### Building Pages
 
 The process for building each page of a multipage application is to run this command from each of the appropriate folders:
 
 	sencha app build
 
-####Configuration
+#### Configuration
 The file ".sencha/app/sencha.cfg" holds configuration for one page ("app"). The most important of the properties found there is perhaps app.classpath.
 
 The ".sencha/workspace/sencha.cfg" file is now useful for setting configuration properties for all pages in the workspace. The most important of these properties after framework locations is probably workspace.classpath.
@@ -341,7 +341,7 @@ The order these files are loaded when present is as follows:
 - ${ext.dir}/cmd/sencha.cfg or ${touch.dir}/cmd/sencha.cfg
 - ${cmd.dir}/sencha.cfg
 
-####Sharing Code Between Pages
+#### Sharing Code Between Pages
 
 Let's add a common folder to the workspace, like so:
 
@@ -359,11 +359,11 @@ This adds the following component to the default classpath:
 
 	${framework.classpath},${workspace.classpath},${app.classpath}	    
 
-###应用间共享代码
+### 应用间共享代码
 修改.sencha/workspace/sencha.cfg
 	workspace.classpath=${workspace.dir}/common/src
 	common/src为workspace下共享代码的目录。
 
-##Packages
+## Packages
 
 TODO	

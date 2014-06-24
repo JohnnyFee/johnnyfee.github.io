@@ -7,6 +7,7 @@ tags: [dao,web,design]
 --- 
 ## 图标资源
 
+- <http://www.easyicon.net/>
 - <http://findicons.com>
 - <http://www.iconpng.com/>
 - <http://www.findicons.com>

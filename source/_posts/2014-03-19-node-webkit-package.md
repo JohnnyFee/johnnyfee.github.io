@@ -129,7 +129,7 @@ tags: [node, webkit]
 - nw.pak
 - package.json
 
-指点单击`nw.exe`即可运行。
+单击`nw.exe`即可运行。
 
 ## 打包
 
@@ -185,9 +185,8 @@ tags: [node, webkit]
 
 ## Reference
 
-- [你所不知道的Node-webkit](http://blog.whattoc.com/2013/12/16/node-webkit01/)
+- [How to run apps · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/How-to-run-apps)
+- [How to package and distribute your apps · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/How-to-package-and-distribute-your-apps)
 - [Build Desktop Apps with JavaScript and Node WebKit](http://flippinawesome.org/2014/02/10/build-desktop-apps-with-javascript-and-node-webkit/)
-
-## Other
-
-- [heX - 指南](http://hex.youdao.com/zh-cn/tutorial/index.html)
+- [Application auto building scripts for Linux Windows and OSX · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Application-auto-building-scripts-for-Linux-Windows-and-OSX)
+- [你所不知道的Node-webkit](http://blog.whattoc.com/2013/12/16/node-webkit01/)

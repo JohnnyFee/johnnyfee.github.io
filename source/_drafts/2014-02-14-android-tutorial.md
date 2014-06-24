@@ -19,6 +19,7 @@ tags: [android, tutorial]
 
 - [Telerik Mobile Application Development Platform](http://www.telerik.com/platform)    
     + [使用Telerik平台构建Web、混合与原生应用 - 推酷](http://www.tuicool.com/articles/2qiI7f)
+- [Hybrid App开发实战](http://www.infoq.com/cn/articles/hybrid-app-development-combat)
 
 ### FAQ
 

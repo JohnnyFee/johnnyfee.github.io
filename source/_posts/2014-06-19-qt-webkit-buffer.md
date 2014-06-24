@@ -59,7 +59,7 @@ QByteArray BufferTest::fromArray(QByteArray data){
 JavaScript:
 
 ```javascript
-bufferTestNative.fromArray(array);
+bufferTestNative.fromArray(buffer.toJSON());
 ```
 
 QT:

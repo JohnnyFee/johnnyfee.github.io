@@ -218,6 +218,11 @@ Javascript with Cody and Node.js.
 - [Node.js的核心与红利](http://www.programmer.com.cn/13844/)
 - [The Business Case for Node - YouTube](https://www.youtube.com/watch?v=bqLXjNbMZpY&app=desktop)
 
+## source
+
+- [详解Node.js API系列](http://blog.whattoc.com/categories/%E8%AF%A6%E8%A7%A3Node.js%20API%E7%B3%BB%E5%88%97/)
+- [Node.js设计模式](http://blog.whattoc.com/categories/Node.js%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/)
+
 ## FAQ
 
 - [How to change value of process.env.PORT in node.js? - Stack Overflow](http://stackoverflow.com/questions/13333221/how-to-change-value-of-process-env-port-in-node-js)

@@ -6,10 +6,9 @@ category: Tool
 tags: [markdown]
 --- 
 
-- [CSS Almanac | CSS-Tricks](http://css-tricks.com/almanac/)
-
 ## Tutorial
 
+- [CSS Almanac | CSS-Tricks](http://css-tricks.com/almanac/)
 - [动起来！好玩的CSS抖动样式 – CSS Shake](http://www.shejidaren.com/css-shake-animation.html)
 - [CSS3文字阴影实现乳白文字效果](http://www.shejidaren.com/css3-milky-font-effect.html)
 - [将鼠标事件绑定到非矩形区域](http://blog.youyo.name/archives/bind-click-event-in-non-rectangular-area.html?-click-event-in-non-rectangular-area)

@@ -4,17 +4,10 @@ title: "JavaScript 核心"
 category: JavaScript
 tags: [javascript]
 --- 
->译者: JeremyWei 
 
->翻译原文: http://weizhifeng.net/javascript-the-core.html 
+>原文：<http://dmitrysoshnikov.com/ecmascript/javascript-the-core/>作者：Dmitry Soshnikov
 
->原文作者：Dmitry Soshnikov
-
->原文：[http://dmitrysoshnikov.com/ecmascript/javascript-the-core/](http://dmitrysoshnikov.com/ecmascript/javascript-the-core/)
-
-> 原作者其他关于 ECMA-262 系列 [ECMA-262 » ECMA-262-3](http://dmitrysoshnikov.com/tag/ecma-262-3/)
-
-<!--more-->
+>翻译: <http://weizhifeng.net/javascript-the-core.html > 译者: JeremyWei 
 
 这篇文章是[「深入ECMA-262-3」](http://dmitrysoshnikov.com/tag/ecma-262-3/)系列的一个概览和摘要。每个部分都包含了对应章节的链接，所以你可以阅读它们以便对其有更深的理解。
 
@@ -43,6 +36,8 @@ ECMAScript做为一个高度抽象的面向对象语言，是通过_对象_来�
 [![](http://s0-weizhifeng-net.b0.upaiyun.com/images/tech/basic-object.png)](http://s0-weizhifeng-net.b0.upaiyun.com/images/tech/basic-object.png)
 
 这些prototype有什么用？让我们以_原型链_（prototype chain）的概念来回答这个问题。
+
+<!--more-->
 
 ## 原型链
 
@@ -589,7 +584,68 @@ _任何对象_都可以做为上下文中的this的值。我想再一次澄清�
 
 祝学习ECMAScript好运！
 
+## Dmitry Soshnikov
+### ECMA-262-3
+
+- [JavaScript. The core.](http://dmitrysoshnikov.com/ecmascript/javascript-the-core/ "Permanent Link to JavaScript. The core.")
+- [Chapter 1. Execution Contexts.](http://dmitrysoshnikov.com/ecmascript/chapter-1-execution-contexts/)
+- [Chapter 2. Variable object.](http://dmitrysoshnikov.com/ecmascript/chapter-2-variable-object/)
+- [Chapter 3. This.](http://dmitrysoshnikov.com/ecmascript/chapter-3-this/)
+- [Chapter 4. Scope chain.](http://dmitrysoshnikov.com/ecmascript/chapter-4-scope-chain/)
+- [Chapter 5. Functions.](http://dmitrysoshnikov.com/ecmascript/chapter-5-functions/)
+- [Chapter 6. Closures.](http://dmitrysoshnikov.com/ecmascript/chapter-6-closures/)
+- [Chapter 7.2. OOP: ECMAScript implementation.](http://dmitrysoshnikov.com/ecmascript/chapter-7-2-oop-ecmascript-implementation/)
+- [Chapter 7.1. OOP: The general theory.](http://dmitrysoshnikov.com/ecmascript/chapter-7-1-oop-general-theory/)
+- [Chapter 8. Evaluation strategy.](http://dmitrysoshnikov.com/ecmascript/chapter-8-evaluation-strategy/)
+- [ECMA-262 » The quiz](http://dmitrysoshnikov.com/ecmascript/the-quiz/)
+
+__中文：__
+
+- [JavaScript核心](http://weizhifeng.net/javascript-the-core.html)
+- [第一章.执行上下文（Execution Context）](http://goddyzhao.tumblr.com/post/10020230352/execution-context)
+- [第二章.变量对象（Variable object）](http://goddyzhao.tumblr.com/post/11141710441/variable-object)
+- [第三章.this](http://goddyzhao.tumblr.com/post/11218727474/this)
+- [第四章.作用域链（Scope Chain）](http://goddyzhao.tumblr.com/post/11259644092/scope-chain)
+- [第五章.函数（Functions）](http://goddyzhao.tumblr.com/post/11273713920/functions)
+- [第六章.闭包（Closures）](http://goddyzhao.tumblr.com/post/11311499651/closures)
+
+### ECMA-262-5
+
+- [Chapter 0. Introduction.](http://dmitrysoshnikov.com/ecmascript/es5-chapter-0-introduction/)
+- [Chapter 1. Properties and Property Descriptors.](http://dmitrysoshnikov.com/ecmascript/es5-chapter-1-properties-and-property-descriptors/)
+- [Chapter 2. Strict Mode.](http://dmitrysoshnikov.com/ecmascript/es5-chapter-2-strict-mode/)
+- [Chapter 3.1. Lexical environments: Common Theory.](http://dmitrysoshnikov.com/ecmascript/es5-chapter-3-1-lexical-environments-common-theory/)
+- [Chapter 3.2. Lexical environments: ECMAScript implementation.](http://dmitrysoshnikov.com/ecmascript/es5-chapter-3-2-lexical-environments-ecmascript-implementation/)
+
+### Essentials of interpretation
+
+- [ECMA-262 » Essentials of interpretation. Checkpoint: part 1](http://dmitrysoshnikov.com/courses/essentials-of-interpretation-checkpoint-part-1/)
+- [Essentials of interpretation. Intro.](http://dmitrysoshnikov.com/courses/essentials-of-interpretation-intro/)
+
+### Note
+
+- [Note 0. Intro.](http://dmitrysoshnikov.com/notes/intro/)
+- [Note 1. ECMAScript. Bound functions.](http://dmitrysoshnikov.com/notes/note-1-ecmascript-bound-functions/)
+- [Note 2. ECMAScript. Equality operators.](http://dmitrysoshnikov.com/notes/note-2-ecmascript-equality-operators/ "")
+- [Note 3. CoffeeScript. Scheme on Coffee.](http://dmitrysoshnikov.com/notes/note-3-coffeescript-scheme-on-coffee/ "")
+- [Note 4. Two words about "hoisting".](http://dmitrysoshnikov.com/notes/note-4-two-words-about-hoisting/ "")
+
+## Other
+
+- [理解Javascript的闭包](http://www.admin10000.com/document/238.html)
+- [深入浅出 JavaScript 中的 this](http://www.admin10000.com/document/1026.html)
+- [拥抱原型面向对象编程](http://www.admin10000.com/document/1242.html)
+- [泄露你的JavaScript技术很烂的五个表现](http://www.admin10000.com/document/1319.html)
+- [常用的Javascript设计模式](http://www.admin10000.com/document/1085.html)
+- [理解JavaScript中的设计模式](http://www.admin10000.com/document/1269.html)
+- [javascript运行机制之执行顺序详解](http://www.admin10000.com/document/3752.html)
+- [创建你的第一个JavaScript库 - WEB开发者](http://www.admin10000.com/document/1069.html)
+- [javascript运行机制之执行顺序详解](http://www.admin10000.com/document/3752.html)
+
 ## 参考
 
 - [JavaScript中的原型和继承 - WEB开发者](http://www.admin10000.com/document/4343.html)
 - [Guide to JavaScript Prototypes, Scopes, and Performance](http://www.toptal.com/javascript/javascript-prototypes-scopes-and-performance-what-you-need-to-know)
+- [真的懂JavaScript吗？](http://goddyzhao.tumblr.com/post/11478726832/do-i-really-understand-javascript)
+[说说为什么 [] == ![] 为true](http://goddyzhao.tumblr.com/post/13962242607/why-is-this-condition-true)
+[通过什么途径能够深入了解JavaScript引擎是如何工作的？](http://blog.goddyzhao.me/post/18554142516/how-to-dive-into-javascript-engine)

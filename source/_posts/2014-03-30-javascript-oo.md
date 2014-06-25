@@ -235,6 +235,7 @@ Arale 2.0 的核心设计原则是 KISS：
 3. 去除 this.parent() 语法糖，需要调用时，和 Backbone 类似，推荐直接使用 SuperClass.prototype.methodName 来调用。
 4. 为了方便调用父类中的方法，提供 superclass 语法糖，与 YUI 类似。
 
+## Tutorial
 
-
-
+- [拥抱原型面向对象编程 - WEB开发者](http://www.admin10000.com/document/1242.html)
+- [JavaScript中的原型和继承 - WEB开发者](http://www.admin10000.com/document/4343.html)

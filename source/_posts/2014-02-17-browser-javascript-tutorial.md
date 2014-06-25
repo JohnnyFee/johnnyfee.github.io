@@ -19,6 +19,12 @@ tags: [javascript]
 
 <!--more-->
 
+### Test Tools
+
+- [Kraken JavaScript Benchmark](http://kraken-mirror.googlecode.com/svn/trunk/kraken/hosted/kraken-1.1/driver.html)
+- [SunSpider 1.0.2 JavaScript Benchmark](http://www.webkit.org/perf/sunspider/sunspider.html) 
+- [**dromaeo**](http://dromaeo.com/)
+
 ## Tool
 
 - Grunt
@@ -105,3 +111,4 @@ tags: [javascript]
 
 - [You Don’t Know JS: Scope & Closures](http://www.salttiger.com/you-dont-know-js-scope-and-closures/)
 - [转载：前端开发经验分享（书籍介绍：javascript） - 徐涛的笔记 - 前端网（W3Cfuns）](http://www.w3cfuns.com/blog-5431260-5398544.html)
+- [45本免费的JavaScript书籍资源 - WEB开发者](http://www.admin10000.com/document/3672.html)

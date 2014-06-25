@@ -17,12 +17,19 @@ tags: [javascript]
 - [Introduction | Learn Javascript](http://gitbookio.github.io/javascript/)
 - [Seven JavaScript Quirks I Wish I’d Known About | Telerik Developer Network](http://developer.telerik.com/featured/seven-javascript-quirks-i-wish-id-known-about/)
 - [Mixins, Forwarding, and Delegation in JavaScript](http://raganwald.com/2014/04/10/mixins-forwarding-delegation.html)
-
+- [nuysoft's blog](http://nuysoft.com/)
 - [JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/#advanced)
 - [A List of Foundational JavaScript Tools](https://www.codefellows.org/blogs/complete-list-of-javascript-tools)
 - [web开发设计人员不可不用的在线web工具和应用](http://www.qianduan.net/web-development-and-design-staff-can-not-be-without-online-web-tools-and-applications.html)
+- [深入理解JavaScript系列 - 汤姆大叔 - 博客园](http://www.cnblogs.com/TomXu/archive/2011/12/15/2288411.html)
+- [JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/)
 
 <!--more-->
+
+### Video
+
+* [Video: Douglas Crockford, “Advanced JavaScript”](http://yuiblog.com/blog/2006/11/27/video-crockford-advjs/)  视频在 financeserver 上有。
+* [视频 : Douglas_Crockford_Advanced_JavaScript](http://v.youku.com/v_show/id_XNjA2NDU2NzU2.html) YouKu 上的视频镜像。
 
 ## OO
 
@@ -38,7 +45,7 @@ tags: [javascript]
 - [JavaScript原生对象属性和方法详解——String对象](http://www.feeldesignstudio.com/2013/09/native-javascript-object-properties-and-methods-string)
 - [JavaScript原生对象属性和方法详解——Math对象](http://www.feeldesignstudio.com/2013/09/native-javascript-object-properties-and-methods-math)
 - [The Curious Case of JavaScript NaN](http://ariya.ofilabs.com/2014/05/the-curious-case-of-javascript-nan.html?)
-
+- [Dev.Opera — JavaScript Array “Extras” in Detail](http://dev.opera.com/articles/javascript-array-extras-in-detail/)
 - [What Every JavaScript Developer Should Know About Floating Points | Flippin' Awesome](http://flippinawesome.org/2014/02/17/what-every-javascript-developer-should-know-about-floating-points/)
 - [Enums for JavaScript](http://www.2ality.com/2011/10/enums.html)
     + [Enums in JavaScript? - Stack Overflow](http://stackoverflow.com/questions/287903/enums-in-javascript)
@@ -46,6 +53,7 @@ tags: [javascript]
     + [simple-enum](https://www.npmjs.org/package/simple-enum)
     + [Enums in Javascript | Stijn de Witt's Blog](http://stijndewitt.wordpress.com/2014/01/26/enums-in-javascript/)
 - [sindresorhus/multiline](https://github.com/sindresorhus/multiline) Multiline strings in JavaScript.
+- [Functional JavaScript, Part 3: .apply(), .call(), and the arguments object Tech.Pro](http://tech.pro/tutorial/2010/functional-javascript-part-3-apply-call-and-the-arguments-object)
 
 ## AOP
 
@@ -84,7 +92,6 @@ tags: [javascript]
       if (!(this instanceof Buffer)){
         return new Buffer(subject, encoding, noZero);
       }
-
       // ...
     }
 

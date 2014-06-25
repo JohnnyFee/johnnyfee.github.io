@@ -11,6 +11,7 @@ tags: [webview]
 	- [driftyco/ionic](https://github.com/driftyco/ionic)
 - [JXcore · a Node.JS distribution with additional features](http://jxcore.com/home/)
 - [Leaflet/Leaflet](https://github.com/Leaflet/Leaflet) JavaScript library for mobile-friendly interactive maps. [http://leafletjs.com](http://leafletjs.com/)
+- [Top 7 Mobile application HTML5 frameworks](http://www.gajotres.net/top-7-mobile-application-html5-frameworks/)
 
 ### 5 Best Mobile Web App Frameworks
 
@@ -59,6 +60,12 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 - [jieyou/remote_inspect_web_on_real_device](https://github.com/jieyou/remote_inspect_web_on_real_device) 各种真机远程调试方法汇总。
 - - [A Concise Guide to Remote Debugging on iOS, Android, and Windows Phone](http://developer.telerik.com/featured/a-concise-guide-to-remote-debugging-on-ios-android-and-windows-phone/)
 - [Bringing F5 (or Command+R) to Hybrid Mobile Apps](http://developer.telerik.com/featured/bringing-f5-or-commandr-to-hybrid-mobile-apps/)
+- [使用weinre远程调试手机网页](http://www.2fz1.com/?p=396)
+
+## website
+
+- [w3cfuns](w3cfuns.com)
+- [admin10000](http://www.admin10000.com/?sp=14686)
 
 ## Books
 

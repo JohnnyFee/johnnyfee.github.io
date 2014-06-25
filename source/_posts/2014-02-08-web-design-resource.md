@@ -25,13 +25,14 @@ tags: [dao,web,design]
 
 <!--more-->
 
-## 图标素材
+## icon
 
 - [为你新项目准备的15组新Icon图标](http://www.shejidaren.com/15-new-icon-set-downloads.html)
 - [精选Dribbble图标Icon素材集（2013年春季版50+）](http://www.shejidaren.com/dribbble-freebie-icons-2013-spring.html)
 - [逼真图标设计欣赏（拟物化图标）](http://www.shejidaren.com/%E9%80%BC%E7%9C%9F%E5%9B%BE%E6%A0%87%E8%AE%BE%E8%AE%A1%E6%AC%A3%E8%B5%8F.html)
 - [iOS7 图标模板PSD （iOS7 icon template）](http://www.shejidaren.com/ios7-icon-template.html)
 - [50套免费icon图标素材精选 – 2014.4月 | 设计达人](http://www.shejidaren.com/free-icon-set-2014-4.html)
+- [200+漂亮线性图标下载（免费）](http://www.shejidaren.com/200-outline-icons-for-designer.html)
 
 ## 效果素材
 

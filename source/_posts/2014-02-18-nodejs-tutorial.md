@@ -217,11 +217,16 @@ Javascript with Cody and Node.js.
 - [图解Node.js流行趋势，Node在路上 - OurJS.com](http://ourjs.com/detail/5306b3ad3b73342e0300000a)
 - [Node.js的核心与红利](http://www.programmer.com.cn/13844/)
 - [The Business Case for Node - YouTube](https://www.youtube.com/watch?v=bqLXjNbMZpY&app=desktop)
+- [我为什么向后端工程师推荐Node.js](http://www.infoq.com/cn/articles/why-recommend-nodejs)
 
 ## source
 
 - [详解Node.js API系列](http://blog.whattoc.com/categories/%E8%AF%A6%E8%A7%A3Node.js%20API%E7%B3%BB%E5%88%97/)
 - [Node.js设计模式](http://blog.whattoc.com/categories/Node.js%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/)
+
+## production
+
+- [Using Node.js in Production](http://flippinawesome.org/2014/06/23/using-node-js-in-production/)
 
 ## FAQ
 

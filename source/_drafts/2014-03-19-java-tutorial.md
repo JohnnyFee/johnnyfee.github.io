@@ -21,7 +21,7 @@ tags: [java]
 ## Java8
 
 - [Java 8 Pocket Guide](http://www.salttiger.com/java-8-pocket-guide/)
-- [Java: The Good Parts](http://www.salttiger.com/java-the-good-parts/)
+- [Java 8学习资料汇总 - WEB开发者](http://www.admin10000.com/document/4616.html)
 
 ## JavaScript
 
@@ -33,5 +33,6 @@ tags: [java]
 - [Functional Programming in Java](http://www.salttiger.com/functional-programming-in-java/)
 - [Java 8 Lambdas](http://www.salttiger.com/java-8-lambdas/)
 
+## Book
 
-
+- [Java: The Good Parts](http://www.salttiger.com/java-the-good-parts/)

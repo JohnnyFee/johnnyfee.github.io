@@ -270,3 +270,7 @@ TODO
 - [Android中Webview使用经验总结（持续更新）](http://my.eoe.cn/iceskysl/archive/1028.html)
 - [Android WebView使用](http://trinea.iteye.com/blog/1152557)
 - [第二十九讲：WebView学习指南 « { Android学习指南 }](http://android.yaohuiji.com/archives/734#comments)
+
+## Book
+
+- [Building Hybrid Android Apps with Java and JavaScript](http://www.salttiger.com/building-hybrid-android-apps-with-java-and-javascript/)

@@ -100,8 +100,15 @@ Can you explain why ++[[]][+[]]+[+[]] = “10”?
 
 ## Books
 
+- [JavaScript: The Definitive Guide (6th)](http://www.salttiger.com/javascript-the-definitive-guide-6th/)
+- [JavaScript: The Good Parts](http://www.salttiger.com/javascript-the-good-parts/)
+- [Learning JavaScriptMVC](http://www.salttiger.com/learning-javascriptmvc/)
 - [You Don’t Know JS: Scope & Closures](http://www.salttiger.com/you-dont-know-js-scope-and-closures/)
 - [JavaScript Programming: Pushing the Limits](http://www.salttiger.com/javascript-programming-pushing-the-limits/)
 - [Data Structures and Algorithms with JavaScript](http://www.salttiger.com/data-structures-and-algorithms-with-javascript/)
 - [Data Structures and Algorithms with JavaScript](http://www.salttiger.com/data-structures-and-algorithms-with-javascript/)
 - [Speaking JavaScript](http://www.salttiger.com/speaking-javascript/)
+- [Effective JavaScript](http://www.salttiger.com/effective-javascript/)
+- [Expert JavaScript](http://www.salttiger.com/expert-javascript/)
+- [Expert JavaScript](http://www.salttiger.com/expert-javascript/)
+- [High Performance JavaScript](http://www.salttiger.com/high-performance-javascript/)

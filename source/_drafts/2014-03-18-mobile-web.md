@@ -69,4 +69,5 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 
 ## Books
 
+- [Mobile JavaScript Application Development](http://www.salttiger.com/mobile-javascript-application-development/)
 - [Mobile Design Pattern Gallery, 2nd Edition](http://www.salttiger.com/mobile-design-pattern-gallery-2nd-edition/)

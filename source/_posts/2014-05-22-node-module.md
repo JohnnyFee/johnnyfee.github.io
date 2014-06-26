@@ -69,6 +69,82 @@ For more detail on Node's module system [the core docs](http://nodejs.org/api/mo
 
 And now on to the interface patterns.
 
+### module.exports vs exports
+
+如果想不借助global，在不同模块之间共享代码，就需要用到exports属性。令人有些迷惑的是，在node.js里，还有另外一个属性，是module.exports。一般情况下，这2个属性的作用是一致的，但是如果对exports或者module.exports赋值的话，又会呈现出令人奇怪的结果
+
+网上关于这个话题的讨论很多，流传最广的是这个帖子：[exports vs module.exports](http://www.hacksparrow.com/node-js-exports-vs-module-exports.html)，但是这篇帖子里有些说法明显是错误的，却没有人指出来。下面说一下我的理解
+
+首先，exports和module.exports都是某个对象的引用（reference），初始情况下，它们指向同一个object，如果不修改module.exports的引用的话，这个object稍后会被导出
+
+![](http://img.blog.csdn.net/20131010224155750?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQva3lmeGJs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+所以不管用exports还是module.exports，给这个object添加属性或函数，都是完全等效的
+
+    exports.name = "Tony";
+    module.exports.age = 33;
+
+    var b = require("./b");
+    console.log(b);// {name:"Tony", age:33}
+
+  
+所以如果只是给对象添加属性，不改变exports和module.exports的引用目标的话，是完全没有问题的 但是有时候，希望导出的是一个构造函数，那么一般会这么写：
+
+    module.exports = function (name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    exports.sex = "male";
+
+    var Person = require("./b");
+    var person = new Person("Tony", 33);
+    console.log(person);// {name:"Tony", age:33}
+    console.log(Person.sex);// undefined
+
+  
+这个sex属性是不会导出的，因为引用关系已经改变： 
+
+![](http://img.blog.csdn.net/20131010230949562?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQva3lmeGJs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+而node导出的， 永远是module.exports指向的对象， 在这里就是function。所以exports指向的那个object，现在已经不会被导出了，为其增加的属性当然也就没用了
+
+如果希望把sex属性也导出，就需要这样写：
+
+    exports = module.exports = function (name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    exports.sex = "male";
+
+  
+事实上，查看很多module的源代码，会发现就是这么写的，这时的引用关系： 
+
+![](http://img.blog.csdn.net/20131010231244734?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQva3lmeGJs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+所以我感觉exports根本是多余的，最终只会导出一个object，却设计了2个引用，很多时候反而会造成迷惑。exports的唯一好处就是可以少敲几个字，还不如只保留module.exports就好了
+
+### exports的缓存
+
+执行require之后，目标模块的代码会被完整地执行一次，然后module.exports对象被返回
+
+需要注意的是，这个过程只会发生一次，后面重复的require，只会拿到 同一个对象
+
+    exports.name = "Tony";
+    exports.age = 33;
+
+    var b1 = require("./b");
+    var b2 = require("./b");
+    console.log(b1 === b2); // true
+    
+    console.log(b2.age);// 33
+    b1.age++;
+    console.log(b2.age);// 34
+    
+    var b3=require("./b");
+    console.log(b3.age);// 34
+
 ## Exports a Namespace
 
 A simple and common pattern is to export an object with a number of properties, primarily but not limited to functions. This allows the code requiring the module to pull in a collection of related functionality under a single namespace.
@@ -379,5 +455,6 @@ I haven't been exhaustive and there are certainly other options available but I 
 
 _Thanks to the incredibly prolific Node developer community for all the open source work from which I have done most of my learning. I encourage you to read the code of the libraries you are using and to find the great developers out there with clear, consistent and readable styles that can inspire your own. Special shout out to [TJ Holowaychuk](https://github.com/visionmedia) whose work on Express.js, Connect and Should.js are referenced above._
 
+## Reference
 
-
+- [node.js的global variable，和module.exports](http://blog.csdn.net/kyfxbl/article/details/12587385)

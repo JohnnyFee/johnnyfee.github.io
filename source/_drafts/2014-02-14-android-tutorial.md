@@ -111,3 +111,4 @@ tags: [android, tutorial]
 
 - [Android Programming: Pushing the Limits](http://www.salttiger.com/android-programming-pushing-limits/)
 - [Creating Dynamic UI with Android Fragments](http://www.salttiger.com/creating-dynamic-ui-android-fragments/)
+- [Efficient Android Threading](http://www.salttiger.com/efficient-android-threading/)

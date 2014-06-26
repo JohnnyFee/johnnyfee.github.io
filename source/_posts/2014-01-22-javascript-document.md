@@ -185,6 +185,12 @@ utils.js:
 	 */
 	Book.prototype.bbbb = {};
 
+## DocumentUp
+
+<https://github.com/jeromegn/DocumentUp>
+
+Pretty documentation generator for Github projects with proper Readme.
+
 ## 工具
 
 - [HTML Compiler v1.6 破解版 | 将网页编译制作成EXE可执行程序](http://www.ttrar.com/html/HTML-Compiler.html)

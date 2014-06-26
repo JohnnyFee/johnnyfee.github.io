@@ -74,10 +74,6 @@ tags: [javascript]
 
 - [Communicating Large Objects with Web Workers in javascript](http://developerblog.redhat.com/2014/05/20/communicating-large-objects-with-web-workers-in-javascript)
 
-## Other
-
-- [条件注释判断浏览器](http://www.cnblogs.com/dtdxrk/archive/2012/03/06/2381868.html)
-
 ## Observer
 
 - [Detect, Undo And Redo DOM Changes With Mutation Observers](http://addyosmani.com/blog/mutation-observers/)
@@ -96,6 +92,11 @@ tags: [javascript]
     }
 
 这样可以保证用户忘记 `new` 的时候，也返回 JavaScript 对象。 
+
+### intelligence
+
+Can you explain why ++[[]][+[]]+[+[]] = “10”?
+<http://stackoverflow.com/questions/7202157/can-you-explain-why-10>
 
 ## Books
 

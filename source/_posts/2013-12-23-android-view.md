@@ -36,6 +36,7 @@ tags: [android]
 - [pakerfeldt / android-viewflow](https://github.com/pakerfeldt/android-viewflow) ViewFlow is an Android UI widget providing a horizontally scrollable ViewGroup with items populated from an Adapter.
 - [johannilsson / android-actionbar](https://github.com/johannilsson/android-actionbar) Android Action Bar Implementation.
 - [SimonVT / android-menudrawer](https://github.com/SimonVT/android-menudrawer) A slide-out menu implementation, which allows users to navigate between views in your app.
+- [flavienlaurent/NotBoringActionBar](https://github.com/flavienlaurent/NotBoringActionBar)
 
 <!--more-->
 
@@ -152,7 +153,7 @@ __其他参考：__
 
 ## Scroll
 
-- [flavienlaurent/discrollview](https://github.com/flavienlaurent/discrollview) Scroll + discover = DiscrollView 
+- [flavienlaurent/discrollview](https://github.com/flavienlaurent/discrollview) Scroll + discover = DiscrollView
 
 ## Wallpaper
 
@@ -176,7 +177,7 @@ __其他参考：__
 - [tyczj / ExtendedCalendarView](https://github.com/tyczj/ExtendedCalendarView) 日历组件。
 - [tyczj/ExtendedCalendarView](https://github.com/tyczj/ExtendedCalendarView)
 - [square/android-times-square](https://github.com/square/android-times-square) Standalone Android widget for picking a single date from a calendar view. 
-
+- [flavienlaurent/datetimepicker](https://github.com/flavienlaurent/datetimepicker)
 
 ## 工具
 - [Android DPI Calculator](http://coh.io/adpi/)

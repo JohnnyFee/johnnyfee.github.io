@@ -306,6 +306,8 @@ JS的加载其实是由两阶段组成：下载内容（download bytes）和执�
 - 2010年 Velocity China 上的两个讲义：
 	- Steve Souders(Google)的 [Even Faster Web Sites](http://velocity.oreilly.com.cn/2010/ppts/velocity-efws-20101208SteveSoudersEvenFaster.pdf) (pdf)
 	- 李穆(淘宝)的 [第三方广告代码稳定性和性能优化实战](http://velocity.oreilly.com.cn/2010/ppts/limufromTaobao.pdf) (pdf)
+- [JavaScript 的性能优化：加载和执行](http://www.ibm.com/developerworks/cn/web/1308_caiys_jsload/index.html?ca=drs-)
+- [Javascript 装载和执行](http://coolshell.cn/articles/9749.html)
 
 ## 性能测试
 

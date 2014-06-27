@@ -46,6 +46,8 @@ tags: [jquery]
     
     $('div').borderize();
     $('div').borderize({color: 'red'});
+
+<!--more-->
   
 以下是我喜欢这种模板的原因  
   

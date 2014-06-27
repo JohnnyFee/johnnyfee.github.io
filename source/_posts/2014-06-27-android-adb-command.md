@@ -30,6 +30,8 @@ Use the install command to install an apk, the optional -r argument reinstalls a
     # example
     adb uninstall com.growingwiththeweb.example
 
+<!--more-->
+
 ## Start an activity
 
     adb shell am start PACKAGE_NAME/ACTIVITY_IN_PACKAGE

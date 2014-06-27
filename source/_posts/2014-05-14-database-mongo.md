@@ -42,3 +42,11 @@ db.posts.find({'tags': 'politics','vote_count': {'$gt': 10}});
 - [MongoDB权限管理之用户名和密码的操作 - 51CTO.COM](http://database.51cto.com/art/201107/278042.htm)
 
 [node.js - Nodejs MongoError: auth fails - Stack Overflow](http://stackoverflow.com/questions/21180643/nodejs-mongoerror-auth-fails)
+
+## Books
+
+- [MongoDB: The Definitive Guide, 2nd Edition](http://www.salttiger.com/mongodb-the-definitive-guide-2nd-edition/) 2013.05
+- [MongoDB Applied Design Patterns](http://www.salttiger.com/mongodb-applied-design-patterns/) 2013.03
+- [Building Node Applications with MongoDB and Backbone](http://www.salttiger.com/building-node-applications-with-mongodb-and-backbone/) 2012.12
+- [MongoDB in Action](http://www.salttiger.com/mongodb-in-action/) 2011.12
+- [50 Tips and Tricks for MongoDB Developers](http://www.salttiger.com/50-tips-and-tricks-for-mongodb-developers/) 2011.04

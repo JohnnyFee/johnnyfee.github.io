@@ -1,9 +1,10 @@
 ---
 layout: post
-title: "JavaScript 效率"
+title: "JavaScript Best Practice"
 category: JavaScript
-tags: [javascript,performance]
+tags: [javascript, best practice]
 --- 
+
 > **本文由 [伯乐在线](http://blog.jobbole.com/) - 翻译自 [net.tutsplus](http://net.tutsplus.com/tutorials/JavaScript-ajax/24-JavaScript-best-practices-for-beginners/)。欢迎加入[技术翻译小组](http://www.jobbole.com/groups/6/)。转载请参见文章末尾处的要求。**作为“[30 HTML和CSS最佳实践”](http://net.tutsplus.com/tutorials/html-css-techniques/30-html-best-practices-for-beginners/)的后续，这篇文章将回顾JavaScript的知识 ！如果你看完了下面的内容，请务必让我们知道你掌握的小技巧！
 
 ## 1.使用 === 代替 ==
@@ -19,6 +20,8 @@ JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操
 起初不太熟悉时，“eval”让我们能够访问JavaScript的编译器（译注：这看起来很强大）。从本质上讲，我们可以将字符串传递给eval作为参数，而执行它。
 
 这不仅大幅降低脚本的性能（译注：JIT编译器无法预知字符串内容，而无法预编译和优化），而且这也会带来巨大的安全风险，因为这样付给要执行的文本太高的权限，避而远之。
+
+<!--more-->
 
 ## 3.省略未必省事
 

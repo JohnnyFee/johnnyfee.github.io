@@ -29,6 +29,8 @@ tags: [android, tutorial]
 
 - [NinjaMock](http://ninjamock.com/)
 
+<!--more-->
+
 ## 混淆
 
 - [Mastering ProGuard for Building Lightweight Android Code | Crashlytics Blog](http://www.crashlytics.com/blog/mastering-proguard-for-building-lightweight-android-code/)

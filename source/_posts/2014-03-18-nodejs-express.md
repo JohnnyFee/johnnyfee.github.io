@@ -25,7 +25,7 @@ Koa号称为Node下一代的 Web 框架。但是在官方的FAQ中提到它不�
 
 但不管怎么样，哥刚入门 Node，还是从 Express 入手。
 
-本文一下部分是 <<[Express Web Application Development](http://www.salttiger.com/express-web-application-development/)>> 的读书笔记，基本都是英文，都是从原文中拷贝下来的。
+本文以下部分是 <<[Express Web Application Development](http://www.salttiger.com/express-web-application-development/)>> 的读书笔记，基本都是英文，都是从原文中拷贝下来的。
 
 ## Install
 
@@ -1970,3 +1970,7 @@ Since Express depends on the `NODE_ENV` environment variable to determine the en
 
 - [Build a RESTful API Using Node and Express 4](http://scotch.io/tutorials/javascript/build-a-restful-api-using-node-and-express-4)
 - [Beer Locker: Building a RESTful API with Node - Scott Smith](http://scottksmith.com/blog/2014/05/02/building-restful-apis-with-node)
+
+### Restful
+
+[restify](http://mcavage.me/node-restify/) 是一个基于Nodejs的REST应用框架，支持服务器端和客户端。restify比起express更专注于REST服务，去掉了express中的template, render等功能，同时强化了REST协议使用，版本化支持，HTTP的异常处理。

@@ -1,17 +1,18 @@
 ---
 layout: post
-title: "NodeJS"
-category: Web
-tags: [web]
+title: "Node Tutorial"
+category: Node
+tags: [node, tutorial]
 --- 
 ## 环境
 
 官网下载并安装 <http://www.nodejs.org/download/>.
 
-安装好后系统默认的环境变量path是 C:\Documents and Settings\Administrator\Application Data\npm
+安装好后系统默认的环境变量 path 是 `C:\Documents and Settings\Administrator\Application Data\npm`。
 
 ## Tutorial
 
+- [从零开始nodejs系列文章](http://blog.fens.me/series-nodejs/)
 - [Node初学者入门，一本全面的NodeJS教程 - OurJS.com](http://ourjs.com/detail/529ca5950cb6498814000005#event-driven-callbacks)
 - [《JavaScript 应用程序设计》总目录](https://github.com/cssmagic/blog/issues/16)
 - [Writing cross-platform Node.js](http://shapeshed.com/writing-cross-platform-node/)
@@ -29,7 +30,6 @@ tags: [web]
 - [Node.js异常捕获的一些实践](http://www.alloyteam.com/2013/12/node-js-series-exception-caught/)
 - [Massa Labs](http://massalabs.com/dev/2013/10/17/handling-errors-in-nodejs.html)
 
-
 ## Framework
 
 - [sahat/hackathon-starter](https://github.com/sahat/hackathon-starter) A boilerplate for Node.js web applications.
@@ -42,6 +42,10 @@ tags: [web]
 - [Node.js Security in the Enterprise - YouTube](https://www.youtube.com/watch?v=Zc8QvuRbdoQ&list=UUXe1qKfGweMKTnmRrMw9yOg&feature=share&index=1)
 - [Node Security](http://www.salttiger.com/node-security/)
 
+### Passport
+
+[Passport](http://passportjs.org/)项 目是一个基于Nodejs的认证中间件。Passport目的只是为了“登陆认证”，因此，代码干净，易维护，可以方便地集成到其他的应用中。Web应用 一般有2种登陆认证的形式：用户名和密码认证登陆,OAuth认证登陆。Passport可以根据应用程序的特点，配置不同的认证机制。本文将介绍，用户 名和密码的认证登陆。
+
 ## Communication
 
 - [amark/coalesce](https://github.com/amark/coalesce) Communication framework for distributed JavaScript.
@@ -51,6 +55,26 @@ tags: [web]
 - [edwlook/node-google-distance](https://github.com/edwlook/node-google-distance)
 
 ## Library
+
+### commander
+
+[commander](http://visionmedia.github.io/commander.js/) 是一个轻巧的nodejs模块，提供了用户命令行输入和参数解析强大功能。commander源自一个同名的Ruby项目。commander的特性：自 记录代码,自动生成帮助,合并短参数（“ABC”==“-A-B-C”）,默认选项,强制选项​​,命令解析,提示符。
+
+### Web控制台工具: tty.js
+
+[tty.js](https://github.com/chjj/tty.js/) 是一个支持在浏览器中运行的命令行窗口，基于node.js平台，依赖socket.io库，通过websocket与Linux系统通信。特性：支持多 tab窗口模型; 支持vim,mc,irssi,vifm语法; 支持xterm鼠标事件; 支持265色显示; 支持session。
+
+### Web爬虫
+
+[cheerio](http://matthewmueller.github.io/cheerio/) 是一个为服务器特别定制的，快速、灵活、封装jQuery核心功能工具包。Cheerio包括了 jQuery核心的子集，从jQuery库中去除了所有DOM不一致性和浏览器不兼容的部分，揭示了它真正优雅的API。Cheerio工作在一个非常简 单，一致的DOM模型之上，解析、操作、渲染都变得难以置信的高效。基础的端到端的基准测试显示Cheerio大约比JSDOM快八倍(8x)。 Cheerio封装了@FB55兼容的htmlparser，几乎能够解析任何的 HTML 和 XML document。
+
+### Timer
+
+[Later](http://bunkat.github.io/later/) 是一个基于Nodejs的工具库，用最简单的方式执行定时任务。Later可以运行在Node和浏览器中。
+
+### Web幻灯片
+
+[Cleaver](http://jdan.github.io/cleaver/) 可以生成基于Markdown的演示文稿。如果你已经有了一个Markdown的文档，30秒就可以制作成幻灯片。Cleaver是为Hacker准备的工具。
 
 ### HTML/CSS
 
@@ -67,8 +91,8 @@ tags: [web]
 
 ### Server
 
-- [mjijackson/mach](https://github.com/mjijackson/mach?utm_source=nodeweekly&utm_medium=email) A better way to build web servers in node.js.
-- [Scaling Node.js Applications | Colin J. Ihrig's Blog](http://cjihrig.com/blog/scaling-node-js-applications/)
+- [mjijackson/mach](https://github.com/mjijackson/mach) A better way to build web servers in node.js.
+- [Scaling Node.js Applications](http://cjihrig.com/blog/scaling-node-js-applications/)
 
 ### Continuous Integration
 
@@ -228,6 +252,32 @@ Javascript with Cody and Node.js.
 
 - [Using Node.js in Production](http://flippinawesome.org/2014/06/23/using-node-js-in-production/)
 
+## Path
+
+ 我们看到Nodejs已经被广发地应用在各种的场景了，针对Nodejs的应用场景，我们应该如何学习Nodejs呢？
+
+以下内容是我整理的文档和教程，每个软件包对应一篇文章，大家可以根据自己的需要进行阅读，完整的文章列表，可以查看：[从零开始nodejs系列文章](http://blog.fens.me/series-nodejs/ "从零开始nodejs系列文章")。
+
+* 项目管理：[npm](http://blog.fens.me/nodejs-npm-package/),[grunt](http://blog.fens.me/nodejs-grunt-intro/), [bower](http://blog.fens.me/nodejs-bower-intro/), [yeoman](http://blog.fens.me/nodejs-yeoman-intro/)
+* Web开发：[express](http://blog.fens.me/nodejs-express3/),ejs,[hexo](http://blog.fens.me/hexo-blog-github/), [socket.io](http://blog.fens.me/nodejs-socketio-chat/), [restify](http://blog.fens.me/nodejs-restify/), [cleaver](http://blog.fens.me/nodejs-slide-cleaver/), [stylus](http://blog.fens.me/nodejs-stylus-css/), [browserify](http://blog.fens.me/nodejs-browserify/),cheerio
+* 工具包：[underscore](http://blog.fens.me/nodejs-express3/),moment,[connet](http://blog.fens.me/nodejs-connect/),[later](http://blog.fens.me/nodejs-cron-later/),[log4js](http://blog.fens.me/nodejs-log4js/),[passport](http://blog.fens.me/nodejs-express-passport/),[passport(oAuth)](http://blog.fens.me/nodejs-oauth-passport/),[domain](http://blog.fens.me/nodejs-core-domain/),[require](http://blog.fens.me/nodejs-requirejs/),[reap](http://blog.fens.me/nodejs-gc-reap/),  
+[commander](http://blog.fens.me/nodejs-commander/),[retry](http://blog.fens.me/nodejs-retry/)
+* 数据库：[mysql](http://blog.fens.me/nodejs-mysql-intro/),[mongoose](http://blog.fens.me/nodejs-mongoose-json/),redis
+* 异步：[async](http://blog.fens.me/nodejs-async/),[wind](http://blog.fens.me/nodejs-async-windjs/)
+* 部署：[forever](http://blog.fens.me/nodejs-server-forever/),pm2
+* 测试：[jasmine](http://blog.fens.me/nodejs-jasmine-bdd/),[karma](http://blog.fens.me/nodejs-karma-jasmine/)
+* 跨平台：[rio](http://blog.fens.me/r-rserve-nodejs/),[tty](http://blog.fens.me/nodejs-linux-sh-tty/)
+* 内核：[cluster](http://blog.fens.me/nodejs-core-cluster/),[http](http://blog.fens.me/nodejs-https-server/),[request](http://blog.fens.me/nodejs-crawler-douban/)
+* 算法：[ape-algorithm(快速排序)](http://blog.fens.me/algorithm-quicksort-nodejs/),[ape-algorithm(桶排序)](http://blog.fens.me/algorithm-bucketsort-nodejs/)
+
+Nodejs在快速的发展着，软件包版本升级的很快，文章有运行不通的地方请参考官方文档解决。我也会不定期更新文章，尽量保持文章代码的可用性。
+
+
+
 ## FAQ
 
 - [How to change value of process.env.PORT in node.js? - Stack Overflow](http://stackoverflow.com/questions/13333221/how-to-change-value-of-process-env-port-in-node-js)
+
+## Reference
+
+- [Node.JS 学习路线图 - WEB开发者](http://www.admin10000.com/document/4624.html)

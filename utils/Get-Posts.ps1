@@ -13,7 +13,6 @@ dir ..\source\_posts\*.md | foreach {
     $name = $matches['NAME']
 
     $url = $urlTemplate -f $year, $month, $day, $name
-    
 
     cat $_ -Encoding UTF8 | foreach {
         if ($_ -cmatch '^title\s*:\s*"(?<TITLE>.*)"$') {

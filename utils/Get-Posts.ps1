@@ -7,7 +7,7 @@ dir ..\source\_posts\*.md | foreach {
         return
     }
 
-	$year = $matches['YEAR']
+    $year = $matches['YEAR']
     $month = $matches['MONTH']
     $day = $matches['DAY']
     $name = $matches['NAME']

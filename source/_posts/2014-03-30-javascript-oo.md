@@ -241,3 +241,4 @@ Arale 2.0 的核心设计原则是 KISS：
 - [JavaScript中的原型和继承 - WEB开发者](http://www.admin10000.com/document/4343.html)
 - [Prototypes Are Not Classes](http://raganwald.com/2014/01/19/prototypes-are-not-classes.html)
 - [Private properties in JavaScript](https://curiosity-driven.org/private-properties-in-javascript)
+- [Objects and classes by example - Mixu's Node book](http://book.mixu.net/node/ch6.html)

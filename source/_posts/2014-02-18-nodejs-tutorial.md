@@ -221,6 +221,14 @@ Javascript with Cody and Node.js.
 
 - [topcloud/socketcluster](https://github.com/topcloud/socketcluster) Highly scalable realtime WebSockets based on Engine.io.
 
+## HTTP
+
+- [Node: HTTP, HTTPS - Mixu's Node book](http://book.mixu.net/node/ch10.html)
+
+## socket.io
+
+- [13. Comet and Socket.io - Mixu's Node book](http://book.mixu.net/node/ch13.html)
+
 ## PhantomJS
 
 - [PhantomJS快速入门教程](http://www.woiweb.net/phantomjs-quick-use-tutorials.html)

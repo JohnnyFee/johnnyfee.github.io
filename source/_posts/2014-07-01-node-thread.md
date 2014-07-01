@@ -1,0 +1,65 @@
+---
+layout: post
+title: "Node Thread"
+category: Node
+tags: [node, thread]
+--- 
+
+- [Node.js: managing child processes - Tech.pro](http://tech.pro/tutorial/2074/nodejs-managing-child-processes)
+
+## process constant
+
+- [Node.js的process模块 – WEB前端开发](http://www.css88.com/archives/4548)
+
+### argv
+
+An array containing the command line arguments. The first element will be 'node', the second element will be the name of the JavaScript file. The next elements will be any additional command line arguments.
+
+```javascript
+// print process.argv
+process.argv.forEach(function(val, index, array) {
+  console.log(index + ': ' + val);
+});
+This will generate:
+```
+
+<!--more-->
+
+```shell
+$ node process-2.js one two=three four
+0: node
+1: /Users/mjr/work/node/process-2.js
+2: one
+3: two=three
+4: four
+```
+
+We can use [substack/minimist](https://github.com/substack/minimist) to process the arguments.
+
+```javascript
+var argv = require('minimist')(process.argv.slice(2));
+console.dir(argv);
+```
+
+```shell
+$ node example/parse.js -a beep -b boop
+{ _: [], a: 'beep', b: 'boop' }
+
+$ node example/parse.js -x 3 -y 4 -n5 -abc --beep=boop foo bar baz
+{ _: [ 'foo', 'bar', 'baz' ],
+  x: 3,
+  y: 4,
+  n: 5,
+  a: true,
+  b: true,
+  c: true,
+  beep: 'boop' }
+```
+## relative path
+
+- `module.filename`：该行代码所在的文件。
+- `__filename`：始终等于 module.filename
+- `__dirname`：该行代码所在的目录。
+- `process.cwd()`：运行node的工作目录，可以使用  cd /d 修改工作目录。
+- `require.main.filename`：用node命令启动的module的filename, 如 node xxx，这里的filename就是这个xxx。
+- `require()` 方法的相对路径是：module.filename；fs.readFile()的相对路径是：process.cwd()。

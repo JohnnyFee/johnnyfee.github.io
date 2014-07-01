@@ -67,7 +67,7 @@ $ git commit -a -m 'added new benchmarks'
 
 看到了吗？提交之前不再需要 git add 文件 benchmarks.rb 了。
 
-## rm
+### rm
 
 一般情况下，你通常直接在文件管理器中把没用的文件删了，或者用rm命令删了：
 
@@ -212,8 +212,6 @@ $ git commit -a -m 'added new benchmarks'
 
 由此我们看到 Git 管理项目时，文件流转的三个工作区域：Git 的工作目录，暂存区域，以及本地仓库。
 
-![Git详解之一：Git起步](http://jbcdn2.b0.upaiyun.com/2012/08/Git-start6.png)
-
 __基本的 Git 工作流程如下：__
 
 1. 在工作目录中修改某些文件。 
@@ -260,6 +258,73 @@ doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 
         node_modules/*
         !node_modules/app-widget
+
+## Advanced
+
+### 从git中永久删除文件以节省空间
+
+[从git中永久删除文件以节省空间](http://blog.csdn.net/meteor1113/article/details/4407209)
+
+在使用版本管理工具的过程中我们会碰到这样的问题:不小心把一个不该加入版本管理的文件加进去了，有时候这个文件很大，也许我们整个版本库才几百 K，但加进去这个没用的文件却有好几百M，我可不想因为这么个破烂东西把整个版本库整个硕大无比，以后维护备份都不方便；还有时候是不小心把一个敏感文件 加进去了，比如里面写了信用卡密码的文本文件。
+
+这时候我们希望能把它从版本库中永久删除不留痕迹，不仅要让它在版本历史里看不出来，还要把它占用的空间也释放出来。
+
+在svn中的办法是把整个版本库dump出来filter一下再load回去。git中可以用下面的方法来实现：
+
+我们先创建一个试验用的版本库，并往里面提交一个10M的大文件再删除:
+
+```shell
+$ mkdir t
+$ cd t
+$ git init
+    Initialized empty Git repository in /Users/apple/t/.git/
+$ dd if=/dev/urandom of=testme.txt bs=10240 count=1024
+    1024+0 records in
+    1024+0 records out
+    10485760 bytes transferred in 1.684808 secs (6223712 bytes/sec)
+$ git add testme.txt
+$ git commit -m "a"
+    [master (root-commit)]: created 6fbb432: "a"
+     1 files changed, 0 insertions(+), 0 deletions(-)
+     create mode 100644 testme.txt
+$ git rm testme.txt
+    rm 'testme.txt'
+$ git commit -m r
+    [master]: created bb38396: "r"
+     1 files changed, 0 insertions(+), 0 deletions(-)
+     delete mode 100644 testme.txt
+
+```
+
+这时候我们看看版本库的大小:
+
+```shell
+$ du -hs
+    10M
+```
+
+很明显虽然testme.txt已经被删除了，但是因为版本历史里曾经有过这个文件，所以git仍然把它存在库中，以后可以通过它再把它恢复回来。
+但我实在是不希望这么一个空版本库占用我10M宝贵的硬盘空间，所以我要把它全删掉，这就要用到git的filter-branch命令了。具体这个命令的用法可以看文档，下面是这个例子中的用法:
+
+```shell
+$ git filter-branch --tree-filter 'rm -f testme.txt' HEAD
+    Rewrite bb383961a2d13e12d92be5f5e5d37491a90dee66 (2/2)
+    Ref 'refs/heads/master' was rewritten
+$ git ls-remote .
+    230b8d53e2a6d5669165eed55579b64dccd78d11        HEAD
+    230b8d53e2a6d5669165eed55579b64dccd78d11        refs/heads/master
+    bb383961a2d13e12d92be5f5e5d37491a90dee66        refs/original/refs/heads/master
+$ git update-ref -d refs/original/refs/heads/master [bb383961a2d13e12d92be5f5e5d37491a90dee66]
+$ git ls-remote .
+    230b8d53e2a6d5669165eed55579b64dccd78d11        HEAD
+    230b8d53e2a6d5669165eed55579b64dccd78d11        refs/heads/master
+$ rm -rf .git/logs
+$ git reflog --all
+$ git prune
+$ git gc
+$ du -hs
+    84K
+```
 
 ## Tutorial
 

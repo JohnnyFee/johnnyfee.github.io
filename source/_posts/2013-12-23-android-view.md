@@ -78,9 +78,7 @@ tags: [android]
 - [square / picasso](https://github.com/square/picasso) A powerful image downloading and caching library for Android http://square.github.io/picasso/
 - [Android-Image-Cache](https://github.com/mitmel/Android-Image-Cache) An image download-and-cacher that also knows how to efficiently generate and retrieve thumbnails of various sizes. <http://mobile.mit.edu/>
 - [Pollexor - Java Thumbor client by Square, Inc.](http://square.github.io/pollexor/) Java client for the [Thumbor image service](http://github.com/globocom/thumbor) which allows you to build URIs in an expressive fashion using a fluent API.
-
-
-
+- [jdamcd/android-crop](https://github.com/jdamcd/android-crop?+Weekly-Android_Weekly_108-9e153b6d02-337832837)
 
 ### Blur
 - [kikoso / android-stackblur](https://github.com/kikoso/android-stackblur) Bitmap图片毛玻璃化。
@@ -145,11 +143,13 @@ __其他参考：__
 - [woozzu / IndexableListView](https://github.com/woozzu/IndexableListView) Phone like fast scroll ListView on Android
 	- <http://www.androidviews.net/2012/10/indexablelistview/>
 * [jpardogo/ListBuddies](https://github.com/jpardogo/ListBuddies)
+* [Philip Roberts: Help, I'm stuck in an event-loop. on Vimeo](http://vimeo.com/96425312)
 
 ## Animation
 - [Udinic / ActivitySplitAnimation](https://github.com/Udinic/ActivitySplitAnimation) Activity展开动画。
 - [JakeWharton / NineOldAndroids](https://github.com/JakeWharton/NineOldAndroids) Android library for using the Honeycomb animation API on all versions of the platform back to 1.0!
 - [koral--/android-gif-drawable](https://github.com/koral--/android-gif-drawable)
+- [DesarrolloAntonio/FragmentTransactionExtended](https://github.com/DesarrolloAntonio/FragmentTransactionExtended)
 
 ## Scroll
 
@@ -187,7 +187,8 @@ __其他参考：__
 - [Android Action Bar Style Generator](http://jgilfelt.github.io/android-actionbarstylegenerator/)
 - [Android Assets Studio](http://android-ui-utils.googlecode.com/hg/asset-studio/dist/index.html) 最佳工具之一。它可以为你生成各种分辨率 (mdpi, hdpi, xhdpi)的启动器、标签、工具栏、菜单图标，可以按照你的配色[生成主题](http://android-holo-colors.com/)，还可以生成工具栏资源 适用于Sherlock Action Bar.
 
-## 参考
+## Tutorial
 - [AndroidView](http://www.androidviews.net/)
+- [Google Design](https://www.google.com/design/)
 - [Android优秀开源项目](http://www.eoeandroid.com/thread-272453-1-1.html) 原文/[ANDROID DEVELOPMENT TOOLS FOR ECLIPSE: 5 MUST HAVES](http://blog.gigavoice.com/?p=50&preview=true)
 - [Android Boost](http://zouguangxian.github.io/android-boost/)

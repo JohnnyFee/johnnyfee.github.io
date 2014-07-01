@@ -66,6 +66,8 @@ tags: [javascript, mvc]
 * [From Backbone Views To React – Leonardo Garcia Crespo](http://leoasis.github.io/posts/2014/03/22/from_backbone_views_to_react/)
 * 插件 
 	- [Backbone.localStorage](https://github.com/jeromegn/abckbone.localstorage) A localStorage adapter for Backbone.js
+- [Ampersand.js - Home](http://ampersandjs.com) A highly modular, loosely coupled, non-frameworky framework for building advanced JavaScript apps. 
+- [Single Page ToDo Application With Backbone.js - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/single-page-todo-application-with-backbonejs--cms-21417)
 
 ### Tutorial
 
@@ -128,6 +130,7 @@ Riot is the most minimal approach to MV* world. It weighs 1kb and has only 3 pub
 * [13 Steps to AngularJS Modularization | Safari Books Online's Official Blog](http://blog.safaribooksonline.com/2014/03/27/13-step-guide-angularjs-modularization/)
 * [Data-binding Revolutions with Object.observe() - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/es7/observe/)
 - [Crafting the Perfect AngularJS Model and Making it Real Time - YouTube](https://www.youtube.com/watch?v=lHbWRFpbma4)
+- [How to Learn AngularJS - Your AngularJS Sherpa](http://www.ng-newsletter.com/posts/how-to-learn-angular.html)
 
 可以参考的东西，链式编程，DI模式。
 

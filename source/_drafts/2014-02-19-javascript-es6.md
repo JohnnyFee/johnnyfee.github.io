@@ -39,6 +39,10 @@ tags: [javascript]
 
 - [My ECMAScript 7 wishlist](http://www.nczonline.net/blog/2014/06/03/my-ecmascript-7-wishlist/)
 
+## Syntax
+
+- [Multiple return values in ECMAScript 6](http://www.2ality.com/2014/06/es6-multiple-return-values.html)
+
 ## Tutorial
 
 - [Solving riddles with Prolog and ES6 generators — curiosity-driven.org](https://curiosity-driven.org/prolog-interpreter)

@@ -410,8 +410,6 @@ TODO
 
 其他平台的lib和相关插件，请参考 <http://git.apache.org/>。
 
-<!--more-->
-
 ### 其他
 
 - [phonegap/phonegap-start](https://github.com/phonegap/phonegap-start) A starting-point for PhoneGap apps

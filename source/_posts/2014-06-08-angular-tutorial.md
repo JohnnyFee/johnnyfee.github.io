@@ -938,3 +938,5 @@ Batarang is a Chrome extension that adds AngularJS knowledge to the built-in Dev
 - <http://angular-ui.github.io/>
 - [AngularJS Multi-Step Form Using UI Router ♥ Scotch](http://scotch.io/tutorials/javascript/angularjs-multi-step-form-using-ui-router?)
 - [All Search and Social Media Meta Tags Starter Template ♥ Scotch](http://scotch.io/quick-tips/all-search-and-social-media-meta-tags-starter-template)
+- [Thumbtack Engineering](http://www.thumbtack.com/engineering/introducing-smarty)
+- 

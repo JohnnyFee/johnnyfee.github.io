@@ -9,9 +9,14 @@ tags: [android, tutorial]
 
 - [{ Android学习指南 }](http://android.yaohuiji.com/)
 
+## UI
+
+- [How to create simple view separators](http://envyandroid.com/archives/1193/view-separators)
+
 ## Thread
 
 - [Efficient Android Threading](http://www.slideshare.net/andersgoransson/efficient-android-threading)
+- [Primer on Threading and Handlers in Android - Wedding Party](http://nerds.weddingpartyapp.com/tech/2014/06/20/primer-threading-handlers-android/)
 
 ## Hybrid Dev
 

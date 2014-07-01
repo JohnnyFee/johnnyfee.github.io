@@ -109,11 +109,12 @@ tags: [node, tutorial]
 
 ### Config
 
+- [flatiron/nconf](https://github.com/flatiron/nconf)
 - [flesler/config-node · GitHub](https://github.com/flesler/config-node)
 
-### File
+### Log
 
-- [sindresorhus/trash](https://github.com/sindresorhus/trash?) Cross-platform command-line app for moving files and directories to the trash - A safer alternative to `rm`.
+- [bpaquet/node-logstash](https://github.com/bpaquet/node-logstash) node-logstash is a tool to collect logs on servers. It allow to send its to a central server and to elastic search for indexing.
 
 ### Message
 
@@ -223,6 +224,7 @@ Javascript with Cody and Node.js.
 ## PhantomJS
 
 - [PhantomJS快速入门教程](http://www.woiweb.net/phantomjs-quick-use-tutorials.html)
+- [peerigon/phridge](https://github.com/peerigon/phridge)
 
 ## Ioc
 
@@ -251,6 +253,10 @@ Javascript with Cody and Node.js.
 ## production
 
 - [Using Node.js in Production](http://flippinawesome.org/2014/06/23/using-node-js-in-production/)
+
+## Thread
+
+[Philip Roberts: Help, I'm stuck in an event-loop. on Vimeo](http://vimeo.com/96425312)
 
 ## Path
 

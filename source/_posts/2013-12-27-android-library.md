@@ -51,6 +51,9 @@ tags: [android]
 
 - [square/dagger](https://github.com/square/dagger) A fast dependency injector for Android and Java. [http://square.github.io/dagger/](http://square.github.io/dagger/).
     + [JakeWharton/u2020](https://github.com/JakeWharton/u2020)
+    + [Dependency injection on Android: Dagger (Part 1)](http://antonioleiva.com/dependency-injection-android-dagger-part-1/)
+    + [Dagger: dependency injection on Android (Part 2) - Antonio Leiva](http://antonioleiva.com/dagger-android-part-2/)
+    + [Dagger: Scoped object graphs (Part 3) - Antonio Leiva](http://antonioleiva.com/dagger-3/?+Weekly-Android_Weekly_107-ac89b26b9e-337832837)
 
 ### Annotaion
 

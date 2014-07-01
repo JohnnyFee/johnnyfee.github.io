@@ -33,57 +33,6 @@ global里定义了一些全局的对象或函数，在node的任何一个模块�
 
 为什么依赖global是不好的实践呢？因为所有的模块都可以不受限制地使用global，而且缺少命名空间的约束，非常容易引起冲突，从而引发潜在的BUG。而且这种BUG一旦发生，要定位是极其困难的，不知道是在哪里改变了全局变量而引发的问题 所以javascript的最佳实践，是强烈建议 不要修改global object，只使用global上预定义的属性和函数
 
-### argv
-
-An array containing the command line arguments. The first element will be 'node', the second element will be the name of the JavaScript file. The next elements will be any additional command line arguments.
-
-```javascript
-// print process.argv
-process.argv.forEach(function(val, index, array) {
-  console.log(index + ': ' + val);
-});
-This will generate:
-```
-
-```shell
-$ node process-2.js one two=three four
-0: node
-1: /Users/mjr/work/node/process-2.js
-2: one
-3: two=three
-4: four
-```
-
-We can use [substack/minimist](https://github.com/substack/minimist) to process the arguments.
-
-```javascript
-var argv = require('minimist')(process.argv.slice(2));
-console.dir(argv);
-```
-
-```shell
-$ node example/parse.js -a beep -b boop
-{ _: [], a: 'beep', b: 'boop' }
-
-$ node example/parse.js -x 3 -y 4 -n5 -abc --beep=boop foo bar baz
-{ _: [ 'foo', 'bar', 'baz' ],
-  x: 3,
-  y: 4,
-  n: 5,
-  a: true,
-  b: true,
-  c: true,
-  beep: 'boop' }
-```
-## relative path
-
-- `module.filename`：该行代码所在的文件。
-- `__filename`：始终等于 module.filename
-- `__dirname`：该行代码所在的目录。
-- `process.cwd()`：运行node的工作目录，可以使用  cd /d 修改工作目录。
-- `require.main.filename`：用node命令启动的module的filename, 如 node xxx，这里的filename就是这个xxx。
-- `require()` 方法的相对路径是：module.filename；fs.readFile()的相对路径是：process.cwd()。
-
 ## module
 
 在模块里用var声明的变量，全部都是在module作用域里的，优先于global作用域的属性

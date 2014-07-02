@@ -54,9 +54,15 @@ tags: [javascript]
 
 - [Intro to Aspect Oriented Programming](http://know.cujojs.com/tutorials/aop/intro-to-aspect-oriented-programming)
 
+## DI
+
+- [Dependency injection in JavaScript](http://krasimirtsonev.com/blog/article/Dependency-injection-in-JavaScript?)
+
 ## ES5
 
-- [Working with ES5 JavaScript array functions in modern and legacy browsers - Tech.Pro](http://tech.pro/tutorial/1834/working-with-es5-javascript-array-functions-in-modern-and-legacy-browsers)
+- [Working with ES5 JavaScript array functions in modern and legacy browsers - Tech.Pro](http://tech.pro/tutorial/1834/working-with-es5-javascript-array-functions-in-modern-and-legacy-br
+
+owsers)
 - [ECMAScript 5 compatibility table](http://kangax.github.io/es5-compat-table/)
 - [jlongster/es6-macros](https://github.com/jlongster/es6-macros) A collection of sweet.js macros that implement ES6 features for ES5.
 

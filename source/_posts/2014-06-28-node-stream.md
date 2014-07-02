@@ -5,59 +5,112 @@ category: Node
 tags: [node, io]
 --- 
 
-原文： <http://blog.safaribooksonline.com/2013/05/01/using-streams-in-node-js/>
+We’ve discussed the three main alternatives when it comes to controlling execution: Sequential, Full Parallel and Parallel. Streams are an alternative way of accessing data from various sources such as the network (TCP/UDP), files, child processes and user input. In doing I/O, Node offers us multiple options for accessing the data:
 
-ode.js is a JavaScript platform for building networked applications. Node.js was not the first server-side JavaScript implementation, but it’s different from all the previous ones because it does I/O in a different way. The I/O operations are event-driven: instead of making sequential I/O operations, the developer defines functions that are called once a relevant event happens. Such an event can be, for instance, that a socket has a new connection or that data is available to be read from a socket. In this article we will take a look at using streams in Node.js, using the latest Streams2 API.
+&nbsp; | Synchoronous |   Asynchronous
+------|--------|-------------------
+Fully buffered  |readFileSync()  |readFile()
+Partially buffered (streaming)  |readSync()  | read(), createReadStream()
 
-Node.js comes with a set of useful abstractions for doing I/O, and one of them is Streams. A stream represents an object that can either be the source of data or it can be the target of data. Node.js provides these abstractions, but it also implements streams in the core modules. For instance, a file can be a stream that is readable, and an HTTP response is a stream that you can write to. A TCP connection is a stream that is both readable and writable. Take a look at [Chapter 9: Reading and Writing Streams of Data](http://my.safaribooksonline.com/9781118240564/chapter09_html) in _Professional Node.js: Building Javascript Based Scalable Software_ for more on reading and writing streams in Node.js.
+The difference between these is how the data is exposed, and the amount of memory used to store the data.
+
+Streams are EventEmitters. If our 1 GB file would, for example, need to be processed in some way once, we could use a stream and process the data as soon as it is read. This is useful, since we do not need to hold all of the data in memory in some buffer: after processing, we no longer need to keep the data in memory for this kind of application.
+
+The Node stream interface consists of two parts: Readable streams and Writable streams. Some streams are both readable and writable.
 
 <!--more-->
 
 ## Readable Streams
 
-Here is an example of a readable stream (01_file.js)-you can access all of the source code found in this article here: [https://github.com/pgte/using-streams-nodejs-article-src](https://github.com/pgte/using-streams-nodejs-article-src):
+The following Node core objects are Readable streams:
+
+- Files `fs.createReadStream(path, [options])`  Returns a new ReadStream object (See Readable Stream).
+- HTTP (Server) `http.ServerRequest`    The request object passed when processing the request/response callback for HTTP servers.
+- HTTP (Client) `http.ClientResponse`   The response object passed when processing the response from an HTTP client request.
+- TCP `net.Socket`  Construct a new socket object.
+- Child process   `child.stdout`    The stdout pipe for child processes launched from Node.js
+- Child process   `child.stderr`    The stderr pipe for child processes launched from Node.js
+- Process `process.stdin`   A Readable Stream for stdin. The stdin stream is paused by default, so one must call process.stdin.resume() to read from it.
+
+
+Readable streams emit the following events:
+
+- Event: ‘data’   Emits either a Buffer (by default) or a string if setEncoding() was used.
+- Event: ‘end’    Emitted when the stream has received an EOF (FIN in TCP terminology). Indicates that no more 'data' events will happen.
+- Event: ‘error’  Emitted if there was an error receiving data.
+
+To bind a callback to an event, use stream.on(eventname, callback). For example, to read data from a file, you could do the following:
 
 ```js
 var fs = require('fs');
-var stream = fs.createReadStream(__filename, {encoding: 'utf8'});
-
-function read() {
-  var buf;
-  while (buf = stream.read()) {
-    console.log('Read from the file:', buf);
-  }
-}
-
-stream.on('readable', read);
-
-stream.once('end', function() {
-  console.log('stream ended');
+var file = fs.createReadStream('./test.txt');
+file.on('error', function(err) {
+  console.log('Error '+err);
+  throw err;
+});
+file.on('data', function(data) {
+  console.log('Data '+data);
+});
+file.on('end', function(){
+  console.log('Finished reading all of the data');
 });
 ```
 
-Here we are creating a readable stream that reads the contents of the current source code file. Every time that the stream has data available on it, it emits the readable event. Here we attached our read function to that event, which makes the function get called every time there is data available. In this function we read from the file until there is no more data left to read.
+Readable streams have the following functions:
 
-Also, we attach a listener to the end event, which gets called once the stream ends, which in this case means that we reached the end of the file. After the end event we will not get any more readable events.
+- pause() Pauses the incoming 'data' events.
+- resume()    Resumes the incoming 'data' events after a pause().
+- destroy()   Closes the underlying file descriptor. Stream will not emit any more events.
 
 ## Writable Streams
 
-In addition to readable streams, we can also use writable streams with Node.js. Following this example, we can have a writable file stream, 02_writable.js:
+The following Node core objects are Writable streams:
+
+- Files   fs.createWriteStream(path, [options])   Returns a new WriteStream object (See Writable Stream).
+- HTTP (Server)   http.ServerResponse 
+- HTTP (Client)   http.ClientRequest  
+- TCP net.Socket  
+- Child process   child.stdin 
+- Process process.stdout  A Writable Stream to stdout.
+- Process process.stderr  A writable stream to stderr. Writes on this stream are blocking.
+
+Writable streams emit the following events:
+
+- Event: ’drain’  After a write() method returned false, this event is emitted to indicate that it is safe to write again.
+- Event: ’error’  Emitted on error with the exception exception.
+
+Writable streams have the following functions:
+
+- write(string, encoding='utf8')  Writes string with the given encoding to the stream.
+- end()   Terminates the stream with EOF or FIN. This call will allow queued write data to be sent before closing the stream.
+- destroy()   Closes the underlying file descriptor. Stream will not emit any more events. Any queued write data will not be sent.
+
+Lets read from stdin and write to a file:
 
 ```js
 var fs = require('fs');
-var stream = fs.createWriteStream('out.txt');
 
-var interval = setInterval(function() {
-  stream.write((new Date()).toString());
-}, 1000);
+var file = fs.createWriteStream('./out.txt');
 
-setTimeout(function() {
-  clearInterval(interval);
-  stream.end();
-}, 5000);
+process.stdin.on('data', function(data) {
+  file.write(data);
+});
+process.stdin.on('end', function() {
+  file.end();
+});
+process.stdin.resume(); // stdin in paused by default
 ```
 
-Here we are creating a writable stream on top of a file named out.txt. Using a setInterval, we write the current date and time to this file on every second. After 5 seconds have elapsed, we end the stream and stop the interval.
+
+Running the code above will write everything you type in from stdin to the file out.txt, until you hit Ctrl+d (e.g. the end of file indicator in Linux).
+
+You can also pipe readable and writable streams using readableStream.pipe(destination, [options]). This causes the content from the read stream to be sent to the write stream, so the program above could have been written as:
+
+```js
+var fs = require('fs');
+process.stdin.pipe(fs.createWriteStream('./out.txt'));
+process.stdin.resume();
+```
 
 ## Piping
 
@@ -125,4 +178,7 @@ PLEASE PASS ME THE SALT
 
 By treating your incoming and outgoing data as streams, you can create your own stream implementations, tie them together using pipe, and reuse them seamlessly throughout many types of streams. Some examples of types of streams include: files, network connections, HTTP requests and responses, database connections, websockets and other existing stream implementations.
 
+## Reference
 
+- [Using Streams in Node.js](http://blog.safaribooksonline.com/2013/05/01/using-streams-in-node-js/)
+- [Fundamentals: Timers, EventEmitters, Streams and Buffers - Mixu's Node book](http://book.mixu.net/node/ch9.html)

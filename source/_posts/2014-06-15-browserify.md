@@ -444,6 +444,7 @@ Another way to achieve many of the same goals as ignore and exclude is the "brow
 
 ### comparison
 
+- [Getting Started with Browserify](http://www.sitepoint.com/getting-started-browserify)
 - [My strategy for client-side package managers (choosing between npm, bower, and component)](http://superbigtree.tumblr.com/post/58075340096/my-strategy-for-client-side-package-managers-choosing)
 - [Browserify vs. Component](www.forbeslindesay.co.uk/post/44144487088/browserify-vs-component)
 

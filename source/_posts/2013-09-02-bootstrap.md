@@ -1,10 +1,14 @@
----
+r---
 layout: post
 title: "Bootstrap"
 description: ""
 category: JavaScript
 tags: [javascript]
 ---
+## Tutorial
+
+- [Bootstrap 3 Tips and Tricks You Might Not Know](http://scotch.io/bar-talk/bootstrap-3-tips-and-tricks-you-might-not-know)
+
 ## Theme
 
 - [Bootstrap 3 templates, themes, examples, free premium bootstrap 3Bootstraptor.com](http://bootstraptor.com/bootstrap3/)
@@ -25,10 +29,6 @@ tags: [javascript]
 
 - [推荐15款最好的 Twitter Bootstrap 开发工具 - WEB开发者](http://www.admin10000.com/document/4353.html)
 - [15个最好的Bootstrap设计工具推荐 - WEB开发者](http://www.admin10000.com/document/3889.html)
-
-## Tutorial
-
-- [Bootstrap 3 Tips and Tricks You Might Not Know](http://scotch.io/bar-talk/bootstrap-3-tips-and-tricks-you-might-not-know)
 
 ## 参考
 

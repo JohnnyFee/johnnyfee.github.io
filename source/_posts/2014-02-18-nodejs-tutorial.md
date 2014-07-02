@@ -60,6 +60,8 @@ tags: [node, tutorial]
 
 [commander](http://visionmedia.github.io/commander.js/) 是一个轻巧的nodejs模块，提供了用户命令行输入和参数解析强大功能。commander源自一个同名的Ruby项目。commander的特性：自 记录代码,自动生成帮助,合并短参数（“ABC”==“-A-B-C”）,默认选项,强制选项​​,命令解析,提示符。
 
+[Omelette by f](http://f.github.io/omelette) Omelette is a simple, template based autocompletion tool for Node projects.
+
 ### Web控制台工具: tty.js
 
 [tty.js](https://github.com/chjj/tty.js/) 是一个支持在浏览器中运行的命令行窗口，基于node.js平台，依赖socket.io库，通过websocket与Linux系统通信。特性：支持多 tab窗口模型; 支持vim,mc,irssi,vifm语法; 支持xterm鼠标事件; 支持265色显示; 支持session。
@@ -228,6 +230,7 @@ Javascript with Cody and Node.js.
 ## socket.io
 
 - [13. Comet and Socket.io - Mixu's Node book](http://book.mixu.net/node/ch13.html)
+- [Real-Time Chat With Node.js' Readline & Socket.io - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/real-time-chat-with-nodejs-readline-socketio--cms-20953)
 
 ## PhantomJS
 

@@ -318,6 +318,10 @@ IndexedDB是基于简单的平面文件（flat-file）数据库，采用了分�
 - 优点：如果你熟悉NoSQL，这是再适合不过了。
 - 缺点：IE、Opera mini 不支持。
 
+## Library
+
+- [ask11/storage](https://github.com/ask11/storage) Asynchronous browser storage with multiple back-ends (IndexedDB, WebSQL, localStorage).
+
 ## Reference
 
 - [QtWebKit Guide | Documentation | Qt Project](http://qt-project.org/doc/qt-4.8/qtwebkit-guide.html)

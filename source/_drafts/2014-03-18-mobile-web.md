@@ -20,6 +20,8 @@ tags: [webview]
 - [Kendo UI review](http://moduscreate.com/5-best-mobile-web-app-frameworks-kendo-ui/)
 - [Angular JS + Ionic review](http://moduscreate.com/5-best-mobile-web-app-frameworks-ionic-angulalrjs)
 - [React review](http://moduscreate.com/5-best-mobile-web-app-frameworks-reactjs/)
+- [10 of the Best jQuery Mobile Device Plugins](http://www.sitepoint.com/10-jquery-mobile-device-plugins)
+- [App.js](http://code.kik.com/app/2) App.js is a lightweight JavaScript UI library for creating mobile webapps that behave like native apps, sacrificing neither performance nor polish.
 
 ## [Device.js](https://github.com/matthewhudson/device.js)
 

@@ -458,3 +458,4 @@ _Thanks to the incredibly prolific Node developer community for all the open sou
 ## Reference
 
 - [node.js的global variable，和module.exports](http://blog.csdn.net/kyfxbl/article/details/12587385)
+- [Node.js Handbook - How `require()` Actually Works](http://fredkschott.com/post/2014/06/require-and-the-module-system)

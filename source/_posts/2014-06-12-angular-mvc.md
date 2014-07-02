@@ -314,9 +314,11 @@ Be sure to check all relative links, images, scripts, and so on. You must either
 
 Running Angular apps with the History API enabled from document root is strongly encouraged, as it takes care of all relative link issues.
 
-
-
 ## Directives
+
+- [voronianski/ngActivityIndicator](https://github.com/voronianski/ngActivityIndicator/) Angular provider for preloader animations 
+<http://labs.voronianski.com/ngActivityIndicator.js>.
+- [ngReactGrid by josebalius](http://josebalius.github.io/ngReactGrid) ngReactGrid is an Angular directive that can be used to render an enhanced HTML table or grid of data very fast using React as the rendering engine. It is based on ng-grid and jQuery DataTables. It uses HTML tables and supports fixed column headers by default.
 
 Directives extend HTML syntax, and are the way to associate behavior and DOM transformations with custom elements and attributes. Through them, you can create reusable UI components, configure your application, and do almost anything else you can imagine wanting to do in your UI template.
 

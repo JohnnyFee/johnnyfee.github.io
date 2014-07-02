@@ -94,7 +94,8 @@ Intuitive, fast & composable MVVM for building interactive interfaces.
 * [Building a mobile-friendly web app using Ember.js and jQuery Mobile](http://blog.mist.io/post/78757774060/building-a-mobile-friendly-web-app-using-ember-js-and)
 * [From Backbone Views To React – Leonardo Garcia Crespo](http://leoasis.github.io/posts/2014/03/22/from_backbone_views_to_react/)
 - [Fixture Adapters - Ember.js With No Server](http://www.sitepoint.com/fixture-adapters-ember-js-server)
--[Things I wish someone had told me when I was learning Ember.js](http://landongn.com/ember/things-i-wish-someone-had-told-me-when-i-was-learning-ember-js)
+- [Things I wish someone had told me when I was learning Ember.js](http://landongn.com/ember/things-i-wish-someone-had-told-me-when-i-was-learning-ember-js)
+- [Vic Ramon's Ember Tutorial](http://ember.vicramon.com)
 
 ### Video
 

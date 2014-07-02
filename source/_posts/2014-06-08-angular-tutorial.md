@@ -943,3 +943,4 @@ Batarang is a Chrome extension that adds AngularJS knowledge to the built-in Dev
 ## Tutorial
 
 - [AngularJS：何时应该使用Directive、Controller、Service](http://damoqiongqiu.iteye.com/blog/1971204)
+- [Rethinking AngularJS Controllers](http://toddmotto.com/rethinking-angular-js-controllers)

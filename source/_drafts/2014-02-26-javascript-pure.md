@@ -35,3 +35,7 @@ tags: [javascript]
 
 - [visionmedia/page.js](https://github.com/visionmedia/page.js)
 - [Single-Page Applications with the Page Micro Library](http://flippinawesome.org/2014/04/28/single-page-applications-with-the-page-micro-library/?-page-applications-with-the-page-micro-library)
+
+## Tutorial
+
+- [jQuery: Using Only What You Need](http://developer.telerik.com/featured/jquery-using-only-what-you-need)

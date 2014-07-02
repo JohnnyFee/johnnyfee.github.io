@@ -12,6 +12,7 @@ tags: [javascript]
 - [Technical Leadership at Mozilla](http://andreasgal.com/2014/04/24/technical-leadership-at-mozilla)
 - [Creating defensive objects with ES6 proxies](http://www.nczonline.net/blog/2014/04/22/creating-defensive-objects-with-es6-proxies)
 - [Practical Workflows for ES6 Modules, Fluent 2014 - YouTube](http://www.youtube.com/watch?v=0VUjM-jJf2U)
+- [Using ES6 Modules Today](http://javascriptplayground.com/blog/2014/06/es6-modules-today)
 
 ## Argument
 

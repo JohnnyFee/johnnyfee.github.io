@@ -102,7 +102,7 @@ tags: [phonegap, cordova]
             </feature>
         </config-file>
 
-    The service `name` matches the one used in the JavaScript exec call. The value is the Java class's fully qualified namespace identifier.
+    The service `name` matches the one used in the JavaScript exec call. The `value` is the Java class's fully qualified namespace identifier.
 
     安装插件后 `feature` 标签会被添加到 res/xml/config.xml 文件中。
 

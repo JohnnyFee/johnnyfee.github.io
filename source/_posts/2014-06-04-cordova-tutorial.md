@@ -7,7 +7,7 @@ tags: [phonegap, cordova]
 
 ## 概述
 
-Cordova开发的相关源码可以从官网下载 http://cordova.apache.org/，内容为一个压缩包，包括cordova的各个模块。
+Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>，内容为一个压缩包，包括cordova的各个模块。
 
 ![Cordova源码](http://johnnyimages.qiniudn.com/cordova-zip.png)
 
@@ -28,8 +28,8 @@ Cordova开发的相关源码可以从官网下载 http://cordova.apache.org/，�
 
 ### Development Paths
 
-- Cross-platform workflow  Use this workflow if you want your app to run on as many different mobile operating systems as possible, with little need for platform-specific development. 一般采用这种方式开发。
-- Platform-centered workflow Use this workflow if you want to focus on building an app for a single platform and need to be able to modify it at a lower level. 平台相关的工具包在[这里](https://www.apache.org/dist/cordova/)下载。
+- __Cross-platform workflow__  Use this workflow if you want your app to run on as many different mobile operating systems as possible, with little need for platform-specific development. 一般采用这种方式开发。
+- __Platform-centered workflow__ Use this workflow if you want to focus on building an app for a single platform and need to be able to modify it at a lower level. 平台相关的工具包在[这里](https://www.apache.org/dist/cordova/)下载。
 
 ## Setup
 
@@ -419,4 +419,5 @@ TODO
 - [解决jquery mobile+phonegap页面切换闪屏问题](http://www.feeldesignstudio.com/2013/10/jquery-mobile-phonegap-flicker-when-navigating-between-page)
 
 ## 参考
+
 - [PhoneGap源码分析](http://www.cnblogs.com/linjisong/tag/PhoneGap/)

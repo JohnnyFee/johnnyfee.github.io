@@ -79,6 +79,7 @@ tags: [android]
 - [Android-Image-Cache](https://github.com/mitmel/Android-Image-Cache) An image download-and-cacher that also knows how to efficiently generate and retrieve thumbnails of various sizes. <http://mobile.mit.edu/>
 - [Pollexor - Java Thumbor client by Square, Inc.](http://square.github.io/pollexor/) Java client for the [Thumbor image service](http://github.com/globocom/thumbor) which allows you to build URIs in an expressive fashion using a fluent API.
 - [jdamcd/android-crop](https://github.com/jdamcd/android-crop?+Weekly-Android_Weekly_108-9e153b6d02-337832837)
+- [dmytrodanylyk/circular-progress-button](https://github.com/dmytrodanylyk/circular-progress-button)
 
 ### Blur
 - [kikoso / android-stackblur](https://github.com/kikoso/android-stackblur) Bitmap图片毛玻璃化。
@@ -90,6 +91,7 @@ __其他参考：__
 
 ## Progress
 
+- [medyo/dynamicbox](https://github.com/medyo/dynamicbox?+Weekly-Android_Weekly_105-9ab2d99a2b-337832837)
 - [johnkil / Android-ProgressFragment](https://github.com/johnkil/Android-ProgressFragment) 使用Fragment实现进度条，需要继承特定的类。
 - [f2prateek / progressbutton](https://github.com/f2prateek/progressbutton)
 - [RaghavSood / AndroidCircularSeekBar](https://github.com/RaghavSood/AndroidCircularSeekBar) 运行进度条。
@@ -123,6 +125,7 @@ __其他参考：__
 - [RomainPiel/Shimmer-android](https://github.com/RomainPiel/Shimmer-android) An Android TextView with a shimmering effect.
 - - [WhisperSystems / TextSecure](https://github.com/WhisperSystems/TextSecure) A secure text messaging application for Android.
 - [How to make gradient buttons in Android](http://androidtuts.net/gradient-buttons-in-android/)
+- [danialgoodwin/android-widget-keyboardless-edittext](https://github.com/danialgoodwin/android-widget-keyboardless-edittext)
 
 ## Graph
 
@@ -154,6 +157,10 @@ __其他参考：__
 ## Scroll
 
 - [flavienlaurent/discrollview](https://github.com/flavienlaurent/discrollview) Scroll + discover = DiscrollView
+
+## Slider
+
+- [daimajia/AndroidImageSlider](https://github.com/daimajia/AndroidImageSlider)
 
 ## Wallpaper
 

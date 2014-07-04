@@ -33,6 +33,7 @@ tags: [android]
 - [My little android warehouse: Rest interaction in Android](http://mytechaddiction.blogspot.com/2014/02/rest-interaction-in-android.html)\
 - [square/retrofit](https://github.com/square/retrofit)
     + [Retrofit](http://square.github.io/retrofit/)
+    + [Hands on Retrofit (A Rest Api Client) – s3xy4ngyc Dev Journey](http://s3xy4ngyc.github.io/articles/hands-on-retrofit/)
     + [Matt Swanson - Integration Testing against REST APIs in Android](http://www.mdswanson.com/blog/2014/02/24/integration-testing-rest-apis-for-android.html)
 
 <!--more-->

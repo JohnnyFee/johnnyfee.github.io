@@ -9,9 +9,6 @@ tags: [android, tutorial]
 
 - [{ Android学习指南 }](http://android.yaohuiji.com/)
 
-## UI
-
-- [How to create simple view separators](http://envyandroid.com/archives/1193/view-separators)
 
 ## Thread
 

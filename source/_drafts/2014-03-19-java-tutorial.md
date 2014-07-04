@@ -33,6 +33,10 @@ tags: [java]
 - [Functional Programming in Java](http://www.salttiger.com/functional-programming-in-java/)
 - [Java 8 Lambdas](http://www.salttiger.com/java-8-lambdas/)
 
+## Native
+
+[bridj - BridJ: Let Java & Scala call C, C++, Objective-C, C#... - Google Project Hosting](https://code.google.com/p/bridj/)
+
 ## Book
 
 - [Java: The Good Parts](http://www.salttiger.com/java-the-good-parts/)

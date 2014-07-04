@@ -4,6 +4,25 @@ title: "Android UI Tips"
 category: android
 tags: [android]
 --- 
+
+## Tutorial
+
+- [How to create simple view separators](http://envyandroid.com/archives/1193/view-separators)
+- [An Android Love Affair: Adding attributes to a custom view](http://droidista.blogspot.com/2014/06/adding-attributes-to-custom-view.html)
+
+### App UI / UX
+
+- [Styling Android » App UI / UX – Part 1](http://blog.stylingandroid.com/archives/2571)
+- [Styling Android » App UI / UX – Part 2](http://blog.stylingandroid.com/archives/2583)
+- [Styling Android » App UI / UX – Part 3](http://blog.stylingandroid.com/archives/2591?+Weekly-Android_Weekly_105-9ab2d99a2b-337832837)
+- [Styling Android » App UI / UX – Part 4](http://blog.stylingandroid.com/archives/2637)
+- [Styling Android » App UI / UX – Part 5](http://blog.stylingandroid.com/archives/2644)
+- [Styling Android » App UI / UX – Part 6](http://blog.stylingandroid.com/archives/2652)
+
+## Theme
+
+- [negusoft/holoaccent](https://github.com/negusoft/holoaccent?+Weekly-Android_Weekly_105-9ab2d99a2b-337832837)
+
 ## The power of TextView: Drawables
 
 当你需要在TextView（包括所有TextView的子类，如Buttons, EditTexts, RadioButtons ）的中放置一个图标时，我们可以借助这些属性：rawableLeft, drawableRight, drawableTop and drawableBottom. 我们还可以借助drawablePadding来调节text and the images之间的padding。

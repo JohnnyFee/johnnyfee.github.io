@@ -278,10 +278,7 @@ $ mkdir t
 $ cd t
 $ git init
     Initialized empty Git repository in /Users/apple/t/.git/
-$ dd if=/dev/urandom of=testme.txt bs=10240 count=1024
-    1024+0 records in
-    1024+0 records out
-    10485760 bytes transferred in 1.684808 secs (6223712 bytes/sec)
+$ copy some big file to the working tree
 $ git add testme.txt
 $ git commit -m "a"
     [master (root-commit)]: created 6fbb432: "a"
@@ -293,7 +290,6 @@ $ git commit -m r
     [master]: created bb38396: "r"
      1 files changed, 0 insertions(+), 0 deletions(-)
      delete mode 100644 testme.txt
-
 ```
 
 这时候我们看看版本库的大小:
@@ -324,15 +320,23 @@ $ git prune
 $ git gc
 $ du -hs
     84K
+$ git push -f
 ```
+
+## 编码
+
+- [Git for Windows 1.8.3中文设置](http://icbm.iteye.com/blog/1933960)
+- [Git for Windows Unicode Support · msysgit/msysgit Wiki](https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support)
+- [git乱码解决方案汇总](http://zengrong.net/post/1249.htm)
 
 ## Tutorial
 
+- [Git - Book](http://git-scm.com/book/zh)
 - [Git Community Book 中文版](http://gitbook.liuhui998.com/)
-- [Git教程 - 廖雪峰的官方网站](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
-- [git 使用简易指南](http://www.bootcss.com/p/git-guide/)
 
 ## Reference
 
 - [version control - git workflow and rebase vs merge questions - Stack Overflow](http://stackoverflow.com/questions/457927/git-workflow-and-rebase-vs-merge-questions)
 - [gitguru » Rebase v Merge in Git](http://gitguru.com/2009/02/03/rebase-v-merge-in-git/)
+- [Git教程 - 廖雪峰的官方网站](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
+- [git 使用简易指南](http://www.bootcss.com/p/git-guide/)

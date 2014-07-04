@@ -75,9 +75,14 @@ owsers)
 
 - [Communicating Large Objects with Web Workers in javascript](http://developerblog.redhat.com/2014/05/20/communicating-large-objects-with-web-workers-in-javascript)
 
+## Native
+
+- [jiahansu/BridJS](https://github.com/jiahansu/BridJS?)
+
 ## Observer
 
 - [Detect, Undo And Redo DOM Changes With Mutation Observers](http://addyosmani.com/blog/mutation-observers/)
+- [Data-binding Revolutions with Object.observe() - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/es7/observe/)
 
 ## Tips
 

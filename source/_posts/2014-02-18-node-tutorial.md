@@ -207,6 +207,8 @@ Javascript with Cody and Node.js.
 ## Performance
 
 - [StrongLoop](http://strongloop.com/strongblog/node-js-performance-tip-of-the-week-memory-leak-diagnosis)
+- [addyosmani/psi](https://github.com/addyosmani/psi/)
+    + [Automating Web Performance Measurement With PSI For Node](http://addyosmani.com/blog/automating-web-performance-measurement-with-psi-for-node)
 
 ## Process
 

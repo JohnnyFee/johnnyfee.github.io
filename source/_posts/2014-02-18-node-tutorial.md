@@ -46,6 +46,8 @@ tags: [node, tutorial]
 
 [Passport](http://passportjs.org/)项 目是一个基于Nodejs的认证中间件。Passport目的只是为了“登陆认证”，因此，代码干净，易维护，可以方便地集成到其他的应用中。Web应用 一般有2种登陆认证的形式：用户名和密码认证登陆,OAuth认证登陆。Passport可以根据应用程序的特点，配置不同的认证机制。本文将介绍，用户 名和密码的认证登陆。
 
+[Build User Authentication with Node.js, Express, Passport, and Orchestrate - The Orchestrate Blog](http://orchestrate.io/blog/2014/06/26/build-user-authentication-with-node-js-express-passport-and-orchestrate)
+
 ## Communication
 
 - [amark/coalesce](https://github.com/amark/coalesce) Communication framework for distributed JavaScript.
@@ -60,7 +62,8 @@ tags: [node, tutorial]
 
 [commander](http://visionmedia.github.io/commander.js/) 是一个轻巧的nodejs模块，提供了用户命令行输入和参数解析强大功能。commander源自一个同名的Ruby项目。commander的特性：自 记录代码,自动生成帮助,合并短参数（“ABC”==“-A-B-C”）,默认选项,强制选项​​,命令解析,提示符。
 
-[Omelette by f](http://f.github.io/omelette) Omelette is a simple, template based autocompletion tool for Node projects.
+- [Omelette by f](http://f.github.io/omelette) Omelette is a simple, template based autocompletion tool for Node projects.
+- [Command-line utilities with Node.js](http://cruft.io/posts/node-command-line-utilities)
 
 ### Web控制台工具: tty.js
 
@@ -296,6 +299,10 @@ Nodejs在快速的发展着，软件包版本升级的很快，文章有运行�
 ## FAQ
 
 - [How to change value of process.env.PORT in node.js? - Stack Overflow](http://stackoverflow.com/questions/13333221/how-to-change-value-of-process-env-port-in-node-js)
+
+## Package
+
+- [javascript - Make exe files from node.js app - Stack Overflow](http://stackoverflow.com/questions/8173232/make-exe-files-from-node-js-app)
 
 ## Reference
 

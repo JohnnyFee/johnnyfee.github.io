@@ -41,3 +41,4 @@ tags: [java]
 
 - [Java: The Good Parts](http://www.salttiger.com/java-the-good-parts/)
 - [Java SE 8 for the Really Impatient](http://www.salttiger.com/java-se-8-for-the-really-impatient/)
+- [Java Cookbook, 3rd Edition](http://www.salttiger.com/java-cookbook-3rd-edition/)

@@ -33,6 +33,7 @@ tags: [dao,web,design]
 - [iOS7 图标模板PSD （iOS7 icon template）](http://www.shejidaren.com/ios7-icon-template.html)
 - [50套免费icon图标素材精选 – 2014.4月 | 设计达人](http://www.shejidaren.com/free-icon-set-2014-4.html)
 - [200+漂亮线性图标下载（免费）](http://www.shejidaren.com/200-outline-icons-for-designer.html)
+- [一套漂亮的电子商务与购物图标素材(70个)](http://www.shejidaren.com/70-ecommerce-icons.html)
 
 ## 效果素材
 
@@ -64,6 +65,9 @@ tags: [dao,web,design]
 - [50个优秀设计素材整理 – 2014.三月](http://www.shejidaren.com/free-design-resources-2014-3.html)
 - [设计师不要错过，免费优质英文字体整理](http://www.shejidaren.com/free-font-downloads-2014-3.html)
 - [高品质免费英文字体 2014年2月](http://www.shejidaren.com/free-english-font-2014-2.html)
+- [45款精心挑选的免费英文字体](http://www.shejidaren.com/free-english-fonts.html)
+- [一款适用于扁平化的英文字体 Uni Sans Free](http://www.shejidaren.com/uni-sans-free-font-download.html)
+
 
 ## Tips
 
@@ -72,6 +76,7 @@ tags: [dao,web,design]
 ## Design
 
 - [40个良好用户界面Tips](http://www.shejidaren.com/good-user-interface-design.html)
+- [最新15个高品质用户界面UI KIT素材](http://www.shejidaren.com/free-ui-kits-psd-download.html)
 
 ## PSD 素材
 
@@ -101,11 +106,16 @@ tags: [dao,web,design]
 
 - [20个色彩美丽的UI KIT设计素材（PSD）](http://www.shejidaren.com/20-beautiful-ui-kits-for-designer.html)
 
+### Icon
+
+- [一套带动画图标素材下载(Web版)](http://www.shejidaren.com/animated-icon-download.html)
+- [200+漂亮线性图标下载（免费）](http://www.shejidaren.com/200-outline-icons-for-designer.html)
 
 ## Tutorial
 
 - [默默图标生成器](http://www.zcool.com.cn/article/ZMzY5ODA=.html)
 - [16个创意Photoshop图像处理教程](http://www.shejidaren.com/photoshop-image-processing-tutorials.html)
+- [信息图]字体与色彩搭配的10条戒律](http://www.shejidaren.com/10-commandments-of-type-and-color.html)
 
 ## Book
 

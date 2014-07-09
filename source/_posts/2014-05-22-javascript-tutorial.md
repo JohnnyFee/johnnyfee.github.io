@@ -50,6 +50,18 @@ tags: [javascript]
 - [sindresorhus/multiline](https://github.com/sindresorhus/multiline) Multiline strings in JavaScript.
 - [Functional JavaScript, Part 3: .apply(), .call(), and the arguments object Tech.Pro](http://tech.pro/tutorial/2010/functional-javascript-part-3-apply-call-and-the-arguments-object)
 
+__7 PATTERNS TO REFACTOR JAVASCRIPT APPLICATIONS:__
+
+### Patterns
+
+1. [Value Objects](http://journal.crushlovely.com/post/88286828068/7-patterns-to-refactor-javascript-applications-value)
+2. [Service Objects](http://journal.crushlovely.com/post/88286835473/7-patterns-to-refactor-javascript-service-objects)
+3. [Form Objects](http://journal.crushlovely.com/post/89270334848/7-patterns-to-refactor-javascript-applications-form)
+4. [Query Objects](http://journal.crushlovely.com/post/89978453593/7-patterns-to-refactor-javascript-applications-query)
+5. [View Objects](http://journal.crushlovely.com/post/90568548968/7-patterns-to-refactor-javascript-applications-view)
+6. Policy Objects
+7. Decorators
+
 ## AOP
 
 - [Intro to Aspect Oriented Programming](http://know.cujojs.com/tutorials/aop/intro-to-aspect-oriented-programming)
@@ -181,3 +193,4 @@ HTMLElement.prototype.__defineGetter__(
 - [Expert JavaScript](http://www.salttiger.com/expert-javascript/)
 - [Expert JavaScript](http://www.salttiger.com/expert-javascript/)
 - [High Performance JavaScript](http://www.salttiger.com/high-performance-javascript/)
+- [Programming JavaScript Applications](http://www.salttiger.com/programming-javascript-applications/)

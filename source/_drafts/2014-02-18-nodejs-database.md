@@ -34,10 +34,6 @@ tags: [web]
 - [[译]MongoDb生产环境注意事项 - yaoxing - 博客园](http://www.cnblogs.com/yaoxing/p/mongodb-production-notes.html)
 - [关于Mongodb的全面总结，学习mongodb的人，可以从这里开始！](http://blog.csdn.net/jakenson/article/details/7060431)
 
-## JSON Database
-
-- [dreyacosta/somewhere.js](https://github.com/dreyacosta/somewhere.js) Small JSON file database for Node.js.
-
 ### 管理工具
 
 - [几个重量级的NoSQL数据库和管理工具 - 数据库 - ITeye资讯](http://www.iteye.com/news/22607-NoSQL-Redis-Cassandra-MongoDB)
@@ -50,6 +46,14 @@ tags: [web]
 ### Tutorial
 
 - [Mongoose学习参考文档——基础篇 - CNode](http://cnodejs.org/topic/504b4924e2b84515770103dd)
+
+## Library
+
+- [Knex.js - A SQL Query Builder for Javascript](http://knexjs.org)
+
+## JSON Database
+
+- [dreyacosta/somewhere.js](https://github.com/dreyacosta/somewhere.js) Small JSON file database for Node.js.
 
 ## 比较
 

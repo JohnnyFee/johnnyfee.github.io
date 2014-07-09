@@ -46,6 +46,15 @@ global里定义了一些全局的对象或函数，在node的任何一个模块�
   
 以上代码会输出"kyfxbl"，而不是"Tony"，因为module的name比global的name更优先
 
+## relative path
+
+- `module.filename`：该行代码所在的文件。
+- `__filename`：始终等于 module.filename
+- `__dirname`：该行代码所在的目录。
+- `process.cwd()`：运行node的工作目录，可以使用  cd /d 修改工作目录。
+- `require.main.filename`：用node命令启动的module的filename, 如 node xxx，这里的filename就是这个xxx。
+- `require()` 方法的相对路径是：module.filename；fs.readFile()的相对路径是：process.cwd()。
+
 ## Reference
 
 - [Global Objects Node.js v0.10.29 Manual & Documentation](http://nodejs.org/docs/latest/api/globals.html#globals_dirname)

@@ -1,14 +1,12 @@
 ---
 layout: post
-title: "Qt WebKit Client Storage"
+title: "Html5 Storage"
 description: ""
 category: Qt
-tags: [qt, webkit, storage]
+tags: [html5, storage]
 --- 
 
 ## Client Storage
-
-This section of the [QtWebKit Guide](http://qt-project.org/doc/qt-4.8/qtwebkit-guide.html) serves as an introduction to the [HTML5 Web Storage](http://dev.w3.org/html5/webstorage/) features of [QtWebKit](qtwebkit.html).
 
 Traditional mobile web development centered around the limitations of client handsets, which had very little storage for applications. As handsets become more powerful, however, this assumption is no longer valid. HTML5's newly introduced [Web Storage](http://dev.w3.org/html5/webstorage/) features expand application storage on the client.
 
@@ -79,7 +77,7 @@ Since keys correspond to array indexes, you should not add or remove keys during
 
 The following displays simple storage functionality. The application prompts for a login and password if they are unavailable. This locally stored data is available the next time users open the browser. However, the contents of the credit card field is stored only for the duration of the browing session.
 
-[![](images/scr_storage.png)](http://johnnyimages.qiniudn.com/scr_storage.png)
+![images/scr_storage.png](http://johnnyimages.qiniudn.com/scr_storage.png)
 
 ### Storing Non-String Data
 
@@ -191,8 +189,6 @@ Web SQL是基于浏览器中嵌入的[sqlite](http://www.sqlite.org/)，继承�
 
 - 优点：快速和功能丰富的sql实现（除了select/insert/update/delete，还能使用joins、inner selects等）。
 - 缺点：Firefox、IE、Opera mini 不支持。
-
-While common local- or session-based databases are capable of storing complex data structures, [QtWebKit](qtwebkit.html)-based browsers can also rely upon the WebSQL standard, which brings SQLite-based structured database functionality, typically deployed on servers, to client browser applications. Based on SQLite version 3.6.19, WebSQL is appropriate for data-intensive applications requring complex queries rather than simple key/value access.
 
 The following test confirms support for WebSQL:
 
@@ -324,9 +320,10 @@ IndexedDB是基于简单的平面文件（flat-file）数据库，采用了分�
 
 ## Reference
 
-- [QtWebKit Guide | Documentation | Qt Project](http://qt-project.org/doc/qt-4.8/qtwebkit-guide.html)
+- [QtWebKit Guide](http://qt-project.org/doc/qt-4.8/qtwebkit-guide.html)
 - [HTML5 Storage Wars - localStorage vs. IndexedDB vs. Web SQL - csimms.botonomy.com](http://csimms.botonomy.com/2011/05/html5-storage-wars-localstorage-vs-indexeddb-vs-web-sql.html)
 
 ## Tutorial
 
 - [Storage - HTML5 Rocks](http://www.html5rocks.com/en/features/storage)
+- [HTML5 Web Storage](http://dev.w3.org/html5/webstorage/)

@@ -936,6 +936,7 @@ Batarang is a Chrome extension that adds AngularJS knowledge to the built-in Dev
 ## UI
 
 - <http://angular-ui.github.io/>
+ - [AngularStrap - AngularJS 1.2+ native directives for Twitter Bootstrap 3.](http://mgcrea.github.io/angular-strap)
 - [AngularJS Multi-Step Form Using UI Router ♥ Scotch](http://scotch.io/tutorials/javascript/angularjs-multi-step-form-using-ui-router?)
 - [All Search and Social Media Meta Tags Starter Template ♥ Scotch](http://scotch.io/quick-tips/all-search-and-social-media-meta-tags-starter-template)
 - [Thumbtack Engineering](http://www.thumbtack.com/engineering/introducing-smarty)
@@ -944,3 +945,5 @@ Batarang is a Chrome extension that adds AngularJS knowledge to the built-in Dev
 
 - [AngularJS：何时应该使用Directive、Controller、Service](http://damoqiongqiu.iteye.com/blog/1971204)
 - [Rethinking AngularJS Controllers](http://toddmotto.com/rethinking-angular-js-controllers)
+- [David and Suzi](http://davidandsuzi.com/using-react-for-faster-renders-and-isomorphism-in-angular)
+- [AngularJS and jQuery Dialogs - The UrBlog](http://jurberg.github.io/blog/2014/06/29/angularjs-jquery-dialog)

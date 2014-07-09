@@ -55,11 +55,3 @@ $ node example/parse.js -x 3 -y 4 -n5 -abc --beep=boop foo bar baz
   c: true,
   beep: 'boop' }
 ```
-## relative path
-
-- `module.filename`：该行代码所在的文件。
-- `__filename`：始终等于 module.filename
-- `__dirname`：该行代码所在的目录。
-- `process.cwd()`：运行node的工作目录，可以使用  cd /d 修改工作目录。
-- `require.main.filename`：用node命令启动的module的filename, 如 node xxx，这里的filename就是这个xxx。
-- `require()` 方法的相对路径是：module.filename；fs.readFile()的相对路径是：process.cwd()。

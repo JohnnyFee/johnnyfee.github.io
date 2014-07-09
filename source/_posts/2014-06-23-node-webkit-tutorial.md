@@ -285,6 +285,10 @@ menu.items[0].click = function() {
 
 node-webkit adds Node.js support and enhancement in DOM for trusted code and content. For untrusted code and content, it should remain in a normal frame or iframe, which is the same as the one in browser. So there are 2 kinds of frames in node-webkit: Node frame and normal frame.
 
+## Notification
+
+- [pbojinov/nodeifications](https://github.com/pbojinov/nodeifications) Simple cross platform desktop notifications for node-webkit.
+
 ## Debug
 
 - [Debugging with devtools · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Debugging-with-devtools)

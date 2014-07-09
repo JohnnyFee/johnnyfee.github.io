@@ -417,6 +417,7 @@ TODO
 ## FAQ
 
 - [解决jquery mobile+phonegap页面切换闪屏问题](http://www.feeldesignstudio.com/2013/10/jquery-mobile-phonegap-flicker-when-navigating-between-page)
+- [Cordova Sample: Check for a file and download if it isn't there](http://www.raymondcamden.com/index.cfm/2014/7/1/Cordova-Sample-Check-for-a-file-and-download-if-it-isnt-there)
 
 ## 参考
 

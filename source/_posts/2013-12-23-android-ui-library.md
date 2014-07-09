@@ -148,12 +148,6 @@ __其他参考：__
 * [jpardogo/ListBuddies](https://github.com/jpardogo/ListBuddies)
 * [Philip Roberts: Help, I'm stuck in an event-loop. on Vimeo](http://vimeo.com/96425312)
 
-## Animation
-- [Udinic / ActivitySplitAnimation](https://github.com/Udinic/ActivitySplitAnimation) Activity展开动画。
-- [JakeWharton / NineOldAndroids](https://github.com/JakeWharton/NineOldAndroids) Android library for using the Honeycomb animation API on all versions of the platform back to 1.0!
-- [koral--/android-gif-drawable](https://github.com/koral--/android-gif-drawable)
-- [DesarrolloAntonio/FragmentTransactionExtended](https://github.com/DesarrolloAntonio/FragmentTransactionExtended)
-
 ## Scroll
 
 - [flavienlaurent/discrollview](https://github.com/flavienlaurent/discrollview) Scroll + discover = DiscrollView

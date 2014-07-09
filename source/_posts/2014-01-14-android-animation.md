@@ -4,7 +4,7 @@ title: "Android动画"
 category: Android
 tags: [android,animation]
 --- 
-##概述
+## 概述
 
 参考官方文档，Android动画分为两类，分别为：
 
@@ -32,7 +32,7 @@ Animator对应的监听接口为`Animator.AnimatorListener`，可以继承Animat
 
 <!--more-->
 
-##Property Animation
+## Property Animation
 
 在XML中定义的语法如下：
 
@@ -97,7 +97,7 @@ In order to run this animation, you must inflate the XML resources in your code 
 	set.setTarget(myObject);
 	set.start();
 
-###ObjectAnimator和ValueAnimator
+### ObjectAnimator和ValueAnimator
 
 ObjectAnimator继承自ValueAnimator。ValueAnimator包含Property Animation动画的所有核心功能，如开始值，结束值，持续时间等属性，以及相应时间属性值的计算方法等。应用Property Animation有两个步聚：
 
@@ -142,7 +142,7 @@ ObjectAnimator可以自动完成两步，而ValueAnimiator只完成了第一步�
 
 **根据应用动画的对象或属性的不同，可能需要在onAnimationUpdate函数中调用invalidate()函数刷新视图。**	
 
-###AnimatorSet
+### AnimatorSet
 
 AnimatorSet 用于定义动画的集合，常用的属性为android:ordering表示动画播放的顺序，取值为：
 
@@ -162,7 +162,7 @@ AnimatorSet 用于定义动画的集合，常用的属性为android:ordering表�
 	bouncer.play(anim5).after(amin2);
 	animatorSet.start();
 
-###ViewPropertyAnimator
+### ViewPropertyAnimator
 
 ViewPropertyAnimator和ObjectAnimator类似，都是用于处理对象属性动画的。不同之处在于，ViewPropertyAnimator可以并行地作用于多个属性，而一个ObjectAnimator对象只能作用于一个属性上。而且，在多个属性上应用动画时使用ViewPropertyAnimator更高效。以下使用三种方法将动画同时作用于某个控件的x和y坐标。
 
@@ -187,7 +187,7 @@ ViewPropertyAnimator和ObjectAnimator类似，都是用于处理对象属性动�
 ViewPropertyAnimator的更多内容请参考 [Introducing ViewPropertyAnimator](http://android-developers.blogspot.com/2011/05/introducing-viewpropertyanimator.html)。
 
 
-###TypeEvalutors和TimeInterplator
+### TypeEvalutors和TimeInterplator
 
 ValueAnimator封装了一个TimeInterpolator和TypeAnimator。TimeInterpolator定义了属性值在开始值与结束值之间的插值方法，TypeAnimator根据开始、结束值与TimeIniterpolator计算得到的值计算出属性值。
 
@@ -253,12 +253,12 @@ ValueAnimator根据动画已进行的时间跟动画总时间(duration)的比计
 
 参数分别为上一步的插值因子，开始值与结束值。
 
-###其他
+### 其他
 
 - [指定关键帧](http://developer.android.com/guide/topics/graphics/prop-animation.html#keyframes)
 - [当Layout改变时应用动画](http://developer.android.com/guide/topics/graphics/prop-animation.html#layout) 如当一个元素在其父元素中变为Visible或者Gone时。
 
-##View Animation
+## View Animation
 
 View animation只能应用于View对象。
 
@@ -274,7 +274,7 @@ XML文件的根元素可以为`<alpha>`,`<scale>`,`<translate>`,`<rotate>`或`<s
 	Animation hyperspaceJumpAnimation=AnimationUtils.loadAnimation(this, R.anim.hyperspace_jump);
 	spaceshipImage.startAnimation(hyperspaceJumpAnimation);
 
-###Tween Animation
+### Tween Animation
 
 在XML中的使用语法如下：
 
@@ -359,7 +359,7 @@ Tween Animation分为以下几种
 
 Tween Animation的interpolator以及使用方法和Property Animation的TimeiInterpolator相同。
 
-###Frame Animation
+### Frame Animation
 
 [AngelDevil](http://www.cnblogs.com/angeldevil/) 在[Android动画学习笔记-Android Animation](http://www.cnblogs.com/angeldevil/archive/2011/12/02/2271096.html)中提到在使用Frame Animation时，需要注意的几点：
 
@@ -385,7 +385,16 @@ This application code will set the animation as the background for a View, then 
 	rocketAnimation = (AnimationDrawable) rocketImage.getBackground();
 	rocketAnimation.start();
 
-##参考
+## Library
+
+- [daimajia/AnimationEasingFunctions](https://github.com/daimajia/AnimationEasingFunctions)
+- [Udinic / ActivitySplitAnimation](https://github.com/Udinic/ActivitySplitAnimation) Activity展开动画。
+- [JakeWharton / NineOldAndroids](https://github.com/JakeWharton/NineOldAndroids) Android library for using the Honeycomb animation API on all versions of the platform back to 1.0!
+- [koral--/android-gif-drawable](https://github.com/koral--/android-gif-drawable)
+- [DesarrolloAntonio/FragmentTransactionExtended](https://github.com/DesarrolloAntonio/FragmentTransactionExtended)
+
+## 参考
+
 - [Android动画学习笔记-Android Animation](http://www.cnblogs.com/angeldevil/archive/2011/12/02/2271096.html)
 - [Animation Resources](http://developer.android.com/guide/topics/resources/animation-resource.html)
 - [View Animation](http://developer.android.com/guide/topics/graphics/view-animation.html)

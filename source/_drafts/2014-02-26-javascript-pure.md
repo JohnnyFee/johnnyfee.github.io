@@ -18,6 +18,7 @@ tags: [javascript]
 
 - [如何做到 jQuery-free？ - WEB开发者](http://www.admin10000.com/document/2043.html)
 	- [remy/min.js](https://github.com/remy/min.js)
+- [Trimming Down jQuery with Grunt -Telerik Developer Network](http://developer.telerik.com/featured/trimming-jquery-grunt)
 
 ## 使用轻量级的组件
 

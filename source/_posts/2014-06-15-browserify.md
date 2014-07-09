@@ -428,6 +428,13 @@ Another way to achieve many of the same goals as ignore and exclude is the "brow
 
 - [How Browserify Works](http://benclinkinbeard.com/posts/how-browserify-works/)
 
+## bower
+
+[eugeneware/debowerify](https://github.com/eugeneware/debowerify) A browserify transform to enable the easy use of bower components in browserify client javascript projects. This can be used in conjunction with deamdify to require AMD components from bower as well.
+
+- [node.js - Browserify and bower. Canonical approach - Stack Overflow](http://stackoverflow.com/questions/23691795/browserify-and-bower-canonical-approach)
+- [bower init - difference between amd, es6, globals and node - Stack Overflow](http://stackoverflow.com/questions/22674018/bower-init-difference-between-amd-es6-globals-and-node)
+
 ## tutorial
 
 - [Browserify](http://browserify.org/)

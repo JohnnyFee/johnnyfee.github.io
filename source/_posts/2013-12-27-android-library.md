@@ -44,6 +44,7 @@ tags: [android]
 - [Spring for Android](http://www.springsource.org/spring-android) 
     - [Spring RESTtemplate]() 一个非常流行的基于Java REST客户端。Spring for Android RestTemplate模块提供了一个可以在安卓环境下工作的RestTemplate版本，为你的安卓应用程序提供了一个非常灵活的REST API。
     - [验证支持](http://static.springsource.org/spring-android/docs/1.0.x/reference/html/auth.html)  OAuth是该领域快速崛起一个的协议。OAuth是一个开源协议，为用户提供第三方应用支持，提供对其他网站受限资源或服务的访问。
+    - [Blender : Boosting Guice with annotation processing // Speaker Deck](https://speakerdeck.com/stephanenicolas/blender-boosting-guice-with-annotation-processing)
 - [octo-online / robospice](https://github.com/octo-online/robospice) Repo of the Open Source Android library : RoboSpice. RoboSpice is a modular android library that makes writing asynchronous long running tasks easy. It is specialized in network requests, supports caching and offers REST requests out-of-the box using extension modules.
 - [Simpler Android apps with Flow and Mortar](http://corner.squareup.com/2014/01/mortar-and-flow.html)
 - [RoboZombie](http://sahan.me/RoboZombie/) Effortless networking for your Android application. <http://sahan.me/RoboZombie>

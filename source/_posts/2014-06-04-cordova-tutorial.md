@@ -396,6 +396,7 @@ TODO
 
 ## Tutorial
 
+- [Apache Cordova Tutorial](http://ccoenraets.github.io/cordova-tutorial/create-cordova-project.html)
 - [phonegap - jacob的专栏](http://blog.csdn.net/wangpengch/article/category/1849949)
 
 ## 相关资料

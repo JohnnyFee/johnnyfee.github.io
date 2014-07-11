@@ -41,3 +41,4 @@ tags: [responsive, web]
 - [Building Responsive Websites Using Twitter BootStrap - 推酷](http://www.tuicool.com/articles/AFzYre)
 - [Creating a Mobile-First Responsive Web Design - HTML5 Rocks](http://www.html5rocks.com/en/mobile/responsivedesign/)
 - [超酷的响应式dribbble设计作品瀑布流布局效果](http://www.qianduan.net/the-cool-response-dribbble-design-works-waterfalls-flow-layout-effects.html)
+- [Breakpoints And The Future Of Websites](http://www.smashingmagazine.com/2014/07/08/breakpoints-and-the-future-websites)

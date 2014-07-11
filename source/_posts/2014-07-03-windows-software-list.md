@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "My Windows Software List "
-category: Node
+category: Windows
 tags: [windows]
 --- 
 
@@ -46,12 +46,12 @@ tags: [windows]
 - [ ] Oracle VM VirtualBox
 - [x] 为知笔记
 
-
-
-
 ## Development
 
 - [x] Node.js
+    - [x] browserify
+    - [x] hexo
+    - [x] anywhere
 - [ ] Adoble Photoshop
 - [x] MarkdownPad2
 - [x] Sencha Architect
@@ -71,8 +71,9 @@ tags: [windows]
     - [x] OmniMarkupPreviewer
     - [ ] sublimetext-markdown-preview
     - [x] SublimeTableEditor
-    - [ ] JsonLint
-    - [ ] HTMLBeauty
+    - [x] JsonLint
+    - [x] HTMLBeauty
+    - [x] dependents & npm install dependents
 - [x] MongoDb
 - [ ] MySQL
 - [x] Office 2013
@@ -90,7 +91,6 @@ tags: [windows]
 
 ## backup
 
-- .ssh/
+- ~/.ssh/
 - chrome goagent config
-
-
+- 导出计划任务

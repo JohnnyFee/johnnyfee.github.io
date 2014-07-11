@@ -10,6 +10,80 @@ tags: [powershell, tutorial]
 - [PowerShell 中文博客](http://www.pstips.net/)
 - [叹为观止](http://blog.vichamp.com/)
 
+## Quick Start
+
+### Get-Member
+
+Listing the Properties and Methods of a Command or Object.
+
+查看一个对象的所有属性：
+
+```shell
+#  You’d like to know which properties and methods are available for event logs
+# Get-EventLog -list will retrieve an event log object
+Get-EventLog -list | Get-Member
+
+#  -membertype parameter in order to limit returned data to properties
+#　 setting -membertype to methods returns just the methods.
+Get-WmiObject win32_bios | Get-Member -membertype properties
+
+# Did you know that some of the properties returned by the Get-Process cmdlet have aliases?
+Get-Process | Get-Member -membertype aliasproperty
+Get-Process | Select-Object name, npm
+```
+
+[Using the Get-Member Cmdlet](http://technet.microsoft.com/en-us/library/ee176854.aspx)
+
+### Get-Help
+
+    update-help
+
+    # displays a list of the available help topics.
+    Get-Help Get-Alias
+
+    # display basic information about the Get-Alias cmdlet. 
+    # 以下三种方法等效
+    Get-Help Get-Alias
+    Help Get-Alias
+    Get-Alias -?
+
+    # use wildcard character
+    Get-Help Get-alia*
+
+    #  displays the online version of the help topic
+    Get-Help Get-Member -Online
+
+    #  including parameter descriptions and examples
+    get-help get-command -detailed
+
+    #　To display all of the available Help for a cmdlet, including technical information about the cmdlet and its parameters
+    get-help get-command -full
+
+    #  To see only the examples
+    get-help get-command -examples
+
+    # to see a description of the TotalCount parameter of Get-Command
+    get-help get-command -parameter totalcount
+
+- [Getting Help: Get-Help](http://technet.microsoft.com/en-us/library/bb648604(v=vs.85).aspx)
+- [Get-Help](http://technet.microsoft.com/zh-CN/library/hh849696.aspx)
+
+### Get-Alias
+
+Listing All Your Windows PowerShell Aliases
+
+## 日期
+
+- Get-Date | Select-Object -ExpandProperty DayOfWeek
+- 字符串转化为日期格式   ([datetime]'2012/02/01').ToString("MM-dd-yyyy") [#PSTip Converting a String to a System.DateTime object](http://www.powershellmagazine.com/2013/07/08/pstip-converting-a-string-to-a-system-datetime-object/)
+
+## 可执行程序
+
+- 执行可执行程序
+    - [PowerShell: Running Executables](http://social.technet.microsoft.com/wiki/contents/articles/7703.powershell-running-executables.aspx) 使用其中的第5个方法。
+    - [PowerShell Call Operator](http://com2kid.wordpress.com/2011/09/25/powershell-call-operator-using-an-array-of-parameters-to-solve-all-your-quoting-problems/)
+- [获取当前路径](http://superuser.com/questions/237902/how-can-one-show-the-current-directory-in-powershell)
+
 ## Performance
 
     (Measure-Command {Dir $home -filter *.ps1 -recurse}).TotalSeconds

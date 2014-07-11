@@ -29,6 +29,7 @@ tags: [node, tutorial]
 - [Node.js下自定义错误类型 - CNode](http://cnodejs.org/topic/52090bc944e76d216af25f6f)
 - [Node.js异常捕获的一些实践](http://www.alloyteam.com/2013/12/node-js-series-exception-caught/)
 - [Massa Labs](http://massalabs.com/dev/2013/10/17/handling-errors-in-nodejs.html)
+- [Error Handling in Nodejs - Developer Center - Joyent](http://www.joyent.com/developers/node/design/errors?)
 
 ## Framework
 
@@ -41,6 +42,7 @@ tags: [node, tutorial]
 - [Top Overlooked Security Threats to Node.js Web Applications](https://speakerdeck.com/ckarande/top-overlooked-security-threats-to-node-dot-js-web-applications)
 - [Node.js Security in the Enterprise - YouTube](https://www.youtube.com/watch?v=Zc8QvuRbdoQ&list=UUXe1qKfGweMKTnmRrMw9yOg&feature=share&index=1)
 - [Node Security](http://www.salttiger.com/node-security/)
+- [Beer Locker: Building a RESTful API with Node - OAuth2 Server - Scott Smith](http://scottksmith.com/blog/2014/07/02/beer-locker-building-a-restful-api-with-node-oauth2-server)
 
 ### Passport
 
@@ -120,6 +122,7 @@ tags: [node, tutorial]
 ### Log
 
 - [bpaquet/node-logstash](https://github.com/bpaquet/node-logstash) node-logstash is a tool to collect logs on servers. It allow to send its to a central server and to elastic search for indexing.
+- [Comparing Winston and Bunyan Node.js Logging](http://npmawesome.com/posts/2014-06-24-comparing-winston-and-bunyan-node-js-logging)
 
 ### Message
 

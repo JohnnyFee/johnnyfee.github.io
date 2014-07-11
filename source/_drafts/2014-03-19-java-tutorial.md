@@ -37,6 +37,10 @@ tags: [java]
 
 [bridj - BridJ: Let Java & Scala call C, C++, Objective-C, C#... - Google Project Hosting](https://code.google.com/p/bridj/)
 
+## Performance
+
+- [九大工具助你玩转Java性能优化 - WEB开发者](http://www.admin10000.com/document/4693.html)
+
 ## Book
 
 - [Java: The Good Parts](http://www.salttiger.com/java-the-good-parts/)

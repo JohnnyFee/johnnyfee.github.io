@@ -52,8 +52,8 @@ tags: [dao,web,design]
 ## 配色
 
 - [mrmrs/colors](https://github.com/mrmrs/colors) Smarter defaults for colors on the web. <http://clrs.cc>
-- [quickLayout.css-快速构建结构兼容的web页面 « 张鑫旭-鑫空间-鑫生活](http://www.zhangxinxu.com/wordpress/2014/03/quicklayout-css-%E5%BF%AB%E9%80%9F%E6%9E%84%E5%BB%BA%E7%BB%93%E6%9E%84%E5%85%BC%E5%AE%B9%E7%9A%84web%E9%A1%B5%E9%9D%A2/)
     + [zhangxinxu/quickLayout](https://github.com/zhangxinxu/quickLayout)
+- [SlexAxton/css-colorguard](https://github.com/SlexAxton/css-colorguard)
 
 ## Logo
 

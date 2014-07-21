@@ -14,6 +14,8 @@ One of the main drawbacks to using HTML5’s new features is that browser suppor
 
 Enter Modernizr, a purpose-built JavaScript library for performing bulletproof feature detection and dynamic loading. When you include Modernizr in a web page, you can detect support for a feature using a much easier syntax. For example, to check to see if the user’s browser supports the Canvas element, you’d use the following:
 
+<!--more-->
+
 ```js
 if(Modernizr.canvas) {
     //Canvas is supported, fire one up!

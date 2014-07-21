@@ -59,21 +59,6 @@ tags: [windows]
 - [x] IntelliJ IDEA
 - [ ] EPT-DEV
 - [ ] Ruby 2.0
-- [x] Sublime
-    - [x] JS Format
-    - [] Lint
-    - [x] Emmet
-    - [] AutoComments
-    - [] LiveReload
-    - [x] Typewriter
-    - [x] open-url
-    - [x] MarkdownEditing
-    - [x] OmniMarkupPreviewer
-    - [ ] sublimetext-markdown-preview
-    - [x] SublimeTableEditor
-    - [x] JsonLint
-    - [x] HTMLBeauty
-    - [x] dependents & npm install dependents
 - [x] MongoDb
 - [ ] MySQL
 - [x] Office 2013
@@ -89,8 +74,41 @@ tags: [windows]
 - [ ] Visual Studio 6.0
 - [ ] Android Studio
 
+### Sublime
+
+- [x] JS Format
+- [] Lint
+- [x] Emmet
+- [] AutoComments
+- [] LiveReload
+- [x] Typewriter
+- [x] open-url
+- [x] MarkdownEditing
+- [x] OmniMarkupPreviewer
+- [ ] sublimetext-markdown-preview
+- [x] SublimeTableEditor
+- [] JsonLint
+- [x] HTMLBeauty
+- [x] dependents & npm install dependents
+- [x] IMESupport
+- [x] InsertDate
+
+## 工具（Green）
+
+- Pandoc [Pandoc](http://johnmacfarlane.net/pandoc/ "Pandoc") 是一个"万能文档转换器"，但我基本上是用它来把 [Markdown](http://daringfireball.net/projects/markdown/ "Markdown") 转换成 PDF，.docx 这些蛋疼的格式。比如你的工作需要你用 Word 写文档，有了这个你就可以写 Markdown 然后用 Pandoc 转成 .docx 然后再把你的模板样式刷上去就好啦。
+- PicPick / LICECap 如果你常开着 QQ 的话那么截图方面的需求基本就已经满足了。如果你需要更高级的功能或者不太开 QQ，[PicPick](http://www.picpick.org/en/ "PicPick") 是一个不错的选择。一方面它有很多常见的截图软件功能，比如截取当前活动窗口，自动滚动窗口截取长网站图片等等。另一方面它还带上了很多实用工具，比如全屏取色器，可浮动的像素标尺，还有一个功能挺够用的图像编辑器。
+
+    如果你想截 gif 图片的话，[LICEcap](http://www.cockos.com/licecap/ "LICEcap") 可能是目前唯一一个免费开源的选择。好消息是它效果还挺不错，用起来也很有意思：你要把它的窗口像快门一样对到你要录制的地方然后开始录，开始前还有几秒准备时间。
+- TDM-GCC [TDM-GCC](http://tdm-gcc.tdragon.net/ "TDM-GCC") 就是一套基于 MinGW 跑在 Windows 32/64 上较新的 GCC，可以用来将 C/C++ 代码编译成原生的 Windows 程序。如果你想在 Windows 上试试 GCC 的话，TDM-GCC 应该是目前最好的选择。
+- gow 如果你常怀念 Linux 下的 ls, cat, tail 这些东西又不想装上一个几个 G 的 cygwin 的话，[gow](https://github.com/bmatzelle/gow "gow") 正是你在苦苦寻找的东西。
+- ConEmu + clink 装上这个后你就有了一个超级豪华加强版的 cmd.exe，ConEmu 自带了 [clink](http://code.google.com/p/clink/ "clink")。
+
 ## backup
 
 - ~/.ssh/
 - chrome goagent config
 - 导出计划任务
+
+## Reference
+
+- [配置豪华的 Windows 开发环境 - WEB开发者](http://www.admin10000.com/document/4724.html)

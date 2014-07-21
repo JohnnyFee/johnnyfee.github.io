@@ -717,6 +717,11 @@ This restriction bans both inline `<script>` blocks and inline event handlers (e
 源码地址：[yeoman / generator-chrome-extension](https://github.com/yeoman/generator-chrome-extension) Yeoman generator for Chrome Extensions 
  <http://yeoman.io>.
 
+ #### Chrome Dev Editor
+
+ - [Hands On with the New Chrome Dev Editor App](http://www.omgchrome.com/chrome-dev-editor-preview-app-released/)
+ - [dart-lang/chromedeveditor](https://github.com/dart-lang/chromedeveditor)
+
 **使用步骤：**
 
  - 安装node插件 `npm install -g generator-chrome-extension`

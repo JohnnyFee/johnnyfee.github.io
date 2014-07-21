@@ -54,6 +54,8 @@ tags: [dao,web,design]
 - [mrmrs/colors](https://github.com/mrmrs/colors) Smarter defaults for colors on the web. <http://clrs.cc>
     + [zhangxinxu/quickLayout](https://github.com/zhangxinxu/quickLayout)
 - [SlexAxton/css-colorguard](https://github.com/SlexAxton/css-colorguard)
+- [davidmerfield/randomColor](https://github.com/davidmerfield/randomColor)
+    + [the demo](http://llllll.li/randomColor/)
 
 ## Logo
 
@@ -110,6 +112,10 @@ tags: [dao,web,design]
 
 - [一套带动画图标素材下载(Web版)](http://www.shejidaren.com/animated-icon-download.html)
 - [200+漂亮线性图标下载（免费）](http://www.shejidaren.com/200-outline-icons-for-designer.html)
+
+## Tools
+
+- [Bohemian Coding - Sketch 3](http://bohemiancoding.com/sketch/)
 
 ## Tutorial
 

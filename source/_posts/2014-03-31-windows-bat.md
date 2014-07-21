@@ -62,7 +62,8 @@ tags: [ps]
 5. “echo”: 当执行echo而不带任何参数的时候，会显示echo的打开或关闭的状态：“ECHO is on” 或者 “ECHO is off”。
 6. “@”:@ 符号表示不显示本行的命令本身。如果只用echo off，虽然echo off后面的命令不显示出来，只显示命令的结果，但是echo off它自己确被显示出来了，这就是使用@echo off的原因。
 
-## SETLOCAL/ENDLOCAL
+## 变量
+### SETLOCAL/ENDLOCAL
 
 SETLOCAL用来控制批处理文件中变量的可见性。就是高级语言常说的局部变量。凡是在SETLOCAL和ENDLOCAL之间的变量都是局部的，以免被其他脚本文件改变变量的值，而没有使用这个标示的都是Global visible（全局变量），很可能被其他文件所改变。下面的例子很好的说明了这一点。
 
@@ -86,6 +87,86 @@ Output:
     the second version is 2.0
     the third version is 2.0
 
+### 延迟环境变量扩展
+
+申明 BAT 的变量，如%name%。在解析命令时，CMD 会找到变量名对应的值,用变量名的值替换掉这个变量名字(name)，如果变量名不存在值,就返回空值。再将这个替换好并且匹配的命令执行。这个替换值的过程,就叫做 _变量扩展_。
+
+例如：
+
+    set var=test
+    echo %var%
+
+变量替换后的变为：
+
+    echo test
+
+在 BAT 中，`IF`, `FOR` 这样的命令都可以加括号，将一些命令嵌套在里面执行。这样的话对于一条可以加扩号嵌其他命令的命令,他的完整格式就是 
+
+    for %%i in (....)
+
+如果我们在括号里面嵌入一些设置变量值的命令,就会出现问题了!
+
+看例子
+
+    @echo off 
+    for /l %%i in (1,1,5) do ( 
+            set var=%%i 
+            echo %var% 
+    )
+
+执行后会显示5个空行的错误提示! 因为在 CMD 解析的时候，找不到 `%var%` 变量定义。如果改成：
+
+    @echo off 
+    set var=test 
+    for /l %%i in (1,1,5) do ( 
+            set var=%%i 
+            echo %var% 
+    )
+
+则输出 5  次 test。
+
+为了解决这个问题，我们是需要引入 _延迟环境变量扩展_ 的概念。使用以下方法启用 延迟环境变量扩展：
+
+    setloacl ENABLEDELAYEDEXPANSION
+
+例：
+
+    @echo off 
+    setlocal ENABLEDELAYEDEXPANSION 
+    set var=test 
+    for /l %%i in (1,1,5) do ( 
+            set var=%%i 
+            echo !var! 
+    )
+
+这样输出就正常了。
+
+另外，
+
+    @echo off 
+    set var=test & echo %test% 
+    pause
+
+set 命令和 echo 命令放在一行，如果不启用"延迟环境变量扩展"，也会出现赋值错误。
+
+### path
+
+- `%cd%` 或者  `!cd!` 获取当前运行命令所在的目录路径。
+- `%~dp0` 获取命令文件所在的目录路径。
+
+如：
+
+D:\test\test.bat:
+
+    @echo off
+    echo Path "cd": %cd%
+    @echo off
+    echo Path "dp0": %~dp0
+
+在 C:\Users\Johnny 下运行该 bat 文件，输出为：
+
+    Path "cd": C:\Users\Johnny
+    Path "dp0": d:\test\
 
 ## set
 
@@ -130,7 +211,9 @@ Output:
         %TIME% - 当前时间。
         %RANDOM% - 显示0 到32767之间的一个随机数。你看CMD也是可以获取随机数的。
 
-## choice
+## 逻辑控制
+
+### choice
 
     CHOICE [/C choices] [/N] [/CS] [/T timeout /D choice] [/M text]
  
@@ -160,6 +243,39 @@ Output:
      
     :Exit
     endlocal
+
+### if
+
+    IF EXIST filename (del filename) ELSE ( echo The file was not found.)
+
+### for
+
+    @echo off
+    setlocal
+    for %%G in (*.bat *.txt) do echo %%G
+    endlocal
+
+### goto
+
+指定跳转到标签，找到标签后，程序将处理从下一行开始的命令。
+
+语法：
+
+    goto label （label是参数，指定所要转向的批处理程序中的行。）
+
+Sample：
+
+    if { %1 }=={ } goto noparms
+    if { %2 }=={ } goto
+
+noparms（如果这里的if、%1、%2你不明白的话，先跳过去，后面会有详细的解释。）
+
+    @Rem check parameters if null show usage
+    :noparms
+    echo Usage: monitor.bat ServerIP PortNumber
+    goto end
+
+标签的名字可以随便起，但是最好是有意义的字母啦，字母前加个：用来表示这个字母是标签，goto命令就是根据这个：来寻找下一步跳到到那里。最好有一些说明这样你别人看起来才会理解你的意图啊。
 
 ## rem
 
@@ -194,39 +310,6 @@ Output:
     set fn=%~f1
     echo %fn%
     endlocal
-
-## if
-
-    IF EXIST filename (del filename) ELSE ( echo The file was not found.)
-
-## for
-
-    @echo off
-    setlocal
-    for %%G in (*.bat *.txt) do echo %%G
-    endlocal
-
-## goto
-
-指定跳转到标签，找到标签后，程序将处理从下一行开始的命令。
-
-语法：
-
-    goto label （label是参数，指定所要转向的批处理程序中的行。）
-
-Sample：
-
-    if { %1 }=={ } goto noparms
-    if { %2 }=={ } goto
-
-noparms（如果这里的if、%1、%2你不明白的话，先跳过去，后面会有详细的解释。）
-
-    @Rem check parameters if null show usage
-    :noparms
-    echo Usage: monitor.bat ServerIP PortNumber
-    goto end
-
-标签的名字可以随便起，但是最好是有意义的字母啦，字母前加个：用来表示这个字母是标签，goto命令就是根据这个：来寻找下一步跳到到那里。最好有一些说明这样你别人看起来才会理解你的意图啊。
 
 ## net
 

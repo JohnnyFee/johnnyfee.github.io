@@ -72,6 +72,10 @@ Get-Process | Select-Object name, npm
 
 Listing All Your Windows PowerShell Aliases
 
+## Set Up
+
+- [PowerShell_零基础自学课程_5_自定义PowerShell环境及Powershell中的基本概念 - volcanol - 博客园](http://www.cnblogs.com/volcanol/archive/2012/05/08/2490886.html)
+
 ## 日期
 
 - Get-Date | Select-Object -ExpandProperty DayOfWeek
@@ -79,9 +83,7 @@ Listing All Your Windows PowerShell Aliases
 
 ## 可执行程序
 
-- 执行可执行程序
-    - [PowerShell: Running Executables](http://social.technet.microsoft.com/wiki/contents/articles/7703.powershell-running-executables.aspx) 使用其中的第5个方法。
-    - [PowerShell Call Operator](http://com2kid.wordpress.com/2011/09/25/powershell-call-operator-using-an-array-of-parameters-to-solve-all-your-quoting-problems/)
+- [PowerShell: Running Executables](http://social.technet.microsoft.com/wiki/contents/articles/7703.powershell-running-executables.aspx) 使用其中的第5个方法。
 - [获取当前路径](http://superuser.com/questions/237902/how-can-one-show-the-current-directory-in-powershell)
 
 ## Performance
@@ -111,5 +113,18 @@ Listing All Your Windows PowerShell Aliases
 
 ## 环境
 
-- [Powershell中禁止执行脚本解决办法](http://www.cnblogs.com/shanyou/archive/2011/09/03/2165371.html) set-ExecutionPolicy RemoteSigned
+- [Powershell中禁止执行脚本解决办法](http://www.cnblogs.com/shanyou/archive/2011/09/03/2165371.html) set-ExecutionPolicy RemoteSigned.
+- [apetrovskiy/STUPS](https://github.com/apetrovskiy/STUPS)
 
+## FAQ
+
+### How to get current username in Windows Powershell?
+
+<http://stackoverflow.com/questions/2085744/how-to-get-current-username-in-windows-powershell>
+
+    [Environment]::UserName
+
+There is also:
+
+    [Environment]::UserDomainName
+    [Environment]::MachineName

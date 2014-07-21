@@ -6,7 +6,7 @@ category: Qt
 tags: [qt, thread]
 --- 
 
-> 原文：http://blog.csdn.net/hai200501019/article/details/9889123
+> 原文：<http://blog.csdn.net/hai200501019/article/details/9889123>
 
 ## Qt同步线程
 

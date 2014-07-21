@@ -23,6 +23,7 @@ tags: [javascript]
 - [web开发设计人员不可不用的在线web工具和应用](http://www.qianduan.net/web-development-and-design-staff-can-not-be-without-online-web-tools-and-applications.html)
 - [深入理解JavaScript系列 - 汤姆大叔 - 博客园](http://www.cnblogs.com/TomXu/archive/2011/12/15/2288411.html)
 - [JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/)
+- - [The JavaScript Tutorial](http://javascript.info/)
 
 <!--more-->
 
@@ -116,6 +117,10 @@ owsers)
 Can you explain why ++[[]][+[]]+[+[]] = “10”?
 <http://stackoverflow.com/questions/7202157/can-you-explain-why-10>
 
+## Set
+
+- [andrejewski/seth](https://github.com/andrejewski/seth)
+
 ## getter and setter
 
 - [ __defineGetter__ 跟 __defineSetter__](http://www.cnblogs.com/sniper007/archive/2012/04/24/2468175.html)
@@ -178,6 +183,24 @@ HTMLElement.prototype.__defineGetter__(
     }  
     );
 ```
+
+## FAQ
+
+    if (obj.length === +obj.length)
+
+It's another way of writing if (typeof obj.length == 'number'). Why they do it that way, it's anyone's guess. Probably trying to be clever at the expense of readability. Which is not too uncommon these days, unfortunately.
+
+Although it might be so that it can be compressed more by minifiers ([YUI Compressor](http://developer.yahoo.com/yui/compressor/), [Closure Compiler](http://closure-compiler.appspot.com/home), [UglifyJS](https://github.com/mishoo/UglifyJS), etc):
+
+(a.length===+a.length)**vs**(typeof a.length=='number')Doing it their way would save 5 bytes, each instance.
+
+This tests if obj's length property is a number.
+
+The [unary + operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Arithmetic_Operators#Unary_plus_%28.2B%29) converts its operand to a number, and the [strict equality operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators#Identity_.2F_strict_equality_%28.3D.3D.3D%29) compares the result with the original length property without performing type coercion.
+
+Therefore, the expression will only be true if obj.length is an actual number (not e.g. a string that can be converted to a number).
+
+—— [underscore.js - obj.length === +obj.length in javascript - Stack Overflow](http://stackoverflow.com/questions/9188998/obj-length-obj-length-in-javascript)
 
 ## Books
 

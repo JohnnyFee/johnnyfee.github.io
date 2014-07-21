@@ -291,7 +291,7 @@ ForEach-Object { "{0,-25}= {1}" -f $_.name, [Environment]::GetFolderPath($_.Name
 
     Dir |Where-Object{$_.CreationTime-gt(Get-Date).AddDays(-14) }
 
-## Creat File
+## New 
 
 ### 创建新目录
 
@@ -347,6 +347,8 @@ ForEach-Object { "{0,-25}= {1}" -f $_.name, [Environment]::GetFolderPath($_.Name
 然后你想更改当前目录为桌面时，只须输入：
 
     cd desktop:
+
+## Read File
 
 ### 读取文本文件的内容
 
@@ -461,6 +463,8 @@ $matches返回了每个圆括号中定义的子正则表达式的匹配项，这
 
 [读取二进制的内容](http://www.pstips.net/working-with-files-and-directories.html#读取二进制的内容)
 
+## Move File
+
 ### 移动和复制文件和目录
 
 Move-Item 和 Copy-Item用来执行移动和拷贝操作。它们也支持通配符。比如下面的脚本会将你家目录下的的所有PowerShell脚本文件复制到桌面上：
@@ -475,6 +479,7 @@ Move-Item 和 Copy-Item用来执行移动和拷贝操作。它们也支持通配
 
     Dir -filter *.ps1 -recurse | ForEach-Object {
         Copy-Item $_.FullName ([Environment]::GetFolderPath("Desktop")) }
+
 小技巧：你可能被诱惑去缩减脚本行，因为文件对象整合了一个CopyTo()方法。
     
     Dir -filter *.ps1 -recurse | ForEach-Object {
@@ -518,7 +523,7 @@ Dir |Where-Object{$_.Name-contains"-x86"} |ForEach-Object{Rename-Item$_.Name$_.N
     Rename-Item $_ ("Script " + $x + ".ps1"); $x++ } {"Finished!"}
     Dir $directory\*.ps1
 
-### 删除文件和目录
+## Delete
 
 使用Remove-Item和别名Del可以删除文件和目录，它会不可恢复的删除文件和目录。如果一个文件属于只读文件，你需要指定参数-force ：
 
@@ -541,12 +546,12 @@ Dir |Where-Object{$_.Name-contains"-x86"} |ForEach-Object{Rename-Item$_.Name$_.N
 
 #### 删除目录内容
 
-如果你只想删除某个目录下的内容而保留目录本身，可以使用通配符。比如下面的脚本行会删除Recent目录下的内容，对应于启动菜单中的“My Recent Documents”。因为删除文件夹是一件掉以轻心就会产生严重后果的事情，所有你可以使用-whatIf参数模拟一下删除过程，看看可能会发生什么。
+如果你只想删除某个目录下的内容而保留目录本身，可以使用通配符。比如下面的脚本行会删除Recent目录下的内容，对应于启动菜单中的“My Recent Documents”。因为删除文件夹是一件掉以轻心就会产生严重后果的事情，所有你可以使用`-whatIf`参数模拟一下删除过程，看看可能会发生什么。
 
     $recents = [Environment]::GetFolderPath("Recent")
     del $recents\*.* -whatIf
 
-如果你已经确认你的命令操作无误，将上面语句中的-whatif去掉即可删除这些文件。另一方面，如果你仍然不是很确定，可以使用**-confirm**，它会在每次删除操作执行前向你确认。
+如果你已经确认你的命令操作无误，将上面语句中的-whatif去掉即可删除这些文件。另一方面，如果你仍然不是很确定，可以使用`-confirm`，它会在每次删除操作执行前向你确认。
 
 #### 删除目录和它的内容
 

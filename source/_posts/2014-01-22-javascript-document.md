@@ -16,16 +16,13 @@ tags : [js, doc]
 	+ [文档伴侣](http://html5ify.com/doxmate)
 
 
-粗略地对比了一下，jsdoc默认支持CommonJS模块编程，RequireJS Module，而jsduck默认情况下不支持。而从文档的角度看，jsdoc远不如jsduck。
-开源项目[Tidesdk](http://www.tidesdk.org/) 的文档使用jsduck编写，可以参考其写法。
+粗略地对比了一下：
 
-phonegap使用[davebalmer/joDoc](https://github.com/davebalmer/jodoc)来生成文档，即直接将Markdown编译成对应的HTML，没有在源码级别提取文档。
+- jsdoc默认支持CommonJS模块编程，RequireJS Module，而jsduck默认情况下不支持。
+- 从文档美观和功能上看，jsdoc 远不如 jsduck。开源项目 [Tidesdk](http://www.tidesdk.org/) 的文档使用jsduck编写。Sencha 的 ExtJS 和 Sencha Touch 也都是使用 jsduck 来生成文档，[Sencha Guides](http://docs.sencha.com/)。
+- phonegap使用 [davebalmer/joDoc](https://github.com/davebalmer/jodoc)来生成文档，即直接将 Markdown 编译成对应的 HTML，没有在源码级别提取文档。为Markdown生成文档的另一个插件为[DocumentUp](http://documentup.com/)。
 
 综合考虑，个人偏向于sencha的jsduck。
-
-可以参考[ExtJS Docs](http://docs.sencha.com/extjs/4.2.2/)，看看jsduck生成的文档。
-
-为Markdown生成文档的另一个插件为[DocumentUp](http://documentup.com/)。
 
 <!--more-->
 

@@ -265,6 +265,24 @@ TODO
 
 - [WebView Explorations - Octodroid](http://stefanodacchille.github.io/blog/2014/02/23/webview-explorations/)
 
+## 内核
+
+- [Android 4.4 WebView实现分析 - 放飞梦想](http://mogoweb.github.io/blog/2014/01/16/analysis-of-android-4-4-webview-implementation/)
+- [Webkit for Android分析](http://mogoweb.net/archives/182)
+- [[译]Android WebView - 放飞梦想](http://mogoweb.github.io/blog/2013/10/24/translated-android-webview/)
+- [Chromium网络加载速度研究(1) - 放飞梦想](http://mogoweb.github.io/blog/2014/03/18/chromium-loading-speed-research-0/)
+- [Chromium网络加载速度研究(2) - 放飞梦想](http://mogoweb.github.io/blog/2014/04/03/chromium-loading-spped-research-1/)
+- [关于chromium_webview项目 - 放飞梦想](http://mogoweb.github.io/blog/2014/06/10/about-chromium-webview-project/)
+
+## Webkit
+
+- [What WebKit version is in what Android version?](http://jimbergman.net/webkit-version-in-android-version/)
+
+## Chromium
+
+- [pwnall/chromeview](https://github.com/pwnall/chromeview)
+- [mogoweb/chromium_webview](https://github.com/mogoweb/chromium_webview)
+
 ## 参考
 
 - [Android中Webview使用经验总结（持续更新）](http://my.eoe.cn/iceskysl/archive/1028.html)

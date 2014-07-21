@@ -70,6 +70,10 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 - [w3cfuns](w3cfuns.com)
 - [admin10000](http://www.admin10000.com/?sp=14686)
 
+## Tutorial
+
+- [Building Apps that Run Everywhere with jQuery Mobile and PhoneGap - YouTube](https://www.youtube.com/watch?v=h8ylWSbn7gU)
+
 ## Books
 
 - [Mobile JavaScript Application Development](http://www.salttiger.com/mobile-javascript-application-development/)

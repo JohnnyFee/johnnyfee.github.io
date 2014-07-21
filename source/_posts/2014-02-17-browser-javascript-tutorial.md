@@ -16,6 +16,7 @@ tags: [javascript]
 - [视频访谈： Stoyan Stefanov 谈JavaScript性能 - 推酷](http://www.tuicool.com/articles/vEn6zm)
 - [User Timing API: Understanding your Web App - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/webperformance/usertiming/)
 - [lodash/lodash](https://github.com/lodash/lodash) A utility library delivering consistency, customization, performance, & extras. <http://lodash.com/>
+- [Announcing JS Error Reporting and AJAX Timing - New Relic blog](http://blog.newrelic.com/2014/03/13/javascript-error-reporting-ajax-timing-new-relic/)
 
 <!--more-->
 

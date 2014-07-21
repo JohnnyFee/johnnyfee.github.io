@@ -99,3 +99,38 @@ tags: [phonegap, cordova, webview,android]
 
 9. Copy the config.xml file from `/framework/res/xml` to the project's `/res/xml` directory.
 
+## Threading
+
+The plugin's JavaScript does not run in the main thread of the WebView interface; instead, it runs on the WebCore thread, as does the execute method. If you need to interact with the user interface, you should use the following variation:
+
+    @Override  
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {  
+      if ("beep".equals(action)) {  
+        final long duration = args.getLong(0);  
+        cordova.getActivity().runOnUiThread(new Runnable() {  
+          public void run() {  
+            ...  
+            callbackContext.success(); // Thread-safe.  
+          }  
+        });  
+        return true;  
+      }  
+      return false;  
+    }  
+
+Use the following if you do not need to run on the main interface's thread, but do not want to block the WebCore thread either:
+
+      @Override  
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {  
+      if ("beep".equals(action)) {  
+        final long duration = args.getLong(0);  
+        cordova.getThreadPool().execute(new Runnable() {  
+          public void run() {  
+            ...  
+            callbackContext.success(); // Thread-safe.  
+          }
+        });  
+        return true;  
+      }  
+      return false;  
+    }

@@ -13,3 +13,17 @@ tags: [extjs, tutorial]
 - [Ext JS 5: Engineered for Performance](http://www.sencha.com/blog/ext-js-5-engineered-for-performance/)
 - [Creating Custom Layouts in Ext JS and Sencha Touch](http://www.sencha.com/blog/creating-custom-layouts-in-ext-js-and-sencha-touch)
 - [Designing Responsive Applications with Ext JS](http://www.sencha.com/blog/designing-responsive-applications-with-ext-js)
+
+## MVC
+
+- [Using ViewControllers in Ext JS 5](http://www.sencha.com/blog/using-viewcontrollers-in-ext-js-5)
+- [Ext JS 5: MVC, MVVM and More](http://www.sencha.com/blog/ext-js-5-mvc-mvvm-and-more)
+
+## Font
+
+- [Training Tip: Using Custom Fonts with Sencha Architect](http://www.sencha.com/blog/training-tip-using-custom-fonts-with-sencha-architect)
+
+## Tutorial
+
+- [Upgrading Deft JS to Work with Ext JS 5](http://www.sencha.com/blog/upgrading-deft-js-to-work-with-ext-js-5/)
+- [Deep Dive Into Ext JS 5 Data](http://www.sencha.com/blog/deep-dive-into-ext-js-5-data/)

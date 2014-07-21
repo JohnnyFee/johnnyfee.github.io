@@ -16,6 +16,7 @@ tags: [web, site]
 
 - [七牛云存储](http://www.qiniu.com/)
 - [盘点国内网站常用的一些CDN公共库加速服务 - WEB开发者](http://www.admin10000.com/document/4614.html)
+- [360网站卫士推出google字体加速方案_科技_环球网](http://tech.huanqiu.com/soft/2014-06/5013029.html?qq-pf-to=pcqq.c2c)
 
 ## 参考
 
@@ -28,5 +29,6 @@ tags: [web, site]
 
 - [图片压缩大](http://www.iplaysoft.com/image-optimization-tools.html)
 - [域名解析服务](https://www.dnspod.cn/Domain)
+- [Godaddy注册商域名修改DNS地址-DNSPod 技术支持-DNSPod-免费智能DNS解析服务商-电信_网通_教育网,智能DNS](https://support.dnspod.cn/Kb/showarticle/tsid/42)
 
 <!--more-->	

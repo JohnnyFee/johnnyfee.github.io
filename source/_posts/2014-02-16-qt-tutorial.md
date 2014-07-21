@@ -147,6 +147,10 @@ Qt控制台程序很少用到，这里仅仅简单了解。
 
 - [QSettings保存程序设置](http://blog.csdn.net/hai200501019/article/details/11179967)
 
+## Web Service
+
+- [QtSoap调用Web Service](http://blog.csdn.net/hai200501019/article/details/19755987)
+
 ## State Machine
 
 - [Qt状态机框架](http://blog.csdn.net/hai200501019/article/details/9316415)

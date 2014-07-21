@@ -334,6 +334,11 @@ $ git push -f
 - [Git - Book](http://git-scm.com/book/zh)
 - [Git Community Book 中文版](http://gitbook.liuhui998.com/)
 
+## FAQ
+
+- [工单 #351: gitPublickey出现Permission denied (publickey). · GitCafe/Help - GitCafe](https://gitcafe.com/GitCafe/Help/tickets/351)
+- [Generating SSH Keys · GitHub Help](https://help.github.com/articles/generating-ssh-keys)
+
 ## Reference
 
 - [version control - git workflow and rebase vs merge questions - Stack Overflow](http://stackoverflow.com/questions/457927/git-workflow-and-rebase-vs-merge-questions)

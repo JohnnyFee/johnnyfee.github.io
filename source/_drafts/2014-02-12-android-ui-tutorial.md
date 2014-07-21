@@ -18,6 +18,8 @@ tags: [android]
 - [Styling Android » App UI / UX – Part 4](http://blog.stylingandroid.com/archives/2637)
 - [Styling Android » App UI / UX – Part 5](http://blog.stylingandroid.com/archives/2644)
 - [Styling Android » App UI / UX – Part 6](http://blog.stylingandroid.com/archives/2652)
+- [Styling Android » Irregular Shapes – Part 1](http://blog.stylingandroid.com/archives/2656)
+- [Styling Android » Irregular Shapes – Part 2](http://blog.stylingandroid.com/archives/2660)
 
 ## Theme
 

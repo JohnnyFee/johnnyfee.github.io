@@ -235,42 +235,6 @@ Plugins should use the initialize method for their start-up logic.
         // your init code here
     }
 
-### Threading
-
-The plugin's JavaScript does not run in the main thread of the WebView interface; instead, it runs on the WebCore thread, as does the execute method. If you need to interact with the user interface, you should use the following variation:
-
-    @Override  
-    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {  
-      if ("beep".equals(action)) {  
-        final long duration = args.getLong(0);  
-        cordova.getActivity().runOnUiThread(new Runnable() {  
-          public void run() {  
-            ...  
-            callbackContext.success(); // Thread-safe.  
-          }  
-        });  
-        return true;  
-      }  
-      return false;  
-    }  
-
-Use the following if you do not need to run on the main interface's thread, but do not want to block the WebCore thread either:
-
-      @Override  
-    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {  
-      if ("beep".equals(action)) {  
-        final long duration = args.getLong(0);  
-        cordova.getThreadPool().execute(new Runnable() {  
-          public void run() {  
-            ...  
-            callbackContext.success(); // Thread-safe.  
-          }
-        });  
-        return true;  
-      }  
-      return false;  
-    }
-
 ### Android Integration
 
 Android features an Intent system that allows processes to communicate with each other. Plugins have access to a CordovaInterface object, which can access the Android Activity that runs the application. This is the Context required to launch a new Android Intent. The CordovaInterface allows plugins to start an Activity for a result, and to set the callback plugin for when the Intent returns to the application.

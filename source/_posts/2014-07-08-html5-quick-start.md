@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Html5 Tutorial"
+title: "Html5 Quick Start"
 category: Web
 tags: [web, html, tutorial]
 --- 
 
-## Quick Start
+本节为读 [HTML5 in Action](http://www.salttiger.com/html5-action/) 部分章节的笔记。
 
 Let’s look more closely at these differences by examining hello.html, the HTML5 equivalent of a “Hello, World!” application, shown in the following listing.
 
@@ -44,7 +44,7 @@ Let’s look more closely at these differences by examining hello.html, the HTML
 
 ![html-order-demo.jpg](http://johnnyimages.qiniudn.com/html-order-demo.jpg)
 
-### Defining a form’s basic HTML document structure
+## Defining a form’s basic HTML document structure
 
 ```html5
 <!DOCTYPE html>
@@ -69,7 +69,7 @@ Let’s look more closely at these differences by examining hello.html, the HTML
 ```
 
 
-### CREATE THE CONTACT DETAILS FORM SECTION
+## CREATE THE CONTACT DETAILS FORM SECTION
 
 - The `autofocus` attribute is self-explanatory; it allows you to define which input element should receive focus when the page loads. 
 - The `required` attribute is also straightforward—it allows you to define that a field must contain input from the user in order to be valid. You’ll learn much more about HTML5 form validation later in the chapter. 
@@ -104,7 +104,7 @@ immediately after the line `<h1>Order Form</h1>` from the previous listing.
         </ul>
     </fieldset>
 
-### CREATE THE ORDER DETAILS FORM SECTION
+## CREATE THE ORDER DETAILS FORM SECTION
 
 - The number input type should display a new UI widget on supported browsers. `min` and `max` attributes define the minimum and maximum numbers that a user can enter in a number input field
 - `data-*` HTML5 data-* attributes allow you to bind arbitrary key/value pair data to any element. JavaScript can then read this data to perform calculations and further client-side manipulation.
@@ -154,50 +154,54 @@ Add this code directly after the code from the previous listing:
 </fieldset>
 ```
 
-### CREATE THE PAYMENT DETAILS FORM SECTION
+## CREATE THE PAYMENT DETAILS FORM SECTION
 
 HTML5 defines a number of date-related types: date, datetime, datetime-local, month, week, and time.
 
 - The `month` type allows the user to select a month and year combination from a date-picker widget.
 - The `pattern` attribute allows you to specify a regular expression pattern to test against data input in a field.
 
-    <fieldset>
-        <legend>Payment Details</legend>
-        <ul>
-            <li>
-                <label class="required">
-                    <div>Name on Card</div>
-                    <input name="card_name" required>
-                </label>
-            </li>
-            <li>
-                <label class="required">
-                    <div>Credit Card No.</div>
-                    <!-- The regular expression in the card number field specifies that the value should be numeric and between 13 and 16 characters in length. The title attribute is used to give users more detail about the field’s requirements, should they attempt to submit an invalid value. -->
-                    <input name="card_number" pattern="[0-9]{13,16}"
-                    maxlength="16" required title="13-16 digits, no spaces">
-                </label>
-            </li>
-            <li>
-                <label class="required">
-                    <div>Expiry Date</div>
-                    <!-- The expiry date for the card uses the month input type, which displays a datepicker widget on supported browsers and should validate based on the format mask YYYY-MM. -->
-                    <input type="month" name="card_expiry" maxlength="7"
-                    placeholder="YYYY-MM" required value="2015-06">
-                </label>
-            </li>
-            <li>
-                <label class="required">
-                    <div>CVV2 No.</div>
-                    <input name="card_cvv2" class="cvv" maxlength="3"
-                    pattern="[0-9]{3}" required title="exactly 3 digits">
-                    <span>(Three digit code at back of card)</span>
-                </label>
-            </li>
-        </ul>
-    </fieldset>
+the code is:
 
-### Bypass form validation and save form data
+```
+<fieldset>
+    <legend>Payment Details</legend>
+    <ul>
+        <li>
+            <label class="required">
+                <div>Name on Card</div>
+                <input name="card_name" required>
+            </label>
+        </li>
+        <li>
+            <label class="required">
+                <div>Credit Card No.</div>
+                <!-- The regular expression in the card number field specifies that the value should be numeric and between 13 and 16 characters in length. The title attribute is used to give users more detail about the field’s requirements, should they attempt to submit an invalid value. -->
+                <input name="card_number" pattern="[0-9]{13,16}"
+                maxlength="16" required title="13-16 digits, no spaces">
+            </label>
+        </li>
+        <li>
+            <label class="required">
+                <div>Expiry Date</div>
+                <!-- The expiry date for the card uses the month input type, which displays a datepicker widget on supported browsers and should validate based on the format mask YYYY-MM. -->
+                <input type="month" name="card_expiry" maxlength="7"
+                placeholder="YYYY-MM" required value="2015-06">
+            </label>
+        </li>
+        <li>
+            <label class="required">
+                <div>CVV2 No.</div>
+                <input name="card_cvv2" class="cvv" maxlength="3"
+                pattern="[0-9]{3}" required title="exactly 3 digits">
+                <span>(Three digit code at back of card)</span>
+            </label>
+        </li>
+    </ul>
+</fieldset>
+```
+
+## Bypass form validation and save form data
 
 - You can force an entire form to bypass validation using the new `novalidate` attribute on the form itself. This is useful only if you want to use the new HTML5 form widgets but don’t want to use any of the new validation features.
 -  In addition, you
@@ -217,7 +221,7 @@ Replace that line with the following:
 - Click the Submit Order button, and an error message will pop up on the Name field telling you that this field must be filled out.
 - Click the Save Order button, and you’ll notice that the validation will no longer be performed, and the URL the form has been submitted to will be `/save` rather than `/submit`.
 
-### Change the form action in older browsers
+## Change the form action in older browsers
 
 On older browsers, the application should also be able to change the form action. When the user submits the form, it should call a different URL than when saving the data.
 
@@ -245,7 +249,7 @@ Create a new file named `app.js` in the same directory as the index.html file. A
 })();
 ```
 
-### Add functions to calculate total values
+## Add functions to calculate total values
 
 - If you needed to convert the value to a floating-point number, you likely used `parseFloat`, but HTML5 has provided a new solution, the `valueAsNumber` property. When you read the `valueAsNumber` property of a number input type, the property returns the number as a floating-point number. If you assign a floating-point number to the `valueAsNumber` property of a number input type, the property will convert the floating-point number to a string-based value.
 
@@ -366,7 +370,7 @@ var qtyListeners = function() {
 qtyListeners();
 ```
 
-### Checking form input data with the Constraint Validation API
+## Checking form input data with the Constraint Validation API
 
 The Constraint Validation API simplifies the implementation of custom error messages by providing a `setCustomValidity` method and a `validationMessage` property. Both constructs allow the application to assign an error message to the `<input>` element’s `validationMessage` attribute. Determining which construct to use will depend on the browser’s support for `setCustomValidity`.
 
@@ -411,7 +415,7 @@ Detecting a failed form validation with the `invalid` event:
     }
     orderForm.addEventListener('invalid',styleInvalidForm, true);
 
-### Styling invalid elements using CSS3 pseudo-classes
+## Styling invalid elements using CSS3 pseudo-classes
 
 One way to style invalid elements would be to iterate over the fields, checking if each one is invalid and applying CSS classes to those that have errors. But this is a bit cumbersome, and you can do this much more elegantly using a bit of CSS3 magic.
 
@@ -452,114 +456,3 @@ input:required, select:required {
     background-color: lightyellow;
 }
 ```
-
-## Modernizr
-
-- [Modernizr/Modernizr](https://github.com/Modernizr/Modernizr)
-- [HTML5 Cross Browser Polyfills · Modernizr/Modernizr Wiki](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills)
-
-One of the main drawbacks to using HTML5’s new features is that browser support isn’t uniform. Thus, you need to find ways to allow those with the latest and greatest browsers to make use of HTML5 features while ensuring that those using slightly older versions aren’t left behind.
-
-Enter Modernizr, a purpose-built JavaScript library for performing bulletproof feature detection and dynamic loading. When you include Modernizr in a web page, you can detect support for a feature using a much easier syntax. For example, to check to see if the user’s browser supports the Canvas element, you’d use the following:
-
-```js
-if(Modernizr.canvas) {
-    //Canvas is supported, fire one up!
-} else {
-    //Canvas is not supported, use a fallback
-}
-```
-
-To detect Canvas support without Modernizr, you’d need to use the following:
-
-```js
-if(!!document.createElement('canvas').getContext) {
-    //Canvas is supported, fire one up!
-} else {
-    //Canvas is not supported, use a fallback
-}
-```
-
-It’s also simple to use Modernizr to dynamically load resources (either .js or .css files) based on a feature test. Consider this example, in which Modernizr will determine if the browser supports the localStorage API. If supported, it will load the localstorage.js file, which would likely contain code that interacts with this API. Otherwise, it will load the localstorage-polyfill.js file, which contains a fallback.
-
-```js
-Modernizr.load({
-    test: Modernizr.localstorage,
-    yep: 'localstorage.js',
-    nope: 'localstorage-polyfill.js'
-});
-```
-
-### Using polyfills and Modernizr to plug the gaps
-
-The term polyfill was coined by Remy Sharp and refers to a piece of code (or shim) that aims to implement missing parts of an API specification. The origin of the term is from a product named Polyfilla, which builders use to fill gaps or cracks in walls. Likewise, we developers can use polyfills to fill the gaps or cracks in various web browsers’ support for HTML5.
-
-aul Irish, one of the key contributors to the Modernizr library, edits and maintains a comprehensive list of polyfills, shims, and fallbacks for a wide variety of HTML5 features. This list is available on Modernizr’s GitHub wiki at: [http://mng.bz/cJhc](http://mng.bz/cJhc).
-
-Let’s look at how to use Modernizr to load a month-picker polyfill into those browsers without a built-in month-picker. 
-
-```js
-Modernizr.load({
-    test:Modernizr.inputtypes.month,
-    nope: 'monthpicker.js' 
-});
-```
-
-You can apply the same technique to most of the HTML5 form’s functionality. In fact, several projects are in the works that aim to polyfill the entire set of forms features in HTML5. These projects include 
-
-* Webshims Lib by Alexander Farkas ([http://afarkas.github.com/webshim/demos/](http://afarkas.github.com/webshim/demos/))
-* H5F by Ryan Seddon ([https://github.com/ryanseddon/H5F](https://github.com/ryanseddon/H5F))
-* Webforms2 by Weston Ruter ([https://github.com/westonruter/webforms2](https://github.com/westonruter/webforms2))
-* html5Widgets by Zoltan “Du Lac” Hawryluk ([https://github.com/zoltan-dulac/html5Forms.js](https://github.com/zoltan-dulac/html5Forms.js))
-
-## File editing and management
-
-The File System API (also known as the File Directories and System API) is a relatively late addition to the HTML5 specification and thus hasn’t yet been implemented by most browser vendors. Although most have provided partial support for the accompanying File API, which you can use to read the contents of local files that the user selects or drops into the application, only Google Chrome currently supports the File System and File Writer APIs that are used to actually create and store files on the client side. The sample application has been written to include vendor prefixes that will probably be used when the other browsers start to include support for these features, but we can’t guarantee that their actual implementation will follow this path.
-
-Also, if you’re using Chrome and plan to test this application in your local directory instead of on a server, you’ll need to start Chrome with the following option: `--Allow-File-Access-From-Files`
-
-If you don’t, your application’s client-side filesystem will be inaccessible and the Geolocation API won’t be able to access your location.
-
-In this section, you’ll build the HTML document for the application and implement basic navigation and state management functionality using JavaScript. 
-
-### CREATE INDEX.HTML
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Super HTML5 Editor</title>
-        <link rel="stylesheet" href="style.css">
-        <script src="app.js"></script>
-    </head>
-    <body class="browser-view">
-    <header><h1>Super HTML5 Editor</h1></header>
-    <section id="list">
-    </section>
-    <section id="editor">
-    </section>
-</body>
-</html>
-```
-
-## Form
-
-- [HTML5 Forms: JavaScript and the Constraint Validation API](http://www.sitepoint.com/html5-forms-javascript-constraint-validation-api)
-
-## File
-
-- [Exploring the FileSystem APIs - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/file/filesystem/)
-- [阅读以 JavaScript 编写的本地文件 - HTML5 Rocks](http://www.html5rocks.com/zh/tutorials/file/dndfiles/)
-
-## Argument
-
-- [HTML5 Vs. Native Apps for Mobile - Business Insider](http://www.businessinsider.com/html5-vs-native-apps-for-mobile-2013-6?op=1)
-
-## Tutorial
-
-- [The JavaScript Tutorial](http://javascript.info/)
-
-## Books
-
-- [HTML5 in Action](http://www.salttiger.com/html5-action/)

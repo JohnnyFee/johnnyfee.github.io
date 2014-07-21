@@ -420,6 +420,12 @@ TODO
 - [解决jquery mobile+phonegap页面切换闪屏问题](http://www.feeldesignstudio.com/2013/10/jquery-mobile-phonegap-flicker-when-navigating-between-page)
 - [Cordova Sample: Check for a file and download if it isn't there](http://www.raymondcamden.com/index.cfm/2014/7/1/Cordova-Sample-Check-for-a-file-and-download-if-it-isnt-there)
 
+## Tutorial
+
+- [2 Quick Tips When Adding PhoneGap/Cordova Plugins : Devgirl's Weblog](http://devgirl.org/2014/07/15/2-quick-tips-when-adding-phonegapcordova-plugins/)
+- [Cordova Sample: Reading a text file](http://www.raymondcamden.com/2014/7/15/Cordova-Sample-Reading-a-text-file)
+- [Cordova Plugins update, and new Contacts demo](http://www.raymondcamden.com/2014/7/9/Cordova-Plugin-update-and-new-Contacts-demo)
+
 ## 参考
 
 - [PhoneGap源码分析](http://www.cnblogs.com/linjisong/tag/PhoneGap/)

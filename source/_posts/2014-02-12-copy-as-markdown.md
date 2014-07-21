@@ -31,3 +31,7 @@ Except clicking the extension icon, there is another easy way to do the same act
 <http://domchristie.github.com/to-markdown>.
 - [rick-li / clipboardExt](https://github.com/rick-li/clipboardExt) Chrome extension to copy current title&url.
 
+## html2markdown
+
+- add jasmine test case 
+       > abc **sdsd**

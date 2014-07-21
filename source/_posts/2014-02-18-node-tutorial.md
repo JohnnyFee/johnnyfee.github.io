@@ -62,10 +62,10 @@ tags: [node, tutorial]
 
 ### commander
 
-[commander](http://visionmedia.github.io/commander.js/) 是一个轻巧的nodejs模块，提供了用户命令行输入和参数解析强大功能。commander源自一个同名的Ruby项目。commander的特性：自 记录代码,自动生成帮助,合并短参数（“ABC”==“-A-B-C”）,默认选项,强制选项​​,命令解析,提示符。
-
+- [commander](http://visionmedia.github.io/commander.js/) 是一个轻巧的nodejs模块，提供了用户命令行输入和参数解析强大功能。commander源自一个同名的Ruby项目。commander的特性：自 记录代码,自动生成帮助,合并短参数（“ABC”==“-A-B-C”）,默认选项,强制选项​​,命令解析,提示符。
 - [Omelette by f](http://f.github.io/omelette) Omelette is a simple, template based autocompletion tool for Node projects.
 - [Command-line utilities with Node.js](http://cruft.io/posts/node-command-line-utilities)
+- [substack/node-optimist](https://github.com/substack/node-optimist)
 
 ### Web控制台工具: tty.js
 
@@ -169,6 +169,7 @@ Javascript with Cody and Node.js.
 - [node-inspector/node-inspector](https://github.com/node-inspector/node-inspector#advanced-use)
 - [ngrok - secure introspectable tunnels to localhost](https://ngrok.com/)
 	- [Expose Yourself with ngrok](http://flippinawesome.org/2014/04/28/expose-yourself-with-ngrok/?-yourself-with-ngrok)
+- [node.js调试 - dolphinX - 博客园](http://www.cnblogs.com/dolphinX/archive/2013/12/22/3485345.html)
 
 ## 云平台
 
@@ -310,3 +311,7 @@ Nodejs在快速的发展着，软件包版本升级的很快，文章有运行�
 ## Reference
 
 - [Node.JS 学习路线图 - WEB开发者](http://www.admin10000.com/document/4624.html)
+
+## Books
+
+- [Node Cookbook, 2nd Edition](http://www.salttiger.com/node-cookbook-2nd-edition/)

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "CSS Layout —— media"
-category: Web
+category: CSS
 tags: [web, css, layout]
 --- 
 
@@ -22,6 +22,8 @@ tags: [web, css, layout]
       }
     }
     </style>
+
+<!--more-->
 
 当媒体查询为真时，相关的样式表或样式规则就会按照正常的级联规则被应用。即使媒体查询返回假， `<link>` 标签上带有媒体查询的样式表仍将被下载，只不过不会被应用。
 

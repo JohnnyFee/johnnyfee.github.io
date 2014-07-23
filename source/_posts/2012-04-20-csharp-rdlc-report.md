@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "C# RDLC报表 "
-category : C#,
+category : C#
 authors: [snowman002000, JohnnyFee]
 tags : [csharp, report]
 --- 

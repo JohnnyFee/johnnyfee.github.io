@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "CSS Layout —— Display"
-category: Web
+category: CSS
 tags: [web, css, layout]
 --- 
 
@@ -18,6 +18,8 @@ div {
   display: none;          /* Hide */
 }
 ```
+
+<!--more-->
 
 The default value for all elements is inline. Most "User Agent stylesheets" (the default styles the browser applies to all sites) reset many elements to "block". Let's go through each of these, and then cover some of the other less common values.
 
@@ -39,15 +41,115 @@ An inline element will accept margin and padding, but the element still sits inl
 
 An inline element will not accept height and width. It will just ignore it.
 
-## Inline Block
+## inline-block
 
-An element set to `inline-block` is very similar to inline in that it will set inline with the natural flow of text (on the "baseline"). The difference is that you are able to set a `width` and `height` which will be respected.
+An element set to `inline-block` is very similar to `inline` in that it will set inline with the natural flow of text (on the "baseline"). The difference is that you are able to set a `width` and `height` which will be respected.
 
 ![inline-block.png ](http://johnnyimages.qiniudn.com/inline-block.png)
 
+你可以创建很多网格来铺满浏览器。在过去很长的一段时间内使用 float 是一种选择，但是使用 inline-block 会更简单。让我们看下使用这两种方法的例子：
+
+```cs
+.box {
+  float: left;
+  width: 200px;
+  height: 100px;
+  margin: 1em;
+}
+.after-box {
+  clear: left;
+}
+```
+
+<style type="text/css">
+.box {
+  float: left;
+  width: 200px;
+  height: 100px;
+  margin: 10px;
+  border: 1px solid red;
+}
+.after-box {
+  border: 1px solid green;
+  clear: left;
+}
+.container1 {
+  border: 1px solid yellow;
+}
+</style>
+
+<div class="container1" style="">
+  <div class="box">我在浮动！</div>
+  <div class="box">我在浮动！</div>
+  <div class="box">我在浮动！</div>
+  <div class="box">我在浮动！</div>
+
+  <div class="after-box">没有浮动</div>
+</div>
+
+你可以用 `display` 属性的值 `inline-block` 来实现相同效果。
+
+```css
+.box2 {
+  display: inline-block;
+  width: 200px;
+  height: 100px;
+  margin: 1em;
+}
+```
+
+你得做些额外工作来让[IE6和IE7支持](http://blog.mozilla.org/webdev/2009/02/20/cross-browser-inline-block/)`inline-block` 。有些时候人们谈到 `inline-block` 会触发叫做 `hasLayout` 的东西，你只需要知道那是用来支持旧浏览器的。如果你对此很感兴趣，可以在前面那个链接中找到更详细的信息。否则我们就继续下去吧。
+
+你可以使用 `inline-block` 来布局。有一些事情需要你牢记： 
+
+* `vertical-align` 属性会影响到 `inline-block` 元素，你可能会把它的值设置为 `top` 。
+* 你需要设置每一列的宽度
+* 如果HTML源代码中元素之间有空格，那么列与列之间会产生空隙。
+
+```css
+nav {
+  display: inline-block;
+  vertical-align: top;
+  width: 25%;
+}
+.column {
+  display: inline-block;
+  vertical-align: top;
+  width: 75%; <!-- 由于HTML之间的空隙，设置为 75% 可能会错行，< 75% 可以。-->
+}
+```
+
+<style type="text/css">
+  nav {
+    display: inline-block;
+    vertical-align: top;
+    width: 25%;
+    border: 1px solid red;
+  }
+  .column {
+    border: 1px solid green;
+    display: inline-block;
+    vertical-align: top;
+    width: 74%;
+  }
+</style>
+
+<div class="container1">
+  <nav>
+    <ul>
+      <li>1. H</li>
+      <li>2. E</li>
+    </ul>
+  </nav>
+  <div class="column">
+      <section>S1</section>
+      <section>S2</section>
+  </div>
+</div>
+
 ## none
 
-另一个常用的display值是 `none` 。一些特殊元素的默认 `display` 值是它，例如 `script` 。 `display:none` 通常被 JavaScript 用来在不删除元素的情况下隐藏或显示元素。 
+另一个常用的 `display` 值是 `none` 。一些特殊元素的默认 `display` 值是它，例如 `script` 。 `display:none` 通常被 JavaScript 用来在不删除元素的情况下隐藏或显示元素。 
 
 它和 `visibility` 属性不一样。把 `display` 设置成 `none` 不会保留元素本该显示的空间，但是 `visibility: hidden`; 还会保留。
 

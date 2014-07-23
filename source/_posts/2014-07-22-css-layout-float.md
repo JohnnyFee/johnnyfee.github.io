@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "CSS Layout —— Float"
-category: Web
+category: CSS
 tags: [web, css, layout]
 --- 
 
@@ -12,6 +12,8 @@ Floated elements _remain a part of the flow of the web page_.  There are four va
 1. An element that is floated is automatically `display: block;`
 2. float 只有横向浮动，没有纵向浮动。
 3. 容器如果没有明确设定高度，会依照普通流内元素高度设置，这样就会导致脱离普通流的浮动元素溢出容器。
+
+<!--more-->
 
     ![](http://css-tricks.com/wp-content/csstricks-uploads/collapse.png)
 

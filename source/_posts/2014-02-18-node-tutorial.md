@@ -138,6 +138,7 @@ tags: [node, tutorial]
 - [substack/stream-handbook](https://github.com/substack/stream-handbook) how to write node programs with streams.
 - [Obvious/sculpt](https://github.com/Obvious/sculpt) Manipulate streams.
 - [mafintosh/torrent-stream](https://github.com/mafintosh/torrent-stream) The low level streaming torrent engine that peerflix uses.
+- [sindresorhus/trash](https://github.com/sindresorhus/trash) Cross-platform command-line app for moving files and directories to the trash - A safer alternative to `rm`
 
 ### Other
 

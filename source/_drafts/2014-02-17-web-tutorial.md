@@ -7,6 +7,7 @@ tags: [web, tutorial]
 
 ## Tutorial
 
+- [dypsilon/frontend-dev-bookmarks](https://github.com/dypsilon/frontend-dev-bookmarks) A huge list of frontend development resources I collected over time. Sorted from general knowledge at the top to concrete problems at the bottom.
 - [慕课网-免费的IT技能学习平台](http://www.imooc.com/)
 - [JacksonTian/fks](https://github.com/JacksonTian/fks)
     + http://html5ify.com/fks/

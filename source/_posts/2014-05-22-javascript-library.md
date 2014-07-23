@@ -22,6 +22,7 @@ tags: [javascript]
 ### String
 
 - [string.js](http://stringjs.com/)
+- [sindresorhus/multiline](https://github.com/sindresorhus/multiline)
 
 ### Object
 
@@ -39,7 +40,6 @@ tags: [javascript]
 ### Number
 
 - [Numeral.js](http://numeraljs.com/)
-
 
 ### JSON
 
@@ -102,3 +102,7 @@ tags: [javascript]
 ## Generator
 
 - [Yeoman - Modern workflows for modern webapps](http://yeoman.io/) [Get started](http://yeoman.io/gettingstarted.html) and then [find a generator](http://yeoman.io/community-generators.html) for your webapp. Generators are available for [Angular](https://github.com/yeoman/generator-angular), [Backbone](https://github.com/yeoman/generator-backbone), [Ember](https://github.com/yeoman/generator-ember) and over 400 other projects. Read the [Yeoman Monthly Digest](http://updates.html5rocks.com/tag/front-end) for our latest picks.
+
+## TODO
+
+- [sindresorhus/awesome-nodejs](https://github.com/sindresorhus/awesome-nodejs)

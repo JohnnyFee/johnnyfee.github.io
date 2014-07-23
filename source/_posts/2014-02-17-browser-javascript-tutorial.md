@@ -74,6 +74,10 @@ tags: [javascript]
 - [通过javascript把图片转化为字符画 - OurJS.com](http://ourjs.com/detail/5268746af3aad32a72000001)
 - [FSO.js - Client-side File Storage in JavaScript](http://fsojs.com/) FSO.js is a JavaScript library for temporary and permanent client-side file storage.
 
+## Other Library
+
+- [sindresorhus/screenfull.js](https://github.com/sindresorhus/screenfull.js) Simple wrapper for cross-browser usage of the JavaScript Fullscreen API.
+
 ## 开发工具
 
 - [Chrome开发者工具和console对象](http://javascript.ruanyifeng.com/tool/console.html)

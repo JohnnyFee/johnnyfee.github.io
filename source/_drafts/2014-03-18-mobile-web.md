@@ -45,6 +45,7 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 
 - [Is jQuery Too Big For Mobile?](http://flippinawesome.org/2014/03/10/is-jquery-too-big-for-mobile/)
 - [Google I/O 2014 - Mobile Web performance auditing - YouTube](https://www.youtube.com/watch?v=WrA85a4ZIaM)
+- [BlendUI，让webapp的体验和交互得到质的提升](http://www.infoq.com/cn/articles/blendul-improve-webapp-experience-and-interactive)
 
 ## Gesture
 

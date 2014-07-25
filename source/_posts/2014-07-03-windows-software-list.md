@@ -108,6 +108,8 @@ tags: [windows]
 - ~/.ssh/
 - chrome goagent config
 - 导出计划任务
+- WebStorm 个性化配置
+- sogou 配置。
 
 ## Reference
 

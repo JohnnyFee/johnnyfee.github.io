@@ -5,6 +5,15 @@ category: CSS
 tags: [web, css, layout]
 --- 
 
+A [CSS](https://developer.mozilla.org/en-US/docs/CSS "/en-US/docs/CSS") **layout mode**, sometimes abbreviated as _layout`,`_ is an algorithm determining the position and the size of boxes based on the way they interact with their sibling and ancestor boxes. There are several of them:
+
+* The _block layout_, designed for laying out documents. The block layout contains document-centric features, like the ability to [_float_](https://developer.mozilla.org/en-US/docs/CSS/float "/en-US/docs/CSS/float") elements or to lay them out over [_multiple columns_](https://developer.mozilla.org/en-US/docs/CSS/Using_CSS_multi-column_layouts "/en-US/docs/CSS/Using_CSS_multi-column_layouts").
+* The_inline layout_, designed for laying out texts.
+* The _table layout_, designed for laying out tables.
+* The _positioned layout_, designed for positioning elements without much interaction with other elements.
+* The [_flexible box layout_](https://developer.mozilla.org/en-US/docs/CSS/Using_CSS_flexible_boxes "/en-US/docs/"), designed for laying out complex pages that can be resized smoothly.
+* The _grid layout_, designed for layout out elements relatively to a fixed grid.
+
 ## margin
 
 设置块级元素的 `width` 可以阻止它从左到右撑满容器，然后你就可以设置左右外边距为 `auto` 来使其水平居中。元素会占据你所指定的宽度，然后剩余的宽度会一分为二成为左右外边距。
@@ -106,3 +115,4 @@ Any    | 3+     | 1.5+     | 11.1+ |10+ |TBD     |TBD
 - [学习CSS布局](http://zh.learnlayout.com/)
 - [column-count](http://css-tricks.com/almanac/properties/c/columns/)
 - [CSS 布局:40个教程、技巧、例子和最佳实践](http://coolshell.cn/articles/6840.html)
+- [Layout mode - CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/Layout_mode)

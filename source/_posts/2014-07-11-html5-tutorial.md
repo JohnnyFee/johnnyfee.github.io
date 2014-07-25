@@ -102,6 +102,7 @@ You can apply the same technique to most of the HTML5 form’s functionality. In
 - [HTML5研究小组](http://www.mhtml5.com/)
 - [WebHek](http://www.webhek.com/)
 - [HTML5DevConf](https://www.youtube.com/watch?v=8J6EdpXdzqc)
+- [HTML-MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
 
 ## Books
 

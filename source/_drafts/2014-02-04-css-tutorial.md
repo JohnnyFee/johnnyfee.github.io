@@ -8,13 +8,10 @@ tags: [markdown]
 
 ## Tutorial
 
+- [开始学CSS - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_started)
+- [CSS 开发者指南 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS)
 - [CSS Almanac | CSS-Tricks](http://css-tricks.com/almanac/)
 - [动起来！好玩的CSS抖动样式 – CSS Shake](http://www.shejidaren.com/css-shake-animation.html)
-- [CSS3文字阴影实现乳白文字效果](http://www.shejidaren.com/css3-milky-font-effect.html)
-- [将鼠标事件绑定到非矩形区域](http://blog.youyo.name/archives/bind-click-event-in-non-rectangular-area.html?-click-event-in-non-rectangular-area)
-- [CSS之Position详解](http://www.cnblogs.com/zigzag/archive/2009/02/19/position.html)
-- [Off Canvas Menus with CSS3 Transitions and Transforms ♥ Scotch](http://scotch.io/tutorials/off-canvas-menus-with-css3-transitions-and-transforms)
-- [利用CSS固定背景交替实现视差滚动效果](http://www.shejidaren.com/css-fixed-scroll-background.html)
 - [W3Help - 标准 - W3C 标准](http://www.w3help.org/zh-cn/standards/)
 - [DIVCSS5 - DIV+CSS布局教程学习与CSS资源分享平台](http://www.divcss5.com/)
 
@@ -49,6 +46,10 @@ tags: [markdown]
 - [CSS Diner - Where we feast on CSS Selectors!](http://flukeout.github.io/)
 - [CSS Diner – 边学CSS选择器，边享受晚餐](http://www.shejidaren.com/css-diner.html)
 - [CSS: Should we change the default for overflow? - Bocoup](http://bocoup.com/weblog/new-overflow-default/)
+- [CSS3文字阴影实现乳白文字效果](http://www.shejidaren.com/css3-milky-font-effect.html)
+- [将鼠标事件绑定到非矩形区域](http://blog.youyo.name/archives/bind-click-event-in-non-rectangular-area.html?-click-event-in-non-rectangular-area)
+- [Off Canvas Menus with CSS3 Transitions and Transforms ♥ Scotch](http://scotch.io/tutorials/off-canvas-menus-with-css3-transitions-and-transforms)
+- [利用CSS固定背景交替实现视差滚动效果](http://www.shejidaren.com/css-fixed-scroll-background.html)
 
 ## Books
 

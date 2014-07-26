@@ -145,7 +145,7 @@ Flexible-boxes-related properties: [`margin`](https://developer.mozilla.org/zh-C
      </body>
     </html>
 
-效果：[点击我](/examples/css-layout-flex-layout.html)
+效果：[点击我](/examples/css-layout-flex-basic.html)
 
 ### 绝妙的弹性布局例子
 

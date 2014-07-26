@@ -121,3 +121,4 @@ Margin 比较特别，它不会影响盒子本身的大小，但是它会
 - [The CSS Box Model](http://css-tricks.com/the-css-box-model/)
     + 如果未声明 padding 或者 border，那他们或者值为零(使用 css reset 时)，或者为浏览器的默认值(很可能不是零，尤其是那些通常没有重置的表单元素)
 - [视觉格式化模型 - CSS](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Visual_formatting_model)
+- [KB006: CSS 框模型( Box module ) - W3Help](http://www.w3help.org/zh-cn/kb/006/)

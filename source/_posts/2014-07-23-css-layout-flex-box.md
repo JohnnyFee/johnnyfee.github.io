@@ -145,6 +145,8 @@ Flexible-boxes-related properties: [`margin`](https://developer.mozilla.org/zh-C
      </body>
     </html>
 
+效果：[点击我](/examples/css-layout-flex-layout.html)
+
 ### 绝妙的弹性布局例子
 
 这个例子说明了弹性布局如何根据不同的屏幕分辨率提供动态改变布局的能力。下图展示了这种转换。

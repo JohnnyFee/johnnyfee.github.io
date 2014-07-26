@@ -6,17 +6,7 @@ category: Git
 tags: [git]
 --- 
 
-## Git 详解
 
-* [Git详解之一：Git起步](http://blog.jobbole.com/25775/)
-* [Git详解之二：Git基础](http://blog.jobbole.com/25808/)
-* [Git详解之三：Git分支](http://blog.jobbole.com/25877/)
-* [Git详解之四：服务器上的Git](http://blog.jobbole.com/25944/)
-* [Git详解之五：分布式Git](http://blog.jobbole.com/25660/)
-* [Git详解之六：Git工具](http://blog.jobbole.com/26112/)
-* [Git详解之七：自定义Git](http://blog.jobbole.com/26131/)
-* [Git详解之八：Git与其他系统](http://blog.jobbole.com/26198/)
-* [Git详解之九：Git内部原理](http://blog.jobbole.com/26209/)
 
 ## Quick Start
 
@@ -333,11 +323,18 @@ $ git push -f
 
 - [Git - Book](http://git-scm.com/book/zh)
 - [Git Community Book 中文版](http://gitbook.liuhui998.com/)
+- [github-cheat-sheet/README.zh-cn.md at master · tiimgreen/github-cheat-sheet](https://github.com/tiimgreen/github-cheat-sheet/blob/master/README.zh-cn.md)
+- [Pro Git](http://git-scm.com/book/zh)
+- [Git magic](http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/zh_cn/)
+- [Git - 简易指南](http://rogerdudler.github.io/git-guide/index.zh.html)
+- [Git 参考手册](http://gitref.justjavac.com/)
+- [沉浸式学 Git](http://igit.linuxtoy.org/index.html)
 
 ## FAQ
 
 - [工单 #351: gitPublickey出现Permission denied (publickey). · GitCafe/Help - GitCafe](https://gitcafe.com/GitCafe/Help/tickets/351)
 - [Generating SSH Keys · GitHub Help](https://help.github.com/articles/generating-ssh-keys)
+- [Git提交时发生SSL certificate problem错误的解决方法 - 宇托的狗窝](http://yutuo.net/archives/2d5c6a3bcfaf69fe.html)
 
 ## Reference
 

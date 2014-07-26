@@ -14,6 +14,10 @@ tags: [javascript]
 - [Practical Workflows for ES6 Modules, Fluent 2014 - YouTube](http://www.youtube.com/watch?v=0VUjM-jJf2U)
 - [Using ES6 Modules Today](http://javascriptplayground.com/blog/2014/06/es6-modules-today)
 
+## Tools
+
+- [addyosmani/es6-tools](https://github.com/addyosmani/es6-tools)
+
 ## Argument
 
 - [使用简单的JavaScript，我们为什么应该抵制ES6 - OurJS.com](http://ourjs.com/detail/530b64f23b73342e03000012)

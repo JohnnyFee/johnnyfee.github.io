@@ -8,6 +8,7 @@ tags: [javascript]
 
 ## Tutorial
 
+- [sorrycc/awesome-javascript](https://github.com/sorrycc/awesome-javascript)
 - [JavascriptOO](http://www.javascriptoo.com/)
 - [JS: The Right Way](http://jstherightway.org/)
 - [JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/)
@@ -29,6 +30,7 @@ tags: [javascript]
 
 ### Video
 
+* [bolshchikov/js-must-watch](https://github.com/bolshchikov/js-must-watch)
 * [Video: Douglas Crockford, “Advanced JavaScript”](http://yuiblog.com/blog/2006/11/27/video-crockford-advjs/)  视频在 financeserver 上有。
 * [视频 : Douglas_Crockford_Advanced_JavaScript](http://v.youku.com/v_show/id_XNjA2NDU2NzU2.html) YouKu 上的视频镜像。
 
@@ -183,6 +185,10 @@ HTMLElement.prototype.__defineGetter__(
     }  
     );
 ```
+
+## Test
+
+- [christian-bromann/awesome-selenium](https://github.com/christian-bromann/awesome-selenium)
 
 ## FAQ
 

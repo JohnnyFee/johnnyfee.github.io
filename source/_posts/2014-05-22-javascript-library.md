@@ -6,6 +6,8 @@ category: JavaScript
 tags: [javascript]
 --- 
 
+- [sorrycc/awesome-javascript](https://github.com/sorrycc/awesome-javascript)
+
 - [Underscore.js](http://underscorejs.org/)
     + [Stop writing For loops. Start using underscore. - @jhooks](http://www.joelhooks.com/blog/2014/02/06/stop-writing-for-loops-start-using-underscorejs/)
 - [lodash/lodash](https://github.com/lodash/lodash/)

@@ -394,11 +394,6 @@ TODO
 
 [PhoneGap API Documentation](http://docs.phonegap.com/en/edge/cordova_storage_storage.md.html#Storage)
 
-## Tutorial
-
-- [Apache Cordova Tutorial](http://ccoenraets.github.io/cordova-tutorial/create-cordova-project.html)
-- [phonegap - jacob的专栏](http://blog.csdn.net/wangpengch/article/category/1849949)
-
 ## 相关资料
 
 ### apache/cordova项目github库
@@ -422,6 +417,9 @@ TODO
 
 ## Tutorial
 
+- [busterc/awesome-cordova](https://github.com/busterc/awesome-cordova)
+- [Apache Cordova Tutorial](http://ccoenraets.github.io/cordova-tutorial/create-cordova-project.html)
+- [phonegap - jacob的专栏](http://blog.csdn.net/wangpengch/article/category/1849949)
 - [2 Quick Tips When Adding PhoneGap/Cordova Plugins : Devgirl's Weblog](http://devgirl.org/2014/07/15/2-quick-tips-when-adding-phonegapcordova-plugins/)
 - [Cordova Sample: Reading a text file](http://www.raymondcamden.com/2014/7/15/Cordova-Sample-Reading-a-text-file)
 - [Cordova Plugins update, and new Contacts demo](http://www.raymondcamden.com/2014/7/9/Cordova-Plugin-update-and-new-Contacts-demo)

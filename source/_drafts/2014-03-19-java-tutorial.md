@@ -41,6 +41,10 @@ tags: [java]
 
 - [九大工具助你玩转Java性能优化 - WEB开发者](http://www.admin10000.com/document/4693.html)
 
+## Tutorial
+
+- [akullpp/awesome-java](https://github.com/akullpp/awesome-java)
+
 ## Book
 
 - [Java: The Good Parts](http://www.salttiger.com/java-the-good-parts/)

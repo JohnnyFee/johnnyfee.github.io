@@ -5,6 +5,10 @@ category: Web
 tags: [web, html, tutorial]
 --- 
 
+## New in Html5
+
+- [CS002: DOCTYPE 与浏览器模式分析 - W3Help](http://www.w3help.org/zh-cn/casestudies/002)
+
 ## Modernizr
 
 - [Modernizr/Modernizr](https://github.com/Modernizr/Modernizr)
@@ -103,6 +107,7 @@ You can apply the same technique to most of the HTML5 form’s functionality. In
 - [WebHek](http://www.webhek.com/)
 - [HTML5DevConf](https://www.youtube.com/watch?v=8J6EdpXdzqc)
 - [HTML-MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
+- [diegocard/awesome-html5](https://github.com/diegocard/awesome-html5)
 
 ## Books
 

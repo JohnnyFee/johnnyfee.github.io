@@ -14,6 +14,16 @@ tags: [markdown]
 - [动起来！好玩的CSS抖动样式 – CSS Shake](http://www.shejidaren.com/css-shake-animation.html)
 - [W3Help - 标准 - W3C 标准](http://www.w3help.org/zh-cn/standards/)
 - [DIVCSS5 - DIV+CSS布局教程学习与CSS资源分享平台](http://www.divcss5.com/)
+- [W3Help - 兼容性 - 知识库](http://www.w3help.org/zh-cn/kb/)
+
+## Compotibility
+
+- [W3Help - 兼容性 - 根本原因](http://www.w3help.org/zh-cn/causes/index.html)
+
+## 规范
+
+- [W3Help - 标准 - W3C 标准](http://www.w3help.org/zh-cn/standards/)
+- [W3Help - 标准 - 词汇表](http://www.w3help.org/zh-cn/home/glossary.html)
 
 ### Video
 

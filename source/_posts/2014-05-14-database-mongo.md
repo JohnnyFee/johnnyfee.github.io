@@ -5,17 +5,9 @@ category: Node
 tags: [mongodb, database]
 --- 
 
-SELECT*FROM posts
-INNER JOIN posts_tags ON posts.id= posts_tags.post_id
-INNER JOIN tags ON posts_tags.tag_id== tags.id
-WHERE tags.text= 'politics' AND posts.vote_count > 10;
-
-The equivalent query in MongoDB is specified using a document as a matcher. The
-special $gtkey indicates the greater-than condition.
-db.posts.find({'tags': 'politics','vote_count': {'$gt': 10}});
-
 ## Tutorial
 
+- [the-little-mongodb-book-cn/mongodb.md at master · justinyhuang/the-little-mongodb-book-cn](https://github.com/justinyhuang/the-little-mongodb-book-cn/blob/master/mongodb.md)
 - [MongoDB Environment](http://www.tutorialspoint.com/mongodb/mongodb_environment.htm)
 - [Getting Started with MongoDB - Part 1 - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/getting-started-with-mongodb-part-1--net-22879)
 

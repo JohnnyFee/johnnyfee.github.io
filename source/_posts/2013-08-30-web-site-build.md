@@ -12,6 +12,14 @@ tags: [web, site]
 - [域名和空间 – 如何搭建个人网站](http://keenwon.com/415.html)
 - [后记：上万访问量的考验](http://keenwon.com/980.html)
 
+## DNS
+
+- [不要在国内注册域名-月光微博客](http://www.williamlong.info/blog/archives/14.html)
+- [乔大海个人网站 » 国外域名和虚拟主机服务商](http://qiaodahai.com/foreign-domain-hosting-providers.html)
+- [GoDaddy、Name.com、NameCheap对比区别，如何选择](http://zhujiming.com/test/godaddy-vs-name-com-vs-namecheap.html)
+- [国外域名注册商横向比较](http://www.gubo.org/%E5%9B%BD%E5%A4%96%E5%9F%9F%E5%90%8D%E6%B3%A8%E5%86%8C%E5%95%86/)
+- [申请域名name.com和dns解析 - - ITeye技术网站](http://grandsea.iteye.com/blog/1391505)
+
 ## CDN
 
 - [七牛云存储](http://www.qiniu.com/)

@@ -5,6 +5,8 @@ category: CSS
 tags: [web, css, selector]
 --- 
 
+原文：<http://www.ruanyifeng.com/blog/2009/03/css_selectors.html>
+
 ## 一、基本选择器
 
 序号    | 选择器          | 含义
@@ -215,3 +217,4 @@ p#info { background:#ff0; }
 
 - [选择器 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_Started/Selectors)
 - [Selectors](http://css-tricks.com/almanac/selectors/)
+- [[CSS] Selector Level 4 搶先看 - HINA::工程幼稚園](http://blog.hinablue.me/entry/css-selector-level-4-quick-preview/)

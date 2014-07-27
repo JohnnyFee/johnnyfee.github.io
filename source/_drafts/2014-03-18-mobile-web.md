@@ -12,6 +12,8 @@ tags: [webview]
 - [JXcore · a Node.JS distribution with additional features](http://jxcore.com/home/)
 - [Leaflet/Leaflet](https://github.com/Leaflet/Leaflet) JavaScript library for mobile-friendly interactive maps. [http://leafletjs.com](http://leafletjs.com/)
 - [Top 7 Mobile application HTML5 frameworks](http://www.gajotres.net/top-7-mobile-application-html5-frameworks/)
+- [famo.us](http://famo.us/)
+    - [[Famo.us] 新一代 HTML5 Web Application JavaScript Framework - HINA::工程幼稚園](http://blog.hinablue.me/entry/famous-first-look/)
 
 ### 5 Best Mobile Web App Frameworks
 

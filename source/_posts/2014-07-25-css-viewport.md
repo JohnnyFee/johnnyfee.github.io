@@ -1,267 +1,271 @@
 ---
 layout: post
-title: "CSS Viewport"
+title: "两个 viewport 的故事（第一部分）"
 category: CSS
 tags: [web, css]
 --- 
 
-## 何謂 viewport
+原文：<http://www.quirksmode.org/mobile/viewports.html>
+翻译：<http://weizhifeng.net/viewports.html>
 
-根據 w3c 對於 [CSS Device Adaptation](http://www.w3.org/TR/css-device-adapt/) 的解釋，他大致上是在做這些事情，
+**在这个迷你系列的文章里边我将会解释viewport，以及许多重要元素的宽度是如何工作的，比如`<html>`元素，也包括窗口和屏幕。**
 
-* 根據裝置的顯示區域來展示文件
-* 放大或縮小文件，來符合或設定上給予裝置的可視區域
-* 允許設定或初始化縮放的級別，或是其他規則
+这篇文章是关于桌面浏览器的，其唯一的目的就是为移动浏览器中相似的讨论做个铺垫。大部分开发者凭直觉已经明白了大部分桌面浏览器中的概念。在移动端我们将会接触到相同的概念，但是会更加复杂，所以对大家已经知道的术语做个提前的讨论将会对你理解移动浏览器产生巨大的帮助。
 
-實際上，他是跟著 _顯示裝置_ 在運作的，所以他的所有設定都跟顯示裝置有關，而這裡的顯示裝置跟 `Media Query` 裡面的 `screen`, `projection`, `print`, `tv`, `tty`, `aural`, `handheld`, `embossed`, `braille`  這幾樣東西是不太一樣的。雖然，`Media Query` 上述那幾項規則設定，很明顯都與其顯示的裝置有關，但是，他們的目的不同，操作的方式也不一樣。
+# 概念：设备像素和CSS像素 #
 
-歐，你說 `print` 為什麼也算_顯示_裝置，因為對印表機而言，印出來也是顯示的一種（但是印出來有 `@page` 可以用喔！
+你需要明白的第一个概念是CSS像素，以及它和设备像素的区别。
 
-@viewport vs. @media
---------------------
+设备像素是我们直觉上觉得「靠谱」的像素。这些像素为你所使用的各种设备都提供了正规的分辨率，并且其值可以（通常情况下）从`screen.width/height`属性中读出。
 
-舉個例子來說，
+如果你给一个元素设置了`width: 128px`的属性，并且你的显示器是1024px宽，当你最大化你的浏览器屏幕，这个元素将会在你的显示器上重复显示8次（大概是这样；我们先忽略那些微妙的地方）。
 
-    @viewport {
-        width: device-width;
-        initial-scale: 1;
-    }
+如果用户进行缩放，那么计算方式将会发生变化。如果用户放大到200%，那么你的那个拥有`width: 128px`属性的元素在1024px宽的显示器上只会重复显示4次。
 
-    @media screen and (min-width: 768px) {
-        h1 {
-            font-size: 16px;
-        }
-    }
-    @media screen and (max-width: 768px) {
-        h1 {
-            font-size: 26px;
-        }
-    }
+现代浏览器中实现缩放的方式无怪乎都是「拉伸」像素。所以，元素的宽度并没有从128个像素被修改为256个像素；相反是**实际像素**被放大了两倍。形式上，元素仍然是128个CSS像素宽，即使它占据了256个设备像素的空间。
 
-上面那個 `@viewport` 與 `@media` 初始化設定中是無關的。這樣理解嗎？什麼？不行？那先看一下步驟:
+换句话说，放大到200%使一个CSS像素变成为一个设备像素的四倍。（宽度2倍，高度2倍，总共4倍）
 
-* `viewport` 規則套用，寬度設定為 `device-width`，且初始縮放數值為 `1`
-* `@media` 套用於 `screen` 與其條件 `(min-width: 768px)`
-* `@media` 套用於 `screen` 與其條件 `(max-width: 768px)`
+一些配图可以解释清楚这个概念。这儿有四个100%缩放比的元素。这儿没有什么值得看的；CSS像素与设备像素完全重叠。
 
-對於我們的視角來說，`device-width` 可以解釋為_我們所看見_的裝置的寬度，而 `768px` 這件事情，則是告訴_該顯示的本文_遇到這個條件時，應該要顯示的結果。所以，條件會顯示的結果是看 `@media` 來決定。舉個例子來解釋這個例子，
+![csspixels_100](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/csspixels_100.gif)
 
-* 假設我們的裝置 `device-width` 是 `800px`
-* 那麼_第一個條件_會成立
+现在让我们缩小。CSS像素开始收缩，这意味着现在一个设备像素覆盖了多个CSS像素。
 
-疑？無法理解？
+![csspixels_out](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/csspixels_out.gif)
 
-    @viewport {
-        width: 768px;
-    }
+如果你进行放大，相反的行为会发生。CSS像素开始变大，现在一个CSS像素覆盖了多个设备像素。
 
-    @media only screen and (width: 768px) {
-        h1 {
-            font-size: 16px;
-        }
-    }
+![csspixels_in](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/csspixels_in.gif)
 
-    @media only screen and (width: 1200px) {
-        h1 {
-            font-size: 26px;
-        }
-    }
+这儿的要点是你只对CSS像素感兴趣。这些就是那些控制你的样式表如何被渲染的像素。
 
-那這樣應該相當好理解了吧！這就是 `@viewport` 在做的事情，另外，由於 `@viewport` 有絕對優先權，所以他會比 `@media` 還要早執行，所以就算這樣寫，也是會成立的，
+设备像素对你（译者：指的是开发者）来说基本上没用。但是对于用户不一样；用户将会放大或者缩小页面直到他能舒服的阅读为止。无论怎样，缩放比例对你不会产生影响。浏览器将会自动的使你的CSS布局被拉伸或者被压缩。
 
-    @media only screen and (width: 768px) {
-        h1 {
-            font-size: 16px;
-        }
-    }
+# 100%缩放 #
 
-    @media only screen and (width: 1200px) {
-        h1 {
-            font-size: 26px;
-        }
-    }
+我是以假设缩放比例为100%来开始这个例子的。是时候需要更加严格的来定义一下这个100%了：
 
-    @viewport {
-        width: 768px;
-    }
+    在缩放比例100%的情况下一个CSS像素完全等于一个设备像素。
 
-另外，我這裡就不要解釋 `actual viewport` 這件事情，我想稍微帶過就好，底下會附上參考文章給大家，
+100%缩放的概念在接下来的解释中会非常有用，但是在你的日常工作中你不用过分的担心它。在桌面环境上你将会在100%缩放比例的情况下测试你的站点，但即使用户放大或者缩小，CSS像素的魔力将会保证你的布局保持相同的比率。
 
-* `@viewport` 有兩種（
+# 屏幕尺寸 #
 
-    <strike>就跟斯斯有兩種一樣（被巴頭</strike>
+_screen.width/height_
 
-* 第一是 `initial viewport`
+* _意义：用户屏幕的整体大小。_
+* _度量单位：设备像素。_
+* _浏览器错误：IE8以CSS像素对其进行度量，IE7和IE8模式下都有这个问题。_
 
-    * `initial viewport` 是指裝置本身的_實際_展示的尺寸或相關設定
+让我们看一些实用的度量。我们将会以`screen.width`和`screen.height`做为开始。它们包括用户屏幕的整个宽度和高度。它们的尺寸是以设备像素来进行度量的，因为它们永远不会变：它们是显示器的属性，而不是浏览器的。
 
-* 其二是 `actual viewport`
+![desktop_screen](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_screen.jpg)
 
-    * `actual viewport` 是指經由 `initial viewport` 初始化後，內容本文的展示尺寸或相關設定
+Fun! 但是这些信息跟对我们有什么用呢？
 
-另外一種說法是，顯示裝置的_實際_展示尺寸叫做 `visual viewport`，底下這兩篇精彩文章請詳閱，
+基本上没用。用户的显示器尺寸对于我们来说不重要－好吧，除非你想度量它来丰富你的web统计数据库。
 
-這裡有兩篇相當精彩的文章，推薦閱讀，  
-[A tale of two viewports — part one](http://www.quirksmode.org/mobile/viewports.html)  
-[A tale of two viewports — part two](http://www.quirksmode.org/mobile/viewports2.html)  
-另外一篇關於 viewport 與瀏覽器的相關文章，  
-[Browser compatibility — viewports](http://www.quirksmode.org/mobile/tableViewport.html)
+# 窗口尺寸 #
 
-屬性與設定
------
+_window.innerWidth/Height_
 
-首先請先參考一下 w3c 所列出來的 [Property Index](http://www.w3.org/TR/css-device-adapt/#property-index)，這些是我們可以使用的設定。然而有幾項比較特殊的 `meta` 標籤使用的設定在這裡 [Property](http://www.w3.org/TR/css-device-adapt/#meta-properties)。
+* _意义：浏览器窗口的整体大小，包括滚动条。_
+* _度量单位：CSS像素。_
+* _浏览器错误：IE7不支持。Opera以设备像素进行度量。_
 
-我們先看一下 `meta` 標籤可用的設定有哪些，
+相反，你想知道的是浏览器窗口的内部尺寸。它告诉了你用户到底有多少空间可以用来做CSS布局。你可以通过`window.innerWidth`和`window.innerHeight`来获取这些尺寸。
 
-* `width` 給予寬度，可視區域寬度，有 `device-width` 這個關鍵字可用，任何非法值會轉成 `1px`，負數會直接失效
-* `height` 給予高度，可視區域高度，有 `device-height` 這個關鍵字可用，任何非法會轉成 `1px`，負數會直接失效
-* `initial-scale` 預設縮放等級，數值範圍從 0.1 ~ 10，若使用 `device-width` 或 `device-height` 則會等於 `10`，`yes` 會等於 `1`，`no` 或任何非法值會轉成 `0.1`，負數會直接失效
-* `minimum-scale` 最小縮放等級，其他設定同 `initial-scale`
-* `maximum-scale` 最大縮放等級，其他設定同 `initial-scale`
-* `user-scalable` 使用者是否可以進行縮放動作，可以使用關鍵字 `yes`, `no`，數值範圍從 -1 ~ 1，若使用 `device-width` 或 `device-height` 則為 `yes`，其他值則為 `no`
-* `target-densityDpi` 這只能使用在大部份的 Android 手機上，數值範圍從 70 ~ 400，單位是 `dpi`，有 `device-dpi`, `low-dpi`, `medium-dpi`, `high-dpi` 等關鍵字可用，其他值會直接失效
+![desktop_inner](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_inner.jpg)
 
-以上的 `meta` 可用屬性設定，都可以被轉換為 `@viewport` 的設定，以下說明，
+很显然，窗口的内部宽度是以CSS像素进行度量的。你需要知道你的布局空间中有多少可以挤进浏览器窗口，当用户放大的时候这个数值会减少。所以如果用户进行放大操作，那么在窗口中你能获取的空间将会变少，`window.innerWidth/Height`的值也变小了。
+（这儿的例外是Opera，当用户放大的时候`window.innerWidth/Height`并没有减少：它们是以设备像素进行度量的。这个问题在桌面上是比较烦人的，但是就像我们将要看到的，这在移动设备上却是非常严重的。）
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes, target-densityDpi=low-dpi">
+![desktop_inner_zoomed](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_inner_zoomed.jpg)
 
-    @viewport {
-        width: device-width;
-        zoom: 1.0;
-        min-zoom: 0.5;
-        max-zoom: 2.0;
-        user-zoom: zoom;
-        resolution: 120dpi;
-    }
+注意度量的宽度和高度是包括滚动条的。它们也被视为内部窗口的一部分。（这大部分是因为历史原因造成的。）
 
-是的，`meta` 轉換為 `@viewport` 並不是直接複製貼上就好，他們的屬性設定是不同的，關於這點 w3c 有說明，請勿把這兩種屬性混在一起寫，
-<strike>就算混在一起也做不出撒尿牛丸的！</strike>
+# 滚动距离 #
 
-我們再來看看 `@viewport` 的屬性設定，
+_window.pageX/YOffset_
 
-* `width` 可視區域寬度，只給這個值則表示最大、最小值相同，可以使用 `auto`, `device-width`, `device-height`, 含單位數值與百分比數值
-* `max-width`, `min-width` 可視區域寬度最大、最小值，可用值同 `width`
-* `height` 可視區域高度，只給這個值則表示最大、最小值相同，可用值同 `width`
-* `max-height`, `min-height` 可視區域高度最大、最小值，可用值同 `width`
-* `zoom` 可視區域預設縮放等級，可以使用 `auto`，初始值 `1.0` 或 `100%`，數值大於此則進行縮放動作
-* `max-zoom`, `min-zoom` 設定可視區域最大、最小允許縮放等級，可用值同 `zoom`
-* `user-zoom` 允許使用者使用縮放，可用值為 `zoom`, `fixed`，前者代表可以，後者則否
-* `orientation` 可視區域的轉向，可用值為 `auto`, `portrait`, `landscape`
-* `resolution` 可視區域的解析度，單位為 `dpi` 或 `dpcm`，可用值為 `auto`, `device` 或是自行指定數值
+* _意义：页面滚动的距离。_
+* _度量单位：CSS像素。_
+* _浏览器错误：无。_
 
-其中 `resolution` 與 `target-densityDpi` 的轉換關係為，
+`window.pageXOffset`和`window.pageYOffset`，包含了文档水平和垂直方向的滚动距离。所以你可以知道用户已经滚动了多少距离。
 
-* `device-dpi` = `device`
-* `low-dpi` = `120dpi`
-* `midium-dpi` = `160dpi`
-* `high-dpi` = `240dpi`
+![desktop_page](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_page.jpg)
 
-然後，我自己實際使用 iPhone4/iPhone4S/iPad，皆無法對 `resolution` 與 `target-densityDpi` 的設定產生效果，但是 Android 可用，所以 w3c 沒有騙人，
+这些属性也是以CSS像素进行度量的。你想知道的是文档已经被滚动了多长距离，不管它是放大还是缩小的状态。
 
-> This property differ from the others since it is from the WebKit implementation used in the Android browser and not supported in Safari.
+理论上，如果用户向上滚动，然后放大，`window.pageX/YOffset`将会发生变化。但是，浏览器为了想保持web页面的连贯，会在用户缩放的时候保持相同的元素位于可见页面的顶部。这个机制并不能一直很完美的执行，但是它意味着在实际情况下`window.pageX/YOffset`并没有真正的更改：被滚动出窗口的CSS像素的数量仍然（大概）是相同的。
 
-應用盲點
-----
+![desktop_page_zoomed](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_page_zoomed.jpg)
 
-由於剛剛提到那兩篇文章很明確的指出 `viewport` 在裝置上的狀況，所以其實在應用上確實會有許多問題點，倒也不是 `@viewport` 或是 `@media` 之間的問題，而是網站在設計本身是否有_考量到_所謂的不同顯示界面的問題。
+# 概念：viewport #
 
-舉個干擾到 `@viewport` 的例子來看，假設我們使用的是 iPhone4，直式顯示方式，
+在我们继续介绍更多的JavaScript属性之前，我们必须介绍另一个概念：viewport。
 
-    @viewport {
+viewport的功能是用来约束你网站中最顶级包含块元素（containing block）`<html>`的。
+
+这听起来有一点模糊，所以看一个实际的例子。假设你有一个流式布局，并且你众多边栏中的一个具有`width: 10%`属性。现在这个边栏会随着浏览器窗口大小的调整而恰好的放大和收缩。但是这到底是如何工作的呢？
+
+从技术上来说，发生的事情是边栏获取了它父元素宽度的10%。比方说是`<body>`元素（并且你还没有给它设置过`宽度`）。所以问题就变成了`<body>`的宽度是哪个？
+
+普通情况下，所有块级元素使用它们父元素宽度的100%（这儿有一些例外，但是让我们现在先忽略它）。所以`<body>`元素和它的父元素`<html>`一样宽。
+
+那么`<html>`元素的宽度是多少？它的宽度和浏览器窗口宽度一样。这就是为什么你的那个拥有`width: 10%`属性的侧边栏会占据整个浏览器窗口的10%。所有web开发者都很直观的知道并且在使用它。
+
+你可能不知道的是这个行为在理论上是如何工作的。理论上，`<html>`元素的宽度是被viewport的宽度所限制的。`<html>`元素使用viewport宽度的100%。
+
+viewport，接着，实际上等于浏览器窗口：它就是那么定义的。viewport不是一个HTML结构，所以你不能用CSS来改变它。它在桌面环境下只是拥有浏览器窗口的宽度和高度。在移动环境下它会有一些复杂。
+
+# 后果　Consequences #
+
+这个状况会有产生一些异样的后果。你可以在这个站点看到这些后果中的一个。滚动到顶部，然后放大两次或者三次，之后这个站点的内容就从浏览器窗口溢出了。
+
+现在滚动到右边，然后你将会看见站点顶部的蓝色边栏不再覆盖一整行了。
+
+![desktop_htmlbehaviour](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_htmlbehaviour.jpg)
+
+这个行为是由于viewport的定义方式而产生的一个后果。我之前给顶部的蓝色边栏设置了`width: 100%`。什么的100%？`<html>`元素的100%，它的宽度和viewport是一样的，viewport的宽度是和浏览器窗口一样的。
+
+问题是：在100%缩放的情况下这个工作的很好，现在我们进行了放大操作，viewport变得比我的站点的总体宽度要小。这对于viewport它本身来说没什么影响，内容现在从`<html>`元素中溢出了，但是那个元素拥有`overflow: visible`，这意味着溢出的内容在任何情况下都将会被显示出来。
+
+但是蓝色边栏并没有溢出。我之前给它设置了`width: 100%`，并且浏览器把viewport的宽度赋给了它。它们根本就不在乎现在宽度实在是太窄了。
+
+![desktop_100percent](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_100percent.jpg)
+
+# 文档宽度？ #
+
+我真正需要知道的是页面中全部内容的宽度是多少，包括那些「伸出」的部分。据我所知得到这个值是不可能的（好吧，除非你去计算页面上所有元素的宽度和边距，但是委婉的说，这是容易出错的）。
+
+我开始相信我们需要一个我称其为「文档宽度」(document width，很显然用CSS像素进行度量)的JavaScript属性对。
+
+![desktop_documentwidth](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_documentwidth.jpg)
+
+并且如果我们真的如此时髦，为什么不把这个值引入到CSS中？我将会给我的蓝色边栏设置`width: 100%`，此值基于文档宽度，而不是`<html>`元素的宽度。（但是这个很复杂，并且如果不能实现我也不会感到惊讶。）
+
+浏览器厂商们，你们怎么认为的？
+
+# 度量viewport #
+
+_document.documentElement.clientWidth/Height_
+
+* _意义：Viewport尺寸。_
+* _度量单位：CSS像素。_
+* _浏览器错误：无。_
+
+你可能想知道viewport的尺寸。它们可以通过`document.documentElement.clientWidth`和`-Height`得到。
+
+![desktop_client](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_client.jpg)
+
+如果你了解DOM，你应该知道`document.documentElement`实际上指的是`<html>`元素：即任何HTML文档的根元素。可以说，viewport要比它更高一层；它是包含`<html>`元素的元素。如果你给`<html>`元素设置`width`属性，那么这将会产生影响。（我不推荐这么做，但是那是可行的。）
+
+在那种情况下`document.documentElement.clientWidth`和`-Height`给出的仍然是viewport的尺寸，而不是`<html>`元素的。（这是一个特殊的规则，只对这个元素的这个属性对产生作用。在任何其他的情况下，使用的是元素的实际宽度。）
+
+![desktop_client_smallpage](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_client_smallpage.jpg)
+
+所以`document.documentElement.clientWidth`和`-Height`一直代表的是viewport的尺寸，不管`<html>`元素的尺寸是多少。
+
+# 两个属性对 #
+
+但是难道viewport宽度的尺寸也可以通过`window.innerWidth/Height`来提供吗？怎么说呢，模棱两可。
+
+两个属性对之间存在着正式区别：`document.documentElement.clientWidth`和`-Height`并不包含滚动条，但是`window.innerWidth/Height`包含。这像是鸡蛋里挑骨头。
+
+事实上两个属性对的存在是浏览器战争的产物。当时Netscape只支持`window.innerWidth/Height`，IE只支持`document.documentElement.clientWidth`和`Height`。从那时起所有其他浏览器开始支持`clientWidth/Height`，但是IE没有支持`window.innerWidth/Height`。
+
+在桌面环境上拥有两个属性对是有一些累赘的　－　但是就像我们将要看到的，在移动端这将会得到祝福。
+
+# 度量\<html>元素 #
+
+_document.documentElement.offsetWidth/Height_
+
+* _意义：元素（也就是页面）的尺寸。_
+* _度量单位：CSS像素。_
+* _浏览器错误：IE度量的是viewport，而不是元素。_
+
+所以`clientWidth/Height`在所有情况下都提供viewport的尺寸。但是我们去哪里获取`<html>`元素本身的尺寸呢？它们存储在`document.documentElement.offsetWidth`和`-Height`之中。
+
+![desktop_offset](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_offset.jpg)
+
+这些属性可以使你以块级元素的形式访问`<html>`元素；如果你设置`width`，那么`offsetWidth`将会表示它。
+
+![desktop_offset_smallpage](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_offset_smallpage.jpg)
+
+# 事件中的坐标 #
+
+_pageX/Y, clientX/Y, screenX/Y_
+
+* _意义：见正文。_
+* _度量单位：见正文。_
+* _浏览器错误：IE不支持pageX/Y。IE和Opera以CSS像素为单位计算screenX/Y。_
+
+然后是事件中的坐标。当一个鼠标事件发生时，有不少于五种属性对可以给你提供关于事件位置的信息。对于我们当前的讨论来说它们当中的三种是重要的：
+
+* `pageX/Y`提供了相对于`<html>`元素的以CSS像素度量的坐标。
+
+![desktop_pageXY](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_pageXY.jpg)
+
+* `clientX/Y`提供了相对于viewport的以CSS像素度量的坐标。
+
+![desktop_clientXY](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_clientXY.jpg)
+
+* `screenX/Y`提供了相对于屏幕的以设备像素进行度量的坐标。
+
+![desktop_screenXY](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_screenXY.jpg)
+
+90%的时间你将会使用`pageX/Y`；通常情况下你想知道的是相对于文档的事件坐标。其他的10%时间你将会使用`clientX/Y`。你永远不需要知道事件相对于屏幕的坐标。
+
+# 媒体查询 #
+
+_媒体查询_
+
+* 意义：见正文。
+* 度量单位：见正文。
+* 浏览器错误：IE不支持它们。
+
+    * 如果 `device-width/height`是以CSS像素进行度量的，那么Firefox将会使用`screen.width/height`的值。
+    * 如果`width/height`是以设备像素进行度量的，那么Safari和Chrome将会使用`documentElement.clientWidth/Height`的值。
+
+最后，说说关于媒体查询的事。原理很简单：你可以声明「只在页面宽度大于，等于或者小于一个特定尺寸的时候才会被执行」的特殊的CSS规则。比如：
+
+    div.sidebar {
         width: 300px;
-        user-zoom: fixed;
     }
 
-    html, body {
-        margin: 0;
-        padding: 0;
-        border: 0;
+    @media all and (max-width: 400px) {
+        // styles assigned when width is smaller than 400px;
+        div.sidebar {
+            width: 100px;
+        }
+
     }
 
-    #container {
-        width: 400px;
-        overflow: hidden;
-    }
-    #container > .navigation {
-        width: 100%;
-    }
+当前sidebar是300px宽，除了当宽度小于400px的时候，在那种情况下sidebar变得100px宽。
 
-當你的 HTML 所展示出來的結果，超出了原有 `@viewport` 的寬度設定，畫面就可能會被切掉（
-<strike>好像是廢話</strike>），我們知道幾件事情，
+问题很显然：我们这儿度量的是哪个宽度？
 
-* `@media` 的 `device-width` 是 `320px`
-* `@viewport` 的 `width` 是 `300px`
-* `document.documentElement.offsetWidth` 將會是 `300px`
-* `screen.width` 將會是 `320px`
-* `#container` 的寬度將會是 `400px`
+这儿有两个对应的媒体查询：`width/height`和`device-width/device-height`。
 
-這樣講很難想像，總要有個畫面比較準確，但是，我這麼說好了，這個畫面在裝置上_顯示完全無異常_，既然無異常我附圖也沒有意義嘛。那麼，如果讓他有異常呢？
+1.  `width/height`使用和`documentElement .clientWidth/Height`（换句话说就是viewport宽高）一样的值。它是工作在CSS像素下的。
 
-加上 `zoom: 1.0`（等同於 `initial-scale: 1.0`）就會有了，
+2.  `device-width/device-height`使用和`screen.width/height`（换句话说就是屏幕的宽高）一样的值。它工作在设备像素下面。
 
-* `@media` 的 `device-width` 是 `320px`
-* `@viewport` 的 `width` 是 `300px`
-* `document.documentElement.offsetWidth` 將會是 `320px`
-* `screen.width` 將會是 `320px`
-* `#container` 的寬度將會是 `400px`
+![desktop_mediaqueries](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport/desktop_mediaqueries.jpg)
 
-疑？你會覺得好像加上 `zoom: 1.0` 之後，所反應出來的數值比較正常。但是，我們在換個方式做，
+你应该使用哪个？这还用想？当然是`width`。Web开发者对设备宽度不感兴趣；这个是浏览器窗口的宽度。
 
-    @viewport {
-        width: 900px;
-        user-zoom: fixed;
-        zoom: 1.0;
-    }
+所以在桌面环境下去使用`width`而去忘记`device-width`吧。我们即将看到这个情况在移动端会更加麻烦。
 
-結果勒（
-<strike>結果勒～結果勒結果勒～</strike>
+# 总结 #
 
-* `@media` 的 `device-width` 是 `320px`
-* `@viewport` 的 `width` 是 `900px`
-* `document.documentElement.offsetWidth` 將會是 `900px`
-* `screen.width` 將會是 `320px`
-* `#container` 的寬度將會是 `400px`
-
-<strike>WTF!!!</strike> 這就是一個典型的 `actual viewport` 的實際範例了。
-
-* `@media` 的 `device-width` 是 `320px`
-* `@viewport` 的 `width` 是 `900px`
-* `document.documentElement.offsetWidth` 將會是 `900px`
-* `screen.width` 將會是 `320px`
-* `#container` 的寬度將會是 `400px`
-
-<strike>WTF!!!</strike> 這就是一個典型的 `actual viewport` 的實際範例了。
-
-Could you tell me why?
-----------------------
-
-NO, you tell me.
-================
-
-好啦，我開玩笑的
-<strike>（被揍飛</strike>，會變成這樣的理由很簡單，我剛剛有說過了 `@viewport` 有兩種，第一種（`initial viewport`）你無法干涉，第二種（`actual viewport`）是由你的文本所產生出來的結果。
-
-所以上面的例子就很明顯可以分割成這兩種區塊，
-
-* 這裡是 `actual viewport`
-
-    * `viewport` 設定為 `900px` 表示我的可視區域就是 `900px`
-    * 故然，我的 `document.documentElement.offsetWidth` 當然就與我的可視區域同大
-
-* 這裡是 `initial viewport`
-
-    * `device-width` 理所當然是 `320px`
-    * `screen.width` 理所當然跟 `device-width` 一樣大
-
-那如果把 `#container` 設定成 `width: 1200px` 呢？嗯，大概就橫向的捲軸會變得比較長一點吧。是的，雖然取得 `document.documentElement.offsetWidth` 還是 `900px`，但是本文設定成 `1200px` 的話，他還是會全部呈現出來，只是你所取得的 `offsetWidth` 就不是真正的寬度了。
-
-_其實，寬度應該以本文總寬度為準，不應該以 `actual viewport` 為準。_
-
-那到底 `@viewport` 做了什麼事情呢？
+本文总结了我们对桌面浏览器行为的探寻。[这个系列的第二部分](http://weizhifeng.net/viewports2.html)把这些概念指向了移动端，并显示的指出了与桌面环境上的一些重要区别。
 
 ## Reference
 
-- [在移动浏览器中使用viewport元标签控制布局 - Mobile](https://developer.mozilla.org/zh-CN/docs/Mobile/Viewport_meta_tag)
+- [在移动浏览器中使用viewport元标签控制布局 - Mobile](https://developer.mozilla.org/zh-CN/docs/Mobile/Viewport _meta_ tag)
 - [@viewport - CSS](https://developer.mozilla.org/zh-CN/docs/Web/CSS/@viewport)
-
+- [两个viewport的故事（第一部分）](http://weizhifeng.net/viewports.html)

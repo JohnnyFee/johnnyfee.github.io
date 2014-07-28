@@ -71,3 +71,4 @@ If you're more of an offline/ebook reader then I highly recommend checking out t
 - [Breakpoints And The Future Of Websites](http://www.smashingmagazine.com/2014/07/08/breakpoints-and-the-future-websites)
 - [Flexbox Based Responsive Equal Height Blocks With JavaScript Fallback — Osvaldas Valutis](http://osvaldas.info/flexbox-based-responsive-equal-height-blocks-with-javascript-fallback)
 - [HTML5 Developer Conference](http://html5devconf.com/videos.html)
+- [响应式web设计(Responsive web design)三步曲](http://weizhifeng.net/responsive-design-in-3-steps.html)

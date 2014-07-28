@@ -10,6 +10,7 @@ tags: [mongodb, database]
 - [the-little-mongodb-book-cn/mongodb.md at master · justinyhuang/the-little-mongodb-book-cn](https://github.com/justinyhuang/the-little-mongodb-book-cn/blob/master/mongodb.md)
 - [MongoDB Environment](http://www.tutorialspoint.com/mongodb/mongodb_environment.htm)
 - [Getting Started with MongoDB - Part 1 - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/getting-started-with-mongodb-part-1--net-22879)
+- [Mongodb数据的备份与恢复](http://weizhifeng.net/backup-and-restore-data-of-mongodb.html)
 
 ## Auth
 

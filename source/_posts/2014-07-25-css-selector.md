@@ -34,6 +34,8 @@ p.info.error { color:#900; font-weight:bold; }
 p#info { background:#ff0; }
 ```
 
+<!--more-->
+
 ## 二、多元素的组合选择器
 
 序号    | 选择器    | 含义       

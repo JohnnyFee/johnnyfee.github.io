@@ -23,7 +23,7 @@ Node 的框架：<http://nodeframework.com/>。
 
 Koa号称为Node下一代的 Web 框架。但是在官方的FAQ中提到它不会取代Connect，但会不会取代Express，并没有正面回答，参考 [koa/docs/faq.md at master · koajs/koa](https://github.com/koajs/koa/blob/master/docs/faq.md)。
 
-但不管怎么样，哥刚入门 Node，还是从 Express 入手。
+但不管怎么样，哥刚入门 Node，还是从 Express 3 入手。
 
 本文以下部分是 <<[Express Web Application Development](http://www.salttiger.com/express-web-application-development/)>> 的读书笔记，基本都是英文，都是从原文中拷贝下来的。
 
@@ -406,7 +406,7 @@ run the app:
 
 Take a look at the content of the directory auto generated:
 
-    ![express-skeleton](http://johnnyimages.qiniudn.com/express-skeleton.png)
+![express-skeleton](http://johnnyimages.qiniudn.com/express-skeleton.png)
 
 
 ### Empowering Express with middlewares

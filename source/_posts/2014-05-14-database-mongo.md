@@ -24,6 +24,10 @@ tags: [mongodb, database]
 - [[译]MongoDb生产环境注意事项 - yaoxing - 博客园](http://www.cnblogs.com/yaoxing/p/mongodb-production-notes.html)
 - [关于Mongodb的全面总结，学习mongodb的人，可以从这里开始！](http://blog.csdn.net/jakenson/article/details/7060431)
 
+## Mongoose
+
+- [Mongoose - 让NodeJS更容易操作Mongodb数据库 - CSSer](http://www.csser.com/board/4f3f516e38a5ebc9780004fe)
+
 ### 管理工具
 
 - [几个重量级的NoSQL数据库和管理工具 - 数据库 - ITeye资讯](http://www.iteye.com/news/22607-NoSQL-Redis-Cassandra-MongoDB)
@@ -33,8 +37,11 @@ tags: [mongodb, database]
 
 - [mongoDB数据库设置用户名及密码 - 我的人生，我做主 - 博客频道 - CSDN.NET](http://blog.csdn.net/wycf1314/article/details/10225921)
 - [MongoDB权限管理之用户名和密码的操作 - 51CTO.COM](http://database.51cto.com/art/201107/278042.htm)
+- [node.js - Nodejs MongoError: auth fails - Stack Overflow](http://stackoverflow.com/questions/21180643/nodejs-mongoerror-auth-fails)
 
-[node.js - Nodejs MongoError: auth fails - Stack Overflow](http://stackoverflow.com/questions/21180643/nodejs-mongoerror-auth-fails)
+## BAE
+
+- [BAE3.0 mongoose 长连接问题 - CNode](http://cnodejs.org/topic/52e0f31a78990b0411b585d9)
 
 ## Books
 

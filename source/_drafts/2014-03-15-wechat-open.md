@@ -31,6 +31,13 @@ tle=docs/cplat/rt/node.js)
 
 - [传说中的WeixinJSBridge和微信rest接口](http://bbs.blueidea.com/thread-3103040-1-1.html)
 
+## 运营
+
+- [微信小店（派代网）](http://www.paidai.com/labels/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E5%BA%97.html)
+- [《淘宝搬家到微信店铺 （实操笔记）》1 -- 微信开店（选型）（派代网）](http://bbs.paidai.com/topic/265663)
+- [微信开店要多少钱？营销大师能忽悠你百万 - 派代商道](http://news.paidai.com/14497)
+- [《淘宝搬家到微信店铺 （实操笔记）》1 -- 微信开店（选型）（派代网）](http://bbs.paidai.com/topic/265663)
+
 ## BAE
 
 - [docs/cplat/bae/log - 百度开放云平台](http://developer.baidu.com/wiki/index.php?title=docs/cplat/bae/log)

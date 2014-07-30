@@ -44,12 +44,6 @@ tags: [node, tutorial]
 - [Node Security](http://www.salttiger.com/node-security/)
 - [Beer Locker: Building a RESTful API with Node - OAuth2 Server - Scott Smith](http://scottksmith.com/blog/2014/07/02/beer-locker-building-a-restful-api-with-node-oauth2-server)
 
-### Passport
-
-[Passport](http://passportjs.org/)项 目是一个基于Nodejs的认证中间件。Passport目的只是为了“登陆认证”，因此，代码干净，易维护，可以方便地集成到其他的应用中。Web应用 一般有2种登陆认证的形式：用户名和密码认证登陆,OAuth认证登陆。Passport可以根据应用程序的特点，配置不同的认证机制。本文将介绍，用户 名和密码的认证登陆。
-
-[Build User Authentication with Node.js, Express, Passport, and Orchestrate - The Orchestrate Blog](http://orchestrate.io/blog/2014/06/26/build-user-authentication-with-node-js-express-passport-and-orchestrate)
-
 ## Communication
 
 - [amark/coalesce](https://github.com/amark/coalesce) Communication framework for distributed JavaScript.

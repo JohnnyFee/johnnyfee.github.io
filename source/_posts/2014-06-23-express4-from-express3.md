@@ -5,7 +5,8 @@ category: Node
 tags: [node, express]
 --- 
 
-> 原文: [express4.x新特性以及如何从3.x升级到4.x](http://jser.me/2014/03/18/express4.x%E6%96%B0%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E4%BB%8E3.x%E5%8D%87%E7%BA%A7%E5%88%B04.x.html)
+> 原文：[ExpressJS 4.0: New Features and Upgrading from 3.0 ♥ Scotch](http://scotch.io/bar-talk/expressjs-4-0-new-features-and-upgrading-from-3-0)
+> 翻译: [express4.x新特性以及如何从3.x升级到4.x](http://jser.me/2014/03/18/express4.x%E6%96%B0%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E4%BB%8E3.x%E5%8D%87%E7%BA%A7%E5%88%B04.x.html)
 
 距离我写[expressx2.x升级3.x](http://jser.me/2012/12/10/Express2.X%E8%BF%81%E7%A7%BB%E8%87%B33.X%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.html)已经过去一年多的时间了，这期间express发展很迅速，已经是nodejs社区事实上的web框架之王。最近express发布了[4.0.0-rc3](https://github.com/visionmedia/express/blob/master/package.json#L4)，其中又有了一些改变，下面我们来看看有哪些改变，以及如何从3.x升级到4.x。
 
@@ -182,8 +183,11 @@ if ('development' == env) {
 
 如果发现这篇文章里有什么错误，欢迎留言反馈。
 
-喜欢看英文的朋友，可以直接看下面的文章：
+## Reference
 
+- [Tom's Blog](http://blog.tompawlak.org/new-features-node-express-4)
 * [Migrating from 3.x to 4.x](https://github.com/visionmedia/express/wiki/Migrating-from-3.x-to-4.x)
+* [Migrating from 3.x to 4.x · strongloop/express Wiki](https://github.com/strongloop/express/wiki/Migrating-from-3.x-to-4.x)
 * [New features in 4.x](https://github.com/visionmedia/express/wiki/New-features-in-4.x)
-
+* [New features in 4.x · strongloop/express Wiki](https://github.com/strongloop/express/wiki/New-features-in-4.x)
+* [Express.js 4, Node.js and MongoDB REST API Tutorial](http://webapplog.com/express-js-4-node-js-and-mongodb-rest-api-tutorial/)

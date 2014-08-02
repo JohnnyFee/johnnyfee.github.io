@@ -38,6 +38,8 @@ tle=docs/cplat/rt/node.js)
 - [微信开店要多少钱？营销大师能忽悠你百万 - 派代商道](http://news.paidai.com/14497)
 - [《淘宝搬家到微信店铺 （实操笔记）》1 -- 微信开店（选型）（派代网）](http://bbs.paidai.com/topic/265663)
 
+## [乐享微信接口 乐享微信 乐享微信机器人 微信订餐](http://www.wxapi.cn/)
+
 ## BAE
 
 - [docs/cplat/bae/log - 百度开放云平台](http://developer.baidu.com/wiki/index.php?title=docs/cplat/bae/log)

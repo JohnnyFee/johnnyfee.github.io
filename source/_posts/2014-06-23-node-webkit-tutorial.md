@@ -296,13 +296,12 @@ node-webkit adds Node.js support and enhancement in DOM for trusted code and con
 - [The nw protocol](https://github.com/rogerwang/node-webkit/wiki/The-nw-protocol)
 - [Crash dump](https://github.com/rogerwang/node-webkit/wiki/Crash-dump)
 
-
-
 ## Tutorial
 
 - [Home · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki)
 - [Introduction to node-webkit (slides)](https://speakerdeck.com/u/zcbenz/p/node-webkit-app-runtime-based-on-chromium-and-node-dot-js)
 - [【开源专访】Node-Webkit作者王文睿：桌面应用的全新开发方式-CSDN.NET](http://www.csdn.net/article/2014-01-08/2818066-Node-Webkit)
+- [开始 node-webkit 前，你应该知道的](http://yedingding.com/2014/07/28/node-webkit-intro.html)
 
 ### example
 

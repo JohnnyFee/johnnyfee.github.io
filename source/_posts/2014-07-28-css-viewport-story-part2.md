@@ -291,3 +291,9 @@ _Meta viewport_
 * 其他媒体查询：dpi，orientation，aspect-ratio。尤其是dpi，那是一个灾难地区，不仅仅是因为所有浏览器都返回96dpi，通常都是错的，也是因为我完全不确定对于web开发者来说哪个值是他们最感兴趣的。
 
 * 当一个元素比layout viewport/HTML元素宽的时候会发生什么？比如我把一个拥有`width: 1500px`属性的元素插入到我的测试页面中的一个？这个元素将会从HTML元素中伸出来（`overflow: visible`），但这意味着实际的viewport可以变得比layout viewport要宽。除了这个以外，旧Android（Nexus One）还会当这个发生的时候放大HTML元素。这是个好主意吗？
+
+## Tutorial
+
+- [视窗meta标签的理解](http://www.w3cplus.com/css/understanding-the-viewport-meta-tag.html)
+- [此像素非彼像素](http://www.w3cplus.com/css/A-pixel-is-not-a-pixel-is-not-a-pixel.html)
+- [Responsive Meta Tag](http://css-tricks.com/snippets/html/responsive-meta-tag/)

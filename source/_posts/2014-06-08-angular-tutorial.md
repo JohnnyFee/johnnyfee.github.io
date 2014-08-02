@@ -949,3 +949,4 @@ Batarang is a Chrome extension that adds AngularJS knowledge to the built-in Dev
 - [AngularJS and jQuery Dialogs - The UrBlog](http://jurberg.github.io/blog/2014/06/29/angularjs-jquery-dialog)
 - [Best Practices for Building Angular.js Apps — Medium](https://medium.com/@dickeyxxx/best-practices-for-building-angular-js-apps-266c1a4a6917)
 - [Requiring Versus Browserifying Angular -Telerik Developer Network](http://developer.telerik.com/featured/requiring-vs-browerifying-angular)
+- [2013年度最强AngularJS资源合集-CSDN.NET](http://www.csdn.net/article/2014-01-03/2818005-AngularJS-Google-resource)

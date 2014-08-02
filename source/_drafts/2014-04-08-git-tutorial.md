@@ -249,7 +249,13 @@ doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
         node_modules/*
         !node_modules/app-widget
 
-## Advanced
+
+- ignore folders:
+    <http://stackoverflow.com/questions/2545602/git-ignore-sub-folders>
+    
+        **/bin/Debug/
+        **/bin/Release/
+        ## Advanced
 
 ### 从git中永久删除文件以节省空间
 

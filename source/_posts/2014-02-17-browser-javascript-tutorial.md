@@ -91,6 +91,7 @@ tags: [javascript]
 ### Debug
 
 - [Amjad Masad: Lesser known Debugging Techniques - YouTube](https://www.youtube.com/watch?v=rcjUR4icvoQ)
+- [谷歌Chrome Developer Tools浅析 – 成为更高效的 Developer_开发工具_酷勤网](http://www.kuqin.com/developtool/20120625/321085.html)
 
 ### 代码工具
 

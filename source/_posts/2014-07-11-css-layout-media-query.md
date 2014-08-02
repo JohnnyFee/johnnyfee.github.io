@@ -175,3 +175,7 @@ Respond.js 是您可以选择的诸多可用开源媒体查询 polyfills 之一�
 - [CSS3媒体查询 - HTML5 Chinese Interest Group Wiki](http://www.w3.org/html/ig/zh/wiki/CSS3%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2#device-aspect-ratio)
 - [CSS媒体查询 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Media_queries)
 - [[CSS] 彈性化的 Media Query - HINA::工程幼稚園](http://blog.hinablue.me/entry/css-media-query-use-pixel-or-not/)
+- [Boilerplate CSS Media Queries](http://www.paulund.co.uk/boilerplate-css-media-queries)
+- [CSS3 Media Queries](http://www.w3cplus.com/content/css3-media-queries)
+- [CSS3 Media Queries模板](http://www.w3cplus.com/css3/css3-media-queries-for-different-devices)
+- [Responsive设计和CSS3 Media Queries的结合](http://www.w3cplus.com/css3/responsive-design-with-css3-media-queries)

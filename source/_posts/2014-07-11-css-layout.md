@@ -14,39 +14,6 @@ A [CSS](https://developer.mozilla.org/en-US/docs/CSS "/en-US/docs/CSS") **layout
 * The [_flexible box layout_](https://developer.mozilla.org/en-US/docs/CSS/Using_CSS_flexible_boxes "/en-US/docs/"), designed for laying out complex pages that can be resized smoothly.
 * The _grid layout_, designed for layout out elements relatively to a fixed grid.
 
-## margin
-
-设置块级元素的 `width` 可以阻止它从左到右撑满容器，然后你就可以设置左右外边距为 `auto` 来使其水平居中。元素会占据你所指定的宽度，然后剩余的宽度会一分为二成为左右外边距。
-
-```css
-#main {
-  width: 600px;
-  margin: 0 auto; 
-}
-```
-
-唯一的问题是，当浏览器窗口比元素的宽度还要窄时，浏览器会显示一个水平滚动条来容纳页面。让我们再来改进下这个方案：
-
-<!--more-->
-
-```css
-#main {
-  max-width: 600px;
-  margin: 0 auto; 
-}
-```
-
-在这种情况下使用 `max-width` 替代 `width` 可以使浏览器更好地处理小窗口的情况。这点在移动设备上显得尤为重要。
-
-<div style="max-width:600px; margin: 0 auto; border: 1px solid #9979D1">
-    所有的结局都已写好<br/>
-    所有的泪水也都已启程<br/>
-    却忽然忘了是怎么样的一个开始<br/>
-    在那个古老的不再回来的夏日<br/>
-</div>
-
-顺便提下， 所有的主流浏览器包括IE7+在内都支持 max-width ，所以放心大胆的用吧。
-
 ## column
 
 The `column-count` property in CSS controls how many vertical columns text in a particular element will be broken into. For instance:

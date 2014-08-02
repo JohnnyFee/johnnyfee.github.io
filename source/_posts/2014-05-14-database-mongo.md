@@ -7,10 +7,34 @@ tags: [mongodb, database]
 
 ## Tutorial
 
-- [the-little-mongodb-book-cn/mongodb.md at master · justinyhuang/the-little-mongodb-book-cn](https://github.com/justinyhuang/the-little-mongodb-book-cn/blob/master/mongodb.md)
+- [the-little-mongodb-book/mongodb.markdown at master · geminiyellow/the-little-mongodb-book](https://github.com/geminiyellow/the-little-mongodb-book/blob/master/zh-cn/mongodb.markdown)
 - [MongoDB Environment](http://www.tutorialspoint.com/mongodb/mongodb_environment.htm)
 - [Getting Started with MongoDB - Part 1 - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/getting-started-with-mongodb-part-1--net-22879)
 - [Mongodb数据的备份与恢复](http://weizhifeng.net/backup-and-restore-data-of-mongodb.html)
+
+## Setup
+
+把 mongod 安装成服务时，用配置文件的方式貌似不行
+
+    mongod --config mongod.cfg --install
+
+使用以下命令 OK
+
+    mongod --dbpath e:\mongo\data --logpath e:\mongo\log\mongo.log --install
+
+之后就可以使用以下命令启动服务：
+    
+    net start MongoDB
+
+删除服务：
+
+    mongod --remove
+
+停止服务：
+
+    net stop MongoDB
+
+参考：[Install MongoDB on Windows — MongoDB Manual 2.6.3](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/)
 
 ## Auth
 

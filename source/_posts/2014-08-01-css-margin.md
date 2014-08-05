@@ -13,13 +13,13 @@ Margins are set using lengths, percentages, or the keyword `auto` and can have n
         margin: 0 3em 0 3em;
     }
 
-<!--more-->
-
 `margin` is a shorthand property and accepts up to four values, shown here:
 
     .box {
         margin: <margin-top> || <margin-right> || <margin-bottom> || <margin-left>
     }
+
+<!--more-->
 
 If fewer than four values are set, the missing values are assumed based on the ones that are defined. For example, the following two rule sets would get identical results:
 
@@ -63,8 +63,6 @@ In this example, two things are done to center this element horizontally within 
 Without the specified width, the `auto` values would essentially have no effect, setting the left and right margins to `0` or else to whatever is the available space inside the parent element.
 
 唯一的问题是，当浏览器窗口比元素的宽度还要窄时，浏览器会显示一个水平滚动条来容纳页面。让我们再来改进下这个方案：
-
-<!--more-->
 
 ```css
 #main {

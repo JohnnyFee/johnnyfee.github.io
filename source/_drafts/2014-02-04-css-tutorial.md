@@ -31,6 +31,18 @@ tags: [markdown]
 - [课程学习-案例：如何用CSS进行网页布局](http://www.imooc.com/learn/57)
 - [案例：固定边栏滚动特效](http://www.imooc.com/view/52?from=admin10000)
 
+## Ordering CSS3 Properties
+
+When writing CSS3 properties, the modern wisdom is to list the "real" property last and the vendor prefixes first:
+
+    .not-a-square {
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+    }
+
+参考：[Ordering CSS3 Properties](http://css-tricks.com/ordering-css3-properties/)
+
 ## Event
 
 - [将鼠标事件绑定到非矩形区域](http://blog.youyo.name/archives/bind-click-event-in-non-rectangular-area.html?-click-event-in-non-rectangular-area)

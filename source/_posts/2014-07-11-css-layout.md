@@ -3,7 +3,7 @@ layout: post
 title: "CSS Layout"
 category: CSS
 tags: [web, css, layout]
---- 
+------------------------
 
 A [CSS](https://developer.mozilla.org/en-US/docs/CSS "/en-US/docs/CSS") **layout mode**, sometimes abbreviated as _layout`,`_ is an algorithm determining the position and the size of boxes based on the way they interact with their sibling and ancestor boxes. There are several of them:
 

@@ -10,6 +10,7 @@ tags: [微信]
 ### Node
 
 - [node-webot/wechat](https://github.com/node-webot/wechat) 微信公共平台消息接口服务中间件。
+- [WeiXin ๏ 微信应用框架](http://weixinjs.org/)
 - [node-webot/weixin-robot](https://github.com/node-webot/weixin-robot) 微信公共帐号自动回复机器人。
 
 ### browser

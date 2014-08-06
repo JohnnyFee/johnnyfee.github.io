@@ -37,6 +37,6 @@ tags: [web, site]
 
 - [图片压缩大](http://www.iplaysoft.com/image-optimization-tools.html)
 - [域名解析服务](https://www.dnspod.cn/Domain)
-- [Godaddy注册商域名修改DNS地址-DNSPod 技术支持-DNSPod-免费智能DNS解析服务商-电信_网通_教育网,智能DNS](https://support.dnspod.cn/Kb/showarticle/tsid/42)
+- [Godaddy注册商域名修改DNS地址-DNSPod 技术支持-DNSPod](https://support.dnspod.cn/Kb/showarticle/tsid/42)
 
 <!--more-->	

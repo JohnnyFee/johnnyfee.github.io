@@ -5,35 +5,13 @@ description: ""
 category: Dao
 tags: [dao,web,design]
 --- 
-## 图标资源
 
-- <http://www.easyicon.net/>
-- <http://findicons.com>
-- <http://www.iconpng.com/>
-- <http://www.findicons.com>
-- <http://www.iconfinder.com>
-- <http://www.72sc.com/png/13723.html>
-- <http://www.famfamfam.com/lab/icons/silk/>
-- <http://www.freeiconsdownload.com/>
-- <http://openiconlibrary.sourceforge.net/>
-- <http://openiconlibrary.sourceforge.net/downloads.html>
-- [PS梦工厂-Icon素材](http://www.psdreamworks.com/category/materials-and-download/icon_materials)
 
 ## 素材资源
 
 - [站酷-素材](http://www.zcool.com.cn/gfxs/)
 
 <!--more-->
-
-## icon
-
-- [为你新项目准备的15组新Icon图标](http://www.shejidaren.com/15-new-icon-set-downloads.html)
-- [精选Dribbble图标Icon素材集（2013年春季版50+）](http://www.shejidaren.com/dribbble-freebie-icons-2013-spring.html)
-- [逼真图标设计欣赏（拟物化图标）](http://www.shejidaren.com/%E9%80%BC%E7%9C%9F%E5%9B%BE%E6%A0%87%E8%AE%BE%E8%AE%A1%E6%AC%A3%E8%B5%8F.html)
-- [iOS7 图标模板PSD （iOS7 icon template）](http://www.shejidaren.com/ios7-icon-template.html)
-- [50套免费icon图标素材精选 – 2014.4月 | 设计达人](http://www.shejidaren.com/free-icon-set-2014-4.html)
-- [200+漂亮线性图标下载（免费）](http://www.shejidaren.com/200-outline-icons-for-designer.html)
-- [一套漂亮的电子商务与购物图标素材(70个)](http://www.shejidaren.com/70-ecommerce-icons.html)
 
 ## 效果素材
 
@@ -48,14 +26,6 @@ tags: [dao,web,design]
 ## 网站模板
 
 - [30个免费的自适应网站模板 | 设计达人](http://www.shejidaren.com/30-free-responsive-html-themes.html)
-
-## 配色
-
-- [mrmrs/colors](https://github.com/mrmrs/colors) Smarter defaults for colors on the web. <http://clrs.cc>
-    + [zhangxinxu/quickLayout](https://github.com/zhangxinxu/quickLayout)
-- [SlexAxton/css-colorguard](https://github.com/SlexAxton/css-colorguard)
-- [davidmerfield/randomColor](https://github.com/davidmerfield/randomColor)
-    + [the demo](http://llllll.li/randomColor/)
 
 ## Logo
 
@@ -108,11 +78,6 @@ tags: [dao,web,design]
 
 - [20个色彩美丽的UI KIT设计素材（PSD）](http://www.shejidaren.com/20-beautiful-ui-kits-for-designer.html)
 
-### Icon
-
-- [一套带动画图标素材下载(Web版)](http://www.shejidaren.com/animated-icon-download.html)
-- [200+漂亮线性图标下载（免费）](http://www.shejidaren.com/200-outline-icons-for-designer.html)
-
 ## Tools
 
 - [Bohemian Coding - Sketch 3](http://bohemiancoding.com/sketch/)
@@ -121,7 +86,6 @@ tags: [dao,web,design]
 
 - [默默图标生成器](http://www.zcool.com.cn/article/ZMzY5ODA=.html)
 - [16个创意Photoshop图像处理教程](http://www.shejidaren.com/photoshop-image-processing-tutorials.html)
-- [信息图]字体与色彩搭配的10条戒律](http://www.shejidaren.com/10-commandments-of-type-and-color.html)
 
 ## Book
 

@@ -24,7 +24,6 @@ tags: [web, site]
 
 - [七牛云存储](http://www.qiniu.com/)
 - [盘点国内网站常用的一些CDN公共库加速服务 - WEB开发者](http://www.admin10000.com/document/4614.html)
-- [360网站卫士推出google字体加速方案_科技_环球网](http://tech.huanqiu.com/soft/2014-06/5013029.html?qq-pf-to=pcqq.c2c)
 
 ## 参考
 

@@ -150,7 +150,7 @@ Works in:
 
 ## background-clip
 
-background-clip  设置元素的背景（背景图片或颜色）是否延伸到边框下面。初始值 `border-box`。
+background-clip  设置元素的背景（背景图片或颜色）显示范围。初始值 `border-box`。
 
 如果没有背景图片，那么只有在边框设置为透明或半透明时才能看到视觉效果。
 
@@ -184,7 +184,7 @@ Here's a simple demo showing the different values of background-clip as well:
 
 The `background-origin` CSS property determines the background positioning area, that is the position of the origin of an image specified using the [`background-image`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-image) CSS property. Initial value `padding-box`.
 
-If the background of the element is an image, it can be quite important where the origin point of the background __starts__.
+If the background of the element is an image, it can be quite important where the origin point of the background __starts__（绘制图像的起点）.
 
 This is related to `background-clip`, because if the `background-clip` is the padding-box but the background-origin is left at the default `border-box`, some of the `background-image` will be cut off, which may or not be desireable.
 
@@ -207,6 +207,7 @@ Here's a simple demo showing the different values of background-orgin as well:
 - [background-size - CSS](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-size)
 - [background-clip - CSS](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-clip)
 - [background-origin - CSS](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-origin)
+- [background-repeat - CSS](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-repeat)
 - [Perfect Full Page Background Image](http://css-tricks.com/perfect-full-page-background-image/)
 - [Transparent Borders with background-clip](http://css-tricks.com/transparent-borders-with-background-clip/)
 

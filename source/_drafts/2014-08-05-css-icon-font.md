@@ -8,6 +8,11 @@ tags: [css, icon, font]
 - [Iconfont-阿里巴巴矢量图标库](http://www.iconfont.cn/repositories/14)
 - [IcoMoon App - Icon Font & SVG Generator](https://icomoon.io/app/#/select)
 - [Font Custom](http://fontcustom.com/#)
+- [The Big List of Flat Icons & Icon Fonts](http://css-tricks.com/flat-icons-icon-fonts/)
+
+## Example
+
+- [Icon Fonts are Awesome](http://css-tricks.com/examples/IconFont/)
 
 ## 素材
 

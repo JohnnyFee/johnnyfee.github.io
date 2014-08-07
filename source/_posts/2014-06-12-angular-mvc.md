@@ -123,17 +123,17 @@ To get this to work with our template, we need to tell the ng-app directive the 
 
 To complete the example, we could implement the rest of the template as:
 
-{%raw%}
-    <body ng-controller="ShoppingController">
-      <h1>Shop!</h1>
-      <table>
-          <td>{{item.title}}</td>
-          <td>{{item.description}}</td>
-          <td>{{item.price | currency}}</td>
-        </tr>
-      </table>
-    </div>
-{%endraw%}
+    {%raw%}
+        <body ng-controller="ShoppingController">
+          <h1>Shop!</h1>
+          <table>
+              <td>{{item.title}}</td>
+              <td>{{item.description}}</td>
+              <td>{{item.price | currency}}</td>
+            </tr>
+          </table>
+        </div>
+    {%endraw%}
 
 Let's look another example:
 
@@ -148,11 +148,11 @@ Let's look another example:
 
 There is a recipe service, which returns what we call an Angular Resource. With just that single line of code—return $resource—(and of course, a dependency on the guthub.services module), we can now put recipe as an argument in any of our controllers, and it will be injected into the controller. Furthermore, each recipe object has the following methods built in:
 
-* Recipe.get()
-* Recipe.save()
-* Recipe.query()
-* Recipe.remove()
-* Recipe.delete()
+1. Recipe.get()
+1. Recipe.save()
+1. Recipe.query()
+1. Recipe.remove()
+1. Recipe.delete()
 
 > If you are going to use Recipe.delete, and want your application to work in IE, you will have to call it like so: Recipe[delete](). This is because delete is a keyword in IE.
 
@@ -160,7 +160,7 @@ The line of code that declares the resource—return $resource—also does a few
 
 1. Notice the :id in the URL specified for the RESTful resource. It basically says that when you make any query (say, Recipe.get()), if you pass in an object with an id field, then the value of that field will be added to the end of the URL.
 
-  That is, calling Recipe.get({id: 15}) will make a call to _/recipe/15_ .
+    That is, calling Recipe.get({id: 15}) will make a call to _/recipe/15_ .
 
 2. What about that second object? The {id: _@id_}? Well, as they say, a line of code is worth a thousand explanations, so let’s take a simple example.
 
@@ -216,20 +216,20 @@ While both of these will have the same effect, they differ in one significant wa
 
 The first will capture any errors that happen when executeSomeAction is called, while the latter will quietly ignore any such errors. You will get error notifications from AngularJS only when you do the first.
 
-* Consider using something like[safeApply](https://coderwall.com/p/ngisma):
+Consider using something like[safeApply](https://coderwall.com/p/ngisma):
 
-{%raw%}
-        $scope.safeApply = function(fn) {
-          var phase = this.$root.$$phase;
-          if(phase == '$apply' || phase == '$digest') {
-            if(fn && (typeof(fn) === 'function')) {
-              fn();
-            }
-          } else {
-            this.$apply(fn);
-          }
-        };
-{%endraw%}
+    {%raw%}
+            $scope.safeApply = function(fn) {
+              var phase = this.$root.$$phase;
+              if(phase == '$apply' || phase == '$digest') {
+                if(fn && (typeof(fn) === 'function')) {
+                  fn();
+                }
+              } else {
+                this.$apply(fn);
+              }
+            };
+    {%endraw%}
 
 Let us take a look at how the $location service would behave, if the URL in the browser was http://www.host.com/base/index.html#!/path?param1=value1#hashValue.
 
@@ -302,7 +302,7 @@ But the following types of links will not be rewritten, and the browser will per
 
         <a href="http://www.angularjs.org">link</a>
 
-  This is different because it is an absolute URL, while the previous example used the existing base URL.
+    This is different because it is an absolute URL, while the previous example used the existing base URL.
 
 3. Links starting with a different base path when one is already defined:
 

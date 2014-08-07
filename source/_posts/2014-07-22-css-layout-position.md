@@ -162,37 +162,11 @@ The position value doesn't cascade, so this can be used to specifically force it
 
 ## demo
 
-```css
-.container {
-  position: relative;
-}
-nav {
-  position: absolute;
-  left: 0px;
-  width: 200px;
-}
-section {
-  /* position is static by default */
-  margin-left: 200px;
-}
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: 70px;
-  background-color: white;
-  width: 100%;
-}
-body {
-  margin-bottom: 120px;
-}
-```
-
-效果如：
-
-![css-layout-position-demo.png](http://johnnyimages.qiniudn.com/css-layout-position-demo.png)
+<p data-height="600" data-theme-id="0" data-slug-hash="Kcgpj" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/Kcgpj/'>position-layout</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 ## Reference
 
 - [position](http://css-tricks.com/almanac/properties/p/position/)
 - [学习CSS布局](http://zh.learnlayout.com/)
+
+<script async src="//codepen.io/assets/embed/ei.js"></script>

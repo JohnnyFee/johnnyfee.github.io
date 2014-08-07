@@ -49,43 +49,7 @@ An element set to `inline-block` is very similar to `inline` in that it will set
 
 你可以创建很多网格来铺满浏览器。在过去很长的一段时间内使用 float 是一种选择，但是使用 inline-block 会更简单。让我们看下使用这两种方法的例子：
 
-```cs
-.box {
-  float: left;
-  width: 200px;
-  height: 100px;
-  margin: 1em;
-}
-.after-box {
-  clear: left;
-}
-```
-
-<style type="text/css">
-.box {
-  float: left;
-  width: 200px;
-  height: 100px;
-  margin: 10px;
-  border: 1px solid red;
-}
-.after-box {
-  border: 1px solid green;
-  clear: left;
-}
-.container1 {
-  border: 1px solid yellow;
-}
-</style>
-
-<div class="container1" style="">
-  <div class="box">我在浮动！</div>
-  <div class="box">我在浮动！</div>
-  <div class="box">我在浮动！</div>
-  <div class="box">我在浮动！</div>
-
-  <div class="after-box">没有浮动</div>
-</div>
+<p data-height="268" data-theme-id="0" data-slug-hash="bnEtH" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/bnEtH/'>float-column</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 你可以用 `display` 属性的值 `inline-block` 来实现相同效果。
 
@@ -106,46 +70,7 @@ An element set to `inline-block` is very similar to `inline` in that it will set
 * 你需要设置每一列的宽度
 * 如果HTML源代码中元素之间有空格，那么列与列之间会产生空隙。
 
-```css
-nav {
-  display: inline-block;
-  vertical-align: top;
-  width: 25%;
-}
-.column {
-  display: inline-block;
-  vertical-align: top;
-  width: 75%; <!-- 由于HTML之间的空隙，设置为 75% 可能会错行，< 75% 可以。-->
-}
-```
-
-<style type="text/css">
-  nav {
-    display: inline-block;
-    vertical-align: top;
-    width: 25%;
-    border: 1px solid red;
-  }
-  .column {
-    border: 1px solid green;
-    display: inline-block;
-    vertical-align: top;
-    width: 74%;
-  }
-</style>
-
-<div class="container1">
-  <nav>
-    <ul>
-      <li>1. H</li>
-      <li>2. E</li>
-    </ul>
-  </nav>
-  <div class="column">
-      <section>S1</section>
-      <section>S2</section>
-  </div>
-</div>
+<p data-height="268" data-theme-id="0" data-slug-hash="tcoGy" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/tcoGy/'>inline-block-layout</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 ## none
 
@@ -153,7 +78,7 @@ nav {
 
 它和 `visibility` 属性不一样。把 `display` 设置成 `none` 不会保留元素本该显示的空间，但是 `visibility: hidden`; 还会保留。
 
-## Table Values
+## table
 
 There is a whole set of display values the force non-table elements to behave like table-elements, if you need that to happen. It's rare-ish, but it sometimes allows you to be "more semantic" with your code while utilizing the unique positioning powers of tables.
 
@@ -183,9 +108,17 @@ To use, just mimic normal table structure. Simple example:
 </div>
 ```
 
+## other
+
+- list-item : 为元素内容生成一个块型盒，随后再生成一个列表型的行内盒。
+- compact : 取决于上下文，display 属性的这个值可能会创建一个行内盒，也可能会创建一个块状盒。不同的情况下会对紧凑（compact）元素应用不同的 CSS 属性。在块型盒中，compact 元素显示在块型元素的左边距（margin）或右边距中。compact 元素会影响所在行的行高计算，其“vertical-align”属性的值是与块型元素的相对值。
+- run-in : Depending on context, this value for the display property creates either an in-line or block level rendering box. In each case different CSS properties may apply to the run-in element. Properties for the run-in element are inherited from its parent element in the document tree, not from the block element box it participates in.
+
 ## Reference
 
 - [display](http://css-tricks.com/almanac/properties/d/display/)
 - [display - CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/display)
 - [display](http://css-tricks.com/almanac/properties/d/display/)
 - [学习CSS布局](http://zh.learnlayout.com/)
+
+<script async src="//codepen.io/assets/embed/ei.js"></script>

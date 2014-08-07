@@ -4,6 +4,7 @@ title: "CSS Layout —— Float"
 category: CSS
 tags: [web, css, layout]
 --- 
+## float
 
 Floated elements _remain a part of the flow of the web page_.  There are four valid values for the float property. The values `left` and `right` float elements those directions respectively. The value `none` (default) tells the element not to float either direction and `inherit` which will assume the float value from that elements parent element.
 
@@ -12,12 +13,12 @@ Floated elements _remain a part of the flow of the web page_.  There are four va
 1. An element that is floated is automatically `display: block;`
 2. float 只有横向浮动，没有纵向浮动。
 3. 容器如果没有明确设定高度，会依照普通流内元素高度设置，这样就会导致脱离普通流的浮动元素溢出容器。
-
-<!--more-->
-
+    
     ![](http://css-tricks.com/wp-content/csstricks-uploads/collapse.png)
 
 4. 浮动元素的后一个元素会围绕着浮动元素（典型运用是文字围绕图片），浮动元素的前一个元素不会受到任何影响，如果你想让两个块状元素并排显示，必须让两个块状元素都应用float。
+
+<!--more-->
 
 Floats are also helpful for layout in smaller instances. Take for example this little area of a web page. If we use float for our little avatar image, when that image changes size the text in the box will reflow to accommodate:
 
@@ -36,21 +37,7 @@ This same layout could be accomplished using relative positioning on container a
 
 例子：
 
-```css
-.box {
-  float: left;
-  width: 200px;
-  height: 100px;
-  margin: 1em;
-}
-```
-
-```html
-<div class="box">float element</div>
-<section>在这个例子中， `section` 元素实际上是在 `div` 之后的（译注：DOM结构上）。
-
-然而 `div` 元素是浮动到左边的，于是 `section` 中的文字就围绕了 `div` ，并且 `section` 元素包围了整个元素。</section>
-```
+<p data-height="268" data-theme-id="0" data-slug-hash="Jiedf" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/Jiedf/'>float</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 如果我们想让 `section` 显示在浮动元素之后呢？
 
@@ -93,12 +80,6 @@ Clear has four valid values as well. The value `both` is most commonly used, whi
 Collapsing almost always needs to be dealt with to prevent strange layout and cross-browser problems. We fix it by clearing the float **after** the floated elements in the container but **before** the close of the container.
 
 ## Techniques for Clearing Floats
-
-<style type="text/css">
-    .box{
-        border:1px solid red
-    }
-</style>
 
 * **The Empty Div Method** is, quite literally, an empty div. `<div style="clear: both;"></div>`. Sometimes you'll see a `<br />` element or some other random element used, but div is the most common because it has no brower default styling, doesn't have any special function, and is unlikely to be generically styled with CSS. This method is scorned by semantic purists since its presence has no contexual meaning at all to the page and is there purely for presentation. Of course in the strictest sense they are right, but it gets the job done right and doesn't hurt anybody.
 
@@ -184,3 +165,5 @@ _Quick fix:_ Make sure you don't have any images that do this, use overflow: hid
 - [学习CSS布局](http://zh.learnlayout.com/)
 - [对CSS中的Position、Float属性的一些深入探讨](http://www.cnblogs.com/coffeedeveloper/p/3145790.html)
 - [CS001: 清理浮动的几种方法以及对应规范说明 - W3Help](http://www.w3help.org/zh-cn/casestudies/001)
+
+<script async src="//codepen.io/assets/embed/ei.js"></script>

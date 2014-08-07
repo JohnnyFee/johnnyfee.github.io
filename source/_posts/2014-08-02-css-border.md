@@ -30,6 +30,26 @@ It could have been expressed through each individual property:
       border-style: solid; /* defaults to none */
     }
 
+## border-style
+
+The `border-style` [CSS](https://developer.mozilla.org/en-US/docs/CSS "CSS") property is a shorthand property for setting the line style for all four sides of the elements border.
+
+The rule for setting `border-style` is the same with `border-radius`.
+
+
+style    | demo    | description                   
+-------- | --------------- | -----
+`none`   | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: none; background-color: palegreen;"></div>   | Like for the `hidden` keyword, displays no border. In that case, except if a background image is set, the calculated values of [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) will be `0`, even if specified otherwise through the property. In case of table cell and border collapsing, the `none` value has the lowest priority: it means that if any other conflicting border is set, it will be displayed.  
+`hidden` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: hidden; background-color: palegreen;"></div> | Like for the `none` keyword, displays no border. In that case, except if a background image is set, the calculated values of [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) will be `0`, even if specified otherwise through the property. In case of table cell and border collapsing, the `hidden` value has the highest priority: it means that if any other conflicting border is set, it won't be displayed.
+`dotted` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: dotted; background-color: palegreen;"></div> | Displays a series of rounded dots. The spacing of the dots are not defined by the specification and are implementation-specific. The radius of the dots is half the calculated [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width).                                                                                                                                                                                   
+`dashed` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: dashed; background-color: palegreen;"></div> | Displays a series of short square-ended dashes or line segments. The exact size and length of the segments are not defined by the specification and are implementation-specific.                                                                                                                                                                                                                                                                  
+`solid`  | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: solid; background-color: palegreen;"></div>  | Displays a single, straight, solid line.                                                                                                                                                                                                                                                                                                                                                                                                          
+`double` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: double; background-color: palegreen;"></div> | Displays two straight lines that add up to the pixel amount defined as [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) .                                                                                                                                                                                                                                                                                          
+`groove` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: groove; background-color: palegreen;"></div> | Displays a border leading to a carved effect. It is the opposite of `ridge`.                                                                                                                                                                                                                                                                                                                                                                      
+`ridge`  | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: ridge; background-color: palegreen;"></div>  | Displays a border with a 3D effect, like if it is coming out of the page. It is the opposite of `groove`.                                                                                                                                                                                                                                                                                                                                         
+`inset`  | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: inset; background-color: palegreen;"></div>  | Displays a border that makes the box appear embedded. It is the opposite of `outset`. When applied to a table cell with [`border-collapse`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse) set to `collapsed`, this value behaves like `groove`.                                                                                                                                                                               
+`outset` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: outset; background-color: palegreen;"></div> | Displays a border that makes the box appear in 3D, embossed. It is the opposite of `inset`. When applied to a table cell with [`border-collapse`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse) set to `collapsed`, this value behaves like `ridge`.                                                                                                                                                                          
+
 ## border-radius
 
 You can give any element "rounded corners" by applying a `border-radius` through CSS. You'll only notice if there is a color change involved. For instance, if the element has a background-color or border that is different than the element it's over. Simple examples:
@@ -263,10 +283,14 @@ table {
       border-collapse: collapse;
     } 
 
-## Tools
+## tools
 
 - [Quick tool for generating border radius code](http://border-radius.com/)
 - [In search of the perfect radius](http://radesign.in/in-search-of-the-perfect-radius/)
+
+## example
+
+- [The Shapes of CSS](http://css-tricks.com/examples/ShapesOfCSS/)
 
 ## Reference
 
@@ -277,5 +301,6 @@ table {
 - [Understanding border-image](http://css-tricks.com/understanding-border-image/)
 - [outline](http://css-tricks.com/almanac/properties/o/outline/)
 - [#95: A Tale of Border Gradients](http://css-tricks.com/video-screencasts/95-a-tale-of-border-gradients/)
+- [border-style - CSS](https://developer.mozilla.org/zh-CN/docs/Web/CSS/border-style)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

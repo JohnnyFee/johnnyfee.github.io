@@ -171,6 +171,7 @@ Respond.js 是您可以选择的诸多可用开源媒体查询 polyfills 之一�
 
 ## Reference
 
+- [CSS Media Queries & Using Available Space](http://css-tricks.com/css-media-queries/)
 - [使用 CSS 媒体查询创建响应式网站](http://www.ibm.com/developerworks/cn/web/wa-cssqueries/)
 - [CSS3媒体查询 - HTML5 Chinese Interest Group Wiki](http://www.w3.org/html/ig/zh/wiki/CSS3%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2#device-aspect-ratio)
 - [CSS媒体查询 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Media_queries)

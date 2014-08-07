@@ -219,4 +219,4 @@ p#info { background:#ff0; }
 
 - [选择器 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_Started/Selectors)
 - [Selectors](http://css-tricks.com/almanac/selectors/)
-- [[CSS] Selector Level 4 搶先看 - HINA::工程幼稚園](http://blog.hinablue.me/entry/css-selector-level-4-quick-preview/)
+- [A Whole Bunch of Amazing Stuff Pseudo Elements Can Do](http://css-tricks.com/pseudo-element-roundup/)

@@ -68,6 +68,12 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 - [Bringing F5 (or Command+R) to Hybrid Mobile Apps](http://developer.telerik.com/featured/bringing-f5-or-commandr-to-hybrid-mobile-apps/)
 - [使用weinre远程调试手机网页](http://www.2fz1.com/?p=396)
 
+## UI
+### Menu
+
+- [5种实用的移动手机APP导航菜单设计方案](http://www.shejidaren.com/mobile-app-menus-design.html)
+
+
 ## website
 
 - [w3cfuns](w3cfuns.com)

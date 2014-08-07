@@ -16,9 +16,7 @@ tags: [markdown]
 - [DIVCSS5 - DIV+CSS布局教程学习与CSS资源分享平台](http://www.divcss5.com/)
 - [W3Help - 兼容性 - 知识库](http://www.w3help.org/zh-cn/kb/)
 
-## Compotibility
-
-- [W3Help - 兼容性 - 根本原因](http://www.w3help.org/zh-cn/causes/index.html)
+<!--more-->
 
 ## 规范
 
@@ -43,30 +41,18 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 
 参考：[Ordering CSS3 Properties](http://css-tricks.com/ordering-css3-properties/)
 
-## Event
-
-- [将鼠标事件绑定到非矩形区域](http://blog.youyo.name/archives/bind-click-event-in-non-rectangular-area.html?-click-event-in-non-rectangular-area)
-
-## Responsive
-
-- [根据移动设备屏幕像素密度，给予不同分辨率的图片](http://blog.youyo.name/archives/mobile-device-screen-pixel-density.html?-device-screen-pixel-density)
-
-## Menu
-
-- [5种实用的移动手机APP导航菜单设计方案](http://www.shejidaren.com/mobile-app-menus-design.html)
-
-## Font
-
-- [CSS字体大小: em与px、pt、百分比之间的对比 - WEB开发者](http://www.admin10000.com/document/4753.html)
-
-## Compatibility
+## Tools
 
 - [Can I use... Support tables for HTML5, CSS3, etc](http://caniuse.com/)
+- [W3Help - 兼容性 - 根本原因](http://www.w3help.org/zh-cn/causes/index.html)
+
+## Library
+
+- [Autoprefixer](https://github.com/ai/autoprefixer)
 
 ## Study
 
 - [CSS Diner - Where we feast on CSS Selectors!](http://flukeout.github.io/)
-- [CSS Diner – 边学CSS选择器，边享受晚餐](http://www.shejidaren.com/css-diner.html)
 - [CSS: Should we change the default for overflow? - Bocoup](http://bocoup.com/weblog/new-overflow-default/)
 - [CSS3文字阴影实现乳白文字效果](http://www.shejidaren.com/css3-milky-font-effect.html)
 - [将鼠标事件绑定到非矩形区域](http://blog.youyo.name/archives/bind-click-event-in-non-rectangular-area.html?-click-event-in-non-rectangular-area)

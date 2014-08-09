@@ -16,6 +16,8 @@ div {
 
 The overflow property controls what happens to content that breaks outside of its bounds. The default value is `visible`. So imagine a div in which you've explicitly set to be 200px wide, but contains an image that is 300px wide. That image will stick out of the div and be visible. Where if you set the overflow value to `hidden`, the image will cut off at 200px.
 
+<!--more-->
+
 Remember that text will naturally wrap at the end of an element (unless [white-space](http://css-tricks.com/almanac/properties/w/whitespace/) is changed) so text will rarely be the cause of overflow. Unless a [height](http://css-tricks.com/almanac/properties/h/height/) is set, text will just push an element taller as well. Overflow comes into play more commonly when explicit widths and heights are set and it would be undesirable for any content to spill out, or when scrolling is explicitly being avoided.
 
 ## text-overflow
@@ -44,7 +46,6 @@ Setting overflow to scroll or auto will display scrollbars to reveal the additio
 
 ## reference
 
-- 1.  * [overflow](http://css-tricks.com/almanac/properties/o/overflow/)
-- 
+1.  [overflow](http://css-tricks.com/almanac/properties/o/overflow/)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

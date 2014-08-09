@@ -278,8 +278,9 @@ Flexible-boxes-related properties: [`margin`](https://developer.mozilla.org/zh-C
 ## Reference
 
 - [使用 CSS 弹性盒 - CSS](https://developer.mozilla.org/zh-CN/docs/CSS/Tutorials/Using_CSS_flexible_boxes#.E5.BC.B9.E6.80.A7.E7.9B.92.E6.A6.82.E5.BF.B5)
-- [Are We Ready to Use Flexbox?](http://www.sitepoint.com/are-we-ready-to-use-flexbox/)
 - [A Complete Guide to Flexbox](http://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+- [Designing CSS Layouts With Flexbox Is As Easy As Pie](http://www.smashingmagazine.com/2013/05/22/centering-elements-with-flexbox/)
+- [Are We Ready to Use Flexbox?](http://www.sitepoint.com/are-we-ready-to-use-flexbox/)
 - [Using Flexbox: Mixing Old and New for the Best Browser Support](http://css-tricks.com/using-flexbox/)
 - [CSS3 弹性盒布局说明（CSS3 Flexible Box Layout Explained）](http://xinyo.org/archives/63075/)
 - [CSS之固定布局、流动布局、弹性布局优缺点分析（下） - 厚朴〖HOPE〗工作室 >> 唯美设计 >> 前端](http://ce.sysu.edu.cn/hope/Item/11239.aspx)

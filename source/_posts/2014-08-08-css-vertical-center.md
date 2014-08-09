@@ -13,6 +13,8 @@ Let’s start by first talking about something that doesn’t work as many expec
 
 With text-align: center in mind, most people look first to [vertical-align](http://www.w3.org/TR/CSS2/visudet.html#propdef-vertical-align) in order to center things vertically. It seems logical and I know it was my first choice. 
 
+<!--more-->
+
 `vertical-align` also applies to table cells and it works with some inline elements.
 
 The values for vertical-align have meaning with respect to a parent inline element.
@@ -73,6 +75,16 @@ Unlike the method above the content can be dynamic as the div will grow with wha
     #child {
         display: inline-block;
     }
+
+__Advantages:__
+
+- Variable height content
+- Content overflows by stretching the parent element
+- Works well cross-browser
+
+__Caveats:__
+
+- Requires extra markup
 
 ## Absolute Positioning and Negative Margin ##
 
@@ -243,9 +255,9 @@ This method also works across browsers. The downside is that it requires an empt
 - [Vertical align anything with just 3 lines of CSS](http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/)
 - [Centering Percentage Width/Height Elements](http://css-tricks.com/centering-percentage-widthheight-elements/)
 
-With just 3 lines of CSS (excluding vendor prefixes) we can with the help of _transform:&nbsp;translateY_&nbsp; vertically center whatever we want, even if we don’t know its height.
+With just 3 lines of CSS (excluding vendor prefixes) we can with the help of _transform: translateY_  vertically center whatever we want, even if we don’t know its height.
 
-The CSS property&nbsp;_transform_ is usally used for rotating and scaling elements, but with its _translateY_ function we can now vertically align elements. Usually this must be done with absolute positioning or setting line-heights, but these require you to either know the height of the element or only works on single-line text etc.
+The CSS property _transform_ is usally used for rotating and scaling elements, but with its _translateY_ function we can now vertically align elements. Usually this must be done with absolute positioning or setting line-heights, but these require you to either know the height of the element or only works on single-line text etc.
 
 So, to do this we write:
 
@@ -307,6 +319,51 @@ __Caveats:__
 * Can interfere with other `transform` effects
 * Results in blurry rendering of edges and text in some cases. Not as much of an issue in modern rendering engines, especially if you [enable `transform-style: preserve-3d`](http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/)
 
+## Flexbox
+
+- [Centering Vertically and Horizontally Using Flexbox](http://www.kirupa.com/html5/centering_vertically_horizontally.htm)
+- [Vertical Centering — Solved By Flexbox — Cleaner, hack-free CSS](http://philipwalton.github.io/solved-by-flexbox/demos/vertical-centering/)
+- [css - vertically centre items with flexbox - Stack Overflow](http://stackoverflow.com/questions/15726740/vertically-centre-items-with-flexbox)
+
+With Flexbox, you can stop worrying. You can align anything (vertically or horizontally) quite painlessly with the `align-items`, `align-self`, and `justify-content` properties.
+
+Unlike some of the existing vertical alignment techniques, with Flexbox the presence of sibling elements doesn't affect their ability to be vertically aligned.
+
+__The HTML:__
+
+```html
+<div class="Aligner">
+  <div class="Aligner-item Aligner-item--top">...</div>
+  <div class="Aligner-item">...</div>
+  <div class="Aligner-item Aligner-item--bottom">...</div>
+</div>
+```
+
+__The CSS:__
+
+```css
+.Aligner {
+  display: flex;
+  align-items: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.Aligner-item {
+  max-width: 50%;
+}
+
+.Aligner-item--top {
+  align-self: flex-start;
+}
+
+.Aligner-item--bottom {
+  align-self: flex-end;
+}
+```
+
+View the full [source](https://github.com/philipwalton/solved-by-flexbox/blob/master/_sass/components/_aligner.scss) for the `Aligner` component used in this demo on Github.
+
 ## Comparison ##
 
 Absolute Centering isn't the only option out there. Several unique methods exist for vertical centering, and each has their advantages. Which technique you choose mainly boils down to which browsers you support and what your existing markup looks like, but this comparison table can help make the right choice to match the features you need.
@@ -337,7 +394,9 @@ Do you use any of the above methods or do you use a different method I didn’t 
 ## Reference
 
 - [6 Methods For Vertical Centering With CSS - Vanseo Design](http://www.vanseodesign.com/css/vertical-centering/)
+- [Absolute Centering](http://codepen.io/shshaw/details/gEiDt)
 - [Vertical Centering with CSS Tables and Vertical-Align](http://vanseodesign.com/blog/demo/vertical-centering/table-cell.php)
+- [How to Center Anything With CSS](http://designshack.net/articles/css/how-to-center-anything-with-css) horizontal alignment.
 - [What is Vertical Align?](http://css-tricks.com/what-is-vertical-align/)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

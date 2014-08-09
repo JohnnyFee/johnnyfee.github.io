@@ -30,9 +30,13 @@ tags: [css, icon, font]
 
 - <http://www.easyicon.net/>
 - <http://findicons.com>
-- <http://www.iconpng.com/>
-- <http://www.findicons.com>
 - <http://www.iconfinder.com>
+- <http://www.iconpng.com/>
+- <http://www.mricons.com/>
+- <http://www.iconlet.com/>
+- <http://www.iconscan.com/>
+- <http://www.iconseeker.com/>
+- <http://icons-search.com/>
 - <http://www.72sc.com/png/13723.html>
 - <http://www.famfamfam.com/lab/icons/silk/>
 - <http://www.freeiconsdownload.com/>

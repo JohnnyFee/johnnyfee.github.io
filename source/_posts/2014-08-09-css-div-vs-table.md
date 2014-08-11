@@ -86,3 +86,7 @@ This is one of those debates that never seems to go away and I guess I’m not e
 There are a lot of myths propagated by both sides in this debate, but once you cut through most of them the argument really boils down to a few things.
 
 Divs require less code and are less dependent on each other than tables. That leads to easier maintenance, more freedom in design, and quicker load times. Those arguments alone should be enough to tip the scales in the argument. Everything else is really irrelevant.
+
+## Reference
+
+- [Are CSS Tables Better Than HTML Tables? - Vanseo Design](http://www.vanseodesign.com/css/tables/)

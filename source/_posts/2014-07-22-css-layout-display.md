@@ -43,6 +43,8 @@ An inline element will not accept height and width. It will just ignore it.
 
 ## inline-block
 
+- [Should You Use Inline-Blocks As A Substitute For Floats? - Vanseo Design](http://www.vanseodesign.com/css/inline-blocks/)
+
 An element set to `inline-block` is very similar to `inline` in that it will set inline with the natural flow of text (on the "baseline"). The difference is that you are able to set a `width` and `height` which will be respected.
 
 ![inline-block.png ](http://johnnyimages.qiniudn.com/inline-block.png)

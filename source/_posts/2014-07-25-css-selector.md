@@ -220,3 +220,5 @@ p#info { background:#ff0; }
 - [选择器 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_Started/Selectors)
 - [Selectors](http://css-tricks.com/almanac/selectors/)
 - [A Whole Bunch of Amazing Stuff Pseudo Elements Can Do](http://css-tricks.com/pseudo-element-roundup/)
+- [CSS Selectors: Should You Optimize Them To Perform Better? - Vanseo Design](http://www.vanseodesign.com/css/css-selector-performance/)
+- 

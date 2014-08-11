@@ -280,6 +280,7 @@ Flexible-boxes-related properties: [`margin`](https://developer.mozilla.org/zh-C
 - [使用 CSS 弹性盒 - CSS](https://developer.mozilla.org/zh-CN/docs/CSS/Tutorials/Using_CSS_flexible_boxes#.E5.BC.B9.E6.80.A7.E7.9B.92.E6.A6.82.E5.BF.B5)
 - [A Complete Guide to Flexbox](http://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 - [Designing CSS Layouts With Flexbox Is As Easy As Pie](http://www.smashingmagazine.com/2013/05/22/centering-elements-with-flexbox/)
+- [Flexbox Revisited: The New Syntax For Flexible Boxes - Vanseo Design](http://www.vanseodesign.com/css/flexbox-revisited/)
 - [Are We Ready to Use Flexbox?](http://www.sitepoint.com/are-we-ready-to-use-flexbox/)
 - [Using Flexbox: Mixing Old and New for the Best Browser Support](http://css-tricks.com/using-flexbox/)
 - [CSS3 弹性盒布局说明（CSS3 Flexible Box Layout Explained）](http://xinyo.org/archives/63075/)

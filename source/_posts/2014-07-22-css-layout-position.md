@@ -160,6 +160,10 @@ __几个结论：__
 
 The position value doesn't cascade, so this can be used to specifically force it to, and inherit the positioning value from its parent.
 
+## tutorial
+
+- [How Does Auto Positioning Work In CSS? - Vanseo Design](http://www.vanseodesign.com/css/auto-positioning/)
+
 ## demo
 
 <p data-height="600" data-theme-id="0" data-slug-hash="Kcgpj" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/Kcgpj/'>position-layout</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>

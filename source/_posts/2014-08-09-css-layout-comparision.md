@@ -8,7 +8,7 @@ tags: [css, layout]
 > source posts: 
 > 
 > - <http://www.vanseodesign.com/css/css-layout-patterns-part-1/>
-> - http://www.vanseodesign.com/css/css-layout-patterns-part-2/
+> - <http://www.vanseodesign.com/css/css-layout-patterns-part-2/>
 
 There are a number of [css layout patterns](http://www.vanseodesign.com/css/2-column-css-layout/) you can use when developing a website. Your design could be of fixed-width or it could be fluid or elastic. It might even be a hybrid layout or be responsive to different devices.
 
@@ -24,10 +24,10 @@ What are the pros and cons of some of the common [css layouts](http://sixrevisio
 
 You’re likely familiar with all of the [css layouts](http://www.vanseodesign.com/css/css-divs-vs-tables/) below, but to make sure we’re on the same page, let’s quickly define each.
 
-* **Fixed-Width** — Overall width is fixed with absolute measurements (px). They’re a solution to the lack of control designing for the web.
-* **Fluid/Liquid** — Overall width is set in proportion to the browser window (%). They’re a solution to multiple resolutions.
-* **Elastic** — Overall width is set in proportion to some design element, usually font-size (em).  They’re a solution to the control issues with fluid designs
-* **Hybrid** — Using a combination of fixed and either fluid or elastic design elements.  They’re a solution to the cons of all 3 layouts above.
+* **[Fixed-Width](/2014/08/10/css-layout-fixed-width/)** — Overall width is fixed with absolute measurements (px). They’re a solution to the lack of control designing for the web.
+* **[Fluid/Liquid](http://johnnyfee.github.io/2014/08/09/css-layout-comparision/)** — Overall width is set in proportion to the browser window (%). They’re a solution to multiple resolutions.
+* **[Elastic](http://johnnyfee.github.io/2014/08/10/css-layout-elastic-grid/)** — Overall width is set in proportion to some design element, usually font-size (em).  They’re a solution to the control issues with fluid designs
+* **[Hybrid](/2014/08/10/css-layout-hybrid/)** — Using a combination of fixed and either fluid or elastic design elements.  They’re a solution to the cons of all 3 layouts above.
 * **Responsive** — Using different stylesheets based on possible ranges of widths of the audience.  They’re a solution to the multiple devices and resolutions of our audience.
 * **Fluid/Elastic Grids** — A type of elastic layout that makes use of a grid.  They’re a solution to maintaining order inside a dynamic container.
 

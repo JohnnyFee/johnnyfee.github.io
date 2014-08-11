@@ -11,12 +11,17 @@ tags: [markdown]
 - [开始学CSS - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_started)
 - [CSS 开发者指南 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS)
 - [CSS Almanac | CSS-Tricks](http://css-tricks.com/almanac/)
-- [动起来！好玩的CSS抖动样式 – CSS Shake](http://www.shejidaren.com/css-shake-animation.html)
 - [W3Help - 标准 - W3C 标准](http://www.w3help.org/zh-cn/standards/)
 - [DIVCSS5 - DIV+CSS布局教程学习与CSS资源分享平台](http://www.divcss5.com/)
 - [W3Help - 兼容性 - 知识库](http://www.w3help.org/zh-cn/kb/)
 
 <!--more-->
+
+## Glyphs
+
+- [Glyphs](http://css-tricks.com/snippets/html/glyphs/)
+- [Entity Lookup](http://entity-lookup.leftlogic.com/)
+- [Math symbols](https://docs.google.com/spreadsheet/pub?hl=en_US&hl=en_US&key=0AlhWX3BA2PNwdDZBTjdiRV93R3c0dkJnNFlaMmV2a3c&output=html)
 
 ## 规范
 
@@ -58,6 +63,7 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 - [将鼠标事件绑定到非矩形区域](http://blog.youyo.name/archives/bind-click-event-in-non-rectangular-area.html?-click-event-in-non-rectangular-area)
 - [Off Canvas Menus with CSS3 Transitions and Transforms ♥ Scotch](http://scotch.io/tutorials/off-canvas-menus-with-css3-transitions-and-transforms)
 - [利用CSS固定背景交替实现视差滚动效果](http://www.shejidaren.com/css-fixed-scroll-background.html)
+- [动起来！好玩的CSS抖动样式 – CSS Shake](http://www.shejidaren.com/css-shake-animation.html)
 
 ## Books
 

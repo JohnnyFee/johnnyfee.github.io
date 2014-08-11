@@ -16,6 +16,9 @@ A [CSS](https://developer.mozilla.org/en-US/docs/CSS "/en-US/docs/CSS") **layout
 
 ## column
 
+- [Create Columns Easily With The CSS3 Multi-Column Layout Module - Vanseo Design](http://www.vanseodesign.com/css/multi-columns/)
+- [4 Methods For Creating Equal Height Columns In CSS - Vanseo Design](http://www.vanseodesign.com/css/equal-height-columns/)
+
 The `column-count` property in CSS controls how many vertical columns text in a particular element will be broken into. For instance:
 
     p.intro-text {
@@ -73,9 +76,14 @@ Chrome | Safari | Firefox  |Opera  |IE  |Android | iOS
 -------|--------|----------|-------|----|--------|-------
 Any    | 3+     | 1.5+     | 11.1+ |10+ |TBD     |TBD
 
-## css 框架
+## CSS 框架
 
 [![blueprint](http://zh.learnlayout.com/images/blueprint.jpg)](http://www.blueprintcss.org/)[![unsemantic](http://zh.learnlayout.com/images/unsemantic.png)](http://www.unsemantic.com/)[![bluetrip](http://zh.learnlayout.com/images/bluetrip.jpg)](http://bluetrip.org/)[![elasticss](http://zh.learnlayout.com/images/elasticss.jpg)](http://elasticss.com/)[![bootstrap](http://zh.learnlayout.com/images/bootstrap.jpg)](http://twitter.github.com/bootstrap/)[![gumby](http://zh.learnlayout.com/images/gumby.jpg)](http://gumbyframework.com/)[![susy](http://zh.learnlayout.com/images/susy.jpg)](http://susy.oddbird.net/)[![foundation](http://zh.learnlayout.com/images/foundation.png)](http://foundation.zurb.com/)[![kube](http://zh.learnlayout.com/images/kube.png)](http://imperavi.com/kube/)[![groundwork](http://zh.learnlayout.com/images/groundwork.gif)](http://groundworkcss.github.com/)
+
+## Tutorial
+
+- [The CSS Grid Layout Module — Flexible Structures for Content - Vanseo Design](http://www.vanseodesign.com/css/grid-layout-module/)
+- [The CSS Regions Module — Control Where Content Flows - Vanseo Design](http://www.vanseodesign.com/css/regions/)
 
 ## Reference
 

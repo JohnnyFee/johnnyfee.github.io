@@ -288,6 +288,10 @@ table {
 - [Quick tool for generating border radius code](http://border-radius.com/)
 - [In search of the perfect radius](http://radesign.in/in-search-of-the-perfect-radius/)
 
+## tutorial
+
+- [How To Add Realism With CSS Box Shadow And Text Shadow - Vanseo Design](http://www.vanseodesign.com/css/shadows/)
+
 ## example
 
 - [The Shapes of CSS](http://css-tricks.com/examples/ShapesOfCSS/)

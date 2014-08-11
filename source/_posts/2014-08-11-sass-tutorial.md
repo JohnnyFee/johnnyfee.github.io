@@ -6,6 +6,7 @@ tags: [css, layout]
 --- 
 
 >原文：<http://www.ruanyifeng.com/blog/2012/06/sass.html>
+>
 >作者：阮一峰
 
 学过[CSS](http://zh.wikipedia.org/wiki/%E5%B1%82%E5%8F%A0%E6%A0%B7%E5%BC%8F%E8%A1%A8)的人都知道，它不是一种编程语言。
@@ -19,7 +20,6 @@ tags: [css, layout]
 <!--more-->
 
 各种"CSS预处理器"之中，我自己最喜欢[SASS](http://sass-lang.com/)，觉得它有很多优点，打算以后都用它来写CSS。下面是我整理的用法总结，供自己开发时参考，相信对其他人也有用。
-
 
 ![](http://image.beekka.com/blog/201206/bg2012061902.png)
 
@@ -116,28 +116,28 @@ SASS允许选择器嵌套。比如，下面的CSS代码：
 可以写成：
 
 	div {  
-	hi {  
-	color:red;  
-	}  
+    	hi {  
+    	   color:red;  
+    	}  
 	}
 
 属性也可以嵌套，比如border-color属性，可以写成：
 
 	p {  
-	border: {  
-	color: red;  
-	}  
+    	border: {  
+        	color: red;  
+    	}  
 	}
 
 注意，border后面必须加上冒号。
 
-在嵌套的代码块内，可以使用$引用父元素。比如a:hover伪类，可以写成：
+在嵌套的代码块内，可以使用&引用父元素。比如a:hover伪类，可以写成：
 
 	a {  
-	&:hover { color: #ffb3ff; }  
+	   &:hover { color: #ffb3ff; }  
 	}
 
-**3.4 注释**
+### 3.4 注释
 
 SASS共有两种注释风格。
 
@@ -151,59 +151,59 @@ SASS共有两种注释风格。
 	重要注释！  
 	\*/
 
-**四、代码的重用**
+## 四、代码的重用
 
-**4.1 继承**
+### 4.1 继承
 
 SASS允许一个选择器，继承另一个选择器。比如，现有class1：
 
 	.class1 {  
-	border: 1px solid #ddd;  
+	   border: 1px solid #ddd;  
 	}
 
 class2要继承class1，就要使用@extend命令：
 
 	.class2 {  
-	@extend .class1;  
-	font-size:120%;  
+    	@extend .class1;  
+    	font-size:120%;  
 	}
 
-**4.2 Mixin**
+### 4.2 Mixin
 
 Mixin有点像C语言的宏（macro），是可以重用的代码块。
 
 使用@mixin命令，定义一个代码块。
 
 	@mixin left {  
-	float: left;  
-	margin-left: 10px;  
+    	float: left;  
+    	margin-left: 10px;  
 	}
 
 使用@include命令，调用这个mixin。
 
 	div {  
-	@include left;  
+	   @include left;  
 	}
 
 mixin的强大之处，在于可以指定参数和缺省值。
 
 	@mixin left($value: 10px) {  
-	float: left;  
-	margin-right: $value;  
+    	float: left;  
+    	margin-right: $value;  
 	}
 
 使用的时候，根据需要加入参数：
 
 	div {  
-	@include left(20px);  
+	   @include left(20px);  
 	}
 
 下面是一个mixin的实例，用来生成浏览器前缀。
 
 	@mixin rounded($vert, $horz, $radius: 10px) {  
-	border-#{$vert}-#{$horz}-radius: $radius;  
-	-moz-border-radius-#{$vert}#{$horz}: $radius;  
-	-webkit-border-#{$vert}-#{$horz}-radius: $radius;  
+    	border-#{$vert}-#{$horz}-radius: $radius;  
+    	-moz-border-radius-#{$vert}#{$horz}: $radius;  
+    	-webkit-border-#{$vert}-#{$horz}-radius: $radius;  
 	}
 
 使用的时候，可以像下面这样调用：
@@ -212,7 +212,7 @@ mixin的强大之处，在于可以指定参数和缺省值。
 >
 	\#footer { @include rounded(top, left, 5px); }
 
-**4.3 颜色函数**
+### 4.3 颜色函数
 
 SASS提供了一些内置的颜色函数，以便生成系列颜色。
 
@@ -221,7 +221,7 @@ SASS提供了一些内置的颜色函数，以便生成系列颜色。
 	grayscale(#cc3) // #808080  
 	complement(#cc3) // #33c
 
-**4.4 插入文件**
+### 4.4 插入文件
 
 @import命令，用来插入外部文件。
 
@@ -231,26 +231,26 @@ SASS提供了一些内置的颜色函数，以便生成系列颜色。
 
 	@import "foo.css";
 
-**五、高级用法**
+## 五、高级用法
 
-**5.1 条件语句**
+### 5.1 条件语句
 
 @if可以用来判断：
 
 	p {  
-	@if 1 + 1 == 2 { border: 1px solid; }  
-	@if 5 < 3 { border: 2px dotted; }  
+    	@if 1 + 1 == 2 { border: 1px solid; }  
+    	@if 5 < 3 { border: 2px dotted; }  
 	}
 
 配套的还有@else命令：
 
 	@if lightness($color) > 30% {  
-	background-color: #000;  
+	   background-color: #000;  
 	} @else {  
-	background-color: #fff;  
+	   background-color: #fff;  
 	}
 
-**5.2 循环语句**
+### 5.2 循环语句
 
 SASS支持for循环：
 
@@ -277,7 +277,7 @@ each命令，作用与for类似：
 	}  
 	}
 
-**5.3 自定义函数**
+### 5.3 自定义函数
 
 SASS允许用户编写自己的函数。
 

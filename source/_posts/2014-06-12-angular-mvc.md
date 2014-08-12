@@ -62,13 +62,13 @@ Controllers have three responsibilities in your app:
       <div ng-controller="ChildController">...</div>
     </div>
 
-Though we express this as nested controllers, the actual nesting happens in scopes. The $scope passed to a nested controller prototypically inherits from its parent controller’s $scope. In this case, this means that the $scope passed to ChildController will have access to all the properties of the $scope passed to ParentController.
+Though we express this as nested controllers, the actual nesting happens in scopes. The `$scope` passed to a nested controller prototypically inherits from its parent controller’s `$scope`. In this case, this means that the `$scope` passed to ChildController will have access to all the properties of the `$scope` passed to ParentController.
 
 You can think of scopes as a context that you use to make changes to your model observable.
 
 ## Services
 
-Services are singleton (single-instance) objects that carry out the tasks necessary to support your application’s functionality. Angular comes with many services like $location, for interacting with the browser’s location, $route, for switching views based on location (URL) changes, and $http, for communicating with servers.
+Services are singleton (single-instance) objects that carry out the tasks necessary to support your application’s functionality. Angular comes with many services like `$location`, for interacting with the browser’s location, $route, for switching views based on location (URL) changes, and $http, for communicating with servers.
 
 With modules, and the dependency injection we get from them, we can write our controller much more simply, like this:
 

@@ -43,3 +43,7 @@ tags: [css, icon, font]
 - <http://openiconlibrary.sourceforge.net/>
 - <http://openiconlibrary.sourceforge.net/downloads.html>
 - [PS梦工厂-Icon素材](http://www.psdreamworks.com/category/materials-and-download/icon_materials)
+
+## Tutorial
+
+- [如何制作自己的网页字体图标](http://www.w3cplus.com/css3/how-to-make-your-own-icon-webfont.html)

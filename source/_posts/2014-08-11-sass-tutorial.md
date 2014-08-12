@@ -288,3 +288,8 @@ SASS允许用户编写自己的函数。
 	\#sidebar {  
 	width: double(5px);  
 	}
+
+## Tutorial
+
+- [Sass: Sass Basics](http://sass-lang.com/guide)
+- [Sass: Syntactically Awesome Style Sheets](http://sass.bootcss.com/)

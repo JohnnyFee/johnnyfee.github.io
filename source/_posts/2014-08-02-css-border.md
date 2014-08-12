@@ -52,6 +52,8 @@ style    | demo    | description
 
 ## border-radius
 
+- [The Shapes of CSS](http://css-tricks.com/examples/ShapesOfCSS/)
+
 You can give any element "rounded corners" by applying a `border-radius` through CSS. You'll only notice if there is a color change involved. For instance, if the element has a background-color or border that is different than the element it's over. Simple examples:
 
 <div data-height="326" data-theme-id="0" data-slug-hash="jmyco" data-default-tab="css" class='codepen'><pre><code>#example-one {
@@ -63,10 +65,10 @@ You can give any element "rounded corners" by applying a `border-radius` through
   border: 3px solid #BADA55;
 }
 .b-example {
-width: 100px;
-height: 100px;
-float: left;
-margin: 0 20px 20px 0;
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 0 20px 20px 0;
 }</code></pre>
 <p>See the Pen <a href='http://codepen.io/JohnnyFee/pen/jmyco/'>border-radius</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 </div>
@@ -97,7 +99,7 @@ With just one value, `border-radius` will the same on all four corners of an ele
 You can also specify two or three values. The Mozilla Docs explains it best:
 
 If **one** value is set, this radius applies to**all 4 corners**.  
-If**two**values are set, the**first**applies to `top-left` and `bottom-right` corner, the **second** applies to `top-right` and `bottom-left` corner.  
+If **two** values are set, the**first**applies to `top-left` and `bottom-right` corner, the **second** applies to `top-right` and `bottom-left` corner.  
 **Four** values apply to the `top-left`, `top-right`, `bottom-right`, `bottom-left` corner in that order.  
 **Three** values: The second value applies to `top-right` and also `bottom-left`.
 
@@ -291,10 +293,6 @@ table {
 ## tutorial
 
 - [How To Add Realism With CSS Box Shadow And Text Shadow - Vanseo Design](http://www.vanseodesign.com/css/shadows/)
-
-## example
-
-- [The Shapes of CSS](http://css-tricks.com/examples/ShapesOfCSS/)
 
 ## Reference
 

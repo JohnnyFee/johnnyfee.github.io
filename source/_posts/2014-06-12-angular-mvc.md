@@ -80,7 +80,7 @@ You can, and should, create your own services to do all of the tasks unique to y
 
 You define services with the module object’s API. There are three functions for creating generic services, with different levels of complexity and ability:
 
-- `provider(name, Object OR constructor())` A configurable service with complex creation logic. If you pass an Object, it should have a function named $get that returns an instance of the service. Otherwise, Angular assumes you’ve passed a constructor that, when called, creates the instance.
+- `provider(name, Object OR constructor())` A configurable service with complex creation logic. If you pass an Object, it should have a function named `$get` that returns an instance of the service. Otherwise, Angular assumes you’ve passed a constructor that, when called, creates the instance.
 
 - `factory(name, $getFunction())` A non-configurable service with complex creation logic. You specify a function that, when called, returns the service instance. You could think of this as `provider(name, { $get: $getFunction() } )`.
 
@@ -106,7 +106,7 @@ We’ll look at the configuration option for provider() later, but let’s discu
       return items;
     });
 
-When Angular creates the ShoppingController, it will pass in $scope and the new Items service that we’ve just defined. This is done by parameter name matching. That is, Angular looks at the function signature for our ShoppingController class, and notices that it is asking for an Items object. Since we’ve defined Items as a service, it knows where to get it.
+When Angular creates the ShoppingController, it will pass in `$scope` and the new Items service that we’ve just defined. This is done by parameter name matching. That is, Angular looks at the function signature for our ShoppingController class, and notices that it is asking for an Items object. Since we’ve defined Items as a service, it knows where to get it.
 
 The result of looking up these dependencies as strings means that the arguments of injectable functions like controller constructors are order-independent. So instead of this:
 
@@ -185,7 +185,7 @@ For instance, if you include the (fictitious) modules SnazzyUIWidgets and SuperD
 
 ### $location
 
-Let’s consider a small example of how you would use the $location service in a real-world application. Consider a case where we have a datepicker, and when a date is selected, the app navigates to a certain URL. Let us take a look at how that might look:
+Let’s consider a small example of how you would use the `$location` service in a real-world application. Consider a case where we have a datepicker, and when a date is selected, the app navigates to a certain URL. Let us take a look at how that might look:
 
     // Assume that the datepicker calls $scope.dateSelected with the date
     $scope.dateSelected = function(dateTxt) {
@@ -197,8 +197,8 @@ Let’s consider a small example of how you would use the $location service in a
 
 Here are four quick tips about when (and how) to call $apply.
 
-* **DO NOT** call it all the time. Calling $apply when AngularJS is happily ticking away (in its $digest cycle, as we call it) will cause an exception. So “better safe than sorry” is not the approach you want to use.
-* **DO CALL** it when controls outside of AngularJS (DOM events, external callbacks such as jQuery UI controls, and so on) are calling AngularJS functions. At that point, you want to tell AngularJS to update itself (the models, the views, and so on), and $apply does just that.
+* **DO NOT** call it all the time. Calling `$apply` when AngularJS is happily ticking away (in its `$digest` cycle, as we call it) will cause an exception. So “better safe than sorry” is not the approach you want to use.
+* **DO CALL** it when controls outside of AngularJS (DOM events, external callbacks such as jQuery UI controls, and so on) are calling AngularJS functions. At that point, you want to tell AngularJS to update itself (the models, the views, and so on), and `$apply` does just that.
 * Whenever possible, execute your code or function by passing it to $apply, rather than executing the function and then calling $apply(). For example, execute the following code:
 
         $scope.$apply(function() {
@@ -231,7 +231,7 @@ Consider using something like[safeApply](https://coderwall.com/p/ngisma):
             };
     {%endraw%}
 
-Let us take a look at how the $location service would behave, if the URL in the browser was http://www.host.com/base/index.html#!/path?param1=value1#hashValue.
+Let us take a look at how the `$location` service would behave, if the URL in the browser was http://www.host.com/base/index.html#!/path?param1=value1#hashValue.
 
 Getter Function |Getter Value | Setter Function
 ----------------|--------------|--------------
@@ -251,10 +251,10 @@ Note that the search() setter has a few modes of operation:
 
 ### HTML5 Mode and Hashbang Mode
 
-The $location service can be configured using the $locationProvider (which can be injected, just like everything else in AngularJS). Of particular interest are two properties on this provider, which are:
+The `$location` service can be configured using the `$locationProvider` (which can be injected, just like everything else in AngularJS). Of particular interest are two properties on this provider, which are:
 
 - html5Mode
-A boolean value which dictates whether the $location service works in HTML5 mode or not- hashPrefix
+A boolean value which dictates whether the `$location` service works in HTML5 mode or not- hashPrefix
 
 A string value (actually a single character) that is used as the prefix for Hashbang URLs (in Hashbang mode or legacy browsers in HTML5 mode). By default it is empty, so Angular’s hash is just ‘’. If the hashPrefix is set to ‘!’, then Angular uses what we call Hashbang URLs (! followed by the url).
 
@@ -274,7 +274,7 @@ In both cases, location.path() would be /foo, location.search() would be bar=123
 
 The Hashbang approach works seamlessly across all browsers, and requires the least amount of configuration. You just need to set the hashBang prefix (! by default) and you are good to go.
 
-The HTML5 mode, on the other hand, talks to the browser URL through the use of HTML5 History API. The $location service is smart enough to figure out whether HTML5 mode is supported or not, and fall back to the Hashbang approach if necessary, so you don’t need to worry about additional work. But you do have to take care of the following.
+The HTML5 mode, on the other hand, talks to the browser URL through the use of HTML5 History API. The `$location` service is smart enough to figure out whether HTML5 mode is supported or not, and fall back to the Hashbang approach if necessary, so you don’t need to worry about additional work. But you do have to take care of the following.
 
 __Server-side configuration__
 
@@ -382,7 +382,7 @@ The butterbar directive can be used as follows:
 
 It basically hides the element right up front, then adds two watches on the root scope. Every time a route change begins, it shows the element (by changing its class), and every time the route has successfully finished changing, it hides the butterbar again.
 
-Another interesting thing to note is how we inject the $rootScope into the directive. All directives directly hook into the AngularJS dependency injection system, so you can inject your services and whatever else you need into them.
+Another interesting thing to note is how we inject the `$rootScope` into the directive. All directives directly hook into the AngularJS dependency injection system, so you can inject your services and whatever else you need into them.
 
 The final thing of note is the API for working with the element. jQuery veterans will be glad to know that it follows a jQuery-like syntax (addClass, removeClass). AngularJS implements a subset of the calls of jQuery so that jQuery is an optional dependency for any AngularJS project. In case you do end up using the full jQuery library in your project, you should know that AngularJS uses that instead of the jQlite implementation it has built-in.
 

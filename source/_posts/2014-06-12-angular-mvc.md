@@ -7,7 +7,95 @@ tags : [angular, tutorial]
 
 本书为读 [AngularJS](http://www.salttiger.com/angularjs/) 的读书笔记，该书的例子在 [shyamseshadri/angularjs-book](https://github.com/shyamseshadri/angularjs-book)。
 
+## Services
+
+Services are singleton (single-instance) objects that carry out the tasks necessary to support your application’s functionality. Angular comes with many services like `$location`, for interacting with the browser’s location, `$route`, for switching views based on location (URL) changes, and` $http`, for communicating with servers.
+
+With modules, and the dependency injection we get from them, we can write our controller much more simply, like this:
+
+    function ShoppingController($scope, Items) {
+      $scope.items = Items.query();
+    }
+
+简而言之，Service 就是 _单例对象_ 在AngluarJS 中的一个别名。这些小东西（指单例对象）会被经常传来传去，保证你每次访问到的都是同一个实例，这一点和工厂模式不同。基于这种思想，单例对象让我们可以 实现一些相当酷的功能，它可以让很多 controller 和 directive 访问内部的数值。
+
+那么我们什么时候应该使用service呢？答案是：无论何时，当我们需要在不同的域中共享数据的时候。另外，多亏了Angular的依赖注入系统，实现这一点是很容易并且很清晰的。
+
+通过 `$scope` 来维护数据是非常粗暴的一种方式。由于其它 `controller`、`directive`、`model` 的影响，`$scope` 很容易就会崩溃或者变脏。它很快就会变成一团乱麻。通过一种集中的途径（在这里就是 `service`）来管理数据，然后通过某种方式来请求修改它，这样不仅仅会更加清晰，同时当应用的体积不断增大的时候也更加容易管理。
+
+You can, and should, create your own services to do all of the tasks unique to your application. Angular’s bundled services start with a `$`, so while you can name them anything you like, its a good idea to avoid starting them with `$` to avoid naming collisions.
+
+As services themselves can have dependencies, the Module API lets you define dependencies for your dependencies.
+
+__In most applications, it will work well enough to create a single module for all the code you create and put all of your dependencies in it.__ If you use services or directives from third-party libraries, they’ll come with their own modules. As your app depends on them, you’d refer to them as dependencies of your application’s module.
+
+For instance, if you include the (fictitious) modules SnazzyUIWidgets and SuperDataSync, your application’s module declaration would look like this:
+
+    var appMod = angular.module('app', ['SnazzyUIWidgets', 'SuperDataSync'];
+
+### define
+
+You define services with the module object’s API. There are three functions for creating generic services, with different levels of complexity and ability:
+
+- `provider(name, Object OR constructor())` A configurable service with complex creation logic. If you pass an Object, it should have a function named `$get` that returns an instance of the service. Otherwise, Angular assumes you’ve passed a constructor that, when called, creates the instance.
+
+- `factory(name, $getFunction())` A non-configurable service with complex creation logic. You specify a function that, when called, returns the service instance. You could think of this as `provider(name, { $get: $getFunction() } )`.
+
+- `service(name, constructor())` A non-configurable service with simple creation logic. Like the constructor option with provider, Angular calls it to create the service instance.
+
+We’ll look at the configuration option for `provider()` later, but let’s discuss an example with `factory()` for our preceding Items example. We can write the service like this:
+
+```
+// Create a module to support our shopping views
+var shoppingModule = angular.module('ShoppingModule', []);
+
+// Set up the service factory to create our Items interface to the
+// server-side database
+shoppingModule.factory('Items', function() {
+  var items = {};
+  items.query = function() {
+    // In real apps, we'd pull this data from the server...
+    return [
+      {title: 'Paint pots', description: 'Pots full of paint', price: 3.95},
+      {title: 'Polka dots', description: 'Dots with polka, price: 2.95},
+      {title: 'Pebbles', description: 'Just little rocks', price: 6.95}
+    ];
+  };
+  return items;
+});
+```
+
+```js
+function ShoppingController($scope, Items) {...}
+```
+
+When Angular creates the `ShoppingController`, it will pass in `$scope` and the new Items service that we’ve just defined. This is done by parameter name matching. That is, Angular looks at the function signature for our `ShoppingController` class, and notices that it is asking for an `Items` object. Since we’ve defined Items as a service, it knows where to get it.
+
+The result of looking up these dependencies as strings means that the arguments of injectable functions like controller constructors are order-independent. So instead of this:
+
+we can write this:
+
+    function ShoppingController(Items, $scope) {...}
+
 ## Controller
+
+Controllers have three responsibilities in your app:
+
+* Set up the initial state in your application’s model
+* Expose model and functions to the view (UI template) through `$scope`
+* Watch other parts of the model for changes and take action.
+
+Controller 应该纯粹地用来把 service、依赖关系、以及其它对象串联到一起，然后通过 scope 把它们关联到 view 上。如果在你的视图里面需要处理复杂的业务逻辑，那么把它们放到 controller 里面也是一个非常不错的选择。
+
+在 Angular 中，controller 自身并不会处理 "request"，除非它是用来处理路由(route)的（很多人把这种方式叫做创建 _route controller_ ，路由控制器）。
+
+Though we express this as nested controllers, the actual nesting happens in scopes. The `$scope` passed to a nested controller prototypically inherits from its parent controller’s `$scope`. In this case, this means that the `$scope` passed to `ChildController` will have access to all the properties of the `$scope` passed to `ParentController`.
+
+    <div ng-controller="ParentController">
+      <div ng-controller="ChildController">...</div>
+    </div>
+
+You can think of scopes as a context that you use to make changes to your model observable.
 
 Use primitives as model：
 
@@ -53,20 +141,6 @@ Though this primitive-style model works in simple cases, for most applications y
     </html>
 
 In this version, we told our `ng-app` element about the name of our module, myApp.
-
-Controllers have three responsibilities in your app:
-
-* Set up the initial state in your application’s model
-* Expose model and functions to the view (UI template) through `$scope`
-* Watch other parts of the model for changes and take action.
-
-Though we express this as nested controllers, the actual nesting happens in scopes. The `$scope` passed to a nested controller prototypically inherits from its parent controller’s `$scope`. In this case, this means that the `$scope` passed to `ChildController` will have access to all the properties of the `$scope` passed to `ParentController`.
-
-    <div ng-controller="ParentController">
-      <div ng-controller="ChildController">...</div>
-    </div>
-
-You can think of scopes as a context that you use to make changes to your model observable.
 
 ### Receipt Controllers
 
@@ -182,87 +256,6 @@ This `resolve` object tells AngularJS that each of these resolve keys needs to b
 
 If the resolve function returns an AngularJS promise, then AngularJS is smart enough to wait for the promise to get resolved before it proceeds. That means that it will wait until the server responds.
 
-## Services
-
-Services are singleton (single-instance) objects that carry out the tasks necessary to support your application’s functionality. Angular comes with many services like `$location`, for interacting with the browser’s location, `$route`, for switching views based on location (URL) changes, and` $http`, for communicating with servers.
-
-With modules, and the dependency injection we get from them, we can write our controller much more simply, like this:
-
-    function ShoppingController($scope, Items) {
-      $scope.items = Items.query();
-    }
-
-You can, and should, create your own services to do all of the tasks unique to your application. Services can be shared across any controllers that need them. As such, they’re a good mechanism to use when you need to communicate across controllers and share state. Angular’s bundled services start with a `$`, so while you can name them anything you like, its a good idea to avoid starting them with `$` to avoid naming collisions.
-
-As services themselves can have dependencies, the Module API lets you define dependencies for your dependencies.
-
-__In most applications, it will work well enough to create a single module for all the code you create and put all of your dependencies in it.__ If you use services or directives from third-party libraries, they’ll come with their own modules. As your app depends on them, you’d refer to them as dependencies of your application’s module.
-
-For instance, if you include the (fictitious) modules SnazzyUIWidgets and SuperDataSync, your application’s module declaration would look like this:
-
-    var appMod = angular.module('app', ['SnazzyUIWidgets', 'SuperDataSync'];
-
-### define
-
-You define services with the module object’s API. There are three functions for creating generic services, with different levels of complexity and ability:
-
-- `provider(name, Object OR constructor())` A configurable service with complex creation logic. If you pass an Object, it should have a function named `$get` that returns an instance of the service. Otherwise, Angular assumes you’ve passed a constructor that, when called, creates the instance.
-
-- `factory(name, $getFunction())` A non-configurable service with complex creation logic. You specify a function that, when called, returns the service instance. You could think of this as `provider(name, { $get: $getFunction() } )`.
-
-- `service(name, constructor())` A non-configurable service with simple creation logic. Like the constructor option with provider, Angular calls it to create the service instance.
-
-We’ll look at the configuration option for `provider()` later, but let’s discuss an example with `factory()` for our preceding Items example. We can write the service like this:
-
-```
-// Create a module to support our shopping views
-var shoppingModule = angular.module('ShoppingModule', []);
-
-// Set up the service factory to create our Items interface to the
-// server-side database
-shoppingModule.factory('Items', function() {
-  var items = {};
-  items.query = function() {
-    // In real apps, we'd pull this data from the server...
-    return [
-      {title: 'Paint pots', description: 'Pots full of paint', price: 3.95},
-      {title: 'Polka dots', description: 'Dots with polka, price: 2.95},
-      {title: 'Pebbles', description: 'Just little rocks', price: 6.95}
-    ];
-  };
-  return items;
-});
-```
-
-When Angular creates the `ShoppingController`, it will pass in `$scope` and the new Items service that we’ve just defined. This is done by parameter name matching. That is, Angular looks at the function signature for our `ShoppingController` class, and notices that it is asking for an `Items` object. Since we’ve defined Items as a service, it knows where to get it.
-
-The result of looking up these dependencies as strings means that the arguments of injectable functions like controller constructors are order-independent. So instead of this:
-
-    function ShoppingController($scope, Items) {...}
-
-we can write this:
-
-    function ShoppingController(Items, $scope) {...}
-
-and it all still functions as we intended.
-To get this to work with our template, we need to tell the `ng-app` directive the name of our module, like the following:
-
-    <html ng-app='ShoppingModule'>
-
-To complete the example, we could implement the rest of the template as:
-
-    {%raw%}
-        <body ng-controller="ShoppingController">
-          <h1>Shop!</h1>
-          <table>
-              <td>{{item.title}}</td>
-              <td>{{item.description}}</td>
-              <td>{{item.price | currency}}</td>
-            </tr>
-          </table>
-        </div>
-    {%endraw%}
-
 ## Directives
 
 Directives extend HTML syntax, and are the way to associate behavior and DOM transformations with custom elements and attributes. Through them, you can create reusable UI components, configure your application, and do almost anything else you can imagine wanting to do in your UI template.
@@ -331,9 +324,9 @@ The `butterbar` directive can be used as follows:
 
 It basically hides the element right up front, then adds two watches on the root scope. Every time a route change begins, it shows the element (by changing its class), and every time the route has successfully finished changing, it hides the butterbar again.
 
-Another interesting thing to note is how we inject the `$rootScope` into the directive. All directives directly hook into the AngularJS dependency injection system, so you can inject your services and whatever else you need into them.
-
 The final thing of note is the API for working with the element. jQuery veterans will be glad to know that it follows a jQuery-like syntax (`addClass`, `removeClass`). AngularJS implements a subset of the calls of jQuery so that jQuery is an optional dependency for any AngularJS project. In case you do end up using the full jQuery library in your project, you should know that AngularJS uses that instead of the jQlite implementation it has built-in.
+
+我们能否在控制器上实现上面的功能呢？当然可以，但是这样做会带来一个重大的问题。一旦其他的 Controller 需要实现相同的功能，可能需要拷贝代码。
 
 ### Library
 
@@ -342,6 +335,29 @@ The final thing of note is the API for working with the element. jQuery veterans
 - [ngReactGrid by josebalius](http://josebalius.github.io/ngReactGrid) ngReactGrid is an Angular directive that can be used to render an enhanced HTML table or grid of data very fast using React as the rendering engine. It is based on ng-grid and jQuery DataTables. It uses HTML tables and supports fixed column headers by default.
 
 ## Templates
+
+Templates in Angular applications are just HTML documents that we load from the server or define in a `<script>` tag like any other static resource.  You define your UI in the template, using standard HTML plus Angular directives where you need UI components.
+
+Once in the web browser, Angular expands these templates into your full application by merging your template with data.
+
+```html
+<div ng-repeat="item in items">
+  <span>{{item.title}}</span>
+  ...
+</div>
+```
+
+Most apps, however, will use some persistent data source on the server.  Your app in the browser connects to your server and requests whatever it needs for the page the user is on, and Angular merges it with your template.
+
+The basic startup flow looks like this:
+
+1.  A user requests the first page of your application.
+2.  The user’s browser makes an HTTP connection to your server and loads the `index.html` page containing your template.
+3.  Angular loads into the page, waits for the page to be fully loaded, and then looks for `ng-app` to define its template boundaries.
+4.  Angular traverses the template and looks for directives and bindings. This results in registration of listeners and DOM manipulation, as well as fetching initial data from the server. The end result of this work is that the app is bootstrapped and the template is converted into view as a DOM.
+5.  You connect to your server to load additional data you need to show the user as needed.
+
+Steps 1 through 3 are standard for every Angular app. It’s in steps 4 and 5 that you have choices. These steps can happen synchronously or asynchronously. For performance, the data your app needs to display to the user on the first view can come down with the HTML template to avoid multiple requests.
 
 Let us start by taking a look at the outermost, main template, which is the index.html. This is the base of our single-page application, and all the other views are loaded within the context of this template:
 
@@ -398,8 +414,12 @@ Now let’s look at the individual templates associated with each controller, st
       </li>
     </ul>
 
-Notice the usage of the ng-href tag instead of href. This is purely to avoid having a bad link during the time that AngularJS is loading up. The ng-href ensures that at no time is a malformed link presented to the user. Always use this whenever your URLs are dynamic instead of static.
+Notice the usage of the `ng-href` tag instead of href. This is purely to avoid having a bad link during the time that AngularJS is loading up. The `ng-href` ensures that at no time is a malformed link presented to the user. Always use this whenever your URLs are dynamic instead of static.
 
-Of course you might wonder: where is the controller? There is no ng-controller defined, and there really was no Main Controller defined. This is where route mapping comes into play. If you remember (or peek back a few pages), the / route redirected to the list template and had the List Controller associated with it. Thus, when any references are made to variables and the like, it is within the scope of the List Controller.
+Of course you might wonder: where is the controller? There is no `ng-controller` defined, and there really was no Main Controller defined. This is where route mapping comes into play. If you remember (or peek back a few pages), the / route redirected to the list template and had the List Controller associated with it. Thus, when any references are made to variables and the like, it is within the scope of the List Controller.
 
-The directive states that the edit() function on the scope is called in case the form is submitted. The form submission happens when any button without an explicit function attached (in this case, the Edit button) is clicked.
+The directive states that the `edit()` function on the scope is called in case the form is submitted. The form submission happens when any button without an explicit function attached (in this case, the Edit button) is clicked.
+
+## Reference
+
+- [AngularJS：何时应该使用Directive、Controller、Service？](http://damoqiongqiu.iteye.com/blog/1971204)

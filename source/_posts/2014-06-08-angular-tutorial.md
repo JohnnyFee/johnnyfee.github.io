@@ -17,34 +17,83 @@ tags : [angular, tutorial]
 
         npm install -g yo
 
-2. Starting a Fresh AngularJS project
+1. Installing generator-angular generator
 
-        yeoman init angular
+        npm install -g generator-angular
 
-3. Running Your Server
+1. Starting a Fresh AngularJS project
         
-        yeoman server
+        mkdir my-new-project && cd my-new-project
+        yo angular [app-name]
 
-4. Adding New Routes, Views, and Controllers
+1. Running Your Server
+        
+        grunt or grunt serve
 
-        yeoman init angular:route routeName
+1. Adding New Routes, Views, and Controllers
 
-    So if you ended up running yeoman init angular:route home, it would:
+        <div class="highlight highlight-bash">
+            <pre>
+            yo angular:route myroute
+            </pre>
+        </div>
 
-    * Create a _home.js_ controller skeleton in the _app/scripts/controllers_ folder
-    * Create a _home.js_ test spec skeleton in the _test/specs/controllers_ folder
-    * Add the _home.html_ template to the _app/views_ folder
-    * Hook up the home route in the main app module ( _app/scripts/app.js_ file)
+    Produces `app/scripts/controllers/myroute.js`:
 
-5. Testing
+        <div class="highlight highlight-javascript">
+            <pre>
+            <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'myMod'</span><span class="p">).</span><span class="nx">controller</span><span class="p">(</span><span class="s1">'MyrouteCtrl'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+              <span class="c1">// ...</span>
+            <span class="p">});</span>
+            </pre>
+        </div>
+
+    Produces `app/views/myroute.html`:
+
+        <div class="highlight highlight-html">
+            <pre>
+            <span class="nt"><p></span>This is the myroute view<span class="nt"></p></span>
+            </pre>
+        </div>
+
+    **Explicitly provide route URI**
+
+    Example:
+
+        <div class="highlight highlight-bash">
+            <pre>
+            yo angular:route myRoute --uri<span class="o">=</span>my/route
+            </pre>
+        </div>
+
+    Produces controller and view as above and adds a route to `app/scripts/app.js` with URI `my/route`
+
+    Available generators:
+
+    - angular (aka angular:app)
+    - angular:controller
+    - angular:directive
+    - angular:filter
+    - angular:route
+    - angular:service
+    - angular:provider
+    - angular:factory
+    - angular:value
+    - angular:constant
+    - angular:decorator
+    - angular:view
+
+    See: [yeoman/generator-angular](https://github.com/yeoman/generator-angular)
+
+1. Testing
 
     We’ve already seen how ridiculously easy it is to start and run tests using Karma. In the end, just two commands were needed to run all your unit tests.
 
     Yeoman makes it easier (if you can believe it). Anytime you generate a file using Yeoman, it also creates a testing stub for you to fill out. Once you’ve installed Karma, running tests with Yeoman is as simple as executing the following command:
 
-        yeoman test
+        grunt test
 
-6. Building Your Project
+1. Building Your Project
 
     Building the production-ready version of your app can be a pain, or at least involve many steps. Yeoman alleviates some of this by allowing you to:
 
@@ -55,9 +104,44 @@ tags : [angular, tutorial]
 
     All these benefits come from just one command:
 
-        yeoman build
+        grunt build
+
+## Principle
+
+![](http://dl2.iteye.com/upload/attachment/0091/3055/5f89a8fd-bbe6-3d15-85c1-4881ac26075d.png)
+
+**Angular没有提供完善的UI，没有提供CSS样式套件，也没有对移动平台进行直接支持。**所以，如果你使用Angular，你一定需要其它东西来配合。例如，如果需要UI，你需要使用jQueryUI，或者自己封装UI组件；如果需要CSS样式，你可以选择bootstrap或者LESS；如果需要支持移动平台，还是需要你自己 去开发。
+
+### Angular能做什么？
+
+1. 自动化的数据双向绑定；
+2. MVC；
+3. 依赖注入---DI系统；
+4. 指令系统（可以自定义语义化标签）---Directive机制；
+5. 模块化---Module机制；
+6. 路由机制---Route机制；
+7. 服务---Service机制；
+8. 内嵌表达式---Expression机制；
+9. 前端代码单元测试和集成测试的自动化（借助于Yeoman等工具）；
+10. 模板；
+11. 动态加载；
+
+
+这么多机制里面，核心的核心是指令系统，实际上其它所有特性都是建立在指令系统之上的。本质上说，Angular写了一个JS版的编译器，一切都构 建在这款编译器之上。对于使用者来说，可以把解析器看成一个JS虚拟机，有兴趣的人可以自己阅读Angular的Parser（HTML解析器）源码。
+
+HTML解析器机制是其它所有框架所不具备也不敢这样做的，它是Angular的灵魂。**
+
+很显然，Angular并没有打算做一个高大全的所谓【框架】，它的核心价值在于，把一堆后台框架的概念带到了前端框架中，比如依 赖注入（来自Spring）；同时又从其它地方抄了一些概念，比如数据自动双向绑定（貌似来自Flex）、模板、MVC、动态加载（来自 RequireJS等），等等。当然，这些理念都挺好。基于这些理念和工具，你可以把前端应用组织得非常良好。
+
+**但是，有一点请特别注意（尤其那些负责技术选型的所谓“架构尸”，请瞪大你的钛合金狗眼看好下面的内容）：对于界面非常复杂的业务 型系统，必须要要有完备的UI支持（Form、DataGrid、Tree、Tab、Window等）。如果你的团队整体JS水平很烂，或者压根没打算自 己去做很多东西，请慎用AngularJS！尤其是那些只有两三条破枪，连美工都没有的小公司，您请靠边儿凉快，这儿没您什么事儿。
+
+和其他框架的比较：
+
+![](http://dl2.iteye.com/upload/attachment/0087/9762/1a69df8b-f592-323c-adb9-d732ef9b2c39.png)
 
 ## Anatomy of an AngularJS Application
+
+### ng-app
 
 Loading the Script:
 
@@ -70,7 +154,7 @@ If you’re building an all-Angular application:
     …
     </html>
 
-Manage only a part of the page by placing it on some element like a <div>within the page:
+Manage only a part of the page by placing it on some element like a `<div>`within the page:
 
     <html>
         …
@@ -82,17 +166,37 @@ Manage only a part of the page by placing it on some element like a <div>within 
 
 <!--more-->
 
-### Templates and Data Binding
+AngularJS会在`DOMContentLoaded`事件触发时执行，并通过`ng-app`指令 寻找你的应用根作用域。如果 `ng-app`指令找到了，那么AngularJS将会：
 
-1. A user requests the first page of your application.
-2. The user’s browser makes an HTTP connection to your server and loads the index.html page containing your template.
-3. Angular loads into the page, waits for the page to be fully loaded, and then looks for ng-app to define its template boundaries.
-4. Angular traverses the template and looks for directives and bindings. This results in registration of listeners and DOM manipulation, as well as fetching initial data from the server. The end result of this work is that the app is bootstrapped and the template is converted into view as a DOM.
-5. You connect to your server to load additional data you need to show the user as needed.
+* 载入和 指令 内容相关的模块。
+* 创建一个应用的“注入器(injector)”。
+* 已拥有 `ng-app` 指令 的标签为根节点来编译其中的DOM。这使得你可以只指定DOM中的一部分作为你的AngularJS应用。
 
-Steps 1 through 3 are standard for every Angular app. It’s in steps 4 and 5 that you have choices. These steps can happen synchronously or asynchronously. For performance, the data your app needs to display to the user on the first view can come down with the HTML template to avoid multiple requests.
+如果你需要主动控制一下初始化的过程，你可以使用手动执行引导程序的方法。比如当你使用“脚本加载器(script loader)”，或者需要在AngularJS编译页面之前做一些操作，你就会用到它了。
 
-### Displaying Text
+下面的例子演示了手动初始化AngularJS的方法。它的效果等同于使用`ng-app`指令 。
+
+```
+<!doctype html>
+<html xmlns:ng="http://angularjs.org">
+    <body>
+        Hello {{'World'}}!
+        <script src="http://code.angularjs.org/angular.js"></script>
+        <script>
+            angular.element(document).ready(function() {
+            angular.bootstrap(document);
+            });
+        </script>
+    </body>
+</html>
+```
+
+下面是一些你的代码必须遵守的顺序：
+
+1.  等页面和所有的脚本加载完之后，找到HTML模板的根节点——通常就是文档的根节点。
+2.  调用 api/angular.bootstrap将模板编译成可执行的、数据双向绑定的应用程序。
+
+### ng-bind
 
 It has two equivalent forms. One we’ve seen with double-curly braces:
 
@@ -106,11 +210,11 @@ Then there’s an attribute-based directive called ng-bind:
 
 - With the double-curly syntax, on the very first page load of your application’s index.html, there’s a chance that your user will see the un-rendered template before Angular has a chance to replace the curlies with your data. Subsequent views won’t suffer from this. The reason is that the browser loads the HTML page, renders it, and only then does Angular get a chance to interpret it as you intended.
 
-- The good news is that you can still use {%raw%}{{ }}{%endraw%} in the majority of your templates. For the data binding you do in your index.html page, however, use ng-bind instead. That way, your users will see nothing until the data has loaded.
+- The good news is that you can still use `{%raw%}{{ }}{%endraw%}` in the majority of your templates. For the data binding you do in your index.html page, however, use ng-bind instead. That way, your users will see nothing until the data has loaded.
 
-### Form Inputs
+### ng-model
 
-you can use the ng-model attribute to bind elements to your model properties:
+you can use the `ng-model` attribute to bind elements to your model properties:
 
     <form ng-controller="SomeController">
       <input type="checkbox" ng-model="youCheckedIt">
@@ -153,7 +257,7 @@ If you have a form that groups inputs, you can use the ng-submit directive on th
 
 The ng-submit directive also automatically prevents the browser from doing its default POST action when it tries to submit the form.
 
-### Lists, Tables, and Other Repeated Elements
+### ng-repeat
 
 `ng-repeat` creates a copy of a set of elements once for every item in a collection.
 
@@ -215,7 +319,7 @@ and this controller:
       $scope.album = album;
     }
 
-### Hiding and Showing
+### ng-show & ng-hide
 
 These directives work by setting the element styles to `display:block` to show and `display:none` to hide as appropriate. Let’s take a fictitious example where we’re building the control panel for a Death Ray.
 
@@ -243,7 +347,7 @@ function DeathrayMenuController($scope) {
 ```
 
 
-### CSS Classes and Styles
+### ng-class & ng-style
 
 Angular provides the `ng-class` and `ng-style` directives. Each of them takes an expression. The result of evaluating this expression can be one of the following:
 
@@ -327,7 +431,7 @@ function RestaurantTableController($scope) {
 }
 ```
 
-### Considerations for src and href Attributes
+### ng-src and ng-href
 
 When data binding to an `<img>` or `<a>` tag, the obvious path of using {%raw%}{{ }}{%endraw%} in the src or href attributes won’t work well. Because browsers are aggressive about loading images parallel to other content, Angular doesn’t get a chance to intercept data binding requests. While the obvious syntax for an `<img> `might be:
 
@@ -370,7 +474,7 @@ Instead, they are evaluated using a custom parser that comes with Angular. In it
 
 Though expressions are more restrictive than JavaScript in many ways, they are more forgiving to undefined and null. Instead of throwing a NullPointerException error, templates will simply render nothing. This allows you to safely use model values that haven’t been set yet, and have them appear in the UI as soon as they get populated.
 
-### Observing Model Changes with $watch
+### $watch
 
 The function’s signature is:
 
@@ -537,7 +641,7 @@ $scope.$watch(function() {
 });
 ```
 
-### Formatting Data with Filters
+### Filters
 
 Filters allow you to declare how to transform data for display to the user within an interpolation in your template. The syntax for using filters is:
 
@@ -597,17 +701,7 @@ and inserting the pageHeading as a model variable via a controller:
       $scope.pageHeading = 'behold the majesty of your page title';
     }
 
-### Talking to Servers
-
-```js
-function ShoppingController($scope, $http) {
-  $http.get('/products').success(function(data, status, headers, config) {
-    $scope.items = data;
-  });
-}
-```
-
-### Validating User Input
+### $valid
 
 ```html
 <h1>Sign Up</h1>
@@ -625,7 +719,7 @@ function ShoppingController($scope, $http) {
 </ng-form>
 ```
 
-Notice that we’re using the required attribute and input types for email and number from HTML5 to do our validation on some of the fields. This works great with Angular, and in older non-HTML5 browsers, Angular will polyfill these with directives that perform the same jobs.
+Notice that we’re using the `required` attribute and input types for email and number from HTML5 to do our validation on some of the fields. This works great with Angular, and in older non-HTML5 browsers, Angular will polyfill these with directives that perform the same jobs.
 
 ```js
 function AddUserController($scope) {
@@ -713,6 +807,7 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 ## Tutorial
 
 - [AngularJS：何时应该使用Directive、Controller、Service](http://damoqiongqiu.iteye.com/blog/1971204)
+- [对比Angular/jQueryUI/Extjs：没有一个框架是万能的](http://damoqiongqiu.iteye.com/blog/1922004)
 - [Rethinking AngularJS Controllers](http://toddmotto.com/rethinking-angular-js-controllers)
 - [David and Suzi](http://davidandsuzi.com/using-react-for-faster-renders-and-isomorphism-in-angular)
 - [AngularJS and jQuery Dialogs - The UrBlog](http://jurberg.github.io/blog/2014/06/29/angularjs-jquery-dialog)

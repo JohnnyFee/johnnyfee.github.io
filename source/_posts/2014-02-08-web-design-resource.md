@@ -32,15 +32,6 @@ tags: [dao,web,design]
 - [39个卓越的创意标志设计](http://www.shejidaren.com/chuang-yi-biao-zhi-she-ji.html)
 - [28个多边形风格的Logo设计欣赏](http://www.shejidaren.com/polygon-logo-designs.html)
 
-## Font
-
-- [50个优秀设计素材整理 – 2014.三月](http://www.shejidaren.com/free-design-resources-2014-3.html)
-- [设计师不要错过，免费优质英文字体整理](http://www.shejidaren.com/free-font-downloads-2014-3.html)
-- [高品质免费英文字体 2014年2月](http://www.shejidaren.com/free-english-font-2014-2.html)
-- [45款精心挑选的免费英文字体](http://www.shejidaren.com/free-english-fonts.html)
-- [一款适用于扁平化的英文字体 Uni Sans Free](http://www.shejidaren.com/uni-sans-free-font-download.html)
-
-
 ## Tips
 
 - [应对紧急情况 27套罕见的独特图标素材包](http://www.shejidaren.com/unique-icon-sets.html)
@@ -77,6 +68,10 @@ tags: [dao,web,design]
 ### UI kit
 
 - [20个色彩美丽的UI KIT设计素材（PSD）](http://www.shejidaren.com/20-beautiful-ui-kits-for-designer.html)
+
+## Material
+
+- [Material设计素材与灵感](http://www.shejidaren.com/material-design-resourices.html)
 
 ## Tools
 

@@ -275,6 +275,10 @@ QVariant默认无法保存指针数据，因为以`void *`为参数的QVariant�
 
 因为QStandardItemModel以行为单位建立树形结构，所以要实现更复杂的树形结构，可以使用自定义的DataRole来存储数据。
 
+## Doc
+
+- [Qt Weekly #17: Linking Qt Classes in Documentation Generated with Doxygen](http://blog.qt.digia.com/blog/2014/08/13/qt-weekly-17-linking-qt-classes-in-documentation-generated-with-doxygen)
+
 ## Reference
 
 ### Example

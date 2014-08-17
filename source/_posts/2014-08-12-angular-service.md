@@ -49,6 +49,7 @@ The line of code that declares the resource—return `$resource`—also does a f
           recipe.$save();
 
     This will make a POST request to _/recipe/13_ . The `@id` tells it to pick the `id` field from its object and use that as the `id` parameter. It’s an added convenience that can save a few lines of code.
+
 ### Changing Views with Routes and $location
 
 We’re building an email app that will easily win out over Gmail, Hotmail, and all the others. We’ll call it…A-Mail.
@@ -116,8 +117,8 @@ function emailRouteConfig($routeProvider) {
     controller: ListController,
     templateUrl: 'list.html'
   }).
-// Notice that for the detail view, we specify a parameterized URL component
-// by placing a colon in front of the id
+  // Notice that for the detail view, we specify a parameterized URL component
+  // by placing a colon in front of the id
   when('/view/:id', {
     controller: DetailController,
     templateUrl: 'detail.html'
@@ -295,6 +296,14 @@ Be sure to check all relative links, images, scripts, and so on. You must either
 Running Angular apps with the History API enabled from document root is strongly encouraged, as it takes care of all relative link issues.
 
 ## $http
+
+```js
+function ShoppingController($scope, $http) {
+  $http.get('/products').success(function(data, status, headers, config) {
+    $scope.items = data;
+  });
+}
+```
 
 ### Communicating Over $http
 

@@ -148,5 +148,8 @@ perspective(value)
 
 This value doesn't affect the element itself, but it affects the transforms of descendent elements 3D transforms, allowing them to all have a consistent depth perspective.
 
+## Reference
 
-
+- [transform](http://css-tricks.com/almanac/properties/t/transform/)
+- [Using CSS transforms - Web developer guide](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transforms)
+- [perspective](http://css-tricks.com/almanac/properties/p/perspective/)

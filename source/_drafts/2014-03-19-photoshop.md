@@ -4,11 +4,45 @@ title: "PhotoShop"
 category: PhotoShop
 tags: [ps]
 --- 
+
+## Demo
+
 - [16个创意Photoshop图像处理教程 | 设计达人](http://www.shejidaren.com/photoshop-image-processing-tutorials.html)
 - [UI设计师的Photoshop配置技巧 | 设计达人](http://www.shejidaren.com/photoshop-configuration-tips-for-ui-designer.html)
 - [21款强大高效的Photoshop扩展插件](http://www.shejidaren.com/21-photoshop-plugins-for-designer.html)
 - [PS黄金分割工具：黄金螺旋 黄金三角 黄金比例 三分法](http://www.shejidaren.com/photoshop-huang-jin-fen-ge.html)
 - [36个漂亮的浏览器PSD模型素材](http://www.shejidaren.com/browser-psd-mockup.html)
+- [默默图标生成器](http://www.zcool.com.cn/article/ZMzY5ODA=.html)
+- [16个创意Photoshop图像处理教程](http://www.shejidaren.com/photoshop-image-processing-tutorials.html)
+- [设计素材：手机锁屏界面-临摹](http://www.zcool.com.cn/gfx/ZMzA0MzMy.html)
+
+## Design Resource
+
+- [站酷](http://www.zcool.com.cn/gfxs/)
+
+
+## Web Design
+
+- [优秀创新的admin后台界面设计欣赏](http://www.shejidaren.com/creative-dashboard-designs.html)
+- [最新15个高品质用户界面UI KIT素材](http://www.shejidaren.com/free-ui-kits-psd-download.html)
+- [54个新出的免费UI设计PSD素材下载](http://www.shejidaren.com/54-free-ui-psd.html)
+- [一共500种俏皮的人物形象PSD素材](http://www.shejidaren.com/500-ren-wu-dong-zuo-su-cai.html)
+- [2014人气网站界面设计免费PSD素材](http://www.shejidaren.com/free-psd-website-templates.html)
+- [20个色彩美丽的UI KIT设计素材（PSD）](http://www.shejidaren.com/20-beautiful-ui-kits-for-designer.html)
+- [Sunday Freebie: 5 Premium Design Resources - DealFuel](http://dealfuel.com/seller/premium-design-resources)
+- [Best PSD Freebies - Download Free PSD Photoshop Resources for Web Design](http://www.bestpsdfreebies.com/)
+
+## Material
+
+- [Material设计素材与灵感](http://www.shejidaren.com/material-design-resourices.html)
+
+### Button & Swither
+
+- [90个免费漂亮的切换开关按钮PSD | 设计达人](http://www.shejidaren.com/switch-and-toggle-button-psds.html)
+
+### Apple
+
+- [30个苹果系列产品模型（Mock Up:iPhone/iMac…）](http://www.shejidaren.com/apple-product-psd-mockups.html)
 
 
 

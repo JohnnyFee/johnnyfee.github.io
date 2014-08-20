@@ -169,7 +169,7 @@ Respond.js 是一个极小的增强 Web 浏览器的 JavaScript 库，使得原�
 
 Respond.js 是您可以选择的诸多可用开源媒体查询 polyfills 之一。如果您觉得 respond.js 无法满足您的需求，在进行一个小小的研究之后，您就会发现几个替代方案。
 
-## Reference
+## Tutorial
 
 - [CSS Media Queries & Using Available Space](http://css-tricks.com/css-media-queries/)
 - [使用 CSS 媒体查询创建响应式网站](http://www.ibm.com/developerworks/cn/web/wa-cssqueries/)
@@ -180,3 +180,5 @@ Respond.js 是您可以选择的诸多可用开源媒体查询 polyfills 之一�
 - [CSS3 Media Queries](http://www.w3cplus.com/content/css3-media-queries)
 - [CSS3 Media Queries模板](http://www.w3cplus.com/css3/css3-media-queries-for-different-devices)
 - [Responsive设计和CSS3 Media Queries的结合](http://www.w3cplus.com/css3/responsive-design-with-css3-media-queries)
+- [Using Media Queries in JavaScript](http://flippinawesome.org/2014/03/24/using-media-queries-in-javascript/)
+- [Using media queries in JavaScript (AbsurdJS edition) - Tech.pro](http://tech.pro/tutorial/1919/using-media-queries-in-javascript-absurdjs-edition)

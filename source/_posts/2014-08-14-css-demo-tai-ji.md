@@ -19,6 +19,8 @@ tags : [css, form]
         background-color: linear-gradient(to right, #222 50%, #eee 50%); 
     }
 
+<!--more-->
+
 `border-radius: 50%` 是将边框由直角变成圆角，而且是最平滑的圆角。因为 `50%` 已经使圆角变得最平滑，所以即使 `border-radius: >50%` 也仍然还是圆角。
 
 `background-color: linear-gradient(to right, #222 50%, #eee 50%);` 使用线性渐变为左右两个半圆设置不同的颜色。`to right` 渐变方向为从左到右，`0-50%` 的背景颜色为 `#222`，`50%-100%` 的背景颜色为 `#eee`。
@@ -92,14 +94,30 @@ tags : [css, form]
       border-color:#eee;
     }
 
+<p data-height="268" data-theme-id="0" data-slug-hash="Bbuji" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/Bbuji/'>Bbuji</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+## 添加动画
+
+使用 `animation` 和 `@keyframes` 定义动画，让太极图顺时针方向匀速转动。
+
+```css
+.yin-yang {
+    animation: spin 2s infinite linear;
+}
+
+@keyframes spin{
+  to {
+    transform: rotate(360deg)
+  }
+}
+```
+
+请注意处理浏览器的前缀支持。
+
 <p data-height="268" data-theme-id="0" data-slug-hash="GrgCA" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/GrgCA/'>GrgCA</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-
-
 
 ## Reference
 
+- [yin-yang](http://codepen.io/WhiteWolfWizard/pen/Lxirc)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>
-
-
-

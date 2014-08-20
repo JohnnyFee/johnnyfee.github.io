@@ -5,6 +5,21 @@ category: Web
 tags: [web, html, tutorial]
 --- 
 
+## Tutorial
+
+- [diegocard/awesome-html5](https://github.com/diegocard/awesome-html5)
+- [HTML5研究小组](http://www.mhtml5.com/)
+- [WebHek](http://www.webhek.com/)
+- [HTML5DevConf](https://www.youtube.com/watch?v=8J6EdpXdzqc)
+- [HTML-MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
+
+## Glyphs
+
+- [Glyphs](http://css-tricks.com/snippets/html/glyphs/)
+- [Entity Lookup](http://entity-lookup.leftlogic.com/)
+- [Math symbols](https://docs.google.com/spreadsheet/pub?hl=en_US&hl=en_US&key=0AlhWX3BA2PNwdDZBTjdiRV93R3c0dkJnNFlaMmV2a3c&output=html)
+- [Html特殊字符表](http://tool.lu/htmlentity/)
+
 ## New in Html5
 
 - [CS002: DOCTYPE 与浏览器模式分析 - W3Help](http://www.w3help.org/zh-cn/casestudies/002)
@@ -99,15 +114,6 @@ You can apply the same technique to most of the HTML5 form’s functionality. In
 - [Test the Web Forward](http://testthewebforward.org/) The [layoutTest coverage in WebKit](http://trac.webkit.org/browser/trunk/LayoutTests) is enormous (28,000 layoutTests at last count), not only for existing features but for any found regressions. In fact, whenever you’re exploring some new or esoteric DOM/CSS/HTML5-y feature, the layoutTests often have fantastic minimal demos of the entire web platform.
 
     In addition, the [W3C is ramping up its effort for conformance suite testing](http://www.w3.org/QA/2013/02/testing_the_open_web_platform.html). This means we can expect both different WebKit ports and all browsers to be testing against the same suite of tests, leading to fewer quirks and a more interoperable web. For all those who have assisted this effort by going to a [Test The Web Forward event](http://testthewebforward.org/)… thank you!
-
-
-## Tutorial
-
-- [HTML5研究小组](http://www.mhtml5.com/)
-- [WebHek](http://www.webhek.com/)
-- [HTML5DevConf](https://www.youtube.com/watch?v=8J6EdpXdzqc)
-- [HTML-MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
-- [diegocard/awesome-html5](https://github.com/diegocard/awesome-html5)
 
 ## Books
 

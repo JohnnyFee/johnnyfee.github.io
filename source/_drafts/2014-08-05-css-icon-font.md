@@ -14,6 +14,10 @@ tags: [css, icon, font]
 
 - [Icon Fonts are Awesome](http://css-tricks.com/examples/IconFont/)
 
+## CSS Icon
+
+- [51个纯CSS绘制的漂亮图标](http://www.shejidaren.com/pure-css-icons.html)
+
 ## 素材
 
 - [为你新项目准备的15组新Icon图标](http://www.shejidaren.com/15-new-icon-set-downloads.html)
@@ -25,6 +29,7 @@ tags: [css, icon, font]
 - [一套漂亮的电子商务与购物图标素材(70个)](http://www.shejidaren.com/70-ecommerce-icons.html)
 - [一套带动画图标素材下载(Web版)](http://www.shejidaren.com/animated-icon-download.html)
 - [200+漂亮线性图标下载（免费）](http://www.shejidaren.com/200-outline-icons-for-designer.html)
+- [应对紧急情况 27套罕见的独特图标素材包](http://www.shejidaren.com/unique-icon-sets.html)
 
 ## 图标资源
 

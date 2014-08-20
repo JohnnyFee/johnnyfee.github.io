@@ -7,6 +7,7 @@ tags: [javascript]
 ---
 ## Tutorial
 
+- [therebelrobot/awesome-bootstrap](https://github.com/therebelrobot/awesome-bootstrap)
 - [Bootstrap 3 Tips and Tricks You Might Not Know](http://scotch.io/bar-talk/bootstrap-3-tips-and-tricks-you-might-not-know)
 
 ## Theme

@@ -162,19 +162,17 @@ div:hover {
 }
 ```
 
-
 上面代码表示，rainbow效果一共有三个状态，分别为起始（0%）、中点（50%）和结束（100%）。如果有需要，完全可以插入更多状态。效果如下。
 
 <iframe width="100%" height="300" src="http://jsfiddle.net/ruanyf/qcum7/3/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
-默认情况下，动画只播放一次。加入infinite关键字，可以让动画无限次播放。
+默认情况下，动画只播放一次。加入 `infinite` 关键字，可以让动画无限次播放。
 
 ```
 div:hover {
   animation: 1s rainbow infinite;
 }
 ```
-
 
 也可以指定动画具体播放的次数，比如3次。
 
@@ -187,7 +185,42 @@ div:hover {
 
 这里还有一个[心脏跳动](http://lea.verou.me/css-4d/#heart-demo)的例子，可供参考。
 
-### 2.2 animation-fill-mode
+### 2.2 animation的各项属性
+
+同transition一样，animation也是一个简写形式。
+
+```
+div:hover {
+  animation: 1s 1s rainbow linear 3 forwards normal;
+}
+```
+
+Just space-separate all the individual values. The order doesn't matter except when using both duration and delay, they need to be in that order. In the example below 1s = duration, 2s = delay, 3 = iterations.
+
+这是一个简写形式，可以分解成各个单独的属性。
+
+```
+div:hover {
+  animation-name: rainbow;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-delay: 1s;
+  animation-fill-mode:forwards;
+  animation-direction: normal;
+  animation-iteration-count: 3;
+}
+```
+
+Property            |可选值   | Description                                
+------------------- | -----|-------
+timing-function     | ease, ease-out, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) (e.g. cubic-bezier(0.5, 0.2, 0.3, 1.0)) | 设置动画速度， 即通过建立加速度曲线，设置动画在关键帧之间是如何变化。
+duration & delay    | Xs or Xms | 设置延时，即从元素加载完成之后到动画序列开始执行的这段时间。
+duration-count      | X   
+fill-mode           | forwards, backwards, both, none  |指定动画执行前后如何为目标元素应用样式。  
+direction | normal, alternate | 设置动画在每次运行完后是反向运行还是重新回到开始位置重复运行。
+iteration-count | X |设置动画重复次数， 可以指定 infinite 无限次重复动画
+
+### 2.3 animation-fill-mode
 
 动画结束以后，会立即从结束状态跳回到起始状态。如果想让动画保持在结束状态，需要使用animation-fill-mode属性。
 
@@ -208,7 +241,7 @@ animation-fill-mode还可以使用下列值。
 - backwards：让动画回到第一帧的状态。
 - both: 根据animation-direction（见后）轮流应用forwards和backwards规则。
 
-### 2.3 animation-direction
+### 2.4 animation-direction
 
 动画循环播放时，每次都是从结束状态跳回到起始状态，再开始播放。animation-direction属性，可以改变这种行为。
 
@@ -222,7 +255,7 @@ animation-fill-mode还可以使用下列值。
 ```
 
 
-默认情况是，animation-direction等于normal。
+默认情况是，`animation-direction` 等于normal。
 
 ```
 div:hover {
@@ -230,35 +263,13 @@ div:hover {
 }
 ```
 
-此外，还可以等于取alternate、reverse、alternate-reverse等值。它们的含义见下图（假定动画连续播放三次）。
+此外，还可以等于取 `alternate`、`reverse`、`alternate-reverse` 等值。它们的含义见下图（假定动画连续播放三次）。
 
 ![](http://image.beekka.com/blog/201402/bg2014021401.png)
 
-简单说，animation-direction指定了动画播放的方向，最常用的值是normal和reverse。浏览器对其他值的支持情况不佳，应该慎用。
+<p data-height="268" data-theme-id="0" data-slug-hash="nyzpt" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/nyzpt/'>nyzpt</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
-### 2.4 animation的各项属性
-
-同transition一样，animation也是一个简写形式。
-
-```
-div:hover {
-  animation: 1s 1s rainbow linear 3 forwards normal;
-}
-```
-
-这是一个简写形式，可以分解成各个单独的属性。
-
-```
-div:hover {
-  animation-name: rainbow;
-  animation-duration: 1s;
-  animation-timing-function: linear;
-  animation-delay: 1s;
-    animation-fill-mode:forwards;
-  animation-direction: normal;
-  animation-iteration-count: 3;
-}
-```
+简单说，`animation-direction` 指定了动画播放的方向，最常用的值是 `normal` 和 `reverse`。浏览器对其他值的支持情况不佳，应该慎用。
 
 ### 2.5 keyframes的写法
 
@@ -281,7 +292,6 @@ keyframes关键字用来定义动画的各个状态，它的写法相当自由�
   to { background: yellowgreen }
 }
 ```
-
 
 如果省略某个状态，浏览器会自动推算中间状态，所以下面都是合法的写法。
 
@@ -369,3 +379,7 @@ div:hover {
 
 - [Animation With CSS: It's Easier Than You Think - Vanseo Design](http://www.vanseodesign.com/css/animation/)
 - [CSS3 Transforms: Adding 2D and 3D Effects To Web Pages - Vanseo Design](http://www.vanseodesign.com/css/transforms/)
+- [Using CSS animations - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Using_CSS_animations)
+- [animation](http://css-tricks.com/almanac/properties/a/animation/)
+
+<script async src="//codepen.io/assets/embed/ei.js"></script>

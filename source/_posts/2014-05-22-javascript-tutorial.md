@@ -190,6 +190,13 @@ HTMLElement.prototype.__defineGetter__(
 
 - [christian-bromann/awesome-selenium](https://github.com/christian-bromann/awesome-selenium)
 
+## Tools
+
+1. [Javascript在线解压缩](http://tool.lu/js/)
+1. [jsfiddle](http://jsfiddle.net/)
+1. [jsbin](http://jsbin.com/)
+2. [codepen](http://codepen.io/)
+
 ## FAQ
 
     if (obj.length === +obj.length)

@@ -12,16 +12,12 @@ tags: [node, tutorial]
 
 ## Tutorial
 
+- [JohnnyFee/awesome-nodejs](https://github.com/JohnnyFee/awesome-nodejs)
 - [从零开始nodejs系列文章](http://blog.fens.me/series-nodejs/)
 - [Node初学者入门，一本全面的NodeJS教程 - OurJS.com](http://ourjs.com/detail/529ca5950cb6498814000005#event-driven-callbacks)
 - [《JavaScript 应用程序设计》总目录](https://github.com/cssmagic/blog/issues/16)
 - [Writing cross-platform Node.js](http://shapeshed.com/writing-cross-platform-node/)
 - [Node.js软肋之回调大坑](http://www.infoq.com/cn/articles/nodejs-callback-hell)
-
-### Angular
-
-- [How I Setup Angular + Node Projects](http://start.jcolemorrison.com/how-i-setup-angular-node-projects/)
-- [A modular way to create your Angular & Node web apps · CleverStack.io](http://cleverstack.io/developer/) A modular way to create your Angular & Node web apps.
 
 ### Error Handling
 

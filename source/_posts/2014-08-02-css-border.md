@@ -285,6 +285,13 @@ table {
       border-collapse: collapse;
     } 
 
+## border-shadow
+
+
+### Demo
+
+- [Squishy Toggle Buttons](http://codepen.io/soulwire/pen/bKens)
+
 ## tools
 
 - [Quick tool for generating border radius code](http://border-radius.com/)

@@ -690,7 +690,7 @@ This will cause the first paragraph to appear twice. So, to use a familiar analo
 
 The .clone() method, by default, does not copy any events that are bound to the matching element or any of its descendants. However, it can take a single Boolean parameter that, when set to true (.clone(true)), clones events as well.
 
-## Content getter and setter methods
+### Content getter and setter methods
 
 It would be nice to be able to modify the pull quote a bit by dropping some words and replacing them with ellipses to keep the content brief. To demonstrate this, we have wrapped a few words of the example text in a <span class="drop"> tag.
 
@@ -705,7 +705,7 @@ The easiest way to accomplish this replacement is to directly specify the new HT
 	    $clonedCopy
 	      .addClass('pulled')
 	      .find('span.drop')
-	        .html('&hellip;')
+	      .html('&hellip;')
 	      .end()
 	      .prependTo($parentParagraph);
 	  });

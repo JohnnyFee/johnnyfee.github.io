@@ -11,7 +11,7 @@ tags : [angular, tutorial]
 
 ### Yeoman: Optimizing Your Workflow
 
-[Yeoman - Modern workflows for modern webapps](http://yeoman.io/)
+See [Yeoman - Modern workflows for modern webapps](http://yeoman.io/)
 
 1. Installing Yeoman
 
@@ -32,39 +32,23 @@ tags : [angular, tutorial]
 
 1. Adding New Routes, Views, and Controllers
 
-        <div class="highlight highlight-bash">
-            <pre>
-            yo angular:route myroute
-            </pre>
-        </div>
+        yo angular:route myroute
 
     Produces `app/scripts/controllers/myroute.js`:
 
-        <div class="highlight highlight-javascript">
-            <pre>
-            <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'myMod'</span><span class="p">).</span><span class="nx">controller</span><span class="p">(</span><span class="s1">'MyrouteCtrl'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
-              <span class="c1">// ...</span>
-            <span class="p">});</span>
-            </pre>
-        </div>
+        angular.module('myMod').controller('MyrouteCtrl', function ($scope) {
+          // ...
+        });
 
     Produces `app/views/myroute.html`:
 
-        <div class="highlight highlight-html">
-            <pre>
-            <span class="nt"><p></span>This is the myroute view<span class="nt"></p></span>
-            </pre>
-        </div>
+        <p>This is the myroute view</p>
 
     **Explicitly provide route URI**
 
     Example:
 
-        <div class="highlight highlight-bash">
-            <pre>
-            yo angular:route myRoute --uri<span class="o">=</span>my/route
-            </pre>
-        </div>
+        yo angular:route myRoute --uri=my/route
 
     Produces controller and view as above and adds a route to `app/scripts/app.js` with URI `my/route`
 
@@ -129,11 +113,11 @@ tags : [angular, tutorial]
 
 这么多机制里面，核心的核心是指令系统，实际上其它所有特性都是建立在指令系统之上的。本质上说，Angular写了一个JS版的编译器，一切都构 建在这款编译器之上。对于使用者来说，可以把解析器看成一个JS虚拟机，有兴趣的人可以自己阅读Angular的Parser（HTML解析器）源码。
 
-HTML解析器机制是其它所有框架所不具备也不敢这样做的，它是Angular的灵魂。**
+HTML解析器机制是其它所有框架所不具备也不敢这样做的，它是Angular的灵魂。
 
 很显然，Angular并没有打算做一个高大全的所谓【框架】，它的核心价值在于，把一堆后台框架的概念带到了前端框架中，比如依 赖注入（来自Spring）；同时又从其它地方抄了一些概念，比如数据自动双向绑定（貌似来自Flex）、模板、MVC、动态加载（来自 RequireJS等），等等。当然，这些理念都挺好。基于这些理念和工具，你可以把前端应用组织得非常良好。
 
-**但是，有一点请特别注意（尤其那些负责技术选型的所谓“架构尸”，请瞪大你的钛合金狗眼看好下面的内容）：对于界面非常复杂的业务 型系统，必须要要有完备的UI支持（Form、DataGrid、Tree、Tab、Window等）。如果你的团队整体JS水平很烂，或者压根没打算自 己去做很多东西，请慎用AngularJS！尤其是那些只有两三条破枪，连美工都没有的小公司，您请靠边儿凉快，这儿没您什么事儿。
+但是，有一点请特别注意（尤其那些负责技术选型的所谓“架构尸”，请瞪大你的钛合金狗眼看好下面的内容）：对于界面非常复杂的业务 型系统，必须要要有完备的UI支持（Form、DataGrid、Tree、Tab、Window等）。如果你的团队整体JS水平很烂，或者压根没打算自 己去做很多东西，请慎用AngularJS！尤其是那些只有两三条破枪，连美工都没有的小公司，您请靠边儿凉快，这儿没您什么事儿。
 
 和其他框架的比较：
 
@@ -806,13 +790,18 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 
 ## Tutorial
 
-- [AngularJS：何时应该使用Directive、Controller、Service](http://damoqiongqiu.iteye.com/blog/1971204)
-- [对比Angular/jQueryUI/Extjs：没有一个框架是万能的](http://damoqiongqiu.iteye.com/blog/1922004)
-- [Rethinking AngularJS Controllers](http://toddmotto.com/rethinking-angular-js-controllers)
-- [David and Suzi](http://davidandsuzi.com/using-react-for-faster-renders-and-isomorphism-in-angular)
+- [2013年度最强AngularJS资源合集-CSDN.NET](http://www.csdn.net/article/2014-01-03/2818005-AngularJS-Google-resource)
 - [AngularJS and jQuery Dialogs - The UrBlog](http://jurberg.github.io/blog/2014/06/29/angularjs-jquery-dialog)
 - [Best Practices for Building Angular.js Apps — Medium](https://medium.com/@dickeyxxx/best-practices-for-building-angular-js-apps-266c1a4a6917)
 - [Requiring Versus Browserifying Angular -Telerik Developer Network](http://developer.telerik.com/featured/requiring-vs-browerifying-angular)
-- [2013年度最强AngularJS资源合集-CSDN.NET](http://www.csdn.net/article/2014-01-03/2818005-AngularJS-Google-resource)
+- [How I Setup Angular + Node Projects](http://start.jcolemorrison.com/how-i-setup-angular-node-projects/)
+- [A modular way to create your Angular & Node web apps · CleverStack.io](http://cleverstack.io/developer/) A modular way to create your Angular & Node web apps.
+- [Rethinking AngularJS Controllers](http://toddmotto.com/rethinking-angular-js-controllers)
+- [David and Suzi](http://davidandsuzi.com/using-react-for-faster-renders-and-isomorphism-in-angular)
+
+## Reference
+
+- [AngularJS：何时应该使用Directive、Controller、Service](http://damoqiongqiu.iteye.com/blog/1971204)
+- [对比Angular/jQueryUI/Extjs：没有一个框架是万能的](http://damoqiongqiu.iteye.com/blog/1922004)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

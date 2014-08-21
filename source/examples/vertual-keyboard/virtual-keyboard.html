@@ -1,6 +1,5 @@
 layout: false
 ---
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,20 +7,50 @@ layout: false
     <title>Document</title>
     <script src="http://cdn.staticfile.org/jquery/2.1.1/jquery.js"></script>
     <script src="keyboard.js"></script>
+
+    <style>
+        #key-panel {
+            width: 200px;
+            height: 200px;
+            border: 1px solid chartreuse;
+        }
+    </style>
 </head>
 <body>
 <div id="input">
-    <input autofocus type="text">
+    <input autofocus type="text" id="iText">
+
+    <div id="key-panel" tabindex="1"></div>
 </div>
 <div id="keyboard">
     <button>1</button>
     <button>2</button>
 </div>
 
+<div>
+    <button id="btnTrigger">Trigger Div Event</button>
+</div>
+
 <script>
-    $('button').on('click', function (e) {
-        keyboard.keyPress(e.target.textContent.charCodeAt(0))
+
+    //    $('button').on('click', function (e) {
+    //        keyboard.keyPress(e.target.textContent.charCodeAt(0))
+    //    });
+
+    $('#key-panel').on('keydown', function (event) {
+        console.log("fuck");
     });
+
+    $(document).on('keydown', function (event) {
+        console.log('document on keyup');
+    });
+
+    $('#btnTrigger').on('click', function () {
+        var e = jQuery.Event("keydown");
+        e.which = 50; // # Some key code value
+        $('#key-panel').trigger(e);
+    });
+
 </script>
 </body>
 </html>

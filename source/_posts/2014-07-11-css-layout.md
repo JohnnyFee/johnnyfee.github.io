@@ -9,10 +9,10 @@ A [CSS](https://developer.mozilla.org/en-US/docs/CSS "/en-US/docs/CSS") **layout
 
 * The _block layout_, designed for laying out documents. The block layout contains document-centric features, like the ability to [_float_](https://developer.mozilla.org/en-US/docs/CSS/float "/en-US/docs/CSS/float") elements or to lay them out over [_multiple columns_](https://developer.mozilla.org/en-US/docs/CSS/Using_CSS_multi-column_layouts "/en-US/docs/CSS/Using_CSS_multi-column_layouts").
 * The _inline layout_, designed for laying out texts.
-* The _table layout_, designed for laying out tables.
-* The _positioned layout_, designed for positioning elements without much interaction with other elements.
+* The _table layout_, designed for laying out tables. 只有 IE10+ 支持。
+* The _[positioned layout](http://inching.org/2014/07/22/css-layout-position/)_, designed for positioning elements without much interaction with other elements.
 * The [_flexible box layout_](https://developer.mozilla.org/en-US/docs/CSS/Using_CSS_flexible_boxes "/en-US/docs/"), designed for laying out complex pages that can be resized smoothly.
-* The _grid layout_, designed for layout out elements relatively to a fixed grid.
+* The _[grid layout](http://www.w3cplus.com/css3/css3-grid-layout.html)_, designed for layout out elements relatively to a fixed grid.
 
 ## column
 

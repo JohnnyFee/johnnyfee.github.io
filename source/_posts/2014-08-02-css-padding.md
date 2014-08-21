@@ -70,7 +70,7 @@ This happens in order to maintain 400px of content space, rather than 400px of t
 
 This occurs in all in-use browsers, in standards mode, but will not occur in IE6 and IE7 in quirks mode (that is, on pages displayed in IE6 or IE7 where there is no doctype declared or where something else is happening to trigger quirks mode).
 
-To resolve this issue, thus keeping the width at 400px no matter the amount of padding, you can use the `[box-sizing](http://css-tricks.com/almanac/properties/b/box-sizing/)` property:
+To resolve this issue, thus keeping the width at 400px no matter the amount of padding, you can use the [box-sizing](http://css-tricks.com/almanac/properties/b/box-sizing/) property:
 
     .box {
      padding: 20px;

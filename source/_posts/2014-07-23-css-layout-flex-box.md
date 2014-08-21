@@ -23,29 +23,29 @@ CSS3 弹性盒，或者简称弹性盒，是一种当页面需要适应不同的
 - __轴__
     每个弹性盒布局以两个轴来排列。弹性子元素沿着**主轴**依次相互排列**。侧轴**垂直于主轴**。**
 
-    * 属性 [`flex-direction`](https://developer.mozilla.org/zh-CN/CSS/flex-direction "flex-direction") 定义主轴方向。
-    * 属性 [`justify-content`](https://developer.mozilla.org/zh-CN/CSS/justify-content "zh-CN/CSS/justify-content") 定义了弹性子元素如何在当前线上沿着主轴排列。
-    * 属性 [`align-items`](https://developer.mozilla.org/zh-CN/CSS/align-items "zh-CN/CSS/align-items") 定义了弹性子元素如何在当前线上沿着侧轴排列。
-    * 属性 [`align-self`](https://developer.mozilla.org/zh-CN/CSS/align-self "zh-CN/CSS/align-self") 覆盖父元素的 `align-items` 属性，定义了单独的弹性子元素如何沿着侧轴排列。
+    * 属性 [`flex-direction`](https://developer.mozilla.org/en-US/CSS/flex-direction "flex-direction") 定义主轴方向。
+    * 属性 [`justify-content`](https://developer.mozilla.org/en-US/CSS/justify-content "en-US/CSS/justify-content") 定义了弹性子元素如何在当前线上沿着主轴排列。
+    * 属性 [`align-items`](https://developer.mozilla.org/en-US/CSS/align-items "en-US/CSS/align-items") 定义了弹性子元素如何在当前线上沿着侧轴排列。
+    * 属性 [`align-self`](https://developer.mozilla.org/en-US/CSS/align-self "en-US/CSS/align-self") 覆盖父元素的 `align-items` 属性，定义了单独的弹性子元素如何沿着侧轴排列。
 
 - __方向__
     弹性容器的**主轴开始**、**主轴结束**和**侧轴开始**、**侧轴结束**边缘代表了弹性子元素排列的起始和结束位置。它们具体取决于由`writing-mode`（从左到右、从右到左等等）属性建立的向量中的主轴和侧轴位置。
 
-    * 属性 [`order`](https://developer.mozilla.org/zh-CN/CSS/order "zh-CN/CSS/order") 将元素依次分组，并决定谁先出现。
-    * 属性 [`flex-flow`](https://developer.mozilla.org/zh-CN/CSS/flex-flow "flex-flow") 是属性 [`flex-direction`](https://developer.mozilla.org/zh-CN/CSS/flex-direction "flex-direction") 和 [`flex-wrap`](https://developer.mozilla.org/zh-CN/CSS/flex-wrap "flex-wrap") 的简写，用于排列弹性子元素。
+    * 属性 [`order`](https://developer.mozilla.org/en-US/CSS/order "en-US/CSS/order") 将元素依次分组，并决定谁先出现。
+    * 属性 [`flex-flow`](https://developer.mozilla.org/en-US/CSS/flex-flow "flex-flow") 是属性 [`flex-direction`](https://developer.mozilla.org/en-US/CSS/flex-direction "flex-direction") 和 [`flex-wrap`](https://developer.mozilla.org/en-US/CSS/flex-wrap "flex-wrap") 的简写，用于排列弹性子元素。
 
 - __线__
-    弹性子元素根据 [`flex-wrap`](https://developer.mozilla.org/zh-CN/CSS/flex-wrap "flex-wrap") 属性控制的侧轴方向（在这个方向上可以建立垂直的新线），既可以是单独一线也可以是多线排列。
+    弹性子元素根据 [`flex-wrap`](https://developer.mozilla.org/en-US/CSS/flex-wrap "flex-wrap") 属性控制的侧轴方向（在这个方向上可以建立垂直的新线），既可以是单独一线也可以是多线排列。
 
 - __尺寸__
     弹性子元素宽高可相应地等价于**主尺寸**和**侧尺寸**，它们都分别取决于弹性容器的主轴和侧轴。
 
-    * 属性 [`min-height`](https://developer.mozilla.org/zh-CN/CSS/min-height "/zh-CN/CSS/min-height") 和 [`min-width`](https://developer.mozilla.org/zh-CN/CSS/min-width "/zh-CN/CSS/min-width") 属性的初始值为0。
-    * 属性 [`flex`](https://developer.mozilla.org/zh-CN/CSS/flex "zh-CN/CSS/flex") 是 [`flex-basis`](https://developer.mozilla.org/zh-CN/CSS/flex-basis "zh-CN/CSS/flex-basis")，[`flex-grow`](https://developer.mozilla.org/zh-CN/CSS/flex-grow "zh-CN/CSS/flex-grow") 和 [`flex-shrink`](https://developer.mozilla.org/zh-CN/CSS/flex-shrink "zh-CN/CSS/flex-shrink") 的缩写，代表弹性子元素的伸缩性。
+    * 属性 [`min-height`](https://developer.mozilla.org/en-US/CSS/min-height "/en-US/CSS/min-height") 和 [`min-width`](https://developer.mozilla.org/en-US/CSS/min-width "/en-US/CSS/min-width") 属性的初始值为0。
+    * 属性 [`flex`](https://developer.mozilla.org/en-US/CSS/flex "en-US/CSS/flex") 是 [`flex-basis`](https://developer.mozilla.org/en-US/CSS/flex-basis "en-US/CSS/flex-basis")，[`flex-grow`](https://developer.mozilla.org/en-US/CSS/flex-grow "en-US/CSS/flex-grow") 和 [`flex-shrink`](https://developer.mozilla.org/en-US/CSS/flex-shrink "en-US/CSS/flex-shrink") 的缩写，代表弹性子元素的伸缩性。
 
 ## 建立弹性盒子
 
-使用CSS建立弹性盒子样式，为 [display](https://developer.mozilla.org/zh-CN/CSS/display "/zh-CN/CSS/display") 指定下面的值：
+使用CSS建立弹性盒子样式，为 [display](https://developer.mozilla.org/en-US/CSS/display "/en-US/CSS/display") 指定下面的值：
 
     display : flex
 
@@ -68,7 +68,7 @@ CSS3 弹性盒，或者简称弹性盒，是一种当页面需要适应不同的
 
 弹 性盒子的对齐会进行真正的居中，不像CSS的其他居中方法。这意味着即使弹性容器溢出，子元素仍然保持居中。有些时候这可能有问题，然而即使溢出了页面的 上沿，或左边沿（在从左到右的语言如英语；这个问题在从右到左的语言中发生在右边沿，如阿拉伯文），因为你不能滚动到那里，即使那里有内容！在将来的版本 中，对齐属性会被扩展为有一个“安全”选项。目前，如果关心这个问题，你可以使用外边距来达到居中的目的，这种方式比较“安全”，在溢出的情况下会停止居 中。在你想要居中的弹性子元素上应用自动外边距代替`align-`属性。在弹性容器的第一个和最后一个子元素的外侧应用自动外边距来代替`justify-`属性。自动外边距会伸缩并假定剩余空间，当有剩余空间时居中弹性子元素，没有剩余空间时切换会正常对齐模式。然而，如果你想要在多线弹性盒子中用基于外边距的居中替换`justify-content` 属性，你可能就没那么幸运了，因为你需要在每一线的第一个和最后一个元素上应用外边距。除非你能提前预测哪个元素是哪一线上的最后一个元素，否则你没法稳定地在主轴上用基于外边距的居中代替 `justify-content` 属性。
 
-说起虽然元素的显示顺序与源代码中的顺序无关，这种无关仅对显示效果有效，不包括语音顺序和基于源代码的导航。即使是 [`order`](https://developer.mozilla.org/zh-CN/docs/CSS/order "") 也不影响语言和导航序列。因此开发者必须小心排列源代码中的元素以免破坏文档的可访问性。
+说起虽然元素的显示顺序与源代码中的顺序无关，这种无关仅对显示效果有效，不包括语音顺序和基于源代码的导航。即使是 [`order`](https://developer.mozilla.org/en-US/docs/CSS/order "") 也不影响语言和导航序列。因此开发者必须小心排列源代码中的元素以免破坏文档的可访问性。
 
 ## 弹性盒子的属性
 
@@ -135,7 +135,8 @@ flex-flow: <‘flex-direction’> || <‘flex-wrap’>
 
 #### justify-content
 
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/justify-content.svg)  
+![justify-content](http://www.w3.org/TR/css3-flexbox/images/flex-pack.svg)
+
 This defines the alignment along the main axis. It helps distribute extra free space left over when either all the flex items on a line are inflexible, or are flexible but have reached their maximum size. It also exerts some control over the alignment of items when they overflow the line.
 
 
@@ -151,6 +152,20 @@ This defines the alignment along the main axis. It helps distribute extra free s
 * `center`: items are centered along the line
 * `space-between`: items are evenly distributed in the line; first item is on the start line, last item on the end line
 * `space-around`: items are evenly distributed in the line with equal space around them
+
+__Demo:__
+
+The following demo shows how flex items behave depending on `justify-content` value:
+
+* The red list is set to `flex-start`
+* The yellow is set to `flex-end`
+* The blue is set to `center`
+* The green is set to `space-between`
+* The pink is set to `space-around`
+
+<p data-height="268" data-theme-id="0" data-slug-hash="IyDvA" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/IyDvA/'>flex</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+See [justify-content](http://css-tricks.com/almanac/properties/j/justify-content/)
 
 #### align-items
 
@@ -228,13 +243,28 @@ Negative numbers are invalid.
 
 This defines the ability for a flex item to shrink if necessary.
 
-
 ```
 .item {
   flex-shrink: <number>; /* default 1 */
 }
 ```
 
+It specifies the "flex shrink factor", which determines how much the flex item will shrink relative to the rest of the flex items in the flex container when there isn't enough space on the row.
+
+When omitted, it is set to `1` and the flex shrink factor is multiplied by the flex basis when distributing negative space.
+
+__Demo:__
+
+To see the full potential of this demo, you would have to be able to resize its width, so please have a look at it on CodePen directly.
+
+<p data-height="230" data-theme-id="0" data-slug-hash="hpesF" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/hpesF/'>hpesF</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+In this demo:
+
+* The first item has `flex: 1 1 20em` (shorthand for `flex-grow: 1`, `flex-shrink: 1`, `flex-basis: 20em`)
+* The second item has `flex: 2 2 20em` (shorthand for `flex-grow: 2`, `flex-shrink: 2`, `flex-basis: 20em`)
+
+Both flex items want to be 20em wide. Because of the flex-grow (first parameter), if the flex container is larger than 40em, the 2nd child will take twice as much leftover space as the first child. But if the parent element is less than 40em wide, then the 2nd child will have twice as much shaved off of it as the 1st child, making it look smaller (because of the 2nd parameter, flex-shrink).
 
 Negative numbers are invalid.
 
@@ -260,6 +290,8 @@ This is the shorthand for `flex-grow,` `flex-shrink` and `flex-basis` combined. 
 }
 ```
 
+See [flex](http://css-tricks.com/almanac/properties/f/flex/)
+
 #### align-self
 
 ![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/align-self.svg)  
@@ -282,8 +314,8 @@ Note that `float`, `clear` and `vertical-align` have no effect on a flex item.
 因为弹性盒子使用一种不同的布局逻辑，一些属性会在弹性容器上无效。
 
 * [多列模块](https://developer.mozilla.org/zh-CN/CSS/Using_CSS_multi-column_layouts "Using CSS multi-column layouts") 中的 `column-*` 属性对弹性子元素无效。
-* [`float`](https://developer.mozilla.org/zh-CN/docs/CSS/float "") 和 [`clear`](https://developer.mozilla.org/zh-CN/docs/CSS/clear "") 对弹性子元素无效。使用 `float` 会导致 `display` 属性计算为 `block`.
-* [`vertical-align`](https://developer.mozilla.org/zh-CN/docs/CSS/vertical-align "") 对弹性子元素的对齐无效。
+* [`float`](https://developer.mozilla.org/en-US/docs/CSS/float "") 和 [`clear`](https://developer.mozilla.org/en-US/docs/CSS/clear "") 对弹性子元素无效。使用 `float` 会导致 `display` 属性计算为 `block`.
+* [`vertical-align`](https://developer.mozilla.org/en-US/docs/CSS/vertical-align "") 对弹性子元素的对齐无效。
 
 ## 例子
 
@@ -521,9 +553,9 @@ Let's try something even better by playing with flex items flexibility! What abo
 
 描述弹性子元素如何排列的逻辑有时候非常隐晦。这是一些在计划使用弹性盒子时应避免的一些事。
 
-弹性盒子会根据[书写模式](https://developer.mozilla.org/zh-CN/docs/CSS/writing-mode "mode")的需要进行排列。这意味着**主起始点**和**主结束点**需要根据**开始**和**结束**点布局。
+弹性盒子会根据[书写模式](https://developer.mozilla.org/en-US/docs/CSS/writing-mode "mode")的需要进行排列。这意味着**主起始点**和**主结束点**需要根据**开始**和**结束**点布局。
 
-**侧起始点**和**侧结束点**取决于依赖[`direction`](https://developer.mozilla.org/zh-CN/CSS/direction "direction")属性值的**开始**和**结束**点的定义**。**
+**侧起始点**和**侧结束点**取决于依赖[`direction`](https://developer.mozilla.org/en-US/CSS/direction "direction")属性值的**开始**和**结束**点的定义**。**
 
 只要`break-` 属性允许，断页可能出现在弹性盒子布局中。CSS3的 `break-after`， `break-before` 和 `break-inside` a以及CSS2.1的 `page-break-before`，`page-break-after` 和 `page-break-inside` 属性可能出现在弹性容器，弹性子元素以及弹性子元素的内部元素上出现。
 

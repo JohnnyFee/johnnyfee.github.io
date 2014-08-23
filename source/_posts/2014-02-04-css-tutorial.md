@@ -50,6 +50,8 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 - [css-triangle-generator](http://apps.eky.hk/css-triangle-generator/zh-hant)
 - [css3lib](http://css3lib.alloyteam.com/)
 - [Ultimate CSS Gradient Generator - ColorZilla.com](http://www.colorzilla.com/gradient-editor/)
+- [katiefenn/parker](https://github.com/katiefenn/parker) Stylesheet analysis tool.
+- [addyosmani/critical](https://github.com/addyosmani/critical) Extract & Inline Critical-path CSS from HTML (alpha).
 
 ## Demo
 

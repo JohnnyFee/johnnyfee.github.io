@@ -27,6 +27,7 @@ tags: [web, tutorial]
 ## Design
 
 - [40个良好用户界面Tips](http://www.shejidaren.com/good-user-interface-design.html)
+- [Designer's guide to DPI](http://sebastien-gabriel.com/designers-guide-to-dpi/home)
 
 ## Tool
 

@@ -22,7 +22,7 @@ jQuery.fn.getCursorPosition = function () {
 
 jQuery.fn.getSelectionStart = function () {
     if (this.lengh == 0) return -1;
-    input = this[0];
+    var input = this[0];
 
     var pos = input.value.length;
 
@@ -69,3 +69,5 @@ window.keyboard = (function () {
         }
     }
 })();
+
+keyboard.keyPress()

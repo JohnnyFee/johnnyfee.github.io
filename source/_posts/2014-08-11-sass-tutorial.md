@@ -293,3 +293,4 @@ SASS允许用户编写自己的函数。
 
 - [Sass: Sass Basics](http://sass-lang.com/guide)
 - [Sass: Syntactically Awesome Style Sheets](http://sass.bootcss.com/)
+- [Keep Sass Simple](http://www.sitepoint.com/keep-sass-simple)

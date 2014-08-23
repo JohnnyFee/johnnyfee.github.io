@@ -17,6 +17,7 @@ tags: [responsive, web]
 - [Flexbox Based Responsive Equal Height Blocks With JavaScript Fallback — Osvaldas Valutis](http://osvaldas.info/flexbox-based-responsive-equal-height-blocks-with-javascript-fallback)
 - [HTML5 Developer Conference](http://html5devconf.com/videos.html)
 - [响应式web设计(Responsive web design)三步曲](http://weizhifeng.net/responsive-design-in-3-steps.html)
+- [Guide to Responsive-Friendly CSS Columns](http://css-tricks.com/guide-responsive-friendly-css-columns)
 
 <!--more-->
 

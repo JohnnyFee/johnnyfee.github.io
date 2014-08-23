@@ -23,6 +23,8 @@ Let us dive straight in with a simple example. Take a look at the following code
 </svg>
 ```
 
+<!--more-->
+
 Copy the code and paste it in a file demo1.svg. Then open the file in Firefox. It will render as shown in the following screenshot. (Firefox users: click [here](http://developer.mozilla.org/@api/deki/files/4571/=svgdemo1.xml "http://developer.mozilla.org/@api/deki/files/4571/=svgdemo1.xml"))
 
 ![svgdemo1.png](https://developer.mozilla.org/@api/deki/files/4928/=svgdemo1.png)
@@ -187,16 +189,23 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
     <dd>  A list of points and other information about how to draw the path. See the [Paths](https://developer.mozilla.org/en-US/Web/SVG/Tutorial/Paths "en-US/Web/SVG/Tutorial/Paths") section for more information.</dd>
 </dl>
 
+## Toos
+
+- [FWeinb/grunt-svgstore](https://github.com/FWeinb/grunt-svgstore)
+
 ## Tutorial
 
 - [SVG](https://developer.mozilla.org/zh-CN/docs/Web/SVG)
 - [SVG教程 - SVG](https://developer.mozilla.org/zh-CN/docs/Web/SVG/Tutorial)
+- [SVG Tutorial](http://tutorials.jenkov.com/svg/index.html)
 - [Using SVG](http://css-tricks.com/using-svg/)
 - [Animating Inline SVG Icons](http://flippinawesome.org/2014/06/03/animating-inline-svg-icons/?-inline-svg-icons)
 - [Icon System with SVG Sprites](http://css-tricks.com/svg-sprites-use-better-icon-fonts/)
 - [Understanding SVG Coordinate Systems & Transformations (Part 1)– The viewport, `viewBox`, & `preserveAspectRatio`](http://sarasoueidan.com/blog/svg-coordinate-systems/)
 - [Understanding SVG Coordinate Systems & Transformations (Part 2) – The `transform` Attribute](http://sarasoueidan.com/blog/svg-transformations/)
 - [Understanding SVG Coordinate Systems & Transformations (Part 3) – Establishing New Viewports](http://sarasoueidan.com/blog/nesting-svgs/)
+- [Inline SVG vs Icon Fonts [CAGEMATCH]](http://css-tricks.com/icon-fonts-vs-svg/)
+- [Swapping Out SVG Icons](http://css-tricks.com/swapping-svg-icons)
 
 ### SVG Attribute reference
 
@@ -220,12 +229,3 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 14.  [SVG字体](https://developer.mozilla.org/en-US/Web/SVG/Tutorial/SVG_fonts "en-US/Web/SVG/Tutorial/SVG fonts")
 15.  [SVG的Image标签](https://developer.mozilla.org/en-US/Web/SVG/Tutorial/SVG_Image_Tag "en-US/Web/SVG/Tutorial/SVG Image Tag")
 16.  [SVG工具](https://developer.mozilla.org/en-US/Web/SVG/Tutorial/Tools_for_SVG "en-US/Web/SVG/Tutorial/Tools_for_SVG")
-
-## SVG vs Fonts
-
-- [Inline SVG vs Icon Fonts [CAGEMATCH]](http://css-tricks.com/icon-fonts-vs-svg/)
-
-## Library
-
-- [FWeinb/grunt-svgstore](https://github.com/FWeinb/grunt-svgstore)
-

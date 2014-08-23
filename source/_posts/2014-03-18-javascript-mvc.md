@@ -170,3 +170,4 @@ sammy             |  5.2     |   16     |      N                |     N
 * [Angular, Ember, And Backbone: Which JavaScript Framework Is Right For You? – ReadWrite](http://readwrite.com/2014/02/06/angular-backbone-ember-best-javascript-framework-for-you)
 * [When to use React.js and when to use Angular?： javascript](http://www.reddit.com/r/javascript/comments/25n7id/when_to_use_reactjs_and_when_to_use_angular)
 * [对比Angular/jQueryUI/Extjs：没有一个框架是万能的](http://damoqiongqiu.iteye.com/blog/1922004)
+* [Opinionated Rundown of JS Frameworks](http://blog.andyet.com/2014/08/13/opinionated-rundown-of-js-frameworks)

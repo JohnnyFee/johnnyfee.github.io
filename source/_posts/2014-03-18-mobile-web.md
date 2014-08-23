@@ -74,10 +74,9 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 
 - [5种实用的移动手机APP导航菜单设计方案](http://www.shejidaren.com/mobile-app-menus-design.html)
 
-## website
+## Test
 
-- [w3cfuns](w3cfuns.com)
-- [admin10000](http://www.admin10000.com/?sp=14686)
+- [Techniques for mobile and responsive cross-browser testing: An Envato case study. - We build Envato](http://webuild.envato.com/blog/techniques-for-mobile-and-responsive-cross-browser-testing)
 
 ## Tutorial
 

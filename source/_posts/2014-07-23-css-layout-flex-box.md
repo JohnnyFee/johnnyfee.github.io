@@ -225,6 +225,7 @@ By default, flex items are laid out in the source order. However, the `order` pr
 #### flex-grow
 
 ![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-grow.svg)  
+
 This defines the ability for a flex item to grow if necessary. It accepts a unitless value that serves as a proportion. It dictates what amount of the available space inside the flex container the item should take up. 
 
 If all items have `flex-grow` set to 1, every child will set to an equal size inside the container. If you were to give one of the children a value of 2, that child would take up twice as much space as the others.
@@ -279,6 +280,36 @@ This defines the default size of an element before the remaining space is distri
 }
 ```
 
+<p data-height="268" data-theme-id="0" data-slug-hash="LEGIc" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/LEGIc/'>LEGIc</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+The first flex item want to be 400px, the second flex item want to be 100px. If the flex container is equal to 500px, the results in Chrome37:
+
+__Chrome 37 with `border-width: 5px`:__
+
+container|flex item1 |flex item2
+---------|-----------|-----------
+380      |300        |83
+450      |354        |96
+470      |370        |100
+507      |400        |107
+500      |394        |106
+550      |425        |125
+600      |450        |150
+
+__Chrome 37 no Boder:__
+
+container|flex item1 |flex item2
+---------|-----------|-----------
+380      |304        |76
+450      |360        |90
+470      |376        |94
+500      |400        |100
+507      |404        |103
+550      |425        |125
+600      |450        |150
+
+Please note flex the position in 400px for flex item1 and 100px for flex item2. Maybe it's not the perfectly desired? 
+
 #### flex
 
 This is the shorthand for `flex-grow,` `flex-shrink` and `flex-basis` combined. The second and third parameters (`flex-shrink` and `flex-basis`) are optional. Default is `0 1 auto`.
@@ -319,7 +350,7 @@ Note that `float`, `clear` and `vertical-align` have no effect on a flex item.
 
 ## 例子
 
-### 基于弹性布局的例子
+### centering
 
 Let's start with a very very simple example, solving an almost daily problem: perfect centering. It couldn't be any simpler if you use flexbox.
 
@@ -337,6 +368,8 @@ Let's start with a very very simple example, solving an almost daily problem: pe
 ```
 
 This relies on the fact a margin set to `auto` in a flex container absorb extra space. So setting a vertical margin of `auto` will make the item perfectly centered in both axis.
+
+### fluid layout
 
 Now let's use some more properties. Consider a list of 6 items, all with a fixed dimensions in a matter of aesthetics but they could be auto-sized. We want them to be evenly and nicely distributed on the horizontal axis so that when we resize the browser, everything is fine (without media queries!).
 
@@ -360,6 +393,8 @@ Now let's use some more properties. Consider a list of 6 items, all with a fixed
 Done. Everything else is just some styling concern. Below is a pen featuring this example. Be sure to go to CodePen and try resizing your windows to see what happen.
 
 <p data-height="540" data-theme-id="0" data-slug-hash="LklCv" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/HugoGiraudel/pen/LklCv/'>Demo Flexbox 1</a> by Hugo Giraudel (<a href='http://codepen.io/HugoGiraudel'>@HugoGiraudel</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+### responsive menu
 
 Let's try something else. Imagine we have a right-aligned navigation on the very top of our website, but we want it to be centered on medium-sized screens and single-columned on small devices. Easy enough.
 
@@ -390,6 +425,8 @@ Let's try something else. Imagine we have a right-aligned navigation on the very
 ```
 
 <p data-height="268" data-theme-id="0" data-slug-hash="pkwqH" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/HugoGiraudel/pen/pkwqH/'>Demo Flexbox 2</a> by Hugo Giraudel (<a href='http://codepen.io/HugoGiraudel'>@HugoGiraudel</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+### responsive layout
 
 Let's try something even better by playing with flex items flexibility! What about a mobile-first 3-columns layout with full-width header and footer. And independent from source order.
 
@@ -434,114 +471,6 @@ Let's try something even better by playing with flex items flexibility! What abo
 ```
 
 <p data-height="268" data-theme-id="0" data-slug-hash="qIAwr" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/HugoGiraudel/pen/qIAwr/'>Demo Flexbox 3</a> by Hugo Giraudel (<a href='http://codepen.io/HugoGiraudel'>@HugoGiraudel</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-
-### 绝妙的弹性布局例子
-
-这个例子说明了弹性布局如何根据不同的屏幕分辨率提供动态改变布局的能力。下图展示了这种转换。
-
-![HolyGrailLayout.png](https://developer.mozilla.org/files/3760/HolyGrailLayout.png)
-
-这个例子正适用于桌面浏览器网页必须优化以适应于智能手机屏幕的场景。不仅仅需要元素减小尺寸，它们排列的顺序方式也必须改变。弹性布局很容易实现这种需求。
-
-    ​
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <style>
-    
-      body {
-       font: 24px Helvetica;
-       background: #999999;
-      }
-    
-      #main {
-       min-height: 800px;
-       margin: 0px;
-       padding: 0px;
-       display: -webkit-flex;
-       display:         flex;
-       -webkit-flex-flow: row;
-               flex-flow: row;
-       }
-     
-      #main > article {
-       margin: 4px;
-       padding: 5px;
-       border: 1px solid #cccc33;
-       border-radius: 7pt;
-       background: #dddd88;
-       -webkit-flex: 3 1 60%;
-               flex: 3 1 60%;
-       -webkit-order: 2;
-               order: 2;
-       }
-      
-      #main > nav {
-       margin: 4px;
-       padding: 5px;
-       border: 1px solid #8888bb;
-       border-radius: 7pt;
-       background: #ccccff;
-       -webkit-flex: 1 6 20%;
-               flex: 1 6 20%;
-       -webkit-order: 1;
-               order: 1;
-       }
-      
-      #main > aside {
-       margin: 4px;
-       padding: 5px;
-       border: 1px solid #8888bb;
-       border-radius: 7pt;
-       background: #ccccff;
-       -webkit-flex: 1 6 20%;
-               flex: 1 6 20%;
-       -webkit-order: 3;
-               order: 3;
-       }
-     
-      header, footer {
-       display: block;
-       margin: 4px;
-       padding: 5px;
-       min-height: 100px;
-       border: 1px solid #eebb55;
-       border-radius: 7pt;
-       background: #ffeebb;
-       }
-     
-      /* Too narrow to support three columns */
-      @media all and (max-width: 640px) {
-      
-       #main, #page {
-        -webkit-flex-flow: column;
-                flex-flow: column;
-       }
-    
-       #main > article, #main > nav, #main > aside {
-        /* Return them to document order */
-        -webkit-order: 0;
-                order: 0;
-       }
-      
-       #main > nav, #main > aside, header, footer {
-        min-height: 50px;
-        max-height: 50px;
-       }
-      }
-    
-     </style>
-      </head>
-      <body>
-     <header>header</header>
-     <div id='main'>
-        <article>article</article>
-        <nav>nav</nav>
-        <aside>aside</aside>
-     </div>
-     <footer>footer</footer>
-      </body>
-    </html>
 
 ## 操作
 

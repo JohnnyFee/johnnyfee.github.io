@@ -28,7 +28,7 @@ The stroke of an SVG shape is the outline of the shape. Here is an SVG stroke ex
 
 ```
 <circle cx="50" cy="50" r="25"
-      style="**stroke: #000000;** fill:none;" />
+      style="stroke: #000000; fill:none;" />
 ```
 
 This example defines a circle with a black (`#000000`) stroke color, and no fill. Here is the resulting image:
@@ -62,19 +62,19 @@ Here are four examples with different `stroke-width`:
 
     <circle cx="50" cy="50" r="25"
             style="stroke: #000066; fill: none;
-                   **stroke-width: 1px;**" />
+                   stroke-width: 1px;" />
 
     <circle cx="150" cy="50" r="25"
             style="stroke: #000066; fill: none;
-                   **stroke-width: 3px;**" />
+                   stroke-width: 3px;" />
 
     <circle cx="250" cy="50" r="25"
             style="stroke: #000066; fill: none;
-                   **stroke-width: 6px;**" />
+                   stroke-width: 6px;" />
 
     <circle cx="350" cy="50" r="25"
             style="stroke: #000066; fill: none;
-                   **stroke-width: 12px;**" />
+                   stroke-width: 12px;" />
 
 Here is the resulting image:
 
@@ -138,19 +138,19 @@ Here are three SVG `stroke-linejoin` examples which illustrate these different v
 <path d="M20,100 l20,-50 l20,50"
       style="stroke: #000000;    fill:none;
              stroke-width:16px;
-             **stroke-linejoin: miter;**" />
+             stroke-linejoin: miter;" />
 <text x="22" y="20">miter</text>
 
 <path d="M120,100 l20,-50 l20,50"
       style="stroke: #000000;    fill:none;
              stroke-width:16px;
-             **stroke-linejoin: round;**" />
+             stroke-linejoin: round;" />
 <text x="122" y="20">round</text>
 
 <path d="M220,100 l20,-50 l20,50"
       style="stroke: #000000;    fill:none;
              stroke-width:16px;
-             **stroke-linejoin: bevel;**" />
+             stroke-linejoin: bevel;" />
 <text x="222" y="20">bevel</text>    
 ```
 
@@ -179,21 +179,21 @@ Here is an SVG `stroke-miterlimit` example:
           style="stroke: #000000;    fill:none;
                  stroke-width:16px;
                  stroke-linejoin: miter;
-                 **stroke-miterlimit: 1.0;**
+                 stroke-miterlimit: 1.0;
                  " />
     <text x="29" y="20">1.0</text>
     <path d="M120,100 l20,-50 l20,50"
           style="stroke: #000000;    fill:none;
                  stroke-width:16px;
                  stroke-linejoin: miter;
-                 **stroke-miterlimit: 2.0;**
+                 stroke-miterlimit: 2.0;
                  " />
     <text x="129" y="20">2.0</text>
     <path d="M220,100 l20,-50 l20,50"
           style="stroke: #000000;    fill:none;
                  stroke-width:16px;
                  stroke-linejoin: miter;
-                 **stroke-miterlimit: 4.0;**
+                 stroke-miterlimit: 4.0;
                  " />
     <text x="229" y="20">4.0</text>    
 
@@ -272,7 +272,7 @@ Here is an SVG `stroke-dasharray` example:
     <line x1="20" y1="20" x2="120" y2="20"
           style="stroke: #000000; fill:none;
           stroke-width: 6px;
-          **stroke-dasharray: 10 5**"  />
+          stroke-dasharray: 10 5"  />
 
 This example defines a stroke that is dashed with the dashed parts being 10 pixels wide, and the space between the dashes being 5 pixels. Here is the resulting image:
 
@@ -315,7 +315,7 @@ The `stroke-dashoffset` is used to set how far into dash pattern to start the pa
           style="stroke: #000000; fill:none;
           stroke-width: 6px;
           stroke-dasharray: 10 5;
-          **stroke-dashoffset: 5**;
+          stroke-dashoffset: 5;
           "  />    
 
 This example sets `dash-offset` to 5 pixels, meaning the rendering of the dashed line will start 5 pixels into the dash pattern (not all browsers fully support this yet). Here is the resulting image:

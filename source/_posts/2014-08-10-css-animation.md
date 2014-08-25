@@ -5,7 +5,7 @@ category: CSS
 tags: [css, animation]
 --- 
 
- 原文：<http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html>
+原文：<http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html>
 
 ## CSS Transition
 
@@ -374,6 +374,10 @@ div:hover {
   100% { background: yellowgreen; }
 }
 ```
+
+## Library
+
+- [h5bp/Effeckt.css](https://github.com/h5bp/Effeckt.css) A Performant Transitions and Animations Library: <http://h5bp.github.io/Effeckt.css>
 
 ## Tutorial
 

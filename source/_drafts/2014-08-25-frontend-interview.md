@@ -45,8 +45,11 @@ tags: [web, career]
 4. 以下代码在严格模式（strict）下，不会报错的是：(D)
 
     A. `v = 123;`
-    B. `function f(){ this.a = 1;}; f(); `
+
+    B. `function f(){ this.a = 1;} f(); `
+    
     C. `var o = { p: 1, p: 2};`
+    
     D. `for(var i = 0; i < 2; i++) {}`
 
 5. 以下程序的输出结果是：(B)
@@ -62,8 +65,11 @@ tags: [web, career]
         </script>
 
     A. hello 和 world
+    
     B. undefined 和 world
+    
     C. hello 和 undefined
+    
     D. world 和 world
 
 6. 以下程序的输出结果是：(A)
@@ -72,9 +78,46 @@ tags: [web, career]
         console.log(a[0])
 
     A. undefined
+    
     B. 3
+    
     C. 0
+    
     D. 以上答案都不对
+
+7. `var a = [1,23]; alert(typeof a);` 的输出结果是：(B)
+
+    A. "array"
+    
+    B. "object"
+    
+    C. "function"
+    
+    D. "undefined"
+
+8. 以下程序的返回结果是:(C)
+
+        var b = 456;
+        var a = {
+            b: 123,
+            callback: function(){
+                console.log(this.b);
+            }
+        }
+
+        var c = function(callback){
+            if(typeof callback === "function"){
+                callback();
+            }
+        }
+
+    A. 123
+    
+    B. undefined
+    
+    C. 456
+    
+    D. 报错
 
 ## 判断题
 
@@ -96,6 +139,36 @@ tags: [web, career]
 
 5. 写出 3 个css3新增的属性。答案：[CSS3 Properties](http://www.quackit.com/css/css3/properties/)  `border-radius` `box-shadow`  `text-shadow` `text-outline` `text-stroke` `background-size` `text-overflow` `flex` `resize`
 
+## 程序阅读题
+
+以下程序的输出结果是：
+
+    function foo(){
+        console.log('global foo');
+    }
+
+    function bar(){
+        console.log('global bar');
+    }
+
+    function hoistMe(){
+        foo();// "local foo"
+        bar(); // TypeErrer: bar is not a function
+
+        function foo(){
+            alert('local foo');
+        }
+
+        var bar = function(){
+            alert('global bar');
+        }
+    }
+
+答案：
+
+"local foo"
+
+错误，错误信息为 TypeError: undefined is not a function.
 
 ## 问答题
 

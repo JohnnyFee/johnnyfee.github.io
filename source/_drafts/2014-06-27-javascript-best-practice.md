@@ -11,7 +11,7 @@ tags: [javascript, best practice]
 
 ## Code Style
 
-### 1.使用 === 代替 ==
+### 使用 === 代替 ==
 
 JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操作中使用前者是最佳实践。
 
@@ -19,7 +19,7 @@ JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操
 
 然而，当使用==和！=时，你可能会遇到类型不同的情况，这种情况下，操作数的类型会被强制转换成一样的再做比较，这可能不是你想要的结果。
 
-### 2.Eval=邪恶
+### Eval=邪恶
 
 起初不太熟悉时，“eval”让我们能够访问JavaScript的编译器（译注：这看起来很强大）。从本质上讲，我们可以将字符串传递给eval作为参数，而执行它。
 
@@ -27,7 +27,7 @@ JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操
 
 <!--more-->
 
-### 4.使用JSLint
+### 使用JSLint
 
 [JSLint](http://www.jslint.com/)是由大名鼎鼎的[道格拉斯](http://www.crockford.com/)（Douglas Crockford）编写的调试器。简单的将你的代码粘贴进JSLint中，它会迅速找出代码中明显的问题和错误。
 
@@ -35,7 +35,7 @@ JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操
 
 部署脚本之前，运行JSLint，只是为了确保你没有做出任何愚蠢的错误。
 
-### 8.减少全局变量
+### 减少全局变量
 
 只要把多个全局变量都整理在一个名称空间下，拟将显著降低与其他应用程序、组件或类库之间产生糟糕的相互影响的可能性。——Douglas Crockford
 
@@ -59,7 +59,33 @@ JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操
 
 注：这里只是简单命名为 “DudeNameSpace”，实际当中要取更合理的名字。
 
-### 13.使用{}代替 new Object()
+### 移除”language”属性
+
+曾经脚本标签中的“language”属性非常常见。
+
+    <script type="text/javascript" language="javascript">  
+    ...  
+    </script>
+    
+
+然而，这个属性早已被弃用，所以请移除（译者注：html5 中已废弃，但如果你喜欢，你仍然可以添加）。
+
+### 自执行函数
+
+和调用一个函数类似，它很简单的使一个函数在页面加载或父函数被调用时自动运行。简单的将你的函数用圆括号包裹起来，然后添加一个额外的设置，这本质上就是调用函数。
+
+    (function doSomething() {  
+       return {  
+          name: 'jeff',  
+          lastName: 'way'  
+       };  
+    })();
+
+
+
+## 数据类型
+
+### 使用{}代替 new Object()
 
 在JavaScript中创建对象的方法有多种。可能是传统的方法是使用”new”加构造函数，像下面这样:
 
@@ -96,7 +122,7 @@ JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操
 
 “对象字面量使我们能够编写更具特色的代码，而且相对简单的多。不需要直接调用构造函数或维持传递给函数的参数的正确顺序，等”——[dyn-web.com](http://www.dyn-web.com/tutorials/obj_lit.php)
 
-### 14.使用[]代替 new Array()
+### 使用[]代替 new Array()
 
 这同样适用于创建一个新的数组。
 
@@ -118,29 +144,70 @@ JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操
 
 传入的参数并不是数组第一个元素，而是数组的长度。
 
-### 24.移除”language”属性
+### 检测数据类型
 
-曾经脚本标签中的“language”属性非常常见。
+如检测是否为数组类型可以使用以下方法：
 
-    <script type="text/javascript" language="javascript">  
-    ...  
-    </script>
-    
+    if(tyoeof Array.isArray === "undefined"){
+        Array.isArray = function(){
+            return Object.prototype.toString.call(arg) === [object Array]";
+        }
+    }
 
-然而，这个属性早已被弃用，所以请移除（译者注：html5 中已废弃，但如果你喜欢，你仍然可以添加）。
+由于 `typeof arrayInstance === "object"`，所以使用 `typeof` 并不能实现该功能。
 
-### 21.自执行函数
+检测其他类型同理。
 
-和调用一个函数类似，它很简单的使一个函数在页面加载或父函数被调用时自动运行。简单的将你的函数用圆括号包裹起来，然后添加一个额外的设置，这本质上就是调用函数。
+### 函数
 
-    (function doSomething() {  
-       return {  
-          name: 'jeff',  
-          lastName: 'way'  
-       };  
-    })();
+常见的函数有以下 3 中形式：
 
-### 23.道格拉斯的 JSON.Parse
+    // 命名函数表达式
+    var add = function add(a, b){
+        return a + b;
+    }
+
+    // 函数表达式，又称为匿名函数
+    var add = function(a, b){
+        return a+b;
+    }
+
+    // 函数声明
+    function foo(){
+        
+    }
+
+- 在调用堆栈中看不到匿名函数函数名称，但这种方式最简洁，最常用。
+- 函数声明只能出现在 “程序代码中”，它们的定义不能分配给变量或属性，也不能以参数形式出现在函数调用中。
+- 在函数体内声明函数表达式和声明普通变量一样，声明都会被提升到函数的顶部。但使用函数声明时，不仅函数定义被提升，而且函数体也被提升了。
+
+    function foo(){
+        console.log('global foo');
+    }
+
+    function bar(){
+        console.log('global bar');
+    }
+
+    function hoistMe(){
+        console.log(typeof foo);// 'function'
+        console.log(typeof bar); // 'undefined'
+
+        foo();// "foo"
+        bar(); // TypeErrer: bar is not a function
+
+        // 函数声明， 变量和函数体都被提升
+        function foo(){
+            alert('local foo');
+        }
+
+        // 函数表达式，近 'bar'  被提升，函数体未被提升。
+        var bar = function(){
+            alert('global bar');
+        }
+    }
+
+### 道格拉斯的 JSON.Parse
 
 尽管 JavaScript 2（ES5)已经内置了JSON 解析器。但在撰写本文时,我们仍然需要自己实现（兼容性）。道格拉斯（Douglas Crockford），JSON之父，已经创建了一个你可以直接使用的解析器。这里可以下载（[http://www.json.org/](http://www.json.org/)）。
 
@@ -153,9 +220,9 @@ JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操
       container.innerHTML += '<li>' + response[i].name + ' : ' + response[i].email + '</li>';  
     }
 
-## 性能优化
+## 性能
 
-### 5.将脚本放在页面的底部
+### 将脚本放在页面的底部
 
 在本系列前面的文章里已经提到过这个技巧，我粘贴信息在这里。
 
@@ -170,7 +237,7 @@ JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操
     </html>
     
 
-### 7.构建字符串的最优方法
+### 构建字符串的最优方法
 
 当你需要遍历数组或对象的时候，不要总想着“for”语句，要有创造性，总能找到更好的办法，例如，像下面这样。
 
@@ -180,7 +247,7 @@ JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操
 
 我不是你心中的神，但请你相信我（不信你自己测试）——这是迄今为止最快的方法！ 使用原生代码（如 join()），不管系统内部做了什么，通常比非原生快很多。 ——James Padolsey, james.padolsey.com
 
-### 12.不要使用”with”语句
+### 不要使用”with”语句
 
 乍一看，”with”语句看起来像一个聪明的主意。基本理念是,它可以为访问深度嵌套对象提供缩写，例如……
 
@@ -203,7 +270,7 @@ JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操
     o.legs = true;
     
 
-### 18.”For in”语句
+### ”For in”语句
 
 当遍历对象的属性时，你可能会发现还会检索方法函数。为了解决这个问题，总在你的代码里包裹在一个if语句来过滤信息。
 

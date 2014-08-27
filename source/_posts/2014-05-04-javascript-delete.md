@@ -8,7 +8,7 @@ tags: [javascript, operator]
 
 ## 理论
 
-delete操作符通常用来删除对象的属性：
+`delete` 操作符通常用来删除对象的属性：
 
 	var o = { x: 1 };
 	delete o.x; // true
@@ -28,15 +28,15 @@ delete操作符通常用来删除对象的属性：
 
 <!--more-->
 
-注意delete只有在无法删除的情况下才会返回false。为了理解这一点，我们必须解释一下变量初始化以及变量属性的一些基本概念--不幸的是很少有Javascript的书能讲到这些。如果你只想知其然而不是知其所以然的话，你完全可以跳过这一节。
+注意 `delete` 只有在无法删除的情况下才会返回 `false`。为了理解这一点，我们必须解释一下变量初始化以及变量属性的一些基本概念--不幸的是很少有 Javascript 的书能讲到这些。如果你只想知其然而不是知其所以然的话，你完全可以跳过这一节。
 
 ### 代码的类型
 
 在ECMAScript中，有三种可执行代码类型：全局代码、函数代码、eval代码。
 
-1. 当一段代码被当做程序段运行的时候，它是在全局作用域下执行的，也就是全局代码。在浏览器环境下，通常`<SCRIPT>`元素就是一段全局代码。
-2. 所有在function中声明的代码即是函数代码，最常见的是HTML元素的响应事件(`<p onclick="...">`)。
-3. 传入内建的eval函数中的代码段称为eval代码，稍后我们会看到这种类型的特别性。
+1. 当一段代码被当做程序段运行的时候，它是在全局作用域下执行的，也就是全局代码。在浏览器环境下，通常 `<SCRIPT>` 元素就是一段全局代码。
+2. 所有在 `function` 中声明的代码即是函数代码，最常见的是HTML元素的响应事件(`<p onclick="...">`)。
+3. 传入内建的 `eval` 函数中的代码段称为 eval 代码，稍后我们会看到这种类型的特别性。
 
 ### 执行上下文(Execution Context)
 
@@ -46,7 +46,7 @@ delete操作符通常用来删除对象的属性：
 
 ### Activation object / Variable object
 
-每个执行上下文都和一个Variable object（变量对象）相关联 ，这也是一个抽象的概念，便于我们理解变量实例化机制：在源代码中声明的变量和方法实际上都是作为属性被加入到与当前上下文相关联的这个对象当中 。
+每个执行上下文都和一个 Variable object（变量对象）相关联 ，这也是一个抽象的概念，便于我们理解变量实例化机制：在源代码中声明的变量和方法实际上都是作为属性被加入到与当前上下文相关联的这个对象当中 。
  
 当执行全局代码的时候，Variable object就是一个全局对象，也就是说所有全局变量和函数都是作为这个变量的属性存在。
 
@@ -112,7 +112,7 @@ delete操作符通常用来删除对象的属性：
 
 我们已经知道声明变量时发生了什么（他们都变成了当前上下文对象的属性），接下来我们就要看一下属性究竟是怎么样一回事。每一个变量属性都可以有以下任意多个属性: ReadOnly, DontEnum, DontDelete, Internal。你可以把这些当做标记，标明了变量属性可以持有的某种特性。这里我们最感兴趣的就是DontDelete标记。
  
-在声明变量或者函数时，他们都变成了当前上下文对象的属性--对于函数代码来说是活动对象，对于全局代码来说则是变量对象，而值得注意的是这些属性在创建时都带有DontDelete标记，但是显式或者隐式的赋值语句所产生的属性并不会带有这个标记！这就是为什么有一些属性我们可以删除，但另一些却不可以：
+在声明变量或者函数时，他们都变成了当前上下文对象的属性--对于函数代码来说是活动对象，对于全局代码来说则是变量对象，而值得注意的是这些属性在创建时都带有DontDelete标记，但是显式或者隐式的赋值语句所产生的__属性__并不会带有这个标记！这就是为什么有一些属性我们可以删除，但另一些却不可以：
 
 	var GLOBAL_OBJECT = this;  
 	  
@@ -423,4 +423,4 @@ delete是普通运算符，会返回true或false。规则为：当被delete的�
 - [深入详解javascript之delete操作符](http://m.oschina.net/blog/28926)
 	- [Understanding delete — Perfection Kills](http://perfectionkills.com/understanding-delete/)
 - [delete - JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete)
-- http://blog.charlee.li/javascript-variables-and-delete-operator/
+- [Javascript的变量与delete操作符](http://blog.charlee.li/javascript-variables-and-delete-operator/)

@@ -23,6 +23,7 @@ tags: [web, tutorial]
 ## Scaffold
 
 - [h5bp/html5-boilerplate](https://github.com/h5bp/html5-boilerplate)
+- [Favicons, Touch Icons, Tile Icons, etc. What All Do You Need?](http://css-tricks.com/favicon-quiz)
 
 ## Design
 

@@ -30,6 +30,7 @@ tags: [css, icon, font]
 - [一套带动画图标素材下载(Web版)](http://www.shejidaren.com/animated-icon-download.html)
 - [200+漂亮线性图标下载（免费）](http://www.shejidaren.com/200-outline-icons-for-designer.html)
 - [应对紧急情况 27套罕见的独特图标素材包](http://www.shejidaren.com/unique-icon-sets.html)
+- [730个免费线性图标 – Linea](http://www.shejidaren.com/730-outline-icons.html)
 
 ## 图标资源
 

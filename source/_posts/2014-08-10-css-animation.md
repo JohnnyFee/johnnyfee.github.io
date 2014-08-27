@@ -385,5 +385,6 @@ div:hover {
 - [CSS3 Transforms: Adding 2D and 3D Effects To Web Pages - Vanseo Design](http://www.vanseodesign.com/css/transforms/)
 - [Using CSS animations - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Using_CSS_animations)
 - [animation](http://css-tricks.com/almanac/properties/a/animation/)
+- [Starting CSS Animations Mid-Way](http://css-tricks.com/starting-css-animations-mid-way)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

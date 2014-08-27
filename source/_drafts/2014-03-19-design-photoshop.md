@@ -15,6 +15,7 @@ tags: [ps]
 - [默默图标生成器](http://www.zcool.com.cn/article/ZMzY5ODA=.html)
 - [16个创意Photoshop图像处理教程](http://www.shejidaren.com/photoshop-image-processing-tutorials.html)
 - [设计素材：手机锁屏界面-临摹](http://www.zcool.com.cn/gfx/ZMzA0MzMy.html)
+- [超赞！32款扁平化Photoshop PSD UI工具包（下）-控件新闻-慧都控件网](http://www.evget.com/article/2014/8/21/21491.html)
 
 ## Design Resource
 

@@ -206,6 +206,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 - [Understanding SVG Coordinate Systems & Transformations (Part 3) – Establishing New Viewports](http://sarasoueidan.com/blog/nesting-svgs/)
 - [Inline SVG vs Icon Fonts [CAGEMATCH]](http://css-tricks.com/icon-fonts-vs-svg/)
 - [Swapping Out SVG Icons](http://css-tricks.com/swapping-svg-icons)
+- [Making SVGs Responsive with CSS](http://tympanus.net/codrops/2014/08/19/making-svgs-responsive-with-css)
 
 ### SVG Attribute reference
 

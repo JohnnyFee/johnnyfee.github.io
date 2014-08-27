@@ -14,6 +14,7 @@ tags: [extjs, tutorial]
 - [Creating Custom Layouts in Ext JS and Sencha Touch](http://www.sencha.com/blog/creating-custom-layouts-in-ext-js-and-sencha-touch)
 - [Designing Responsive Applications with Ext JS](http://www.sencha.com/blog/designing-responsive-applications-with-ext-js)
 - [Top Support Tips](http://www.sencha.com/blog/top-support-tips-august-2014)
+- [Ext JS 5: Routing Part II](http://existdissolve.com/2014/08/ext-js-5-routing-part-ii/)
 
 ## MVC
 
@@ -24,6 +25,10 @@ tags: [extjs, tutorial]
 ## Font
 
 - [Training Tip: Using Custom Fonts with Sencha Architect](http://www.sencha.com/blog/training-tip-using-custom-fonts-with-sencha-architect)
+
+## Example
+
+- [This Week in Sencha (July 5, 2013)](http://senchaexamples.com/2013/07/05/this-week-in-sencha-july-5-2013/)
 
 ## Tutorial
 

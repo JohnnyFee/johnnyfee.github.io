@@ -55,11 +55,25 @@ This same layout could be accomplished using relative positioning on container a
 
 使用 `float` 实现网站布局请参考 [CSS - 浮动布局例子](http://zh.learnlayout.com/float-layout.html)。
 
-__参考:__
+See Also [float](http://css-tricks.com/almanac/properties/f/float/)
 
-- [float](http://css-tricks.com/almanac/properties/f/float/)
+## The Great Collapse
 
-## clear
+One of the more bewildering things about working with floats is how they can affect the element that contains them (their "parent" element). If this parent element contained nothing but floated elements, the height of it would literally collapse to nothing. This isn't always obvious if the parent doesn't contain any visually noticeable background, but it is important to be aware of.
+
+![](http://css-tricks.com/wp-content/csstricks-uploads/collapse.png)
+
+浮动的原理和清除浮动的原因：浮动的框可以左右移动，直至它的外边缘遇到包含框或者另一个浮动框的边缘。浮动框不属于(或脱离了)文档中的普通流，当一个元素浮动之后，不会影响到块级框的布局而只会影响行内元素(如span、a、em)的排列，即行内元素浮动后就会表现得像块级元素一样。当浮动框高度超出包含框的时候，也就会出现包含框不会自动伸高来闭合浮动元素（或者可以称为“高度塌陷”现象）。在实际布局中，往往这并不是我们所希望的，所以需要闭合浮动元素，使其包含框表现出正常的高度。
+
+As anti-intuitive as collapsing seems to be, the alternative is worse. Consider this scenario:
+
+![](http://css-tricks.com/wp-content/csstricks-uploads/whywecollapse.png)
+
+If the block element on top where to have automatically expanded to accomodate the floated element, we would have an unnatural spacing break in the flow of text between paragraphs, with no practical way of fixing it. If this were the case, us designers would be complaining much harder about this behavior than we do about collapsing.
+
+Collapsing almost always needs to be dealt with to prevent strange layout and cross-browser problems. We fix it by clearing the float **after** the floated elements in the container but **before** the close of the container.
+
+### clear
 
 Float's sister property is `clear`. An element that has the clear property set on it will not move up adjacent to the float like the float desires, but will move itself down past the float. Again an illustration is more helpful than words:
 
@@ -90,7 +104,7 @@ Collapsing almost always needs to be dealt with to prevent strange layout and cr
         </div>
 
 * **The Overflow Method** relies on setting the overflow CSS property on a parent element. 
-    If this property is set to auto or hidden on the parent element, the parent will expand to contain the floats, effectively clearing it for succeeding elements. This method can be beautifully semantic as it may not require an additional elements. However if you find yourself adding a new div just to apply this, it is equally as unsemantic as the empty div method and less adaptable. Also bear in mind that the overflow property isn't specifically for clearing floats. Be careful not to hide content or trigger unwanted scrollbars.
+    If this property is set to `auto` or `hidden` on the parent element, the parent will expand to contain the floats, effectively clearing it for succeeding elements. This method can be beautifully semantic as it may not require an additional elements. However if you find yourself adding a new div just to apply this, it is equally as unsemantic as the empty div method and less adaptable. Also bear in mind that the overflow property isn't specifically for clearing floats. Be careful not to hide content or trigger unwanted scrollbars.
 
         <div class="box" style="overflow: hidden">
           <img src="http://zh.learnlayout.com/images/ilta.png" style="float:right">
@@ -114,20 +128,10 @@ Collapsing almost always needs to be dealt with to prevent strange layout and cr
            clear: both;
         }
 
-        <div class="box clearfix">
+        <div class="clearfix">
           <img src="http://zh.learnlayout.com/images/ilta.png" style="float:right">
           <section>文字坏绕</section>
         </div>
-
-以上例子中的 `box` 样式均为：
-
-```
-<style type="text/css">
-    .box{
-        border:1px solid red
-    }
-</style>
-```
 
 This will apply a small bit of content, hidden from view, after the parent element which clears the float. This isn't quite the [whole story](http://www.positioniseverything.net/easyclearing.html), as additional code needs to be used to accomodate for older browsers. **Note:** Also see [this snippet](http://css-tricks.com/snippets/css/clear-fix/) which keeps track of the latest and greatest in clearfixes, including the newer "micro clearfix."
 
@@ -138,6 +142,8 @@ Different scenarios call for different float clearning methods. Take for example
 To better visually connect the similar blocks, we want to start a new row as we please, in this case when the color changes. We could use either the overflow or easy clearing method if each of the color groups had a parent element. Or, we use the empty div method in between each group. Three wrapping divs that didn't previously exist or three after divs that didn't previously exist. I'll let you decide which is better.
 
 ![](http://css-tricks.com/wp-content/csstricks-uploads/grid-blocks-cleared.png)
+
+<p data-height="268" data-theme-id="0" data-slug-hash="AxmBK" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/HugoGiraudel/pen/AxmBK/'>Float: down with Sass</a> by Hugo Giraudel (<a href='http://codepen.io/HugoGiraudel'>@HugoGiraudel</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 ## 与position的兼容性问题
 
@@ -157,6 +163,18 @@ _Quick fix:_ Make sure you don't have any images that do this, use overflow: hid
 * The **3px Jog** is when text that is up next to a floated element is mysteriously kicked away by 3px like a weird forcefield around the float. _Quick fix:_ set a width or height on the affected text.
 * In IE 7, the **Bottom Margin Bug** is when if a floated parent has floated children inside it, bottom margin on those children is ignored by the parent. _Quick fix:_ using bottom padding on the parent instead.
 
+### Alternatives
+
+If you need text wrapping around images, there really aren't any alternatives for float. Speaking of which, check out this [rather clever technique](http://www.ideashower.com/ideas/active/css-text-wrapper/) for wrapping text around irregular shapes. But for page layout, there definitely are choices. Eric Sol right here on A List Apart has an article on  [Faux Absolute Positioning](http://alistapart.com/articles/fauxabsolutepositioning), which is a very interesting technique that in many ways combines the flexibility of floats with the strength of absolute positioning. 
+
+CSS3 tackles page layout a couple of ways:
+
+* [Flexbox](http://dev.w3.org/csswg/css3-flexbox/)
+* [Multi-column Layout](http://dev.w3.org/csswg/css3-multicol/)
+* [Grid Layout](http://dev.w3.org/csswg/css3-grid-align/)
+* [Template Layout](http://dev.w3.org/csswg/css3-layout/)
+
+Absolutely positioned floats (e.g. you absolutely position as normal, but the element is still able to affect other elements, like have text wrap around it) were discussed but I _think_ it was shelved due to similarities to other more robust layout ideas.
 
 ## Reference
 

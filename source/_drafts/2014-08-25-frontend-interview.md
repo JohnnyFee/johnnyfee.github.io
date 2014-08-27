@@ -66,7 +66,15 @@ tags: [web, career]
     C. hello 和 undefined
     D. world 和 world
 
-6. 
+6. 以下程序的输出结果是：(A)
+
+        var a = new Array(3);
+        console.log(a[0])
+
+    A. undefined
+    B. 3
+    C. 0
+    D. 以上答案都不对
 
 ## 判断题
 

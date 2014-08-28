@@ -780,14 +780,6 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - Batarang 
     Batarang is a Chrome extension that adds AngularJS knowledge to the built-in Developer Tools suite in Google Chrome. 
 
-## UI
-
-- <http://angular-ui.github.io/>
- - [AngularStrap - AngularJS 1.2+ native directives for Twitter Bootstrap 3.](http://mgcrea.github.io/angular-strap)
-- [AngularJS Multi-Step Form Using UI Router ♥ Scotch](http://scotch.io/tutorials/javascript/angularjs-multi-step-form-using-ui-router?)
-- [All Search and Social Media Meta Tags Starter Template ♥ Scotch](http://scotch.io/quick-tips/all-search-and-social-media-meta-tags-starter-template)
-- [Thumbtack Engineering](http://www.thumbtack.com/engineering/introducing-smarty)
-
 ## Tutorial
 
 - [2013年度最强AngularJS资源合集-CSDN.NET](http://www.csdn.net/article/2014-01-03/2818005-AngularJS-Google-resource)
@@ -798,6 +790,21 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - [A modular way to create your Angular & Node web apps · CleverStack.io](http://cleverstack.io/developer/) A modular way to create your Angular & Node web apps.
 - [Rethinking AngularJS Controllers](http://toddmotto.com/rethinking-angular-js-controllers)
 - [David and Suzi](http://davidandsuzi.com/using-react-for-faster-renders-and-isomorphism-in-angular)
+- [Adding Auth to your Ionic app in 5 mins with Auth0](http://ionicframework.com/blog/authentication-in-ionic)
+- [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
+- [Debugging AngularJS Apps from the Console - Modern Web](http://modernweb.com/2014/08/21/debugging-angularjs-apps-console)
+
+### UI
+
+- <http://angular-ui.github.io/>
+ - [AngularStrap - AngularJS 1.2+ native directives for Twitter Bootstrap 3.](http://mgcrea.github.io/angular-strap)
+- [AngularJS Multi-Step Form Using UI Router ♥ Scotch](http://scotch.io/tutorials/javascript/angularjs-multi-step-form-using-ui-router?)
+- [All Search and Social Media Meta Tags Starter Template ♥ Scotch](http://scotch.io/quick-tips/all-search-and-social-media-meta-tags-starter-template)
+- [Thumbtack Engineering](http://www.thumbtack.com/engineering/introducing-smarty)
+
+### Mobile
+
+- [Getting Started with Mobile Angular UI](http://www.sitepoint.com/getting-started-mobile-angular-ui)
 
 ## Reference
 

@@ -244,3 +244,4 @@ Arale 2.0 的核心设计原则是 KISS：
 - [Objects and classes by example - Mixu's Node book](http://book.mixu.net/node/ch6.html)
 - [TremayneChrist/ProtectJS](https://github.com/TremayneChrist/ProtectJS)
 - [A JavaScript Constructor Problem, and Three Solutions](http://raganwald.com/2014/07/09/javascript-constructor-problem.html)
+- [Simple Currying in javascript - The Thinking Alien](http://blog.zakhour.me/post/javascript/simple-currying-in-javascript)

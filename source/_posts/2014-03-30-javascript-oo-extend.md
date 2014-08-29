@@ -234,14 +234,3 @@ Arale 2.0 的核心设计原则是 KISS：
 2. Implements 接收的参数就是普通对象，与 implement 方法保持一致。MooTools 中 Implements 属性需要是类。
 3. 去除 this.parent() 语法糖，需要调用时，和 Backbone 类似，推荐直接使用 SuperClass.prototype.methodName 来调用。
 4. 为了方便调用父类中的方法，提供 superclass 语法糖，与 YUI 类似。
-
-## Tutorial
-
-- [拥抱原型面向对象编程 - WEB开发者](http://www.admin10000.com/document/1242.html)
-- [JavaScript中的原型和继承 - WEB开发者](http://www.admin10000.com/document/4343.html)
-- [Prototypes Are Not Classes](http://raganwald.com/2014/01/19/prototypes-are-not-classes.html)
-- [Private properties in JavaScript](https://curiosity-driven.org/private-properties-in-javascript)
-- [Objects and classes by example - Mixu's Node book](http://book.mixu.net/node/ch6.html)
-- [TremayneChrist/ProtectJS](https://github.com/TremayneChrist/ProtectJS)
-- [A JavaScript Constructor Problem, and Three Solutions](http://raganwald.com/2014/07/09/javascript-constructor-problem.html)
-- [Simple Currying in javascript - The Thinking Alien](http://blog.zakhour.me/post/javascript/simple-currying-in-javascript)

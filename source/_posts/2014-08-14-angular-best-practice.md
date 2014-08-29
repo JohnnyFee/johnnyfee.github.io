@@ -243,5 +243,5 @@ AngularJS拥有一整套工具使这个过程非常简单;有了ngClass我们可
 
 希望这个答案对你有用。
 
-**原文英文地址：** http://stackoverflow.com/questions/14994391/how-do-i-think-in-angularjs-if-i-have-a-jquery-background
+**原文英文地址：** <http://stackoverflow.com/questions/14994391/how-do-i-think-in-angularjs-if-i-have-a-jquery-background>
 

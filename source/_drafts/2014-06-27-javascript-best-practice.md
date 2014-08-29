@@ -181,31 +181,31 @@ JavaScript 使用2种不同的等值运算符：===|!== 和 ==|!=，在比较操
 - 函数声明只能出现在 “程序代码中”，它们的定义不能分配给变量或属性，也不能以参数形式出现在函数调用中。
 - 在函数体内声明函数表达式和声明普通变量一样，声明都会被提升到函数的顶部。但使用函数声明时，不仅函数定义被提升，而且函数体也被提升了。
 
-    function foo(){
-        console.log('global foo');
-    }
-
-    function bar(){
-        console.log('global bar');
-    }
-
-    function hoistMe(){
-        console.log(typeof foo);// 'function'
-        console.log(typeof bar); // 'undefined'
-
-        foo();// "foo"
-        bar(); // TypeErrer: bar is not a function
-
-        // 函数声明， 变量和函数体都被提升
         function foo(){
-            alert('local foo');
+            console.log('global foo');
         }
 
-        // 函数表达式，近 'bar'  被提升，函数体未被提升。
-        var bar = function(){
-            alert('global bar');
+        function bar(){
+            console.log('global bar');
         }
-    }
+
+        function hoistMe(){
+            console.log(typeof foo);// 'function'
+            console.log(typeof bar); // 'undefined'
+
+            foo();// "foo"
+            bar(); // TypeErrer: bar is not a function
+
+            // 函数声明， 变量和函数体都被提升
+            function foo(){
+                alert('local foo');
+            }
+
+            // 函数表达式，近 'bar'  被提升，函数体未被提升。
+            var bar = function(){
+                alert('global bar');
+            }
+        }
 
 ### 道格拉斯的 JSON.Parse
 

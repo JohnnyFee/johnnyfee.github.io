@@ -12,6 +12,8 @@ tags: [javascript, kernel]
 
 <!--more-->
 
+DOTO 使用 goddyzhao 的翻译。
+
 ## 介绍
 
 这篇文章我们主要探讨ECMAScript执行上下文和相关的ECMAScript可执行代码。

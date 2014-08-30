@@ -172,7 +172,6 @@ See [justify-content](http://css-tricks.com/almanac/properties/j/justify-content
 ![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/align-items.svg)  
 This defines the default behaviour for how flex items are laid out along the cross axis on the current line. Think of it as the `justify-content` version for the cross-axis (perpendicular to the main-axis).
 
-
 ```
 .container {
   align-items: flex-start | flex-end | center | baseline | stretch;

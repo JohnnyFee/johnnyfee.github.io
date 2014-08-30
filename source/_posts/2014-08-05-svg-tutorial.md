@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "SVG"
+title: "SVG Tutorial"
 category: Css
 tags: [css, svg]
 --- 
@@ -49,15 +49,11 @@ The rendering process involves the following:
     * If the HTML is HTML5, and the browser is a conforming HTML5 browser, the SVG can be directly embedded, too. However, there may be syntax changes necessary to conform to the HTML5 specification
     * The SVG file can be referenced with an `object` element:
 
-        ```
-        <object data="image.svg" type="image/svg+xml" />
-        ```
+            <object data="image.svg" type="image/svg+xml" />
 
     * Likewise an `iframe` element can be used:
 
-        ```
-        <iframe src="image.svg"></iframe>
-        ```
+            <iframe src="image.svg"></iframe>
 
     * An `img` element can be used theoretically, too. However this technique doesn't work in Firefox before 4.0.
     * Finally SVG can be created dynamically with JavaScript and injected into the HTML DOM. This has the advantage, that replacement technologies for browsers, that can't process SVG, can be implemented.

@@ -4,14 +4,33 @@ title: "前端笔试题"
 category: Web
 tags: [web, career]
 ---
-## 选择题
+## 选择题（每题 2 分，共 20 分）
 
-1.  以下哪个不是 HTML5 的新标签：c
+1.  以下哪个不是 HTML5 的新标签：(C)
 
-    a.  `<article>`
-    b.  `<section>`
-    c.  `<address>`
-    d.  `<time>`
+    A.  `<article>`
+    B.  `<section>`
+    C.  `<address>`
+    D.  `<time>`
+
+2. 请问以下代码中，`<h1>` 和 `p` 之间的空隙(margin) 为多少 px？(B)
+
+        h1 {
+          margin: 0 0 25px 0;
+          background: #cfc;
+        }
+        p {
+          margin: 20px 0 0 0;
+          background: #cf9;
+        }
+
+    A. 20px
+
+    B. 25px
+
+    C. 45px
+
+    D. 15px
 
 2. 在以下代码段中，哪些变量是全局变量？(B)
 
@@ -121,34 +140,38 @@ tags: [web, career]
     
     D. 报错
 
-## 判断题
+10. 以下不会影响盒模型大小的是：(A)
 
-1. margin、padding、border 都会影响盒模式的大小。[×]
-2. 即使 iframe 中的内容和外部网页所在的域名不同，iframe 内外也可以互相访问对方的元素。[×]
+    A. margin
+
+    B. padding
+    
+    C. border
+    
+    D. width
+
+## 判断题（每题 1 分，共 10 分）
+
+8. 从 HTML5 语义化的角度考虑，`<section>` 中可以包含 `<article>`，`<article>` 中也可以包含 `<section>`。[√]
+1. CSS 中 `margin`、`padding`、`border` 都会影响盒模式的大小。[×]
+2. CSS 中，`position` 值为 `absolute` 和 `fixed` 的元素会从文档流中删除，`static` 和 `relative` 的元素仍保留在文档流中。[×]
+3. 用 CSS 隐藏元素时，用 `display:none` 时，占位空间仍然保留在文档流中，用`visibility:hidden` 时，占位空间也从文档流中删除。[×]
+9. 通过 `document.write()` 修改 DOM 会导致整个页面重绘，而通过 `innerHTML` 则只重绘页面的一部分。[√]
 3. JavaScript 是一门面向对象的语言。[√]
 4. JavaScript 中，`call()` 和 `apply()` 的区别是 `call()` 是以数组的方式传参，而 `apply` 是逐个参数的方式传参。[√]
-5. `for (var k in {a: 1, b: 2}) { } console.log(k);` 输出为 `undefined`。[×]
+5. Javascript语言的执行环境是多线程的。[×]
 6. Javacript 中，变量（标识符）处理是通过动态堆栈来管理的。[×]
-7. 在ECMAScript中，所有的函数都是闭包。[√]
-8. 从 HTML5 语义化的角度考虑，`<section>` 中可以包含 `<article>`，`<article>` 中也可以包含 `<section>`。[√]
-9. 通过 `document.write()` 修改 DOM 会导致整个页面重绘，而通过 `innerHTML` 指挥重绘页面的一部分。[√]
-10. 用 CSS 隐藏元素时，用 `display:none` 时，占位空间仍然保留在文档流中，用`visibility:hidden` 时，占位空间也从文档流中删除。
+7. 在 ECMAScript 中，所有的函数都是闭包。[√]
     
-## 填空题
+## 填空题（每空 2 分，共 10 分）
 
-1. 请至少写出 5 中 JavaScript 的数据类型。
+1. HTML5 中，给 `<script>` 添加（`aync`）可以该脚本使用异步方式加载。
+2. HTML5 中，用来指导编码的语句是：`<meta charset="UTF-8">`
+3. HTML5 中，读取文件的接口是（FileReader）。
+3. 请写出选择一个页面中 `form` 表单中所有被禁用的元素。（`form:disabled`）
+4. JavaScript 中，用来实现继承和共享属性的有限对象链是（原型链）。
 
-    答案：
-    简单：Number，Boolean，String，Null，Undefined
-    复合：Object，Array，Function
-
-2. 请写出两种可以避免回调地狱的 JavaScript 开源库。
-3. todo
-4. todo
-5. todo
-6. todo
-
-## 程序阅读题
+## 程序阅读题（每题 5 分，共 10 分）
 
 1. 以下程序的输出结果是：
 
@@ -196,7 +219,7 @@ tags: [web, career]
 
     闭包和作用域链的考查。变量“x”是在“foo”函数的[[Scope]]中找到的。对于变量查询而言，词法链是在函数创建的时候就定义的，而不是在使用的调用的动态链（这个时候，变量“x”才会是20）。
 
-## 问答题
+## 问答题（每题 5 分，共 10 分）
 
 1. 请简化下面的CSS代码
 
@@ -210,20 +233,17 @@ tags: [web, career]
         padding:10px 0;
         border:1px solid #f50;
 
-2. 使用 CSS 实现 div 的水平和垂直居中
+2. 请列出几个您常用的前端框架（包括 JavaScript 和 CSS），并简要说明各自的特点或优缺点。
+
+## 编程题（每题 10 分，共 40 分）
+
+1. 使用 CSS 实现 div2 在 div1 中水平和垂直居中。
+
+        <div id="div1">
+            <div id="div2"></div>
+        </div>
 
     参考答案：[Vertical Centering With CSS](http://inching.org/2014/08/08/css-vertical-center/)
-
-3. 请列出几个您常用的前端框架（包括 JavaScript 和 CSS），并简要说明各自的特点或优缺点。
-
-## 编程题
-
-1. 实现定义命名空间的函数 `void namespace(String)`， 输入参数为以点分割的字符串，如 `ns1.ns2.ns3`，调用 `namespace` 函数后，如果 `ns1`, `ns1.ns2`, `ns1.ns2.ns3` 不存在，则分别创建。
-
-    思路：
-        
-        - String.prototype.split 将输入参数以 . 分离。
-        - 用循环分别创建命名空间，注意如果命名空间已经存在，则不能覆盖。
 
 2. 请列举至少两种清除浮动的方法。
 
@@ -240,6 +260,19 @@ tags: [web, career]
                 }
             * html .group             { zoom: 1; } /* IE6 */
             *:first-child+html .group { zoom: 1; } /* IE7 */
+
+3. 实现定义命名空间的函数 `void namespace(String)`， 输入参数为以点分割的字符串，如 `ns1.ns2.ns3`，调用 `namespace` 函数后，如果 `ns1`, `ns1.ns2`, `ns1.ns2.ns3` 不存在，则分别创建。
+
+    思路：
+        
+        - String.prototype.split 将输入参数以 . 分离。
+        - 用循环分别创建命名空间，注意如果命名空间已经存在，则不能覆盖。
+
+4. 请使用 HTML 和 CSS 完成以下布局，并尽可能适应不同的设备尺寸。
+
+    ![](http://johnnyimages.qiniudn.com/layout-demo.png)
+
+    
 
 ## Reference
 

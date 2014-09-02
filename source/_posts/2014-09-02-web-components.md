@@ -11,7 +11,9 @@ Recently I was working with a client to train their internal teams on how to bui
 
 In an ideal scenario, the HTML language would be expressive enough to create complex UI widgets and also extensible so that we, the developers, could fill in any gaps with our own tags. Today, this is finally possible through a new set of standards called **Web Components.**
 
-### Web Components?
+<!--more-->
+
+## Web Components?
 
 Web Components are a collection of standards which are working their way through the W3C and landing in browsers as we speak. In a nutshell, they allow us to bundle markup and styles into custom HTML elements. What's truly amazing about these new elements is that they fully encapsulate all of their HTML and CSS. That means the styles that you write always render as you intended, and your HTML is safe from the prying eyes of external JavaScript.
 
@@ -21,7 +23,7 @@ If you want to play with native Web Components I'd recommend using [Chrome Canar
 * Experimental Web Platform Features
 * HTML Imports
 
-### A Practical Example
+## A Practical Example
 
 Think about how you currently implement an image slider, it might look something like this:
 
@@ -73,7 +75,7 @@ That's a decent chunk of HTML, and we haven't even included the CSS yet! But ima
 
 Not too shabby! We've ditched the boilerplate and the only code that's left is the stuff we care about. This is the kind of thing that Web Components will allow us to do. But before I delve into the specifics I'd like to tell you another story.
 
-### Hidden in the shadows
+## Hidden in the shadows
 
 For years the browser makers have had a sneaky trick hidden up their sleeves. Take a look at this `<video>` tag and really think about all the visual goodies you get with just one line of HTML.
 
@@ -102,7 +104,7 @@ Now, think back to our image slider. What if we _all_ had access to the shadow D
 
 Let’s take a look at how to make this happen, using the first pillar of Web Components, the template.
 
-### Templates
+## Templates
 
 Every good construction project has to start with a blueprint, and with Web Components that blueprint comes from the new `<template>` tag. The template tag allows you to store some markup on the page which you can later clone and reuse. If you've worked with libraries like mustache or handlebars before, then the `<template>` tag should feel familiar.
 
@@ -121,7 +123,7 @@ So the first step in creating our `<img-slider>` is to put all of its HTML and C
 
 Once we've done this, we're ready to move it into the shadow DOM.
 
-### Shadow DOM
+## Shadow DOM
 
 To really make sure that our HTML and CSS doesn't adversely affect the consumer we sometimes resort to iframes. They do the trick, but you wouldn't want to build your entire application in 'em.
 
@@ -139,7 +141,7 @@ To create shadow DOM, select an element and call its `createShadowRoot` method. 
 </script>
 ```
 
-#### Shadow Host
+### Shadow Host
 
 In shadow DOM parlance, the element that you call `createShadowRoot` on is known as the **Shadow Host.** It's the only piece visible to the user, and it's where you would ask the user to supply your element with content.
 
@@ -153,13 +155,13 @@ If you think about our `<video>` tag from before, the `<video>` element itself i
 </video>
 ```
 
-#### Shadow Root
+### Shadow Root
 
 The document fragment returned by `createShadowRoot` is known as the **Shadow Root.** The shadow root, and its descendants, are hidden from the user, but they're what the browser will actually render when it sees our tag.
 
 In the `<video>` example, the play button, scrubber, timecode, etc. are all descendants of the shadow root. They show up on the screen but their markup is not visible to the user.
 
-#### Shadow Boundary
+### Shadow Boundary
 
 Any HTML and CSS inside of the shadow root is protected from the parent document by an invisible barrier called the **Shadow Boundary.** The shadow boundary prevents CSS in the parent document from bleeding into the shadow DOM, and it also prevents external JavaScript from traversing into the shadow root.
 
@@ -169,7 +171,7 @@ And if, at some point, the parent document goes looking for h3's with `$('h3')`,
 
 This level of privacy is something that we've dreamed about and worked around for years. To say that it will change the way we build web applications is a total understatement.
 
-### Shadowy Sliders
+## Shadowy Sliders
 
 To get our `img-slider` into the shadow DOM we'll need to create a shadow host and populate it with the contents of our template.
 
@@ -197,7 +199,7 @@ If you're using Chrome you can actually see this working in the following pen.
 
 <p data-height="500" data-theme-id="0" data-slug-hash="GusaF" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/robdodson/pen/GusaF/'>CSS3 Slider Shadow DOM</a> by Rob Dodson (<a href='http://codepen.io/robdodson'>@robdodson</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
-#### Insertion Points
+### Insertion Points
 
 At this point our `img-slider` is inside the shadow DOM but the image paths are hard coded. Just like the `<source>` tags nested inside of `<video>`, we'd like the images to come from the user, so we'll have to invite them over from the shadow host.
 
@@ -238,7 +240,7 @@ Now we can populate our `img-slider`.
 
 This is really cool! We've cut the amount of markup that the user sees way down. But why stop here? We can take things a step further and turn this `img-slider` into its own tag.
 
-### Custom Elements
+## Custom Elements
 
 Creating your own HTML element might sound intimidating but it's actually quite easy. In Web Components speak, this new element is a **Custom Element**, and the only two requirements are that its name must contain a dash, and its prototype must extend `HTMLElement`.
 
@@ -275,7 +277,7 @@ We pass the tag name and prototype to a new method on the `document`, called `re
 
 Now that our element is registered there are a few different ways to use it. The first, and most straightforward, is to just use the `<img-slider>` tag somewhere in our HTML. But we can also call `document.createElement("img-slider")` or we can use the constructor that was returned by `document.registerElement` and stored in the `ImgSlider` variable. It's up to you which style you prefer.
 
-### Support
+## Support
 
 Support for the various standards that makeup Web Components is currently spotty, though improving all the time. This table illustrates where we're presently at.
 
@@ -285,7 +287,7 @@ But don't let the table discourage you from using them! The smarties at Mozilla 
 
 Let's look at how we could rewrite our `img-slider` using Google's Web Component library, [Polymer.](http://www.polymer-project.org/)
 
-### Polymer to the Rescue!
+## Polymer to the Rescue!
 
 Polymer adds a new tag to the browser, `<polymer-element>`, which automagically turns templates into shadow DOM and registers custom elements for us. All we need to do is to tell Polymer what name to use for the tag and to make sure we include our template markup.
 
@@ -295,17 +297,17 @@ I find it's often easier to create elements using Polymer because of all the nic
 
 This is just a tiny example of what Polymer can do, so be sure to [visit its project page](http://www.polymer-project.org/) and also checkout Mozilla's alternative, [X-Tag.](http://www.x-tags.org/)
 
-### Issues
+## Issues
 
 Any new standard can be controversial and in the case of Web Components it seems that they are especially polarizing. Before we wrap up, I want to open up for discussion some of the feedback I've heard over the past few months and give my take on it.
 
-#### OMG it's XML!!!
+### OMG it's XML!!!
 
 I think the thing that probably scares most developers when they first see Custom Elements is the notion that it will turn the document into one big pile of XML, where everything on the page has some bespoke tag name and, in this fashion, we'll make the web pretty much unreadable. That's a valid argument so I decided to kick the bees' nest and [bring it up on the Polymer mailing list.](https://groups.google.com/forum/#!searchin/polymer-dev/xml/polymer-dev/lzvaDViB_Ow/VtbeIqX0Ap0J)
 
 The back and forth discussion is pretty interesting but I think the general consensus is that we're just going to have to experiment to see what works and what doesn't. Is it better, and more semantic, to see a tag name like `<img-slider>` or is our present "div soup" the only way it should be? Alex Rusell composed [a very thoughtful post on this subject](http://infrequently.org/2013/11/long-term-web-semantics/) and I'd recommend everyone take the time to read it before making up their mind.
 
-#### SEO
+### SEO
 
 At this moment it's unclear how well crawlers support Custom Elements and Shadow DOM. [The Polymer FAQ states](http://www.polymer-project.org/faq.html#seo):
 
@@ -332,7 +334,7 @@ From speaking with members of the Polymer team I've learned that the general bes
 
 To be fair, this isn't a new problem. AJAX heavy sites [have been dealing with this issue](https://developers.google.com/webmasters/ajax-crawling/docs/html-snapshot) for a few years now and thankfully there are [solutions](http://www.yearofmoo.com/2012/11/angularjs-and-seo.html) out there.
 
-#### Accessibility
+### Accessibility
 
 Obviously when you're hiding markup in secret shadow DOM sandboxes the issue of accessibility becomes pretty important. Steve Faulkner took a look at accessibility in shadow DOM and seemed to be satisfied with what he found.
 
@@ -348,7 +350,7 @@ Marcy also points out that the img-slider I built in this post is not accessible
 
 Surely there will be bumps along the way but that sounds like a pretty great start!
 
-#### Style tags? Um, no thanks.
+### Style tags? Um, no thanks.
 
 Unfortunately `<link>` tags do not work inside of the Shadow DOM, which means the only way to pull in external CSS is through `@import`. In other words, `<style>` tags are — for the moment — unavoidable<sup>1</sup>.
 
@@ -359,7 +361,7 @@ Keep in mind that the styles we're talking about are relevant only to a componen
 <sup>1</sup> 
 <small>Unless you use Polymer which <a href="http://www.polymer-project.org/articles/styling-elements.html#style-shadowdom">gets around this limitation with XHR</a>.</small>
 
-### Now it's your turn
+## Now it's your turn
 
 It's up to us to figure out where these standards should go and what best practices will guide them. Give [Polymer](http://www.polymer-project.org/) a shot, and also look at Mozilla's alternative to Polymer, [X-Tag](http://www.x-tags.org/) (which has support all the way down to Internet Explorer 9).
 

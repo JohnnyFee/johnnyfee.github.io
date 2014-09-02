@@ -11,6 +11,7 @@ tags: [web, tutorial]
 - [慕课网-免费的IT技能学习平台](http://www.imooc.com/)
 - [JacksonTian/fks](https://github.com/JacksonTian/fks)
 - [前端导航站 - 前端工程师专用的导航站](http://123.jser.us/)
+- [UI中国-专业界面设计平台](http://www.ui.cn/)
 
 ## Design Template
 

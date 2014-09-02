@@ -74,6 +74,37 @@ An element set to `inline-block` is very similar to `inline` in that it will set
 
 <p data-height="268" data-theme-id="0" data-slug-hash="tcoGy" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/tcoGy/'>inline-block-layout</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
+### the Space Between Inline Block Elements
+
+真正意义上的inline-block水平呈现的元素间，换行显示或空格分隔的情况下会有间距。
+
+```
+<nav>
+  <a href="#">One</a>
+  <a href="#">Two</a>
+  <a href="#">Three</a>
+</nav>
+```
+
+```
+nav a {
+  display: inline-block;
+  padding: 5px;
+  background: red;
+}
+```
+
+Will result in:
+
+![](http://cdn.css-tricks.com/wp-content/uploads/2012/04/spaces.png "spaces")  
+
+__移除空隙的方法：__
+
+- [Fighting the Space Between Inline Block Elements](http://css-tricks.com/fighting-the-space-between-inline-block-elements/)
+- [去除inline-block元素间间距的N种方法](http://www.zhangxinxu.com/wordpress/2012/04/inline-block-space-remove-%E5%8E%BB%E9%99%A4%E9%97%B4%E8%B7%9D/)
+
+<p data-height="400" data-theme-id="0" data-slug-hash="hmlqF" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/chriscoyier/pen/hmlqF/'>Ways to handle space between inline-block elements</a> by Chris Coyier (<a href='http://codepen.io/chriscoyier'>@chriscoyier</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
 ## none
 
 另一个常用的 `display` 值是 `none` 。一些特殊元素的默认 `display` 值是它，例如 `script` 。 `display:none` 通常被 JavaScript 用来在不删除元素的情况下隐藏或显示元素。 

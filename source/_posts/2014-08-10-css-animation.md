@@ -44,7 +44,8 @@ img{
 
 这样一来，只有height的变化需要1秒实现，其他变化（主要是width）依然瞬间实现，效果如下。
 
-<iframe width="100%" height="300" src="http://jsfiddle.net/feiqiang/qdo4mk5u/1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<p data-height="268" data-theme-id="0" data-slug-hash="hGvkL" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/hGvkL/'>hGvkL</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
 
 ### 1.2 transition-delay
 
@@ -66,7 +67,7 @@ img{
 
 上面代码指定，width在1秒之后，再开始变化，也就是延迟（delay）1秒，效果如下。
 
-<iframe width="100%" height="300" src="http://jsfiddle.net/feiqiang/ntchuhs3/1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<p data-height="268" data-theme-id="0" data-slug-hash="wroqK" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/wroqK/'>wroqK</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 delay的真正意义在于，它指定了动画发生的顺序，使得多个不同的transition可以连在一起，形成复杂效果。
 
@@ -82,12 +83,14 @@ img{
 
 除了ease以外，其他模式还包括
 
+1. ease： 快入慢出。入的速度没有 ease-out 快。
 1. linear：匀速
-1. ease-in：加速
-1. ease-out：减速
-1. cubic-bezier函数：自定义速度模式
+1. ease-in：慢入快出
+1. ease-out：快入慢出
+2. ease-in-out：慢入慢出。
+1. cubic-bezier 函数：自定义速度模式
 
-最后那个cubic-bezier，可以使用[工具网站](http://cubic-bezier.com/)来定制。
+See Also [Understanding CSS Timing Functions](http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/)
 
 ```
 img{
@@ -97,7 +100,7 @@ img{
 
 上面的代码会产生一个最后阶段放大过度、然后回缩的效果。
 
-<iframe width="100%" height="300" src="http://jsfiddle.net/feiqiang/mWaM7/60/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<p data-height="268" data-theme-id="0" data-slug-hash="fvtEe" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/fvtEe/'>fvtEe</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 ### 1.4 transition的各项属性
 
@@ -135,7 +138,6 @@ transition的优点在于简单易用，但是它有几个很大的局限。
 1. transition需要事件触发，所以没法在网页加载时自动发生。
 1. transition是一次性的，不能重复发生，除非一再触发。
 1. transition只能定义开始状态和结束状态，不能定义中间状态，也就是说只有两个状态。
-
 1. 一条transition规则，只能定义一个属性的变化，不能涉及多个属性。
 
 __CSS Animation就是为了解决这些问题而提出的。__
@@ -213,31 +215,31 @@ div:hover {
 
 Property            |可选值   | Description                                
 ------------------- | -----|-------
-timing-function     | ease, ease-out, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) (e.g. cubic-bezier(0.5, 0.2, 0.3, 1.0)) | 设置动画速度， 即通过建立加速度曲线，设置动画在关键帧之间是如何变化。
+timing-function     | <li>ease <li>ease-out <li>ease-in <li>ease-in-out <li>linear <li>cubic-bezier(x1, y1, x2, y2)| 设置动画速度， 即通过建立加速度曲线，设置动画在关键帧之间是如何变化。
 duration & delay    | Xs or Xms | 设置延时，即从元素加载完成之后到动画序列开始执行的这段时间。
 duration-count      | X   
-fill-mode           | forwards, backwards, both, none  |指定动画执行前后如何为目标元素应用样式。  
-direction | normal, alternate | 设置动画在每次运行完后是反向运行还是重新回到开始位置重复运行。
+fill-mode           | <li>forwards <li>backwards <li>both <li>none  |指定动画执行前后如何为目标元素应用样式。  
+direction | <li>normal <li>alternate | 设置动画在每次运行完后是反向运行还是重新回到开始位置重复运行。
 iteration-count | X |设置动画重复次数， 可以指定 infinite 无限次重复动画
 
 ### 2.3 animation-fill-mode
 
 动画结束以后，会立即从结束状态跳回到起始状态。如果想让动画保持在结束状态，需要使用animation-fill-mode属性。
 
-```
+```css
 div:hover {
   animation: 1s rainbow forwards;
 }
 ```
 
-
 forwards表示让动画停留在结束状态，效果如下。
 
 <iframe width="100%" height="300" src="http://jsfiddle.net/ruanyf/qcum7/4/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
-animation-fill-mode还可以使用下列值。
+animation-fill-mode 可以使用下列值。
 
 - none：默认值，回到动画没开始时的状态。
+- forwards：让动画停留在结束状态
 - backwards：让动画回到第一帧的状态。
 - both: 根据animation-direction（见后）轮流应用forwards和backwards规则。
 
@@ -356,7 +358,7 @@ div:hover {
 
 也就是说，实际运用中，代码必须写成下面的样子。
 
-```
+```css
 div:hover {
   -webkit-animation: 1s rainbow;
   animation: 1s rainbow;  
@@ -378,6 +380,10 @@ div:hover {
 ## Library
 
 - [h5bp/Effeckt.css](https://github.com/h5bp/Effeckt.css) A Performant Transitions and Animations Library: <http://h5bp.github.io/Effeckt.css>
+
+## Tools
+
+- [cubic-bezier](http://cubic-bezier.com/)
 
 ## Tutorial
 

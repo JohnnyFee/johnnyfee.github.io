@@ -58,47 +58,50 @@ Any    | 3+     | 1.5+     | 11.1+ |10+ |TBD     |TBD
 
 ## Example
 
-- [SaraSoueidan/windows8-animations · GitHub](https://github.com/SaraSoueidan/windows8-animations)
-    - [Windows-8-like Animations with CSS3 and jQuery](http://codepen.io/SaraSoueidan/details/sBELl/)
-* [SaraSoueidan/s-gallery · GitHub](https://github.com/SaraSoueidan/s-gallery)
-* [SaraSoueidan/navicon-transformicons · GitHub](https://github.com/SaraSoueidan/navicon-transformicons)
-- [SaraSoueidan/css-shapes-layouts · GitHub](https://github.com/SaraSoueidan/css-shapes-layouts)
-- [Simple Circular Menu With CSS – How-To](http://codepen.io/SaraSoueidan/pen/wpHBt)
-- [CSS3 Testimonials Slider](http://codepen.io/SaraSoueidan/details/CyFbd/)
-- [CSS3 Black Navigation Menu](http://codepen.io/SaraSoueidan/details/poDuw/)
-- [Responsive CSS3 Side Navigation Menu](http://codepen.io/SaraSoueidan/details/bogtz/)
-- [Horizontal Portfolio Layout with CSS3 Animations and jQuery](http://codepen.io/SaraSoueidan/details/zsgit/)
-- [CSS3 Multiple-Choice “Windowed Slider” UI](http://codepen.io/SaraSoueidan/details/AwmzH/)
-- [Share It (Fork)](http://codepen.io/SaraSoueidan/details/kHaBr/)
-- [Side Menu Staggered Animation [ Coding Dribbble]](http://codepen.io/gsimone/details/whIBC/)
-- [CSS Swinging Panel Menu](http://codepen.io/sethabbott/details/cewzF/)
-- [CSS 3D Solar System](http://codepen.io/juliangarnier/details/idhuG/)
-- [Physics Playground - CodePen](http://codepen.io/suffick/pen/fhjvk)
-- [Opening type](http://codepen.io/diegopardo/details/GqEho/)
-- [Direction-aware 3D hover effect - CodePen](http://codepen.io/noeldelgado/pen/pGwFx)
-- [Don't Overthink It Grids - CodePen](http://codepen.io/chriscoyier/pen/eGcLw)
-- [CSS3 text-shadow effects - CodePen](http://codepen.io/juanbrujo/pen/yGpAK)
-- [:focus tooltip - CodePen](http://codepen.io/vpegado/pen/daugx)
-- [Text input love - CodePen](http://codepen.io/MichaelArestad/pen/ohLIa)
-- [Social swatchbook - CodePen](http://codepen.io/HugoGiraudel/pen/lDuBK)
-- [Switches - CodePen](http://codepen.io/billycrist/pen/CHmiE)
-- [iOS 7 Blurred Header - CodePen](http://codepen.io/rikschennink/pen/zvcgx)
-- [Ladda - CodePen](http://codepen.io/hakimel/pen/gkeha)
-- [CSS3 Timeline - CodePen](http://codepen.io/P233/pen/lGewF)
-- [iOS style sliding menu - CodePen](http://codepen.io/jasonhowmans/pen/dykhL)
-- [Social Flip Cards - CodePen](http://codepen.io/pouretrebelle/pen/GmguH)
-- [Social App Menu - CodePen](http://codepen.io/matthoiland/pen/vHFCk)
-- [A Circular Form - CodePen](http://codepen.io/kindofone/pen/slnGx)
-- [Line Menu Icon that Expands Into Actual Menu - CodePen](http://codepen.io/chriscoyier/pen/Iraiy)
-- [Minimal Circular 3D Buttons - CodePen](http://codepen.io/chriscoyier/pen/ctugI)
-- [Responsive CSS3 Side Navigation Menu - CodePen](http://codepen.io/SaraSoueidan/pen/bogtz)
-- [Fixed image backgrounds - CodePen](http://codepen.io/dropside/pen/bxhke)
-- [Slide Icon Menu - CodePen](http://codepen.io/hugo/pen/zfgby)
-- [Sliding Vertical Nav - CodePen](http://codepen.io/alassetter/pen/CndgF)
-- [CSS3 Working Clock - CodePen](http://codepen.io/iliadraznin/pen/JcqbE)
+### Context
+
 - [Kontext - CodePen](http://codepen.io/hakimel/pen/FAiKv)
-- [Side nav play - CodePen](http://codepen.io/MichaelArestad/pen/vbAxI)
+
+### Form
+
 - [Login Form - CodePen](http://codepen.io/frytyler/pen/EGdtg)
+- [Radio & Checkbox - CodePen](http://codepen.io/WhiteWolfWizard/pen/oDyhs)
+- [Editable To-Do List - CodePen](http://codepen.io/WhiteWolfWizard/pen/ipsCD)
+- [Social Flip Cards - CodePen](http://codepen.io/pouretrebelle/pen/GmguH)
+- [CSS3 Timeline - CodePen](http://codepen.io/P233/pen/lGewF)
+- [Ladda - CodePen](http://codepen.io/hakimel/pen/gkeha)
+- [Text input love - CodePen](http://codepen.io/MichaelArestad/pen/ohLIa)
+- [SaraSoueidan/navicon-transformicons · GitHub](https://github.com/SaraSoueidan/navicon-transformicons)
+- [S Gallery: A Responsive jQuery Gallery Plugin with CSS3 Animations](http://sarasoueidan.com/blog/s-gallery/)
+
+### Menu
+
+- [Social App Menu - CodePen](http://codepen.io/matthoiland/pen/vHFCk)
+- [Fixed Navigation - CodePen](http://codepen.io/WhiteWolfWizard/pen/fHEIs)
+- [Side nav play - CodePen](http://codepen.io/MichaelArestad/pen/vbAxI)
+- [Sliding Vertical Nav - CodePen](http://codepen.io/alassetter/pen/CndgF)
+- [Responsive CSS3 Side Navigation Menu - CodePen](http://codepen.io/SaraSoueidan/pen/bogtz)
+- [iOS style sliding menu - CodePen](http://codepen.io/jasonhowmans/pen/dykhL)
+- [Side Menu Staggered Animation [ Coding Dribbble ]](http://codepen.io/gsimone/details/whIBC/)
+- [CSS3 Testimonials Slider](http://codepen.io/SaraSoueidan/details/CyFbd/)
+- [Simple Circular Menu With CSS – How-To](http://codepen.io/SaraSoueidan/pen/wpHBt)
+
+### Layout
+
+- [CodePen - A Pen by Elena](http://codepen.io/elenanicole53/pen/rsiDj)
+- [CodePen - A Pen by White Wolf Wizard](http://codepen.io/WhiteWolfWizard/pen/KhHxg)
+- [Fixed image backgrounds - CodePen](http://codepen.io/dropside/pen/bxhke)
+- [CSS3 Testimonials Slider](http://codepen.io/SaraSoueidan/details/CyFbd/)
+
+### Works
+
+- [CSS3 Working Clock - CodePen](http://codepen.io/iliadraznin/pen/JcqbE)
+- [CSS 3D Solar System - CodePen](http://codepen.io/juliangarnier/pen/idhuG/?editors=010)
+
+### Metro
+
+- [CodePen - A Pen by White Wolf Wizard](http://codepen.io/WhiteWolfWizard/pen/Agnwi)
+- [How to Create Windows-8-like animations with CSS3 and jQuery](http://sarasoueidan.com/blog/windows8-animations/)
 
 ## CSS 框架
 

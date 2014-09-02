@@ -307,6 +307,8 @@ You can find a demo of it here:
 
 <p data-height="268" data-theme-id="0" data-slug-hash="kzEhe" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/sebastianekstrom/pen/kzEhe/'>Vertical center with only 3 lines of CSS</a> by sebastianekstrom (<a href='http://codepen.io/sebastianekstrom'>@sebastianekstrom</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
+<p data-height="268" data-theme-id="0" data-slug-hash="dhmFv" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/dhmFv/'>dhmFv</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
 __Advantages:__
 
 * Variable height content
@@ -329,40 +331,7 @@ With Flexbox, you can stop worrying. You can align anything (vertically or horiz
 
 Unlike some of the existing vertical alignment techniques, with Flexbox the presence of sibling elements doesn't affect their ability to be vertically aligned.
 
-__The HTML:__
-
-```html
-<div class="Aligner">
-  <div class="Aligner-item Aligner-item--top">...</div>
-  <div class="Aligner-item">...</div>
-  <div class="Aligner-item Aligner-item--bottom">...</div>
-</div>
-```
-
-__The CSS:__
-
-```css
-.Aligner {
-  display: flex;
-  align-items: center;
-  align-items: center;
-  justify-content: center;
-}
-
-.Aligner-item {
-  max-width: 50%;
-}
-
-.Aligner-item--top {
-  align-self: flex-start;
-}
-
-.Aligner-item--bottom {
-  align-self: flex-end;
-}
-```
-
-View the full [source](https://github.com/philipwalton/solved-by-flexbox/blob/master/_sass/components/_aligner.scss) for the `Aligner` component used in this demo on Github.
+<p data-height="268" data-theme-id="0" data-slug-hash="EIsCe" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/EIsCe/'>EIsCe</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 ## Comparison ##
 

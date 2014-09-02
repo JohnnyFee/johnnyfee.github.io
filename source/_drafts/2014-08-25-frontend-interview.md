@@ -114,31 +114,6 @@ tags: [web, career]
     
     D. "undefined"
 
-8. 以下程序的返回结果是:(C)
-
-        var b = 456;
-        var a = {
-            b: 123,
-            callback: function(){
-                console.log(this.b);
-            }
-        }
-
-        var c = function(callback){
-            if(typeof callback === "function"){
-                callback();
-            }
-        }
-
-        c(a.callback);
-
-    A. 123
-    
-    B. undefined
-    
-    C. 456
-    
-    D. 报错
 
 10. 以下不会影响盒模型大小的是：(A)
 
@@ -150,28 +125,45 @@ tags: [web, career]
     
     D. width
 
-## 判断题（每题 1 分，共 10 分）
+10. 可以让以下程序的输出结果为 "321 123" 的是：（C）
+
+        var f = function(b){
+            console.log(this.a);
+            console.log(b);
+        };
+
+        var o = {
+            a: 321
+        }
+
+    A. f.call(o, [123])
+
+    B. f.apply(o, 123);
+
+    C. f.bind(o)(123);
+
+    D. f(123);
+
+## 判断题（每题 1 分，共 5 分）
 
 8. 从 HTML5 语义化的角度考虑，`<section>` 中可以包含 `<article>`，`<article>` 中也可以包含 `<section>`。[√]
-1. CSS 中 `margin`、`padding`、`border` 都会影响盒模式的大小。[×]
-2. CSS 中，`position` 值为 `absolute` 和 `fixed` 的元素会从文档流中删除，`static` 和 `relative` 的元素仍保留在文档流中。[×]
-3. 用 CSS 隐藏元素时，用 `display:none` 时，占位空间仍然保留在文档流中，用`visibility:hidden` 时，占位空间也从文档流中删除。[×]
-9. 通过 `document.write()` 修改 DOM 会导致整个页面重绘，而通过 `innerHTML` 则只重绘页面的一部分。[√]
+2. CSS 中，`position` 值为 `absolute` 和 `fixed` 的元素会从文档流中删除，`static` 和 `relative` 的元素仍保留在文档流中。[√]
+3. 用 CSS 隐藏元素时，用 `display:none` 时，占位空间仍然保留在文档流中，用`visibility:hidden` 时，占位空间从文档流中删除。[×]
+9. 通过 `document.write()` 修改 DOM 会导致整个页面重绘，而通过 `innerHTML` 只重绘页面的一部分。[√]
 3. JavaScript 是一门面向对象的语言。[√]
-4. JavaScript 中，`call()` 和 `apply()` 的区别是 `call()` 是以数组的方式传参，而 `apply` 是逐个参数的方式传参。[√]
 5. Javascript语言的执行环境是多线程的。[×]
 6. Javacript 中，变量（标识符）处理是通过动态堆栈来管理的。[×]
 7. 在 ECMAScript 中，所有的函数都是闭包。[√]
     
 ## 填空题（每空 2 分，共 10 分）
 
-1. HTML5 中，给 `<script>` 添加（`aync`）可以该脚本使用异步方式加载。
-2. HTML5 中，用来指导编码的语句是：`<meta charset="UTF-8">`
+1. HTML5 中，给 `<script>` 添加（`aync`）可以使该脚本使用异步方式加载。
+2. HTML5 中，用来指定编码的语句是：`<meta charset="UTF-8">`
 3. HTML5 中，读取文件的接口是（FileReader）。
-3. 请写出选择一个页面中 `form` 表单中所有被禁用的元素。（`form:disabled`）
+3. 请写出选择 `form` 表单中所有被禁用的元素的 CSS 选择器。（`form:disabled`）
 4. JavaScript 中，用来实现继承和共享属性的有限对象链是（原型链）。
 
-## 程序阅读题（每题 5 分，共 10 分）
+## 程序阅读题（每题 5 分，共 20 分）
 
 1. 以下程序的输出结果是：
 
@@ -218,6 +210,43 @@ tags: [web, career]
     答案：10 
 
     闭包和作用域链的考查。变量“x”是在“foo”函数的[[Scope]]中找到的。对于变量查询而言，词法链是在函数创建的时候就定义的，而不是在使用的调用的动态链（这个时候，变量“x”才会是20）。
+
+8. 以下程序的返回结果是:(C)
+
+        var b = 456;
+        var a = {
+            b: 123,
+            callback: function(){
+                console.log(this.b);
+            }
+        }
+
+        var c = function(callback){
+            if(typeof callback === "function"){
+                callback();
+            }
+        }
+
+        c(a.callback);
+
+   
+    答案： 456
+
+3. 请写出以下程序的输出结果：
+
+        var data = [];
+         
+        for (var k = 0; k < 3; k++) {
+          data[k] = function () {
+            alert(k);
+          };
+        }
+         
+        data[0](); 
+        data[1](); 
+        data[2]();
+
+    答案：3 3 3
 
 ## 问答题（每题 5 分，共 10 分）
 

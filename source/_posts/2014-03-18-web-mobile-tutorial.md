@@ -33,9 +33,6 @@ tags: [angular, ui]
 - [Sencha Touch](http://docs.sencha.com/touch/2.4.0/) 
 - [React](http://facebook.github.io/react/) A JAVASCRIPT LIBRARY FOR BUILDING USER INTERFACES. See [React Review](http://moduscreate.com/5-best-mobile-web-app-frameworks-reactjs/)
 - [Kendo UI](http://www.telerik.com/kendo-ui)
-- [Mobile Angular UI - Angular JS Mobile UI framework with Bootstrap 3 Css](http://mobileangularui.com/)
-- [Material Design](https://material.angularjs.org/#/)
-- [AngularUI for AngularJS](http://angular-ui.github.io/)
 
 ## Pros & Cons
 

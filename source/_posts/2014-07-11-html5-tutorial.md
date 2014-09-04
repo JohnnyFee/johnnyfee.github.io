@@ -85,7 +85,7 @@ You can apply the same technique to most of the HTML5 form’s functionality. In
 * Webforms2 by Weston Ruter ([https://github.com/westonruter/webforms2](https://github.com/westonruter/webforms2))
 * html5Widgets by Zoltan “Du Lac” Hawryluk ([https://github.com/zoltan-dulac/html5Forms.js](https://github.com/zoltan-dulac/html5Forms.js))
 
-## Compatibility
+## Tools
 
 - [Can I use... Support tables for HTML5, CSS3, etc](http://caniuse.com/)
 
@@ -118,4 +118,3 @@ You can apply the same technique to most of the HTML5 form’s functionality. In
 ## Books
 
 - [HTML5 in Action](http://www.salttiger.com/html5-action/)
-- [HTML5框架](http://caibaojian.com/html5-framework.html)

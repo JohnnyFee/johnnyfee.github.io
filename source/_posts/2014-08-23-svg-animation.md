@@ -342,4 +342,8 @@ Here is the resulting animation which both scales and rotates a rectangle:
     </rect>
 </svg>  
 
+## Tutorial
+
+- [Animating Inline SVG Icons - Modern Web](http://modernweb.com/2014/06/03/animating-inline-svg-icons/)
+
 <script async src="//codepen.io/assets/embed/ei.js"></script>

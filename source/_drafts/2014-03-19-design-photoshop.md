@@ -22,6 +22,7 @@ tags: [ps]
 - [超赞！32款扁平化Photoshop PSD UI工具包（下）-控件新闻-慧都控件网](http://www.evget.com/article/2014/8/21/21491.html)
 - [UI Animation in Photoshop – Tutorial #1](http://androiduiux.com/2014/08/26/ui-animation-in-photoshop-tutorial-1)
 - [50个热门的网页PSD模板下载](http://caibaojian.com/50-top-best-psd.html)
+- [5种实用的移动手机APP导航菜单设计方案](http://www.shejidaren.com/mobile-app-menus-design.html)
 
 ## Design Resource
 

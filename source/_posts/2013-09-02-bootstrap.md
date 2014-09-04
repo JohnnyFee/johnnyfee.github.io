@@ -1,10 +1,11 @@
-r---
+---
 layout: post
 title: "Bootstrap"
 description: ""
 category: JavaScript
 tags: [javascript]
 ---
+
 ## Tutorial
 
 - [therebelrobot/awesome-bootstrap](https://github.com/therebelrobot/awesome-bootstrap)

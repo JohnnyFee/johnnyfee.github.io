@@ -7,11 +7,11 @@ tags: [javascript]
 --- 
 
 - [sorrycc/awesome-javascript](https://github.com/sorrycc/awesome-javascript)
-
 - [Underscore.js](http://underscorejs.org/)
     + [Stop writing For loops. Start using underscore. - @jhooks](http://www.joelhooks.com/blog/2014/02/06/stop-writing-for-loops-start-using-underscorejs/)
 - [lodash/lodash](https://github.com/lodash/lodash/)
 - [Breaking Bad (Loops in JavaScript Libraries)](http://webapplog.com/breaking-bad-loops-in-javascript-libraries)
+- [mortzdk/jsCache](https://github.com/mortzdk/jsCache)
 
 ## Data Type
 
@@ -104,7 +104,3 @@ tags: [javascript]
 ## Generator
 
 - [Yeoman - Modern workflows for modern webapps](http://yeoman.io/) [Get started](http://yeoman.io/gettingstarted.html) and then [find a generator](http://yeoman.io/community-generators.html) for your webapp. Generators are available for [Angular](https://github.com/yeoman/generator-angular), [Backbone](https://github.com/yeoman/generator-backbone), [Ember](https://github.com/yeoman/generator-ember) and over 400 other projects. Read the [Yeoman Monthly Digest](http://updates.html5rocks.com/tag/front-end) for our latest picks.
-
-## TODO
-
-- [sindresorhus/awesome-nodejs](https://github.com/sindresorhus/awesome-nodejs)

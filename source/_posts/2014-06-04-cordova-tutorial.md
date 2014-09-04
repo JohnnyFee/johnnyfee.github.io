@@ -423,6 +423,7 @@ TODO
 - [2 Quick Tips When Adding PhoneGap/Cordova Plugins : Devgirl's Weblog](http://devgirl.org/2014/07/15/2-quick-tips-when-adding-phonegapcordova-plugins/)
 - [Cordova Sample: Reading a text file](http://www.raymondcamden.com/2014/7/15/Cordova-Sample-Reading-a-text-file)
 - [Cordova Plugins update, and new Contacts demo](http://www.raymondcamden.com/2014/7/9/Cordova-Plugin-update-and-new-Contacts-demo)
+- [PhoneGap Archives - Modern Web](http://modernweb.com/category/mobile/phonegap/)
 
 ## 参考
 

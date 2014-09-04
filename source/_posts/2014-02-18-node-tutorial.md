@@ -267,7 +267,8 @@ Javascript with Cody and Node.js.
 
 ## Thread
 
-[Philip Roberts: Help, I'm stuck in an event-loop. on Vimeo](http://vimeo.com/96425312)
+- [Philip Roberts: Help, I'm stuck in an event-loop. on Vimeo](http://vimeo.com/96425312)
+- [JXcore · a Node.JS distribution with additional features](http://jxcore.com/home/)
 
 ## Path
 

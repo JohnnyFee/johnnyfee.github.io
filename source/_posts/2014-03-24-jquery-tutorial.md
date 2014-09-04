@@ -771,5 +771,6 @@ When this sneaky bit of code fetches the content of the pull quote with `$cloned
 
 ## Tutorial
 
+- [How to Use jQuery's $.ajax() Function](http://www.sitepoint.com/use-jquerys-ajax-function)
 - [8个对程序员来说有用的jQuery小贴士和技巧 - WEB开发者](http://www.admin10000.com/document/3961.html)
 - [jQuery Coding Standards and Best Practices](http://lab.abhinayrathore.com/jquery-standards/)

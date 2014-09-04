@@ -5,6 +5,10 @@ category: PhotoShop
 tags: [ps]
 --- 
 
+## Tutorial
+
+- [Designer's guide to DPI](http://sebastien-gabriel.com/designers-guide-to-dpi/home)
+
 ## Demo
 
 - [16个创意Photoshop图像处理教程 | 设计达人](http://www.shejidaren.com/photoshop-image-processing-tutorials.html)
@@ -16,6 +20,8 @@ tags: [ps]
 - [16个创意Photoshop图像处理教程](http://www.shejidaren.com/photoshop-image-processing-tutorials.html)
 - [设计素材：手机锁屏界面-临摹](http://www.zcool.com.cn/gfx/ZMzA0MzMy.html)
 - [超赞！32款扁平化Photoshop PSD UI工具包（下）-控件新闻-慧都控件网](http://www.evget.com/article/2014/8/21/21491.html)
+- [UI Animation in Photoshop – Tutorial #1](http://androiduiux.com/2014/08/26/ui-animation-in-photoshop-tutorial-1)
+- [50个热门的网页PSD模板下载](http://caibaojian.com/50-top-best-psd.html)
 
 ## Design Resource
 

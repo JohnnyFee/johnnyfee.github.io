@@ -56,7 +56,12 @@ tags: [android, tutorial]
 - [Make Your First Android App: Part 3/3 | Ray Wenderlich](http://www.raywenderlich.com/56111/make-first-android-app-part-3)
 
 ## UI
+
 - [Performance optimization](http://optimizationtricks.blogspot.in/)
+
+## Android L
+
+- [PTR Android Blog: Getting Started with Android L Animations](http://ptrprograms.blogspot.com/2014/08/getting-started-with-android-l.html)
 
 ## Device
 

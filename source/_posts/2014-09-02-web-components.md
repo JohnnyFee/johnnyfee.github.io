@@ -370,3 +370,11 @@ Also, make sure you reach out to [the developers at Google](https://groups.googl
 While there are still some rough edges, I think Web Components will eventually usher in a new style of application development, something more akin to snapping together Lego bricks and less like our current approach, which is often plagued by excess boilerplate. I'm pretty excited by where all of this is heading, and I look forward to what the future might hold.
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+## Library
+
+- [skatejs/skatejs](https://github.com/skatejs/skatejs)
+
+## Tutorial
+
+- [Web Components - 面向未来的组件标准-Miller is me.](http://www.milleris.me/2014/05/04/%E9%9D%A2%E5%90%91%E6%9C%AA%E6%9D%A5%E7%9A%84Web%2BComponents.html)

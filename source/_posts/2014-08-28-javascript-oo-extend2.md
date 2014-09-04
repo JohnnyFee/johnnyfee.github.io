@@ -244,6 +244,15 @@ var inherit = (function () {
 
 至此，这便是类式继承的__圣杯解决方案__。
 
+不用闭包而使用 `Object.create` 方案如下：
+
+    var inherits = function (C, P) {
+        C.prototype = Object.create(P.prototype);
+        C.prototype.constructor = C;
+    };
+
+See [Simple inheritance with JavaScript](http://blogs.msdn.com/b/eternalcoding/archive/2014/08/20/simple-inheritance-with-javascript.aspx)
+
 ## 类式继承语法糖 —— Klass
 
 许多JavaScript类库模仿类，引进了一些语法糖。这些类库的实现通常有以下共同特点：

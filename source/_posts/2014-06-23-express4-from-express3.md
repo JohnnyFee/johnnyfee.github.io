@@ -10,6 +10,8 @@ tags: [node, express]
 
 距离我写[expressx2.x升级3.x](http://jser.me/2012/12/10/Express2.X%E8%BF%81%E7%A7%BB%E8%87%B33.X%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.html)已经过去一年多的时间了，这期间express发展很迅速，已经是nodejs社区事实上的web框架之王。最近express发布了[4.0.0-rc3](https://github.com/visionmedia/express/blob/master/package.json#L4)，其中又有了一些改变，下面我们来看看有哪些改变，以及如何从3.x升级到4.x。
 
+<!--more-->
+
 ## 移除内置中间件 ##
 
 4.x版本不再依赖Connect，之前内置的所有中间件除了`static`都被分离为单独的模块了，也就是如果你的3.x的代码是：

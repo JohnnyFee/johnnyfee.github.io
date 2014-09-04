@@ -166,7 +166,7 @@ div:hover {
 
 上面代码表示，rainbow效果一共有三个状态，分别为起始（0%）、中点（50%）和结束（100%）。如果有需要，完全可以插入更多状态。效果如下。
 
-<iframe width="100%" height="300" src="http://jsfiddle.net/ruanyf/qcum7/3/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<p data-height="268" data-theme-id="0" data-slug-hash="zuHsw" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/zuHsw/'>zuHsw</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 默认情况下，动画只播放一次。加入 `infinite` 关键字，可以让动画无限次播放。
 
@@ -234,7 +234,7 @@ div:hover {
 
 forwards表示让动画停留在结束状态，效果如下。
 
-<iframe width="100%" height="300" src="http://jsfiddle.net/ruanyf/qcum7/4/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<p data-height="268" data-theme-id="0" data-slug-hash="eghDp" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/eghDp/'>eghDp</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 animation-fill-mode 可以使用下列值。
 
@@ -331,7 +331,7 @@ div:hover {
 
 有时，动画播放过程中，会突然停止。这时，默认行为是跳回到动画的开始状态。
 
-<iframe width="100%" height="300" src="http://jsfiddle.net/ruanyf/8t3Le/2/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<p data-height="268" data-theme-id="0" data-slug-hash="GkBdf" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/GkBdf/'>GkBdf</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 上面动画中，如果鼠标移走，色块立刻回到动画开始状态。
 
@@ -350,7 +350,7 @@ div:hover {
 
 上面的代码指定，没有鼠标没有悬停时，动画状态是暂停；一旦悬停，动画状态改为继续播放。效果如下。
 
-<iframe width="100%" height="300" src="http://jsfiddle.net/ruanyf/8t3Le/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<p data-height="268" data-theme-id="0" data-slug-hash="Creut" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/Creut/'>Creut</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 ### 2.7 浏览器前缀
 

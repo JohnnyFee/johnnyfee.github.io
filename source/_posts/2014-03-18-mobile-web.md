@@ -5,6 +5,14 @@ description: ""
 category: Hybrid
 tags: [webview]
 --- 
+## Tutorial
+
+- [jtyjty99999/mobileTech](https://github.com/jtyjty99999/mobileTech)
+- [手机网页开发 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/Mobile)
+- [Building Apps that Run Everywhere with jQuery Mobile and PhoneGap - YouTube](https://www.youtube.com/watch?v=h8ylWSbn7gU)
+- [HTML5、Web引擎与跨平台移动App开发 - WEB开发者](http://www.admin10000.com/document/4920.html)
+- [优化移动体验的HTML5技巧 - 技术翻译 - 开源中国社区](http://www.oschina.net/translate/mobile-app-optimization-and-performance)
+
 ## Framework
 
 - [Ionic: Advanced HTML5 Hybrid Mobile App Framework](http://ionicframework.com/)
@@ -13,7 +21,10 @@ tags: [webview]
 - [Leaflet/Leaflet](https://github.com/Leaflet/Leaflet) JavaScript library for mobile-friendly interactive maps. [http://leafletjs.com](http://leafletjs.com/)
 - [Top 7 Mobile application HTML5 frameworks](http://www.gajotres.net/top-7-mobile-application-html5-frameworks/)
 - [famo.us](http://famo.us/)
-    - [[Famo.us] 新一代 HTML5 Web Application JavaScript Framework - HINA::工程幼稚園](http://blog.hinablue.me/entry/famous-first-look/)
+
+## Scaffold
+
+- [Mobile Boilerplate: A best practice baseline for your mobile web app](http://html5boilerplate.com/mobile/)
 
 ### 5 Best Mobile Web App Frameworks
 
@@ -81,14 +92,11 @@ Device.js 是一个很小 的 JavaScript 库，它 简化了编写和平台，�
 ## Library
 
 - [ftlabs/fastclick](https://github.com/ftlabs/fastclick)
+- [hammerjs/hammer.js](https://github.com/hammerjs/hammer.js/)
 
-## Tutorial
-
-- [手机网页开发 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/Mobile)
-- [Building Apps that Run Everywhere with jQuery Mobile and PhoneGap - YouTube](https://www.youtube.com/watch?v=h8ylWSbn7gU)
-- [HTML5、Web引擎与跨平台移动App开发 - WEB开发者](http://www.admin10000.com/document/4920.html)
 
 ## Books
 
 - [Mobile JavaScript Application Development](http://www.salttiger.com/mobile-javascript-application-development/)
+- [Programming the Mobile Web, 2nd Edition](http://www.salttiger.com/programming-the-mobile-web-2nd-edition/)
 - [Mobile Design Pattern Gallery, 2nd Edition](http://www.salttiger.com/mobile-design-pattern-gallery-2nd-edition/)

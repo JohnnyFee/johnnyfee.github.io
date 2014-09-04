@@ -14,6 +14,8 @@ A [CSS](https://developer.mozilla.org/en-US/docs/CSS "/en-US/docs/CSS") **layout
 * The [_flexible box layout_](https://developer.mozilla.org/en-US/docs/CSS/Using_CSS_flexible_boxes "/en-US/docs/"), designed for laying out complex pages that can be resized smoothly.
 * The _[grid layout](http://www.w3cplus.com/css3/css3-grid-layout.html)_, designed for layout out elements relatively to a fixed grid.
 
+<!--more-->
+
 ## column
 
 - [Create Columns Easily With The CSS3 Multi-Column Layout Module - Vanseo Design](http://www.vanseodesign.com/css/multi-columns/)

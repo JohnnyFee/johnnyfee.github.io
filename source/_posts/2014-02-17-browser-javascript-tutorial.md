@@ -17,6 +17,7 @@ tags: [javascript]
 - [User Timing API: Understanding your Web App - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/webperformance/usertiming/)
 - [lodash/lodash](https://github.com/lodash/lodash) A utility library delivering consistency, customization, performance, & extras. <http://lodash.com/>
 - [Announcing JS Error Reporting and AJAX Timing - New Relic blog](http://blog.newrelic.com/2014/03/13/javascript-error-reporting-ajax-timing-new-relic/)
+- [JavaScript Memory Management Masterclass // Speaker Deck](https://speakerdeck.com/addyosmani/javascript-memory-management-masterclass)
 
 <!--more-->
 

@@ -21,7 +21,7 @@ tags: [responsive, web]
 
 <!--more-->
 
-**一、"自适应网页设计"的概念**
+## 一、"自适应网页设计"的概念
 
 See [自适应网页设计（Responsive Web Design） - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2012/05/responsive_web_design.html)
 
@@ -33,7 +33,7 @@ See [自适应网页设计（Responsive Web Design） - 阮一峰的网络日志
 
 这里还有一个[测试小工具](http://www.benjaminkeen.com/misc/bricss/)，可以在一张网页上，同时显示不同分辨率屏幕的测试效果，我推荐安装。
 
-**二、允许网页宽度自动调整**
+## 二、允许网页宽度自动调整
 
 "自适应网页设计"到底是怎么做到的？其实并不难。
 
@@ -49,7 +49,7 @@ See [自适应网页设计（Responsive Web Design） - 阮一峰的网络日志
 > <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>  
 > <![endif]-->
 
-**三、不使用绝对宽度**
+## 三、不使用绝对宽度
 
 由于网页会根据屏幕宽度调整布局，所以不能使用绝对宽度的布局，也不能使用具有绝对宽度的元素。这一条非常重要。
 
@@ -65,7 +65,7 @@ See [自适应网页设计（Responsive Web Design） - 阮一峰的网络日志
 
 > width:auto;
 
-**四、相对大小的字体**
+## 四、相对大小的字体
 
 字体也不能使用绝对大小（px），而只能使用相对大小（em）。
 
@@ -87,7 +87,7 @@ See [自适应网页设计（Responsive Web Design） - 阮一峰的网络日志
 
 small元素的大小是默认大小的0.875倍，即14像素（14/16=0.875）。
 
-**五、流动布局（fluid grid）**
+## 五、流动布局（fluid grid）
 
 ["流动布局"](http://www.alistapart.com/articles/fluidgrids/)的含义是，各个区块的位置都是浮动的，不是固定不变的。
 
@@ -105,7 +105,7 @@ small元素的大小是默认大小的0.875倍，即14像素（14/16=0.875）。
 
 另外，绝对定位（position: absolute）的使用，也要非常小心。
 
-**六、选择加载CSS**
+## 六、选择加载CSS
 
 "自适应网页设计"的核心，就是CSS3引入的[Media Query](http://www.w3.org/TR/CSS21/media.html)模块。
 
@@ -127,7 +127,7 @@ small元素的大小是默认大小的0.875倍，即14像素（14/16=0.875）。
 
 > @import url("tinyScreen.css") screen and (max-device-width: 400px);
 
-**七、CSS的@media规则**
+## 七、CSS的@media规则
 
 同一个CSS文件中，也可以根据不同的屏幕分辨率，选择应用不同的CSS规则。
 
@@ -146,7 +146,7 @@ small元素的大小是默认大小的0.875倍，即14像素（14/16=0.875）。
 
 上面的代码意思是，如果屏幕宽度小于400像素，则column块取消浮动（float:none）、宽度自动调节（width:auto），sidebar块不显示（display:none）。
 
-**八、图片的自适应（fluid image）**
+## 八、图片的自适应（fluid image）
 
 除了布局和文本，"自适应网页设计"还必须实现图片的[自动缩放](http://unstoppablerobotninja.com/entry/fluid-images)。
 

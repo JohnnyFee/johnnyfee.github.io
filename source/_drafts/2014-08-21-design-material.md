@@ -8,7 +8,7 @@ tags: [design, android]
 
 ## Tutorial
 
-- [Material Design 设计语言](http://www.ui.cn/Material/)
+- [Material Design - Google design guidelines](https://www.google.com/design/spec/material-design/introduction.html)
 - [Material Design - Material Design 中文版](http://design.1sters.com/)
 
 ## Design
@@ -20,6 +20,8 @@ tags: [design, android]
 
 ## Example
 
+- [ebidel/material-playground](https://github.com/ebidel/material-playground)
+- [Single page app using web components](http://polymer-change.appspot.com/demos/spa.html#one)
 - [Material Design Spinner - CodePen](http://codepen.io/mrrocks/pen/EiplA)
 - [Material design buttons - CodePen](http://codepen.io/Fischaela/pen/ahgIy)
 

@@ -62,26 +62,30 @@ __注：__如果在主线程中执行webView.loadUrl("javascript:xxx") N次，�
 
 如果用webview点链接看了很多页以后，如果不做任何处理，点击系统“Back”键，整个浏览器会调用finish()而结束自身，如果希望浏览的网页回退而不是退出浏览器，需要在当前Activity中处理并消费掉该Back事件，覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法，代码如下：
 
-    // To handle the back button key press
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        LogUtil.i(this, "keyCode="   keyCode);
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
-            mWebView.goBack();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+```java
+// To handle the back button key press
+public boolean onKeyDown(int keyCode, KeyEvent event) {
+    LogUtil.i(this, "keyCode="   keyCode);
+    if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+        mWebView.goBack();
+        return true;
     }
+    return super.onKeyDown(keyCode, event);
+}
+```
 
 ### 设置android WebView 不显示滚动条
 
 可以直接在layout中添加 android:scrollbars="none" 来设置不显示滚动条，如下：
 
-    <WebView
-        android:id="@ id/wv"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@drawable/bg"
-        android:scrollbars="none" />
+```xml
+<WebView
+    android:id="@ id/wv"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:scrollbars="none" />
+```
 
 ### android:scrollbarStyle控制滚动条位置
 
@@ -192,7 +196,6 @@ this.webView.setWebChromeClient(new WebChromeClient());
             return true;
         }
 
-
 ## WebViewClient
 
 ###  处理页面内的url
@@ -201,29 +204,33 @@ this.webView.setWebChromeClient(new WebChromeClient());
 
 <http://stackoverflow.com/questions/4066438/android-webview-how-to-handle-redirects-in-app-instead-of-opening-a-browser>
 
-    webview.setWebViewClient(new WebViewClient() {
-        public boolean shouldOverrideUrlLoading(WebView view, String url){
-            // do your handling codes here, which url is the requested url
-            // probably you need to open that url rather than redirect:
-            view.loadUrl(url);
-            return false; // then it is not handled by default action
-       }
-    });
+```java
+webview.setWebViewClient(new WebViewClient() {
+    public boolean shouldOverrideUrlLoading(WebView view, String url){
+        // do your handling codes here, which url is the requested url
+        // probably you need to open that url rather than redirect:
+        view.loadUrl(url);
+        return false; // then it is not handled by default action
+   }
+});
+```
 
 以下Demo指定只有url里包含eoe.cn的时候才在webview里打开，否则还是启动浏览器打开.
 
-    @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        LogUtil.i(this, "url="   url);
-        if ( url.contains("eoe.cn") == true){
-            view.loadUrl(url);
-            return true;
-        }else{
-            Intent in = new Intent (Intent.ACTION_VIEW , Uri.parse(url));
-            startActivity(in);
-            return true;
-        }
+```java
+@Override
+public boolean shouldOverrideUrlLoading(WebView view, String url) {
+    LogUtil.i(this, "url="   url);
+    if ( url.contains("eoe.cn") == true){
+        view.loadUrl(url);
+        return true;
+    }else{
+        Intent in = new Intent (Intent.ACTION_VIEW , Uri.parse(url));
+        startActivity(in);
+        return true;
     }
+}
+```
 
 ## Database
 
@@ -245,17 +252,23 @@ __多个webview共享数据__
 
 
 ### 打开本地缓存提供JS调用
-   
-    mWebView.getSettings().setDomStorageEnabled(true); 
-    // Set cache size to 8 mb by default. should be more than enough 
-    mWebView.getSettings().setAppCacheMaxSize(1024*1024*8); 
-    // This next one is crazy. It's the DEFAULT location for your app's cache 
-    // But it didn't work for me without this line. 
-    // UPDATE: no hardcoded path. Thanks to Kevin Hawkins 
-    String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath(); 
-    mWebView.getSettings().setAppCachePath(appCachePath); 
-    mWebView.getSettings().setAllowFileAccess(true); 
-    mWebView.getSettings().setAppCacheEnabled(true);  
+
+```java   
+mWebView.getSettings().setDomStorageEnabled(true); 
+// Set cache size to 8 mb by default. should be more than enough 
+mWebView.getSettings().setAppCacheMaxSize(1024*1024*8); 
+// This next one is crazy. It's the DEFAULT location for your app's cache 
+// But it didn't work for me without this line. 
+// UPDATE: no hardcoded path. Thanks to Kevin Hawkins 
+String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath(); 
+mWebView.getSettings().setAppCachePath(appCachePath); 
+mWebView.getSettings().setAllowFileAccess(true); 
+mWebView.getSettings().setAppCacheEnabled(true);  
+```
+
+## Http Server
+
+- [NanoHttpd/nanohttpd](https://github.com/NanoHttpd/nanohttpd)
 
 ## 和Java的通信
 

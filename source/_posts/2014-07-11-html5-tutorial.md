@@ -7,6 +7,7 @@ tags: [web, html, tutorial]
 
 ## Tutorial
 
+- [Learn to Code HTML & CSS - Beginner & Advanced](http://learn.shayhowe.com/)
 - [diegocard/awesome-html5](https://github.com/diegocard/awesome-html5)
 - [HTML5研究小组](http://www.mhtml5.com/)
 - [WebHek](http://www.webhek.com/)
@@ -85,6 +86,34 @@ You can apply the same technique to most of the HTML5 form’s functionality. In
 * Webforms2 by Weston Ruter ([https://github.com/westonruter/webforms2](https://github.com/westonruter/webforms2))
 * html5Widgets by Zoltan “Du Lac” Hawryluk ([https://github.com/zoltan-dulac/html5Forms.js](https://github.com/zoltan-dulac/html5Forms.js))
 
+### Use Modular IE Fixes
+
+You can use conditional comments to target Internet Explorer if you are having issues with your web pages.
+
+#### IE 7 Example
+
+<pre>
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/ie-7.css" media="all">
+<![endif]-->
+</pre>
+
+#### IE 6 Example
+
+<pre>
+<!--[if IE 6]>
+<link rel="stylesheet" href="css/ie-6.css" media="all">
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+<script type="text/javascript">
+                        DD_belatedPNG.fix('#logo');
+                </script>
+<![endif]-->
+</pre>
+
+However, try to make your fixes modular to future-proof your work such that when older versions of IE don’t need to be supported anymore, you just have to update your site in one place (i.e. take out the reference to the ie-6.css stylesheet).
+
+By the way, for pixing PNG transparencies in IE6, I recommend the [DD_belated PNG script](http://www.dillerdesign.com/experiment/DD_belatedPNG/) (the JavaScript method referenced above).
+
 ## Tools
 
 - [Can I use... Support tables for HTML5, CSS3, etc](http://caniuse.com/)
@@ -93,11 +122,6 @@ You can apply the same technique to most of the HTML5 form’s functionality. In
 
 - [Adding captions and subtitles to HTML5 video ✩ Mozilla Hacks – the Web developer blog](https://hacks.mozilla.org/2014/07/adding-captions-and-subtitles-to-html5-video)
 - [Google I/O 2014 - HTML5 everywhere: How and why YouTube uses the Web platform - YouTube](https://www.youtube.com/watch?v=2gLq4Ze0Jq4)
-
-## Form
-
-- [HTML5 Forms: JavaScript and the Constraint Validation API](http://www.sitepoint.com/html5-forms-javascript-constraint-validation-api)
-- [The Difference Between Anchors, Inputs and Buttons](http://davidwalsh.name/html5-buttons?)
 
 ## File
 
@@ -117,4 +141,5 @@ You can apply the same technique to most of the HTML5 form’s functionality. In
 
 ## Books
 
+- [HTML5 Pocket Reference, 5th Edition](http://www.salttiger.com/html5-pocket-reference-5th-edition/)
 - [HTML5 in Action](http://www.salttiger.com/html5-action/)

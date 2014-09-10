@@ -20,7 +20,6 @@ tags: [design, android]
 
 ## Example
 
-- [ebidel/material-playground](https://github.com/ebidel/material-playground)
 - [Single page app using web components](http://polymer-change.appspot.com/demos/spa.html#one)
 - [Material Design Spinner - CodePen](http://codepen.io/mrrocks/pen/EiplA)
 - [Material design buttons - CodePen](http://codepen.io/Fischaela/pen/ahgIy)

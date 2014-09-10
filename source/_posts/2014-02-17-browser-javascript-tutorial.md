@@ -78,6 +78,7 @@ tags: [javascript]
 ## Other Library
 
 - [sindresorhus/screenfull.js](https://github.com/sindresorhus/screenfull.js) Simple wrapper for cross-browser usage of the JavaScript Fullscreen API.
+- [mrdoob/three.js](https://github.com/mrdoob/three.js) JavaScript 3D library. <http://threejs.org/>
 
 ## 开发工具
 

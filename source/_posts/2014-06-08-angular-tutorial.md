@@ -794,9 +794,14 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
 - [Debugging AngularJS Apps from the Console - Modern Web](http://modernweb.com/2014/08/21/debugging-angularjs-apps-console)
 
+## FAQ
+
+- [angularjs - Cross origin requests are only supported for HTTP - Stack Overflow](http://stackoverflow.com/questions/19847252/cross-origin-requests-are-only-supported-for-http)
+
 ## Reference
 
 - [AngularJS：何时应该使用Directive、Controller、Service](http://damoqiongqiu.iteye.com/blog/1971204)
 - [对比Angular/jQueryUI/Extjs：没有一个框架是万能的](http://damoqiongqiu.iteye.com/blog/1922004)
+- [Angular 中文](http://www.ngnice.com/docs/guide)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

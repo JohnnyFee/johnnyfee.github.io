@@ -373,7 +373,9 @@ While there are still some rough edges, I think Web Components will eventually u
 
 ## Library
 
+- [Introduction to Web Components](http://www.w3.org/TR/components-intro/)
 - [skatejs/skatejs](https://github.com/skatejs/skatejs)
+- [erikringsmuth/app-router](https://github.com/erikringsmuth/app-router)
 
 ## Tutorial
 

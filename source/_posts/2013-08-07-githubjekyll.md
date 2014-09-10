@@ -21,7 +21,7 @@ GitHub Pages分为User, Organization Pages(博客或网站)和Project Pages(项�
 创建一个按照USERNAME.github.io命名的GitHub库，其中USERNAME为你的GitHub用户名。在该库的`设置`选项中点击`GitHub Pages`/`Automatic Page Generator`。按照向导编辑首页，选择`网站模版`。再查看该库的`设置`/`GitHub Pages`就可以看到`Your site is published at http://johnnyfee.github.io`的字样。这个就是我所用的github.io二级域名了。通过修改库中的内容，可以编辑我们的静态网站或博客。
 
 ### 创建Project Pages
-	
+
 创建方法类似于创建User Pages，只是git库是项目库。还有一个区别是，编辑网页的时候，需要切换到gh-pages分支，才能看到项目的文档。
  
 
@@ -31,21 +31,39 @@ GitHub Pages分为User, Organization Pages(博客或网站)和Project Pages(项�
 
 ### 安装
 
-- 安装[Ruby2.0](http://rubyinstaller.org/)，傻瓜式安装即可。
-- 如果你Windows用户，请安装[RubyInstaller Development Kit (DevKit)](http://github.com/oneclick/rubyinstaller/wiki/Development-Kit)
-- 配置过程请参考[Running Jekyll on Windows](http://www.madhur.co.in/blog/2011/09/01/runningjekyllwindows.html)，做到第5步即可。
-- 通过gem安装jekyll
+See [Running Jekyll on Windows – Madhur Ahuja](http://www.madhur.co.in/blog/2011/09/01/runningjekyllwindows.html).
 
-   	$ gem install jekyll
+1. 安装[Ruby2.0](http://rubyinstaller.org/)，傻瓜式安装即可。
+2. Download "DEVELOPMENT KIT" installer(<http://rubyinstaller.org/downloads/)>) that matches the Windows architecture and the Ruby version just installed. 
+
+    For example, DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe is for 64-bit Windows   with Ruby 2.0.0 x64. Install the Ruby development kit from  [the same location above](http://rubyinstaller.org/downloads/) and extract it to path such as c:\devkit.
+
+    Run the following commands 
+
+        ruby dk.rb init
+    
+    to generate the config.yml file to be used later in this Step. 如果生成的 config.xml 文件中包含了 `- C:/Ruby200`，则下一步可以省略。
+3. Edit the generated config.yml file to include installed Rubies. For example, in our case, it will look like this:
+
+        - C:/Ruby200
+
+4. Run the following command to install to DevKit enhance your installed Rubies. This step installs (or updates) an operating_system.rb file into the relevant directory needed to implement a RubyGems
+
+        ruby dk.rb install
+
+5. Install Jekyll using following command:
+
+   	    $ gem install jekyll
 
 	**注意**，对于中国大陆的用户请使用淘宝的[RubyGems镜像](http://ruby.taobao.org/)。
-- 使用[Jekyll-Bootstrap](http://jekyllbootstrap.com/index.html#start-now)快速搭建博客[^3]
+
+6. 使用[Jekyll-Bootstrap](http://jekyllbootstrap.com/index.html#start-now)快速搭建博客[^3]
 
 	Jekyll-Bootstrap提供了能够被GitHub完美解析的文件结构和配置。
 
 	`git clone https://github.com/plusjade/jekyll-bootstrap.git USERNAME.github.com`
 
-将修改push到远程库，等几分钟即可看到博客首页了，接下来就是慢慢完善你的博客了。
+    将修改push到远程库，等几分钟即可看到博客首页了，接下来就是慢慢完善你的博客了。
 
 ###显示页面中显示中文乱码[^4]
 

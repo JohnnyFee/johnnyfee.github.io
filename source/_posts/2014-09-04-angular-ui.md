@@ -2,21 +2,17 @@
 layout: post
 title: "Angular UI"
 description: ""
-category: Hybrid
-tags: [webview]
+category: Angular
+tags: [angular, ui]
 --- 
 
-### UI
+## UI Tutorial
 
-- <http://angular-ui.github.io/>
- - [AngularStrap - AngularJS 1.2+ native directives for Twitter Bootstrap 3.](http://mgcrea.github.io/angular-strap)
-- [AngularJS Multi-Step Form Using UI Router ♥ Scotch](http://scotch.io/tutorials/javascript/angularjs-multi-step-form-using-ui-router?)
+- [AngularJS Multi-Step Form Using UI Router ♥ Scotch](http://scotch.io/tutorials/javascript/angularjs-multi-step-form-using-ui-router?) AngularJS 1.2+ native directives for Bootstrap 3. <http://mgcrea.github.io/angular-strap>
 - [All Search and Social Media Meta Tags Starter Template ♥ Scotch](http://scotch.io/quick-tips/all-search-and-social-media-meta-tags-starter-template)
 - [Thumbtack Engineering](http://www.thumbtack.com/engineering/introducing-smarty)
 
-### Mobile
+## UI Framework
 
-- [Getting Started with Mobile Angular UI](http://www.sitepoint.com/getting-started-mobile-angular-ui)
-- [Mobile Angular UI - Angular JS Mobile UI framework with Bootstrap 3 Css](http://mobileangularui.com/)
-- [Material Design](https://material.angularjs.org/#/)
-- [AngularUI for AngularJS](http://angular-ui.github.io/)
+- [AngularUI for AngularJS](http://angular-ui.github.io/#ui-modules) The companion suite(s) to the AngularJS framework.
+- [mgcrea/angular-strap](https://github.com/mgcrea/angular-strap)

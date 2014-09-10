@@ -7,6 +7,8 @@ tags: [web, html]
 
 ## HTML
 
+### 自定义属性
+
 ### 新的Doctype声明
 
 XHTML的声明太长了，我相信很少会有前端开发人员能手写出这个Doctype声明。

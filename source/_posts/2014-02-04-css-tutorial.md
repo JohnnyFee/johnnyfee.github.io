@@ -6,6 +6,79 @@ category: Tool
 tags: [markdown]
 --- 
 
+### 优先级
+
+CSS 应用样式的优先级（从高到低）：
+
+1. 元素内嵌样式（用元素的全局属性 style 定义的样式）
+2. 文档内嵌样式（定义在 style 元素中的样式）
+3. 外部样式（用 link 元素导入的样式）
+4. 用户样式（用户定义的样式）
+5. 浏览器样式
+
+可以使用 important 改变正常的层叠次序，如：
+
+    <style type="text/css">
+        a {
+            color: black !important;
+        }
+    </style>
+
+在样式后附上 `!important` 即可将属性值标识为重要，浏览器会优先考虑。
+
+
+### 继承
+
+并非所有的元素都可以继承，与元素外观（文字颜色，字体等）相关的样式后被继承，与布局相关的样式不会被继承。在样式中，使用 inherit 可以强制实施继承，明确指示浏览器在该属性成使用父元素样式中的值。
+
+```html
+<style type="text/css">
+    p {
+        color: white;
+        border: medum solid black;
+    }
+</style>
+<body>
+    <p>I like <span>Apple</span> and orange.</p>
+</body>
+```
+
+span 会继承父元素 p 的 color 样式，但并没有继承 border 属性值。如果添加 span 样式：
+
+```css
+span {
+    border: inherit;
+}
+```
+
+则 span 和父元素 p 使用相同的 border 值。
+
+### color
+
+CSS 中表示颜色的方法有以下几种：
+
+1. 十六进制，如#ffffff，即红黄绿三种颜色的分值。
+2. 颜色名，如 red。完整颜色名列表请参考 <www.w3.org/TR/css3-color>
+3. CSS 颜色函数：
+
+    - rgb(r, g, b)
+    - rgba(r, g, b, a) 如 `rgba(112, 128, 144, 0)`
+    - hsl(h, s, l) 用 HSL 模型，（色相 hue， 饱和度 saturation， 亮度 lightness）。如：`hsl(120, 100%, 22%)`
+
+### 长度单位
+
+CSS 中可以使用绝对长度单位，也可以使用相对长度单位。绝对程度单位不常用，常见的有 in（英寸），cm（厘米），mm（毫米）等。相对长度单位有：
+
+- em 相对字号大小。如字号是 16px，则 2em = 2 × 16px = 32px。
+- ex 与元素字体的 _x 高度_ 相关，字体基线到中线的距离，一般和字母 x 的高度相当，通常 1ex ≈ 0.5 em。
+- rem 与根元素的字号相关
+- px CSS 像素
+- % 另一属性的值得百分比
+
+See also [The Lengths of CSS](http://css-tricks.com/the-lengths-of-css/)。
+
+另外，可以使用 CSS3 的 `calc` 函数动态计算长度值，如 `width: calc(80% - 20px)` 。
+
 ## Tutorial
 
 - [ikkou/awesome-css](https://github.com/ikkou/awesome-css)

@@ -15,4 +15,4 @@ tags: [angular, ui]
 ## UI Framework
 
 - [AngularUI for AngularJS](http://angular-ui.github.io/#ui-modules) The companion suite(s) to the AngularJS framework.
-- [mgcrea/angular-strap](https://github.com/mgcrea/angular-strap)
+- [mgcrea/angular-strap](https://github.com/mgcrea/angular-strap) AngularJS 1.2+ native directives for Bootstrap 3. <http://mgcrea.github.io/angular-strap>

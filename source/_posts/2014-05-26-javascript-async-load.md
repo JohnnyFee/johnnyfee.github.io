@@ -137,47 +137,27 @@ OnLoad：页面的所有资源都加载完毕（包括图片）。浏览器的�
 
 ### defer 属性
 
+defer 属性告诉浏览器要等页面载入完成之后才能执行脚本。这样，在 `<head>` 中通过下面的代码引入 file.js
+
     <script src="file.js" defer></script>
 
-defer属性声明这个脚本中将不会有 document.write 或 dom 修改。
-
-浏览器将会并行下载 file.js 和其它有 defer 属性的script，而不会阻塞页面后续处理。
-
-defer属性在IE 4.0中就实现了，超过13年了！Firefox 从 3.5 开始支持defer属性 。
-
-注：所有的defer 脚本保证是**按顺序依次执行**的。
+可以使 file.js 和文档的下载和解析同时进行，也可以保证 file.js 在文档下载和解析完成之后执行。
 
 ### async 属性
 
     <script src="file.js" async></script>
 
-async属性是HTML5新增的。作用和defer类似，但是它将在下载后尽快执行，**不能保证脚本会按顺序执行**。它们将在onload 事件之前完成。
+file.js 的下载和HTML 文档的下载和解析同时进行，一旦下载完成，立即执行，不管 HTML 文档有没有解析完成。
 
-Firefox 3.6、Opera 10.5、IE 9 和 最新的Chrome 和 Safari 都支持 async 属性。可以同时使用 async 和 defer，这样IE 4之后的所有 IE 都支持异步加载。
+### Difference
 
-### 详细解释
+Both async and defer scripts begin to __download immediately__ without pausing the parser and both support an optional onload handler to address the common need to perform initialization which depends on the script. The difference between async and defer centers around when the script is executed. Each async script executes at the first opportunity after it is finished downloading and before the window’s load event. This means it’s possible (and likely) that async scripts are not executed in the order in which they occur in the page. The defer scripts, on the other hand, are guaranteed to be executed in the order they occur in the page. That execution starts after parsing is completely finished, but before the document’s DOMContentLoaded event.
 
-`<script>` 标签在 HTML 4.01 与 HTML5 的区别：
+See also [Surfin' Safari - Blog Archive » Running scripts in WebKit](https://www.webkit.org/blog/1395/running-scripts-in-webkit/)
 
-* type 属性在HTML 4中是必须的，在HTML5中是可选的。
-* async 属性是HTML5中新增的。
-* 个别属性（xml:space）在HTML5中不支持。
+使用这两个属性的脚本中不能调用document.write方法。
 
-**说明：**
-
-1. 没有 async 属性，script 将立即获取（下载）并执行，然后才继续后面的处理，这期间阻塞了浏览器的后续处理。
-2. 如果有 async 属性，那么 script 将被异步下载并执行，同时浏览器继续后续的处理。
-3. HTML4中就有了defer属性，它提示浏览器这个 script 不会产生任何文档元素（没有document.write），因此浏览器会继续后续处理和渲染。
-4. 如果没有 async 属性 但是有 defer 属性，那么script 将在页面parse之后执行。
-5. 如果同时设置了二者，那么 defer 属性主要是为了让不支持 async 属性的老浏览器按照原来的 defer 方式处理，而不是同步方式。
-
-另参见官方说明：[script async](http://www.whatwg.org/specs/web-apps/current-work/multipage/scripting-1.html#attr-script-async)
-
-### 个人补充
-
-既然 HTML5 中已经支持异步加载，为什么还要使用前面推荐的那种麻烦（动态创建 script 元素）的方式？
-
-答：为了兼容尚不支持 async 老浏览器。如果将来所有浏览器都支持了，那么直接在script中加上async 属性是最简单的方式。
+See also：[script async](http://www.whatwg.org/specs/web-apps/current-work/multipage/scripting-1.html#attr-script-async)
 
 ## 三、延迟加载（lazy loading）
 

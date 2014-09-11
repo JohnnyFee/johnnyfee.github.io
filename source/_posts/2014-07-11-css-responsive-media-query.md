@@ -9,7 +9,20 @@ tags: [web, css, layout]
 
 ## 媒体查询
 
-媒体查询包含媒体类型以及零或多个检查特定媒体特征条件的表达式。媒体类型包括`all`，`aural`，`braille`，`handheld`，`print`，`projection`，`screen`，`tty`，`tv`，`embossed`，常用的为 `scrren`、`print` 以及表示所有媒体类型的 `all`。
+媒体查询包含媒体类型以及零或多个检查特定媒体特征条件的表达式。媒体类型包括：
+
+- `all` 将样式用于所有设备（默认值）
+- `aural` 将样式用于语音合成器
+- `braille` 用于盲文设备
+- `handheld` 手持设备
+- `print` 打印预览和打印页面时
+- `projection` 投影机
+- `screen` 计算机显示器屏幕
+- `tty` 电传打印机等等宽设备
+- `tv` 电视机
+- `embossed`
+
+常用的为 `scrren`、`print` 以及表示所有媒体类型的 `all`。
 
     <!-- link元素中的CSS媒体查询 -->
     <link rel="stylesheet" media="(max-width: 800px)" href="example.css" />

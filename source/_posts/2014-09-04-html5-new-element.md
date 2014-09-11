@@ -7,22 +7,7 @@ tags: [web, html]
 
 ## HTML
 
-### 自定义属性
 
-### 新的Doctype声明
-
-XHTML的声明太长了，我相信很少会有前端开发人员能手写出这个Doctype声明。
-
-```
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-```
-
-HTML5的Doctype声明很短，看到这个声明相信你马上就能记住，不用浪费脑细胞去记那长的有点变态的XHTML的Doctype声明了。
-
-    <!DOCTYPE html>
-
-HTML5的简短的DOCTYPE声明是让Firefox、Chrome等现代浏览器和IE6/7/8等浏览器都进入(准)标准模式，你可能会奇怪IE6/7居然也可以支持HTML5 Doctype，事实上，IE是只要doctype符合这种格式，都会进入标准模式。
 
 <!--more-->
 

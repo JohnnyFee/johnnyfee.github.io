@@ -35,6 +35,102 @@ HTML5 规范将元素分为三大类：
 - 流元素（flow element）短语元素的超级。
 - 短语元素（phrasing element）HTML 的基本成分。
 
+## 结构文档
+
+可以使用 base 标签来设置基准 URL，让 HTML 文档中的相对链接在此基础上进行解析。如：
+
+```html
+<head>
+    <title></title>
+    <base href="http://titan/listings" />
+</head>
+```
+
+如果在页面中 `<a>` 的超链接为 page2.html，则浏览器会将 `<a>` 的完整路径解析为 "http://titan/listings/page2.html"。如果不指定 base，在 "http://myserver.com/app/page1.html" 页面中，对于 `<a href="page2.html"></a>` 完整路径为  "http://myserver.com/app/page2.html"。
+
+### 元数据
+
+#### 指定名/值元数据对
+
+指定名值元数据对，如：
+
+```html
+<head>
+    <meta name="author" content="Adam Freeman"/>
+    <meta name="description" content="A simple example"/>
+</head>
+```
+
+供 meta 元素使用的预定义的元数据有：
+
+- application name 当前页所属 Web 应用系统的名称。
+- author 当前页的作者名
+- description 当前页的描述
+- generator 用来成成 HTMl 的软件名称，如ASP.NET等。
+- keywords 以逗号分隔的字符串，用来描述页面的内容。
+
+#### 声明字符编码：
+
+    <meta charset="utf-8">
+
+#### 模拟 HTTP 表字段
+
+如让浏览器每个 5 秒刷新 1 次：
+
+    <meta http-equiv="refresh" content="5">
+
+除了 `refresh` 属性中，另外一个常用的属性为 `content-tyle`，使用这个属性也可以指定 HTML 页面的编码： `<meta http-equiv="content-type" content="text/html charset=UTF-8">`
+
+### DOCTYPE 元素
+
+DOCTYPE 告诉浏览器两件事：第一，它处理的是 HTML 文档；第二，用来标志文档内容的 HTML 所属的版本。
+
+XHTML的声明太长了，我相信很少会有前端开发人员能手写出这个Doctype声明。
+
+```
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+```
+
+HTML5的 Doctype 声明很短，看到这个声明相信你马上就能记住，不用浪费脑细胞去记那长的有点变态的 XHTML 的 Doctype 声明了。
+
+    <!DOCTYPE html>
+
+HTML5 的简短的 DOCTYPE 声明是让 Firefox、Chrome 等现代浏览器和 IE6/7/8 等浏览器都进入(准)标准模式，你可能会奇怪 IE6/7 居然也可以支持HTML5 Doctype，事实上，IE是只要doctype符合这种格式，都会进入标准模式。
+
+### link
+
+link 元素用来在 HTML 文档中引入外部资源，link 常用的属性为：
+
+- href 指向的资源的 URL
+- media 说明所关联的内容用于哪种设备。
+- ref 所关联资源的类型。
+- sizes 指定图标的大小。
+- type 关联资源的 MINE 类型，如 text/css、image/x-icon
+
+其中，ref 常用的属性有：
+
+- author: 链接到文档的作者
+- icon: 指定图标资源
+- prefetch: 预先获取一个资源
+- stylesheet: 外辱外部样式表
+
+#### 载入外部样式
+
+如：载入外部的 style.css 样式表：
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+#### 为页面定义网站标志
+
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+如果网站图标位于 /favicon.ico ，则可以省略该 link 元素。
+
+
+
+<link rel="stylesheet" type="text/css" href="">>
+
 ## Tutorial
 
 - [Learn to Code HTML & CSS - Beginner & Advanced](http://learn.shayhowe.com/)

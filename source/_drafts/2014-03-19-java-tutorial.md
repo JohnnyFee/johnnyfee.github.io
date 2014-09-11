@@ -32,6 +32,7 @@ tags: [java]
 
 - [Functional Programming in Java](http://www.salttiger.com/functional-programming-in-java/)
 - [Java 8 Lambdas](http://www.salttiger.com/java-8-lambdas/)
+- [Java 8: Lambdas, Part 1](http://ifeve.com/java-8-lambdas-part-1/)
 
 ## Native
 

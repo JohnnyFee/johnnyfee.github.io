@@ -345,5 +345,6 @@ Here is the resulting animation which both scales and rotates a rectangle:
 ## Tutorial
 
 - [Animating Inline SVG Icons - Modern Web](http://modernweb.com/2014/06/03/animating-inline-svg-icons/)
+- [超级强大的SVG SMIL animation动画详解 « 张鑫旭-鑫空间-鑫生活](http://www.zhangxinxu.com/wordpress/2014/08/so-powerful-svg-smil-animation/)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

@@ -6,6 +6,7 @@ category: ExtJS
 tags: [extjs, tutorial]
 --- 
 
+## Tutorial
 - [Getting Started with Ext JS 5](http://existdissolve.com/2014/08/getting-started-with-ext-js-5/)
 - [Training Tip: Developing Apps in a Multi-Device World](http://www.sencha.com/blog/training-tip-developing-apps-in-a-multi-device-world)
 - [Reusing Code in Ext JS 5 and Sencha Touch Apps to Build a Sencha Space App](http://www.sencha.com/blog/reusing-code-in-ext-js-5-and-sencha-touch-apps-to-build-a-sencha-space-app/)
@@ -15,6 +16,9 @@ tags: [extjs, tutorial]
 - [Designing Responsive Applications with Ext JS](http://www.sencha.com/blog/designing-responsive-applications-with-ext-js)
 - [Top Support Tips](http://www.sencha.com/blog/top-support-tips-august-2014)
 - [Ext JS 5: Routing Part II](http://existdissolve.com/2014/08/ext-js-5-routing-part-ii/)
+- [Declarative Listeners in Ext JS 5](http://www.sencha.com/blog/declarative-listeners-in-ext-js-5)
+- [Sencha Architect - Team Development in the Real World (Part 3 of 3)](http://www.sencha.com/blog/sencha-architect-team-development-in-the-real-world-part-3-of-3)
+- [Ext JS 5: View Controllers](http://existdissolve.com/2014/09/ext-js-5-view-controllers/)
 
 ## MVC
 

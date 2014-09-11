@@ -23,6 +23,7 @@ tags: [ps]
 - [UI Animation in Photoshop – Tutorial #1](http://androiduiux.com/2014/08/26/ui-animation-in-photoshop-tutorial-1)
 - [50个热门的网页PSD模板下载](http://caibaojian.com/50-top-best-psd.html)
 - [5种实用的移动手机APP导航菜单设计方案](http://www.shejidaren.com/mobile-app-menus-design.html)
+- [优秀设计资源与教程分享 2014-9月](http://www.shejidaren.com/design-resources-september-2014.html)
 
 ## Design Resource
 
@@ -39,6 +40,7 @@ tags: [ps]
 - [20个色彩美丽的UI KIT设计素材（PSD）](http://www.shejidaren.com/20-beautiful-ui-kits-for-designer.html)
 - [Sunday Freebie: 5 Premium Design Resources - DealFuel](http://dealfuel.com/seller/premium-design-resources)
 - [Best PSD Freebies - Download Free PSD Photoshop Resources for Web Design](http://www.bestpsdfreebies.com/)
+- [UX用户体验博客与资源 推荐！](http://www.shejidaren.com/ux-design-blog-and-resources.html)
 
 ## Material
 

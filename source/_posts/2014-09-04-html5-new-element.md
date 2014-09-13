@@ -7,32 +7,6 @@ tags: [web, html]
 
 ## HTML
 
-
-
-<!--more-->
-
-### `<figure>`标签
-
-看看下面一段简单的代码：
-
-    <img src="path/to/image" alt="About image" />
-    <h6>Image of Mars.</h6>
-
-遗憾的是，这里的h6标签和img标签好像没有什么关系，语义不够明确。HTML5意识到了这一点，于是就采用了`<figure>`标签。当`<figure>`结合`<figcaption>`标签的使用，可以让h6标签和img标签组合起来，代码就更具语义化了。
-
-```html
-<figure>
-   <img src="path/to/image" alt="About image" />
-    <figcaption>
-       <h6>This is an image of something interesting. </h6>
-   </figcaption>
-</figure>
-```
-
-### 重新定义`<small>`
-
-不久前，我使用了`<small>`标签来创建与logo相关的副标题。但是在HTML5中重新定义了`<small>`标签，使之更能表现语义化，在`<small>`的字号都会变小，想想如果这个标签用于网站的底部的版权信息还是个不错的做法。
-
 ### 去掉了Javascript和CSS标签的type属性
 
 通常你会在`<link>`和`<script>`加上type属性：
@@ -48,61 +22,6 @@ view sourceprint?
 ```html
 <link href="path/to/stylesheet.css" />
 <script src="path/to/script.js"></script>
-```
-
-### 是否使用双引号
-
-这有点让人纠结，HTML5并不是XTHML，你可以省去标签中的双引号。相信大多数同志也包括我都习惯了加上双引号，因为这让代码看起来会更标准。不过，这可以根据你的个人喜好来确定是到底要不要双引号。
-
-```
-<h6 class=myClass id=someId> Start the reactor.  </h6>
-```
-
-### IE对HTML5的支持
-
-IE浏览器目前对HTML5的支持并不好，也是阻碍HTML5的更快普及的一大绊脚石，不过，IE9对HTML5的支持度还是很不错的。
-
-IE把HTML5新增的标签都解析成内联元素，而实际上它们是块级元素，所以有必要为它们定义一个样式：
-
-```html
-header, footer, article, section, nav, menu, hgroup {
-   display: block;
-}
-```
-
-尽管如此，IE还是不能解析这些新增的HTML5标签，这个时候就需要借助Javascript来解决这个问题：
-
-```js
-document.createElement("article");
-document.createElement("footer");
-document.createElement("header");
-document.createElement("hgroup");
-document.createElement("nav");
-document.createElement("menu");
-```
-
-你可以借助这一段Javascript代码来修复IE更好的解析HTML5
-
-```html
- 
-<!--[if IE]>
-<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
- <![endif]-->
-```
-
-### 标题群( hgroup)
-
-这个类似于第二点技巧。如果用h1和h2标签分别表示网站的名称和副标题，但这会让两个本义上密切相关的标题并没有关联起来。这个时候可以使用  
-
-`<hgroup>`标签将它们组合起来，这样代码会更有语义。
-
-```html
-<header>
-    <hgroup>
-         <h1> Recall Fan Page </h1>
-        <h2> Only for people who want the memory of a lifetime. </h2>
-    </hgroup>
-</header>
 ```
 
 ### 检测浏览器对HTML5属性的支持
@@ -121,54 +40,7 @@ document.createElement("menu");
 </script>
 ```
 
-### Mark标签
-
-`<mark>`标签用于高亮显示那些需要在视觉上向用户突出其重要性的文字，包裹在此标签里的字符串必须与用户当前的行为相关。例如，如果我在一些博客中搜索“Open your Mind” ，我可以使用在`<mark>`标签里使用 JavaScript 来包裹每一次动作。
-
-```html
-<h3> Search Results <h3>
-<h6> They were interrupted, just after Quato said, <mark>"Open your Mind"</mark>. </h6>
-```
-
-### 该如何正确的使用div标签
-
-有些人可能会有疑问，有了`<header>`和`<footer>`等这些标签，`<div>`标签在HTML5中还有用吗？答案是肯定的，比如你想创建一个能包裹特殊内容的容器自由灵活的`<div>`肯定是首选，而你要创建一篇文章或者一个导航菜单，建议你使用更有语义的`<article>`和`<nav>`标签。
-
-很多人认为HTML5可能还是很遥远的事，所以直接无视，其实不然，现在很多网站都已经开始使用HTML5了，事实上，HTML5的一些新增属性和功能是让代码变得更简洁，这总归是一件好事，应该值得我们推崇。最后感谢你阅读了这篇HTML5的入门级文章，希望能为你进一步学习HTML5提供一些帮助。
-
 ## Layout
-
-### 更有语义的header和footer
-
-下面的代码在HTML5中将不复存在
-
-```html
-<div id="header">
-     ...
-</div>
-
-<div id="footer">
-     ...
-</div>
-```
-
-通常我们都会给header和footer定义一个div，然后再添加一个id，但是在HTML5中可以直接使用`<header>`和`<footer>`标签，所以可以将上面的代码改写成：
-
-```html
-<header>
-    ...  
-</header>
-  
-<footer>
-    ...  
-</footer>
-```
-
-要注意不要将这两个标签和网站的头部和页脚混淆起来，它们只是代表它们的容器。
-
-### section
-
-### article
 
 ## Video And Audio
 

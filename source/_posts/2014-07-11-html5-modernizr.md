@@ -5,6 +5,40 @@ category: Web
 tags: [web, html, tutorial]
 --- 
 
+## IE对HTML5的支持
+
+IE浏览器目前对HTML5的支持并不好，也是阻碍HTML5的更快普及的一大绊脚石，不过，IE9对HTML5的支持度还是很不错的。
+
+IE把HTML5新增的标签都解析成内联元素，而实际上它们是块级元素，所以有必要为它们定义一个样式：
+
+```html
+header, footer, article, section, nav, menu, hgroup {
+   display: block;
+}
+```
+
+尽管如此，IE还是不能解析这些新增的HTML5标签，这个时候就需要借助Javascript来解决这个问题：
+
+<!--more-->
+
+```js
+document.createElement("article");
+document.createElement("footer");
+document.createElement("header");
+document.createElement("hgroup");
+document.createElement("nav");
+document.createElement("menu");
+```
+
+你可以借助这一段Javascript代码来修复IE更好的解析HTML5
+
+```html
+ 
+<!--[if IE]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+ <![endif]-->
+```
+
 ## Modernizr
 
 - [Modernizr/Modernizr](https://github.com/Modernizr/Modernizr)
@@ -14,7 +48,6 @@ One of the main drawbacks to using HTML5’s new features is that browser suppor
 
 Enter Modernizr, a purpose-built JavaScript library for performing bulletproof feature detection and dynamic loading. When you include Modernizr in a web page, you can detect support for a feature using a much easier syntax. For example, to check to see if the user’s browser supports the Canvas element, you’d use the following:
 
-<!--more-->
 
 ```js
 if(Modernizr.canvas) {

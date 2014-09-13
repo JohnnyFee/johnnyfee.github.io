@@ -35,7 +35,7 @@ HTML5 规范将元素分为三大类：
 - 流元素（flow element）短语元素的超级。
 - 短语元素（phrasing element）HTML 的基本成分。
 
-## 结构文档
+## 文档结构
 
 可以使用 base 标签来设置基准 URL，让 HTML 文档中的相对链接在此基础上进行解析。如：
 
@@ -127,9 +127,600 @@ link 元素用来在 HTML 文档中引入外部资源，link 常用的属性为�
 
 如果网站图标位于 /favicon.ico ，则可以省略该 link 元素。
 
+    <link rel="stylesheet" type="text/css" href="">
 
+## 标记文字
 
-<link rel="stylesheet" type="text/css" href="">>
+元素 | 用途 | Example
+-----|-------|------
+a    | 超链接。将 href 属性设置为绝对或相对 URL，链接指向其他文档的超链接；将 href 属性设置为文档中元素中的 id，则链接指向文档中的相应元素。|
+b  | 用来标志一段文字，但不表示特别的强调或重要性。习惯样式为加粗。| I like <b>apple </b> and <b>orange</b>
+strong | 表示一段重要文字。| <strong>Warning:</strong> Eating more is bad.
+u  | 呈现行元素，没有实际的语义。| Eating <u>too many</u> is bad.
+em   | 表示强调。习惯样式为斜体字。| <em>I</em> like apple.
+i    | 表示科学术语或外文词语。| Mandarin, properly known as <i>cirtrus reticulata</i>
+s    | 表示不精确或不正确的内容| Orange at my local store cost <s>$1</s> &2 for 3.
+small | 表示小号字体内容，常用于免责声明和澄清声明。| It costs $1 each <small>(plus tax)</small>
+sup/sub | 表示上标或下标 | <sup>1</sup>/<sub>3</sub>
+br | 使用与换行也是内容的一部分，切勿用于创建段落或别的内容组。
+wbr | 表示成果当前浏览器窗口的内容适合在此换行。
+code| 计算机代码 code {font-family: monospace;}
+var| 变量 var {font-style: italic;}
+samp | 程序输出 samp { font-family: monospace; }
+kdb| 用户输入 kdb { font-family: monospace; }
+abbr| 表示缩写，无习惯样式 | <abbr title="Florida Department of Citrus">FDOC</abbr>
+dfn | 表示术语定义，没有习惯样式。如果要为 dfn 定义 title，则必须定义 title = 所定义的术语。如果 dfn 元素包含一个 abbr 元素，则该缩写词就是要定义的术语。| <dfn title="apple">apple</dfn>
+q   | 表示引用内容，属性 cite 用来指定原文章的 URL。习惯样式是使用 :before 和 :after 这两个伪元素选择器在因为前后生成引号。 | <q cite="http://inching.org">Oh, It's my life.</q>
+cite | 表示其他作品的标题。| My favorite book on fruit is <cite>Fruit: Editable, Inedible</cite> by Stuppy.
+ruby、rt、rp | 表示东亚预研中的注音符号。ruby 元素表示一段包含注音符号的文字，rt 用来标记注音符号，rp 用来标记供不支持注音符号特性的浏览器显示在注音符号前后的括号。| <ruby>吃<rp>(</rp><rt>chī</rt><rp>)</rp></ruby>
+bdo | 指定内容的文本方向。使用的 dir 属性指定方向，rtl（从右到左），ltr（从左到右）。| <bdo dir="rtl"> I love you.</bdo>
+bdi | 出于文本方向的考虑将文本与其他内容隔离开来。| 
+span | 对一段内容应用全局属性，无任何语义。
+mark | 表示与另一段上下文相关而被突出显示的内容。| I would like a  <mark>pair</mark> of <mark>pears</mark>.
+ins/del | 表示添加/删除的文本。属性 cite 指定解释添加或删除文字原因的文档的 URL，属性 datetime 用来设置修改时间。| <ins>I', ins.</ins><br/><del>I'm del.</del>
+time | 表示时间或日期。如果布尔属性 pubdate 存在，则 time 元素表示的是整个 HTML 文档或离该文档最近的 article 元素的发布日期。datetime 属性以 [RFC 3330](http://tools.ietf.org/html/rfc3339) 规定的格式指定日期或时间。有了 datetime， 可以在元素中以便于阅读的形式设置日期或时间，同时又确保计算机能无歧义地解析指定的日期或时间。  | I bought it at <time datetime="15:00">3 o'clock</time>
+
+align、width、noshade、size、color 属性在 HTML 中已不再使用。
+
+## 组织内容
+
+元素|用途|示例
+----|----|------
+p   | 段落。HTML 要求浏览器将连在一起的几个空白字符这算为一个空格。 |
+div | 无语义。在不在万不得已的情况下最好不要用 div 元素，应尽可能考虑那些具有语义的元素，如 article、section 等。
+pre | 保留 HTML 文档中的布局。最常用的场景是和 code 元素结合使用，用来表示编程语言的代码。| <pre><code>var a; a= 1;</code></pre>
+blockquote | 表示引自他处的内容。与 `<q>` 类似，但常用在引用的内容更多的情况下。
+hr |都是段落级别的主题转变。可以在 `<blockquote>` 中加入一些 `<hr> ` 形成一定的结构。
+
+### 列表
+
+### 有序列表
+
+ol 和 li 用来生成有序列表。可以通过设置 li 的 value 属性来生成编号不连续的有序列表。ol 的 type 属性用来显示在各列表项旁的编号的类型。
+
+ol 常用的 type 属性为：
+
+值|说明|示例
+---|-----|--------
+1 | 十进制（默认）| 1. 2. 3.
+a | 小写拉丁字母|a. b. c.
+A | 大写拉丁字母 | A. B. C.
+i | 小写罗马字母 | i. ii. iii. iv
+I | 大写罗马字母 | I. II. III. IV.
+
+可以通过 ol 的 start 属性设定列表项相的编号值，默认首项的编号为 1：
+
+    <ol>
+        <li>bananas</li>
+        <li value="4">mongoes</li>
+        <li>cherries</li>
+        <li value="7">plums</li>
+        <li>peaches</li>
+    </ol>
+
+#### 无序列表
+
+ul 无任何局部属性。可以通过 CSS 属性 list-style-type 控制无序列表的样式。
+
+#### 自定义列表
+
+ul 和 li 用来生成无序列表。可以配合 CSS 的 :before 选择器和 counter 特性，可以生成自定义编号的列表。
+
+### 说明列表
+
+dl、dt、dd 用来生成术语极其定义的列表。dl 表示说明列表，dt 表示列表中的术语，表示列表中术语的定义。
+
+```html
+<dt>
+    <dt>Apple</dt>
+        <dd>The apple is the pomaceous fruit of the apple tree.</dd>
+        <dd><i>Musa acuminata</i></dd>
+    <dt>Orange</dt>
+    <dd>The orange is ...</dd>
+</dt>
+```
+
+### figure
+
+figure、figcaption 通常作为一个成体文档的主题引用，把它从主体中删除也不会影响文档的意思。可以用来表示插图，标题可有可无，可以放在 figure 的头部也可放在尾部。
+
+<figure>
+    <figcaption>Listing 23. Using the code element</figcaption>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQanHp0lRoIxq7ejlAKGpksWNF6OTuZPrJEsvlx6d-bcbxe0hT-">
+</figure>
+
+## 文档分节
+
+### hgroup
+
+`<hgroup>` 可以用来讲几个标题元素作为一个整体处理，以免搅乱 HTML 文档的大纲。hgroup 主要用来解决子标题的问题。hgroup 元素在从 h1
+到 h6 的标题体系中的位置取决于第一个标题子元素。
+
+如：
+
+```html
+<hgroup>
+    <h1>Fruite I Like</h1>
+    <h2>How I learned to Love Citrus</h2>
+</hgroup>
+<h2>Additional fruites</h2>
+```
+
+这样，文档大纲是：
+
+- Fruite I Like
+    - Additional fruites
+
+而非：
+
+- Fruite I Like
+    - How I learned to Love Citrus
+    - Additional fruites
+
+### header & footer
+
+header 元素表示一节的首部，包含适合出现在首部的东西，包括刊头或徽标。header 元素通常包含一个标题元素或一个 hgroup 元素，还可以包含改节的导航元素。
+
+footer 表示一节的尾部，包含该节的总结信息，如作者介绍、版权信息、到相关内容的链接、徽标及免责申明。
+
+```html
+<body>
+    <header>
+        <hgroup>
+            <h1>Things I like</h1>
+            <h2>by Adam Freeman</h2>    
+        </hgroup>
+        <section>
+            ...
+        </section>
+    </header>
+
+    <section>
+        <header>
+            <h1>Archive I like</h1>
+        </header>
+        <section>
+            ...
+        </section>
+    </section>
+</body>
+```
+
+### nav
+
+nav 元素是一个可以用于页面导航的链接组。nav 元素可以用于以下场景：
+
+1. 传统导航栏。
+2. 侧边栏导航。
+3. 页内导航。
+4. 翻页操作。
+
+如：
+
+```html
+<article>
+    <header>
+        <h1>HTML 与 CSS3 的历史</h1>
+        <nav>
+            <ul>
+                <li><a href="#HTML">HTML5 的历史</a></li>
+                <li><a href="#CSS">CSS3 的历史</a></li>
+            </ul>
+        </nav>
+    </header>
+</article>
+```
+
+### aside
+
+aside 用来表示跟周边内容稍微沾一点关系的内容，该内容与页面中的其他内容、article、section 有点关系，但并非主题内容的一部分。如：主要内容相关的引用、侧边栏（如评论）、广告、背景信息等。
+
+```html
+<article>
+    <h1>词法闭包</h1>
+    <p>...</p>
+    <aside>
+        <h1>名词解释</h1>
+        <dl>
+            <dt>闭包</dt>
+            <dd>...</dd>
+        </dl>
+    </aside>
+</article>
+```
+
+### article
+
+article 元素代表文档、页面或应用程序中独立的、完整的
+可以独立被外部引用的内容。可以是一篇博客或报刊中的文章、一篇论坛帖子、一段用户评论等。
+
+article 可以用自己的标题（一般放在 header 元素中）。
+
+```html
+<article>
+    <h1>苹果</h1>
+    <p>...</p>
+    <section>
+        <h2>评论</h2>
+        <article>
+            <h3>发表者：阿萨</h3>
+            <p>...</p>
+        </article>
+    </section>
+</article>
+```
+
+### section
+
+section 元素的作用是对页面上的内容进行分块，或者说对文章分段。如：
+
+```html
+<article>
+    <h1>Apple</h1>
+    <p>苹果，植物类水果，多次花果...</p>
+    <section>
+        <h2>红富士</h2>
+        <p>红富士是从普通富士的芽...</p>
+    </section>
+    <section>
+        <h2>国光</h2>
+        <p>国光苹果品，...</p>
+    </section>
+</article>
+```
+
+section 元素的使用总结：
+
+- 不要将 section 元素用作设置样式的页面容器，那是 div 元素的工作。
+- 如果 article 、aside、nav 元素更符合使用条件，不要使用 section 元素。
+- 尽量不要为没有标题的内容区块使用 section 元素。
+
+### address
+
+address 元素用来表示文档或 article 元素的联系信息。address 元素不能表示文档或文章的联系信息之外的地址，如不能再文档内容中表示客户或用户的地址。
+
+```html
+<article>
+    <address>
+        Questions and comments? <a href="mailto:hello@123.com">Email me</a>
+    </address>
+</article>
+```
+
+### details
+
+details 元素在文档中生成一个区域，用户可以展示它以了解关于某个主题的更多详情。details 可以包含一个 summary 元素，用于为详情区域生成一个说明标签或标题。
+
+<details>
+    <summary>Kinds of Triathlon</summary>
+    There are different kinds of triathlon - sprint, Olympic and so on.
+    <ol>
+        <li>1.5km swim</li>
+        <li>40km cycle</li>
+    </ol>
+</details>
+
+## 表格元素
+
+`<table>` 在 CSS 一般不用来布局，主要用来展示二维数据。`<table>` 常用的标签主要有：
+- `capttion` 表格标题
+- `thead` 表头
+- `th` 表头单元格
+- `tbody` 主体部分
+- `tr` 主体行
+- `td` 主体列
+- `tfoot` 表脚
+
+### 表头单元格
+
+可以使用 th 在表格中添加表格单元格：
+
+```html
+<table>
+    <tr>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Color</th>
+    </tr>
+    <tr>
+        <th>Favorite</th>
+        <td>Apple</td>
+        <td>Green</td>
+    </tr>
+    <tr>
+        <th>2nd Favorite</th>
+        <td>Orange</td>
+        <td>Orange</td>
+    </tr>
+</table>
+```
+
+在一行中可以混合使用 tr 和 td 元素，也可以让一行包含清一色的 th 元素。
+
+### 表头和表格主体
+
+tbody 表示构成表格主体的全体行——不包括表头行和表脚行，thead 表示表头行，tfoot 表示表脚行。如果没有 thead，tr 元素都会被视为表格主体的一部分。
+
+```html
+<table>
+    <caption>Results of the 2011 Fruit Survey</caption>
+    <thead>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Color</th>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Favorite</th>
+            <td>Apple</td>
+            <td>Green</td>
+        </tr>
+        <tr>
+            <th>2nd Favorite</th>
+            <td>Orange</td>
+            <td>Orange</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Color</th>
+    </tfoot>
+</table>
+```
+
+### 不规则表格
+
+td 元素的 colspan 属性用于跨列，tr 元素的 rowspan 属性用于跨行。
+
+## form
+
+定义表单：
+
+    <form action="/form" method="post"></form>
+
+form 元素的 action 属性用于指定表单要提交到的服务器的 URL，method 只提交方法，target 属性用于指定反馈信息的目标显示位置，同 a 元素的 target 属性，name 指定表单的名称。
+
+### 数据编码
+
+form 元素的 enctype 属性用来指定浏览器发送到服务器的数据采用的编码方式。可用的中有：
+
+值               |说明
+-----------------|-----------
+application/x-www-form-urlencoded | 默认值。每项数据的名称和值都与 URL 采用相同的编码方式。如：fava=Apples&name=Adam+Freeman
+multipart/form-data | 用于文件上传。
+text/plain | 浏览器的实现不同，不常用。
+
+### 表单自动完成
+
+```html
+<form action="" autocomplete>
+    <input type="text" name="fave" />
+</form>
+```
+
+autocomplete 的属性值有两个，on 和 off。form 的 autocomplete 属性设置的是表单中的 input 元素默认的行为方式，各 input 元素同样可以设置该属性以覆盖默认方式。
+
+### label
+
+```html
+<form action="" method="">
+        <p>
+            <label for="name">账号：<input type="text" id="name"></label>
+        </p>
+        <p>
+            <label for="pw">密码：<input type="password" id="pw"></label>
+        </p>
+</form>
+```
+
+为 input 元素指定 id 属性值，并将相关 label 的 for 属性设置为这个 id 值，这样便可以将 input 元素和 label 元素关联起来，这种方式时显示关联。在设置负载的表单是，通常将 input 元素置于 label 元素中，这是可以省略 label 的 for 属性和 input 的 id 属性，这种方式为 隐式关联。关联的作用是点击 label 时，相应的控件也会获得焦点。
+
+### 自动聚焦
+
+设计者可以使用 input 的 autofocus 属性让表单显示出来的时候自动聚焦于某个 input 元素，这样用户可以直接输入数据。
+
+    <input type="text" autofocus />
+
+### 禁用 input 元素
+
+    <input type="text" disabled />
+
+### 表单元素分组
+
+对于复杂的表单可以使用 formset 将一些表单元素组织在一起。formset 的 legend 属性用于为组指定说明标签，可以使用 formset 的 disabled 禁用或禁用组元素。
+
+```html
+<form action="" method="">
+    <fieldset disabled>
+        <legend>登录表单</legend>
+        <p><label for="name">账号：</label><input type="text" id="name"></p>
+        <p><label for="pw">密码：</label><input type="password" id="pw"></p>
+        <input type="submit" value="登陆">
+    </fieldset>
+</form>
+```
+
+### button
+
+### 提交表单
+
+可以通过将 button 元素的 type 设置为 submit，来提交表单。
+
+    <button type="sbumit">提交</button>
+
+一旦 type 被设置为 submit，则该 button 具有了 form 元素的一些属性：
+
+属性          | 说明
+--------------|--------------
+form | 指定按钮关联的表单，如果按钮处于 form 内，该属性可以省略。
+formaction | 覆盖 form 元素的 action 属性。
+formenctype | 覆盖 form 元素的 enctype 属性。
+formmethod | 覆盖 form 元素的 method 属性。
+formtarget | 覆盖 form 元素的 target 属性。
+formnovalidate | 覆盖 form 元素的 novalidate 属性。
+
+### 重置表单
+
+    <button type="reset"></button>
+
+## input 元素
+
+HTML5 中 input 的 type 值有 23 个不同的值。
+
+type 属性 | 说明 | 示例
+----------|-------|---
+checkbox | “是/否” 二态复选框 | <input type="checkbox" name="vaggie" checked />
+color | 颜色信息 | <input type="color" />
+date | 日期
+datetime | 带时区信息的世界时（包括日期和时间）
+datetime-local | 不带时区信息的世界时（包括日期和时间）
+email | 电子邮箱地址
+month 只能输入年和月
+number | 只能输入整数和浮点数 | <input type="number" value="10" min="1" max="20" />
+radiobutton | 将输入限制在一组固定选项中进行选择 | <input type="radio" name="fruit" value="oranges" id="oranges" />
+range | 只能输入指定范围内的数值 | <input type="range" value="10" min="1" max="20" />
+tel |只能输入规范的电话号码
+time | 只能输入事件信息
+week | 只能输入年和星期
+url | 只能输入完全限定的 URL
+
+### text
+
+type 属性设置为 text 在浏览器中显示为一个单行文本框，常用属性有：
+
+属性 | 说明
+-----|--------------
+list | 为文本框提供建议值的 datalist 元素，其值为 datalist 元素的 id 值。
+manlength | 允许用户输入的字符的最大值。
+pattern | 指定用于验证的正则表达式。
+placeholder | 占位式提示。
+readonly | 只读，防止用户编辑内容。
+required | 表示用户必须输入一个值，否则无法通过验证。
+size | 通过指定文本框可见的字符数目设置其宽度。
+value | 文本框的初始值。
+
+如：
+
+指定文本框大小，并限制最大输入字符数：
+
+    <input type="text" maxlength="10" size="10" />
+
+设置初始值和占位提示：
+
+    <input type="text" placehold="Your name" name="name" value="Lucy"/>
+
+使用数据列表：
+
+```html
+<input type="text" list="fruitlist" name="fave"/>
+<datalist id="fruitlist">
+    <option value="Apples" label="Lovely Apples" />
+    <option value="Orange">Refreshing Oranges</option>
+    <option value="Cherries"/>
+</datalist>
+```
+
+option 的值通过 value 设置，显示可以通过 label 属性设置，也可以通过 option 的元素内容设置。
+
+生成只读或被禁用的文本框：
+
+    <input type="text" disabled />
+    <input type="text" readonly />
+
+设置为 disabled 的元素不能被发送到服务端。
+
+### password
+
+属性通 type=text。用户输入的内容只是显示为掩饰字符，而不是被替换成掩饰字符，提交表但是，服务器收到的是明文密码。对于安全敏感的应用，应该考虑使用 SSL/HTTPS 对通信内容加密。
+
+### button
+
+可以设置 type=submit、reset、button 来生成提交、重置、普通按钮。用法同 <a href="#button">button 一节</a>
+
+input 生成的按钮和用 button 生成的an牛的不同之处在于 button 生成的an牛可以用来显示含标志的文字。
+
+### number
+
+type 属性值为 number 时，只能输入整数和浮点数。常用属性为：
+
+属性 | 说明
+-----|--------
+list | datalist 元素的 id，表示提供的建议值。
+min | 可接受的最小值。
+max | 可接受的最大值。
+step | 上下调节数值的步长。
+value | 元素的初始值。
+
+readonly、required 同 type=text。
+
+    <input type="number" step="1" min="0" max="100" value="1" name="price" />
+
+### range
+
+range 可以用来从实现规定的范围内选择一个数值。支持的属性和 type=number 相同。
+
+    <input type="range" value="10" min="1" max="20" />
+
+### checkbox
+
+checkbox 用来用来生成供用户选择是否的复选框支持的额外属性为：
+
+属性| 说明
+----|--------
+checked | 表示复选框刚显示数来或重置后成勾选状态。
+required | 表示用户必须勾选该复选框，否则无法通过验证。
+value | 设置在复选框在勾选时提交给服务器的数据值，默认为 on。
+
+    <input type="checkbox" name="vaggie" />
+
+提交表单是，只有勾选状态的复选框的数据值才会发送到服务端。
+
+### radio
+
+radio 用来生成一组单选按钮，供用户从一批固定选项中选择一项。
+
+额外支出支持的属性：
+
+属性|说明
+-----|------
+checked | 初始勾选状态
+required | 表示用户必须在一组单选an牛中选择一个，否则无法通过输入验证。
+
+每个 type=radio 的 input 元素代表一个选项，如果要生成一组互斥的选项，只需要将相关的 input 元素的 name 属性设置为同一个值即可。
+
+```html
+<fieldset>
+    <label for="apples">
+        <input type="radio" name="fruit" value="apples" id="apples"/>
+        Apples
+    </label>
+    <label for="oranges">
+        <input type="radio" name="fruit" value="oranges" id="oranges" />
+        Oranges
+    </label>
+</fieldset>
+```
+
+和 checkbox 类似，未选择的单选按钮的值不会被发送到服务器。
+
+### email & tel & url
+
+这三种 input 支持的属性和 type=text 相同。email 还支持一个名为 multiple 的属性，设置了改属性的 input 元素可以接受多个电子邮箱地址。
+
+```html
+<label>
+    Email:
+    <input type="email" placeholder="user@mail.com"/>
+</label>
+<label>
+    TEL:
+    <input type="tel" placeholder="(XXX)-XXX-XXXX"/>
+</label>
+<label>URL:
+    <input type="url"/>
+</label>
+```
 
 ## Tutorial
 
@@ -140,7 +731,6 @@ link 元素用来在 HTML 文档中引入外部资源，link 常用的属性为�
 - [HTML5DevConf](https://www.youtube.com/watch?v=8J6EdpXdzqc)
 - [HTML-MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
 - [Glyphs](http://css-tricks.com/snippets/html/glyphs/)
-
 
 ## Tools
 

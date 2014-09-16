@@ -75,16 +75,16 @@ __7 PATTERNS TO REFACTOR JAVASCRIPT APPLICATIONS:__
 
 ## ES5
 
-- [Working with ES5 JavaScript array functions in modern and legacy browsers - Tech.Pro](http://tech.pro/tutorial/1834/working-with-es5-javascript-array-functions-in-modern-and-legacy-br
-
 owsers)
 - [ECMAScript 5 compatibility table](http://kangax.github.io/es5-compat-table/)
-- [jlongster/es6-macros](https://github.com/jlongster/es6-macros) A collection of sweet.js macros that implement ES6 features for ES5.
 
 ## ES6
 
 - [lukehoban/es6features](https://github.com/lukehoban/es6features) Overview of ECMAScript 6 features.
 - [ECMAScript 6: A Better JavaScript for the Ambient Computing Era](http://www.slideshare.net/allenwb/wdc14-allebwb?)
+- [ECMAScript 6 modules: the final syntax](http://www.2ality.com/2014/09/es6-modules-final.html)
+- [jlongster/es6-macros](https://github.com/jlongster/es6-macros) A collection of sweet.js macros that implement ES6 features for ES5.
+- 
 
 ### Worker
 
@@ -192,6 +192,7 @@ HTMLElement.prototype.__defineGetter__(
 
 ## Tools
 
+1. [Polyfill service](https://cdn.polyfill.io/v1/) The polyfill service selectively bundles browser polyfills based on the User-Agent header supplied in a request. See also [Polyfills as a service](http://labs.ft.com/2014/09/polyfills-as-a-service).
 1. [Javascript在线解压缩](http://tool.lu/js/)
 1. [jsfiddle](http://jsfiddle.net/)
 1. [jsbin](http://jsbin.com/)

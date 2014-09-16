@@ -5,6 +5,7 @@ description: ""
 category: Android
 tags: [android, tutorial]
 --- 
+
 ## Tutorial
 
 - [JohnnyFee/awesome-android](https://github.com/JohnnyFee/awesome-android)
@@ -115,6 +116,12 @@ tags: [android, tutorial]
 ### Android Studio
 
 - [inmite/android-butterknife-zelezny](https://github.com/inmite/android-butterknife-zelezny) Android Studio plug-in for generating ButterKnife injections from selected layout XML.
+
+## Library
+
+- [Instagram/ig-json-parser](https://github.com/Instagram/ig-json-parser/). See also [Fast, auto-generated streaming JSON parsing for Android - Instagram Engineering](http://instagram-engineering.tumblr.com/post/97147584853/json-parsing)
+
+- [What Should You Localize?](http://blog.danlew.net/2014/09/08/what-should-i-localize)
 
 ## Tutorial
 

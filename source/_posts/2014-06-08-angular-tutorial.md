@@ -9,9 +9,8 @@ tags : [angular, tutorial]
 
 ## Quick Start
 
-### Yeoman: Optimizing Your Workflow
-
 See [Yeoman - Modern workflows for modern webapps](http://yeoman.io/)
+See also [angular/angular-seed](https://github.com/angular/angular-seed).
 
 1. Installing Yeoman
 
@@ -779,6 +778,10 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 
 - Batarang 
     Batarang is a Chrome extension that adds AngularJS knowledge to the built-in Developer Tools suite in Google Chrome. 
+
+## Library
+
+- [angular-data: Home](http://angular-data.pseudobry.com) Give your data the treatment it deserves with a data store built for Angular.js.
 
 ## Tutorial
 

@@ -10,6 +10,8 @@ tags: [javascript]
 
 - [therebelrobot/awesome-bootstrap](https://github.com/therebelrobot/awesome-bootstrap)
 - [Bootstrap 3 Tips and Tricks You Might Not Know](http://scotch.io/bar-talk/bootstrap-3-tips-and-tricks-you-might-not-know)
+- [Bootstrap3.0 栅格系统背后的精妙魔法(Bootstrap3.0的栅格布局系统实现原理) - willian12345](http://www.cnblogs.com/willian/p/3558180.html)
+- [bootstrap3栅格系统源码学习](http://www.pchou.info/open-source/2014/01/21/52de149d84a8f.html)
 
 ## Theme
 

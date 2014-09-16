@@ -14,7 +14,9 @@ tags: [javascript,performance]
 
 JavaScript 本身可以算是一门简单的语言，但我们也不断用智慧和灵活的模式来改进它。昨天我们将这些模式应用到了 JavaScript 框架中，今天这些框架又驱动了我们的 Web 应用程序。很多新手开发者被各种强大的 JavaScript 框架吸引进来，但他们却忽略了框架身后浩如星海的 JavaScript 实用技巧。本文将为你呈献其中七个基础知识点：
 
-## 1. 在 String.prototype.replace 方法中使用 /g 和 /i 标志位
+## String
+
+### 在 String.prototype.replace 方法中使用 /g 和 /i 标志位
 
 令很多 JavaScript 初学者意外的是，字符串的 replace 方法并不会 [替换所有匹配的子串](http://davidwalsh.name/javascript-replace)——而仅仅替换第一次匹配。当然 JavaScript 老手们都知道这里可以使用正则表达式，并且需要加上一个全局标志位（/g）：
 
@@ -35,7 +37,11 @@ JavaScript 本身可以算是一门简单的语言，但我们也不断用智慧
 
 每个 JavaScript 开发者都曾踩过这两个标志位的坑——因此别忘了在适当的时候用上它们！
 
-## 2. 类数组对象和 Array.prototype.slice 方法
+## Array
+
+- [Working with ES5 JavaScript array functions in modern and legacy browsers - Tech.Pro](http://tech.pro/tutorial/1834/working-with-es5-javascript-array-functions-in-modern-and-legacy-br)
+
+### 类数组对象和 Array.prototype.slice 方法
 
 数组的 slice 方法通常用来从一个数组中抽取片断。但很多开发者不了解的是，这个方法还可以用来将“类数组”元素（比如 arguments 参数列表、节点列表和属性列表）转换成真正的数组：（译注：DOM 元素的属性列表通过 attributes 属性获取，比如 document.body.attributes。）
 
@@ -56,7 +62,7 @@ JavaScript 本身可以算是一门简单的语言，但我们也不断用智慧
 
 Array.prototype.slice 绝对是 JavaScript 世界中的一玫珍宝，但 JavaScript 初学者们显然还没有意识到它的全部潜力。
 
-## 3. Array.prototype.sort 方法
+### Array.prototype.sort 方法
 
 [数组的 sort 方法](http://davidwalsh.name/array-sort) 远远没有被充分利用，而且可能比开发者们想像的更加强大。很多开发者可能觉得 sort 方法可以用来做这种事情：
 
@@ -84,7 +90,7 @@ Array.prototype.slice 绝对是 JavaScript 世界中的一玫珍宝，但 JavaSc
 
 你不仅可以对简单类型的数组项进行排序，可以通过属性来排序对象。如果哪天服务器端发来一段 JSON 数据，而且其中的对象需要排序，你可别忘了这一招！
 
-## 4. 用 length 属性来截断数组
+### 用 length 属性来截断数组
 
 几乎所有开发者都踩过 JavaScript 的这个坑——“传对象只是传引用”。开发者们经常会试图 [把一个数组清空](http://davidwalsh.name/empty-array)，但实际上却错误地创建了一个新数组。
 
@@ -102,7 +108,7 @@ Array.prototype.slice 绝对是 JavaScript 世界中的一玫珍宝，但 JavaSc
 
 坑里的人们终于明白，原来传对象只是在传引用。因此当我把 myArray 重新赋值为 [] 时，确实会创建出一个新的空数组，但其它对老数组的引用仍然没变！大坑啊！还是换用截断的方法吧，少年。
 
-## 5. 使用 push 来合并数组
+### 使用 push 来合并数组
 
 在上面的第 2 节里，我展示了数组的 slice 和 apply 方法所能组合出的几个小妙招，所以对于数组方法的其它技巧，你应该已经做好心理准备了吧。这次我们使用 push 方法来合并数组：
 
@@ -115,11 +121,10 @@ Array.prototype.slice 绝对是 JavaScript 世界中的一玫珍宝，但 JavaSc
 
 这是一项不为人知的小技巧，简单的原生方法就可以实现数组合并这样的常见任务。
 
-（译注：这个方法的巧妙之外不仅在于 push 方法可以接收多个参数，还涉及到 apply 方法的第二个参数的用法。）
+See also [Combining JS Arrays](http://davidwalsh.name/combining-js-arrays)
 
-## 6. Efficient Feature/Object Property Detection
-
-## 6. 高效探测功能特性和对象属性
+## Property
+### 高效探测功能特性和对象属性
 
 很多时候开发者们会像下面这样来探测浏览器的某个特性：
 
@@ -137,7 +142,11 @@ Array.prototype.slice 绝对是 JavaScript 世界中的一玫珍宝，但 JavaSc
 
 键名检查十分简单，而且可以避免内存泄露。另外请注意，如果这个属性的值是假值，那么前一种探测方式将会得到“否”的结果，并不能真正探测出这个键名是否存在。
 
-## 7. 事件对象的 preventDefault 和 stopPropagation 方法
+See also [Retrieving Property Names with `Object.getOwnPropertyNames` and `Object.keys` · Design Pepper](http://designpepper.com/blog/drips/retrieving-property-names-with-object-getownpropertynames-and-object-keys.html)
+
+## Event
+
+### 事件对象的 preventDefault 和 stopPropagation 方法
 
 很多时候，当一个动作元素（比如链接）被点击时，会触发某个功能。显然我们并不希望点击链接时浏览器顺着这个链接跳转，于是我们会习惯性地使用 JavaScript 类库的 Event.stop 方法：
 

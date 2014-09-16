@@ -66,6 +66,7 @@ For more, see our repository on [GitHub](https://github.com/angular/material)
 
 - [Web Fundamentals — Google Developers](https://developers.google.com/web/fundamentals/)
 - [Welcome - Polymer](http://www.polymer-project.org/)
+- [Join the Web Components revolution with Polymer](http://www.ibm.com/developerworks/library/wa-polymer)
 
 ### Video
 

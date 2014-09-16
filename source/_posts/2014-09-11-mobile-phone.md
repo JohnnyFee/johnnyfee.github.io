@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Mobile Phone"
-category: Other
+category: Tools
 tags: [mobile, phone]
 --- 
 

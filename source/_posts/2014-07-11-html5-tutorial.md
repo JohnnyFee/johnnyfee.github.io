@@ -5,7 +5,9 @@ category: Web
 tags: [web, html, tutorial]
 --- 
 
-### 标签
+## HTML 元素
+
+### 虚元素
 
 没有结束标签，在其中放置任何内容都不符合 HTML 规范，这类元素称为虚元素，它是一种组织性元素，如 `<hr>`。虚元素有两种表示方法，`<hr>` 和 `<hr />`，建议使用后一种。
 
@@ -20,6 +22,8 @@ tags: [web, html, tutorial]
     <input disabled="">
     <input disabled="disabled">
     <input disabled="true">
+
+<!--more-->
 
 ### 自定义属性
 
@@ -400,7 +404,7 @@ details 元素在文档中生成一个区域，用户可以展示它以了解关
     </ol>
 </details>
 
-## 表格元素
+## table
 
 `<table>` 在 CSS 一般不用来布局，主要用来展示二维数据。`<table>` 常用的标签主要有：
 - `capttion` 表格标题
@@ -411,7 +415,7 @@ details 元素在文档中生成一个区域，用户可以展示它以了解关
 - `td` 主体列
 - `tfoot` 表脚
 
-### 表头单元格
+### th
 
 可以使用 th 在表格中添加表格单元格：
 
@@ -437,7 +441,7 @@ details 元素在文档中生成一个区域，用户可以展示它以了解关
 
 在一行中可以混合使用 tr 和 td 元素，也可以让一行包含清一色的 th 元素。
 
-### 表头和表格主体
+### thead & tbody
 
 tbody 表示构成表格主体的全体行——不包括表头行和表脚行，thead 表示表头行，tfoot 表示表脚行。如果没有 thead，tr 元素都会被视为表格主体的一部分。
 
@@ -481,7 +485,7 @@ td 元素的 colspan 属性用于跨列，tr 元素的 rowspan 属性用于跨�
 
 form 元素的 action 属性用于指定表单要提交到的服务器的 URL，method 只提交方法，target 属性用于指定反馈信息的目标显示位置，同 a 元素的 target 属性，name 指定表单的名称。
 
-### 数据编码
+### enctype
 
 form 元素的 enctype 属性用来指定浏览器发送到服务器的数据采用的编码方式。可用的中有：
 
@@ -491,7 +495,9 @@ application/x-www-form-urlencoded | 默认值。每项数据的名称和值都�
 multipart/form-data | 用于文件上传。
 text/plain | 浏览器的实现不同，不常用。
 
-### 表单自动完成
+### autocomplete
+
+autocomplete 用于设置表单的自动完成。
 
 ```html
 <form action="" autocomplete>
@@ -516,19 +522,21 @@ autocomplete 的属性值有两个，on 和 off。form 的 autocomplete 属性�
 
 为 input 元素指定 id 属性值，并将相关 label 的 for 属性设置为这个 id 值，这样便可以将 input 元素和 label 元素关联起来，这种方式时显示关联。在设置负载的表单是，通常将 input 元素置于 label 元素中，这是可以省略 label 的 for 属性和 input 的 id 属性，这种方式为 隐式关联。关联的作用是点击 label 时，相应的控件也会获得焦点。
 
-### 自动聚焦
+### autofocus
 
 设计者可以使用 input 的 autofocus 属性让表单显示出来的时候自动聚焦于某个 input 元素，这样用户可以直接输入数据。
 
     <input type="text" autofocus />
 
-### 禁用 input 元素
+### disabled
+
+禁用 input：
 
     <input type="text" disabled />
 
-### 表单元素分组
+### fieldset
 
-对于复杂的表单可以使用 formset 将一些表单元素组织在一起。formset 的 legend 属性用于为组指定说明标签，可以使用 formset 的 disabled 禁用或禁用组元素。
+对于复杂的表单可以使用 fieldset 将一些表单元素组织在一起。fieldset 的 legend 属性用于为组指定说明标签，可以使用 fieldset 的 disabled 禁用或禁用组元素。
 
 ```html
 <form action="" method="">
@@ -543,7 +551,7 @@ autocomplete 的属性值有两个，on 和 off。form 的 autocomplete 属性�
 
 ### button
 
-### 提交表单
+### sbumit
 
 可以通过将 button 元素的 type 设置为 submit，来提交表单。
 
@@ -560,30 +568,71 @@ formmethod | 覆盖 form 元素的 method 属性。
 formtarget | 覆盖 form 元素的 target 属性。
 formnovalidate | 覆盖 form 元素的 novalidate 属性。
 
-### 重置表单
+### reset
 
     <button type="reset"></button>
 
-## input 元素
+### select
+
+用来生成一个选项列表用用户选择，size 属性用来设置要显示给用户的选项数，在 Chrome36 中 size>4 才有意义。 multiple 元素用来让用户一次选择多个选项。
+
+要提供给用户的选项有 option 定义，如 datalist 中的 option，option 的 selected 用来将该选项自动选中。
+
+```html
+<select name="select" multiple="" size="5">
+    <option value="Apples" label="Apples"/>
+    <option value="Oranges" selected>Oranges</option>
+    <option value="Cherries">Pear</option>
+    <option value="Pear" />
+    <option value="Watermelons" />
+    <option value="Hamilons"/>
+</select>
+```
+
+optgroup 元素可以用来给 option 元素分组，其 label
+属性可以用来为整租选项提供一个小标题，disabled 属性可以用来阻止选择选项组内的任何选择。
+
+```html
+<select name="select">
+    <optgroup label="Top Choice">
+        <option value="Apples" label="Apples"/>
+        <option value="Oranges" selected>Oranges</option>
+    </optgroup>
+    <optgroup label="No Sale" disabled="">
+        <option value="Cherries">Pear</option>
+        <option value="Pear" />
+    </optgroup>
+</select>
+```
+
+### textarea
+
+textarea 用来输入多行文字。textare 可以用 rows 和cols 属性设置大小。wrap 属性控制提交表单时在文字中插入换行符的方式，值为 hard 值会在每行的末尾插入换行符，结果是所提交的文字中每行的字符数都不超过 cols 属性的规定；值为 soft 时，不会自动插入换行符。
+
+其他支持的属性同 type=text。
+
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+
+### output
+
+output 用来表示输出结果。
+
+```html
+<fieldset>
+    <legend>Price Calculator</legend>
+    <input type="number" id="quant" placeholder="quant" /> × <input type="number" id="price" placeholder="price" /> = <output for="quant price"></output>
+</fieldset>
+```
+
+### 验证
+
+使用 HTML 的验证功能时，存在的问题是一次向用户提示的，如果表单中存在多处问题，那么用户不得不提交多次才能发现所有错误，而且错误提示的外观也不受设计者控制。
+
+HTML 中用于验证的属性有：required、min、max、pattern。
+
+## input
 
 HTML5 中 input 的 type 值有 23 个不同的值。
-
-type 属性 | 说明 | 示例
-----------|-------|---
-checkbox | “是/否” 二态复选框 | <input type="checkbox" name="vaggie" checked />
-color | 颜色信息 | <input type="color" />
-date | 日期
-datetime | 带时区信息的世界时（包括日期和时间）
-datetime-local | 不带时区信息的世界时（包括日期和时间）
-email | 电子邮箱地址
-month 只能输入年和月
-number | 只能输入整数和浮点数 | <input type="number" value="10" min="1" max="20" />
-radiobutton | 将输入限制在一组固定选项中进行选择 | <input type="radio" name="fruit" value="oranges" id="oranges" />
-range | 只能输入指定范围内的数值 | <input type="range" value="10" min="1" max="20" />
-tel |只能输入规范的电话号码
-time | 只能输入事件信息
-week | 只能输入年和星期
-url | 只能输入完全限定的 URL
 
 ### text
 
@@ -721,6 +770,116 @@ required | 表示用户必须在一组单选an牛中选择一个，否则无法�
     <input type="url"/>
 </label>
 ```
+
+### datetime
+
+支持的属性和 type=number 相同。
+
+用来获取时间和日期的 input 元素类型：
+
+type 属性 | 说明 | 格式| 示例
+----------|-------|-----|----
+datetime | 带时区信息的世界时（包括日期和时间）| 2011-07-19T16:12:31.491Z |<input type="datetime" value="2011-07-19T16:12:31.491Z" />
+datetime-local | 不带时区信息的世界时（包括日期和时间）| 2011-07-19T16:12:31.491 | <input type="datetime-local" value="2011-07-19T16:12:31.491" />
+date | 日期 | 2011-07-19 | <input type="date" />
+time | 只能输入事件信息 | 16:12:31.491 | <input type="time" value="16:12:31.491"/>
+month| 只能输入年和月|2011-07| <input type="month" value="2011-07" />
+week | 只能输入年和星期 | 2011-W30 |<input type="week" value="2011-W30" />
+
+### color
+
+type 为 color 的 input 用来选择颜色。
+
+    <input type="color" />
+
+### search
+
+用来生成一个文本框，用用户输入搜索词。支持的属性和 type=text 相同。
+
+    <input type="search" />
+
+### hidden
+
+用来呈现希望用户看不到或不能编辑的数据项，但又表单提交时希望发送服务上的元素。
+
+    <input type="hidden" name="id" value="123456" />
+
+### image
+
+用来将生成的按钮显示为图像，点击该图像会导致提交表单。支持的属性同 type=submit 时的按钮。初次之外，还支持的属性有 width、height、alt。
+
+表单提交时，用户点击图片的坐标（相对图像的左上角）会提交到服务器，如：submit.x/submit.x，可以根据图像的不同区域代表不同的操作。
+
+### file
+
+用来选择文件，提交表单时将文件上传到服务器。有上传文件的 input 时，form
+的 enctype 属性必须设置为 multipart/form-data，接受的额外属性为：
+
+属 性 | 说明
+-------|-----
+accept | 接受的 MINE 类型。关于 MINE 类型的定义，参见 [RFC 2046](http://tools.ietf.org/html/rfc2046)
+multiple | 设置这个属性可以一次上传多个文件。
+required | 必须选择至少一个文件。
+
+## 嵌入内容
+
+### image
+
+要嵌入一张图像需要使用 src 和 alt 属性，src 指定预嵌入图像的 URL，alt 定义了 img 元素的备用内容，在图像无法正常呈现时显示。如：
+
+    <img src="http://temp.im/200x200" alt="200x200">
+
+可以使用 width 和 height 来指定图像的大小，这样可以让浏览器在图像尚未载入时正确摆放网页里的各个元素。注意，width 和 height 不能用来动态缩放图像。
+
+在超链接中嵌入图像时，如果给 img 加上 ismap 属性加载创建了一个服 _务器端分区响应图_，在图像上点击的位置坐标（相对左上角）会附加到 URL 上。点击的位置是距图像顶部4px，左边 10px，浏览器会导航到：http://server.com/some.html/10,4。
+
+我们可以创建 _客户端分区响应图_，通过点击图像上的不同区域让浏览器导航到不同的 URL 上。这一过程不需要服务器的引导，因此需要使用元素来定义图像上的各个区域以及他们所代表的行为。实现客户端分区响应图的关键元素时 map。
+
+map 包含一个活多个 area，他们各自代表了图像上可以被点击的一块区域。are 元素的属性可以分为两类，第一类通 a 元素的属性，代表用户点击后浏览器导航到的 URL，第二类为 shape 和 coords 属性，coords 属性根据 shape 的值而定：
+
+shap 值 | coords 值
+---------|--------
+rect | 代表一个矩形区域。coords 为由逗号分隔的四个整数值，分别代表：<li>图像左边缘和矩形的左侧<li>图像上边缘和矩形的上侧<li>图像左边缘和矩形的右侧<li>图像上边缘和矩形的下侧
+circle | 代表一个圆形区域。coors 为由三个逗号分隔的整数值组成：<li>图像左边缘到圆心的距离<li>图像下边缘到圆心的距离<li>图像的半径
+poly | 代表一个多边形。coords 属性为六个用逗号分隔的整数，每一个数字各代表多边形的一个顶点。
+default |默认区域，即覆盖正常图，不需要提供 coords 值。
+
+```html
+<img src="http://temp.im/300x100" alt="300x100" usemap="mymap">
+<map name="mymap">
+    <area href="http://google.com.hk" shape="rect" coords="0,0,100,100" />
+    <area href="http://baidu.com" shape="rect" coords="0,0,200,100" />
+    <area href="http://inching.org" shape="default"/>
+</map>
+```
+
+### iframe
+
+iframe 元素允许我们在现有的 HTML 文档中嵌入另一张文档。
+
+    <iframe name="myframe" src="http://inching.org" frameborder="0" width="600" height="600" seamless sandbox></iframe>
+
+我们创建了一个 name 属性为 myframe 的 iframe，这样我们可以将 a、form、button、input 等元素的 target 属性指定为 myframe，则相应的链接会在 myframe 中打开，如：
+
+    <a href="http://www.baidu.com" target="myframe">www.baidu.com</a>
+
+width 和 height 用来指定大小，src 用来指定 URL。
+
+### progress
+
+progress 用来表现某项任务进度逐渐完成的过程。progress 的 value 属性定义了当前的进度，它位于 0 和 max 属性的值（省略时为 1）所定义的范围之间。
+
+    <progress value="10" max="30"></progress>
+
+<progress value="10" max="30"></progress>
+
+### meter
+
+meter 元素显示了某个范围内所有可能值中的一个。min、max 定义了可能值所处范围的边界，可以用浮点数来表示。meter 元素的显示可分为三个部分：过低、过高、最佳。< low 属性值都认为是过低，> high 属性值则认为过高，optimum 指定了最佳值。
+
+    <meter value="90" min="10" max="100" low="40" hight="80" optimum="60"></meter>
+
+<meter value="90" min="10" max="100" low="40" hight="80" optimum="60"></meter>
 
 ## Tutorial
 

@@ -9,6 +9,9 @@ tags: [android]
 
 - [How to create simple view separators](http://envyandroid.com/archives/1193/view-separators)
 - [An Android Love Affair: Adding attributes to a custom view](http://droidista.blogspot.com/2014/06/adding-attributes-to-custom-view.html)
+- [Building a RecyclerView LayoutManager – Part 2](http://wiresareobsolete.com/2014/09/recyclerview-layoutmanager-2)
+- [marvinlabs/android-floatinglabel-widgets](https://github.com/marvinlabs/android-floatinglabel-widgets)
+- [MrEngineer13/SnackBar](https://github.com/MrEngineer13/SnackBar) toast-like alert pattern for Android.
 
 ### App UI / UX
 

@@ -202,6 +202,7 @@ FlowType.JS 简化了这一困难，基于 特定元素的宽度改变字体大�
 
 ##图片
 - [malsup / cycle](https://github.com/malsup/cycle/tree/master)
+- [jonom/jquery-focuspoint](https://github.com/jonom/jquery-focuspoint) Query plugin for 'responsive cropping'. Dynamically crop images to fill available space without cutting out the image's subject. Great for full-screen images.
 - [20 个具有惊艳效果的 jQuery 图像缩放插件 - WEB开发者](http://www.admin10000.com/document/3853.html)
 
 ##通知

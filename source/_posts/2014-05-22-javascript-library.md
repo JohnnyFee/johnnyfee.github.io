@@ -51,6 +51,7 @@ tags: [javascript]
 ### Collection
 
 - [flesler/hashmap](https://github.com/flesler/hashmap) HashMap JavaScript class for NodeJS and the browser. The keys can be anything and won't be stringified.
+- [DataCollection.js](http://thestorefront.github.io/DataCollection.js) Manipulate data from API responses with ease.
 
 ### fn
 

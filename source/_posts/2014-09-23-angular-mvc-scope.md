@@ -5,23 +5,26 @@ category : Angular
 tags : [angular, tutorial]
 --- 
 
-#### 深入探讨 Scope 作用域
+> 原文：[【译】《精通使用AngularJS开发Web App》（三）--- 深入scope，继承结构，事件系统和生命周期](http://segmentfault.com/blog/chao2/1190000000361245)
+> 书名：[Mastering Web Application Development with AngularJS](http://www.amazon.com/Mastering-Web-Application-Development-AngularJS/dp/1782161821/)
 
 每一个 `$scope` 都是类 `Scope` 的一个实例。类 `Scope` 拥有可以控制 `scope` 生命周期的方法，提供事件传播的能力，并支持模板渲染。
 
-##### 作用域的层次结构
+## 作用域的层次结构
 
 让我们再来看看这个简单的 `HelloCtrl` 的例子：
 
-<pre class=" hljs php">
-<span class="widget-clipboard"></span><span class="hljs-keyword">var</span> HelloCtrl = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$scope</span>)</span></span>{
-    <span class="hljs-variable">$scope</span>.name = <span class="hljs-string">'World'</span>;
+```js
+var HelloCtrl = function($scope){
+    $scope.name = 'World';
 }
-</pre>
+```
 
 `HelloCtrl` 看起来就跟普通的 JavaScript 构造函数没什么区别，事实上，除了 `$scope` 这个参数之外，确实没什么新奇之处。不过，这个参数究竟是从哪里来的呢？
 
 这个新的作用域是由 `ng-controller`指令使用 `Scope.$new()` 方法生成的。等一下，这么说来我们必须至少拥有一个 `scope` 的实例才能创建新的 `scope`！没错，AngularJS其实有一个 `$rootScope`（这个是所有其他作用域的父级）。这个 `$rootScope` 实例是在一个新的应用启动的时候创建的。
+
+<!--more-->
 
 `ng-controller`指令就是 **`可以创建作用域`** 指令的其中一个。AngularJS 会在任何它在DOM树中碰到这种 **`可以创建作用域`** 指令的时候创建一个新的 `Scope`类的实例。这些新创建的作用域通过 `$parent` 属性指向它自身的父作用域。DOM树中会有很多 **`可以创建作用域`** 的指令，结果就是，很多作用域被创建了。
 
@@ -31,19 +34,19 @@ tags : [angular, tutorial]
 
 控制器如下：
 
-<pre class=" hljs php">
-<span class="widget-clipboard"></span><span class="hljs-keyword">var</span> WorldCtrl = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-variable">$scope</span>)</span> </span>{
-    <span class="hljs-variable">$scope</span>.population = <span class="hljs-number">7000</span>;
-    <span class="hljs-variable">$scope</span>.countries = [
-        {name: <span class="hljs-string">'France'</span>, population: <span class="hljs-number">63.1</span>},
-        {name: <span class="hljs-string">'United Kingdom'</span>, population: <span class="hljs-number">61.8</span>},
+```js
+var WorldCtrl = function ($scope) {
+    $scope.population = 7000;
+    $scope.countries = [
+        {name: 'France', population: 63.1},
+        {name: 'United Kingdom', population: 61.8},
     ];
 };
-</pre>
+```
 
 模版如下：
 
-<span class="widget-clipboard"></span>```html
+```html
 <ul ng-controller="WorldCtrl">
     <li ng-repeat="country in countries">
         {{country.name}} has population of {{country.population}}
@@ -59,21 +62,20 @@ tags : [angular, tutorial]
 ![AngularJS作用域截图](http://www.peichao01.com/Mastering_AngularJS_book/ch1_p16.png)  
 正如我们在截图中所看到的，每一个作用域（以矩形标注边界）维护属于她自己的一段数据模型。给不同的作用域增加同名的变量是完全没有问题的，不会发生命名冲突（不同的DOM元素会指向不同的作用域，并使用相对应的作用域的变量来渲染模板）。这样一来，每个元素又有自己的命名空间，在前面的例子中，每一个 `<li>` 元素都有自己的作用域，而 `country` 变量就定义在各自的作用域上面。
 
-##### Scope的层次结构和继承
+## Scope的层次结构和继承
 
 定义在作用于上的属性对他的子级作用于来说是可见的，试想一下，子级作用域并不需要重复定义同名的属性！这在实践中是非常有用的，因为我们不必一遍又一遍的重复定义本来可以通过作用域链得到的那些属性。
 
 再来看看前面的例子，假设我们想要显示给出的这些国家与世界总人口的百分比。要实现这个功能，我们可以在一个作用域上定义一个 `worldsPercentage` 的方法，并由 `WorldCtrl` 来管理，如下所以：
 
-<pre class=" hljs php">
-<span class="widget-clipboard"></span><span class="hljs-variable">$scope</span>.worldsPercentage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(countryPopulation)</span> </span>{ 
-    <span class="hljs-keyword">return</span> (countryPopulation / <span class="hljs-variable">$scope</span>.population)*<span class="hljs-number">100</span>;
+```js
+$scope.worldsPercentage = function (countryPopulation) { 
+    return (countryPopulation / $scope.population)*100;
 }
-</pre>
-
+```
 然后被 `ng-repeat` 创建的每一个作用域实例都来调用这个方法，如下：
 
-<span class="widget-clipboard"></span>```html
+```html
 <li ng-repeat="country in countries">
     {{country.name}} has population of {{country.population}},
     {{worldsPercentage(country.population)}} % of the World's
@@ -83,20 +85,20 @@ tags : [angular, tutorial]
 
 AngularJS中作用域的继承规则跟 JavaScript 中原型的继承规则是相同的（在需要读取一个属性的时候，会一直向继承树的上方查询，直到找到了这个属性为止）。
 
-##### 贯穿作用域链的继承的风险
+## 贯穿作用域链的继承的风险
 
 这种透过作用域层次关系的继承，在读数据的时候显得非常的直观、易于理解。但是在写数据的时候，就变的有点复杂了。
 
 让我们来看看，如果我们在一个作用域上定义了一个变量，先不管是否在子级作用域上。JavaScript代码如下：
 
-<pre class=" hljs php">
-<span class="widget-clipboard zeroclipboard-is-hover"></span><span class="hljs-keyword">var</span> HelloCtrl = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-variable">$scope</span>)</span> </span>{
+```js
+var HelloCtrl = function ($scope) {
 };
-</pre>
+```
 
 视图的代码如下：
 
-<span class="widget-clipboard"></span>```html
+```js
 <body ng-app ng-init="name='World'"> 
     <h1>Hello, {{name}}</h1>
     <div ng-controller="HelloCtrl">
@@ -118,7 +120,7 @@ AngularJS中作用域的继承规则跟 JavaScript 中原型的继承规则是�
 
 另一个解决方案就是，不要直接把属性绑定到 作用域上，而是绑到一个对象上面，如下所示：
 
-<span class="widget-clipboard"></span>```html
+```html
 <body ng-app ng-init="thing = {name : 'World'}"> 
     <h1>Hello, {{thing.name}}</h1>
     <div ng-controller="HelloCtrl">
@@ -133,18 +135,18 @@ AngularJS中作用域的继承规则跟 JavaScript 中原型的继承规则是�
 > 避免直接把数据绑定到 作用域的属性上。应优先选择把数据双向绑定到对象的属性上（然后再把对象挂到 scope 上）。  
 > 就经验而言，在给 `ng-model` 指令的表达式中，你应该有一个点（例如， `ng-model="thing.name"`）。
 
-##### 作用域层级和事件系统
+## 作用域层级和事件系统
 
 层级关系中的作用域可以使用 `event bus`（一种事件系统）。AngularJS可以在作用域层级中传播具名的装备齐全的事件。事件可以从任何一个作用域中发出，然后向上（$emit）和向下（$broadcast）四处传播。  
 ![截图](http://www.peichao01.com/Mastering_AngularJS_book/ch1_p20.png)  
 AngularJS核心服务和指令使用这种事件巴士来发出一些应用程序状态变化的重要事件。比如，我们可以监听 `$locationChangeSuccess` 事件（由 `$rootScope` 实例发出），然后在任何 location（浏览器中就是URL）变化的时候都会得到通知，如下所示：
 
-<pre class=" hljs php">
-<span class="widget-clipboard"></span><span class="hljs-variable">$scope</span>.<span class="hljs-variable">$on</span>(<span class="hljs-string">'$locationChangeSuccess'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event, newUrl, oldUrl)</span></span>{ 
-    <span class="hljs-comment">//react on the location change here</span>
-    <span class="hljs-comment">//for example, update breadcrumbs based on the newUrl</span>
+```js
+$scope.$on('$locationChangeSuccess', function(event, newUrl, oldUrl){ 
+    //react on the location change here
+    //for example, update breadcrumbs based on the newUrl
 });
-</pre>
+```
 
 每一个作用域对象都会有这个 `$on` 方法，可以用来注册一个作用域事件的侦听器。这个函数所扮演的侦听器在被调用时会有一个 `event` 对象作为第一个参数。后面的参数会根据事件类型的不同与事件本身的配备一一对应。
 
@@ -156,7 +158,7 @@ AngularJS核心服务和指令使用这种事件巴士来发出一些应用程�
 
 > 千万不要在 AngularJS 中模仿 DOM 的基于事件的编程方式。大多数情况下，你的应用会有更好的架构方式，你也可以在双向数据绑定这条路上深入探索。
 
-##### 作用域的生命周期
+## 作用域的生命周期
 
 作用域需要提供相互隔离的命名空间，避免变量的命名冲突。作用域们都很小，而且被以层级的方式组织起来，对内存使用的管理来说很有帮助。当其中一个作用域不再需要 ，它就可以被销毁了。结果就是，这个作用域所暴露出来的模型和方法就符合的垃圾回收的标准。
 

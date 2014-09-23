@@ -801,6 +801,7 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 
 ## Library
 
+- [Popular Modules - AngularJS Modules, Plugins and Directives](http://ngmodules.org/)
 - [angular-data: Home](http://angular-data.pseudobry.com) Give your data the treatment it deserves with a data store built for Angular.js.
 
 ## Tutorial

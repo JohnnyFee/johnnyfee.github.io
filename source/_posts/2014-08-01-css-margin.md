@@ -241,3 +241,4 @@ IE6 is prone to the [doubled float-margin bug](http://www.positioniseverything.n
 
 - [margin](http://css-tricks.com/almanac/properties/m/margin/)
 - [Collapsing Margins - SitePoint](http://www.sitepoint.com/web-foundations/collapsing-margins/)
+- [负值之美：负margin在页面布局中的应用 / Owen Chen](http://owenchen.duapp.com/index.php/beauty-of-negative-values-negative-margin-in-page-layout-application/)

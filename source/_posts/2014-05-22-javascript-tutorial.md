@@ -24,7 +24,8 @@ tags: [javascript]
 - [web开发设计人员不可不用的在线web工具和应用](http://www.qianduan.net/web-development-and-design-staff-can-not-be-without-online-web-tools-and-applications.html)
 - [深入理解JavaScript系列 - 汤姆大叔 - 博客园](http://www.cnblogs.com/TomXu/archive/2011/12/15/2288411.html)
 - [JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/)
-- - [The JavaScript Tutorial](http://javascript.info/)
+- [The JavaScript Tutorial](http://javascript.info/)
+- [JavaScript事件代理和委托（Delegation） / Owen Chen](http://owenchen.duapp.com/index.php/javascript-event-delegation-and-delegates-delegation/)
 
 <!--more-->
 

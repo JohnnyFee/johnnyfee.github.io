@@ -7,6 +7,12 @@ tags : [angular, tutorial]
 
 本书为读 [AngularJS](http://www.salttiger.com/angularjs/) 的读书笔记，该书的例子在 [shyamseshadri/angularjs-book](https://github.com/shyamseshadri/angularjs-book)。
 
+## module
+
+`module` 扮演一个其他的AngularJS需要管理的对象（控制器、服务等）的容器。要定义一个新的模块，我们需要给 `module` 方法的第一个参数提供模块的名字。第二个参数指定所需要依赖的模块（在之前的模块中，我们没有依赖与任何其他模块）。
+
+`angular.module` 方法的调用会返回一个新创建的模块的实例。一旦我们是用这个实例，就可以开始定义新的控制器了。
+
 ## Services
 
 Services are singleton (single-instance) objects that carry out the tasks necessary to support your application’s functionality. Angular comes with many services like `$location`, for interacting with the browser’s location, `$route`, for switching views based on location (URL) changes, and` $http`, for communicating with servers.
@@ -89,172 +95,44 @@ Controller 应该纯粹地用来把 service、依赖关系、以及其它对象�
 
 在 Angular 中，controller 自身并不会处理 "request"，除非它是用来处理路由(route)的（很多人把这种方式叫做创建 _route controller_ ，路由控制器）。
 
-Though we express this as nested controllers, the actual nesting happens in scopes. The `$scope` passed to a nested controller prototypically inherits from its parent controller’s `$scope`. In this case, this means that the `$scope` passed to `ChildController` will have access to all the properties of the `$scope` passed to `ParentController`.
+> 就经验而言，千万不要在 AngularJS控制器中操作 DOM 元素。在控制器中获取一个DOM的引用，并操作DOM的属性，是在用命令式的方式控制UI -- 这是跟 AugularJS 构建 UI 的思想相悖的。
+> —— [【译】《精通使用AngularJS开发Web App》（四）--- 深入视图，模板系统，模块和依赖注入](http://segmentfault.com/blog/chao2/1190000000361964)
 
-    <div ng-controller="ParentController">
-      <div ng-controller="ChildController">...</div>
-    </div>
+### 全局控制器
+
+我们可以向下面这样定义一个全局控制器：
+
+```js
+function TextController($scope) {
+  $scope.someText = 'You have started your journey.';
+}
+```
 
 You can think of scopes as a context that you use to make changes to your model observable.
 
-Use primitives as model：
+全局定义的控制器构造函数只适用于快速示例和原型开发。永远不要在大型的、真实的应用中使用全局定义的控制器。
 
-    <html ng-app>
-    <body ng-controller="TextController">
-      <p>{{someText}}</p>
+### 嵌套控制器
 
-      <script
-          src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js">
-      </script>
+```html
+<div ng-controller="ParentController">
+  <div ng-controller="ChildController">...</div>
+</div>
+```
 
-      <script>
-        function TextController($scope) {
-          $scope.someText = 'You have started your journey.';
-        }
-      </script>
-    </body>
-    </html>
+Though we express this as nested controllers, the actual nesting happens in scopes. The `$scope` passed to a nested controller prototypically inherits from its parent controller’s `$scope`. In this case, this means that the `$scope` passed to `ChildController` will have access to all the properties of the `$scope` passed to `ParentController`.
 
-<!--more-->
+### Scope
 
-Though this primitive-style model works in simple cases, for most applications you’ll want to create a model object to contain your data.
+AngularJS中的 `$scope` 对象在这里就是要将 域模型 暴露给视图（模板）。只需把属性设置给 scope 实例，就可以在模板渲染时得到这个值。
 
-    <html ng-app='myApp'>
-    <body ng-controller='TextController'>
-      <p>{{someText.message}}</p>
-
-    <script
-        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js">
-    </script>
-
-    <script>
-      var myAppModule = angular.module('myApp', []);
-
-      myAppModule.controller('TextController',
-          function($scope) {
-        var someText = {};
-        someText.message = 'You have started your journey.';
-        $scope.someText = someText;
-      });
-    </script>
-    </body>
-    </html>
-
-In this version, we told our `ng-app` element about the name of our module, myApp.
-
-### Receipt Controllers
-
-Let’s go over the first controller, which is the List Controller, responsible for displaying the list of all recipes in the system.
-
-    app.controller('ListCtrl', ['$scope', 'recipes',
-        function($scope, recipes) {
-      $scope.recipes = recipes;
-    }]);
-
-With the List Controller under our belts, the other controllers are pretty similar in nature, but we will still cover them one by one to point out the interesting aspects:
-
-    app.controller('ViewCtrl', ['$scope', '$location', 'recipe',
-        function($scope, $location, recipe) {
-      $scope.recipe = recipe;
-
-      $scope.edit = function() {
-        $location.path('/edit/' + recipe.id);
-      };
-    }]);
+`$scope`对象让我们可以非常精确的控制这个域内的模型的哪一部分，以及哪些操作在视图层是可用的。理论上来讲，AngularJS的 scopes 非常类似于 MVVM 模式的 ViewModel。
 
 
-Next, let’s take a look at the Edit Controller:
 
-    app.controller('EditCtrl', ['$scope', '$location', 'recipe',
-        function($scope, $location, recipe) {
-      $scope.recipe = recipe;
+## Model
 
-      $scope.save = function() {
-        $scope.recipe.$save(function(recipe) {
-          $location.path('/view/' + recipe.id);
-        });
-      };
-
-      $scope.remove = function() {
-        delete $scope.recipe;
-        $location.path('/');
-      };
-    }]);
-
-
-Next, we have the New Controller:
-
-    app.controller('NewCtrl', ['$scope', '$location', 'Recipe',
-        function($scope, $location, Recipe) {
-      $scope.recipe = new Recipe({
-        ingredients: [ {} ]
-      });
-
-      $scope.save = function() {
-        $scope.recipe.$save(function(recipe) {
-          $location.path('/view/' + recipe.id);
-        });
-      };
-    }]);
-
-
-Finally, we have the Ingredients Controller. This is a special controller, but before we get into why or how, let’s take a look:
-
-    app.controller('IngredientsCtrl', ['$scope', function($scope) {
-      $scope.addIngredient = function() {
-        var ingredients = $scope.recipe.ingredients;
-        ingredients[ingredients.length] = {};
-      };
-      $scope.removeIngredient = function(index) {
-        $scope.recipe.ingredients.splice(index, 1);
-      };
-    }]);
-
-It is a child controller, it inherits the scope from the parent controller (the Edit/New controllers in this case). Thus, it has access to the $scope.recipe from the parent.
-
-With that, we finish the last of the controllers. The only JavaScript piece that remains is how the routing is set up:
-// This file is app/scripts/controllers/controllers.js
-
-    var app = angular.module('guthub',
-        ['guthub.directives', 'guthub.services']);
-
-    app.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.
-          when('/', {
-            controller: 'ListCtrl',
-            resolve: {
-              recipes: function(MultiRecipeLoader) {
-                return MultiRecipeLoader();
-              }
-            },
-            templateUrl:'/views/list.html'
-          }).when('/edit/:recipeId', {
-            controller: 'EditCtrl',
-            resolve: {
-              recipe: function(RecipeLoader) {
-                return RecipeLoader();
-              }
-            },
-            templateUrl:'/views/recipeForm.html'
-          }).when('/view/:recipeId', {
-            controller: 'ViewCtrl',
-            resolve: {
-              recipe: function(RecipeLoader) {
-                return RecipeLoader();
-              }
-            },
-            templateUrl:'/views/viewRecipe.html'
-          }).when('/new', {
-            controller: 'NewCtrl',
-            templateUrl:'/views/recipeForm.html'
-          }).otherwise({redirectTo:'/'});
-    }]);
-
-For each route, we specify the URL, the controller that backs it up, the template to load, and finally (optionally), a resolve object.
-
-This `resolve` object tells AngularJS that each of these resolve keys needs to be satisfied before the route can be displayed to the user. For us, we want to load all the recipes, or an individual recipe, and make sure we have the server response before we display the page. So we tell the route provider that we have recipes (or a recipe), and then tell it how to fetch it.
-
-If the resolve function returns an AngularJS promise, then AngularJS is smart enough to wait for the promise to get resolved before it proceeds. That means that it will wait until the server responds.
+AngularJS 的模型就是那些普通的 JavaScript 对象。使用任何现有的，纯JavaScript类或对象，就跟在模型层一样的去使用它们也是可以的。要把模型暴露给 AngularJS，你只需把它赋值给 $scope 的属性即可。
 
 ## Directives
 
@@ -280,8 +158,7 @@ We can now move to the directives we will be using in our application. There wil
 Let’s look at the code:
 
 ```js
-// This file is app/scripts/directives/directives.js
-
+// app/scripts/directives/directives.js
 var directives = angular.module('guthub.directives', []);
 
 directives.directive('butterbar', ['$rootScope',
@@ -328,6 +205,12 @@ The final thing of note is the API for working with the element. jQuery veterans
 
 我们能否在控制器上实现上面的功能呢？当然可以，但是这样做会带来一个重大的问题。一旦其他的 Controller 需要实现相同的功能，可能需要拷贝代码。
 
+See:
+
+- [AngularJS 指令（Directives）实践指南（一） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide/)
+- [AngularJS 指令（Directives）实践指南（二） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-b/)
+- [AngularJS 指令（Directives）实践指南（三） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-c/)
+
 ### Library
 
 - [voronianski/ngActivityIndicator](https://github.com/voronianski/ngActivityIndicator/) Angular provider for preloader animations 
@@ -361,65 +244,91 @@ Steps 1 through 3 are standard for every Angular app. It’s in steps 4 and 5 th
 
 Let us start by taking a look at the outermost, main template, which is the index.html. This is the base of our single-page application, and all the other views are loaded within the context of this template:
 
-    <!DOCTYPE html>
-    <html   lang="en" ng-app="guthub">
-    <head>
-      <title>GutHub - Create and Share</title>
-      <script src="scripts/vendor/angular.min.js"></script>
-      <script src="scripts/vendor/angular-resource.min.js"></script>
-      <script src="scripts/directives/directives.js"></script>
-      <script src="scripts/services/services.js"></script>
-      <script src="scripts/controllers/controllers.js"></script>
-      <link href="styles/bootstrap.css" rel="stylesheet">
-      <link href="styles/guthub.css" rel="stylesheet">
-    </head>
-    <body>
-      <header>
-        <h1>GutHub</h1>
-      </header>
+```html
+<!DOCTYPE html>
+<html   lang="en" ng-app="guthub">
+<head>
+  <title>GutHub - Create and Share</title>
+  <link href="styles/bootstrap.css" rel="stylesheet">
+  <link href="styles/guthub.css" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>GutHub</h1>
+  </header>
 
-      <div butterbar>Loading...</div>
+  <div butterbar>Loading...</div>
 
-      <div class="container-fluid">
-        <div class="row-fluid">
-          <div class="span2">
-            <!--Sidebar-->
-            <div id="focus"><a href="/#/new">New Recipe</a></div>
-            <div><a href="/#/">Recipe List</a></div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span2">
+        <!--Sidebar-->
+        <div id="focus"><a href="/#/new">New Recipe</a></div>
+        <div><a href="/#/">Recipe List</a></div>
 
-          </div>
-          <div class="span10">
-            <div ng-view></div>
-          </div>
-        </div>
       </div>
-    </body>
-    </html>
+      <div class="span10">
+        <div ng-view></div>
+      </div>
+    </div>
+  </div>
 
-__Link href Values__
+<script src="scripts/vendor/angular.min.js"></script>
+<script src="scripts/vendor/angular-resource.min.js"></script>
+<script src="scripts/directives/directives.js"></script>
+<script src="scripts/services/services.js"></script>
+<script src="scripts/controllers/controllers.js"></script>
+</body>
+</html>
+```
 
-The hrefs link to the various pages of our single-page application. Notice how they use the # character to ensure that the page doesn’t reload, and are relative to the current page. AngularJS watches the URL (as long as the page isn’t reloaded), and works it magic (or actually, the very boring route management we defined as part of our routes) when needed.
+导航到其他模板使用 `/#/` 开头的链接路径，如 `<a href="/#/new">New Recipe</a>`，这样可以防止主页面被重新加载。
 
-__ng-view__
+`<div ng-view></div>` 用于定义模板容器。当路由发生变化时，路由对应的模板将替换这个 div 的内容。
 
-This is where the last piece of magic happens. In our controllers section, we defined our routes. As part of that definition, we denoted the URL for each route, the controller associated with the route, and a template. When AngularJS detects a route change, it loads the template, attaches the controller to it, and replaces the ng-view with the contents of the template.
+如食谱列表的 template 定义如下：
 
-Now let’s look at the individual templates associated with each controller, starting with the “list of recipes” template:
-
-    <!-- File is chapter4/guthub/app/views/list.html -->
+```html
+    <!-- app/views/list.html -->
     <h3>Recipe List</h3>
     <ul class="recipes">
       <li ng-repeat="recipe in recipes">
         <div><a href="/#/view/{{recipe.id}}">{{recipe.title}}</a></div>
       </li>
     </ul>
+```
 
-Notice the usage of the `ng-href` tag instead of href. This is purely to avoid having a bad link during the time that AngularJS is loading up. The `ng-href` ensures that at no time is a malformed link presented to the user. Always use this whenever your URLs are dynamic instead of static.
+## Demo
 
-Of course you might wonder: where is the controller? There is no `ng-controller` defined, and there really was no Main Controller defined. This is where route mapping comes into play. If you remember (or peek back a few pages), the / route redirected to the list template and had the List Controller associated with it. Thus, when any references are made to variables and the like, it is within the scope of the List Controller.
+一个完整的使用 Angular MVC 的例子：[angularjs-book/chapter4/guthub](https://github.com/shyamseshadri/angularjs-book/tree/master/chapter4/guthub)
 
-The directive states that the `edit()` function on the scope is called in case the form is submitted. The form submission happens when any button without an explicit function attached (in this case, the Edit button) is clicked.
+在定义 router 时，我们使用了 resolve 对象：
+
+```js
+app.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.when('/', {
+        controller: 'ListCtrl',
+        resolve: {
+          recipes: function(MultiRecipeLoader) {
+            return MultiRecipeLoader();
+          }
+        },
+        templateUrl:'/views/list.html'
+      })
+      ...
+}
+```
+
+This `resolve` object tells AngularJS that each of these resolve keys needs to be satisfied before the route can be displayed to the user. For us, we want to load all the recipes, or an individual recipe, and make sure we have the server response before we display the page. So we tell the route provider that we have recipes (or a recipe), and then tell it how to fetch it.
+
+If the resolve function returns an AngularJS promise, then AngularJS is smart enough to wait for the promise to get resolved before it proceeds. That means that it will wait until the server responds.
 
 ## Reference
 
 - [AngularJS：何时应该使用Directive、Controller、Service？](http://damoqiongqiu.iteye.com/blog/1971204)
+- [【译】《精通使用AngularJS开发Web App》（二） --- 框架概览，双向数据绑定，MVC，scope，控制器，模型](http://segmentfault.com/blog/chao2/1190000000360976)
+
+## Tutorial
+
+- [Angular 2.0 / Owen Chen](http://owenchen.duapp.com/index.php/angular-2-0/)
+- [AngularJS 数据建模 / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-data-modeling/)

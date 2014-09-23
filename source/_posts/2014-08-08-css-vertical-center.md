@@ -367,5 +367,6 @@ Do you use any of the above methods or do you use a different method I didn’t 
 - [Vertical Centering with CSS Tables and Vertical-Align](http://vanseodesign.com/blog/demo/vertical-centering/table-cell.php)
 - [How to Center Anything With CSS](http://designshack.net/articles/css/how-to-center-anything-with-css) horizontal alignment.
 - [What is Vertical Align?](http://css-tricks.com/what-is-vertical-align/)
+- [三种方式实现动态元素水平居中 / Owen Chen](http://owenchen.duapp.com/index.php/there-are-three-ways-to-implement-dynamic-elements-centered-horizontally/)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

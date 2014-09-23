@@ -172,3 +172,4 @@ sammy             |  5.2     |   16     |      N                |     N
 * [对比Angular/jQueryUI/Extjs：没有一个框架是万能的](http://damoqiongqiu.iteye.com/blog/1922004)
 * [Opinionated Rundown of JS Frameworks](http://blog.andyet.com/2014/08/13/opinionated-rundown-of-js-frameworks)
 * [AngularJS vs. Backbone.js vs. Ember.js - Choosing Your JS Framework](http://www.airpair.com/js/javascript-framework-comparison)
+* [Overview of Popular JavaScript Frameworks' Internal Mechanics - Frontend Masters](https://frontendmasters.com/courses/javascript-frameworks-showdown/overview)

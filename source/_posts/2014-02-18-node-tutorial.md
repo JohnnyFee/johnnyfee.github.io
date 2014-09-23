@@ -32,6 +32,7 @@ tags: [node, tutorial]
 - [sahat/hackathon-starter](https://github.com/sahat/hackathon-starter) A boilerplate for Node.js web applications.
 - [12 Web Application Frameworks for Node.js | CodeCondo](http://codecondo.com/10-web-application-frameworks-for-node-js/)
 - [10个最好的Node.js MVC框架 - WEB开发者](http://www.admin10000.com/document/3931.html)
+- [Sails.js](http://sailsjs.org/#/) It is designed to emulate the familiar MVC pattern of frameworks like Ruby on Rails, but with support for the requirements of modern apps: data-driven APIs with a scalable, service-oriented architecture. 
 
 ## Security
 
@@ -215,6 +216,7 @@ Javascript with Cody and Node.js.
 - [doxout/recluster](https://github.com/doxout/recluster) Node clustering library with support for zero downtime reloading.
 - [supervizer](https://github.com/oOthkOo/supervizer)
 - [Node.js: managing child processes - Tech.pro](http://tech.pro/tutorial/2074/nodejs-managing-child-processes?)
+- [Supervisor: A Process Control System — Supervisor 3.1.2 documentation](http://supervisord.org/)
 
 ## Http Server
 

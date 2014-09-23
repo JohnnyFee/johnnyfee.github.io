@@ -118,10 +118,6 @@ HTML解析器机制是其它所有框架所不具备也不敢这样做的，它�
 
 但是，有一点请特别注意（尤其那些负责技术选型的所谓“架构尸”，请瞪大你的钛合金狗眼看好下面的内容）：对于界面非常复杂的业务 型系统，必须要要有完备的UI支持（Form、DataGrid、Tree、Tab、Window等）。如果你的团队整体JS水平很烂，或者压根没打算自 己去做很多东西，请慎用AngularJS！尤其是那些只有两三条破枪，连美工都没有的小公司，您请靠边儿凉快，这儿没您什么事儿。
 
-和其他框架的比较：
-
-![](http://dl2.iteye.com/upload/attachment/0087/9762/1a69df8b-f592-323c-adb9-d732ef9b2c39.png)
-
 ## Anatomy of an AngularJS Application
 
 ### ng-app
@@ -178,6 +174,18 @@ AngularJS会在`DOMContentLoaded`事件触发时执行，并通过`ng-app`指令
 
 1.  等页面和所有的脚本加载完之后，找到HTML模板的根节点——通常就是文档的根节点。
 2.  调用 api/angular.bootstrap将模板编译成可执行的、数据双向绑定的应用程序。
+
+### ng-init
+
+我们可以使用 `ng-init` 在模板被渲染之前来初始化模型。
+
+```js
+<body ng-app ng-init="name='World'">
+    <h1>Hello, {{name}}</h1>
+</body>
+```
+
+请注意，控制器在设置模型的初始值时是跟 `ng-init`指令所做的任务一样的。有了控制器，才使得使用 JavaScript 来表达初始化的逻辑成为可能，而不必拿代码把HTML模版搞的一团糟。
 
 ### ng-bind
 
@@ -301,6 +309,18 @@ and this controller:
     function AlbumController($scope) {
       $scope.album = album;
     }
+
+### ng-submit
+
+```html
+<form ng-submit="edit()" class="form-horizontal">
+    <div class="form-actions">
+        <button class="btn btn-primary">Edit</button>
+    </div>
+</form>
+```
+
+The directive states that the `edit()` function on the `scope` is called in case the form is submitted. The form submission happens when any button without an explicit function attached (in this case, the Edit button) is clicked.
 
 ### ng-show & ng-hide
 
@@ -786,6 +806,7 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 ## Tutorial
 
 - [2013年度最强AngularJS资源合集-CSDN.NET](http://www.csdn.net/article/2014-01-03/2818005-AngularJS-Google-resource)
+- [AngularJS：2013年好文精选 / Owen Chen](http://owenchen.duapp.com/index.php/angularjs2013-good-article-review/)
 - [AngularJS and jQuery Dialogs - The UrBlog](http://jurberg.github.io/blog/2014/06/29/angularjs-jquery-dialog)
 - [Best Practices for Building Angular.js Apps — Medium](https://medium.com/@dickeyxxx/best-practices-for-building-angular-js-apps-266c1a4a6917)
 - [Requiring Versus Browserifying Angular -Telerik Developer Network](http://developer.telerik.com/featured/requiring-vs-browerifying-angular)

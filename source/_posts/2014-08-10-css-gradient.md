@@ -366,6 +366,7 @@ The good news is this isn't really any issue anymore. The only offending browser
 - [CSS Gradients](http://css-tricks.com/css3-gradients/)
 - [Conical Gradients in CSS](http://css-tricks.com/conical-gradients-css/)
 - [How To Work With Linear, Radial, And Repeating CSS Gradients - Vanseo Design](http://www.vanseodesign.com/css/gradients/)
+- [Single Div Drawings with CSS ✩ Mozilla Hacks – the Web developer blog](https://hacks.mozilla.org/2014/09/single-div-drawings-with-css)
 
 ## Example
 

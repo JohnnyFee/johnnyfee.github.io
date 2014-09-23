@@ -6,6 +6,8 @@ category: Tool
 tags: [markdown]
 --- 
 
+## CSS
+
 ### 优先级
 
 CSS 应用样式的优先级（从高到低）：
@@ -25,7 +27,6 @@ CSS 应用样式的优先级（从高到低）：
     </style>
 
 在样式后附上 `!important` 即可将属性值标识为重要，浏览器会优先考虑。
-
 
 ### 继承
 
@@ -79,6 +80,8 @@ See also [The Lengths of CSS](http://css-tricks.com/the-lengths-of-css/)。
 
 另外，可以使用 CSS3 的 `calc` 函数动态计算长度值，如 `width: calc(80% - 20px)` 。
 
+## CSS Selector
+
 ## Tutorial
 
 - [ikkou/awesome-css](https://github.com/ikkou/awesome-css)
@@ -121,6 +124,10 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 
 参考：[Ordering CSS3 Properties](http://css-tricks.com/ordering-css3-properties/)
 
+## Performance
+
+- [CSS Performance Tooling // Speaker Deck](https://speakerdeck.com/addyosmani/css-performance-tooling)
+
 ## Tools
 
 - [Can I use... Support tables for HTML5, CSS3, etc](http://caniuse.com/)
@@ -137,6 +144,7 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 - [css-triangle-generator](http://apps.eky.hk/css-triangle-generator/zh-hant)
 - [css3lib](http://css3lib.alloyteam.com/)
 - [Ultimate CSS Gradient Generator - ColorZilla.com](http://www.colorzilla.com/gradient-editor/)
+- [Koala](http://koala-app.com/ "Koala")
 
 ## Demo
 

@@ -154,8 +154,8 @@ samp | 程序输出 samp { font-family: monospace; }
 kdb| 用户输入 kdb { font-family: monospace; }
 abbr| 表示缩写，无习惯样式 | <abbr title="Florida Department of Citrus">FDOC</abbr>
 dfn | 表示术语定义，没有习惯样式。如果要为 dfn 定义 title，则必须定义 title = 所定义的术语。如果 dfn 元素包含一个 abbr 元素，则该缩写词就是要定义的术语。| <dfn title="apple">apple</dfn>
-q   | 表示引用内容，属性 cite 用来指定原文章的 URL。习惯样式是使用 :before 和 :after 这两个伪元素选择器在因为前后生成引号。 | <q cite="http://inching.org">Oh, It's my life.</q>
-cite | 表示其他作品的标题。| My favorite book on fruit is <cite>Fruit: Editable, Inedible</cite> by Stuppy.
+q   | 表示引用内容，属性 cite 用来指定原文章的 URL。习惯样式是使用 :before 和 :after 这两个伪元素选择器在内容前后生成引号。 | <q cite="http://inching.org">Oh, It's my life.</q>
+cite | 表示作品的标题。| My favorite book on fruit is <cite>Fruit: Editable, Inedible</cite> by Stuppy.
 ruby、rt、rp | 表示东亚预研中的注音符号。ruby 元素表示一段包含注音符号的文字，rt 用来标记注音符号，rp 用来标记供不支持注音符号特性的浏览器显示在注音符号前后的括号。| <ruby>吃<rp>(</rp><rt>chī</rt><rp>)</rp></ruby>
 bdo | 指定内容的文本方向。使用的 dir 属性指定方向，rtl（从右到左），ltr（从左到右）。| <bdo dir="rtl"> I love you.</bdo>
 bdi | 出于文本方向的考虑将文本与其他内容隔离开来。| 
@@ -217,8 +217,8 @@ dl、dt、dd 用来生成术语极其定义的列表。dl 表示说明列表，d
 ```html
 <dt>
     <dt>Apple</dt>
-        <dd>The apple is the pomaceous fruit of the apple tree.</dd>
-        <dd><i>Musa acuminata</i></dd>
+    <dd>The apple is the pomaceous fruit of the apple tree.</dd>
+    <dd><i>Musa acuminata</i></dd>
     <dt>Orange</dt>
     <dd>The orange is ...</dd>
 </dt>
@@ -786,6 +786,8 @@ time | 只能输入事件信息 | 16:12:31.491 | <input type="time" value="16:12
 month| 只能输入年和月|2011-07| <input type="month" value="2011-07" />
 week | 只能输入年和星期 | 2011-W30 |<input type="week" value="2011-W30" />
 
+See [demosthenes.info – Using The HTML5 Date Input](http://demosthenes.info/blog/923/Using-The-HTML5-Date-Input)
+
 ### color
 
 type 为 color 的 input 用来选择颜色。
@@ -822,6 +824,8 @@ multiple | 设置这个属性可以一次上传多个文件。
 required | 必须选择至少一个文件。
 
 ## 嵌入内容
+
+- [Built-in Browser Support for Responsive Images - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/responsive/picture-element/)
 
 ### image
 
@@ -880,6 +884,10 @@ meter 元素显示了某个范围内所有可能值中的一个。min、max 定�
     <meter value="90" min="10" max="100" low="40" hight="80" optimum="60"></meter>
 
 <meter value="90" min="10" max="100" low="40" hight="80" optimum="60"></meter>
+
+## API
+
+- [Introducing the Screen Orientation API](http://www.sitepoint.com/introducing-screen-orientation-api)
 
 ## Tutorial
 

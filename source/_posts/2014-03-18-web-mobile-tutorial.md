@@ -167,6 +167,23 @@ Excellent framework made for fast application prototyping. It can become problem
 
 - [Techniques for mobile and responsive cross-browser testing: An Envato case study. - We build Envato](http://webuild.envato.com/blog/techniques-for-mobile-and-responsive-cross-browser-testing)
 
+## FAQ
+
+### jquery mobile+phonegap页面切换闪屏问题
+
+当jquery mobile在页面切换时出现闪屏，可以使用如下代码解决：
+
+```js
+$(document).bind("mobileinit", function () {
+    $.extend($.mobile, {
+        defaultPageTransition : 'none'
+    });
+
+    $.mobile.defaultPageTransition = 'none';
+    $.mobile.defaultDialogTransition = 'none';
+});
+```
+
 ## Library
 
 - [hammerjs/hammer.js](https://github.com/hammerjs/hammer.js/) A javascript library for multi-touch gestures :// You can touch this <http://hammerjs.github.io>

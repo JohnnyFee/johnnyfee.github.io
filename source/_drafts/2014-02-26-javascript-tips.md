@@ -163,3 +163,27 @@ See also [Retrieving Property Names with `Object.getOwnPropertyNames` and `Objec
 
 JavaScript 老鸟们看到这篇文章可能会说“我早知道了”，但说不定什么时候，他们就会在某一点上栽跟头。提醒大家留意 JavaScript 中的各种小细节，失之毫厘谬以千里啊！
 
+## Escape
+
+js对文字进行编码涉及3个函数：escape,encodeURI,encodeURIComponent，相应3个解码函数：unescape,decodeURI,decodeURIComponent
+
+1. 传递参数时需要使用 encodeURIComponent，这样组合的 url 才不会被#等特殊字符截断。
+
+    例如：
+
+        document.write(‘<a href=”http://passport.baidu.com/?logout&aid=7&u=’+encodeURIComponent(“http://cang.baidu.com/bruce42″)+’”>退出</a>’);
+
+2. 进行 url 跳转时可以整体使用 encodeURI
+
+    例如：
+
+        Location.href=encodeURI(“http://cang.baidu.com/do/s?word=百度&ct=21″);
+
+3. escape 对0-255以外的unicode值进行编码时输出%u****格式，其它情况下 escape，encodeURI，encodeURIComponent 编码结果相同。
+最多使用的应为 encodeURIComponent，它是将中文、韩文等特殊字符转换成utf-8格式的url编码，所以如果给后台传递参数需要使用encodeURIComponent时需要后台解码对utf-8支持（form中的编码方式和当前页面编码方式相同）
+
+4. escape 不编码字符有69个：*，+，-，.，/，@，_，0-9，a-z，A-Z
+
+    encodeURI 不编码字符有82个：!，#，$，&，’，(，)，*，+，,，-，.，/，:，;，=，?，@，_，~，0-9，a-z，A-Z
+
+    encodeURIComponent 不编码字符有71个：!， ‘，(，)，*，-，.，_，~，0-9，a-z，A-Z

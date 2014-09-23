@@ -685,7 +685,7 @@ ls命令是列出目录内容(List Directory Contents)的意思。运行它就�
 
 rm' 标准移除命令。 rm 可以用来删除文件和目录。
 
-　　删除目录
+删除目录
 
     root@tecmint:~# rm PassportApplicationForm_Main_English_V1.0
  
@@ -695,8 +695,7 @@ rm' 标准移除命令。 rm 可以用来删除文件和目录。
 
     root@tecmint:~# rm -rf PassportApplicationForm_Main_English_V1.0
 　　
-警告: "rm -rf" 命令是一个破坏性的命令,
-假如你不小心删除一个错误的目录。一旦你使用'rm -rf' 删除一个目录,在目录中所有的文件包括目录本身会被永久的删除,所以使用这个命令要非常小心。
+警告: "rm -rf" 命令是一个破坏性的命令, 一旦你使用'rm -rf' 删除一个目录,在目录中所有的文件包括目录本身会被永久的删除,所以使用这个命令要非常小心。
 
 ### mv
 

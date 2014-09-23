@@ -128,7 +128,7 @@ AngularJS中的 `$scope` 对象在这里就是要将 域模型 暴露给视图�
 
 `$scope`对象让我们可以非常精确的控制这个域内的模型的哪一部分，以及哪些操作在视图层是可用的。理论上来讲，AngularJS的 scopes 非常类似于 MVVM 模式的 ViewModel。
 
-
+See Also [Angular MVC Scope](http://inching.org/2014/09/23/angular-mvc-scope/)
 
 ## Model
 
@@ -217,70 +217,7 @@ See:
 <http://labs.voronianski.com/ngActivityIndicator.js>.
 - [ngReactGrid by josebalius](http://josebalius.github.io/ngReactGrid) ngReactGrid is an Angular directive that can be used to render an enhanced HTML table or grid of data very fast using React as the rendering engine. It is based on ng-grid and jQuery DataTables. It uses HTML tables and supports fixed column headers by default.
 
-## Templates
-
-Templates in Angular applications are just HTML documents that we load from the server or define in a `<script>` tag like any other static resource.  You define your UI in the template, using standard HTML plus Angular directives where you need UI components.
-
-Once in the web browser, Angular expands these templates into your full application by merging your template with data.
-
-```html
-<div ng-repeat="item in items">
-  <span>{{item.title}}</span>
-  ...
-</div>
-```
-
-Most apps, however, will use some persistent data source on the server.  Your app in the browser connects to your server and requests whatever it needs for the page the user is on, and Angular merges it with your template.
-
-The basic startup flow looks like this:
-
-1.  A user requests the first page of your application.
-2.  The user’s browser makes an HTTP connection to your server and loads the `index.html` page containing your template.
-3.  Angular loads into the page, waits for the page to be fully loaded, and then looks for `ng-app` to define its template boundaries.
-4.  Angular traverses the template and looks for directives and bindings. This results in registration of listeners and DOM manipulation, as well as fetching initial data from the server. The end result of this work is that the app is bootstrapped and the template is converted into view as a DOM.
-5.  You connect to your server to load additional data you need to show the user as needed.
-
-Steps 1 through 3 are standard for every Angular app. It’s in steps 4 and 5 that you have choices. These steps can happen synchronously or asynchronously. For performance, the data your app needs to display to the user on the first view can come down with the HTML template to avoid multiple requests.
-
-Let us start by taking a look at the outermost, main template, which is the index.html. This is the base of our single-page application, and all the other views are loaded within the context of this template:
-
-```html
-<!DOCTYPE html>
-<html   lang="en" ng-app="guthub">
-<head>
-  <title>GutHub - Create and Share</title>
-  <link href="styles/bootstrap.css" rel="stylesheet">
-  <link href="styles/guthub.css" rel="stylesheet">
-</head>
-<body>
-  <header>
-    <h1>GutHub</h1>
-  </header>
-
-  <div butterbar>Loading...</div>
-
-  <div class="container-fluid">
-    <div class="row-fluid">
-      <div class="span2">
-        <!--Sidebar-->
-        <div id="focus"><a href="/#/new">New Recipe</a></div>
-        <div><a href="/#/">Recipe List</a></div>
-
-      </div>
-      <div class="span10">
-        <div ng-view></div>
-      </div>
-    </div>
-  </div>
-
-<script src="scripts/vendor/angular.min.js"></script>
-<script src="scripts/vendor/angular-resource.min.js"></script>
-<script src="scripts/directives/directives.js"></script>
-<script src="scripts/services/services.js"></script>
-<script src="scripts/controllers/controllers.js"></script>
-</body>
-</html>
-```
+## View
 
 导航到其他模板使用 `/#/` 开头的链接路径，如 `<a href="/#/new">New Recipe</a>`，这样可以防止主页面被重新加载。
 
@@ -297,6 +234,21 @@ Let us start by taking a look at the outermost, main template, which is the inde
       </li>
     </ul>
 ```
+
+### Templates
+
+In Angular, templates are written with HTML that contains Angular-specific elements and attributes. Angular combines the template with information from the model and controller to render the dynamic view that a user sees in the browser.
+
+Once in the web browser, Angular expands these templates into your full application by merging your template with data.
+
+```html
+<div ng-repeat="item in items">
+  <span>{{item.title}}</span>
+  ...
+</div>
+```
+
+Angular 模板可以通过内存加载、AJAX 两种方式加载，See [Angular Template Loading](http://inching.org/2014/09/23/angular-mvc-template/).
 
 ## Demo
 

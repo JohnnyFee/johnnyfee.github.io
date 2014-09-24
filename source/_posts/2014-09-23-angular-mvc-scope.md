@@ -163,3 +163,7 @@ $scope.$on('$locationChangeSuccess', function(event, newUrl, oldUrl){
 作用域需要提供相互隔离的命名空间，避免变量的命名冲突。作用域们都很小，而且被以层级的方式组织起来，对内存使用的管理来说很有帮助。当其中一个作用域不再需要 ，它就可以被销毁了。结果就是，这个作用域所暴露出来的模型和方法就符合的垃圾回收的标准。
 
 新的作用域通常是被 `可创建作用域` 的指令所生成和销毁的。不过也可以使用 `$new()` 和 `$destroy()` 方法来手动的创建和销毁作用域。
+
+## Tutorial
+
+- [Understanding Scopes · angular/angular.js Wiki](https://github.com/angular/angular.js/wiki/Understanding-Scopes)

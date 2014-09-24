@@ -17,6 +17,8 @@ tags : [angular, tutorial]
 
 Services are singleton (single-instance) objects that carry out the tasks necessary to support your application’s functionality. Angular comes with many services like `$location`, for interacting with the browser’s location, `$route`, for switching views based on location (URL) changes, and` $http`, for communicating with servers.
 
+<!--more-->
+
 With modules, and the dependency injection we get from them, we can write our controller much more simply, like this:
 
     function ShoppingController($scope, Items) {
@@ -134,88 +136,7 @@ See Also [Angular MVC Scope](http://inching.org/2014/09/23/angular-mvc-scope/)
 
 AngularJS 的模型就是那些普通的 JavaScript 对象。使用任何现有的，纯JavaScript类或对象，就跟在模型层一样的去使用它们也是可以的。要把模型暴露给 AngularJS，你只需把它赋值给 $scope 的属性即可。
 
-## Directives
-
-Directives extend HTML syntax, and are the way to associate behavior and DOM transformations with custom elements and attributes. Through them, you can create reusable UI components, configure your application, and do almost anything else you can imagine wanting to do in your UI template.
-
-You can write apps with the built-in directives that come with Angular, but you’ll likely run into situations where you want to write your own. You’ll know it’s time to break into directives when you want to deal with __browser events or modify the DOM__ in a way that isn’t already supported by the built-in directives. This code of yours belongs in a directive that you write, and not in a controller, service, or any other place in your app.
-
-As with services, you define directives through the module object’s API by calling its `directive()` function, where directiveFunction is a factory function that defines your directive’s features.
-
-    var appModule = angular.module('appModule', [...]);
-    appModule.directive('directiveName', directiveFunction);
-
-We can now move to the directives we will be using in our application. There will be two directives in the app:
-
-- butterbar
-  
-    This directive will be shown and hidden when the routes change and while the page is still loading information. It will hook into the route-changing mechanism and automatically hide and show whatever is within its tag ,based on the state of the page.
-
-- focus
-  
-    The focus directive is used to ensure that specific input fields (or elements) have the focus.
-
-Let’s look at the code:
-
-```js
-// app/scripts/directives/directives.js
-var directives = angular.module('guthub.directives', []);
-
-directives.directive('butterbar', ['$rootScope',
-    function($rootScope) {
-  return {
-    link: function(scope, element, attrs) {
-      element.addClass('hide');
-
-      $rootScope.$on('$routeChangeStart', function() {
-        element.removeClass('hide');
-      });
-
-      $rootScope.$on('$routeChangeSuccess', function() {
-        element.addClass('hide');
-      });
-    }
-  };
-}]);
-
-directives.directive('focus',
-    function() {
-  return {
-    link: function(scope, element, attrs) {
-      element[0].focus();
-    }
-  };
-});
-```
-
-Here, we’re returning the directive configuration object with its `link` function specified. The `link` function gets a reference to the enclosing scope, the DOM `element` it lives on, an array of any `attributes` passed to the directive, and the `controller` on the DOM element, if it exists. Here, we only need to get at the element and call its `focus()` method.
-
-Directives go through a two-step process. 
-
-1. In the first step (the compile phase), all directives attached to a DOM element are found, and then processed. Any DOM manipulation also happens during the compile step. At the end of this phase, a linking function is produced.
-2. In the second step, the link phase (the phase we used previously), the preceding DOM template produced is linked to the scope. Also, any watchers or listeners are added as needed, resulting in a live binding between the scope and the element. Thus, anything related to the scope happens in the linking phase.
-
-The `butterbar` directive can be used as follows:
-
-    <div butterbar>My loading text...</div>
-
-It basically hides the element right up front, then adds two watches on the root scope. Every time a route change begins, it shows the element (by changing its class), and every time the route has successfully finished changing, it hides the butterbar again.
-
-The final thing of note is the API for working with the element. jQuery veterans will be glad to know that it follows a jQuery-like syntax (`addClass`, `removeClass`). AngularJS implements a subset of the calls of jQuery so that jQuery is an optional dependency for any AngularJS project. In case you do end up using the full jQuery library in your project, you should know that AngularJS uses that instead of the jQlite implementation it has built-in.
-
-我们能否在控制器上实现上面的功能呢？当然可以，但是这样做会带来一个重大的问题。一旦其他的 Controller 需要实现相同的功能，可能需要拷贝代码。
-
-See:
-
-- [AngularJS 指令（Directives）实践指南（一） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide/)
-- [AngularJS 指令（Directives）实践指南（二） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-b/)
-- [AngularJS 指令（Directives）实践指南（三） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-c/)
-
-### Library
-
-- [voronianski/ngActivityIndicator](https://github.com/voronianski/ngActivityIndicator/) Angular provider for preloader animations 
-<http://labs.voronianski.com/ngActivityIndicator.js>.
-- [ngReactGrid by josebalius](http://josebalius.github.io/ngReactGrid) ngReactGrid is an Angular directive that can be used to render an enhanced HTML table or grid of data very fast using React as the rendering engine. It is based on ng-grid and jQuery DataTables. It uses HTML tables and supports fixed column headers by default.
+See [AngularJS 数据建模 / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-data-modeling/)
 
 ## View
 

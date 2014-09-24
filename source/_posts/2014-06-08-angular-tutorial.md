@@ -89,6 +89,8 @@ See also [angular/angular-seed](https://github.com/angular/angular-seed).
 
         grunt build
 
+See also: [使用Yeoman快速启动AngularJS项目开发 / Owen Chen](http://owenchen.duapp.com/index.php/yeo-angular/)
+
 ## Principle
 
 ![](http://dl2.iteye.com/upload/attachment/0091/3055/5f89a8fd-bbe6-3d15-85c1-4881ac26075d.png)
@@ -794,6 +796,10 @@ AngularJS provides some nice mockups, as well as testing functions, to allow you
 
 Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but you don’t really need any. All you need to do is add a shortcut command to execute “karma start” and “karma run” from within your IDE. This can usually be done by adding a simple script to execute, or the actual shell command, depending on your choice of editor. You should see the results every time it finishes running, of course.
 
+## Test
+
+- [基于Karma和Jasmine的AngularJS测试 / Owen Chen](http://owenchen.duapp.com/index.php/jasmine-and-karma-test-angularjs/)
+
 ## Tools
 
 - Batarang 
@@ -804,8 +810,111 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - [Popular Modules - AngularJS Modules, Plugins and Directives](http://ngmodules.org/)
 - [angular-data: Home](http://angular-data.pseudobry.com) Give your data the treatment it deserves with a data store built for Angular.js.
 
+
+## FAQ
+
+### How do I switch views in AngularJS from a controller function?
+
+In order to switch between different views, you could directly change the window.location (using the $location service!) in
+index.html file
+
+```html
+<!-- index.html -->
+<div ng-controller="Cntrl">
+        <div ng-click="changeView('edit')">
+            edit
+        </div>
+        <div ng-click="changeView('preview')">
+            preview
+        </div>
+</div>
+```
+
+
+```js
+// Controller.js
+function Cntrl ($scope,$location) {
+        $scope.changeView = function(view){
+            $location.path(view); // path not hash
+        }
+    }
+```
+
+and configure the router to switch to different partials based on the location. This would have the benefit of history as well as using ng-view.
+
+Alternatively, you use ng-include with different partials and then use a ng-switch as shown in here ( https://github.com/ganarajpr/Angular-UI-Components/blob/master/index.html )
+
+```js
+ <div ng-switch on="component" >
+    <div ng-switch-when="flash" ng-include="'partial/flash.html'"></div>
+    <div ng-switch-when="tabs" ng-include="'partial/tabs.html'"></div>
+    <div ng-switch-when="cm"></div>
+    <div ng-switch-default></div>
+</div>
+```
+
+也可以使用内置模板如：
+
+```html
+<div class="module" ng-controller="FruitCtrl">
+    <h1>Fruit Module</h1>
+    <div ng-switch="moduleState">
+        <div ng-switch-when="list">
+            <ul>
+                <li ng-repeat="fruit in fruits"><a href="#" ng-click="showDetail(fruit)">{{fruit}}</a></li>
+            </ul>
+        </div>
+        <div ng-switch-when="details">
+            <p>Details for {{ selectedFruit }}</p>
+            <a href="#" ng-click="showList()">Back to list</a>
+        </div>
+    </div>
+</div>
+```
+
+The extra variable called `moduleState` defines the current state of the widget. Thanks to the `ng-switch` directive the content of the outer `div` automatically switches between inner elements based on the values passed to their `ng-switch-when` attributes.
+
+```js
+// Controller
+function FruitCtrl($scope)
+{
+    $scope.moduleState = 'list';
+
+    $scope.fruits = ['Banana', 'Orange', 'Apple'];
+
+    $scope.showDetail = function(fruit)
+    {
+        $scope.selectedFruit = fruit;
+
+        $scope.moduleState = 'details';
+    };
+
+    $scope.showList = function()
+    {
+        $scope.moduleState = 'list';
+    };
+}
+```
+
+All you have to do here is to modify the value of the `moduleState` variable, which automatically shows the desired widget view. Additionally, the introduced `selectedFruit` variable holds the reference of the item to act on in the details view.
+
+The advantage of using the `ng-switch` directive is that you can easily add any number of states to your widget in a consistent manner.
+
+See: 
+
+- [javascript - How do I switch views in AngularJS from a controller function? - Stack Overflow](http://stackoverflow.com/questions/11003916/how-do-i-switch-views-in-angularjs-from-a-controller-function)
+- [javascript - AngularJS change partial in controller on click - Stack Overflow](http://stackoverflow.com/questions/16649617/angularjs-change-partial-in-controller-on-click)
+
+## Reference
+
+- [AngularJS：何时应该使用Directive、Controller、Service](http://damoqiongqiu.iteye.com/blog/1971204)
+- [对比Angular/jQueryUI/Extjs：没有一个框架是万能的](http://damoqiongqiu.iteye.com/blog/1922004)
+- [Angular 中文](http://www.ngnice.com/docs/guide)
+
 ## Tutorial
 
+- [AngularJS: API: ng](https://docs.angularjs.org/api/ng)
+- [angular/angular.js Wiki](https://github.com/angular/angular.js/wiki/FAQ)
 - [2013年度最强AngularJS资源合集-CSDN.NET](http://www.csdn.net/article/2014-01-03/2818005-AngularJS-Google-resource)
 - [AngularJS：2013年好文精选 / Owen Chen](http://owenchen.duapp.com/index.php/angularjs2013-good-article-review/)
 - [AngularJS and jQuery Dialogs - The UrBlog](http://jurberg.github.io/blog/2014/06/29/angularjs-jquery-dialog)
@@ -818,15 +927,5 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - [Adding Auth to your Ionic app in 5 mins with Auth0](http://ionicframework.com/blog/authentication-in-ionic)
 - [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
 - [Debugging AngularJS Apps from the Console - Modern Web](http://modernweb.com/2014/08/21/debugging-angularjs-apps-console)
-
-## FAQ
-
-- [angularjs - Cross origin requests are only supported for HTTP - Stack Overflow](http://stackoverflow.com/questions/19847252/cross-origin-requests-are-only-supported-for-http)
-
-## Reference
-
-- [AngularJS：何时应该使用Directive、Controller、Service](http://damoqiongqiu.iteye.com/blog/1971204)
-- [对比Angular/jQueryUI/Extjs：没有一个框架是万能的](http://damoqiongqiu.iteye.com/blog/1922004)
-- [Angular 中文](http://www.ngnice.com/docs/guide)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

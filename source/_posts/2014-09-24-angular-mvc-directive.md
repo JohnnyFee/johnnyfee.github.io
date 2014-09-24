@@ -337,8 +337,6 @@ app.directive('sayHello', function() {
 
 `ng-transclude` 指明插入的位置，带有 `ng-transclude` 指令标签的元素会被删除，然后被替换为指令的内容。
 
-如果你在指令定义中设置 `transclude:true`，一个新的嵌入的scope会被创建，它原型继承子父scope。 如果你想要你的指令使用隔离的scope，但是它所包含的内容能够在父scope中执行，transclusion也可以帮忙。
-
 假设我们注册一个如下的指令：
 
 ```js
@@ -370,15 +368,61 @@ app.directive('pane', function(){
 生成的 DOM 为：
 
 ```html
-<div style="border: 1px solid black;">
-    <div style="background-color: gray">我是标题</div>
-    我是内容
-</div>
+<pane title="Tobias" class="ng-isolate-scope">
+    <div style="border: 1px solid black;">
+        <div style="background-color: gray" class="ng-binding">Tobias</div>
+        <div ng-transclude="">
+            <span class="ng-scope ng-binding">12121212</span>
+        </div>
+    </div>
+</pane>
 ```
 
 也可以直接使用父scope中定义的 `{{title}}` 而非子scope。你可以在这个[Plunker](http://plnkr.co/edit/YQBPB9cvGgJiYMuIjzTw?p=preview)。如果你想要学习更多关于scope的知识，可以阅读[这篇文章](https://github.com/angular/angular.js/wiki/Understanding-Scopes)。
 
 另外，transclude 可以在 compile 函数和 controller 函数中使用，See [angular 的 Transclude](http://www.angularjs.cn/A0pU)。
+
+### Scope
+
+如果你在指令定义中设置 `transclude:true`，一个新的嵌入的scope会被创建，它原型继承子父 scope。
+
+Transclude makes the contents of a directive with this option have access to the scope outside of the directive rather than inside.
+
+```js
+// scripts.js
+angular.module('docsTransclusionExample', [])
+  .controller('Controller', ['$scope', function($scope) {
+    $scope.name = 'Tobias';
+  }])
+  .directive('myDialog', function() {
+    return {
+      restrict: 'E',
+      transclude: true,
+      scope: {},
+      templateUrl: 'my-dialog.html',
+      link: function (scope, element) {
+        scope.name = 'Jeff';
+      }
+    };
+  });
+```
+
+```html
+<!-- index.html -->
+<div ng-controller="Controller">
+  <my-dialog>Check out the contents, {{name}}!</my-dialog>
+</div>
+```
+
+```html
+<!-- my-dialog.html -->
+<div class="alert" ng-transclude>
+</div>
+```
+
+The output will be:
+
+> Check out the contents, Tobias!
 
 ### `transclude: 'element'` 和 `transclude: true`
 

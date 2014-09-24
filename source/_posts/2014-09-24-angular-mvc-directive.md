@@ -58,7 +58,12 @@ app.directive('helloWorld', function() {
 
 我们在指令定义过程中使用了三个属性来配置指令：
 
-- `restrict` 这个属性用来指定指令在HTML中如何使用（还记得之前说的，指令的四种表示方式吗）。在上面的例子中，我们使用了 ‘AE’。所以这个指令可以被当作新的HTML元素或者属性来使用。如果要允许指令被当作class来使用，我们将 restrict 设置成 'AEC'。
+- `restrict` 这个属性用来指定指令在HTML中如何使用（还记得之前说的，指令的四种表示方式吗）。在上面的例子中，我们使用了 'AE'。所以这个指令可以被当作新的HTML元素或者属性来使用。如果要允许指令被当作class来使用，我们将 restrict 设置成 'AEC'。
+
+    1.  `<span class="str">'A'</span>` - only matches attribute name
+    2.  `<span class="str">'E'</span>` - only matches element name
+    3.  `<span class="str">'C'</span>` - only matches class name
+
 - `template`/`templateUrl` 这个属性规定了指令被Angular编译和链接（link）后生成的HTML标记。这个属性值不一定要是简单的字符串。template 可以非常复杂，而且经常包含其他的指令，以及表达式(`{{ }}`)等。`template` 只用于 templete 内容比较少的情况，更多的情况下你可能会见到 `templateUrl`。所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
 - `replace` 这个属性指明生成的HTML内容是否会替换掉定义此指令的HTML元素。在我们的例子中，我们用 `<hello-world></hello-world>` 的方式使用我们的指令，并且将 replace 设置成 true。所以，在指令被编译之后，生成的模板内容替换掉了 `<hello-world></hello-world>`。最终的输出是 `<h3>Hello World!!</h3>`。如果你将 replace 设置成 false，也就是默认值，那么生成的模板会被插入到定义指令的元素中。
 
@@ -138,13 +143,12 @@ app.directive('test', function() {
 
 在编译阶段之后，就开始了链接（linking）阶段。在这个阶段，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的scope下被解析和处理，然后返回具有事件响应的真实的DOM节点。
 
-## 改变指令的Scope
+## Scope
 
-默认情况下，指令获取它父节点的controller的scope。但这并不适用于所有情况。如果将父controller的scope暴露给指令，那么他们可以随意地修改 scope 的属性。在某些情况下，你的指令希望能够添加一些仅限内部使用的属性和方法。如果我们在父的scope中添加，会污染父scope。 其实我们还有两种选择：
+默认情况下，指令获取它父节点的 controller 的 scope。但这并不适用于所有情况。如果将父controller的scope暴露给指令，那么他们可以随意地修改 scope 的属性。在某些情况下，你的指令希望能够添加一些仅限内部使用的属性和方法。如果我们在父的scope中添加，会污染父scope。 其实我们还有两种选择：
 
-一个子scope – 这个scope原型继承子父scope。
-
-一个隔离的scope – 一个孤立存在不继承自父scope的scope。
+- 一个子scope – 这个 scope 原型继承父 scope。
+- 一个隔离的scope – 一个孤立存在不继承自父scope的scope。
 
 这样的scope可以通过指令定义对象中 scope 属性来配置。下面的代码片段是一个例子：
 
@@ -173,7 +177,9 @@ app.directive('helloWorld', function() {
 });
 ```
 
-这个指令使用了一个隔离的scope。隔离的scope在我们想要创建可重用的指令的时候是非常有好处的。通过使用隔离的scope，我们能够保证我们的指令是自包含的，可以被很容易的插入到HTML应用中。 它内部不能访问父的scope，所保证了父scope不被污染。 在我们的 helloWorld 指令例子中，如果我们将 scope 设置成 `{}`，那么上面的代码将不会工作。 它会创建一个新的隔离的scope，那么相应的表达式 `{{color}}` 会指向到这个新的scope中，它的值将是 `undefined`.
+这个指令使用了一个隔离的scope。隔离的scope在我们想要创建可重用的指令的时候是非常有好处的。通过使用隔离的scope，我们能够保证我们的指令是自包含的，可以被很容易的插入到HTML应用中。 它内部不能访问父的scope，所保证了父scope不被污染。 
+
+在我们的 helloWorld 指令例子中，如果我们将 scope 设置成 `{}`，那么上面的代码将不会工作。 它会创建一个新的隔离的scope，那么相应的表达式 `{{color}}` 会指向到这个新的scope中，它的值将是 `undefined`.
 
 使用隔离的scope并不意味着我们完全不能访问父scope的属性。其实有一些技术可以允许我们访问父scope的属性，甚至监视他们的变化。
 
@@ -214,11 +220,11 @@ app.directive('helloWorld', function() {
 </body>
 ```
 
-上面的代码现在是不能工作的。因为我们用了一个隔离的scope，指令内部的 {{color}} 表达式被隔离在指令内部的scope中(不是父scope)。但是外面的输入框元素中的 ng-model 指令是指向父scope中的 color 属性的。所以，我们需要一种方式来绑定隔离scope和父scope中的这两个参数。在 Angular 中，这种数据绑定可以通过为指令所在的HTML元素添加属性和并指令定义对象中配置相应的 scope 属性来实现。让我们来细究一下建立数据绑定的几种方式。
+上面的代码现在是不能工作的。因为我们用了一个隔离的scope，指令内部的 `{{color}}` 表达式被隔离在指令内部的scope中(不是父scope)。但是外面的输入框元素中的 ng-model 指令是指向父scope中的 color 属性的。所以，我们需要一种方式来绑定隔离scope和父scope中的这两个参数。让我们来细究一下建立数据绑定的几种方式。
 
 ### 使用 @ 实现单向文本绑定
 
-在下面的指令定义中，我们指定了隔离scope中的属性 color 绑定到指令所在HTML元素上的参数 colorAttr。在HTML标记中，你可以看到 {{color}}表达式被指定给了 color-attr 参数。当表达式的值发生改变时，color-attr 参数也跟着改变。隔离scope中的 color 属性的值也相应地被改变。
+在下面的指令定义中，我们指定了隔离scope中的属性 color 绑定到指令所在HTML元素上的参数 colorAttr。在HTML标记中，你可以看到 `{{color}}` 表达式被指定给了 color-attr 参数。当表达式的值发生改变时，color-attr 参数也跟着改变。隔离 scope 中的 color 属性的值也相应地被改变。
 
 ```js
 app.directive('helloWorld', function() {
@@ -243,7 +249,7 @@ app.directive('helloWorld', function() {
 
 我们称这种方式为单项绑定，是因为在这种方式下，你只能将字符串(使用表达式{{}})传递给参数。当父scope的属性变化时，你的隔离scope模型中的属性值跟着变化。你甚至可以在指令内部监控这个scope属性的变化，并且触发一些任务。然而，反向的传递并不工作。你不能通过对隔离scope属性的操作来改变父scope的值。
 
-注意点：
+__注意点：__
 
 当隔离scope属性和指令元素参数的名字一样是，你可以更简单的方式设置scope绑定：
 
@@ -271,7 +277,7 @@ app.directive('helloWorld', function() {
 app.directive('helloWorld', function() {
   return {
     scope: {
-      color: '='
+      color: '=color' // 当 = 后的值和属性名相等时，可以省略 = 后边的值。
     },
     ....
     // the rest of the configurations
@@ -288,7 +294,7 @@ app.directive('helloWorld', function() {
 </body>
 ```
 
-与 @ 不同，这种方式让你能够给属性指定一个真实的scope数据模型，而不是简单的字符串。这样你就可以传递简单的字符串、数组、甚至复杂的对象给隔离scope。同时，还支持双向的绑定。每当父scope属性变化时，相对应的隔离scope中的属性也跟着改变，反之亦然。和之前的一样，你也可以监视这个scope属性的变化。
+与 @ 不同，这种方式让你能够给属性指定一个真实的 scope 数据模型，而不是简单的字符串。这样你就可以传递简单的字符串、数组、甚至复杂的对象给隔离scope。同时，还支持双向的绑定。每当父scope属性变化时，相对应的隔离scope中的属性也跟着改变，反之亦然。和之前的一样，你也可以监视这个scope属性的变化。
 
 ### 使用 & 在父scope中执行函数
 
@@ -431,7 +437,7 @@ app.directive('innerDirective', function() {
 </outer-directive>
 ```
 
-require: ‘^outerDirective’ 告诉Angular在元素以及它的父元素中搜索controller。这样被找到的 controller 实例会作为第四个参数被传入到 link 函数中。在我们的例子中，我们将嵌入的指令的scope发送给父亲指令。如果你想尝试这个代码的话，请在开启浏览器控制台的情况下打开这个[Plunker](http://plnkr.co/edit/NMWGE6l9p1tBZh3jCfKn?p=preview)。同时，[这篇Angular官方文档](http://docs.angularjs.org/guide/directive)上的最后部分给了一个非常好的关于指令交互的例子，是非常值得一读的。
+require: '^outerDirective' 告诉Angular在元素以及它的父元素中搜索controller。这样被找到的 controller 实例会作为第四个参数被传入到 link 函数中。在我们的例子中，我们将嵌入的指令的scope发送给父亲指令。如果你想尝试这个代码的话，请在开启浏览器控制台的情况下打开这个[Plunker](http://plnkr.co/edit/NMWGE6l9p1tBZh3jCfKn?p=preview)。同时，[这篇Angular官方文档](http://docs.angularjs.org/guide/directive)上的最后部分给了一个非常好的关于指令交互的例子，是非常值得一读的。
 
 ## Demo
 
@@ -500,6 +506,66 @@ It basically hides the element right up front, then adds two watches on the root
 The final thing of note is the API for working with the element. jQuery veterans will be glad to know that it follows a jQuery-like syntax (`addClass`, `removeClass`). AngularJS implements a subset of the calls of jQuery so that jQuery is an optional dependency for any AngularJS project. In case you do end up using the full jQuery library in your project, you should know that AngularJS uses that instead of the jQlite implementation it has built-in.
 
 我们能否在控制器上实现上面的功能呢？当然可以，但是这样做会带来一个重大的问题。一旦其他的 Controller 需要实现相同的功能，可能需要拷贝代码。
+
+### Clock
+
+In this example we will build a directive that displays the current time. Once a second, it updates the DOM to reflect the current time.
+
+In our link function, we want to update the displayed time once a second, or whenever a user changes the time formatting string that our directive binds to. We will use the `$interval` service to call a handler on a regular basis. This is easier than using `$timeout` but also works better with end-to-end testing, where we want to ensure that all `$timeouts` have completed before completing the test. We also want to remove the `$interval` if the directive is deleted so we don't introduce a memory leak.
+
+```js
+// script.js
+angular.module('docsTimeDirective', [])
+  .controller('Controller', ['$scope', function($scope) {
+    $scope.format = 'M/d/yy h:mm:ss a';
+  }])
+  .directive('myCurrentTime', ['$interval', 'dateFilter', function($interval, dateFilter) {
+
+    function link(scope, element, attrs) {
+      var format,
+          timeoutId;
+
+      function updateTime() {
+        element.text(dateFilter(new Date(), format));
+      }
+
+      scope.$watch(attrs.myCurrentTime, function(value) {
+        format = value;
+        updateTime();
+      });
+
+      element.on('$destroy', function() {
+        $interval.cancel(timeoutId);
+      });
+
+      // start the UI update process; save the timeoutId for canceling
+      timeoutId = $interval(function() {
+        updateTime(); // update DOM
+      }, 1000);
+    }
+
+    return {
+      link: link
+    };
+  }]);
+```
+
+```html
+<div ng-controller="Controller">
+  Date format: <input ng-model="format"> <hr/>
+  Current time is: <span my-current-time="format"></span>
+</div>
+```
+
+There are a couple of things to note here. Just like the `module.controller` API, the function argument in `module.directive` is dependency injected. Because of this, we can use `$interval` and dateFilter inside our directive's link function.
+
+We register an event `element.on('$destroy', ...)`. What fires this `$destroy` event?
+
+There are a few special events that AngularJS emits. When a DOM node that has been compiled with Angular's compiler is destroyed, it emits a $destroy event. Similarly, when an AngularJS scope is destroyed, it broadcasts a $destroy event to listening scopes.
+
+By listening to this event, you can remove event listeners that might cause memory leaks. Listeners registered to scopes and elements are automatically cleaned up when they are destroyed, but if you registered a listener on a service, or registered a listener on a DOM node that isn't being deleted, you'll have to clean it up yourself or you risk introducing a memory leak.
+
+__Best Practice:__ Directives should clean up after themselves. You can use element.on('$destroy', ...) or scope.$on('$destroy', ...) to run a clean-up function when the directive is removed.
 
 ## Library
 

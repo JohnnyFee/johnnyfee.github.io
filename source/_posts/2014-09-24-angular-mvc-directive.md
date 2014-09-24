@@ -46,39 +46,21 @@ app.directive('helloWorld', function() {
 });
 ```
 
-在上面的代码中，app.directive()方法在模块中注册了一个新的指令。这个方法的第一个参数是这个指令的名字。第二个参数是一个返回指令定义对象的函数。如果你的指令依赖于其他的对象或者服务，比如 $rootScope, $http, 或者$compile，他们可以在这个时间被注入。
+在上面的代码中，`app.directive()` 方法在模块中注册了一个新的指令。这个方法的第一个参数是这个指令的名字。第二个参数是一个返回指令定义对象的函数。如果你的指令依赖于其他的对象或者服务，比如 `$rootScope`, `$http`, 或者 `$compile`，他们可以在这个时间被注入。
 
-这个指令在HTML中以一个元素使用，如下：
+这个指令在HTML中以一个元素使用，如`<hello-world/>` 或者 `<hello:world/>`。
 
-    <hello-world/>
+也可以以一个属性的方式使用，如 `<div hello-world></div>` 或者 `<div hello:world/>`。
 
-或者
-
-    <hello:world/>
-
-也可以以一个属性的方式使用：
-
-    <div hello-world></div>
-
-或者
-
-    <div hello:world/>
-
-如果你想要符合HTML5的规范，你可以在元素前面添加 x- 或者 data-的前缀。所以下面的标记也会匹配 helloWorld 指令：
-
-    <div data-hello-world></div>
-
-或者
-
-    <div x-hello-world></div>
+如果你想要符合HTML5的规范，你可以在元素前面添加 x- 或者 data-的前缀。所以下面的标记也会匹配 helloWorld 指令，如 `<div data-hello-world></div>` 或者 `<div x-hello-world></div>`。
 
 在匹配指令的时候，Angular会在元素或者属性的名字中剔除 x- 或者 data- 前缀。 然后将 – 或者 : 连接的字符串转换成驼峰(camelCase)表现形式，然后再与注册过的指令进行匹配。这是为什么，我们在HTML中以 hello-world 的方式使用 helloWorld 指令。其实，这跟HTML对标签和属性不区分大小写有关。
 
 我们在指令定义过程中使用了三个属性来配置指令：
 
-- restrict 这个属性用来指定指令在HTML中如何使用（还记得之前说的，指令的四种表示方式吗）。在上面的例子中，我们使用了 ‘AE’。所以这个指令可以被当作新的HTML元素或者属性来使用。如果要允许指令被当作class来使用，我们将 restrict 设置成 ‘AEC’。
-- template 这个属性规定了指令被Angular编译和链接（link）后生成的HTML标记。这个属性值不一定要是简单的字符串。template 可以非常复杂，而且经常包含其他的指令，以及表达式(`{{ }}`)等。更多的情况下你可能会见到 templateUrl， 而不是 template。所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
-- replace 这个属性指明生成的HTML内容是否会替换掉定义此指令的HTML元素。在我们的例子中，我们用 `<hello-world></hello-world>` 的方式使用我们的指令，并且将 replace 设置成 true。所以，在指令被编译之后，生成的模板内容替换掉了 `<hello-world></hello-world>`。最终的输出是 `<h3>Hello World!!</h3>`。如果你将 replace 设置成 false，也就是默认值，那么生成的模板会被插入到定义指令的元素中。
+- `restrict` 这个属性用来指定指令在HTML中如何使用（还记得之前说的，指令的四种表示方式吗）。在上面的例子中，我们使用了 ‘AE’。所以这个指令可以被当作新的HTML元素或者属性来使用。如果要允许指令被当作class来使用，我们将 restrict 设置成 'AEC'。
+- `template`/`templateUrl` 这个属性规定了指令被Angular编译和链接（link）后生成的HTML标记。这个属性值不一定要是简单的字符串。template 可以非常复杂，而且经常包含其他的指令，以及表达式(`{{ }}`)等。`template` 只用于 templete 内容比较少的情况，更多的情况下你可能会见到 `templateUrl`。所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
+- `replace` 这个属性指明生成的HTML内容是否会替换掉定义此指令的HTML元素。在我们的例子中，我们用 `<hello-world></hello-world>` 的方式使用我们的指令，并且将 replace 设置成 true。所以，在指令被编译之后，生成的模板内容替换掉了 `<hello-world></hello-world>`。最终的输出是 `<h3>Hello World!!</h3>`。如果你将 replace 设置成 false，也就是默认值，那么生成的模板会被插入到定义指令的元素中。
 
 打开这个 [plunker](http://plnkr.co/edit/GKI339z2VDdZTOE2bGFP)，在”Hello World!!”右键检查元素内容，来更形象地明白这些。
 
@@ -316,7 +298,7 @@ app.directive('helloWorld', function() {
 app.directive('sayHello', function() {
   return {
     scope: {
-      sayHelloIsolated: '&amp;'
+      sayHelloIsolated: '&'
     },
     ....
     // the rest of the configurations
@@ -339,43 +321,71 @@ app.directive('sayHello', function() {
 
 作为一个Angular的新手，你可能会在选择正确的指令scope的时候感到困惑。默认情况下，指令不会创建一个新的scope，而是沿用父scope。但是在很多情况下，这并不是我们想要的。如果你的指令重度地使用父scope的属性，甚至创建新的时，会污染父scope。让所有的指令都使用同一个父scope不会是一个好主意，因为任何人都可能修改这个scope中的属性。因此，下面的这个原则也许可以帮助你为你的指令选择正确的scope。
 
-1.父scope(scope: false) – 这是默认情况。如果你的指令不操作父scoe的属性，你就不需要一个新的scope。这种情况下是可以使用父scope的。
+1. 父scope(scope: false) – 这是默认情况。如果你的指令不操作父scoe的属性，你就不需要一个新的scope。这种情况下是可以使用父scope的。
 
-2.子scope(scope：true) – 这会为指令创建一个新的scope，并且原型继承自父scope。如果你的指令scope中的属性和方法与其他的指令以及父scope都没有关系的时候，你应该创建一个新scope。在这种方式下，你同样拥有父scope中所定义的属性和方法。
+2. 子scope(scope：true) – 这会为指令创建一个新的scope，并且原型继承自父scope。如果你的指令scope中的属性和方法与其他的指令以及父scope都没有关系的时候，你应该创建一个新scope。在这种方式下，你同样拥有父scope中所定义的属性和方法。
 
-3.隔离scope(scope:{}) – 这就像一个沙箱！当你创建的指令是自包含的并且可重用的，你就需要使用这种scope。你在指令中会创建很多scope属性和方法，它们仅在指令内部使用，永远不会被外部的世界所知晓。如果是这样的话，隔离的scope是更好的选择。隔离的scope不会继承父scope。
+3. 隔离scope(scope:{}) – 这就像一个沙箱！当你创建的指令是自包含的并且可重用的，你就需要使用这种scope。你在指令中会创建很多scope属性和方法，它们仅在指令内部使用，永远不会被外部的世界所知晓。如果是这样的话，隔离的scope是更好的选择。隔离的scope不会继承父scope。
 
 ## Transclusion（嵌入）
 
-Transclusion 是让我们的指令包含任意内容的方法。我们可以延时提取并在正确的scope下编译这些嵌入的内容，最终将它们放入指令模板中指定的位置。 如果你在指令定义中设置 transclude:true，一个新的嵌入的scope会被创建，它原型继承子父scope。 如果你想要你的指令使用隔离的scope，但是它所包含的内容能够在父scope中执行，transclusion也可以帮忙。
+`ng-transclude` 指明插入的位置，带有 `ng-transclude` 指令标签的元素会被删除，然后被替换为指令的内容。
+
+如果你在指令定义中设置 `transclude:true`，一个新的嵌入的scope会被创建，它原型继承子父scope。 如果你想要你的指令使用隔离的scope，但是它所包含的内容能够在父scope中执行，transclusion也可以帮忙。
 
 假设我们注册一个如下的指令：
 
 ```js
-app.directive('outputText', function() {
-  return {
-    transclude: true,
-    scope: {},
-    template: '<div ng-transclude></div>'
-  };
-});
-```
-
-它使用如下：
-
-```html
-<div output-text>
-  <p>Hello {{name}}</p>
+<div ng-controller="Ctrl">
+      <input ng-model="title"><br>
+      <textarea ng-model="text"></textarea> <br/>
+      <pane title="{{title}}">{{text}}</pane>
 </div>
 ```
 
-ng-transclude 指明在哪里放置被嵌入的内容。在这个例子中DOM内容 `<p>Hello {{name}}</p>` 被提取和放置到 `<div ng-transclude></div>` 内部。有一个很重要的点需要注意的是，表达式 `{{name}}` 所对应的属性是在父scope中被定义的，而非子scope。你可以在这个[Plunker](http://plnkr.co/edit/YQBPB9cvGgJiYMuIjzTw?p=preview)例子中做一些实验。如果你想要学习更多关于scope的知识，可以阅读[这篇文章](https://github.com/angular/angular.js/wiki/Understanding-Scopes)。
+pane是一个自定义derective，标签里还有一个表达式，这个指令的目的是显示 input中输入的title，和textarea中输入的text，当然是按照一定的dom结构显示。看下pane是如何实现：
 
-### transclude:’element’ 和 transclude:true的区别
+```js
+app.directive('pane', function(){
+    return {
+      restrict: 'E',
+      transclude: true,
+      scope: { title:'@' },
+      template: '<div style="border: 1px solid black;">' +
+                  '<div style="background-color: gray">{{title}}</div>' +
+                  '<div ng-transclude></div>' +
+                '</div>'
+    };
+});
+```
 
-有时候我我们要嵌入指令元素本身，而不仅仅是它的内容。在这种情况下，我们需要使用 transclude:’element’。它和 transclude:true 不同，它将标记了 ng-transclude 指令的元素一起包含到了指令模板中。使用transclusion，你的link函数会获得一个名叫 transclude 的链接函数，这个函数绑定了正确的指令scope，并且传入了另一个拥有被嵌入DOM元素拷贝的函数。你可以在这个 transclude 函数中执行比如修改元素拷贝或者将它添加到DOM上等操作。 类似 ng-repeat 这样的指令使用这种方式来重复DOM元素。仔细研究一下这个[Plunker](http://plnkr.co/edit/yFLe7OXj2u8epHXe6a0s?p=preview)，它使用这种方式复制了DOM元素，并且改变了第二个实例的背景色。
+我们想把 `<pane title="{{title}}">{{text}}</pane>` 中 `{{title}}` 和 `{{text}}` 变量的内容封装到我们的 dom 结构中，`{{title}}` 可以通过结构 `scope: { title:'@' }` 取得，`<panel></panel>` 标签之间的内容将替换模板中的 `<div ng-transclude></div>`。
 
-同样需要注意的是，在使用 transclude:’element’的时候，指令所在的元素会被转换成HTML注释。所以，如果你结合使用 transclude:’element’ 和 replace:false，那么指令模板本质上是被添加到了注释的innerHTML中——也就是说其实什么都没有发生！相反，如果你选择使用 replace:true，指令模板会替换HTML注释，那么一切就会如果所愿的工作。使用 replade:false 和 transclue:’element’有时候也是有用的，比如当你需要重复DOM元素但是并不想保留第一个元素实例（它会被转换成注释）的情况下。对这块还有疑惑的同学可以阅读stackoverflow上的[这篇讨论](http://stackoverflow.com/questions/18449743/when-to-use-transclude-true-and-transclude-element)，介绍的比较清晰。
+生成的 DOM 为：
+
+```html
+<div style="border: 1px solid black;">
+    <div style="background-color: gray">我是标题</div>
+    我是内容
+</div>
+```
+
+也可以直接使用父scope中定义的 `{{title}}` 而非子scope。你可以在这个[Plunker](http://plnkr.co/edit/YQBPB9cvGgJiYMuIjzTw?p=preview)。如果你想要学习更多关于scope的知识，可以阅读[这篇文章](https://github.com/angular/angular.js/wiki/Understanding-Scopes)。
+
+另外，transclude 可以在 compile 函数和 controller 函数中使用，See [angular 的 Transclude](http://www.angularjs.cn/A0pU)。
+
+### `transclude: 'element'` 和 `transclude: true`
+
+有时候我我们要嵌入指令元素本身，而不仅仅是它的内容。在这种情况下，我们需要使用 `transclude:'element'`。它和 `transclude:true` 不同，它将标记了 `ng-transclude`指令的元素一起包含到了指令模板中。
+
+使用transclusion，你的link函数会获得一个名叫 transclude 的链接函数，这个函数绑定了正确的指令scope，并且传入了另一个拥有被嵌入DOM元素拷贝的函数。你可以在这个 transclude 函数中执行比如修改元素拷贝或者将它添加到DOM上等操作。 类似 ng-repeat 这样的指令使用这种方式来重复DOM元素。仔细研究一下这个[Plunker](http://plnkr.co/edit/yFLe7OXj2u8epHXe6a0s?p=preview)，它使用这种方式复制了DOM元素，并且改变了第二个实例的背景色。
+
+同样需要注意的是，在使用 transclude:'element' 的时候，指令所在的元素会被转换成 HTML 注释。所以，如果你结合使用 transclude:'element' 和 replace:false，那么指令模板本质上是被添加到了注释的 innerHTML 中——也就是说其实什么都没有发生！相反，如果你选择使用 replace:true，指令模板会替换 HTML 注释，那么一切就会如果所愿的工作。使用 replade:false 和 transclue:'element' 有时候也是有用的，比如当你需要重复 DOM 元素但是并不想保留第一个元素实例（它会被转换成注释）的情况下。对这块还有疑惑的同学可以阅读stackoverflow上的[这篇讨论](http://stackoverflow.com/questions/18449743/when-to-use-transclude-true-and-transclude-element)，介绍的比较清晰。
+
+See also：
+
+- [Transclusion and scopes - Angular Tips](http://angular-tips.com/blog/2014/03/transclusion-and-scopes/)
+- [In the trenches: Transclude in AngularJS](http://blog.omkarpatil.com/2012/11/transclude-in-angularjs.html)
 
 ## controller 函数和 require
 
@@ -499,6 +509,7 @@ The final thing of note is the API for working with the element. jQuery veterans
 
 ## Tutorial
 
+- [AngularJS: Developer Guide: Directives](https://docs.angularjs.org/guide/directive)
 - [AngularJS 指令（Directives）实践指南（一） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide/)
 - [AngularJS 指令（Directives）实践指南（二） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-b/)
 - [AngularJS 指令（Directives）实践指南（三） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-c/)

@@ -5,140 +5,434 @@ category : Angular
 tags : [angular, tutorial]
 --- 
 
-> 原文：[【译】《精通使用AngularJS开发Web App》（三）--- 深入scope，继承结构，事件系统和生命周期](http://segmentfault.com/blog/chao2/1190000000361245)
-> 书名：[Mastering Web Application Development with AngularJS](http://www.amazon.com/Mastering-Web-Application-Development-AngularJS/dp/1782161821/)
-
 每一个 `$scope` 都是类 `Scope` 的一个实例。类 `Scope` 拥有可以控制 `scope` 生命周期的方法，提供事件传播的能力，并支持模板渲染。
 
-## 作用域的层次结构
+## Angular 的作用域继承
 
-让我们再来看看这个简单的 `HelloCtrl` 的例子：
-
-```js
-var HelloCtrl = function($scope){
-    $scope.name = 'World';
-}
-```
-
-`HelloCtrl` 看起来就跟普通的 JavaScript 构造函数没什么区别，事实上，除了 `$scope` 这个参数之外，确实没什么新奇之处。不过，这个参数究竟是从哪里来的呢？
-
-这个新的作用域是由 `ng-controller`指令使用 `Scope.$new()` 方法生成的。等一下，这么说来我们必须至少拥有一个 `scope` 的实例才能创建新的 `scope`！没错，AngularJS其实有一个 `$rootScope`（这个是所有其他作用域的父级）。这个 `$rootScope` 实例是在一个新的应用启动的时候创建的。
+Angular 中作用域的继承使用的是原型继承，也就在说子作用域的 prototype 会指向父作用域。在子作用域中查找属性时，先查找子作用域中的属性，如果为找到，在去父作用域中查找，以此类推，直到找到跟作用域 $rootScope。
 
 <!--more-->
 
-`ng-controller`指令就是 **`可以创建作用域`** 指令的其中一个。AngularJS 会在任何它在DOM树中碰到这种 **`可以创建作用域`** 指令的时候创建一个新的 `Scope`类的实例。这些新创建的作用域通过 `$parent` 属性指向它自身的父作用域。DOM树中会有很多 **`可以创建作用域`** 的指令，结果就是，很多作用域被创建了。
+Angular 中，总共有四种作用域：
 
-> 作用域的形式类似于父子、树状的关系，并且最根部的就是 `$rootScope` 实例。就像作用域是被DOM树驱动着创建的一样，作用域树也是在模仿 DOM 的结构。
+1. 普通的原型继承作用域
 
-现在你已经知道了，一些指令会创建新的子级的作用域，你可能会想，为什么会需要这些复杂的东西。要想理解这一点，我们来演示一个例子，其中使用了 `ng-repeat` 循环指令。
+    - ng-include
+    - ng-switch
+    - ng-controller
+    - directive with `scope: true`
+    
+2. 通过拷贝/复制的原型继承作用域。ng-repeat 的每个迭代都会创建一个子作用域，并且每个字作用域总是得到一个新的属性。 
 
-控制器如下：
+    - ng-repeat
+    
+3. 隔离作用域。不继承父作用域，但可以通过 '=', '@', and '&' 访问父作用域的属性。
+
+    - directive with `scope: {...}`
+
+4. transcluded 作用域。这个作用域也会原型继承与父作用域，但是是隔离作用域的兄弟。
+
+    - directive with `transclude: true` 
+    
+以下情况都会创建新的作用域，并且继承于父作用域：
+
+- ng-repeat
+- ng-include
+- ng-switch
+- ng-view
+- ng-controller
+- directive with `scope: true`
+- directive with `transclude: true`.
+
+以下情况也会创建新的作用域，但不会从父作用域中继承：
+
+- directive with scope: { ... }
+
+这样的作用域，我们成为隔离作用域（isolate scope）。
+
+其他情况不会自动创建作用域，即时 scope: false。
+
+## ng-include
+
+假设我们有一个 Controller:
 
 ```js
-var WorldCtrl = function ($scope) {
-    $scope.population = 7000;
-    $scope.countries = [
-        {name: 'France', population: 63.1},
-        {name: 'United Kingdom', population: 61.8},
-    ];
-};
+$scope.myPrimitive = 50;
+$scope.myObject    = {aNumber: 11};
 ```
 
-模版如下：
+HTML:
 
 ```html
-<ul ng-controller="WorldCtrl">
-    <li ng-repeat="country in countries">
-        {{country.name}} has population of {{country.population}}
+<script type="text/ng-template" id="/tpl1.html">
+    <input ng-model="myPrimitive">
+</script>
+<div ng-include src="'/tpl1.html'"></div>
+
+<script type="text/ng-template" id="/tpl2.html">
+    <input ng-model="myObject.aNumber">
+</script>
+<div ng-include src="'/tpl2.html'"></div>
+```
+
+每一个 ng-include 对生成一个子作用域，该子作用域都通过原型继承于父作用域。
+
+![ng-include](https://camo.githubusercontent.com/67fc2d40487725fde10b669426c8b6b74213e6c6/687474703a2f2f692e737461636b2e696d6775722e636f6d2f7a694466782e706e67)
+
+第一个文本框的数据模型为 myPrimitive，为基本类型的数据。如果 在以第一个文本框中敲入数据 (如 "77") 将导致 ChildScope1 得到一个新的作用域属性（myPrimitive），这将覆盖父作用域中的同名属性。这可能不是你所期望的。
+
+![ng-include primitive](https://camo.githubusercontent.com/f1c9d54bd5b13d1e479b41ca6062b4b9fecc8fe2/687474703a2f2f692e737461636b2e696d6775722e636f6d2f376c3864672e706e67)
+
+第二个文本框的数据模型为 `myObject.aNumber`，是复杂对象的属性。如果我们在这个文本框中敲入内容不会导致子作用域添加新的属性。因为当 ngModel 查找属性时，可以在父作用域中找到。
+
+![ng-include object](https://camo.githubusercontent.com/5a6ff2644b1b7a15621c2a20928abfce0a2018bb/687474703a2f2f692e696d6775722e636f6d2f6f764a6547706f2e706e67)
+
+如果我们想让第一个文本框也达到同样的效果，我们可以使用 `$parent` 来重写，让它绑定父作用域的相应属性，如：
+
+```
+<input ng-model="$parent.myPrimitive">
+```
+
+这样也不会产生新的属性，而是查找带父作用域中的属性。当然，父作用域是什么总是不可预知的，我们一般不适用这种方式，一般会把简单属性改成复杂属性，也就是基本类型的数据放到一个 Object 类型的对象中。
+
+![ng-include $parent](https://camo.githubusercontent.com/40767f9e9cc824e5c9ef178e385c9daa40ade6ba/687474703a2f2f692e737461636b2e696d6775722e636f6d2f6b6438706a2e706e67)
+
+For scenarios where form elements are not involved, another solution is to define a function on the parent scope to modify the primitive. Then ensure the child always calls this function, which will be available to the child scope due to prototypal inheritance. E.g.,
+
+另外一种方式可以使用方法来修改属性，在子作用于中通过方法来访问基本类型。
+
+```
+// in the parent scope
+$scope.setMyPrimitive = function(value) {
+    $scope.myPrimitive = value;
+}
+```
+
+Here is a [sample fiddle](http://jsfiddle.net/mrajcok/jNxyE/) that uses this "parent function" approach.  (This was part of a [Stack Overflow post](http://stackoverflow.com/a/14104318/215945).)
+
+See also:
+
+- <http://stackoverflow.com/a/13782671/215945>
+- <https://github.com/angular/angular.js/issues/1267>.
+
+## ng-repeat
+
+Ng-repeat works a little differently. Suppose we have in our controller:
+
+```js
+$scope.myArrayOfPrimitives = [ 11, 22 ];
+$scope.myArrayOfObjects    = [{num: 101}, {num: 202}]
+```
+
+And in our HTML:
+
+```html
+<ul><li ng-repeat="num in myArrayOfPrimitives">
+       <input ng-model="num"></input>
     </li>
-    <hr>
-    World's population: {{population}} millions
+</ul>
+<ul><li ng-repeat="obj in myArrayOfObjects">
+       <input ng-model="obj.num"></input>
+    </li>
 </ul>
 ```
 
-这个 `ng-repeat` 指令可以迭代一个 countries 的集合，并且为集合中的每一项都创建新的DOM 元素。`ng-repeat` 指令的语法非常容易理解；其中每一项都需要一个新的变量 `country`，并把它挂到 `$scope` 上面，以便视图渲染使用。
-
-但这里有一个问题，就是，每一个 `country` 都需要将一个新的变量挂载到一个 `$scope` 上去，而我们也不能就简单的覆盖掉前面被挂在上去的值。AngularJS 通过为集合中的每一个元素都创建一个新的作用域来解决这个问题。新创建的这些作用域跟相匹配的DOM树结构非常相像，我们也能通过之前提到的那个牛逼的 Chrome 扩展 Batarang 来可视化的看到这一点，下面是屏幕截图：  
-![AngularJS作用域截图](http://www.peichao01.com/Mastering_AngularJS_book/ch1_p16.png)  
-正如我们在截图中所看到的，每一个作用域（以矩形标注边界）维护属于她自己的一段数据模型。给不同的作用域增加同名的变量是完全没有问题的，不会发生命名冲突（不同的DOM元素会指向不同的作用域，并使用相对应的作用域的变量来渲染模板）。这样一来，每个元素又有自己的命名空间，在前面的例子中，每一个 `<li>` 元素都有自己的作用域，而 `country` 变量就定义在各自的作用域上面。
-
-## Scope的层次结构和继承
-
-定义在作用于上的属性对他的子级作用于来说是可见的，试想一下，子级作用域并不需要重复定义同名的属性！这在实践中是非常有用的，因为我们不必一遍又一遍的重复定义本来可以通过作用域链得到的那些属性。
-
-再来看看前面的例子，假设我们想要显示给出的这些国家与世界总人口的百分比。要实现这个功能，我们可以在一个作用域上定义一个 `worldsPercentage` 的方法，并由 `WorldCtrl` 来管理，如下所以：
+ng-repeat 为每一项创建一个新的作用域，该作用域继承于父作用域，除此之外，它还将 item 的值赋值给这个子作用域的新属性（这个新的属性名为循环变量名，如这里的 `obj`）。
 
 ```js
-$scope.worldsPercentage = function (countryPopulation) { 
-    return (countryPopulation / $scope.population)*100;
-}
+childScope = scope.$new(); // child scope prototypically inherits from parent scope ...     
+childScope[valueIdent] = value; // creates a new childScope property
 ```
-然后被 `ng-repeat` 创建的每一个作用域实例都来调用这个方法，如下：
+
+如果 item 是基本类型（如 myArrayOfPrimitives 中的值），复制给子作用域的新属性的其实是这个基本类型的拷贝。所以修改 item 值并不会影响父作用域中的数组（`myArrayOfPrimitives`）。ng-repeat 为每个子作用域添加一个和 `myArrayOfPrimitives` 无关的 `num` 属性。在 Angular 1.0.3 +，在文本框中输入值不会影响子作用域中的 `num` 值，See Artem's explanation as to why on [StackOverflow](http://stackoverflow.com/a/13723990/215945)。
+
+![ng-repeat primitive](https://camo.githubusercontent.com/3254baf91afdd969e6f167eeeb59950a0399a8f1/687474703a2f2f692e737461636b2e696d6775722e636f6d2f6e4c6f69572e706e67)
+
+如果 item 不是基本类型，而是一个对象，那么赋值给子作用域的是这个对象的引用，而非拷贝。改变子作用域中该属性的中，将对父作用域中的数组产生影响，如：
+
+![ng-repeat object](https://camo.githubusercontent.com/881318ad2d70364cf61d50faf536a7ce08f39777/687474703a2f2f692e737461636b2e696d6775722e636f6d2f51536a544a2e706e67)
+
+See also： 
+
+- [Difficulty with ng-model, ng-repeat, and inputs](http://stackoverflow.com/questions/13714884/difficulty-with-ng-model-ng-repeat-and-inputs) 
+- [ng-repeat and databinding](http://stackoverflow.com/a/13782671/215945)
+
+## ng-switch & ng-view
+
+类似于 ng-include。
+
+## controller
+
+子 controller 也会原型继承父 controller 的作用域，来生成一个新的作用域。但子 Controller 本身不是一个好的实践，如果你想要共享数据，可以考虑使用 Servcie。
+
+## directive
+
+默认情况下，指令不会创建一个新的scope，而是沿用父scope。但是在很多情况下，这并不是我们想要的。如果你的指令重度地使用父scope的属性，甚至创建新的时，会污染父scope。让所有的指令都使用同一个父scope不会是一个好主意，因为任何人都可能修改这个scope中的属性。因此，下面的这个原则也许可以帮助你为你的指令选择正确的scope。
+
+1. 默认 (`scope: false`) 这是默认情况。指令不会创建新的作用域，使用的是父作用域。这可能会污染父作用域，不利于创建可复用的组件。
+
+    如：
+
+        app.directive('helloWorld', function() {
+          return {
+            scope: true,  // use a child scope that inherits from parent
+            restrict: 'AE',
+            replace: 'true',
+            template: '<h3>Hello World!!</h3>'
+          };
+        });
+
+2. `scope：true` 这会为指令创建一个新的scope，并且原型继承自父scope。如果多于一个指令（在同样的 DOM 元素长）要求新的作用域时，只有一个新的作用域会被创建。因为是原型继承，所以和父作用域的基本类型双向绑定时，也会有 ng-include 一样的问题。
+
+    如：
+
+        app.directive('helloWorld', function() {
+          return {
+            scope: {},  // use a new isolated scope
+            restrict: 'AE',
+            replace: 'true',
+            template: '<h3>Hello World!!</h3>'
+          };
+        });
+
+3. `scope:{...}` – 使用这种方式，指令会创建一个隔离作用域，没有原型继承。对于创建可复用的组件，这可能是最好的选择，这可以防止对父作用域的意外读写。如果你想访问父作用域，可以使用 `=` 进行双向绑定，使用 `@` 进行单向绑定，使用 `&` 绑定到父作用域的表达式。下面会具体介绍。这几种方法都会在子作用域中创建新的属性，这些属性来源于父作用域。
+
+    隔离作用域的 `__proto__` 引用的是  [Scope](http://docs.angularjs.org/api/ng.%24rootScope.Scope) 对象（如下图，图中橘色的 'Object' 应该修正为 'Scope'）。隔离作用局的 `$parent` 属性引用父作用域，既能它是隔离作用局而且没有从父作用域原型继承。
+
+    假如指令为： 
+
+
+        <my-directive interpolated="{{parentProp1}}" twowayBinding="parentProp2">
+    
+    指令的作用域为：
+
+        scope: { 
+            interpolatedProp: '@interpolated', 
+            twowayBindingProp: '=twowayBinding' 
+        }
+
+    并且，在指令的 link 函数中，有以下代码：
+    
+        scope.someIsolateProp = "I'm isolated"
+
+    那么形成的作用域的图为：
+
+     ![isolate scope](https://camo.githubusercontent.com/c2e294392bfdcb48a6afcc328acb81d1ce4e9f18/687474703a2f2f692e737461636b2e696d6775722e636f6d2f4d557853342e706e67)  
+
+     最后应该注意的是，在 link 函数中可以使用 `attrs.$observe('attr_name', function(value) { ... })` 来监视隔离作用域中使用 `@` 的属性变化。举个例子，假如在 link 函数中有如下语句：
+
+        attrs.$observe('interpolated', function(value) { ... })
+
+    回调函数的参数 value 的值为 11，而 `scope.twowayBindingProp` 是 undefined，`scope.twowayBindingProp` 的值为 `Mark`，因为它使用的 `=`，进行双向绑定。
+
+    See also [AngularJS Sticky Notes Pt 2 – Isolated Scope – One Hungry Mind](http://onehungrymind.com/angularjs-sticky-notes-pt-2-isolated-scope/)。
+
+4. `transclude: true` 指令将创建一个 "transcluded" 子作用域，该作用域也原型继承与父作用域。所以如果嵌入的内容（用来 替换ng-transclude 的东西）需要和父作用域中的基本类型的属性建立双向绑定，可以使用　`$parent`，或者把模型修改父对象。这和 ng-include 中的情况一样。
+
+    如果某个指令同时拥有隔离作用域和 transcluded 作用域，他们为兄弟关系，他们的 `$parent` 指向共同的父作用域。隔离作用域的 `$$nextSibling` 引用的是 transcluded 作用域。
+
+    See [AngularJS two way binding not working in directive with transcluded scope](http://stackoverflow.com/a/14484903/215945)
+
+    For the picture below, assume the same directive as above with this addition: `transclude: true`
+
+    ![transcluded scope](https://camo.githubusercontent.com/34d8b831f665a8ff15f134bcc83a8a7e96822421/687474703a2f2f692e737461636b2e696d6775722e636f6d2f666b5748412e706e67)
+
+    使用 transclusion 后，你也可以通过 link 函数的第 5 个参数来嵌入内容的默认作用域；
+
+        app.directive('person', function() {
+          return {
+            restrict: 'EA',
+            scope: {
+              header: '='
+            },
+            transclude:true,
+            link: function(scope, element, attrs, ctrl, transclude) {
+              scope.person = {
+                name: 'Directive Joe',
+                profession: 'Scope guy'
+              };
+
+              scope.header = 'Directive\'s header';
+
+              // scope.$parent。这是默认情况。
+              // 如果改成 scope，则嵌入内容的作用域的指令的隔离作用域。
+              transclude(scope.$parent, function(clone, scope) {
+                element.append(clone);
+              });
+            }
+          };
+        });
+
+    See [Transclusion and scopes - Angular Tips](http://angular-tips.com/blog/2014/03/transclusion-and-scopes/)
+
+### 访问父作用域
+
+我们前面已经提到过可以使用 `@` `=` `&` 来访问父作用域，接下来我们逐一介绍。
+
+假设我们有以下指令，当用户在一个输入框中输入一种颜色的名称时，Hello World 文字的背景色自动发生变化。同时，当用户在 Hello World 文字上点击时，背景色变回白色。
+
+```js
+app.controller('MainCtrl', function($scope){
+    
+}).directive('helloWorld', function() {
+  return {
+    scope: {},
+    restrict: 'AE',
+    replace: true,
+    template: '<p style="background-color:{{color}}">Hello World</p>',
+    link: function(scope, elem, attrs) {
+      elem.bind('click', function() {
+        elem.css('background-color','white');
+        scope.$apply(function() {
+          scope.color = "white";
+        });
+      });
+      elem.bind('mouseover', function() {
+        elem.css('cursor', 'pointer');
+      });
+    }
+  };
+});
+```
+
+使用这个指令的HTML标签如下：
 
 ```html
-<li ng-repeat="country in countries">
-    {{country.name}} has population of {{country.population}},
-    {{worldsPercentage(country.population)}} % of the World's
-   population
-</li>
-```
-
-AngularJS中作用域的继承规则跟 JavaScript 中原型的继承规则是相同的（在需要读取一个属性的时候，会一直向继承树的上方查询，直到找到了这个属性为止）。
-
-## 贯穿作用域链的继承的风险
-
-这种透过作用域层次关系的继承，在读数据的时候显得非常的直观、易于理解。但是在写数据的时候，就变的有点复杂了。
-
-让我们来看看，如果我们在一个作用域上定义了一个变量，先不管是否在子级作用域上。JavaScript代码如下：
-
-```js
-var HelloCtrl = function ($scope) {
-};
-```
-
-视图的代码如下：
-
-```js
-<body ng-app ng-init="name='World'"> 
-    <h1>Hello, {{name}}</h1>
-    <div ng-controller="HelloCtrl">
-        Say hello to: <input type="text" ng-model="name">
-        <h2>Hello, {{name}}!</h2> 
-    </div>
+<body ng-controller="MainCtrl">
+  <input type="text" ng-model="color" placeholder="Enter a color"/>
+  <hello-world/>
 </body>
 ```
 
-运行一下这段代码，就可以发现，这个 `name` 变量尽管仅仅是定义在了最顶级的作用域上，但在整个应用中都是可见的！这说明变量是从作用域链上继承下来的。换句话说，变量是在父级作用域上定义的，然后在子级作用域中访问的。
+上面的代码现在是不能工作的。因为 input 中的 ng-model 绑定的是 Controller 的作用域，而 hello-world 指令模板中使用的是隔离作用域，所以指令模板内的 color 中始终是 undefined。
 
-现在，我们一起来看看，如果在 `<input>` 中写点字会发生什么，结果如下图所示：  
-![截图](http://www.peichao01.com/Mastering_AngularJS_book/ch1_p18.png)  
-你可能会感到吃惊，因为 `HelloCtrl` 控制器所初始化的作用域创建了一个新的变量，而不是直接去修改 `$rootScope` 实例中的值。不过当我们认识到作用域也只不过是在彼此间进行了原型继承，也就不会觉得那么吃惊了。所有可以用在 JavaScript 对象上的原型继承的规则，都可以同等的用在 作用域 的原型链继承上去。毕竟 `Scopes` 作用域就是 JavaScript 对象嘛。
+### 单向绑定
 
-在子级作用域中去改变父级作用域上面的属性有几种方法。第一种，我们就直接通过 `$parent` 属性来引用父级作用域，但我们要看到，这是一个非常不可靠的解决方案。麻烦之处就在于，`ng-model` 指令所使用的表达式非常严重的依赖于整个DOM结构。比如就在 `<input>` 标签上面的哪里插入另一个 `可创建作用域` 的指令，那 `$parent` 就会指向一个完全不同的作用域了。
+`@` 用来实现单向绑定。 在下面的指令定义中，我们通过 `color: '@colorAttr'` 将属性 color 以指令属性 colorAttr 暴露出去。在使用指令时，通过 `color-attr="{{color}}"` 和父作用域的 color 属性单向绑定。当表达式 `"{{color}}"` 的值发生改变时，隔离作用于的 color 属性跟着变化，指令模板中的值也发生变化。
 
-> 就经验来讲，尽量避免使用 `$parent` 属性，因为它强制的把 AngularJS 表达式和你的模板所创建的 DOM 结构捆绑在了一起。这样一来，HTML结构的一个小小的改动，都可能会让整个应用崩溃。
+```js
+app.directive('helloWorld', function() {
+  return {
+    scope: {
+      color: '@colorAttr'
+    },
+    ....
+    // the rest of the configurations
+  };
+});
+```
 
-另一个解决方案就是，不要直接把属性绑定到 作用域上，而是绑到一个对象上面，如下所示：
+更新后的HTML标记代码如下：
 
-```html
-<body ng-app ng-init="thing = {name : 'World'}"> 
-    <h1>Hello, {{thing.name}}</h1>
-    <div ng-controller="HelloCtrl">
-        Say hello to: <input type="text" ng-model="thing.name">
-        <h2>Hello, {{thing.name}}!</h2> 
-    </div>
+```js
+<body ng-controller="MainCtrl">
+  <input type="text" ng-model="color" placeholder="Enter a color"/>
+  <hello-world color-attr="{{color}}"/>
 </body>
 ```
 
-这个方案会更可靠，因为他并没有假设 DOM 树的结构是什么样子。
+我们称这种方式为单项绑定，是因为在这种方式下，父作用域的属性发生变化，子作用域的值会随之发生变化，而子作用域的值发生变化，并不会影响父作用域的值。
 
-> 避免直接把数据绑定到 作用域的属性上。应优先选择把数据双向绑定到对象的属性上（然后再把对象挂到 scope 上）。  
-> 就经验而言，在给 `ng-model` 指令的表达式中，你应该有一个点（例如， `ng-model="thing.name"`）。
+__注意点：__
 
-## 作用域层级和事件系统
+当隔离scope属性和指令元素参数的名字一样是，你可以更简单的方式设置scope绑定：
+
+```js
+app.directive('helloWorld', function() {
+  return {
+    scope: {
+      color: '@'
+    },
+    ....
+    // the rest of the configurations
+  };
+});
+```
+
+相应使用指令的HTML代码如下：
+
+    <hello-world color="{{color}}"/>
+
+### 双向绑定
+
+让我们将指令的定义改变成下面的样子：
+
+```js
+app.directive('helloWorld', function() {
+  return {
+    scope: {
+      color: '=color' // 当 = 后的值和属性名相等时，可以省略 = 后边的值。
+    },
+    ....
+    // the rest of the configurations
+  };
+});
+```
+
+相应的HTML修改如下：
+
+```html
+<body ng-controller="MainCtrl">
+  <input type="text" ng-model="color" placeholder="Enter a color"/>
+  <hello-world color="color"/>
+</body>
+```
+
+与 @ 不同，这种方式让你能够给属性指定一个真实的 scope 数据模型，而不是简单的字符串。这样你就可以传递简单的字符串、数组、甚至复杂的对象给隔离scope。同时，还支持双向的绑定。每当父scope属性变化时，相对应的隔离scope中的属性也跟着改变，反之亦然。
+
+### 绑定表达式
+
+指令可以使用 `&` 来触发父作用域的表达式，`&` 后边可以是任意合法的表达式。我们通常用 `&` 来为指令绑定事件的回调。
+
+```html
+<!-- index.html -->
+<div ng-controller="Controller">
+  <my-dialog ng-hide="dialogIsHidden" on-close="hideDialog()">
+    Check out the contents, {{name}}!
+  </my-dialog>
+</div>
+```
+
+```js
+// script.js
+angular.module('docsIsoFnBindExample', [])
+  .controller('Controller', ['$scope', '$timeout', function($scope, $timeout) {
+    $scope.name = 'Tobias';
+    $scope.hideDialog = function () {
+      $scope.dialogIsHidden = true;
+      $timeout(function () {
+        $scope.dialogIsHidden = false;
+      }, 2000);
+    };
+  }])
+  .directive('myDialog', function() {
+    return {
+      restrict: 'E',
+      transclude: true,
+      scope: {
+        'close': '&onClose'
+      },
+      templateUrl: 'my-dialog-close.html'
+    };
+  });
+```
+
+```html
+<!-- my-dialog-close.html -->
+<div class="alert">
+  <a href class="close" ng-click="close()">&times;</a>
+  <div ng-transclude></div>
+</div>
+```
+
+> __Best Practice:__ use &attr in the scope option when you want your directive to expose an API for binding to behaviors.
+
+## 作用域和事件系统
 
 层级关系中的作用域可以使用 `event bus`（一种事件系统）。AngularJS可以在作用域层级中传播具名的装备齐全的事件。事件可以从任何一个作用域中发出，然后向上（$emit）和向下（$broadcast）四处传播。  
+
 ![截图](http://www.peichao01.com/Mastering_AngularJS_book/ch1_p20.png)  
+
 AngularJS核心服务和指令使用这种事件巴士来发出一些应用程序状态变化的重要事件。比如，我们可以监听 `$locationChangeSuccess` 事件（由 `$rootScope` 实例发出），然后在任何 location（浏览器中就是URL）变化的时候都会得到通知，如下所示：
 
 ```js
@@ -162,8 +456,9 @@ $scope.$on('$locationChangeSuccess', function(event, newUrl, oldUrl){
 
 作用域需要提供相互隔离的命名空间，避免变量的命名冲突。作用域们都很小，而且被以层级的方式组织起来，对内存使用的管理来说很有帮助。当其中一个作用域不再需要 ，它就可以被销毁了。结果就是，这个作用域所暴露出来的模型和方法就符合的垃圾回收的标准。
 
-新的作用域通常是被 `可创建作用域` 的指令所生成和销毁的。不过也可以使用 `$new()` 和 `$destroy()` 方法来手动的创建和销毁作用域。
+新的作用域通常是被可创建作用域的指令所生成和销毁的。不过也可以使用 `$new()` 和 `$destroy()` 方法来手动的创建和销毁作用域。
 
-## Tutorial
+## Reference
 
 - [Understanding Scopes · angular/angular.js Wiki](https://github.com/angular/angular.js/wiki/Understanding-Scopes)
+- [【译】《精通使用AngularJS开发Web App》（三）--- 深入scope，继承结构，事件系统和生命周期](http://segmentfault.com/blog/chao2/1190000000361245)

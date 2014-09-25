@@ -64,7 +64,7 @@ app.directive('helloWorld', function() {
     2.  `<span class="str">'E'</span>` - only matches element name
     3.  `<span class="str">'C'</span>` - only matches class name
 
-- `template`/`templateUrl` 这个属性规定了指令被Angular编译和链接（link）后生成的HTML标记。这个属性值不一定要是简单的字符串。template 可以非常复杂，而且经常包含其他的指令，以及表达式(`{{ }}`)等。`template` 只用于 templete 内容比较少的情况，更多的情况下你可能会见到 `templateUrl`。所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
+- `template`/`templateUrl` 这个属性规定了指令被Angular编译和链接（link）后生成的HTML标记。这个属性值不一定要是简单的字符串。template 可以非常复杂，而且经常包含其他的指令，以及表达式(`{%raw%}{{ }}{%raw%}`)等。`template` 只用于 templete 内容比较少的情况，更多的情况下你可能会见到 `templateUrl`。所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
 - `replace` 这个属性指明生成的HTML内容是否会替换掉定义此指令的HTML元素。在我们的例子中，我们用 `<hello-world></hello-world>` 的方式使用我们的指令，并且将 replace 设置成 true。所以，在指令被编译之后，生成的模板内容替换掉了 `<hello-world></hello-world>`。最终的输出是 `<h3>Hello World!!</h3>`。如果你将 replace 设置成 false，也就是默认值，那么生成的模板会被插入到定义指令的元素中。
 
 打开这个 [plunker](http://plnkr.co/edit/GKI339z2VDdZTOE2bGFP)，在”Hello World!!”右键检查元素内容，来更形象地明白这些。
@@ -143,196 +143,6 @@ app.directive('test', function() {
 
 在编译阶段之后，就开始了链接（linking）阶段。在这个阶段，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的scope下被解析和处理，然后返回具有事件响应的真实的DOM节点。
 
-## Scope
-
-默认情况下，指令获取它父节点的 controller 的 scope。但这并不适用于所有情况。如果将父controller的scope暴露给指令，那么他们可以随意地修改 scope 的属性。在某些情况下，你的指令希望能够添加一些仅限内部使用的属性和方法。如果我们在父的scope中添加，会污染父scope。 其实我们还有两种选择：
-
-- 一个子scope – 这个 scope 原型继承父 scope。
-- 一个隔离的scope – 一个孤立存在不继承自父scope的scope。
-
-这样的scope可以通过指令定义对象中 scope 属性来配置。下面的代码片段是一个例子：
-
-```js
-app.directive('helloWorld', function() {
-  return {
-    scope: true,  // use a child scope that inherits from parent
-    restrict: 'AE',
-    replace: 'true',
-    template: '<h3>Hello World!!</h3>'
-  };
-});
-```
-
-上面的代码，让Angular给指令创建一个继承自父socpe的新的子scope。
-另外一个选择，隔离的scope：
-
-```js
-app.directive('helloWorld', function() {
-  return {
-    scope: {},  // use a new isolated scope
-    restrict: 'AE',
-    replace: 'true',
-    template: '<h3>Hello World!!</h3>'
-  };
-});
-```
-
-这个指令使用了一个隔离的scope。隔离的scope在我们想要创建可重用的指令的时候是非常有好处的。通过使用隔离的scope，我们能够保证我们的指令是自包含的，可以被很容易的插入到HTML应用中。 它内部不能访问父的scope，所保证了父scope不被污染。 
-
-在我们的 helloWorld 指令例子中，如果我们将 scope 设置成 `{}`，那么上面的代码将不会工作。 它会创建一个新的隔离的scope，那么相应的表达式 `{{color}}` 会指向到这个新的scope中，它的值将是 `undefined`.
-
-使用隔离的scope并不意味着我们完全不能访问父scope的属性。其实有一些技术可以允许我们访问父scope的属性，甚至监视他们的变化。
-
-## 隔离scope和父scope之间的数据绑定
-
-通常，隔离指令的scope会带来很多的便利，尤其是在你要操作多个scope模型的时候。但有时为了使代码能够正确工作，你也需要从指令内部访问父scope的属性。好消息是Angular给了你足够的灵活性让你能够有选择性的通过绑定的方式传入父scope的属性。让我们重温一下我们的 [helloWorld](http://plnkr.co/edit/14q6WxHyhWuVxEIqwww1?p=preview) 指令，它的背景色会随着用户在输入框中输入的颜色名称而变化。还记得当我们对这个指令使用隔离scope的之后，它不能工作了吗？现在，我们来让它恢复正常。
-
-假设我们已经初始化完成app这个变量所指向的Angular模块。那么我们的 helloWorld 指令如下面代码所示：
-
-```js
-app.directive('helloWorld', function() {
-  return {
-    scope: {},
-    restrict: 'AE',
-    replace: true,
-    template: '<p style="background-color:{{color}}">Hello World</p>',
-    link: function(scope, elem, attrs) {
-      elem.bind('click', function() {
-        elem.css('background-color','white');
-        scope.$apply(function() {
-          scope.color = "white";
-        });
-      });
-      elem.bind('mouseover', function() {
-        elem.css('cursor', 'pointer');
-      });
-    }
-  };
-});
-```
-
-使用这个指令的HTML标签如下：
-
-```html
-<body ng-controller="MainCtrl">
-  <input type="text" ng-model="color" placeholder="Enter a color"/>
-  <hello-world/>
-</body>
-```
-
-上面的代码现在是不能工作的。因为我们用了一个隔离的scope，指令内部的 `{{color}}` 表达式被隔离在指令内部的scope中(不是父scope)。但是外面的输入框元素中的 ng-model 指令是指向父scope中的 color 属性的。所以，我们需要一种方式来绑定隔离scope和父scope中的这两个参数。让我们来细究一下建立数据绑定的几种方式。
-
-### 使用 @ 实现单向文本绑定
-
-在下面的指令定义中，我们指定了隔离scope中的属性 color 绑定到指令所在HTML元素上的参数 colorAttr。在HTML标记中，你可以看到 `{{color}}` 表达式被指定给了 color-attr 参数。当表达式的值发生改变时，color-attr 参数也跟着改变。隔离 scope 中的 color 属性的值也相应地被改变。
-
-```js
-app.directive('helloWorld', function() {
-  return {
-    scope: {
-      color: '@colorAttr'
-    },
-    ....
-    // the rest of the configurations
-  };
-});
-```
-
-更新后的HTML标记代码如下：
-
-```js
-<body ng-controller="MainCtrl">
-  <input type="text" ng-model="color" placeholder="Enter a color"/>
-  <hello-world color-attr="{{color}}"/>
-</body>
-```
-
-我们称这种方式为单项绑定，是因为在这种方式下，你只能将字符串(使用表达式{{}})传递给参数。当父scope的属性变化时，你的隔离scope模型中的属性值跟着变化。你甚至可以在指令内部监控这个scope属性的变化，并且触发一些任务。然而，反向的传递并不工作。你不能通过对隔离scope属性的操作来改变父scope的值。
-
-__注意点：__
-
-当隔离scope属性和指令元素参数的名字一样是，你可以更简单的方式设置scope绑定：
-
-```js
-app.directive('helloWorld', function() {
-  return {
-    scope: {
-      color: '@'
-    },
-    ....
-    // the rest of the configurations
-  };
-});
-```
-
-相应使用指令的HTML代码如下：
-
-    <hello-world color="{{color}}"/>
-
-### 使用 = 实现双向绑定
-
-让我们将指令的定义改变成下面的样子：
-
-```js
-app.directive('helloWorld', function() {
-  return {
-    scope: {
-      color: '=color' // 当 = 后的值和属性名相等时，可以省略 = 后边的值。
-    },
-    ....
-    // the rest of the configurations
-  };
-});
-```
-
-相应的HTML修改如下：
-
-```html
-<body ng-controller="MainCtrl">
-  <input type="text" ng-model="color" placeholder="Enter a color"/>
-  <hello-world color="color"/>
-</body>
-```
-
-与 @ 不同，这种方式让你能够给属性指定一个真实的 scope 数据模型，而不是简单的字符串。这样你就可以传递简单的字符串、数组、甚至复杂的对象给隔离scope。同时，还支持双向的绑定。每当父scope属性变化时，相对应的隔离scope中的属性也跟着改变，反之亦然。和之前的一样，你也可以监视这个scope属性的变化。
-
-### 使用 & 在父scope中执行函数
-
-有时候从隔离scope中调用父scope中定义的函数是非常有必要的。为了能够访问外部scope中定义的函数，我们使用 `&`。比如我们想要从指令内部调用 sayHello() 方法。下面的代码告诉我们该怎么做：
-
-```js
-app.directive('sayHello', function() {
-  return {
-    scope: {
-      sayHelloIsolated: '&'
-    },
-    ....
-    // the rest of the configurations
-  };
-});
-```
-
-相应的HTML代码如下：
-
-```html
-<body ng-controller="MainCtrl">
-  <input type="text" ng-model="color" placeholder="Enter a color"/>
-  <say-hello sayHelloIsolated="sayHello()"/>
-</body>
-```
-
-这个 [Plunker](http://plnkr.co/edit/k4scWKwtGBJw7lfKGqVJ?p=preview) 例子对上面的概念做了很好的诠释。
-
-### 父scope、子scope以及隔离scope的区别
-
-作为一个Angular的新手，你可能会在选择正确的指令scope的时候感到困惑。默认情况下，指令不会创建一个新的scope，而是沿用父scope。但是在很多情况下，这并不是我们想要的。如果你的指令重度地使用父scope的属性，甚至创建新的时，会污染父scope。让所有的指令都使用同一个父scope不会是一个好主意，因为任何人都可能修改这个scope中的属性。因此，下面的这个原则也许可以帮助你为你的指令选择正确的scope。
-
-1. 父scope(scope: false) – 这是默认情况。如果你的指令不操作父scoe的属性，你就不需要一个新的scope。这种情况下是可以使用父scope的。
-
-2. 子scope(scope：true) – 这会为指令创建一个新的scope，并且原型继承自父scope。如果你的指令scope中的属性和方法与其他的指令以及父scope都没有关系的时候，你应该创建一个新scope。在这种方式下，你同样拥有父scope中所定义的属性和方法。
-
-3. 隔离scope(scope:{}) – 这就像一个沙箱！当你创建的指令是自包含的并且可重用的，你就需要使用这种scope。你在指令中会创建很多scope属性和方法，它们仅在指令内部使用，永远不会被外部的世界所知晓。如果是这样的话，隔离的scope是更好的选择。隔离的scope不会继承父scope。
-
 ## Transclusion（嵌入）
 
 `ng-transclude` 指明插入的位置，带有 `ng-transclude` 指令标签的元素会被删除，然后被替换为指令的内容。
@@ -382,59 +192,13 @@ app.directive('pane', function(){
 
 另外，transclude 可以在 compile 函数和 controller 函数中使用，See [angular 的 Transclude](http://www.angularjs.cn/A0pU)。
 
-### Scope
+transclude 有两个值可选，分别为 `element` 和 `true`。
 
-如果你在指令定义中设置 `transclude:true`，一个新的嵌入的scope会被创建，它原型继承子父 scope。
-
-Transclude makes the contents of a directive with this option have access to the scope outside of the directive rather than inside.
-
-```js
-// scripts.js
-angular.module('docsTransclusionExample', [])
-  .controller('Controller', ['$scope', function($scope) {
-    $scope.name = 'Tobias';
-  }])
-  .directive('myDialog', function() {
-    return {
-      restrict: 'E',
-      transclude: true,
-      scope: {},
-      templateUrl: 'my-dialog.html',
-      link: function (scope, element) {
-        scope.name = 'Jeff';
-      }
-    };
-  });
-```
-
-```html
-<!-- index.html -->
-<div ng-controller="Controller">
-  <my-dialog>Check out the contents, {{name}}!</my-dialog>
-</div>
-```
-
-```html
-<!-- my-dialog.html -->
-<div class="alert" ng-transclude>
-</div>
-```
-
-The output will be:
-
-> Check out the contents, Tobias!
-
-### `transclude: 'element'` 和 `transclude: true`
-
-有时候我我们要嵌入指令元素本身，而不仅仅是它的内容。在这种情况下，我们需要使用 `transclude:'element'`。它和 `transclude:true` 不同，它将标记了 `ng-transclude`指令的元素一起包含到了指令模板中。
-
-使用transclusion，你的link函数会获得一个名叫 transclude 的链接函数，这个函数绑定了正确的指令scope，并且传入了另一个拥有被嵌入DOM元素拷贝的函数。你可以在这个 transclude 函数中执行比如修改元素拷贝或者将它添加到DOM上等操作。 类似 ng-repeat 这样的指令使用这种方式来重复DOM元素。仔细研究一下这个[Plunker](http://plnkr.co/edit/yFLe7OXj2u8epHXe6a0s?p=preview)，它使用这种方式复制了DOM元素，并且改变了第二个实例的背景色。
-
-同样需要注意的是，在使用 transclude:'element' 的时候，指令所在的元素会被转换成 HTML 注释。所以，如果你结合使用 transclude:'element' 和 replace:false，那么指令模板本质上是被添加到了注释的 innerHTML 中——也就是说其实什么都没有发生！相反，如果你选择使用 replace:true，指令模板会替换 HTML 注释，那么一切就会如果所愿的工作。使用 replade:false 和 transclue:'element' 有时候也是有用的，比如当你需要重复 DOM 元素但是并不想保留第一个元素实例（它会被转换成注释）的情况下。对这块还有疑惑的同学可以阅读stackoverflow上的[这篇讨论](http://stackoverflow.com/questions/18449743/when-to-use-transclude-true-and-transclude-element)，介绍的比较清晰。
+使用 `transclude: true` 会将嵌入的内容插入指令标签内部，而 `transclude: 'element'` 会替换指令标签。
 
 See also：
 
-- [Transclusion and scopes - Angular Tips](http://angular-tips.com/blog/2014/03/transclusion-and-scopes/)
+- [angularjs - when to use transclude 'true' and transclude 'element' - Stack Overflow](http://stackoverflow.com/questions/18449743/when-to-use-transclude-true-and-transclude-element)
 - [In the trenches: Transclude in AngularJS](http://blog.omkarpatil.com/2012/11/transclude-in-angularjs.html)
 
 ## controller 函数和 require

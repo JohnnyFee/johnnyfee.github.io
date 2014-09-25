@@ -21,6 +21,8 @@ Angular 模板可以通过内存加载、AJAX 两种方式加载。
 
 其中，`type="text/ng-template"` 是指明这是 ng 模板。id 是模板标识。
 
+<!--more-->
+
 __Note:__ the `script` tag containing the template does not need to be included in the `head` of the document, but it must be below the `ng-app` definition.
 
 ### 通过使用 `$templateCache` service 来实现
@@ -43,8 +45,6 @@ myApp.run(function($templateCache) {
 ```
 
 `$templateCache` 服务 put 方法负责向内存写入模板内容。
-
-<!--more-->
 
 `$templateCache`基于`cacheFactory`而来，接口保持一致，可以认为  
 `$templateCache = $cacheFactory('template');`

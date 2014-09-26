@@ -25,11 +25,8 @@ As with services, you define directives through the module object’s API by cal
 一个Angular指令可以有以下的四种表现形式：
 
 1. 一个新的HTML元素（`<data-picker></data-picker>`）
-
 2. 元素的属性（`<input type=”text” data-picker/>`）
-
 3. CSS class（`<input type=”text” class=”data-picker”/>`）
-
 4. 注释（`<!- directive:data-picker –>`）
 
 指令注册的方式与 controller 一样，但是它返回的是一个拥有指令配置属性的简单对象(指令定义对象) 。下面的代码是一个简单的 Hello World 指令。
@@ -90,15 +87,15 @@ app.directive('helloWorld', function() {
     restrict: 'AE',
     replace: true,
     template: '<p style="background-color:{{color}}">Hello World',
-    link: function(scope, elem, attrs) {
-      elem.bind('click', function() {
-        elem.css('background-color', 'white');
-        scope.$apply(function() {
+    link: function($scope, $elem, $attrs) {
+      $elem.bind('click', function() {
+        $elem.css('background-color', 'white');
+        $scope.$apply(function() {
           scope.color = "white";
         });
       });
-      elem.bind('mouseover', function() {
-        elem.css('cursor', 'pointer');
+      $elem.bind('mouseover', function() {
+        $elem.css('cursor', 'pointer');
       });
     }
   };
@@ -107,11 +104,47 @@ app.directive('helloWorld', function() {
 
 我们注意到指令定义中的 link 函数。 它有三个参数：
 
-- `scope` 指令的scope。在我们的例子中，指令的scope就是父controller的scope。
-- `elem` 指令的jQLite(jQuery的子集)包装DOM元素。如果你在引入AngularJS之前引入了jQuery，那么这个元素就是jQuery元素，而不是jQLite元素。由于这个元素已经被jQuery/jQLite包装了，所以我们就在进行DOM操作的时候就不需要再使用 $()来进行包装。
-- `attr` 一个包含了指令所在元素的属性的标准化的参数对象。举个例子，你给一个HTML元素添加了一些属性：`<hello-world some-attribute=""></hello-world>`，那么可以在 link 函数中通过 `attrs.someAttribute` 来使用它。
+- `$scope` 指令的scope。在我们的例子中，指令的scope就是父controller的scope。
+- `$elem` 指令的jQLite(jQuery的子集)包装DOM元素。如果你在引入AngularJS之前引入了jQuery，那么这个元素就是jQuery元素，而不是jQLite元素。由于这个元素已经被jQuery/jQLite包装了，所以我们就在进行DOM操作的时候就不需要再使用 $()来进行包装。$element === angular.element() === jQuery() === $()。You still cannot rely upon children or following-siblings since they have not been linked yet.
+- `$attr` 一个包含了指令所在元素的属性的标准化的参数对象。举个例子，你给一个HTML元素添加了一些属性：`<hello-world some-attribute=""></hello-world>`，那么可以在 link 函数中通过 `$attrs.someAttribute` 来使用它。
+
+    If you have a _sibling_ attribute that will contain `{{}}` then the attribute will need to be evaluated and could even change multiple times. **Don't do this manually!**
+
+    Instead use `$attributes.$observe('myOtherAttribute', function(newValue))` exactly as you would have used `$scope.$watch()`. The only difference in the first argument is the attribute name (not an expression) and the callback function only has `newValue` (already evaluated for you). It will re-fire the callback every single time the evaluation changes too.
+
+    **NOTE:** This means that you can only access this attribute _asynchronously_
+
+    **NOTE:** If you want to _reliably_ access the attribute pre-evaluation then you should do it in the CompileFunction
 
 link 函数主要用来为DOM元素添加事件监听、监视模型属性变化、以及更新DOM。在上面的指令代码片段中，我们添加了两个事件，click 和 mouseover。click 处理函数用来重置 `<p>` 的背景色，而 mouseover 处理函数改变鼠标为 pointer。在模板中有一个表达式 `{{color}}`，当父 scope 中的 color 发生变化时，它用来改变 Hello World 文字的背景色。 这个 [plunker](http://plnkr.co/edit/14q6WxHyhWuVxEIqwww1) 演示了这些概念。
+
+### Pre vs Post Linking Functions
+
+Anywhere you can use a `LinkingFunction()`, you can alternatively use an object with a pre and post linking function. [Oddly enough](https://github.com/angular/angular.js/issues/2592), a `LinkingFunction()` is a `PostLinkingFunction()` by default:
+
+```js
+link: function LinkingFunction($scope, $element, $attributes) { ... }
+//...
+link: {
+  pre: function PreLinkingFunction($scope, $element, $attributes) { ... },
+  post: function PostLinkingFunction($scope, $element, $attributes) { ... },
+}
+```
+
+The difference is that `PreLinkingFunction()` will fire on the parent first, then child, and so on. A `PostLinkingFunction()` goes in reverse, firing on the child first, then parent, and so on. Here's a demo: http://plnkr.co/edit/qrDMJBlnwdNlfBqEEXL2?p=preview
+
+**When do I want this reverse `PostLinking` behavior?** Sometimes jQuery plugins need to know the number and size of children DOM element's (such as slideshows or layout managers like Isotope). There are a few ways to support these:
+
+* **(Worst)** Delay the plugin's execution using [$timeout](http://docs.angularjs.org/api/ng.%24timeout)
+* Nested directives. If each child has a directive, it can  `require: '^parentDirective'` which will give you access to the `parentDirective` controller.
+
+    * If you use the `PreLinkingFunction()` on `parentDirective`, you can instantiate the container empty, and use then update it every time the 
+
+**This does _NOT_ accomodate for async changes such as loading `$scope` data via AJAX**
+
+If you need to wait till your `$scope` data finishes loading try using [ng-if](http://docs.angularjs.org/api/ng/directive/ngIf) to defer linking of a block of DOM.
+
+The pre-linking and post-linking phases are executed by the compiler. The pre-link function is executed before the child elements are linked, while the post-link function is executed after. It is only safe to do DOM transformations after the post-link function.
 
 ## Compile
 
@@ -123,27 +156,113 @@ compile 函数在 link 函数被执行之前用来做一些DOM改造。它接收
 要注意的是 compile 函数不能访问 scope，并且必须返回一个 link 函数。但是如果没有设置 compile 函数，你可以正常地配置 link 函数，（有了compile，就不能用link，link函数由compile返回）。compile函数可以写成如下的形式：
 
 ```js
-app.directive('test', function() {
+myApp.directive('directiveName', function(){
+  // 注入函数
+  // 每个 app 最多运行一遍。这对启动和全局配置的时候有用。
   return {
-    compile: function(tElem,attrs) {
-      //do optional DOM transformation here
-      return function(scope,elem,attrs) {
-        //linking function here
+    compile: function($templateElement, $templateAttributes) {
+
+      // 编译函数
+      // 1. 每个 jq 实例（在未被渲染的模板中）只运行一次。
+      // 2. You CAN examine the DOM and cache information about what variables
+      //   or expressions will be used, but you cannot yet figure out their values.
+      // 3. Angular is caching the templates, 
+      // now is a good time to inject new angular templates as children or future siblings to automatically run..
+
+      return function($scope, $linkElement, $linkAttributes) {
+
+        // 链接函数
+        // 1. 每个已经渲染的实例只执行一次。
+        // 2. Once for each row in an ng-repeat when the row is created.
+        // 3. Note that ng-if or ng-switch may also affect if this is executed.
+        // 4. Scope IS available because controller logic has finished executing.
+        // 5. All variables and expression values can finally be determined.
+        // 6. Angular is rendering cached templates. It's too late to add templates for angular
+        //  to automatically run. If you MUST inject new templates, you must $compile them manually.
+
       };
     }
   };
-});
+})
 ```
+
+你只能在链接函数中访问 `$scope`，也只能在链接函数中使用 DOM，因为在编译函数中可能移除或复制元素。
 
 大多数的情况下，你只需要使用 link 函数。这是因为大部分的指令只需要考虑注册事件监听、监视模型、以及更新DOM等，这些都可以在 link 函数中完成。 但是对于像 ng-repeat 之类的指令，需要克隆和重复 DOM 元素多次，在 link 函数执行之前由 compile 函数来完成。这就带来了一个问题，为什么我们需要两个分开的函数来完成生成过程，为什么不能只使用一个？要回答好这个问题，我们需要理解指令在Angular中是如何被编译的！
 
-## 指令是如何被编译的
+### 指令是如何被编译的
 
 当应用引导启动的时候，Angular开始使用 $compile 服务遍历DOM元素。这个服务基于注册过的指令在标记文本中搜索指令。一旦所有的指令都被识别后，Angular执行他们的 compile 方法。如前面所讲的，compile 方法返回一个 link 函数，被添加到稍后执行的 link 函数列表中。这被称为编译阶段。如果一个指令需要被克隆很多次（比如 ng-repeat），compile函数只在编译阶段被执行一次，复制这些模板，但是link 函数会针对每个被复制的实例被执行。所以分开处理，让我们在性能上有一定的提高。这也说明了为什么在 compile 函数中不能访问到scope对象。
 
 在编译阶段之后，就开始了链接（linking）阶段。在这个阶段，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的scope下被解析和处理，然后返回具有事件响应的真实的DOM节点。
 
-## Transclusion（嵌入）
+## Extending Directives
+
+Lets say you want to use a 3rd-party directive, but you want to extend it without modifying it. There are several ways you can go about doing this.
+
+### Global Configurations
+
+Some well-designed directives (such as those found in AngularUI) can be configured globally so that you do not have to pass in your options into every instance.
+
+### Require Directives
+
+Create a new directive that assumes the first directive has already been applied. You can require it on a parent DOM element, OR on the same DOM element. If you need to access functionality found in the primary directive, make it exposed via the directive controller (this may require submitting a Pull Request or feature request to the plugin developer).  
+
+```js
+// <div a b></div>
+ui.directive('a', function(){
+  return {
+    controller: function(){
+      this.data = {}
+      this.changeData = function( ... ) { ... }
+    },
+    link: ($scope, $element, $attributes, controller) {
+      controller.data = { ... }
+    }
+  }
+})
+myApp.directive('b', function(){
+  return {
+    require: 'a',
+    link: ($scope, $element, $attributes, aController) {
+      aController.changeData()
+      aController.data = { ... }
+    }
+  }
+})
+```
+
+### Stacking Directives
+
+You can create a new directive with the exact same name as the original directive. Both directives will be executed. However, you can use the priority to control which directive fires first (again, may require a Pull Request or feature request)
+
+```js
+// <div a></div>
+ui.directive('a', {
+    priority: 1,
+    //...
+});
+myApp.directive('a', {
+    priority: 0,
+    // ...
+});
+```
+
+### Templating
+
+You can leverage `<ng-include>` or simply create a directive that generates the HTML with the primary directive attached.
+
+```js
+// <div b></div>
+ui.directive('a', ... )
+myApp.directive('b', function(){
+  return {
+    template: '<div a="someOptions"></div>'
+  }
+})
+```
+
+## Transclusion
 
 `ng-transclude` 指明插入的位置，带有 `ng-transclude` 指令标签的元素会被删除，然后被替换为指令的内容。
 
@@ -201,7 +320,7 @@ See also：
 - [angularjs - when to use transclude 'true' and transclude 'element' - Stack Overflow](http://stackoverflow.com/questions/18449743/when-to-use-transclude-true-and-transclude-element)
 - [In the trenches: Transclude in AngularJS](http://blog.omkarpatil.com/2012/11/transclude-in-angularjs.html)
 
-## controller 函数和 require
+## Directive's Controller
 
 如果你想要允许其他的指令和你的指令发生交互时，你需要使用 controller 函数。比如有些情况下，你需要通过组合两个指令来实现一个UI组件。那么你可以通过如下的方式来给指令添加一个 controller 函数。
 
@@ -219,6 +338,8 @@ app.directive('outerDirective', function() {
   };
 });
 ```
+
+We are defining a `controller` function in our directive, so we don’t need to define either of these functions, but it is important to note that we cannot do DOM manipulations in our controller function.
 
 这个代码为指令添加了一个名叫 outerDirective 的controller。当另一个指令想要交互时，它需要声明它需要引用(require)你的指令的 controller 实例。可以通过如下的方式实现：
 
@@ -246,6 +367,143 @@ app.directive('innerDirective', function() {
 ```
 
 require: '^outerDirective' 告诉Angular在元素以及它的父元素中搜索controller。这样被找到的 controller 实例会作为第四个参数被传入到 link 函数中。在我们的例子中，我们将嵌入的指令的scope发送给父亲指令。如果你想尝试这个代码的话，请在开启浏览器控制台的情况下打开这个[Plunker](http://plnkr.co/edit/NMWGE6l9p1tBZh3jCfKn?p=preview)。同时，[这篇Angular官方文档](http://docs.angularjs.org/guide/directive)上的最后部分给了一个非常好的关于指令交互的例子，是非常值得一读的。
+
+### Require option
+
+This lets you pass a controller (as defined above) associated with another directive into a compile/linking function. You have to specify the name of the directive to be required – It should be bound to same element or its parent. The name can be prefixed with:
+
+1.  `?` – Will not raise any error if a mentioned directive does not exist.
+2.  `^` – Will look for the directive on parent elements, if not available on the same element.
+
+如果引用的是同级的 Controller，不需要加特殊字符，如：
+
+```html
+div ng-app="superApp">
+  <superhero flight strength>Superman</superhero>
+</div>
+```
+
+```js
+var app = angular.module('superApp', []);
+
+app.directive("superhero", function () {
+  return {
+    restrict: "E",
+
+    controller: function ($scope) {
+      $scope.abilities = [];
+
+      this.addStrength = function() {
+        $scope.abilities.push("strength");
+      };
+    
+      // ...
+    },
+
+    link: function (scope, element) {
+      element.addClass("button");
+      element.bind("mouseenter", function () {
+        console.log(scope.abilities);
+      });
+    }
+  };
+});
+```
+
+```js
+app.directive("strength", function() {
+    return {
+      require: "superhero",
+      link: function (scope, element, attrs, superheroCtrl) {
+        superheroCtrl.addStrength();
+      }
+    };
+}).directive("flight", function() {
+  return {
+    require: "superhero",
+    link: function (scope, element, attrs, superheroCtrl) {
+      superheroCtrl.addFlight();
+    }
+  };
+});
+;
+```
+
+See [AngularJS - Directive to Directive Communication - Thinkster](https://thinkster.io/egghead/directive-to-directive-communication/)
+
+### Multiple controllers
+
+Say you needed to call a method in a parent directive, but you still need to set the model value from within your directive. To do this you can set the 'require' property in the directive to an array of controllers, then when you pass in a single controller argument to your linking function, you can access each controller in the array by using its array index.
+
+```php
+app.directive('myDirective', function () {
+  return{
+    restrict: "A",
+    require:['^parentDirective', '^ngModel'], 
+    link: function ($scope, $element, $attrs, controllersArr) {
+
+      // parentDirective controller
+      controllersArr[0].someMethodCall(); 
+
+      // ngModel controller         
+      controllersArr[1].$setViewValue(); 
+    }
+  }
+});
+```
+
+Here is an example of it in action: 
+[Example](https://github.com/angular/angular.js/blob/master/src/ng/directive/input.js#L1206)
+
+See [Perry Hoffman : AngularJS: Including multiple controllers in a directive.](https://coderwall.com/p/8teqba)
+
+### require: 'ngModel'
+
+The `require` instruction gives you the controller for the directive you name as the fourth argument to your `link` function. (You can use `^` to look for the controller on a parent element; `?` makes it optional.) So `require: 'ngModel'` gives you the controller for the `ngModel` directive, [which is an `ngModelController`](http://docs.angularjs.org/api/ng.directive%3angModel.NgModelController).
+
+Directive controllers can be written to provide APIs that other directives can use; with `ngModelController`, you get access to special functionality that's built into `ngModel`, including getting and setting the value. Consider the following example:
+
+```html
+<input color-picker ng-model="project.color">
+```
+
+```js
+app.directive('colorPicker', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+      element.colorPicker({
+        // initialize the color to the color on the scope
+        pickerDefault: scope.color,
+        // update the ngModel whenever we pick a new color
+        onColorChange: function(id, newValue) {
+          scope.$apply(function() {
+            ngModel.$setViewValue(newValue);
+          });
+        }
+      });
+
+      // update the color picker whenever the value on the scope changes
+      ngModel.$render = function() {
+        element.val(ngModel.$modelValue);
+        element.change();                
+      };
+    }
+  }
+});
+```
+
+This directive uses the `ngModel` controller to get and set the value of the color from the colorpicker. See this JSFiddle example: http://jsfiddle.net/BinaryMuse/AnMhx/
+
+If you're using `require: 'ngModel'`, you probably shouldn't _also_ be using `ngModel: '='` in your isolate scope; the `ngModelController` gives you all the access you need to change the value.
+
+The bottom example on [the AngularJS homepage](http://angularjs.org/) also uses this functionality (except using a custom controller, not `ngModel`).
+
+---
+
+As for the casing of a directive, for example, `ngModel` vs `ng-model` vs `data-ng-model`: while Angular supports using multiple forms on the DOM, when you refer to a directive by name (for example, when creating a directive, or using `require`), you always use the lowerCamelCase form of the name.
+
+See [angularjs - What's the meaning of require: 'ngModel'? - Stack Overflow](http://stackoverflow.com/questions/20930592/whats-the-meaning-of-require-ngmodel)
 
 ## Demo
 
@@ -315,6 +573,10 @@ The final thing of note is the API for working with the element. jQuery veterans
 
 我们能否在控制器上实现上面的功能呢？当然可以，但是这样做会带来一个重大的问题。一旦其他的 Controller 需要实现相同的功能，可能需要拷贝代码。
 
+### Weather for San Francisco
+
+See [Build custom directives with AngularJS](http://www.ng-newsletter.com/posts/directives.html).
+
 ### Clock
 
 In this example we will build a directive that displays the current time. Once a second, it updates the DOM to reflect the current time.
@@ -381,11 +643,15 @@ __Best Practice:__ Directives should clean up after themselves. You can use elem
 <http://labs.voronianski.com/ngActivityIndicator.js>.
 - [ngReactGrid by josebalius](http://josebalius.github.io/ngReactGrid) ngReactGrid is an Angular directive that can be used to render an enhanced HTML table or grid of data very fast using React as the rendering engine. It is based on ng-grid and jQuery DataTables. It uses HTML tables and supports fixed column headers by default.
 
+## Reference
+
+- [A Practical Guide to AngularJS Directives - SitePoint](http://www.sitepoint.com/practical-guide-angularjs-directives/) / 翻译 [AngularJS 指令（Directives）实践指南（一） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide/)
+- [A Practical Guide to AngularJS Directives (Part Two) - SitePoint](http://www.sitepoint.com/practical-guide-angularjs-directives-part-two/) / 翻译 [AngularJS 指令（Directives）实践指南（二） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-b/)
+- [AngularJS: Developer Guide: Directives](https://docs.angularjs.org/guide/directive)
+- [Understanding Directives · angular/angular.js Wiki](https://github.com/angular/angular.js/wiki/Understanding-Directives)
+
 ## Tutorial
 
-- [AngularJS: Developer Guide: Directives](https://docs.angularjs.org/guide/directive)
-- [AngularJS 指令（Directives）实践指南（一） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide/)
-- [AngularJS 指令（Directives）实践指南（二） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-b/)
 - [AngularJS 指令（Directives）实践指南（三） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-c/)
 - [AngularJS Directives – Basics – One Hungry Mind](http://onehungrymind.com/angularjs-directives-basics/)
 - [AngularJS Sticky Notes Pt 2 – Isolated Scope – One Hungry Mind](http://onehungrymind.com/angularjs-sticky-notes-pt-2-isolated-scope/)

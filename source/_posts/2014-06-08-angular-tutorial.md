@@ -743,6 +743,10 @@ We can prevent form submission in an invalid state by adding ng-disabled to the 
 
     <button ng-disabled='!addUserForm.$valid'>Submit</button>
 
+See:
+
+- [Form validation with AngularJS](http://www.ng-newsletter.com/posts/validations.html)
+
 ## Testing
 
 ### Karma’s
@@ -809,7 +813,7 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 
 - [Popular Modules - AngularJS Modules, Plugins and Directives](http://ngmodules.org/)
 - [angular-data: Home](http://angular-data.pseudobry.com) Give your data the treatment it deserves with a data store built for Angular.js.
-
+- [AngularJS Datatype Editors (ADE)](http://toodledo.github.io/ADE/) ADE is a bunch of directives and filters for displaying and editing various types of data, using AngularJS.
 
 ## FAQ
 
@@ -905,6 +909,10 @@ See:
 - [javascript - How do I switch views in AngularJS from a controller function? - Stack Overflow](http://stackoverflow.com/questions/11003916/how-do-i-switch-views-in-angularjs-from-a-controller-function)
 - [javascript - AngularJS change partial in controller on click - Stack Overflow](http://stackoverflow.com/questions/16649617/angularjs-change-partial-in-controller-on-click)
 
+### Multiple directives [ngSwitchWhen, ngInclude] asking for transclusion
+
+See [Ng-Include inside ng-switch should be allowed · Issue #4731 · angular/angular.js](https://github.com/angular/angular.js/issues/4731)
+
 ## Reference
 
 - [AngularJS：何时应该使用Directive、Controller、Service](http://damoqiongqiu.iteye.com/blog/1971204)
@@ -927,5 +935,10 @@ See:
 - [Adding Auth to your Ionic app in 5 mins with Auth0](http://ionicframework.com/blog/authentication-in-ionic)
 - [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
 - [Debugging AngularJS Apps from the Console - Modern Web](http://modernweb.com/2014/08/21/debugging-angularjs-apps-console)
+
+### Style Guide
+
+- [angularjs style guide](https://github.com/mgechev/angularjs-style-guide/blob/master/README-zh-cn.md)
+- [Google's AngularJS Style Guide](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

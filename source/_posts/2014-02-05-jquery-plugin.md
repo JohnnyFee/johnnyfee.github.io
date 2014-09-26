@@ -264,6 +264,7 @@ FlowType.JS 简化了这一困难，基于 特定元素的宽度改变字体大�
 
 
 ### Jquery-maskMoney
+
 [Jquery-maskMoney](http://plentz.github.io/jquery-maskmoney/) 
     jQuery plugin to mask data entry in the input text in the form of money (currency).
 

@@ -191,6 +191,16 @@ AngularJS会在`DOMContentLoaded`事件触发时执行，并通过`ng-app`指令
 
 ### ng-bind
 
+The `ngBind` attribute tells Angular to replace the text content of the specified HTML element with the value of a given expression, and to update the text content when the value of that expression changes.
+
+`ngBind` 用于单向绑定($scope --> view)。
+
+Typically, you don't use `ngBind` directly, but instead you use the double curly markup like `{{ expression }}` which is similar but less verbose.
+
+It is preferable to use `ngBind` instead of `{{ expression }}` if a template is momentarily displayed by the browser in its raw state before Angular compiles it. Since `ngBind` is an element attribute, it makes the bindings invisible to the user while the page is loading.
+
+An alternative solution to this problem would be using the [ngCloak](https://docs.angularjs.org/api/ng/directive/ngCloak) directive.
+
 It has two equivalent forms. One we’ve seen with double-curly braces:
 
     <p>{{greeting}}</p>
@@ -207,16 +217,28 @@ Then there’s an attribute-based directive called ng-bind:
 
 ### ng-model
 
+`ngModel` 用于 form 元素的双向绑定。 `ngModel` 负责:
+
+- Binding the view into the model, which other directives such as `input`, `textarea` or select `require`.
+- Providing validation behavior (i.e. required, number, email, url).
+- Keeping the state of the control (valid/invalid, dirty/pristine, touched/untouched, validation errors).
+- Setting related css classes on the element (`ng-valid`, `ng-invalid`, `ng-dirty`, `ng-pristine`, `ng-touched`, `ng-untouched`) including animations.
+- Registering the control with its parent form.
+
+__Note:__ `ngModel` will try to bind to the property given by evaluating the expression on the current scope. If the property doesn't already exist on this scope, it will be created implicitly and added to the scope.
+
 you can use the `ng-model` attribute to bind elements to your model properties:
 
-    <form ng-controller="SomeController">
-      <input type="checkbox" ng-model="youCheckedIt">
-    </form>
+```html
+<form ng-controller="SomeController">
+  <input type="checkbox" ng-model="youCheckedIt">
+</form>
+```
 
 This means that:
 
-- When the user checks the box, a property called youCheckedIt on the SomeController’s $scope will become true. Unchecking the box makes youCheckedIt false.
-- If you set $scope.youCheckedIt to true in SomeController, the box becomes checked in the UI. Setting it to false unchecks the box.
+- When the user checks the box, a property called youCheckedIt on the SomeController’s `$scope` will become true. Unchecking the box makes youCheckedIt false.
+- If you set `$scope.youCheckedIt` to true in SomeController, the box becomes checked in the UI. Setting it to false unchecks the box.
 
 you can call `$watch()` with an expression to observe and a callback that gets invoked whenever that expression changes:
 
@@ -226,7 +248,6 @@ you can call `$watch()` with an expression to observe and a callback that gets i
     Recommendation: {{funding.needed}}
 </form>
 ```
-
 
 ```js
 function StartUpController($scope) {
@@ -239,16 +260,6 @@ function StartUpController($scope) {
   $scope.$watch('funding.startingEstimate', computeNeeded);
 }
 ```
-
-If you have a form that groups inputs, you can use the ng-submit directive on the form itself to specify a function to call when the form submits:
-
-    <form ng-submit="requestFunding()" ng-controller="StartUpController">
-      Starting: <input ng-change="computeNeeded()" ng-model="startingEstimate">
-      Recommendation: {{needed}}
-      <button>Fund my startup!</button>
-    </form>
-
-The ng-submit directive also automatically prevents the browser from doing its default POST action when it tries to submit the form.
 
 ### ng-repeat
 
@@ -323,6 +334,18 @@ and this controller:
 ```
 
 The directive states that the `edit()` function on the `scope` is called in case the form is submitted. The form submission happens when any button without an explicit function attached (in this case, the Edit button) is clicked.
+
+If you have a form that groups inputs, you can use the `ng-submit` directive on the form itself to specify a function to call when the form submits:
+
+```html
+<form ng-submit="requestFunding()" ng-controller="StartUpController">
+  Starting: <input ng-change="computeNeeded()" ng-model="startingEstimate">
+  Recommendation: {{needed}}
+  <button>Fund my startup!</button>
+</form>
+```
+
+The `ng-submit` directive also automatically prevents the browser from doing its default POST action when it tries to submit the form.
 
 ### ng-show & ng-hide
 

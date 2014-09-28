@@ -7,22 +7,24 @@ tags: [web, css]
 
 ## border
 
-Every element on a page is a rectangular box. All the way from the root `<html>` element to the lowly `<i>` element. You can apply a border to any of those rectangular boxes with the `border` property. Here's a classic example of a box with a border:
+页面中的每个元素都是矩形盒子，达到根元素 `html`，小到 `i` 元素。你可以使用 `border` 属性对所有这些矩形盒子应用边框。比如：
 
-    .box {
-      width: 200px;
-      height: 100px;
-      border: 3px solid red;
-      background: #eee;
-    }
+```css
+.box {
+  width: 200px;
+  height: 100px;
+  border: 3px solid red;
+  background: #eee;
+}
+```
 
 <!--more-->
 
-The above was the shorthand syntax, in the format:
+以上使用的是简写语法, 格式为:
 
     border:  <border-width> || <border-style> || <color>
 
-It could have been expressed through each individual property:
+这也可以使用单个属性描述：
 
     .box {
       border-width: 3px;   /* defaults to medium */
@@ -30,151 +32,129 @@ It could have been expressed through each individual property:
       border-style: solid; /* defaults to none */
     }
 
+你可以使用 border-top[/bottom/left/right]-with[/color/style/radius] 来设置某一条边的样式。
+
 ## border-style
 
-The `border-style` [CSS](https://developer.mozilla.org/en-US/docs/CSS "CSS") property is a shorthand property for setting the line style for all four sides of the elements border.
-
-The rule for setting `border-style` is the same with `border-radius`.
-
+所有边框样式如表：
 
 style    | demo    | description                   
 -------- | --------------- | -----
 `none`   | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: none; background-color: palegreen;"></div>   | Like for the `hidden` keyword, displays no border. In that case, except if a background image is set, the calculated values of [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) will be `0`, even if specified otherwise through the property. In case of table cell and border collapsing, the `none` value has the lowest priority: it means that if any other conflicting border is set, it will be displayed.  
 `hidden` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: hidden; background-color: palegreen;"></div> | Like for the `none` keyword, displays no border. In that case, except if a background image is set, the calculated values of [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) will be `0`, even if specified otherwise through the property. In case of table cell and border collapsing, the `hidden` value has the highest priority: it means that if any other conflicting border is set, it won't be displayed.
-`dotted` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: dotted; background-color: palegreen;"></div> | Displays a series of rounded dots. The spacing of the dots are not defined by the specification and are implementation-specific. The radius of the dots is half the calculated [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width).                                                                                                                                                                                   
-`dashed` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: dashed; background-color: palegreen;"></div> | Displays a series of short square-ended dashes or line segments. The exact size and length of the segments are not defined by the specification and are implementation-specific.                                                                                                                                                                                                                                                                  
-`solid`  | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: solid; background-color: palegreen;"></div>  | Displays a single, straight, solid line.                                                                                                                                                                                                                                                                                                                                                                                                          
-`double` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: double; background-color: palegreen;"></div> | Displays two straight lines that add up to the pixel amount defined as [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) .                                                                                                                                                                                                                                                                                          
-`groove` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: groove; background-color: palegreen;"></div> | Displays a border leading to a carved effect. It is the opposite of `ridge`.                                                                                                                                                                                                                                                                                                                                                                      
-`ridge`  | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: ridge; background-color: palegreen;"></div>  | Displays a border with a 3D effect, like if it is coming out of the page. It is the opposite of `groove`.                                                                                                                                                                                                                                                                                                                                         
-`inset`  | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: inset; background-color: palegreen;"></div>  | Displays a border that makes the box appear embedded. It is the opposite of `outset`. When applied to a table cell with [`border-collapse`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse) set to `collapsed`, this value behaves like `groove`.                                                                                                                                                                               
-`outset` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: outset; background-color: palegreen;"></div> | Displays a border that makes the box appear in 3D, embossed. It is the opposite of `inset`. When applied to a table cell with [`border-collapse`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse) set to `collapsed`, this value behaves like `ridge`.                                                                                                                                                                          
+`dotted` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: dotted; background-color: palegreen;"></div> | Displays a series of rounded dots. The spacing of the dots are not defined by the specification and are implementation-specific. The radius of the dots is half the calculated [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width).
+`dashed` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: dashed; background-color: palegreen;"></div> | Displays a series of short square-ended dashes or line segments. The exact size and length of the segments are not defined by the specification and are implementation-specific.
+`solid`  | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: solid; background-color: palegreen;"></div>  | Displays a single, straight, solid line.
+`double` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: double; background-color: palegreen;"></div> | Displays two straight lines that add up to the pixel amount defined as [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width).
+`groove` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: groove; background-color: palegreen;"></div> | Displays a border leading to a carved effect. It is the opposite of `ridge`.
+`ridge`  | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: ridge; background-color: palegreen;"></div>  | Displays a border with a 3D effect, like if it is coming out of the page. It is the opposite of `groove`.
+`inset`  | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: inset; background-color: palegreen;"></div>  | Displays a border that makes the box appear embedded. It is the opposite of `outset`. When applied to a table cell with [`border-collapse`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse) set to `collapsed`, this value behaves like `groove`.
+`outset` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: outset; background-color: palegreen;"></div> | Displays a border that makes the box appear in 3D, embossed. It is the opposite of `inset`. When applied to a table cell with [`border-collapse`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse) set to `collapsed`, this value behaves like `ridge`.
 
 ## border-radius
 
-- [The Shapes of CSS](http://css-tricks.com/examples/ShapesOfCSS/)
+`border-radius` 属性用来描述元素边框的圆角半径。你只需要注意颜色是否有变化，比如，要注意让元素的背景色或者边框颜色和元素周围的颜色不一样。
 
-You can give any element "rounded corners" by applying a `border-radius` through CSS. You'll only notice if there is a color change involved. For instance, if the element has a background-color or border that is different than the element it's over. Simple examples:
-
-<div data-height="326" data-theme-id="0" data-slug-hash="jmyco" data-default-tab="css" class='codepen'><pre><code>#example-one {
-  border-radius: 10px;
-  background: #BADA55;
-}
-#example-two {
-  border-radius: 10px;
-  border: 3px solid #BADA55;
-}
-.b-example {
-    width: 100px;
-    height: 100px;
-    float: left;
-    margin: 0 20px 20px 0;
-}</code></pre>
+<div data-height="326" data-theme-id="0" data-slug-hash="jmyco" data-default-tab="result" class='codepen'>
 <p>See the Pen <a href='http://codepen.io/JohnnyFee/pen/jmyco/'>border-radius</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 </div>
 
-It's pretty realistic these days to drop prefixes and just use border-radius, [as discussed here](http://css-tricks.com/do-we-need-box-shadow-prefixes/).
-
-If the element has an image background, it will be clipped at the rounded corner naturally:
+如果元素有背景图片，背景图片也会拥有指定的圆角。
 
 <p data-height="219" data-theme-id="0" data-slug-hash="nqsfF" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/nqsfF/'>nqsfF</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
-Sometimes you can see a `background-color` "leak" outside of a border when `border-radius` is present. ([see](http://tumble.sneak.co.nz/post/928998513/fixing-the-background-bleed)). To prevent this you use background-clip:
+如果你发现边框外边的背景色有毛边（See [Sneak — Fixing the background 'bleed'](http://tumble.sneak.co.nz/post/928998513/fixing-the-background-bleed)），可以使用 `background-clip` 属性来避免：
 
-    .round {
-      border-radius: 10px;
-    
-      /* Prevent background color leak outs */
-      -webkit-background-clip: padding-box; 
-      -moz-background-clip:    padding; 
-      background-clip:         padding-box;
-    }
+```css
+.round {
+  border-radius: 10px;
 
-With just one value, `border-radius` will the same on all four corners of an element. But that need not be the case. You can specifiy each corner separatedly if you wish:
+  /* Prevent background color leak outs */
+  -webkit-background-clip: padding-box; 
+  -moz-background-clip:    padding; 
+  background-clip:         padding-box;
+}
+```
 
-    .round {
-       border-radius: 5px 10px 15px 20px; /* top left, top right, bottom right, bottom left */
-    }
+如果 `border-radius` 只有一个值，这个值将应用到所有的四个角，你也可以单独为每个角指定圆角：
 
-You can also specify two or three values. The Mozilla Docs explains it best:
+```css
+.round {
+   border-radius: 5px 10px 15px 20px; /* top left, top right, bottom right, bottom left */
+}
+```
 
-If **one** value is set, this radius applies to**all 4 corners**.  
-If **two** values are set, the**first**applies to `top-left` and `bottom-right` corner, the **second** applies to `top-right` and `bottom-left` corner.  
-**Four** values apply to the `top-left`, `top-right`, `bottom-right`, `bottom-left` corner in that order.  
-**Three** values: The second value applies to `top-right` and also `bottom-left`.
+你还可以使用 2 个或 3 个值，The Mozilla Docs explains it best:
+
+- If **one** value is set, this radius applies to**all 4 corners**.  
+- If **two** values are set, the**first**applies to `top-left` and `bottom-right` corner, the **second** applies to `top-right` and `bottom-left` corner.
+- **Three** values: The second value applies to `top-right` and also `bottom-left`.
+- **Four** values apply to the `top-left`, `top-right`, `bottom-right`, `bottom-left` corner in that order.  
 
 Like:
 
-    #example-four {
-      border-radius: 5px 20px 5px;
-      background: #BADA55;
-    }
+```css
+#example-four {
+  border-radius: 5px 20px 5px;
+  background: #BADA55;
+}
+```
 
-You may also specify the radiuses in which the corner is rounded by. In other words, the rounding doesn't have to be perfectly circular, it can be elliptical. This is done using a slash ("/") between two values.
+边框的圆角半径包含垂直半径和水平半径，你可是使用 "/" 来同时指定两个半径，如果两个值相等，则是圆角，否则为椭圆角。如果垂直半径和水平半径相等，则可以省略 "/"，只写一个值。
 
-<p data-height="268" data-theme-id="0" data-slug-hash="zExoB" data-default-tab="css" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/zExoB/'>zExoB</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="zExoB" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/zExoB/'>zExoB</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 **Note:** Firefox only supported elliptical borders in 3.5+ and older WebKit browsers (e.g. Safari 4) incorrectly treat "40px 10px" as the same as "40px/10px". 
 
-You may specify the value of `border-radius` in percentages. This is particularly useful when wanting to create a circle or elipse [shape](http://css-tricks.com/examples/ShapesOfCSS/), but can be used any time you want the border radius to be directly correlated with the elements width.
+你可以使用百分比来指定 `border-radius`，这对你创建圆形、椭圆或其他[形状](http://css-tricks.com/examples/ShapesOfCSS/)时非常有用，不用每次因为元素的长宽发生变化而修改 `border-radius`。
 
-<div data-height="268" data-theme-id="0" data-slug-hash="Igchn" data-default-tab="css" class='codepen'><pre><code>#example-seven, #example-eight {
-   border-radius: 50%;
-}
-#example-eight {
-   width: 200px;
-}
-
-.b-example {
-  width: 100px;
-  height: 100px;
-  float: left;
-  margin: 0 20px 20px 0;
-  background: #BADA55;
-}</code></pre>
+<div data-height="268" data-theme-id="0" data-slug-hash="Igchn" data-default-tab="result" class='codepen'>
 <p>See the Pen <a href='http://codepen.io/JohnnyFee/pen/Igchn/'>Igchn</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 </div>
 
 **Note:** In Safari percentage values for border-radius only supported in 5.1+. In Opera, only supported in 11.5+.
 
+你可是使用边框样式画出一些图形，如 [The Shapes of CSS](http://css-tricks.com/examples/ShapesOfCSS/)。
+
 ## border-image
 
-The `border-image` property of CSS allows you to use an image in which to paint the border of an element with. 
-
-It's not as straight forward as, say, background-image, which just places the image into the background area. `border-image` takes the image you give it and slices it like a tic-tac-toe board into nine slices (at the measurements you give it). It then places the corners at the corners, and the middle sections it repeats as needed to fill the element space. The middle section also repeats (or stretches) as you specify.
+`border-image` 使你可以用图片来绘制元素的边框。这不是简单地把图片置于背景区。`border-image` 会把你指定的图片按照你指定的切分方法划分成 9 块，成井子格，然后把井子格的四个角置于元素的四个角，中间的部分分别置于元素的四条边上，你可以指定图片的四边以拉伸或者重复的方式来填充元素的四边。
 
 ### The basic idea
 
-The border-image shorthand property has 3 parts:
+`border-image` 的简写属性有 3 个部分:
 
     border-image: url(border-image.png) 25% repeat;
 
 ![](http://cdn.css-tricks.com/wp-content/uploads/2010/07/borderimagecss.png "borderimagecss")
 
-Essentially, these allow you to specify:
+实际上，三部分允许你指定：
 
-1. An image to use as the border
-1. Where to slice that image, dividing the image into 9 sections
-1. How the browser should apply those sections to the edges of your element
+1. 用于边框的图片。
+2. 切割图片的位置，这个位置用于把图片划分为 9 块。
+3. 浏览器如何将这些块应用到元素的边上。
 
+也可以使用单独的属性，以下为是他们的默认属性:
 
-The individual properties, with their defaults are:
+```css
+div {
+  border-image-source: none;
+  border-image-slice: 100%;
+  border-image-width: 1;
+  border-image-outset: 0;
+  border-image-repeat: stretch;
+}
+```
 
-    div {
-      border-image-source: none;
-      border-image-slice: 100%;
-      border-image-width: 1;
-      border-image-outset: 0;
-      border-image-repeat: stretch;
-    }
+使用简单语法的实例:
 
-Or as shorthand:
+```css
+div {
+  border-image: url("image.png") 25 30 10 20 repeat stretch;
+}
+```
 
-    div {
-      border-image: url("image.png") 25 30 10 20 repeat stretch;
-    }
-
-Remember that the element needs a [border](http://css-tricks.com/almanac/properties/b/border/) in which to apply this image.
+别忘了给元素指定边框来让图片得以应用。
 
 ### The pertinent details
 

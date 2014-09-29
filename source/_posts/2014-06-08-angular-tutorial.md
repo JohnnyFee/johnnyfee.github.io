@@ -217,6 +217,51 @@ Then there’s an attribute-based directive called ng-bind:
 
 - The good news is that you can still use `{%raw%}{{ }}{%endraw%}` in the majority of your templates. For the data binding you do in your index.html page, however, use ng-bind instead. That way, your users will see nothing until the data has loaded.
 
+### HTML content in AngularJS expressions
+
+By default AngularJS will escape any HTML markup that made it into an expression (model) evaluated by the interpolation directive. For example, given the model:
+
+    $scope.msg = 'Hello, <b>World</b>!';
+
+And the markup fragment:
+
+    <p>{{msg}}</p>
+
+The rendering process will escape the `<b>` tags, so they will appear as plain text and not as markup:
+
+    <p>Hello, &lt;b&gt;World&lt;/b&gt;!</p>
+
+The interpolation directive will do the escaping of any HTML content found in the model in order to prevent HTML injection attacks.
+
+If, for any reason, your model contains HTML markup that needs to be evaluated and rendered by a browser you can use the `ng-bind-html-unsafe` directive to switch off default HTML tags escaping:
+
+    <p ng-bind-html-unsafe="msg"></p>
+
+Using the `ng-bind-html-unsafe` directive we will get the HTML fragment with the `<b>` tags interpreted by a browser.
+
+Extreme care should be taken when using the `ng-bind-html-unsafe` directive. Its usage should be limited to cases where you fully trust or can control the expression being evaluated. Otherwise malicious users might inject any arbitrary HTML on your page.
+
+AngularJS has one more directive that will selectively sanitize certain HTML tags while allowing others to be interpreted by a browser: `ng-bind-html`. Its usage is similar to the unsafe equivalent:
+
+    <p ng-bind-html="msg"></p>
+
+In terms of escaping the `ng-bind-html` directive is a compromise between behavior of the `ng-bind-html-unsafe` (allow all HTML tags) and the `interpolation` directive (allow no HTML tags at all). It might be a good alternative for cases where we want to allow some HTML tags entered by users.
+
+__Note:__The ng-bind-html directive resides in a separate module (ngSanitize) and requires inclusion of an additional source file: angular-sanitize.js.
+
+Don't forget to declare dependency on the `ngSanitize` module if you plan to use the `ng-bind-html` directive:
+
+```js
+angular.module('expressionsEscaping', ['ngSanitize'])
+  .controller('ExpressionsEscapingCtrl', function ($scope) {
+    $scope.msg = 'Hello, <b>World</b>!';
+  });
+```
+
+__Tip:__
+
+Unless you are working with existing legacy systems (CMS, back-ends sending HTML, and so on.), markup in the model should be avoided. Such markup can't contain AngularJS directives and requires the `ng-bind-html-unsafe` or `ng-bind-html` directive to obtain desired results.
+
 ### ng-model
 
 `ngModel` 用于 form 元素的双向绑定。 `ngModel` 负责:
@@ -265,65 +310,186 @@ function StartUpController($scope) {
 
 ### ng-repeat
 
+The `ng-repeat` directive is probably one of the most used and the most powerful directives. It will iterate over a collection of items stamping out a new DOM element for each entry in a collection. But the `ng-repeat` directive will do much more than simply assuring the initial rendering of a collection. It will constantly monitor the source of data to re-render a template in response to changes.
+
+Internally the `ng-repeat` might choose to move DOM nodes around (if you move an element in array), delete a DOM node if an element is removed from the array and insert new nodes if additional elements end up in the array. Regardless of the strategy chosen by a repeater behind the scenes it is crucial to realize that it is not a simple `for` loop that will run once. The `ng-repeat` directive behaves more like an observer of a data that tries to map entries in a collection to DOM nodes. The process of data-observing is continuous.
+
 `ng-repeat` creates a copy of a set of elements once for every item in a collection.
 
-To display this list of students, we can do something like the following:
+By using the `ng-repeat-start` and the `ng-repeat-end` attributes it will be possible to indicate a group of sibling DOM elements to be iterated over.
 
-    <ul ng-controller='StudentListController'>
-      <li ng-repeat='student in students'>
-        <a href='/student/view/{{student.id}}'>{{student.name}}</a>
-      </li>
-    </ul>
+The basic usage and syntax is very simple:
 
-    var students = [{name:'Mary Contrary', id:'1'},
-                    {name:'Jack Sprat', id:'2'},
-                    {name:'Jill Hill', id:'3'}];
+```html
+<table class="table table-bordered">
+  <tr ng-repeat="user in users">
+    <td>{{user.name}}</td>
+    <td>{{user.email}}</td>
+  </tr>
+</table>
+```
 
-    function StudentListController($scope) {
-      $scope.students = students;
-    }
+Here the `users` array is defined on a scope and contains typical user objects with properties like: `name`, `email`, and so on. The `ng-repeat` directive will iterate over users' collection and create a `<tr>` DOM element for each entry in a collection.
 
-As we’ve seen before, changing the student’s array will automatically change the rendered list. If we were to do something like inserting a new student into the list:
-
-    <ul ng-controller=''>
-      <li ng-repeat='student in students'>
-        <a href='/student/view/{{student.id}}'>{{student.name}}</a>
-      </li>
-    </ul>
-    <button ng-click="insertTom()">Insert</button>
-
-    var students = [{name:'Mary Contrary', id:'1'},
-                {name:'Jack Sprat', id:'2'},
-                {name:'Jill Hill', id:'3'}];
-
-    function StudentListController($scope) {
-      $scope.students = students;
-
-      $scope.insertTom = function () {
-        $scope.students.splice(1, 0, {name:'Tom Thumb', id:'4'});
-      };
-    }
+#### Special variables
 
 The ng-repeat directive also gives you references to the index of the current element via `$index`, and booleans that tell you if you’re on the first element, somewhere in the middle, or the last element of the collection with `$first`, `$middle`, and `$last`.
 You might imagine using the `$index` to label rows in a table. Given a template like this:
 
-    <table ng-controller='AlbumController'>
-      <tr ng-repeat='track in album'>
-        <td>{{$index + 1}}</td>
-        <td>{{track.name}}</td>
-        <td>{{track.duration}}</td>
-      </tr>
-    </table>
+```html
+<li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+  <span class="divider">/</span>
+  <ng-switch on="$last">
+    <span ng-switch-when="true">{{breadcrumb.name}}</span>
+    <span ng-switch-default>
+      <a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a>
+    </span>
+  </ng-switch>
+</li>
+```
 
-and this controller:
+#### Iterating over an object's properties
 
-    var album = [{name:'Southwest Serenade', duration: '2:34'},
-             {name:'Northern Light Waltz', duration: '3:21'},
-             {name:'Eastern Tango', duration: '17:45'}];
+Usually the `ng-repeat` directive is used to display entries from a JavaScript array. Alternatively it can be used to iterate over properties of an object. In this case the syntax is slightly different:
 
-    function AlbumController($scope) {
-      $scope.album = album;
-    }
+```js
+<li ng-repeat="(name, value) in user">
+    Property {{$index}} with {{name}} has value {{value}}
+</li>
+```
+
+In the preceding example, we can display all the properties of a user object as an unordered list. Please note that we must specify variable names for both a property name and its value using a bracket notation (`name`, `value`).
+
+The `ng-repeat` directive will, before outputting results, sort property names alphabetically. This behavior can't be changed so there is no way of controlling the iteration order while using `ng-repeat` with objects.
+
+Iterating over objects' properties, while being supported, has limitations. The main issue is that we can't control iteration order.
+
+#### ngRepeat patterns
+
+This section will walk us through some of the commonly used presentation patterns and ways of implementing them with AngularJS. In particular we are going to look into lists with details and altering classes on elements being part of a list.
+
+__Lists and details__
+
+It is a common use case to display a list whose items expand to show additional details, when they are clicked. There are two variants of this pattern: either only one element can be expanded or alternatively several expended elements are allowed. Here is the screenshot illustrating this particular UI design:
+
+![](http://johnnyimages.qiniudn.com/angular-ng-repeat.jpg)
+
+__Displaying only one row with details__
+
+The requirement of having only one element expanded can be easily covered with the following code:
+
+```html
+<table class="table table-bordered" ng-controller="ListAndOneDetailCtrl">
+  <tbody ng-repeat="user in users" ng-click="selectUser(user)" ng-switch on="isSelected(user)">
+    <tr>
+      <td>{{user.name}}</td>
+      <td>{{user.email}}</td>
+</tr>
+<tr ng-switch-when="true">
+      <td colspan="2">{{user.desc}}</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+In the preceding example an additional row, containing user details, is only rendered if a given user was selected. A selection process is very simple and is covered by the selectUser and isSelected functions:
+
+```js
+.controller('ListAndOneDetailCtrl', function ($scope, users) {
+  $scope.users = users;
+
+  $scope.selectUser = function (user) {
+    $scope.selectedUser = user;
+  };
+
+  $scope.isSelected = function (user) {
+    return $scope.selectedUser === user;
+  };
+})
+```
+
+Assuming that we would like to allow multiple rows with additional details we need to change a strategy. This time selection details need to be stored on each and every element level. As you remember the `ng-repeat` directive is creating a new scope for each and every element of a collection it iterates over. We can take advantage of this new scope to store "selected" state for each item:
+
+```html
+<table class="table table-bordered">
+  <tbody ng-repeat="user in users" ng-controller="UserCtrl"
+    ng-click="toggleSelected()" ng-switch on="isSelected()">
+    <tr>
+      <td>{{user.name}}</td>
+      <td>{{user.email}}</td>
+    </tr>
+    <tr ng-switch-when="true">
+      <td colspan="2">{{user.desc}}</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+This example is interesting since we are using the `ng-controller` directive for each item. A provided controller can augment scope with functions and variables to control selection state:
+
+```js
+.controller('UserCtrl', function ($scope) {
+
+  $scope.toggleSelected = function () {
+    $scope.selected = !$scope.selected;
+  };
+
+  $scope.isSelected = function () {
+    return $scope.selected;
+  };
+});
+```
+
+It is important to understand that specifying a controller on the same DOM element as the `ng-repeat` directive means that the controller will be managing a new scope created by a repeater. In practice it means that we can have a controller dedicated to managing individual items of a collection. It is a powerful pattern that allows us to neatly encapsulate item-specific variables and behavior (functions).
+
+__Altering tables, rows, and classes__
+
+Zebra-striping is often added to lists in order to improve their readability. AngularJS has a pair of directives (`ngClassEven` and `ngClassOdd`) that make this task trivial:
+
+```html
+<tr ng-repeat="user in users" 
+ng-class-even="'light-gray'" ng-class-odd="'dark-gray'">
+  . . . 
+</tr>
+```
+
+The `ngClassEven` and `ngClassOdd` directives are just specialization of the more generic `ngClass` directive. The `ngClass` is very versatile and can be applied in many different situations. To demonstrate its power we could rewrite the preceding example like follows:
+
+```html
+<tr ng-repeat="user in users" 
+ng-class="{'dark-gray' : !$index%2, 'light-gray' : $index%2}">
+```
+
+Here the `ngClass` directive is used with an object argument. Keys of this object are class names and values; conditional expressions. A class specified as a key will be added or removed from an element based on result of a corresponding expression evaluation.
+
+The `ng-class` directive can also accept arguments of type string or array. Both arguments can contain a list of CSS classes (coma-separated in case of string) to be added to a given element.
+
+### ng-click
+
+AngularJS has the built-in support for the different events with the following directives:
+
+* <span class="strong">**Click events**</span>: `ngClick` and `ngDblClick`
+* <span class="strong">**Mouse events**</span>: `ngMousedown`, `ngMouseup`, `ngMouseenter`, `ngMouseleave`, `ngMousemove` and `ngMouseover`
+* <span class="strong">**Keyboard events**</span>: `ngKeydown`, `ngKeyup` and `ngKeypress`
+* <span class="strong">**Input change event**</span> (`ngChange)`: The `ngChange` directive cooperates with the `ngModel` one, and let us to react on model changes initiated by user input.
+
+Mentioned DOM event handlers can accept a special argument `$event` in their expression, which represents the raw DOM event. This allows us to get access to lower-level properties of an event, prevent it default action, stop its propagation, and so on. As an example we can see how to read the position of a clicked element:
+
+```html
+<li ng-repeat="item in items" ng-click="logPosition(item, $event)">
+    {{item}}
+</li>
+```
+
+Where the `logPosition` function is defined on a scope like follows:
+
+```js
+$scope.readPosition = function (item, $event) {
+  console.log(item + ' was clicked at: ' + $event.clientX + ',' + $event.clientY);
+};
+```
+
+While the `$event` special variable is exposed to event handlers it shouldn't be abused to do extensive DOM manipulations. _Angular Zen_ AngularJS is all about declarative UI and DOM manipulation should be restricted to directives. This is why the `$event` argument is mostly used inside directive's code.
 
 ### ng-submit
 
@@ -376,6 +542,39 @@ function DeathrayMenuController($scope) {
 }
 ```
 
+### ng-switch
+
+If we want to physically remove or add DOM nodes conditionally the family of `ng-switch` directives (`ng-switch`, `ng-switch-when`, `ng-switch-default`) will come handy:
+
+```html
+<div ng-switch on="showSecret">
+  <div ng-switch-when="true">Secret</div>
+  <div ng-switch-default>Won't show you my secrets!</div>
+</div>
+```
+
+The `ng-switch` directive is really close to the JavaScript switch statement as we may have several `ng-switch-when` occurrences inside for one `ng-switch`.
+
+The main difference between the `ng-show`/`ng-hide` and the `ng-switch` directives is the way the DOM elements are treated. The `ng-switch` directive will add/remove DOM elements from the DOM tree while the `ng-show`/`ng-hide` will simply apply `style="display: none;"` to hide elements. The `ng-switch` directive is creating a new scope.
+
+The `ng-show`/`ng-hide` directives are easy to use but might have unpleasant performance consequences if applied to large number of DOM nodes. If you spot performance issues related to the size of DOM tree you should lean towards using more verbose `ng-switch` family of directives.
+
+### ng-if
+
+The problem with the `ng-switch` family of directives is that the syntax can get quite verbose for simple use-case. Fortunately AngularJS has one more directive in its arsenal: `ng-if`. It behaves similarly to the `ng-switch` directive (in the sense that it adds / removes elements from the DOM tree) but has very simple syntax:
+
+    <div ng-if="showSecret">Secret</div>
+
+### ng-include
+
+The `ng-include` directive, while not directly acting as the `if`/`else` statement, can be used to conditionally display blocks of dynamic, AngularJS-powered markup. The discussed directive has a very nice property. It can load and conditionally display partials based on a result of expression evaluation. This allows us to easily create highly dynamic pages. For example, we could include different user edit forms depending on the user's role. In the following code snippet we load a different partial for users that have administrator role:
+
+```html
+<div ng-include="user.admin && 'edit.admin.html' || 'edit.user.html'">
+</div>
+```
+
+The `ng-include` directive accepts an expression as its argument, so you need to pass a quoted string if you plan to use a fixed value pointing to a partial, for example, `<div ng-include="'header.tpl.html'"></div>`.
 
 ### ng-class & ng-style
 
@@ -671,66 +870,6 @@ $scope.$watch(function() {
 });
 ```
 
-### Filters
-
-Filters allow you to declare how to transform data for display to the user within an interpolation in your template. The syntax for using filters is:
-
-    {% raw %}
-    {{ expression | filterName : parameter1 : ...parameterN }} 
-    {% endraw %}
-
-where `expression` is any Angular expression, `filterName` is the name of the filter you want to use, and the `parameters` to the filter are separated by colons. The parameters themselves can be any valid Angular expression.
-
-Angular comes with several filters, like `currency`, which we’ve seen:
-
-    {% raw %}
-    {{12.9 | currency}}
-    {% endraw %}
-
-This bit of code will display the following: $12.90 We put this declaration in the view (rather than in the controller or model) because the dollar sign in front of the number is only important to humans, and not to the logic we use to process the number.
-
-Other filters that come with Angular include `date`, `number`, `uppercase`, and more.
-
-Filters can also be chained with additional pipe symbols in the binding. For example, we can format the previous example for no digits after the decimal by adding the number filter, which takes the number of decimals to round to as a parameter. So:
-
-    {% raw %}
-    {{12.9 | currency | number:0 }} 
-    {% endraw %}
-
-> displays: $13
-
-You’re not limited to the bundled filters, and it is simple to write your own. If we wanted to create a filter that title-cased strings for our headings, for example, we could do so as follows:
-
-```js
-var homeModule = angular.module('HomeModule', []);
-homeModule.filter('titleCase', function() {
-  var titleCaseFilter = function(input) {
-    var words = input.split(' ');
-    for (var i = 0; i < words.length; i++) {
-      words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-    }
-    return words.join(' ');
-  };
-  return titleCaseFilter;
-});
-```
-
-With a template like this:
-
-```html
-{% raw %}
-<body ng-app='HomeModule' ng-controller="HomeController">
-  <h1>{{pageHeading | titleCase}}</h1>
-</body>
-{% endraw %}
-```
-
-and inserting the pageHeading as a model variable via a controller:
-
-    function HomeController($scope) {
-      $scope.pageHeading = 'behold the majesty of your page title';
-    }
-
 ### $valid
 
 ```html
@@ -773,6 +912,8 @@ See:
 - [Form validation with AngularJS](http://www.ng-newsletter.com/posts/validations.html)
 
 ## Testing
+
+- [基于Karma和Jasmine的AngularJS测试 / Owen Chen](http://owenchen.duapp.com/index.php/jasmine-and-karma-test-angularjs/)
 
 ### Karma’s
 
@@ -825,9 +966,6 @@ AngularJS provides some nice mockups, as well as testing functions, to allow you
 
 Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but you don’t really need any. All you need to do is add a shortcut command to execute “karma start” and “karma run” from within your IDE. This can usually be done by adding a simple script to execute, or the actual shell command, depending on your choice of editor. You should see the results every time it finishes running, of course.
 
-## Test
-
-- [基于Karma和Jasmine的AngularJS测试 / Owen Chen](http://owenchen.duapp.com/index.php/jasmine-and-karma-test-angularjs/)
 
 ## Tools
 

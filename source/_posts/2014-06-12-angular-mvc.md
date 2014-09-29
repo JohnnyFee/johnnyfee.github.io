@@ -46,7 +46,7 @@ For instance, if you include the (fictitious) modules SnazzyUIWidgets and SuperD
 
     var appMod = angular.module('app', ['SnazzyUIWidgets', 'SuperDataSync'];
 
-### define
+### Registering services
 
 You define services with the module object’s API. There are three functions for creating generic services, with different levels of complexity and ability:
 
@@ -130,50 +130,152 @@ function (notificationsArchive, MAX_LEN) {
 });
 ```
 
-[And then supply configuration values outside of `NotificationsService`, on a module level as shown in the following code:]()
+And then supply configuration values outside of `NotificationsService`, on a module level as shown in the following code:
 
     myMod.constant('MAX_LEN', 10);
 
-[Constants are very useful for creating services that can be re-used across many different applications (as clients of a service can ]()[configure it at their will). There is only one disadvantage of using constants, that is, as soon as a service expresses a dependency on a constant, a value for this constant must be supplied. Sometimes it would be good to have default configuration values and allow clients to change them only when needed.]()
+Constants are very useful for creating services that can be re-used across many different applications (as clients of a service can configure it at their will). There is only one disadvantage of using constants, that is, as soon as a service expresses a dependency on a constant, a value for this constant must be supplied. Sometimes it would be good to have default configuration values and allow clients to change them only when needed.
 
-#### Privider
+#### Provider
 
-- `provider(name, Object OR constructor())` A configurable service with complex creation logic. If you pass an Object, it should have a function named `$get` that returns an instance of the service. Otherwise, Angular assumes you’ve passed a constructor that, when called, creates the instance.
+`provider(name, Object OR constructor())` A configurable service with complex creation logic. If you pass an Object, it should have a function named `$get` that returns an instance of the service. Otherwise, Angular assumes you’ve passed a constructor that, when called, creates the instance.
 
+All the registration methods described so far are just special cases of the most generic, ultimate version of all of them, `provider`. Here is the example of registering the `notificationsService` service as a provider:
 
-We’ll look at the configuration option for `provider()` later, but let’s discuss an example with `factory()` for our preceding Items example. We can write the service like this:
+```js
+myMod.provider('notificationsService', function () {
 
+    var config = {
+      maxLen : 10
+    };
+    var notifications = [];
+
+    return {
+      setMaxLen : function(maxLen) {
+        config.maxLen = maxLen || config.maxLen;
+      },
+
+      $get : function(notificationsArchive) {
+        return {
+          push:function (notification) {
+            …
+            if (newLen > config.maxLen) {
+              …
+            }
+          },
+          // other methods go here
+        };
+      }
+    };
+  });
 ```
-// Create a module to support our shopping views
-var shoppingModule = angular.module('ShoppingModule', []);
 
-// Set up the service factory to create our Items interface to the
-// server-side database
-shoppingModule.factory('Items', function() {
-  var items = {};
-  items.query = function() {
-    // In real apps, we'd pull this data from the server...
-    return [
-      {title: 'Paint pots', description: 'Pots full of paint', price: 3.95},
-      {title: 'Polka dots', description: 'Dots with polka, price: 2.95},
-      {title: 'Pebbles', description: 'Just little rocks', price: 6.95}
-    ];
-  };
-  return items;
+Firstly a `provider` is a function that must return an object containing the `$get` property. The mentioned `$get` property is a factory function, that when invoked should return a `service` instance. We can think of providers as objects that embed factory functions in their `$get` property.
+
+Next, an object returned from a `provider` function can have additional methods and properties. Those are exposed, so it is possible to set configuration options before the `$get` (factory) method gets invoked. Indeed, we can still set the `maxLen` configuration property, but we are no longer obliged to do so. Furthermore, it is possible to have more complex configuration logic, as our services can expose configuration methods and not only simple configuration values.
+
+### Services and their visibility across module
+
+[Services defined on sibling modules are also visible to each other. We could move a `car` service ]()[into a separate module, and then change module dependencies, so that an application depends on both the `engines` and `cars` modules as follows:]()
+
+```js
+angular.module('app', ['engines', 'cars'])
+
+angular.module('cars', [])
+  .factory('car', function ($log, dieselEngine) {
+    return {
+      start: function() {
+        $log.info('Starting ' + dieselEngine.type);
+      }
+    };
+  });
+
+angular.module('engines', [])
+  .factory('dieselEngine', function () {
+    return {
+      type: 'diesel'
+    };
+  });
+```
+
+[In the preceding case an `engine` can still be injected into a `car` without any problem.]()
+
+[Since AngularJS combines all the services from all the modules into one big, application-level set of services there can be one and only one service with a given name. We can use this to our advantage in cases where we want to depend on a module, but at the same time override some of the services from this module. To illustrate this, we can redefine the `dieselEngine` service directly in the `cars` module in the following manner:]()
+
+```js
+angular.module('app', ['engines', 'cars'])
+  .controller('AppCtrl', function ($scope, car) {
+    car.start();
+  });
+
+angular.module('cars', [])
+  .factory('car', function ($log, dieselEngine) {
+    return {
+      start: function() {
+        $log.info('Starting ' + dieselEngine.type);
+      };
+    }
+  })
+
+  .factory('dieselEngine', function () {
+    return {
+      type: 'custom diesel'
+    };
+  });
+```
+
+[In this case, the `car` service will be injected with the `dieselEngine` service defined in the same module as that of the `car` service. The `car` module level, `dieselEngine`, will override (shadow) the `dieselEngine` ]()[service defined under the `engines` module.]()
+
+__Note:__ There can be one and only one service with a given name in an AngularJS application. Services defined in the modules closer to the root of modules hierarchy will override those defined in child modules.
+
+## Modules lifecycle
+
+In the previous paragraphs, we could see that AngularJS supports various recipes for object's creation. A `provider` is a special kind of recipe, since it can be further configured before it produces any object instances. To effectively support providers, AngularJS splits module's lifecycle into two phases, which are as follows:
+
+- __The configuration phase:__ It is the phase where all the recipes are collected and configured
+- __The run phase:__ It is the phase where we can execute any post-instantiation logic
+
+### The configuration phase
+
+Providers can be configured only during the configuration (first) phase. Surely, it doesn't make sense to change a recipe after objects are baked, right? Providers can be configured as shown in the following code:
+
+```js
+myMod.config(function(notificationsServiceProvider){
+    notificationsServiceProvider.setMaxLen(5);
 });
 ```
 
+The important thing to notice here is a dependency on the `notificationsServiceProvider` objects with the `Provider` suffix representing the recipes that are ready to be executed. The configuration phase allows us to do the last-moment tweaks to the objects' creation formula.
+
+### The run phase
+
+The run phase allows us to register any work that should be executed upon the application's bootstrap. One could think of the run phase as an equivalent of the main method in other programming languages. The biggest difference is that AngularJS modules can have multiple configure and run blocks. In this sense, there is not even a single entry point (a running application is truly a collection of collaborating objects).
+
+To illustrate how the run phase could be useful, let's imagine that we need to display application's start time (or uptime) to the users. To support this requirement, we could set application's start time as a property of the `$rootScope` instance as follows:
+
 ```js
-function ShoppingController($scope, Items) {...}
+angular.module('upTimeApp', []).run(function($rootScope) {
+    $rootScope.appStarted = new Date();
+});
 ```
 
-When Angular creates the `ShoppingController`, it will pass in `$scope` and the new Items service that we’ve just defined. This is done by parameter name matching. That is, Angular looks at the function signature for our `ShoppingController` class, and notices that it is asking for an `Items` object. Since we’ve defined Items as a service, it knows where to get it.
+And then retrieve it any template, as given in the following code:
 
-The result of looking up these dependencies as strings means that the arguments of injectable functions like controller constructors are order-independent. So instead of this:
+    Application started at: {appStarted}
 
-we can write this:
 
-    function ShoppingController(Items, $scope) {...}
+#### Different phases and different registration methods
+
+Let's summarize different methods of creating objects and how those methods correspond to module's lifecycle phases:
+
+
+&nbsp; | What gets registered?| Injectable during the configuration phase? | Injectable during the run phase?
+---------- | ------------------ | --------- | --------
+Constant   | Constant's value  | Yes  | Yes
+Variable   | Variable's value   | -  | Yes
+`Service`  | A new object created by a constructor function      | -  | Yes
+`Factory`  | A new object returned from a `factory` function     | -  | Yes
+`Provider` | A new object created by the `$get` factory function | Yes| -  
 
 ## Controller
 

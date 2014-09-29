@@ -20,6 +20,8 @@ See also [angular/angular-seed](https://github.com/angular/angular-seed).
 
         npm install -g generator-angular
 
+<!--more-->
+
 1. Starting a Fresh AngularJS project
         
         mkdir my-new-project && cd my-new-project

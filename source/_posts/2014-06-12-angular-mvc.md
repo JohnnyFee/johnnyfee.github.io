@@ -15,11 +15,14 @@ tags : [angular, tutorial]
 
 See [AngularJS: Developer Guide: Modules](https://docs.angularjs.org/guide/module) / 翻译 [AngularJs学习笔记--Modules - Lcllao - 博客园](http://www.cnblogs.com/lcllao/archive/2012/09/22/2698208.html)
 
+<!--more-->
+
 ## Services
 
 Services are singleton (single-instance) objects that carry out the tasks necessary to support your application’s functionality. Angular comes with many services like `$location`, for interacting with the browser’s location, `$route`, for switching views based on location (URL) changes, and` $http`, for communicating with servers.
 
-<!--more-->
+In AngularJS the word service can refer to either the method of registering constructor functions (as shown in the previous example) or any singleton object that is created and managed by AngularJS DI system, regardless of the method of registering used (this is what most people mean by using the word service in the context of AngularJS modules).
+
 
 With modules, and the dependency injection we get from them, we can write our controller much more simply, like this:
 
@@ -47,11 +50,96 @@ For instance, if you include the (fictitious) modules SnazzyUIWidgets and SuperD
 
 You define services with the module object’s API. There are three functions for creating generic services, with different levels of complexity and ability:
 
+#### Values
+
+The easiest way of having AngularJS to manage an object is to register a pre-instantiated one as follows:
+
+```js
+var myMod = angular.module('myMod', []);
+myMod.value('notificationsArchive', new NotificationsArchive());
+```
+
+Any service managed by AngularJS' DI mechanism needs to have a unique name (for example, `notificationsArchive` in the preceding example). What follows is a recipe for creating new instances.
+
+Value objects are not particularly interesting, since object registered via this method can't depend on other objects. This is not much of the problem for the `NotificationArchive` instance, since it doesn't have any dependencies. In practice, this method of registration only works for very simple objects usually expressed as instances of built-in objects or object literals).
+
+#### Services
+
+`service(name, constructor())` A non-configurable service with simple creation logic. Like the constructor option with provider, Angular calls it to create the service instance.
+
+We can't register the NotificationsService service as a value object, since we need to express a dependency on an archive service. The simplest way of registering a recipe for objects, depending on other objects, is to register a constructor function. We can do this using the `service` method as follows:
+
+    myMod.service('notificationsService', NotificationsService);
+
+where the `NotificationsService` constructor function can now be written as follows:
+
+```js
+var NotificationsService = function (notificationsArchive) {
+    this.notificationsArchive = notificationsArchive;
+};
+```
+
+By using AngularJS dependency injection we could eliminate the `new` keyword from the `NoficiationsService` constructor function. Now this service is not concerned with dependencies instantiation and can accept any archiving service. Our simple application is much more flexible now!
+
+In practice the `service` method is not commonly used but might come in handy for registering pre-existing constructor functions, and thus make AngularJS manage objects created by those constructors.
+
+#### Factories
+
+`factory(name, $getFunction())` A non-configurable service with complex creation logic. You specify a function that, when called, returns the service instance. You could think of this as `provider(name, { $get: $getFunction() } )`.
+
+
+It is more flexible as compared to the `service` method, since we can register any arbitrary object-creating function. An example is shown in the following code
+
+```js
+myMod.factory('notificationsService',function(notificationsArchive){
+
+    var MAX_LEN = 10;
+    var notifications = [];
+
+    return {
+      push:function (notification) {
+        var notificationToArchive;
+        var newLen = notifications.unshift(notification);
+
+        //push method can rely on the closure scope now!
+        if (newLen > MAX_LEN) {
+          notificationToArchive = this.notifications.pop();
+          notificationsArchive.archive(notificationToArchive);
+        }
+      },
+      // other methods of the NotificationsService
+    };
+```
+
+AngularJS will use a supplied `factory` function to register an object returned. It can be any valid JavaScript object, including `function` objects!
+
+The `factory` method is the most common way of getting objects into AngularJS dependency injection system. It is very flexible and can contain sophisticated creation logic. Since factories are regular functions, we can also take advantage of a new lexical scope to simulate "private" variables. This is very useful as we can hide implementation details of a given service. Indeed, in the preceding example we can keep the `notificationToArchive` service, all the configuration parameters (`MAX_LEN`) and internal state (`notifications`) as "private".
+
+#### Constants
+
+Our `NotificationsService` is getting better and better, it is decoupled from its collaborators and hides its private state. ]()[Unfortunately, it still has a hard-coded configuration `MAX_LEN` constant. AngularJS has a remedy for this, that is, constants can be defined on a module level and injected as any other collaborating object.
+
+Ideally, we would like to have our `NotificationsService` service to be provided with a configuration value in the following manner:
+
+```js
+myMod.factory('notificationsService', 
+
+function (notificationsArchive, MAX_LEN) {
+  …
+  //creation logic doesn't change
+});
+```
+
+[And then supply configuration values outside of `NotificationsService`, on a module level as shown in the following code:]()
+
+    myMod.constant('MAX_LEN', 10);
+
+[Constants are very useful for creating services that can be re-used across many different applications (as clients of a service can ]()[configure it at their will). There is only one disadvantage of using constants, that is, as soon as a service expresses a dependency on a constant, a value for this constant must be supplied. Sometimes it would be good to have default configuration values and allow clients to change them only when needed.]()
+
+#### Privider
+
 - `provider(name, Object OR constructor())` A configurable service with complex creation logic. If you pass an Object, it should have a function named `$get` that returns an instance of the service. Otherwise, Angular assumes you’ve passed a constructor that, when called, creates the instance.
 
-- `factory(name, $getFunction())` A non-configurable service with complex creation logic. You specify a function that, when called, returns the service instance. You could think of this as `provider(name, { $get: $getFunction() } )`.
-
-- `service(name, constructor())` A non-configurable service with simple creation logic. Like the constructor option with provider, Angular calls it to create the service instance.
 
 We’ll look at the configuration option for `provider()` later, but let’s discuss an example with `factory()` for our preceding Items example. We can write the service like this:
 

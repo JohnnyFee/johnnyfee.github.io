@@ -15,7 +15,7 @@ tags : [angular, tutorial]
 
 ## filter的两种使用方法
 
-### 1. 在模板中使用filter
+### 在模板中使用filter
 
 我们可以直接在{{}}中使用filter，跟在表达式后面用 | 分割，语法如下：
 
@@ -91,13 +91,13 @@ ng内置了九种过滤器，使用方法都非常简单，看文档即懂。不
 
 ### Formatting filters
 
-#### 1. currency (货币处理)
+#### currency (货币处理)
 
 使用currency可以将数字格式化为货币，默认是美元符号，你可以自己传入所需的符号，例如我传入人民币：
 
     {{num | currency : '￥'}}
 
-#### 2. date (日期格式化)
+#### date (日期格式化)
 
 原生的js对日期的格式化能力有限，ng提供的date过滤器基本可以满足一般的格式化要求。Model can contain dates expressed as Date objects or as Strings (in this case Strings will be parsed to a Date object before formatting). 用法如下：
 
@@ -105,7 +105,7 @@ ng内置了九种过滤器，使用方法都非常简单，看文档即懂。不
 
 参数用来指定所要的格式，y M d h m s E 分别表示 年 月 日 时 分 秒 星期，你可以自由组合它们。也可以使用不同的个数来限制格式化的位数。另外参数也可以使用特定的描述性字符串，例如“shortTime”将会把时间格式为12:05 pm这样的。ng提供了八种描述性的字符串，个人觉得这些有点多余，我完全可以根据自己的意愿组合出想要的格式，不愿意去记这么多单词~
 
-#### 4. json(格式化json对象)
+#### json(格式化json对象)
 
 json过滤器可以把一个js对象格式化为json字符串，没有参数。这东西有什么用呢，我一般也不会在页面上输出一个json串啊，官网说它可以用来进行调试，嗯，是个不错的选择。或者，也可以用在js中使用，作用就和我们熟悉的JSON.stringify()一样。用法超级简单：
 
@@ -113,11 +113,11 @@ json过滤器可以把一个js对象格式化为json字符串，没有参数。�
 
 This filter is mostly useful for debugging purposes as it can assure "pretty-print" for JavaScript objects. Typical usage looks like follows: `{{someObject | json}}`. It is mostly used for debugging purposes.
 
-#### 6. lowercase(小写)/uppercase(大写)
+#### lowercase(小写)/uppercase(大写)
 
 把数据转化为全部小写。太简单了，不多解释。同样是很鸡肋的一个filter，没有参数，只能把整个字符串变为小写，不能指定字母。怎么用我都懒得写了。
 
-#### 8. number(格式化数字)
+#### number(格式化数字)
 
 number过滤器可以为一个数字加上千位分割，像这样，123,456,789。同时接收一个参数，可以指定float类型保留几位小数：
 
@@ -125,7 +125,7 @@ number过滤器可以为一个数字加上千位分割，像这样，123,456,789
 
 ### Array-transforming filters
 
-#### 3. filter(匹配子串)
+#### filter(匹配子串)
 
 This is a general-purpose filtering utility. It is very flexible and supports many options to precisely select elements from a collection.
 
@@ -152,7 +152,7 @@ $scope.func = function(e){return e.age>4;}
 > 
 > {{childrenArray | filter : func }}  //参数是函数，指定返回age>4的
 
-#### 9.orderBy(排序)
+#### orderBy(排序)
 
 orderBy过滤器可以将一个数组中的元素进行排序，接收一个参数来指定排序规则，参数可以是一个字符串，表示以该属性名称进行排序。可以是一个函数，定义排序属性。还可以是一个数组，表示依次按数组中的属性值进行排序（若按第一项比较的值相等，再按第二项比较），还是拿上面的孩子数组举例：
 
@@ -162,7 +162,7 @@ orderBy过滤器可以将一个数组中的元素进行排序，接收一个参�
 
 内置的过滤器介绍完了，写的我都快睡着了。。。正如你所看到的，ng内置的过滤器也并不是万能的，事实上好多都比较鸡肋。更个性化的需求就需要我们来定义自己的过滤器了，下面来看看如何自定义过滤器。
 
-#### 5. limitTo(限制数组长度或字符串长度)
+#### limitTo(限制数组长度或字符串长度)
 
 limitTo过滤器用来截取数组或字符串，接收一个参数用来指定截取的长度，如果参数是负值，则从数组尾部开始截取。个人觉得这个filter有点鸡肋，首先只能从数组或字符串的开头/尾部进行截取，其次，js原生的函数就可以代替它了，看看怎么用吧：
 

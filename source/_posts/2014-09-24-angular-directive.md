@@ -9,6 +9,8 @@ tags : [angular, tutorial]
 
 Directives extend HTML syntax, and are the way to associate behavior and DOM transformations with custom elements and attributes. Through them, you can create reusable UI components, configure your application, and do almost anything else you can imagine wanting to do in your UI template.
 
+![](http://johnnyimages.qiniudn.com/angular-directive-what.jpg)
+
 You can write apps with the built-in directives that come with Angular, but you’ll likely run into situations where you want to write your own. You’ll know it’s time to break into directives when you want to deal with __browser events or modify the DOM__ in a way that isn’t already supported by the built-in directives. This code of yours belongs in a directive that you write, and not in a controller, service, or any other place in your app.
 
 相对 JQuery 实现控件的方式，Directives 更具语义性，从 HTML 便可知控件的含义。
@@ -24,10 +26,12 @@ As with services, you define directives through the module object’s API by cal
 
 一个Angular指令可以有以下的四种表现形式：
 
-1. 一个新的HTML元素（`<data-picker></data-picker>`）
-2. 元素的属性（`<input type=”text” data-picker/>`）
-3. CSS class（`<input type=”text” class=”data-picker”/>`）
-4. 注释（`<!- directive:data-picker –>`）
+指令形式 | `restrict` 属性值 |示例
+---------|------------|----
+新的HTML元素 | 'E' | `<data-picker></data-picker>`
+元素的属性 | 'A' | `<input type="text" data-picker/>`
+CSS 类 | 'C' | `<input type="text" class="data-picker"/>`
+注释 | 'M' |`<!- directive:data-picker –>`
 
 指令注册的方式与 controller 一样，但是它返回的是一个拥有指令配置属性的简单对象(指令定义对象) 。下面的代码是一个简单的 Hello World 指令。
 
@@ -45,21 +49,17 @@ app.directive('helloWorld', function() {
 
 在上面的代码中，`app.directive()` 方法在模块中注册了一个新的指令。这个方法的第一个参数是这个指令的名字。第二个参数是一个返回指令定义对象的函数。如果你的指令依赖于其他的对象或者服务，比如 `$rootScope`, `$http`, 或者 `$compile`，他们可以在这个时间被注入。
 
-这个指令在HTML中以一个元素使用，如`<hello-world/>` 或者 `<hello:world/>`。
+__使用方法：__
 
-也可以以一个属性的方式使用，如 `<div hello-world></div>` 或者 `<div hello:world/>`。
-
-如果你想要符合HTML5的规范，你可以在元素前面添加 x- 或者 data-的前缀。所以下面的标记也会匹配 helloWorld 指令，如 `<div data-hello-world></div>` 或者 `<div x-hello-world></div>`。
-
-在匹配指令的时候，Angular会在元素或者属性的名字中剔除 x- 或者 data- 前缀。 然后将 – 或者 : 连接的字符串转换成驼峰(camelCase)表现形式，然后再与注册过的指令进行匹配。这是为什么，我们在HTML中以 hello-world 的方式使用 helloWorld 指令。其实，这跟HTML对标签和属性不区分大小写有关。
+- 这个指令在HTML中以一个元素使用，如`<hello-world/>` 或者 `<hello:world/>`。
+- 也可以以一个属性的方式使用，如 `<div hello-world></div>` 或者 `<div hello:world/>`。
+- 如果你想要符合HTML5的规范，你可以在元素前面添加 x- 或者 data-的前缀。所以下面的标记也会匹配 helloWorld 指令，如 `<div data-hello-world></div>` 或者 `<div x-hello-world></div>`。
+ 
+    在匹配指令的时候，Angular会在元素或者属性的名字中剔除 x- 或者 data- 前缀。 然后将 – 或者 : 连接的字符串转换成驼峰(camelCase)表现形式，然后再与注册过的指令进行匹配。这是为什么，我们在HTML中以 hello-world 的方式使用 helloWorld 指令。其实，这跟HTML对标签和属性不区分大小写有关。
 
 我们在指令定义过程中使用了三个属性来配置指令：
 
 - `restrict` 这个属性用来指定指令在HTML中如何使用（还记得之前说的，指令的四种表示方式吗）。在上面的例子中，我们使用了 'AE'。所以这个指令可以被当作新的HTML元素或者属性来使用。如果要允许指令被当作class来使用，我们将 restrict 设置成 'AEC'。
-
-    1.  `<span class="str">'A'</span>` - only matches attribute name
-    2.  `<span class="str">'E'</span>` - only matches element name
-    3.  `<span class="str">'C'</span>` - only matches class name
 
 - `template`/`templateUrl` 这个属性规定了指令被Angular编译和链接（link）后生成的HTML标记。这个属性值不一定要是简单的字符串。template 可以非常复杂，而且经常包含其他的指令，以及表达式(`{%raw%}{{ }}{%raw%}`)等。`template` 只用于 templete 内容比较少的情况，更多的情况下你可能会见到 `templateUrl`。所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
 - `replace` 这个属性指明生成的HTML内容是否会替换掉定义此指令的HTML元素。在我们的例子中，我们用 `<hello-world></hello-world>` 的方式使用我们的指令，并且将 replace 设置成 true。所以，在指令被编译之后，生成的模板内容替换掉了 `<hello-world></hello-world>`。最终的输出是 `<h3>Hello World!!</h3>`。如果你将 replace 设置成 false，也就是默认值，那么生成的模板会被插入到定义指令的元素中。
@@ -68,9 +68,21 @@ app.directive('helloWorld', function() {
 
 ## Link
 
-指令生成出的模板其实没有太多意义，除非它在特定的scope下编译。默认情况下，指令并不会创建新的子scope。更多的，它使用父scope，也就是说，如果指令存在于一个controller下，它就会使用这个controller的scope。
+指令的 link 函数主要用来为 DOM 元素添加事件监听、监视模型属性变化、以及更新 DOM。我们可以在 link 函数中访问指令的 scope。
 
-如何运用scope，我们要用到一个叫做 link 的函数。它由指令定义对象中的link属性配置。让我们来改变一下我们的 helloWorld 指令，当用户在一个输入框中输入一种颜色的名称时，Hello World 文字的背景色自动发生变化。同时，当用户在 Hello World 文字上点击时，背景色变回白色。 相应的HTML标记如下：
+link 函数有三个参数：
+
+- `$scope` 指令的scope。在我们的例子中，指令的scope就是父 controller 的 scope。
+- `$elem` 指令的 jQLite(jQuery的子集)包装DOM元素。如果你在引入 AngularJS 之前引入了 jQuery，那么这个元素就是 jQuery 元素，而不是 jQLite 元素。由于这个元素已经被 jQuery/jQLite 包装了，所以我们就在进行DOM操作的时候就不需要再使用 $() 来进行包装。$element === angular.element() === jQuery() === $()。
+- `$attr` 一个包含了指令所在元素的属性的标准化的参数对象。举个例子，你给一个 HTML元素添加了一些属性：`<hello-world some-attribute=""></hello-world>`，那么可以在 link 函数中通过 `$attrs.someAttribute` 来使用它。
+
+    如果你也有一个包含 `{{}}` 的属性，这个属性需要计算，并且可能改变多次。你可以使用 `$attributes.$observe('myOtherAttribute', function(newValue))` 来监听属性的改变，而不是 `$scope.$watch()`。`$observe` 第一个参数为属性名，回调函数只有一个参数 `newValue`，表示经过计算的新值。和 `$watch` 的区别为当表达式的值改变时，`$observe` 仅且仅被触发一次，而 `$watch` 可能被触发多次。
+
+    这意味着你只能异步地访问属性。如果你非要在表达式计算之前访问属性，你应该在 Compile 函数中完成。
+
+让我们来改变一下我们的 helloWorld 指令，当用户在一个输入框中输入一种颜色的名称时，Hello World 文字的背景色自动发生变化。同时，当用户在 Hello World 文字上点击时，背景色变回白色。 
+
+相应的HTML标记如下：
 
 ```html
 <body ng-controller="MainCtrl">
@@ -102,25 +114,11 @@ app.directive('helloWorld', function() {
 });
 ```
 
-我们注意到指令定义中的 link 函数。 它有三个参数：
-
-- `$scope` 指令的scope。在我们的例子中，指令的scope就是父controller的scope。
-- `$elem` 指令的jQLite(jQuery的子集)包装DOM元素。如果你在引入AngularJS之前引入了jQuery，那么这个元素就是jQuery元素，而不是jQLite元素。由于这个元素已经被jQuery/jQLite包装了，所以我们就在进行DOM操作的时候就不需要再使用 $()来进行包装。$element === angular.element() === jQuery() === $()。You still cannot rely upon children or following-siblings since they have not been linked yet.
-- `$attr` 一个包含了指令所在元素的属性的标准化的参数对象。举个例子，你给一个HTML元素添加了一些属性：`<hello-world some-attribute=""></hello-world>`，那么可以在 link 函数中通过 `$attrs.someAttribute` 来使用它。
-
-    If you have a _sibling_ attribute that will contain `{{}}` then the attribute will need to be evaluated and could even change multiple times. **Don't do this manually!**
-
-    Instead use `$attributes.$observe('myOtherAttribute', function(newValue))` exactly as you would have used `$scope.$watch()`. The only difference in the first argument is the attribute name (not an expression) and the callback function only has `newValue` (already evaluated for you). It will re-fire the callback every single time the evaluation changes too.
-
-    **NOTE:** This means that you can only access this attribute _asynchronously_
-
-    **NOTE:** If you want to _reliably_ access the attribute pre-evaluation then you should do it in the CompileFunction
-
-link 函数主要用来为DOM元素添加事件监听、监视模型属性变化、以及更新DOM。在上面的指令代码片段中，我们添加了两个事件，click 和 mouseover。click 处理函数用来重置 `<p>` 的背景色，而 mouseover 处理函数改变鼠标为 pointer。在模板中有一个表达式 `{{color}}`，当父 scope 中的 color 发生变化时，它用来改变 Hello World 文字的背景色。 这个 [plunker](http://plnkr.co/edit/14q6WxHyhWuVxEIqwww1) 演示了这些概念。
+在上面的指令代码片段中，我们添加了两个事件，`click` 和 `mouseover`。`click` 处理函数用来重置 `<p>` 的背景色，而 `mouseover` 处理函数改变鼠标为 pointer。在模板中有一个表达式 `{{color}}`，当父 scope 中的 color 发生变化时，它用来改变 Hello World 文字的背景色。
 
 ### Pre vs Post Linking Functions
 
-Anywhere you can use a `LinkingFunction()`, you can alternatively use an object with a pre and post linking function. [Oddly enough](https://github.com/angular/angular.js/issues/2592), a `LinkingFunction()` is a `PostLinkingFunction()` by default:
+凡是你使用 link 函数的地方，你都可以使用一个 pre 和 post 属性组成的对象，这两个属性分别表示前处理链接链接函数和后处理链接链接函数。默然情况下，链接函数指的是后处理链接函数，See [Oddly enough](https://github.com/angular/angular.js/issues/2592)。
 
 ```js
 link: function LinkingFunction($scope, $element, $attributes) { ... }
@@ -131,29 +129,26 @@ link: {
 }
 ```
 
-The difference is that `PreLinkingFunction()` will fire on the parent first, then child, and so on. A `PostLinkingFunction()` goes in reverse, firing on the child first, then parent, and so on. Here's a demo: http://plnkr.co/edit/qrDMJBlnwdNlfBqEEXL2?p=preview
-
-**When do I want this reverse `PostLinking` behavior?** Sometimes jQuery plugins need to know the number and size of children DOM element's (such as slideshows or layout managers like Isotope). There are a few ways to support these:
-
-* **(Worst)** Delay the plugin's execution using [$timeout](http://docs.angularjs.org/api/ng.%24timeout)
-* Nested directives. If each child has a directive, it can  `require: '^parentDirective'` which will give you access to the `parentDirective` controller.
-
-    * If you use the `PreLinkingFunction()` on `parentDirective`, you can instantiate the container empty, and use then update it every time the 
-
-**This does _NOT_ accomodate for async changes such as loading `$scope` data via AJAX**
+前处理链接函数先在父元素上触发，然后再子元素上触发，后处理链接函数相反，先在子元素上触发，让后在父元素上触发。See a demo: <http://plnkr.co/edit/qrDMJBlnwdNlfBqEEXL2?p=preview>。
 
 If you need to wait till your `$scope` data finishes loading try using [ng-if](http://docs.angularjs.org/api/ng/directive/ngIf) to defer linking of a block of DOM.
 
 The pre-linking and post-linking phases are executed by the compiler. The pre-link function is executed before the child elements are linked, while the post-link function is executed after. It is only safe to do DOM transformations after the post-link function.
 
+Pre-linking 和 post-linking 都是被 compiler 执行的。Pre-linking 是在所有子元素被链接之前执行，而 post-ling 是在所有子元素链接之后。只有在 post-link 函数中做 DOM 变换才是安全的。
+
+See [Understanding Directives · angular/angular.js Wiki](https://github.com/angular/angular.js/wiki/Understanding-Directives)。
+
 ## Compile
 
-compile 函数在 link 函数被执行之前用来做一些DOM改造。它接收下面的参数：
+compile 函数在 link 函数被执行之前用来做一些 DOM 改造。它接收下面的参数：
 
-- tElement – 指令所在的元素
-- attrs – 元素上赋予的参数的标准化列表
+- element – 指令所在的元素
+- attributes – 元素上赋予的参数的标准化列表
 
-要注意的是 compile 函数不能访问 scope，并且必须返回一个 link 函数。但是如果没有设置 compile 函数，你可以正常地配置 link 函数，（有了compile，就不能用link，link函数由compile返回）。compile函数可以写成如下的形式：
+要注意的是 compile 函数不能访问 scope，并且必须返回一个 link 函数。只能在链接函数中使用 DOM，因为在编译函数中可能移除或复制元素。如果没有设置 compile 函数，你可以正常地配置 link 函数，有了compile，就不能用link，link函数由compile返回。
+
+compile函数可以写成如下的形式：
 
 ```js
 myApp.directive('directiveName', function(){
@@ -186,23 +181,33 @@ myApp.directive('directiveName', function(){
 })
 ```
 
-你只能在链接函数中访问 `$scope`，也只能在链接函数中使用 DOM，因为在编译函数中可能移除或复制元素。
-
 大多数的情况下，你只需要使用 link 函数。这是因为大部分的指令只需要考虑注册事件监听、监视模型、以及更新DOM等，这些都可以在 link 函数中完成。 但是对于像 ng-repeat 之类的指令，需要克隆和重复 DOM 元素多次，在 link 函数执行之前由 compile 函数来完成。这就带来了一个问题，为什么我们需要两个分开的函数来完成生成过程，为什么不能只使用一个？要回答好这个问题，我们需要理解指令在Angular中是如何被编译的！
 
-### 指令是如何被编译的
+## 生命周期
 
-当应用引导启动的时候，Angular开始使用 $compile 服务遍历DOM元素。这个服务基于注册过的指令在标记文本中搜索指令。一旦所有的指令都被识别后，Angular执行他们的 compile 方法。如前面所讲的，compile 方法返回一个 link 函数，被添加到稍后执行的 link 函数列表中。这被称为编译阶段。如果一个指令需要被克隆很多次（比如 ng-repeat），compile函数只在编译阶段被执行一次，复制这些模板，但是link 函数会针对每个被复制的实例被执行。所以分开处理，让我们在性能上有一定的提高。这也说明了为什么在 compile 函数中不能访问到scope对象。
+### 编译
+
+当应用引导启动的时候，Angular 开始使用 $compile 服务遍历 DOM 元素，试图使用注册过的指令列表来匹配每个元素、属性、注释、CSS 类，一旦匹配，AngularJS 调用相应指令的 compile 函数，这个 compile 函数返回一个 link 函数，被添加到稍后执行的 link 函数列表中。
+
+The compilation stage is done before the scope has been prepared, and no scope data is available in the compile function.
+
+Once all the directives have been compiled, AngularJS creates the scope and links each directive to the scope by calling each of the linking functions.
+
+如果一个指令需要被克隆很多次（比如 ng-repeat），compile函数只在编译阶段被执行一次，复制这些模板，但是link 函数会针对每个被复制的实例被执行。所以分开处理，让我们在性能上有一定的提高。这也说明了为什么在 compile 函数中不能访问到 scope 对象。
 
 在编译阶段之后，就开始了链接（linking）阶段。在这个阶段，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的scope下被解析和处理，然后返回具有事件响应的真实的DOM节点。
 
-## Extending Directives
+### 链接
 
-Lets say you want to use a 3rd-party directive, but you want to extend it without modifying it. There are several ways you can go about doing this.
+
+
+## 扩展指令
+
+假如你想使用第三方指令，但又不想修改它，我们一下这些方法来达到这个目标。
 
 ### Global Configurations
 
-Some well-designed directives (such as those found in AngularUI) can be configured globally so that you do not have to pass in your options into every instance.
+一些好的指令（AngularUI）可以做一些全局配置，这要你就不需要在每个实例中传入你的配置项了。
 
 ### Require Directives
 
@@ -648,8 +653,6 @@ __Best Practice:__ Directives should clean up after themselves. You can use elem
 - [A Practical Guide to AngularJS Directives - SitePoint](http://www.sitepoint.com/practical-guide-angularjs-directives/) / 翻译 [AngularJS 指令（Directives）实践指南（一） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide/)
 - [A Practical Guide to AngularJS Directives (Part Two) - SitePoint](http://www.sitepoint.com/practical-guide-angularjs-directives-part-two/) / 翻译 [AngularJS 指令（Directives）实践指南（二） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-b/)
 - [AngularJS: Developer Guide: Directives](https://docs.angularjs.org/guide/directive)
-- [Understanding Directives · angular/angular.js Wiki](https://github.com/angular/angular.js/wiki/Understanding-Directives)
-
 ## Tutorial
 
 - [AngularJS 指令（Directives）实践指南（三） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-c/)

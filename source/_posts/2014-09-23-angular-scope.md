@@ -75,7 +75,7 @@ HTML:
 <div ng-include src="'/tpl2.html'"></div>
 ```
 
-每一个 ng-include 对生成一个子作用域，该子作用域都通过原型继承于父作用域。
+每一个 ng-include 对生成一个子作用域，该子作用域都通过原型继承于父作用域：
 
 ![ng-include](https://camo.githubusercontent.com/67fc2d40487725fde10b669426c8b6b74213e6c6/687474703a2f2f692e737461636b2e696d6775722e636f6d2f7a694466782e706e67)
 
@@ -167,7 +167,7 @@ See also：
 
 ## directive
 
-默认情况下，指令不会创建一个新的scope，而是沿用父scope。但是在很多情况下，这并不是我们想要的。如果你的指令重度地使用父scope的属性，甚至创建新的时，会污染父scope。让所有的指令都使用同一个父scope不会是一个好主意，因为任何人都可能修改这个scope中的属性。因此，下面的这个原则也许可以帮助你为你的指令选择正确的scope。
+定义指令值，我们可以使用以下三种方式的作用域：
 
 1. 默认 (`scope: false`) 这是默认情况。指令不会创建新的作用域，使用的是父作用域。这可能会污染父作用域，不利于创建可复用的组件。
 
@@ -195,7 +195,7 @@ See also：
           };
         });
 
-3. `scope:{...}` – 使用这种方式，指令会创建一个隔离作用域，没有原型继承。对于创建可复用的组件，这可能是最好的选择，这可以防止对父作用域的意外读写。如果你想访问父作用域，可以使用 `=` 进行双向绑定，使用 `@` 进行单向绑定，使用 `&` 绑定到父作用域的表达式。下面会具体介绍。这几种方法都会在子作用域中创建新的属性，这些属性来源于父作用域。
+3. `scope:{...}` – 使用这种方式，指令会创建一个隔离作用域，没有原型继承。对于创建可复用的组件，这可能是最好的选择，这可以防止对父作用域的意外读写。
 
     隔离作用域的 `__proto__` 引用的是  [Scope](http://docs.angularjs.org/api/ng.%24rootScope.Scope) 对象（如下图，图中橘色的 'Object' 应该修正为 'Scope'）。隔离作用局的 `$parent` 属性引用父作用域，既能它是隔离作用局而且没有从父作用域原型继承。
 
@@ -227,7 +227,7 @@ See also：
 
     See also [AngularJS Sticky Notes Pt 2 – Isolated Scope – One Hungry Mind](http://onehungrymind.com/angularjs-sticky-notes-pt-2-isolated-scope/)。
 
-4. `transclude: true` 指令将创建一个 "transcluded" 子作用域，该作用域也原型继承与父作用域。所以如果嵌入的内容（用来 替换ng-transclude 的东西）需要和父作用域中的基本类型的属性建立双向绑定，可以使用　`$parent`，或者把模型修改父对象。这和 ng-include 中的情况一样。
+4. `transclude: true` 指令将创建一个 "transcluded" 子作用域，该作用域也原型继承于父作用域。所以如果嵌入的内容（用来 替换ng-transclude 的东西）需要和父作用域中的基本类型的属性建立双向绑定，可以使用　`$parent`，或者把模型修改父对象。这和 ng-include 中的情况一样。
 
     如果某个指令同时拥有隔离作用域和 transcluded 作用域，他们为兄弟关系，他们的 `$parent` 指向共同的父作用域。隔离作用域的 `$$nextSibling` 引用的是 transcluded 作用域。
 
@@ -265,9 +265,11 @@ See also：
 
     See [Transclusion and scopes - Angular Tips](http://angular-tips.com/blog/2014/03/transclusion-and-scopes/)
 
-### 访问父作用域
+默认情况下，指令不会创建一个新的scope，而是沿用父scope。但是在很多情况下，这并不是我们想要的。如果你的指令重度地使用父scope的属性，甚至创建新的时，会污染父scope。让所有的指令都使用同一个父scope不会是一个好主意，因为任何人都可能修改这个scope中的属性。因此，下面的这个原则也许可以帮助你为你的指令选择正确的scope。
 
-我们前面已经提到过可以使用 `@` `=` `&` 来访问父作用域，接下来我们逐一介绍。
+## 隔离作用域
+
+在使用隔离作用域之后，如果要访问父作用域，需要显式地在父作用域和子作用域之间建立映射。有三种指定映射关系的方法，使用 `=` 进行数据绑定，使用 `@` 进行插值，使用 `&` 绑定到父作用域的表达式。这几种方法都会在子作用域中创建新的属性，这些属性来源于父作用域。
 
 假设我们有以下指令，当用户在一个输入框中输入一种颜色的名称时，Hello World 文字的背景色自动发生变化。同时，当用户在 Hello World 文字上点击时，背景色变回白色。
 
@@ -306,9 +308,24 @@ app.controller('MainCtrl', function($scope){
 
 上面的代码现在是不能工作的。因为 input 中的 ng-model 绑定的是 Controller 的作用域，而 hello-world 指令模板中使用的是隔离作用域，所以指令模板内的 color 中始终是 undefined。
 
-### 单向绑定
+### 插值
 
-`@` 用来实现单向绑定。 在下面的指令定义中，我们通过 `color: '@colorAttr'` 将属性 color 以指令属性 colorAttr 暴露出去。在使用指令时，通过 `color-attr="{{color}}"` 和父作用域的 color 属性单向绑定。当表达式 `"{{color}}"` 的值发生改变时，隔离作用于的 color 属性跟着变化，指令模板中的值也发生变化。
+`@` 用来实现插值（interpolate），也即单向绑定。 
+
+The `@` symbol indicates that AngularJS should interpolate the value of the specified attribute and update the isolated scope property when it changes. Interpolation is used with `{{}}` curly braces to generate a string using values from the parent scope.
+
+A common mistake is to expect an interpolated object to be the object itself. Interpolation always returns a string. So if you have an object, say user has a field called `userName`, then the interpolation of `{{user}}` will convert the `user` object to a string and you will not be able to access the `userName` property on the string.
+
+This attribute interpolation is equivalent to manually `$observe` the attribute:
+
+```js
+attrs.$observe('attribute1', function(value) {
+  isolatedScope.isolated1 = value;
+});
+attrs.$$observers['attribute1'].$$scope = parentScope;
+```
+
+在下面的指令定义中，我们通过 `color: '@colorAttr'` 将属性 color 以指令属性 colorAttr 暴露出去。在使用指令时，通过 `color-attr="{{color}}"` 和父作用域的 color 属性单向绑定。当表达式 `"{{color}}"` 的值发生改变时，隔离作用于的 color 属性跟着变化，指令模板中的值也发生变化。
 
 ```js
 app.directive('helloWorld', function() {
@@ -353,7 +370,24 @@ app.directive('helloWorld', function() {
 
     <hello-world color="{{color}}"/>
 
-### 双向绑定
+### 数据绑定
+
+The `=` symbol indicates that AngularJS should keep the expression in the specified attribute and the value on the isolated scope in sync with each other. This is a two-way data binding that allows objects and values to be mapped directly between the inside and outside of the widget.
+
+Since this interface supports two way data binding, the expression given in the attribute should be assignable (that is, refers to a field on the scope or an object) and not an arbitrary computed expression.
+
+This binding is a bit like setting up two `$watch` functions:
+
+```js
+var parentGet = $parse(attrs['attribute2']);
+var parentSet = parentGet.assign;
+parentScope.$watch(parentGet, function(value) {
+  isolatedScope.isolated2 = value;
+});
+isolatedScope.$watch('isolated2', function(value) {
+  parentSet(parentScope, value);
+});
+```
 
 让我们将指令的定义改变成下面的样子：
 
@@ -382,7 +416,18 @@ app.directive('helloWorld', function() {
 
 如果父作用域中用于双向绑定的属性不存在，则会抛出 `NON_ASSIGNABLE_MODEL_EXPRESSION` 异常，你可以使用 `=?` 或者 `=?attr` 避免抛出异常。
 
-### 绑定表达式
+### 表达式
+
+The `&` symbol indicates that the expression provided in the attribute on the element will be made available on the scope as a function that, when called, will execute the expression. This is useful for creating callbacks from the widget.
+
+This binding is equivalent to `$parse` the expression in the attribute and exposing the parsed expression function on the isolated scope:
+
+```js
+parentGet = $parse(attrs['attribute3']);
+scope.isolated3 = function(locals) {
+  return parentGet(parentScope, locals);
+};
+```
 
 指令可以使用 `&` 来触发父作用域的表达式，`&` 后边可以是任意合法的表达式。我们通常用 `&` 来为指令绑定事件的回调。
 
@@ -428,6 +473,109 @@ angular.module('docsIsoFnBindExample', [])
 ```
 
 > __Best Practice:__ use &attr in the scope option when you want your directive to expose an API for binding to behaviors.
+
+### pagination demo
+
+The following is the pagination directive definition object:
+
+```js
+myModule.directive('pagination', function() {
+return {
+  restrict: 'E',
+  scope: {
+    numPages: '=',
+    currentPage: '='
+  },
+  template: ...,
+  replace: true,
+```
+
+The directive is restricted to appear as an element. It creates an isolated scope with `numPages` and `currentPage` data, which is bound to attributes `num-pages` and `current-page`, respectively. The directive element will be replaced with the template shown earlier:
+
+```js
+scope.$watch('numPages', function(value) {
+      scope.pages = [];
+      for(var i=1;i<=value;i++) { scope.pages.push(i); }
+      if ( scope.currentPage > value ) {
+        scope.selectPage(value);
+      }
+    });
+
+    ...
+
+    scope.isActive = function(page) {
+      return scope.currentPage === page;
+    };
+
+    scope.selectPage = function(page) {
+      if ( ! scope.isActive(page) ) {
+        scope.currentPage = page;
+      }
+    };
+
+    ...
+
+    scope.selectNext = function() {
+      if ( !scope.noNext() ) {
+        scope.selectPage(scope.currentPage+1);
+      }
+    };
+}
+```
+
+The link function sets up a `$watch` property to create the pages array based on the value of `numPages`. It adds the various helper functions to the isolated scope that will be used in the directive's template.
+
+It would be useful to provide a function or an expression that is evaluated when the page changes. We can do this by specifying a new attribute on the directive and mapping it to the isolated scope using `&`.
+
+```html
+<pagination
+  num-pages="tasks.pageCount"
+  current-page="tasks.currentPage"
+  on-select-page="selectPage(page)">
+</pagination>
+```
+
+What we are saying here is that whenever the selected page changes, the directive should call the `selectPage(page)` function passing it to the new page number as a parameter. Here is a test of this feature:
+
+```js
+it('executes the onSelectPage expression when the current page changes', inject(function($compile, $rootScope) {
+    $rootScope.selectPageHandler =
+      jasmine.createSpy('selectPageHandler');
+    element = $compile(
+      '<pagination num-pages="numPages" ' +
+                 ' current-page="currentPage" ' +
+                 ' on-select-page="selectPageHandler(page)">' +
+      '</pagination>')($rootScope);
+    $rootScope.$digest();
+    var page2 = element.find('li').eq(2).find('a').eq(0);
+    page2.click();
+    $rootScope.$digest();
+    expect($rootScope.selectPageHandler).toHaveBeenCalledWith(2);
+```
+
+We create a spy to handle the call-back and then the `it` function gets called when we click on a new page.
+
+To implement this we add an extra field to our isolate scope definition:
+
+```js
+scope: {
+  ...,
+  onSelectPage: '&'
+},
+```
+
+Now an `onSelectPage()` function will be available on the isolated scope. When called, it will execute the expression passed to the `on-select-page` attribute. We now change the `selectPage()` function on the isolated scope to call `onSelectPage()`:
+
+```js
+scope.selectPage = function(page) {
+  if (!scope.isActive(page) ) {
+    scope.currentPage = page;
+    scope.onSelectPage({ page: page });
+  }
+};
+```
+
+Note that we pass the page variable to the expression in a map of variables. These variables are provided to the bound expression when it is executed, as though they were on the scope.
 
 ## 作用域和事件系统
 

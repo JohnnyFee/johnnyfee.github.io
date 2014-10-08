@@ -22,18 +22,9 @@ As with services, you define directives through the module object’s API by cal
     var appModule = angular.module('appModule', [...]);
     appModule.directive('directiveName', directiveFunction);
 
-## Custom Directive
+## 定义指令
 
-一个Angular指令可以有以下的四种表现形式：
-
-指令形式 | `restrict` 属性值 |示例
----------|------------|----
-新的HTML元素 | 'E' | `<data-picker></data-picker>`
-元素的属性 | 'A' | `<input type="text" data-picker/>`
-CSS 类 | 'C' | `<input type="text" class="data-picker"/>`
-注释 | 'M' |`<!- directive:data-picker –>`
-
-指令注册的方式与 controller 一样，但是它返回的是一个拥有指令配置属性的简单对象(指令定义对象) 。下面的代码是一个简单的 Hello World 指令。
+Each directive must be registered with a **module**. You call `directive()` on the **module** passing in the **canonical name** of the directive and a **factory function** that returns the **directive definition**.。下面的代码是一个简单的 Hello World 指令。
 
 ```js
 var app = angular.module('myapp', []);
@@ -49,6 +40,16 @@ app.directive('helloWorld', function() {
 
 在上面的代码中，`app.directive()` 方法在模块中注册了一个新的指令。这个方法的第一个参数是这个指令的名字。第二个参数是一个返回指令定义对象的函数。如果你的指令依赖于其他的对象或者服务，比如 `$rootScope`, `$http`, 或者 `$compile`，他们可以在这个时间被注入。
 
+一个Angular指令可以有以下的四种表现形式：
+
+指令形式 | `restrict` 属性值 |示例
+---------|------------|----
+新的HTML元素 | 'E' | `<data-picker></data-picker>`
+元素的属性 | 'A' | `<input type="text" data-picker/>`
+CSS 类 | 'C' | `<input type="text" class="data-picker"/>`
+注释 | 'M' |`<!- directive:data-picker –>`
+
+
 __使用方法：__
 
 - 这个指令在HTML中以一个元素使用，如`<hello-world/>` 或者 `<hello:world/>`。
@@ -60,13 +61,122 @@ __使用方法：__
 我们在指令定义过程中使用了三个属性来配置指令：
 
 - `restrict` 这个属性用来指定指令在HTML中如何使用（还记得之前说的，指令的四种表示方式吗）。在上面的例子中，我们使用了 'AE'。所以这个指令可以被当作新的HTML元素或者属性来使用。如果要允许指令被当作class来使用，我们将 restrict 设置成 'AEC'。
-
 - `template`/`templateUrl` 这个属性规定了指令被Angular编译和链接（link）后生成的HTML标记。这个属性值不一定要是简单的字符串。template 可以非常复杂，而且经常包含其他的指令，以及表达式(`{%raw%}{{ }}{%raw%}`)等。`template` 只用于 templete 内容比较少的情况，更多的情况下你可能会见到 `templateUrl`。所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
 - `replace` 这个属性指明生成的HTML内容是否会替换掉定义此指令的HTML元素。在我们的例子中，我们用 `<hello-world></hello-world>` 的方式使用我们的指令，并且将 replace 设置成 true。所以，在指令被编译之后，生成的模板内容替换掉了 `<hello-world></hello-world>`。最终的输出是 `<h3>Hello World!!</h3>`。如果你将 replace 设置成 false，也就是默认值，那么生成的模板会被插入到定义指令的元素中。
 
+### 属性列表
+
+属性         | 描述 
+------------- | --------
+`name`        | The name of the directive.
+`restrict`    | In what kind of mark-up this directive can appear.
+`priority`    | Hint to the compiler of the order that directives should be executed.  
+`terminal`    | Whether the compiler should continue compiling directives below this.                                                             
+`link`        | The link function that will link the directive to the scope.
+`template`    | A string that will be used to generate mark-up for this directive.
+`templateUrl` | A URL where the template for this directive may be found.
+`replace`     | Whether to replace this directive's element with what is in the template.
+`transclude`  | Whether to provide the contents of this directive's element for use in the template and compile function.
+`scope`       | Whether to create a new child scope or isolated scope for this directive.                
+`controller`  | A function that will act as a directive controller for this directive.                                                         
+`require`     | Requires a directive controller from another directive to be injected into this directive's link function.
+`compile`     | The compile function that can manipulate the source DOM and will create the link function and is only used if a link has not been provided above.
+
 打开这个 [plunker](http://plnkr.co/edit/GKI339z2VDdZTOE2bGFP)，在”Hello World!!”右键检查元素内容，来更形象地明白这些。
 
-## Link
+## 生命周期
+
+当应用引导启动的时候，Angular 开始使用 $compile 服务遍历 DOM 元素，试图使用注册过的指令列表来匹配每个元素、属性、注释、CSS 类，一旦匹配，AngularJS 调用相应指令的 compile 函数，这个 compile 函数返回一个 link 函数，被添加到稍后执行的 link 函数列表中。
+
+The compilation stage is done before the scope has been prepared, and no scope data is available in the compile function.
+
+Once all the directives have been compiled, AngularJS creates the scope and links each directive to the scope by calling each of the linking functions.
+
+At the linking stage, the scope is being attached to the directive, and the linking function can then wire up bindings between the scope and the DOM.
+
+If you have some complex functionality that does not rely on the data in the scope, then it should appear in the compile function, so that it is only called once.
+
+编译阶段主要用于优化。 It is possible to do almost all the work in the linking function (except for a few advanced things like access to the transclusion function). 以 ng-repeat 为例, compile 函数只执行一次，用来复制模板, 但是 link 函数在 repeater 每次迭代的时候，每次数据发生变化的时候都会被调用。
+
+在编译阶段之后，就开始了链接（linking）阶段。在这个阶段，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的scope下被解析和处理，然后返回具有事件响应的真实的DOM节点。
+
+### Compile
+
+compile 函数在 link 函数被执行之前用来做一些 DOM 改造。它接收下面的参数：
+
+- element – 指令所在的元素
+- attributes – 元素上赋予的参数的标准化列表
+
+要注意的是 compile 函数不能访问 scope，并且必须返回一个 link 函数。只能在链接函数中使用 DOM，因为在编译函数中可能移除或复制元素。如果没有设置 compile 函数，你可以正常地配置 link 函数，有了compile，就不能用link，link函数由compile返回。
+
+compile函数可以写成如下的形式：
+
+```js
+myApp.directive('directiveName', function(){
+  // 注入函数
+  // 每个 app 最多运行一遍。这对启动和全局配置的时候有用。
+  return {
+    compile: function($templateElement, $templateAttributes) {
+
+      // 编译函数
+      // 1. 每个 jq 实例（在未被渲染的模板中）只运行一次。
+      // 2. You CAN examine the DOM and cache information about what variables
+      //   or expressions will be used, but you cannot yet figure out their values.
+      // 3. Angular is caching the templates, 
+      // now is a good time to inject new angular templates as children or future siblings to automatically run..
+
+      return function($scope, $linkElement, $linkAttributes) {
+
+        // 链接函数
+        // 1. 每个已经渲染的实例只执行一次。
+        // 2. Once for each row in an ng-repeat when the row is created.
+        // 3. Note that ng-if or ng-switch may also affect if this is executed.
+        // 4. Scope IS available because controller logic has finished executing.
+        // 5. All variables and expression values can finally be determined.
+        // 6. Angular is rendering cached templates. It's too late to add templates for angular
+        //  to automatically run. If you MUST inject new templates, you must $compile them manually.
+
+      };
+    }
+  };
+})
+```
+
+大多数的情况下，你只需要使用 link 函数。这是因为大部分的指令只需要考虑注册事件监听、监视模型、以及更新DOM等，这些都可以在 link 函数中完成。 但是对于像 ng-repeat 之类的指令，需要克隆和重复 DOM 元素多次，在 link 函数执行之前由 compile 函数来完成。这就带来了一个问题，为什么我们需要两个分开的函数来完成生成过程，为什么不能只使用一个？要回答好这个问题，我们需要理解指令在Angular中是如何被编译的！
+
+如下面的例子，我们定义一个 button 指令，当 button 的类型为 submit 时，自动添加 'btn-primary' 属性，根据 size 属性，添加改变大小的 CSS 类。我们这个例子是基于 Bootstrap 的。
+
+```js
+myModule.directive('button', function() {
+  return {
+    restrict: 'E',
+    compile: function(element, attributes) {
+      element.addClass('btn');
+      if ( attributes.type === 'submit' ) {
+        element.addClass('btn-primary');
+      }
+      if ( attributes.size ) {
+        element.addClass('btn-' + attributes.size);
+      }
+    }
+  };
+});
+```
+
+我们可以这样使用：
+
+    <button type="submit" size="large">Submit</button>
+
+如果没用 Angular，我们的代码可能是这样的：
+
+    <button type="submit"
+        class="btn btn-primary btn-large">Click Me!</button>
+
+We can do all these modifications in the compile function rather than the linking function because our changes to the element do not rely on the scope data that will be bound to the element. We could have put this functionality into the linking function instead, but if the button appears in an ng-repeat loop, then addClass() would be called for each iteration of the button.
+
+By putting the functionality in the compile function, it is only called once, and the button is simply cloned by the ng-repeat directive. If you are doing complex work on the DOM then this optimization can make a significant difference, especially if you are iterating over a large collection.
+
+### Link
 
 指令的 link 函数主要用来为 DOM 元素添加事件监听、监视模型属性变化、以及更新 DOM。我们可以在 link 函数中访问指令的 scope。
 
@@ -116,7 +226,7 @@ app.directive('helloWorld', function() {
 
 在上面的指令代码片段中，我们添加了两个事件，`click` 和 `mouseover`。`click` 处理函数用来重置 `<p>` 的背景色，而 `mouseover` 处理函数改变鼠标为 pointer。在模板中有一个表达式 `{{color}}`，当父 scope 中的 color 发生变化时，它用来改变 Hello World 文字的背景色。
 
-### Pre vs Post Linking Functions
+#### Pre vs Post Linking Functions
 
 凡是你使用 link 函数的地方，你都可以使用一个 pre 和 post 属性组成的对象，这两个属性分别表示前处理链接链接函数和后处理链接链接函数。默然情况下，链接函数指的是后处理链接函数，See [Oddly enough](https://github.com/angular/angular.js/issues/2592)。
 
@@ -138,68 +248,6 @@ The pre-linking and post-linking phases are executed by the compiler. The pre-li
 Pre-linking 和 post-linking 都是被 compiler 执行的。Pre-linking 是在所有子元素被链接之前执行，而 post-ling 是在所有子元素链接之后。只有在 post-link 函数中做 DOM 变换才是安全的。
 
 See [Understanding Directives · angular/angular.js Wiki](https://github.com/angular/angular.js/wiki/Understanding-Directives)。
-
-## Compile
-
-compile 函数在 link 函数被执行之前用来做一些 DOM 改造。它接收下面的参数：
-
-- element – 指令所在的元素
-- attributes – 元素上赋予的参数的标准化列表
-
-要注意的是 compile 函数不能访问 scope，并且必须返回一个 link 函数。只能在链接函数中使用 DOM，因为在编译函数中可能移除或复制元素。如果没有设置 compile 函数，你可以正常地配置 link 函数，有了compile，就不能用link，link函数由compile返回。
-
-compile函数可以写成如下的形式：
-
-```js
-myApp.directive('directiveName', function(){
-  // 注入函数
-  // 每个 app 最多运行一遍。这对启动和全局配置的时候有用。
-  return {
-    compile: function($templateElement, $templateAttributes) {
-
-      // 编译函数
-      // 1. 每个 jq 实例（在未被渲染的模板中）只运行一次。
-      // 2. You CAN examine the DOM and cache information about what variables
-      //   or expressions will be used, but you cannot yet figure out their values.
-      // 3. Angular is caching the templates, 
-      // now is a good time to inject new angular templates as children or future siblings to automatically run..
-
-      return function($scope, $linkElement, $linkAttributes) {
-
-        // 链接函数
-        // 1. 每个已经渲染的实例只执行一次。
-        // 2. Once for each row in an ng-repeat when the row is created.
-        // 3. Note that ng-if or ng-switch may also affect if this is executed.
-        // 4. Scope IS available because controller logic has finished executing.
-        // 5. All variables and expression values can finally be determined.
-        // 6. Angular is rendering cached templates. It's too late to add templates for angular
-        //  to automatically run. If you MUST inject new templates, you must $compile them manually.
-
-      };
-    }
-  };
-})
-```
-
-大多数的情况下，你只需要使用 link 函数。这是因为大部分的指令只需要考虑注册事件监听、监视模型、以及更新DOM等，这些都可以在 link 函数中完成。 但是对于像 ng-repeat 之类的指令，需要克隆和重复 DOM 元素多次，在 link 函数执行之前由 compile 函数来完成。这就带来了一个问题，为什么我们需要两个分开的函数来完成生成过程，为什么不能只使用一个？要回答好这个问题，我们需要理解指令在Angular中是如何被编译的！
-
-## 生命周期
-
-### 编译
-
-当应用引导启动的时候，Angular 开始使用 $compile 服务遍历 DOM 元素，试图使用注册过的指令列表来匹配每个元素、属性、注释、CSS 类，一旦匹配，AngularJS 调用相应指令的 compile 函数，这个 compile 函数返回一个 link 函数，被添加到稍后执行的 link 函数列表中。
-
-The compilation stage is done before the scope has been prepared, and no scope data is available in the compile function.
-
-Once all the directives have been compiled, AngularJS creates the scope and links each directive to the scope by calling each of the linking functions.
-
-如果一个指令需要被克隆很多次（比如 ng-repeat），compile函数只在编译阶段被执行一次，复制这些模板，但是link 函数会针对每个被复制的实例被执行。所以分开处理，让我们在性能上有一定的提高。这也说明了为什么在 compile 函数中不能访问到 scope 对象。
-
-在编译阶段之后，就开始了链接（linking）阶段。在这个阶段，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的scope下被解析和处理，然后返回具有事件响应的真实的DOM节点。
-
-### 链接
-
-
 
 ## 扩展指令
 
@@ -306,7 +354,7 @@ app.directive('pane', function(){
     <div style="border: 1px solid black;">
         <div style="background-color: gray" class="ng-binding">Tobias</div>
         <div ng-transclude="">
-            <span class="ng-scope ng-binding">12121212</span>
+            <span class="ng-scope ng-binding">12121212
         </div>
     </div>
 </pane>
@@ -373,12 +421,19 @@ app.directive('innerDirective', function() {
 
 require: '^outerDirective' 告诉Angular在元素以及它的父元素中搜索controller。这样被找到的 controller 实例会作为第四个参数被传入到 link 函数中。在我们的例子中，我们将嵌入的指令的scope发送给父亲指令。如果你想尝试这个代码的话，请在开启浏览器控制台的情况下打开这个[Plunker](http://plnkr.co/edit/NMWGE6l9p1tBZh3jCfKn?p=preview)。同时，[这篇Angular官方文档](http://docs.angularjs.org/guide/directive)上的最后部分给了一个非常好的关于指令交互的例子，是非常值得一读的。
 
-### Require option
+### Require
 
-This lets you pass a controller (as defined above) associated with another directive into a compile/linking function. You have to specify the name of the directive to be required – It should be bound to same element or its parent. The name can be prefixed with:
+This lets you pass a controller (as defined above) associated with another directive into a compile/linking function. You have to specify the name of the directive to be required – It should be bound to same element or its parent. 
 
-1.  `?` – Will not raise any error if a mentioned directive does not exist.
-2.  `^` – Will look for the directive on parent elements, if not available on the same element.
+__Making the controller optional:__
+
+If the current element does not contain the specified directive, then the compiler will throw an error. You can make the `require` field of the controller optional by putting a `'?'` in front of the directive name, for example, `require: '?ngModel'`. If the directive has not been provided, then the fourth parameter will be `null`. If you require more than one controller then the relevant element in the array of controllers will be `null`.
+
+__Searching for parents for the controller:__
+
+If the directive, whose controller you require, can appear on this or any ancestor of the current element, then you can put a `'^'` in front of the directive name, for example, `require: '^ngModel'`. The compiler will then search the ancestor elements starting from the element containing the current directive and return the first matching controller.
+
+You can combine optional and ancestor prefixes to have an optional directive that may appear in an ancestor. For example, `require: '^?form'` would let you find the controller for the form directive, which is what the `ng-model` directive does to register itself with the form if it is available.
 
 如果引用的是同级的 Controller，不需要加特殊字符，如：
 
@@ -510,6 +565,157 @@ As for the casing of a directive, for example, `ngModel` vs `ng-model` vs `data-
 
 See [angularjs - What's the meaning of require: 'ngModel'? - Stack Overflow](http://stackoverflow.com/questions/20930592/whats-the-meaning-of-require-ngmodel)
 
+### ngModelController
+
+我们以一个确认密码输入验证器的例子为例，当确认密码和输入MOMA相同时，才认为输入合法。
+
+```html
+<form name="passwordForm">
+  <input type="password" name="password" ng-model="user.password">
+  <input type="password" name="confirmPassword" ng-model="confirmPassword" validate-equals="user.password">
+</form>
+```
+
+This custom model validator directive must integrate with `ngModelController` to provide a consistent validation experience for the user.
+
+Validation directives require access to the `ngModelController`, which is the directive controller for the `ng-model` directive. We specify this in our directive definition using the `require` field. This field takes a string or an array of strings. Each string must be the canonical name of the directive whose controller we require.
+
+When the required directive is found, its directive controller is injected into the linking function as the fourth parameter. For example:
+
+```js
+require: 'ngModel',
+link: function(scope, element, attrs, ngModelController) { … }
+```
+
+If more than one controller is required, then the fourth parameter will be an array containing these controllers in the same order as they were required.
+
+Once we have required the `ngModelController` we use its API to specify the validity of the input element. This is a common case for this kind of directive and the pattern is fairly straightforward. The `ngModelController` exposes the following functions and properties that we will use:
+
+Name                                        | Description
+------------------------------------------- | -----------
+`$parsers`                                  | A pipeline of functions that will be called in turn when the value of the input element changes.
+`$formatters`                               | A pipeline of functions that will be called in turn when the value of the model changes.        
+`$setValidity(validationErrorKey, isValid)` | A function called to set whether the model is valid for a given kind of validation error.       
+`$valid`                                    | True if there is no error.                                                                      
+`$error`                                    | An object that contains information about any validation errors on the model.                   
+
+The functions that go into `$parsers` and `$formatters` take a value and return a value, for example, `function(value) { return value; }`. The value they receive is the value returned from the previous function in the pipeline. It is inside these functions where we put our validation logic and call `$setValidity()`.
+
+Normally, in a validation function you return `undefined` if the value is not valid. This prevents the model from being updated with an invalid value. In this case, at the point of returning, the validation function does not know whether the value is valid or not. So we return the value any-way and then let the response callback set the validity later.
+
+```js
+myModule.directive('validateEquals', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ngModelCtrl) {
+      function validateEqual(myValue) {
+        var valid = (myValue === scope.$eval(attrs.validateEquals));
+        ngModelCtrl.$setValidity('equal', valid);
+        return valid ? myValue : undefined;
+      }
+
+      ngModelCtrl.$parsers.push(validateEqual);
+      ngModelCtrl.$formatters.push(validateEqual);
+
+      scope.$watch(attrs.validateEquals, function() {
+        ngModelCtrl.$setViewValue(ngModelCtrl.$viewValue);
+      });
+    }
+  };
+});
+```
+
+We create a function called `validateEqual(value)`, which compares the passed in value with the value of the expression. We push this into the `$parsers` and `$formatters` pipelines, so that the validation function gets called each time either the model or the view changes.
+
+In this directive we also have to take into account the model we are comparing against changing. We do this by setting up a watch on the expression, which we retrieve from the `attrs` parameter of the linking function. When it does change, we artificially trigger the `$parsers` pipeline to run by calling `$setViewValue()`. This ensures that all potential `$parsers` are run in case any of them modify the model value before it gets to our validator.
+
+我们也可以使用类似的方式实现远程验证：
+
+```js
+myModule.directive('uniqueEmail', ["Users", function (Users) {
+  return {
+    require:'ngModel',
+    link:function (scope, element, attrs, ngModelCtrl) {
+      var original;
+      ngModelCtrl.$formatters.unshift(function(modelValue) {
+        original = modelValue;
+        return modelValue;
+      });
+      
+      ngModelCtrl.$parsers.push(function (viewValue) {
+        if (viewValue && viewValue !== original ) {
+          Users.query({email:viewValue}, function (users) {
+            if (users.length === 0) {
+              ngModelCtrl.$setValidity('uniqueEmail', true);
+            } else {
+              ngModelCtrl.$setValidity('uniqueEmail', false);
+            }
+          });
+          return viewValue;
+        }
+      });
+    }
+  };
+}]);
+```
+
+## Unit Test
+
+Directives have low level access to the DOM and can be complex. This makes them prone to errors and hard to debug. Therefore, more than the other areas of your application, it is important that directives have a comprehensive range of tests.
+
+Writing unit tests for directives can seem daunting at first but AngularJS provides some nice features to make it as painless as possible and you will reap the benefits when your directives are reliable and maintainable.
+
+The general strategy when testing directives is as follows:
+
+* Load the module containing the directive
+* Compile  a string of mark-up containing the directive to get linking function
+* Run the linking function to link it to the `$rootScope`
+* Check that the element has the properties that you expect
+
+Here is a common skeleton unit test for a directive:
+
+```js
+describe('myDir directive', function () {
+  var element, scope;
+
+  beforeEach(module('myDirModule'));
+
+  beforeEach(inject(function ($compile, $rootScope) {
+    var linkingFn = $compile('<my-dir></my-dir>');
+    scope = $rootScope;
+    element = linkingFn(scope);
+  }));
+
+  it('has some properties', function() {
+    expect(element.someMethod()).toBe(XXX);
+  });
+
+  it('does something to the scope', function() {
+    expect(scope.someField).toBe(XXX);
+  });
+
+  ...
+});
+```
+
+Load the module that contains the directive into the test, then create an element containing this directive, using the `$compile` and `$rootScope` functions. Keep a reference of `element` and `$scope` so that it is available in all the tests later.
+
+Depending upon the kind of tests you are writing you may want to compile a different element in each `it` clause. In this case you should keep a reference to the `$compile` function too.
+
+Finally, test whether the directive performs as expected by interacting with it through jQuery/jqLite functions and through modifying scope.
+
+In cases where your directive is using `$watch`, `$observe`, or `$q`, you will need to trigger a `$digest` before checking your expectations. For example:
+
+```js
+it("updates the scope via a $watch", function() {
+  scope.someField = 'something';
+  scope.$digest();
+  expect(scope.someOtherField).toBe('something');
+});
+```
+
+In the rest of this chapter we will introduce our custom directives through their unit tests, in keeping with the concept of Test Driven Development (TDD).
+
 ## Demo
 
 ### Notepad
@@ -628,7 +834,7 @@ angular.module('docsTimeDirective', [])
 ```html
 <div ng-controller="Controller">
   Date format: <input ng-model="format"> <hr/>
-  Current time is: <span my-current-time="format"></span>
+  Current time is: <span my-current-time="format">
 </div>
 ```
 
@@ -641,6 +847,137 @@ There are a few special events that AngularJS emits. When a DOM node that has be
 By listening to this event, you can remove event listeners that might cause memory leaks. Listeners registered to scopes and elements are automatically cleaned up when they are destroyed, but if you registered a listener on a service, or registered a listener on a DOM node that isn't being deleted, you'll have to clean it up yourself or you risk introducing a memory leak.
 
 __Best Practice:__ Directives should clean up after themselves. You can use element.on('$destroy', ...) or scope.$on('$destroy', ...) to run a clean-up function when the directive is removed.
+
+### Wrapping the jQueryUI datepicker directive
+
+Sometimes there is a third party widget that is complex enough and it is not worth writing a pure AngularJS version of it in the short term. You can accelerate your development by wrapping such as widget in an AngularJS directive but you have to be careful about how the two libraries would interact.
+
+Here we will look at making a `datepicker` input directive that wraps the jQueryUI `datepicker` widget. The widget exposes the following API that we will use to integrate into AngularJS, where element is the jQuery wrapper around the element on which the widget is to be attached.
+
+Function   | Description
+------------------------------------- | --------------
+`element.datepicker(options)`         | Create a new widget using the given options and attach it to the element.
+`element.datepicker("setDate", date)` | Set the date on the widget.                                              
+`element.datepicker("getDate")`       | Get the date on the widget.                                              
+`element.datepicker("destroy")`       | Destroy and remove the widget from the element.                          
+
+We want to be informed when the user selects a new date with the picker. The `options` that we pass to create a new widget can provide an `onSelect` callback that will be called when the user selects a date:
+
+    element.datepicker({onSelect: function(value, picker) { ... });
+
+To keep things simple, we will specify that the `datepicker` directive can only be linked to a JavaScript Date object in the model.
+
+The general pattern for wrapping JQuery input widgets is similar, again, to building a validation directive. You require `ngModel` and place functions on the `$parsers` and `$formatters` pipeline to transform the values between the model and the view.
+
+Also, we need to put data into the widget when the model changes and get data into the model when the widget changes. We override `ngModel.$render()` to update the widget. This function is called after all the `$formatters` have been executed successfully. To get the data out, we use the `onSelect` callback to call `ngModel.$setViewValue()`, which updates the view value and triggers the `$parsers` pipeline.
+
+![angular-directive-datepicker.jpg](http://johnnyimages.qiniudn.com/angular-directive-datepicker.jpg)
+
+#### Writing tests for directives that wrap libraries
+
+[In a pure unit test we would ]()[create a mock jQueryUI `datepicker` widget that exposes the same interface. In this case we are going to take a more pragmatic approach and use a real `datepicker` widget in the tests.]()
+
+[The advantage of this is that we do not have to rely on the widget's interface being documented accurately. By calling the actual methods and checking that the user interface is updated correctly, we can be very sure that our directive is working. The disadvantages are that the DOM manipulation in the widget can slow down the test runs and there must be a way to interact with the widget to ensure that it is behaving correctly.]()
+
+[In this case, the jQueryUI `datepicker` widget exposes another function that allows us to simulate a user selecting a date:]()
+
+    $.datepicker._selectDate(element);
+
+[We create a helper function `selectDate()`, which we will use to simulate date selection on the widget:]()
+
+```js
+var selectDate = function(element, date) {
+  element.datepicker('setDate', date);
+  $.datepicker._selectDate(element);
+};
+```
+
+The tests themselves make use of the widget's API and this helper function. For example:
+
+```js
+describe('simple use on input element', function() {
+  var aDate, element;
+  beforeEach(function() {
+    aDate = new Date(2010, 12, 1);
+    element = $compile(
+      "<input date-picker ng-model='x'/>")($rootScope);
+  });
+  it('should get the date from the model', function() {
+    $rootScope.x = aDate;
+    $rootScope.$digest();
+    expect(element.datepicker('getDate')).toEqual(aDate);
+  });
+
+  it('should put the date in the model', function() {
+    $rootScope.$digest();
+    selectDate(element, aDate);
+    expect($rootScope.x).toEqual(aDate);
+  });
+});
+```
+
+Here, we check that model changes get forwarded to the widget and widget changes get passed back to the model. Notice that we do not call $digest() after selectDate(), since it is the directive's job to ensure that the digest occurs after a user interaction.
+
+There are more tests for all different scenarios for this directive. They can be found in the sample code.
+
+#### Implementing the jQuery datepicker directive
+
+[The directive implementation is again making use of the functionality provided by the `ngModelController`. In ]()[particular, we add a function to the `$formatters` pipeline that ensures that the model is a `Date` object, we add our `onSelect` callback to the `options`, and we override the `$render` function to update the widget when the model changes.]()
+
+```js
+myModule.directive('datePicker', function () {
+  return {
+    require:'ngModel',
+    link:function (scope, element, attrs, ngModelCtrl) {
+      ngModelCtrl.$formatters.push(function(date) {
+        if ( angular.isDefined(date) &&
+             date !== null &&
+             !angular.isDate(date) ) {
+          throw new Error('ng-Model value must be a Date object');
+        }
+        return date;
+      });
+
+      var updateModel = function () {
+        scope.$apply(function () {
+          var date = element.datepicker("getDate");
+          element.datepicker("setDate", element.val());
+          ngModelCtrl.$setViewValue(date);
+        });
+      };
+      var onSelectHandler = function(userHandler) {
+        if ( userHandler ) {
+          return function(value, picker) {
+            updateModel();
+            return userHandler(value, picker);
+          };
+        } else {
+          return updateModel;
+        }
+      };
+```
+
+[The `onSelect()` handler ]()[calls our `updateModel()` ]()[function, which passes the new date value into the `$parsers` pipeline via `$setViewValue()`:]()
+
+```js
+var setUpDatePicker = function () {
+    var options = scope.$eval(attrs.datePicker) || {};
+    options.onSelect = onSelectHandler(options.onSelect);
+    element.bind('change', updateModel);
+    element.datepicker('destroy');
+    element.datepicker(options);
+    ngModelCtrl.$render();
+  };
+
+  ngModelCtrl.$render = function () {
+    element.datepicker("setDate", ngModelCtrl.$viewValue);
+  };
+
+  scope.$watch(attrs.datePicker, setUpDatePicker, true);
+  }
+};
+});
+```
 
 ## Library
 

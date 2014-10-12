@@ -9,8 +9,9 @@ tags : [angular, tutorial]
 
 ## Quick Start
 
-See [Yeoman - Modern workflows for modern webapps](http://yeoman.io/)
-See also [angular/angular-seed](https://github.com/angular/angular-seed).
+[Single Page Apps with AngularJS Routing and Templating ♥ Scotch](http://scotch.io/tutorials/javascript/single-page-apps-with-angularjs-routing-and-templating) 利用 AngularJS 创建一个单页面工程。
+
+对于正式工程可以参考下面的方法完成脚手架：
 
 1. Installing Yeoman
 
@@ -20,7 +21,7 @@ See also [angular/angular-seed](https://github.com/angular/angular-seed).
 
         npm install -g generator-angular
 
-<!--more-->
+    <!--more-->
 
 1. Starting a Fresh AngularJS project
         
@@ -68,8 +69,6 @@ See also [angular/angular-seed](https://github.com/angular/angular-seed).
     - angular:decorator
     - angular:view
 
-    See: [yeoman/generator-angular](https://github.com/yeoman/generator-angular)
-
 1. Testing
 
     We’ve already seen how ridiculously easy it is to start and run tests using Karma. In the end, just two commands were needed to run all your unit tests.
@@ -91,7 +90,12 @@ See also [angular/angular-seed](https://github.com/angular/angular-seed).
 
         grunt build
 
-See also: [使用Yeoman快速启动AngularJS项目开发 / Owen Chen](http://owenchen.duapp.com/index.php/yeo-angular/)
+See:
+
+- [Yeoman - Modern workflows for modern webapps](http://yeoman.io/)
+- [angular/angular-seed](https://github.com/angular/angular-seed).
+- [yeoman/generator-angular](https://github.com/yeoman/generator-angular)
+- [使用Yeoman快速启动AngularJS项目开发 / Owen Chen](http://owenchen.duapp.com/index.php/yeo-angular/)
 
 ## Principle
 
@@ -911,6 +915,10 @@ See:
 
 - [Form validation with AngularJS](http://www.ng-newsletter.com/posts/validations.html)
 
+## ng-3-part
+
+- [mgonto/angular-wizard](https://github.com/mgonto/angular-wizard) 向导。
+
 ## Testing
 
 - [基于Karma和Jasmine的AngularJS测试 / Owen Chen](http://owenchen.duapp.com/index.php/jasmine-and-karma-test-angularjs/)
@@ -971,6 +979,7 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 
 - Batarang 
     Batarang is a Chrome extension that adds AngularJS knowledge to the built-in Developer Tools suite in Google Chrome. 
+- [ng-inspector for AngularJS](http://ng-inspector.org/) The AngularJS inspector pane for your browser.
 
 ## Library
 
@@ -1075,6 +1084,138 @@ See:
 ### Multiple directives [ngSwitchWhen, ngInclude] asking for transclusion
 
 See [Ng-Include inside ng-switch should be allowed · Issue #4731 · angular/angular.js](https://github.com/angular/angular.js/issues/4731)
+
+### how to access the angular $scope variable in browsers console
+
+Pick an element in the HTML panel of the developer tools and type this in the console
+
+```
+angular.element($0).scope()
+```
+
+In webkit `$0` is a reference to the selected DOM node in the elements tab, so by doing this you get the selected DOM node scope printed out in the console
+
+**Addons/Extensions**
+
+There are some very useful Chrome Extensions that you might want to checkout:
+
+* [Batarang](https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk). This has been around for a while.
+
+* [ng-inspector](http://ng-inspector.org/). This is the newest one, and as the name suggests, it allows you to inspect your application's scopes.
+
+**Playing with JS Fiddle**
+
+When working with jsfiddle you can open the fiddle in _show_ mode by adding `/show` at the end of the url. When running like this you have access to the `angular` global. You can try it here
+
+http://jsfiddle.net/jaimem/Yatbt/show
+
+**jQuery Lite**
+
+If you load jQuery before angular, `angular.element` can be passed a jQuery selector. So you could inspect the scope of a controller with
+
+```
+angular.element('[ng-controller=ctrl]').scope()
+```
+
+Of a button
+
+```
+angular.element('button:eq(1)').scope()
+```
+
+... and so on.
+
+You might actually want to use a global function to make it easier
+
+```
+window.SC = function(selector){
+    return angular.element(selector).scope();
+};
+```
+
+Now you could do this
+
+```
+SC('button:eq(10)')
+SC('button:eq(10)').row   // -> value of scope.row
+```
+
+check here: http://jsfiddle.net/jaimem/DvRaR/1/show/
+
+See [angularjs - how to access the angular $scope variable in browsers console - Stack Overflow](http://stackoverflow.com/questions/13743058/how-to-access-the-angular-scope-variable-in-browsers-console)
+
+### $apply() and $digest()
+
+See:
+
+- [Understanding Angular's $apply() and $digest()](http://www.sitepoint.com/understanding-angulars-apply-digest/) 
+- [AngularJS and scope.$apply — Jim Hoskins](http://jimhoskins.com/2012/12/17/angularjs-and-apply.html)
+
+`$apply()` and `$digest()` are two core, and sometimes confusing, aspects of AngularJS. To understand how AngularJS works one needs to fully understand how `$apply()` and `$digest()` work. This article aims to explain what `$apply()` and `$digest()` really are, and how they can be useful in your day-to-day AngularJS programming. 
+
+#### `$apply` and `$digest` Explored
+
+AngularJS offers an incredibly awesome feature known as two way data binding which greatly simplifies our lives. Data binding means that when you change something in the view, the `scope` model _automagically_ updates. Similarly, whenever the `scope` model changes, the view updates itself with the new value. How does does AngularJS do that? When you write an expression (`{{aModel}}`), behind the scenes Angular sets up a watcher on the `scope` model, which in turn updates the view whenever the model changes. This `watcher` is just like any watcher you set up in AngularJS:
+
+    $scope.$watch('aModel', function(newValue, oldValue) {
+      //update the DOM with newValue
+    });
+
+The second argument passed to `$watch()` is known as a listener function, and is called whenever the value of `aModel` changes. It is easy for us to grasp that when the value of `aModel` changes this listener is called, updating the expression in HTML. But, there is still one big question! How does Angular figure out when to call this listener function? In other words, how does AngularJS know when `aModel` changes so it can call the corresponding listener? Does it run a function periodically to check whether the value of the `scope` model has changed? Well, this is where the `$digest` cycle steps in.
+
+It’s the `$digest` cycle where the watchers are fired. When a watcher is fired, AngularJS evaluates the `scope` model, and if it has changed then the corresponding listener function is called. So, our next question is when and how this `$digest` cycle starts.
+
+The `$digest` cycle starts as a result of a call to `$scope.$digest()`. Assume that you change a `scope` model in a handler function through the `ng-click` directive. In that case AngularJS automatically triggers a `$digest` cycle by calling `$digest()`. When the `$digest` cycle starts, it fires each of the watchers. These watchers check if the current value of the `scope` model is different from last calculated value. If yes, then the corresponding listener function executes. As a result if you have any expressions in the view they will be updated. In addition to `ng-click`, there are several other built-in directives/services that let you change models (e.g. `ng-model`, `$timeout`, etc) and automatically trigger a `$digest` cycle.
+
+So far, so good! But, there is a small gotcha. In the above cases, Angular doesn’t directly call `$digest()`. Instead, it calls `$scope.$apply()`, which in turn calls `$rootScope.$digest()`. As a result of this, a digest cycle starts at the `$rootScope`, and subsequently visits all the child scopes calling the watchers along the way.
+
+Now, let’s assume you attach an `ng-click` directive to a button and pass a function name to it. When the button is clicked, AngularJS wraps the function call within `$scope.$apply()`. So, your function executes as usual, change models (if any), and a `$digest` cycle starts to ensure your changes are reflected in the view.
+
+**Note**: `$scope.$apply()` automatically calls `$rootScope.$digest()`. The `$apply()` function comes in two flavors. The first one takes a function as an argument, evaluates it, and triggers a `$digest` cycle. The second version does not take any arguments and just starts a `$digest` cycle when called. We will see why the former one is the preferred approach shortly.
+
+#### When Do You Call `$apply()` Manually?
+
+If AngularJS usually wraps our code in `$apply()` and starts a `$digest` cycle, then when do you need to do call `$apply()` manually? Actually, AngularJS makes one thing pretty clear. It will account for only those model changes which are done inside AngularJS’ context (i.e. the code that changes models is wrapped inside `$apply()`). Angular’s built-in directives already do this so that any model changes you make are reflected in the view. However, if you change any model outside of the Angular context, then you need to inform Angular of the changes by calling `$apply()` manually. It’s like telling Angular that you are changing some models and it should fire the `watchers` so that your changes propagate properly.
+
+For example, if you use JavaScript’s `setTimeout()` function to update a `scope` model, Angular has no way of knowing what you might change. In this case it’s your responsibility to call `$apply()` manually, which triggers a `$digest` cycle. Similarly, if you have a directive that sets up a DOM event listener and changes some models inside the handler function, you need to call `$apply()` to ensure the changes take effect.
+
+Let’s look at an example. Suppose you have a page, and once the page loads you want to display a message after a two second delay. Your implementation might look something like the JavaScript and HTML shown in the following listing.
+
+<p data-height="268" data-theme-id="0" data-slug-hash="fukyn" data-default-tab="result" data-user="Sandeep92" class='codepen'>See the Pen <a href='http://codepen.io/Sandeep92/pen/fukyn/'>fukyn</a> by Sandeep Panda (<a href='http://codepen.io/Sandeep92'>@Sandeep92</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+By running the example, you will see that the delayed function runs after a two second interval, and updates the `scope` model `message`. Still, the view doesn’t update. The reason, as you may have guessed, is that we forgot to call `$apply()` manually. Therefore, we need to update our `getMessage()` function as shown below.
+
+<p data-height="268" data-theme-id="0" data-slug-hash="bEmBn" data-default-tab="result" data-user="Sandeep92" class='codepen'>See the Pen <a href='http://codepen.io/Sandeep92/pen/bEmBn/'>bEmBn</a> by Sandeep Panda (<a href='http://codepen.io/Sandeep92'>@Sandeep92</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+If you run this updated example, you can see the view update after two seconds. The only change is that we wrapped our code inside `$scope.$apply()` which automatically triggers `$rootScope.$digest()`. As a result the watchers are fired as usual and the view updates.
+
+**Note**: By the way, you should use `$timeout` service whenever possible which is `setTimeout()` with automatic `$apply()` so that you don’t have to call `$apply()` manually.
+
+Also, note that in the above code you could have done the model changes as usual and placed a call to `$apply()` (the no-arg version) in the end. Have a look at the following snippet:
+
+```js
+$scope.getMessage = function() {
+  setTimeout(function() {
+    $scope.message = 'Fetched after two seconds';
+    console.log('message:' + $scope.message);
+    $scope.$apply(); //this triggers a $digest
+  }, 2000);
+};
+```
+
+The above code uses the no-arg version of `$apply()` and works. Keep in mind that you should always use the version of `$apply()` that accepts a function argument. This is because when you pass a function to `$apply()`, the function call is wrapped inside a `try...catch` block, and any exceptions that occur will be passed to the `$exceptionHandler` service.
+
+#### How Many Times Does the `$digest` Loop Run?
+
+When a `$digest` cycle runs, the watchers are executed to see if the `scope` models have changed. If they have, then the corresponding listener functions are called. This leads to an important question. What if a listener function itself changed a `scope` model? How would AngularJS account for that change? 
+
+The answer is that the `$digest` loop doesn’t run just once. At the end of the current loop, it starts all over again to check if any of the models have changed. This is basically dirty checking, and is done to account for any model changes that might have been done by listener functions. So, the `$digest` cycle keeps looping until there are no more model changes, or it hits the max loop count of 10. It’s always good to stay idempotent and try to minimize model changes inside the listener functions.
+
+**Note**: At a minimum, `$digest` will run twice even if your listener functions don’t change any models. As discussed above, it runs once more to make sure the models are stable and there are no changes.
+
+#### Conclusion
+
+I hope this article has clarified what `$apply` and `$digest` are all about. The most important thing to keep in mind is whether or not Angular **can** detect your changes. If it cannot, then you must call `$apply()` manually.
 
 ## Reference
 

@@ -60,6 +60,9 @@ Any    | 3+     | 1.5+     | 11.1+ |10+ |TBD     |TBD
 
 ## Example
 
+- [Ratings - CodePen](http://codepen.io/WhiteWolfWizard/pen/kylpj)
+- [Personal Online Resume](http://codepen.io/WhiteWolfWizard/details/mjbJB/)
+
 ### Context
 
 - [Kontext - CodePen](http://codepen.io/hakimel/pen/FAiKv)
@@ -75,9 +78,15 @@ Any    | 3+     | 1.5+     | 11.1+ |10+ |TBD     |TBD
 - [Text input love - CodePen](http://codepen.io/MichaelArestad/pen/ohLIa)
 - [SaraSoueidan/navicon-transformicons · GitHub](https://github.com/SaraSoueidan/navicon-transformicons)
 - [S Gallery: A Responsive jQuery Gallery Plugin with CSS3 Animations](http://sarasoueidan.com/blog/s-gallery/)
+- [Radio & Checkbox - CodePen](http://codepen.io/WhiteWolfWizard/pen/oDyhs)
+
+### Loader
+
+- [Loader - CodePen](http://codepen.io/WhiteWolfWizard/pen/Iihlo)
 
 ### Menu
 
+- [Shifting Sidebar - CodePen](http://codepen.io/WhiteWolfWizard/pen/gpLsI)
 - [Social App Menu - CodePen](http://codepen.io/matthoiland/pen/vHFCk)
 - [Fixed Navigation - CodePen](http://codepen.io/WhiteWolfWizard/pen/fHEIs)
 - [Side nav play - CodePen](http://codepen.io/MichaelArestad/pen/vbAxI)
@@ -87,6 +96,7 @@ Any    | 3+     | 1.5+     | 11.1+ |10+ |TBD     |TBD
 - [Side Menu Staggered Animation [ Coding Dribbble ]](http://codepen.io/gsimone/details/whIBC/)
 - [CSS3 Testimonials Slider](http://codepen.io/SaraSoueidan/details/CyFbd/)
 - [Simple Circular Menu With CSS – How-To](http://codepen.io/SaraSoueidan/pen/wpHBt)
+- [Horizontal Drop-Down Menu - CodePen](http://codepen.io/WhiteWolfWizard/pen/nLhrw)
 
 ### Layout
 
@@ -94,11 +104,17 @@ Any    | 3+     | 1.5+     | 11.1+ |10+ |TBD     |TBD
 - [CodePen - A Pen by White Wolf Wizard](http://codepen.io/WhiteWolfWizard/pen/KhHxg)
 - [Fixed image backgrounds - CodePen](http://codepen.io/dropside/pen/bxhke)
 - [CSS3 Testimonials Slider](http://codepen.io/SaraSoueidan/details/CyFbd/)
+- [Editable To-Do List - CodePen](http://codepen.io/WhiteWolfWizard/pen/ipsCD?editors=101)
+- [Photo Hover - CodePen](http://codepen.io/WhiteWolfWizard/pen/gehdq)
 
 ### Works
 
 - [CSS3 Working Clock - CodePen](http://codepen.io/iliadraznin/pen/JcqbE)
 - [CSS 3D Solar System - CodePen](http://codepen.io/juliangarnier/pen/idhuG/?editors=010)
+
+### Tabs
+
+- [CSS Tabs - CodePen](http://codepen.io/WhiteWolfWizard/pen/wFkGp)
 
 ### Metro
 

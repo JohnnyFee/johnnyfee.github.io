@@ -18,6 +18,7 @@ tags: [responsive, web]
 - [HTML5 Developer Conference](http://html5devconf.com/videos.html)
 - [响应式web设计(Responsive web design)三步曲](http://weizhifeng.net/responsive-design-in-3-steps.html)
 - [Guide to Responsive-Friendly CSS Columns](http://css-tricks.com/guide-responsive-friendly-css-columns)
+- [aFarkas/respimage](https://github.com/aFarkas/respimage) respimage is a responsive images polyfill, that loads your images fast and responsibly.
 
 <!--more-->
 
@@ -170,6 +171,10 @@ small元素的大小是默认大小的0.875倍，即14像素（14/16=0.875）。
     });
 
 不过，有条件的话，最好还是根据不同大小的屏幕，加载不同分辨率的图片。有[很多方法](http://blog.cloudfour.com/responsive-imgs-part-2/)可以做到这一条，服务器端和客户端都可以实现。
+
+## Performance
+
+- [lafikl/RWDPerf](https://github.com/lafikl/RWDPerf) Performance testing tool for Responsive web designs.
 
 ## Tools
 

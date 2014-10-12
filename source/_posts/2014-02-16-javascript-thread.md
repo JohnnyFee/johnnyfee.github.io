@@ -38,7 +38,7 @@ JavaScript脚本的执行不影响html元素事件的触发，在Time1时间段�
 
 ##Event Loop线程
 
-参考：[什么是 Event Loop？ - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2013/10/event_loop.html?from=ourjs.com)
+参考：[JavaScript 运行机制详解：再谈Event Loop - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2014/10/event-loop.html)
 
 Event Loop 是一个很重要的概念，指的是计算机系统的一种运行机制。[Wikipedia](http://en.wikipedia.org/wiki/Event_loop)这样定义：
 

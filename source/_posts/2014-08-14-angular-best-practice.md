@@ -245,3 +245,7 @@ AngularJS拥有一整套工具使这个过程非常简单;有了ngClass我们可
 
 **原文英文地址：** <http://stackoverflow.com/questions/14994391/how-do-i-think-in-angularjs-if-i-have-a-jquery-background>
 
+## Tutorial
+
+- [10 Top Mistakes Angular.js Developers Make](http://www.airpair.com/angularjs/posts/top-10-mistakes-angularjs-developers-make)
+- [Angularjs开发一些经验总结 - 破狼 - 博客园](http://www.cnblogs.com/whitewolf/archive/2013/03/24/2979344.html)

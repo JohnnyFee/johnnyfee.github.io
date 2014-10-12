@@ -57,6 +57,14 @@ tags: [javascript]
 
 - [fn.js](http://eliperelman.com/fn.js/) 　fn.js 这个库的目的是鼓励函数式编程（functional programming）。fn.js 运行在 Node.js 环境也可以通过 AMD 加载器（如 RequireJS）在浏览器中使用。
 
+### Timer
+
+- [caike/jQuery-Simple-Timer](https://github.com/caike/jQuery-Simple-Timer)
+
+## Device
+
+- [zzmp/juliusjs](https://github.com/zzmp/juliusjs)
+
 ## Spelling
 
 - [hotoo/pinyin](https://github.com/hotoo/pinyin) 汉字拼音转换工具 Web 版。<http://pinyin.hotoo.me/>

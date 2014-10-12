@@ -53,6 +53,7 @@ tags: [javascript]
     + [Enums in Javascript | Stijn de Witt's Blog](http://stijndewitt.wordpress.com/2014/01/26/enums-in-javascript/)
 - [sindresorhus/multiline](https://github.com/sindresorhus/multiline) Multiline strings in JavaScript.
 - [Functional JavaScript, Part 3: .apply(), .call(), and the arguments object Tech.Pro](http://tech.pro/tutorial/2010/functional-javascript-part-3-apply-call-and-the-arguments-object)
+- [Learning much javascript from one line of code - arqex](http://arqex.com/939/learning-much-javascript-one-line-code)
 
 __7 PATTERNS TO REFACTOR JAVASCRIPT APPLICATIONS:__
 

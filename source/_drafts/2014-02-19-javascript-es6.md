@@ -13,10 +13,14 @@ tags: [javascript]
 - [Creating defensive objects with ES6 proxies](http://www.nczonline.net/blog/2014/04/22/creating-defensive-objects-with-es6-proxies)
 - [Practical Workflows for ES6 Modules, Fluent 2014 - YouTube](http://www.youtube.com/watch?v=0VUjM-jJf2U)
 - [Using ES6 Modules Today](http://javascriptplayground.com/blog/2014/06/es6-modules-today)
+- [ECMAScript 6入门](http://es6.ruanyifeng.com/#docs/string)
+- [Lightweight ES6 Features That Pack A Punch](http://colintoh.com/blog/lightweight-es6-features)
+- [ECMAScript 6 promises (2/2): the API](http://www.2ality.com/2014/10/es6-promises-api.html)
 
 ## Tools
 
 - [addyosmani/es6-tools](https://github.com/addyosmani/es6-tools)
+- [sebmck/6to5](https://github.com/sebmck/6to5)
 
 ## Argument
 

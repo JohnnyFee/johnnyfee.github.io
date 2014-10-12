@@ -9,8 +9,6 @@ tags : [angular, tutorial]
 
 Directives extend HTML syntax, and are the way to associate behavior and DOM transformations with custom elements and attributes. Through them, you can create reusable UI components, configure your application, and do almost anything else you can imagine wanting to do in your UI template.
 
-![](http://johnnyimages.qiniudn.com/angular-directive-what.jpg)
-
 You can write apps with the built-in directives that come with Angular, but you’ll likely run into situations where you want to write your own. You’ll know it’s time to break into directives when you want to deal with __browser events or modify the DOM__ in a way that isn’t already supported by the built-in directives. This code of yours belongs in a directive that you write, and not in a controller, service, or any other place in your app.
 
 相对 JQuery 实现控件的方式，Directives 更具语义性，从 HTML 便可知控件的含义。
@@ -40,16 +38,6 @@ app.directive('helloWorld', function() {
 
 在上面的代码中，`app.directive()` 方法在模块中注册了一个新的指令。这个方法的第一个参数是这个指令的名字。第二个参数是一个返回指令定义对象的函数。如果你的指令依赖于其他的对象或者服务，比如 `$rootScope`, `$http`, 或者 `$compile`，他们可以在这个时间被注入。
 
-一个Angular指令可以有以下的四种表现形式：
-
-指令形式 | `restrict` 属性值 |示例
----------|------------|----
-新的HTML元素 | 'E' | `<data-picker></data-picker>`
-元素的属性 | 'A' | `<input type="text" data-picker/>`
-CSS 类 | 'C' | `<input type="text" class="data-picker"/>`
-注释 | 'M' |`<!- directive:data-picker –>`
-
-
 __使用方法：__
 
 - 这个指令在HTML中以一个元素使用，如`<hello-world/>` 或者 `<hello:world/>`。
@@ -60,9 +48,30 @@ __使用方法：__
 
 我们在指令定义过程中使用了三个属性来配置指令：
 
-- `restrict` 这个属性用来指定指令在HTML中如何使用（还记得之前说的，指令的四种表示方式吗）。在上面的例子中，我们使用了 'AE'。所以这个指令可以被当作新的HTML元素或者属性来使用。如果要允许指令被当作class来使用，我们将 restrict 设置成 'AEC'。
-- `template`/`templateUrl` 这个属性规定了指令被Angular编译和链接（link）后生成的HTML标记。这个属性值不一定要是简单的字符串。template 可以非常复杂，而且经常包含其他的指令，以及表达式(`{%raw%}{{ }}{%raw%}`)等。`template` 只用于 templete 内容比较少的情况，更多的情况下你可能会见到 `templateUrl`。所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
-- `replace` 这个属性指明生成的HTML内容是否会替换掉定义此指令的HTML元素。在我们的例子中，我们用 `<hello-world></hello-world>` 的方式使用我们的指令，并且将 replace 设置成 true。所以，在指令被编译之后，生成的模板内容替换掉了 `<hello-world></hello-world>`。最终的输出是 `<h3>Hello World!!</h3>`。如果你将 replace 设置成 false，也就是默认值，那么生成的模板会被插入到定义指令的元素中。
+### `restrict`
+
+这个属性用来指定指令在HTML中如何使用（还记得之前说的，指令的四种表示方式吗）。在上面的例子中，我们使用了 'AE'。所以这个指令可以被当作新的HTML元素或者属性来使用。如果要允许指令被当作class来使用，我们将 restrict 设置成 'AEC'。
+
+一个Angular指令可以有以下的四种表现形式：
+
+指令形式 | `restrict` 属性值 |示例
+---------|------------|----
+新的HTML元素 | 'E' | `<data-picker></data-picker>`
+元素的属性 | 'A' | `<input type="text" data-picker/>`
+CSS 类 | 'C' | `<input type="text" class="data-picker"/>`
+注释 | 'M' |`<!- directive:data-picker –>`
+
+### `template`/`templateUrl` 
+
+这个属性规定了指令被Angular编译和链接（link）后生成的HTML标记。这个属性值不一定要是简单的字符串。template 可以非常复杂，而且经常包含其他的指令，以及表达式(`{%raw%}{{ }}{%raw%}`)等。`template` 只用于 templete 内容比较少的情况，更多的情况下你可能会见到 `templateUrl`。所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
+
+### `replace`
+
+The `replace` property tells the compiler to replace the original directive's element with the template given by the `template` field. If we had provided `template` but not `replace`, then the compiler would append the template to the directive's element.
+
+When you ask the compiler to replace the element with a template, it will copy over all the attributes from the original element to the template element as well.
+
+在上述例子中，我们用 `<hello-world></hello-world>` 的方式使用我们的指令，并且将 replace 设置成 true。所以，在指令被编译之后，生成的模板内容替换掉了 `<hello-world></hello-world>`。最终的输出是 `<h3>Hello World!!</h3>`。如果你将 replace 设置成 false，也就是默认值，那么生成的模板会被插入到定义指令的元素中。
 
 ### 属性列表
 
@@ -96,7 +105,7 @@ At the linking stage, the scope is being attached to the directive, and the link
 
 If you have some complex functionality that does not rely on the data in the scope, then it should appear in the compile function, so that it is only called once.
 
-编译阶段主要用于优化。 It is possible to do almost all the work in the linking function (except for a few advanced things like access to the transclusion function). 以 ng-repeat 为例, compile 函数只执行一次，用来复制模板, 但是 link 函数在 repeater 每次迭代的时候，每次数据发生变化的时候都会被调用。
+编译阶段主要用于优化。 It is possible to do almost all the work in the linking function (except for a few advanced things like access to the transclusion function). 以 ng-repeat 为例，compile 函数只执行一次，用来复制模板, 但是 link 函数在 repeater 每次迭代的时候，每次数据发生变化的时候都会被调用。
 
 在编译阶段之后，就开始了链接（linking）阶段。在这个阶段，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的scope下被解析和处理，然后返回具有事件响应的真实的DOM节点。
 
@@ -317,6 +326,8 @@ myApp.directive('b', function(){
 
 ## Transclusion
 
+Transclusion is necessary whenever a directive is replacing its original contents with new elements but wants to use the original contents somewhere in the new elements.
+
 `ng-transclude` 指明插入的位置，带有 `ng-transclude` 指令标签的元素会被删除，然后被替换为指令的内容。
 
 假设我们注册一个如下的指令：
@@ -345,33 +356,53 @@ app.directive('pane', function(){
 });
 ```
 
-我们想把 `<pane title="{{title}}">{{text}}</pane>` 中 `{{title}}` 和 `{{text}}` 变量的内容封装到我们的 dom 结构中，`{{title}}` 可以通过结构 `scope: { title:'@' }` 取得，`<panel></panel>` 标签之间的内容将替换模板中的 `<div ng-transclude></div>`。
+A simple example of such a templated widget is an `alert` element directive.
 
-生成的 DOM 为：
+![](http://johnnyimages.qiniudn.com/angular-directive-alert.jpg)
+
+The contents of the `alert` element contains the message to display in the alert. This needs to be transcluded into the directive's template. A list of alerts can be displayed using `ng-repeat`:
 
 ```html
-<pane title="Tobias" class="ng-isolate-scope">
-    <div style="border: 1px solid black;">
-        <div style="background-color: gray" class="ng-binding">Tobias</div>
-        <div ng-transclude="">
-            <span class="ng-scope ng-binding">12121212
-        </div>
-    </div>
-</pane>
+<alert type="alert.type" close="closeAlert($index)"
+       ng-repeat="alert in alerts">
+  {{alert.msg}}
+</alert>
 ```
 
-也可以直接使用父scope中定义的 `{{title}}` 而非子scope。你可以在这个[Plunker](http://plnkr.co/edit/YQBPB9cvGgJiYMuIjzTw?p=preview)。如果你想要学习更多关于scope的知识，可以阅读[这篇文章](https://github.com/angular/angular.js/wiki/Understanding-Scopes)。
+The `close` attribute should contain an expression that will be executed when the user closes the alert. The implementation of the directive is quite straightforward as follows:
 
-另外，transclude 可以在 compile 函数和 controller 函数中使用，See [angular 的 Transclude](http://www.angularjs.cn/A0pU)。
+```js
+myModule.directive('alert', function () {
+  return {
+    restrict:'E',
+    replace: true,
+    transclude: true,
+    template:
+      '<div class="alert alert-{{type}}">' +
+        '<button type="button" class="close"' +
+                'ng-click="close()">&times;' +
+        '</button>' +
+        '<div ng-transclude></div>' +
+      '</div>',
+    scope: { type:'=', close:'&' }
+  };
+});
+```
 
-transclude 有两个值可选，分别为 `element` 和 `true`。
+We use isolated scope to ensure that the scopes inside and outside the widget do not contaminate each other. This means that expressions within the template have no access to the values on the parent scope, containing the widget. This is useful because we don't want properties on the parent scope affecting or being affected by what we do inside the template.
 
-使用 `transclude: true` 会将嵌入的内容插入指令标签内部，而 `transclude: 'element'` 会替换指令标签。
+The original contents of the directive's element, which is going to be inserted into the template, needs to be associated with the original scope and not the isolated scope. By transcluding the original elements we are able to maintain the correct scope for these elements.
 
-See also：
+### transclude
 
-- [angularjs - when to use transclude 'true' and transclude 'element' - Stack Overflow](http://stackoverflow.com/questions/18449743/when-to-use-transclude-true-and-transclude-element)
-- [In the trenches: Transclude in AngularJS](http://blog.omkarpatil.com/2012/11/transclude-in-angularjs.html)
+The `transclude` property takes either `true` or `'element'`. This tells the compiler to extract the contents of the original `<alert>` element and make them available to be transcluded into the template.
+
+* Using `transclude: true` means that the children of the directive's element will be transcluded. This is what happens in the `alert` directive, although we then replaced the directive's element with our template.
+* Using `transclude: 'element'` means the entire element will be transcluded including any attribute directives that have not already been compiled. This is what happens in the `ng-repeat` directive.
+
+### ng-transclude
+
+The `ng-transclude` directive gets the transcluded elements and appends them to the element in the template on which it appears. This is the simplest and most common way to use transclusion.
 
 ## Directive's Controller
 
@@ -495,7 +526,7 @@ See [AngularJS - Directive to Directive Communication - Thinkster](https://think
 
 Say you needed to call a method in a parent directive, but you still need to set the model value from within your directive. To do this you can set the 'require' property in the directive to an array of controllers, then when you pass in a single controller argument to your linking function, you can access each controller in the array by using its array index.
 
-```php
+```js
 app.directive('myDirective', function () {
   return{
     restrict: "A",
@@ -875,15 +906,15 @@ Also, we need to put data into the widget when the model changes and get data in
 
 #### Writing tests for directives that wrap libraries
 
-[In a pure unit test we would ]()[create a mock jQueryUI `datepicker` widget that exposes the same interface. In this case we are going to take a more pragmatic approach and use a real `datepicker` widget in the tests.]()
+In a pure unit test we would create a mock jQueryUI `datepicker` widget that exposes the same interface. In this case we are going to take a more pragmatic approach and use a real `datepicker` widget in the tests.
 
-[The advantage of this is that we do not have to rely on the widget's interface being documented accurately. By calling the actual methods and checking that the user interface is updated correctly, we can be very sure that our directive is working. The disadvantages are that the DOM manipulation in the widget can slow down the test runs and there must be a way to interact with the widget to ensure that it is behaving correctly.]()
+The advantage of this is that we do not have to rely on the widget's interface being documented accurately. By calling the actual methods and checking that the user interface is updated correctly, we can be very sure that our directive is working. The disadvantages are that the DOM manipulation in the widget can slow down the test runs and there must be a way to interact with the widget to ensure that it is behaving correctly.
 
-[In this case, the jQueryUI `datepicker` widget exposes another function that allows us to simulate a user selecting a date:]()
+In this case, the jQueryUI `datepicker` widget exposes another function that allows us to simulate a user selecting a date:
 
     $.datepicker._selectDate(element);
 
-[We create a helper function `selectDate()`, which we will use to simulate date selection on the widget:]()
+We create a helper function `selectDate()`, which we will use to simulate date selection on the widget:
 
 ```js
 var selectDate = function(element, date) {
@@ -922,7 +953,7 @@ There are more tests for all different scenarios for this directive. They can be
 
 #### Implementing the jQuery datepicker directive
 
-[The directive implementation is again making use of the functionality provided by the `ngModelController`. In ]()[particular, we add a function to the `$formatters` pipeline that ensures that the model is a `Date` object, we add our `onSelect` callback to the `options`, and we override the `$render` function to update the widget when the model changes.]()
+The directive implementation is again making use of the functionality provided by the `ngModelController`. In particular, we add a function to the `$formatters` pipeline that ensures that the model is a `Date` object, we add our `onSelect` callback to the `options`, and we override the `$render` function to update the widget when the model changes.
 
 ```js
 myModule.directive('datePicker', function () {
@@ -957,7 +988,7 @@ myModule.directive('datePicker', function () {
       };
 ```
 
-[The `onSelect()` handler ]()[calls our `updateModel()` ]()[function, which passes the new date value into the `$parsers` pipeline via `$setViewValue()`:]()
+The `onSelect()` handler calls our `updateModel()` function, which passes the new date value into the `$parsers` pipeline via `$setViewValue()`:
 
 ```js
 var setUpDatePicker = function () {

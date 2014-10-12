@@ -324,6 +324,63 @@ AngularJS中的 `$scope` 对象在这里就是要将 域模型 暴露给视图�
 
 See Also [Angular MVC Scope](http://inching.org/2014/09/23/angular-mvc-scope/)
 
+### Controller 间通信机制
+
+Controller 之间的通信可以使用以下几种方式：
+
+- 如果有父子关系，那么子 Controller 共享父 Controller 的属性。
+- 使用 Angular 服务的方式。在ng中服务是一个单例，所以在服务中生成一个对象，该对象就可以利用依赖注入的方式在所有的控制器中共享。参照以下例子，在一个控制器修改了服务对象的值，在另一个控制器中获取到修改后的值。
+- 基于事件方式。以下详细说明。
+
+Angularjs为在scope中为我们提供了冒泡和隧道机制，$broadcast会把事件广播给所有子controller，而$emit则会将事件冒泡传递给父controller，$on则是angularjs的事件注册函数，有了这一些我们就能很快的以angularjs的方式去解决angularjs controller之间的通信，代码如下：
+
+在一般情况下基于继承的方式已经足够满足大部分情况了，但是这种方式没有实现兄弟控制器之间的通信方式，所以引出了事件的方式 。基于事件的方式中我们可以里面作用的 `$on`, `$emit`, `$boardcast` 这几个方式来实现，其中 `$on` 表示事件监听，$emit表示向父级以上的 作用域触发事件，`$boardcast` 表示向子级以下的作用域广播事件。参照以下代码：
+
+
+```js
+function Sandcrawler($scope) {
+    // 监听子 Controller 发送的事件。
+    $scope.$on('requestDroidRecall', function(e) {
+        // 向下广播事件。
+        $scope.$broadcast('executeDroidRecall');
+    });
+}
+function Droid($scope) {
+    $scope.location = "Owen Farm";
+    $scope.recallAllDroids = function() {
+        // 向上传播事件
+        $scope.$emit('requestDroidRecall');
+    }
+
+    // 监听父 Controller 发送的事件。
+    $scope.$on('executeDroidRecall', function() { 
+        $scope.location = "Sandcrawler"
+    });
+}
+```
+
+```html
+<div ng-controller="Sandcrawler">
+    <div ng-controller="Droid">
+        <h2>R2-D2</h2>
+        <p>Droid Location: {{location}}</p>
+        <button ng-click="recallAddDroids()">Recall All Droids</button>
+    </div>
+    <div ng-controller="Droid">
+        <h2>C-3PO</h2>
+        <p>Droid Location: {{status}}</p>
+        <button ng-click="recallAddDroids()">Recall All Droids</button>
+    </div>
+</div>
+```
+
+从这个用法我们可以引申出一种用于兄弟控制间进行通信的方法，首先我们一个兄弟控制中向父作用域触发一个事件，然后在父作用域 中监听事件，再广播给子作用域，这样通过事件携带的参数，实现了数据经过父作用域，在兄弟作用域之间传播。这里要注意的是，通过父元素作为中介进行传递的话，兄弟元素用的事件名不能一样，否则会进入死循环。
+
+See: 
+
+- [Angularjs Controller 间通信机制 - 破狼 - 博客园](http://www.cnblogs.com/whitewolf/archive/2013/04/16/3024843.html)
+- [angular开发 控制器之间的通信 - 专栏 - 前端乱炖](http://www.html-js.com/article/1560)
+
 ## Model
 
 AngularJS 的模型就是那些普通的 JavaScript 对象。使用任何现有的，纯JavaScript类或对象，就跟在模型层一样的去使用它们也是可以的。要把模型暴露给 AngularJS，你只需把它赋值给 $scope 的属性即可。

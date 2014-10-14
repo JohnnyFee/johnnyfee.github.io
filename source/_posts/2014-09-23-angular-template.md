@@ -7,7 +7,7 @@ tags : [angular, tutorial]
 
 Angular 模板可以通过内存加载、AJAX 两种方式加载。
 
-## Cache 加载
+## 本地加载
 
 如果之前使用过 Bootstrap 插件的 ng 版，即 angular-ui，就会了解到这种方式的具体应用。模板本质上是字符串，把字符串直接写入内存，加载时直接从内存获取，速度会更快，有两种方式显式启用内存加载。
 
@@ -58,7 +58,7 @@ removeAll | 删除所有模板内容
 destroy   | 解除key-value对应关系，但不释放内存
 info      | 模板缓存对象的信息        
 
-### 使用 Cache 模板
+__使用 Cache 模板：__
 
     <div ng-include="'lovestory.html'" class="well"></div>
 
@@ -70,7 +70,7 @@ info      | 模板缓存对象的信息
 
 ### 合并模板
 
-在开发简短，我们可以用远程模板，在发布的时候，我们可以将模板压缩到一个文件，以减少 AJAX 请求，
+在开发阶段，我们可以用远程模板，在发布的时候，我们可以将模板压缩到一个文件，以减少 AJAX 请求，
 
 这里以 [grunt-html2js](https://www.npmjs.org/package/grunt-html2js) 为例：
 

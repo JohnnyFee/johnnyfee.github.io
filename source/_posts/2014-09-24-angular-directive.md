@@ -330,32 +330,6 @@ Transclusion is necessary whenever a directive is replacing its original content
 
 `ng-transclude` 指明插入的位置，带有 `ng-transclude` 指令标签的元素会被删除，然后被替换为指令的内容。
 
-假设我们注册一个如下的指令：
-
-```js
-<div ng-controller="Ctrl">
-      <input ng-model="title"><br>
-      <textarea ng-model="text"></textarea> <br/>
-      <pane title="{{title}}">{{text}}</pane>
-</div>
-```
-
-pane是一个自定义derective，标签里还有一个表达式，这个指令的目的是显示 input中输入的title，和textarea中输入的text，当然是按照一定的dom结构显示。看下pane是如何实现：
-
-```js
-app.directive('pane', function(){
-    return {
-      restrict: 'E',
-      transclude: true,
-      scope: { title:'@' },
-      template: '<div style="border: 1px solid black;">' +
-                  '<div style="background-color: gray">{{title}}</div>' +
-                  '<div ng-transclude></div>' +
-                '</div>'
-    };
-});
-```
-
 A simple example of such a templated widget is an `alert` element directive.
 
 ![](http://johnnyimages.qiniudn.com/angular-directive-alert.jpg)
@@ -403,6 +377,176 @@ The `transclude` property takes either `true` or `'element'`. This tells the com
 ### ng-transclude
 
 The `ng-transclude` directive gets the transcluded elements and appends them to the element in the template on which it appears. This is the simplest and most common way to use transclusion.
+
+### transclusion functions
+
+When a directive requests transclusion, AngularJS will extract the transcluded elements from the DOM and compile them. Here is an approximation of what happens with `transclude: true`:
+
+```js
+var elementsToTransclude = directiveElement.contents();
+directiveElement.html('');
+var transcludeFunction = $compile(elementsToTransclude);
+```
+
+The first line gets the contents of the element containing the directive that requested the transclusion. The second line clears this element. The third line compiles the transcluded contents to produce the <span class="strong">**transclusion**</span> function, which will be passed back to the directive, for it to use.
+
+#### Creating a transclusion function with the $compile service
+
+The call to `$compile` service returns a linking function. 
+
+```js
+var linkingFn = $compile(
+  '<div some-directive>Some {{"interpola-ted"}} values</div>');
+```
+
+You call this function with a scope to retrieve a DOM element containing the compiled DOM elements, bound to the given scope:
+
+    var compiledElement = linkingFn(someScope);
+
+Transclusion functions are just special instances of link functions.
+
+If we pass in a call-back function as a parameter to a linking function then a clone of the elements will be returned instead of the original elements. The call-back function will be called synchronously with the cloned elements as a parameter.
+
+```js
+var clone = linkingFn(scope, function callback(clone) {
+  element.append(clone);
+});
+```
+
+This is very useful if you want to make copies of the original element's children, as it would happen in `ng-repeat`.
+
+#### Accessing transclusion functions in directives
+
+The compiler passes this **transclusion** function back to the directive. There are two places where you can get hold a **transclusion**function: the compile function and the directive controller.
+
+```js
+myModule.directive('myDirective', function() {
+  return {
+    transclude: true,
+    compile: function(element, attrs, transcludeFn) { ... };
+    controller: function($scope, $transclude) { ... },
+  };
+});
+```
+
+Here we have indicated that the directive should `transclude` its contents. We can access the <span class="strong">**transclusion**</span> functions in the compile function, via the `transcludeFn` parameter and in the directive controller, via the `$transclude` parameter.
+
+__Getting the transclusion function in the compile function with transcludeFn:__
+
+The transclusion function is made available as the third parameter of the compile function of a directive. At this stage of the compilation, the scope is not known so the **transclusion** function is not bound to any scope. Instead, you will pass in the scope to this function, as its first parameter, when you call it.
+
+The scope is available in the linking function and so this is where you will generally find the transclusion function being invoked.
+
+```js
+compile: function(element, attrs, transcludeFn) {
+  return function postLink(scope, element, attrs, controller) {
+    var newScope = scope.$parent.$new();
+    element.find('p').first().append(transcludeFn(newScope));
+  };
+}
+```
+
+We append the transcluded elements to the first `<p>` element below the directive's element. When calling the <span class="strong">**transclusion**</span> function, we bind the transcluded elements to a scope. In this case we create a new scope, which is a sibling of the directive's scope, that is, child of the `$parent` of the directive's scope.
+
+This is necessary when the directive has an isolated scope; since the scope passed to the link function is the isolated scope and does not inherit the properties from the parent scope, which the transcluded elements need.
+
+#### Getting the transclusion function in the directive controller with $transclude
+
+We can access the <span class="strong">**transclusion**</span> function in a directive controller by injecting `$transclude`. In this case, `$transclude` is a function that is pre-bound to new a child of the parent scope, so you do not need to provide a scope.
+
+```js
+controller: function($scope, $element, $transclude) {
+  $element.find('p').first().append($transclude());
+}
+```
+
+Once again, we append the transcluded elements to the first `<p>` element.
+
+With `$transclude`, the pre-bound scope will be a prototypical child of the original scope from where the transcluded elements came.
+
+#### Creating an if directive that uses transclusion
+
+Let's look at a simple directive that makes explicit use of transclusion functions rather than relying on the `ng-transclude `directive. While AngularJS 1.0 provides both `ng-show` and `ng-switch` directives for changing the visibility of content in an application, `ng-show` doesn't remove the element from the DOM when it is hidden and `ng-switch` is quite verbose for simple situations.
+
+If we just want to remove the element from the DOM when it is not needed, we can create an `if` directive. It would be used similar to `ng-show`:
+
+```html
+<body ng-init="model= {show: true, count: 0}">
+  <button ng-click="model.show = !model.show">
+    Toggle Div
+  </button>
+  <div if="model.show" ng-init="model.count=model.count+1">
+    Shown {{model.count}} times
+  </div>
+</body>
+```
+
+Here, each time the button is clicked the value of `model.show` is toggled between `true` and `false`. To show that the DOM element is being removed and reinserted on each toggle, we are incrementing `model.count`.
+
+In the unit tests we will need to test that the DOM element is actually added and removed correctly:
+
+```js
+it('creates or removes the element as the if condition changes', function () {
+    element = $compile(
+      '<div><div if="someVar"></div></div>')(scope);
+  scope.$apply('someVar = true');
+  expect(element.children().length).toBe(1);
+  scope.$apply('someVar = false');
+  expect(element.children().length).toBe(0);
+  scope.$apply('someVar = true');
+  expect(element.children().length).toBe(1);
+});
+```
+
+Here we check that the number of children on our container element increases or decreases as the expression toggles between `true` and `false`.
+
+Note that we need to wrap the element that contains the if directive in a div because our directive will use jqLite.after() to insert it into the DOM, which requires that the element has a parent.
+
+Let's take a look at how to implement this directive:
+
+```js
+myModule.directive('if', function () {
+  return {
+    transclude: 'element',
+    priority: 500,
+    compile: function (element, attr, transclude) {
+      return function postLink(scope, element, attr) {
+        var childElement, childScope;
+
+        scope.$watch(attr['if'], function (newValue) {
+          if (childElement) {
+            childElement.remove();
+            childScope.$destroy();
+            childElement = undefined;
+            childScope = undefined;
+          }
+          if (newValue) {
+            childScope = scope.$new();
+            childElement = transclude(childScope, function(clone){
+              element.after(clone);
+            });
+          }
+        });
+    ...
+```
+
+The directive transcludes the entire element (`transclude: 'element'`). We provide a compile function, which gives us access to the <span class="strong">**transclusion**</span> function, which returns the link function, where we `$watch` the `if` attribute expression.
+
+We use `$watch` rather than `$observe` here because the `if` attribute should contain an expression to be evaluated rather than a string to be interpolated.
+
+When the expression changes, we tidy up the scope and child element, if they exist. This is important to ensure that we don't have any memory leaks. If the expression evaluates to `true`, we create a new child scope and then use it with the <span class="strong">**transclusion**</span> function to clone a new copy of the transcluded elements. We insert these elements after the element that contained the directive.
+
+__Using the priority property in a directive：__
+
+All directives have a priority, defaulting to zero, as in the case of the `alert` directive. On each element, AngularJS compiles the higher priority directives before lower priority ones. We can specify this using the `priority` property on the directive definition object.
+
+If a directive has `transclude: 'element'`, the compiler will only transclude attributes whose directives have a lower priority than the current directive, in other words, the element's directives that have not yet been processed.
+
+The `ng-repeat` directive has `transclude: 'element'` and `priority: 1000`, so generally all attributes that appear on the `ng-repeat` element are transcluded to appear on the cloned repeated elements.
+
+We gave out `if` directive a priority of `500`, which is less than `ng-repeat`. This means that if you put it on the same element as an `ng-repeat`, the expression that `if` watches will refer to the scope created by each iteration of `ng-repeat`.
+
+In this directive, transclusion allowed us to get hold of the contents of the directive's element, bound to the correct scope, and conditionally insert it into the DOM.
 
 ## Directive's Controller
 

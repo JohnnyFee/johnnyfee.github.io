@@ -23,7 +23,6 @@ Services are singleton (single-instance) objects that carry out the tasks necess
 
 In AngularJS the word service can refer to either the method of registering constructor functions (as shown in the previous example) or any singleton object that is created and managed by AngularJS DI system, regardless of the method of registering used (this is what most people mean by using the word service in the context of AngularJS modules).
 
-
 With modules, and the dependency injection we get from them, we can write our controller much more simply, like this:
 
     function ShoppingController($scope, Items) {
@@ -176,7 +175,7 @@ Next, an object returned from a `provider` function can have additional methods 
 
 ### Services and their visibility across module
 
-[Services defined on sibling modules are also visible to each other. We could move a `car` service ]()[into a separate module, and then change module dependencies, so that an application depends on both the `engines` and `cars` modules as follows:]()
+Services defined on sibling modules are also visible to each other. We could move a `car` service into a separate module, and then change module dependencies, so that an application depends on both the `engines` and `cars` modules as follows:
 
 ```js
 angular.module('app', ['engines', 'cars'])
@@ -198,9 +197,9 @@ angular.module('engines', [])
   });
 ```
 
-[In the preceding case an `engine` can still be injected into a `car` without any problem.]()
+In the preceding case an `engine` can still be injected into a `car` without any problem.
 
-[Since AngularJS combines all the services from all the modules into one big, application-level set of services there can be one and only one service with a given name. We can use this to our advantage in cases where we want to depend on a module, but at the same time override some of the services from this module. To illustrate this, we can redefine the `dieselEngine` service directly in the `cars` module in the following manner:]()
+Since AngularJS combines all the services from all the modules into one big, application-level set of services there can be one and only one service with a given name. We can use this to our advantage in cases where we want to depend on a module, but at the same time override some of the services from this module. To illustrate this, we can redefine the `dieselEngine` service directly in the `cars` module in the following manner:
 
 ```js
 angular.module('app', ['engines', 'cars'])
@@ -224,7 +223,7 @@ angular.module('cars', [])
   });
 ```
 
-[In this case, the `car` service will be injected with the `dieselEngine` service defined in the same module as that of the `car` service. The `car` module level, `dieselEngine`, will override (shadow) the `dieselEngine` ]()[service defined under the `engines` module.]()
+In this case, the `car` service will be injected with the `dieselEngine` service defined in the same module as that of the `car` service. The `car` module level, `dieselEngine`, will override (shadow) the `dieselEngine` service defined under the `engines` module.
 
 __Note:__ There can be one and only one service with a given name in an AngularJS application. Services defined in the modules closer to the root of modules hierarchy will override those defined in child modules.
 

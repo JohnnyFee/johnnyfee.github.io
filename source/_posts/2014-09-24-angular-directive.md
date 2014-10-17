@@ -7,22 +7,17 @@ tags : [angular, tutorial]
 
 ## Directives
 
-Directives extend HTML syntax, and are the way to associate behavior and DOM transformations with custom elements and attributes. Through them, you can create reusable UI components, configure your application, and do almost anything else you can imagine wanting to do in your UI template.
+指令继承 HTML 语法，是一种为自定义元素和属性与 DOM 变换和行为关联的方式。你可以使用指令来创建可复用的 UI 组件，配置应用和其他所有你想在 UI 模板中做的事情。
 
-You can write apps with the built-in directives that come with Angular, but you’ll likely run into situations where you want to write your own. You’ll know it’s time to break into directives when you want to deal with __browser events or modify the DOM__ in a way that isn’t already supported by the built-in directives. This code of yours belongs in a directive that you write, and not in a controller, service, or any other place in your app.
+你可以使用 Angular 内置的指令，也可以自定义指令。处理浏览器事件和修改 DOM 时，当内置指令在方面无法满足时，你可以自定义指令。
 
 相对 JQuery 实现控件的方式，Directives 更具语义性，从 HTML 便可知控件的含义。
 
 <!--more-->
 
-As with services, you define directives through the module object’s API by calling its `directive()` function, where directiveFunction is a factory function that defines your directive’s features.
-
-    var appModule = angular.module('appModule', [...]);
-    appModule.directive('directiveName', directiveFunction);
-
 ## 定义指令
 
-Each directive must be registered with a **module**. You call `directive()` on the **module** passing in the **canonical name** of the directive and a **factory function** that returns the **directive definition**.。下面的代码是一个简单的 Hello World 指令。
+我们使用 module 对象的 `directive()` 方法定义指令：
 
 ```js
 var app = angular.module('myapp', []);
@@ -50,7 +45,7 @@ __使用方法：__
 
 ### `restrict`
 
-这个属性用来指定指令在HTML中如何使用（还记得之前说的，指令的四种表示方式吗）。在上面的例子中，我们使用了 'AE'。所以这个指令可以被当作新的HTML元素或者属性来使用。如果要允许指令被当作class来使用，我们将 restrict 设置成 'AEC'。
+这个属性用来指定指令在HTML中的使用方法。在上面的例子中，我们使用了 'AE'。所以这个指令可以被当作新的 HTML 元素或者属性来使用。如果还要允许指令被当作class来使用，我们将 restrict 设置成 'AEC'。
 
 一个Angular指令可以有以下的四种表现形式：
 
@@ -63,15 +58,13 @@ CSS 类 | 'C' | `<input type="text" class="data-picker"/>`
 
 ### `template`/`templateUrl` 
 
-这个属性规定了指令被Angular编译和链接（link）后生成的HTML标记。这个属性值不一定要是简单的字符串。template 可以非常复杂，而且经常包含其他的指令，以及表达式(`{%raw%}{{ }}{%raw%}`)等。`template` 只用于 templete 内容比较少的情况，更多的情况下你可能会见到 `templateUrl`。所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
+这个属性规定了指令被 Angular 编译和链接（link）后生成的HTML标记。这个属性值不一定要是简单的字符串。template 可以非常复杂，而且经常包含其他的指令，以及表达式(`{%raw%}{{ }}{%raw%}`)等。`template` 只用于 templete 内容比较少的情况，更多的情况下你可能会见到 `templateUrl`。所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
 
 ### `replace`
 
-The `replace` property tells the compiler to replace the original directive's element with the template given by the `template` field. If we had provided `template` but not `replace`, then the compiler would append the template to the directive's element.
+`replace` 为 true 表示 compiler 将用 `template` 指定的模板内容替换原指令元素，原指令中的所有属性都将被拷贝到模板元素中。`replace` 为 false 时，表示 template 内容作为指令子元素添加到指令元素中。`replace` 默认为 false。
 
-When you ask the compiler to replace the element with a template, it will copy over all the attributes from the original element to the template element as well.
-
-在上述例子中，我们用 `<hello-world></hello-world>` 的方式使用我们的指令，并且将 replace 设置成 true。所以，在指令被编译之后，生成的模板内容替换掉了 `<hello-world></hello-world>`。最终的输出是 `<h3>Hello World!!</h3>`。如果你将 replace 设置成 false，也就是默认值，那么生成的模板会被插入到定义指令的元素中。
+在上述例子中，我们用 `<hello-world></hello-world>` 的方式使用我们的指令，并且将 `replace` 设置成 true。所以，在指令被编译之后，生成的模板内容替换掉了 `<hello-world></hello-world>`。最终的输出是 `<h3>Hello World!!</h3>`。如果你将 replace 设置成 false，那么生成的模板会被插入到定义指令的元素中。
 
 ### 属性列表
 
@@ -91,23 +84,13 @@ When you ask the compiler to replace the element with a template, it will copy o
 `require`     | Requires a directive controller from another directive to be injected into this directive's link function.
 `compile`     | The compile function that can manipulate the source DOM and will create the link function and is only used if a link has not been provided above.
 
-打开这个 [plunker](http://plnkr.co/edit/GKI339z2VDdZTOE2bGFP)，在”Hello World!!”右键检查元素内容，来更形象地明白这些。
-
 ## 生命周期
 
-当应用引导启动的时候，Angular 开始使用 $compile 服务遍历 DOM 元素，试图使用注册过的指令列表来匹配每个元素、属性、注释、CSS 类，一旦匹配，AngularJS 调用相应指令的 compile 函数，这个 compile 函数返回一个 link 函数，被添加到稍后执行的 link 函数列表中。
+当应用引导启动的时候，Angular 开始使用 `$compile` 服务遍历 DOM 元素，试图使用注册过的指令列表来匹配每个元素、属性、注释、CSS 类，一旦匹配成功，AngularJS 调用相应指令的 compile 函数，这个 compile 函数返回一个 link 函数，被添加到稍后执行的 link 函数列表中。作用域在编译阶段还没有准备好，在编译阶段还不能使用作用域中数据。
 
-The compilation stage is done before the scope has been prepared, and no scope data is available in the compile function.
+一旦所有的指令编译完成便进入编译阶段，AngularJS 创建作用域并且通过调用 link 函数将每个指令链接到作用域。在这个阶段，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的 scope 下被解析和处理，然后返回具有事件响应的真实的 DOM 节点。
 
-Once all the directives have been compiled, AngularJS creates the scope and links each directive to the scope by calling each of the linking functions.
-
-At the linking stage, the scope is being attached to the directive, and the linking function can then wire up bindings between the scope and the DOM.
-
-If you have some complex functionality that does not rely on the data in the scope, then it should appear in the compile function, so that it is only called once.
-
-编译阶段主要用于优化。 It is possible to do almost all the work in the linking function (except for a few advanced things like access to the transclusion function). 以 ng-repeat 为例，compile 函数只执行一次，用来复制模板, 但是 link 函数在 repeater 每次迭代的时候，每次数据发生变化的时候都会被调用。
-
-在编译阶段之后，就开始了链接（linking）阶段。在这个阶段，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的scope下被解析和处理，然后返回具有事件响应的真实的DOM节点。
+在链接阶段，作用域已经链接到了指令，链接函数为作用域和 DOM 之间的绑定接通了电源。link 函数几乎可以做所以的事情，除了一些高级用法如访问 transclusion 函数。
 
 ### Compile
 
@@ -116,9 +99,11 @@ compile 函数在 link 函数被执行之前用来做一些 DOM 改造。它接�
 - element – 指令所在的元素
 - attributes – 元素上赋予的参数的标准化列表
 
-要注意的是 compile 函数不能访问 scope，并且必须返回一个 link 函数。只能在链接函数中使用 DOM，因为在编译函数中可能移除或复制元素。如果没有设置 compile 函数，你可以正常地配置 link 函数，有了compile，就不能用link，link函数由compile返回。
+要注意的是 compile 函数不能访问 scope，并且必须返回一个 link 函数。只能在链接函数中使用 DOM，因为在编译函数中可能移除或复制元素。如果没有设置 compile 函数，你可以正常地配置 link 函数，有了compile，就不能有 link，link 函数由 compile 函数返回。
 
-compile函数可以写成如下的形式：
+编译阶段主要用于优化。以 ng-repeat 为例，compile 函数用来复制模板，只执行一次，但是 在 repeater 每次迭代的时候，link 函数都会被调用。
+
+compile 函数可以写成如下的形式：
 
 ```js
 myApp.directive('directiveName', function(){
@@ -151,9 +136,7 @@ myApp.directive('directiveName', function(){
 })
 ```
 
-大多数的情况下，你只需要使用 link 函数。这是因为大部分的指令只需要考虑注册事件监听、监视模型、以及更新DOM等，这些都可以在 link 函数中完成。 但是对于像 ng-repeat 之类的指令，需要克隆和重复 DOM 元素多次，在 link 函数执行之前由 compile 函数来完成。这就带来了一个问题，为什么我们需要两个分开的函数来完成生成过程，为什么不能只使用一个？要回答好这个问题，我们需要理解指令在Angular中是如何被编译的！
-
-如下面的例子，我们定义一个 button 指令，当 button 的类型为 submit 时，自动添加 'btn-primary' 属性，根据 size 属性，添加改变大小的 CSS 类。我们这个例子是基于 Bootstrap 的。
+如下面的例子，我们定义一个 button 指令，当 button 的类型为 submit 时，自动添加 `btn-primary` 类，根据 size 属性，添加改变大小的 CSS 类。我们这个例子是基于 Bootstrap 的。
 
 ```js
 myModule.directive('button', function() {
@@ -161,10 +144,10 @@ myModule.directive('button', function() {
     restrict: 'E',
     compile: function(element, attributes) {
       element.addClass('btn');
-      if ( attributes.type === 'submit' ) {
+      if (attributes.type === 'submit' ) {
         element.addClass('btn-primary');
       }
-      if ( attributes.size ) {
+      if (attributes.size ) {
         element.addClass('btn-' + attributes.size);
       }
     }
@@ -181,19 +164,21 @@ myModule.directive('button', function() {
     <button type="submit"
         class="btn btn-primary btn-large">Click Me!</button>
 
-We can do all these modifications in the compile function rather than the linking function because our changes to the element do not rely on the scope data that will be bound to the element. We could have put this functionality into the linking function instead, but if the button appears in an ng-repeat loop, then addClass() would be called for each iteration of the button.
+如果你有不依赖作用域数据的复杂功能，那么这些应该出现在编译函数中，以便这些代码只运行一次。加入我们把上例中改用 link 函数实现，那么当 button 出现在 `ng-repeat` 循环中时，`addClass()` 函数在每次迭代中都将会被调用。S市用 compile 函数来实现，`addClass()` 只会被调用一次，button 只是被 `ng-repeat` 简单的复制。
 
-By putting the functionality in the compile function, it is only called once, and the button is simply cloned by the ng-repeat directive. If you are doing complex work on the DOM then this optimization can make a significant difference, especially if you are iterating over a large collection.
+在处理比较复杂的 DOM 操作时，这样的优化是比较可观的，特别是当你要迭代一个大集合的时候。
 
 ### Link
 
 指令的 link 函数主要用来为 DOM 元素添加事件监听、监视模型属性变化、以及更新 DOM。我们可以在 link 函数中访问指令的 scope。
 
+大多数的情况下，你只需要使用 link 函数。这是因为大部分的指令只需要考虑注册事件监听、监视模型、以及更新DOM等，这些都可以在 link 函数中完成。 
+
 link 函数有三个参数：
 
-- `$scope` 指令的scope。在我们的例子中，指令的scope就是父 controller 的 scope。
-- `$elem` 指令的 jQLite(jQuery的子集)包装DOM元素。如果你在引入 AngularJS 之前引入了 jQuery，那么这个元素就是 jQuery 元素，而不是 jQLite 元素。由于这个元素已经被 jQuery/jQLite 包装了，所以我们就在进行DOM操作的时候就不需要再使用 $() 来进行包装。$element === angular.element() === jQuery() === $()。
-- `$attr` 一个包含了指令所在元素的属性的标准化的参数对象。举个例子，你给一个 HTML元素添加了一些属性：`<hello-world some-attribute=""></hello-world>`，那么可以在 link 函数中通过 `$attrs.someAttribute` 来使用它。
+- `$scope` 指令的 scope。在我们的例子中，指令的scope就是父 controller 的 scope。
+- `$elem` 用 jQLite(jQuery的子集)包装的 DOM 元素。如果你在引入 AngularJS 之前引入了 jQuery，那么这个元素就是 jQuery 元素，而不是 jQLite 元素。由于这个元素已经被 jQuery/jQLite 包装了，所以我们就在进行DOM操作的时候就不需要再使用 $() 来进行包装。$element === angular.element() === jQuery() === $()。
+- `$attr` 一个包含了指令所在元素的属性对象。举个例子，你给一个 HTML元素添加了一些属性：`<hello-world some-attribute=""></hello-world>`，那么可以在 link 函数中通过 `$attrs.someAttribute` 来使用它。
 
     如果你也有一个包含 `{{}}` 的属性，这个属性需要计算，并且可能改变多次。你可以使用 `$attributes.$observe('myOtherAttribute', function(newValue))` 来监听属性的改变，而不是 `$scope.$watch()`。`$observe` 第一个参数为属性名，回调函数只有一个参数 `newValue`，表示经过计算的新值。和 `$watch` 的区别为当表达式的值改变时，`$observe` 仅且仅被触发一次，而 `$watch` 可能被触发多次。
 
@@ -252,89 +237,19 @@ link: {
 
 If you need to wait till your `$scope` data finishes loading try using [ng-if](http://docs.angularjs.org/api/ng/directive/ngIf) to defer linking of a block of DOM.
 
-The pre-linking and post-linking phases are executed by the compiler. The pre-link function is executed before the child elements are linked, while the post-link function is executed after. It is only safe to do DOM transformations after the post-link function.
-
 Pre-linking 和 post-linking 都是被 compiler 执行的。Pre-linking 是在所有子元素被链接之前执行，而 post-ling 是在所有子元素链接之后。只有在 post-link 函数中做 DOM 变换才是安全的。
 
 See [Understanding Directives · angular/angular.js Wiki](https://github.com/angular/angular.js/wiki/Understanding-Directives)。
 
-## 扩展指令
-
-假如你想使用第三方指令，但又不想修改它，我们一下这些方法来达到这个目标。
-
-### Global Configurations
-
-一些好的指令（AngularUI）可以做一些全局配置，这要你就不需要在每个实例中传入你的配置项了。
-
-### Require Directives
-
-Create a new directive that assumes the first directive has already been applied. You can require it on a parent DOM element, OR on the same DOM element. If you need to access functionality found in the primary directive, make it exposed via the directive controller (this may require submitting a Pull Request or feature request to the plugin developer).  
-
-```js
-// <div a b></div>
-ui.directive('a', function(){
-  return {
-    controller: function(){
-      this.data = {}
-      this.changeData = function( ... ) { ... }
-    },
-    link: ($scope, $element, $attributes, controller) {
-      controller.data = { ... }
-    }
-  }
-})
-myApp.directive('b', function(){
-  return {
-    require: 'a',
-    link: ($scope, $element, $attributes, aController) {
-      aController.changeData()
-      aController.data = { ... }
-    }
-  }
-})
-```
-
-### Stacking Directives
-
-You can create a new directive with the exact same name as the original directive. Both directives will be executed. However, you can use the priority to control which directive fires first (again, may require a Pull Request or feature request)
-
-```js
-// <div a></div>
-ui.directive('a', {
-    priority: 1,
-    //...
-});
-myApp.directive('a', {
-    priority: 0,
-    // ...
-});
-```
-
-### Templating
-
-You can leverage `<ng-include>` or simply create a directive that generates the HTML with the primary directive attached.
-
-```js
-// <div b></div>
-ui.directive('a', ... )
-myApp.directive('b', function(){
-  return {
-    template: '<div a="someOptions"></div>'
-  }
-})
-```
-
 ## Transclusion
 
-Transclusion is necessary whenever a directive is replacing its original contents with new elements but wants to use the original contents somewhere in the new elements.
+当你想用模板内容替换指令内容，但用想用指令内容时，Transclusion 就能派上用场了。在模板中使用 `ng-transclude` 指明插入的位置，作为原元素内容的占位符。
 
-`ng-transclude` 指明插入的位置，带有 `ng-transclude` 指令标签的元素会被删除，然后被替换为指令的内容。
-
-A simple example of such a templated widget is an `alert` element directive.
+我们通过一个 `alert` 元素指令来说明，`alert` 指令的效果如下：
 
 ![](http://johnnyimages.qiniudn.com/angular-directive-alert.jpg)
 
-The contents of the `alert` element contains the message to display in the alert. This needs to be transcluded into the directive's template. A list of alerts can be displayed using `ng-repeat`:
+`alert` 元素包含要显示在 alert 中的消息，这需要把消息移动到指令的模板中。alert 列表可以使用 `ng-repeat` 来显示：
 
 ```html
 <alert type="alert.type" close="closeAlert($index)"
@@ -343,7 +258,7 @@ The contents of the `alert` element contains the message to display in the alert
 </alert>
 ```
 
-The `close` attribute should contain an expression that will be executed when the user closes the alert. The implementation of the directive is quite straightforward as follows:
+当用户关闭 alert 时，`close` 函数被调用。实现该指令的代码如下：
 
 ```js
 myModule.directive('alert', function () {
@@ -363,24 +278,22 @@ myModule.directive('alert', function () {
 });
 ```
 
-We use isolated scope to ensure that the scopes inside and outside the widget do not contaminate each other. This means that expressions within the template have no access to the values on the parent scope, containing the widget. This is useful because we don't want properties on the parent scope affecting or being affected by what we do inside the template.
+这里我们使用隔离作用域来保证内外作用域的组件不会互相污染。这意味着指令模板中的表达式无法访问父作用域。
 
-The original contents of the directive's element, which is going to be inserted into the template, needs to be associated with the original scope and not the isolated scope. By transcluding the original elements we are able to maintain the correct scope for these elements.
+### `transclude`
 
-### transclude
+`transclude` 属性的可选值为 `true` 和 `'element'`。
 
-The `transclude` property takes either `true` or `'element'`. This tells the compiler to extract the contents of the original `<alert>` element and make them available to be transcluded into the template.
+* 使用 `transclude: true` 意味着指令元素的子元素会被移动内嵌到模板中。
+* 使用 `transclude: 'element'` 意味着这个元素会被移动内嵌到模板中，包括元素的所有未被编译的属性指令。在这种情况下，只有当 `repalce` 属性为 true 时才有意义，
 
-* Using `transclude: true` means that the children of the directive's element will be transcluded. This is what happens in the `alert` directive, although we then replaced the directive's element with our template.
-* Using `transclude: 'element'` means the entire element will be transcluded including any attribute directives that have not already been compiled. This is what happens in the `ng-repeat` directive.
+### `ng-transclude`
 
-### ng-transclude
+`ng-transclude` 指定需要移动的指令内容在模板中的占位符。
 
-The `ng-transclude` directive gets the transcluded elements and appends them to the element in the template on which it appears. This is the simplest and most common way to use transclusion.
+### transclusion 函数
 
-### transclusion functions
-
-When a directive requests transclusion, AngularJS will extract the transcluded elements from the DOM and compile them. Here is an approximation of what happens with `transclude: true`:
+当一个指令要求移动内嵌时，AnguarJS 将从 DOM 中提取内嵌内容并编译。以下是 `transclude: true` 时大致做的事情：
 
 ```js
 var elementsToTransclude = directiveElement.contents();
@@ -388,24 +301,24 @@ directiveElement.html('');
 var transcludeFunction = $compile(elementsToTransclude);
 ```
 
-The first line gets the contents of the element containing the directive that requested the transclusion. The second line clears this element. The third line compiles the transcluded contents to produce the <span class="strong">**transclusion**</span> function, which will be passed back to the directive, for it to use.
+The first line gets the contents of the element containing the directive that requested the transclusion. The second line clears this element. The third line compiles the transcluded contents to produce the **transclusion** function, which will be passed back to the directive, for it to use.
 
-#### Creating a transclusion function with the $compile service
+#### 使用 $compile 服务创建 transclude 函数
 
-The call to `$compile` service returns a linking function. 
+`$compile` 函数的返回结果为一个链接函数：
 
 ```js
 var linkingFn = $compile(
   '<div some-directive>Some {{"interpola-ted"}} values</div>');
 ```
 
-You call this function with a scope to retrieve a DOM element containing the compiled DOM elements, bound to the given scope:
+为 `linkingFn`  函数传入 scope，是编译后的 DOM 元素指定的 scope 绑定：
 
     var compiledElement = linkingFn(someScope);
 
-Transclusion functions are just special instances of link functions.
+Transclusion 函数只是 link 函数的特殊例子。
 
-If we pass in a call-back function as a parameter to a linking function then a clone of the elements will be returned instead of the original elements. The call-back function will be called synchronously with the cloned elements as a parameter.
+如果你为链接函数传入回调函数，该回调函数的参数是原始元素的拷贝，而非原始函数本身。
 
 ```js
 var clone = linkingFn(scope, function callback(clone) {
@@ -413,11 +326,11 @@ var clone = linkingFn(scope, function callback(clone) {
 });
 ```
 
-This is very useful if you want to make copies of the original element's children, as it would happen in `ng-repeat`.
+这在想拷贝原始元素的场合非常有用，在 `ng-repeat` 就是这么干的。
 
-#### Accessing transclusion functions in directives
+#### 在指令中访问 transclusion 函数
 
-The compiler passes this **transclusion** function back to the directive. There are two places where you can get hold a **transclusion**function: the compile function and the directive controller.
+你可以在两个地方获得 transclusion 函数：compile 函数和指令的 controller：
 
 ```js
 myModule.directive('myDirective', function() {
@@ -429,13 +342,11 @@ myModule.directive('myDirective', function() {
 });
 ```
 
-Here we have indicated that the directive should `transclude` its contents. We can access the <span class="strong">**transclusion**</span> functions in the compile function, via the `transcludeFn` parameter and in the directive controller, via the `$transclude` parameter.
+__在编译函数中获取 transclusion 函数:__
 
-__Getting the transclusion function in the compile function with transcludeFn:__
+compile 函数的第三个参数为 transclusion 函数。在编译阶段，作用域式不可用的，所以 transclusion 函数没用绑定到任何作用域。
 
-The transclusion function is made available as the third parameter of the compile function of a directive. At this stage of the compilation, the scope is not known so the **transclusion** function is not bound to any scope. Instead, you will pass in the scope to this function, as its first parameter, when you call it.
-
-The scope is available in the linking function and so this is where you will generally find the transclusion function being invoked.
+作用域在链接阶段是可用的，所以链接函数才是调用 transclusion 函数的地方。
 
 ```js
 compile: function(element, attrs, transcludeFn) {
@@ -446,13 +357,14 @@ compile: function(element, attrs, transcludeFn) {
 }
 ```
 
-We append the transcluded elements to the first `<p>` element below the directive's element. When calling the <span class="strong">**transclusion**</span> function, we bind the transcluded elements to a scope. In this case we create a new scope, which is a sibling of the directive's scope, that is, child of the `$parent` of the directive's scope.
+我们把移动内嵌的元素追加到指令元素内的 `<p>` 元素中。这里，我们创建乐意个新的作用域，该作用域是指令作用域的兄弟，也就是指令作用域的 `$parent` 的一个子作用域。
 
-This is necessary when the directive has an isolated scope; since the scope passed to the link function is the isolated scope and does not inherit the properties from the parent scope, which the transcluded elements need.
 
-#### Getting the transclusion function in the directive controller with $transclude
+这在指令有一个隔离作用域时特别需要，因为传入 link 函数的作用域是隔离作用域，并不继承于父作用域，而 transcluded 元素的作用域需要继承与作用域。
 
-We can access the <span class="strong">**transclusion**</span> function in a directive controller by injecting `$transclude`. In this case, `$transclude` is a function that is pre-bound to new a child of the parent scope, so you do not need to provide a scope.
+__在指令的 controller 中获取 transclusion 函数：__
+
+我们在指令的 controller 中通过 `$transclude` 访问 transclusion 函数。在这种情况下，`$transclude` 是一个提前绑定到继承与父作用域的子作用域的函数，所以你无需提供作用域。
 
 ```js
 controller: function($scope, $element, $transclude) {
@@ -460,11 +372,7 @@ controller: function($scope, $element, $transclude) {
 }
 ```
 
-Once again, we append the transcluded elements to the first `<p>` element.
-
-With `$transclude`, the pre-bound scope will be a prototypical child of the original scope from where the transcluded elements came.
-
-#### Creating an if directive that uses transclusion
+#### 使用 transclusion 创建 if 指令
 
 Let's look at a simple directive that makes explicit use of transclusion functions rather than relying on the `ng-transclude `directive. While AngularJS 1.0 provides both `ng-show` and `ng-switch` directives for changing the visibility of content in an application, `ng-show` doesn't remove the element from the DOM when it is hidden and `ng-switch` is quite verbose for simple situations.
 
@@ -530,11 +438,11 @@ myModule.directive('if', function () {
     ...
 ```
 
-The directive transcludes the entire element (`transclude: 'element'`). We provide a compile function, which gives us access to the <span class="strong">**transclusion**</span> function, which returns the link function, where we `$watch` the `if` attribute expression.
+The directive transcludes the entire element (`transclude: 'element'`). We provide a compile function, which gives us access to the **transclusion** function, which returns the link function, where we `$watch` the `if` attribute expression.
 
 We use `$watch` rather than `$observe` here because the `if` attribute should contain an expression to be evaluated rather than a string to be interpolated.
 
-When the expression changes, we tidy up the scope and child element, if they exist. This is important to ensure that we don't have any memory leaks. If the expression evaluates to `true`, we create a new child scope and then use it with the <span class="strong">**transclusion**</span> function to clone a new copy of the transcluded elements. We insert these elements after the element that contained the directive.
+When the expression changes, we tidy up the scope and child element, if they exist. This is important to ensure that we don't have any memory leaks. If the expression evaluates to `true`, we create a new child scope and then use it with the **transclusion** function to clone a new copy of the transcluded elements. We insert these elements after the element that contained the directive.
 
 __Using the priority property in a directive：__
 
@@ -548,9 +456,118 @@ We gave out `if` directive a priority of `500`, which is less than `ng-repeat`. 
 
 In this directive, transclusion allowed us to get hold of the contents of the directive's element, bound to the correct scope, and conditionally insert it into the DOM.
 
-## Directive's Controller
+## 指令控制器
 
-如果你想要允许其他的指令和你的指令发生交互时，你需要使用 controller 函数。比如有些情况下，你需要通过组合两个指令来实现一个UI组件。那么你可以通过如下的方式来给指令添加一个 controller 函数。
+我们见过不少使用 `ng-controller` 实例化的 controller，这些 controller 不应该直接操作 DOM，而只是用来处理当前作用域的。
+
+指令控制器是 controller 的一种特殊形式，这样的控制器由指令定义，指令在 DOM 中每出现一次指令控制器实例化一次。
+
+### 定义指令控制器
+
+我们通过指令定义对象中的 `controller` 属性来定义指令控制器。`controller` 属性值可以是一个定义在 module 中的控制器：
+
+```js
+myModule.directive('myDirective', function() {
+  return {
+    controller: 'MyDirectiveController'
+  };
+});
+myModule.controller('MyDirectiveController', function($scope) {
+  ...
+});
+```
+
+也可是用来实例化控制器的构造函数：
+
+```js
+myModule.directive('myDirective', function() {
+  return {
+    controller: function($scope, ...) { ... }
+  };
+});
+```
+
+如果指令 controller 定义在 module 中，好处是方便测试，坏处是对整个应用可见。使用内联的方式定义，好处是使控制器成为指令的私有控制器，坏处是不利于测试。
+
+指令控制器的依赖注入和其他控制器一样，如所有的控制器可以注入 `$scope`、`$timeout`、`$rootScope` 等。指令控制器还可以注入一下几个特殊服务：
+
+* `$element`: 这是对指令的 DOM 元素的引用，使用 jQLite/jQuery 包装。
+* `$attrs`: 这里指令 DOM 元素中的属性列表。
+* `$transclude`: This is a **transclusion** function that is already bound to the correct scope. This function is described in the **transclusion** functions.
+
+### 指令控制器和  link 函数的不同
+
+指令控制器和 link 函数在功能上有很多重叠的地方。在使用  link 函数的地方我们经常也可以使用控制器。
+
+directive controllers 和 link functions 的不同之处主要体现在以下两个方面。
+
+#### 依赖注入
+
+指令控制器必须使用依赖注入来指定所需要的服务，如 `$scope`, `$element`, and `$attrs`。link 函数传入的总是这四个参数， `scope`, `element`, `attrs`, and `controller`，它使用的不是依赖注入，所以参数名可以任意。
+
+#### 编译过程
+
+指令控制器在编译过程的不同时间调用。加入有以下 DOM 结构和指令：
+
+![](http://johnnyimages.qiniudn.com/angular-directive-controller.jpg)
+
+指令控制器和 link 函数按以下顺序被调用：
+
+* parent (controller)
+* [parent (pre-link)
+    * child 1 (controller)
+    * child 1 (pre-link)
+        * child 1 a (controller)
+        * child 1 a (pre-link)
+        * child 1 a (post-link)
+        * child 1 b (controller)
+        * child 1 b (pre-link)
+        * child 1 b (post-link)
+    * child 1 (post-link)
+* parent (post-link)
+
+如果一个元素包含多个指令，那么对于这个元素来说：
+
+* 如果需要，创建作用域
+* 实例化每个指令的指令控制器
+* 每个指令的 pre-link 函数被调用
+* 链接每个子元素
+* 每个指令的 post-link 函数被调用
+
+这意味着当一个指令控制器被实例化的时候，指令元素和它的子元素还没有完全被链接。但是当 link 函数(pre 或者 post)被调用的时候，元素所有的指令控制器已经实例化了。这是指令控制器可以被传到链接函数的原因。
+
+post-link 函数是在当前元素极其子元素编译和链接完成后被调用。这意味着这个阶段 DOM 的任何修改都不会被 AngularJS 编译器意识到。这在把第三方库（如 JQeury 插件）关联到元素的时候非常有用，因为这个过程可能在修改 DOM 的时候造成 Angular 编译器混乱。
+
+[Angular Scope](http://inching.org/2014/09/23/angular-scope) 中的 pagination demo 是用 link 函数实现的，我们可以把它改成 directive controller 的版本：
+
+```
+myModule.directive('pagination', function() {
+  return {
+    restrict: 'E',
+    scope: { numPages: '=', currentPage: '=', onSelectPage: '&' },
+    templateUrl: 'template/pagination.html',
+    replace: true,
+    controller: ['$scope, '$element', '$attrs',
+                   function($scope, $element, $attrs) {
+      $scope.$watch('numPages', function(value) {
+        $scope.pages = [];
+        for(var i=1;i<=value;i++) {
+           $scope.pages.push(i);
+        }
+        if($scope.currentPage > value ) {
+          $scope.selectPage(value);
+        }
+      });
+      $scope.noPrevious = function() {
+        return $scope.currentPage === 1;
+      };
+      ...
+    }]
+...
+});
+```
+
+### 访问其他控制器
 
 ```js
 app.directive('outerDirective', function() {
@@ -567,7 +584,6 @@ app.directive('outerDirective', function() {
 });
 ```
 
-We are defining a `controller` function in our directive, so we don’t need to define either of these functions, but it is important to note that we cannot do DOM manipulations in our controller function.
 
 这个代码为指令添加了一个名叫 outerDirective 的controller。当另一个指令想要交互时，它需要声明它需要引用(require)你的指令的 controller 实例。可以通过如下的方式实现：
 
@@ -594,109 +610,11 @@ app.directive('innerDirective', function() {
 </outer-directive>
 ```
 
-require: '^outerDirective' 告诉Angular在元素以及它的父元素中搜索controller。这样被找到的 controller 实例会作为第四个参数被传入到 link 函数中。在我们的例子中，我们将嵌入的指令的scope发送给父亲指令。如果你想尝试这个代码的话，请在开启浏览器控制台的情况下打开这个[Plunker](http://plnkr.co/edit/NMWGE6l9p1tBZh3jCfKn?p=preview)。同时，[这篇Angular官方文档](http://docs.angularjs.org/guide/directive)上的最后部分给了一个非常好的关于指令交互的例子，是非常值得一读的。
+require: '^outerDirective' 告诉Angular在元素以及它的父元素中搜索controller。这样被找到的 controller 实例会作为第四个参数被传入到 link 函数中。在我们的例子中，我们将嵌入的指令的scope发送给父亲指令。
 
-### Require
+#### `require`
 
-This lets you pass a controller (as defined above) associated with another directive into a compile/linking function. You have to specify the name of the directive to be required – It should be bound to same element or its parent. 
-
-__Making the controller optional:__
-
-If the current element does not contain the specified directive, then the compiler will throw an error. You can make the `require` field of the controller optional by putting a `'?'` in front of the directive name, for example, `require: '?ngModel'`. If the directive has not been provided, then the fourth parameter will be `null`. If you require more than one controller then the relevant element in the array of controllers will be `null`.
-
-__Searching for parents for the controller:__
-
-If the directive, whose controller you require, can appear on this or any ancestor of the current element, then you can put a `'^'` in front of the directive name, for example, `require: '^ngModel'`. The compiler will then search the ancestor elements starting from the element containing the current directive and return the first matching controller.
-
-You can combine optional and ancestor prefixes to have an optional directive that may appear in an ancestor. For example, `require: '^?form'` would let you find the controller for the form directive, which is what the `ng-model` directive does to register itself with the form if it is available.
-
-如果引用的是同级的 Controller，不需要加特殊字符，如：
-
-```html
-div ng-app="superApp">
-  <superhero flight strength>Superman</superhero>
-</div>
-```
-
-```js
-var app = angular.module('superApp', []);
-
-app.directive("superhero", function () {
-  return {
-    restrict: "E",
-
-    controller: function ($scope) {
-      $scope.abilities = [];
-
-      this.addStrength = function() {
-        $scope.abilities.push("strength");
-      };
-    
-      // ...
-    },
-
-    link: function (scope, element) {
-      element.addClass("button");
-      element.bind("mouseenter", function () {
-        console.log(scope.abilities);
-      });
-    }
-  };
-});
-```
-
-```js
-app.directive("strength", function() {
-    return {
-      require: "superhero",
-      link: function (scope, element, attrs, superheroCtrl) {
-        superheroCtrl.addStrength();
-      }
-    };
-}).directive("flight", function() {
-  return {
-    require: "superhero",
-    link: function (scope, element, attrs, superheroCtrl) {
-      superheroCtrl.addFlight();
-    }
-  };
-});
-;
-```
-
-See [AngularJS - Directive to Directive Communication - Thinkster](https://thinkster.io/egghead/directive-to-directive-communication/)
-
-### Multiple controllers
-
-Say you needed to call a method in a parent directive, but you still need to set the model value from within your directive. To do this you can set the 'require' property in the directive to an array of controllers, then when you pass in a single controller argument to your linking function, you can access each controller in the array by using its array index.
-
-```js
-app.directive('myDirective', function () {
-  return{
-    restrict: "A",
-    require:['^parentDirective', '^ngModel'], 
-    link: function ($scope, $element, $attrs, controllersArr) {
-
-      // parentDirective controller
-      controllersArr[0].someMethodCall(); 
-
-      // ngModel controller         
-      controllersArr[1].$setViewValue(); 
-    }
-  }
-});
-```
-
-Here is an example of it in action: 
-[Example](https://github.com/angular/angular.js/blob/master/src/ng/directive/input.js#L1206)
-
-See [Perry Hoffman : AngularJS: Including multiple controllers in a directive.](https://coderwall.com/p/8teqba)
-
-### require: 'ngModel'
-
-The `require` instruction gives you the controller for the directive you name as the fourth argument to your `link` function. (You can use `^` to look for the controller on a parent element; `?` makes it optional.) So `require: 'ngModel'` gives you the controller for the `ngModel` directive, [which is an `ngModelController`](http://docs.angularjs.org/api/ng.directive%3angModel.NgModelController).
-
-Directive controllers can be written to provide APIs that other directives can use; with `ngModelController`, you get access to special functionality that's built into `ngModel`, including getting and setting the value. Consider the following example:
+`require` 让其他指令的控制器关联到 compile/linking 函数。默认情况下，你必须在当前元素指令 require 的指令，你才可以在 compile/link 函数中使用 require 指令的控制器。
 
 ```html
 <input color-picker ng-model="project.color">
@@ -728,21 +646,37 @@ app.directive('colorPicker', function() {
 });
 ```
 
-This directive uses the `ngModel` controller to get and set the value of the color from the colorpicker. See this JSFiddle example: http://jsfiddle.net/BinaryMuse/AnMhx/
+如果当前元素没有包含 require 的指令，那么 compiler 会抛出错误。你可以通过在 require 的指令前加 `?` 让 require 的指令变得可选，如 `require: '?ngModel'`。如果 require 的指令没有提供，那么指令控制器的第四个参数将为 `null`。如果 require 多个指令，则指令控制器的四个参数为数组，require 对应的数组元素为 `null`。
 
-If you're using `require: 'ngModel'`, you probably shouldn't _also_ be using `ngModel: '='` in your isolate scope; the `ngModelController` gives you all the access you need to change the value.
+如果你 require 的指令可以出现在当前元素的祖先元素上，你可以在 require 的指令名前加 `^`，如 `require: '^ngModel'`。编译器将从当前元素开始向父元素查找，直到找到第一个匹配的指令控制器。
 
-The bottom example on [the AngularJS homepage](http://angularjs.org/) also uses this functionality (except using a custom controller, not `ngModel`).
+你可以结合使用祖先前缀和可选前缀，如 `require: '^?form'`。
 
----
+当你想 require 多个指令的时候，可以把 `require` 属性设置成一个数组，link 函数的第四个参数为相应指令控制器的数组，如：
 
-As for the casing of a directive, for example, `ngModel` vs `ng-model` vs `data-ng-model`: while Angular supports using multiple forms on the DOM, when you refer to a directive by name (for example, when creating a directive, or using `require`), you always use the lowerCamelCase form of the name.
+```js
+app.directive('myDirective', function () {
+  return{
+    restrict: "A",
+    require:['^parentDirective', '^ngModel'], 
+    link: function ($scope, $element, $attrs, controllersArr) {
 
-See [angularjs - What's the meaning of require: 'ngModel'? - Stack Overflow](http://stackoverflow.com/questions/20930592/whats-the-meaning-of-require-ngmodel)
+      // parentDirective controller
+      controllersArr[0].someMethodCall(); 
+
+      // ngModel controller         
+      controllersArr[1].$setViewValue(); 
+    }
+  }
+});
+```
+
+Here is an example of it in action: 
+[Example](https://github.com/angular/angular.js/blob/master/src/ng/directive/input.js#L1206)
 
 ### ngModelController
 
-我们以一个确认密码输入验证器的例子为例，当确认密码和输入MOMA相同时，才认为输入合法。
+我们以一个确认密码输入验证器的例子为例，当确认密码和输入密码相同时，才认为输入合法。
 
 ```html
 <form name="passwordForm">
@@ -750,33 +684,6 @@ See [angularjs - What's the meaning of require: 'ngModel'? - Stack Overflow](htt
   <input type="password" name="confirmPassword" ng-model="confirmPassword" validate-equals="user.password">
 </form>
 ```
-
-This custom model validator directive must integrate with `ngModelController` to provide a consistent validation experience for the user.
-
-Validation directives require access to the `ngModelController`, which is the directive controller for the `ng-model` directive. We specify this in our directive definition using the `require` field. This field takes a string or an array of strings. Each string must be the canonical name of the directive whose controller we require.
-
-When the required directive is found, its directive controller is injected into the linking function as the fourth parameter. For example:
-
-```js
-require: 'ngModel',
-link: function(scope, element, attrs, ngModelController) { … }
-```
-
-If more than one controller is required, then the fourth parameter will be an array containing these controllers in the same order as they were required.
-
-Once we have required the `ngModelController` we use its API to specify the validity of the input element. This is a common case for this kind of directive and the pattern is fairly straightforward. The `ngModelController` exposes the following functions and properties that we will use:
-
-Name                                        | Description
-------------------------------------------- | -----------
-`$parsers`                                  | A pipeline of functions that will be called in turn when the value of the input element changes.
-`$formatters`                               | A pipeline of functions that will be called in turn when the value of the model changes.        
-`$setValidity(validationErrorKey, isValid)` | A function called to set whether the model is valid for a given kind of validation error.       
-`$valid`                                    | True if there is no error.                                                                      
-`$error`                                    | An object that contains information about any validation errors on the model.                   
-
-The functions that go into `$parsers` and `$formatters` take a value and return a value, for example, `function(value) { return value; }`. The value they receive is the value returned from the previous function in the pipeline. It is inside these functions where we put our validation logic and call `$setValidity()`.
-
-Normally, in a validation function you return `undefined` if the value is not valid. This prevents the model from being updated with an invalid value. In this case, at the point of returning, the validation function does not know whether the value is valid or not. So we return the value any-way and then let the response callback set the validity later.
 
 ```js
 myModule.directive('validateEquals', function() {
@@ -800,11 +707,27 @@ myModule.directive('validateEquals', function() {
 });
 ```
 
-We create a function called `validateEqual(value)`, which compares the passed in value with the value of the expression. We push this into the `$parsers` and `$formatters` pipelines, so that the validation function gets called each time either the model or the view changes.
+我们创建了一个 `validateEqual(value)` 的函数来比较传入的值和表达式的值。我们这个函数放在 `$parsers` 和 `$formatters` 管道中，所以验证函数在模型或者试图的值发生变化时都将被触发。
 
-In this directive we also have to take into account the model we are comparing against changing. We do this by setting up a watch on the expression, which we retrieve from the `attrs` parameter of the linking function. When it does change, we artificially trigger the `$parsers` pipeline to run by calling `$setViewValue()`. This ensures that all potential `$parsers` are run in case any of them modify the model value before it gets to our validator.
+在这个指令中，我们也必须通过 `watch` 函数来监听比较的值（`attrs.validateEquals`）。当监听的值发生变化时，我们通过 `$setViewValue()` 手动触发 `$parsers` 管道。这保证了模型一旦发生变化，`$parsers` 所有函数将会运行。
 
-我们也可以使用类似的方式实现远程验证：
+`ngModelController`  的相关属性和方法：
+
+Name                                        | Description
+------------------------------------------- | -----------
+`$parsers`                                  | 当输入元素的值发生变化时，函数管道将以此运行。
+`$formatters`                               | 当模型的值发生变化时，函数管道将依次运行。
+`$setValidity(validationErrorKey, isValid)` | A function called to set whether the model is valid for a given kind of validation error.       
+`$valid`                                    | True if there is no error.                                                                      
+`$error`                                    | An object that contains information about any validation errors on the model.                   
+
+`$parsers` and `$formatters` 中的函数接收一个值返回一个值，如 `function(value) { return value; }`。接收的值是管道中的前一个函数的返回值。我们的验证逻辑将放在这些函数中。
+
+我们同样可以使用类似的方式实现远程验证：
+
+```html
+<input ng-model="user.email" unique-email>
+```
 
 ```js
 myModule.directive('uniqueEmail', ["Users", function (Users) {
@@ -832,6 +755,81 @@ myModule.directive('uniqueEmail', ["Users", function (Users) {
     }
   };
 }]);
+```
+
+当用户输入发生变化时，我们只在 `$parser` 中和服务区比较验证。如果值通过设置模型来更新，我们认为应用逻辑保证了 e-mail 的正确性。如编辑一个已经存在的用户，我们认为这里的 e-mail 是正确的。
+
+通常，在验证函数中，如果值是非法的，我们返回 `undefined`，这可以防止使用一个非法的值来改变模型。在这个例子中，函数返回我们仍不知道值是否合法，所以我们先将值返回，然后在响应的回调函数中设置有效性。
+
+我们为 `$formatters` 添加一个函数来跟踪设置到 model 的原值。当用户再次输入原值的时候，可以防止和服务器发生交互。
+
+## 扩展指令
+
+假如你想使用第三方指令，但又不想修改它，我们一下这些方法来达到这个目标。
+
+### Global Configurations
+
+一些好的指令（AngularUI）可以做一些全局配置，这要你就不需要在每个实例中传入你的配置项了。
+
+### Require Directives
+
+你可以通过在指令中 require 第三方指令，这样你就可以使用第三方指令的 Controller 了。
+
+```js
+// <div a b></div>
+ui.directive('a', function(){
+  return {
+    controller: function(){
+      this.data = {}
+      this.changeData = function( ... ) { ... }
+    },
+    link: ($scope, $element, $attributes, controller) {
+      controller.data = { ... }
+    }
+  }
+})
+
+myApp.directive('b', function(){
+  return {
+    require: 'a',
+    link: ($scope, $element, $attributes, aController) {
+      aController.changeData()
+      aController.data = { ... }
+    }
+  }
+})
+```
+
+### Stacking Directives
+
+你可以创建一个和第三方指令名称相同的指令。两个指令都将运行，你可以通过 `priority` 属性来控制指令的执行循序。如果第三方指令没有设置 `priority` 属性，可能需要 PR。
+
+```js
+// <div a></div>
+ui.directive('a', {
+    priority: 1,
+    //...
+});
+myApp.directive('a', {
+    priority: 0,
+    // ...
+});
+```
+
+### Templating
+
+You can leverage `<ng-include>` or simply create a directive that generates the HTML with the primary directive attached.
+
+你可是使用 `<ng-include>` 或者简单创建生成第三方指令的模板。
+
+```js
+// <div b></div>
+ui.directive('a', ... )
+myApp.directive('b', function(){
+  return {
+    template: '<div a="someOptions"></div>'
+  }
+})
 ```
 
 ## Unit Test
@@ -1165,6 +1163,7 @@ var setUpDatePicker = function () {
 - [A Practical Guide to AngularJS Directives - SitePoint](http://www.sitepoint.com/practical-guide-angularjs-directives/) / 翻译 [AngularJS 指令（Directives）实践指南（一） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide/)
 - [A Practical Guide to AngularJS Directives (Part Two) - SitePoint](http://www.sitepoint.com/practical-guide-angularjs-directives-part-two/) / 翻译 [AngularJS 指令（Directives）实践指南（二） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-b/)
 - [AngularJS: Developer Guide: Directives](https://docs.angularjs.org/guide/directive)
+
 ## Tutorial
 
 - [AngularJS 指令（Directives）实践指南（三） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-c/)

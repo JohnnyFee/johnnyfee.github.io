@@ -11,7 +11,7 @@ tags : [angular, tutorial]
 
 [Single Page Apps with AngularJS Routing and Templating ♥ Scotch](http://scotch.io/tutorials/javascript/single-page-apps-with-angularjs-routing-and-templating) 利用 AngularJS 创建一个单页面工程。
 
-对于正式工程可以参考下面的方法完成脚手架：
+对于正式工程可以使用 yo 创建脚手架：
 
 1. Installing Yeoman
 

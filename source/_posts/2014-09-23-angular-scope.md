@@ -7,22 +7,22 @@ tags : [angular, tutorial]
 
 每一个 `$scope` 都是类 `Scope` 的一个实例。类 `Scope` 拥有可以控制 `scope` 生命周期的方法，提供事件传播的能力，并支持模板渲染。
 
-## Angular 的作用域继承
+## 作用域
 
-Angular 中作用域的继承使用的是原型继承，也就在说子作用域的 prototype 会指向父作用域。在子作用域中查找属性时，先查找子作用域中的属性，如果为找到，在去父作用域中查找，以此类推，直到找到跟作用域 $rootScope。
+Angular 中作用域的继承使用的是原型继承，也就在说子作用域的 prototype 会指向父作用域。在子作用域中查找属性时，先查找子作用域中的属性，如果未找到，在去父作用域中查找，以此类推，直到找到跟作用域 $rootScope。
 
 <!--more-->
 
 Angular 中，总共有四种作用域：
 
-1. 普通的原型继承作用域
+1. 普通的原型继承作用域。创建一个原型继承于父作用域的作用域。
 
     - ng-include
     - ng-switch
     - ng-controller
     - directive with `scope: true`
     
-2. 通过拷贝/复制的原型继承作用域。ng-repeat 的每个迭代都会创建一个子作用域，并且每个字作用域总是得到一个新的属性。 
+2. 通过拷贝/复制的原型继承作用域。ng-repeat 的每个迭代都会创建一个子作用域，并且每个作用域总是得到一个新的属性。 
 
     - ng-repeat
     
@@ -30,7 +30,7 @@ Angular 中，总共有四种作用域：
 
     - directive with `scope: {...}`
 
-4. transcluded 作用域。这个作用域也会原型继承与父作用域，但是是隔离作用域的兄弟。
+4. transcluded 作用域。这个作用域也会原型继承与父作用域，可以和隔离作用域共存，是隔离作用域的兄弟。
 
     - directive with `transclude: true` 
     
@@ -44,13 +44,17 @@ Angular 中，总共有四种作用域：
 - directive with `scope: true`
 - directive with `transclude: true`.
 
-以下情况也会创建新的作用域，但不会从父作用域中继承：
+隔离作用域也会创建新的作用域，但不会从父作用域中继承：
 
 - directive with scope: { ... }
 
 这样的作用域，我们成为隔离作用域（isolate scope）。
 
-其他情况不会自动创建作用域，即时 scope: false。
+其他情况不会自动创建作用域，即 `scope: false`。
+
+### 原型继承
+
+作用域继承通常比较简单，你甚至经常不需要知道它的存在。除非你使用双向绑定到父作用域的一个基本类型(e.g., number, string, boolean) 的值时，并不会像我们期望的那样运行。实际上，子作用域得到的是自己的属性，这会隐藏父作用域中的同名属性。 这个问题是有由 JavaScript 的原型继承导致的，跟 AngularJS 没有什么关系。新的 Angular 开发者可能不会意识到 repeat, ng-switch, ng-view and ng-include 对会创建新的作用域，所以使用的时候，这类问题时有发生。
 
 ## ng-include
 
@@ -64,18 +68,22 @@ $scope.myObject    = {aNumber: 11};
 HTML:
 
 ```html
+<!-- 模板 tpl1.html -->
 <script type="text/ng-template" id="/tpl1.html">
     <input ng-model="myPrimitive">
 </script>
+
 <div ng-include src="'/tpl1.html'"></div>
 
+<!-- 模板 tpl2.html -->
 <script type="text/ng-template" id="/tpl2.html">
     <input ng-model="myObject.aNumber">
 </script>
+
 <div ng-include src="'/tpl2.html'"></div>
 ```
 
-每一个 ng-include 对生成一个子作用域，该子作用域都通过原型继承于父作用域：
+每一个 ng-include 生成一个子作用域，该子作用域都通过原型继承于父作用域：
 
 ![ng-include](https://camo.githubusercontent.com/67fc2d40487725fde10b669426c8b6b74213e6c6/687474703a2f2f692e737461636b2e696d6775722e636f6d2f7a694466782e706e67)
 
@@ -146,7 +154,7 @@ childScope = scope.$new(); // child scope prototypically inherits from parent sc
 childScope[valueIdent] = value; // creates a new childScope property
 ```
 
-如果 item 是基本类型（如 myArrayOfPrimitives 中的值），复制给子作用域的新属性的其实是这个基本类型的拷贝。所以修改 item 值并不会影响父作用域中的数组（`myArrayOfPrimitives`）。ng-repeat 为每个子作用域添加一个和 `myArrayOfPrimitives` 无关的 `num` 属性。在 Angular 1.0.3 +，在文本框中输入值不会影响子作用域中的 `num` 值，See Artem's explanation as to why on [StackOverflow](http://stackoverflow.com/a/13723990/215945)。
+如果 item 是基本类型（如 myArrayOfPrimitives 中的值），复制给子作用域的新属性的其实是这个基本类型的拷贝。所以修改 item 值并不会影响父作用域中的数组（`myArrayOfPrimitives`）。ng-repeat 为每个子作用域添加一个和 `myArrayOfPrimitives` 无关的 `num` 属性。在 Angular 1.0.3+，在文本框中输入值不会影响子作用域中的 `num` 值，See Artem's explanation as to why on [StackOverflow](http://stackoverflow.com/a/13723990/215945)。
 
 ![ng-repeat primitive](https://camo.githubusercontent.com/3254baf91afdd969e6f167eeeb59950a0399a8f1/687474703a2f2f692e737461636b2e696d6775722e636f6d2f6e4c6f69572e706e67)
 
@@ -177,9 +185,9 @@ See also：
 
         app.directive('helloWorld', function() {
           return {
-            scope: true,  // use a child scope that inherits from parent
+            scope: false,
             restrict: 'AE',
-            replace: 'true',
+            replace: true,
             template: '<h3>Hello World!!</h3>'
           };
         });
@@ -190,14 +198,23 @@ See also：
 
         app.directive('helloWorld', function() {
           return {
-            scope: {},  // use a new isolated scope
+            scope: true,
             restrict: 'AE',
-            replace: 'true',
+            replace: true,
             template: '<h3>Hello World!!</h3>'
           };
         });
 
 3. `scope:{...}` – 使用这种方式，指令会创建一个隔离作用域，没有原型继承。对于创建可复用的组件，这可能是最好的选择，这可以防止对父作用域的意外读写。
+
+        app.directive('helloWorld', function() {
+          return {
+            scope: {},  // use a new isolated scope
+            restrict: 'AE',
+            replace: true,
+            template: '<h3>Hello World!!</h3>'
+          };
+        });
 
     隔离作用域的 `__proto__` 引用的是  [Scope](http://docs.angularjs.org/api/ng.%24rootScope.Scope) 对象（如下图，图中橘色的 'Object' 应该修正为 'Scope'）。隔离作用局的 `$parent` 属性引用父作用域，既能它是隔离作用局而且没有从父作用域原型继承。
 
@@ -221,15 +238,15 @@ See also：
 
      ![isolate scope](https://camo.githubusercontent.com/c2e294392bfdcb48a6afcc328acb81d1ce4e9f18/687474703a2f2f692e737461636b2e696d6775722e636f6d2f4d557853342e706e67)  
 
+     当 parentProp1 被修改为 11 时， `scope.interpolatedProp` 是 undefined，`scope.twowayBindingProp` 的值为 `Mark`，因为它使用的 `=`，进行双向绑定。
+
      最后应该注意的是，在 link 函数中可以使用 `attrs.$observe('attr_name', function(value) { ... })` 来监视隔离作用域中使用 `@` 的属性变化。举个例子，假如在 link 函数中有如下语句：
 
         attrs.$observe('interpolated', function(value) { ... })
 
-    回调函数的参数 value 的值为 11，而 `scope.twowayBindingProp` 是 undefined，`scope.twowayBindingProp` 的值为 `Mark`，因为它使用的 `=`，进行双向绑定。
-
     See also [AngularJS Sticky Notes Pt 2 – Isolated Scope – One Hungry Mind](http://onehungrymind.com/angularjs-sticky-notes-pt-2-isolated-scope/)。
 
-4. `transclude: true` 指令将创建一个 "transcluded" 子作用域，该作用域也原型继承于父作用域。所以如果嵌入的内容（用来 替换ng-transclude 的东西）需要和父作用域中的基本类型的属性建立双向绑定，可以使用　`$parent`，或者把模型修改父对象。这和 ng-include 中的情况一样。
+4. `transclude: true` 指令将创建一个 "transcluded" 子作用域，该作用域也原型继承于父作用域。所以如果嵌入的内容（用来替换ng-transclude 的东西）需要和父作用域中的基本类型的属性建立双向绑定，可以使用　`$parent`，或者把模型修改父对象。这和 ng-include 中的情况一样。
 
     如果某个指令同时拥有隔离作用域和 transcluded 作用域，他们为兄弟关系，他们的 `$parent` 指向共同的父作用域。隔离作用域的 `$$nextSibling` 引用的是 transcluded 作用域。
 
@@ -239,7 +256,7 @@ See also：
 
     ![transcluded scope](https://camo.githubusercontent.com/34d8b831f665a8ff15f134bcc83a8a7e96822421/687474703a2f2f692e737461636b2e696d6775722e636f6d2f666b5748412e706e67)
 
-    使用 transclusion 后，你也可以通过 link 函数的第 5 个参数来嵌入内容的默认作用域；
+    使用 transclusion 后，你也可以通过 link 函数的第 5 个参数来修改嵌入内容的默认作用域；
 
         app.directive('person', function() {
           return {
@@ -327,7 +344,7 @@ attrs.$observe('attribute1', function(value) {
 attrs.$$observers['attribute1'].$$scope = parentScope;
 ```
 
-在下面的指令定义中，我们通过 `color: '@colorAttr'` 将属性 color 以指令属性 colorAttr 暴露出去。在使用指令时，通过 `color-attr="{{color}}"` 和父作用域的 color 属性单向绑定。当表达式 `"{{color}}"` 的值发生改变时，隔离作用于的 color 属性跟着变化，指令模板中的值也发生变化。
+在下面的指令定义中，我们通过 `color: '@colorAttr'` 将属性 color 以指令属性 colorAttr 暴露出去。在使用指令时，通过 `color-attr="{{color}}"` 和父作用域的 color 属性单向绑定。当表达式 `"{{color}}"` 的值发生改变时，隔离作用域的 color 属性跟着变化，指令模板中的值也发生变化。
 
 ```js
 app.directive('helloWorld', function() {
@@ -350,9 +367,7 @@ app.directive('helloWorld', function() {
 </body>
 ```
 
-我们称这种方式为单项绑定，是因为在这种方式下，父作用域的属性发生变化，子作用域的值会随之发生变化，而子作用域的值发生变化，并不会影响父作用域的值。
-
-__注意点：__
+我们也称这种方式为单项绑定，是因为在这种方式下，父作用域的属性发生变化，子作用域的值会随之发生变化，而子作用域的值发生变化，并不会影响父作用域的值。
 
 当隔离scope属性和指令元素参数的名字一样是，你可以更简单的方式设置scope绑定：
 
@@ -495,7 +510,8 @@ return {
 The directive is restricted to appear as an element. It creates an isolated scope with `numPages` and `currentPage` data, which is bound to attributes `num-pages` and `current-page`, respectively. The directive element will be replaced with the template shown earlier:
 
 ```js
-scope.$watch('numPages', function(value) {
+link: function(scope) {
+    scope.$watch('numPages', function(value) {
       scope.pages = [];
       for(var i=1;i<=value;i++) { scope.pages.push(i); }
       if ( scope.currentPage > value ) {

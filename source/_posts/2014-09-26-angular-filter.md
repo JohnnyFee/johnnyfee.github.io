@@ -5,8 +5,6 @@ category : Angular
 tags : [angular, tutorial]
 --- 
 
-> 原文：[走进AngularJs(七) 过滤器（filter） - 吕大豹 - 博客园](http://www.cnblogs.com/lvdabao/p/3475426.html)
-
 过滤器（filter）正如其名，作用就是接收一个输入，通过某个规则进行处理，然后返回处理后的结果。主要用在数据的格式化上，例如获取一个数组中的子集，对数组中的元素进行排序等。ng内置了一些过滤器，它们是：currency(货币)、date(日期)、filter(子串匹配)、json(格式化json对象)、limitTo(限制个数)、lowercase(小写)、uppercase(大写)、number(数字)、orderBy(排序)。总共九种。除此之外还可以自定义过滤器，这个就强大了，可以满足任何要求的数据处理。
 
 过滤器的内容非常简单，只要明白了内置的如何使用，自己如何定义一个filter就OK了~今天系统的学习了下，下面做个介绍。
@@ -33,28 +31,26 @@ filter可以接收参数，参数用 : 进行分割，如下：
 
     {{ expression | filter:argument1:argument2:... }}
 
-
-
 除了对{{}}中的数据进行格式化，我们还可以在指令中使用filter，例如先对数组array进行过滤处理，然后再循环输出：
 
     <span ng-repeat="a in array | filter ">
 
 ### 在 JavaScript 中使用 filter
 
-Filters are usually invoked from markup (using the pipe symbol in expressions), but it is also possible to get access to filters instances from JavaScript code (controllers, services, other filters, and so on). This way we can combine the existing filters to provide a new functionality.
+过滤器除了在模板中调用，还可以在 JavaScript 中调用，如 controllers, services, other filters 等。这样，我们就可以结合已存在的过滤器来提供新的功能。
 
-Filters can be injected to any objects managed by AngularJS <span class="strong">**Dependency Injection**</span> system. We can express dependency on a filter using two distinct methods, requiring either:
+过来周期可以注入到被 AngularJS DI 系统管理的任何对象，我们有两种方式来表示过滤器的依赖：
 
-* The `$filter` service
-* A filter name with the `Filter` suffix
+* `$filter` 服务
+* `Filter` 后缀的过滤器名
 
-The `$filter` service is a lookup function that allows us to retrieve an instance of a filter based on its name. To see it in action we can write a filter that behaves similarly to the `limitTo` one and can trim lengthy strings. Additionally our custom version will add the "…" suffix if a string is trimmed. Here is the relevant code:
+`$filter` 服务是一个根据名字获取过滤器的查询函数。以下是一个类似 `limitTo` 的例子，当字符串的长度超过指定的长度时，超过的部分会被截取，并添加 "…" 后缀：
 
 ```js
 angular.module('trimFilter', [])
   .filter('trim', function($filter){
 
-var limitToFilter =  $filter('limitTo');
+    var limitToFilter =  $filter('limitTo');
 
     return function(input, limit) {
       if (input.length > limit) {
@@ -65,13 +61,12 @@ var limitToFilter =  $filter('limitTo');
   });
 ```
 
-The `$filter('limitTo')`function call allows us to get a hand on a filter instance based on the filter's name.
+其中，通过 `$filter('limitTo')` 就可以得到一个 `limitTo` 过滤器实例。
 
-While the previous method certainly works there is an alternative one that is often faster to code and easier to read:
+我们还可以通过一种更快而且易读的方式来得到 `limitTo` 服务：
 
 ```js
 .filter('trim', function(limitToFilter){
-
     return function(input, limit) {
       if (input.length > limit) {
         return limitToFilter(input, limit-3) + '...';
@@ -81,9 +76,9 @@ While the previous method certainly works there is an alternative one that is of
   });
 ```
 
-In the second example, presented here it is enough to declare a dependency named as `[filter name]Filter` where the `[filter name]` is a name of a filter we want to retrieve.
+其中，我们使用 `limitToFilter` 来获取过滤器，这种方式的命名规则为  `[filter name]Filter`，`[filter name]` 为过滤器名字。
 
-Accessing filter instances using the `$filter` service results in an odd syntax, and this is why we find it easier to work with the form using the `Filter` suffix. The only occasions where the `$filter` service might be more convenient is when we need to retrieve several filter instances in one place or retrieve a filter instance based on a variable, for example, `$filter(filterName)`.
+使用 `Filter` 后缀的方式更简单自然，使用 `$filter` 服务的唯一场合是当我们想得到多个过滤器实例或者想根据变量来获取过滤器实例时，如 `$filter(filterName)`。
 
 ## ng的内置过滤器
 
@@ -537,4 +532,5 @@ If your function can generate different results for the same input it is not a g
 
 ## Tutorial
 
+- [走进AngularJs(七) 过滤器（filter） - 吕大豹 - 博客园](http://www.cnblogs.com/lvdabao/p/3475426.html)
 - [AngularJS: API: filter components in ng](https://docs.angularjs.org/api/ng/filter)

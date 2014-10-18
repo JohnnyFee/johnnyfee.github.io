@@ -15,25 +15,26 @@ tags : [angular, tutorial]
 
 ### 在模板中使用filter
 
-我们可以直接在{{}}中使用filter，跟在表达式后面用 | 分割，语法如下：
+我们可以直接在 `{%raw%}{{ }}{%endraw%}` 中使用filter，跟在表达式后面用 | 分割，语法如下：
 
-    {{ expression | filter }}
+    {%raw%}{{ expression | filter }}
 
 也可以多个filter连用，上一个filter的输出将作为下一个filter的输入（怪不得这货长的跟管道一个样。。）
-
+    {%raw%}
     {{ expression | filter1 | filter2 | ... }}
     // 如
     {{12.9 | currency | number:0 }} 
+    {%endraw%}
 
 > displays: $13
 
 filter可以接收参数，参数用 : 进行分割，如下：
 
-    {{ expression | filter:argument1:argument2:... }}
+    {%raw%}{{ expression | filter:argument1:argument2:... }}{%endraw%}
 
-除了对{{}}中的数据进行格式化，我们还可以在指令中使用filter，例如先对数组array进行过滤处理，然后再循环输出：
+除了对 `{%raw%}{{}}{%endraw%}` 中的数据进行格式化，我们还可以在指令中使用filter，例如先对数组array进行过滤处理，然后再循环输出：
 
-    <span ng-repeat="a in array | filter ">
+    {%raw%}<span ng-repeat="a in array | filter ">{%endraw%}
 
 ### 在 JavaScript 中使用 filter
 
@@ -90,13 +91,13 @@ ng内置了九种过滤器，使用方法都非常简单，看文档即懂。不
 
 使用currency可以将数字格式化为货币，默认是美元符号，你可以自己传入所需的符号，例如我传入人民币：
 
-    {{num | currency : '￥'}}
+    {%raw%}{{num | currency : '￥'}}{%endraw%}
 
 #### date (日期格式化)
 
 原生的js对日期的格式化能力有限，ng提供的date过滤器基本可以满足一般的格式化要求。Model can contain dates expressed as Date objects or as Strings (in this case Strings will be parsed to a Date object before formatting). 用法如下：
 
-    {{date | date : 'yyyy-MM-dd hh:mm:ss EEEE'}}
+    {%raw%}{{date | date : 'yyyy-MM-dd hh:mm:ss EEEE'}}{%endraw%}
 
 参数用来指定所要的格式，y M d h m s E 分别表示 年 月 日 时 分 秒 星期，你可以自由组合它们。也可以使用不同的个数来限制格式化的位数。另外参数也可以使用特定的描述性字符串，例如“shortTime”将会把时间格式为12:05 pm这样的。ng提供了八种描述性的字符串，个人觉得这些有点多余，我完全可以根据自己的意愿组合出想要的格式，不愿意去记这么多单词~
 
@@ -104,9 +105,9 @@ ng内置了九种过滤器，使用方法都非常简单，看文档即懂。不
 
 json过滤器可以把一个js对象格式化为json字符串，没有参数。这东西有什么用呢，我一般也不会在页面上输出一个json串啊，官网说它可以用来进行调试，嗯，是个不错的选择。或者，也可以用在js中使用，作用就和我们熟悉的JSON.stringify()一样。用法超级简单：
 
-    {{ jsonTest | json}}
+    {%raw%}{{ jsonTest | json}}{%endraw%}
 
-This filter is mostly useful for debugging purposes as it can assure "pretty-print" for JavaScript objects. Typical usage looks like follows: `{{someObject | json}}`. It is mostly used for debugging purposes.
+This filter is mostly useful for debugging purposes as it can assure "pretty-print" for JavaScript objects. Typical usage looks like follows: `{%raw%}{{someObject | json}}{%endraw%}`. It is mostly used for debugging purposes.
 
 #### lowercase(小写)/uppercase(大写)
 
@@ -116,13 +117,13 @@ This filter is mostly useful for debugging purposes as it can assure "pretty-pri
 
 number过滤器可以为一个数字加上千位分割，像这样，123,456,789。同时接收一个参数，可以指定float类型保留几位小数：
 
-    {{ num | number : 2 }}
+    {%raw%}{{ num | number : 2 }}{%endraw%}
 
 ### Array-transforming filters
 
 #### filter(匹配子串)
 
-This is a general-purpose filtering utility. It is very flexible and supports many options to precisely select elements from a collection.
+这是一个多功能的过滤工具，它很灵活能够支持多个选项以从集合中精确选择元素。
 
 这个名叫filter的filter（不得不说这名字起的，真让人容易混淆——！）用来处理一个数组，然后可以过滤出含有某个子串的元素，作为一个子数组来返回。可以是字符串数组，也可以是对象数组。如果是对象数组，可以匹配属性的值。它接收一个参数，用来定义子串的匹配规则。下面举个例子说明一下参数的用法，我用现在特别火的几个孩子定义了一个数组：
 
@@ -139,6 +140,7 @@ $scope.func = function(e){return e.age>4;}
 ```
 
 
+> {%raw%}
 > {{ childrenArray | filter : 'a' }} //匹配属性值中含有a的
 > 
 > {{ childrenArray | filter : 4 }}  //匹配属性值中含有4的
@@ -146,42 +148,42 @@ $scope.func = function(e){return e.age>4;}
 > {{ childrenArray | filter : {name : 'i'} }} //参数是对象，匹配name属性中含有i的
 > 
 > {{childrenArray | filter : func }}  //参数是函数，指定返回age>4的
+> {%endraw%}
 
 #### orderBy(排序)
 
 orderBy过滤器可以将一个数组中的元素进行排序，接收一个参数来指定排序规则，参数可以是一个字符串，表示以该属性名称进行排序。可以是一个函数，定义排序属性。还可以是一个数组，表示依次按数组中的属性值进行排序（若按第一项比较的值相等，再按第二项比较），还是拿上面的孩子数组举例：
 
+    {%raw%}
     <div>{{ childrenArray | orderBy : 'age' }}</div>      //按age属性值进行排序，若是-age，则倒序
     <div>{{ childrenArray | orderBy : orderFunc }}</div>   //按照函数的返回值进行排序
     <div>{{ childrenArray | orderBy : ['age','name'] }}</div>  //如果age相同，按照name进行排序
+    {%endraw%}
 
 内置的过滤器介绍完了，写的我都快睡着了。。。正如你所看到的，ng内置的过滤器也并不是万能的，事实上好多都比较鸡肋。更个性化的需求就需要我们来定义自己的过滤器了，下面来看看如何自定义过滤器。
 
 #### limitTo(限制数组长度或字符串长度)
 
-limitTo过滤器用来截取数组或字符串，接收一个参数用来指定截取的长度，如果参数是负值，则从数组尾部开始截取。个人觉得这个filter有点鸡肋，首先只能从数组或字符串的开头/尾部进行截取，其次，js原生的函数就可以代替它了，看看怎么用吧：
+limitTo 过滤器用来截取数组或字符串，接收一个参数用来指定截取的长度，如果参数是负值，则从数组尾部开始截取。个人觉得这个filter有点鸡肋，首先只能从数组或字符串的开头/尾部进行截取，其次，js原生的函数就可以代替它了，看看怎么用吧：
 
-    {{ childrenArray | limitTo : 2 }}  //将会显示数组中的前两项
+    {%raw%}{{ childrenArray | limitTo : 2 }}{%endraw%}  //将会显示数组中的前两项
 
-The listed filters work on arrays only (`limitTo` being an exception, it can cope with strings as well).When applied to an object other that an array those filters have no effect and will simply return a source object.
+列出来的过滤器只能用于数组（`limitTo` 是个例外，他能处理字符串）。当这类过滤器应用到对象而不是数组时，无效果，只是简单地返回原对象。
 
-The array-related filters are often used with the `ng-repeat` directive to render filtered results. In the following sections we are going to build a full example of a table that can be sorted, filtered and paginated. Examples are built around SCRUM backlog list from the sample application, and will illustrate how to combine filters and the repeater directive.
+数组相关的过滤器经常和 `ng-repeat` 指令来显示果过滤结果。
 
-The array-related filters are often used with the `ng-repeat` directive to render filtered results. In the following sections we are going to build a full example of a table that can be sorted, filtered and paginated. Examples are built around SCRUM backlog list from the sample application, and will illustrate how to combine filters and the repeater directive.
+## filter 过滤器
 
-## Filtering with the "filter" filter
+AngularJS 有一个名为 filter 的过滤器。filter 过滤器是个过功能的过滤函数，可以用于选择数组的子集。有很多参数格式可以用于这些过滤器以便驱动元素选择过程。最简单的例子，我们可以通过一个子字符串，集合中的所有元素都将被检查是否包含指定的子字符串。
 
-First we need to clarify that AngularJS has a filter named `filter`. The name is a bit unfortunate since the word "filter" might refer to any filter in general (a transforming function) or this specific filter named "filter".
-
-The **"filter" filter** is a general-purpose filtering function that can be used to select a subset of an array (or put differently exclude some elements). There are number of parameter formats that can be supplied to this filter in order to drive element selection process. In the simplest form we can provide a string in the case all fields of all elements in a collection will be checked for a presence of a given substring.
-
-As an example let's consider a product backlog list that we would like to filter based on search criteria. Users would be presented with an input box where they could type-in search criteria. The resulting list should have only elements where any field of a given element contains a provided substring. The following screenshot illustrates finished UI:
+下面是一个基于查询条件过滤的产品订单的例子。有一个用户输入查询条件的输入框，查询结果是只包含提供的子字符串的元素，如图：
 
 ![](http://johnnyimages.qiniudn.com/angular-filter.jpg)
 
-If we assume that our data model has the following properties: `name`, `desc`, `priority`, `estimation` and `done`, we could write a template for the discussed UI as follows:
+假设我们的数据模型包含以下属性：`name`, `desc`, `priority`, `estimation` and `done`，下面是 UI 模板：
 
 ```html
+{%raw%}
 <div class="well">
 <label>
   Search for:<input type="text" ng-model="criteria">
@@ -201,21 +203,22 @@ If we assume that our data model has the following properties: `name`, `desc`, `
     </tr>
   </tbody>
 </table>
+{%endraw%}
 ```
 
-As you can see it is extremely easy to add a filter based on user's input; we just need to wire up value of an input field as an argument to the filter. The rest will be taken care of by AngularJS automatic data binding and refresh mechanism. The matching criteria can be negated by prefixing with the ! operator.
+正如你所见，基于用户输入来添加过滤器异常简单，我们只需要把输入框的值作为阐述传给过滤器。匹配条件也可以使用 `!` 操作符否定。
 
-In the previous example all the properties of source objects are searched for a substring match. If we want to have a more precise control over properties matching we can do so by providing an object argument to a filter. Such an object will act as a "query be example". Here we want to limit matching to the name property and include only items that are not done yet:
+如果你想更精确地控制匹配条件，我们可以为过滤器提供一个对象作为参数，集合中的项会匹配对象中的所有属性，也就是所这些属性使用的是 AND 逻辑操作符。下例中，我们只匹配 name 属性且只包含还没有完成的项：
 
-    ng-repeat="item in backlog | filter:{name: criteria, done: false}"
+    {%raw%}ng-repeat="item in backlog | filter:{name: criteria, done: false}"{%endraw%}
 
-In this code snippet all properties of an object specified as an argument must match. We could say that conditions expressed by the individual properties are combined using the AND logical operator.
+另外，AngularJS 提供了一个名为 `$` 的 catch-all 属性，它可以将 AND 和 OR 逻辑操作符结合使用。假如我们要搜索源对象中所有属性都和字符串匹配，并且没有完成的项，这样的表达式为：
 
-Additionally AngularJS provides a catch-all property name: `$`. Using this wildcard as a property name we can combine AND and OR logical operators. Let's say that we want to search for a string match in all properties of a source object, but take into account only not completed items. In this case a filtering expression could be re-written as follows:
+    {%raw%}ng-repeat="item in backlog | filter:{$: criteria, done: false}"{%endraw%}
 
-    ng-repeat="item in backlog | filter:{$: criteria, done: false}"
+当对象不足以表达过滤条件时，我们可以为过滤器提供函数（也就是所谓的“断言”）。这样的函数在源集合的每次迭代的时候都会被调用，过滤结果为所有让过滤函数返回 `true`的项。 
 
-It might happen that the combination of required search criteria is so complex that it is not possible to express it using object's syntax. In this case a function can be provided as an argument to the filter (so called `predicate` function). Such a function will be invoked for each and every individual element of a source collection. The resulting array will contain only elements for which the filtering function returns `true`. As a slightly contrived example we could imagine that we want to see only backlog items that are already completed and required over 20 units of effort. The filtering function for this example is both easy to write:
+以下例子返回所有已经完成并且 estimation 超过 20的项：
 
 ```js
 $scope.doneAndBigEffort = function (backlogItem) {
@@ -225,43 +228,42 @@ $scope.doneAndBigEffort = function (backlogItem) {
 
 And use:
 
-    ng-repeat="item in backlog | filter:doneAndBigEffort"
+    {%raw%}ng-repeat="item in backlog | filter:doneAndBigEffort"{%endraw%}
 
-### Counting filtered results
+### 计算过滤结果
 
-Often at times, we would like to display a number of items in a collection. Normally it is as simple as using the `{{myArray.length}}` expression. Things get a bit more complicated while using filters as we would like to show the size of a filtered array. A naive approach could consist of duplicating filters in both a repeater and a counting-expression. Taking our last example of filtering in a repeater:
+我们有时候需要显示过滤集合的项数，我们可能在 repeater 和 计算表达式中同时使用 filter 来达到这一目标，如：
 
-    <tr ng-repeat="item in backlog | filter:{$: criteria, done: false}">
+    {%raw%}<tr ng-repeat="item in backlog | filter:{$: criteria, done: false}">{%endraw%}
 
-We could try to create a summary row like:
+总结行:
 
-    Total: {{(backlog | filter:{$: criteria, done: false}).length}}
+    {%raw%}Total: {{(backlog | filter:{$: criteria, done: false}).length}}{%endraw%}
 
-This has obviously several drawbacks; not only code is duplicated but also the same filters need to be executed several times in two different places, not ideal from the performance standpoint.
+这有几个明显的缺点，不仅代码冗余，而且 filter 在两个地方都要运行。
 
-To remedy this situation we can create an intermediate variable (`filteredBacklog`) that would hold a filtered array:
+我们可以通过为过滤后的数组创建一个临时变量来避免这样的缺点：
 
-    ng-repeat="item in filteredBacklog = (backlog | filter:{$: criteria, done: false})"
+    {%raw%}ng-repeat="item in filteredBacklog = (backlog | filter:{$: criteria, done: false})"{%endraw%}
 
-Then, counting filtered results boils down to displaying the length of a saved array:
+然后，计算过滤结果就归结为显示数组的长度：
 
     Total: {{filteredBacklog.length}}
 
-The preceding pattern for counting filtering objects, while not very intuitive, allows us to have filtering logic in one place only.
+这种方法不是很直观，过滤逻辑只能放在一个地方。
 
-The other possibility is to move the whole filtering logic to a controller and only expose filtered results on a scope. This method has one more advantage: it moves filtering code to a controller where it is very easy to unit test. To use this solution you will need to learn how to access filters from the JavaScript; something that is covered later on in this chapter.
+另一中方法是把过滤的逻辑移到控制器中，让后只把过滤结果暴露出来。这种方法还有一个好处，就是便于测试。
 
-### Sorting with the orderBy filter
+### 使用 orderBy 过滤器排序
 
-Quite often a tabular data can be sorted freely by users. Usually clicking on a header of an individual column selects a given field as sort criteria, while clicking again reverses the sort order. In this section, we are going to implement this common pattern with AngularJS.
-
-The `orderBy` filter will be our primary tool for this job. When finished, our sample table holding list of backlog items will get fully functional sorting icons shown as follows:
+扁平的数据可以用来自由排序，通常通过点击以下某一列的表头，再点一下则反方向排序。我们接下来实现这个例子。
 
 ![](http://johnnyimages.qiniudn.com/angular-fileter-sort.jpg)
 
-The `orderBy` filter is easy and intuitive to use so we can immediately dive into the code example, without spending too much time on theoretical introductions. Firstly we will make sorting work and then add sorting indicators. Here is relevant part of markup taking part in sorting:
+用来排序的 HTML 部分：
 
 ```html
+{%raw%}
 <thead>
   <th ng-click="sort('name')">Name</th>
   <th ng-click="sort('desc')">Description</th>
@@ -275,14 +277,15 @@ The `orderBy` filter is easy and intuitive to use so we can immediately dive int
     ... 
   </tr>
 </tbody>
+{%endraw%}
 ```
 
-The actual sorting is taken care of by the `orderBy` filter, which in our example takes two arguments:
+`orderBy` 带有两个参数：
 
-* `sortField`: a property name to be used as a sorting predicate
-* sort order (`reverse`): this argument indicates if a sorted array should be reversed
+* `sortField`: 用于排序断言的属性名
+* sort order (`reverse`): 排序方向
 
-The `sort` function, triggered by a click event on a cell header, is responsible for selecting the sort field as well as toggling sort direction. Here are relevant bits of the controller's code:
+通过单元格的点击事件触发的 `sort` 函数负责选择排序属性和切换排序方向：
 
 ```js
 $scope.sortField = undefined;
@@ -298,11 +301,9 @@ $scope.sort = function (fieldName) {
 };
 ```
 
-Our sorting example builds on top of the previous, filtering one, so now our backlog list can be both filtered and sorted. With AngularJS it is surprisingly easy to combine both filters to create interactive tables.
+AngularJS 可以结合过滤器和排序来创建交互式表格。`orderBy` 过滤器应该置于 `filter` 过滤器之后，这是出于性能的考虑，因为相对过滤，排序更耗时，所以最好让排序算法运行在尽可能少的数据集合上。
 
-The `orderBy` filter was deliberately placed after the `filter` filter. The reason for this is performance: sorting is more costly as compared to filtering so it is better to execute ordering algorithm on a minimal data set.
-
-Now that the sorting works we just need to add icons indicating which field we are sorting and whether it is ascending or descending. Once again the `ng-class` directive will prove very useful. Here is the example of visual indicators for the "name" column:
+我们需要添加图标以指示排序的域以及排列的顺序，为此我们会用到 `ng-class`。下例为 name 列的例子：
 
 ```html
 <th ng-click="sort('name')">Name
@@ -322,11 +323,9 @@ $scope.isSortDown = function (fieldName) {
 };
 ```
 
-Of course there are many ways of displaying sort indicators, and the one just presented strives to keep CSS classes out of JavaScript code. This way presentation can be easily changed just be tweaking a template.
+## 自定义过滤器
 
-## Custom Filter
-
-You’re not limited to the bundled filters, and it is simple to write your own. If we wanted to create a filter that title-cased strings for our headings, for example, we could do so as follows:
+除了使用内置的过滤器，我们也可以自定义过滤器。以下一个让单词首字母大写的例子：
 
 ```js
 var homeModule = angular.module('HomeModule', []);
@@ -342,7 +341,7 @@ homeModule.filter('titleCase', function() {
 });
 ```
 
-With a template like this:
+在模板中使用:
 
 ```html
 {% raw %}
@@ -352,7 +351,7 @@ With a template like this:
 {% endraw %}
 ```
 
-and inserting the pageHeading as a model variable via a controller:
+`pageHeading` 为控制器中的模型变量：
 
 ```js
 function HomeController($scope) {
@@ -360,82 +359,76 @@ function HomeController($scope) {
 }
 ```
 
-### a pagination example
+### 分页的例子
 
-So far we've managed to display backlog items in a dynamic table that support sorting and filtering. Pagination is another UI pattern that is often used with larger data sets.
-
-AngularJS doesn't provide any filter that would help us to precisely select a subset of an array based on start and end indexes. To support pagination we need to create a new filter, and this is a good occasion to get familiar with the process of writing custom filters.
-
-To get the idea of an interface for the new filter; let's call it `pagination` we will write a sketch of markup first:
+我们将创建一个名为 `pagination` 的过滤器用来分页，以下是使用分页过滤器的例子：
 
 ```html
+{%raw%}
 <tr ng-repeat="item in filteredBacklog = (backlog | 
   pagination:pageNo:pageSize">
   <td>{{item.name}}</td>
   . . .
 </tr>
+{%endraw%}
 ```
 
-The new `pagination` filter needs to take two parameters: page to be displayed (its index) and its size (number of items per page).
+`pagination` 过滤器需要携带两个参数：当前页索引和页大小。
 
-What follows is the very first, naive implementation of the filter (error handling was deliberately omitted to focus on filter writing mechanics):
+以下是简单的实现（忽略了错误处理）：
 
 ```js
 angular.module('arrayFilters', [])
 
   .filter('pagination', function(){
-
-  return function(inputArray, selectedPage, pageSize) {
-       var start = selectedPage*pageSize;
-       return inputArray.slice(start, start + pageSize);
-     };
+      return function(inputArray, selectedPage, pageSize) {
+           var start = selectedPage*pageSize;
+           return inputArray.slice(start, start + pageSize);
+         };
   });
 ```
 
-A filter, as any other provider, needs to be registered on an instance of a module. The `filter` method should be called with a filter name and a factory function that will create an instance of a new filter. The registered factory function must return the actual filter function.
+想其他的 provider 一样，过滤器需要在一个 module 实例上注册。需要为 `filter` 指定一个过滤器名和一个工厂方法，这个工厂方法必须返回实际的过滤器函数。
 
-The first argument of `pagination` filtering function represents input to be filtered while subsequent parameters can be declared to support filter options.
+`pagination` 过滤函数的第一个参数是要过滤的内容，接下来的参数为过滤函数的选项。
 
-Filters are very easy to unit test; they work on a supplied input, and when done properly they shouldn't have any side effects. Here is an example test for our custom `pagination` filter:
+过滤器易于单元测试，如：
 
 ```js
 describe('pagination filter', function () {
-
   var paginationFilter;
+
   beforeEach(module('arrayFilters'));
   beforeEach(inject(function (_paginationFilter_) {
     paginationFilter = _paginationFilter_;
   }));
 
   it('should return a slice of the input array', function () {
-
     var input = [1, 2, 3, 4, 5, 6];
 
-expect(paginationFilter(input, 0, 2)).toEqual([1, 2]);
+    expect(paginationFilter(input, 0, 2)).toEqual([1, 2]);
     expect(paginationFilter(input, 2, 2)).toEqual([5, 6]);
   });
 
   it('should return empty array for out-of bounds', function () {
-
     var input = [1, 2];
-expect(paginationFilter(input, 2, 2)).toEqual([]);
+   
+    expect(paginationFilter(input, 2, 2)).toEqual([]);
   });
 });
 ```
 
-Testing a filter is as simple as testing a single function, and most of the time is really straightforward. The structure of the sample test just presented should be easy to follow as there are almost no new constructs here. The only thing that requires explanation is the way of accessing instances of a filter from the JavaScript code.
-
 ## Filters dos and don'ts
 
-Filters do a marvelous job when used to format and transform data invoked from a template offering nice and concise syntax. But filters are just a tool for a specific job and can as any other tools cause damage if used incorrectly. This section describes situations where filters should be avoided and an alternative solution would be a better fit.
+过滤器在模板中为格式化和数据转换提供了简洁便利的语法。但如果使用不当可能引起错误，以下讲述了过滤器适合和不适合的使用场景。
 
-### Filters and DOM manipulation
+### 过滤器和 DOM 操作
 
-At times it might be tempting to return HTML markup as a result of filter's execution. In fact AngularJS contains one filter that does exactly that: `linky` (in the separate `ngSanitize` module).
+你有时可能试图在过滤器函数中返回 HTML 标签，实际上，AngularJS 包含了一个这么做的的过滤器（在分离的 `ngSanitize` 模块中）。
 
-It turns out, in practice, that filters outputting HTML are not the best idea. The main problem is that to render output of such a filter we need to use one of the binding directives described earlier on `ngBindUnsafeHtml` or `ngBindHtml`. Not only does it make the binding syntax more verbose (as compared to simply using `{{expression}}`) but potentially makes a web page vulnerable to HTML injection attacks.
+实际上，过滤器输出 HTMl 不是最佳实践，最主要的原因是为了显示过滤器输出的 HTML，我们需要 `ngBindUnsafeHtml` 或者 `ngBindHtml` 这样的绑定插件。这不仅让绑定语法便得更复杂（相对 `{{expression}}`），也让网页更容易受到 HTML 注入攻击。
 
-To see some issues involving filters outputting HTML we can examine a simple `highlight` filter:
+我们看下 `highlight` 过滤器：
 
 ```js
 angular.module('highlight', [])
@@ -453,18 +446,20 @@ angular.module('highlight', [])
   });
 ```
 
-You can immediately see that this filter contains hardcoded HTML markup. As a result we can't use it with the interpolation directive but need to write a template like:
+这个过滤器包含硬编码的 HTML 标签，结果是，我们不能使用插值指令，而需要像这样写模板：
 
 ```html
+{%raw%}
 <input ng-model="search">
 <span ng-bind-html="phrase | highlight:search"></span>
+{%endraw%}
 ```
 
-On top of this the HTML markup outputted from a filter can't contain any AngularJS directives as those wouldn't be evaluated.
+过滤器输出的 HTML 标签中不能包含任何 AngularJS 指令，因为这些指令不会执行。
 
-### Costly data transformations in filters
+### 过滤器中耗时的数据转换
 
-Filters, when used in a template, become integral part of the AngularJS expression, and as such are frequently evaluated. In fact, such filter functions are called multiple times on each digest cycle. We can easily see this in practice by creating a logging wrapper around the uppercase filter:
+在模板中使用过滤器时，过滤器变成了 AngularJS 表达式的一部分，表达式会被频繁执行。实际上，这样的过滤器函数在每个 digest 周期中被调用多次。我们可以通过下面的例子验证：
 
 ```js
 angular.module('filtersPerf', [])
@@ -476,19 +471,15 @@ angular.module('filtersPerf', [])
   });
 ```
 
-Upon using this newly defined filter in a markup like:
+在标签上这样使用：
 
-    <input ng-model="name"> {{name | logUppercase}}
+    {%raw%}<input ng-model="name"> {{name | logUppercase}}{%endraw%}
 
-We will see that the log statement is written at least once (usually twice) for each keystroke! This experiment alone should convince you that filters are executed often so it is highly preferable that they execute fast.
+每敲一个键盘，至少输出一次 log（经常两次）。正因为过滤器不仅执行一次，所以过滤器要尽可能高效执行的。过滤器执行多次是因为 Angular 的脏检查在工作。
 
-Don't be surprised to see that a filter is called multiple times in a row; this is AngularJS dirty checking at work. Strive to write your filters so they do light, fast processing.
+### 不稳定的过滤器
 
-### Unstable filters
-
-Since filters are called multiple times it is reasonable to expect that a filter responds with the same return value if the input doesn't change. Such functions are called stable with respect to their parameters.
-
-Things can get easily out of hand if a filter doesn't have this property. To see the disastrous effects of unstable filters let's write a malicious random filter that selects a random element from an input array (it is unstable):
+过滤器会被调用多次，当输入没有发生变化时，过滤器放回的结果应该是一样的。如果过滤器没有这个特点就很容易失控。让我们编写一个恶意的随机数过滤器，这个过滤器从一个数组中随机选择一个元素：
 
 ```js
 angular.module('filtersStability', [])
@@ -502,17 +493,17 @@ angular.module('filtersStability', [])
   })
 ```
 
-Given an array of different items stored in the items variable on a scope, the random filter could be used in a template like:
+这个随删出售过滤器可以这样使用：
 
-    {{items | random}}
+    {%raw%}{{items | random}}{%endraw%}
 
-The preceding code, upon execution, will print out a random value so it might seem that it behaves correctly. It is only upon expecting browser's console we can realize that in fact an error is logged:
+这在界面上回看了一个随机数，这看上去是正确的。但查看控制台是，我们可以发现有错误输出：
 
     Uncaught Error: 10 $digest() iterations reached. Aborting!
 
-This error means that an expression is yielding different results each time it is being evaluated. AngularJS sees a constantly changing model and re-evaluates an expression, hoping that it will stabilize. 
+错误的意思是，每次计算会产生不同的值。AngularJS 观察模型的变化，然后计算表达式，期望这是一个稳定的过程。
 
-In situations like those the solution is to calculate a random value in a controller, before a template is rendered:
+像这样的场景，解决办法是在模板显示前，在控制器中计算随机数。
 
 ```js
 .controller('RandomCtrl', function ($scope) {
@@ -525,10 +516,6 @@ In situations like those the solution is to calculate a random value in a contro
 $scope.randomValue = Math.floor(Math.random() * $scope.items.length);
 });
 ```
-
-Like this a random value will be calculated before template processing and we can safely use the {{randomValue}} expression to output the prepared value.
-
-If your function can generate different results for the same input it is not a good candidate for a filter. Invoke this function from a controller instead and leave AngularJS to render pre-calculated value.
 
 ## Tutorial
 

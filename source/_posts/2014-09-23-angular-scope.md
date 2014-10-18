@@ -331,7 +331,7 @@ app.controller('MainCtrl', function($scope){
 
 `@` 用来实现插值（interpolate），也即单向绑定。 
 
-The `@` symbol indicates that AngularJS should interpolate the value of the specified attribute and update the isolated scope property when it changes. Interpolation is used with `{{}}` curly braces to generate a string using values from the parent scope.
+The `@` symbol indicates that AngularJS should interpolate the value of the specified attribute and update the isolated scope property when it changes. Interpolation is used with `{%raw%}{{}}{%endraw%}` curly braces to generate a string using values from the parent scope.
 
 A common mistake is to expect an interpolated object to be the object itself. Interpolation always returns a string. So if you have an object, say user has a field called `userName`, then the interpolation of `{{user}}` will convert the `user` object to a string and you will not be able to access the `userName` property on the string.
 

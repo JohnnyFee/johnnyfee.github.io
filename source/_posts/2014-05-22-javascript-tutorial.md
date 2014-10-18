@@ -26,6 +26,7 @@ tags: [javascript]
 - [JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/)
 - [The JavaScript Tutorial](http://javascript.info/)
 - [JavaScript事件代理和委托（Delegation） / Owen Chen](http://owenchen.duapp.com/index.php/javascript-event-delegation-and-delegates-delegation/)
+- [跟着 8 张思维导图学习 Javascript - WEB开发者](http://www.admin10000.com/document/5110.html)
 
 <!--more-->
 

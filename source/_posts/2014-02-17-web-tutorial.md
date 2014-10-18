@@ -33,6 +33,8 @@ tags: [web, tutorial]
 
 ## Tool
 
+- [Google I/O 2012 - Better Web App Development Through Tooling - YouTube](https://www.youtube.com/watch?feature=player_embedded&v=Mk-tFn2Ix6g)
+
 ### API Debugging
 
 1.  [Hurl.it](http://hurl.it/)

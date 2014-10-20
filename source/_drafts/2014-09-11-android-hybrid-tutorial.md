@@ -445,7 +445,7 @@ myWebView = new MyWebView(this);
 myWebView.addJavaScriptInterface(JavaScriptInterface, "HybridNote");
 ```
 
-In this example, `JavaScriptInterface` is bound to the JavaScript environment of WebView and is accessible using the `HybridNote` object (aka _namespace_</span>). Depending upon the Android version, either all public or some special methods of the bound objects will be accessible inside the JavaScript code. Once the object is added to the WebView using the function specified earlier, the object will be available to JavaScript only after the page in the WebView is loaded next or the existing page is reloaded. This can be achieved by calling the `loadData()` function of the WebView object.
+In this example, `JavaScriptInterface` is bound to the JavaScript environment of WebView and is accessible using the `HybridNote` object (aka _namespace_). Depending upon the Android version, either all public or some special methods of the bound objects will be accessible inside the JavaScript code. Once the object is added to the WebView using the function specified earlier, the object will be available to JavaScript only after the page in the WebView is loaded next or the existing page is reloaded. This can be achieved by calling the `loadData()` function of the WebView object.
 
 The object binding framework available as part of Android is very flexible and powerful. It is intelligent in the sense that it can automatically bind return objects for Java method calls for them to be accessible in the JavaScript environment. Unlike their explicit counterparts, the implicitly bound objects are anonymous objects and would be lost unless you store an explicit reference to them in JavaScript variables.
 
@@ -469,7 +469,7 @@ The JavaScript layer does not have direct access to the exposed Java object’s 
 
 __@JavaScriptInterface Annotations__
 
-If you set your `targetSdkVersion` to 17 (or higher) in _AndroidManifest.xml_</span> all the methods that are accessed by JavaScript must have `@JavaScriptInterface` annotations.]()
+If you set your `targetSdkVersion` to 17 (or higher) in _AndroidManifest.xml_ all the methods that are accessed by JavaScript must have `@JavaScriptInterface` annotations.]()
 
 ```java
 import android.WebKit.javaScriptInterface;
@@ -481,7 +481,7 @@ public void showToast(String toast)  {
 }
 ```
 
-In Android 2.3, the `addJavaScriptInterface()` method does not work as expected. However, given _2.3_</span> is still the most used version of Android, you may want your application to work on 2.3 devices as well.
+In Android 2.3, the `addJavaScriptInterface()` method does not work as expected. However, given _2.3_ is still the most used version of Android, you may want your application to work on 2.3 devices as well.
 
 Developers across the Web have come up with a number of workarounds to take care of this. You can find one such implementation at [Android 2.3 WebView’s broken AddJavascriptInterface website](http://goo.gl/EICOa).
 
@@ -850,13 +850,13 @@ WebSettings settings = WebView.getSettings();
 
 ### Preventing Local Files from Being Loaded in the WebView
 
-The `setAllowFileAccess()` API allows developers to control access to local files by the WebView. This API is one of several WebView settings you can configure at runtime. By default, this setting is enabled for accessing files in the filesystem. This setting does not restrict the WebView to load local resources from the _file:///android_asset_</span> (assets) and _file:///android_res_</span> (resources) directories. For security reasons, if your app does not require access to the filesystem, it is a good practice to turn this setting off.
+The `setAllowFileAccess()` API allows developers to control access to local files by the WebView. This API is one of several WebView settings you can configure at runtime. By default, this setting is enabled for accessing files in the filesystem. This setting does not restrict the WebView to load local resources from the _file:///android_asset_ (assets) and _file:///android_res_ (resources) directories. For security reasons, if your app does not require access to the filesystem, it is a good practice to turn this setting off.
 
     settings.setAllowFileAccess(false);
 
 ### Enabling JavaScript
 
-For security reasons, JavaScript is _disabled_</span> in the WebView by default. You can enable/disable JavaScript using `setJavaScriptEnabled()` method.
+For security reasons, JavaScript is _disabled_ in the WebView by default. You can enable/disable JavaScript using `setJavaScriptEnabled()` method.
 
     settings.setJavaScriptEnabled(true);
 
@@ -899,7 +899,7 @@ settings.setSupportZoom(false);
 
 ### Hardware Acceleration
 
-Starting at version 3.0, Android introduced full hardware acceleration for applications. This is not enabled by default for applications targeted for platforms below version 4.0. The web browser itself moved to a _tile-based rendering architecture_</span> as opposed to display list architecture, which makes it more responsive.
+Starting at version 3.0, Android introduced full hardware acceleration for applications. This is not enabled by default for applications targeted for platforms below version 4.0. The web browser itself moved to a _tile-based rendering architecture_ as opposed to display list architecture, which makes it more responsive.
 
 If you wish to enable hardware acceleration in your application or activity, you can set `android:handwareAccelerated="true"` in your manifest.
 
@@ -1034,7 +1034,7 @@ Here are some things to keep in mind when creating single-page applications:
 
 Not all browsers are created equal, the same goes for mobile browsers. CSS Reset is a way to keep the rendering results as universal as possible by resetting the built-in default style values to a baseline value before your custom CSS is applied.
 
-HTML5 Boilerplate provides two CSS files (_main.css_</span> and _normalize.css_</span>), which offers a nice way of resetting your browser’s default style settings. You can download these files from the [Html5boilerplate website](http://goo.gl/3JUxZ).
+HTML5 Boilerplate provides two CSS files (_main.css_ and _normalize.css_), which offers a nice way of resetting your browser’s default style settings. You can download these files from the [Html5boilerplate website](http://goo.gl/3JUxZ).
 
 ```css
 /*
@@ -1051,9 +1051,9 @@ html, body, div, form, fieldset, legend, label {
 
 ### Your Home index.html
 
-The _index.html_</span> web page will be launched by the WebView when an activity starts. This web page is normally placed in the _assets_</span> directory. We defined the `viewport` meta tag, which controls the initial appearance when the web page loads. The CSS `link` tag was intentionally left blank because we like to load our CSS files using JavaScript by respecting the `window.devicePixelRatio` window property.
+The _index.html_ web page will be launched by the WebView when an activity starts. This web page is normally placed in the _assets_ directory. We defined the `viewport` meta tag, which controls the initial appearance when the web page loads. The CSS `link` tag was intentionally left blank because we like to load our CSS files using JavaScript by respecting the `window.devicePixelRatio` window property.
 
-We discovered that in some older versions of the Android API, our sample app was crashing when processing the <span class="strong">**`0.75`**</span> Device Pixel Ratio (DPR) while loading the CSS using the `link` tag. We were able to re-produce this abnormal crash with a few more same-generation phones as well. However, the usage that follows is more responsive than loading these CSS files in JavaScript; you may see a nonstyled view first for a split second, then a styled version will be shown due to the `onDomReady()` delay in JavaScript.
+We discovered that in some older versions of the Android API, our sample app was crashing when processing the **`0.75`** Device Pixel Ratio (DPR) while loading the CSS using the `link` tag. We were able to re-produce this abnormal crash with a few more same-generation phones as well. However, the usage that follows is more responsive than loading these CSS files in JavaScript; you may see a nonstyled view first for a split second, then a styled version will be shown due to the `onDomReady()` delay in JavaScript.
 
 The following way of loading your CSS into the DOM is the ideal way:
 
@@ -1150,7 +1150,7 @@ Here’s a sample source of a template file for a hybrid Android application:
 
 ### Viewport Meta Tag
 
-The `viewport` meta tag defines a set of properties that describes the behavior and initial appearance of the web page when it is rendered for the first time based on the device screen size. The _viewport_</span> is the section of the web page that is shown in the view. This `viewport` meta tag is supported by many mobile browsers.
+The `viewport` meta tag defines a set of properties that describes the behavior and initial appearance of the web page when it is rendered for the first time based on the device screen size. The _viewport_ is the section of the web page that is shown in the view. This `viewport` meta tag is supported by many mobile browsers.
 
 #### Viewport Width
 
@@ -1202,7 +1202,7 @@ In the mobile app paradigm, responsive design should be carefully considered whe
 
 Media queries in CSS3 help the application adapt to different sets of properties and rules for your CSS styling. Media queries allow us to target not only certain generations of devices but also to scrutinize some of the characteristics of a device to target certain styling attributes such as `orientation`, `device-aspect-ratio`, `color`, or `resolution`.
 
-Responsive design is fulfilled by using the media queries in the CSS files to improve the _device-specific_</span> response while the `media` attribute controls which styles to apply.
+Responsive design is fulfilled by using the media queries in the CSS files to improve the _device-specific_ response while the `media` attribute controls which styles to apply.
 
 There are three ways to define CSS media queries in your HTML documents. We will be using the first technique in our sample application.
 
@@ -1285,7 +1285,7 @@ The `opacity` property in CSS specifies the amount of transparency for an elemen
 
     -webkit-opacity: 0.5;
 
-RGBA stands for _Red, Green, Blue, and Alpha_</span>. CSS3 introduced the RGBA support to set the alpha transparency, which sets the opacity via the alpha channel and controls how much of what is behind the color shows through.
+RGBA stands for _Red, Green, Blue, and Alpha_. CSS3 introduced the RGBA support to set the alpha transparency, which sets the opacity via the alpha channel and controls how much of what is behind the color shows through.
 
     background: rgba(255, 0, 0, 0.5);
 
@@ -1400,7 +1400,7 @@ image.onload = function() {
 
 ### Avoid using text-shadow, box-shadow, border-radius, gradient, opacity, CSS RGBA, and image transparency
 
-These styling effects can slow down the scrolling in the WebKit. The issues with `text-shadow` and `box-shadow` are already resolved in the current WebKit, but the Android version of WebKit hasn’t been fixed yet. So, use them on scrolling areas sparingly; visit the [WebKit bug website](http://goo.gl/SJf87) for additional information. Also, using the `opacity` and CSS `RGBA` properties in CSS may interfere with hardware accelerated rendering in the scroll view. If these effects are needed, use lightweight _.png_</span> graphics that combine many of these effects into one static image or experiment with how much you can do in CSS3 and how much you will need to statically create. This is especially required for scrolling or animating areas of your application.
+These styling effects can slow down the scrolling in the WebKit. The issues with `text-shadow` and `box-shadow` are already resolved in the current WebKit, but the Android version of WebKit hasn’t been fixed yet. So, use them on scrolling areas sparingly; visit the [WebKit bug website](http://goo.gl/SJf87) for additional information. Also, using the `opacity` and CSS `RGBA` properties in CSS may interfere with hardware accelerated rendering in the scroll view. If these effects are needed, use lightweight _.png_ graphics that combine many of these effects into one static image or experiment with how much you can do in CSS3 and how much you will need to statically create. This is especially required for scrolling or animating areas of your application.
 
 ### Use CSS3 Transitions instead of JavaScript animations
 

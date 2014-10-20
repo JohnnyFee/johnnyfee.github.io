@@ -898,6 +898,7 @@ meter 元素显示了某个范围内所有可能值中的一个。min、max 定�
 - [HTML5DevConf](https://www.youtube.com/watch?v=8J6EdpXdzqc)
 - [HTML-MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
 - [Glyphs](http://css-tricks.com/snippets/html/glyphs/)
+- [HTML5 中 40 个最重要的技术点 - WEB开发者](http://www.admin10000.com/document/5332.html)
 
 ## Tools
 

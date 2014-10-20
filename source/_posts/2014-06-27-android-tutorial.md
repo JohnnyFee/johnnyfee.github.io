@@ -8,47 +8,13 @@ tags: [android, tutorial]
 
 ## Tutorial
 
+- [Android Design Patterns](http://www.salttiger.com/android-design-patterns/)
+- [Mastering the Android Touch System - YouTube](https://www.youtube.com/watch?v=EZAoJU-nUyI)
+- [Supporting Multiple Screens | Android Developers](http://developer.android.com/guide/practices/screens_support.html)
 - [JohnnyFee/awesome-android](https://github.com/JohnnyFee/awesome-android)
 - [{ Android学习指南 }](http://android.yaohuiji.com/)
-
-## Security
-
 - [ashishb/android-security-awesome](https://github.com/ashishb/android-security-awesome)
-
-## Thread
-
-- [Efficient Android Threading](http://www.slideshare.net/andersgoransson/efficient-android-threading)
-- [Primer on Threading and Handlers in Android - Wedding Party](http://nerds.weddingpartyapp.com/tech/2014/06/20/primer-threading-handlers-android/)
-
-## Hybrid Dev
-
-### Framework
-
-- [Telerik Mobile Application Development Platform](http://www.telerik.com/platform)    
-    + [使用Telerik平台构建Web、混合与原生应用 - 推酷](http://www.tuicool.com/articles/2qiI7f)
-- [Hybrid App开发实战](http://www.infoq.com/cn/articles/hybrid-app-development-combat)
-
-### FAQ
-
-- [Android Hybrid App四大坑](http://blog.meathill.com/tech/app/web/traps-in-developing-android-hybrid-app.html)
-
-## 原型设计
-
-- [NinjaMock](http://ninjamock.com/)
-
-<!--more-->
-
-## 混淆
-
-- [Mastering ProGuard for Building Lightweight Android Code | Crashlytics Blog](http://www.crashlytics.com/blog/mastering-proguard-for-building-lightweight-android-code/)
-
-## 多屏支持
-
-- [Supporting Multiple Screens | Android Developers](http://developer.android.com/guide/practices/screens_support.html)
-
-## 开发环境
-
-- [A productive Android development environment - Cyril Mottier](http://cyrilmottier.com/2013/06/27/a-productive-android-development-environment/)
+- [What Should You Localize?](http://blog.danlew.net/2014/09/08/what-should-i-localize)
 
 ### 开发过程
 
@@ -56,21 +22,15 @@ tags: [android, tutorial]
 - [Make Your First Android App: Part 2/3 | Ray Wenderlich](http://www.raywenderlich.com/56109/make-first-android-app-part-2)
 - [Make Your First Android App: Part 3/3 | Ray Wenderlich](http://www.raywenderlich.com/56111/make-first-android-app-part-3)
 
-## UI
+<!--more-->
 
-- [Performance optimization](http://optimizationtricks.blogspot.in/)
+## Toos
 
-## Android L
-
-- [PTR Android Blog: Getting Started with Android L Animations](http://ptrprograms.blogspot.com/2014/08/getting-started-with-android-l.html)
-
-## Device
-
-- [The Ultimate Android Camera Development Guide -](http://www.airpair.com/android/android-camera-development)
-- [Styling Android » Bluetooth LE – Part 3](http://blog.stylingandroid.com/archives/2419)
-
-### Canvas
-- [Drawing shapes with fingers | ONGOING DEV](http://gmariotti.blogspot.com/2014/01/drawing-shapes-with-fingers.html)
+- [A productive Android development environment - Cyril Mottier](http://cyrilmottier.com/2013/06/27/a-productive-android-development-environment/)
+- [Mastering ProGuard for Building Lightweight Android Code | Crashlytics Blog](http://www.crashlytics.com/blog/mastering-proguard-for-building-lightweight-android-code/)
+- [inmite/android-butterknife-zelezny](https://github.com/inmite/android-butterknife-zelezny) Android Studio plug-in for generating ButterKnife injections from selected layout XML.
+- [bearstouch/android_img_resizer](https://github.com/bearstouch/android_img_resizer) <http://www.bearstouch.com>
+- [Android Dev Tools ~ KP Bird](http://www.kpbird.com/p/android-dev-tools.html)
 
 ## Test
 
@@ -84,48 +44,12 @@ tags: [android, tutorial]
 - [MustafaFerhan/DebugLog](https://github.com/MustafaFerhan/DebugLog) Create a simple and more understandable Android logs.
 - [JakeWharton/timber](https://github.com/JakeWharton/timber) A logger with a small, extensible API which provides utility on top of Android's normal Log class.
 
-## Core
-
-- [Mastering the Android Touch System - YouTube](https://www.youtube.com/watch?v=EZAoJU-nUyI)
-
-## Command
-
-- [Get database from an Android app (Android 4.3+)](https://gist.github.com/ignasi/8706888)
-
-## Rating
-
-- [PomepuyN/discreet-app-rate](https://github.com/PomepuyN/discreet-app-rate) A lightweight non intrusive app rate reminder for Android 
-<http://nicolaspomepuy.fr/non-intrusive-app-rate>.
-
-## Root
-
-- [案例：Android系统Root原理初探](http://www.imooc.com/view/126?from=admin10000)
-
-## Tool
-
-- [bearstouch/android_img_resizer](https://github.com/bearstouch/android_img_resizer) <http://www.bearstouch.com>
-- [Android Dev Tools ~ KP Bird](http://www.kpbird.com/p/android-dev-tools.html)
-
 ## 模拟器
 
 - [使用 Intel HAXM 为 Android 模拟器加速，媲美真机](http://www.cnblogs.com/beginor/archive/2013/01/13/2858228.html)
 - [Genymotion](http://www.genymotion.com/)
     - [Genymotion 中文官网](http://www.genymotion.cn/#theme=home)
     - [使用指南 - Genymotion 中文官网](http://www.genymotion.cn/#theme=guide)
-
-### Android Studio
-
-- [inmite/android-butterknife-zelezny](https://github.com/inmite/android-butterknife-zelezny) Android Studio plug-in for generating ButterKnife injections from selected layout XML.
-
-## Library
-
-- [Instagram/ig-json-parser](https://github.com/Instagram/ig-json-parser/). See also [Fast, auto-generated streaming JSON parsing for Android - Instagram Engineering](http://instagram-engineering.tumblr.com/post/97147584853/json-parsing)
-
-- [What Should You Localize?](http://blog.danlew.net/2014/09/08/what-should-i-localize)
-
-## Tutorial
-
-- [Android Design Patterns](http://www.salttiger.com/android-design-patterns/)
 
 ## Books
 

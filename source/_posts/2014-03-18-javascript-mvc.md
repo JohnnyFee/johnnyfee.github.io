@@ -173,3 +173,4 @@ sammy             |  5.2     |   16     |      N                |     N
 * [Opinionated Rundown of JS Frameworks](http://blog.andyet.com/2014/08/13/opinionated-rundown-of-js-frameworks)
 * [AngularJS vs. Backbone.js vs. Ember.js - Choosing Your JS Framework](http://www.airpair.com/js/javascript-framework-comparison)
 * [Overview of Popular JavaScript Frameworks' Internal Mechanics - Frontend Masters](https://frontendmasters.com/courses/javascript-frameworks-showdown/overview)
+* [Anatomy of a JavaScript MV* Framework](http://www.sitepoint.com/anatomy-javascript-mv-framework)

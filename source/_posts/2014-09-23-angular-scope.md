@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Angular MVC Scope"
+title: "Angular Scope"
 category : Angular
 tags : [angular, tutorial]
 --- 

@@ -12,6 +12,8 @@ tags: [android]
 - [Building a RecyclerView LayoutManager – Part 2](http://wiresareobsolete.com/2014/09/recyclerview-layoutmanager-2)
 - [marvinlabs/android-floatinglabel-widgets](https://github.com/marvinlabs/android-floatinglabel-widgets)
 - [MrEngineer13/SnackBar](https://github.com/MrEngineer13/SnackBar) toast-like alert pattern for Android.
+- [Performance optimization](http://optimizationtricks.blogspot.in/)
+- [PTR Android Blog: Getting Started with Android L Animations](http://ptrprograms.blogspot.com/2014/08/getting-started-with-android-l.html)
 
 ### App UI / UX
 

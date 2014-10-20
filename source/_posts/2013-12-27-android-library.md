@@ -9,6 +9,7 @@ tags: [android]
 下一步会进行初步比较。
 
 ## Thread
+
 - [loopj / android-async-http](https://github.com/loopj/android-async-http) android的异步请求组件。
 - [square / tape](https://github.com/square/tape) A lightning fast, transactional, file-based FIFO for Android and Java. <http://square.github.io/tape/>
 - [CodeAndMagic/android-deferred-object](https://github.com/CodeAndMagic/android-deferred-object) Android implementation of the deferred object pattern as seen on jQuery.
@@ -119,6 +120,7 @@ tags: [android]
 - [Uncodin / bypass](https://github.com/Uncodin/bypass) Skip the HTML, Bypass takes markdown and renders it directly on Android and iOS. <http://uncodin.github.com/bypass/>
 - [square/phrase](https://github.com/square/phrase/) Phrase is an Android string resource templating library
     + [Android String Formatting with Phrase](http://corner.squareup.com/2014/01/phrase.html)
+- [Instagram/ig-json-parser](https://github.com/Instagram/ig-json-parser/). See also [Fast, auto-generated streaming JSON parsing for Android - Instagram Engineering](http://instagram-engineering.tumblr.com/post/97147584853/json-parsing)
 
 ## Android SDK扩展
 - [jgilfelt / android-adt-templates](https://github.com/jgilfelt/android-adt-templates) A small collection of ADT templates to help quickly scaffold common Activity and UI patterns.

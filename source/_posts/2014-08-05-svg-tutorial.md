@@ -203,6 +203,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 - [Inline SVG vs Icon Fonts [CAGEMATCH]](http://css-tricks.com/icon-fonts-vs-svg/)
 - [Swapping Out SVG Icons](http://css-tricks.com/swapping-svg-icons)
 - [Making SVGs Responsive with CSS](http://tympanus.net/codrops/2014/08/19/making-svgs-responsive-with-css)
+- [A Guide to SVG Animations (SMIL)](http://css-tricks.com/guide-svg-animations-smil/)
 
 ### SVG Attribute reference
 

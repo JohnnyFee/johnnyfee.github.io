@@ -12,6 +12,8 @@ tags: [javascript]
 - [lodash/lodash](https://github.com/lodash/lodash/)
 - [Breaking Bad (Loops in JavaScript Libraries)](http://webapplog.com/breaking-bad-loops-in-javascript-libraries)
 - [mortzdk/jsCache](https://github.com/mortzdk/jsCache)
+- [github/fetch](https://github.com/github/fetch) The global `fetch` function is an easier way to make web requests and handle
+responses than using an XMLHttpRequest. 
 
 ## Data Type
 

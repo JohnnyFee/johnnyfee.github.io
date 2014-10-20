@@ -958,6 +958,8 @@ Karma’s main reason for existence is to make your test-driven development (TDD
 
 ### Unit Tests
 
+- [An Introduction To Unit Testing In AngularJS Applications](http://www.smashingmagazine.com/2014/10/07/introduction-to-unit-testing-in-angularjs)
+
 AngularJS makes it easy to write your unit tests, and supports the Jasmine style of writing tests by default (as does Karma). Jasmine is what we call a behavior-driven development framework, which allows you to write specifications that denote how your code should behave. A sample test in Jasmine might look something like this.
 describe("MyController:", function() {
 
@@ -1239,6 +1241,10 @@ I hope this article has clarified what `$apply` and `$digest` are all about. The
 - [Adding Auth to your Ionic app in 5 mins with Auth0](http://ionicframework.com/blog/authentication-in-ionic)
 - [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
 - [Debugging AngularJS Apps from the Console - Modern Web](http://modernweb.com/2014/08/21/debugging-angularjs-apps-console)
+
+### Chart
+
+- [angular-chart.js - beautiful, reactive, responsive charts for Angular.JS using Chart.js](http://jtblin.github.io/angular-chart.js)
 
 ### Style Guide
 

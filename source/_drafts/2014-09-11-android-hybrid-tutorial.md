@@ -5,37 +5,37 @@ category: Android
 tags: [mobile, android, hybrid]
 --- 
 
-## What's Hybrid
+## 什么是混合
 
-“Hybrid” applications are a special category of web applications that extend the web-based application environment through their use of native platform APIs available on a given device. The hybrid application design pattern is equally applicable to both mobile and desktop environments. For the scope of this book, we will focus on hybrid applications targeted toward the Android platform, however, most of the design patterns are also applicable to other platforms, including iOS and Windows Phone.
-
-__The benefits of hybrid apps compared to native include:__
-
-- Inexpensive cross-platform development cycle
-- Abundant human resources
-- Approval process
-    Most of the app stores do have an approval process for which each app has to qualify before it can be made available through the sales channels of that app store. Because hybrid apps can be updated outside the bounds of an app store, you can typically get away with one submission to the app store. Once you are approved, you can push subsequent updates independently through your server if you like. A key point to note however, is that a fresh submission of the application would be required every time you make changes in the native code associated with the hybrid app.
-- Hybrid apps are the future
-
-    Looking toward the future and upcoming advancements in mobile OS technologies, one can easily argue that hybrid apps are the future of development. Windows Phone 8, Google announcements to eventually merge Chromium OS and Android, Tizen OS, and Firefox all hint toward a hybrid future, not too far away, and hence, building and deploying hybrid apps is strategically a right thing to do.
+"混合" 应用是一种特殊的 WEB 应用，它扩展基于 WEB 的应用，并且可以使用设备平台的本地 API。混合应用的设计模式同时适用于移动和桌面环境。
 
 <!--more-->
 
-__The possible drawbacks of hybrid apps as compared to native apps include:__
+__相对本地应用的有点：__
 
-- Performance
-    You may experience potential performance issues because JavaScript is fundamentally single-threaded, which means that only one operation can be performed at a time. However, if done right, you can come up with a solution wherein you can offload background tasks to a native thread, which would execute in parallel while your app is busy performing UI operations. The native thread would then notify the JavaScript of the events and task completions/failures.
-- Differences in cross-platforms
-    WebKit is not equally maintained in all mobile platforms, which means that there might be indistinct differences between renderings and platform-specific features to watch out for, though one could arguably say it is a better scenario than rewriting all code from scratch. Further, this is such a well-understood topic that often you would find material describing ways to identify and mitigate these UI experience risks.
-- Unavailable advanced features
-    There might be advanced features that cannot always be easily implemented on the hybrid layer—for example, OpenGL-based rendering—however, the set of features is rapidly shrinking with companies like Microsoft, Google, and Mozilla introducing a bunch of new standards aimed at bridging this gap.
-- Inconsistent user interfaces
+- 缩短跨平台开发周期
 
-    Platform-specific UIs’ look and feel might be seriously difficult to mimic using HTML, CSS, and JavaScript.
+- 丰富的人力资源
+
+- 简化审核过程。大多数的应用商店在产品上架前都有一个审核过程。因为混合应用可以不通过应用商店更新，所以你无需提交到应用商店。一旦你审核通过，之后你可以自由更新。需要注意的一点事，一旦你对本地代码做了更改，这时候你就需要提交一个新版本到应用商店。
+
+- 混合应用是未来。展望移动系统技术，你可以很容易认为混合应用是开发的未来。 Windows Phone 8，Google 提出合并 Chrome OS 和 Android，Tizen OS 和 Firefox 证实了这一点，因此，在不久的将来，构建和发布混合应用是具有战略性的正确选择。
+
+<!--more-->
+
+__相对本地应用的不足：__
+
+- 性能。因为 JavaScript 是单线程的，你可能会碰到性能问题。然而，你可以把后台任务在运行本地线程中，这样，当应用忙于处理 UI 操作时，这人任务同时可以并行。本地线程会将事件和完成失败通知到 JavaScript。
+
+- 不同平台的差异。WebKit 并不是在所有平台都是一致的，这意味着特定平台的显示可能有些不一样，这是一个易理解的话题，你需要找到缩小这些 UI 差异的方法。
+
+- 不允许的高级特性。可能有一些高级特性不能在混合层轻易实现，如基于 OpenGL 的渲染，然后，随着 Microsoft, Google, and Mozilla 引进一些新的标准用来弥补这些空白，这些不能实现的技术正在不断减少。
+
+- 不一致的用户界面。特定平台的的 UI 的观感可能很难用 HTML, CSS, and JavaScript 来模拟。
 
 ## Quick Start
 
-We will build a sample application wherein the UI is implemented in HTML and rendered using a WebView. To get started, create a sample project using Eclipse or on the command line.
+你可以构建一个样例工程，使用 HTML 来来实现 UI，使用 WebView 来渲染。首先，使用 Eclipse 或者使用命令行创建样例工程。
 
 ```sh
 $ mkdir helloworld

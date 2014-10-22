@@ -9,7 +9,7 @@ tags : [angular, tutorial]
 
 ## Quick Start
 
-[Single Page Apps with AngularJS Routing and Templating ♥ Scotch](http://scotch.io/tutorials/javascript/single-page-apps-with-angularjs-routing-and-templating) 利用 AngularJS 创建一个单页面工程。
+对于非正式工程，你可以按照 [Single Page Apps with AngularJS Routing and Templating ♥ Scotch](http://scotch.io/tutorials/javascript/single-page-apps-with-angularjs-routing-and-templating) 创建一个单页面工程。
 
 对于正式工程可以使用 yo 创建脚手架：
 
@@ -197,29 +197,41 @@ AngularJS会在`DOMContentLoaded`事件触发时执行，并通过`ng-app`指令
 
 ### ng-bind
 
-The `ngBind` attribute tells Angular to replace the text content of the specified HTML element with the value of a given expression, and to update the text content when the value of that expression changes.
-
-`ngBind` 用于单向绑定($scope --> view)。
-
-Typically, you don't use `ngBind` directly, but instead you use the double curly markup like `{{ expression }}` which is similar but less verbose.
-
-It is preferable to use `ngBind` instead of `{{ expression }}` if a template is momentarily displayed by the browser in its raw state before Angular compiles it. Since `ngBind` is an element attribute, it makes the bindings invisible to the user while the page is loading.
-
-An alternative solution to this problem would be using the [ngCloak](https://docs.angularjs.org/api/ng/directive/ngCloak) directive.
-
-It has two equivalent forms. One we’ve seen with double-curly braces:
-
-    <p>{{greeting}}</p>
-
-Then there’s an attribute-based directive called ng-bind:
+`ngBind` 属性告诉 Angular 用指定的表达式的值替换文本内容，并且当表达式的值发生变化时，自动更新文本内容。
 
     <p ng-bind="greeting"></p>
 
-如何使用这两种方式：
+`ngBind` 用于单向绑定($scope --> view)。
 
-- With the double-curly syntax, on the very first page load of your application’s index.html, there’s a chance that your user will see the un-rendered template before Angular has a chance to replace the curlies with your data. Subsequent views won’t suffer from this. The reason is that the browser loads the HTML page, renders it, and only then does Angular get a chance to interpret it as you intended.
+除了 `ngBind`，还有一个更简洁的双大括号表示法，如 `{{ expression }}`。
 
-- The good news is that you can still use `{%raw%}{{ }}{%endraw%}` in the majority of your templates. For the data binding you do in your index.html page, however, use ng-bind instead. That way, your users will see nothing until the data has loaded.
+    <p>{{greeting}}</p>
+
+在应用首页 `idnex.html` 中，建议使用 `ng-bind`，在子视图中，建议使用 `{%raw%}{{ }}{%endraw%}`。因为当首页加载时，在 AngularJS 有机会替换模板中的双大括号表达式前，未渲染的模板可能被用户看见，而子视图不会受这个影响。       
+
+如果模板在 Angular 编译之前就会显示，那么最好使用 `ngBind`，因为 `ngBind` 是元素属性，页面加载的时候，绑定表达式对用于来说是不可见的。
+
+另一个可选的先解决方案是使用 [ngCloak](https://docs.angularjs.org/api/ng/directive/ngCloak) 指令。
+
+`ngCloak` 指令用于应用加载时，阻止未编译的 html 模板短暂显示。也可以用这个指令避免由 html 模板显示引起的闪烁效果。
+
+The directive can be applied to the `<body>` element, but the preferred usage is to apply multiple `ngCloak` directives to small portions of the page to permit progressive rendering of the browser view.
+
+ngCloak works in cooperation with the following css rule embedded within angular.js and angular.min.js. For CSP mode please add angular-csp.css to your html file (see ngCsp).
+
+```css
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+display: none !important;
+}
+```
+
+When this css rule is loaded by the browser, all html elements (including their children) that are tagged with the `ngCloak` directive are hidden. When Angular encounters this directive during the compilation of the template it deletes the `ngCloak` element attribute, making the compiled element visible.
+
+For the best result, the angular.js script must be loaded in the head section of the html document; alternatively, the css rule above must be included in the external stylesheet of the application.
+
+Legacy browsers, like IE7, do not provide attribute selector support (added in CSS 2.1) so they cannot match the `[ng\:cloak]` selector. To work around this limitation, you must add the css class ng-cloak in addition to the `ngCloak` directive as shown in the example below.
+
+See also [javascript - Angularjs - ng-cloak/ng-show elements blink - Stack Overflow](http://stackoverflow.com/questions/11249768/angularjs-ng-cloak-ng-show-elements-blink).
 
 ### HTML content in AngularJS expressions
 
@@ -270,15 +282,14 @@ Unless you are working with existing legacy systems (CMS, back-ends sending HTML
 
 `ngModel` 用于 form 元素的双向绑定。 `ngModel` 负责:
 
-- Binding the view into the model, which other directives such as `input`, `textarea` or select `require`.
-- Providing validation behavior (i.e. required, number, email, url).
-- Keeping the state of the control (valid/invalid, dirty/pristine, touched/untouched, validation errors).
-- Setting related css classes on the element (`ng-valid`, `ng-invalid`, `ng-dirty`, `ng-pristine`, `ng-touched`, `ng-untouched`) including animations.
-- Registering the control with its parent form.
+- 提供验证行为 (i.e. required, number, email, url)。
+- 维持控制状态 (`valid`/`invalid`, `dirty`/`pristine`, `touched`/`untouched`, validation errors)。
+- 设置动画元素相关的 css 类(`ng-valid`, `ng-invalid`, `ng-dirty`, `ng-pristine`, `ng-touched`, `ng-untouched`)
+- Registering the control with its parent [form](https://docs.angularjs.org/api/ng/directive/form).
 
-__Note:__ `ngModel` will try to bind to the property given by evaluating the expression on the current scope. If the property doesn't already exist on this scope, it will be created implicitly and added to the scope.
+`ngModel` 会试图绑定当前作用域中的属性，如果属性在作用域中不存在，它会隐式地添加同名属性到作用域中。
 
-you can use the `ng-model` attribute to bind elements to your model properties:
+使用 `ng-model` 绑定元素到模型属性：
 
 ```html
 <form ng-controller="SomeController">
@@ -286,31 +297,10 @@ you can use the `ng-model` attribute to bind elements to your model properties:
 </form>
 ```
 
-This means that:
+这意味着：
 
-- When the user checks the box, a property called youCheckedIt on the SomeController’s `$scope` will become true. Unchecking the box makes youCheckedIt false.
-- If you set `$scope.youCheckedIt` to true in SomeController, the box becomes checked in the UI. Setting it to false unchecks the box.
-
-you can call `$watch()` with an expression to observe and a callback that gets invoked whenever that expression changes:
-
-```html
-<form ng-controller="StartUpController">
-    Starting: <input ng-model="funding.startingEstimate">
-    Recommendation: {{funding.needed}}
-</form>
-```
-
-```js
-function StartUpController($scope) {
-  $scope.funding = { startingEstimate: 0 };
-
-  computeNeeded = function() {
-    $scope.funding.needed = $scope.funding.startingEstimate * 10;
-  };
-
-  $scope.$watch('funding.startingEstimate', computeNeeded);
-}
-```
+- 一旦用户勾选，SomeController’s 作用域中的 `youCheckedIt` 被设置成 true，反勾选则为 false。
+- 如果在 SomeController 设置 `$scope.youCheckedIt` 为 true，UI 中勾选框被勾选，设置为 false，则取消勾选。
 
 ### ng-repeat
 
@@ -472,10 +462,10 @@ The `ng-class` directive can also accept arguments of type string or array. Both
 
 AngularJS has the built-in support for the different events with the following directives:
 
-* <span class="strong">**Click events**</span>: `ngClick` and `ngDblClick`
-* <span class="strong">**Mouse events**</span>: `ngMousedown`, `ngMouseup`, `ngMouseenter`, `ngMouseleave`, `ngMousemove` and `ngMouseover`
-* <span class="strong">**Keyboard events**</span>: `ngKeydown`, `ngKeyup` and `ngKeypress`
-* <span class="strong">**Input change event**</span> (`ngChange)`: The `ngChange` directive cooperates with the `ngModel` one, and let us to react on model changes initiated by user input.
+* **Click events**: `ngClick` and `ngDblClick`
+* **Mouse events**: `ngMousedown`, `ngMouseup`, `ngMouseenter`, `ngMouseleave`, `ngMousemove` and `ngMouseover`
+* **Keyboard events**: `ngKeydown`, `ngKeyup` and `ngKeypress`
+* **Input change event** (`ngChange)`: The `ngChange` directive cooperates with the `ngModel` one, and let us to react on model changes initiated by user input.
 
 Mentioned DOM event handlers can accept a special argument `$event` in their expression, which represents the raw DOM event. This allows us to get access to lower-level properties of an event, prevent it default action, stop its propagation, and so on. As an example we can see how to read the position of a clicked element:
 
@@ -709,31 +699,130 @@ Though expressions are more restrictive than JavaScript in many ways, they are m
 
 ### $watch
 
-The function’s signature is:
+你可以使用 `$watch()` 来监测表达式，一旦表达式的值发生变化，回调将会被调用：
 
-    $watch(watchFn, watchAction, deepWatch) 
+```html
+<form ng-controller="StartUpController">
+    Starting: <input ng-model="funding.startingEstimate">
+    Recommendation: {{funding.needed}}
+</form>
+```
 
-The details of each parameter are as follows:
+```js
+function StartUpController($scope) {
+  $scope.funding = { startingEstimate: 0 };
 
-- `watchFn`
+  computeNeeded = function() {
+    $scope.funding.needed = $scope.funding.startingEstimate * 10;
+  };
 
-    This parameter is a string with an Angular expression or a function that returns the current value of the model that you want to watch. This expression will be evaluated multiple times, so you need to make sure that it has no side effects. __That is, it can be called multiple times without changing state.__ For the same reason, watch expressions should be computationally cheap. If you’ve passed in an Angular expression in a string, it will be evaluated against objects available to the scope it’s called on.
+  $scope.$watch('funding.startingEstimate', computeNeeded);
+}
+```
 
-- `watchAction`
+`$watch` 的方法签名为:
 
-    This is the function or expression to be called when the `watchFn` changes. In the function form, it receives the new and old values of watchFn as well as a reference to the scope. Its signature is `function(newValue, oldValue, scope)`.
+    $watch(watchExpression, listener, objectEquality) 
 
-- `deepWatch`
+参数描述为：
 
-    If set to true, this optional boolean parameter tells Angular to examine each property within the watched object for changes. You’d use this if you wanted to watch individual elements in an array or properties in an object instead of just a simple value. As Angular needs to walk the array or object, this can be computationally expensive if the collection is large.
+- `watchExpression` 每次调用 `$digest()` 的时候，`watchExpression` 都会被调用，并且返回被监测的值。由于检测到表达式的值发生改变时，`$digest()` 才返回，所以每次 `$digest()` 的时候，`watchExpression` 可能会执行多次并且应该是幂等的。
 
-The `$watch` function returns a function that will de-register the listener when you no longer want to receive change notifications.
-If we wanted to watch a property and then later de-register it, we would use the following:
+- `listener` 当 `watchExpression` 的值和前一次不等时，`listener` 被调用（除了首次运行）。比较取决于引用相等，严格比较（通过 `!==`），直到对象相等（`==`，取决于 `objectEquality` 参数的设置）。listener 函数的签名为 `function(newValue, oldValue, scope)`.
 
-    ...
-    var dereg = $scope.$watch('someModel.someProperty', callbackOnChange());
-    …
-    dereg();
+- `objectEquality` 当 `objectEquality == true` 时，`watchExpression` 表达式的比较使用 `angular.equals()`。为了保存将要比较的对象值，用 `angular.copy` 来拷贝一个副本。因此，监视复杂对象可能会有内存和性能问题。
+
+watcher 注册之后，`listener` 将会被异步调用一次 (via `$evalAsync`) 来初始化 watcher。在某些场合，这可能是不良的，因为即使 `watchExpression` 没有改变，`listener` 也会被调用。为了在 `listener` 函数中发现这个，我们可以比较 newVal and oldVal，如果全等(===)，那么说明 `listener` 是首次调用。
+
+```js
+// let's assume that scope was dependency injected as the $rootScope
+var scope = $rootScope;
+scope.name = 'misko';
+scope.counter = 0;
+
+expect(scope.counter).toEqual(0);
+scope.$watch('name', function(newValue, oldValue) {
+  scope.counter = scope.counter + 1;
+});
+expect(scope.counter).toEqual(0);
+
+scope.$digest();
+// the listener is always called during the first $digest loop after it was registered
+expect(scope.counter).toEqual(1);
+
+scope.$digest();
+// but now it will not be called unless the value changes
+expect(scope.counter).toEqual(1);
+
+scope.name = 'adam';
+scope.$digest();
+expect(scope.counter).toEqual(2);
+
+
+
+// Using a function as a watchExpression
+var food;
+scope.foodCounter = 0;
+expect(scope.foodCounter).toEqual(0);
+scope.$watch(
+  // This function returns the value being watched. It is called for each turn of the $digest loop
+  function() { return food; },
+  // This is the change listener, called when the value returned from the above function changes
+  function(newValue, oldValue) {
+    if ( newValue !== oldValue ) {
+      // Only increment the counter if the value changed
+      scope.foodCounter = scope.foodCounter + 1;
+    }
+  }
+);
+// No digest has been run so the counter will be zero
+expect(scope.foodCounter).toEqual(0);
+
+// Run the digest but since food has not changed count will still be zero
+scope.$digest();
+expect(scope.foodCounter).toEqual(0);
+
+// Update food and run digest.  Now the counter will increment
+food = 'cheeseburger';
+scope.$digest();
+expect(scope.foodCounter).toEqual(1);
+```
+
+`$watch` 返回一个反注册监听器的函数，如果不在需要监听属性，你可以调用这个函数：
+
+```js
+...
+var dereg = $scope.$watch('someModel.someProperty', callbackOnChange);
+…
+dereg();
+```
+
+#### 监听多个属性
+
+如果你想监听多个属性或者一个对象，你可以有两个选择：
+
+* 使用 `$watchGroup` 同时监听多个属性
+
+        $scope.$watchGroup(['foo', 'bar'], function(newValues, oldValues, scope) {
+          // newValues array contains the current values of the watch expressions
+          // with the indexes matching those of the watchExpression array
+          // i.e.
+          // newValues[0] -> $scope.foo 
+          // and 
+          // newValues[1] -> $scope.bar 
+        });
+
+* 把它们放在一个数组或者对象中，然后调用 `$watchGroup` 函数。
+
+        $scope.$watchCollection('[foo, bar]', function(newValues, oldValues){
+            // do stuff here
+            // newValues and oldValues contain the new and respectively old value
+            // of the observed collection array
+        });
+
+See [javascript - Watch multiple $scope attributes - Stack Overflow](http://stackoverflow.com/questions/11952579/watch-multiple-scope-attributes)
+
+#### watch() 的性能问题
 
 Let’s say that we want to apply a $10 discount when the customer adds more than $100 worth of merchandise to her cart. For a template, we’ll use:
 
@@ -788,41 +877,19 @@ function CartController($scope) {
 
 <p data-height="268" data-theme-id="0" data-slug-hash="sEymG" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/sEymG/'>sEymG</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
-__Watching multiple things__
-
-What if you want to watch multiple properties or objects and execute a function whenever any of them change? You’d have two basic options:
-
-* Put them into an array or object and pass in deepWatch as true.
-* Watch a concatenated value of the properties.
-
-In the first case, if you’ve got an object with two properties _a_ and _b_ in your scope, and want to execute the `callMe()` function on change, you could watch both of them, like so:
-
-    $scope.$watch('things.a + things.b', callMe(...)); 
-
-Of course, _a_ and _b_ could be on different objects, and you could make the list as long as you like. If the list is long, you would likely write a function that returns the concatenated value rather than relying on an expression for the logic. In the second case, you might want to watch all the properties on the things object. In this case, you could do this:
-
-    $scope.$watch('things', callMe(...), true);
-
-__Performance Considerations in watch()__
-
-
 The preceding example executes correctly, but there is a potential problem with performance. Though it isn’t obvious, if you put a debugger breakpoint in `totalCart()`, you’d see that it gets called six times to render this page. Though you’d never notice it in this application, in more complex apps, running it six times could be an issue.
 
-Why six? Three of them we can trace pretty easily, as it runs one time each in:
+上面的例子可以正确执行，当有一个潜在的性能问题。虽让不是很明显，如果你在 `totalCart()` 中下个断点，你可以看到它被调用了 8 次。这在大型应用中，可能会有性能问题。
 
-* The template as `{% raw %}{{totalCart() | currency}}{% endraw %}`
-* The `subtotal()` function
-* The `$watch()` function
+其中：
 
-Then Angular runs all of these again, bringing us to six. Angular does this to verify that transitive changes in your model have fully propagated and your model has _settled_ . Angular does this checking by making a copy of all watched properties and comparing them to the current value to see if they’ve changed. In fact, Angular may run this up to ten times to ensure full propagation. If changes are still occurring after ten iterations, Angular exits with an error. If that occurs, you probably have a dependency loop that you’ll need to fix.
+* The template as `{% raw %}{{totalCart() | currency}}{% endraw %}` 3 次
+* The `subtotal()` function 3 次
+* The `$watch()` function 2 次
 
-Though you currently need to worry about this, by the time you’ve finished this book it may be a non-issue. While Angular has had to implement data binding in JavaScript, we’ve been working with the TC39 folks on a low-level native implementation called [Object.observe()](http://updates.html5rocks.com/2012/11/Respond-to-change-with-Object-observe). With this in place, Angular will automatically use `Object.observe()` wherever present to give you native-speed data binding.
+我们有几个方式可以解决这个问题。一个是在 items 数组上创建 `$watch`，让后重新计算 `$scope` 中的 total, discount, and subtotal 属性。
 
-As you’ll see in the next chapter, Angular has a nice Chrome debugging extension called Batarang that will automatically highlight expensive data bindings for you.
-
-Now that we know about this issue, there are a few ways we can solve it. One way would be to create a `$watch` on changes to the items array and just recalculate the total, discount, and subtotal as properties on the `$scope`.
-
-To do this, we’d update the template to use these properties:
+首先，更新使用这些属性的模板：
 
 ```html
 {% raw %}
@@ -832,7 +899,7 @@ To do this, we’d update the template to use these properties:
 {% endraw %}
 ```
 
-Then, in JavaScript, we’d watch the items array, and call a function to calculate the totals on any change to that array, like so:
+在 JavaScript 中，监视 items 数组，在数据变化时重新计算总值：
 
 ```js
 function CartController($scope) {
@@ -858,9 +925,7 @@ function CartController($scope) {
 }
 ```
 
-Notice here that the `$watch` specified items as a string. This is possible because the `$watch` function can take either a function (as we did previously) or a string. If a string is passed to the `$watch` function, then it will be evaluated as an expression in the scope of the `$scope` it’s called on.
-
-This strategy might work well for your app. However, since we’re watching the items array, Angular will have to make a copy of it to compare it for us. For a large list of items, it may perform better if we just recalculate the bill properties every time Angular evaluates the page. We can do this by creating a `$watch` with only a `watchFn` that will recalculate our properties like this:
+然而，由于我们监视的是 item 数组，Angular 为了比较必须拷贝一个副本，对于 items 大列表，如果可能只计算 bill 属性，可能更好。我们可以创建一个只有监听表达式函数的的 `$watch`：
 
 ```js
 $scope.$watch(function() {
@@ -873,6 +938,8 @@ $scope.$watch(function() {
   $scope.bill.subtotal = total - $scope.bill.discount;
 });
 ```
+
+See Also [Improving Angular Dirty Checking Performance](http://opensourceconnections.com/blog/2014/04/24/improving-angular-dirty-checking-performance/)
 
 ### $valid
 
@@ -905,19 +972,13 @@ function AddUserController($scope) {
 }
 ```
 
-Inside the controller, we can access the validation state of the form through a property called `$valid`. Angular will set this to true when all the inputs in the form are valid. We can use this `$valid` property to do nifty things such as disabling the Submit button when the form isn’t completed yet.
-
-We can prevent form submission in an invalid state by adding ng-disabled to the Submit button:
+在 Controller 中，我们通过 `$valid` 访问验证表单的状态。当表单的所有 inputs 合法时，`$valid` 的值为 true。在表单还没有完成时，我们可以根据 `$valid` 的值来禁用或者启用提交按钮。
 
     <button ng-disabled='!addUserForm.$valid'>Submit</button>
 
 See:
 
 - [Form validation with AngularJS](http://www.ng-newsletter.com/posts/validations.html)
-
-## ng-3-part
-
-- [mgonto/angular-wizard](https://github.com/mgonto/angular-wizard) 向导。
 
 ## Testing
 
@@ -979,9 +1040,9 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 
 ## Tools
 
-- Batarang 
-    Batarang is a Chrome extension that adds AngularJS knowledge to the built-in Developer Tools suite in Google Chrome. 
-- [ng-inspector for AngularJS](http://ng-inspector.org/) The AngularJS inspector pane for your browser.
+* [Batarang](https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk). This has been around for a while.
+
+* [ng-inspector](http://ng-inspector.org/). This is the newest one, and as the name suggests, it allows you to inspect your application's scopes.
 
 ## Library
 
@@ -991,20 +1052,21 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 
 ## FAQ
 
-### How do I switch views in AngularJS from a controller function?
+### 如何在 controller 中切换视图
 
-In order to switch between different views, you could directly change the window.location (using the $location service!) in
-index.html file
+#### 使用路由
+
+为了在不同视图中间切换视图，你可以在 `index.html` 中使用 `$location` 服务直接改变直接改变 window.location。
 
 ```html
 <!-- index.html -->
 <div ng-controller="Cntrl">
-        <div ng-click="changeView('edit')">
-            edit
-        </div>
-        <div ng-click="changeView('preview')">
-            preview
-        </div>
+    <div ng-click="changeView('edit')">
+        edit
+    </div>
+    <div ng-click="changeView('preview')">
+        preview
+    </div>
 </div>
 ```
 
@@ -1012,15 +1074,17 @@ index.html file
 ```js
 // Controller.js
 function Cntrl ($scope,$location) {
-        $scope.changeView = function(view){
-            $location.path(view); // path not hash
-        }
+    $scope.changeView = function(view){
+        $location.path(view); // path not hash
     }
+}
 ```
 
-and configure the router to switch to different partials based on the location. This would have the benefit of history as well as using ng-view.
+然后配置 router 来导航到不同的视图。
 
-Alternatively, you use ng-include with different partials and then use a ng-switch as shown in here ( https://github.com/ganarajpr/Angular-UI-Components/blob/master/index.html )
+#### 使用 ng-switch
+
+除此之外，你也可以使用 `ng-include` 和 `ng-switch` 来根据条件包含不同的视图：
 
 ```js
  <div ng-switch on="component" >
@@ -1074,9 +1138,9 @@ function FruitCtrl($scope)
 }
 ```
 
-All you have to do here is to modify the value of the `moduleState` variable, which automatically shows the desired widget view. Additionally, the introduced `selectedFruit` variable holds the reference of the item to act on in the details view.
+你要做的事情只有修改 `moduleState` 变量的值，它会自动显示对应的组件视图。另外，`selectedFruit` 变量保存了当前操作的 item 引用。
 
-The advantage of using the `ng-switch` directive is that you can easily add any number of states to your widget in a consistent manner.
+使用 `ng-switch` 指令的好处是你可以轻易添加任意多的状态。
 
 See: 
 
@@ -1089,21 +1153,13 @@ See [Ng-Include inside ng-switch should be allowed · Issue #4731 · angular/ang
 
 ### how to access the angular $scope variable in browsers console
 
-Pick an element in the HTML panel of the developer tools and type this in the console
+在开发者工具的 HTML 面板中选择一个元素并且在控制台敲入：
 
 ```
 angular.element($0).scope()
 ```
 
-In webkit `$0` is a reference to the selected DOM node in the elements tab, so by doing this you get the selected DOM node scope printed out in the console
-
-**Addons/Extensions**
-
-There are some very useful Chrome Extensions that you might want to checkout:
-
-* [Batarang](https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk). This has been around for a while.
-
-* [ng-inspector](http://ng-inspector.org/). This is the newest one, and as the name suggests, it allows you to inspect your application's scopes.
+其中，WebKit 中 `$0` 引用的是选中的元素。
 
 **Playing with JS Fiddle**
 
@@ -1113,21 +1169,19 @@ http://jsfiddle.net/jaimem/Yatbt/show
 
 **jQuery Lite**
 
-If you load jQuery before angular, `angular.element` can be passed a jQuery selector. So you could inspect the scope of a controller with
+如果你在 Angular 前加载 jQuery，`angular.element` 可以传入一个 jQuery 选择器。所以你可以用下面的方法检查指定 controller 的作用域：
 
 ```
 angular.element('[ng-controller=ctrl]').scope()
 ```
 
-Of a button
+检查一个 button 的：
 
 ```
 angular.element('button:eq(1)').scope()
 ```
 
-... and so on.
-
-You might actually want to use a global function to make it easier
+你可以使用一个全局函数让它更简洁：
 
 ```
 window.SC = function(selector){
@@ -1135,7 +1189,7 @@ window.SC = function(selector){
 };
 ```
 
-Now you could do this
+现在你可以：
 
 ```
 SC('button:eq(10)')
@@ -1145,79 +1199,6 @@ SC('button:eq(10)').row   // -> value of scope.row
 check here: http://jsfiddle.net/jaimem/DvRaR/1/show/
 
 See [angularjs - how to access the angular $scope variable in browsers console - Stack Overflow](http://stackoverflow.com/questions/13743058/how-to-access-the-angular-scope-variable-in-browsers-console)
-
-### $apply() and $digest()
-
-See:
-
-- [Understanding Angular's $apply() and $digest()](http://www.sitepoint.com/understanding-angulars-apply-digest/) 
-- [AngularJS and scope.$apply — Jim Hoskins](http://jimhoskins.com/2012/12/17/angularjs-and-apply.html)
-
-`$apply()` and `$digest()` are two core, and sometimes confusing, aspects of AngularJS. To understand how AngularJS works one needs to fully understand how `$apply()` and `$digest()` work. This article aims to explain what `$apply()` and `$digest()` really are, and how they can be useful in your day-to-day AngularJS programming. 
-
-#### `$apply` and `$digest` Explored
-
-AngularJS offers an incredibly awesome feature known as two way data binding which greatly simplifies our lives. Data binding means that when you change something in the view, the `scope` model _automagically_ updates. Similarly, whenever the `scope` model changes, the view updates itself with the new value. How does does AngularJS do that? When you write an expression (`{{aModel}}`), behind the scenes Angular sets up a watcher on the `scope` model, which in turn updates the view whenever the model changes. This `watcher` is just like any watcher you set up in AngularJS:
-
-    $scope.$watch('aModel', function(newValue, oldValue) {
-      //update the DOM with newValue
-    });
-
-The second argument passed to `$watch()` is known as a listener function, and is called whenever the value of `aModel` changes. It is easy for us to grasp that when the value of `aModel` changes this listener is called, updating the expression in HTML. But, there is still one big question! How does Angular figure out when to call this listener function? In other words, how does AngularJS know when `aModel` changes so it can call the corresponding listener? Does it run a function periodically to check whether the value of the `scope` model has changed? Well, this is where the `$digest` cycle steps in.
-
-It’s the `$digest` cycle where the watchers are fired. When a watcher is fired, AngularJS evaluates the `scope` model, and if it has changed then the corresponding listener function is called. So, our next question is when and how this `$digest` cycle starts.
-
-The `$digest` cycle starts as a result of a call to `$scope.$digest()`. Assume that you change a `scope` model in a handler function through the `ng-click` directive. In that case AngularJS automatically triggers a `$digest` cycle by calling `$digest()`. When the `$digest` cycle starts, it fires each of the watchers. These watchers check if the current value of the `scope` model is different from last calculated value. If yes, then the corresponding listener function executes. As a result if you have any expressions in the view they will be updated. In addition to `ng-click`, there are several other built-in directives/services that let you change models (e.g. `ng-model`, `$timeout`, etc) and automatically trigger a `$digest` cycle.
-
-So far, so good! But, there is a small gotcha. In the above cases, Angular doesn’t directly call `$digest()`. Instead, it calls `$scope.$apply()`, which in turn calls `$rootScope.$digest()`. As a result of this, a digest cycle starts at the `$rootScope`, and subsequently visits all the child scopes calling the watchers along the way.
-
-Now, let’s assume you attach an `ng-click` directive to a button and pass a function name to it. When the button is clicked, AngularJS wraps the function call within `$scope.$apply()`. So, your function executes as usual, change models (if any), and a `$digest` cycle starts to ensure your changes are reflected in the view.
-
-**Note**: `$scope.$apply()` automatically calls `$rootScope.$digest()`. The `$apply()` function comes in two flavors. The first one takes a function as an argument, evaluates it, and triggers a `$digest` cycle. The second version does not take any arguments and just starts a `$digest` cycle when called. We will see why the former one is the preferred approach shortly.
-
-#### When Do You Call `$apply()` Manually?
-
-If AngularJS usually wraps our code in `$apply()` and starts a `$digest` cycle, then when do you need to do call `$apply()` manually? Actually, AngularJS makes one thing pretty clear. It will account for only those model changes which are done inside AngularJS’ context (i.e. the code that changes models is wrapped inside `$apply()`). Angular’s built-in directives already do this so that any model changes you make are reflected in the view. However, if you change any model outside of the Angular context, then you need to inform Angular of the changes by calling `$apply()` manually. It’s like telling Angular that you are changing some models and it should fire the `watchers` so that your changes propagate properly.
-
-For example, if you use JavaScript’s `setTimeout()` function to update a `scope` model, Angular has no way of knowing what you might change. In this case it’s your responsibility to call `$apply()` manually, which triggers a `$digest` cycle. Similarly, if you have a directive that sets up a DOM event listener and changes some models inside the handler function, you need to call `$apply()` to ensure the changes take effect.
-
-Let’s look at an example. Suppose you have a page, and once the page loads you want to display a message after a two second delay. Your implementation might look something like the JavaScript and HTML shown in the following listing.
-
-<p data-height="268" data-theme-id="0" data-slug-hash="fukyn" data-default-tab="result" data-user="Sandeep92" class='codepen'>See the Pen <a href='http://codepen.io/Sandeep92/pen/fukyn/'>fukyn</a> by Sandeep Panda (<a href='http://codepen.io/Sandeep92'>@Sandeep92</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-
-By running the example, you will see that the delayed function runs after a two second interval, and updates the `scope` model `message`. Still, the view doesn’t update. The reason, as you may have guessed, is that we forgot to call `$apply()` manually. Therefore, we need to update our `getMessage()` function as shown below.
-
-<p data-height="268" data-theme-id="0" data-slug-hash="bEmBn" data-default-tab="result" data-user="Sandeep92" class='codepen'>See the Pen <a href='http://codepen.io/Sandeep92/pen/bEmBn/'>bEmBn</a> by Sandeep Panda (<a href='http://codepen.io/Sandeep92'>@Sandeep92</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-
-If you run this updated example, you can see the view update after two seconds. The only change is that we wrapped our code inside `$scope.$apply()` which automatically triggers `$rootScope.$digest()`. As a result the watchers are fired as usual and the view updates.
-
-**Note**: By the way, you should use `$timeout` service whenever possible which is `setTimeout()` with automatic `$apply()` so that you don’t have to call `$apply()` manually.
-
-Also, note that in the above code you could have done the model changes as usual and placed a call to `$apply()` (the no-arg version) in the end. Have a look at the following snippet:
-
-```js
-$scope.getMessage = function() {
-  setTimeout(function() {
-    $scope.message = 'Fetched after two seconds';
-    console.log('message:' + $scope.message);
-    $scope.$apply(); //this triggers a $digest
-  }, 2000);
-};
-```
-
-The above code uses the no-arg version of `$apply()` and works. Keep in mind that you should always use the version of `$apply()` that accepts a function argument. This is because when you pass a function to `$apply()`, the function call is wrapped inside a `try...catch` block, and any exceptions that occur will be passed to the `$exceptionHandler` service.
-
-#### How Many Times Does the `$digest` Loop Run?
-
-When a `$digest` cycle runs, the watchers are executed to see if the `scope` models have changed. If they have, then the corresponding listener functions are called. This leads to an important question. What if a listener function itself changed a `scope` model? How would AngularJS account for that change? 
-
-The answer is that the `$digest` loop doesn’t run just once. At the end of the current loop, it starts all over again to check if any of the models have changed. This is basically dirty checking, and is done to account for any model changes that might have been done by listener functions. So, the `$digest` cycle keeps looping until there are no more model changes, or it hits the max loop count of 10. It’s always good to stay idempotent and try to minimize model changes inside the listener functions.
-
-**Note**: At a minimum, `$digest` will run twice even if your listener functions don’t change any models. As discussed above, it runs once more to make sure the models are stable and there are no changes.
-
-#### Conclusion
-
-I hope this article has clarified what `$apply` and `$digest` are all about. The most important thing to keep in mind is whether or not Angular **can** detect your changes. If it cannot, then you must call `$apply()` manually.
 
 ## Reference
 

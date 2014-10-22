@@ -897,16 +897,9 @@ See [AngularJS 指令（Directives）实践指南（三） / Owen Chen](http://o
 
 ### butterbar & focus
 
-We can now move to the directives we will be using in our application. There will be two directives in the app:
-
-- butterbar
+- butterbar 这个指令用来实现一个自动显示/隐藏的 loading。当路由发成变化，并且在页面加载的时候显示，当加载完成时隐藏。
+- focus 这个指令用来保证指定的 input 输入框（或者元素）有焦点。
   
-    This directive will be shown and hidden when the routes change and while the page is still loading information. It will hook into the route-changing mechanism and automatically hide and show whatever is within its tag ,based on the state of the page.
-
-- focus
-  
-    The focus directive is used to ensure that specific input fields (or elements) have the focus.
-
 Let’s look at the code:
 
 ```js
@@ -940,26 +933,11 @@ directives.directive('focus',
 });
 ```
 
-Here, we’re returning the directive configuration object with its `link` function specified. The `link` function gets a reference to the enclosing scope, the DOM `element` it lives on, an array of any `attributes` passed to the directive, and the `controller` on the DOM element, if it exists. Here, we only need to get at the element and call its `focus()` method.
+先隐藏 loading 元素，让后在 root scope 上添加两个监听器。一旦路由改变的时候，便显示元素，一旦路由完场，便隐藏元素。
 
-Directives go through a two-step process. 
-
-1. In the first step (the compile phase), all directives attached to a DOM element are found, and then processed. Any DOM manipulation also happens during the compile step. At the end of this phase, a linking function is produced.
-2. In the second step, the link phase (the phase we used previously), the preceding DOM template produced is linked to the scope. Also, any watchers or listeners are added as needed, resulting in a live binding between the scope and the element. Thus, anything related to the scope happens in the linking phase.
-
-The `butterbar` directive can be used as follows:
+我们可以这样使用 `butterbar` 指令:
 
     <div butterbar>My loading text...</div>
-
-It basically hides the element right up front, then adds two watches on the root scope. Every time a route change begins, it shows the element (by changing its class), and every time the route has successfully finished changing, it hides the butterbar again.
-
-The final thing of note is the API for working with the element. jQuery veterans will be glad to know that it follows a jQuery-like syntax (`addClass`, `removeClass`). AngularJS implements a subset of the calls of jQuery so that jQuery is an optional dependency for any AngularJS project. In case you do end up using the full jQuery library in your project, you should know that AngularJS uses that instead of the jQlite implementation it has built-in.
-
-我们能否在控制器上实现上面的功能呢？当然可以，但是这样做会带来一个重大的问题。一旦其他的 Controller 需要实现相同的功能，可能需要拷贝代码。
-
-### Weather for San Francisco
-
-See [Build custom directives with AngularJS](http://www.ng-newsletter.com/posts/directives.html).
 
 ### Clock
 
@@ -1157,6 +1135,8 @@ var setUpDatePicker = function () {
 - [voronianski/ngActivityIndicator](https://github.com/voronianski/ngActivityIndicator/) Angular provider for preloader animations 
 <http://labs.voronianski.com/ngActivityIndicator.js>.
 - [ngReactGrid by josebalius](http://josebalius.github.io/ngReactGrid) ngReactGrid is an Angular directive that can be used to render an enhanced HTML table or grid of data very fast using React as the rendering engine. It is based on ng-grid and jQuery DataTables. It uses HTML tables and supports fixed column headers by default.
+- [AlexDisler/ng-special-offer](https://github.com/AlexDisler/ng-special-offer) Prompt users to rate your cordova app in the app store.
+- [mgonto/angular-wizard](https://github.com/mgonto/angular-wizard) 向导。
 
 ## Reference
 

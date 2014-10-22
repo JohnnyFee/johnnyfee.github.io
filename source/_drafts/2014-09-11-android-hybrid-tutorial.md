@@ -44,7 +44,7 @@ $ android create project -n HelloWorld -p ./ -t \
   android-14 -k com.helloworld --activity MainActivity
 ```
 
-Once you execute the commands, an empty native _Hello World_ application will be created for you. Change the AndroidManifest XML to include the `INTERNET` permission:
+执行命令之后，一个空的本地 _Hello World_ 应用将被创建。修改 AndroidManifest 文件，以包含 `INTERNET` 权限：
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -68,7 +68,7 @@ Once you execute the commands, an empty native _Hello World_ application will be
 </manifest>
 ```
 
-Next, we will modify the layout resource file to specify a WebView in the view hierarchy. This layout resource will be set as a content view in the `MainActivity` class of the application.
+然后，我们修改布局资源文件，让它在视图层包含一个 WebView 控件。我们会在 `MainActivity` 类中将该布局文件设置为内容视图：
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -85,7 +85,7 @@ Next, we will modify the layout resource file to specify a WebView in the view h
 </LinearLayout>
 ```
 
-Open the MainActivity.java file, and change the code as follows:
+打开 `MainActivity.java`，作如下修改:
 
 ```java
 package com.helloworld;
@@ -119,14 +119,14 @@ public class MainActivity extends Activity {
 }
 ```
 
-Alternatively, you can create an and add a WebView to the application view hierarchy programmatically, as follows:
+除此之外，你也可以用编程方式来为应用视图层创建和添加 WebView：
 
 ```java
 WebView WebView = new WebView(this);
 contentView.addView(webView);
 ```
 
-Now let’s look at the sample HTML page that will be rendered by the application.
+以下是一个被应用显示 HTML 页面：
 
 ```html
 <!DOCTYPE html>
@@ -191,16 +191,16 @@ article section.view {
 
 ## WebView
 
-### Loading a Web Page
+### 加载网页
 
-Once you have a created a WebView control, you can request it to load a web page by using the `loadURL()` API passing the requested URL in the function argument. WebView supports loading resources from the Web or locally from the assets or resource folder.
+一旦你创建了 WevView 控件，通过调用 `loadURL()` API，并且传入请求的 URL 来加载页面。
 
-* Root path to the _asset_ folder in Android is _file:///android_asset_
-* Root path to the _res_ folder in Android is _file:///android_res_
+* _asset_ 文件夹的根路径为 _file:///android_asset_
+* _res_ 文件夹的根路径为 _file:///android_res_
 
-Please note, that the url is _file:///android_asset_ and not _file:///android_assets_. This is one of the most common mistakes made by developers during development.
+请注意，路径是 _file:///android_asset_，而非 _file:///android_assets_，不是复数。
 
-_file:///_ simply denotes that you wish to access the local filesystem, and points to the root directory. Anything mentioned after this is the relative path to the resource we would like to load in the WebView. Hence, when the URL is of the form _file:///android_asset_, we are specifying the base URL for the path to the _asset_ folder for the application package.
+_file:///_ 表示你想访问的本地文件系统，并且指向根目录。我们接下来在 WebView 中加载的路径都是相对这个根目录的。因此，_file:///android_asset_ 表示应用包中相对 _asset_ 文件夹的路径。
 
 ```java
 // load index.html from the assets folder
@@ -213,19 +213,17 @@ WebView.loadUrl("file:///android_res/drawable/logo.png");
 WebView.loadUrl("http://www.oreilly.com");
 ```
 
-### Loading HTML into WebView
+### 加载 HTML
 
-You can request the WebView to render any valid HTML as a string using the `loadData()` method.
-
-Let’s look at the `loadData()` API in a bit more detail:
+你可以让 WevView 使用 `loadData()` 方法来显示任何合法的 HTML（以字符串的形式），如：
 
     loadData(String data, String mimeType, String encoding)
 
-`data` specifies the data to be loaded, HTML markup in our case, into the WebView using the data URL scheme. The data URL scheme allows us to include data inline in web pages as if they were external resources. Using this technique, we can load normally separate elements such as images and stylesheets in a single HTTP request rather than multiple HTTP requests.
+其中，`data` 为要加载的数据，这让我们可以在网页中包含内联数据，好像它们是外部资源一样。使用这个技术，我们可以在一个 HTTP 请求中加载多个通常是分离的资源，如图片和样式。
 
-`mimeType` will denote the data type, which will be `text/html`.
+`mimeType` 表示数据类型，如 `text/html`。
 
-The `encoding` parameter specifies whether the data is base64 or URL encoded. If the data is base64 encoded, the value of the encoding parameter must be `base64`. For all other values of the parameter, including null, it is assumed that the data uses ASCII encoding for octets inside the range of safe URL characters.
+`encoding` 指定编码方式。如 `base64` 表示数据使用 base64 编码，`UTF-8` 表示使用 UTF-8 编码方式。
 
 ```java
 String data = "<!DOCTYPE html>";
@@ -236,9 +234,7 @@ data += "</html>";
 WebView.loadData(data, "text/html", "UTF-8");
 ```
 
-the above API will be used to create a data URL of the form `data:[<MIME-type>][;charset=<encoding>][;base64],<data>` before it is loaded inside the WebView.
-
-If you would like to reference a file from an arbitrary source like the _res/drawable_ directory within your HTML documents, using something like:
+如果你想在 HTML 中引用 _res/drawable_ 目录中的任意文件，你可能会使用如下代码：
 
 ```java
 // Bad example
@@ -249,17 +245,17 @@ data += "</html>";
 WebView.loadData(data, "text/html", "UTF-8");
 ```
 
-This code will not load the _logo.png_ image, as JavaScript’s _same origin policy_ restricts all the resources on the web page to originate from the same site—in this case, `data:[<MIME-type>]` and not _file:///_, as we have requested.
+这段代码不会加载 _logo.png_ 图片，因为受 _同源策略_ 的限制，网页中的所有资源都必须来自同一个站点，本例中，我们请求的是 `data:[<MIME-type>]` 而非 _file:///_。
 
-To avoid this restriction, Google recommends using `loadDataWithBaseURL()` with an appropriate base URL, which is used both to resolve relative URLs and when applying JavaScript’s same origin policy.
+为了避免这个限制，Google 建议使用 `loadDataWithBaseURL()`，传入一个合适的基地址，这可以同时解决相对地址和同源策略两个问题。
 
-### Loading Local Files into the WebView
+### 加载本地文件
 
-Android WebView provides a very flexible set of APIs to load documents from multiple sources. However, you may have to tweak the behavior of the WebView in certain cases, as the same origin policy would restrict the locations from which the content can be loaded within the web browser—for example, loading a local file on the filesystem.
+Android WebView 提供一组非常灵活的 API 用来从加载多个来源的文档。然而，你在某些场合必须调整 WebView 的行为，因为同源策略会限制在 web 浏览器中加载内容的地址，如从文件系统加载本地文件。
 
-In the following sections, we will look at some of the techniques you can use to allow the web browser to load content from multiple sources.
+下面，我们会使用一些技术来让浏览器从加载多个来源的内容。
 
-Load local files from _res/drawable_ into the WebView with a given base URL:
+从 _res/drawable_ 加载文件，需要指定基地址：
 
 ```java
 String html = "<!DOCTYPE html>";
@@ -269,7 +265,7 @@ html += "</html>";
 WebView.loadDataWithBaseURL("file:///android_res/drawable/", html, "text/html", "UTF-8", null);
 ```
 
-Load local files from an SD card into the WebView without a given base URL:
+从 SD 卡中加载文件，无需指定基地址：
 
 ```java
 String base = Environment.getExternalStorageDirectory().getAbsolutePath()
@@ -282,7 +278,7 @@ html += "</html>";
 WebView.loadDataWithBaseURL("", html, "text/html","UTF-8", null);
 ```
 
-Load local files into the WebView by reading the contents of the file in Java and then passing the data to the WebView:
+先在 Java 中读取文件内容，然后将数据传入 WebView：
 
 ```java
 // Load an html file
@@ -290,7 +286,7 @@ String html = loadFileFromSDCard("file:///sdcard/oreilly/book/logo.png");
 WebView.loadDataWithBaseURL("", html, "text/html", "UTF-8", null);
 ```
 
-or:
+或者:
 
 ```java
 // Load an image file
@@ -298,7 +294,7 @@ String pngData = loadFileFromAssets("file:///android_asset/images/logo.png");
 WebView.loadData(pngData, "image/png", "UTF-8");
 ```
 
-### Load Flash Files into the WebView
+### 加载 Flash 文件
 
 In order to load flash files from SDCard into the view, you can link your flash files in the embed tag using _file:///_ protocol.
 
@@ -327,38 +323,39 @@ if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 }
 ```
 
-### Reading Files from the res/raw Directory
+### 从 res/raw 目录中读取文件
 
-If you need to read a file (e.g., _home.html_) from the _res/raw_ directory and display it in the WebView, you need to pass the resource ID (e.g., _R.raw.home_) to your reader function in order to get it as string.
+如果你需要从 _res/raw_ 读取文件并显示在 WebView 中，你需要传入资源 ID（如 _R.raw.home_）读取函数，以便能够作为字符串来获取。
+
+    WebView.loadData(getRawFileFromResource(R.raw.home), "text/html", "UTF-8");
 
 ```java
-WebView.loadData(getRawFileFromResource(R.raw.home), "text/html", "UTF-8");
-    private String getRawFileFromResource(int resourceId) {
-        StringBuilder sb = new StringBuilder();
-        Scanner s = new Scanner(getResources().openRawResource(resourceId));
-        while (s.hasNextLine()) {
-                sb.append(s.nextLine() + "\n");
-        }
-        return sb.toString();
+private String getRawFileFromResource(int resourceId) {
+    StringBuilder sb = new StringBuilder();
+    Scanner s = new Scanner(getResources().openRawResource(resourceId));
+    while (s.hasNextLine()) {
+            sb.append(s.nextLine() + "\n");
+    }
+    return sb.toString();
 }
 ```
 
-### Triggering JavaScript Functions from the Java Layer
+### 在 Java 层调用 JavaScript 函数
 
-A key aspect of an hybrid application would be its ability to allow native code to call JavaScript APIs, for delivering data, callbacks, and events. Since, there is no direct API for this in WebKit, developers often use the loadUrl() function for this purpose. The loadURL() function requests the WebView to load and execute the specified URL.
+混合应用的一个关键特点允许本地代码调用 JavaScript 的 API，比如传递数据，回调和事件，WebKit 没有直接的 API，开发者经常使用 `loadUrl()` 函数来达到这个目的。`loadURL()` 函数请求 WebView 加载和执行指定的 URL。
 
-For example, if we wish to display an alert dialog in the WebView, as a result of some Java code execution, we would write something like:
+比如，如果我们希望在 WebView 中显示一个提示框，我们可以像这样：
 
 ```java
 String js = "alert('Alert from Java');";
 WebView.loadUrl("JavaScript:" + js);
 ```
 
-### Opening a WebView in Fullscreen Mode
+### 以全屏模式打开  WebView
 
-At times, you may want to display a fullscreen WebView to the user. Although you can request the WebView to cover the entire activity, by default, the activity does not cover the full screen, and you will observe a title bar and a notification bar. You can make an activity a fullscreen activity by either specifying activity flags in the manifest file or by doing it programatically.
+虽然你可以让 WebView 来覆盖整个 Activity，但默认请款下，Activity 没有覆盖整个屏幕，你可以看见标题栏和通知栏。你可以在 manifest 文件中设置 Activity 的标志也可以编程来让 Activity 以全屏方式显示。
 
-Make an activity full screen through _AndroidManifest.xml_:
+通过 _AndroidManifest.xml_:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -370,7 +367,7 @@ Make an activity full screen through _AndroidManifest.xml_:
 </manifest>
 ```
 
-Or make an activity fullscreen programmatically:
+以编程方式实现:
 
 ```java
 @Override
@@ -384,13 +381,13 @@ public void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-### Enabling a Resize Event in JavaScript While Your Application Is Fullscreen
+### 当应用是全屏模式时启用 Resize 事件
 
-When you set your activity to fullscreen mode, the resize event is not fired when the soft keyboard comes out in the WebView. We have done numerous experiments to capture the resize event from JavaScript, but with no luck. This could be Android limitation or a bus. This issue has been raised to Android developers at Google. The alternative solution of how to mitigate this issue is addressed in the next section.
+当你把 Activity 设置成全屏模式时，当软键盘在 WebView 中显示时，resize 事件不会被触发。这可能是 Android 的限制或者是 bug。
 
-To enable a resize event while your application is fullscreen, do the following:
+我们可以通过下面这种方式来启用 resize 事件:
 
-1.Use the _res/values/styles.xml_ file to make your application fullscreen and turn off the window title.
+1.在 _res/values/styles.xml_ 中设置主题，让你的应用全屏并且关闭窗口标题
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -414,7 +411,7 @@ To enable a resize event while your application is fullscreen, do the following:
 </resources>
 ```
 
-2.Apply this theme to your application using the following XML attribute in your manifest.
+2.在 manifest 文件中应用这个主题：
 
 ```xml
 <application
@@ -423,7 +420,7 @@ To enable a resize event while your application is fullscreen, do the following:
     android:theme="@style/Theme" > ... </application>
 ```
 
-3.You can now capture the resize event in your HTML.
+3.现在可以在 HTML 中捕获 resize 事件了：
 
 ```js
 $(window).bind('resize', function() {
@@ -431,13 +428,11 @@ $(window).bind('resize', function() {
 });
 ```
 
-### Calling Java Methods from JavaScript
+### JavaScript 调用 Java 方法
 
-The WebView allows developers to extend the JavaScript API namespace by defining their own components in Java and then making them available in the JavaScript environment. This technique comes in handy when you wish to access a platform feature not already available in JavaScript or wish to consume a component written in Java through JavaScript.
+WebView 允许开发者通过在 Java 中定义组件让后并使它们从 JavaScript 可访问来扩展 JavaScrip API。当你想访问的平台特性在 JavaScript 中还没有或者想消费使用 Java 写的组件的时候，这个技术就能派上用场。
 
-The `addJavaScriptInterface()` method of the WebView can be used for this purpose.
-
-![](http://johnnyimages.qiniudn.com/android-hybird-communication.png)
+`addJavaScriptInterface()` 可以用来实现这个目的：
 
 ```java
 JavaScriptInterface JavaScriptInterface = new JavaScriptInterface(this);
@@ -445,9 +440,13 @@ myWebView = new MyWebView(this);
 myWebView.addJavaScriptInterface(JavaScriptInterface, "HybridNote");
 ```
 
-In this example, `JavaScriptInterface` is bound to the JavaScript environment of WebView and is accessible using the `HybridNote` object (aka _namespace_). Depending upon the Android version, either all public or some special methods of the bound objects will be accessible inside the JavaScript code. Once the object is added to the WebView using the function specified earlier, the object will be available to JavaScript only after the page in the WebView is loaded next or the existing page is reloaded. This can be achieved by calling the `loadData()` function of the WebView object.
+它的流程图为：
 
-The object binding framework available as part of Android is very flexible and powerful. It is intelligent in the sense that it can automatically bind return objects for Java method calls for them to be accessible in the JavaScript environment. Unlike their explicit counterparts, the implicitly bound objects are anonymous objects and would be lost unless you store an explicit reference to them in JavaScript variables.
+![](http://johnnyimages.qiniudn.com/android-hybird-communication.png)
+
+这个例子中，`JavaScriptInterface` WebView 的 JavaScript 环境，并且可以通过 `HybridNote` 对象（aka _namespace_）来访问。一旦对象被添加到 WebView，这个对象在页面下次加载或者重新载入后便可使用。这可以通过 WebView 对象的 `loadData()` 函数来实现。
+
+对象绑定框架非常灵活和强大。它会让 Java 方法返回的对象也可以从 JavaScript 环境访问。不像显式的对象，隐式绑定的对象是匿名对象，除非你用 JavaScript 变量来存储它的引用，否则它将丢失。
 
 ```java
 class MyLocationProvider {
@@ -457,17 +456,17 @@ class MyLocationProvider {
 WebView.addJavaScriptInterface(myLocationProvider, "nativeLocProvider");
 ```
 
-In the previous example, `nativeLocProvider` is global and can be accessed anywhere within the JavaScript.
+上例中，`nativeLocProvider` 是全局变量，可以在 JavaScript 的任何地方访问：
 
     var location = nativeLocProvider.getLocation();
 
-In the second example, when we call `getLocation` in JavaScript, the return object is automatically bound to the JavaScript environment, however, as shown earlier we will have to maintain a reference to the returned object to refer to it in the future.
+当我们在 JavaScript 中调用 `getLocation` 方法时，返回的对象自动绑定到了 JavaScript 环境，然而我们必须维持这个返回对象的引用，之后才能使用。
 
-From the JavaScript layer, all the public methods of the exposed Java objects can be accessed in Android versions below Jelly Bean MR1 (API Level - 17). For Jelly Bean MR1 API Level and above, exposed functions should specifically be annotated with `@JavaScriptInterface` to prevent any unwanted methods from being exposed.
+Jelly Bean MR1 (API Level - 17) 之前的 Android 版本中，暴露的 Java 对象的所有共有方法都可以在 JavaScript 层 访问。For Jelly Bean MR1 API Level and above，暴露的方法必须标注有 `@JavaScriptInterface`，以阻止不想让 JavaScript 访问的方法暴露。
 
-The JavaScript layer does not have direct access to the exposed Java object’s fields. If needed, explicit getters and setters must be provided for accessing the fields.
+JavaScript 层不能直接访问 Java 对象的域，如果需要，你可以使用显式的 getter 和setter 来实现。
 
-__@JavaScriptInterface Annotations__
+__@JavaScriptInterface__
 
 If you set your `targetSdkVersion` to 17 (or higher) in _AndroidManifest.xml_ all the methods that are accessed by JavaScript must have `@JavaScriptInterface` annotations.]()
 

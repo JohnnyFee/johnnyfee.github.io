@@ -424,6 +424,7 @@ TODO
 - [Cordova Sample: Reading a text file](http://www.raymondcamden.com/2014/7/15/Cordova-Sample-Reading-a-text-file)
 - [Cordova Plugins update, and new Contacts demo](http://www.raymondcamden.com/2014/7/9/Cordova-Plugin-update-and-new-Contacts-demo)
 - [PhoneGap Archives - Modern Web](http://modernweb.com/category/mobile/phonegap/)
+- [PhoneGap Development Mistakes and How to Avoid Them](http://chrisgriffith.wordpress.com/2014/10/10/phonegap-development-mistakes-and-how-to-avoid-them)
 
 ## 参考
 

@@ -37,6 +37,10 @@ tags: [angular, ui]
 front-end framework in the world.
 - [Ratchet](http://goratchet.com/) Build mobile apps with simple HTML‚ CSS‚ and JS components.
 
+## Design
+
+- [Wayfinding For The Mobile Web](http://www.smashingmagazine.com/2014/10/13/wayfinding-for-the-mobile-web)
+
 ## Pros & Cons
 
 See [Top 7 Mobile application HTML5 frameworks](http://www.gajotres.net/top-7-mobile-application-html5-frameworks/)

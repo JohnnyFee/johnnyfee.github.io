@@ -11,7 +11,7 @@ tags: [mobile, android, hybrid]
 
 <!--more-->
 
-__相对本地应用的有点：__
+__相对本地应用的优点：__
 
 - 缩短跨平台开发周期
 
@@ -340,17 +340,6 @@ private String getRawFileFromResource(int resourceId) {
 }
 ```
 
-### 在 Java 层调用 JavaScript 函数
-
-混合应用的一个关键特点允许本地代码调用 JavaScript 的 API，比如传递数据，回调和事件，WebKit 没有直接的 API，开发者经常使用 `loadUrl()` 函数来达到这个目的。`loadURL()` 函数请求 WebView 加载和执行指定的 URL。
-
-比如，如果我们希望在 WebView 中显示一个提示框，我们可以像这样：
-
-```java
-String js = "alert('Alert from Java');";
-WebView.loadUrl("JavaScript:" + js);
-```
-
 ### 以全屏模式打开  WebView
 
 虽然你可以让 WebView 来覆盖整个 Activity，但默认请款下，Activity 没有覆盖整个屏幕，你可以看见标题栏和通知栏。你可以在 manifest 文件中设置 Activity 的标志也可以编程来让 Activity 以全屏方式显示。
@@ -468,7 +457,7 @@ JavaScript 层不能直接访问 Java 对象的域，如果需要，你可以使
 
 __@JavaScriptInterface__
 
-If you set your `targetSdkVersion` to 17 (or higher) in _AndroidManifest.xml_ all the methods that are accessed by JavaScript must have `@JavaScriptInterface` annotations.]()
+如果你在 _AndroidManifest.xml_ 中设置 `targetSdkVersion` 为 17+，所有暴露给 JavaScript 的方法必须有 `@JavaScriptInterface` 标注。
 
 ```java
 import android.WebKit.javaScriptInterface;
@@ -480,11 +469,11 @@ public void showToast(String toast)  {
 }
 ```
 
-In Android 2.3, the `addJavaScriptInterface()` method does not work as expected. However, given _2.3_ is still the most used version of Android, you may want your application to work on 2.3 devices as well.
+在 Android 2.3，`addJavaScriptInterface()` 不能正常工作。然而，_2.3_ 让然是使用的比较广泛的版本，你可能想让你的应用可以运行在 2.3 的设备上。
 
-Developers across the Web have come up with a number of workarounds to take care of this. You can find one such implementation at [Android 2.3 WebView’s broken AddJavascriptInterface website](http://goo.gl/EICOa).
+开发者提出了很多变通方案，你可以在 [Android 2.3 WebView’s broken AddJavascriptInterface website](http://goo.gl/EICOa) 找到一个实现。
 
-Another approach is to use an `onJsPrompt()` callback. Wherein the `message` or the `defaultValue` parameter can be used to pass the name of the method to be executed in the native environment along with params.
+另一个方法是使用 `onJsPrompt()` 回调，在这里，可以使用 `message` 或者 `defaultValue` 参数可以用来传入在原生环境执行的方法名和参数。
 
 ```java
 @Override
@@ -505,263 +494,30 @@ public boolean onJsPrompt(WebView view, String url, String message,
 }
 ```
 
-### Calling JavaScript Methods from Java
+### 在 Java 层调用 JavaScript 函数
 
-Calling JavaScript methods from Java is not as straightforward as accessing a Java method from JavaScript. JavaScript objects are not exposed in the Java layer. The way you call a JavaScript function is by creating a JavaScript URL, which is then passed onto the WebView for execution. There are a couple of technical fallouts of this approach. The first being that you have to be aware of the JavaScript runtime code structure, and second, you must ensure that the JavaScript URL has proper error handling defined as part of the JavaScript. The JavaScript URL can be passed onto the WebView, and hence the JavaScript environment, using `loadURL()` (or similar) API. Also note that the JavaScript receiver object has to be made addressable from the Java layer. You can do this by either making the scope of these variables global or by building some form of dispatcher framework that can route the response to a correct receiver object.
+混合应用的一个关键特点允许本地代码调用 JavaScript 的 API，比如传递数据，回调和事件，WebKit 没有直接的 API，开发者经常使用 `loadUrl()` 函数来达到这个目的。`loadURL()` 函数请求 WebView 加载和执行指定的 URL。
 
-The reasons behind this rather complex marshaling of data back from Java to JavaScript are:
+比如，如果我们希望在 WebView 中显示一个提示框，我们可以像这样：
 
-* JavaScript is single-threaded, hence, calling into JavaScript would involve marshaling the response parameters to the thread hosting the JavaScript engine.
-* The JavaScript URL approach has long existed and appears to be a perfect candidate solution for this, instead of developing a completely new API.
+```java
+String js = "alert('Alert from Java');";
+WebView.loadUrl("JavaScript:" + js);
+```
+
+从 Java 调用 JavaScript 不像 Java 调 JavaScript 那么直观。JavaScript 对象没有暴露给 Java 层。你调用 JavaScript 方法是通过创建 JavaScript URL，然后传到 WebView 执行。使用这个方法有两个注意点，首先你必须知道 JavaScript 运行时的代码结构，其次，你必须保证 JavaScript URL 有合适的错误处理代码。JavaScript URL 中的变量必须是可寻址的，为了做到这个，你可以通过把这些变量的作用域设置为全局的，也可以通过构建调度框架来将响应路由到正确的接收对象。
 
 ### Routing Data to the Correct JavaScript Receiver
 
-In the previous section, we touched upon needing a form of routing framework for delivering responses from Java to the correct JavaScript objects. There are several ways you can achieve this.
+为了实现一个路由框架将从 Java 运行的代码交付到正确的 JavaScript 对象，有以下几个方法可以做到这个：
 
-* If you use an existing hybrid application framework like PhoneGap, Cordova, or Karura, then this is already done for you.
-* You can use some of the existing asynchronous function framework available in JavaScript—for example, the Deferred Object framework available in jQuery.
-* Build a custom framework yourself.
-
-### Deferred Object Pattern
-
-The Deferred Object pattern is the key pattern used by a number of JavaScript applications for decoupling of the request from the code that handles the results of the request and allows multiple callbacks to be attached upon notification of a result. To achieve such a decoupling, the Deferred Object provides functions that allow the callback functions to be registered for handling the success, failure, or the progress of the request. Deferred Object framework is available as part of the jQuery library.
-Here’s how to create a deferred object in jQuery:
-
-```js
-var deferred = $.Deferred();
-// var deferred =  new Deferred();
-// var deferred = jQuery.Deferred();
-```
-
-#### Register Success Callback Using deferred.done()
-
-The `.done()` function allows a callback function to be registered with the Deferred Object. This callback function will be called once the request is successfully completed when `.resolve()` is called on the Deferred Object.
-
-```js
-deferred.done(function(data) {
-    console.log("Success callback: " + data);
-});
-```
-
-#### Register Failure Callback Using deferred.fail()
-
-The `.fail()` function allows the registration of a callback that will be called if the request fails with any error when `.reject()` is called on the Deferred Object. The function can provide the appropriate error code and message that describes the error encountered.
-
-```js
-deferred.fail(function(errCode, errMsg) {
-   console.log("Failure callback: " + errCode + " - " + errMsg);
-});
-```
-
-#### Register Progress Callback Using deferred.progress()
-
-The `.progress()` function provides the option to update the caller of the progress of the request. The callback function can be called multiple times during the lifetime of the request while `.notify()` is being called on the Deferred Object. In contrast, the `.done()` and `.fail()` callbacks are executed only once per lifecycle of the request.
-
-```js
-deferred.progress(function(percentage) {
-    console.log("Progress callback: " + percentage);
-});
-```
-
-In addition to using the Deferred Object to indicate success or failure of the request, it can be used to indicate the status of the request as well. The callback function that needs to be provided with the status update of the request can be registered using the `.progress()` or using the third parameter of the `.then()` function.
-
-To be able to update the status by calling the progress callback registered, the Deferred Object provides the `.notify()` function that takes the progress update parameters as arguments. For example, this callback can be used to update the UI elements such as the progress bar for providing feedback to the user.
-
-```js
-function progressBar() {
-    var deferred = $.Deferred();
-
-    var i = 0;
-    var intervalId = setInterval(function() {
-        deferred.notify(++i);
-        if (i == 99) {
-                        clearInterval(intervalId);
-                }
-    }, 1000);
-
-    return deferred.promise();
-};
-
-var promise = progressBar();
-
-promise.progress(function(percentage) {
-        console.log(percentage + "% completed");
-});
-```
-
-The progress callback function can be called multiple times during the lifetime of the request. In contrast, the `deferred.resolve()` and `deferred.reject()` functions are only executed once per the lifecycle of the request.
-
-In the following simple example, we can see the whole picture of how the Deferred Object is used.
-
-```js
-function requestDB() {
-    // 1 - create the Deferred
-    var deferred = $.Deferred();
-
-    XMLHttpRequest xhr = new XMLHttpRequest();
-    xhr.open("GET", "/api/contact", true);
-    xhr.addEventListener('load', function() {
-            if (xhr.readyState == 4) {
-                    if ((xhr.status >= 200 && xhr.status <= 300)
-                            || xhr.status == 304) {
-                            // 3a - triggers the .then() or
-                            // .done() callbacks
-                            var response = { name: "O'reilly" };
-                            deferred.resolve(response);
-                    } else {
-                            // 3b - triggers the .fail() callback with
-                            // an error code and a message
-                            deferred.reject(404, "File not found.");
-                    }
-            }
-    }, false);
-    xhr.send();
-
-    // 2 - return the promise right away
-    return deferred.promise();
-}
-
-$.when(RequestDB()).then(function(response) {
-    // 3a1 - access to returned parameters
-    console.log(data.name);
-}).fail(function(errCode, errMsg) {
-    // 3b1 - access to fail messages
-    console.log("Failure callback: " + errCode + " - " + errMsg);
-});
-```
-
-When the `requestDB()` function is called by the `$.when()` function, there are four steps expected to happen:
-
-1.  We create a Deferred Object that can then facilitate callbacks to be fired based on the expected results from the program.
-2.  Once the Deferred Object is created, we return this object immediately so the consumer application can attach different utility functions, such as `.done()`, `.then()`, or `.fail()`, to handle its outcome.
-3.  If the application returns a result successfully from the source, then we have to let the consumer application know about this outcome. In this case, we call the `.resolve()` function with or without return parameter `response`.
-        1.  Once the Deferred Object resolves the result with a success outcome and passes any parameters to a handling function we can access these parameters (including the `response` parameter) from the anonymous callback functions in `.done()` or `.then()`. In our case, the `response` JSON object holds the return data, and we should be able to access the key/value pairs within the callback function.
-        2.  If the outcome results in a failure, we can also let the consumer application know about it. It is good practice to pass descriptive messages to the consumer application about what went wrong while processing the request. In our case, we pass an error code and a message to the consumer application to handle the result accordingly.
-        3.  if we receive a failure from our request, then the `.fail()` function is able to pass us the parameters that are dispatched from `.reject()`. In our case, we can access the error code and the message from our anonymous function in order to handle this failure with a friendlier error message to the users in the UI.
-
-#### Simpler Callback registration with .then()
-
-The `.then()` function provides a convenient way to specify the success, fail, and progress callback functions in one place. All of the callback parameters are optional, which allows the developer to declare the callbacks only for the functions that are of interest. The `.then()` function is fired when the `.resolve()` or `.reject()` functions are called on the Deferred Object.
-
-The structure of the `deferred.then()` function is as follows:
-
-    deferred.then(successCallback, failCallback, progressCallback);
-
-Combining the example given for `.done()`, `.fail()`, and `.progress()`, to use the `.then()` function, we would be able to achieve an equivalent behavior as shown here:
-
-```js
-deferred.then(function() {
-        console.log("Success callback");
-}, function(errCode, errMsg) {
-        console.log("Failure callback: " + errCode + " - " + errMsg);
-}, function() {
-        console.log("Progress callback");
-});
-```
-
-#### Synchronizing Multiple Asynchronous Events with $.when()
-
-You can also synchronize one or more events using deferred’s `$.when()` helper function, as in the following example. The `$.when()` function waits for all its tasks to be executed, and once supplied deferred events are resolved, depending on the events’ success and failure states, `.then()` or `.fail()` callbacks will be fired. If one of the tasks fails, then `.fail()` will be invoked.
-
-```js
-function doThis() {
-   return $.get('this.html');
-}
-
-function doThat() {
-   return $.get('that.html');
-}
-
-$.when(doThis(), doThat()).then(function(data) {
-        console.log("Both events are successful.");
-}).fail(function(errCode, errMsg) {
-        console.log("One or more events are failed.");
-});
-```
-
-#### Resolve a Deferred Object
-
-The potential of the Deferred Object is seen by allowing the success callback(s) to be called when the request is completed successfully.
-
-The Deferred Object can be used to invoke the success callback(s) by calling the `.resolve()` function on the Deferred Object. The `.resolve()` function can be used to provide the callback function(s) with the arguments that communicate the artifacts of the request.
-
-```js
-var deferred =  new Deferred();
-
-// register the success callback with two args
-deferred.done(function(arg1, arg2) {
-        alert("Success callback with two artifacts");
-};
-// Do some processing resulting in artifact1 and artifact2
-        .
-        .
-        .
-// Calling the resolve function on the Deferred Object with two artifacts as
-// arguments will trigger the success callback to be called with the same.
-deferred.resolve(artifact1, artifact2);
-```
-
-#### Reject a Deferred Object
-
-Similarly, the other important usage of the Deferred Object is to notify any interested parties to the failure of an async request.
-
-The Deferred Object can be used to invoke the failure callback(s) by calling the `.reject()` function on the Deferred Object. Similar to the success callback, the `.reject()` function can be used to provide the failure callback(s) with error codes and error messages that describe the cause of the failure.
-
-```js
-var deferred =  new Deferred();
-
-// register the failure callback with the errorCode and errorMsg args
-deferred.fail(function(errorCode, errorMsg) {
-        alert("Failure callback: " +errorCode+ " & message" + errorMsg);
-};
-// Do some processing resulting in an error with errCode and corresponding
-// error message errMsg
-        .
-        .
-// Calling the reject function on the Deferred Object with the error code
-// and err message would be passed back to the callback function(s) that
-// have been registered.
-deferred.reject(errCode, errMsg);
-```
-
-### Use of Promise
-
-A typical usage of a Deferred Object pattern would be to provide the caller of a function with a handle to a Deferred Object. The caller can use the handle to set the callbacks that it is interested in.
-
-In addition, the function that created the Deferred Object would want to restrict the ability to finalize the Deferred Object by calling `.resolve()` or `.reject()`, to only itself or its downstream functions.
-
-Both the requirements are supported in the Deferred Object framework by the `.promise()` function. The `.promise()` function returns a Deferred Object that can be used only to set the callbacks but not call the functions that could alter the state of the object. The called function can return this to the caller, which can then set the callback functions required upon the Deferred action completion.
-
-For example, consider an Ajax request to download a web page. The call flow showing the usage of promise is as follows:
-
-```js
-function ajaxRequest(url) {
-        var deferred =  new Deferred();
-
-        // Initiate the request to download url and pass the
-        // Deferred Object to enable the downstream downloader
-        // to call resolve() or reject() and progress() as necessary
-        download(url, deferred);
-
-        // Return the Deferred Promise Object to enable the
-        // callbacks to be set by the caller
-        return deferred.promise();
-}
-
-function caller() {
-        ajaxRequest("http://oreilly.com")then(function() {
-                alert("Page successfully downloaded");
-        }, function(errCode, errorMsg) {
-                alert("Failure Callback: " + errCode + " - " + errorMsg);
-        }, function() {
-                console.log("Progress update called");
-        });
-}
-```
+* 如果你使用已经存在的应用框架，如 PhoneGap, Cordova, or Karura，那么他们已经帮你做了这些事情。
+* 你可以使用现有的异步框架，如 JQuery 中的 Deferred 对象框架。
+* 自定义一个框架。
 
 ### Domain Whitelisting
 
-You can create an allowed list of domains that WebView can view if your application needs to navigate to domains outside the expected domain. Just use the `shouldOverrideUrlLoading(WebView view, String url)` method:
+你可以使用 `shouldOverrideUrlLoading(WebView view, String url)`  方法创建一个允许的域名列表：
 
 ```java
 @Override
@@ -776,7 +532,9 @@ public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
 However, restricting loading remote resources within the `shouldOverrideUrlLoading(WebView view, String url)` method does not intercept the requests that are made from IFRAME, XmlHttpRequests Ajax Object, and SRC attributes in HTML tags.
 
-A solution to the problem mentioned in the Warning would be to intercept the request and manually load different content into this view.
+然而，`shouldOverrideUrlLoading(WebView view, String url)` 并不会拦截来自 IFRAME, XmlHttpRequests Ajax Object, and SRC attributes in HTML tags 的请求。
+
+这个问题的解决办法是使用 `shouldInterceptRequest` 拦截请求，并且手动替换为不同的内容到视图中：
 
 ```java
 @Override
@@ -796,9 +554,9 @@ public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
 }
 ```
 
-### Thread Safety
+## 线程安全
 
-从 JavaScript 访问 Java 对象时，方法可能运行在一个和 WebView 相关的后台线程中，这个线程不同于主应用线程。这意味着应用开发者在 JavaScript 中访问 Java 对象以及这些方法中的对象域时，应该注意线程安全问题
+从 JavaScript 访问 Java 对象时，方法可能运行在一个和 WebView 相关的后台线程中，这个线程不同于主应用线程。这意味着应用开发者在 JavaScript 中访问 Java 对象以及这些方法中的对象域时，应该注意线程安全问题。
 
 为了解决这个问题，我们建议使用一个主线程相关的处理器让访问 Java 方法的请求排队。这个处理器可以将这些事件发送给主线程，从而避免任何线程问题。
 
@@ -806,17 +564,19 @@ public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
 
 ## WebViewClient
 
-Android’s WebView is extensible and implements a number of delegatory classes including WebViewClient and WebChromeClient, which can be used by developers to customize the default behavior of WebView and inject data in the request/response call flows.
+Android 的 WebView 是可扩展的并且有很多具有代表性的类，包括 WebViewClient 和W ebChromeClient，这些类可以用来自定义 WebView 的默认行为，并且可以在请求/相应 调用流中注入数据。
 
 WebViewClient is a class that the WebView refers to before it handles everything that, in some way, is related to the rendering of a page. Using this class, you can add callback methods that are invoked to inform you of changes in the rendering.
 
-These callbacks include:
+WebViewClient 是 WebView 引用的是一个和页面显示相关的类。这个类可以用来添加用来报告显示过程的回调方法。
 
-* Start and stop loading of web requests
-* Whether the browser should load specific resources
-* Notify errors, login requests, and form resubmissions
+这些回调包括:
 
-Android WebView has a default implementation of the WebViewClient, which can be overridden by the default delegate using the `setWebViewClient()` method of the WebView.
+* web 请求开始加载和结束加载
+* 浏览区是否应该加载指定的资源
+* 错误通知，登陆请求和 form 重提交
+
+Android WebView 有一个 WebViewClint 的默认实现，可以使用 WebView 的 `setWebViewClient()` 方法覆盖这个默认实现。
 
 ```java
 webView.setWebViewClient(new WebViewClient(webView) {
@@ -826,9 +586,7 @@ webView.setWebViewClient(new WebViewClient(webView) {
 
 ## WebChromeClient
 
-WebChromeClient is also a delegate class, responsible for everything browser UI specific, unlike the WebViewClient, which is responsible for everything that is related to the rendering of the web content.
-
-The WebChromeClient lets you handle the browser’s visited history, create new windows, take care of alerts, prompts, and console messages. A simple application with no requirements on the integration will be fine without overriding the default WebChromeClient delegate. You can specify your own delegate using the `setWebChromeClient()` method of the WebView.
+WebChromeClient 负责浏览器 UI 的所有事情。WebChromeClient 可以用来处理浏览器的访问历史，创建新的窗口，关注 alerts, prompts, and console messages。一个没有综合需求的简单应用可以不用覆盖默认的 WebChromeClient。你可以使用 WebView 的 `setWebChromeClient()` 方法来指定你自己的实现。
 
 ```java
 webView.setWebChromeClient(new WebChromeClient(webView){
@@ -838,34 +596,30 @@ webView.setWebChromeClient(new WebChromeClient(webView){
 
 ## WebSettings
 
-WebView in Android, provides a very comprehensive configuration interface, `WebSettings`, which can be used to customize the behavior of the WebView at runtime. The `WebSettings` object is valid only during the lifecycle of a WebView. In other words, an `IllegalStateException` will be thrown if you try to access any method from a `WebView.getSettings()` object if a WebView is already destroyed.
+Android 的 WebView 提供了一个非常综合的配置接口 `WebSettings`，用来配置 WebView 运行时的行为。`WebSettings` 在 WebView 的声明周期内是一个合法的对象。换句话说，如果 WebView 已经销毁，你还视图访问 `WebView.getSettings()` 的任何方法，会抛出 `IllegalStateException` 异常。
 
-You can retrieve `WebSettings` with `WebView.getSettings()` API.
+你可以通过 `WebView.getSettings()` 获取 `WebSettings`。
 
 ```java
 WebView WebView = new WebView(this);
 WebSettings settings = WebView.getSettings();
 ```
 
-### Preventing Local Files from Being Loaded in the WebView
+### 阻止本地文件被加载
 
-The `setAllowFileAccess()` API allows developers to control access to local files by the WebView. This API is one of several WebView settings you can configure at runtime. By default, this setting is enabled for accessing files in the filesystem. This setting does not restrict the WebView to load local resources from the _file:///android_asset_ (assets) and _file:///android_res_ (resources) directories. For security reasons, if your app does not require access to the filesystem, it is a good practice to turn this setting off.
+`setAllowFileAccess()` 接口用来控制本地文件是否可以被 WebView 访问。这是其中一个可以在运行时配置的设置项。默认请款下，允许访问本地文件系统。这个设置不会限制 WebView 从  _file:///android_asset_ (assets) and _file:///android_res_ (resources) 目录加载本地资源。出于安全考虑，如果你的应用没有必要访问文件系统，最好把这个设置关闭。
 
     settings.setAllowFileAccess(false);
 
-### Enabling JavaScript
+### 启用 JavaScript
 
-For security reasons, JavaScript is _disabled_ in the WebView by default. You can enable/disable JavaScript using `setJavaScriptEnabled()` method.
+出于安全考虑，JavaScript 默认是被禁止的。你可以通过 `setJavaScriptEnabled()` 方法来启用/禁用 JavaScript。
 
     settings.setJavaScriptEnabled(true);
 
-We suggest that you always include all the JavaScript libraries in the assets directory of your application within your hybrid app.
-If you are using third-party JavaScript libraries in your application, eventually, your application will inherit all the bugs and vulnerabilities that may cause undesired situations for your application. Some developers prefer downloading third-party JavaScript from their own web servers to mitigate the risks of being hacked. This allows them to react more quickly than others in removing the malicious code from the web server.
-Again, ideally, you should deliver all your JavaScript files within your application.
+打开一些不需要的 WebView 设置可能导致不期望的行为。因此，最好关闭你应用中无需使用的特性。
 
-Turning on some of the WebView settings unnecessarily may result in unexpected behavior in your application. Hence, it is a good practice to turn off features not required by your application.
-
-For example, if you are not using a Flash plug-in, turn it off using the `setPluginState(PluginState.OFF)` method, which may prevent attackers from compromising your app via third-party plug-ins.
+比如，你如果不需要使用 Flash 插件，请使用 `setPluginState(PluginState.OFF)` 方法关闭，这可以阻止受到第三方插件的攻击。
 
 ```java
 WebView WebView = new WebView(this);
@@ -873,20 +627,20 @@ WebSettings settings = WebView.getSettings();
 settings.setPluginState(PluginState.OFF);
 ```
 
-We encourage you to read the following research papers published by Syracuse University in New York:
+我们建议你读以下几篇 Syracuse University in New York 发表的研究论文：
 
 - [“Attacks on WebView in the Android Systems” article](http://goo.gl/LyPev).
 - [“Touchjacking Attacks on Web in Android, iOS, and Windows Phone” article](http://goo.gl/i89Sn).
 
-### Setting Default Font Size
+### 设置默认的字号
 
-By default, the WebKit renders and displays fonts in 16 sp (scale-independent pixels) unit. This unit enables WebView to adjust the font size for both screen density and the user’s preference. If you would like to change the font size to something other than the default size, you can use the `setDefaultFontSize()` method with the preferred font size value.
+默认情况下，WebKit 的渲染和显示的字体大小为 16sp (scale-independent pixels) 。这个单位允许 WebView 让字体大小同时适应屏幕密度和用户偏好。如果你想改变默认的字体大小，你可以使用 `setDefaultFontSize()` 方法。
 
-### Zoom Controls
+### 缩放控制
 
-Setting the `setBuiltInZoomControls()` method to `false` will prevent the built-in zoom mechanisms. Setting this to `true` will allow the `setDisplayZoomControls()` method to show onscreen zoom controls. `setDefaultZoom(ZoomDensity.FAR)` sets the default zoom density of a web page. Setting its value to `FAR` makes it appear in 240 dpi at 100%. `setSupportZoom()` with `false` value will set whether the WebView should support zooming using its onscreen zoom controls and gestures or not.
+设置 `setBuiltInZoomControls()` 方法为 `false` 会阻止内置的缩放机制，设置为 `true` 则允许 `setDisplayZoomControls()` 方法显示屏幕上的缩放控制。`setDefaultZoom(ZoomDensity.FAR)` 设置网页的默认缩放密度（zoom density），设置为 `FAR`，让它在 240 dpi 的屏幕上以 100% 显示。`setSupportZoom()` 设置 WebView 是否支持使用屏幕上的缩放控件和手势进行缩放。
 
-From the user experience perspective, turning off zooming for the most of the mobile apps will be ideal for many users unless the application features require zooming.
+从用户体验的角度来看，对于大多数应用来说，最好关闭缩放，除非应用要求具有缩放功能。
 
 ```java
 WebView WebView = new WebView(this);
@@ -896,11 +650,11 @@ settings.setDefaultZoom(ZoomDensity.FAR);
 settings.setSupportZoom(false);
 ```
 
-### Hardware Acceleration
+### 硬件加速
 
-Starting at version 3.0, Android introduced full hardware acceleration for applications. This is not enabled by default for applications targeted for platforms below version 4.0. The web browser itself moved to a _tile-based rendering architecture_ as opposed to display list architecture, which makes it more responsive.
+从 Android 3.0 开始，Android 引入的全硬件加速。这在目标为 4.0 以下默认是未启用的。The web browser itself moved to a _tile-based rendering architecture_ as opposed to display list architecture, which makes it more responsive.
 
-If you wish to enable hardware acceleration in your application or activity, you can set `android:handwareAccelerated="true"` in your manifest.
+如果你在应用或者 acitvity 中启用硬件加速，你可以在 manifest 中设置 `android:handwareAccelerated="true"`。
 
 ```java
 // enable hardware acceleration using code (>= level 11)
@@ -911,11 +665,11 @@ settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
 settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 ```
 
-If you enable hardware acceleration for your application, make sure you test it. Enabling hardware acceleration has side-effects, the most important one being that it adds a significant amount of memory requirements to your application (approx. 7-8M at minimum). This can have huge impact on low end devices.
+如果你为你的应用启用硬件加速，要确保你测试过。启用硬件测试有些副作用，最重要的是添加了大量的内存需求（至少约 7-8M）。这会对低配置的设备产生严重影响。
 
-Given that the Android ecosystem is so heavily fragmented, it is possible that you may observe issues with hardware-accelerated WebView. To selectively turn off hardware acceleration for your WebView, you can either set it to `android:handwareAccelerated="false"` for the entire application or the activity hosting the WebView in the application manifest file.
+考虑状况 Android 生态系统是严重分裂的，你可能需要观察硬件加速的 WebView 可能产生的问题。你可以用选择地通过 `android:handwareAccelerated="false"` 来在 manifest 文件中关闭整个应用或者寄宿 WebView 的 activity。
 
-You can achieve the same effect programmatically using the following code:
+你可以使用以下代码达到相同的效果：
 
 ```java
 // selectively disable hardware acceleration for WebView
@@ -925,77 +679,61 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 }
 ```
 
-## Architecture of a Hybrid Application
+## 混合应用的架构
 
-Hybrid applications are special, bringing together best of both worlds to an extent. A sufficiently complex hybrid application would typically contain most of the component. Let’s quickly go over these components before we delve into more details.
+混合应用将两个最好的世间结合到了一起。一个足够负载的混合应用一般会包含大多数组件。让我们快速复习这些组件：
 
 ![](http://johnnyimages.qiniudn.com/android-hybird-architect.png)
 
-__WebView__
+- __WebView：__ 一个混合应用首先是一个 web 应用，并且具有通过额外的用户自定的 API 访问平台特性的能力。这个 web 应用要求使用 WebView 来渲染内容并且 host 业务逻辑。
 
-A hybrid application is a primarily a web app with access to platform capabilities through an additional set of user defined APIs. This web application requires a WebView to render content and host the business logic.
+- __View, model, and controller：__ 由于应用主要使用 JavaScript 来编写，取决于你用的 JavaScript 库，你可能有多种实现 MVC 组件的方式。
 
-__View, model, and controller__
+- __JS-Java Bridge：__ 这是允许原生代码和 web 环境互相访问的粘合层。这个桥梁允许执行同步和异步执行因为包含性能，易用即安全等原因，这层是最要的层之一。
 
-Since the application is primarily written in JavaScript, depending upon the JavaScript library you use, you will have some form of implementation of model, view, and controller components.
+- __Java 插件：__ Java 插件是个用户定义的扩展 API，这些 API 都暴露给 JavaScript 环境。
 
-__JS-Java Bridge__
+- __原生组件:__ 这是在混合应用中想访问的原生服务和组件，如显示工具栏，原生提示框，访问地址等等。
 
-It is the glue layer that allows the native and web environments to interact with each other. The bridge should allow for execution of synchronous and asynchronous APIs. As was discussed in the previous chapters, this layer is one of the most crucial layers in a hybrid application for several reasons, including performance, ease of use, and security.
+- __应用数据:__  While HTML5 data storage gives us some capabilities to store data, you may often want to store BLOBs in custom formats; this is where application data, filesystem APIs, and native APIs come into play.
 
-__Java plug-ins__
+- __Assets and resources:__  Assets and resources 包含应用的静态资源。如果你愿意，可以用资源来本地化文本。
 
-A Java plug-in is the user defined extension API that has been exposed to the JavaScript environment.
+__原生业务逻辑:__ 在设计混合应用的时候，原生和 web 组件之间的业务逻辑的分离是一个重要的架构问题。你可能会经常想处于某些原因，如访问原生组件、安全问题、你想使用某个只能在原生层才能访问的组件，而感觉需要把部分业务逻辑在原生代码层实现。
 
-__Native components__
+## 混合应用的 HTML 架构
 
-These are native services and components you wish to access as part of your hybrid applications. Some of the examples include showing actionbar, native dialogs, accessing location, and so on.
+混合应用是一个使用 mobile 友好的 JavaScript 和 CSS 样式构建，以具有原生应用的观感。像其他应用一样，混合应用可能根据用户体验而变得相当复杂。出于简单考虑中，我们假设一个简单的应用只包含一个简单的 WebView 和一个简单的入口网页，如 index.html。一个原生应用会在应用启动器上对用户可见。一旦用户点击了启动图标，带有 WebView 的主 activity 会被创建，WebView 会加载默认的入口网页来初始化 UI。之后，web 组件的设计完全取决于你的选择，然而，单页面应用是这些应用的的事实标准设计策略。
 
-__Application data__
+### Web 应用的架构
 
-While HTML5 data storage gives us some capabilities to store data, you may often want to store BLOBs in custom formats; this is where application data, filesystem APIs, and native APIs come into play.
-
-__Assets and resources__
-
-Assets and resources contain the static artifacts that ship with your application. You can use resources to localize text if you like.
-
-__Native business logic__
-
-One very important architectural split while designing hybrid applications is the split for the business logic between the native and web components. Often you may feel the need to implement part of the business logic in the native layer for several reasons, including access to native components, additional security, or just that a particular component you wish to link to is only available in the native layer.
-
-## HTML Architecture for Hybrid Applications
-
-Your hybrid application is primarily an HTML5 web page built using mobile-optimized JavaScript and CSS-styled to look and feel native. Like any application, hybrid applications can be rather complex depending upon the user experience. For the sake of simplicity, let’s assume a simple app that contains a single WebView and a single entry point web page—for example, index.html. An hybrid application will be visible to users like any other application on the application launcher. Once users tap on the application launch icon, the main activity will be created containing a WebView with no browser chrome visible. Upon creation, the WebView will load your default entry point web page to initiate the user experience. From that point on, the design of the web component is completely your choice, however single page applications have recently emerged as a de facto design strategy for these applications. Let’s look at this design pattern in slightly more detail.
-
-### Architecture of a Web Application
-
-A typical web application can architecturally be represented as:
+一个典型的 web 应用的架构可以描述为：
 
 ![](http://johnnyimages.qiniudn.com/android-hybrid-html.png)
 
-The architecture is self explanatory, however, we would like to reiterate a few salient points:
+架构是自解释的，然而，我们想重申几个要点：
 
 * UI events generate DOM objects based on user interactions.
 * The model abstracts network connectivity and storage making the controller and views agnostic of the source and destination for data.
-* The model is assumed to be the only component that stores anything about the data.
+* 模型使用存储数据的唯一组件。
 
-### Key Design Considerations for Single Page Applications
+### SPA 关键的设计点
 
-Here are some things to keep in mind when creating single-page applications:
+以下是设计 单页面应用的时需要记住的几件事情：
 
-* Modularize your code as much as possible.
-* Try to make these modules independent of each other, if possible.
-* Use the proper access paradigm for variable names. Make sure you do not expose what is not required.
+* 尽可能让你的代码模块化。
+* 如果可能，让这些模块相互独立。
+* 使用恰当的方式访问变量，保证部暴露不需要暴露的变量。
 * Develop a mechanism wherein you can explicitly identify module dependencies and hence load them at runtime.
 * Additionally, it would be beneficial if non-UI modules can be run from the command line. This will greatly facilitate unit testing.
 
-### The Libraries and Frameworks for Your Hybrid Apps
+### 混合应用中使用的库和框架
+ 
+- Backbone.js 提供 MVC 框架
+- Underscore.js 提供工具函数
+- iScroll.js 提供滚动支持。 iScroll.js 是个必要的库，用来在指定宽高的元素中滚动内容，而且是跨设备的，这在原生代码中是不支持的。
 
-- Backbone.js for MVC Framework
-- Underscore.js for Utility Support
-- iScroll.js for scrolling. iScroll.js is a must-have library that enables scrolling the view using JavaScript. This library was developed to accommodate the limitations of the mobile WebKit, which does not provide a native and cross-device way to scroll content inside a fixed width/height element.
-
-    To use `iScroll.js`, list items need to be appended to an `iScroll` container element.
+    为了使用 `iScroll.js`，列表项需要添加到一个 `iScroll` 容器元素中：
 
         <div id="wrapper">
             <div id="scroller">
@@ -1009,31 +747,19 @@ Here are some things to keep in mind when creating single-page applications:
         </div>
         var myScroll = new iScroll('wrapper');
 
-    Since a list needs to be prepopulated, you may experience performance issues when you render a large amount of list items, such as 1,000 rows in a roster. Of course, you can use pagination to break down the content into multiple views, however, there are cases where you want to list all of your content within the same view.
+    由于一个列表需要预填充，当你渲染大量的列表项的时候，你可能会碰到性能问题，比如 1000 行的花名册。当让，你可以使用分页来内容分散到多个视图，然而，难免有些场合你需要在一个视图中列出所有的类表象。
 
-    Ideally, `iScroll` should allow us to append items to the DOM progressively as you scroll, which is currently not supported. One approach to overcome this limitation would be to progressively load the content into scrolling area using `setTimeout(func, delay)`. This way we can load an initial set of items into the view to give the illusion that the content is loaded fast enough to view, thereafter, we can append the rest of the elements to the scrolling container as the user starts scrolling.
+    理想情况下，`iScroll` 可以允许我们随着滚动，向 DOM 中慢慢添加列表项，这个现在还不之支持。一个可行的方法是使用 `setTimeout(func, delay)` 加载内容到滚动区域。这种方式，我们可以加载一个初始集合到视图中，就像内容很快被加载到了视图中，随后，当用户开始滚动的时候，添加其他的列表项到滚动容器中。
 
-    This method works fine for a relatively small list of items in the list view. The ideal solution would be appending the list items to the scrolling view one by one dynamically as you scroll. This optimization technique would offer a better user experience than the previous one we mentioned here.
+    这个方法对相对比较小的列表可行。理想的方法是当你滚动的时候，一项一项添加列表项到滚动视图中。这个最佳技术相比之前提到的方案可以提供一个更好的用户体验。
 
 - jQuery.js for JavaScript application
 
-    __Preload Images Within the CSS Files__
+### CSS Reset 避免浏览器不一致
 
-    For our sample application, we will be using a jQuery plug-in to preload the images in our CSS documents. The `preloadCssImages.jQuery_v5.js` plug-in offers an unobtrusive way to preload all your images from different directories, which are defined in your CSS files.
+不是所有的浏览器完全相等，移动浏览同样是这样。CSS Reset 通过在你自定义的 CSS 应用之前，将内置的默认样式值重置到 baseline value，让显示效果尽可能统一。
 
-    You can download this library from the [jQuery-Preload-CSS-Images plug-in website](http://goo.gl/Gj6Eh).
-
-        $(document).ready(function(){
-                $.preloadCssImages();
-        });
-
-    At the time of this writing, we have observed that the images that are defined in the CSS documents are not loaded properly in the WebView UI by Android. This could happen for several reasons. Using preloadCssImages.jQuery_v5.js, you can work around these issues by downloading images explicitly.
-
-### CSS Reset Avoids Browser Inconsistencies
-
-Not all browsers are created equal, the same goes for mobile browsers. CSS Reset is a way to keep the rendering results as universal as possible by resetting the built-in default style values to a baseline value before your custom CSS is applied.
-
-HTML5 Boilerplate provides two CSS files (_main.css_ and _normalize.css_), which offers a nice way of resetting your browser’s default style settings. You can download these files from the [Html5boilerplate website](http://goo.gl/3JUxZ).
+HTML5 Boilerplate 提供了两个 CSS 文件 (_main.css_ and _normalize.css_)，提供了一个很好的重置浏览器默认样式设置的方法。你可以从  [Html5boilerplate website](http://goo.gl/3JUxZ) 下载这两个文件。
 
 ```css
 /*
@@ -1048,13 +774,13 @@ html, body, div, form, fieldset, legend, label {
 }
 ```
 
-### Your Home index.html
+### 首页 index.html
 
-The _index.html_ web page will be launched by the WebView when an activity starts. This web page is normally placed in the _assets_ directory. We defined the `viewport` meta tag, which controls the initial appearance when the web page loads. The CSS `link` tag was intentionally left blank because we like to load our CSS files using JavaScript by respecting the `window.devicePixelRatio` window property.
+网页通常放在 _assets_ 目录。我们定义 `viewport` meta 标签，它控制网页加载时的初始外观。`link` 标签故意留空，因为我们想使用 JavaScript 来根据 `window.devicePixelRatio` 属性加载 CSS 文件。
 
-We discovered that in some older versions of the Android API, our sample app was crashing when processing the **`0.75`** Device Pixel Ratio (DPR) while loading the CSS using the `link` tag. We were able to re-produce this abnormal crash with a few more same-generation phones as well. However, the usage that follows is more responsive than loading these CSS files in JavaScript; you may see a nonstyled view first for a split second, then a styled version will be shown due to the `onDomReady()` delay in JavaScript.
+我们发现，在一些老版本的 Android 中，我们的示例应用在用 `link` 标签加载 CSS 时，处理 **`0.75`** Device Pixel Ratio (DPR) 时会崩溃。我们可以在一些相同版本的手机上重现这个变态的崩溃，然而，下面的用法比使用 JavaScript 加载 CSS 更具有响应性。由于 JavaScript 中 `onDomReady()` 的延时，你会先看到一个无样式的视图，然后一个有样式的版本会显式：
 
-The following way of loading your CSS into the DOM is the ideal way:
+下面把 CSS 装载入 DOM 的方法是最理想的方式：
 
 ```html
 <link rel="stylesheet"
@@ -1071,9 +797,7 @@ The following way of loading your CSS into the DOM is the ideal way:
         href="xhdpi.css" />
 ```
 
-Other possible solutions follow, but are not recommended unless it is necessary to load your CSS this way.
-
-Loading CSS using a JavaScript function for different DPIs:
+下面是另外一种解决方法，但是我们不推荐使用：
 
 ```js
 function loadCSS() {
@@ -1093,7 +817,7 @@ function loadCSS() {
 }
 ```
 
-`#dpr-css` is the ID of your stylesheet `<link>` tag in the HTML.
+`#dpr-css` 是 `<link>` 标签的 ID：
 
 ```html
 <link id="dpr-css" rel="stylesheet"
@@ -1102,19 +826,19 @@ function loadCSS() {
       media="screen" />
 ```
 
-Alternatively, you can append your stylesheets to the DOM for different densities using the following code. However, we do not recommend this technique.
+你也可以使用下面的代码为不同的密度将样式添加到 DOM 中，我们也不推荐这样做：
 
 ```js
 $('HEAD').append($('<link rel="stylesheet" href="xhdpi.css" type="text/css"
         media="screen and (-webkit-min-device-pixel-ratio: 2.0)" />'));
 ```
 
-Here’s a sample source of a template file for a hybrid Android application:
+以下是混合 Android 应用的模板文件：
 
 ```html
 <script type="text/x-tmpl" id="tmpl_contacts_item">
 <div class="contact item" data-id="<%= id %>">
-        <div class="edit">Edit</div>
+    <div class="edit">Edit</div>
     <div class="profile">
         <img data-id="<%= id %>" class="avatar" src="<%= avatar %>" />
         <div class="full_name"><%= name.givenName %> <%= name.familyName %></div>
@@ -1149,53 +873,48 @@ Here’s a sample source of a template file for a hybrid Android application:
 
 ### Viewport Meta Tag
 
-The `viewport` meta tag defines a set of properties that describes the behavior and initial appearance of the web page when it is rendered for the first time based on the device screen size. The _viewport_ is the section of the web page that is shown in the view. This `viewport` meta tag is supported by many mobile browsers.
+`viewport` 元标签定义了一组属性用来描述当网页基于设备屏幕尺寸第一次显式时，网页的行为和初始外观。
 
 #### Viewport Width
 
-The `width` of the viewport in pixels tells the browser how best to render the web page width-wise. In this example, we are targeting 320 px wide screens to display our content.
+viewport 的 `width` 属性告诉浏览器如何最好地横向显式网页。比如，我们在目标为 320px 宽度的屏幕上显式网页内容。
 
     <meta name="viewport" content="width=320">
 
-This does not scale the view for different screen sizes. In particular, Android device fragmentation makes this more of a concern than on other platforms. So using the `device-width` value for the `width` property in the viewport tag would allow the content to be scaled to the available width on the screen.
+这不会为不同尺寸的屏幕进行缩放。
+
+把 `width` 属性社这为 `device-width` 会让内容缩放带适合屏幕的宽度。
 
     <meta name="viewport" content="width=device-width">
 
-In this case, whether your screen width is 480 px in portrait mode or 800 px in landscape mode, the `device-width` value makes the available `width` independent of how wide your screen is.
+不管你的屏幕宽度是竖屏模式下的 480px 还是横屏模式下的 800px，`device-width` 值让 `width` 不受屏幕宽度的约束。
 
 #### Viewport Scaling with the Content Attribute
 
-Here are a few of the available options for the `content` attribute:
+以下是一些 `content` 属性允许的选型：
 
-__initial-scale__
+- __initial-scale__： 网页第一显示后的缩放倍数。值在 0 到 10.0 之间。1.0 表示不放大，1.0 以上表示放大，1.0 以下表示缩小。
 
-The initial zoom of a web page. Its scale is a multiplier from 0 to 10.0 that sets the scale of a web page after its first display. The larger value zooms in, but 1.0 means no zoom.
+- __minimum-scale__：网页最小的缩小倍数。1.0 表示不允许缩放，缩放比例为 0 to 10.0 之间。
 
-__minimum-scale__
+- __maximum-scale__：网页最大的放大倍数。1.0 表示不允许缩放，缩放比例为 0 to 10.0 之间。
 
-The minimum multiplier the user is able to zoom out of a web page. 1.0 does not allow any zooms. Its scale is from 0 to 10.0.
+- __user-scalable__：是否允许用户控制网页的缩放，默认值是允许。
 
-__maximum-scale__
+- `target-densitydpi=device-dpi` 这个属性已经从 WebKit 中删除。这个属性不在被 iOS 支持，这个问题可以参考 [WebKit bug website](http://goo.gl/URmQd)。
 
-The maximum multiplier the user is able to zoom in to a web page. 1.0 does not allow any zooms. Its scale is from 0 to 10.0.
-
-__user-scalable__
-
-The permission (yes/no) as to whether the user is able to control the scale (zoom in/out) of the web page or not. The default value is yes.
-
-Support for the `target-densitydpi=device-dpi` property has been dropped from WebKit in favor of responsive images and CSS device units. This property was not supported by iOS anyway. The issue can be followed at the [WebKit bug website](http://goo.gl/URmQd).
 
 ```html
 <meta name="viewport" content="width=device-width,
-        minimum-scale=1,
-        initial-scale=1,
-        maximum-scale=1,
-        user-scalable=no" />
+    minimum-scale=1,
+    initial-scale=1,
+    maximum-scale=1,
+    user-scalable=no" />
 ```
 
-This meta tag has an important role when optimizing the web page for mobile devices. It basically prevents the mobile browsers from altering the zoom level of that web page unilaterally.
+这个元标签在为移动设备优化网页时非常重要。它主要组织移动浏览器修改网页的缩放级别。
 
-### Responsive Design and Media Queries
+### 响应式设计和媒体查询
 
 In the mobile app paradigm, responsive design should be carefully considered when it comes to content adaptation and presentation because the available screen area is limited.
 
@@ -1209,15 +928,15 @@ In the `<style>` element as media rules:
 
 ```html
 <style type="text/css">
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.0) {
-                /* some CSS definitions here */
-        }
-        @media only screen and (orientation: portrait){
-                /* some CSS definitions here */
-        }
-        @media only screen and (orientation: landscape){
-                /* some CSS definitions here */
-        }
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.0) {
+            /* some CSS definitions here */
+    }
+    @media only screen and (orientation: portrait){
+            /* some CSS definitions here */
+    }
+    @media only screen and (orientation: landscape){
+            /* some CSS definitions here */
+    }
 </style>
 ```
 
@@ -1397,6 +1116,16 @@ image.onload = function() {
 };
 ```
 
+For our sample application, we will be using a jQuery plug-in to preload the images in our CSS documents. The `preloadCssImages.jQuery_v5.js` plug-in offers an unobtrusive way to preload all your images from different directories, which are defined in your CSS files.
+
+You can download this library from the [jQuery-Preload-CSS-Images plug-in website](http://goo.gl/Gj6Eh).
+
+    $(document).ready(function(){
+            $.preloadCssImages();
+    });
+
+At the time of this writing, we have observed that the images that are defined in the CSS documents are not loaded properly in the WebView UI by Android. This could happen for several reasons. Using preloadCssImages.jQuery_v5.js, you can work around these issues by downloading images explicitly.
+
 ### Avoid using text-shadow, box-shadow, border-radius, gradient, opacity, CSS RGBA, and image transparency
 
 These styling effects can slow down the scrolling in the WebKit. The issues with `text-shadow` and `box-shadow` are already resolved in the current WebKit, but the Android version of WebKit hasn’t been fixed yet. So, use them on scrolling areas sparingly; visit the [WebKit bug website](http://goo.gl/SJf87) for additional information. Also, using the `opacity` and CSS `RGBA` properties in CSS may interfere with hardware accelerated rendering in the scroll view. If these effects are needed, use lightweight _.png_ graphics that combine many of these effects into one static image or experiment with how much you can do in CSS3 and how much you will need to statically create. This is especially required for scrolling or animating areas of your application.
@@ -1418,6 +1147,8 @@ Caching the JavaScript and DOM variables allows you to access them faster in the
 ## Tutorial
 
 - [Android WebKit Development](http://goo.gl/j6m2q)
+- [Hybrid Mobile Apps: Providing A Native Experience With Web Technologies](http://www.smashingmagazine.com/2014/10/21/providing-a-native-experience-with-web-technologies)
+- [Meteor, Cordova, and Famo.us: The Chill Way to Build Apps - Discover Meteor](https://www.discovermeteor.com/blog/meteor-cordova-famous-the-chill-way-to-build-apps)
 
 ### Framework
 

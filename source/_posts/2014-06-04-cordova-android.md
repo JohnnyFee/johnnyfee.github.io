@@ -58,3 +58,8 @@ If you want to use Cordova's Android-centered shell tools in conjunction with th
 - LogLevel (string, defaults to ERROR) 错误级别。可选值为ERROR, WARN, INFO, DEBUG, and VERBOSE。
 
         <preference name="LogLevel" value="VERBOSE"/>
+
+
+## Plugins
+
+- [The Battery Status API](http://www.kirupa.com/html5/the_battery_status_api_js.htm)

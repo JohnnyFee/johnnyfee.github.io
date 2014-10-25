@@ -5,8 +5,6 @@ category : Angular
 tags : [angular, tutorial]
 --- 
 
-每一个 `$scope` 都是类 `Scope` 的一个实例。类 `Scope` 拥有可以控制 `scope` 生命周期的方法，提供事件传播的能力，并支持模板渲染。
-
 ## 作用域
 
 Angular 中作用域的继承使用的是原型继承，也就在说子作用域的 prototype 会指向父作用域。在子作用域中查找属性时，先查找子作用域中的属性，如果未找到，在去父作用域中查找，以此类推，直到找到跟作用域 $rootScope。

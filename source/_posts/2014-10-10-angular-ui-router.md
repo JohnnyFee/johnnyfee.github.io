@@ -39,4 +39,5 @@ See [javascript - Difference between angular-route and angular-ui-router - Stack
     
     翻译：[AngularJS 使用 UI Router 实现表单向导 - 技术翻译 - 开源中国社区](http://www.oschina.net/translate/angularjs-multi-step-form-using-ui-router)
 
+- [Diving deep into the AngularUI Router](http://www.ng-newsletter.com/posts/angular-ui-router.html)
 

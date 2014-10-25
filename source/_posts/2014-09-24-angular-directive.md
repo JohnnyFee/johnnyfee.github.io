@@ -941,9 +941,7 @@ directives.directive('focus',
 
 ### Clock
 
-In this example we will build a directive that displays the current time. Once a second, it updates the DOM to reflect the current time.
-
-In our link function, we want to update the displayed time once a second, or whenever a user changes the time formatting string that our directive binds to. We will use the `$interval` service to call a handler on a regular basis. This is easier than using `$timeout` but also works better with end-to-end testing, where we want to ensure that all `$timeouts` have completed before completing the test. We also want to remove the `$interval` if the directive is deleted so we don't introduce a memory leak.
+这是 AngularJS 官方的一个例子，用来显示当前的事件，每隔一秒在 DOM 上更新事件。
 
 ```js
 // script.js
@@ -982,6 +980,12 @@ angular.module('docsTimeDirective', [])
   }]);
 ```
 
+在 link 函数中，每隔一秒或者一旦事件格式发成改变，我们将在更新 DOM 上的事件。我们使用 `$interval` 服务定义调用一个处理函数。如果指令被删除，我们也应该移除 `$interval`，以避免内存泄露。
+
+我们在此注册了一个事件 `element.on('$destroy', ...)`，这个事件是被谁触发的？当使用 Angular 编译器编译后的 DOM 节点被删除时，它会触发一个 `$destroy` 事件。同样，AngularJS 作用域被删除时，它会广播一个 `$destroy` 事件。
+
+通过监听这个事件，你可以移除可能引发内存泄露的事件监听器。当作用域和元素移除的时候，注册到他们的监听器会自动删除。但是，如果注册在服务上或者 DOM 元素节点上的监听器不会被删除，你必须自己清除他们，否则就有可能引起内存泄露。
+
 ```html
 <div ng-controller="Controller">
   Date format: <input ng-model="format"> <hr/>
@@ -989,15 +993,7 @@ angular.module('docsTimeDirective', [])
 </div>
 ```
 
-There are a couple of things to note here. Just like the `module.controller` API, the function argument in `module.directive` is dependency injected. Because of this, we can use `$interval` and dateFilter inside our directive's link function.
-
-We register an event `element.on('$destroy', ...)`. What fires this `$destroy` event?
-
-There are a few special events that AngularJS emits. When a DOM node that has been compiled with Angular's compiler is destroyed, it emits a $destroy event. Similarly, when an AngularJS scope is destroyed, it broadcasts a $destroy event to listening scopes.
-
-By listening to this event, you can remove event listeners that might cause memory leaks. Listeners registered to scopes and elements are automatically cleaned up when they are destroyed, but if you registered a listener on a service, or registered a listener on a DOM node that isn't being deleted, you'll have to clean it up yourself or you risk introducing a memory leak.
-
-__Best Practice:__ Directives should clean up after themselves. You can use element.on('$destroy', ...) or scope.$on('$destroy', ...) to run a clean-up function when the directive is removed.
+__Best Practice:__ Directives should clean up after themselves. You can use `element.on('$destroy', ...)` or `scope.$on('$destroy', ...)` to run a clean-up function when the directive is removed.
 
 ### Wrapping the jQueryUI datepicker directive
 

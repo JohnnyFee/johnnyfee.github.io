@@ -980,6 +980,10 @@ See:
 
 - [Form validation with AngularJS](http://www.ng-newsletter.com/posts/validations.html)
 
+## Performance
+
+- [angular性能优化心得](http://atian25.github.io/2014/05/09/angular-performace/)
+
 ## Testing
 
 - [基于Karma和Jasmine的AngularJS测试 / Owen Chen](http://owenchen.duapp.com/index.php/jasmine-and-karma-test-angularjs/)
@@ -1049,6 +1053,7 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - [Popular Modules - AngularJS Modules, Plugins and Directives](http://ngmodules.org/)
 - [angular-data: Home](http://angular-data.pseudobry.com) Give your data the treatment it deserves with a data store built for Angular.js.
 - [AngularJS Datatype Editors (ADE)](http://toodledo.github.io/ADE/) ADE is a bunch of directives and filters for displaying and editing various types of data, using AngularJS.
+- [angular-cn/ng-showcase](https://github.com/angular-cn/ng-showcase/)Angular范例程序
 
 ## FAQ
 

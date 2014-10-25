@@ -24,6 +24,7 @@ tags: [ps]
 - [50个热门的网页PSD模板下载](http://caibaojian.com/50-top-best-psd.html)
 - [5种实用的移动手机APP导航菜单设计方案](http://www.shejidaren.com/mobile-app-menus-design.html)
 - [优秀设计资源与教程分享 2014-9月](http://www.shejidaren.com/design-resources-september-2014.html)
+- [Ready For Retina HD: Create Pixel-Perfect Assets For Multiple Scale Factors](http://www.smashingmagazine.com/2014/10/15/create-assets-for-multiple-scale-factors)
 
 ## Design Resource
 

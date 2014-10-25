@@ -17,15 +17,15 @@ __相对本地应用的优点：__
 
 - 丰富的人力资源
 
-- 简化审核过程。大多数的应用商店在产品上架前都有一个审核过程。因为混合应用可以不通过应用商店更新，所以你无需提交到应用商店。一旦你审核通过，之后你可以自由更新。需要注意的一点事，一旦你对本地代码做了更改，这时候你就需要提交一个新版本到应用商店。
+- 简化审核过程。大多数的应用商店在产品上架前都有一个审核过程。因为混合应用可以不通过应用商店更新，所以你无需提交到应用商店。一旦你审核通过，之后便可以自由更新。需要注意的一点是，一旦你对本地代码做了更改，这时候你就需要提交一个新版本到应用商店。
 
-- 混合应用是未来。展望移动系统技术，你可以很容易认为混合应用是开发的未来。 Windows Phone 8，Google 提出合并 Chrome OS 和 Android，Tizen OS 和 Firefox 证实了这一点，因此，在不久的将来，构建和发布混合应用是具有战略性的正确选择。
+- 混合应用是未来。展望移动系统技术，你可以很容易认为混合应用是开发的未来。 Windows Phone 8，Google 提出合并 Chrome OS 和 Android，Tizen OS 和 Firefox，这些都证实了这一点，因此，在不久的将来，构建和发布混合应用是具有战略性的正确选择。
 
 <!--more-->
 
 __相对本地应用的不足：__
 
-- 性能。因为 JavaScript 是单线程的，你可能会碰到性能问题。然而，你可以把后台任务在运行本地线程中，这样，当应用忙于处理 UI 操作时，这人任务同时可以并行。本地线程会将事件和完成失败通知到 JavaScript。
+- 性能。因为 JavaScript 是单线程的，你可能会碰到性能问题。然而，你可以把后台任务在运行本地线程中，这样，当应用忙于处理 UI 操作时，这些任务同时可以并行。本地线程会将事件和完成失败通知到 JavaScript。
 
 - 不同平台的差异。WebKit 并不是在所有平台都是一致的，这意味着特定平台的显示可能有些不一样，这是一个易理解的话题，你需要找到缩小这些 UI 差异的方法。
 
@@ -916,15 +916,13 @@ viewport 的 `width` 属性告诉浏览器如何最好地横向显式网页。�
 
 ### 响应式设计和媒体查询
 
-In the mobile app paradigm, responsive design should be carefully considered when it comes to content adaptation and presentation because the available screen area is limited.
+在移动应用范例中，由于可用的屏幕区域是有限的，响应式设计应被考虑。
 
-Media queries in CSS3 help the application adapt to different sets of properties and rules for your CSS styling. Media queries allow us to target not only certain generations of devices but also to scrutinize some of the characteristics of a device to target certain styling attributes such as `orientation`, `device-aspect-ratio`, `color`, or `resolution`.
+CSS3 中的媒体查询可以帮助应用适应不同的 CSS 属性和规则。媒体查询忘让我们适应不同的设备，而且可以使用设备的不同特性，如 `orientation`, `device-aspect-ratio`, `color`, or `resolution`。
 
-Responsive design is fulfilled by using the media queries in the CSS files to improve the _device-specific_ response while the `media` attribute controls which styles to apply.
+响应设计可以通过 CSS 中的媒体查询来实现。有几种在 HTML 文档中定义 CSS 媒体查询的方式。我们将使在下面的例子中使用第一种方式：
 
-There are three ways to define CSS media queries in your HTML documents. We will be using the first technique in our sample application.
-
-In the `<style>` element as media rules:
+在 `<style>` 元素中使用媒体规则：
 
 ```html
 <style type="text/css">
@@ -940,7 +938,7 @@ In the `<style>` element as media rules:
 </style>
 ```
 
-As an external include:
+外部引用：
 
 ```html
 <link rel="stylesheet"
@@ -948,32 +946,32 @@ As an external include:
         media="only screen and (max-width: 320px)" />
 ```
 
-by importing the stylesheet:
+通过导入样式：
 
     @import "small_screen.css" only screen and (max-width: 320px);
 
-[Android provides WebKit as a rendering engine, which supports a proprietary property called `-webkit-min-device-pixel-ratio` that returns the pixel density of that device. There are currently at least four possible values for the Device Pixel Ratio (DPR): `0.75`, `1.0`, `1.5`, and `2.0`. These values can accessed from JavaScript using the `window.devicePixelRatio` window property.
+Android 为 WebKit 提供了一个渲染引擎，支持返回设备的像素密度的 `-webkit-min-device-pixel-ratio` 属性。当前有至少冲个可能的 Device Pixel Ratio (DPR，设备像素比) ：`0.75`, `1.0`, `1.5`, and `2.0`。这些值可以使用 JavaScript 的 `window.devicePixelRatio` 属性访问。
 
-* If the `DPR` is 0.75, the device is considered low density and the web page is scaled down by default.
-* If the `DPR` is 1, the device is considered medium density and the web page is not scaled at all.
-* If the `DPR` is 1.5, the device is considered high density and the web page is scaled up by this ratio.
-* If the `DPR` is 2, the device is considered extra high density and the web page is scaled up by this ratio.
+* 如果 `DPR` 是 0.75，则该设备为低密度的，网页默认按比例缩小。
+* 如果 `DPR` is 1，设备为中等密度，网页不会缩放。
+* 如果 `DPR` is 1.5，设备为高密度的，网页会按这个比例放大。
+* 如果 `DPR` is 2，设备为超高密度，网页按这个比例放大。
 
-To understand a little bit more about pixel density, see this in-depth article by Peter-Paul Koch, visit the [Quirksmode website](http://goo.gl/hKYlS) for pixel density.
+如果想深入了解像素密度，可以参考 Peter-Paul Koch 这篇文章 [Quirksmode website](http://goo.gl/hKYlS)。
 
 ### EM or Percent (%) unit for scalable interface
 
-There are several kinds of units available for scaling an HTML element in the browser: EMs (em), Root Ems (rem), Pixels (px), Picas (pc), Exes (ex), Percents (%), and Points (pt). However, some of them are not largely supported for the `font-size` property to scale the text size in the CSS document.
+浏览器中有几种缩放 HTML 元素的单位：EMs (em), Root Ems (rem), Pixels (px), Picas (pc), Exes (ex), Percents (%), and Points (pt)。然而，其中一些没有被完全支持用来在 CSS 文档中缩放字体大小的 `font-size` 属性。
 
-We focus on two of these for mobile applications: `em` and `%`. If you would like to display the correct size of text in all screen resolutions, `em` or `%` is the ideal solution because they are the most commonly used ones for the font sizes on the Web, but which one is more preferable and why? Designers and developers are often confused with which to choose for font size in the CSS properties.
+对于移动应用，我们主要关注其他的两个：`em` and `%`。如果你想在所有的屏幕分辨率中显示文本的正确尺寸，`em` or `%` 是最好的解决方案，因为他们在 web 中是被普遍使用在字体大小上。当时，两者哪个更好呢？
 
-Normally, the WebKit renders the font sizes as 16 px (16 sp in Android) unless you change the default font size in the WebKit settings explicitly using the `setDefaultFontSize()` method. In other words, most web browser render the font sizes as the `16px`, which is equal to `1em` or `100%`. However, we do not recommend you use the `px` unit for the font sizes in your CSS documents.
+通常，WebKit 使用 16px（在 Android 中为 16 sp） 显示字体大小，除非你使用 WebKit settings 的 `setDefaultFontSize()` 方法改变 Webkit 默认的字体大小。换句话说，大多数浏览器显示字体大小为 `16px`，这个值等于 `1em` or `100%`。但是，我们不建议你在 CSS 文档中使用使用 `px` 作为字体大小的单位。
 
-The W3C also recommends using `em` or `%` for the font sizes for more scalable and robust stylesheets. We actually found out that using percent (`%`) for the font size allows designers to preserve readability for maximum consistency and accessibility in visual designs.
+为了更好的收缩性和健壮性，W3C 也建议使用 `em` or `%` 作为字体大小的单位。我们实际上发现使用 percent (`%`) 让设计者 to preserve readability for maximum consistency and accessibility in visual designs。
 
-Sometimes setting a `font-size` value to an inner HTML tag may not give you the result that you expect. This is because the inner element inherits the `font-size` from its parent and applies its own `font-size` relative to its parent’s `font-size`. As a result, you may end up seeing a smaller font.
+有时候，在 HTML 标签内设置 `font-size` 的值可能不会有预期的结果。这是因为内元素从父元素中继承了 `font-size` ，并相对父元素的 `font-size` 应用自己的 `font-size`。所以，你可能看到更小的字体。
 
-Font size inheritance in nested HTML tags looks like the following:
+在嵌套的 HTML 标签中的字体大小的示例：
 
 ```html
 header {
@@ -989,33 +987,33 @@ span {
 <span>This is a span tag</span>
 ```
 
-Therefore, the first `<header>` tag has a font size as `2em`, which is twice the base font size, then the inner `<span>` tag in the second `<header>` tag will inherit its parent tag as `2em`, then it will multiple with `0.5`. It will result in `1em`, but if you look at the second `<span>` tag, its font size is actually the correct `0.5em`. Both `em` and `%` units get bigger as the base font size increases. The font experiment can be seen at the [Jsfiddle website](http://goo.gl/AVRxh).
+示例的效果可参考 [Jsfiddle website](http://goo.gl/AVRxh)。
 
-It is also possible that you may need to convert `px` to `em` or vice versa. You may programmatically do the conversions using this handy jQuery plug-in in your application. Visit the [jQuery-Pixel-Em-Converter plug-in website](http://goo.gl/BwjJZ) or use the tool at the [Pxtoem website](http://goo.gl/iTYJE).
+`<header>` 的字体大小为 `2em`，这是基础字体大小的两倍，第二个 `<header>` 内部的 `<span>` 标签继承父标签的字体大小 `2em`，然后乘以 `0.5`，结果为 `1em`，而和 `<header>` 平行的 `<span>`，它的字体大小是 `0.5em`。`em` and `%` 两个单位都会随着基础字体大小的变大而变大。。
 
-__CSS3 Introduces rem Unit:__
+你可能需要 `px` 和 `em` 的互相转换。你可以使用 jQuery 插件来 [jQuery-Pixel-Em-Converter plug-in website](http://goo.gl/BwjJZ) 来实现，也可以直接使用工具 [Pxtoem website](http://goo.gl/iTYJE)。
 
-The `rem` unit is relative to the root (`<html>`) element. You can define a root font size, and then you can use that font size as a baseline within your CSS document. As we mentioned earlier, `em` causes a compounding issue for nested elements, which inherit the `font-size` from their parents, whereas the `rem` unit prevents this undesired behavior and gives designers and developers control of the font size by taking the percentage of the root (`<html>`) element’s font size for each element independently, even if they are nested.
+__CSS3 引入 rem 单位：__
 
-### Opacity or RGBA: What Is the Difference?
+`rem` 单位是相对根元素 (`<html>`)而言的。你可以定义根元素的字体大小，让后将这个字体大小作为 CSS 文档中的基准。就像前面提到的，`em` 会在内嵌元素上会有混合的问题，`rem` 则通过使用 root 元素的字体大小的百分比避免了这个问题。
 
-The `opacity` property in CSS specifies the amount of transparency for an element. Its value can be anywhere from `0.0` to `1`. A lower opacity value means the element can be more transparent. A higher value means the element is fully opaque. The main difference between `opacity` and `RGBA` is that `opacity` affects an element’s children with the same opacity level while `RGBA` has an effect on the transparency of a single element only for independent opacity.
+### Opacity or RGBA: 区别是什么?
+
+CSS 中 `opacity` 属性指定了一个元素的透明度，它的取值范围是 `0.0` to `1`。值越小表示元素越透明。`opacity` and `RGBA`  之间的主要区别为：`opacity` 影响元素的子元素，让子元素具有相同的透明度，然而 `RGBA` 之后影响单个元素的透明度。
 
     -webkit-opacity: 0.5;
 
-RGBA stands for _Red, Green, Blue, and Alpha_. CSS3 introduced the RGBA support to set the alpha transparency, which sets the opacity via the alpha channel and controls how much of what is behind the color shows through.
+RGBA 代表 _Red, Green, Blue, and Alpha_。CSS3 introduced the RGBA support to set the alpha transparency, which sets the opacity via the alpha channel and controls how much of what is behind the color shows through.
 
     background: rgba(255, 0, 0, 0.5);
 
-WebKit supports RGBA in CSS properties; however, there is a performance issue with RGBA in scrolling views. We will talk about these performance tips and tricks in later chapters.
-
-We will use the RGBA conversion tool at [Devoth’s HEX 2 RGBA Color Calculator website](http://goo.gl/R7X82) to convert `HEX` colors to `RGBA` format for our example application.
+我们可以使用 RGBA 转换工具 [Devoth’s HEX 2 RGBA Color Calculator website](http://goo.gl/R7X82) 来将 `HEX` 颜色转化为 `RGBA` 格式。
 
 ### Event Pooling
 
-As your application gets complex, managing events can be burdensome. Organizing the events into an event pooling mechanism, which is a variation of observer pattern, mechanism might be one alternative solution to manage dependencies. jQuery offers the `bind` and the `trigger` APIs to handle event pooling in a easy way. Event pooling can be really useful when the events are dispatched from the Java layer using Android WebView.
+随着你的应用变得更加复杂，事件管理可能会很繁杂。可以把事件阻止到一个事件池机制中，该机制是观察者模式的变化，可能是管理依赖的另一个解决方案。jQuery 提供了 `bind` 和 `trigger` 以一个简单的方式来处理事件池。当事件从 Java 层派发的时候，事件池非常有用。
 
-Here is an example of event pooling using jQuery’s `bind` and the `trigger` APIs.
+这是一个使用 jQuery’s `bind` and the `trigger` 的事件池的一个例子：
 
 ```js
 function updateContact(e, data) {
@@ -1034,7 +1032,7 @@ function updateContact(e, data) {
 }
 ```
 
-The following code allows us to bind an event to the document, which can be then called from various sources, such as HTML, a URL location, or JavaScript code itself using the `trigger` API in jQuery. You may notice that multiple event names can be registered using the `bind` API.
+下面的代码让我们绑定一个事件到文档，这个事件可以在 HTML、URL 地址 或者 JavaScript 代码中通过 `trigger` 来触发。
 
 ```js
 function subscribeEvents(eventName, callback) {
@@ -1046,7 +1044,7 @@ subscribeEvents('NAME_UPDATE PHONE_UPDATE', function(e, data) {
 });
 ```
 
-Using the following code, we can easily encapsulate a common functionality into the `triggerEvent()` method in which triggering an event would be very easy using the `eventName`, `args`, and `delay` parameters.
+使用下面的代码，我们可以轻易地将一个常用功能创想到 `triggerEvent()` 方法中，在这个方法中，你可以使用 `eventName`, `args`, and `delay` 参数触发一个事件：
 
 ```js
 function triggerEvent(eventName, args, delay) {
@@ -1056,7 +1054,7 @@ function triggerEvent(eventName, args, delay) {
 }
 ```
 
-Once you subscribe to your events using `subscribeEvents()` function, you can trigger these events from HTML, using the URL location from the Android WebView or you call them from the JavaScript code itself.
+一旦你使用 `subscribeEvents()` 函数订阅了事件，你便可以从 HTML、Android WebView 的 URL 地址 或者直接从 JavaScript 中触发这些事件：
 
 ```
 // from HTML
@@ -1070,15 +1068,15 @@ JavaScript: triggerEvent('NAME_UPDATE', { name : 'Karura' }, 100)
 triggerEvent('NAME_UPDATE', { name : 'Karura' }, 100);
 ```
 
-For some reason, when Android WebView executes the JavaScript: func(); code in the URL location, the WebView gains the focus and dismisses the soft keyboard while typing in a form field. This behavior can cause very unpleasant experiences for users if they are chatting in your app. One ideal solution could be that when a user focuses into a form field, you either detect the focus in the Java layer or notify the Java layer from JavaScript, then pull the content and events using JavaScript from the Java layer. By doing so, you can prevent the Android WebView from gaining focus while dispatching the events to the UI layer.
+处于某些原因，在 form 中输入的时候，当 Android WebView 在 URL 地址中执行 JavaScript: func(); 时，软键盘隐藏 WebView 会消失。这可能会导致很不好的用户体验。一个理想的解决方案是，当用户的焦点在表单项的时候，你要么在 Java 层检测焦点，要么从 JavaScript 通知 Java 层，然后使用 JavaScript 从 Java 层拉取内容和事件。这样，在派发事件到 UI 层时可以防止 Android WebView 获取焦点。
 
-## CSS, DOM, and JavaScript: Optimization Tips and Useful Snippets
+## CSS, DOM, and JavaScript: Optimization Tips and Useful Snippets 
 
-In this chapter, we will explore how to build snappy mobile applications by taking advantage of high-performance optimization techniques while avoiding memory leaks. Performance is a big focus for mobile applications, as smartphones have limited resources.
+我们接下来会介绍如何通过利用高性能的优化技术来避免内存泄露构建一个移动应用。性能在移动应用中是一个大焦点，因为手机的资源是有限的。
 
-### Image garbage collection
+### 图片垃圾回收
 
-The images in the view may not be immediately garbage collected when you remove the DOM container element. In order to release the previous image reference, you can assign a `1x1` pixel transparent data image `src` attribute before safely removing the image object. You can encode this image as `base64` to avoid a network request.
+当你移除 DOM 容器元素时，视图中的图片可能不会被立即被垃圾收集。为了释放前一个图片的引用，你可能需要在安全移除图片对象前，将 `1x1` 像素的透明图片的数据赋值给 `src` 属性。你可以将这个图片编码为 `base64`，以避免一个网络请求。
 
 ```js
 function removeImage(image) {
@@ -1093,6 +1091,8 @@ function removeImage(image) {
 ### Data URI images
 
 Use of `base64` encoded data images is very popular in mobile apps. It involves inlining your image data straight into the HTML or CSS page. It allows images to load instantly with your web app’s HTML page—something very important if you want your app to function like a native app. An additional benefit is that you can easily retrieve relatively small images like the avatars within the JSON strings from the Java layer. If you want to create data URI images manually, you can use the following command in your terminal window:
+
+使用 `base64` 编码的数据图片在移动应用中是很流行的。它调用内联的图片数据到 HTML 或者 CSS 中。
 
     openssl base64 -in image.png
 

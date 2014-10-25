@@ -5,6 +5,8 @@ category: Tools
 tags: [mobile, phone]
 --- 
 
+## 设备尺寸
+
 - [友盟指数 - 设备指数以全新数据可视化方式呈现Android及iOS设备的相关数据](http://www.umindex.com/)
 - [Screen Sizes](http://screensiz.es/phone)
 
@@ -20,3 +22,4 @@ android：一般在4寸-4.8寸之间，也有小到 3.2寸的，也有5寸，7�
 iOS：3.5寸，9.8寸，4.0 寸，7.8 寸。
 
 See [目前主流的智能手机的屏幕尺寸与分辨率是多少？ - 知乎](http://www.zhihu.com/question/20440405)
+

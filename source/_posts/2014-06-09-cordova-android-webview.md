@@ -12,22 +12,19 @@ tags: [phonegap, cordova, webview,android]
 
 以下是官方使用第二方式来实现 Activity 的方法：
 
-1. To follow these instructions, make sure you have the latest Cordova distribution. Download it from [cordova.apache.org](http://cordova.apache.org/) and unzip its Android package.
-
-2. Navigate to the Android package's /framework directory and run ant jar. It creates the Cordova .jar file, formed as /framework/cordova-x.x.x.jar.
-
-3. Copy the .jar file into the Android project's /libs directory.
-
-4. Add the following to the application's /res/xml/main.xml file, with the layout_height, layout_width and id modified to suit the application:
+1. 下载最新的 Cordova，地址为 [cordova.apache.org](http://cordova.apache.org/) ，解压 Android 包。
+2. 导航到 Android 包的 /framework 目录，运行 ant jar。它会创建 Cordova .jar 文件，格式为 `/framework/cordova-x.x.x.jar`。
+3. 拷贝 .jar 文件到 Android 项目的 /lib 目录中。
+4. 添加下面的代码到 /res/xml/main.xml 文件中：
 
         <org.apache.cordova.CordovaWebView  
             android:id="@+id/tutorialView"  
             android:layout_width="match_parent"  
             android:layout_height="match_parent" />  
 
-<!--more-->
+    <!--more-->
 
-5. Modify the activity so that it implements the CordovaInterface. It should implement the included methods. You may wish to copy them from `/framework/src/org/apache/cordova/CordovaActivity.java`, or else implement them on your own. The following code fragment shows a basic application that relies on the interface. Note how the referenced view id matches the id attribute specified in the XML fragment shown above:
+5. 修改 Activity，使它实现 CordovaInterface 接口，它应该实现包含的方法。你可以从  `/framework/src/org/apache/cordova/CordovaActivity.java` 拷贝也可以自己实现。下面的代码片段显示了一个基于这个接口的基本应用。
 
         public class CordovaViewTestActivity extends Activity implements CordovaInterface {  
             CordovaWebView cwv;  
@@ -41,7 +38,7 @@ tags: [phonegap, cordova, webview,android]
                 cwv.loadUrl(Config.getStartUrl());  
         }  
 
-6. If the application needs to use the camera, implement the following:
+6. 如果应用需要使用 camera，按照下面的方式实现：
 
         @Override  
         public void setActivityResultCallback(CordovaPlugin plugin) {  
@@ -61,16 +58,16 @@ tags: [phonegap, cordova, webview,android]
 
             // If multitasking turned on, then disable it for activities that return results  
 
-        if (command != null) {  
-            this.keepRunning = false;  
-        }  
-          
-        // Start activity  
-        super.startActivityForResult(intent, requestCode);  
+            if (command != null) {  
+                this.keepRunning = false;  
+            }  
+              
+            // Start activity  
+            super.startActivityForResult(intent, requestCode);  
         }     
           
           
-        @Override  
+        
         /**  
          * Called when an activity you launched exits, giving you the requestCode you started it with,  
          * the resultCode it returned, and any additional data from it.  
@@ -80,6 +77,7 @@ tags: [phonegap, cordova, webview,android]
          * @param resultCode        The integer result code returned by the child activity through its setResult().  
          * @param data              An Intent, which can return result data to the caller (various data can be attached to Intent "extras").  
          */  
+        @Override  
         protected void onActivityResult(int requestCode, int resultCode, Intent intent) {  
             super.onActivityResult(requestCode, resultCode, intent);  
             CordovaPlugin callback = this.activityResultCallback;  
@@ -88,49 +86,52 @@ tags: [phonegap, cordova, webview,android]
             }  
         }  
 
-7. Finally, remember to add the thread pool, otherwise plugins have no threads on which to run:
+7. 最后，别忘了添加线程池，否则，插件没有可运行的线程：
 
         @Override  
         public ExecutorService getThreadPool() {  
             return threadPool;  
         }  
 
-8. Copy the application's HTML and JavaScript files to the Android project's `/assets/www` directory.
+8. 拷贝应用的 HTML 和 JavaScript 文件到 Android 项目的 `/assets/www` 目录下。
+9. 从 `/framework/res/xml` 拷贝 config.xml 文件到项目的 `/res/xml` 下。
 
-9. Copy the config.xml file from `/framework/res/xml` to the project's `/res/xml` directory.
+## 线程
 
-## Threading
+插件的 JavaScript 不会运行在 WebView 接口的主线程中，而是运行在 WebCore 线程中，execute 方法也是一样。如果你需要和 UI 交互，你应该使用下面的变种：
 
-The plugin's JavaScript does not run in the main thread of the WebView interface; instead, it runs on the WebCore thread, as does the execute method. If you need to interact with the user interface, you should use the following variation:
-
-    @Override  
-    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {  
-      if ("beep".equals(action)) {  
-        final long duration = args.getLong(0);  
-        cordova.getActivity().runOnUiThread(new Runnable() {  
-          public void run() {  
-            ...  
-            callbackContext.success(); // Thread-safe.  
-          }  
-        });  
-        return true;  
+```java
+@Override  
+public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {  
+  if ("beep".equals(action)) {  
+    final long duration = args.getLong(0);  
+    cordova.getActivity().runOnUiThread(new Runnable() {  
+      public void run() {  
+        ...  
+        callbackContext.success(); // Thread-safe.  
       }  
-      return false;  
-    }  
+    });  
+    return true;  
+  }  
+  return false;  
+} 
+```
 
-Use the following if you do not need to run on the main interface's thread, but do not want to block the WebCore thread either:
+如果你不需要跑在主接口线程中，请使用下面的代码，但不要阻塞 WebCore 线程：
 
-      @Override  
-    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {  
-      if ("beep".equals(action)) {  
-        final long duration = args.getLong(0);  
-        cordova.getThreadPool().execute(new Runnable() {  
-          public void run() {  
-            ...  
-            callbackContext.success(); // Thread-safe.  
-          }
-        });  
-        return true;  
-      }  
-      return false;  
-    }
+```java
+@Override  
+public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {  
+  if ("beep".equals(action)) {  
+    final long duration = args.getLong(0);  
+    cordova.getThreadPool().execute(new Runnable() {  
+      public void run() {  
+        ...  
+        callbackContext.success(); // Thread-safe.  
+      }
+    });  
+    return true;  
+  }  
+  return false;  
+}
+```

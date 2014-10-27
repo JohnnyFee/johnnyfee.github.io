@@ -122,7 +122,8 @@ tags: [android]
     + [Android String Formatting with Phrase](http://corner.squareup.com/2014/01/phrase.html)
 - [Instagram/ig-json-parser](https://github.com/Instagram/ig-json-parser/). See also [Fast, auto-generated streaming JSON parsing for Android - Instagram Engineering](http://instagram-engineering.tumblr.com/post/97147584853/json-parsing)
 
-## Android SDK扩展
+## Android Studio 扩展
+
 - [jgilfelt / android-adt-templates](https://github.com/jgilfelt/android-adt-templates) A small collection of ADT templates to help quickly scaffold common Activity and UI patterns.
 
 ## Sample

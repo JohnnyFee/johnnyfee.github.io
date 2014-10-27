@@ -26,10 +26,10 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
 
 ![phonegap2.x&3.x.png](http://johnnyimages.qiniudn.com/phonegap2.x&3.x.png)
 
-### Development Paths
+### 开发路线
 
-- __Cross-platform workflow__  Use this workflow if you want your app to run on as many different mobile operating systems as possible, with little need for platform-specific development. 一般采用这种方式开发。
-- __Platform-centered workflow__ Use this workflow if you want to focus on building an app for a single platform and need to be able to modify it at a lower level. 平台相关的工具包在[这里](https://www.apache.org/dist/cordova/)下载。
+- __跨平台工作流：__  如果你想让你的应用可以跑在尽可能多的移动平台，可以使用这种开发路线。
+- __以平台为中心的工作流：__ 如果你想专注于单个平台，并且向在更底层修改应用，那么你应该使用以平为中心的工作流。平台平台相关的工具包在[这里](https://www.apache.org/dist/cordova/)下载。
 
 ## Setup
 
@@ -41,14 +41,15 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
 
 ## Quick Start
 
-### Create the App
+### 创建应用
 
     $ cordova create hello com.example.hello HelloWorld
 
 其中：
-- hello 目录名称
-- com.example.hello 保存在 `config.xml` 中，应用的唯一标识。
-- HelloWorld 应用名称，保存在 `config.xml` 中。
+
+- `hello` 目录名称
+- `com.example.hello` 保存在 `config.xml` 中，应用的唯一标识。
+- `HelloWorld` 应用名称，保存在 `config.xml` 中。
 
 生成的目录结构如下：
 
@@ -72,7 +73,7 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
 
 生成的工程是一个包含不然任何插件的目录，也不属于任何平台。
 
-### Add Platforms
+### 添加平台
 
     $ cd hello
 
@@ -96,7 +97,7 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
 
 添加或删除平台会影响 `platforms/` 下的内容。添加平台或者 `build` 时，`www/` 的内容将拷贝到所有平台下，如 `platforms/ios/www` 和 `platforms/android/assets/www`。开发时，只能修改与 `platforms/` 平行的 `www` 目录。
 
-### Build the App
+### 构建
 
     // 编译 platforms 下的所有平台
     $ cordova build
@@ -107,7 +108,7 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
     $ cordova prepare ios
     $ cordova compile ios
 
-### Run
+### 运行
 
     // 在模拟器上运行
     $ cordova emulate android
@@ -115,7 +116,53 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
     // 在设备上运行，如果设备不存在，会选择模拟器运行。
     $ cordova run android
 
-### Add Plugin Features
+### Using merges to Customize Each Platform
+
+工程目录下的 `merges/` 用于为平台指定特殊文件，`build` 时，`merges/` 中的文件将覆盖 `www/` 下对应目录结构的文件。
+
+如：
+
+`www/index.html`：
+
+    <link rel="stylesheet" type="text/css" href="css/overrides.css" />
+
+`www/css/overrides.css`：
+    
+    body { font-size:12px; }
+
+`merges/android/css/overrides.css`
+    
+    body { font-size:14px; }
+
+`build` 后， Android 平台的页面 字体大小为 14px。
+
+### 帮助
+
+
+    cordova or cordova help
+    cordova info
+
+### 升级 Cordova 和工程
+
+参考：[PhoneGap API Documentation](http://docs.phonegap.com/en/edge/plugin_ref_plugman.md.html)
+
+升级 cordova：
+    
+    // 升级到最新版
+    $ sudo npm update -g cordova
+    // 升级到指定版本
+    $ sudo npm install -g cordova@3.1.0-0.2.0
+
+升级工程：
+    
+    $ cordova platform update android
+    $ cordova platform update ios
+
+## 插件
+
+- [Cordova Plugin Registry](http://plugins.cordova.io/#/)
+
+### 添加插件
 
 插件官网：[plugins.cordova.io](http://plugins.cordova.io/)
 
@@ -169,103 +216,67 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
 
 __常用插件：__
 
-- Basic device information (Device API)
+- 基本设备信息 (Device API)
     
         $ cordova plugin add org.apache.cordova.device
 
-- Network Connection and Battery [Events](http://docs.phonegap.com/en/edge/cordova_events_events.md.html#Events):
+- 网络连接和电池 [Events](http://docs.phonegap.com/en/edge/cordova_events_events.md.html#Events):
 
         $ cordova plugin add org.apache.cordova.network-information  
         $ cordova plugin add org.apache.cordova.battery-status  
 
-- Accelerometer, Compass, and Geolocation:
+- 加速器, 指南针, 定位:
 
         $ cordova plugin add org.apache.cordova.device-motion  
         $ cordova plugin add org.apache.cordova.device-orientation  
         $ cordova plugin add org.apache.cordova.geolocation  
 
-- Camera, Media playback and Capture:
+- 照相机, 媒体播放 and 截图:
 
         $ cordova plugin add org.apache.cordova.camera  
         $ cordova plugin add org.apache.cordova.media-capture  
         $ cordova plugin add org.apache.cordova.media  
 
-- Access files on device or network (File API):
+- 访问设备文件或者网络 (File API):
 
         $ cordova plugin add org.apache.cordova.file  
         $ cordova plugin add org.apache.cordova.file-transfer  
 
-- Notification via dialog box or vibration:
+- 对话框或者震动通知:
 
         $ cordova plugin add org.apache.cordova.dialogs  
         $ cordova plugin add org.apache.cordova.vibration  
 
-- Contacts:
+- 联系人:
 
         $ cordova plugin add org.apache.cordova.contacts  
 
-- Globalization:
+- 全球化:
 
         $ cordova plugin add org.apache.cordova.globalization  
 
-- Splashscreen:
+- 启动动画:
 
         $ cordova plugin add org.apache.cordova.splashscreen  
 
-- Open new browser windows (InAppBrowser):
+- 打开浏览器窗口 (InAppBrowser):
 
         $ cordova plugin add org.apache.cordova.inappbrowser  
 
-- Debug console:
+- 调试控制台:
 
         $ cordova plugin add org.apache.cordova.console
 
 参考：[Which Core PhoneGap/Cordova Plugins Do I Need?](http://developer.telerik.com/featured/which-core-phonegapcordova-plugins-do-i-need/)
 
-### Using merges to Customize Each Platform
+### 自定义插件
 
-工程目录下的 `merges/` 用于为平台指定特殊文件，`build` 时，`merges/` 中的文件将覆盖 `www/` 下对应目录结构的文件。
-
-如：
-
-www/index.html：
-
-    <link rel="stylesheet" type="text/css" href="css/overrides.css" />
-
-www/css/overrides.css：
-    
-    body { font-size:12px; }
-
-merges/android/css/overrides.css
-    
-    body { font-size:14px; }
-
-`build` 后， Android 平台的页面 字体大小为 14px。
-
-### Help
-
-    cordova help
-    cordova #same
-
-    cordova info
-
-### Updating Cordova and Your Project
-
-参考：[PhoneGap API Documentation](http://docs.phonegap.com/en/edge/plugin_ref_plugman.md.html)
-
-升级到 cordova：
-    
-    // 升级到最新版
-    $ sudo npm update -g cordova
-    // 升级到指定版本
-    $ sudo npm install -g cordova@3.1.0-0.2.0
-
-升级工程：
-    
-    $ cordova platform update android
-    $ cordova platform update ios
+- [PhoneGap API Documentation](http://docs.phonegap.com/en/edge/guide_hybrid_plugins_index.md.html#Plugin%20Development%20Guide)
+- [Cordova Android Plugin](http://inching.org/2014/06/05/cordova-android-plugin/)
 
 ## Plugman
+
+See [PhoneGap 09 使用Plugman管理Plugins - jacob的专栏 - 博客频道 - CSDN.NET](http://blog.csdn.net/jacob_wang520/article/details/18319471)
 
 如果你使用的是以平台为中心(Platform-centered)的方法开发插件，你需要使用更底层的 [Plugman](https://github.com/apache/cordova-plugman/) 来管理插件。
 
@@ -326,19 +337,22 @@ merges/android/css/overrides.css
 
 使用 CLI 生成的 `config.xml` 默认内容为：
 
-    <widget id="com.example.hello" version="0.0.1">
-        <name>HelloWorld</name>
-        <description>
-            A sample Apache Cordova application that responds to the deviceready event.
-        </description>
-        <author email="dev@callback.apache.org" href="http://phonegap.com">
-            Apache Cordova Team
-        </author>
-        <content src="index.html" />
-        <access origin="*" />
-    </widget>
+```xml
+<widget id="com.example.hello" version="0.0.1">
+    <name>HelloWorld</name>
+    <description>
+        A sample Apache Cordova application that responds to the deviceready event.
+    </description>
+    <author email="dev@callback.apache.org" href="http://phonegap.com">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="disable-cursor" value="false" />
+</widget>
+```
 
-- `widget.id` 为应用的标识，`widget.version`  为用用版本，命名格式为 `major/minor/patch`。
+- `widget.id` 为应用的标识，`widget.version`  为应用版本，命名格式为 `major/minor/patch`。
 - `name` 应用名称。
 - `description` 和 `author` 分别为应用描述和作者。
 - `content` 为应用的启用页，默认为 `index.html`，相对 `www/`下的文件路径。
@@ -346,41 +360,69 @@ merges/android/css/overrides.css
 - `preference` 为对应到平台的特性，如 `全屏` 等。
 
 
-### Global Preferences
+### 全局偏好设置
 
 所有平台都支持的特性：
 
 - Fullscreen 全屏，默认为false。
 
-    <preference name="Fullscreen" value="true" />
+        <preference name="Fullscreen" value="true" />
 
 - Orientation 横屏、竖屏设置，可选值为 `default`, `landscape`, or `portrait`。默认为 default。
     
-    <preference name="Orientation" value="landscape" />
+        <preference name="Orientation" value="landscape" />
 
-### Multi-Platform Preferences
+### 多平台偏好设置
 
-- DisallowOverscroll(boolean,false)：在用户滚动过程中，当你不想要显示任何反馈，可以将该值设置为true。适用于Android和IOS。
+- DisallowOverscroll(boolean,false)：在用户滚动过程中，当你不想要显示任何反馈，可以将该值设置为true。适用于 Android 和 IOS。
 
-    <preference name="DisallowOverscroll" value="true"/> 
+        <preference name="DisallowOverscroll" value="true"/> 
 
-- BackgroundColor：设置背景颜色，支持32位色彩，首字节代表alpha通道，其他代表RGB通道。
+- BackgroundColor：设置背景颜色，支持32位色彩，首字节代表 alpha 通道，其他代表 RGB 通道。
 
-    可用于Android和BlackBerry，通过重写CSS可以用于所有平台，如：body{background-color:blue;}
+    可用于 Android 和 BlackBerry，通过重写CSS可以用于所有平台，如：body{background-color:blue;}
 
         <preference name="BackgroundColor" value="0xff0000ff"/>
 
-- HideKeyboardFormAccessoryBar（boolean，false）：在下面键盘出现是，需要隐藏工具栏，从而帮助用户从一个form转到另一个form的时候，可以将该值设置为true。应用于IOS和BlackBerry
+- HideKeyboardFormAccessoryBar（boolean，false）：在下面键盘出现是，需要隐藏工具栏，从而帮助用户从一个 form 转到另一个 form 的时候，可以将该值设置为 true。应用于 IOS 和 BlackBerry
 
-    <preference name="HideKeyboardFormAccessoryBar" value="true"/>  
+        <preference name="HideKeyboardFormAccessoryBar" value="true"/>  
 
-### The feature Element
+### 特征元素
 
-TODO
+如果你使用 CLI 去编译项目，你可以使用 plugin 命令启用设备 API，它不会修改顶级的 config.xml 文件，所以 `<feature>` 不会应用到工作流中。如果你直接工作在一个 SDK 下，并且使用特定平台的 `config.xml`，你可以使用 `<feature>` 来启用设备级别的 API 和外部插件。以下为 Android 项目指定设备 API
 
-### The platform Element
+```xml
+<feature name="Device">
+    <param name="android-package" value="org.apache.cordova.device.Device" />
+</feature>
+```
 
-TODO
+他们通常以自定义值出现在平台特定的config.xml文件中。比如，这儿有一个为android项目指明设备API的例子：
+
+```xml
+<feature name="Device">  
+    <param name="android-package" value="org.apache.cordova.device.Device" />  
+</feature> 
+```
+
+这个元素如何出现在 iOS 项目中：
+
+```xml
+<feature name="Device">  
+    <param name="ios-package" value="CDVDevice" />  
+</feature>  
+```
+
+### 平台元素
+
+使用 CLI 编译应用时，有时需要制定需要制定偏好这只或者其他特殊平台的元素规格。使用 `<platform>` 来指定只出现在一个指定平台的 `config.xml` 文件中的特殊配置。比如，以下是如何指定只有 Android 使用 Fullscreen 偏好：
+
+```xml
+<platform name="android">
+    <preference name="Fullscreen" value="true" />
+</platform>
+```
 
 ## Icons and Splash Screens
 

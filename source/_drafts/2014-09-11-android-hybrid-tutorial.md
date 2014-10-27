@@ -1090,15 +1090,15 @@ function removeImage(image) {
 
 ### Data URI images
 
-Use of `base64` encoded data images is very popular in mobile apps. It involves inlining your image data straight into the HTML or CSS page. It allows images to load instantly with your web app’s HTML page—something very important if you want your app to function like a native app. An additional benefit is that you can easily retrieve relatively small images like the avatars within the JSON strings from the Java layer. If you want to create data URI images manually, you can use the following command in your terminal window:
+在移动应用中使用 `base64` 编码的数据图片是很流行的。这让你的图面能够立即显示在网页中，这能让你的应用更像本地应用。一个额外的好处是你可以从 Java 层轻易取得JSON 字符串中相对小的图片（如头像）。
 
-使用 `base64` 编码的数据图片在移动应用中是很流行的。它调用内联的图片数据到 HTML 或者 CSS 中。
+你可以使用下面的指令手动创建 URI 图片：
 
     openssl base64 -in image.png
 
-### Preloading images
+### 预加载图片
 
-Perhaps some of your web data needs to come from a dynamic remote resource or is too large to use base64. You can also preload images to cache in your app browser’s memory. This solution is perfect for login pages or other “doorways” where you have the opportunity to load data in the background.
+也许有些网页数据需要从远程加载或者太大而不适合使用 base64 编码。你可以预加载图面缓存到浏览器内存中。这个解决本法适合在登陆页或者其他有在后台加载数据的机会的 “正门”。
 
 ```js
 function loadImage(src) {
@@ -1116,33 +1116,31 @@ image.onload = function() {
 };
 ```
 
-For our sample application, we will be using a jQuery plug-in to preload the images in our CSS documents. The `preloadCssImages.jQuery_v5.js` plug-in offers an unobtrusive way to preload all your images from different directories, which are defined in your CSS files.
+对于我们的实例应用，我们可以使用 jQuery plug-in 来加载 CSS 文档中图片。`preloadCssImages.jQuery_v5.js` 插件提过一个从不同目录中预加载图片的方法。
 
-You can download this library from the [jQuery-Preload-CSS-Images plug-in website](http://goo.gl/Gj6Eh).
+你可以从 [jQuery-Preload-CSS-Images plug-in website](http://goo.gl/Gj6Eh) 加载这个库。
 
     $(document).ready(function(){
             $.preloadCssImages();
     });
 
-At the time of this writing, we have observed that the images that are defined in the CSS documents are not loaded properly in the WebView UI by Android. This could happen for several reasons. Using preloadCssImages.jQuery_v5.js, you can work around these issues by downloading images explicitly.
+### 避免使用 text-shadow, box-shadow, border-radius, gradient, opacity, CSS RGBA, and image transparency
 
-### Avoid using text-shadow, box-shadow, border-radius, gradient, opacity, CSS RGBA, and image transparency
+这些样式效果会减缓 WebKit 中的滚动。`text-shadow` and `box-shadow`  问题在当前的 WebKit 中已经解决了，但是 WebKit 的 Android 版本还没有修复。所以，尽量不要再在滚动区使用，访问 [WebKit bug website](http://goo.gl/SJf87) 查看更多信息。使用 `opacity` and CSS `RGBA` 属性可能在滚动视图妨碍硬件加速渲染。如果这些需要效果，使用 轻量级的 _.png_ 图片，组合多个想过图到一个静态图片中。
 
-These styling effects can slow down the scrolling in the WebKit. The issues with `text-shadow` and `box-shadow` are already resolved in the current WebKit, but the Android version of WebKit hasn’t been fixed yet. So, use them on scrolling areas sparingly; visit the [WebKit bug website](http://goo.gl/SJf87) for additional information. Also, using the `opacity` and CSS `RGBA` properties in CSS may interfere with hardware accelerated rendering in the scroll view. If these effects are needed, use lightweight _.png_ graphics that combine many of these effects into one static image or experiment with how much you can do in CSS3 and how much you will need to statically create. This is especially required for scrolling or animating areas of your application.
+### 使用 CSS3 Transitions 而不是 JavaScript animations
 
-### Use CSS3 Transitions instead of JavaScript animations
-
-CSS3 Transitions are hardware accelerated, harnessing not just the CPU but the GPU of the video card. They offer much smoother user experiences than their counterpart.
+CSS3 变换是硬件加速的，不仅使用 CPU 同时也使用显卡的 GPU。他们提供了更平滑的用户体验。
 
     -webkit-transition: width 1s;
 
-### Image sprites
+### 雪碧图
 
-An image sprite is a collection of images placed into a single image while assigning a unique position for each one. Using image sprites will reduce the number of HTTP requests to the web server and save bandwidth. It is also an ideal technique for game applications in order to load images faster. For example, you could put all the world countries’ flags in a single CSS sprite. This concept can be easily used in the Android Java layer as well. You can find more about this example at the [Flag-sprites website](http://goo.gl/NWStf).
+一个雪碧图是将一组图片放在单个图片中，并且为每个图片提供一个唯一的位置。使用雪碧图会节省很多 HTTP 请求并节省带宽。比如，你可以把世界上所有国家的标志放在一个单独的 CSS 雪碧图中。这个概念同样可以用在 Android Java 层。你可以在 [Flag-sprites website](http://goo.gl/NWStf) 查看这个例子。
 
-### Object caching
+### 对象缓存
 
-Caching the JavaScript and DOM variables allows you to access them faster in the iterations or later in the code.
+缓存的 JavaScript 和 DOM 变量可以让你在迭代和以后的代码中更快地访问。
 
 ## Tutorial
 

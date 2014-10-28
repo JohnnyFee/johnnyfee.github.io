@@ -7,21 +7,21 @@ tags: [phonegap, cordova]
 
 ## 插件开发指南
 
-_插件_ 是应用中用来显示的 Cordova WebView 和原生平台通信的植入代码包。插件提供了访问设备和平台功能，这些功能在基于网页的应用不存在。所有主要的 Cordova API 功能都被实现为插件，其他特性如条形码扫描、NFC 通讯或者定制日历也是可用的。请参考插件中心 [registry](http://plugins.cordova.io/)。
+See [Apache Cordova API Documentation](http://cordova.apache.org/docs/en/4.0.0/guide_hybrid_plugins_index.md.html#Plugin%20Development%20Guide)
 
-插件包含每一个支持的平台的一个单独的 JavaScript 接口和一个相应的原生代码库。这部分通过一个简单的 _echo_ 插件逐步讲解，这个例子可以作为编译更复杂的功能的模板。还会讨论基本的插件结构和对外的 JavaScript 接口。
+_插件_ 是应用中用来显示的 Cordova WebView 和原生平台通信的植入代码包。插件提供了访问设备和平台的功能，这些功能在基于网页的应用本不存在。请参考插件中心 [registry](http://plugins.cordova.io/)。
 
-除了这些说明，当你准备些一个插件时，最好先浏览 [已经存在的插件](http://cordova.apache.org/#contribute)，作为指导。
+插件包含每一个支持的平台的一个单独的 JavaScript 接口和一个相应的原生代码。我们通过一个简单的 _echo_ 插件逐步讲解，这个例子可以作为编写插件模板。
 
 ### 编译插件
 
-应用开发者使用 CLI 的 `plugin add` 命令来添加一个插件到工程中。命令的茶树一个 包含插件代码的 git 库的 URL。这个例子实现了 Cordova 的 Device API：
+应用开发者使用 CLI 的 `plugin add` 命令来添加一个插件到工程中，命令参数为插件代码的 GIT 库的 URL。这个例子实现了 Cordova 的 Device API：
 
 ```
 $ cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git
 ```
 
-插件代码库的顶层目录中必须包含 `plugin.xml` 文件，有多种方式配置这个文件。以下是 `Device` 插件的简化版本，设备插件这个简单例子的版本提供了一个模型：
+插件代码库的顶层目录中必须包含 `plugin.xml` 文件。以下是 `Device` 插件的简化版本：
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -48,15 +48,15 @@ $ cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-devi
 
 ### 验证插件
 
-可以使用plugman工具去检查插件在每一个平台是是否安装成功。
+可以使用 plugman 工具去检查插件在每一个平台是是否安装成功。
 
-你需要一个有效的app源文件目录，确保index.html home页面引用了插件的javascript接口名称，如果是在同一目录下面：
+你需要一个有效的 app 源文件目录，如 `www` 目录，确保 `index.html` 页面引用了插件的 JavaScript 接口：
 
 ```html
 <script src="myplugin.js"></script>
 ```
 
-运行下面的代码去测试IOS中的依赖插件是否正确载入：
+然后，运行下面的代码去测试插件是否正确载入：
 
 ```shell
 $ plugman install --platform ios --project /path/to/my/project/www --plugin /path/to/my/plugin
@@ -64,7 +64,7 @@ $ plugman install --platform ios --project /path/to/my/project/www --plugin /pat
 
 ### JavaScript 接口
 
-javascript提供了一个前置接口，它是插件最重要的组成部分。你可以按你喜欢的方式去组织你的插件，但是你需要调用cordova.call()去与本地平台通信，使用下面打代码形式：
+JavaScript 提供了一个前端接口，它是插件最重要的组成部分。你可以按你喜欢的方式去组织你的插件，但是你需要调用 `cordova.exec()`去与本地平台通信：
 
 ```js
 cordova.exec(function(winParam) {},  
@@ -74,17 +74,15 @@ cordova.exec(function(winParam) {},
     ["firstArgument", "secondArgument", 42, false]);  
 ```
 
-这些参数是怎么工作的，如下解释：
+参数说明为：
 
-* function(winParam){}: 成功的回调函数；假定exec（）函数调用成功的完成了，该函数会被调用，同时可以传递需要的参数到这个函数；
-* function(error){}：像上面一样，不过是失败的时候的回调函数；
-* service：调用本地平台的服务名称；
-* action：调用本地平台的行为，一般代表的就是插件的函数名称；
-* [/* arguments */]: 传递给本地环境的参数数组。
+* `function(winParam){}`: 成功的回调函数。
+* `function(error){ }`：失败回调。
+* `service`：调用原生接口的服务名称。
+* `action`：调用原生接口的行为，一般为插件的函数名称。
+* [/* arguments */]: 传递给原生接口的参数数组。
 
 ### Sample JavaScript
-
-本例子展示了实现javascript接口的一种方式：
 
 ```js
 window.echo = function(str, callback) {  
@@ -94,9 +92,7 @@ window.echo = function(str, callback) {
 };  
 ```
 
-看传递给 cordova.exec 函数的最后三个参数，第一个代表调用 Echo 服务，是一个类名，第二个请求一个 echo 行为，对应 Echo 类的 echo 方法，第三个参数参数数组，包含要 echo 的字符串。
-
-在这个例子中，插件关联到 `window` 对象上，可以这样调用：
+在这个例子中，插件被关联到 `window` 对象上，可以这样调用：
 
 ```js
 window.echo("echome", function(echoValue) {  
@@ -104,11 +100,9 @@ window.echo("echome", function(echoValue) {
 });  
 ```
 
-传入 exec 的成功的回调函数是 `window.echo` 携带的回调函数的引用，如果原生平台触发错误回调，只是简单地调用成功回调并且传入一个默认字符串。
+### 原生接口
 
-### 本地接口
-
-一旦你定义了你的javascript接口，你必须至少需要一个本地实现。详细信息可以参考：
+一旦你定义了你的 JavaScript 接口，你至少需要一个本地实现。详细信息可以参考：
 
 * [Amazon Fire OS Plugins](http://docs.phonegap.com/en/3.3.0/guide_platforms_amazonfireos_plugin.md.html#Amazon%20Fire%20OS%20Plugins)
 * [](http://docs.phonegap.com/en/3.3.0/guide_platforms_android_plugin.md.html#Android%20Plugins)[PhoneGap
@@ -116,7 +110,6 @@ window.echo("echome", function(echoValue) {
 * [iOS Plugins](http://docs.phonegap.com/en/3.3.0/guide_platforms_ios_plugin.md.html#iOS%20Plugins)
 * [BlackBerry 10 Plugins](http://docs.phonegap.com/en/3.3.0/guide_platforms_blackberry10_plugin.md.html#BlackBerry%2010%20Plugins)
 * [Windows Phone Plugins](http://docs.phonegap.com/en/3.3.0/guide_platforms_wp8_plugin.md.html#Windows%20Phone%20Plugins)
-
 * [Amazon Fire OS Plugins](http://docs.phonegap.com/en/edge/guide_platforms_amazonfireos_plugin.md.html#Amazon%20Fire%20OS%20Plugins)
 * [Android Plugins](http://docs.phonegap.com/en/edge/guide_platforms_android_plugin.md.html#Android%20Plugins)
 * [iOS Plugins](http://docs.phonegap.com/en/edge/guide_platforms_ios_plugin.md.html#iOS%20Plugins)
@@ -131,17 +124,20 @@ Tizen平台暂时不支持插件。
 
 你需要使用 `plugman` 工具按照下面的步骤安装插件：
 
-```
+```shell
 $ plugman adduser # that is if you don't have an account yet$ plugman publish /path/to/your/plugin
 ```
 
 ## Plugin Specification
 
-See [PhoneGap 13 插件配置标准 - jacob的专栏 - 博客频道 - CSDN.NET](http://blog.csdn.net/jacob_wang520/article/details/18350355)
+See： 
 
-plugin.xml文件是在plugins命名空间（http://apache.org/cordova/ns/plugins/1.0）下面的xml文档。它包含一个定义插件的顶层 plugin 元素及定义插件结构的子元素。
+- [Apache Cordova API Documentation](http://cordova.apache.org/docs/en/4.0.0/plugin_ref_spec.md.html#Plugin%20Specification)
+- [PhoneGap 13 插件配置标准 - jacob的专栏 - 博客频道 - CSDN.NET](http://blog.csdn.net/jacob_wang520/article/details/18350355)
 
-A sample plugin element:
+plugin.xml文件是在plugins命名空间（http://apache.org/cordova/ns/plugins/1.0)下面的xml文档。它包含一个定义插件的顶层 plugin 元素及定义插件结构的子元素。
+
+一个插件元素示例：
 
 ```xml
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"  
@@ -150,67 +146,50 @@ A sample plugin element:
     version="1.0.2"> 
 ```
 
-### plugin 元素
-
-The `plugin` element is the plugin manifest's top-level element. It
-features the following attributes:
+### plugin
 
 `plugin` 元素是插件 manifest 的底层元素，它有下面的特性：
 
-* `xmlns` (required): 插件命名空间，`http://apache.org/cordova/ns/plugins/1.0`。 If
-    the document contains XML from other namespaces, such as tags to be
-    added to the `AndroidManifest.xml` file, those namespaces should
-    also be included in the top-level element.
+* `xmlns` (必须): 插件命名空间，`http://apache.org/cordova/ns/plugins/1.0`。如果文档中包含其他命名空间的 XML，如添加到 `AndroidManifest.xml` 文件的命名空间，这些命名空间应该添加到顶级元素。
+* `id` (必须): 插件的全路径，如：`com.alunny.foo`
+* `version` (必须): 插件的版本，使用major.minor.patch的模式，正则表达式为： `^\d+[.]\d+[.]\d+$`
 
-* `id` (required):
-    A reverse-domain style identifier for the plugin, such as
-    `com.alunny.foo`
+### engines 和 engine
 
-* `version` (required):
-    A version number for the plugin, that matches the following
-    major-minor-patch style regular expression:
+`<engines>` 元素的的子元素指明了插件支持的基于 Cordova 的框架的版本，如：
 
-    ```
-    ^\d+[.]\d+[.]\d+$
-    ```
-
-### engines and engine Elements
-
-The child elements of the `<engines>` element specify versions of
-Apache Cordova-based frameworks that this plugin supports. An example:
-
-```
-<engines>    <engine name="cordova" version="1.7.0" />    <engine name="cordova" version="1.8.1" />    <engine name="worklight" version="1.0.0" platform="android" scriptSrc="worklight_version"/></engines>
+```xml
+<engines>  
+    <engine name="cordova" version="1.7.0" />  
+    <engine name="cordova" version="1.8.1" />  
+    <engine name="worklight" version="1.0.0" platform="android" scriptSrc="worklight_version"/>  
+</engines>  
 ```
 
-Similar to the `<plugin>` element's `version` attribute, the specified
-version string should match a major-minor-patch string conforming to
-the regular expression:
+跟 `<plugin>` 的 `version` 属性相似，engine 的 `version` 也符合 major.minor.patch 格式。`<engine>` 元素也可以使用模糊匹配来避免重复，减少由于平台升级带来的维护。工具至少应该应该支持 `>`, `>=`, `<` and `<=`，如：
 
-```
-^\d+[.]\d+[.]\d+$
-```
-
-Engine elements may also specify fuzzy matches to avoid repetition,
-and to reduce maintenance when the underlying platform is updated.
-Tools should support a minimum of `>`, `>=`, `<` and `<=`, for
-example:
-
-```
-<engines>    <engine name="cordova" version=">=1.7.0" />    <engine name="cordova" version="<1.8.1" /></engines>
+```xml
+<engines>
+    <engine name="cordova" version=">=1.7.0" />  
+    <engine name="cordova" version="<1.8.1" />  
+</engines>  
 ```
 
-The `<engine>` tags also has default support for all of the main platforms Cordova exists on. 
-Specifying the `cordova` engine tag means that all versions of Cordova on any platform must
-satisfy the engine version attribute. You may also list specific platforms and their versions
-in order to override the catch-all `cordova` engine:
+`<engine>` 默认支持 Cordova 支持的所有主要平台，`version` 属性指的是支持 Cordova 的版本号。你可以列出指定的平台和他们的版本，以覆盖 `cordova` 引擎的默认配置：
 
-```
-<engines>    <engine name="cordova" version=">=1.7.0" />    <engine name="cordova-android" version=">=1.8.0" />    <engine name="cordova-ios" version=">=1.7.1" /></engines>
+```xml
+<engines>  
+    <engine name="cordova" version=">=1.7.0" />  
+    <engine name="cordova-android" version=">=1.8.0" />  
+    <engine name="cordova-ios" version=">=1.7.1" />  
+</engines> 
 ```
 
 Here's a list of the default engines that the '
 <engine>' tag supports:
+
+下面是 `<engine>` 标签默认支持的引擎列表：
+
 * 'cordova' 
 * 'cordova-plugman' 
 * 'cordova-amazon-fireos'
@@ -219,254 +198,177 @@ Here's a list of the default engines that the '
 * 'cordova-blackberry10' 
 * 'cordova-wp7'
 * 'cordova-wp8'
-* 'cordova-windows8' <br>
+* 'cordova-windows8'
 * 'android-sdk' // returns the highest Android api level installed
 * 'apple-xcode' // returns the xcode version 
 * 'apple-ios' // returns the highest iOS version installed
 * 'apple-osx' // returns the OSX version
 * 'blackberry-ndk' // returns the native blackberry SDK version</engine>
 
-Specifying custom Apache Cordova-based frameworks should be listed under the engine tag like so:
+如果要指明一个基于 Cordova 的自定义框架，应该使用下面的 engine 标签列出：
 
+```xml
+<engines>  
+    <engine name="my_custom_framework" version="1.0.0" platform="android" scriptSrc="path_to_my_custom_framework_version"/>  
+    <engine name="another_framework" version=">0.2.0" platform="ios|android" scriptSrc="path_to_another_framework_version"/>  
+    <engine name="even_more_framework" version=">=2.2.0" platform="*" scriptSrc="path_to_even_more_framework_version"/>  
+</engines> 
 ```
-<engines>    <engine name="my_custom_framework" version="1.0.0" platform="android" scriptSrc="path_to_my_custom_framework_version"/>    <engine name="another_framework" version=">0.2.0" platform="ios|android" scriptSrc="path_to_another_framework_version"/>    <engine name="even_more_framework" version=">=2.2.0" platform="*" scriptSrc="path_to_even_more_framework_version"/></engines>
-```
 
-A custom Apache Cordova-based framework requires that an engine element includes the following attributes: 
-`name`, `version`, `scriptSrc`, and `platform`. 
+一个基于 Cordova 的自定义框架要求 engine 元素必须包含以下属性：
 
-* `name` (required): A human-readable name for your custom framework. 
+* `name`（必须）：框架名称。
+* `version`（必须）：框架版本。
+* `scriptSrc`（必须）：告诉 plugman 框架版本的脚本文件，理想情况下，这个文件应该在插件目录的顶级目录。
+* `platform`（必须）：框架支持的平台。你可以使用通配符 `*` 来代表所有平台，也可以指定多个平台，如 `android|ios|blackberry10`，还可以值指定一个平台 `android`。
 
-* `version` (required): The version that your framework must have in order to install.
 
-* `scriptSrc` (required): The script file that tells plugman what version of the custom framework is. 
-    Ideally, this file should be within the top level directory of your plugin directory.
+如果没指定 `<engine>` 标签，plugman 会盲目地将插件安装到 Cordova 过程目录下。
 
-* `platform` (required): Which platforms that your framework supports. You may use the wildcard `*`
-    to say supported for all platforms, specify multiple with a pipe character like `android|ios|blackberry10` 
-    or just a single platform like `android`.
+### name
 
-plugman aborts with a non-zero code for any plugin whose target
-project does not meet the engine's constraints.
-
-If no `<engine>` tags are specified, plugman attempts to install into
-the specified cordova project directory blindly.
-
-### name Element
-
-A human-readable name for the plugin, whose text content contains the
-name of the plugin. For example:
+指定插件的名称，如：
 
 ```
 <name>Foo</name>
 ```
 
-This element does not (yet) handle localization.
+这个元素没有处理本地化。
 
-### description Element
+### description
 
-A human-readable description for the plugin. The text content of the element contains
-the description of the plugin. An example:
+指定插件描述，如：
 
-```
+```xml
 <description>Foo plugin description</description>
 ```
 
-This element does not (yet) handle localization.
+该元素也没有处理本地化
 
-### author Element
+### author
 
-Plugin author name. The text content of the element contains
-the name of the plugin author. An example:
+指定插件的作者，如：
 
-```
+```xml
 <author>Foo plugin description</author>
 ```
 
-### keywords Element
+### keywords
 
-Plugin keywords. The text content of the element contains comma separated keywords to describe the plugin. An example:
+指定插件关键字，使用逗号分隔，如：
 
-```
+```xml
 <keywords>foo,bar</keywords>
 ```
 
-### license Element
+### license
 
-Plugin license. The text content of the element contains the plugin license. An example:
+指定插件许可，如：
 
-```
+```xml
 <license>Apache 2.0 License</license>
 ```
 
-### asset Element
+### asset
 
-One or more elements listing the files or directories to be copied
-into a Cordova app's `www` directory. Examples:
+指定需要复制到 www 目录的文件或者目录，如：
 
-```
-<!-- a single file, to be copied in the root directory --><asset src="www/foo.js" target="foo.js" /><!-- a directory, also to be copied in the root directory --><asset src="www/foo" target="foo" />
-```
-
-All `<asset>` tags require both `src` and `target` attributes.
-Web-only plugins contains mostly `<asset>` elements. Any `<asset>`
-elements that are nested within `<platform>` elements specify
-platform-specific web assets, as described below. Attributes include:
-
-* `src` (required): 
-    Where the file or directory is located in the plugin package,
-    relative to the `plugin.xml` document.  If a file does not exist at
-    the specified `src` location, plugman stops and reverses the
-    installation process, issues a notification about the conflict, and
-    exits with a non-zero code.
-
-* `target` (required):
-
-    Where the file or directory should be located in the Cordova app,
-    relative to the `www` directory.
-    Assets can be targeted to subdirectories, for example:
-
-    ```
-    <asset src="www/new-foo.js" target="js/experimental/foo.js" />
-    ```
-
-    creates the `js/experimental` directory within the `www` directory,
-    unless already present, then copies the `new-foo.js` file and
-    renames it `foo.js`.  If a file already exists at the target
-    location, plugman stops and reverses the installation process,
-    issues a notification about the conflict, and exits with a non-zero
-    code.
-
-### js-module Element
-
-Most plugins include one or more JavaScript files.  Each `<js-module>`
-tag corresponds to a JavaScript file, and prevents the plugin's users
-from having to add a `<script>` tag for each file.  While `<asset>`
-tags simply copy a file from the plugin subdirectory into `www`,
-`<js-module>` tags are much more sophisticated. They look like this:
-
-```
-<js-module src="socket.js" name="Socket">    <clobbers target="chrome.socket" /></js-module>
+```xml
+<!-- a single file, to be copied in the root directory -->  
+<asset src="www/foo.js" target="foo.js" />  
+<!-- a directory, also to be copied in the root directory -->  
+<asset src="www/foo" target="foo" />  
 ```
 
-When installing a plugin with the example above, `socket.js` is copied
-to `www/plugins/my.plugin.id/socket.js`, and added as an entry to
-`www/cordova_plugins.js`. At load time, code in `cordova.js` uses XHR
-to read each file and inject a `<script>` tag into HTML. It adds a
-mapping to clobber or merge as appropriate, as described below.
+所有的 asset 元素都必须包含 `src` 和 `target` 属性，基于 web 的插件多半包含 `<asset>` 元素。嵌套在 `<platform>` 元素下 `<asset>` 元素指定平台相关的 Web 资源。属性包含：
 
-_Do not_ wrap the file with `cordova.define`, as it is added
-automatically. The module is wrapped in a closure, with `module`,
-`exports`, and `require` in scope, as is normal for AMD modules.
+* `src` (required): 插件包下相对 `plugin.xml` 文档的文件或者目录。如果文件不存在于指定的 `src` 下，plugman 会停止并报错。
+* `target` (required): 相对 `www` 目录，Cordova 应用下相对 `www` 的文件或目录。Assets 可以指定到子目录中，如：
+    
+        <asset src="www/new-foo.js" target="js/experimental/foo.js" />
 
-Details for the `<js-module>` tag:
+    这会在 `www` 目录下创建 `js/experimental` 目录（如果不存在），让后拷贝 `new-foo.js` 文件，并且重命名为 `foo.js`。如果文件在目标位置已经存在，plugman 会停止并报错。
 
-* The `src` references a file in the plugin directory relative to the
-    `plugin.xml` file.
+### js-module
 
-* The `name` provides the last part of the module name. It can
-    generally be whatever you like, and it only matters if you want to
-    use `cordova.require` to import other parts of your plugins in your
-    JavaScript code. The module name for a `<js-module>` is your
-    plugin's `id` followed by the value of `name`. For the example
-    above, with an `id` of `chrome.socket`, the module name is
-    `chrome.socket.Socket`.
+大多数插件包含一个或者多个 JavaScript 文件。每一个 `<js-module>` 标签对应一个 JavaScript 文件，并且使插件使用者不用为每个文件增加 `<script>`标签。`<asset>` 标签只是简单地从插件子目录将文件拷贝到 `www` 下，`<js-module>` 更加复杂，如下：
 
-* Three tags are allowed within `<js-module>`:
-    * `<clobbers target="some.value"/>` indicates that the
-        `module.exports` is inserted into the `window` object as
-        `window.some.value`. You can have as many `<clobbers>` as you
-        like. Any object not available on `window` is created.
+```xml
+<js-module src="socket.js" name="Socket">  
+    <clobbers target="chrome.socket" />  
+</js-module>  
+```
 
-    * `<merges target="some.value"/>` indicates that the module
-        should be merged with any existing value at `window.some.value`.
-        If any key already exists, the module's version overrides the
-        original. You can have as many `<merges>` as you like. Any
-        object not available on `window` is created.
+当安装一个上面的插件时，`socket.js` 被复制到 `www/plugins/my.plugin.id/socket.js`，并且在 `www/cordova_plugins.js` 中增加了一个入口。加载时，`cordova.js` 中的代码使用 XHR 去读取每一个文件并使用 `<script>` 将它们注入到 HTML 页面中。
 
-    * `<runs/>` means that your code should be specified with
-        `cordova.require`, but not installed on the `window`
-        object. This is useful when initializing the module, attaching
-        event handlers or otherwise. You can only have up to one
-        `<runs/>` tag. Note that including a `<runs/>` with
-        `<clobbers/>` or `<merges/>` is redundant, since they also
-        `cordova.require` your module.
+不要使用 `cordova.define` 去包装文件，它会被自动包装。模块封装在一个闭包中， `module`，
+`exports`, and `require` 都在作用域中，因为这对 AMD 模块来说是正常的。
 
-    * An empty `<js-module>` still loads and can be accessed in other
-        modules via `cordova.require`.
+`<js-module>` 标签的详情：
 
-If `src` does not resolve to an existing file, plugman stops and
-reverses the installation, issues a notification of the problem, and
-exits with a non-zero code.
+* `src` 引用插件目录下一个相对于 `plugin.xml` 文件的文件。
 
-Nesting `<js-module>` elements within `<platform>` declares
-platform-specific JavaScript module bindings.
+* `name` 模块名称的最后一部分。这在你使用 `cordova.require` 来导入插件的其他模块时有用。`<js-module>` 的模块名称是插件的 `id` + `name`。前面的例子中，`id` 是 `chrome.socket`，`name` 是 `Socket`，模块名称为 `chrome.socket.Socket`。
 
-### dependency Element
+* `<js-module>` 中可以有以下三个标签:
+    
+    * `<clobbers target="some.value"/>` 指明 `module.exports` 将 `window.some.value` 插入到 `window` 对象中。只要你喜欢，你可以有很多 `<clobber>`。Any object not available on `window` is created.
+
+    * `<merges target="some.value"/>` 表示模块应该和已经存在的 `window.some.value` 合并，如果 key 已经存在，使用模块的版本覆盖原来的。可以有多个 `<merges>` 标签。Any object not available on `window` is created.
+
+    * `<runs/>` 表示你的代码应该使用 `cordova.require` 指定，但不安装到 `window` 对象上。这在初始化模块时很有用，如绑定事件处理器。你最多只能有一个 `<runs/>` 标签。注意在 `<clobbers/>` or `<merges/>` 中包含 `<runs/>` 是多余的，因为它们也会 `cordova.require` 你的模块。
+
+    * 空的 `<js-module>` 仍会加载并且可以被其他模块通过 `cordova.require` 访问。
+
+如果 `src` 不能解析为一个文件地址，plugman 会停止加载并回滚安装，发出问题的通知并以非 0 代码退出。
+
+嵌套在 `<platform>` 下的 `<js-module>` 元素申明了指定平台的 JavaScript 的模块绑定。
+
+### dependency
 
 The `<dependency>` tag allows you to specify other plugins on which the
 current plugin depends. While future versions will access them from
 plugin repositories, in the short term plugins are directly referenced
 as URLs by `<dependency>` tags. They are formatted as follows:
 
-```
-<dependency id="com.plugin.id" url="https://github.com/myuser/someplugin" commit="428931ada3891801" subdir="some/path/here" />
-```
+`<dependency>` 标签让你指定当前插件的依赖插件。未来的版本会从插件库中访问，就眼前来说，插件通过 `<dependency>` 标签的 URL 来引用。如：
 
-* `id`: provides the ID of the plugin. It should be globally unique,
-    and expressed in reverse-domain style. While neither of these
-    restrictions is currently enforced, they may be in the future.
-
-* `url`: A URL for the plugin. This should reference a git repository,
-    which plugman attempts to clone.
-
-* `commit`: This is any git reference understood by `git checkout`: a
-    branch or tag name (e.g., `master`, `0.3.1`), or a commit hash (e.g.,
-    `975ddb228af811dd8bb37ed1dfd092a3d05295f9`).
-
-* `subdir`: Specifies that the targeted plugin dependency exists as a
-    subdirectory of the git repository. This is helpful because it
-    allows the repository to contain several related plugins, each
-    specified individually.
-
-In the future, version constraints will be introduced, and a plugin
-repository will exist to support fetching by name instead of explicit
-URLs.
-
-#### Relative Dependency Paths
-
-If you set the `url` of a `<dependency>` tag to `"."` and provide a
-`subdir`, the dependent plugin is installed from the same local or
-remote git repository as the parent plugin that specifies the
-`<dependency>` tag.
-
-Note that the `subdir` always specifies a path relative to the _root_
-of the git repository, not the parent plugin. This is true even if you
-installed the plugin with a local path directly to it. Plugman finds
-the root of the git repository and then finds the other plugin from
-there.
-
-### platform Element
-
-The `<platform>` tag identifies platforms that have associated native
-code or require modifications to their configuration files. Tools
-using this specification can identify supported platforms and install
-the code into Cordova projects.
-
-Plugins without `<platform>` tags are assumed to be JavaScript-only,
-and therefore installable on any and all platforms.
-
-A sample platform tag:
-
-```
-<platform name="android">    <!-- android-specific elements --></platform><platform name="ios">    <!-- ios-specific elements --></platform>
+```xml
+<dependency id="com.plugin.id" url="https://github.com/myuser/someplugin" commit="428931ada3891801" subdir="some/path/here" />  
 ```
 
-The required `name` attribute identifies a platform as supported,
-associating the element's children with that platform.
+* `id`: 插件ID，它需要全局唯一的，使用反向域名来表达。
+* `url`: 插件库地址。
+* `commit`: 它是 `git checkout` 用的 git 引用：一个分支或者一个标签名称（(e.g., `master`, `0.3.1`)，或者一个提交的hash码(e.g.,
+    `975ddb228af811dd8bb37ed1dfd092a3d05295f9`)。
+* `subdir`: 指定代码库中的子目录作为插件依赖。这让库可以包含几个相关的插件，这有时比较好用。
 
-Platform names should be lowercase. Platform names, as arbitrarily
-chosen, are listed:
+未来会引入版本约束，可以通过 name 获取而非显式的 URL。
+
+#### 相对依赖路径
+
+如果你设置了 `<dependency>` 标签的 `url` 为 `"."`，并且提供了 `subdir`，依赖插件将会从定义 `<dependency>` 的父插件的本地或者远程 git 库中安装。
+
+`subdir` 总是指定相对 git 库的根的目录，而不是父插件的目录。即使插件是使用本地路径来安装的，也还是如此。plugman 在 git 库的根目录寻找并发现其他的插件。
+
+### platform
+
+`<platform>` 指明了本地代码相关的或者需要修改配置文件的平台。工具可以根据它识别支持的平台并把代码安装到 Cordova 工程中。
+
+没有指定 `<platform>` 插件只支持 JavaScript，因此可以在平台上安装。
+
+```xml
+<platform name="android">
+    <!-- android-specific elements -->
+</platform>
+<platform name="ios">
+    <!-- ios-specific elements -->
+</platform>
+```
+
+`name` 表示支持的平台，子元素指定平台相关的特性。
+
+平台名称应该使用小写，平台列表为：
 
 * amazon-fireos
 * android
@@ -476,192 +378,166 @@ chosen, are listed:
 * wp8
 * windows8
 
-### source-file Element
+### source-file
 
-The `<source-file>` element identifies executable source code that
-should be installed into a project. Examples:
+`<source-file>` 元素指定安装到项目中的可执行代码，如：
 
-```
-<!-- android --><source-file src="src/android/Foo.java"                target-dir="src/com/alunny/foo" /><!-- ios --><source-file src="src/ios/CDVFoo.m" /><source-file src="src/ios/someLib.a" framework="true" /><source-file src="src/ios/someLib.a" compiler-flags="-fno-objc-arc" />
-```
-
-It supports the following attributes:
-
-* `src` (required):
-    Location of the file relative to `plugin.xml`.  If the `src` file
-    can't be found, plugman stops and reverses the installation, issues
-    a notification about the problem, and exits with a non-zero code.
-
-* `target-dir`:
-    A directory into which the files should be copied, relative to the
-    root of the Cordova project.  In practice, this is most important
-    for Java-based platforms, where a file in the `com.alunny.foo`
-    package must be located within the `com/alunny/foo` directory. For
-    platforms where the source directory is not important, this
-    attribute should be omitted.
-
-    As with assets, if the `target` of a `source-file` would overwrite
-    an existing file, plugman stops and reverses the installation,
-    issues a notification about the problem, and exits with a non-zero
-    code.
-
-* `framework` (iOS only):
-    If set to `true`, also adds the specified file as a framework to the
-    project.
-
-* `compiler-flags` (iOS only):
-    If set, assigns the specified compiler flags for the particular
-    source file.
-
-### config-file Element
-
-Identifies an XML-based configuration file to be modified, where in
-that document the modification should take place, and what should be
-modified.
-
-Two file types that have been tested for modification with this
-element are `xml` and `plist` files.
-
-The `config-file` element only allows you to append new children to an
-XML document tree. The children are XML literals to be inserted in the
-target document.
-
-Example for XML:
-
-```
-<config-file target="AndroidManifest.xml" parent="/manifest/application">    <activity android:name="com.foo.Foo" android:label="@string/app_name">        <intent-filter>        </intent-filter>    </activity></config-file>
+```xml
+<!-- android -->
+<source-file src="src/android/Foo.java"
+                target-dir="src/com/alunny/foo" />
+<!-- ios -->
+<source-file src="src/ios/CDVFoo.m" />
+<source-file src="src/ios/someLib.a" framework="true" />
+<source-file src="src/ios/someLib.a" compiler-flags="-fno-objc-arc" />
 ```
 
-Example for `plist`:
+它支持以下属性:
 
+* `src` (required): 相对 `plugin.xml` 文件路径。
+* `target-dir`: 文件拷贝的目标路径，相对 Cordova 项目的跟路径。实际中，这在 Java 平台很重要，在 `com.alunny.foo` 包下的文件必须在 `com/alunny/foo` 目录下。在源目录不重要的平台，这个属性应该被忽略。如果 `source-file` 会覆盖已经存在的文件，则 plugman 会报错。
+* `framework` (iOS only): If set to `true`, also adds the specified file as a framework to the project.
+* `compiler-flags` (iOS only): If set, assigns the specified compiler flags for the particular source file.
+
+### config-file
+
+标志一个基于 XML 的配置文件，这个配置文件可以修改两种文件类型，分别为 `xml` 和 `plist` 文件。`config-file` 元素只允许添加新的子元素到 XML 文档树中。子元素会插入到目标文档中。
+
+修改类型为 xml 的文件，如：
+
+```xml
+<config-file target="AndroidManifest.xml" parent="/manifest/application">
+    <activity android:name="com.foo.Foo" android:label="@string/app_name">
+        <intent-filter>
+        </intent-filter>
+    </activity>
+</config-file>
 ```
-<config-file target="*-Info.plist" parent="CFBundleURLTypes">    <array>        <dict>            <key>PackageName</key>            <string>$PACKAGE_NAME</string>        </dict>    </array></config-file>
+
+`plist` 的例子:
+
+```xml
+<config-file target="*-Info.plist" parent="CFBundleURLTypes">
+    <array>
+        <dict>
+            <key>PackageName</key>
+            <string>$PACKAGE_NAME</string>
+        </dict>
+    </array>
+</config-file>
 ```
 
-It supports the following attributes:
+支持的属性如下:
 
-* `target`:
+* `target`: 修改的目标文件，相对于 Cordova 项目的根目录。target 可以包含通配符（*），这种情况下，plugman 递归搜索工程目录，并使用第一个匹配的结果。IOS 中，相对于项目根目录的配置文件路径是不可知的，所以标明一个相对 `cordova-ios-project/MyAppName/config.xml` 的目标文件 `config.xml`。
 
-    The file to be modified, and the path relative to the root of the
-    Cordova project.
+* `parent`: 一个 XPath 选择器，指定配置文件将要添加到的目标文件。如果使用绝对选择器，你可以使用通配符（*）去指定根元素。对于 `plist` 文件，`parent` 元素指定了 XML 被插入的父文件的 key。
 
-    The target can include wildcard (`*`) elements. In this case,
-    plugman recursively searches through the project directory structure
-    and uses the first match.
-
-    On iOS, the location of configuration files relative to the project
-    directory root is not known, so specifying a target of `config.xml`
-    resolves to `cordova-ios-project/MyAppName/config.xml`.
-
-    If the specified file does not exist, the tool ignores the
-    configuration change and continues installation.
-
-* `parent`: An XPath selector referencing the parent of the elements
-    to be added to the config file. If you use absolute selectors, you
-    can use a wildcard (`*`) to specify the root element,
-    e.g., `/*/plugins`.
-
-    For `plist` files, the `parent` determines under what parent key the
-    specified XML should be inserted.
-
-    If the selector does not resolve to a child of the specified
-    document, the tool stops and reverses the installation process,
-    issues a warning, and exits with a non-zero code.
-
-### plugins-plist Element
+### plugins-plist
 
 This is _outdated_ as it only applies to cordova-ios 2.2.0 and
 below. Use the `<config-file>` tag for newer versions of Cordova.
 
 Example:
 
-```
-<config-file target="config.xml" parent="/widget/plugins">    <feature name="ChildBrowser">        <param name="ios-package" value="ChildBrowserCommand"/>    </feature></config-file>
+```xml
+<config-file target="config.xml" parent="/widget/plugins">
+    <feature name="ChildBrowser">
+        <param name="ios-package" value="ChildBrowserCommand"/>
+    </feature>
+</config-file>
 ```
 
 Specifies a key and value to append to the correct `AppInfo.plist`
 file in an iOS Cordova project. For example:
 
-```
+```xml
 <plugins-plist key="Foo" string="CDVFoo" />
 ```
 
 ### resource-file and header-file Elements
 
-Like source files, but specifically for platforms such as iOS that
-distinguish between source files, headers, and resources. iOS Examples:
+像 source file 一样，指定源文件、header 和资源文件。如 iOS：
 
-```
-<resource-file src="CDVFoo.bundle" /><resource-file src="CDVFooViewController.xib" /><header-file src="CDVFoo.h" />
+```xml
+<resource-file src="CDVFoo.bundle" />
+<resource-file src="CDVFooViewController.xib" />
+<header-file src="CDVFoo.h" />
 ```
 
-Android example:
+Android 示例:
 
-```
+```xml
 <resource-file src="FooPluginStrings.xml" target="res/values/FooPluginStrings.xml" />
 ```
 
-### lib-file Element
+### lib-file
 
-Like source, resource, and header files, but specifically for
-platforms such as BlackBerry 10 that use user-generated libraries.
-Examples:
+像 source, resource, and header files，指定用户自定义的库：
 
+如:
+
+```xml
+<lib-file src="src/BlackBerry10/native/device/libfoo.so" arch="device" />
+<lib-file src="src/BlackBerry10/native/simulator/libfoo.so" arch="simulator" />
 ```
-<lib-file src="src/BlackBerry10/native/device/libfoo.so" arch="device" /><lib-file src="src/BlackBerry10/native/simulator/libfoo.so" arch="simulator" />
-```
 
-Supported attributes:
+支持的属性:
 
-* `src` (required):
-    The location of the file relative to `plugin.xml`.
-    If `src` can't be found, plugman stops and reverses the
-    installation, issues a warning about the problem, and exits with a
-    non-zero code.
+* `src` (required): 相对 `plugin.xml` 的文件路径。
+* `arch`: `.so` 文件编译的架构，如 `device` or `simulator`。
 
-* `arch`: The architecture for which the `.so` file has been built,
-    either `device` or `simulator`.
-
-### framework Element
+### framework
 
 Identifies a framework (usually part of the OS/platform) on which the plugin depends.
 
-Examples:
+指定插件依赖的平台（通常是 OS/平台）。
 
-```
-<framework src="libsqlite3.dylib" /><framework src="social.framework" weak="true" /><framework src="relative/path/to/my.framework" custom="true" /><framework src="path/to/project/LibProj.csproj" custom="true" type="projectReference"/>
+如:
+
+```xml
+<framework src="libsqlite3.dylib" />
+<framework src="social.framework" weak="true" />
+<framework src="relative/path/to/my.framework" custom="true" />
+<framework src="path/to/project/LibProj.csproj" custom="true" type="projectReference"/>
 ```
 
 The `src` attribute identifies the framework, which plugman attempts
 to add to the Cordova project, in the correct fashion for a given
 platform.
 
-The optional `weak` attribute is a boolean indicating whether the
-framework should be weakly linked. The default is `false`.
+- `src` 属性指定框架，plugman 会视图添加到 Cordova 工程。
+- `weak` 指定跨家是否应该被软连接，默认为 `false`。
+- `custom` 默认为  `false`。指定 framework 是否作文插件文件的一部分（因此，它不是系统框架）。在 Android 平台，它指定如何处理 **src**，如果为  `true` **src** 乡镇应用的工程目录，否则，相对 Android SDK 目录。
+- `custom` The optional `custom` attribute is a boolean indicating whether the framework is one that is included as part of your plugin files (thus it is not a system framework). The default is `false`.  **_On Android_** it specifies how to treat **src**. If `true` **src** is a relative path from the application project's directory, otherwise -- from the Android SDK directory.
+- `type` The optional `type` attribute is a string indicating the type of framework to add. Currently only `projectReference` is supported and only on Windows 8.  Using `custom='true'` and `type='projectReference'` will add a reference to the project which will be added to the compile+link steps of the cordova project.  This essentially is the only way currently that a 'custom' framework can target multiple architectures as they are explicitly built as a dependency by the referencing cordova application.
+- `parent` The optional `parent` attribute is currently supported only on Android. It sets the relative path to the directory containing the sub-project to which to add the reference. The default is `.`, i.e. the application project. It allows to add references between sub projects like in this example:
 
-The optional `custom` attribute is a boolean indicating whether the framework is one that is included as part of your plugin files (thus it is not a system framework). The default is `false`.
-
-The optional `type` attribute is a string indicating the type of framework to add. Currently only `projectReference` is supported and only on Windows 8.  Using `custom='true'` and `type='projectReference'` will add a reference to the project which will be added to the compile+link steps of the cordova project.  This essentially is the only way currently that a 'custom' framework can target multiple architectures as they are explicitly built as a dependency by the referencing cordova application.
-
-### info Element
-
-Additional information provided to users. This is useful when you
-require extra steps that can't be easily automated or are beyond
-plugman's scope.  Examples:
-
-```
-<info>You need to install __Google Play Services__ from the `Android Extras` section using the Android SDK manager (run `android`).You need to add the following line to the `local.properties`:android.library.reference.1=PATH_TO_ANDROID_SDK/sdk/extras/google/google_play_services/libproject/google-play-services_lib</info>
+```xml
+<framework src="FeedbackLib" custom="true" />
+<framework src="extras/android/support/v7/appcompat" custom="false" parent="FeedbackLib" />
 ```
 
-### Variables
+### info
 
-In certain cases, a plugin may need to make configuration changes
-dependent on the target application. For example, to register for C2DM
-on Android, an app whose package id is `com.alunny.message` would
-require a permission such as:
+Additional information provided to users. This is useful when you require extra steps that can't be easily automated or are beyond plugman's scope.  Examples:
 
+```xml
+<info>
+You need to install __Google Play Services__ from the `Android Extras` section using the Android SDK manager (run `android`).
+
+You need to add the following line to the `local.properties`:
+
+android.library.reference.1=PATH_TO_ANDROID_SDK/sdk/extras/google/google_play_services/libproject/google-play-services_lib
+</info>
 ```
-<uses-permissionandroid:name="com.alunny.message.permission.C2D_MESSAGE"/>
+
+### 变量
+
+在某些情况下，一个插件需要根据目标平台对配置文件进行更改。比如，为了在 Android 上面注册 C2DM（一个 package id 为 `com.alunny.message` 的应用），需要如下面的权限：
+
+```xml
+<uses-permission android:name="com.alunny.message.permission.C2D_MESSAGE"/>
 ```
 
 In such cases where the content inserted from the `plugin.xml` file is
@@ -669,43 +545,31 @@ not known ahead of time, variables can be indicated by a dollar-sign
 followed by a series of capital letters, digits, or underscores. For
 the above example, the `plugin.xml` file would include this tag:
 
-```
-<uses-permissionandroid:name="$PACKAGE_NAME.permission.C2D_MESSAGE"/>
+在这种情况下面，事先并不知道插入 `plugin.xml` 文件的内容。这个时候就需要使用到变量的概念，变量是以美元符号（$)开头的，后接一系列大写字母、数字及下划线。对于上面的例子，`plugin.xml` 中会包含下面的标签：
+
+```xml
+<uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"/>
 ```
 
-plugman replaces variable references with the specified value, or the
-empty string if not found. The value of the variable reference may be
-detected (in this case, from the `AndroidManifest.xml` file) or
-specified by the user of the tool; the exact process is dependent on
-the particular tool.
+plugman 会使用特定的值代替变量，如果没有找到则使用一个空的字符串代替。变量的值可以被自己检测（如从 `AndroidManifest.xml` 文件中），也可以由工具指定，该过程依赖于特定的工具；
 
-plugman can request users to specify a plugin's required
-variables. For example, API keys for C2M and Google Maps can be
-specified as a command-line argument:
+plugman可以要求用户指定插件需要的变量值，如：C2M 和 Google 地图的 API_KEY 可以使用下面的命令参数指定：
 
-```
+```shell
 plugman --platform android --project /path/to/project --plugin name|git-url|path --variable API_KEY=!@CFATGWE%^WGSFDGSDFW$%^#$%YTHGsdfhsfhyer56734
 ```
 
-To make the variable mandatory, the `<platform>` tag needs to contain
-a `<preference>` tag. For example:
+为了强制使用标量，在 `<platform>` 标签下需要包含一个 `<preference>` 标签，如：
 
-```
+```xml
 <preference name="API_KEY" />
 ```
 
-plugman checks that these required preferences are passed in.  If not,
-it should warn the user how to pass the variable in and exit with a
-non-zero code.
-
-Certain variable names should be reserved, as listed below.
+plugman 会检查必须的 preferences 传入，如果没有，报错退出。
 
 ### $PACKAGE_NAME
 
-The reverse-domain style unique identifier for the package,
-corresponding to the `CFBundleIdentifier` on iOS or the `package`
-attribute of the top-level `manifest` element in an
-`AndroidManifest.xml` file.
+包的反向域风格的唯一标识符，对应 iOS 的 `CFBundleIdentifier` 或 Android 中的 `AndroidManifest.xml` 文件的顶级 `manifest` 元素的 `package` 属性。
 
 ## Android 插件
 

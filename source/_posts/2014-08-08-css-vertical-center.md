@@ -368,5 +368,6 @@ Do you use any of the above methods or do you use a different method I didn’t 
 - [How to Center Anything With CSS](http://designshack.net/articles/css/how-to-center-anything-with-css) horizontal alignment.
 - [What is Vertical Align?](http://css-tricks.com/what-is-vertical-align/)
 - [三种方式实现动态元素水平居中 / Owen Chen](http://owenchen.duapp.com/index.php/there-are-three-ways-to-implement-dynamic-elements-centered-horizontally/)
+- [4 CSS Tricks for Vertical Alignment — Adnane Belmadiaf's Blog - Front-end Developer](http://daker.me/2014/04/4-css-tricks-for-vertical-alignment.html)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

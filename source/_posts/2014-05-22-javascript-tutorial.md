@@ -97,10 +97,11 @@ owsers)
 
 - [jiahansu/BridJS](https://github.com/jiahansu/BridJS?)
 
-## Observer
+## Observe
 
 - [Detect, Undo And Redo DOM Changes With Mutation Observers](http://addyosmani.com/blog/mutation-observers/)
 - [Data-binding Revolutions with Object.observe() - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/es7/observe/)
+- [Binding data with Object.observe](http://blog.mdnbar.com/binding-data-with-objectobserve)
 
 ## Tips
 

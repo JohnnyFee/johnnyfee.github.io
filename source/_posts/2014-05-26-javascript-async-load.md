@@ -7,7 +7,7 @@ tags: [javascript, loader]
 
 原文： <http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html>
 
-## 一、同步加载与异步加载的形式
+## 同步加载与异步加载的形式
 
 ### 同步加载
 
@@ -133,7 +133,7 @@ OnLoad：页面的所有资源都加载完毕（包括图片）。浏览器的�
 
 详见参考资料中2010年的Velocity 大会 Steve Souders 和淘宝的那两个讲义。
 
-## 二、async 和 defer 属性
+## async 和 defer 属性
 
 ### defer 属性
 
@@ -159,7 +159,7 @@ See also [Surfin' Safari - Blog Archive » Running scripts in WebKit](https://ww
 
 See also：[script async](http://www.whatwg.org/specs/web-apps/current-work/multipage/scripting-1.html#attr-script-async)
 
-## 三、延迟加载（lazy loading）
+## 延迟加载（lazy loading）
 
 前面解决了异步加载（async loading）问题，再谈谈什么是延迟加载。
 
@@ -171,7 +171,7 @@ See also：[script async](http://www.whatwg.org/specs/web-apps/current-work/mult
 
 就像图片的延迟加载，在图片出现在可视区域内时（在滚动条下拉）才加载显示图片。
 
-## 四、script 的两阶段加载 与 延迟执行（lazy execution）
+## script 的两阶段加载 与 延迟执行（lazy execution）
 
 JS的加载其实是由两阶段组成：下载内容（download bytes）和执行（parse and execute）。
 
@@ -202,7 +202,7 @@ JS的加载其实是由两阶段组成：下载内容（download bytes）和执�
 
 	这个代码将使 js 执行5秒才能完成！
 
-## 五、script 标签使用的历史
+## script 标签使用的历史
 
 1. script 放在 HEAD 中**
 
@@ -249,7 +249,7 @@ JS的加载其实是由两阶段组成：下载内容（download bytes）和执�
 	* 在所有浏览器中，script都是并行下载；
 	* 不阻止渲染（rendering）直到真正需要时；
 
-## 六、异步加载的问题
+## 异步加载的问题
 
 在异步加载的时候，无法使用 document.write 输出文档内容。
 
@@ -263,7 +263,7 @@ JS的加载其实是由两阶段组成：下载内容（download bytes）和执�
 
 2. 如果需要在**固定位置**异步生成元素的内容，那么可以在该固定位置设置一个dom元素作为目标，这样就知道位置了，异步加载之后就可以对这个元素进行修改。
 
-## 六、JS 模块化管理
+## JS 模块化管理
 
 异步加载，需要将所有 js 内容按模块化的方式来切分组织，其中就存在依赖关系，而异步加载不保证执行顺序。
 
@@ -271,7 +271,7 @@ JS的加载其实是由两阶段组成：下载内容（download bytes）和执�
 
 [RequireJS](http://requirejs.org/) 、 [CommonJS](http://www.commonjs.org/) 以及 王保平(淘宝)的 [SeaJS](http://seajs.com/) 及其[博客](http://lifesinger.wordpress.com/) 。
 
-## 七、JS最佳实践
+## JS最佳实践
 
 1. 最小化 js 文件，利用压缩工具将其最小化，同时开启http gzip压缩。工具：
 2. 尽量不要放在 <head> 中，尽量放在页面底部，最好是</body>之前的位置
@@ -288,6 +288,7 @@ JS的加载其实是由两阶段组成：下载内容（download bytes）和执�
 	- 李穆(淘宝)的 [第三方广告代码稳定性和性能优化实战](http://velocity.oreilly.com.cn/2010/ppts/limufromTaobao.pdf) (pdf)
 - [JavaScript 的性能优化：加载和执行](http://www.ibm.com/developerworks/cn/web/1308_caiys_jsload/index.html?ca=drs-)
 - [Javascript 装载和执行](http://coolshell.cn/articles/9749.html)
+- [async vs defer attributes - Growing with the Web](http://www.growingwiththeweb.com/2014/02/async-vs-defer-attributes.html)
 
 ## 性能测试
 

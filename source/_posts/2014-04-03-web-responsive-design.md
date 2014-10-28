@@ -19,6 +19,9 @@ tags: [responsive, web]
 - [响应式web设计(Responsive web design)三步曲](http://weizhifeng.net/responsive-design-in-3-steps.html)
 - [Guide to Responsive-Friendly CSS Columns](http://css-tricks.com/guide-responsive-friendly-css-columns)
 - [aFarkas/respimage](https://github.com/aFarkas/respimage) respimage is a responsive images polyfill, that loads your images fast and responsibly.
+- [Responsive Images: The Ultimate Guide](http://davidwalsh.name/responsive-images)
+- [How to set the order of stacked columns in responsive emails - Campaign Monitor](https://www.campaignmonitor.com/blog/post/4321/order-stacked-columns-responsive-email)
+
 
 <!--more-->
 

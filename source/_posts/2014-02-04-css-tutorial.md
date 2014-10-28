@@ -135,6 +135,17 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 - [katiefenn/parker](https://github.com/katiefenn/parker) Stylesheet analysis tool.
 - [addyosmani/critical](https://github.com/addyosmani/critical) Extract & Inline Critical-path CSS from HTML (alpha).
 - [Stylify Me - Online Style Guide Generator](http://stylifyme.com/?stylify=inching.org)
+- [Clippy — CSS clip-path maker](http://bennettfeely.com/clippy)
+
+### 预编译
+
+- LESS
+- SASS
+- Stalus
+
+### 预编译工具
+
+- [Prepros App :: Dead Simple Design, Development and Testing](http://alphapixels.com/prepros/)
 
 ### Generator
 

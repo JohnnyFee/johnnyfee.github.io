@@ -19,13 +19,13 @@ Sass是一种"CSS预处理器"，可以让CSS的开发变得简单和可维护�
 
 <!--more-->
 
-## 一、Compass是什么？
+## Compass是什么？
 
 简单说，Compass是Sass的工具库（toolkit）。
 
 Sass本身只是一个编译器，Compass在它的基础上，封装了一系列有用的模块和模板，补充Sass的功能。它们之间的关系，有点像Javascript和jQuery、Ruby和Rails、python和Django的关系。
 
-## 二、安装
+## 安装
 
 Compass是用Ruby语言开发的，所以安装它之前，必须安装Ruby。
 
@@ -37,7 +37,9 @@ Compass是用Ruby语言开发的，所以安装它之前，必须安装Ruby。
 
 正常情况下，Compass（连同Sass）就安装好了。
 
-## 三、项目初始化
+See also: [Install the Compass Stylesheet Authoring Framework](http://compass-style.org/install/)
+
+## 项目初始化
 
 接下来，要创建一个你的Compass项目，假定它的名字叫做myproject，那么在命令行键入：
 
@@ -55,7 +57,7 @@ Compass是用Ruby语言开发的，所以安装它之前，必须安装Ruby。
 
 接下来，就可以动手写代码了。
 
-## 四、编译
+## 编译
 
 在写代码之前，我们还要知道如何编译。因为我们写出来的是后缀名为scss的文件，只有编译成css文件，才能用在网站上。
 
@@ -94,7 +96,7 @@ Compass只编译发生变动的文件，如果你要重新编译未变动的文�
 
 更多的compass命令行用法，请参考[官方文档](http://compass-style.org/help/tutorials/production-css/)。
 
-## 五、Compass的模块
+## Compass的模块
 
 Compass采用模块结构，不同模块提供不同的功能。目前，它内置五个模块：
 
@@ -106,7 +108,7 @@ Compass采用模块结构，不同模块提供不同的功能。目前，它内�
 
 下面，我依次介绍这五个内置模块。它们提供Compass的主要功能，但是除了它们，你还可以自行加载网上的第三方模块，或者自己动手编写模块。
 
-## 六、reset模块
+## reset模块
 
 通常，编写自己的样式之前，有必要[重置](http://meyerweb.com/eric/tools/css/reset/)浏览器的默认样式。
 
@@ -116,11 +118,11 @@ Compass采用模块结构，不同模块提供不同的功能。目前，它内�
 
 上面的@import命令，用来指定加载模块，这里就是加载reset模块。编译后，会生成相应的[css reset代码](http://meyerweb.com/eric/tools/css/reset/index.html)。
 
-## 七、CSS3模块
+## CSS3模块
 
 目前，[该模块](http://compass-style.org/reference/compass/css3/)提供19种CSS3命令。在这里，我介绍其中的三种：圆角、透明和行内区块。
 
-### 7.1 圆角
+### 圆角
 
 [圆角](http://compass-style.org/reference/compass/css3/border_radius/)（border-radius）的写法是
 
@@ -146,7 +148,7 @@ Compass采用模块结构，不同模块提供不同的功能。目前，它内�
 
 	@include border-corner-radius(top, left, 5px);
 
-### 7.2 透明
+### 透明
 
 [透明](http://compass-style.org/reference/compass/css3/opacity/)（opacity）的写法为
 
@@ -172,7 +174,7 @@ opacity的参数0.5，表示透明度为50%。
 
 	@include opacity(1);
 
-### 7.3 行内区块
+### 行内区块
 
 [行内区块](http://compass-style.org/reference/compass/css3/inline_block/)（inline-block）的写法为
 
@@ -192,7 +194,7 @@ opacity的参数0.5，表示透明度为50%。
         \*display: inline;  
     }
 
-## 八、layout模块
+## layout模块
 
 [该模块](http://compass-style.org/reference/compass/layout/)提供布局功能。
 
@@ -211,7 +213,7 @@ opacity的参数0.5，表示透明度为50%。
         @include stretch;   
     }
 
-## 九、typography模块
+## typography模块
 
 [该模块](http://compass-style.org/reference/compass/typography/)提供版式功能。
 
@@ -227,7 +229,7 @@ opacity的参数0.5，表示透明度为50%。
     @include link-colors(#00c, #0cc, #c0c, #ccc, #cc0);  
     }
 
-## 十、utilities模块
+## utilities模块
 
 [该模块](http://compass-style.org/reference/compass/utilities/)提供某些不属于其他模块的功能。
 
@@ -264,7 +266,7 @@ opacity的参数0.5，表示透明度为50%。
         text-align: right;  
     }
 
-## 十一、Helper函数
+## Helper函数
 
 除了模块，Compass还提供一系列[函数](http://compass-style.org/reference/compass/helpers/)。
 
@@ -281,3 +283,8 @@ opacity的参数0.5，表示透明度为50%。
     .icon { background-image: url('data:image/png;base64,iBROR...QmCC');}
 
 函数与mixin的主要区别是，不需要使用@include命令，可以直接调用。
+
+## Tutorial
+
+- [How to start using Sass and Compass in 10 minutes - Gaya Design](http://www.gayadesign.com/diy/how-to-start-using-sass-and-compass-in-10-minutes/)
+- [How to use & to simplify your Sass](http://seesparkbox.com/foundry/how_to_use_ampersands_to_simplifiy_your_sass)

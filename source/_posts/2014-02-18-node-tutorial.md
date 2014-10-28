@@ -174,15 +174,6 @@ Javascript with Cody and Node.js.
 - [Nodejitsu](https://www.nodejitsu.com/)
 - 阿里云
 
-## Full Statck
-
-- [也谈基于NodeJS的全栈式开发经验技巧](http://www.w3cfuns.com/article-1315-1.html)
-- [An Introduction to the MEAN Stack](http://www.sitepoint.com/introduction-mean-stack/)
-- [MEAN.io - A Fullstack Javascript Framework](http://www.mean.io/#!/)
-- [Introduction to the MEAN Stack - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/introduction-to-the-mean-stack--cms-19918)
-- [MEAN Stack – A Quick Start Guide | Flippin' Awesome](http://flippinawesome.org/2014/04/21/mean-stack-a-quick-start-guide/)
-- [Synth - The back-end web framework designed to make (Angular](http://www.synthjs.com) The back-end web framework designed to make (Angular|Ember|Backbone)JS web apps easy to create and manage.
-
 ## confusion
 
 - [Code Protection and Packaging for Node.js Projects with JXCore | Flippin' Awesome](http://flippinawesome.org/2014/04/21/code-protection-and-packaging-for-node-js-projects-with-jxcore/)

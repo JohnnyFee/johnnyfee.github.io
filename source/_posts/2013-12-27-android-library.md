@@ -121,6 +121,7 @@ tags: [android]
 - [square/phrase](https://github.com/square/phrase/) Phrase is an Android string resource templating library
     + [Android String Formatting with Phrase](http://corner.squareup.com/2014/01/phrase.html)
 - [Instagram/ig-json-parser](https://github.com/Instagram/ig-json-parser/). See also [Fast, auto-generated streaming JSON parsing for Android - Instagram Engineering](http://instagram-engineering.tumblr.com/post/97147584853/json-parsing)
+- [polok/TaggerString](https://github.com/polok/TaggerString) TaggerString is very light library which allows to build dynamic string resource in much more readable way.
 
 ## Android Studio 扩展
 
@@ -135,6 +136,7 @@ tags: [android]
 - [evant/gradle-retrolambda](https://github.com/evant/gradle-retrolambda)
 
 ## Reference
+
 - [Android Boost](http://zouguangxian.github.io/android-boost/)
 - [Android优秀开源项目](http://www.eoeandroid.com/thread-272453-1-1.html)
 - [安卓开发经验分享：资源、UI、函数库、测试、构建一个都不能少](http://www.importnew.com/4868.html)

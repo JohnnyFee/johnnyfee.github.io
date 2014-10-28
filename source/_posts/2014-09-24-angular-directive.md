@@ -1133,6 +1133,7 @@ var setUpDatePicker = function () {
 - [ngReactGrid by josebalius](http://josebalius.github.io/ngReactGrid) ngReactGrid is an Angular directive that can be used to render an enhanced HTML table or grid of data very fast using React as the rendering engine. It is based on ng-grid and jQuery DataTables. It uses HTML tables and supports fixed column headers by default.
 - [AlexDisler/ng-special-offer](https://github.com/AlexDisler/ng-special-offer) Prompt users to rate your cordova app in the app store.
 - [mgonto/angular-wizard](https://github.com/mgonto/angular-wizard) 向导。
+- [jirikavi/AngularJS-Toaster](https://github.com/jirikavi/AngularJS-Toaster)
 
 ## Reference
 

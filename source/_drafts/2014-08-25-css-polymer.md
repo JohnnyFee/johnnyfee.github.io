@@ -68,6 +68,7 @@ For more, see our repository on [GitHub](https://github.com/angular/material)
 - [Welcome - Polymer](http://www.polymer-project.org/)
 - [Join the Web Components revolution with Polymer](http://www.ibm.com/developerworks/library/wa-polymer)
 - [Building Web Apps With Yeoman And Polymer: Scaffold your webapps with modern tooling - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/webcomponents/yeoman/)
+- [Building single page apps using web components - Polymer](https://www.polymer-project.org/articles/spa.html)
 
 ### Video
 

@@ -492,58 +492,63 @@ ECMAScript的下一个版本Harmony已经考虑到了模块化的需求，目前
     }   
 
 ### 加载模块   
+
 使用import关键字来加载外部模块
 
-    // we can import in script code, not just inside a module
-    import {sum, pi} from math;
-    alert("2π = " + sum(pi, pi));
+```js
+// we can import in script code, not just inside a module
+import {sum, pi} from math;
+alert("2π = " + sum(pi, pi));
 
-    // 引入所有API
-    import * from math;
-    alert("2π = " + sum(pi, pi));
+// 引入所有API
+import * from math;
+alert("2π = " + sum(pi, pi));
 
-    // 使用另一个引用作为别名
-    // a static module reference
-    module M = math;
-      
-    // reify M as an immutable "module instance object"
-    alert("2π = " + M.sum(M.pi, M.pi));
+// 使用另一个引用作为别名
+// a static module reference
+module M = math;
+  
+// reify M as an immutable "module instance object"
+alert("2π = " + M.sum(M.pi, M.pi));
 
-    //局部重命名
-    import { draw: drawShape } from shape;
-    import { draw: drawGun } from cowboy;
+//局部重命名
+import { draw: drawShape } from shape;
+import { draw: drawGun } from cowboy;
 
-    // 嵌套模块
-    module widgets {
-        export module button { ... }
-        export module alert { ... }
-        export module textarea { ... }
-        ...
-    }
-      
-    import { messageBox, confirmDialog } from widgets.alert;
-    ...
+// 嵌套模块
+module widgets {
+    export module button { ... }
+    export module alert { ... }
+    export module textarea { ... }
+    ...
+}
+  
+import { messageBox, confirmDialog } from widgets.alert;
+...
 
-    // 从服务器上请求的模块
-    <script type="harmony">
-    // loading from a URL
-    module JSON at 'http://json.org/modules/json2.js';
-    alert(JSON.stringify({'hi': 'world'}));
+// 从服务器上请求的模块
+<script type="harmony">
+// loading from a URL
+module JSON at 'http://json.org/modules/json2.js';
+alert(JSON.stringify({'hi': 'world'}));
 
-    // 动态载入一个模块
-    Loader.load('http://json.org/modules/json2.js', function(JSON) {
-        alert(JSON.stringify([0, {a: true}]));
-    });
-
+// 动态载入一个模块
+Loader.load('http://json.org/modules/json2.js', function(JSON) {
+    alert(JSON.stringify([0, {a: true}]));
+});
+```
 
 除此之外，还可以远程载入的模块、异步加载模块等，请参考[使用 AMD、CommonJS 及 ES Harmony 编写模块化的 JavaScript](http://justineo.github.io/singles/writing-modular-js/)。
 
 ### 参考
+
 - [UMD和ECMAScript模块 - snandy - 博客园](http://www.cnblogs.com/snandy/archive/2012/03/19/2406596.html)
 - [harmony:modules](http://wiki.ecmascript.org/doku.php?id=harmony:modules)
 - [harmony:module_loaders](http://wiki.ecmascript.org/doku.php?id=harmony:module_loaders)
 
+## 工具
 
+- [mehdishojaei/grunt-amdcheck](https://github.com/mehdishojaei/grunt-amdcheck) Finds and removes unused dependencies in AMD modules. <https://npmjs.org/package/grunt-amdcheck>
 
 ## 参考链接
 

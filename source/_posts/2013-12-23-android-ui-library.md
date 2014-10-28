@@ -189,7 +189,10 @@ __其他参考：__
 - [Android Assets Studio](http://android-ui-utils.googlecode.com/hg/asset-studio/dist/index.html) 最佳工具之一。它可以为你生成各种分辨率 (mdpi, hdpi, xhdpi)的启动器、标签、工具栏、菜单图标，可以按照你的配色[生成主题](http://android-holo-colors.com/)，还可以生成工具栏资源 适用于Sherlock Action Bar.
 
 ## Tutorial
+
 - [AndroidView](http://www.androidviews.net/)
 - [Google Design](https://www.google.com/design/)
 - [Android优秀开源项目](http://www.eoeandroid.com/thread-272453-1-1.html) 原文/[ANDROID DEVELOPMENT TOOLS FOR ECLIPSE: 5 MUST HAVES](http://blog.gigavoice.com/?p=50&preview=true)
 - [Android Boost](http://zouguangxian.github.io/android-boost/)
+- [FloatLabelLayout](https://gist.github.com/chrisbanes/11247418)
+- [StanKocken/EfficientAdapter](https://github.com/StanKocken/EfficientAdapter) An efficient adapter to make the use of RecyclerView much easier for Android.

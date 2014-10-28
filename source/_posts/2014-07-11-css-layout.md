@@ -79,6 +79,7 @@ Any    | 3+     | 1.5+     | 11.1+ |10+ |TBD     |TBD
 - [SaraSoueidan/navicon-transformicons · GitHub](https://github.com/SaraSoueidan/navicon-transformicons)
 - [S Gallery: A Responsive jQuery Gallery Plugin with CSS3 Animations](http://sarasoueidan.com/blog/s-gallery/)
 - [Radio & Checkbox - CodePen](http://codepen.io/WhiteWolfWizard/pen/oDyhs)
+- [Readme Login Form](http://dash.readme.io/login)
 
 ### Loader
 
@@ -129,6 +130,7 @@ Any    | 3+     | 1.5+     | 11.1+ |10+ |TBD     |TBD
 
 - [The CSS Grid Layout Module — Flexible Structures for Content - Vanseo Design](http://www.vanseodesign.com/css/grid-layout-module/)
 - [The CSS Regions Module — Control Where Content Flows - Vanseo Design](http://www.vanseodesign.com/css/regions/)
+- [The Anti-hero of CSS Layout - "display:table"](http://colintoh.com/blog/display-table-anti-hero)
 
 ## Reference
 

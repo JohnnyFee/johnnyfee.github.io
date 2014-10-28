@@ -55,7 +55,10 @@ See [Running Jekyll on Windows – Madhur Ahuja](http://www.madhur.co.in/blog/20
 
    	    $ gem install jekyll
 
-	**注意**，对于中国大陆的用户请使用淘宝的[RubyGems镜像](http://ruby.taobao.org/)。
+	**注意**，对于中国大陆的用户请国内镜像：
+
+    - 淘宝的[RubyGems镜像](http://ruby.taobao.org/)。
+    - [Rubygems 镜像 - 山东理工大学](http://ruby.sdutlinux.org/)
 
 6. 使用[Jekyll-Bootstrap](http://jekyllbootstrap.com/index.html#start-now)快速搭建博客[^3]
 

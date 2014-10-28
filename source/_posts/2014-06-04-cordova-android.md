@@ -7,9 +7,9 @@ tags: [phonegap, cordova, android]
 
 ## Setup
 
-If you want to use Cordova's Android-centered shell tools in conjunction with the SDK, download Cordova from [cordova.apache.org](http://cordova.apache.org/). Otherwise ignore this section if you plan to use the cross-platform CLI tool described in [The Command-Line Interface](http://docs.phonegap.com/en/edge/guide_cli_index.md.html#The%20Command-Line%20Interface).
+如果你想让 Cordova 的以 Android 为中心的 shell 工具和 SDK 协作，从 [cordova.apache.org](http://cordova.apache.org/) 下载 Cordova。否则，如果你计划使用跨平台的 CLI 工具，请忽略这部分内容。
 
-- 安装 Android Sdk [developer.android.com/sdk](http://developer.android.com/sdk/) 安装方法参考[这里](http://developer.android.com/sdk/installing/bundle.html)。
+- 安装 Android SDK [developer.android.com/sdk](http://developer.android.com/sdk/) 安装方法参考[这里](http://developer.android.com/sdk/installing/bundle.html)。
 - 添加 `tools/` 和 `platform-tools/` 到环境变量。
 - 可能还需要 将 Java 和 Ant 添加到环境变量。`;%JAVA_HOME%\bin;%ANT_HOME%\bin`
 

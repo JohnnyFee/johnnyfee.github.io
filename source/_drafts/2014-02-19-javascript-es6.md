@@ -16,6 +16,7 @@ tags: [javascript]
 - [ECMAScript 6入门](http://es6.ruanyifeng.com/#docs/string)
 - [Lightweight ES6 Features That Pack A Punch](http://colintoh.com/blog/lightweight-es6-features)
 - [ECMAScript 6 promises (2/2): the API](http://www.2ality.com/2014/10/es6-promises-api.html)
+- [Preparing for ECMAScript 6: Set and WeakSet](http://www.sitepoint.com/preparing-ecmascript-6-set-weakset)
 
 ## Tools
 

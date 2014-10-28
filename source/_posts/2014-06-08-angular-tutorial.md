@@ -1054,6 +1054,7 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - [angular-data: Home](http://angular-data.pseudobry.com) Give your data the treatment it deserves with a data store built for Angular.js.
 - [AngularJS Datatype Editors (ADE)](http://toodledo.github.io/ADE/) ADE is a bunch of directives and filters for displaying and editing various types of data, using AngularJS.
 - [angular-cn/ng-showcase](https://github.com/angular-cn/ng-showcase/)Angular范例程序
+- [Pasvaz/bindonce](https://github.com/Pasvaz/bindonce) Zero watches binding for AngularJs
 
 ## FAQ
 
@@ -1236,5 +1237,6 @@ See [angularjs - how to access the angular $scope variable in browsers console -
 
 - [angularjs style guide](https://github.com/mgechev/angularjs-style-guide/blob/master/README-zh-cn.md)
 - [Google's AngularJS Style Guide](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html)
+- [johnpapa/angularjs-styleguide](https://github.com/johnpapa/angularjs-styleguide#modules)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

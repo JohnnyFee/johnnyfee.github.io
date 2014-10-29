@@ -80,9 +80,9 @@ cordova.exec(function(winParam) {},
 * `function(error){ }`：失败回调。
 * `service`：调用原生接口的服务名称。
 * `action`：调用原生接口的行为，一般为插件的函数名称。
-* [/* arguments */]: 传递给原生接口的参数数组。
+* `[/* arguments */]`: 传递给原生接口的参数数组。
 
-### Sample JavaScript
+如：
 
 ```js
 window.echo = function(str, callback) {  
@@ -120,28 +120,29 @@ Tizen平台暂时不支持插件。
 
 ### 发布插件
 
-一旦开发完成你的插件，你可能想要将其发布到社区与别人进行分享。你可以发布你的插件到 cordova [注册中心]](http://plugins.cordova.io/) 或者发布到任何基于 npmjs 的其他注册中心。其他的开发者可以使用 自动安装这个插件，通过 Cordova CLI 或者 `plugman` 自动管理。
+一旦开发完成你的插件，你可能想要将其发布到社区与别人进行分享。你可以发布你的插件到 cordova [注册中心](http://plugins.cordova.io/) 或者发布到任何其他基于 npm 的注册中心。
 
-你需要使用 `plugman` 工具按照下面的步骤安装插件：
+你需要使用 `plugman` 工具按照下面的步骤发布插件：
 
 ```shell
-$ plugman adduser # that is if you don't have an account yet$ plugman publish /path/to/your/plugin
+$ plugman adduser # that is if you don't have an account yet
+$ plugman publish /path/to/your/plugin
 ```
 
-## Plugin Specification
+## 插件规范
 
 See： 
 
 - [Apache Cordova API Documentation](http://cordova.apache.org/docs/en/4.0.0/plugin_ref_spec.md.html#Plugin%20Specification)
 - [PhoneGap 13 插件配置标准 - jacob的专栏 - 博客频道 - CSDN.NET](http://blog.csdn.net/jacob_wang520/article/details/18350355)
 
-plugin.xml文件是在plugins命名空间（http://apache.org/cordova/ns/plugins/1.0)下面的xml文档。它包含一个定义插件的顶层 plugin 元素及定义插件结构的子元素。
+`plugin.xml` 文件是在 plugins 命名空间（http://apache.org/cordova/ns/plugins/1.0) 下面的xml文档。
 
-一个插件元素示例：
+如：
 
 ```xml
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"  
-    xmlns:android="http://schemas.android.com/apk/res/android"  
+    xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.alunny.foo"  
     version="1.0.2"> 
 ```
@@ -150,13 +151,13 @@ plugin.xml文件是在plugins命名空间（http://apache.org/cordova/ns/plugins
 
 `plugin` 元素是插件 manifest 的底层元素，它有下面的特性：
 
-* `xmlns` (必须): 插件命名空间，`http://apache.org/cordova/ns/plugins/1.0`。如果文档中包含其他命名空间的 XML，如添加到 `AndroidManifest.xml` 文件的命名空间，这些命名空间应该添加到顶级元素。
+* `xmlns` (必须): 插件命名空间，`http://apache.org/cordova/ns/plugins/1.0`。如果文档中包含其他命名空间的 XML，如 `AndroidManifest.xml` 文件中的命名空间，这些命名空间应该添加到顶级元素，如 `xmlns:android="http://schemas.android.com/apk/res/android"`。
 * `id` (必须): 插件的全路径，如：`com.alunny.foo`
-* `version` (必须): 插件的版本，使用major.minor.patch的模式，正则表达式为： `^\d+[.]\d+[.]\d+$`
+* `version` (必须): 插件的版本，使用 major.minor.patch 模式，正则表达式为： `^\d+[.]\d+[.]\d+$`
 
 ### engines 和 engine
 
-`<engines>` 元素的的子元素指明了插件支持的基于 Cordova 的框架的版本，如：
+`<engines>` 指定插件支持的基于 Cordova 的框架的版本，如：
 
 ```xml
 <engines>  
@@ -166,7 +167,7 @@ plugin.xml文件是在plugins命名空间（http://apache.org/cordova/ns/plugins
 </engines>  
 ```
 
-跟 `<plugin>` 的 `version` 属性相似，engine 的 `version` 也符合 major.minor.patch 格式。`<engine>` 元素也可以使用模糊匹配来避免重复，减少由于平台升级带来的维护。工具至少应该应该支持 `>`, `>=`, `<` and `<=`，如：
+跟 `<plugin>` 的 `version` 属性相似，`engine` 的 `version` 也符合 major.minor.patch 格式。`<engine>` 元素也可以使用模糊匹配来避免重复，减少由于平台升级带来的维护。可以使用的模糊操作符为：`>`, `>=`, `<` and `<=`，如：
 
 ```xml
 <engines>
@@ -185,9 +186,6 @@ plugin.xml文件是在plugins命名空间（http://apache.org/cordova/ns/plugins
 </engines> 
 ```
 
-Here's a list of the default engines that the '
-<engine>' tag supports:
-
 下面是 `<engine>` 标签默认支持的引擎列表：
 
 * 'cordova' 
@@ -205,7 +203,7 @@ Here's a list of the default engines that the '
 * 'apple-osx' // returns the OSX version
 * 'blackberry-ndk' // returns the native blackberry SDK version</engine>
 
-如果要指明一个基于 Cordova 的自定义框架，应该使用下面的 engine 标签列出：
+如果要指明一个基于 Cordova 的自定义框架，应该使用下面的 `engine` 标签列出：
 
 ```xml
 <engines>  
@@ -220,7 +218,7 @@ Here's a list of the default engines that the '
 * `name`（必须）：框架名称。
 * `version`（必须）：框架版本。
 * `scriptSrc`（必须）：告诉 plugman 框架版本的脚本文件，理想情况下，这个文件应该在插件目录的顶级目录。
-* `platform`（必须）：框架支持的平台。你可以使用通配符 `*` 来代表所有平台，也可以指定多个平台，如 `android|ios|blackberry10`，还可以值指定一个平台 `android`。
+* `platform`（必须）：框架支持的平台。你可以使用通配符 `*` 来代表所有平台，也可以指定多个平台，如 `android|ios|blackberry10`，还可以只指定一个平台 `android`。
 
 
 如果没指定 `<engine>` 标签，plugman 会盲目地将插件安装到 Cordova 过程目录下。
@@ -280,14 +278,14 @@ Here's a list of the default engines that the '
 <asset src="www/foo" target="foo" />  
 ```
 
-所有的 asset 元素都必须包含 `src` 和 `target` 属性，基于 web 的插件多半包含 `<asset>` 元素。嵌套在 `<platform>` 元素下 `<asset>` 元素指定平台相关的 Web 资源。属性包含：
+所有的 asset 元素都必须包含 `src` 和 `target` 属性，基于 web 插件多半包含 `<asset>` 元素。嵌套在 `<platform>` 元素下 `<asset>` 元素指定平台相关的 Web 资源。属性包含：
 
 * `src` (required): 插件包下相对 `plugin.xml` 文档的文件或者目录。如果文件不存在于指定的 `src` 下，plugman 会停止并报错。
-* `target` (required): 相对 `www` 目录，Cordova 应用下相对 `www` 的文件或目录。Assets 可以指定到子目录中，如：
+* `target` (required):相对 `www` 的文件或目录。如：
     
         <asset src="www/new-foo.js" target="js/experimental/foo.js" />
 
-    这会在 `www` 目录下创建 `js/experimental` 目录（如果不存在），让后拷贝 `new-foo.js` 文件，并且重命名为 `foo.js`。如果文件在目标位置已经存在，plugman 会停止并报错。
+    这会在 `www` 目录下创建 `js/experimental` 目录（如果不存在），然后拷贝 `new-foo.js` 文件，并且重命名为 `foo.js`。如果文件在目标位置已经存在，plugman 会停止并报错。
 
 ### js-module
 

@@ -180,9 +180,42 @@ $scope.getMessage = function() {
 
 __注意：__ 即使监听函数没有改变模型，`$digest` 至少也会运行两遍，再运行一次是为了确保模型是稳定的，没有其他修改。
 
-### Conclusion
-
 最重要的是要记住 Angular 能否发现你的修改，你过不能，你应该手动调用 `$apply()`。
+
+## Difference between the $observe and $watch methods
+
+See [javascript - Difference between the $observe and $watch methods - Stack Overflow](http://stackoverflow.com/questions/14876112/difference-between-the-observe-and-watch-methods)
+
+**[$observe()](https://docs.angularjs.org/api/ng.$compile.directive.Attributes#$observe)** is a method on the [Attributes](http://docs.angularjs.org/api/ng.$compile.directive.Attributes) object, and as such, it can only be used to observe/watch the value change of a DOM attribute.  It is only used/called inside directives.  Use $observe when you need to observe/watch a DOM attribute that contains interpolation (i.e., {{}}'s). 
+E.g., `attr1="Name: {{name}}"`, then in a directive: `attrs.$observe('attr1', ...)`. 
+(If you try `scope.$watch(attrs.attr1, ...)` it won't work because of the {{}}s -- you'll get `undefined`.)  Use $watch for everything else.
+
+**[$watch()](http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch)** is more complicated.  It can observe/watch an "expression", where the expression can be either a function or a string.  If the expression is a string, it is [$parse](http://docs.angularjs.org/api/ng.$parse)'d (i.e., evaluated as an [Angular expression](http://docs.angularjs.org/guide/expression)) into a function.  (It is this function that is called every digest cycle.)  The string expression can not contain {{}}'s.  $watch is a method on the [Scope](http://docs.angularjs.org/api/ng.$rootScope.Scope) object, so it can be used/called wherever you have access to a scope object, hence in 
+
+* a controller -- any controller -- one created via ng-view, ng-controller, or a directive controller
+* a linking function in a directive, since this has access to a scope as well
+
+Because strings are evaluated as Angular expressions, $watch is often used when you want to observe/watch a model/scope property.  E.g., `attr1="myModel.some_prop"`, then in a controller or link function: `scope.$watch('myModel.some_prop', ...)` or `scope.$watch(attrs.attr1, ...)` (or `scope.$watch(attrs['attr1'], ...)`).
+(If you try `attrs.$observe('attr1')` you'll get the string `myModel.some_prop`, which is probably not what you want.)
+
+As discussed in comments on @PrimosK's answer, all $observes and $watches are checked every [digest cycle](http://docs.angularjs.org/guide/concepts).
+
+Directives with isolate scopes are more complicated.  If the '@' syntax is used, you can $observe _or $watch_ a DOM attribute that contains interpolation (i.e., {{}}'s).  (The reason it works with $watch is because the '@' syntax does the [interpolation](http://docs.angularjs.org/api/ng.$interpolate) for us, hence $watch sees a string without {{}}'s.)  To make it easier to remember which to use when, I suggest using $observe for this case also.
+
+To help test all of this, I wrote a [Plunker](http://plnkr.co/edit/HBha8sVdeCqhJtQghGxw?p=preview) that defines two directives.  One (`d1`) does not create a new scope, the other (`d2`) creates an isolate scope.  Each directive has the same six attributes.  Each attribute is both $observe'd and $watch'ed.
+
+```
+<div d1 attr1="{{prop1}}-test" attr2="prop2" attr3="33" attr4="'a_string'"
+        attr5="a_string" attr6="{{1+aNumber}}"></div>
+```
+
+Look at the console log to see the differences between $observe and $watch in the linking function.  Then click the link and see which $observes and $watches are triggered by the property changes made by the click handler.
+
+Notice that when the link function runs, any attributes that contain {{}}'s are not evaluated yet (so if you try to examine the attributes, you'll get `undefined`).  The only way to see the interpolated values is to use $observe (or $watch if using an isolate scope with '@').  Therefore, getting the values of these attributes is an _asynchronous_ operation.  (And this is why we need the $observe and $watch functions.)
+
+Sometimes you don't need $observe or $watch.  E.g., if your attribute contains a number or a boolean (not a string), just evaluate it once: `attr1="22"`, then in, say, your linking function: `var count = scope.$eval(attrs.attr1)`.  If it is just a constant string – `attr1="my string"` – then just use `attrs.attr1` in your directive (no need for $eval()).
+
+See also [Vojta's google group post](https://groups.google.com/d/msg/angular/TbRQhG-G14I/bYcipV1OYwcJ) about $watch expressions.
 
 ## Reference
 

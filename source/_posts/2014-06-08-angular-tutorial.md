@@ -97,6 +97,15 @@ See:
 - [yeoman/generator-angular](https://github.com/yeoman/generator-angular)
 - [使用Yeoman快速启动AngularJS项目开发 / Owen Chen](http://owenchen.duapp.com/index.php/yeo-angular/)
 
+__根目录下的一些配置文件的说明：__
+
+- __.bowerrc__ Bower 配置文件。
+- __.csslintrc__ CSSLint 配置文件。[CSS Lint](http://csslint.net/)。
+- __.editconfig__ EditorConfig 配置文件, 用来在不同的编辑器和 IDE 之间配置统一的编码风格，参考 [EditorConfig](http://editorconfig.org/)。WebStorm 默认提供并安装了这个插件。
+- __.gitignore__ Git ignore file。
+- __.jshintrc__ JSHint 配置文件。
+- __.travis.yml__ Travis 配置文件，用来告诉 Travis 如何构建。[Travis CI](https://travis-ci.org/) 为开源社区提供免费的持续集成的平台。
+
 ## Principle
 
 ![](http://dl2.iteye.com/upload/attachment/0091/3055/5f89a8fd-bbe6-3d15-85c1-4881ac26075d.png)
@@ -1055,6 +1064,13 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - [AngularJS Datatype Editors (ADE)](http://toodledo.github.io/ADE/) ADE is a bunch of directives and filters for displaying and editing various types of data, using AngularJS.
 - [angular-cn/ng-showcase](https://github.com/angular-cn/ng-showcase/)Angular范例程序
 - [Pasvaz/bindonce](https://github.com/Pasvaz/bindonce) Zero watches binding for AngularJs
+
+__快捷键：__
+
+- [AngularHotkeys.js](http://chieffancypants.github.io/angular-hotkeys/) 建议使用。
+- [bfanger/angular-keyboard](https://github.com/bfanger/angular-keyboard) 仅供参考。
+- [alisabzevari/NgHotkey](https://github.com/alisabzevari/NgHotkey) 仅供参考。
+
 
 ## FAQ
 

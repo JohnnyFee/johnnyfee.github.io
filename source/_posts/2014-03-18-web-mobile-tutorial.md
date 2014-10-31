@@ -13,6 +13,11 @@ tags: [angular, ui]
 - [HTML5、Web引擎与跨平台移动App开发 - WEB开发者](http://www.admin10000.com/document/4920.html)
 - [优化移动体验的HTML5技巧 - 技术翻译 - 开源中国社区](http://www.oschina.net/translate/mobile-app-optimization-and-performance)
 - [The State of Hybrid Mobile Development - Telerik Developer NetworkTelerik Developer Network](http://developer.telerik.com/featured/the-state-of-hybrid-mobile-development/)
+- [Adding Native Touches to Your Hybrid App -Telerik Developer Network](http://developer.telerik.com/featured/adding-native-touches-hybrid-app)
+
+### Vedio
+
+- [Angelina Fabbro: CSS In Your Pocket - Mobile CSS Tips From The Trenches [CSSConfUS2014] - YouTube](https://www.youtube.com/watch?v=vBHt61yDO9U)
 
 <!--more-->
 

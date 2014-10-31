@@ -136,7 +136,7 @@ See：
 - [Apache Cordova API Documentation](http://cordova.apache.org/docs/en/4.0.0/plugin_ref_spec.md.html#Plugin%20Specification)
 - [PhoneGap 13 插件配置标准 - jacob的专栏 - 博客频道 - CSDN.NET](http://blog.csdn.net/jacob_wang520/article/details/18350355)
 
-`plugin.xml` 文件是在 plugins 命名空间（http://apache.org/cordova/ns/plugins/1.0) 下面的xml文档。
+`plugin.xml` 文件是在 plugins 命名空间（http://apache.org/cordova/ns/plugins/1.0) 下面的 XML 文档。
 
 如：
 
@@ -289,7 +289,7 @@ See：
 
 ### js-module
 
-大多数插件包含一个或者多个 JavaScript 文件。每一个 `<js-module>` 标签对应一个 JavaScript 文件，并且使插件使用者不用为每个文件增加 `<script>`标签。`<asset>` 标签只是简单地从插件子目录将文件拷贝到 `www` 下，`<js-module>` 更加复杂，如下：
+大多数插件包含一个或者多个 JavaScript 文件。每一个 `<js-module>` 标签对应一个 JavaScript 文件。`<asset>` 标签只是简单地从插件子目录将文件拷贝到 `www` 下，`<js-module>` 更加复杂，如下：
 
 ```xml
 <js-module src="socket.js" name="Socket">  
@@ -324,11 +324,6 @@ See：
 
 ### dependency
 
-The `<dependency>` tag allows you to specify other plugins on which the
-current plugin depends. While future versions will access them from
-plugin repositories, in the short term plugins are directly referenced
-as URLs by `<dependency>` tags. They are formatted as follows:
-
 `<dependency>` 标签让你指定当前插件的依赖插件。未来的版本会从插件库中访问，就眼前来说，插件通过 `<dependency>` 标签的 URL 来引用。如：
 
 ```xml
@@ -357,7 +352,7 @@ as URLs by `<dependency>` tags. They are formatted as follows:
 
 ```xml
 <platform name="android">
-    <!-- android-specific elements -->
+    <source-file src="src/android/Device.java" target-dir="src/org/apache/cordova/device" />
 </platform>
 <platform name="ios">
     <!-- ios-specific elements -->
@@ -455,7 +450,7 @@ file in an iOS Cordova project. For example:
 
 ### resource-file and header-file Elements
 
-像 source file 一样，指定源文件、header 和资源文件。如 iOS：
+像 source file 一样，指定 header 和资源文件。如 iOS：
 
 ```xml
 <resource-file src="CDVFoo.bundle" />
@@ -487,8 +482,6 @@ Android 示例:
 
 ### framework
 
-Identifies a framework (usually part of the OS/platform) on which the plugin depends.
-
 指定插件依赖的平台（通常是 OS/平台）。
 
 如:
@@ -500,9 +493,7 @@ Identifies a framework (usually part of the OS/platform) on which the plugin dep
 <framework src="path/to/project/LibProj.csproj" custom="true" type="projectReference"/>
 ```
 
-The `src` attribute identifies the framework, which plugman attempts
-to add to the Cordova project, in the correct fashion for a given
-platform.
+`src` 属性指定一个添加到 Cordova 工程的框架。
 
 - `src` 属性指定框架，plugman 会视图添加到 Cordova 工程。
 - `weak` 指定跨家是否应该被软连接，默认为 `false`。
@@ -518,7 +509,7 @@ platform.
 
 ### info
 
-Additional information provided to users. This is useful when you require extra steps that can't be easily automated or are beyond plugman's scope.  Examples:
+提供给用户的额外信息。
 
 ```xml
 <info>
@@ -538,20 +529,15 @@ android.library.reference.1=PATH_TO_ANDROID_SDK/sdk/extras/google/google_play_se
 <uses-permission android:name="com.alunny.message.permission.C2D_MESSAGE"/>
 ```
 
-In such cases where the content inserted from the `plugin.xml` file is
-not known ahead of time, variables can be indicated by a dollar-sign
-followed by a series of capital letters, digits, or underscores. For
-the above example, the `plugin.xml` file would include this tag:
-
 在这种情况下面，事先并不知道插入 `plugin.xml` 文件的内容。这个时候就需要使用到变量的概念，变量是以美元符号（$)开头的，后接一系列大写字母、数字及下划线。对于上面的例子，`plugin.xml` 中会包含下面的标签：
 
 ```xml
 <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"/>
 ```
 
-plugman 会使用特定的值代替变量，如果没有找到则使用一个空的字符串代替。变量的值可以被自己检测（如从 `AndroidManifest.xml` 文件中），也可以由工具指定，该过程依赖于特定的工具；
+plugman 会使用特定的值代替变量，如果没有找到则使用一个空的字符串代替。变量的值可以被自动检测（如从 `AndroidManifest.xml` 文件中），也可以由工具指定，该过程依赖于特定的工具；
 
-plugman可以要求用户指定插件需要的变量值，如：C2M 和 Google 地图的 API_KEY 可以使用下面的命令参数指定：
+plugman 可以要求用户指定插件需要的变量值，如：C2M 和 Google 地图的 API_KEY 可以使用下面的命令参数指定：
 
 ```shell
 plugman --platform android --project /path/to/project --plugin name|git-url|path --variable API_KEY=!@CFATGWE%^WGSFDGSDFW$%^#$%YTHGsdfhsfhyer56734
@@ -603,47 +589,49 @@ plugman 会检查必须的 preferences 传入，如果没有，报错退出。
 
 `plugin.xml` 的内容如下：
 
-    <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        xmlns:rim="http://www.blackberry.com/ns/widgets"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        id="org.apache.cordova.device"
-        version="0.2.9">
-        <name>Device</name>
-        <description>Cordova Device Plugin</description>
-        <license>Apache 2.0</license>
-        <keywords>cordova,device</keywords>
-        <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git</repo>
-        <issue>https://issues.apache.org/jira/browse/CB/component/12320648</issue>
+```xml
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="org.apache.cordova.device"
+    version="0.2.9">
+    <name>Device</name>
+    <description>Cordova Device Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,device</keywords>
+    <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git</repo>
+    <issue>https://issues.apache.org/jira/browse/CB/component/12320648</issue>
 
-        <js-module src="www/device.js" name="device">
-            <clobbers target="device" />
-        </js-module>
+    <js-module src="www/device.js" name="device">
+        <clobbers target="device" />
+    </js-module>
 
-         <!-- android -->
-        <platform name="android">
-            <config-file target="res/xml/config.xml" parent="/*">
-                <feature name="Device" >
-                    <param name="android-package" value="org.apache.cordova.device.Device"/>
-                </feature>
-            </config-file>
+     <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Device" >
+                <param name="android-package" value="org.apache.cordova.device.Device"/>
+            </feature>
+        </config-file>
 
-            <source-file src="src/android/Device.java" target-dir="src/org/apache/cordova/device" />
-        </platform>
+        <source-file src="src/android/Device.java" target-dir="src/org/apache/cordova/device" />
+    </platform>
 
-         <!-- ios -->
-        <platform name="ios">
-            <config-file target="config.xml" parent="/*">
-                <feature name="Device">
-                    <param name="ios-package" value="CDVDevice"/>
-                </feature>
-            </config-file>
+     <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Device">
+                <param name="ios-package" value="CDVDevice"/>
+            </feature>
+        </config-file>
 
-            <header-file src="src/ios/CDVDevice.h" />
-            <source-file src="src/ios/CDVDevice.m" />
-        </platform>
+        <header-file src="src/ios/CDVDevice.h" />
+        <source-file src="src/ios/CDVDevice.m" />
+    </platform>
 
-        <!--other platforms-->
-    </plugin>
+    <!--other platforms-->
+</plugin>
+```
 
 其中：
 
@@ -656,11 +644,11 @@ plugman 会检查必须的 preferences 传入，如果没有，报错退出。
             <clobbers target="device" />
         </js-module>
 
-    插件对应的 javascript 模块，src 属性指向 JavaScript 文件，如这里的 `www/device.js`。对于 Android 平台，插件安装后，该文件会被拷贝到 `assets/www/plugins/org.apache.cordova.device/www/` 下。该 JavaScript 文件被在 `index.html` 被加载。`clobbers` 为映射的变量，默认为全局变量，本例中将 device 模块映射为全局变量 `windows.device`。如果没有使用 `clobbers` 来映射，我们可以使用 `require` 方法来加载模块：
+    插件对应的 javascript 模块，src 属性指向 JavaScript 文件，如这里的 `www/device.js`。对于 Android 平台，插件安装后，该文件会被拷贝到 `assets/www/plugins/org.apache.cordova.device/www/` 下。该 JavaScript 文件在 `index.html` 被加载。`clobbers` 为映射的变量，默认为全局变量，本例中将 device 模块映射为全局变量 `windows.device`。如果没有使用 `clobbers` 来映射，我们可以使用 `require` 方法来加载模块：
 
         var device = cordova.require('org.apache.cordova.device');
 
-- platform：插件的平台配置，以 Android 为例。
+- config-file：插件的平台配置，以 Android 为例。
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Device" >
@@ -670,7 +658,7 @@ plugman 会检查必须的 preferences 传入，如果没有，报错退出。
 
     The service `name` matches the one used in the JavaScript exec call. The `value` is the Java class's fully qualified namespace identifier.
 
-    安装插件后 `feature` 标签会被添加到 res/xml/config.xml 文件中。
+    安装插件后 `feature` 标签会被添加到 `res/xml/config.xml` 文件中。
 
         <source-file src="src/android/Device.java" target-dir="src/org/apache/cordova/device" />
 
@@ -682,130 +670,167 @@ plugman 会检查必须的 preferences 传入，如果没有，报错退出。
 
 #### The JavaScript Interface
 
-    cordova.exec(function(winParam) {},
-        function(error) {},
-        "service",
-        "action",
-        ["firstArgument", "secondArgument", 42, false]);
+```js
+var argscheck = require('cordova/argscheck'),
+    channel = require('cordova/channel'),
+    utils = require('cordova/utils'),
+    exec = require('cordova/exec'),
+    cordova = require('cordova');
 
-Here is how each parameter works:
+channel.createSticky('onCordovaInfoReady');
+// Tell cordova channel to wait on the CordovaInfoReady event
+channel.waitForInitialization('onCordovaInfoReady');
 
-* `function(winParam) {}`: A success callback function. Assuming your exec call completes successfully, this function executes along with any parameters you pass to it.
-* `function(error) {}`: An error callback function. If the operation does not complete successfully, this function executes with an optional error parameter.
-* `"service"`: The service name to call on the native side. This corresponds to a native class, for which more information is available in the native guides listed below.
-* `"action"`: The action name to call on the native side. This generally corresponds to the native class method. See the native guides listed below.
-* [/* arguments */]: An array of arguments to pass into the native environment.
+/**
+ * This represents the mobile device, and provides properties for inspecting the model, version, UUID of the
+ * phone, etc.
+ * @constructor
+ */
+function Device() {
+    this.available = false;
+    this.platform = null;
+    this.version = null;
+    this.uuid = null;
+    this.cordova = null;
+    this.model = null;
 
-This example shows one way to implement the plugin's JavaScript interface:
+    var me = this;
 
-    window.echo = function(str, callback) {  
-        cordova.exec(callback, function(err) {  
-            callback('Nothing to echo.');  
-        }, "Echo", "echo", [str]);  
-    };  
-
-In this example, the plugin attaches itself to the window object as the echo function, which plugin users would call as follows:
-
-    window.echo("echome", function(echoValue) {  
-        alert(echoValue == "echome"); // should alert true.  
+    channel.onCordovaReady.subscribe(function() {
+        me.getInfo(function(info) {
+            //ignoring info.cordova returning from native, we should use value from cordova.version defined in cordova.js
+            //TODO: CB-5105 native implementations should not return info.cordova
+            var buildLabel = cordova.version;
+            me.available = true;
+            me.platform = info.platform;
+            me.version = info.version;
+            me.uuid = info.uuid;
+            me.cordova = buildLabel;
+            me.model = info.model;
+            channel.onCordovaInfoReady.fire();
+        },function(e) {
+            me.available = false;
+            utils.alert("[ERROR] Error initializing Cordova: " + e);
+        });
     });
+}
+
+/**
+ * Get device info
+ *
+ * @param {Function} successCallback The function to call when the heading data is available
+ * @param {Function} errorCallback The function to call when there is an error getting the heading data. (OPTIONAL)
+ */
+Device.prototype.getInfo = function(successCallback, errorCallback) {
+    argscheck.checkArgs('fF', 'Device.getInfo', arguments);
+    exec(successCallback, errorCallback, "Device", "getDeviceInfo", []);
+};
+
+module.exports = new Device();
+```
 
 ### src/android/Device.java
 
-    public class Device extends CordovaPlugin {
-        public static String uuid;                                // Device UUID
+```java
+public class Device extends CordovaPlugin {
+    public static String uuid;                                // Device UUID
 
-        // ... other fileds
+    // ... other fileds
 
-        public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-            super.initialize(cordova, webView);
-            Device.uuid = getUuid();
-        }
-
-        /**
-         * Executes the request and returns PluginResult.
-         *
-         * @param action            The action to execute.
-         * @param args              JSONArry of arguments for the plugin.
-         * @param callbackContext   The callback id used when calling back into JavaScript.
-         * @return                  True if the action was valid, false if not.
-         */
-        public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-            if (action.equals("getDeviceInfo")) {
-                JSONObject r = new JSONObject();
-                r.put("uuid", Device.uuid);
-                r.put("version", this.getOSVersion());
-                r.put("platform", this.getPlatform());
-                r.put("model", this.getModel());
-                callbackContext.success(r);
-            }
-            else {
-                return false;
-            }
-            return true;
-        }
-
-        /**
-         * Get the device's Universally Unique Identifier (UUID).
-         *
-         * @return
-         */
-        public String getUuid() {
-            String uuid = Settings.Secure.getString(this.cordova.getActivity().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-            return uuid;
-        }
-
-        // ... other method
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        Device.uuid = getUuid();
     }
+
+    /**
+     * Executes the request and returns PluginResult.
+     *
+     * @param action            The action to execute.
+     * @param args              JSONArry of arguments for the plugin.
+     * @param callbackContext   The callback id used when calling back into JavaScript.
+     * @return                  True if the action was valid, false if not.
+     */
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        if (action.equals("getDeviceInfo")) {
+            JSONObject r = new JSONObject();
+            r.put("uuid", Device.uuid);
+            r.put("version", this.getOSVersion());
+            r.put("platform", this.getPlatform());
+            r.put("model", this.getModel());
+            callbackContext.success(r);
+        }
+        else {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get the device's Universally Unique Identifier (UUID).
+     *
+     * @return
+     */
+    public String getUuid() {
+        String uuid = Settings.Secure.getString(this.cordova.getActivity().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+        return uuid;
+    }
+
+    // ... other method
+}
+```
 
 其中：
 
 - 插件必须继承插件父类 `CordovaPlugin`。
 - `initialize` 重写父类的初始化方法，当插件被实例化后，该方法自动被调用。
-- `execute` 重写父类的执行请求方法。
-    
-    execute 的方法签名为：
+- `execute` 重写父类的执行请求方法。方法签名为：
 
         public boolean execute(String action, JSONArray args, CallbackContext callbackContext)
 
     + action 用于标识插件的行为。
     + args 参数。
-    + callbackContext 和 JavaScript 交互时的上下文。成功的话调用 `callbackContext.success(message)`，失败调用 `callbackContext.error(message)` 方法，分别对应 javascript 文件中的 success 和 error 回调函数。
+    + callbackContext 和 JavaScript 的交互上下文。成功调用 `callbackContext.success(message)`，失败调用 `callbackContext.error(message)` 方法，分别对应 JavaScript 文件中的 `success` 和 `error` 回调函数。
 
 ### Android Plugin (Native Interfaces)
 
-Android plugins are based on Cordova-Android, which consists of an Android WebView with hooks attached to it. Plugins are represented as class mappings in the `config.xml` file. A plugin consists of at least one Java class that extends the CordovaPlugin class, overriding one of its execute methods. As best practice, the plugin should also handle `pause` and `resume` events, along with any message passing between plugins. Plugins with long-running requests, background activity such as media playback, listeners, or internal state should implement the `onReset()` method as well. It executes when the WebView navigates to a new page or refreshes, which reloads the JavaScript.
+插件描述为 `config.xml` 文件中的类映射。一个插件至少包含一个继承于 `CordovaPlugin` 的 Java 类，并且覆盖其中的 `execute` 方法。作为最佳实践，插件应该处理 `pause` and `resume` 事件，以及插件之间传递的任何信息。长时间运行的插件，如媒体播放，监听器，或者内部内部状态，其后台的 Activity 还应该实现 `onReset()` 方法。它在 WebView 导航到新的页面或者刷新的时候执行，这会重新加载 JavaScript。
 
-Whether you distribute a plugin as Java file or as a jar file of its own, the plugin must be specified in your Cordova-Android application's `res/xml/config.xml` file. See Application Plugins for more information on how to use the `plugin.xml` file to inject this feature element:
+不管你把插件发布为 Java 文件还是 jar 文件，插件都必须在 Cordova-Android 应用的 `res/xml/config.xml` 文件中指定。如何在 `plugin.xml` 文件中注入 feature 元素：
 
-    <feature name="<service_name>">
-        <param name="android-package" value="<full_name_including_namespace>" />
-    </feature>
+```xml
+<feature name="<service_name>">
+    <param name="android-package" value="<full_name_including_namespace>" />
+</feature>
+```
 
-The service `name` matches the one used in the JavaScript exec call. The value is the Java class's fully qualified namespace identifier. Otherwise, the plugin may compile but still be unavailable to Cordova.
+`service_name` 必须和 JavaScript 中 `exec` 匹配，`value` 为 Java 类的全限定名。否则，插件虽然可以编译，但在 Cordova 中还是不能用。
 
-### Plugin Initialization and Lifetime
+### 插件初始化和声明周期
 
-One instance of a plugin object is created for the life of each WebView. Plugins are not instantiated until they are first referenced by a call from JavaScript, unless `<param>` with an onloadname attribute is set to "true" in `config.xml`. E.g.:
+插件实例和 WebView 的生命周期一致。插件直到第一次在 JavaScript 被调用时才被引用，除非 `config.xml` 文件中 `onloadname` 参数被设置为 `true`，如
 
-    <feature name="Echo">  
-        <param name="android-package" value="<full_name_including_namespace>" />  
-        <param name="onload" value="true" />  
-    </feature>  
+```xml
+<feature name="Echo">  
+    <param name="android-package" value="<full_name_including_namespace>" />  
+    <param name="onload" value="true" />  
+</feature>  
+```
 
-Plugins should use the initialize method for their start-up logic.
+插件应该使用初始化方法来实现启动逻辑：
 
-    @override  
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {  
-        super.initialize(cordova, webView);
-        // your init code here
-    }
+```java
+@override  
+public void initialize(CordovaInterface cordova, CordovaWebView webView) {  
+    super.initialize(cordova, webView);
+    // your init code here
+}
+```
 
-### Android Integration
+### Android 集成
 
-Android features an Intent system that allows processes to communicate with each other. Plugins have access to a CordovaInterface object, which can access the Android Activity that runs the application. This is the Context required to launch a new Android Intent. The CordovaInterface allows plugins to start an Activity for a result, and to set the callback plugin for when the Intent returns to the application.
+Android 的 Intent 系统可以实现进程间通信。插件可以访问 CordovaInterface 对象，CordovaInterface 对象可以访问运行应用 Android Activity，这个 Activity 启动一个 Android Itent 的上下文。CordovaInterface 可以让插件为了结果启动一个 Activity，让后当 Intent 结果返回时设置回调件。 
 
-As of Cordova 2.0, Plugins can no longer directly access the Context, and the legacy ctx member is deprecated. All ctx methods exist on the Context, so both getContext() and getActivity() can return the required object.
+Cordova 2.0 开始，插件不再能直接访问 Context，`ctx` 成员已被废弃。所有的 `ctx` 的方法在 Context 中都可以找到，所以 `getContext()` and `getActivity()` 都可以放回需要的对象。
 
 ### Upgrading Android
 

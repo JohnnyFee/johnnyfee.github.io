@@ -10,6 +10,17 @@ tags: [android, webview]
 
 [pwnall / chromeview](https://github.com/pwnall/chromeview) Android WebView implementation that uses the latest Chromium code.
 
+Since the release of Android 4.4 KitKat, WebView has been based on Chromium, which means that it has the same rendering and Javascript engine as Chrome for Android. Although it doesn't have the same features, this is a big thing because the consistency and performance in running web apps have been improved. Besides that, our apps are hardware accelerated by default and we also have an insanely awesome [remote debugging](https://developer.chrome.com/devtools/docs/remote-debugging) feature.
+
+With the new Android 5 Lollipop, Google has pushed hybrid development even further. The Chromium layer behind the WebView component is now [updatable from Google Play](http://developer.android.com/about/versions/lollipop.html#WebView). This means that every mobile device with Android 5 or later should have not only the same but the latest browsing engine in the WebView. There are several reasons why this is good news:
+
+* Users get better and more feature-rich experience in using their web apps,
+* Hybrid apps are now more consistent between devices and have better performance,
+* Users don't have to update their OS to get the latest and best possible browser engine.
+
+
+See [The Updatable WebView on Android 5.0 Lollipop - what is it and why should you care? — Infinum](https://www.infinum.co/the-capsized-eight/articles/the-updateable-webview-on-android-5-lollipop-what-is-it-and-why-should-you-care)
+
 ### 添加权限
 
 要用Webview，确认你在**AndroidManifest.xml** 中添加了使用许可 "android.permission.INTERNET" ,否则会出Web page not available错误。

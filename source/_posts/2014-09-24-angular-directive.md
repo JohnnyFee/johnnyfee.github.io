@@ -31,26 +31,22 @@ app.directive('helloWorld', function() {
 });
 ```
 
-在上面的代码中，`app.directive()` 方法在模块中注册了一个新的指令。这个方法的第一个参数是这个指令的名字。第二个参数是一个返回指令定义对象的函数。如果你的指令依赖于其他的对象或者服务，比如 `$rootScope`, `$http`, 或者 `$compile`，他们可以在这个时间被注入。
+在上面的代码中，`app.directive()` 方法在模块中注册了一个新的指令。这个方法的第一个参数是这个指令的名字。第二个参数是一个返回指令定义对象的函数。如果你的指令依赖于其他的对象或者服务，比如 `$rootScope`, `$http`, 或者 `$compile`，他们可以在这里注入。
 
 __使用方法：__
 
-- 这个指令在HTML中以一个元素使用，如`<hello-world/>` 或者 `<hello:world/>`。
-- 也可以以一个属性的方式使用，如 `<div hello-world></div>` 或者 `<div hello:world/>`。
-- 如果你想要符合HTML5的规范，你可以在元素前面添加 x- 或者 data-的前缀。所以下面的标记也会匹配 helloWorld 指令，如 `<div data-hello-world></div>` 或者 `<div x-hello-world></div>`。
+- 以一个元素使用，如`<hello-world/>` 或者 `<hello:world/>`。
+- 以一个属性使用，如 `<div hello-world></div>` 或者 `<div hello:world/>`。
+- 如果你想要符合 HTML5 的规范，你可以在元素前面添加 `x-` 或者 `data-`的前缀，如 `<div data-hello-world></div>` 或者 `<div x-hello-world></div>`。
  
-    在匹配指令的时候，Angular会在元素或者属性的名字中剔除 x- 或者 data- 前缀。 然后将 – 或者 : 连接的字符串转换成驼峰(camelCase)表现形式，然后再与注册过的指令进行匹配。这是为什么，我们在HTML中以 hello-world 的方式使用 helloWorld 指令。其实，这跟HTML对标签和属性不区分大小写有关。
-
-我们在指令定义过程中使用了三个属性来配置指令：
+    在匹配指令的时候，Angular会在元素或者属性的名字中剔除 `x-` 或者 `data-` 前缀。 然后将 `–` 或者 `:` 连接的字符串转换成驼峰(camelCase)表现形式，然后再与注册过的指令进行匹配。这跟HTML对标签和属性不区分大小写有关。
 
 ### `restrict`
 
-这个属性用来指定指令在HTML中的使用方法。在上面的例子中，我们使用了 'AE'。所以这个指令可以被当作新的 HTML 元素或者属性来使用。如果还要允许指令被当作class来使用，我们将 restrict 设置成 'AEC'。
-
-一个Angular指令可以有以下的四种表现形式：
+这个属性用来指定指令在 HTML 中的使用方法。一个 Angular 指令有以下的四种表现形式：
 
 指令形式 | `restrict` 属性值 |示例
----------|------------|----
+---------|------------|-----------
 新的HTML元素 | 'E' | `<data-picker></data-picker>`
 元素的属性 | 'A' | `<input type="text" data-picker/>`
 CSS 类 | 'C' | `<input type="text" class="data-picker"/>`
@@ -58,13 +54,13 @@ CSS 类 | 'C' | `<input type="text" class="data-picker"/>`
 
 ### `template`/`templateUrl` 
 
-这个属性规定了指令被 Angular 编译和链接（link）后生成的HTML标记。这个属性值不一定要是简单的字符串。template 可以非常复杂，而且经常包含其他的指令，以及表达式(`{%raw%}{{ }}{%raw%}`)等。`template` 只用于 templete 内容比较少的情况，更多的情况下你可能会见到 `templateUrl`。所以，理想情况下，你应该将模板放到一个特定的HTML文件中，然后将 templateUrl 属性指向它。
+指定模板或者模板文件。`template` 用于 templete 内容比较少的情况，更多的情况下你可能会见到 `templateUrl`。所以，理想情况下，你应该将模板放到一个特定的 HTML 文件中，然后将 templateUrl 属性指向它。
 
 ### `replace`
 
-`replace` 为 true 表示 compiler 将用 `template` 指定的模板内容替换原指令元素，原指令中的所有属性都将被拷贝到模板元素中。`replace` 为 false 时，表示 template 内容作为指令子元素添加到指令元素中。`replace` 默认为 false。
+`replace` 为 `true` 表示 compiler 将用 `template` 指定的模板内容替换原指令元素，原指令中的所有属性都将被拷贝到模板元素中。`replace` 为 `false` 时，表示 template 内容作为指令的子元素添加到指令元素中。`replace` 默认为 `false`。
 
-在上述例子中，我们用 `<hello-world></hello-world>` 的方式使用我们的指令，并且将 `replace` 设置成 true。所以，在指令被编译之后，生成的模板内容替换掉了 `<hello-world></hello-world>`。最终的输出是 `<h3>Hello World!!</h3>`。如果你将 replace 设置成 false，那么生成的模板会被插入到定义指令的元素中。
+在上例中，我们将 `replace` 设置成 `true`，在指令被编译之后，生成的模板内容替换掉了 `<hello-world></hello-world>`，最终的输出是 `<h3>Hello World!!</h3>`。如果你将 replace 设置成 `false`，那么生成的的内容为 `<hello-world><h3>Hello World!!</h3></hello-world>`。
 
 ### 属性列表
 
@@ -86,18 +82,18 @@ CSS 类 | 'C' | `<input type="text" class="data-picker"/>`
 
 ## 生命周期
 
-当应用引导启动的时候，Angular 开始使用 `$compile` 服务遍历 DOM 元素，试图使用注册过的指令列表来匹配每个元素、属性、注释、CSS 类，一旦匹配成功，AngularJS 调用相应指令的 compile 函数，这个 compile 函数返回一个 link 函数，被添加到稍后执行的 link 函数列表中。作用域在编译阶段还没有准备好，在编译阶段还不能使用作用域中数据。
+当应用启动时，Angular 开始使用 `$compile` 服务遍历 DOM 元素，试图使用注册过的指令列表来匹配每个元素、属性、注释、CSS 类，一旦匹配成功，AngularJS 调用相应指令的 compile 函数，这个 compile 函数返回一个 link 函数，被添加到稍后执行的 link 函数列表中。作用域在编译阶段还没有准备好，在编译阶段还不能使用作用域中数据。
 
-一旦所有的指令编译完成便进入编译阶段，AngularJS 创建作用域并且通过调用 link 函数将每个指令链接到作用域。在这个阶段，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的 scope 下被解析和处理，然后返回具有事件响应的真实的 DOM 节点。
+一旦所有的指令编译完成便进入链接阶段。在这个阶段，作用域已准备就绪，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的 scope 下被解析和处理，然后返回具有事件响应的真实的 DOM 节点。
 
-在链接阶段，作用域已经链接到了指令，链接函数为作用域和 DOM 之间的绑定接通了电源。link 函数几乎可以做所以的事情，除了一些高级用法如访问 transclusion 函数。
+link 函数几乎可以做所以的事情，除了一些高级用法如访问 `transclusion` 函数。
 
 ### Compile
 
-compile 函数在 link 函数被执行之前用来做一些 DOM 改造。它接收下面的参数：
+`compile` 函数在 `link` 函数被执行之前用来做一些 DOM 改造。它接收下面的参数：
 
-- element – 指令所在的元素
-- attributes – 元素上赋予的参数的标准化列表
+- `element` – 指令所在的元素
+- `attributes` – 元素上赋予的参数的标准化列表
 
 要注意的是 compile 函数不能访问 scope，并且必须返回一个 link 函数。只能在链接函数中使用 DOM，因为在编译函数中可能移除或复制元素。如果没有设置 compile 函数，你可以正常地配置 link 函数，有了compile，就不能有 link，link 函数由 compile 函数返回。
 
@@ -114,22 +110,18 @@ myApp.directive('directiveName', function(){
 
       // 编译函数
       // 1. 每个 jq 实例（在未被渲染的模板中）只运行一次。
-      // 2. You CAN examine the DOM and cache information about what variables
-      //   or expressions will be used, but you cannot yet figure out their values.
-      // 3. Angular is caching the templates, 
-      // now is a good time to inject new angular templates as children or future siblings to automatically run..
+      // 2. 你可以检查 DOM 和变量或者表达式的信息，但是你还不能计算出它们的值。
+      // 3. Angular 缓存了模板，现在可以修改模板，如添加子元素或者添加兄弟元素。
 
       return function($scope, $linkElement, $linkAttributes) {
 
         // 链接函数
         // 1. 每个已经渲染的实例只执行一次。
-        // 2. Once for each row in an ng-repeat when the row is created.
-        // 3. Note that ng-if or ng-switch may also affect if this is executed.
-        // 4. Scope IS available because controller logic has finished executing.
-        // 5. All variables and expression values can finally be determined.
-        // 6. Angular is rendering cached templates. It's too late to add templates for angular
-        //  to automatically run. If you MUST inject new templates, you must $compile them manually.
-
+        // 2. ng-repeat 的行创建的时候，每行运行一次。
+        // 3. 执行的时候，ng-if 或者 ng-switch 可能会受影响。
+        // 4. 作用域可以使用，因为控制器逻辑已经执行完成。
+        // 5. 所有变量和表达式的值已经确定。
+        // 6. Angular 正在显示缓存的模板。这时添加模板已经太晚，如果是必须这样做，你需要手动编译。
       };
     }
   };
@@ -164,7 +156,7 @@ myModule.directive('button', function() {
     <button type="submit"
         class="btn btn-primary btn-large">Click Me!</button>
 
-如果你有不依赖作用域数据的复杂功能，那么这些应该出现在编译函数中，以便这些代码只运行一次。加入我们把上例中改用 link 函数实现，那么当 button 出现在 `ng-repeat` 循环中时，`addClass()` 函数在每次迭代中都将会被调用。S市用 compile 函数来实现，`addClass()` 只会被调用一次，button 只是被 `ng-repeat` 简单的复制。
+如果你有不依赖作用域数据的复杂功能，那么这些应该出现在编译函数中，以便这些代码只运行一次。假如我们把上例中改用 link 函数实现，那么当 button 出现在 `ng-repeat` 循环中时，`addClass()` 函数在每次迭代中都将会被调用。而用 compile 函数来实现，`addClass()` 只会被调用一次，button 只是被 `ng-repeat` 简单的复制。
 
 在处理比较复杂的 DOM 操作时，这样的优化是比较可观的，特别是当你要迭代一个大集合的时候。
 
@@ -172,19 +164,17 @@ myModule.directive('button', function() {
 
 指令的 link 函数主要用来为 DOM 元素添加事件监听、监视模型属性变化、以及更新 DOM。我们可以在 link 函数中访问指令的 scope。
 
-大多数的情况下，你只需要使用 link 函数。这是因为大部分的指令只需要考虑注册事件监听、监视模型、以及更新DOM等，这些都可以在 link 函数中完成。 
+大多数的情况下，你只需要使用 link 函数。这是因为大部分的指令只需要考虑注册事件监听、监视模型、以及更新 DOM 等，这些都可以在 link 函数中完成。 
 
 link 函数有三个参数：
 
-- `$scope` 指令的 scope。在我们的例子中，指令的scope就是父 controller 的 scope。
-- `$elem` 用 jQLite(jQuery的子集)包装的 DOM 元素。如果你在引入 AngularJS 之前引入了 jQuery，那么这个元素就是 jQuery 元素，而不是 jQLite 元素。由于这个元素已经被 jQuery/jQLite 包装了，所以我们就在进行DOM操作的时候就不需要再使用 $() 来进行包装。$element === angular.element() === jQuery() === $()。
-- `$attr` 一个包含了指令所在元素的属性对象。举个例子，你给一个 HTML元素添加了一些属性：`<hello-world some-attribute=""></hello-world>`，那么可以在 link 函数中通过 `$attrs.someAttribute` 来使用它。
+- `$scope` 指令的 scope。在我们的例子中，指令的 scope 就是父 controller 的 scope。
+- `$elem` 用 jQLite(jQuery的子集)包装的 DOM 元素。如果你在引入 AngularJS 之前引入了 jQuery，那么这个元素就是 jQuery 元素，而不是 jQLite 元素。由于这个元素已经被 jQuery/jQLite 包装了，所以我们就在进行 DOM 操作的时候就不需要再使用 `$()` 来进行包装。`$element === angular.element() === jQuery() === $()`。
+- `$attr` 包含了指令所在元素的属性对象。举个例子，你给一个 HTML 元素添加了一些属性：`<hello-world some-attribute=""></hello-world>`，那么可以在 link 函数中通过 `$attrs.someAttribute` 来使用它。
 
     如果你也有一个包含 `{{}}` 的属性，这个属性需要计算，并且可能改变多次。你可以使用 `$attributes.$observe('myOtherAttribute', function(newValue))` 来监听属性的改变，而不是 `$scope.$watch()`。`$observe` 第一个参数为属性名，回调函数只有一个参数 `newValue`，表示经过计算的新值。和 `$watch` 的区别为当表达式的值改变时，`$observe` 仅且仅被触发一次，而 `$watch` 可能被触发多次。
 
-    这意味着你只能异步地访问属性。如果你非要在表达式计算之前访问属性，你应该在 Compile 函数中完成。
-
-让我们来改变一下我们的 helloWorld 指令，当用户在一个输入框中输入一种颜色的名称时，Hello World 文字的背景色自动发生变化。同时，当用户在 Hello World 文字上点击时，背景色变回白色。 
+让我们来改变一下我们的 `helloWorld` 指令，当用户在一个输入框中输入一种颜色的名称时，Hello World 文字的背景色自动发生变化。同时，当用户在 Hello World 文字上点击时，背景色变回白色。 
 
 相应的HTML标记如下：
 
@@ -233,9 +223,7 @@ link: {
 }
 ```
 
-前处理链接函数先在父元素上触发，然后再子元素上触发，后处理链接函数相反，先在子元素上触发，让后在父元素上触发。See a demo: <http://plnkr.co/edit/qrDMJBlnwdNlfBqEEXL2?p=preview>。
-
-If you need to wait till your `$scope` data finishes loading try using [ng-if](http://docs.angularjs.org/api/ng/directive/ngIf) to defer linking of a block of DOM.
+前处理链接函数先在父元素上触发，然后在子元素上触发，后处理链接函数相反，先在子元素上触发，然后在父元素上触发。See a demo: <http://plnkr.co/edit/qrDMJBlnwdNlfBqEEXL2?p=preview>。
 
 Pre-linking 和 post-linking 都是被 compiler 执行的。Pre-linking 是在所有子元素被链接之前执行，而 post-ling 是在所有子元素链接之后。只有在 post-link 函数中做 DOM 变换才是安全的。
 
@@ -243,13 +231,13 @@ See [Understanding Directives · angular/angular.js Wiki](https://github.com/ang
 
 ## Transclusion
 
-当你想用模板内容替换指令内容，但用想用指令内容时，Transclusion 就能派上用场了。在模板中使用 `ng-transclude` 指明插入的位置，作为原元素内容的占位符。
+当你想用模板内容替换指令内容，但又想用指令内容时，Transclusion 就能派上用场了。在模板中使用 `ng-transclude` 指明插入的位置，作为原元素内容的占位符。
 
 我们通过一个 `alert` 元素指令来说明，`alert` 指令的效果如下：
 
 ![](http://johnnyimages.qiniudn.com/angular-directive-alert.jpg)
 
-`alert` 元素包含要显示在 alert 中的消息，这需要把消息移动到指令的模板中。alert 列表可以使用 `ng-repeat` 来显示：
+`alert` 元素包含要显示在 alert 中的消息，这需要把消息移动到指令的模板中。`alert` 列表可以使用 `ng-repeat` 来显示：
 
 ```html
 <alert type="alert.type" close="closeAlert($index)"
@@ -285,7 +273,7 @@ myModule.directive('alert', function () {
 `transclude` 属性的可选值为 `true` 和 `'element'`。
 
 * 使用 `transclude: true` 意味着指令元素的子元素会被移动内嵌到模板中。
-* 使用 `transclude: 'element'` 意味着这个元素会被移动内嵌到模板中，包括元素的所有未被编译的属性指令。在这种情况下，只有当 `repalce` 属性为 true 时才有意义，
+* 使用 `transclude: 'element'` 意味着这个元素会被移动内嵌到模板中，包括元素的所有未被编译的属性指令。在这种情况下，只有当 `repalce` 属性为 `true` 时才有意义，
 
 ### `ng-transclude`
 
@@ -312,7 +300,7 @@ var linkingFn = $compile(
   '<div some-directive>Some {{"interpola-ted"}} values</div>');
 ```
 
-为 `linkingFn`  函数传入 scope，是编译后的 DOM 元素指定的 scope 绑定：
+为 `linkingFn` 函数传入 scope，是编译后的 DOM 元素指定的 scope 绑定：
 
     var compiledElement = linkingFn(someScope);
 
@@ -374,9 +362,9 @@ controller: function($scope, $element, $transclude) {
 
 #### 使用 transclusion 创建 if 指令
 
-Let's look at a simple directive that makes explicit use of transclusion functions rather than relying on the `ng-transclude `directive. While AngularJS 1.0 provides both `ng-show` and `ng-switch` directives for changing the visibility of content in an application, `ng-show` doesn't remove the element from the DOM when it is hidden and `ng-switch` is quite verbose for simple situations.
+让我们看一个简单的例子，来显示调用 transclusion 函数，而不依赖 `ng-transclude` 指令。尽管 AngularJS 提供了 `ng-show` and `ng-switch` 指令，但 `ng-show` 不会从 DOM 中移除元素，而 `ng-switch` 对于简单场景用起来又显得有点啰嗦。
 
-If we just want to remove the element from the DOM when it is not needed, we can create an `if` directive. It would be used similar to `ng-show`:
+如果我们让元素不需要的时候，将它从 DOM 中移除，我们可以创建 `if` 指令，它用起来类似于 `ng-show`：
 
 ```html
 <body ng-init="model= {show: true, count: 0}">
@@ -389,9 +377,9 @@ If we just want to remove the element from the DOM when it is not needed, we can
 </body>
 ```
 
-Here, each time the button is clicked the value of `model.show` is toggled between `true` and `false`. To show that the DOM element is being removed and reinserted on each toggle, we are incrementing `model.count`.
+每次点击按钮的时候，`model.show` 在 `true` and `false` 之间切换。我们使用 `model.count` 统计移除和插入的总次数。
 
-In the unit tests we will need to test that the DOM element is actually added and removed correctly:
+在测试用例中，我们测试 DOM 元素是否真的被添加和删除：
 
 ```js
 it('creates or removes the element as the if condition changes', function () {
@@ -406,11 +394,9 @@ it('creates or removes the element as the if condition changes', function () {
 });
 ```
 
-Here we check that the number of children on our container element increases or decreases as the expression toggles between `true` and `false`.
+注意我们需要将 `if` 指令包含在 div 中，因为我们的指定会使用 `jqLite.after()` 将元素插入到 DOM 中，这要求这个元素有父元素。
 
-Note that we need to wrap the element that contains the if directive in a div because our directive will use jqLite.after() to insert it into the DOM, which requires that the element has a parent.
-
-Let's take a look at how to implement this directive:
+这个指令的具体实现为:
 
 ```js
 myModule.directive('if', function () {
@@ -438,23 +424,19 @@ myModule.directive('if', function () {
     ...
 ```
 
-The directive transcludes the entire element (`transclude: 'element'`). We provide a compile function, which gives us access to the **transclusion** function, which returns the link function, where we `$watch` the `if` attribute expression.
+指定 transcludes 整个元素  (`transclude: 'element'`)。我们提供 compile 函数，这允许我们访问 transclusion 函数。我们在 compile 函数返回 link 函数中，`$watch` 该 `if` 属性表达式。 
 
-We use `$watch` rather than `$observe` here because the `if` attribute should contain an expression to be evaluated rather than a string to be interpolated.
+我们使用 `$watch` 而非 `$observe`，因为 `if` 属性包含的是表达式而不是插值字符串。
 
-When the expression changes, we tidy up the scope and child element, if they exist. This is important to ensure that we don't have any memory leaks. If the expression evaluates to `true`, we create a new child scope and then use it with the **transclusion** function to clone a new copy of the transcluded elements. We insert these elements after the element that contained the directive.
+表达式改变的时候，我们会相应地处理子元素。这可以保证不会造成内存泄露。如果为 `true`，我们创建一个子作用域，然后使用这个作用域在 **transclusion** 函数中拷贝一份 transcluded 元素。我们把这些元素插入到包含指定的元素后。
 
-__Using the priority property in a directive：__
+__在指令中使用 priority 属性：__
 
-All directives have a priority, defaulting to zero, as in the case of the `alert` directive. On each element, AngularJS compiles the higher priority directives before lower priority ones. We can specify this using the `priority` property on the directive definition object.
+当在同一个 DOM 元素上定义了多个指令的时候，有时需要指定指定应用的顺序。`priority` 用于在调用编译函数前对指令排序。`priority` 值大的先编译。Pre-link 函数也是按照 `priority` 的顺序执行，但 post-link 按照相反的顺序执行。相同优先级的指令顺序是未定义的。`priority` 的默认值为 0。你可以参考这个例子 [HG2D - Priority in Directive - JSFiddle](http://jsfiddle.net/codef0rmer/7REAr/)。
 
-If a directive has `transclude: 'element'`, the compiler will only transclude attributes whose directives have a lower priority than the current directive, in other words, the element's directives that have not yet been processed.
+我们 `if` 指令的优先级为 `500`， 比 `ng-repeat` 的优先级低。这意味着，如果你把它放在 `ng-repeat` 相同的元素上，`if` 表达式会引用 `ng-repeat` 每次迭代产生的作用域。
 
-The `ng-repeat` directive has `transclude: 'element'` and `priority: 1000`, so generally all attributes that appear on the `ng-repeat` element are transcluded to appear on the cloned repeated elements.
-
-We gave out `if` directive a priority of `500`, which is less than `ng-repeat`. This means that if you put it on the same element as an `ng-repeat`, the expression that `if` watches will refer to the scope created by each iteration of `ng-repeat`.
-
-In this directive, transclusion allowed us to get hold of the contents of the directive's element, bound to the correct scope, and conditionally insert it into the DOM.
+在这个指令中，transclusion 让我们获取指令的内容，并且绑定到正确的作用域，然后插入到 DOM 中。
 
 ## 指令控制器
 

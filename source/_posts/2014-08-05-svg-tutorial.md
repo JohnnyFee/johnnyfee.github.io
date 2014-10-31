@@ -193,6 +193,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 
 - [SVG](https://developer.mozilla.org/zh-CN/docs/Web/SVG)
 - [SVG教程 - SVG](https://developer.mozilla.org/zh-CN/docs/Web/SVG/Tutorial)
+- [Pocket Guide to Writing SVG](http://svgpocketguide.com/book)
 - [SVG Tutorial](http://tutorials.jenkov.com/svg/index.html)
 - [Using SVG](http://css-tricks.com/using-svg/)
 - [Animating Inline SVG Icons](http://flippinawesome.org/2014/06/03/animating-inline-svg-icons/?-inline-svg-icons)

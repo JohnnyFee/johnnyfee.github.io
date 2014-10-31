@@ -19,6 +19,7 @@ tags: [node, tutorial]
 - [Writing cross-platform Node.js](http://shapeshed.com/writing-cross-platform-node/)
 - [Node.js软肋之回调大坑](http://www.infoq.com/cn/articles/nodejs-callback-hell)
 - [如何选择Node.js Web开发框架？ - WEB开发者](http://www.admin10000.com/document/5283.html)
+- [Writing Modular Node.js Projects for Express and Beyond](http://strongloop.com/strongblog/modular-node-js-express/)
 
 ### Error Handling
 
@@ -112,6 +113,7 @@ tags: [node, tutorial]
 
 - [flatiron/nconf](https://github.com/flatiron/nconf)
 - [flesler/config-node · GitHub](https://github.com/flesler/config-node)
+- [sgmonda/stdio](https://github.com/sgmonda/stdio) 简易管理模块。
 
 ### Log
 
@@ -133,6 +135,7 @@ tags: [node, tutorial]
 - [Obvious/sculpt](https://github.com/Obvious/sculpt) Manipulate streams.
 - [mafintosh/torrent-stream](https://github.com/mafintosh/torrent-stream) The low level streaming torrent engine that peerflix uses.
 - [sindresorhus/trash](https://github.com/sindresorhus/trash) Cross-platform command-line app for moving files and directories to the trash - A safer alternative to `rm`
+- [sgmonda/stdio](https://github.com/sgmonda/stdio) 标准输入输出管理模块。
 
 ### Other
 
@@ -286,7 +289,10 @@ Javascript with Cody and Node.js.
 
 Nodejs在快速的发展着，软件包版本升级的很快，文章有运行不通的地方请参考官方文档解决。我也会不定期更新文章，尽量保持文章代码的可用性。
 
+## Toos
 
+- [Stormpath User Management API](https://stormpath.com/) 提供用户管理服务。
+- [Superstatic - Static Web Server for HTML5 Applications](http://superstatic.org) 静态网页服务器。
 
 ## FAQ
 

@@ -268,15 +268,45 @@ Provider | A new object created by the `$get` factory function | Yes| -
 
 Controllers 在你的应用中有三个职责：
 
-* 初始化应用的模型
-* 通过 `$scope` 暴露模型和方法到 views (UI template)
+* 初始化应用的模型。
+* 通过 `$scope` 暴露模型和方法到 views (UI template)。
 * 监视模型的变化并作出响应。
 
-千万不要在 AngularJS控制器中操作 DOM 元素。在控制器中获取一个 DOM 的引用，并操作DOM的属性，是在用命令式的方式控制UI -- 这是跟 AugularJS 构建 UI 的思想相悖的。
+千万不要在 AngularJS 控制器中操作 DOM 元素。在控制器中获取一个 DOM 的引用，并操作 DOM 的属性，是在用命令式的方式控制UI -- 这是跟 AugularJS 构建 UI 的思想相悖的。
 
 Controller 应该纯粹地用来把 service、依赖关系、以及其它对象串联到一起，然后通过 scope 把它们关联到 view 上。如果在你的视图里面需要处理复杂的业务逻辑，那么把它们放到 controller 里面也是一个非常不错的选择。
 
 在 Angular 中，controller 自身并不会处理 "request"，除非它是用来处理路由(route)的（很多人把这种方式叫做创建 _route controller_ ，路由控制器）。
+
+通过 `ng-controller` 指令为 DOM 元素指定控制器时，控制器的实例个数和 `ng-controller` 相同。
+
+### 生命周期
+
+See [javascript - What is the lifecycle of an AngularJS Controller? - Stack Overflow](http://stackoverflow.com/questions/16094940/what-is-the-lifecycle-of-an-angularjs-controller)
+
+Controllers are not singletons. Anyone can create a new controller and they are never auto-destroyed. The fact is that it's generally bound to the life cycle of its underlying scope. The controller is not automatically destroyed whenever its scope is destroyed. However, after destroying an underlying scope, its controller is useless (at least, by design, it should be).
+
+Answering your specific question, a `ngView` directive (as well for `ngController` directive) will always [create a new controller and a new scope](https://github.com/angular/angular.js/blob/master/src/ng/directive/ngView.js#L201-L206) every time a navigation happens. And the [last scope is going to be destroyed](https://github.com/angular/angular.js/blob/65f5e856a161e7c91b9ebde1360242dc704d0510/src/ngRoute/directive/ngView.js#L179) as well.
+
+The life cycle "events" are quite simple. Your **"creation event"** is the construction of your controller itself. Just run your code. To know when it gets useless (**"destruction event"**), listen to scope `$destroy` event: 
+
+```
+$scope.$on('$destroy', function iVeBeenDismissed() {
+  // say goodbye to your controller here
+  // release resources, cancel request...
+})
+```
+
+For `ngView` specifically, you are able to know when the content gets loaded through the scope event `$viewContentLoaded`:
+
+```js
+$scope.$on('$viewContentLoaded', function readyToTrick() {
+  // say hello to your new content here
+  // BUT NEVER TOUCHES THE DOM FROM A CONTROLLER
+});
+```
+
+[Here is a Plunker](http://plnkr.co/edit/ZddQ5W?p=preview) with a concept proof (open your console window).
 
 ### 全局控制器
 

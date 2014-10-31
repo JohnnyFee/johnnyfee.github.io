@@ -14,6 +14,21 @@ tags: [javascript]
 - [bootstrap3栅格系统源码学习](http://www.pchou.info/open-source/2014/01/21/52de149d84a8f.html)
 - [Responsive Web Design Tips from Bootstrap's CSS](http://www.sitepoint.com/responsive-web-design-tips-bootstrap-css)
 
+## 优秀网站
+
+- [乐窝](http://lewoer.com/) 留美找房第一站
+- [杭州网站建设](http://www.yeahzan.com/) 提供网站设计和建设。
+- [翁天信 · Dandy Weng](http://dandyweng.com/) 个人博客。
+- [The World's Best Bootstrap Sites](http://lovebootstrap.com/)
+- [More...](http://expo.bootcss.com/)
+
+## Tools
+
+### Designer
+
+- [Layoutit!!! Bootstrap 可视化布局](http://www.bootcss.com/p/layoutit/)
+- <http://w3cshare.com/15-best-design-tools-recommended-bootstrap>
+
 ## Theme
 
 - [Bootstrap 3 templates, themes, examples, free premium bootstrap 3Bootstraptor.com](http://bootstraptor.com/bootstrap3/)

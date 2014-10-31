@@ -467,6 +467,8 @@ See [PhoneGap 09 使用Plugman管理Plugins - jacob的专栏 - 博客频道 - CS
 - [Cordova Plugins update, and new Contacts demo](http://www.raymondcamden.com/2014/7/9/Cordova-Plugin-update-and-new-Contacts-demo)
 - [PhoneGap Archives - Modern Web](http://modernweb.com/category/mobile/phonegap/)
 - [PhoneGap Development Mistakes and How to Avoid Them](http://chrisgriffith.wordpress.com/2014/10/10/phonegap-development-mistakes-and-how-to-avoid-them)
+- [Creating a mobile app from a simple HTML site ✩ Mozilla Hacks – the Web developer blog](https://hacks.mozilla.org/2014/10/creating-a-mobile-app-from-a-simple-html-site)
+- [Web Speech API and Phonegap - A Smart Mouth App](http://thejackalofjavascript.com/phonegap-smart-mouth-app)
 
 ## 参考
 

@@ -7,7 +7,7 @@ tags : [angular, tutorial]
 
 Angular 模板可以通过内存加载、AJAX 两种方式加载。
 
-## 本地加载
+## 内存加载
 
 如果之前使用过 Bootstrap 插件的 ng 版，即 angular-ui，就会了解到这种方式的具体应用。模板本质上是字符串，把字符串直接写入内存，加载时直接从内存获取，速度会更快，有两种方式显式启用内存加载。
 
@@ -51,12 +51,12 @@ myApp.run(function($templateCache) {
 
 方法        | 功能                    
 --------- | ----------------------
-put       | 向内存写入模板内容             
-get       | 从内存获取模板内容             
-remove    | 传入key值，删除对应模板内容       
-removeAll | 删除所有模板内容              
-destroy   | 解除key-value对应关系，但不释放内存
-info      | 模板缓存对象的信息        
+`put`       | 向内存写入模板内容             
+`get`       | 从内存获取模板内容             
+`remove`    | 传入key值，删除对应模板内容       
+`removeAll` | 删除所有模板内容              
+`destroy`   | 完全销毁缓存对象，从 `$cacheFactory` 集合中移除。
+`info`      | 模板缓存对象的信息。     
 
 __使用 Cache 模板：__
 

@@ -25,6 +25,8 @@ tags : [node, grunt]
 
     npm install
 
+<!--more-->
+
 ## Gruntfile
 
 一个Gruntfile由下面几部分组成：
@@ -124,7 +126,7 @@ require('load-grunt-tasks')(grunt);
 
 ### options
 
-在一个任务配置中，`options` 属性指定覆盖属性的内置默认值。此外，每一个任务目标中更具体的目标都可以拥有一个 `options` 属性。目标级的选项将会覆盖任务级的选项(就近原则————`options`离目标越近,其优先级越高)。
+在一个任务配置中，`options` 属性指定覆盖属性的内置默认值。此外，每一个任务中更具体的目标都可以拥有一个 `options` 属性。目标级的选项将会覆盖任务级的选项(就近原则————`options`离目标越近,其优先级越高)。
 
 `options`对象是可选，如果不需要，可以省略。
 
@@ -284,7 +286,7 @@ grunt.initConfig({
 * `*` 匹配任意数量的字符，但不匹配 `/`
 * `?` 匹配单个字符，但不匹配 `/`
 * `**` 匹配任意数量的字符，包括 `/`，as long as it's the only thing in a path part。
-* `{}` 允许使用一个逗号分割的列表或者表达式，表示“or”（或）关系。
+* `{}` 允许使用一个逗号分割的列表或者表达式，表示逻辑或关系。
 * `!` 在模式的开头用于否定一个匹配模式(即排除与模式匹配的信息)
 
 大多数的人都知道 `foo/*.js` 将匹配位于`foo/`目录下的所有的`.js`结尾的文件, 而`foo/**/*.js`将匹配`foo/`目录以及其子目录中所有以`.js`结尾的文件。
@@ -497,9 +499,9 @@ module.exports = function(grunt) {
 
 自定义的项目特定的任务可以不定义在Gruntfile中；它们可以定义在一个外部`.js`文件中，然后通过[grunt.loadTasks](http://gruntjs.com/grunt#grunt.loadtasks)方法来加载。
 
-## 常用模块设置
+## 常用模块
 
-grunt的[模块](http://gruntjs.com/plugins)已经超过了2000个，且还在快速增加。下面是一些常用的模块（按字母排序）。
+grunt的[模块](http://gruntjs.com/plugins)接近 4k 个，且还在快速增加。下面是一些常用的模块（按字母排序）。
 
 1.  **grunt-contrib-clean**：删除文件。
 2.  **grunt-contrib-compass**：使用compass编译sass文件。
@@ -517,7 +519,7 @@ grunt的[模块](http://gruntjs.com/plugins)已经超过了2000个，且还在�
 
 ### grunt-contrib-jshint
 
-jshint用来检查语法错误，比如分号的使用是否正确、有没有忘记写括号等等。它在grunt.initConfig方法里面的配置代码如下。
+[gruntjs/grunt-contrib-jshint](https://github.com/gruntjs/grunt-contrib-jshint) 用来检查语法错误，比如分号的使用是否正确、有没有忘记写括号等等。它在grunt.initConfig方法里面的配置代码如下。
 
 ```js
 jshint: {
@@ -640,7 +642,7 @@ clean: {
 }
 ```
 
-**（2）grunt-autoprefixer**
+### grunt-autoprefixer
 
 该模块用于为CSS语句加上浏览器前缀。
 
@@ -655,9 +657,9 @@ autoprefixer: {
 },
 ```
 
-**（3）grunt-contrib-connect**
+### grunt-contrib-connect
 
-该模块用于在本机运行一个 Web Server。
+[gruntjs/grunt-contrib-connect](https://github.com/gruntjs/grunt-contrib-connect) 用于在本机运行一个 Web Server。
 
 ```javascript
 connect: {
@@ -673,7 +675,7 @@ connect: {
 
 connect模块会随着grunt运行结束而结束，为了使它一直处于运行状态，可以把它放在watch模块之前运行。因为watch模块需要手动中止，所以connect模块也就会一直运行。
 
-**（4）grunt-htmlhint**
+### grunt-htmlhint
 
 该模块用于检查HTML语法。
 
@@ -696,7 +698,7 @@ htmlhint: {
 
 上面代码用于检查index.html文件：HTML标记是否配对、标记名和属性名是否小写、属性值是否包括在双引号之中、特殊字符是否转义、HTML元素的id属性是否为唯一值、head部分是否没有script标记。
 
-**（5）grunt-contrib-sass模块**
+### grunt-contrib-sass
 
 该模块用于将SASS文件转为CSS文件。
 
@@ -715,7 +717,7 @@ sass: {
 
 上面代码指定输出文件为build/css/master.css，输入文件为assets/sass/master.scss。
 
-**（6）grunt-markdown**
+### grunt-markdown
 
 该模块用于将markdown文档转为HTML文档。
 
@@ -755,14 +757,31 @@ markdown: {
 </html>
 ```
 
+## FAQ
+
+### `{,*/}*.`
+
+See [node.js - What does `{,*/}` mean in paths of Gruntfile.js? - Stack Overflow](http://stackoverflow.com/questions/19485806/what-does-mean-in-paths-of-gruntfile-js)
+
+```js
+watch: {
+    styles: {
+      files: [
+        '<%= yeoman.app %>/styles/{,*/}*.less'
+      ],
+      tasks: ['copy:styles', 'autoprefixer']
+    }
+}
+```
+
+`{,*/}` 用逗号表达式来表示逻辑或关系。`{,*/}*.less` 表示 `*.less` 或者 `*/*.cess`。这是为了效率考虑，只往下匹配一层子目录，如果你想递归匹配，可是使用 `styles/**/*.less`。
+
 ## Tutorial
 
 - 入门
     - 中文官网：<http://www.gruntjs.org/>、<http://www.gruntjs.net/> 先将“新手上路”看过一遍，基本了解 grunt 是什么，怎么用的。
     - 阮一峰博客：<http://javascript.ruanyifeng.com/tool/grunt.html>，对 grunt 入门介绍得简单易懂，对几个常用的 grunt 插件进行了简单的介绍。
     - 英文官网：<http://gruntjs.com/>，在对 grunt 基本了解以后，在中文官网上看不明白的地方，可以直接看英文官网的说明。
-- 插件：
-    - 虽然中文官网也有插件页面，但是并不能进行搜索。所以要搜索 grunt 插件，要在英文官网的插件页面搜索。
 - grunt 相关：
     - [编写可维护的 Gruntfile.js](http://blog.segmentfault.com/heroic/1190000000343005?page=1#c-1190000000343005-1050000000344590)
     - [配置 WebStorm Grunt 环境](http://www.cnblogs.com/eboke/p/3793922.html)
@@ -771,12 +790,12 @@ markdown: {
     - [Automate Recurring Tasks with Grunt](http://www.sitepoint.com/automate-recurring-tasks-grunt)
     - [Automate with Grunt](http://www.salttiger.com/automate-with-grunt/)
     - [Five Grunt Tasks You Won't Want to Miss!](http://www.sitepoint.com/five-grunt-tasks-wont-want-miss/)
+- grunt api
+    - [grunt api](http://www.gruntjs.org/api/grunt.html)
+
 
 ## Reference
 
 - [新手上路 - Grunt 中文社区](http://www.gruntjs.org/docs/getting-started.html#cli) / [Getting started - Grunt: The JavaScript Task Runner](http://gruntjs.com/getting-started)
 - [配置任务 - Grunt 中文社区](http://www.gruntjs.org/docs/configuring-tasks.html) / [Configuring tasks - Grunt: The JavaScript Task Runner](http://gruntjs.com/configuring-tasks)
-
-## Task
-
-- [azer/bud](https://github.com/azer/bud?) Minimalistic Task Manager.
+- [Grunt：任务自动管理工具 -- JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/tool/grunt.html#toc4)

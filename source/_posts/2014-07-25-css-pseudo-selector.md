@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "CSS Selector"
+title: "CSS 伪选择器"
 category: CSS
 tags: [web, css, selector]
 --- 
@@ -197,15 +197,15 @@ In that case the zeroing out of the margin would work (assuming it matched the s
 
 ## ::after / ::before
 
-`::after` is a pseudo element which allows you to insert content onto a page from CSS (without it needing to be in the HTML). While the end result is not actually in the DOM, it appears on the page as if it is, and would essentially be like this:
+`::after` 和 `::before` 插入的内容看上去在页面中，但其实它并不尊在与 DOM 中。`::after` 将内容插入元素后，`::before` 将内容插入到元素前。
 
-```
+```css
 div::after {
   content: "hi";
 }
 ```
 
-```
+```html
 <div>
   <!-- Rest of stuff inside the div -->
   hi
@@ -217,14 +217,14 @@ div::after {
 * You want the generated content to come before the element content, positionally.
 * The `::after` content is also "after" in source-order, so it will position on top of `::before` if stacked on top of each other naturally.
 
-The value for content can be:
+`content` 的值可以为： 
 
-* **A string:** `content: "a string";` - special characters need to be specially encoded as a unicode entity. See the [glyphs page](http://css-tricks.com/snippets/html/glyphs/).
-* **An image:** content: url(/path/to/image.jpg); - The image is inserted at it's exact dimensions and [cannot be resized.](http://cdpn.io/hbgJc) Since things like [gradients](http://css-tricks.com/css3-gradients/) are actually images, a pseudo element can be a gradient. 
-* **Nothing:** content: ""; - Useful for clearfix and inserting images as background-images (set width and height, and can even resize with background-size).
-* **A counter:** `content: counter(li);` - Really useful for [styling lists](http://www.456bereastreet.com/archive/201105/styling_ordered_list_numbers/) until :marker comes along.
+* **字符串**： `content: "a string";` 特殊字符需要编码为 unicode 实体（entity），See  [glyphs page](http://css-tricks.com/snippets/html/glyphs/)。
+* **图片**： `content: url(/path/to/image.jpg);` 图片以它真实的大小插入，并且不能[调整大小]((http://cdpn.io/hbgJc))。由于 [gradients](http://css-tricks.com/css3-gradients/) 实际上也是图片，所以伪元素也可是 gradient。
+* **无**： `content: "";` Useful for clearfix and inserting images as background-images (set width and height, and can even resize with background-size). 在 clearfix 和插入作为背景的图片（设置宽度和高度，设置可以使用 `background-size` 调整大小）是有用。
+* **计数器**： `content: counter(li);` 结合 `:marker`，对 [styling lists](http://www.456bereastreet.com/archive/201105/styling_ordered_list_numbers/) 有用。
 
-Note that you cannot insert HTML (at least, that will be rendered as HTML). `content: "<h1>nope</h1>";`
+注意你不能插入 HTML（至少，它将作为 HTML 显示），如 `content: "<h1>nope</h1>";`。
 
 ## Example
 

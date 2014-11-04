@@ -5,6 +5,8 @@ category : Node
 tags : [node, grunt]
 --- 
 
+简单说，Grunt是一个自动任务运行器，会按照预先设定的顺序自动运行一系列的任务。这可以简化工作流程，减轻重复性工作带来的负担。    
+
 ## Install
 
 安装CLI:
@@ -101,14 +103,48 @@ grunt.initConfig({
 
 ### 加载 grunt 插件和任务
 
-许多常用的任务像 [concatenation](https://github.com/gruntjs/grunt-contrib-concat)，[minification](http://github.com/gruntjs/grunt-contrib-uglify) 和 [linting](https://github.com/gruntjs/grunt-contrib-jshint) 都被作为 grunt 插件来使用。只要一个插件被作为一个依赖指定在项目的`package.json`文件中，并且已经通过`npm install`安装好，都可以在你的`Gruntfile`文件中使用下面这个简单的命令启用它(所依赖的任务)。
+当一个插件被作为一个依赖指定在项目的 `package.json` 文件中，并且已经通过 `npm install` 安装好，都可以在你的 Gruntfile 文件中使用下面这个简单的命令启用它。
 
-```
+```js
 // 加载提供"uglify"任务的插件
 grunt.loadNpmTasks('grunt-contrib-uglify');
 ```
 
 **注意**: `grunt --help`命令可以列出所有可用的任务。
+
+你需要使用几个模块，这里就要写几条grunt.loadNpmTasks语句，将各个模块一一加载。
+
+如果加载模块很多，这部分会非常冗长。而且，还存在一个问题，就是凡是在这里加载的模块，也同时出现在 `package.json` 文件中。如果使用npm命令卸载模块以后，模块会自动从 `package.json`文件中消失，但是必须手动从Gruntfile.js文件中清除，这样很不方便，一旦忘记，还会出现运行错误。这里有一个解决办法，就是安装load-grunt-tasks模块，然后在Gruntfile.js文件中，用下面的语句替代所有的grunt.loadNpmTasks语句。
+
+```javascript
+require('load-grunt-tasks')(grunt);
+```
+
+这条语句的作用是自动分析package.json文件，自动加载所找到的grunt模块。
+
+### options
+
+在一个任务配置中，`options` 属性指定覆盖属性的内置默认值。此外，每一个任务目标中更具体的目标都可以拥有一个 `options` 属性。目标级的选项将会覆盖任务级的选项(就近原则————`options`离目标越近,其优先级越高)。
+
+`options`对象是可选，如果不需要，可以省略。
+
+```js
+grunt.initConfig({
+    concat: {
+        options: {
+            // 这里是任务级的Options，覆盖任务的默认值 
+        },
+        foo: {
+            options: {
+                // 这里是'foo'目标的options，它会覆盖任务级的options.
+            }
+        },
+        bar: {
+            // 没有指定options，这个目标将使用任务级的options
+        }
+    }
+});
+```
 
 ## 文件
 
@@ -118,11 +154,11 @@ grunt.loadNpmTasks('grunt-contrib-uglify');
 
 * `filter` 它通过接受任意一个有效的[fs.Stats方法名](http://nodejs.org/docs/latest/api/fs.html#fs_class_fs_stats)或者一个参数为 `src` 并且返回 `true` 或者 `false` 的函数。
 
-* `nonull`  If set to `true` then the operation will include non-matching patterns.结合Grunt的`--verbore`标志, 这个选项可以帮助用来调试文件路径的问题。
+* `nonull`  If set to `true` then the operation will include non-matching patterns. 结合Grunt的`--verbore`标志, 这个选项可以帮助用来调试文件路径的问题。
 
 * `dot` 它允许模式匹配句点开头的文件名，even if the pattern does not explicitly have a period in that spot.
 
-* `matchBase` 如果设置这个属性，缺少斜线的模式(意味着模式中不能使用斜线进行文件路径的匹配)将不会匹配包含在斜线中的文件名。 例如，`a?b` 将匹配`/xyz/123/acb`但不匹配`/xyz/acb/123`。
+* `matchBase` 如果设置这个属性，缺少斜线的模式，意味着模式中不能使用斜线进行文件路径的匹配，将不会匹配包含在斜线中的文件名。 例如，`a?b` 将匹配`/xyz/123/acb`但不匹配`/xyz/acb/123`。
 
 * `expand` 处理动态的`src-dest`文件映射，更多的信息请查看["动态构建文件对象"](http://gruntjs.com/configuring-tasks#building-the-files-object-dynamically)。
 
@@ -246,13 +282,9 @@ grunt.initConfig({
 当然这并不是一个综合的匹配模式方面的教程，你只需要知道如何在文件路径匹配过程中使用它们即可：
 
 * `*` 匹配任意数量的字符，但不匹配 `/`
-
 * `?` 匹配单个字符，但不匹配 `/`
-
 * `**` 匹配任意数量的字符，包括 `/`，as long as it's the only thing in a path part。
-
-* `{}` 允许使用一个逗号分割的列表或者表达式
-
+* `{}` 允许使用一个逗号分割的列表或者表达式，表示“or”（或）关系。
 * `!` 在模式的开头用于否定一个匹配模式(即排除与模式匹配的信息)
 
 大多数的人都知道 `foo/*.js` 将匹配位于`foo/`目录下的所有的`.js`结尾的文件, 而`foo/**/*.js`将匹配`foo/`目录以及其子目录中所有以`.js`结尾的文件。
@@ -445,7 +477,7 @@ module.exports = function(grunt){
 
 ## 自定义任务
 
-你可以通过定义一个`default`任务来配置Grunt，让它默认运行一个或者多个任务。在下面的例子中，在命令行中运行`grunt`而不指定特定的任务将自动运行`uglify`任务。这个功能与显示的运行`grunt uglify`或者等价的`grunt default`一样。你可以在任务参数数组中指定任意数量的任务(这些任务可以带参数，也可以不带参数)。
+你可以通过定义一个 `default`任务来配置Grunt，让它默认运行一个或者多个任务。在下面的例子中，在命令行中运行`grunt`而不指定特定的任务将自动运行`uglify`任务。这个功能与显示的运行`grunt uglify`或者等价的`grunt default`一样。你可以在任务参数数组中指定任意数量的任务(这些任务可以带参数，也可以不带参数)。
 
 ```js
 // 默认任务
@@ -465,43 +497,277 @@ module.exports = function(grunt) {
 
 自定义的项目特定的任务可以不定义在Gruntfile中；它们可以定义在一个外部`.js`文件中，然后通过[grunt.loadTasks](http://gruntjs.com/grunt#grunt.loadtasks)方法来加载。
 
-## options
+## 常用模块设置
 
-在一个任务配置中，`options` 属性指定覆盖属性的内置默认值。此外，每一个任务目标中更具体的目标都可以拥有一个 `options` 属性。目标级的选项将会覆盖任务级的选项(就近原则————`options`离目标越近,其优先级越高)。
+grunt的[模块](http://gruntjs.com/plugins)已经超过了2000个，且还在快速增加。下面是一些常用的模块（按字母排序）。
 
-`options`对象是可选，如果不需要，可以省略。
+1.  **grunt-contrib-clean**：删除文件。
+2.  **grunt-contrib-compass**：使用compass编译sass文件。
+3.  **grunt-contrib-concat**：合并文件。
+4.  **grunt-contrib-copy**：复制文件。
+5.  **grunt-contrib-cssmin**：压缩以及合并CSS文件。
+6.  **grunt-contrib-imagemin**：图像压缩模块。
+7.  **grunt-contrib-jshint**：检查JavaScript语法。
+8.  **grunt-contrib-uglify**：压缩以及合并JavaScript文件。
+9.  **grunt-contrib-watch**：监视文件变动，做出相应动作。
 
-```json
-grunt.initConfig({
-    concat: {
+模块的前缀如果是grunt-contrib，就表示该模块由grunt开发团队维护；如果前缀是grunt（比如grunt-pakmanager），就表示由第三方开发者维护。
+
+以下选几个模块，看看它们配置参数的写法，也就是说如何在grunt.initConfig方法中配置各个模块。
+
+### grunt-contrib-jshint
+
+jshint用来检查语法错误，比如分号的使用是否正确、有没有忘记写括号等等。它在grunt.initConfig方法里面的配置代码如下。
+
+```js
+jshint: {
+    options: {
+        eqeqeq: true,
+        trailing: true
+    },
+    files: ['Gruntfile.js', 'lib/**/*.js']
+},
+```
+
+上面代码先指定jshint的[检查项目](http://www.jshint.com/docs/options/)，eqeqeq表示要用严格相等运算符取代相等运算符，trailing表示行尾不得有多余的空格。然后，指定files属性，表示检查目标是Gruntfile.js文件，以及lib目录的所有子目录下面的JavaScript文件。
+
+### grunt-contrib-concat
+
+concat用来合并同类文件，它不仅可以合并JavaScript文件，还可以合并CSS文件。
+
+```javascript
+concat: {
+  js: {
+    src: ['lib/module1.js', 'lib/module2.js', 'lib/plugin.js'],
+    dest: 'dist/script.js'
+  }
+  css: {
+    src: ['style/normalize.css', 'style/base.css', 'style/theme.css'],
+    dest: 'dist/screen.css'
+  }
+}
+```
+
+js目标用于合并JavaScript文件，css目标用语合并CSS文件。两者的src属性指定需要合并的文件（input），dest属性指定输出的目标文件（output）。
+
+### grunt-contrib-uglify
+
+uglify模块用来压缩代码，减小文件体积。
+
+```javascript
+uglify: {
+  options: {
+    banner: bannerContent,
+    sourceMapRoot: '../',
+    sourceMap: 'distrib/'+name+'.min.js.map',
+    sourceMapUrl: name+'.min.js.map'
+  },
+  target : {
+    expand: true,
+    cwd: 'js/origin',
+    src : '*.js',
+    dest : 'js/'
+  }
+},
+```
+
+上面代码中的options属性指定压缩后文件的文件头，以及sourceMap设置；target目标指定输入和输出文件。
+
+### grunt-contrib-copy
+
+[copy模块](https://github.com/gruntjs/grunt-contrib-copy)用于复制文件与目录。
+
+```javascript
+copy: {
+  main: {
+    src: 'src/*',
+    dest: 'dest/',
+  },
+},
+```
+
+上面代码将src子目录（只包含它下面的第一层文件和子目录），拷贝到dest子目录下面（即dest/src目录）。如果要更准确控制拷贝行为，比如只拷贝文件、不拷贝目录、不保持目录结构，可以写成下面这样：
+
+```javascript
+copy: {
+  main: {
+    expand: true,
+    cwd: 'src/',
+    src: '**',
+    dest: 'dest/',
+    flatten: true,
+    filter: 'isFile',
+  },
+},
+```
+
+### grunt-contrib-watch
+
+[watch模块](https://github.com/gruntjs/grunt-contrib-watch)用来在后台运行，监听指定事件，然后自动运行指定的任务。
+
+```javascript
+watch: {
+   scripts: {
+    files: '**/*.js',
+    tasks: 'jshint',
+    options: {
+      livereload: true,
+    },
+   },
+   css: {
+    files: '**/*.sass',
+    tasks: ['sass'],
+    options: {
+      livereload: true,
+    },
+   },
+},
+```
+
+设置好上面的代码，打开另一个进程，运行grunt watch。此后，任何的js代码变动，文件保存后就会自动运行jshint任务；任何sass文件变动，文件保存后就会自动运行sass任务。
+
+需要注意的是，这两个任务的options参数之中，都设置了livereload，表示任务运行结束后，自动在浏览器中重载（reload）。这需要在浏览器中安装[livereload插件](http://livereload.com/)。安装后，livereload的默认端口为localhost:35729，但是也可以用livereload: 1337的形式重设端口（localhost:1337）。
+
+### grunt-contrib-clean
+
+该模块用于删除文件或目录。
+
+```javascript
+clean: {
+  build: {
+    src: ["path/to/dir/one", "path/to/dir/two"]
+  }
+}
+```
+
+**（2）grunt-autoprefixer**
+
+该模块用于为CSS语句加上浏览器前缀。
+
+```javascript
+autoprefixer: {
+  build: {
+    expand: true,
+    cwd: 'build',
+    src: [ '**/*.css' ],
+    dest: 'build'
+  }
+},
+```
+
+**（3）grunt-contrib-connect**
+
+该模块用于在本机运行一个 Web Server。
+
+```javascript
+connect: {
+  server: {
+    options: {
+      port: 4000,
+      base: 'build',
+      hostname: '*'
+    }
+  }
+}
+```
+
+connect模块会随着grunt运行结束而结束，为了使它一直处于运行状态，可以把它放在watch模块之前运行。因为watch模块需要手动中止，所以connect模块也就会一直运行。
+
+**（4）grunt-htmlhint**
+
+该模块用于检查HTML语法。
+
+```javascript
+htmlhint: {
+    build: {
         options: {
-            // 这里是任务级的Options，覆盖任务的默认值 
+            'tag-pair': true,
+            'tagname-lowercase': true,
+            'attr-lowercase': true,
+            'attr-value-double-quotes': true,
+            'spec-char-escape': true,
+            'id-unique': true,
+            'head-script-disabled': true,
         },
-        foo: {
-            options: {
-                // 这里是'foo'目标的options，它会覆盖任务级的options.
-            }
+        src: ['index.html']
+    }
+}
+```
+
+上面代码用于检查index.html文件：HTML标记是否配对、标记名和属性名是否小写、属性值是否包括在双引号之中、特殊字符是否转义、HTML元素的id属性是否为唯一值、head部分是否没有script标记。
+
+**（5）grunt-contrib-sass模块**
+
+该模块用于将SASS文件转为CSS文件。
+
+```javascript
+sass: {
+    build: {
+        options: {
+            style: 'compressed'
         },
-        bar: {
-            // 没有指定options，这个目标将使用任务级的options
+        files: {
+            'build/css/master.css': 'assets/sass/master.scss'
         }
     }
-});
+}
+```
+
+上面代码指定输出文件为build/css/master.css，输入文件为assets/sass/master.scss。
+
+**（6）grunt-markdown**
+
+该模块用于将markdown文档转为HTML文档。
+
+```javascript
+markdown: {
+    all: {
+      files: [
+        {
+          expand: true,
+          src: '*.md',
+          dest: 'docs/html/',
+          ext: '.html'
+        }
+      ],
+      options: {
+        template: 'templates/index.html',
+      }
+    }
+},
+```
+
+上面代码指定将md后缀名的文件，转为docs/html/目录下的html文件。template属性指定转换时采用的模板，模板样式如下。
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="main" class="container">
+        <%=content%>
+    
+
+</body>
+</html>
 ```
 
 ## Tutorial
 
-- 入门：
+- 入门
     - 中文官网：<http://www.gruntjs.org/>、<http://www.gruntjs.net/> 先将“新手上路”看过一遍，基本了解 grunt 是什么，怎么用的。
     - 阮一峰博客：<http://javascript.ruanyifeng.com/tool/grunt.html>，对 grunt 入门介绍得简单易懂，对几个常用的 grunt 插件进行了简单的介绍。
     - 英文官网：<http://gruntjs.com/>，在对 grunt 基本了解以后，在中文官网上看不明白的地方，可以直接看英文官网的说明。
 - 插件：
     - 虽然中文官网也有插件页面，但是并不能进行搜索。所以要搜索 grunt 插件，要在英文官网的插件页面搜索。
 - grunt 相关：
-    - 编写可维护的 Gruntfile.js：http://blog.segmentfault.com/heroic/1190000000343005?page=1#c-1190000000343005-1050000000344590
-    - 配置WebStorm Grunt环境：http://www.cnblogs.com/eboke/p/3793922.html
-    - grunt 有提供对文件操作的 API： http://www.gruntjs.org/api/grunt.file.html
-    - 使用 grunt-contrib-copy 自动复制文件：http://keenwon.com/1082.html
+    - [编写可维护的 Gruntfile.js](http://blog.segmentfault.com/heroic/1190000000343005?page=1#c-1190000000343005-1050000000344590)
+    - [配置 WebStorm Grunt 环境](http://www.cnblogs.com/eboke/p/3793922.html)
+    - [grunt 有提供对文件操作的 API](http://www.gruntjs.org/api/grunt.file.html)
+    - [使用 grunt-contrib-copy 自动复制文件](http://keenwon.com/1082.html)
     - [Automate Recurring Tasks with Grunt](http://www.sitepoint.com/automate-recurring-tasks-grunt)
     - [Automate with Grunt](http://www.salttiger.com/automate-with-grunt/)
     - [Five Grunt Tasks You Won't Want to Miss!](http://www.sitepoint.com/five-grunt-tasks-wont-want-miss/)

@@ -12,6 +12,8 @@ Yeoman 生成的 Angular 脚手架提供了 27 个任务配置和 3 个自定义
 - test 执行应用的单元测试。
 - default 构建一个优化过的，产品化的应用版本。
 
+<!--more-->
+
 ```js
 module.exports = function(grunt) {
     grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {

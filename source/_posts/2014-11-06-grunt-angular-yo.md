@@ -212,7 +212,7 @@ copy: {
 }
 ```
 
-`expand: true` 是为了启用扩展属性，`cwd` 修改 `dest` 和 `src` 的相对路径，`flatten` 将 `dest` 文件全部平板地放置，即不含目录结构。所以，`style` 目标的作用是，将 `<%= yeoman.app %>/styles` 以及下级目录中的所有 css 文件以平板方式拷贝到 `.tmp/styles/`。
+`expand: true` 是为了启用扩展属性，`cwd` 修改 `dest` 和 `src` 的相对路径。所以，`style` 目标的作用是，将 `<%= yeoman.app %>/styles` 以及下级目录中的所有 css 文件以平板方式拷贝到 `.tmp/styles/`。
 
 ### autoprefixer
 
@@ -423,6 +423,27 @@ grunt.registerTask('build', [
   ]);
 ```
 
+1. 清除 `.tmp` 和 `<%= yeoman.dist %>/{,*/}*`，但保留 `<%= yeoman.dist %>/.git*` 文件或者文件夹。
+1. 根据 bower 的依赖关系替换 `index.html` 中的占位符。
+1. 根据 `<%= yeoman.app %>/index.html` 中的 usemin 块生成 JS 和 CSS 的优化配置，并指定输出路径为 `<%= yeoman.dist %>`。
+1. 并行运行 `concurrent:dist` 目标中的三个子任务：
+    - 将 `<%= yeoman.app %>/styles` 以及下级目录中的所有 css 文件拷贝到 `.tmp/styles/`。
+    - 将`<%= yeoman.app %>/images` 中的图片压缩到 `<%= yeoman.dist %>/images` 中。
+    - 将 `<%= yeoman.app %>/images/{,*/}/` 下的所有 svg 图片压缩到 `<%= yeoman.dist %>/images` 中。
+1. `.tmp/styles/` 目录以及下级目录中的所有 css 文件添加前缀，然后覆盖原文件。
+1. 利用`useminPrepare` 任务生成的配置合并文件，指定输出路径为 `<%= yeoman.dist %>`。
+1. 将 `.tmp/concat/scripts` 目录下除了 `oldieshim.js` 之外的所有 js 文件加上 angular 注解后覆盖原来的文件。
+1. 将 `<%= yeoman.app %>/` 的所有 html、图片、字体文件、.htaccess 拷贝到 `<%= yeoman.dist %>` 下。
+1. 将 `<%= yeoman.dist %>/*.html` 中的本地路径修改为 CDN 路径。
+2. 使用 `useminPrepare` 生成的配置最小化 CSS。
+3. 使用 `useminPrepare` 生成的配置混淆 JavaScript。
+4. 使用 filerev 重命名 `<%= yeoman.dist %>/` 下所有 js、css、图片和字体文件。
+5. 将 `<%= yeoman.dist %>/{,*/}*.html` 和 `<%= yeoman.dist %>/styles/{,*/}*.css` 中的 usemin 块替换为 `'<%= yeoman.dist %>','<%= yeoman.dist %>/images'` 中优化后并且 revved 的版本。
+6. 压缩 `<%= yeoman.dist %>` 下的所有 html 以及视图文件夹所有的 html，将压缩后的文件置于 `<%= yeoman.dist %>/` 下。
+
+
+
+
 ### clean:dist
 
 清除 `.tmp` 和 `<%= yeoman.dist %>/{,*/}*`，但保留 `<%= yeoman.dist %>/.git*` 文件或者文件夹。
@@ -447,7 +468,9 @@ clean: {
 
 根据 bower 的依赖关系替换 `index.html` 中的占位符。
 
-### usemin
+### useminPrepare
+
+根据 `<%= yeoman.app %>/index.html` 中的 usemin 块生成 JS 和 CSS 的压缩配置，并指定输出路径为 `<%= yeoman.dist %>`。
 
 ```js
 useminPrepare: {
@@ -467,20 +490,32 @@ useminPrepare: {
 }
 ```
 
-`useminPrepare` 为实现优化修改 Grunt 配置，定义 js 的优化流程为 `concat` --> `uglifyjs`，css 的优化流程为 `cssmin`。优化的 html 文件为 `<%= yeoman.app %>/index.html`，优化后的文件路径为 `'<%= yeoman.dist %>`。
+index.html 中 usemin 块：
 
-```js
-// Performs rewrites based on filerev and the useminPrepare configuration
-usemin: {
-  html: ['<%= yeoman.dist %>/{,*/}*.html'],
-  css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
-  options: {
-    assetsDirs: ['<%= yeoman.dist %>','<%= yeoman.dist %>/images']
-  }
-}
+```html
+<!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:css(.tmp) styles/main.css -->
+<link rel="stylesheet" href="styles/main.css">
+<!-- endbuild -->
+
+<!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<!-- endbuild -->
 ```
 
-`usemin` 使用 `useminPrepare` 阶段准备的配置优化，将优化后的版本替换指定文件的 usemin 块。`usemin` 中定义了两个目标，`html` 和 `css`，先使用优化优化版本替换这些文件中的 usemin 块，让后试图使用 revved 的版本再次替换。`options.assetsDirs` 重定义了 revved 版本的查找路径。
+`useminPrepare` 为实现优化修改 Grunt 配置，定义 js 的优化流程为 `concat` --> `uglifyjs`，css 的优化流程为 `cssmin`。优化的 html 文件为 `<%= yeoman.app %>/index.html`，优化后的文件路径为 `<%= yeoman.dist %>`。
+
+将 `index.html` 中有 `wiredep` 插入的 css 合并为 `.tmp/styles/vendor.css` 文件中。将 `<!-- build:css(.tmp) styles/main.css --><!-- endbuild -->` 中的 css （分路径为 `.temp` 目录下）合并到 `.tmp/styles/main.css` 中。压缩后放到 `<%= yeoman.dist %>/`
+
+将 `wiredep` 插入的 js 文件合并到 `.tmp/scripts/vendor.js` 中，将进一步混淆后的文件生成到 `scripts/vendor.js` 中。将 `<!-- build:js({.tmp,app}) scripts/scripts.js --> <!-- endbuild -->` 中的 js 文件（存在于 `.tmp` 或者 `app` 目录下）合并到 `.temp/scripts/scripts.js` 中，混淆后。
 
 ### concurrent:dist
 
@@ -496,7 +531,7 @@ concurrent: {
 }
 ```
 
-- copy:styles 将 `<%= yeoman.app %>/styles` 以及下级目录中的所有 css 文件以平板方式拷贝到 `.tmp/styles/`。
+- copy:styles 将 `<%= yeoman.app %>/styles` 以及下级目录中的所有 css 文件拷贝到 `.tmp/styles/`。
 - imagemin 将 `<%= yeoman.app %>/images` 中的图片压缩到 `<%= yeoman.dist %>/images` 中。
 - svgmin 将 `<%= yeoman.app %>/images/{,*/}/` 下的所有 svg 图片压缩到 `<%= yeoman.dist %>/images` 中。
 
@@ -542,20 +577,185 @@ svgmin: {
 
 ### autoprefixer
 
+`dist` 目标表示为 `.tmp/styles/` 目录以及下级目录中的所有 css 文件添加前缀，然后覆盖原文件。
+
 ### concat
+
+[gruntjs/grunt-contrib-concat](https://github.com/gruntjs/grunt-contrib-concat) 用于拼接文件。
+
+我们这里使用的是 `useminPrepare` 任务生成的配置，合并后的文件生成到临时目录(`.tmp`)目录下。
 
 ### ngAnnotate
 
+[mzgol/grunt-ng-annotate](https://github.com/mzgol/grunt-ng-annotate) 用来将 Angular 添加、删除或者重建 Angular 中的依赖注入。
+
+有如下 Angular 模块，在未标注之前：
+
+```js
+angular.module("MyMod").controller("MyCtrl", function($scope, $timeout) {
+});
+```
+
+标注之后：
+
+```js
+angular.module("MyMod").controller("MyCtrl", ["$scope", "$timeout", function($scope, $timeout) {
+}]);
+```
+
+添加标注后可以安全地对代码进行压缩。
+
+我们的 `ngAnnotate` 的任务配置如下：
+
+```js
+ngAnnotate: {
+  dist: {
+    files: [{
+      expand: true,
+      cwd: '.tmp/concat/scripts',
+      src: ['*.js', '!oldieshim.js'],
+      dest: '.tmp/concat/scripts'
+    }]
+  }
+}
+```
+
+将 `.tmp/concat/scripts` 目录下除了 `oldieshim.js` 之外的所有 js 文件加上注解后覆盖原来的文件。
+
 ### copy:dist
+
+```js
+copy: {
+  dist: {
+    files: [{
+      expand: true,
+      dot: true,
+      cwd: '<%= yeoman.app %>',
+      dest: '<%= yeoman.dist %>',
+      src: [
+        '*.{ico,png,txt}',
+        '.htaccess',
+        '*.html',
+        'views/{,*/}*.html',
+        'images/{,*/}*.{webp}',
+        'fonts/*'
+      ]
+    }, {
+      expand: true,
+      cwd: '.tmp/images',
+      dest: '<%= yeoman.dist %>/images',
+      src: ['generated/*']
+    }]
+  }
+}
+```
+
+将 `<%= yeoman.app %>/` 的所有 html、图片、字体文件、.htaccess 拷贝到 `<%= yeoman.dist %>` 下。
 
 ### cdnify
 
+[callumlocke/grunt-cdnify](https://github.com/callumlocke/grunt-cdnify) 将指定文件中的本地路径修改为 CDN 路径，CDN 可以通过 `options.base` 配置，默认为 Google 提供的 CDN。
+
+```js
+cdnify: {
+  dist: {
+    html: ['<%= yeoman.dist %>/*.html']
+  }
+}
+```
+
+将 `<%= yeoman.dist %>/*.html` 中的本地路径修改为 CDN 路径。
+
 ### cssmin
+
+使用 `useminPrepare` 生成的配置，你也可以自定义：
+
+```js
+cssmin: {
+    dist: {
+     files: {
+       '<%= yeoman.dist %>/styles/main.css': [
+         '.tmp/styles/{,*/}*.css'
+       ]
+     }
+    }
+}
+```
 
 ### uglify
 
+使用 `useminPrepare` 生成的配置，混淆后的文件默认生成到通过 `useminPrepare` 中指定的目标目录。
+
+你也可以自定义：
+
+```js
+uglify: {
+  dist: {
+    files: {
+      '<%= yeoman.dist %>/scripts/scripts.js': [
+        '<%= yeoman.dist %>/scripts/scripts.js'
+      ]
+    }
+  }
+}
+```
+
 ### filerev
+
+[yeoman/grunt-filerev](https://github.com/yeoman/grunt-filerev) 通过文件内容的哈希重命名文件名。
+
+```js
+// Renames files for browser caching purposes
+filerev: {
+  dist: {
+    src: [
+      '<%= yeoman.dist %>/scripts/{,*/}*.js',
+      '<%= yeoman.dist %>/styles/{,*/}*.css',
+      '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+      '<%= yeoman.dist %>/styles/fonts/*'
+    ]
+  }
+}
+```
+
+使用 filerev 重命名 `<%= yeoman.dist %>/` 下所有 js、css、图片和字体文件。
 
 ### usemin
 
+```js
+usemin: {
+  html: ['<%= yeoman.dist %>/{,*/}*.html'],
+  css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+  options: {
+    assetsDirs: ['<%= yeoman.dist %>','<%= yeoman.dist %>/images']
+  }
+}
+```
+
+`usemin` 使用 `useminPrepare` 阶段准备的配置优化，将 `<%= yeoman.dist %>/{,*/}*.html` 和 `<%= yeoman.dist %>/styles/{,*/}*.css` 中的 usemin 块替换为 `'<%= yeoman.dist %>','<%= yeoman.dist %>/images'` 中优化后并且 revved 的版本。`options.assetsDirs` 重定义了 revved 版本的查找路径。
+
 ### htmlmin
+
+[gruntjs/grunt-contrib-htmlmin](https://github.com/gruntjs/grunt-contrib-htmlmin) 压缩 html。
+
+```js
+htmlmin: {
+  dist: {
+    options: {
+      collapseWhitespace: true,
+      conservativeCollapse: true,
+      collapseBooleanAttributes: true,
+      removeCommentsFromCDATA: true,
+      removeOptionalTags: true
+    },
+    files: [{
+      expand: true,
+      cwd: '<%= yeoman.dist %>',
+      src: ['*.html', 'views/{,*/}*.html'],
+      dest: '<%= yeoman.dist %>'
+    }]
+  }
+}
+```
+
+压缩 `<%= yeoman.dist %>` 下的所有 html 以及视图文件夹所有的 html，将压缩后的文件置于 `<%= yeoman.dist %>/` 下。

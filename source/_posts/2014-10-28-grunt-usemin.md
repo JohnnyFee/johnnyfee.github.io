@@ -37,6 +37,8 @@ grunt.registerTask('build', [
 
 关于目录和任务，最主要的区别是 `useminPrepare` 的需要指定输入路径、临时路径（默认为 `.tmp`）和输出路径，这个输出路径用来为处理器管道输出正确的配置，然后 `usemin` 只和输出路径有关，所有需要的资源都应该已经输入到了目标目录中（变化或者只是拷贝）。
 
+合并文件默认生成到临时目录(`.tmp`)下，混淆后的文件默认生成到指定的 dest 目录下。
+
 ## useminPrepare
 
 `useminPrepare` 试图为应用到 usemin 块的步骤（如 concatenation and uglify-cation）准备正确的配置。这需要输入目录，临时目录和目标目录。usemin 块中引用的文件要么是相对路径要么是绝对路径（`/images/foo.png` or `../../images/foo.png`）。通过绝对路径引用的文件在指定的搜索路径集合中查找，默认路径为包含 usemin 块的 html/css 文件所在的路径。相对路径引用的文件也在包含 usemin 块文件所在的路径中查找。如果不指定 root，绝对路径和相对路径其实都是相对当前检查的 html/css 文件所在的目录。
@@ -52,7 +54,7 @@ usemin 块可以如下表达:
 ```
 
 * **type**: 可以是 `js`, `css` 或者使用 [block replacement function](https://github.com/yeoman/grunt-usemin#blockreplacements) 定义的自定义类型。
-* **alternate search path**: (可选) 默认情况下，输入文件时相对 usemin 块所在的文件，Alternate search path 让你改变相对路径。
+* **alternate search path**: (可选) 默认情况下，输入文件时相对 usemin 块所在的文件，Alternate search path 让你改变相对路径。这个对应 `options.root` 选项。
 * **path**: 优化后的文件路径。
 
 如:

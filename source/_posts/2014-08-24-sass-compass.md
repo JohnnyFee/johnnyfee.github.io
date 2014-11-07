@@ -29,6 +29,11 @@ Sass本身只是一个编译器，Compass在它的基础上，封装了一系列
 
 Compass是用Ruby语言开发的，所以安装它之前，必须安装Ruby。
 
+**注意**，对于中国大陆的用户请国内镜像：
+
+* 淘宝的[RubyGems镜像](http://ruby.taobao.org/)。
+* [Rubygems 镜像 - 山东理工大学](http://ruby.sdutlinux.org/)
+
 假定你的机器（Linux或OS X）已经安装好Ruby，那么在命令行模式下键入：
 
 	sudo gem install compass

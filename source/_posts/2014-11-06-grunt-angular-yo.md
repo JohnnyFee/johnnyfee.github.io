@@ -424,25 +424,26 @@ grunt.registerTask('build', [
 ```
 
 1. 清除 `.tmp` 和 `<%= yeoman.dist %>/{,*/}*`，但保留 `<%= yeoman.dist %>/.git*` 文件或者文件夹。
-1. 根据 bower 的依赖关系替换 `index.html` 中的占位符。
-1. 根据 `<%= yeoman.app %>/index.html` 中的 usemin 块生成 JS 和 CSS 的优化配置，并指定输出路径为 `<%= yeoman.dist %>`。
-1. 并行运行 `concurrent:dist` 目标中的三个子任务：
+2. 根据 bower 的依赖关系替换 `index.html` 中的占位符。
+3. 利用`useminPrepare` 任务生成的配置合并文件，指定输出路径为 `<%= yeoman.dist %>`。包括 bower_components 中的 js 和 css，以及 `.temp/` 下用户自定义的 css 以及 `.tmp/` 或者 `app/` 下的 js。
+4. 并行运行 `concurrent:dist` 目标中的三个子任务：
     - 将 `<%= yeoman.app %>/styles` 以及下级目录中的所有 css 文件拷贝到 `.tmp/styles/`。
     - 将`<%= yeoman.app %>/images` 中的图片压缩到 `<%= yeoman.dist %>/images` 中。
     - 将 `<%= yeoman.app %>/images/{,*/}/` 下的所有 svg 图片压缩到 `<%= yeoman.dist %>/images` 中。
-1. `.tmp/styles/` 目录以及下级目录中的所有 css 文件添加前缀，然后覆盖原文件。
-1. 利用`useminPrepare` 任务生成的配置合并文件，指定输出路径为 `<%= yeoman.dist %>`。
-1. 将 `.tmp/concat/scripts` 目录下除了 `oldieshim.js` 之外的所有 js 文件加上 angular 注解后覆盖原来的文件。
-1. 将 `<%= yeoman.app %>/` 的所有 html、图片、字体文件、.htaccess 拷贝到 `<%= yeoman.dist %>` 下。
-1. 将 `<%= yeoman.dist %>/*.html` 中的本地路径修改为 CDN 路径。
-2. 使用 `useminPrepare` 生成的配置最小化 CSS。
-3. 使用 `useminPrepare` 生成的配置混淆 JavaScript。
-4. 使用 filerev 重命名 `<%= yeoman.dist %>/` 下所有 js、css、图片和字体文件。
-5. 将 `<%= yeoman.dist %>/{,*/}*.html` 和 `<%= yeoman.dist %>/styles/{,*/}*.css` 中的 usemin 块替换为 `'<%= yeoman.dist %>','<%= yeoman.dist %>/images'` 中优化后并且 revved 的版本。
-6. 压缩 `<%= yeoman.dist %>` 下的所有 html 以及视图文件夹所有的 html，将压缩后的文件置于 `<%= yeoman.dist %>/` 下。
-
-
-
+5. `.tmp/styles/` 目录以及下级目录中的所有 css 文件添加前缀，然后覆盖原文件。
+6. 使用的是 `useminPrepare` 任务生成的配置合并 css 和 js 文件。
+    - 将 `index.html` 中有 `wiredep` 插入的 css 合并为 `.tmp/styles/vendor.css` 文件中。
+    - 将 `<!-- build:css(.tmp) styles/main.css --><!-- endbuild -->` 中的 css （路径为 `.temp` 目录下）合并到 `.tmp/styles/main.css` 中。
+    - 将 `wiredep` 插入的 js 文件合并到 `.tmp/scripts/vendor.js` 中。
+    - 将 `<!-- build:js({.tmp,app}) scripts/scripts.js --> <!-- endbuild -->` 中的 js 文件（存在于 `.tmp` 或者 `app` 目录下）合并到 `.temp/scripts/scripts.js` 中。
+7. 将 `.tmp/concat/scripts` 目录下除了 `oldieshim.js` 之外的所有 js 文件加上 angular 注解后覆盖原来的文件。
+8. 将 `<%= yeoman.app %>/` 的所有 html、图片、字体文件、.htaccess 拷贝到 `<%= yeoman.dist %>` 下。
+9. 将 `<%= yeoman.dist %>/*.html` 中的本地路径修改为 CDN 路径。
+10. 使用 `useminPrepare` 生成的配置最小化 CSS。压缩后置于 `'<%= yeoman.dist %>'/styles/` 中。
+11. 使用 `useminPrepare` 生成的配置混淆 JavaScript。混淆后置于 `'<%= yeoman.dist %>'/scripts` 中。
+12. 使用 filerev 重命名 `<%= yeoman.dist %>/` 下所有 js、css、图片和字体文件。
+13. 将 `<%= yeoman.dist %>/{,*/}*.html` 和 `<%= yeoman.dist %>/styles/{,*/}*.css` 中的 usemin 块替换为 `'<%= yeoman.dist %>','<%= yeoman.dist %>/images'` 中优化后并且 revved 的版本。
+14. 压缩 `<%= yeoman.dist %>` 下的所有 html 以及视图文件夹所有的 html，将压缩后的文件置于 `<%= yeoman.dist %>/` 下。
 
 ### clean:dist
 
@@ -513,9 +514,9 @@ index.html 中 usemin 块：
 
 `useminPrepare` 为实现优化修改 Grunt 配置，定义 js 的优化流程为 `concat` --> `uglifyjs`，css 的优化流程为 `cssmin`。优化的 html 文件为 `<%= yeoman.app %>/index.html`，优化后的文件路径为 `<%= yeoman.dist %>`。
 
-将 `index.html` 中有 `wiredep` 插入的 css 合并为 `.tmp/styles/vendor.css` 文件中。将 `<!-- build:css(.tmp) styles/main.css --><!-- endbuild -->` 中的 css （分路径为 `.temp` 目录下）合并到 `.tmp/styles/main.css` 中。压缩后放到 `<%= yeoman.dist %>/`
+将 `index.html` 中有 `wiredep` 插入的 css 合并为 `.tmp/styles/vendor.css` 文件中。将 `<!-- build:css(.tmp) styles/main.css --><!-- endbuild -->` 中的 css （路径为 `.temp` 目录下）合并到 `.tmp/styles/main.css` 中。压缩后放到 `<%= yeoman.dist %>/`
 
-将 `wiredep` 插入的 js 文件合并到 `.tmp/scripts/vendor.js` 中，将进一步混淆后的文件生成到 `scripts/vendor.js` 中。将 `<!-- build:js({.tmp,app}) scripts/scripts.js --> <!-- endbuild -->` 中的 js 文件（存在于 `.tmp` 或者 `app` 目录下）合并到 `.temp/scripts/scripts.js` 中，混淆后。
+将 `wiredep` 插入的 js 文件合并到 `.tmp/scripts/vendor.js` 中，将进一步混淆后的文件生成到 `<%= yeoman.dist %>/scripts/vendor.js` 中。将 `<!-- build:js({.tmp,app}) scripts/scripts.js --> <!-- endbuild -->` 中的 js 文件（存在于 `.tmp` 或者 `app` 目录下）合并到 `.temp/scripts/scripts.js` 中，混淆后的文件生成到 `<%= yeoman.dist %>/scripts/scripts.js` 中。
 
 ### concurrent:dist
 

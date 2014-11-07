@@ -102,21 +102,11 @@ clean 的任务配置为：
 
 ```js
 clean: {
-  dist: {
-    files: [{
-      dot: true,
-      src: [
-        '.tmp',
-        '<%= yeoman.dist %>/{,*/}*',
-        '!<%= yeoman.dist %>/.git*'
-      ]
-    }]
-  },
   server: '.tmp'
 }
 ```
 
-`serve` 任务只是用了 `clean:server` 目标，即删除 `.tmp` 目录。
+`clean:server` 删除 `.tmp` 目录。
 
 ### wiredep
 
@@ -273,7 +263,7 @@ connect: {
 
 `options.livereload` 设置为 `true` 或者端口号，表示使用 [connect-livereload](https://github.com/intesso/connect-livereload) 在你的页面中注入 live reload 脚本。这不会执行 live reloading，它试图和 `grunt-contrib-watch` 或者其他根据文件的修改触发 live reload 的服务器结合使用。
 
-`options.keepalive` 设置为 `true` 表示让服务器无限期的执行。而这个任务之后的其任务不再执行。默认情况下，grunt 任务执行完成，web 服务器会停止。
+`options.keepalive` 设置为 `true` 表示让服务器无限期的执行，这个任务之后的其任务不再执行。默认情况下，grunt 任务执行完成，web 服务器会停止。
 
 `options.middleware` 类型为 Function 或者数组，用来添加 Connect 中间件。如果是函数，该函数返回中间件数组。Default: `Array` of connect middlewares that use `options.base` for static files and directory browsing，如：
 
@@ -760,3 +750,7 @@ htmlmin: {
 ```
 
 压缩 `<%= yeoman.dist %>` 下的所有 html 以及视图文件夹所有的 html，将压缩后的文件置于 `<%= yeoman.dist %>/` 下。
+
+## compass
+
+如果你想使用 compass 之类的预编译插件，

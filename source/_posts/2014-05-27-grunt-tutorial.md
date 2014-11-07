@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Grunt"
-category : Node
+title: "Grunt Tutorial"
+category : Grunt
 tags : [node, grunt]
 --- 
 

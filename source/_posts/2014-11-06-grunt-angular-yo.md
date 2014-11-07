@@ -753,4 +753,99 @@ htmlmin: {
 
 ## compass
 
-如果你想使用 compass 之类的预编译插件，
+如果你想使用 [gruntjs/grunt-contrib-compass](https://github.com/gruntjs/grunt-contrib-compass) 之类的预编译插件，需要做如下修改：
+
+### watch
+
+将其中的 `style` 目标替换为一下目标，即将
+
+```js
+styles: {
+    files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+    tasks: ['newer:copy:styles', 'autoprefixer']
+}
+```
+
+替换为：
+
+```js
+compass: {
+    files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+    tasks: ['compass:server', 'autoprefixer']
+}
+```
+
+### wiredep
+
+在 wiredep 任务中添加目标 `sass` 目标：
+
+```js
+sass: {
+    src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+    ignorePath: /(\.\.\/){1,2}bower_components\//
+  }
+```
+
+### compass
+
+添加 cpmpass 任务配置：
+
+```js
+// Compiles Sass to CSS and generates necessary files if requested
+compass: {
+  options: {
+    sassDir: '<%= yeoman.app %>/styles',
+    cssDir: '.tmp/styles',
+    generatedImagesDir: '.tmp/images/generated',
+    imagesDir: '<%= yeoman.app %>/images',
+    javascriptsDir: '<%= yeoman.app %>/scripts',
+    fontsDir: '<%= yeoman.app %>/styles/fonts',
+    importPath: './bower_components',
+    httpImagesPath: '/images',
+    httpGeneratedImagesPath: '/images/generated',
+    httpFontsPath: '/styles/fonts',
+    relativeAssets: false,
+    assetCacheBuster: false,
+    raw: 'Sass::Script::Number.precision = 10\n'
+  },
+  dist: {
+    options: {
+      generatedImagesDir: '<%= yeoman.dist %>/images/generated'
+    }
+  },
+  server: {
+    options: {
+      debugInfo: true
+    }
+  }
+}
+```
+
+其中
+
+- `sassDir` 指的是 sass 或者 scss 文件所在的目录，不能使用通配符模式，只需要指定目录，compass 会自动递归遍历。
+- `cssDir` sass 或者 scss 生成的 css 文件的存储目录。目录结构和 scss 或者 sass 的相同。
+- 其他请参考 [gruntjs/grunt-contrib-compass](https://github.com/gruntjs/grunt-contrib-compass)。
+
+
+### concurrent
+
+将 `concurrent` 中的 `copy:styles` 目标替换为 `compass:server`。
+
+```js
+concurrent: {
+  server: [
+    'compass:server'
+  ],
+  test: [
+    'compass'
+  ],
+  dist: [
+    'compass:dist',
+    'imagemin',
+    'svgmin'
+  ]
+}
+```
+
+

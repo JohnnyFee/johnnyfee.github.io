@@ -521,3 +521,4 @@ $scope.randomValue = Math.floor(Math.random() * $scope.items.length);
 
 - [走进AngularJs(七) 过滤器（filter） - 吕大豹 - 博客园](http://www.cnblogs.com/lvdabao/p/3475426.html)
 - [AngularJS: API: filter components in ng](https://docs.angularjs.org/api/ng/filter)
+- [All About the Built-In AngularJS Filters ♥ Scotch](http://scotch.io/tutorials/javascript/all-about-the-built-in-angularjs-filters)

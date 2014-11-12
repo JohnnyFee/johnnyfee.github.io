@@ -913,6 +913,7 @@ meter 元素显示了某个范围内所有可能值中的一个。min、max 定�
 
 - [Exploring the FileSystem APIs - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/file/filesystem/)
 - [阅读以 JavaScript 编写的本地文件 - HTML5 Rocks](http://www.html5rocks.com/zh/tutorials/file/dndfiles/)
+- [Use the HTML5 File API to Work with Files Locally in the Browser ♥ Scotch](http://scotch.io/tutorials/use-the-html5-file-api-to-work-with-files-locally-in-the-browser?&mc_cid=36aa7ac1ca&mc_eid=8a875429cf)
 
 ## Argument
 

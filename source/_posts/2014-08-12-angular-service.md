@@ -9,7 +9,339 @@ tags : [angular, tutorial]
 
 [AngularJS: API: service components in ng](https://docs.angularjs.org/api/ng/service)
 
-## $resource
+## Services
+
+服务是用来实现应用功能的单例对象。Angular 本身提供了很多服务，如操作浏览器地址的 `$location`，根据地址的改变来切换视图的 `$route`，和服务器通信的 `$http`。 服务可以是注册的构造函数，也可以是被 AngularJS DI 系统创建和管理的单例对象。
+
+AngularJS 的 DI 机制要求所有的服务具有唯一的服务名。
+
+Angular 内置的服务都是以 `$` 开头，当你定义自己的服务时，请尽量避免使用 `$` 开头。
+
+使用服务和依赖注入，我们可以更简单地编写 controller：
+
+```js
+function ShoppingController($scope, Items) {
+  $scope.items = Items.query();
+}
+```
+
+那么我们什么时候应该使用service呢？答案是：无论何时，当我们需要在不同的域中共享数据的时候。另外，多亏了Angular的依赖注入系统，实现这一点是很容易并且很清晰的。
+
+通过 `$scope` 来维护数据是非常粗暴的一种方式。由于其它 `controller`、`directive`、`model` 的影响，`$scope` 很容易就会崩溃或者变脏。它很快就会变成一团乱麻。通过一种集中的途径（在这里就是 `service`）来管理数据，然后通过某种方式来请求修改它，这样不仅仅会更加清晰，同时当应用的体积不断增大的时候也更加容易管理。
+
+### 定义服务
+
+服务 module 对象的 API 来定义，可以通过以下几种方法来创建服务。
+
+#### Values
+
+让 Angular 管理一个对象的最简单方式是注册一个已经实例化的对象：
+
+`value` 方法用来定义供用户组件使用的基本类型的值或者对象类型的值。和 `constant` 定义服务的不同之处是，使用 `value` 方法的值可以被修改，而使用 `constant` 定义的不能修改。另外，使用 `value` 方法创建的服务不能再 config 阶段使用，`constant` 方法可以。 
+
+Another good use for the `value` method is to define model objects that will be used by your components. This pattern provides a nice way to keep the model definition and the code that operates on the model in the same module, helping you to keep repetitive code out of your components and in a single file where it resides best. This code pattern can also help to keep your controller's code as thin as possible when it comes to operating on the model.
+
+The followingcode example shows how you can define a value that contains both themodel and code used to interrogate the model toderive calculated values from the model. In this case, the brewer model is defined, and two methods are defined on the prototype of the `brewer` object that can be used to retrieve the full name of the brewer and check to see if the brewer has an item in their inventory:
+
+```js
+(function() {
+    'use strict';
+    var Brewer = function() {
+        var self = this;
+        self.userName = '';
+        self.firstName = '';
+        self.lastName = '';
+        self.email = '';
+        self.location = '';
+        self.bio = '';
+        self.webSite = '';
+        self.avatar = '';
+        self.photo = '';
+        self.dateJoined = '';
+        self.inventory = [];
+    };
+
+    Brewer.prototype = {
+        fullName: function() {
+            return this.firstName + ' ' + this.lastName;
+        },
+        hasItemInInventory: function(value) {
+            var result = false;
+            if (this.inventory && this.inventory.length > 0) {
+                angular.forEach(this.inventory, function(item) {
+                    if (item.name === value) {
+                        result = true;
+                    }
+                });
+            }
+            return result;
+        }
+    }
+    angular.module('brew-everywhere').value('brewer', Brewer);
+})();
+```
+
+Now, when you inject this into a controller or directive for the first time, the `$inject` service will provide the constructor of the model that you can use to create new instances of the model in your code.
+
+```js
+var myMod = angular.module('myMod', []);
+myMod.value('notificationsArchive', new NotificationsArchive());
+```
+
+这种方式非常简单，无法定义服务的依赖，所以仅适用于与注册已经实例化的对象。
+
+#### Services
+
+`service(name, constructor())` 适用于创建无配置，只有简单逻辑的服务。Angular 使用这个方法来创建服务实例。
+
+It provides a shorthand method for registering a constructor function that will be instantiated by calling the object's new method. This is similar to the `value` method, but is best used if you define your services using the popular type/class methodology as discussed in the various books for object-oriented programming with JavaScript.
+
+In the following code example, we've defined a logging service, which wraps the log4javascript library using the `service` method. First, we define a constructor function called Logging, which defines the data members of the service and then we define the service's functionality by adding the various methods to the Logging object's prototype. Finally, we define the service by providing the constructor method to the AngularJS module's servicemethod.
+
+```js
+(function() {
+    'use strict';
+    var Logging = function() {
+        this.log = null;
+    };
+    Logging.prototype = {
+        init: function() {
+            // get the logger object
+            this.log = log4javascript.getLogger("main");
+            // set the log level
+            this.log.setLevel(log4javascript.Level.ALL);
+            // create and add an appender to the logger
+            var appender = new log4javascript.PopUpAppender();
+            this.log.addAppender(appender);
+        },
+        trace: function(message) {
+            this.log.trace(message);
+        },
+        debug: function(message) {
+            this.log.debug(message);
+        },
+        info: function(message) {
+            this.log.info(message);
+        },
+        warn: function(message) {
+            this.log.warn(message);
+        },
+        error: function(message) {
+            this.log.error(message);
+        },
+        fatal: function(message) {
+            this.log.fatal(message);
+        }
+    };
+    angular.module('brew-everywhere').service('logging', Logging);
+})();
+```
+
+假设 `NotificationsService` 服务需要依赖一个 archive 服务，那么这就不能用 Value 方法定义了。最简单的方法是通过 `service` 方法注册一个构造函数。如：
+
+    myMod.service('notificationsService', NotificationsService);
+
+`NotificationsService` 构造函数依赖其他服务，如：
+
+```js
+var NotificationsService = function (notificationsArchive) {
+    this.notificationsArchive = notificationsArchive;
+};
+```
+
+通过使用依赖注入，我们可以从 `NoficiationsService`  构造函数中消除 `new` 关键字。现在这个服务不用关心依赖的实例化，并且可以接受任何 archiving 服务。
+
+实际上，`service` 方法不常用，主要用于注册已经存在的构造函数，从而让 AngularJS 能够管理这些构造函数创建出来的对象。
+
+#### Factories
+
+`factory(name, $getFunction())` 适用于创建无配置，具有复杂逻辑的服务。
+
+相对 `service` 方法，这种方式更灵活，因为我们注册的是一个可以创建任意对象的函数。这个函数可以放回任意合法的 JavaScript 对象，包括 `function` 对象。
+
+We can also define a service using the AngularJS module's `factory` method. You should use this method if you are not using a type/class definition to define your service and you do not need to configure your service inside a module's config method.
+
+`factory` 方法等效于 `provider(name, { $get: $getFunction() } )`。
+
+如：
+
+```js
+myMod.factory('notificationsService',function(notificationsArchive){
+
+    var MAX_LEN = 10;
+    var notifications = [];
+
+    return {
+      push:function (notification) {
+        var notificationToArchive;
+        var newLen = notifications.unshift(notification);
+
+        //push method can rely on the closure scope now!
+        if (newLen > MAX_LEN) {
+          notificationToArchive = this.notifications.pop();
+          notificationsArchive.archive(notificationToArchive);
+        }
+      }
+      // other methods of the NotificationsService
+    };
+```
+
+`factory` 方法是把对象注入到 AngularJS DI 系统最常用的方式。这种方式很灵活，并且可以包含复杂的逻辑。因为放到服务实例的工厂只是普通的函数，所以我们可以利用词法作用域来模拟私有变量。如上例中，`MAX_LEN` 和 `notifications` 都是私有变量。
+
+#### Constants
+
+The first method is the `constant` method, which is best used to define a primitive value or object that will never change and needs to be made available for use by a module's `config` method. The following is an example of using the `constant` method to define messages used for a logging service:
+
+```js
+angular.module('logging').constant('logging_config', {
+    traceLevel: {
+    _LOG_TRACE_: '_LOG_TRACE_',
+    _LOG_DEBUG_: '_LOG_DEBUG_',
+    _LOG_INFO_: '_LOG_INFO_',
+    _LOG_WARN_: '_LOG_WARN_',
+    _LOG_ERROR_: '_LOG_ERROR_',
+    _LOG_FATAL_: '_LOG_FATAL_',
+    }
+});
+```
+
+`NotificationsService` 仍然一个缺陷，它有一个硬编码的 `MAX_LEN` 常量。可以使用 `constant` 方法定义一个表示常量的服务，如：
+
+    myMod.constant('MAX_LEN', 10);
+
+然后，把该常量服务作为 `NotificationsService` 服务的依赖：
+
+```js
+myMod.factory('notificationsService', 
+
+function (notificationsArchive, MAX_LEN) {
+  …
+  //creation logic doesn't change
+});
+```
+
+Constants 适用于可以在多个应用中使用的常量服务，不同应用可以配置这些常量。
+
+#### Provider
+
+以上所有的注册方法都是 `provider` 方法的特殊案例。 `provider(name, Object OR constructor())` 适用于创建可配置的具有复杂逻辑的服务。
+
+首先，`provider` 是方法，该方法返回一个包含 `$get` 属性的对象，`$get` 是一个方法，该方法返回 `service` 实例。我们可以认为 providers 是把工厂方法嵌入在 `$get` 属性中的对象。
+
+其次，`provider` 函数中返回的对象可以有其他方法和属性。这些方法和属性被暴露出去，所以可以在 `$get` 工厂方法调用之前设置配置选项。 Indeed, we can still set the `maxLen` configuration property, but we are no longer obliged to do so. Furthermore, it is possible to have more complex configuration logic, as our services can expose configuration methods and not only simple configuration values.
+
+Here is the example of registering the `notificationsService` service as a provider:
+
+```js
+myMod.provider('notificationsService', function () {
+    var config = {
+      maxLen : 10
+    };
+    var notifications = [];
+
+    return {
+      setMaxLen : function(maxLen) {
+        config.maxLen = maxLen || config.maxLen;
+      },
+
+      $get : function(notificationsArchive) {
+        return {
+          push:function (notification) {
+            …
+            if (newLen > config.maxLen) {
+              …
+            }
+          },
+          // other methods go here
+        };
+      }
+    };
+  });
+```
+
+### Service 跨模块可见性
+
+定义在相邻模块的服务对彼此也是可见的。比如下例中，我们可以把 `car` 服务移动到单独的模块中，然后改变模块的依赖，使应用同时依赖 `engines` and `cars`： 
+
+```js
+angular.module('app', ['engines', 'cars'])
+
+angular.module('cars', [])
+  .factory('car', function ($log, dieselEngine) {
+    return {
+      start: function() {
+        $log.info('Starting ' + dieselEngine.type);
+      }
+    };
+  });
+
+angular.module('engines', [])
+  .factory('dieselEngine', function () {
+    return {
+      type: 'diesel'
+    };
+  });
+```
+
+在一个 AnuglarJS 应用中服务的名字都不能相同。靠近应用模块的服务将覆盖其他子模块的同名服务。
+
+```js
+angular.module('app', ['engines', 'cars'])
+  .controller('AppCtrl', function ($scope, car) {
+    car.start();
+  });
+
+angular.module('cars', [])
+  .factory('car', function ($log, dieselEngine) {
+    return {
+      start: function() {
+        $log.info('Starting ' + dieselEngine.type);
+      };
+    }
+  })
+
+  .factory('dieselEngine', function () {
+    return {
+      type: 'custom diesel'
+    };
+  });
+```
+
+在上例中，`car` 服务被注入 `dieselEngine` 服务，`dieselEngine` 服务和 `car` 服务在同一个模块中。`car` 模块中的 `dieselEngine` 服务将覆盖 `engines` 模块中 `dieselEngine` 服务。
+
+## Modules lifecycle
+
+对象创建的 `provider` 方法可以在创建对象实例之前可以进行一些配置。为了支持这个功能，AngularJS 可以把模块的生命周期划分为两个阶段，分别是配置阶段和运行阶段。
+
+总结一下服务中创建对象的不同方法和这些方法对应模块的生命周期的阶段：
+
+&nbsp; | 注册的内容 | 配置阶段可注入 | 运行阶段可注入
+---------- | ------------------ | --------- | --------
+Constant   | Constant's value  | Yes  | Yes
+Variable   | Variable's value   | -  | Yes
+Service  | A new object created by a constructor function      | -  | Yes
+Factory  | A new object returned from a `factory` function     | -  | Yes
+Provider | A new object created by the `$get` factory function | Yes| -  
+
+## Controller
+
+Controllers 在你的应用中有三个职责：
+
+* 初始化应用的模型。
+* 通过 `$scope` 暴露模型和方法到 views (UI template)。
+* 监视模型的变化并作出响应。
+
+千万不要在 AngularJS 控制器中操作 DOM 元素。在控制器中获取一个 DOM 的引用，并操作 DOM 的属性，是在用命令式的方式控制UI -- 这是跟 AugularJS 构建 UI 的思想相悖的。
+
+Controller 应该纯粹地用来把 service、依赖关系、以及其它对象串联到一起，然后通过 scope 把它们关联到 view 上。如果在你的视图里面需要处理复杂的业务逻辑，那么把它们放到 controller 里面也是一个非常不错的选择。
+
+在 Angular 中，controller 自身并不会处理 "request"，除非它是用来处理路由(route)的（很多人把这种方式叫做创建 _route controller_ ，路由控制器）。
+
+通过 `ng-controller` 指令为 DOM 元素指定控制器时，控制器的实例个数和 `ng-controller` 相同。
+
+## Common AngularJS Services
+
+### $resource
 
 Let's look another example:
 
@@ -52,7 +384,7 @@ The line of code that declares the resource—return `$resource`—also does a f
 
     This will make a POST request to _/recipe/13_ . The `@id` tells it to pick the `id` field from its object and use that as the `id` parameter. It’s an added convenience that can save a few lines of code.
 
-### Changing Views with Routes and $location
+#### Changing Views with Routes and $location
 
 We’re building an email app that will easily win out over Gmail, Hotmail, and all the others. We’ll call it…A-Mail.
 
@@ -155,7 +487,7 @@ function DetailController($scope, $routeParams) {
 
 We’ve created the basic structure for an app with many views. We switch views by changing the URL. This means that the forward and back buttons just work for users. Users are able to bookmark and email links to views within the app, even though there is only one real HTML page.
 
-## $location
+### $location
 
 Let’s consider a small example of how you would use the `$location` service in a real-world application. Consider a case where we have a datepicker, and when a date is selected, the app navigates to a certain URL. Let us take a look at how that might look:
 
@@ -177,7 +509,7 @@ host()|www.host.com |N/A
 path() |/path path('/newPath')
 protocol() |http |N/A 
 search() |{'a’: ‘b'} |search({'c’: ‘def'})
-url() |/path?param1=value1?hashValue |url('/newPath?p2=v2') ## Model
+url() |/path?param1=value1?hashValue |url('/newPath?p2=v2') ### Model
 
 Note that the `search()` setter has a few modes of operation:
 
@@ -229,7 +561,7 @@ $scope.safeApply = function(fn) {
 {%endraw%}
 ```
 
-### HTML5 Mode and Hashbang Mode
+#### HTML5 Mode and Hashbang Mode
 
 The `$location` service can be configured using the `$locationProvider` (which can be injected, just like everything else in AngularJS). Of particular interest are two properties on this provider, which are:
 
@@ -259,7 +591,7 @@ The Hashbang approach works seamlessly across all browsers, and requires the lea
 
 The HTML5 mode, on the other hand, talks to the browser URL through the use of HTML5 History API. The `$location` service is smart enough to figure out whether HTML5 mode is supported or not, and fall back to the Hashbang approach if necessary, so you don’t need to worry about additional work. But you do have to take care of the following.
 
-### Server-side configuration
+#### Server-side configuration
 
 Because HTML5 links look like any other URL on your application, you need to take care on the server side to route all links within your app to your main HTML (most likely, the _index.html_ ). For example, if your app is the landing page for _superawesomewebsite.com_ , and you have a route _/amazing?who=me_ in your app, then the URL that the browser would show is _http://www.superawesomewebsite.com/amazing?who=me+_ .
 
@@ -297,7 +629,7 @@ Be sure to check all relative links, images, scripts, and so on. You must either
 
 Running Angular apps with the History API enabled from document root is strongly encouraged, as it takes care of all relative link issues.
 
-## $http
+### $http
 
 ```js
 function ShoppingController($scope, $http) {
@@ -307,7 +639,7 @@ function ShoppingController($scope, $http) {
 }
 ```
 
-### Communicating Over $http
+#### Communicating Over $http
 
 Angular’s core `$http` service would look something like the following:
 
@@ -344,7 +676,7 @@ Similar convenience methods are provided for most of the common request types, i
 * PUT
 * JSONP
 
-### Configuring Your Request Further
+#### Configuring Your Request Further
 
 At times, the standard request options provided out of the box are not enough. This could be because you want to:
 
@@ -377,7 +709,7 @@ $http({
 
 The GET, POST, and other convenience methods set the method, so you don’t need to. 
 
-### Setting HTTP Headers
+#### Setting HTTP Headers
 
 These are set in the $httpProvider.defaults.headers configuration object. This step is usually done in the config part of setting up your app. So if you wanted to enable “DO NOT TRACK” for all your GET requests, while removing the Requested-With header for all your requests, you could simply do the following:
 
@@ -398,7 +730,7 @@ If you want to set the headers for only certain requests, but not as a default, 
        params: {id: 5}
     }).success(function() { // Handle success });
 
-### Working with RESTful Resources
+#### Working with RESTful Resources
 
 The `ngResource` is a separate, optional module. To use it, you need to:
 
@@ -414,7 +746,7 @@ E.g.
             {charge: {method:'POST', params:{charge:true}, isArray:false});
     }]);
 
-[Declaring your own `$resource` is as simple as calling the injected `$resource` function (you know how to inject things by now, right?) with the right parameters.]()
+Declaring your own `$resource` is as simple as calling the injected `$resource` function (you know how to inject things by now, right?) with the right parameters.
 
 The `$resource` function takes one required argument—the URL at which the resource is available—and two optional arguments: default parameters and additional actions you want to configure on the resource.
 

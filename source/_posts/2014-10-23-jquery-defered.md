@@ -10,6 +10,8 @@ tags: [javascript]
 The Deferred Object pattern is the key pattern used by a number of JavaScript applications for decoupling of the request from the code that handles the results of the request and allows multiple callbacks to be attached upon notification of a result. To achieve such a decoupling, the Deferred Object provides functions that allow the callback functions to be registered for handling the success, failure, or the progress of the request. Deferred Object framework is available as part of the jQuery library.
 Here’s how to create a deferred object in jQuery:
 
+<!--more-->
+
 ```js
 var deferred = $.Deferred();
 // var deferred =  new Deferred();

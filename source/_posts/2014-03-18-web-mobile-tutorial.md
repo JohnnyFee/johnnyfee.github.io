@@ -42,6 +42,49 @@ tags: [angular, ui]
 front-end framework in the world.
 - [Ratchet](http://goratchet.com/) Build mobile apps with simple HTML‚ CSS‚ and JS components.
 
+## 开发方案
+
+随着HTML5标准定稿，一切纷争将告一段落，现在，属于HTML5的时代到来了。
+
+我们先谈谈HTML5原来不如原生应用的地方，业内俗称HTML5有“性工能”障碍。即HTML5**性**能不如原生、开发**工**具不如原生、**能**力调用不如原生。
+
+[![](http://cms.csdnimg.cn/article/201411/06/545ad8faa2704.jpg)](http://cms.csdnimg.cn/article/201411/06/545ad8faa2704.jpg)  
+
+这几个问题导致开发者无法使用HTML5做出与原生一样的App。然而，不管是硬件升级还是OS厂商策略变化，以及相关软件技术的成熟，已解决了HTML5的“性工能”障碍。
+
+1. 硬件升级
+
+    2011年，iPhone 4s的CPU是A5，现在iPhone 6是A8，按苹果的历次发布会的说法，速度共提升了7.5倍。这3年间7.5倍的速度提升，抹平了太多HTML5的性能问题。
+
+2. 苹果、Google的策略变化
+
+    Google在2013年底发布的Android 4.4，内置的Webview不再是蹩脚的Android WebKit浏览器，而是Chromium，性能大幅提升。从最新的Android 5.0开始，Webview可以通过Google Play Store实时更新，和Chrome的升级保持一致，用户就可以不刷机享受到最新的浏览器引擎；再看Apple方面，2012年iPhone 5发布后，HTML5在iOS上的表现已令人满意，Safari独家的JavaScript加速引擎Nitro不再那么重要，不过在iOS 8发布后，苹果还是很识趣地取消了三方程序调用Nitro的限制，现在任意浏览器或应用调用iOS的UIWebview都可以利用Nitro加速，这样在前端使用JS做大型运算也成为可能。两大手机操作系统霸主和浏览器巨头的态度发生了变化，使得HTML5在手机上的发展不再受限，而且这个变化不可逆只能继续向前，这种变化势必会产生深远的影响。
+
+3. 软件技术的成熟
+
+    PhoneGap的发展虽然放缓了，但其他产品技术却成熟了。2014年的iWeb大会上，众多厂商的产品提供了面向开发者免费或开源的HTML5性工能障碍的解决方案。
+
+    _（注：作者作为从业人员，也会在分析各种方案时提到我们公司的方案，但作者会客观不夸张的陈述方案，而且该方案是纯免费的，没有商业销售嫌疑。）_
+
+    DCloud公司在iWeb大会上发布了系统的HTML5“性工能缺失”的解决方案，包括：
+
+    1. 性能：提升HTML5性能的手机端引擎，让侧滑菜单、下拉刷新等动态交互卡顿的问题得以解　决；
+    2. 工具：HTML5开发IDE产品HBuilder, 超快的编程利器；
+    3. 能力：把40万原生API封装成JavaScript对象，以解决HTML5能力不足问题的Native.js技术；
+    4. 最接近原生体验的高性能框架：MUI框架，体积只有几十K，加载、运行远快于一般框架。基于该方案开发的HTML5应用完全可以达到原生App的功能和体验。
+
+    英特尔公司发布了Crosswalk引擎，可以让Android 4.0 - 4.3的手机上的应用打包Chromium引擎而不是Android WebKit。毕竟目前市场上存在大量Android 4.0 - 4.3的手机，同时统一的WebView也避免了兼容性的烦恼。
+
+    在专业方向上很多公司也做出了不错的成绩。触控的Cocos2d-html5、Egret runtime和Ludei CocoonJS强化了Canvas的表现，让HTML5游戏体验更好；UC、猎豹等手机浏览器都强化了音视频播放的表现。
+
+不管是硬件升级、软件成熟，还是操作系统厂商策略变化，都在强力推动HTML5的爆发。
+
+不过要注意，我说的HTML5爆发，不是指手机浏览器会替代桌面成为应用入口。有人说HTML5不好，因为用户讨厌打开浏览器输入URL的过程。我想说这种想法是对HTML5的片面理解。HTML5!=传统浏览器，虽然编程语言还是HTML、Javascript、CSS，但发行方式绝不是传统网站那么简单。HTML5应用的入口，反而很少是启动浏览器输入URL，它可以是存在于手机桌面的图标、也可以来自超级App（如微信朋友圈）、以及搜索引擎、应用市场、广告联盟。。。到处都是它的入口。它的入口，比原生App更多。
+
+See [HTML5定稿了，为什么原生App世界将被颠覆-CSDN.NET](http://www.csdn.net/article/2014-11-06/2822513-how-html5-changes/1)
+
+HTML5的“性工能”障碍得到解决，可以接近原生App的效果，所以它就可以替代原生App吗？很多人认为，即使HTML5会发展的比现在好，也将是与原生App各占一部分市场的格局，要求不高的长尾应用会使用HTML5，而主流应用仍是原生App的天下。
+
 ## Design
 
 - [Wayfinding For The Mobile Web](http://www.smashingmagazine.com/2014/10/13/wayfinding-for-the-mobile-web)

@@ -1064,6 +1064,7 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - [AngularJS Datatype Editors (ADE)](http://toodledo.github.io/ADE/) ADE is a bunch of directives and filters for displaying and editing various types of data, using AngularJS.
 - [angular-cn/ng-showcase](https://github.com/angular-cn/ng-showcase/)Angular范例程序
 - [Pasvaz/bindonce](https://github.com/Pasvaz/bindonce) Zero watches binding for AngularJs
+- [tymondesigns/angular-locker](https://github.com/tymondesigns/angular-locker) A simple & configurable abstraction for local/session storage in angular projects.
 
 __快捷键：__
 

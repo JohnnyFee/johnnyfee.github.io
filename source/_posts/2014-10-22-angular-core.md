@@ -13,6 +13,8 @@ Our browser is waiting for events, for example the user interactions. If you cli
 
 Angular extends this events-loop creating something called `angular context` (remember this, it is an important concept). To explain what this context is and how it works we will need to explain more concepts.
 
+<!-- more -->
+
 ## The $watch list
 
 Every time you bind something in the UI you insert a `$watch` in a `$watch list`. Imagine the `$watch` as something that is able to detect changes in the model it is watching (bear with me, this will be clear soon). Imagine you have this:

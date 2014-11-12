@@ -181,7 +181,7 @@ And if you call the function pending anywhere in the spec body, no matter the ex
 
     spyOn(foo, 'setBar');
 
-我们称`foo.setBar`为一个spi。之后我们便可以使用`expect(foo.setBar).toHaveBeenCalled();`等方法断言`foo.setBar`的调用情况。Spi的调用并不会印象真实的值，除非你使用下面介绍的如`and.callThrough`等方法。。
+我们称`foo.setBar`为一个spi。之后我们便可以使用`expect(foo.setBar).toHaveBeenCalled();`等方法断言`foo.setBar`的调用情况。Spi的调用并不会影响真实的值，除非你使用下面介绍的如`and.callThrough`等方法。。
 
 如果一个spy被调用过，则`toHaveBeenCalled`这个Mather将返回true。如果一个Spi被调用的参数列表和`toHaveBeenCalledWith`的参数相符，则`toHaveBeenCalledWith`将返回true。
 
@@ -213,7 +213,7 @@ And if you call the function pending anywhere in the spec body, no matter the ex
       });
 
       it("stops all execution on a function", function() {
-        // Spi的调用并不会印象真实的值，bar仍然是null。
+        // Spi的调用并不会影响真实的值，bar仍然是null。
         expect(bar).toBeNull();
       });
     });

@@ -15,6 +15,7 @@ tags: [android, tutorial]
 - [{ Android学习指南 }](http://android.yaohuiji.com/)
 - [ashishb/android-security-awesome](https://github.com/ashishb/android-security-awesome)
 - [What Should You Localize?](http://blog.danlew.net/2014/09/08/what-should-i-localize)
+- [Top 10 Most Common Android Development Mistakes](http://www.toptal.com/android/top-10-most-common-android-development-mistakes)
 
 ### 开发过程
 
@@ -23,6 +24,10 @@ tags: [android, tutorial]
 - [Make Your First Android App: Part 3/3 | Ray Wenderlich](http://www.raywenderlich.com/56111/make-first-android-app-part-3)
 
 <!--more-->
+
+## Material
+
+- [afollestad/material-dialogs](https://github.com/afollestad/material-dialogs)
 
 ## Toos
 

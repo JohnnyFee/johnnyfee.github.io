@@ -25,218 +25,35 @@ See [AngularJS: Developer Guide: Modules](https://docs.angularjs.org/guide/modul
 
 <!--more-->
 
-## Services
-
-服务是用来实现应用功能的单例对象。Angular 本身提供了很多服务，如操作浏览器地址的 `$location`，根据地址的改变来切换视图的 `$route`，和服务器通信的 `$http`。 服务可以是注册的构造函数，也可以是被 AngularJS DI 系统创建和管理的单例对象。
-
-AngularJS 的 DI 机制要求所有的服务具有唯一的服务名。
-
-Angular 内置的服务都是以 `$` 开头，当你定义自己的服务时，请尽量避免使用 `$` 开头。
-
-使用服务和依赖注入，我们可以更简单地编写 controller：
-
-```js
-function ShoppingController($scope, Items) {
-  $scope.items = Items.query();
-}
-```
-
-那么我们什么时候应该使用service呢？答案是：无论何时，当我们需要在不同的域中共享数据的时候。另外，多亏了Angular的依赖注入系统，实现这一点是很容易并且很清晰的。
-
-通过 `$scope` 来维护数据是非常粗暴的一种方式。由于其它 `controller`、`directive`、`model` 的影响，`$scope` 很容易就会崩溃或者变脏。它很快就会变成一团乱麻。通过一种集中的途径（在这里就是 `service`）来管理数据，然后通过某种方式来请求修改它，这样不仅仅会更加清晰，同时当应用的体积不断增大的时候也更加容易管理。
-
-### 定义服务
-
-服务 module 对象的 API 来定义，可以通过以下几种方法来创建服务。
-
-#### Values
-
-让 Angular 管理一个对象的最简单方式是注册一个已经实例化的对象：
-
-```js
-var myMod = angular.module('myMod', []);
-myMod.value('notificationsArchive', new NotificationsArchive());
-```
-
-这种方式非常简单，无法定义服务的依赖，所以仅适用于与注册已经实例化的对象。
-
-#### Services
-
-`service(name, constructor())` 适用于创建无配置，只有简单逻辑的服务。Angular 使用这个方法来创建服务实例。
-
-假设 `NotificationsService` 服务需要依赖一个 archive 服务，那么这就不能用 Value 方法定义了。最简单的方法是通过 `service` 方法注册一个构造函数。如：
-
-    myMod.service('notificationsService', NotificationsService);
-
-`NotificationsService` 构造函数依赖其他服务，如：
-
-```js
-var NotificationsService = function (notificationsArchive) {
-    this.notificationsArchive = notificationsArchive;
-};
-```
-
-通过使用依赖注入，我们可以从 `NoficiationsService`  构造函数中消除 `new` 关键字。现在这个服务不用关心依赖的实例化，并且可以接受任何 archiving 服务。
-
-实际上，`service` 方法不常用，主要用于注册已经存在的构造函数，从而让 AngularJS 能够管理这些构造函数创建出来的对象。
-
-#### Factories
-
-`factory(name, $getFunction())` 适用于创建无配置，具有复杂逻辑的服务。
-
-相对 `service` 方法，这种方式更灵活，因为我们注册的是一个可以创建任意对象的函数。这个函数可以放回任意合法的 JavaScript 对象，包括 `function` 对象。
-
-`factory` 方法等效于 `provider(name, { $get: $getFunction() } )`。
-
-如：
-
-```js
-myMod.factory('notificationsService',function(notificationsArchive){
-
-    var MAX_LEN = 10;
-    var notifications = [];
-
-    return {
-      push:function (notification) {
-        var notificationToArchive;
-        var newLen = notifications.unshift(notification);
-
-        //push method can rely on the closure scope now!
-        if (newLen > MAX_LEN) {
-          notificationToArchive = this.notifications.pop();
-          notificationsArchive.archive(notificationToArchive);
-        }
-      },
-      // other methods of the NotificationsService
-    };
-```
-
-`factory` 方法是把对象注入到 AngularJS DI 系统最常用的方式。这种方式很灵活，并且可以包含复杂的逻辑。因为放回服务实例的工厂只是普通的函数，所以我们可以利用词法作用域来模拟私有变量。如上例中，我们可以 `MAX_LEN` 和 `notifications` 都是私有变量。
-
-#### Constants
-
-`NotificationsService` 仍然一个缺陷，它有一个硬编码的 `MAX_LEN` 常量。可以使用 `constant` 方法定义一个表示常量的服务，如：
-
-    myMod.constant('MAX_LEN', 10);
-
-然后，把该常量服务作为 `NotificationsService` 服务的依赖：
-
-```js
-myMod.factory('notificationsService', 
-
-function (notificationsArchive, MAX_LEN) {
-  …
-  //creation logic doesn't change
-});
-```
-
-Constants 适用于可以在多个应用中使用的常量服务，不同应用可以配置这些常量。
-
-#### Provider
-
-以上所有的注册方法都是 `provider` 方法的特殊案例。 `provider(name, Object OR constructor())` 适用于创建可配置的具有复杂逻辑的服务。
-
-首先，`provider` 是方法，该方法返回一个包含 `$get` 属性的对象，`$get` 是一个方法，该方法返回 `service` 实例。我们可以认为 providers 是把工程方法嵌入在 `$get` 属性中的对象。
-
-其次，`provider` 函数中返回的对象可以有其他方法和属性。这些方法和属性被暴露出去，所以可以在 `$get` 工厂方法调用之前设置配置选项。 Indeed, we can still set the `maxLen` configuration property, but we are no longer obliged to do so. Furthermore, it is possible to have more complex configuration logic, as our services can expose configuration methods and not only simple configuration values.
-
-Here is the example of registering the `notificationsService` service as a provider:
-
-```js
-myMod.provider('notificationsService', function () {
-    var config = {
-      maxLen : 10
-    };
-    var notifications = [];
-
-    return {
-      setMaxLen : function(maxLen) {
-        config.maxLen = maxLen || config.maxLen;
-      },
-
-      $get : function(notificationsArchive) {
-        return {
-          push:function (notification) {
-            …
-            if (newLen > config.maxLen) {
-              …
-            }
-          },
-          // other methods go here
-        };
-      }
-    };
-  });
-```
-
-### Service 跨模块可见性
-
-定义在相邻模块的服务对彼此也是可见的。比如下例中，我们可以把 `car` 服务移动到单独的模块中，让后改变模块的依赖，使应用同时依赖 `engines` and `cars`： 
-
-```js
-angular.module('app', ['engines', 'cars'])
-
-angular.module('cars', [])
-  .factory('car', function ($log, dieselEngine) {
-    return {
-      start: function() {
-        $log.info('Starting ' + dieselEngine.type);
-      }
-    };
-  });
-
-angular.module('engines', [])
-  .factory('dieselEngine', function () {
-    return {
-      type: 'diesel'
-    };
-  });
-```
-
-在一个 AnuglarJS 应用中服务的名字都不能相同。靠近应用模块的服务将覆盖其他子模块的同名服务。
-
-```js
-angular.module('app', ['engines', 'cars'])
-  .controller('AppCtrl', function ($scope, car) {
-    car.start();
-  });
-
-angular.module('cars', [])
-  .factory('car', function ($log, dieselEngine) {
-    return {
-      start: function() {
-        $log.info('Starting ' + dieselEngine.type);
-      };
-    }
-  })
-
-  .factory('dieselEngine', function () {
-    return {
-      type: 'custom diesel'
-    };
-  });
-```
-
-在上例中，`car` 服务被注入 `dieselEngine` 服务，`dieselEngine` 服务和 `car` 服务在同一个模块中。`car` 模块中的 `dieselEngine` 服务将覆盖 `engines` 模块中 `dieselEngine` 服务。
-
 ## Modules lifecycle
 
-对象创建的 `provider` 方法可以在创建对象实例之前可以进行一些配置。为了支持这个功能，AngularJS 可以把模块的生命周期划分为两个阶段，分别是配置阶段和运行阶段。
+AngularJS 可以把模块的生命周期划分为两个阶段，分别是配置阶段和运行阶段。
 
 - __配置阶段：__ It is the phase where all the recipes are collected and configured
 - __运行阶段:__ It is the phase where we can execute any post-instantiation logic
 
 ### 配置阶段
 
-Providers 可以在配置阶段配置，如：
+我们可以在定义模块的时候配置模块：
 
 ```js
-myMod.config(function(notificationsServiceProvider){
-    notificationsServiceProvider.setMaxLen(5);
+angular.module('admin-projects', [], function() {
+  //configuration logic goes here
 });
 ```
 
-这里依赖的是 `notificationsServiceProvider` 对象，`Provider` 后缀表示方法已经准备好执行了。配置阶段是我们能够在对象创建前做的最后一次调整。
+这种方法只能配置一个配置块，最常用的是通过 `module` 实例的 `config` 方法：
+
+```js
+angular.module('admin-projects', [])
+  .config(function() {
+    //configuration block 1
+  })
+
+  .config(function() {
+    //configuration block 2
+  });
+```
 
 ### 运行阶段
 
@@ -249,20 +66,6 @@ angular.module('upTimeApp', []).run(function($rootScope) {
     $rootScope.appStarted = new Date();
 });
 ```
-
-And then retrieve it any template, as given in the following code:
-
-    Application started at: {appStarted}
-
-总结一下服务中创建对象的不同方法和这些方法对应模块的生命周期的阶段：
-
-&nbsp; | 注册的内容 | 配置阶段可注入 | 运行阶段可注入
----------- | ------------------ | --------- | --------
-Constant   | Constant's value  | Yes  | Yes
-Variable   | Variable's value   | -  | Yes
-Service  | A new object created by a constructor function      | -  | Yes
-Factory  | A new object returned from a `factory` function     | -  | Yes
-Provider | A new object created by the `$get` factory function | Yes| -  
 
 ## Controller
 

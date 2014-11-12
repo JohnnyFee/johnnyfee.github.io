@@ -87,12 +87,12 @@ grunt.registerTask('serve', 'Compile then start a connect web server', function(
 
 在调试阶段，一般使用非 `dist` 目标，这个目标运行的任务为：
 
-- clean:server,
-- wiredep,
-- concurrent:server,
-- autoprefixer,
-- connect:livereload,
-- watch
+- clean:server, 删除 .tmp 目录。
+- wiredep, 根据 bower 的依赖关系替换 index.html 中的占位符。
+- concurrent:server, 将 `<%= yeoman.app %>/styles` 以及下级目录中的所有 css 文件以平板方式拷贝到 `.tmp/styles/`。
+- autoprefixer, 使用 Can I Use 数据库为 CSS 添加前缀。
+- connect:livereload, 分别把 .tmp，/bower_components，appConfig.app 作为 static 资源，并启动一个 web 服务器。
+- watch 监听 js、css、html 等文件的变化，并运行相应的任务。
 
 ### clean:server
 

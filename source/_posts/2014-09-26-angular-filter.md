@@ -17,7 +17,7 @@ tags : [angular, tutorial]
 
 我们可以直接在 `{%raw%}{{ }}{%endraw%}` 中使用filter，跟在表达式后面用 | 分割，语法如下：
 
-    {%raw%}{{ expression | filter }}
+    {%raw%}{{ expression | filter }}{%endraw%}
 
 也可以多个filter连用，上一个filter的输出将作为下一个filter的输入（怪不得这货长的跟管道一个样。。）
     {%raw%}

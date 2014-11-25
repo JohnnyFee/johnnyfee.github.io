@@ -5,15 +5,13 @@ category: CSS
 tags: [web, css, selector]
 --- 
 
-原文：<http://www.ruanyifeng.com/blog/2009/03/css_selectors.html>
-
 ## 基本选择器
 
 选择器名称 | 使用方法          | 含义                   | 示例
 ------------ | ----------------|-----------|-----------
 通用元素选择器| \* | 选择所有元素  | `* { margin:0; padding:0; }`
 元素类型选择器 | <元素类型> | 选择所有指定类型的元素 | `p { font-size:2em; }`
-类选择器 | <类名>或<元素类型>.<类名> | 选择指定类的元素 | <li>`p.info { background:#ff0; }` <li> `span.class1.class2`。
+类选择器 | <类名>或<元素类型>.<类名> | 选择指定类的元素 | <li>`p.info { background:#ff0; }` <li> `span.class1.class2`
 ID 选择器 |\#<id值\>| 匹配所有 ID 属性等于 id 的元素 | `#info { background:#ff0; }`
 
 <!--more-->
@@ -47,7 +45,7 @@ ID 选择器 |\#<id值\>| 匹配所有 ID 属性等于 id 的元素 | `#info { b
 并集选择器 | <选择器>, <选择器>, <选择器> | 以逗号分隔的单个选择器匹配的所有元素的并集。| `.class1, p.class2`
 后代选择器 | <选择器> <选择器>   | 匹配第一个选择器的后代中匹配匹配第二个选择器的元素。| 后代选择器后匹配任意包含在匹配第一个选择器的元素中的元素，而不仅仅是直接子元素。| `div p`
 子代选择器 | <第一个选择器> > <第二个选择器> | 匹配第一个选择器的直接后代中匹配第二个选择器的元素。| `body > * > span`
-相邻兄弟选择器| <第一个选择器> + <第二个选择器> | 紧跟第一个选择器匹配的元素，且匹配第二个选择器的元素 | `p + a`     
+相邻兄弟选择器| <第一个选择器> + <第二个选择器> | 紧跟与第一个选择器匹配的元素，且匹配第二个选择器的元素 | `p + a`     
 普通兄弟选择器| <第一个选择器> ~ <第二个选择器> | 位于第一个选择器匹配的元素之后，且匹配第二个选择器的元素 | `p ~ a`     
 
 ## 伪元素选择器
@@ -236,10 +234,14 @@ a:link:after { content: " (" attr(href) ") "; }
 :empty | 匹配一个不包含任何子元素的元素，注意，文本节点也被看作子元素 | p:empty { background:#ff0; }
 :selection   |  匹配用户当前选中的元素 
 
+## Referece
+
+- [CSS选择器笔记 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2009/03/css_selectors.html)
+- 《HTML5 和 CSS3 权威指南》
+
 ## Tutorial
 
 - [选择器 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_Started/Selectors)
 - [Selectors](http://css-tricks.com/almanac/selectors/)
 - [A Whole Bunch of Amazing Stuff Pseudo Elements Can Do](http://css-tricks.com/pseudo-element-roundup/)
 - [CSS Selectors: Should You Optimize Them To Perform Better? - Vanseo Design](http://www.vanseodesign.com/css/css-selector-performance/)
-- 

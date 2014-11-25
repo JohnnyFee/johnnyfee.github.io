@@ -5,21 +5,17 @@ category: Grunt
 tags: [angular, test]
 --- 
 
-## Jasmine: Spec Style of Testing
+See 电子书 [AngularJS: Up and Running](http://www.salttiger.com/angularjs-up-and-running/)
 
-AngularJS adopted Jasmine as its testing framework: unit tests for the framework itself are written using Jasmine and all the examples in the documentation are using Jasmine syntax as well. Moreover AngularJS extended the original Jasmine library with few useful add-ons that make testing even easier.
+AngularJS 采用 Jasmine 作为它的测试框架，而且 AngularJS 为 Jasmine 提供了几个有用的扩展，让测试更加简单。
 
-### Testing AngularJS objects
+测试 AngularJS 对象和测试其他普通的 JavaScript 类没有多大区别，特殊之处在于它的 DI 系统和应用到单元测试中的方式。
 
-Testing AngularJS objects is not much different from testing any other, regular JavaScript class. Specific to AngularJS is its dependency injection system and the way it can be leveraged in unit tests. To learn how to write tests leveraging the DI machinery we are going to focus on testing services and controllers.
-
-All the tests-related extensions and mock objects are distributed in a separate AngularJS file named `angular-mocks.js`. Don't forget to include this script in your test runner. At the same time it is important not to include this script in the deployed version of an application.
+所有测试相关的扩展和模拟对象都发布在一个分离的文件 [`angular-mocks.js` ](https://github.com/angular/bower-angular-mocks) 中。在 test runner 中不要忘记包含这个脚本，同时，不要在应用的发布版本中不要包含这个脚本。
 
 <!--more-->
 
 ## 测试服务
-
-Writing tests for objects registered in AngularJS modules is easy but requires a bit of initial setup. More specifically, we need to ensure that a proper AngularJS module is initialized and the whole DI machinery brought to life. Fortunately AngularJS provides a set of methods that make Jasmine tests and the dependency injection system play together really nicely.
 
 假设有如下服务：
 
@@ -38,7 +34,7 @@ angular.module('archive', [])
   }); 
 ```
 
-Here is the corresponding test:
+相应的测试代码为:
 
 ```js
 describe('notifications archive tests', function () {
@@ -60,31 +56,23 @@ describe('notifications archive tests', function () {
 });
 ```
 
-At this point you should be able to recognize the familiar structure of the Jasmine test plus spot some new function calls: `module` and `inject`.
+除了多了两个新的函数，`module` and `inject`，其他和 Jasmine 测试的结构类似。
 
-- Instantiating a module. The `module` function is used in Jasmine tests to indicate that services from a given module should be prepared for the test. The role of this method is similar to the one played by the `ng-app` directive. It indicated that AngularJS `$injector` should be created for a given module (and all the dependent modules). This  modulefunction is one of the helper methods that the angular-mocks.js AngularJS library file provides, as well as many others.
+- `module` 用来初始化模块。这个方法的功能类似于 `ng-app`  指定，指示要为指定的模块创建好 `$injector`，模块中的服务应该准备好。
+    你可以在一个测试用例中，调用多次 `module` 方法，之后，所有模块中的 service、value 和 constant 都可以通过 `$injector` 获取。
 
-    Don't confuse the `module` function used in the test with the `angular.module` method. While both have the same name their roles are quite different. The `angular.module` method is used to declare new modules while the `module` function allows us to specify modules to be used in a test.
+- `inject` 注入服务。
 
-    In reality it is possible to have multiple `module` function calls in one test. In this case all the services, values and constants from the specified modules will be available through the `$injector`.
+        var notificationsArchive;
+        beforeEach(inject(function (_notificationsArchive_) {
+          notificationsArchive = _notificationsArchive_;
+        }));
 
-- Injecting services. The `inject` function has one simple responsibility, that is it injects the services into our tests.
+    我们这里使用带有头尾下划线对的服务名称来注入相应的服务。这是因为 `$injector` 会先剥去收尾的下划线对，然后使用服务名来接受注入的服务。这是很有用的小窍门，因为我们可以保存没有下划线的服务变量。
 
-The last part that might be confusing is the presence of the mysterious underscores in the inject function call:
+### 模拟服务
 
-```js
-var notificationsArchive;
-beforeEach(inject(function (_notificationsArchive_) {
-  notificationsArchive = _notificationsArchive_;
-}));
-```
-
-What is happening here is that `$injector` will strip any a pair leading and trailing underscores when inspecting the function's arguments to retrieve dependencies. This is a useful trick since we can save variable names without underscores for the test itself.
-
-### Mocking Out Services
-
-We saw mocked-out versions of $locationand $window that the AngularJS mock file
-provides. Let’s consider the very simple `ItemService`
+我们了 AngularJS 模拟文件提供的 `$location` 和 `$window` 的模拟版本。让我们考虑以下例子：
 
 ```js
 angular.module('notesApp1', [])
@@ -111,9 +99,9 @@ angular.module('notesApp1', [])
     }]);
 ```
 
-Now for the purpose of our unit test, we want to mock out ItemServiceso that we can override the default implementation for our unit test. There are two ways to accomplish this.
+我们有两种方法来覆盖 `ItemService` 的默认实现：
 
-The first way is to override the service during the unit test, as an inline mock:
+第一种方法是使用内联的模拟服务：
 
 ```js
 describe('ItemCtrl with inline mock', function() {
@@ -142,11 +130,9 @@ describe('ItemCtrl with inline mock', function() {
 });
 ```
 
-In this unit test, the start of the test is similar, where we instantiate our module, the `notesApp1`. After that, we have another `beforeEach`, which is where we override the `ItemService` with our own mock. We use the `module` function, but instead of giving it the name of the module, we give it a function that gets injected with a `$provide`. This provider shares its namespace with the modules loaded before. So now we create our mock Service  and tell the provider that when any controller or service asks for `ItemService`, give it our value. Because we do this  after the  `notesApp1` module is loaded, it overwrites the original `ItemService` definition.
+我们这里调用 `module` 函数是，传入的不是模块名称，而是注入 `$provide` 服务的函数。这个 provider 和之前加载的模块共享命名空间，所以你可以创建我们的虚拟服务，然后通过 `$provide.value` 覆盖原来的 `ItemService` 定义。
 
-The second option to override services would be at a global level instead of a unit test level. To decide whether to create the mocks as we did in the previous example using a local variable and the  `$provide.value`  function, or whether to do it globally like An‐ gularJS does it, the question we need to answer is whether or not other tests could reuse the mock.
-
-The mock we created before would only be usable within this particular  describe  block. To change the preceding to be a more reusable, general-purpose mock of the ItemSer vice, we could do the following:
+第二种覆盖服务的方式是使用全局方式，而非单元测试级别。使用全局方式还是局部方式，取决于你是否想让这个虚拟服务被其他单元测试重用。
 
 ```js
 angular.module('notesApp1Mocks', [])
@@ -162,7 +148,7 @@ angular.module('notesApp1Mocks', [])
     }]);
 ```
 
-What we had hardcoded in the `mockService` has been extracted out into a service with the same name, but in a different module named `notesApp1Mocks`. This file will reside in the test folder, and be included by `karma.conf.js`, but not in our live application. Our tests would now change as follows:
+我们在另一个模块中编写了同名的服务，这个文件位于 test 文件夹下，并且包含在 `karma.conf.js` 文件中：
 
 ```js
 describe('ItemCtrl With global mock', function() {
@@ -181,13 +167,13 @@ describe('ItemCtrl With global mock', function() {
 });
 ```
 
-This ensures that after `notesApp1` is loaded, we load the  `notesApp1Mocks`  module, which overrides the `ItemService`. After that, when our test loads the controller, which then calls the service, it defers to the mocked-out `ItemService` that we created. We can use this approach when we need a global reusable mock, and defer to the describe-level mock when we need to mock just one particular test.
+`notesApp1Mocks` 需要在 `notesApp1` 之后加载。
 
 ### Spies
 
-But what if we didn’t want to implement an entire mocked-out service? What if we just wanted to know in the case of `ItemService` whether or not the `list` function was called, and not worry about the actual value from it? For those kinds of cases, we have Jasmine spies. Spies allow us to hook into certain functions, and check whether they were called, how many times they were called, what arguments they were called with, and so on. 
+如果你不想实现整个虚拟服务，而只想知道 `ItemService` 中 `list` 方法是否被调用了，不想知道 `list` 的返回值，只是，我们可以使用 Jasmine spies。Spies 让我们钩进某否函数，并检查函数是否被调用，调用了多少次，调用差数等。
 
-So let’s see how to change our mock to use spies instead:
+以下是使用 Spies 的示例：
 
 ```js
 describe('ItemCtrl with spies', function() {
@@ -212,9 +198,9 @@ describe('ItemCtrl with spies', function() {
 });
 ```
 
-We call the `spyOn` function with an object as the first argument, and a string with the function name that we want to hook on to as the second argument. In this example, we tell Jasmine to spy on the `list` function of the `ItemService`. We also tell it to continue calling the actual service underneath by calling  `andCallThrough` on the spy. This means we can use Jasmine to check whether or not the function was called, and have the function work as it used to underneath.
+我们通过调用 `andCallThrough` 让这个 Spy 继续调用实际的服务方法。这使 Jasmine 不仅可以检查方法是否被调用，还可以让它监视的函数运行。
 
-What if we wanted to not have the existing method execute as normal?
+假如你不想让已有的方法按照正常的方式执行呢？
 
 ```js
 describe('ItemCtrl with SpyReturn', function() {
@@ -240,13 +226,13 @@ describe('ItemCtrl with SpyReturn', function() {
 });
 ```
 
-In this example, we override the listmethod in the ItemService, and replace it with our Jasmine spy. The  spyOnfunction returns a spy that’s called with the  andReturn function on the spy created by createSpy, and gives it the value to return.
+我们使用 Jasmine spy 替换了 `ItemService` 中的 `list` 方法，并且通过 `andReturn` 修改了 `list` 函数的返回值。
 
-### Unit Testing Server Calls
+### 单元测试服务器调用
 
-With AngularJS, as long as we include the _angular-mocks.js_ file as part of the Karma configuration, AngularJS takes care of ensuring that when we use the $httpservice, it doesn’t actually make server calls. All server calls are intercepted, and we can test them all within the context of a unit test. Because they are intercepted and mocked out, our unit tests remain fast and stable.
+在 Angular 中，只要在 Karma 配置中包含了 _angular-mocks.js_ 文件，AngularJS 就让调用 `$httpservice` 时，并不真正发生服务器调用。所有的服务器调用都叫被拦截，让我们可以在单元测试上下文中测试，所有我们的单元测试也会更快更稳定。
 
-Let’s take a sample controller that makes server calls using `$http`, and see how we might unit test it:
+让我们使用 `$http` 来编写服务器调用：
 
 ```js
 angular.module('serverApp', [])
@@ -262,9 +248,7 @@ angular.module('serverApp', [])
     }]);
 ```
 
-In this code snippet, we have a very simple controller, which makes a GET request to `/api/notewhen` it loads, and saves the response into the `items` array on the controller.
-
-In case of an error, it saves the error message on the controller’s instance. Now, let’s see how we might test this:
+测试代码如下：
 
 ```js
 describe('MainCtrl Server Calls', function() {
@@ -291,6 +275,7 @@ describe('MainCtrl Server Calls', function() {
             label: 'Mock'
         }]);
     });
+    
     afterEach(function() {
         // Ensure that all expects set on the $httpBackend
         // were actually called
@@ -395,7 +380,7 @@ In this test, very little has changed even though our code has added a new servi
 
 Also, we are now changing the server to respond with a 404. Under such a condition, we expect the `items` array to still be empty, but now the `errorMessage` variable should be updated in the controller with the server’s response. We added an `expect` to make sure this happens. The `afterEach` blocks remains as it was.
 
-## Testing controllers
+## 测试控制器
 
 A test for a controller follows similar a pattern to the one for a service. Let's have a look at the fragment of the `ProjectsEditCtrl` controller from the sample application. This controller in question is responsible for the editing projects in the administration part of the application. Here we are going to test methods of the controller responsible for adding and removing project's team members:
 
@@ -504,12 +489,173 @@ Excellent, predictable mocks for the asynchronous services are one of the reason
 
 On many platforms there are often fundamental, global services that are rather difficult to test. Logging and exception handling code are examples of such logic that causes testing headaches. Luckily, AngularJS has a remedy here; it provides services addressing those infrastructural concerns alongside with accompanying mock objects. You've probably noticed that the test example makes use of one more mock, namely, `$log`. The mock for the `$log` service will accumulate all the logging statements and store them for further assertions. Using a mock object assures that we are not invoking real platform services; especially the ones that are potentially expensive in terms of performance and could have side-effects (for example, one could imagine that the `$log` service sends logs to a server over HTTP, and it would be very bad idea to perform network calls while executing tests).
 
+## 测试过滤器
+
+有如下过滤器：
+
+```js
+angular.module('filtersApp', [])
+    .filter('timeAgo', [function() {
+        var ONE_MINUTE = 1000 * 60;
+        var ONE_HOUR = ONE_MINUTE * 60;
+        var ONE_DAY = ONE_HOUR * 24;
+        var ONE_MONTH = ONE_DAY * 30;
+        return function(ts, optShowSecondsMessage) {
+            if (optShowSecondsMessage !== false) {
+                optShowSecondsMessage = true;
+            }
+            var currentTime = new Date().getTime();
+            var diff = currentTime - ts;
+            if (diff < ONE_MINUTE && optShowSecondsMessage) {
+                return 'seconds ago';
+            } else if (diff < ONE_HOUR) {
+                return 'minutes ago';
+            } else if (diff < ONE_DAY) {
+                return 'hours ago';
+            } else if (diff < ONE_MONTH) {
+                return 'days ago';
+            } else {
+                return 'months ago';
+            }
+        };
+    }]);
+```
+
+One might use the above filter as follows:
+
+    {%raw%}{{ myCtrl.ts | timeAgo }}{%endraw%}
+
+If we decided to only show messages from minutes, we might use it as follows with the optional argument set to false:
+
+    {%raw%}{{ myCtrl.ts | timeAgo:false }}{%endraw%}
+
+测试代码如下：
+
+```js
+describe('timeAgo Filter', function() {
+    beforeEach(module('filtersApp'));
+    var filter;
+    beforeEach(inject(function(timeAgoFilter) {
+        filter = timeAgoFilter;
+    }));
+    it('should respond based on timestamp', function() {
+        // The presence of new Date().getTime() makes it slightly
+        // hard to unit test deterministicly.
+        // Ideally, we would inject a dateProvider into the timeAgo
+        // filter, but we are trying to keep it simple here.
+        // So we will assume that our tests are fast enough to
+        // execute in mere milliseconds.
+        var currentTime = new Date().getTime();
+        currentTime -= 10000;
+        expect(filter(currentTime)).toEqual('seconds ago');
+        var fewMinutesAgo = currentTime - 1000 * 60;
+        expect(filter(fewMinutesAgo)).toEqual('minutes ago');
+        var fewHoursAgo = currentTime - 1000 * 60 * 68;
+        expect(filter(fewHoursAgo)).toEqual('hours ago');
+        var fewDaysAgo = currentTime - 1000 * 60 * 60 * 26;
+        expect(filter(fewDaysAgo)).toEqual('days ago');
+        var fewMonthsAgo = currentTime - 1000 * 60 * 60 * 24 * 32;
+        expect(filter(fewMonthsAgo)).toEqual('months ago');
+    });
+});
+```
+
+We can pass optional or other arguments to the filter as additional parameters to the filter function. In this case, we pass  `false` to tell the filter not to show the seconds message. Our test changes minutely, such that both the `currentTime` and the `fewMinutesAgo` conditions return the  "minutes ago"string as compared to "seconds ago"  and "minutes ago" previously.
+
+## 测试指令
+
+### Steps Involved in Testing a Directive
+
+At its core, there are a few key steps (some of which parallel the unit tests for our controllers) that you can use as a checklist when writing unit tests for a directive:
+
+1. Get the `$compile` service injected into the unit test.
+2. Create the HTML element that will trigger the directive you have created.
+3. Create the scopeagainst which you want the directive to be tested again.
+4. Remember that there is no server in the unit test. If the directive loads a template using the `templateUrl` key, add an expectation on `$httpBackend`  for loading the `templateUrl` and designate the HTML that’s to be used instead of the template in the test.
+5. Compile the HTML element using the  $compileservice with the scope you’ve created.
+6. Write expectations on how the directive should be rendered and on the functions that are defined in the linkfunction.
+
+The first five tests are going to be standard for any unit test we write for a directive. Only the last two—where we start testing the rendering and business logic encapsulated in a directive—change from one directive to another.
+
+To quickly recap what our directive definition was, let’s look at our stock directive definition:
+
+```js
+angular.module('stockMarketApp', [])
+    .directive('stockWidget', [function() {
+        return {
+            templateUrl: 'stock.html',
+            restrict: 'A',
+            scope: {
+                stockData: '=',
+                stockTitle: '@',
+                whenSelect: '&'
+            },
+            link: function($scope, $element, $attrs) {
+                $scope.getChange = function(stock) {
+                    return Math.ceil(((stock.price - stock.previous) /
+                        stock.previous) * 100);
+                };
+                $scope.onSelect = function() {
+                    $scope.whenSelect({
+                        stockName: $scope.stockData.name,
+                        stockPrice: $scope.stockData.price,
+                        stockPrevious: $scope.stockData.previous
+                    });
+                };
+            }
+        };
+    }]);
+```
+
+Let’s take a look at our unit test setup:
+
+```js
+describe('Stock Widget Directive Rendering', function() {
+    beforeEach(module('stockMarketApp'));
+    var compile, mockBackend, rootScope;
+    // Step 1
+    beforeEach(inject(function($compile, $httpBackend, $rootScope) {
+        compile = $compile;
+        mockBackend = $httpBackend;
+        rootScope = $rootScope;
+    }));
+    it('should render HTML based on scope correctly', function() {
+        // Step 2
+        var scope = rootScope.$new();
+        scope.myStock = {
+            name: 'Best Stock',
+            price: 100,
+            previous: 200
+        };
+        scope.title = 'the best';
+        // Step 3
+        mockBackend.expectGET('stock.html').respond(
+            '<div ng-bind="stockTitle"></div>' +
+            '<div ng-bind="stockData.price"></div>');
+        // Step 4
+        var element = compile('<div stock-widget' +
+            ' stock-data="myStock"' +
+            ' stock-title="This is {{title}}"></div>')(scope);
+        // Step 5
+        scope.$digest();
+        mockBackend.flush();
+        // Step 6
+        expect(element.html()).toEqual(
+            '<div ng-bind="stockTitle" class="ng-binding">' +
+            'This is the best' +
+            '</div>' +
+            '<div ng-bind="stockData.price" class="ng-binding">' +
+            '100' +
+            '</div>');
+    });
+});
+```
+
 ## Karma
 
 Karma is the test runner that makes running tests painless and amazingly fast. It uses NodeJS and SocketIO to facilitate tests in multiple browsers at insanely fast speeds.
 
-Karma, which is the test runner, is solely responsible for finding all the unit tests in our codebase, opening browsers, running the tests in them, and capturing results. It does not care what language or framework we use for writing the tests; it sim‐
-ply runs them.
+Karma, which is the test runner, is solely responsible for finding all the unit tests in our codebase, opening browsers, running the tests in them, and capturing results. It does not care what language or framework we use for writing the tests; it simply runs them.
 
 ### Setup
 
@@ -624,3 +770,258 @@ The command automatically looks for the  karma.conf.jsfile in the directory you 
 
     karma start my.conf.js
 
+## End-to-End Testing
+
+As applications grow in size and complexity, it becomes unrealistic to rely on manual testing to verify the correctness of new features, catch bugs and notice regressions. Unit tests are the first line of defense for catching bugs, but sometimes issues come up with integration between components which can't be captured in a unit test. End to end tests are made to find these problems.
+
+We have built [Protractor](https://github.com/angular/protractor), an end to end test runner which simulates user interactions that will help you verify the health of your Angular application.
+
+Protractor is an end-to-end test framework for AngularJS applications. Protractor runs tests against your application running in a real browser, interacting with it as a user would.
+
+### Set Up
+
+See [Protractor - end to end testing for AngularJS](http://angular.github.io/protractor/#/tutorial)
+
+Use npm to install Protractor globally with:
+
+```
+npm install -g protractor
+```
+
+This will install two command line tools, `protractor` and `webdriver-manager`. Try running `protractor --version` to make sure it's working.
+
+The `webdriver-manager` is a helper tool to easily get an instance of a Selenium Server running. Use it to download the necessary binaries with:
+
+```
+webdriver-manager update
+```
+
+Now start up a server with:
+
+```
+webdriver-manager start
+```
+
+This will start up a Selenium Server and will output a bunch of info logs. Your Protractor test will send requests to this server to control a local browser. Leave this server running throughout the tutorial. You can see information about the status of the server at `http://localhost:4444/wd/hub`.
+
+### Protractor Configuration
+
+The Protractor configuration file is a JavaScript file that basically holds all the configuration elements that Protractor needs to be able to run the end-to-end tests.  These include configuration options like: 
+
+- Where is the server running?
+- Where is the Selenium WebDriver on which to run the tests?
+- What tests should be executed?
+- What browsers should the tests be run on?
+
+And much more. Let’s take a look at a sample configuration with the most commonly used options, which is what we will be using for the tests in this chapter:
+
+```js
+exports.config = {
+    // The address of a running Selenium server
+    seleniumAddress: 'http://localhost:4444/wd/hub',
+    // The URL where the server we are testing is running
+    baseUrl: 'http://localhost:8000/',
+    // Capabilities to be passed to the WebDriver instance
+    capabilities: {
+        'browserName': 'chrome'
+    },
+    // Spec patterns are relative to the location of the
+    // spec file. They may include glob patterns.
+    specs: ['*Spec*.js'],
+    // Options to be passed to Jasmine-node
+    jasmineNodeOpts: {
+        showColors: true // Use colors in the command-line report
+    }
+};
+```
+
+This configuration file is the simplest Protractor configuration file we could use. It has the following things of note:
+
+- Specifies that the Selenium server is running locally on port 4444.
+- Specifies that the server is running at http://localhost:8000/.
+- Specifies that the browser to automatically run is Chrome.
+- Points out the spec.jsfile that holds the end-to-end test code.
+- Some configuration options for Jasmine to show colors in the command line.
+
+Now what do we need to do before we can run this test?
+
+1. Start Selenium locally (this can be done with webdriver-manager start).
+2. Start the server locally (node server.jsin our example).
+3. Start Protractor (protractor test/e2e/protractor.conf.js).
+
+### An End-to-End Test
+
+Protractor tests use the same Jasmine scaffolding syntax we’ve been using for our unit tests, so we have the same describe  blocks for a set of tests, and individual itblocks for each test. In addition to these, Protractor exposes some global variables that are needed for writing end-to-end tests, namely: 
+
+- `browser` This is a wrapper around WebDriver that allows us to interact with the browser directly. We use this object to navigate to different pages and page-level information. 
+
+- `element` The element object is a helper function to find and interact with HTML elements. It takes a strategy to find the elements as the argument, and then gives you back an element that you can interact with by clicking and sending keystrokes to it. 
+
+- `by` The  byis an object with a collection of element-finding strategies. We can find elements by  idor  CSSclasses, which are built-in strategies of WebDriver. Protractor adds a few strategies on top of that to find elements by  model,  binding, and  repeater as well, which are AngularJS-specific ways to find certain elements on the page.
+
+Start the app by first installing the dependent packages using  npm in
+stallfollowed by node server.js:
+
+```js
+describe('Routing Test', function() {
+    it('should show teams on the first page', function() {
+        // Open the list of teams page
+        browser.get('/');
+        // Check whether there are 5 rows in the repeater
+        var rows = element.all(
+            by.repeater('team in teamListCtrl.teams'));
+        expect(rows.count()).toEqual(5);
+        // Check the first row details
+        var firstRowRank = element(
+            by.repeater('team in teamListCtrl.teams')
+            .row(0).column('team.rank'));
+        var firstRowName = element(
+            by.repeater('team in teamListCtrl.teams')
+            .row(0).column('team.name'));
+        expect(firstRowRank.getText()).toEqual('1');
+        expect(firstRowName.getText()).toEqual('Spain');
+        // Check the last row details
+        var lastRowRank = element(
+            by.repeater('team in teamListCtrl.teams')
+            .row(4).column('team.rank'));
+        var lastRowName = element(
+            by.repeater('team in teamListCtrl.teams')
+            .row(4).column('team.name'));
+        expect(lastRowRank.getText()).toEqual('5');
+        expect(lastRowName.getText()).toEqual('Uruguay');
+        // Check that login link is shown and
+        // logout link is hidden
+        expect(element(by.css('.login-link')).isDisplayed())
+            .toBe(true);
+        expect(element(by.css('.logout-link')).isDisplayed())
+            .toBe(false);
+    });
+    it('should allow logging in', function() {
+        // Navigate to the login page
+        browser.get('#/login');
+        var username = element(
+            by.model('loginCtrl.user.username'));
+        var password = element(
+            by.model('loginCtrl.user.password'));
+        // Type in the username and password
+        username.sendKeys('admin');
+        password.sendKeys('admin');
+        // Click on the login button
+        element(by.css('.btn.btn-success')).click();
+        // Ensure that the user was redirected
+        expect(browser.getCurrentUrl())
+            .toEqual('http://localhost:8000/#/');
+        // Check that login link is hidden and
+        // logout link is shown
+        expect(element(by.css('.login-link')).isDisplayed())
+            .toBe(false);
+        expect(element(by.css('.logout-link')).isDisplayed())
+            .toBe(true);
+    });
+});
+```
+
+We have two tests in this example. The first test:
+
+- Opens up the main page of the teams application.
+- Fetches all the rows by using the repeater, and then checks whether there are five rows present on the main page.
+- Fetches the name and rank of the first row and asserts that they are as expected. 
+- Fetches the name and rank of the last row and asserts that they are as expected.
+- Checks that the login link is shown and the logout link is hidden. Thus, the first test purely deals with rendering and logic to ensure that the application is correctly hooked up to the server and is capable of fetching and displaying the content correctly.
+
+The second test deals with user interaction by:
+
+- Opening up the login page.
+- Entering the username and password to the correct model.
+- Clicking the login button by CSS selector.
+- Ensuring that the login is successful by checking the URL of the redirected page. 
+- Checking that the login link is hidden and the logout link is shown.
+
+We will see Protractor open the Chrome browser through Selenium, navigate to the main page of our locally running application, and click through and run our tests as we have defined them. At the end, it should print out whether they were successful, or the reason for failure in case they failed.
+
+### Considerations
+
+There are a few things we have to keep in mind, as well as some best practices that should be followed, when working with and writing end-to-end tests in AngularJS. Let’s go over them one by one: 
+
+- Location of ng-app: When you write a simple Protractor test for AngularJS, and point it at any URL that hosts an AngularJS application, Protractor’s default behavior is to look at the body element of the HTML to find  ng-app. It then kicks in and does its magic. But in case ng-app is not on the body tag, but on a subelement, we need to manually tell Protractor how to find it. This is done through the  rootElement  option of the Protractor configuration, which takes a CSS selector to the element using ng-app. For example, if ng-appwas on the following element inside our bodytag: 
+
+        <div class="angular-app" ng-app="myApp"></div>
+
+    then we’d have to specify the following line in our Protractor configuration file: 
+
+        rootElement: ".angular-app"
+
+    This would tell Protractor to find the element with the CSS class angular-app. This is not needed if you have the ng-appon the bodyelement. 
+
+- Polling: If you have any kind of polling logic in your code, where you have to keep fetching some information or doing some calculations every few seconds, make sure you’re not using the `$timeout`  service AngularJS provides for that. Protractor has issues figuring out when AngularJS is done with its work. If you need polling, and need to write end-to-end tests for it, make sure you use the $intervalservice instead. Protractor understands and deals with the $intervalservice, and behaves like you would expect it to. 
+- Manual bootstrapping: Protractor currently does not support working with AngularJS applications that are manually bootstrapped. Thus, if you need to write end-to-end tests for such an application, you might have to work with the underlying WebDriver (by using browser.driver.getinstead of  browser.get, and so on), and add wait conditions to ensure that all the things are loaded before proceeding with the test. You would not be able to leverage any of the benefits that Protractor offers. 
+- Future execution: WebDriver commands that we write in our tests don’t return the actual values, but rather promises that will execute later in the browser (in various browsers even). Thus, console.log won’t actually print the values because it doesn’t have them at the point the code is executed. 
+- Debugging: Protractor has great built-in support for debugging, because it leverages the WebDriver debugging. To debug any test, we can just add the following line at the point where we want to start debugging: 
+
+        browser.debugger(); 
+    This could be after any of the lines in the test. Then we run our tests using the following command: 
+
+        protractor debug path/to/conf.js
+
+    This opens up the Node debugger, which allows us to step through the various breakpoints in our test. We now need to type “c” and click Enter, to tell Protractor to continue running the tests. Protractor will run the tests like normal in the browser up until the point it hits the debugger statement. At that point, it stops and waits for further instructions to resume the test. This is a real, live application in the browser that you can interact with and debug to see exactly what the Protractor runner is seeing. You can actually click around and change the state of the test to make it fail as well. When you are done debugging, you can type “c” and click Enter to continue running the test until the next debug point or the end of the test, whichever comes first. 
+
+The last thing to consider is how to organize your tests in such a way that makes them easy to maintain and reuse. In the test that we wrote in the previous section, we used elementand byto find elements in the page and interact with it by clicking, entering keys, and asserting the state of the UI. But when we write our tests, we want to create an API that allows us to easily understand the intent of the test. This is useful because it becomes easier to understand the test, as well as allow anyone to quickly build a set of larger, more encompassing tests using the same API. To accomplish this, we use the concept of PageObjects. Let’s rewrite the Teams List page test to use PageObjects instead of directly working with the WebDriver APIs at a test level:
+
+```js
+function TeamsListPage() {
+    this.open = function() {
+        browser.get('/');
+    };
+    this.getTeamsListRows = function() {
+        return element.all(by.repeater('team in teamListCtrl.teams'));
+    };
+    this.getRankForRow = function(row) {
+        return element(
+            by.repeater('team in teamListCtrl.teams')
+            .row(row).column('team.rank'));
+    };
+    this.getNameForRow = function(row) {
+        return element(
+            by.repeater('team in teamListCtrl.teams')
+            .row(row).column('team.name'));
+    };
+    this.isLoginLinkVisible = function() {
+        return element(by.css('.login-link')).isDisplayed();
+    };
+    this.isLogoutLinkVisible = function() {
+        return element(by.css('.logout-link')).isDisplayed();
+    };
+}
+
+describe('Routing Test With PageObjects', function() {
+    it('should show teams on the first page', function() {
+        var teamsListPage = new TeamsListPage();
+        teamsListPage.open();
+        expect(teamsListPage.getTeamsListRows().count()).toEqual(5);
+        expect(teamsListPage.getRankForRow(0).getText())
+            .toEqual('1');
+        expect(teamsListPage.getNameForRow(0).getText())
+            .toEqual('Spain');
+        expect(teamsListPage.getRankForRow(4).getText())
+            .toEqual('5');
+        expect(teamsListPage.getNameForRow(4).getText())
+            .toEqual('Uruguay');
+        // Check that login link is shown and
+        // logout link is hidden
+        expect(teamsListPage.isLoginLinkVisible()).toBe(true);
+        expect(teamsListPage.isLogoutLinkVisible()).toBe(false);
+    });
+});
+```
+
+We created a JavaScript class called TeamsListPage, which exposes some APIs to open the page, get all the rows, and get the individual name and rank for a given row. Then in our test, we can work with an instance of the  TeamsListPage  object, which makes the test much easier to read than before. We can do something similar for the Login Page test as well. PageObjects encapsulate abstractions on how to access certain elements and how to interact with them in a single place, thus allowing for simple reuse as well as handling change in a single place rather than making the change in multiple places.
+
+## Library
+
+- [Mocha - the fun, simple, flexible JavaScript test framework](http://mochajs.org/) Mocha is a feature-rich JavaScript test framework running on node.js and the browser, making asynchronous testing simple and fun.
+- [Home - Chai](http://chaijs.com/) Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.
+- [pivotal/jasmine](https://github.com/pivotal/jasmine) DOM-less simple JavaScript testing framework <http://jasmine.github.io/>.
+
+## Reference
+
+- [说说NG里的单元测试 - AngularJS Nice Things](http://www.ngnice.com/posts/dc4b032b537ae0)

@@ -512,8 +512,11 @@ grunt的[模块](http://gruntjs.com/plugins)接近 4k 个，且还在快速增�
 7.  **grunt-contrib-jshint**：检查JavaScript语法。
 8.  **grunt-contrib-uglify**：压缩以及合并JavaScript文件。
 9.  **grunt-contrib-watch**：监视文件变动，做出相应动作。
+10. [ChrisWren/grunt-inject](https://github.com/ChrisWren/grunt-inject) 注入 JavaScript 文件。
+11. [intesso/connect-livereload](https://github.com/intesso/connect-livereload) connect middleware for adding the livereload script to the response.
+12. [jsoverson/grunt-open](https://github.com/jsoverson/grunt-open) 使用默认浏览器打开指定的 url。
 
-模块的前缀如果是grunt-contrib，就表示该模块由grunt开发团队维护；如果前缀是grunt（比如grunt-pakmanager），就表示由第三方开发者维护。
+模块的前缀如果是 grunt-contrib，就表示该模块由grunt开发团队维护；如果前缀是grunt（比如grunt-pakmanager），就表示由第三方开发者维护。
 
 以下选几个模块，看看它们配置参数的写法，也就是说如何在grunt.initConfig方法中配置各个模块。
 

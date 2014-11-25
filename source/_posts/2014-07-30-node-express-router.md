@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Learn to Use the New Router in ExpressJS 4.0"
-category: Node
+category: Nodew
 tags: [node, router, express]
 --- 
 
@@ -277,7 +277,7 @@ The last thing we’ll look at today is how to use `app.route()` to define multi
 
 We can define our routes right on our `app`. This is similar to using `app.get`, but we will use `app.route`. app.route is basically a shortcut to call the Express Router. Instead of calling `express.Router()`, we can call `app.route` and start applying our routes there.
 
-Using app.route lets us define multiple actions on a single login route. We’ll need a `GET` route to show the login form and a `POST` route to process the login form.
+Using `app.route` lets us define multiple actions on a single login route. We’ll need a `GET` route to show the login form and a `POST` route to process the login form.
 
 ```js 
 ...

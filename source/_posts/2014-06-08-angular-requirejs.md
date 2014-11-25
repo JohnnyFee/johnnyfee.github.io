@@ -358,3 +358,8 @@ Thankfully, the RequireJS approach doesn’t affect our end-to-end tests at all,
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
     singleRun = false;
+
+## Tutorial
+
+- [And just like that Grunt and RequireJS are out, it’s all about Gulp and Browserify now - 推酷](http://www.tuicool.com/articles/quyYFv)
+- [AngularJS - 使用RequireJS还是Browserify？ - 专栏 - 前端乱炖](http://www.html-js.com/article/2126)

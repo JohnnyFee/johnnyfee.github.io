@@ -1231,6 +1231,9 @@ See [angularjs - how to access the angular $scope variable in browsers console -
 
 ## Tutorial
 
+- [AngularJS 中文资料+工具+库+Demo 大搜集 - friskfly - 博客园](http://www.cnblogs.com/friskfly/p/3176735.html)
+- [AngularJS-Learning/ZH-CN.md at master · jmcunningham/AngularJS-Learning](https://github.com/jmcunningham/AngularJS-Learning/blob/master/ZH-CN.md)
+- [jmcunningham/AngularJS-Learning](https://github.com/jmcunningham/AngularJS-Learning)
 - [AngularJS: API: ng](https://docs.angularjs.org/api/ng)
 - [angular/angular.js Wiki](https://github.com/angular/angular.js/wiki/FAQ)
 - [2013年度最强AngularJS资源合集-CSDN.NET](http://www.csdn.net/article/2014-01-03/2818005-AngularJS-Google-resource)

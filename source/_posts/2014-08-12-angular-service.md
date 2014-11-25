@@ -33,15 +33,32 @@ function ShoppingController($scope, Items) {
 
 服务 module 对象的 API 来定义，可以通过以下几种方法来创建服务。
 
+#### Constants
+
+`constant` 用来为不会改变的基本类型和对象定义服务，该服务可以在 module 对象的 `config` 方法中使用。如：
+
+```js
+angular.module('logging').constant('logging_config', {
+    traceLevel: {
+    _LOG_TRACE_: '_LOG_TRACE_',
+    _LOG_DEBUG_: '_LOG_DEBUG_',
+    _LOG_INFO_: '_LOG_INFO_',
+    _LOG_WARN_: '_LOG_WARN_',
+    _LOG_ERROR_: '_LOG_ERROR_',
+    _LOG_FATAL_: '_LOG_FATAL_',
+    }
+});
+```
+
 #### Values
 
 让 Angular 管理一个对象的最简单方式是注册一个已经实例化的对象：
 
 `value` 方法用来定义供用户组件使用的基本类型的值或者对象类型的值。和 `constant` 定义服务的不同之处是，使用 `value` 方法的值可以被修改，而使用 `constant` 定义的不能修改。另外，使用 `value` 方法创建的服务不能再 config 阶段使用，`constant` 方法可以。 
 
-Another good use for the `value` method is to define model objects that will be used by your components. This pattern provides a nice way to keep the model definition and the code that operates on the model in the same module, helping you to keep repetitive code out of your components and in a single file where it resides best. This code pattern can also help to keep your controller's code as thin as possible when it comes to operating on the model.
+`value` 方法另一个用处是定义 model 对象和基于 model 对象的操作，这可以让你可以重用的代码从组件中解耦，并存在于单独的文件中。这个编码模式也可以让控制器的代码尽可能薄。
 
-The followingcode example shows how you can define a value that contains both themodel and code used to interrogate the model toderive calculated values from the model. In this case, the brewer model is defined, and two methods are defined on the prototype of the `brewer` object that can be used to retrieve the full name of the brewer and check to see if the brewer has an item in their inventory:
+以下定义了 `Brewer` 模型，以及其中的两个方法：
 
 ```js
 (function() {
@@ -81,7 +98,7 @@ The followingcode example shows how you can define a value that contains both th
 })();
 ```
 
-Now, when you inject this into a controller or directive for the first time, the `$inject` service will provide the constructor of the model that you can use to create new instances of the model in your code.
+当你可以把它注入控制器或者指令，并且通过 `$inject` 服务获取模型的构造函数。
 
 ```js
 var myMod = angular.module('myMod', []);
@@ -94,48 +111,7 @@ myMod.value('notificationsArchive', new NotificationsArchive());
 
 `service(name, constructor())` 适用于创建无配置，只有简单逻辑的服务。Angular 使用这个方法来创建服务实例。
 
-It provides a shorthand method for registering a constructor function that will be instantiated by calling the object's new method. This is similar to the `value` method, but is best used if you define your services using the popular type/class methodology as discussed in the various books for object-oriented programming with JavaScript.
-
-In the following code example, we've defined a logging service, which wraps the log4javascript library using the `service` method. First, we define a constructor function called Logging, which defines the data members of the service and then we define the service's functionality by adding the various methods to the Logging object's prototype. Finally, we define the service by providing the constructor method to the AngularJS module's servicemethod.
-
-```js
-(function() {
-    'use strict';
-    var Logging = function() {
-        this.log = null;
-    };
-    Logging.prototype = {
-        init: function() {
-            // get the logger object
-            this.log = log4javascript.getLogger("main");
-            // set the log level
-            this.log.setLevel(log4javascript.Level.ALL);
-            // create and add an appender to the logger
-            var appender = new log4javascript.PopUpAppender();
-            this.log.addAppender(appender);
-        },
-        trace: function(message) {
-            this.log.trace(message);
-        },
-        debug: function(message) {
-            this.log.debug(message);
-        },
-        info: function(message) {
-            this.log.info(message);
-        },
-        warn: function(message) {
-            this.log.warn(message);
-        },
-        error: function(message) {
-            this.log.error(message);
-        },
-        fatal: function(message) {
-            this.log.fatal(message);
-        }
-    };
-    angular.module('brew-everywhere').service('logging', Logging);
-})();
-```
+它提供了一个注册构造函数的方法，这个构造函数会通过 `new` 来实例化。把通过这种方法注册的服务注入到其他服务时，得到的是通过 `new` 实例化的对象，而 `value` 得到的仍然是构造函数。
 
 假设 `NotificationsService` 服务需要依赖一个 archive 服务，那么这就不能用 Value 方法定义了。最简单的方法是通过 `service` 方法注册一个构造函数。如：
 
@@ -155,13 +131,9 @@ var NotificationsService = function (notificationsArchive) {
 
 #### Factories
 
-`factory(name, $getFunction())` 适用于创建无配置，具有复杂逻辑的服务。
+`factory(name, $getFunction())` 适用于创建无配置，具有复杂逻辑的服务。如果你使用 type/class 定义服务，而且也不需要在模型的 `config` 方法中配置，这是你就可以使用 `factory` 方法。
 
-相对 `service` 方法，这种方式更灵活，因为我们注册的是一个可以创建任意对象的函数。这个函数可以放回任意合法的 JavaScript 对象，包括 `function` 对象。
-
-We can also define a service using the AngularJS module's `factory` method. You should use this method if you are not using a type/class definition to define your service and you do not need to configure your service inside a module's config method.
-
-`factory` 方法等效于 `provider(name, { $get: $getFunction() } )`。
+`factory` 方法等效于 `provider(name, { $get: $getFunction() } )`，可以返回任意合法的 JavaScript 对象，包括 `function` 对象。
 
 如：
 
@@ -188,49 +160,15 @@ myMod.factory('notificationsService',function(notificationsArchive){
 
 `factory` 方法是把对象注入到 AngularJS DI 系统最常用的方式。这种方式很灵活，并且可以包含复杂的逻辑。因为放到服务实例的工厂只是普通的函数，所以我们可以利用词法作用域来模拟私有变量。如上例中，`MAX_LEN` 和 `notifications` 都是私有变量。
 
-#### Constants
-
-The first method is the `constant` method, which is best used to define a primitive value or object that will never change and needs to be made available for use by a module's `config` method. The following is an example of using the `constant` method to define messages used for a logging service:
-
-```js
-angular.module('logging').constant('logging_config', {
-    traceLevel: {
-    _LOG_TRACE_: '_LOG_TRACE_',
-    _LOG_DEBUG_: '_LOG_DEBUG_',
-    _LOG_INFO_: '_LOG_INFO_',
-    _LOG_WARN_: '_LOG_WARN_',
-    _LOG_ERROR_: '_LOG_ERROR_',
-    _LOG_FATAL_: '_LOG_FATAL_',
-    }
-});
-```
-
-`NotificationsService` 仍然一个缺陷，它有一个硬编码的 `MAX_LEN` 常量。可以使用 `constant` 方法定义一个表示常量的服务，如：
-
-    myMod.constant('MAX_LEN', 10);
-
-然后，把该常量服务作为 `NotificationsService` 服务的依赖：
-
-```js
-myMod.factory('notificationsService', 
-
-function (notificationsArchive, MAX_LEN) {
-  …
-  //creation logic doesn't change
-});
-```
-
-Constants 适用于可以在多个应用中使用的常量服务，不同应用可以配置这些常量。
-
 #### Provider
 
 以上所有的注册方法都是 `provider` 方法的特殊案例。 `provider(name, Object OR constructor())` 适用于创建可配置的具有复杂逻辑的服务。
 
-首先，`provider` 是方法，该方法返回一个包含 `$get` 属性的对象，`$get` 是一个方法，该方法返回 `service` 实例。我们可以认为 providers 是把工厂方法嵌入在 `$get` 属性中的对象。
+首先，`provider` 是返回包含 `$get` 属性的对象的方法，`$get` 是返回 `service` 实例的方法。我们可以认为 providers 是把工厂方法嵌入在 `$get` 属性中的对象。
 
-其次，`provider` 函数中返回的对象可以有其他方法和属性。这些方法和属性被暴露出去，所以可以在 `$get` 工厂方法调用之前设置配置选项。 Indeed, we can still set the `maxLen` configuration property, but we are no longer obliged to do so. Furthermore, it is possible to have more complex configuration logic, as our services can expose configuration methods and not only simple configuration values.
+其次，`provider` 函数中返回的对象可以有其他方法和属性。这些方法和属性被暴露出去，所以可以在 `$get` 工厂方法调用之前设置配置选项。 
 
-Here is the example of registering the `notificationsService` service as a provider:
+如：
 
 ```js
 myMod.provider('notificationsService', function () {
@@ -257,6 +195,14 @@ myMod.provider('notificationsService', function () {
       }
     };
   });
+```
+
+在配置阶段，可以通过以下方式来调用 `setMaxLen` 等配置方法：
+
+```js
+myMode.config(function(notificationsServiceProvider){
+     notificationsServiceProvider.setMaxLen(100);
+});
 ```
 
 ### Service 跨模块可见性
@@ -806,3 +752,7 @@ CreditCard.get({cardId: 456}, function(card) {
 Regardless of whether you use the shortcut return type or the callback, there are some other points you should note about the returned object.
 
 The return value is not a plain old JS object, but in fact a “resource” type object. This means that in addition to the value returned by the server, it has some additional behavior attached to it (the `$save()` and `$charge()` in this case). This allows you to perform server-side operations with ease, for example by fetching data, making some changes, and persisting the changes to the server (the most common behavior in any CRUD app).
+
+## Library
+
+- [mbertolacci/angular-service-utilities](https://github.com/mbertolacci/angular-service-utilities) AngularJS utilities for bringing two-way data binding into services, plus some other goodies.

@@ -5,7 +5,7 @@ category: Grunt
 tags: [angular, yo, grunt]
 --- 
 
-Yeoman 生成的 Angular 脚手架提供了 27 个任务配置和 3 个自定义任务。这三个自定义任务分贝为:
+Yeoman 生成的 Angular 脚手架提供了 27 个任务配置和 4 个自定义任务。这四个自定义任务分贝为:
 
 - build 编译产品化的版本。
 - serve 编译，让后启动一个 web 服务器。
@@ -81,6 +81,42 @@ grunt.registerTask('serve', 'Compile then start a connect web server', function(
             'watch'
         ]);
     });
+```
+
+
+```js
+ grunt.registerTask('serve', function (target) {
+    if (target === 'dist') {
+      return grunt.task.run(['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
+    }
+
+    if (target === 'debug') {
+      return grunt.task.run([
+        'clean:server',
+        'env:all',
+        'injector:less', 
+        'concurrent:server',
+        'injector',
+        'wiredep',
+        'autoprefixer',
+        'concurrent:debug'
+      ]);
+    }
+
+    grunt.task.run([
+      'clean:server',
+      'env:all',
+      'injector:less', 
+      'concurrent:server',
+      'injector',
+      'wiredep',
+      'autoprefixer',
+      'express:dev',
+      'wait',
+      'open',
+      'watch'
+    ]);
+  });
 ```
 
 如果 `serve` 的目标是 `dist`，那么就运行 build，并且为 build 后的版本启动 web 服务器，这个服务器是持久运行的。主要用于测试发布版本。
@@ -478,6 +514,14 @@ useminPrepare: {
       }
     }
   }
+}
+```
+
+在使用这个任务的时候，需要主要必须在 `initConfig` 函数中传入以下配置，否则运行该任务的时候会出错：
+
+```js
+yeoman: {
+    app: <the app path>
 }
 ```
 

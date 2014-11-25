@@ -5,6 +5,8 @@ category: Android
 tags: [mobile, android, hybrid]
 --- 
 
+See [Building Hybrid Android Apps with Java and JavaScript](http://www.salttiger.com/building-hybrid-android-apps-with-java-and-javascript/)
+
 ## 什么是混合
 
 "混合" 应用是一种特殊的 WEB 应用，它扩展基于 WEB 的应用，并且可以使用设备平台的本地 API。混合应用的设计模式同时适用于移动和桌面环境。
@@ -778,7 +780,7 @@ html, body, div, form, fieldset, legend, label {
 
 网页通常放在 _assets_ 目录。我们定义 `viewport` meta 标签，它控制网页加载时的初始外观。`link` 标签故意留空，因为我们想使用 JavaScript 来根据 `window.devicePixelRatio` 属性加载 CSS 文件。
 
-我们发现，在一些老版本的 Android 中，我们的示例应用在用 `link` 标签加载 CSS 时，处理 **`0.75`** Device Pixel Ratio (DPR) 时会崩溃。我们可以在一些相同版本的手机上重现这个变态的崩溃，然而，下面的用法比使用 JavaScript 加载 CSS 更具有响应性。由于 JavaScript 中 `onDomReady()` 的延时，你会先看到一个无样式的视图，然后一个有样式的版本会显式：
+我们发现，在一些老版本的 Android 中，我们的示例应用在用 `link` 标签加载 CSS 时，处理 **`0.75`** Device Pixel Ratio (DPR) 时会崩溃。我们可以在一些相同版本的手机上重现这个变态的崩溃，然而，使用 `link` 比使用 JavaScript 加载 CSS 更具有响应性。由于 JavaScript 中 `onDomReady()` 的延时，你会先看到一个无样式的视图，然后才显示有样式的版本。
 
 下面把 CSS 装载入 DOM 的方法是最理想的方式：
 
@@ -901,7 +903,7 @@ viewport 的 `width` 属性告诉浏览器如何最好地横向显式网页。�
 
 - __user-scalable__：是否允许用户控制网页的缩放，默认值是允许。
 
-- `target-densitydpi=device-dpi` 这个属性已经从 WebKit 中删除。这个属性不在被 iOS 支持，这个问题可以参考 [WebKit bug website](http://goo.gl/URmQd)。
+- `target-densitydpi=device-dpi` 这个属性已经从 WebKit 中删除。这个属性不再被 iOS 支持，这个问题可以参考 [WebKit bug website](http://goo.gl/URmQd)。
 
 
 ```html
@@ -912,7 +914,7 @@ viewport 的 `width` 属性告诉浏览器如何最好地横向显式网页。�
     user-scalable=no" />
 ```
 
-这个元标签在为移动设备优化网页时非常重要。它主要组织移动浏览器修改网页的缩放级别。
+这个元标签在为移动设备优化网页时非常重要。它主要阻止移动浏览器修改网页的缩放级别。
 
 ### 响应式设计和媒体查询
 

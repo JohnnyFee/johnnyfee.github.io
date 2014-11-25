@@ -9,53 +9,61 @@ tags: [javascript, oo]
 
 ### 属性方法私有化
 
-实现私有成员的方法简单说就是将私有成员作为构造函数的局部变量。如：
+实现私有成员的方法是将这些私有成员作为构造函数的局部变量。如：
 
-    function Gadget(){
-        // 私有属性
-        var name = "iPod";
+```js
+function Gadget(){
+    // 私有属性
+    var name = "iPod";
 
-        // 公共方法
-        this.getName = function(){
-            return this.name;
-        }
+    // 公共方法
+    this.getName = function(){
+        return name;
     }
+}
+```
 
-将私有成员暴露的方法成为特权方法，如 `getName`。
+用来暴露私有成员的方法称为 __特权方法__，如 `getName`。
 
 <!--more-->
 
 ### 字面量私有化
 
-如果你想封装一个对象字面量中的私有属性，我们需要借助一个即时函数，如：
+如果你想在对象字面量中封装私有属性，需要借助一个即时函数，如：
 
-    var myobj = (function(){
-        // 私有属性
-        var name = "hello";
+```js
+var myobj = (function(){
+    // 私有属性
+    var name = "hello";
 
-        return {
-            // 公共方法
-            getName: function(){
-                return name;
-            }
+    return {
+        // 公共方法
+        getName: function(){
+            return name;
         }
-    }());
+    }
+}());
+```
 
 ### 原型和私有化
 
 如何实现实例共享（即 prototype 级别的属性和方法）的私有属性和方法呢？原理为封装 protopty，如：
 
-    Gadget.prototype = (function(){
-       var browser =  "Mobile Webkit";
+```js
+Gadget.prototype = (function(){
+   var browser =  "Mobile Webkit";
 
-       return {
-            getBrowser : function(){
-                return browser;
-            }
-       }
-    }());
+   return {
+        getBrowser : function(){
+            return browser;
+        }
+   }
+}());
+```
 
 ### 私有静态成员
+
+使用一个立即执行函数包装私有静态属性，并返回新的构造函数。该程序的功能可以实现对象的计数器。
 
 ```js
 var Gadget = (function(){
@@ -76,8 +84,6 @@ var Gadget = (function(){
     return NewGadget;
 }());
 ```
-
-使用一个立即执行函数包装私有静态属性，并返回新的构造函数。该程序的功能可以实现对象的计数器。
 
 ## 常量
 

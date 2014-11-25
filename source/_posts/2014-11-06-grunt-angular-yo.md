@@ -5,7 +5,7 @@ category: Grunt
 tags: [angular, yo, grunt]
 --- 
 
-Yeoman 生成的 Angular 脚手架提供了 27 个任务配置和 4 个自定义任务。这四个自定义任务分贝为:
+[yeoman/generator-angular](https://github.com/yeoman/generator-angular) 脚手架提供了 27 个任务配置和 4 个自定义任务。这四个自定义任务分贝为:
 
 - build 编译产品化的版本。
 - serve 编译，让后启动一个 web 服务器。

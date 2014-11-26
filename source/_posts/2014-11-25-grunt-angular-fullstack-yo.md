@@ -7,7 +7,7 @@ tags: [angular, fullstack, yo, grunt]
 
 本文基于 [使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析](http://inching.org/2014/11/06/grunt-angular-yo/) 中的一些内容，与其中重复的内容不再描述。
 
-Yeoman 生成的 [yeoman/generator-angular](https://github.com/yeoman/generator-angular) 脚手架提供了 26 个任务配置和 6 个自定义任务。这 6 个自定义任务分贝为:
+Yeoman 生成的 [DaftMonk/generator-angular-fullstack](https://github.com/DaftMonk/generator-angular-fullstack) 脚手架提供了 26 个任务配置和 6 个自定义任务。这 6 个自定义任务分贝为:
 
 - wait 
 - express-keepalive 
@@ -412,7 +412,7 @@ concurrent: {
 
 ### nodemon
 
-nodemon 用于监视 nodejs 应用的文件修改，并自动重启服务，主要用于开发环境。
+[ChrisWren/grunt-nodemon](https://github.com/ChrisWren/grunt-nodemon) 用于监视 nodejs 应用的文件修改，并自动重启服务，主要用于开发环境。
 
 ```js
 nodemon: {

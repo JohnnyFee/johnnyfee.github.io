@@ -145,6 +145,10 @@ To better visually connect the similar blocks, we want to start a new row as we 
 
 <p data-height="268" data-theme-id="0" data-slug-hash="AxmBK" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/HugoGiraudel/pen/AxmBK/'>Float: down with Sass</a> by Hugo Giraudel (<a href='http://codepen.io/HugoGiraudel'>@HugoGiraudel</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
+## overflow
+
+See [overflow](http://css-tricks.com/almanac/properties/o/overflow/)
+
 ## 与position的兼容性问题
 
 1. 元素同时应用了position: relative、float、（top / left / bottom / right）属性后，则元素先浮动到相应的位置，然后再根据（top / left / bottom / right）所设置的距离来发生偏移。

@@ -23,3 +23,6 @@ iOS：3.5寸，9.8寸，4.0 寸，7.8 寸。
 
 See [目前主流的智能手机的屏幕尺寸与分辨率是多少？ - 知乎](http://www.zhihu.com/question/20440405)
 
+## Data
+
+- [MOVR Mobile Overview Report](http://data.wurfl.io/MOVR/pdf/2014_q3/MOVR_2014_q3.pdf)

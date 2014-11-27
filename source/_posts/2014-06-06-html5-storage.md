@@ -314,9 +314,12 @@ IndexedDB是基于简单的平面文件（flat-file）数据库，采用了分�
 - 优点：如果你熟悉NoSQL，这是再适合不过了。
 - 缺点：IE、Opera mini 不支持。
 
+See [Introduction to IndexedDB: The In-Browser Database](http://www.codemag.com/Article/1411041)
+
 ## Library
 
 - [ask11/storage](https://github.com/ask11/storage) Asynchronous browser storage with multiple back-ends (IndexedDB, WebSQL, localStorage).
+- [jas-/secStore.js](https://github.com/jas-/secStore.js) Encryption enabled browser storage.
 
 ## Reference
 

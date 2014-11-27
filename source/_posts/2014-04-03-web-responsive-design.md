@@ -21,6 +21,7 @@ tags: [responsive, web]
 - [aFarkas/respimage](https://github.com/aFarkas/respimage) respimage is a responsive images polyfill, that loads your images fast and responsibly.
 - [Responsive Images: The Ultimate Guide](http://davidwalsh.name/responsive-images)
 - [How to set the order of stacked columns in responsive emails - Campaign Monitor](https://www.campaignmonitor.com/blog/post/4321/order-stacked-columns-responsive-email)
+- [10 Responsive Design Problems and Fixes](http://uxmag.com/articles/10-responsive-design-problems-and-fixes)
 
 
 <!--more-->

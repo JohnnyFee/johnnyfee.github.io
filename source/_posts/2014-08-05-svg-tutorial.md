@@ -191,6 +191,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 
 ## Tutorial
 
+- [The ultimate SVG guide](https://psdtowp.net/svg.html)
 - [SVG](https://developer.mozilla.org/zh-CN/docs/Web/SVG)
 - [SVG教程 - SVG](https://developer.mozilla.org/zh-CN/docs/Web/SVG/Tutorial)
 - [Pocket Guide to Writing SVG](http://svgpocketguide.com/book)

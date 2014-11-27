@@ -9,12 +9,17 @@ tags: [angular, fullstack, yo, grunt]
 
 Yeoman 生成的 [DaftMonk/generator-angular-fullstack](https://github.com/DaftMonk/generator-angular-fullstack) 脚手架提供了 26 个任务配置和 6 个自定义任务。这 6 个自定义任务分贝为:
 
-- wait 
-- express-keepalive 
-- serve 
-- test 
-- build
-- defalt
+- serve 启动服务器。
+    + default 调试前端代码。前端代码的修改会 livereload，后端代码的修改会导致重启服务。
+    + dist 运行打包之后的版本。
+    + debug 在浏览器中调试后端代码。前端代码的修改不会 livereload。
+- test 测试
+    + default 服务端和客户端测试。
+    + server 服务端测试。
+    + client 客户端测试。
+    + e2e e2e 测试。
+- build 打包。前端打包到 `dist/public/` 下，后端打包到 `dist/server/` 下。
+- default jshint，测试，打包。
 
 ## build
 
@@ -569,6 +574,16 @@ watch: {
   }
 }
 ```
+
+### express-keepalive
+
+```js
+ grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
+    this.async();
+  });
+```
+
+该任务是不让 Grunt 结束。
 
 ## test
 

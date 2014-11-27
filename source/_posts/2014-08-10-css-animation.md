@@ -380,6 +380,7 @@ div:hover {
 ## Library
 
 - [h5bp/Effeckt.css](https://github.com/h5bp/Effeckt.css) A Performant Transitions and Animations Library: <http://h5bp.github.io/Effeckt.css>
+- [CSS3 Animation Cheat Sheet - Justin Aguilar](http://www.justinaguilar.com/animations/index.html#)
 
 ## Tools
 

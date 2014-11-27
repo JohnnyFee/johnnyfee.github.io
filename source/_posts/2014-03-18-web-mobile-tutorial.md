@@ -221,6 +221,10 @@ Excellent framework made for fast application prototyping. It can become problem
 
 - [Techniques for mobile and responsive cross-browser testing: An Envato case study. - We build Envato](http://webuild.envato.com/blog/techniques-for-mobile-and-responsive-cross-browser-testing)
 
+## Tools
+
+- [Mobile-Friendly Test](https://www.google.com/webmasters/tools/mobile-friendly)
+
 ## FAQ
 
 ### jquery mobile+phonegap页面切换闪屏问题

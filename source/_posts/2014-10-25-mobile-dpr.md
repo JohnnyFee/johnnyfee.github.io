@@ -9,7 +9,7 @@ tags: [mobile]
 
 本文所说`devicePixelRatio`其实指的是`window.devicePixelRatio`, 被所有WebKit浏览器以及Opera所支持，随着显示器的发展，这个属性也慢慢登上了前端技术的舞台。
 
-### 一、定义
+## 定义
 
 > window.devicePixelRatio是设备上物理像素和设备独立像素(device-independent pixels (dips))的比例。  
 > 公式表示就是：window.devicePixelRatio = 物理像素 / dips
@@ -28,7 +28,7 @@ dip或dp,（device independent pixels，设备独立像素）与屏幕密度有�
 
 <!--more-->
 
-### 二、浏览器支持
+## 浏览器支持
 
 * IE以及FireFox压根不支持。可能接下来的版本会支持。
 * Opera桌面浏览器时，即使是视网膜设备，返回的值也是1而不是2. 不过，这个bug在后续的版本中会修复的。
@@ -55,7 +55,7 @@ MeeGo WebKit `meta viewport`应用时改变值的做法是大错特错的。设�
 Chrome下是认识这个属性的，在我机子上弹出的是`1`, 如下图：  
 ![Chrome浏览器下devicePixelRatio弹出结果截图 张鑫旭-鑫空间-鑫生活](http://image.zhangxinxu.com/image/blog/201208/2012-08-23_140751.png "Chrome浏览器下devicePixelRatio弹出结果截图 张鑫旭-鑫空间-鑫生活")
 
-### 三、其他一些系统、设备
+## 其他一些系统、设备
 
 **1. iOS**  
 类似的，无视网膜设备`devicePixelRatio`值为`1`，视网膜设备为`2`. 因为实际的像素个数是双倍。不过，iphone似乎不愿意改变大家都熟知习惯的320像素宽度布局，没有把设备宽度一下子变成640像素，因此，dips宽度依然是320, 于是`devicePixelRatio`就是`640/320 = 2`.
@@ -85,7 +85,7 @@ Android标准似乎不严格，于是自家人玩自家人的游戏，对于开�
 
 在任何情况下，根据苹果的规范做法，`devicePixelRatio`值只可能是`1`或者`2`. 如果你看到`2`，你要提供视网膜优化显示图片，如果是`1`，使用正常的图片——（这里内容其实属于视网膜站点的开发内容）。
 
-### 四、其他相关属性
+## 其他相关属性
 
 当页面设置了`<meta name="viewport" content="width=device-width">`时候，`document.documentElement.clientWidth`在大部分浏览器下，得到的是布局视区的宽度，等同于dips的宽度。
 
@@ -98,7 +98,7 @@ Android标准似乎不严格，于是自家人玩自家人的游戏，对于开�
 
 Nokia Lumia Windows Phone上的IE9 `screen.width`的值与Android设备一样，返回的是物理像素。而且其不支持`devicePixelRatio`. 因此，我们无法从中看出其对待像素的态度是如何的。
 
-### 五、小小结论
+## 小小结论
 
 1.  `devicePixelRatio`在大多数浏览器是值得信赖的。
 2.  在iOS设备，`screen.width`乘以`devicePixelRatio`得到的是物理像素值。
@@ -106,6 +106,11 @@ Nokia Lumia Windows Phone上的IE9 `screen.width`的值与Android设备一样，
 
 注：本文的DIPs切勿和DPI搞混了！DPI指每英寸点的个数，本文的DIPs指设备独立像素。
 
-参考文章：  
+参考文章：
+
 - [devicePixelRatio](http://www.quirksmode.org/blog/archives/2012/06/devicepixelrati.html)  
 - [More about devicePixelRatio](http://www.quirksmode.org/blog/archives/2012/07/more_about_devi.html)
+
+## Tutorial
+
+- [Tips for designers: from a developer for Android](http://vinsol.com/blog/2014/11/20/tips-for-designers-from-a-developer)

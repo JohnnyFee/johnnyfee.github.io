@@ -363,3 +363,4 @@ Thankfully, the RequireJS approach doesn’t affect our end-to-end tests at all,
 
 - [And just like that Grunt and RequireJS are out, it’s all about Gulp and Browserify now - 推酷](http://www.tuicool.com/articles/quyYFv)
 - [AngularJS - 使用RequireJS还是Browserify？ - 专栏 - 前端乱炖](http://www.html-js.com/article/2126)
+- [Dependency Injection using RequireJS & AngularJS](http://solutionoptimist.com/2013/09/30/requirejs-angularjs-dependency-injection/)

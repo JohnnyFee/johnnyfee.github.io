@@ -32,3 +32,7 @@ tags: [dao, style, guide]
 
 - [CSS Style Guides](http://css-tricks.com/css-style-guides/)
 
+## Tutorial
+
+- [Website Style Guide Resources](http://styleguides.io/)
+

@@ -14,6 +14,7 @@ tags: [android]
 - [MrEngineer13/SnackBar](https://github.com/MrEngineer13/SnackBar) toast-like alert pattern for Android.
 - [Performance optimization](http://optimizationtricks.blogspot.in/)
 - [PTR Android Blog: Getting Started with Android L Animations](http://ptrprograms.blogspot.com/2014/08/getting-started-with-android-l.html)
+- [Grid Spacing on Android](http://cyrilmottier.com/2014/11/17/grid-spacing-on-android/)
 
 ### App UI / UX
 
@@ -85,3 +86,7 @@ tags: [android]
 ## Design
 
 - [Android L UI PSD素材](http://www.shejidaren.com/android-l-ui-psd.html)
+
+## Tools
+
+- [theDazzler/droidicon](https://github.com/theDazzler/droidicon) Over 1600 customizable icons for Android including 750+ Google Material Design icons, 25 ready-made social badges, and more!

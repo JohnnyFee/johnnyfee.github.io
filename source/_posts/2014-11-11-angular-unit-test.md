@@ -72,7 +72,7 @@ describe('notifications archive tests', function () {
 
 ### 模拟服务
 
-我们了 AngularJS 模拟文件提供的 `$location` 和 `$window` 的模拟版本。让我们考虑以下例子：
+我们为 AngularJS 模拟文件提供的 `$location` 和 `$window` 的模拟版本。让我们考虑以下例子：
 
 ```js
 angular.module('notesApp1', [])
@@ -99,9 +99,7 @@ angular.module('notesApp1', [])
     }]);
 ```
 
-我们有两种方法来覆盖 `ItemService` 的默认实现：
-
-第一种方法是使用内联的模拟服务：
+我们有两种方法来覆盖 `ItemService` 的默认实现，第一种方法是使用内联的模拟服务：
 
 ```js
 describe('ItemCtrl with inline mock', function() {
@@ -1025,3 +1023,7 @@ We created a JavaScript class called TeamsListPage, which exposes some APIs to o
 ## Reference
 
 - [说说NG里的单元测试 - AngularJS Nice Things](http://www.ngnice.com/posts/dc4b032b537ae0)
+
+## Tutorial
+
+- [Testing Angular with Karma](https://www.airpair.com/angularjs/posts/testing-angular-with-karma)

@@ -349,6 +349,8 @@ Note that `float`, `clear` and `vertical-align` have no effect on a flex item.
 
 ## 例子
 
+- [Flexbox Nav Bar with Fixed, Variable, and Take-Up-The-Rest Elements](http://css-tricks.com/flexbox-nav-bar-fixed-variable-take-rest-elements)
+
 ### centering
 
 Let's start with a very very simple example, solving an almost daily problem: perfect centering. It couldn't be any simpler if you use flexbox.

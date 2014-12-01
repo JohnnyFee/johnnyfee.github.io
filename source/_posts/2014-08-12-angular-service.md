@@ -9,8 +9,6 @@ tags : [angular, tutorial]
 
 [AngularJS: API: service components in ng](https://docs.angularjs.org/api/ng/service)
 
-## Services
-
 服务是用来实现应用功能的单例对象。Angular 本身提供了很多服务，如操作浏览器地址的 `$location`，根据地址的改变来切换视图的 `$route`，和服务器通信的 `$http`。 服务可以是注册的构造函数，也可以是被 AngularJS DI 系统创建和管理的单例对象。
 
 AngularJS 的 DI 机制要求所有的服务具有唯一的服务名。
@@ -29,11 +27,11 @@ function ShoppingController($scope, Items) {
 
 通过 `$scope` 来维护数据是非常粗暴的一种方式。由于其它 `controller`、`directive`、`model` 的影响，`$scope` 很容易就会崩溃或者变脏。它很快就会变成一团乱麻。通过一种集中的途径（在这里就是 `service`）来管理数据，然后通过某种方式来请求修改它，这样不仅仅会更加清晰，同时当应用的体积不断增大的时候也更加容易管理。
 
-### 定义服务
+## 定义服务
 
 服务 module 对象的 API 来定义，可以通过以下几种方法来创建服务。
 
-#### Constants
+### Constants
 
 `constant` 用来为不会改变的基本类型和对象定义服务，该服务可以在 module 对象的 `config` 方法中使用。如：
 
@@ -50,7 +48,7 @@ angular.module('logging').constant('logging_config', {
 });
 ```
 
-#### Values
+### Values
 
 让 Angular 管理一个对象的最简单方式是注册一个已经实例化的对象：
 
@@ -107,7 +105,7 @@ myMod.value('notificationsArchive', new NotificationsArchive());
 
 这种方式非常简单，无法定义服务的依赖，所以仅适用于与注册已经实例化的对象。
 
-#### Services
+### Services
 
 `service(name, constructor())` 适用于创建无配置，只有简单逻辑的服务。Angular 使用这个方法来创建服务实例。
 
@@ -129,7 +127,7 @@ var NotificationsService = function (notificationsArchive) {
 
 实际上，`service` 方法不常用，主要用于注册已经存在的构造函数，从而让 AngularJS 能够管理这些构造函数创建出来的对象。
 
-#### Factories
+### Factories
 
 `factory(name, $getFunction())` 适用于创建无配置，具有复杂逻辑的服务。如果你使用 type/class 定义服务，而且也不需要在模型的 `config` 方法中配置，这是你就可以使用 `factory` 方法。
 
@@ -160,7 +158,7 @@ myMod.factory('notificationsService',function(notificationsArchive){
 
 `factory` 方法是把对象注入到 AngularJS DI 系统最常用的方式。这种方式很灵活，并且可以包含复杂的逻辑。因为放到服务实例的工厂只是普通的函数，所以我们可以利用词法作用域来模拟私有变量。如上例中，`MAX_LEN` 和 `notifications` 都是私有变量。
 
-#### Provider
+### Provider
 
 以上所有的注册方法都是 `provider` 方法的特殊案例。 `provider(name, Object OR constructor())` 适用于创建可配置的具有复杂逻辑的服务。
 
@@ -205,7 +203,15 @@ myMode.config(function(notificationsServiceProvider){
 });
 ```
 
-### Service 跨模块可见性
+### decorator
+
+    decorator(name, decorator);
+
+Register a service decorator with the $injector. A service decorator intercepts the creation of a service, allowing it to override or modify the behaviour of the service. The object returned by the decorator may be the original service, or a new service object which replaces or wraps and delegates to the original service.
+
+See [Enhancing AngularJS Logging using Decorators](http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/)
+
+## Service 跨模块可见性
 
 定义在相邻模块的服务对彼此也是可见的。比如下例中，我们可以把 `car` 服务移动到单独的模块中，然后改变模块的依赖，使应用同时依赖 `engines` and `cars`： 
 
@@ -255,7 +261,7 @@ angular.module('cars', [])
 
 在上例中，`car` 服务被注入 `dieselEngine` 服务，`dieselEngine` 服务和 `car` 服务在同一个模块中。`car` 模块中的 `dieselEngine` 服务将覆盖 `engines` 模块中 `dieselEngine` 服务。
 
-## Modules lifecycle
+## 生命周期
 
 对象创建的 `provider` 方法可以在创建对象实例之前可以进行一些配置。为了支持这个功能，AngularJS 可以把模块的生命周期划分为两个阶段，分别是配置阶段和运行阶段。
 
@@ -269,23 +275,7 @@ Service  | A new object created by a constructor function      | -  | Yes
 Factory  | A new object returned from a `factory` function     | -  | Yes
 Provider | A new object created by the `$get` factory function | Yes| -  
 
-## Controller
-
-Controllers 在你的应用中有三个职责：
-
-* 初始化应用的模型。
-* 通过 `$scope` 暴露模型和方法到 views (UI template)。
-* 监视模型的变化并作出响应。
-
-千万不要在 AngularJS 控制器中操作 DOM 元素。在控制器中获取一个 DOM 的引用，并操作 DOM 的属性，是在用命令式的方式控制UI -- 这是跟 AugularJS 构建 UI 的思想相悖的。
-
-Controller 应该纯粹地用来把 service、依赖关系、以及其它对象串联到一起，然后通过 scope 把它们关联到 view 上。如果在你的视图里面需要处理复杂的业务逻辑，那么把它们放到 controller 里面也是一个非常不错的选择。
-
-在 Angular 中，controller 自身并不会处理 "request"，除非它是用来处理路由(route)的（很多人把这种方式叫做创建 _route controller_ ，路由控制器）。
-
-通过 `ng-controller` 指令为 DOM 元素指定控制器时，控制器的实例个数和 `ng-controller` 相同。
-
-## Common AngularJS Services
+## 常用的 Angular 服务
 
 ### $resource
 

@@ -17,3 +17,7 @@ http://express4-bootstrap-starter.tukangslicing.net>
 - [Passport Authentication for Node.js Applications](http://www.sitepoint.com/passport-authentication-for-nodejs-applications/)
 - [Build User Authentication with Node.js, Express, Passport, and Orchestrate - The Orchestrate Blog](http://orchestrate.io/blog/2014/06/26/build-user-authentication-with-node-js-express-passport-and-orchestrate)
 - [Build a Simple App with Node.js, Express, Passport and Stormpath - Stormpath User Management API](https://stormpath.com/blog/build-app-nodejs-express-passport-stormpath/)
+
+## Tutorial
+
+- [Everything You Ever Wanted to Know about Node Authentication](https://www.youtube.com/watch?v=FkPqcIJvEPk)

@@ -119,6 +119,7 @@ tags: [node, tutorial]
 
 - [bpaquet/node-logstash](https://github.com/bpaquet/node-logstash) node-logstash is a tool to collect logs on servers. It allow to send its to a central server and to elastic search for indexing.
 - [Comparing Winston and Bunyan Node.js Logging](http://npmawesome.com/posts/2014-06-24-comparing-winston-and-bunyan-node-js-logging)
+- [trentm/node-bunyan](https://github.com/trentm/node-bunyan) a simple and fast JSON logging module for node.js services.
 
 ### Message
 
@@ -151,6 +152,7 @@ tags: [node, tutorial]
 - [Cody a CMS in Node.js: Home](http://howest.cody-cms.org/en/info) Create your own web environment in
 Javascript with Cody and Node.js.
 - [用node.js和express.js和jade搭建轻型cms系统 - CNode](http://cnodejs.org/topic/4f16442ccae1f4aa270010bf)
+- [pencilblue/pencilblue](https://github.com/pencilblue/pencilblue) Full stack online publishing and CMS for Node.js <https://pencilblue.org>
 
 ## Mock
 

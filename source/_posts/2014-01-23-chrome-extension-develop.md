@@ -717,7 +717,7 @@ This restriction bans both inline `<script>` blocks and inline event handlers (e
 源码地址：[yeoman / generator-chrome-extension](https://github.com/yeoman/generator-chrome-extension) Yeoman generator for Chrome Extensions 
  <http://yeoman.io>.
 
- #### Chrome Dev Editor
+#### Chrome Dev Editor
 
  - [Hands On with the New Chrome Dev Editor App](http://www.omgchrome.com/chrome-dev-editor-preview-app-released/)
  - [dart-lang/chromedeveditor](https://github.com/dart-lang/chromedeveditor)
@@ -732,3 +732,7 @@ This restriction bans both inline `<script>` blocks and inline event handlers (e
 **常用命令：**
 
 	yo chrome-extension --skip-install --test-framework=jasmine
+
+## Tutorial
+
+- [Creating A “Save For Later” Chrome Extension With Modern Web Tools - Smashing Magazine](http://www.smashingmagazine.com/2014/11/17/creating-save-later-chrome-extension-modern-web-tools)

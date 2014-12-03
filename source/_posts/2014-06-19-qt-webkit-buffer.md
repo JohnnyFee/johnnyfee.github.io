@@ -171,5 +171,6 @@ N 次运行的时间消耗，单位为 ms。
 
 ### 结论
 
-- 和 QT 交互时，尽可能使用 `Uint8ClampedArray` 或者 `Uint8Array` 数组传递。JavaScript 中的 Buffer 对象，尽可能转化成这两种类型后和 QT 交互。
+- 和 QT 交互时，尽可能使用 `Uint8ClampedArray` 或者 `Uint8Array` 数组传递。
+- JavaScript 的 Buffer 构造函数返回的是 Uint8Array 对象，因此可以直接使用 new Buffer() 创建的对象传递给 QT。
 - 将 `Uint8ClampedArray` 或者 `Uint8Array` 封装成 Buffer 有一定的时间消耗。

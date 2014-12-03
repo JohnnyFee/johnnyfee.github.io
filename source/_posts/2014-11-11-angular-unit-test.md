@@ -651,45 +651,44 @@ describe('Stock Widget Directive Rendering', function() {
 
 ## Karma
 
-Karma is the test runner that makes running tests painless and amazingly fast. It uses NodeJS and SocketIO to facilitate tests in multiple browsers at insanely fast speeds.
+Karma 是能够让测试以惊人的速度无痛运行的 test runner。它使用 NodeJS 和 SocketIO 加快了在多种浏览器中的执行测试的速度。
 
-Karma, which is the test runner, is solely responsible for finding all the unit tests in our codebase, opening browsers, running the tests in them, and capturing results. It does not care what language or framework we use for writing the tests; it simply runs them.
+Karma 作为 test runner，全权负责在我们的代码库中查找所有的单元测试、打开浏览器、在浏览器中执行这些单元测试，并且捕获结果。它不关心我们使用哪种语言或者框架来写的测试，它只管运行测试。
 
 ### Setup
 
-Install Karma CLI
+安装 Karma CLI
 
     sudo npm install -g karma-cli
 
-Karma has a concept called plugins, which allow you to choose only the components you need for your project. These plugins allow you to choose which framework you use for writing your unit tests (Karma is framework agnostic), which browsers to launch, and so on. To start off, we will install the Jasmine plugin to write our tests in Jasmine, and the Chrome launcher to start Google Chrome automatically. Install these two with the following command:
+Karma 有个概念叫“插件”，这些插件允许你只选择你的工程需要的组件来用。通过这些插件，你可以选择使用哪个框架来写你的单元测试（Karma 是框架未知的），启动哪些浏览器，等等。开始之前，我们先安装 Jasmine 插件，以便我们可以使用 Jasmine 框架来写单元测试，以及 Chrome launcher 插件来自动启动 Google Chrome 浏览器。安装这两个插件的命令如下：
 
     npm install karma-jasmine karma-chrome-launcher
 
 ### Karma Plugins
 
-We installed two plugins for Karma in the previous section. Let’s explore the concept of
-Karma plugins a bit more. Karma plugins can be broadly split into the following
-categories:
+前面我们安装了两个 Karma 的插件，让我们进一步了解一下 Karma 的插件。Karma 的插件大体上可以分为以下几个类别：
 
 - Browser launchers
     
-    The first type of plugins for Karma are ones that help Karma launch browsers automatically as part of a test run. We installed the Chrome browser launcher plugin, and there are similar ones for Firefox, IE, and many more.
+    这些插件在测试运行的时候帮助 Karma 自动启动浏览器。我们之前安装了 Chrome 浏览器的 launcher 插件，对于其他浏览器如 Firefox 和 IE 等，也是有类似的 launcher 插件的。
 
 - Testing frameworks
 
-    We can also choose the type of framework we want to use when we write unit tests. We will be using Jasmine, which we installed again in the previous section, but if you prefer a different style of writing unit tests, like mocha or qunit, there are plugins available for those as well.
+    我们也可以选择使用哪种框架来编写单元测试。因为前面我们安装了 Jasmine 插件，所以我们将使用 Jasmine 框架来编写单元测试。但是如果你更喜欢其他风格的单元测试，比如 mocha 或者 qunit，你也可以安装这些框架的插件。
 
 - Reporters
 
-    Karma can give us the results of the tests in various forms as well. The default progress reporter comes built in, but you might decide that you need the test results as junit.xmlfiles. You can install a Karma plugin for that.
+    Karma 可以提供多种格式的测试结果。默认的 progress reporter 是内置的，但是如果你需要像 junit.xml 文件那样的测试结果，你可以安装一个相关的 Karma 插件。
 
 - Integrations
 
-    One other major category of plugins allows us to integrate with existing JavaScript libraries or tools, like Google’s Closure or RequireJS. Most of these have plugins for Karma as well that you can install if you need them.
+    这类插件允许我们集成其他已经存在的 JavaScript 库或者工具，比如 Google’s Closure，或者 RequireJS。大多数这些插件你都可以在你需要的时候安装它们。
+
 
 ### Explaining the Karma Config
 
-To use Karma, we need a configuration file that tells Karma how to operate.  We will see how easy it is to generate this configuration file in the next section.  The default name for this file is karma.conf.js, and unless you tell Karma otherwise, it will automatically look for a file with this name in the directory you run Karma from:
+要使用 Karma，我们需要一个配置文件来告诉 Karma 怎么去操作。下面我们将会看到这个配置文件的生成是非常容易的。这个配置文件默认的名称是 karma.conf.js，除非你告诉 Karma 使用其他名字，否则 Karma 将自动在你运行它的目录底下寻找名为 karma.conf.js 的配置文件：
 
 ```js
 // File: chapter3/karma.conf.js
@@ -738,80 +737,85 @@ module.exports = function(config) {
 其中：
 
 - basePath
-The base path from which all files for testing and the tests themselves need to be loaded. This is set relative to the location of the Karma config file.
+所有需要加载的测试及测试相关的文件的根路径。根路径是相对于 Karma 的配置文件的路径进行设置的。
 - frameworks
-Which frameworks to load, as an array. In our example, we loaded Jasmine (which requires that the karma-jasmine plugin be installed). You can select mocha, qunit, or something else as well here.
+需要加载的测试框架。在我们的例子中，加载了 Jasmine（这要求已经安装了 karma-jasmine 插件）。你也可以选择 mocha，qunit，或者其他框架。
 - files
-The list of files (or file paths) to load, listed as an array. In the case of AngularJS, we first load the AngularJS library, and then the  angular-mocks.js  file, which AngularJS provides as a helper for testing. Finally, we load the application source code followed by the actual unit tests.
+需要加载的文件列表(or file paths)，以数组的形式列出。就 AngularJS 来说，我们先加载了 AngularJS 库文件，然后加载了 AngularJS 提供的用来辅助测试的 angular-mock.js 文件，最后加载了应用程序以及单元测试。
 - exclude
-A list of files (or file paths) to exclude. Useful if you are using a lot of glob rules (wildcard statements to include a set of files, like **.js) for the files, and want to exclude certain files (like the karma.conf.js).
+需要排除的文件列表(or file paths)。这在当你对文件使用很多 glob 规则（通配符语句来包含一组文件，如 **.js），但是又想排除掉某些特定文件（如 karma.conf.js）时非常有用。
 - port
-This specifies which port the Karma test runner server runs on. By default, it is  8080. 
+Karma 的 test runner 服务运行的端口。默认是 8080。
 - logLevel
-Which levels of log (console.log,  console.info) Karma needs to capture from the browser. 
+Karma 要从浏览器捕获哪些等级的日志（如 console.log， console.info）。
 - autoWatch
-This is by far the coolest and most useful feature of Karma. This tells Karma to keep a watch on all the files included by the files config, and if any of them change, to run the affected unit tests. If this is set to  true, you don’t need to ever manually trigger a run of your unit tests; Karma will take care of that for you. 
-- browsers The browsers Karma should open when it is initially started. Most of these require a  karma-launcherplugin (we installed the  chrome-launcher, so we specify Chrome in this).
-- singleRun This is a Boolean value, and tells Karma to shut down the server after one single run of the unit tests. This should be set to  truefor continuous integration envi‐ ronments, and can be ignored otherwise.
+这是 Karma 目前为止最为酷炫有用的功能。它让 Karma 对 `files` 配置项中包含的所有文件保持监视，一旦这些文件有任何改动，就会运行相关的单元测试。如果此项配置设为 true，你就再也不用手动去触发你的单元测试了，全部由 Karma 帮你代劳了。 
+- browsers 
+当 Karma 初始化启动时要打开的浏览器。大部分这些浏览器都是要安装一个相应的 karma launcher 插件的（因为我们已经安装了 chrome-launcher，所以在例子中此项配置我们可以设置 Chrome）。
+- singleRun 
+This is a Boolean value, and tells Karma to shut down the server after one single run of the unit tests. This should be set to  truefor continuous integration envi‐ ronments, and can be ignored otherwise.
+此项配置为 Boolean 值，它让 Karma 在所有的单元测试运行完一次后关掉 server。此项配置在连续集成环境需要设置为 true，否则可以忽略。（不是很明白此项配置的作用-_-!）
 
-you can of course copy and paste the contents of the config file from the previous section to get started, but Karma offers a much nicer way to get started with your own Karma config. Karma lets you autogenerate the config by running the following command: 
+你可以直接复制粘贴前面 config 文件来用，但是 Karma 有提供了一个更好的方式来创建 config 文件。运行以下命令： 
 
     karma init
 
-This triggers an interactive shell, which prompts us with a series of questions. Each answer usually has a series of options that you can cycle through by using Tab on your keyboard. After we select all our options, the karma.conf.jsfile is generated for us.
+这将触发一个交互界面，提示我们一些问题。通常每个问题的答案会有一系列的选项，你可以通过键盘上 Tab 键来进行选择。当我们完成所有的选项后，karma.conf.js 文件就生成好了。
 
-### Running the Unit Test
+### 运行单元测试
 
     karma start
 
-The command automatically looks for the  karma.conf.jsfile in the directory you are executing the command from, and picks up the config from it. In case your config file is not named karma.conf.js, or if it is in a different folder, you can optionally pass it in as an argument to the command. That is:
+该命令会自动在你运行此命令的目录下寻找 karma.conf.js 文件，并获取其中的配置。为了防止你的配置文件不是以 karma.conf.js 命名，或者 karma.conf.js 在另外一个目录下，你可以将你的配置文件作为一个参数传给此命令，如下：
 
     karma start my.conf.js
 
 ## End-to-End Testing
 
-As applications grow in size and complexity, it becomes unrealistic to rely on manual testing to verify the correctness of new features, catch bugs and notice regressions. Unit tests are the first line of defense for catching bugs, but sometimes issues come up with integration between components which can't be captured in a unit test. End to end tests are made to find these problems.
+随着应用程序越来越庞大和复杂，靠人工测试来验证新功能的正确性、查出 bug等就会变得不现实。单元测试是查 bug 的第一防御线，但是有些时候问题是出现在组件之间的集成，无法在单元测试中查出。端到端测试就是为了找出这些问题。
 
-We have built [Protractor](https://github.com/angular/protractor), an end to end test runner which simulates user interactions that will help you verify the health of your Angular application.
+我们建了个端到端的 test runner [Protractor](https://github.com/angular/protractor), 可以模拟用户的交互操作来帮助你验证你的 Angular 程序的健壮性。
 
-Protractor is an end-to-end test framework for AngularJS applications. Protractor runs tests against your application running in a real browser, interacting with it as a user would.
+Protractor 是一个 AngularJS 应用程序的端到端的测试框架。它是 在真实的浏览器中为你的应用程序运行测试，像用户那样与浏览器的进行交互。
 
 ### Set Up
 
-See [Protractor - end to end testing for AngularJS](http://angular.github.io/protractor/#/tutorial)
+参见 [Protractor - end to end testing for AngularJS](http://angular.github.io/protractor/#/tutorial)
 
-Use npm to install Protractor globally with:
+使用 npm 来全局安装 Protractor:
 
 ```
 npm install -g protractor
 ```
 
-This will install two command line tools, `protractor` and `webdriver-manager`. Try running `protractor --version` to make sure it's working.
+这将安装两个命令行工具：`protractor` 和 `webdriver-manager`。可运行 `protractor --version` 来检查 Protractor 是否已经可用。
 
-The `webdriver-manager` is a helper tool to easily get an instance of a Selenium Server running. Use it to download the necessary binaries with:
+The `webdriver-manager` is a helper tool to easily get an instance of a Selenium Server running. Use it to download the necessary binaries with
+`webdriver-manager` 可以很容易的获取一个正在运行的 Selenium Server 实例。使用它来下载必要的 binaries（这是啥？）：:
 
 ```
 webdriver-manager update
 ```
 
-Now start up a server with:
+现在启动一个服务器:
 
 ```
 webdriver-manager start
 ```
 
-This will start up a Selenium Server and will output a bunch of info logs. Your Protractor test will send requests to this server to control a local browser. Leave this server running throughout the tutorial. You can see information about the status of the server at `http://localhost:4444/wd/hub`.
+这会启动一个 Selenium Server，并且输出一堆信息日志。你的 Protractor 测试将会发送请求到这个服务器来控制本地浏览器。你可以在 `http://localhost:4444/wd/hub` 上面看到服务器的状态信息。
 
 ### Protractor Configuration
 
-The Protractor configuration file is a JavaScript file that basically holds all the configuration elements that Protractor needs to be able to run the end-to-end tests.  These include configuration options like: 
+Protractor 的配置文件是一个 JavaScript 文件，基本上包括了所有让 Protractor 可以运行端到端测试的配置元素。例如以下这些配置选项：
 
-- Where is the server running?
-- Where is the Selenium WebDriver on which to run the tests?
-- What tests should be executed?
-- What browsers should the tests be run on?
+- 服务器运行在哪里？
+- 用来运行测试的 Selenium WebDriver 在哪里？
+- 哪些测试要被排除？
+- 使用哪些浏览器来运行测试？
 
-And much more. Let’s take a look at a sample configuration with the most commonly used options, which is what we will be using for the tests in this chapter:
+等等其他许多配置选项。
+让我们来看一个最常用的几个选项的配置例子，我们将在这个章节的测试中使用这个配置文件：
 
 ```js
 exports.config = {
@@ -833,31 +837,35 @@ exports.config = {
 };
 ```
 
-This configuration file is the simplest Protractor configuration file we could use. It has the following things of note:
+这个配置文件是最简单的 Protractor 配置文件。它包括以下内容：
 
-- Specifies that the Selenium server is running locally on port 4444.
-- Specifies that the server is running at http://localhost:8000/.
-- Specifies that the browser to automatically run is Chrome.
-- Points out the spec.jsfile that holds the end-to-end test code.
-- Some configuration options for Jasmine to show colors in the command line.
+- 指定 Selenium server 运行在本地端口 4444。
+- Specifies that the server is running at http://localhost:8000/.指定服务器运行在 `http://localhost:8000/`。(这是指哪个服务器？) 
+- 指定自动启动的浏览器是 Chrome。
+- 指定包含端到端测试的 spec.js 文件。
+- 一些让 Jasmine 命令行彩色显示的选项。
 
-Now what do we need to do before we can run this test?
+Protractor 对 Jasmine 是完全支持的，但是对于其他测试框架，比如 Mocha、Cucumber 等只提供了有限的支持，如果你使用 Mocha，你还需要包含你自己的断言库（如 Chai）才可以。
 
-1. Start Selenium locally (this can be done with webdriver-manager start).
-2. Start the server locally (node server.jsin our example).
-3. Start Protractor (protractor test/e2e/protractor.conf.js).
+在开始测试之前，我们需要做：
+
+1. 启动本地 Selenium（这个我们通过 `webdriver-manager start` 完成）
+2. 启动本地服务（在我们的例子中是 node server.js）
+3. 启动 Protractor（protractor test/e2e/protractor.conf.js）
 
 ### An End-to-End Test
 
-Protractor tests use the same Jasmine scaffolding syntax we’ve been using for our unit tests, so we have the same describe  blocks for a set of tests, and individual itblocks for each test. In addition to these, Protractor exposes some global variables that are needed for writing end-to-end tests, namely: 
+Protractor 测试使用和 Jasmine 脚手架一样的语法，所以我们使用同样的 describe 块来描述一组测试，使用独立的 it 块来描述每一个测试。除此之外，Protractor 暴露了一些编写端到端测试所需的全局变量，即： 
 
-- `browser` This is a wrapper around WebDriver that allows us to interact with the browser directly. We use this object to navigate to different pages and page-level information. 
+- `browser` 这是 WebDriver 的封装，可用来与浏览器进行直接交互。我们使用这个对象来导航到不同的页面以及页面级别的信息。 
 
-- `element` The element object is a helper function to find and interact with HTML elements. It takes a strategy to find the elements as the argument, and then gives you back an element that you can interact with by clicking and sending keystrokes to it. 
+- `element` 这个对象可帮助寻找 HTML 元素，以及与 HTML 元素进行交互。它接受一个策略参数来寻找，然后返回一个你可以通过点击和发送按键来交互的元素。
 
-- `by` The  byis an object with a collection of element-finding strategies. We can find elements by  idor  CSSclasses, which are built-in strategies of WebDriver. Protractor adds a few strategies on top of that to find elements by  model,  binding, and  repeater as well, which are AngularJS-specific ways to find certain elements on the page.
+- `by` 这个对象拥有一个元素查找策略的集合。我们可以通过 id 或者 css 类来查找元素，这些都是 WebDriver 内置的策略。Protractor 在此基础上添加了一些通过 model、binding 和 repeater 来查找元素的策略，这些是 AngularJS 的在页面上寻找元素的特有方式。
 
-Start the app by first installing the dependent packages using  npm in
+`element` 接收一个 Locator 类型的参数用来寻找元素，`by` 则会创建 Locator 类型的对象。
+
+开始之前先使用 npm 安装好依赖的包 in
 stallfollowed by node server.js:
 
 ```js
@@ -919,51 +927,52 @@ describe('Routing Test', function() {
 });
 ```
 
-We have two tests in this example. The first test:
+在这个例子中我们有 2 个测试。第一个测试：
 
-- Opens up the main page of the teams application.
-- Fetches all the rows by using the repeater, and then checks whether there are five rows present on the main page.
-- Fetches the name and rank of the first row and asserts that they are as expected. 
-- Fetches the name and rank of the last row and asserts that they are as expected.
-- Checks that the login link is shown and the logout link is hidden. Thus, the first test purely deals with rendering and logic to ensure that the application is correctly hooked up to the server and is capable of fetching and displaying the content correctly.
+- 打开 teams 应用程序的主页面。
+- 使用 repeater 来获取所有的 team，然后检查主页面上是不是有 5 个 team。
+- 获取第一个 team 的名称和名次，并且判断它们是否如预期的。
+- 获取最后一个 team 的名称和名次，并且判断它们是否如预期的。
+- 检查登录链接是否在登出链接隐藏的时候显示。
+这样，第一个测试纯粹只是检查了渲染，以及应用程序是否正确连接上服务器，是否能够正确地获取和显示内容。
 
-The second test deals with user interaction by:
+第二个测试处理用户交互：
 
-- Opening up the login page.
-- Entering the username and password to the correct model.
-- Clicking the login button by CSS selector.
-- Ensuring that the login is successful by checking the URL of the redirected page. 
-- Checking that the login link is hidden and the logout link is shown.
+- 打开登录页面。
+- 输入用户名和密码给相应的 model。
+- 通过 CSS 选择器点击登录按钮。
+- 通过检查重定向的页面地址来确保登录成功。
+- 检查登录链接是否在登出链接显示的时候隐藏。
 
-We will see Protractor open the Chrome browser through Selenium, navigate to the main page of our locally running application, and click through and run our tests as we have defined them. At the end, it should print out whether they were successful, or the reason for failure in case they failed.
+我们将会看到 Protractor 通过 Selenium 打开 Chrome 浏览器，导航到我们本地运行的应用程序主页面，按照我们已经定义好的来依次点击和运行我们的测试。最后，它将会输出测试是否运行成功，如果运行失败，则输出失败原因。
 
 ### Considerations
 
-There are a few things we have to keep in mind, as well as some best practices that should be followed, when working with and writing end-to-end tests in AngularJS. Let’s go over them one by one: 
+当我们在使用 AngularJS 并编写端到端测试的时候，就像那些我们应该要遵从的最佳实践一样，有几点需要牢记：
 
-- Location of ng-app: When you write a simple Protractor test for AngularJS, and point it at any URL that hosts an AngularJS application, Protractor’s default behavior is to look at the body element of the HTML to find  ng-app. It then kicks in and does its magic. But in case ng-app is not on the body tag, but on a subelement, we need to manually tell Protractor how to find it. This is done through the  rootElement  option of the Protractor configuration, which takes a CSS selector to the element using ng-app. For example, if ng-appwas on the following element inside our bodytag: 
+- ng-app 的位置：当你为 AngularJS 写一个简单的 Protractor 测试，并将它指向任何一个运行 AngularJS 应用程序的 URL 的时候，Protractor 默认是在 HTML 的 `body` 元素里面查找 `ng-app`。找到 `ng-app` 后 Protractor 就会介入发挥它的作用。但是为了防止 `ng-app` 不在 `body` 标签上而是在它的子元素上的情况，我们需要手动告诉 Protractor 如何去找到 `ng-app`。这个可以通过 Protractor 的 `rootElement` 配置项来完成，该配置项使用 CSS 选择器来寻找带有 `ng-app` 的元素。例如，当 `ng-app` 是在 `body` 标签下的以下元素里面： 
 
         <div class="angular-app" ng-app="myApp"></div>
 
-    then we’d have to specify the following line in our Protractor configuration file: 
+    然后我们就要像下面这样在 Protractor 的配置文件里面设置： 
 
         rootElement: ".angular-app"
 
-    This would tell Protractor to find the element with the CSS class angular-app. This is not needed if you have the ng-appon the bodyelement. 
+    这将会告诉 Protractor `ng-app` 是在带有 `angular-app` CSS 类的元素上。当然，如果你是在 `body` 元素上设置了 `ng-app`，就不需要这么做了。
 
-- Polling: If you have any kind of polling logic in your code, where you have to keep fetching some information or doing some calculations every few seconds, make sure you’re not using the `$timeout`  service AngularJS provides for that. Protractor has issues figuring out when AngularJS is done with its work. If you need polling, and need to write end-to-end tests for it, make sure you use the $intervalservice instead. Protractor understands and deals with the $intervalservice, and behaves like you would expect it to. 
-- Manual bootstrapping: Protractor currently does not support working with AngularJS applications that are manually bootstrapped. Thus, if you need to write end-to-end tests for such an application, you might have to work with the underlying WebDriver (by using browser.driver.getinstead of  browser.get, and so on), and add wait conditions to ensure that all the things are loaded before proceeding with the test. You would not be able to leverage any of the benefits that Protractor offers. 
-- Future execution: WebDriver commands that we write in our tests don’t return the actual values, but rather promises that will execute later in the browser (in various browsers even). Thus, console.log won’t actually print the values because it doesn’t have them at the point the code is executed. 
-- Debugging: Protractor has great built-in support for debugging, because it leverages the WebDriver debugging. To debug any test, we can just add the following line at the point where we want to start debugging: 
+- Polling: 如果在你的代码里有任何轮询的逻辑来不断的获取某些信息或者每隔几秒做一些运算，那么确保你不是使用 AngularJS 提供的 `$timeout` 服务。因为 Protractor 在判断 AngularJS 是否已经完成工作的时候有一些问题。如果你需要轮询，并且为此编写端到端测试，你应该使用 `$interval`服务。Protractor 能够很好地理解并且处理 `$interval` 服务。
+- Manual bootstrapping: 目前 Protractor 还不支持手动 bootstrap 的 AngularJS 应用程序。所以，如果你需要为这样的应用程序编写端到端测试，你可能需要使用底层的 WebDriver（使用 browser.driver.get 取代 browser.get，等等），并且添加等待条件来确保在测试运行之前所有的东西都加载好了。你将无法利用任何 Protractor 提供的好处。
+- Future execution: 我们在测试中写的 WebDriver 指令并不返回实际的值，而是承诺稍后将会在浏览器（甚至是多个浏览器）中执行。因此，当 `console.log`这句代码执行的时候，并不会真正的去打印内容，因为这些内容此时都还没有。
+- Debugging: Protractor 内置了对 debugging 的很好支持，因为它利用了 WebDriver 的 debugging。要调试任何的测试，我们只需在希望开始调试的地方添加以下这行：
 
         browser.debugger(); 
-    This could be after any of the lines in the test. Then we run our tests using the following command: 
+    这可以加在测试中的任何一行代码之后。然后我们用以下命令来执行测试： 
 
         protractor debug path/to/conf.js
 
-    This opens up the Node debugger, which allows us to step through the various breakpoints in our test. We now need to type “c” and click Enter, to tell Protractor to continue running the tests. Protractor will run the tests like normal in the browser up until the point it hits the debugger statement. At that point, it stops and waits for further instructions to resume the test. This is a real, live application in the browser that you can interact with and debug to see exactly what the Protractor runner is seeing. You can actually click around and change the state of the test to make it fail as well. When you are done debugging, you can type “c” and click Enter to continue running the test until the next debug point or the end of the test, whichever comes first. 
+     这将会打开 Node 调试器，让我们可以单步调试测试中的各个断点。输入“c”，然后回车，可以让 Protractor 继续运行测试。Protractor 将会在浏览器中正常运行测试，直到它碰到 debugger 语句，它将停下来，等待进一步的指示来 resume 测试。Protractor 让你可以和一个在浏览器中真实运行的应用程序进行交互和调试，将它所掌握的信息提供给你。你也可以通过点击和修改测试的状态来让它失败。当你完成调试，你可以输入“c”然后回车来继续执行测试，直到遇到下一个断点或者测试结束。
 
-The last thing to consider is how to organize your tests in such a way that makes them easy to maintain and reuse. In the test that we wrote in the previous section, we used elementand byto find elements in the page and interact with it by clicking, entering keys, and asserting the state of the UI. But when we write our tests, we want to create an API that allows us to easily understand the intent of the test. This is useful because it becomes easier to understand the test, as well as allow anyone to quickly build a set of larger, more encompassing tests using the same API. To accomplish this, we use the concept of PageObjects. Let’s rewrite the Teams List page test to use PageObjects instead of directly working with the WebDriver APIs at a test level:
+最后一件需要考虑的事情就是如何组织你的测试，让它们比较容易维护和复用。在我们前面写的测试中，我们使用 element 和 by 在页面中查找元素，通过点击、输入按键以及判断 UI 的状态来进行交互。但是当我们编写测试的时候，我们希望创建一个 API 能够让我们很容易地明白测试的目的。这是很有用的，因为当测试变得更容易理解了，也就让任何人都可以使用这个 API 来快速地建立起一组更大、更全面的测试。为了实现这点，我们可以使用 PageObject。让我们使用 PageObject 取代直接操作 WebDriver API 来重写 Team 列表页面的测试：
 
 ```js
 function TeamsListPage() {
@@ -1012,7 +1021,9 @@ describe('Routing Test With PageObjects', function() {
 });
 ```
 
-We created a JavaScript class called TeamsListPage, which exposes some APIs to open the page, get all the rows, and get the individual name and rank for a given row. Then in our test, we can work with an instance of the  TeamsListPage  object, which makes the test much easier to read than before. We can do something similar for the Login Page test as well. PageObjects encapsulate abstractions on how to access certain elements and how to interact with them in a single place, thus allowing for simple reuse as well as handling change in a single place rather than making the change in multiple places.
+我们创建了一个叫做 TeamsListPage 的 JavaScript 类，这个类暴露了一些 API 来打开页面、获取所有记录、获取指定记录的名称和名次。然后在我们的测试中，我们使用一个 TeamsListPage 对象让测试比之前更容易阅读了。我们也可以对登录页面的测试做类似的改造。
+
+PageObjects encapsulate abstractions on how to access certain elements and how to interact with them in a single place, thus allowing for simple reuse as well as handling change in a single place rather than making the change in multiple places. PageObject 在如何访问元素、如何在一个单一的地方与元素进行交互上进行抽象封装，这样就允许简单的复用，在一个地方处理变化而不是在很多个地方产生变化（最后一句话可能翻译得不是很清楚。。。）
 
 ## Library
 

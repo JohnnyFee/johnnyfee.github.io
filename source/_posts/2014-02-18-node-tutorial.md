@@ -54,6 +54,7 @@ tags: [node, tutorial]
 ## Library
 
 - [felixge/node-formidable](https://github.com/felixge/node-formidable) A node.js module for parsing form data, especially file uploads.
+- [MrSwitch/hello.js](https://github.com/MrSwitch/hello.js) A Javascript RESTFUL API library for connecting with OAuth2 services, such as Google+ API, Facebook Graph and Windows Live Connect. http://adodson.com/hello.js/
 
 ### commander
 

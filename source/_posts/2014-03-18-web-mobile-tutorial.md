@@ -16,6 +16,7 @@ tags: [angular, ui]
 - [The State of Hybrid Mobile Development - Telerik Developer NetworkTelerik Developer Network](http://developer.telerik.com/featured/the-state-of-hybrid-mobile-development/)
 - [Adding Native Touches to Your Hybrid App -Telerik Developer Network](http://developer.telerik.com/featured/adding-native-touches-hybrid-app)
 - [Popular ICEs for mobile hybrid app development - Developer Economics](http://www.developereconomics.com/popular-ices-mobile-hybrid-app-development)
+- [12 HTML5 tricks for mobile](http://www.creativebloq.com/html5/12-html5-tricks-mobile-81412803)
 
 
 ### Vedio

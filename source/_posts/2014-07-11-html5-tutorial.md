@@ -25,6 +25,11 @@ tags: [web, html, tutorial]
 
 <!--more-->
 
+contenteditable: 
+
+- [The HTML5 Contenteditable Attribute](http://blog.teamtreehouse.com/html5-contenteditable-attribute)
+- [HTML5 Local Storage](http://blog.teamtreehouse.com/html5-local-storage)
+
 ### 自定义属性
 
 用户可以使用自定义元素，自定义元素必须以 `data-` 开头。如：
@@ -73,7 +78,7 @@ HTML5 规范将元素分为三大类：
 - generator 用来成成 HTMl 的软件名称，如ASP.NET等。
 - keywords 以逗号分隔的字符串，用来描述页面的内容。
 
-#### 声明字符编码：
+#### 声明字符编码
 
     <meta charset="utf-8">
 

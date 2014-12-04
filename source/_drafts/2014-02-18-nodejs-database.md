@@ -50,6 +50,7 @@ tags: [web]
 ## Library
 
 - [Knex.js - A SQL Query Builder for Javascript](http://knexjs.org)
+- [Lightweight javascript in-memory database: LokiJS](http://lokijs.org)
 
 ## JSON Database
 

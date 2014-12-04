@@ -36,7 +36,7 @@ tags : [node, grunt]
 * 加载的Grunt插件和任务
 * 自定义任务
 
-### "wrapper"函数
+## "wrapper" 函数
 
 每个Gruntfile(和Grunt插件)都使用这个基本格式，并且所有你的 Grunt 代码都必须指定在这个函数里面：
 

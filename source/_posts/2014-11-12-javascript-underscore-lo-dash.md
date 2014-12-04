@@ -6,6 +6,10 @@ category: JavaScript
 tags: [javascript]
 --- 
 
+The spiritual successor to underscore.js, lodash maintains backwards compatibility with underscore code (if you use the compatible version), and takes bold steps forward to help you manipulate those objects and arrays quickly and easily.
+
+There are many more methods to lodash then I've covered here, these are the ones I find myself using the most.
+
 I always thought libraries like Lo-Dash can’t really get any&nbsp;faster than they already are. Lo‑Dash almost perfectly mixes [various techniques](https://www.youtube.com/watch?v=NthmeLEhDDM "Unorthodox Performance") to squeeze out the most from JavaScript. It uses JavaScript fastest statements, adaptive algorithms, it even measures performance to avoid accidental regressions in subsequent releases.
 
 <!-- more -->
@@ -119,6 +123,251 @@ $json.get("/new/assets").success(function(data) {
 
 It may also speed up execution time in some cases. We can create a complex query early and then, when time is critical, execute it.
 
+## Array
+
+**first**
+
+Pop, shift, slice? How about just give me the `_.first` x numbers of elements.
+
+```javascript
+var array = [ 1, 2, 3, 4 ,5 ];
+_.first(array, 3);
+// returns [1,2,3]
+```
+
+**rest**
+
+Push, unshift or splice? Wha
+
+Push, unshift or splice? What about when you just want the last few items of an array?
+
+```
+var array = [ 1, 2, 3, 4 ,5 ];
+    _.rest(array, 3);
+    // returns [1,2,3]
+```
+
+**compact**
+
+Sometimes you end up with a bunch of empty fields in an array. `_.compact` removes everything which evaluates to `false`, `null`, `0`, `undefined` or `NaN`. Useful for keeping data tidy.
+
+```
+var array = [ 0, 1, 0, 2, false, true ];
+_.compact(array);
+// returns [ 1,2, true]
+```
+
+**flatten**
+
+Nested arrays are often part of working with JavaScript, use `_.flatten` to get rid of the un-needed structure.
+
+```
+var array = [[ 1,2 ], [3,4]];
+_.flatten(array);
+// returns [1,2,3,4]
+```
+
+**each**
+
+Good old forEach, except it works in all browsers and is a little trimmer.
+
+```
+var array = [1,2,3];
+_.each(array, function(v,i){
+  array[i] = v*2;
+});
+// does not return anything, just sets array to [ 2, 4, 6 ];
+```
+
+It's important to notice that lodash uses the following formats on anonymous functions:
+
+Dealing with arrays
+
+
+```
+function(value, i)
+```
+
+Dealing with objects
+
+```
+function(value, key)
+```
+
+This may be second nature to anyone used to `for-in` loops, but it could be a stumbling block for anyone used to the key, value notation.
+
+Collections are arrays of objects, and while the above functions work perfectly well on them, there are other ways we can traverse and manipulate them. 
+
+## Collections - [{},{},{}]
+
+**map**
+
+`Map` is useful when you need to transform values of an array or object. Unlike each, this generates a new array. 
+
+```
+function toDogYears(dog){
+  return dog.age*7;
+};
+var dogs = [{ name: "arf", age: 3}, {name:'bark', age: 5}]
+
+_.map(dogs, toDogYears);
+//returns [21,35]
+```
+
+**reduce**
+
+`_.reduce` turns an array or collection into a single value, using an accumulator as a starting point and passing it into a function for each iteration.
+
+```
+// array reduction
+var array = [ 1,2,3 ];
+_.reduce(array, function(total, number){
+  return total + number;
+}, 0);
+
+// object reduction
+var workers = [{ name: 'john', years: 5 }, {name: 'susan', years: 3}, {name: 'lucy', years: 2 }];
+
+_.reduce(workers, function(combined, worker){
+  return combined.years += worker.years
+},{});
+// returns { years: 10 };
+```
+
+**filter**
+
+For the next three functions, assume this dataset:
+
+```
+var cats = [{ name: 'fuzzy', color: 'orange', age: 12 },
+{ name: 'tiny', color: 'red', age: 7 },
+{ name: 'grumpy', color: 'white', age: 5 } ]
+```
+
+`_.filter` returns an array of objects which all pass a truth test.
+
+
+```
+_.filter(cats, function getYoungerCats(cat){
+return (cat.age < 10);
+});
+// returns [ { name: 'tiny', color: 'red', age: 7 }, { name: 'grumpy', color: 'white', age: 5 } ]
+```
+
+**pluck**
+
+Pluck is similar to reduce, except you get an ordered list of properties as an array, instead of an accumulated value. Useful when you need to build isolated datasets out of large collections.
+
+```
+_.pluck(cats, 'name');
+// return [ 'fuzzy', 'tiny', 'grumpy']
+```
+
+**where**
+
+Where is a shorthand for what you might otherwise accomplish with `_.filter`.
+
+
+```
+_.where(cats, { color: 'red'});
+// returns [{ name: 'fuzzy', color: 'orange', age: 12 }]
+```
+
+## Objects - {}
+
+**clone**
+
+One of the gotchas in JavaScript-land is using an object as a property of another object, and we change that property, thinking that we are affecting a copy of the object. Not true. Only a pointer to the original object is stored.
+
+```
+var obj = { 'a' : true, 'b': true };
+var smartContainer = { foo: _.clone(obj) }
+smartContainer.foo.a = false;
+// obj.a == true
+// original object was not changed
+
+var container = { foo: obj };
+container.foo.a = false;
+// obj.a == false
+// original object changed, even though it's inside another object
+```
+
+**extend**
+
+`_.extend` divides your development experience into before you used extend and after you used extend. Simply, it merges objects. Properties of subsequent objects will override earlier.
+
+```
+_.extend({ type: 'ball', color: 'blue' }, { name: 'bob', color: 'red' });
+// { type: 'ball', color: 'red', name: 'bob' }
+```
+
+**has**
+
+Useful as a safe alternative to `if (obj.prop)` conditional testing.
+
+```
+if ( _.has(obj, 'prop')) { }
+```
+
+**isEmpty / isPlainObject / isUndefined / isEqual / isNull**
+
+These simple conditional tests are extremely useful, abstract away all sorts of edge cases, and are easy to use.
+
+**transform**
+
+`_.transform` is similar to reduce, in that it runs a function for each element of an array or object. Transform does not need an explicit starting point for the accumulator however.
+
+```
+var coords = { lat: 35.34534534534, long: 40.3552523434 };
+_.transform( coords, function roundCoords(result, val, key){
+return result["short"+key] = Math.round(val);
+});
+// returns { shortlat: 35, shortlong: 40 }
+```
+
+**pick**
+
+`_.pick` can be handy when you need to turn a large object into a specific smaller one.
+
+```
+var userModel = { attributes: [ 'username' , 'email'] };
+var customerData = { username: 'foo', email: "a@a.com", address:"123 Fine St", phone:"1234561231" }}
+
+_.pick(customerData, _.(userModel);
+// returns { username: 'foo', email: "a@a.com" }
+```
+
+## Chains - _.()
+
+Chains allow you to put together all your lodash knowledge in a very powerful sequence of code. 
+
+Chains can be started with `_.chain(value)` or the shorthand `_(value)`.
+
+The value is then substituted for the input value for each chainable function that supports it. You can see a list of what methods are and aren't supported [here](https://lodash.com/docs#_), as well as the native Array methods supported by lodash. 
+
+If you want your chain to return a value, not just manipulate provided arrays, you have to use `.value()` at the end of your chain. 
+
+```
+var array = [1,2,3,4];
+_(array)
+    .map( function(val){ return val*val; } )
+    .filter( function(val){ return ( val % 2 === 0) } )
+    .reverse()
+    .value();
+// returns [16,4]
+```
+
+Chains keep code concise and readable for easy maintenance. If, for debugging, or for detailed manipulation, you need to access an array in the middle of chaining, you can use the `_.tap` method.
+
+```
+var array = [1,2,3,4];
+_(array)
+    .tap(function(arr){ arr.splice(2,1,'three'); })
+    .filter( function(val){ return ( val % 2 !== 0 )} )
+    .value();
+// returns [1, 'three']
+```
+
 ## Wrap up
 
 Lazy evaluation is not the new idea in the industry. It has&nbsp;already been there with excellent libraries like [LINQ](http://en.wikipedia.org/wiki/Language_Integrated_Query "LINQ"), [Lazy.js](http://danieltao.com/lazy.js/ "Lazy.js") and many others. The main difference Lo-Dash makes, I believe, is that you still have good ol` Underscore API with a new powerful engine inside.&nbsp;No new library to learn, no significant code changes to make, just&nbsp;a pending upgrade.
@@ -130,3 +379,4 @@ _TBC… I’d like to write another – more advanced – post explaining how th
 ## Reference
 
 - [How to Speed Up Lo-Dash ×100? Introducing Lazy Evaluation.](http://filimanjaro.com/blog/2014/introducing-lazy-evaluation)
+- [Utilities for Everyday Node.js Development](https://www.airpair.com/node.js/posts/utilities-for-everyday-node-development)

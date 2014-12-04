@@ -7,253 +7,11 @@ tags: [javascript]
 
 <link rel="stylesheet" type="text/css" href="http://cdn.staticfile.org/twitter-bootstrap/3.3.0/css/bootstrap.css">
 
-## 表单
+## 表单控件
 
 单独的表单控件会被自动赋予一些全局样式。所有设置了 `.form-control` 类的 `<input>`、`<textarea>` 和 `<select>` 元素都将被默认设置宽度属性为 `width: 100%;`。 将 `label` 元素和前面提到的控件包裹在 `.form-group` 中可以获得最好的排列。
 
 不要将表单组直接和输入框组混合使用。建议将输入框组嵌套到表单组中使用。
-
-```css
-// Form groups
-//
-// Designed to help with the organization and spacing of vertical forms. For
-// horizontal forms, use the predefined grid classes.
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: inline-block;
-  // Force IE8 to wrap long content (see https://github.com/twbs/bootstrap/issues/13141)
-  max-width: 100%; 
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-```
-
-如：
-
-<form role="form">
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" placeholder="Enter email">
-  </div>
-</form>
-
-```html
-<form role="form">
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-  </div>
-</form>
-```
-
-### 水平排列的表单
-
-通过为表单添加 `.form-horizontal` 类，并联合使用 Bootstrap 预置的栅格类，可以将 `label` 标签和控件组水平并排布局。这样做将改变 `.form-group` 的行为，使其表现为栅格系统中的行（row），因此就无需再额外添加 `.row` 了。
-
-```
-// Horizontal forms
-//
-// Horizontal forms are built on grid classes and allow you to create forms with
-// labels on the left and inputs on the right.
-
-.form-horizontal {
-
-  // Consistent vertical alignment of radios and checkboxes
-  //
-  // Labels also get some reset styles, but that is scoped to a media query below.
-  .radio,
-  .checkbox,
-  .radio-inline,
-  .checkbox-inline {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: (@padding-base-vertical + 1); // Default padding plus a border
-  }
-  // Account for padding we're adding to ensure the alignment and of help text
-  // and other content below items
-  .radio,
-  .checkbox {
-    min-height: (@line-height-computed + (@padding-base-vertical + 1));
-  }
-
-  // Make form groups behave like rows
-  .form-group {
-    .make-row();
-  }
-
-  // Reset spacing and right align labels, but scope to media queries so that
-  // labels on narrow viewports stack the same as a default form example.
-  @media (min-width: @screen-sm-min) {
-    .control-label {
-      text-align: right;
-      margin-bottom: 0;
-      padding-top: (@padding-base-vertical + 1); // Default padding plus a border
-    }
-  }
-
-  // Validation states
-  //
-  // Reposition the icon because it's now within a grid column and columns have
-  // `position: relative;` on them. Also accounts for the grid gutter padding.
-  .has-feedback .form-control-feedback {
-    right: (@grid-gutter-width / 2);
-  }
-
-  // Form group sizes
-  //
-  // Quick utility class for applying `.input-lg` and `.input-sm` styles to the
-  // inputs and labels within a `.form-group`.
-  .form-group-lg {
-    @media (min-width: @screen-sm-min) {
-      .control-label {
-        padding-top: ((@padding-large-vertical * @line-height-large) + 1);
-      }
-    }
-  }
-  .form-group-sm {
-    @media (min-width: @screen-sm-min) {
-      .control-label {
-        padding-top: (@padding-small-vertical + 1);
-      }
-    }
-  }
-}
-```
-
-如：
-
-```html
-<form class="form-horizontal" role="form">
-  <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Sign in</button>
-    </div>
-  </div>
-</form>
-```
-
-### 内联表单
-
-为 `<form>` 元素添加 `.form-inline` 类可使其内容左对齐并且表现为 `inline-block` 级别的控件。只适用于视口（viewport）至少在 768px 宽度时（视口宽度再小的话就会使表单折叠）。
-
-在 Bootstrap 中，输入框和单选/多选框控件默认被设置为 `width: 100%;` 宽度。在内联表单，我们将这些元素的宽度设置为 `width: auto;`，因此，多个控件可以排列在同一行。
-
-如果你没有为每个输入控件设置 `label` 标签，屏幕阅读器将无法正确识别。对于这些内联表单，你可以通过为 `label` 设置 `.sr-only` 类将其隐藏。
-
-```
-// Inline forms
-//
-// Make forms appear inline(-block) by adding the `.form-inline` class. Inline
-// forms begin stacked on extra small (mobile) devices and then go inline when
-// viewports reach <768px.
-//
-// Requires wrapping inputs and labels with `.form-group` for proper display of
-// default HTML form controls and our custom form controls (e.g., input groups).
-//
-// Heads up! This is mixin-ed into `.navbar-form` in navbars.less.
-
-.form-inline {
-
-  // Kick in the inline
-  @media (min-width: @screen-sm-min) {
-    // Inline-block all the things for "inline"
-    .form-group {
-      display: inline-block;
-      margin-bottom: 0;
-      vertical-align: middle;
-    }
-
-    // In navbar-form, allow folks to *not* use `.form-group`
-    .form-control {
-      display: inline-block;
-      width: auto; // Prevent labels from stacking above inputs in `.form-group`
-      vertical-align: middle;
-    }
-
-    // Make static controls behave like regular ones
-    .form-control-static {
-      display: inline-block;
-    }
-
-    .input-group {
-      display: inline-table;
-      vertical-align: middle;
-
-      .input-group-addon,
-      .input-group-btn,
-      .form-control {
-        width: auto;
-      }
-    }
-
-    // Input groups need that 100% width though
-    .input-group > .form-control {
-      width: 100%;
-    }
-
-    .control-label {
-      margin-bottom: 0;
-      vertical-align: middle;
-    }
-
-    // Remove default margin on radios/checkboxes that were used for stacking, and
-    // then undo the floating of radios and checkboxes to match (which also avoids
-    // a bug in WebKit: https://github.com/twbs/bootstrap/issues/1969).
-    .radio,
-    .checkbox {
-      display: inline-block;
-      margin-top: 0;
-      margin-bottom: 0;
-      vertical-align: middle;
-
-      label {
-        padding-left: 0;
-      }
-    }
-    .radio input[type="radio"],
-    .checkbox input[type="checkbox"] {
-      position: relative;
-      margin-left: 0;
-    }
-
-    // Re-override the feedback icon.
-    .has-feedback .form-control-feedback {
-      top: 0;
-    }
-  }
-}
-```
-
-如：
-
-```html
-<form class="form-inline" role="form">
-  <div class="form-group">
-    <input type="email" class="form-control" placeholder="Enter email">
-  </div>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox"> Remember me
-    </label>
-  </div>
-  <div class="form-group">
-    <label class="sr-only" for="exampleInputPassword2">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
-  </div>
-  <button type="submit" class="btn btn-default">Sign in</button>
-</form>
-```
-
-## 表单控件
 
 ```css
 .form-control {
@@ -574,7 +332,7 @@ input[type="checkbox"] {
 </form>
 ```
 
-## 输入框图标
+### 输入框图标
 
 你还可以针对校验状态为输入框添加额外的图标。只需设置相应的 `.has-feedback` 类并添加正确的图标即可。
 
@@ -676,6 +434,281 @@ input[type="checkbox"] {
 </form>
 ```
 
+## 表单
+
+默认表单控件是堆叠排放。
+
+<form role="form">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" placeholder="Enter email">
+  </div>
+</form>
+
+```html
+<form role="form">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+  </div>
+</form>
+```
+
+源码：
+
+```css
+// Form groups
+//
+// Designed to help with the organization and spacing of vertical forms. For
+// horizontal forms, use the predefined grid classes.
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: inline-block;
+  // Force IE8 to wrap long content (see https://github.com/twbs/bootstrap/issues/13141)
+  max-width: 100%; 
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+```
+
+### 水平排列的表单
+
+通过为表单添加 `.form-horizontal` 类，并联合使用 Bootstrap 预置的栅格类，可以将 `label` 标签和控件组水平并排布局。这样做将改变 `.form-group` 的行为，使其表现为栅格系统中的行（row），因此就无需再额外添加 `.row` 了。
+
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" placeholder="Email">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Sign in</button>
+    </div>
+  </div>
+</form>
+
+```html
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Sign in</button>
+    </div>
+  </div>
+</form>
+```
+
+源码：
+
+```
+// Horizontal forms
+//
+// Horizontal forms are built on grid classes and allow you to create forms with
+// labels on the left and inputs on the right.
+
+.form-horizontal {
+
+  // Consistent vertical alignment of radios and checkboxes
+  //
+  // Labels also get some reset styles, but that is scoped to a media query below.
+  .radio,
+  .checkbox,
+  .radio-inline,
+  .checkbox-inline {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: (@padding-base-vertical + 1); // Default padding plus a border
+  }
+  // Account for padding we're adding to ensure the alignment and of help text
+  // and other content below items
+  .radio,
+  .checkbox {
+    min-height: (@line-height-computed + (@padding-base-vertical + 1));
+  }
+
+  // Make form groups behave like rows
+  .form-group {
+    .make-row();
+  }
+
+  // Reset spacing and right align labels, but scope to media queries so that
+  // labels on narrow viewports stack the same as a default form example.
+  @media (min-width: @screen-sm-min) {
+    .control-label {
+      text-align: right;
+      margin-bottom: 0;
+      padding-top: (@padding-base-vertical + 1); // Default padding plus a border
+    }
+  }
+
+  // Validation states
+  //
+  // Reposition the icon because it's now within a grid column and columns have
+  // `position: relative;` on them. Also accounts for the grid gutter padding.
+  .has-feedback .form-control-feedback {
+    right: (@grid-gutter-width / 2);
+  }
+
+  // Form group sizes
+  //
+  // Quick utility class for applying `.input-lg` and `.input-sm` styles to the
+  // inputs and labels within a `.form-group`.
+  .form-group-lg {
+    @media (min-width: @screen-sm-min) {
+      .control-label {
+        padding-top: ((@padding-large-vertical * @line-height-large) + 1);
+      }
+    }
+  }
+  .form-group-sm {
+    @media (min-width: @screen-sm-min) {
+      .control-label {
+        padding-top: (@padding-small-vertical + 1);
+      }
+    }
+  }
+}
+```
+
+
+### 内联表单
+
+为 `<form>` 元素添加 `.form-inline` 类可使其内容左对齐并且表现为 `inline-block` 级别的控件。只适用于视口（viewport）至少在 768px 宽度时（视口宽度再小的话就会使表单折叠）。
+
+在 Bootstrap 中，输入框和单选/多选框控件默认被设置为 `width: 100%;` 宽度。在内联表单，我们将这些元素的宽度设置为 `width: auto;`，因此，多个控件可以排列在同一行。
+
+如果你没有为每个输入控件设置 `label` 标签，屏幕阅读器将无法正确识别。对于这些内联表单，你可以通过为 `label` 设置 `.sr-only` 类将其隐藏。
+
+<form class="form-inline" role="form">
+  <div class="form-group">
+    <input type="email" class="form-control" placeholder="Enter email">
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox"> Remember me
+    </label>
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="exampleInputPassword2">Password</label>
+    <input type="password" class="form-control" placeholder="Password">
+  </div>
+  <button type="submit" class="btn btn-default">Sign in</button>
+</form>
+
+```html
+<form class="form-inline" role="form">
+  <div class="form-group">
+    <input type="email" class="form-control" placeholder="Enter email">
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox"> Remember me
+    </label>
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="exampleInputPassword2">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+  </div>
+  <button type="submit" class="btn btn-default">Sign in</button>
+</form>
+```
+
+源码：
+
+```
+// Inline forms
+//
+// Make forms appear inline(-block) by adding the `.form-inline` class. Inline
+// forms begin stacked on extra small (mobile) devices and then go inline when
+// viewports reach <768px.
+//
+// Requires wrapping inputs and labels with `.form-group` for proper display of
+// default HTML form controls and our custom form controls (e.g., input groups).
+//
+// Heads up! This is mixin-ed into `.navbar-form` in navbars.less.
+
+.form-inline {
+
+  // Kick in the inline
+  @media (min-width: @screen-sm-min) {
+    // Inline-block all the things for "inline"
+    .form-group {
+      display: inline-block;
+      margin-bottom: 0;
+      vertical-align: middle;
+    }
+
+    // In navbar-form, allow folks to *not* use `.form-group`
+    .form-control {
+      display: inline-block;
+      width: auto; // Prevent labels from stacking above inputs in `.form-group`
+      vertical-align: middle;
+    }
+
+    // Make static controls behave like regular ones
+    .form-control-static {
+      display: inline-block;
+    }
+
+    .input-group {
+      display: inline-table;
+      vertical-align: middle;
+
+      .input-group-addon,
+      .input-group-btn,
+      .form-control {
+        width: auto;
+      }
+    }
+
+    // Input groups need that 100% width though
+    .input-group > .form-control {
+      width: 100%;
+    }
+
+    .control-label {
+      margin-bottom: 0;
+      vertical-align: middle;
+    }
+
+    // Remove default margin on radios/checkboxes that were used for stacking, and
+    // then undo the floating of radios and checkboxes to match (which also avoids
+    // a bug in WebKit: https://github.com/twbs/bootstrap/issues/1969).
+    .radio,
+    .checkbox {
+      display: inline-block;
+      margin-top: 0;
+      margin-bottom: 0;
+      vertical-align: middle;
+
+      label {
+        padding-left: 0;
+      }
+    }
+    .radio input[type="radio"],
+    .checkbox input[type="checkbox"] {
+      position: relative;
+      margin-left: 0;
+    }
+
+    // Re-override the feedback icon.
+    .has-feedback .form-control-feedback {
+      top: 0;
+    }
+  }
+}
+```
+
 ## 表单状态
 
 ### 禁用状态
@@ -724,77 +757,6 @@ input[type="checkbox"] {
 ### 校验状态
 
 Bootstrap 对表单控件的校验状态，如 error、warning 和 success 状态，都定义了样式。使用时，添加 `.has-warning`、`.has-error` 或 `.has-success` 类到这些控件的父元素即可。任何包含在此元素之内的 `.control-label`、`.form-control` 和 `.help-block` 元素都将接受这些校验状态的样式。
-
-```
-// Feedback states
-.has-success {
-  .form-control-validation(@state-success-text; @state-success-text; @state-success-bg);
-}
-.has-warning {
-  .form-control-validation(@state-warning-text; @state-warning-text; @state-warning-bg);
-}
-.has-error {
-  .form-control-validation(@state-danger-text; @state-danger-text; @state-danger-bg);
-}
-
-// Reposition feedback icon if input has visible label above
-.has-feedback label {
-
-  & ~ .form-control-feedback {
-     top: (@line-height-computed + 5); // Height of the `label` and its margin
-  }
-  &.sr-only ~ .form-control-feedback {
-     top: 0;
-  }
-}
-```
-
-其中：
-
-```
-// Form validation states
-//
-// Used in forms.less to generate the form validation CSS for warnings, errors,
-// and successes.
-
-.form-control-validation(@text-color: #555; @border-color: #ccc; @background-color: #f5f5f5) {
-  // Color the label and help text
-  .help-block,
-  .control-label,
-  .radio,
-  .checkbox,
-  .radio-inline,
-  .checkbox-inline,
-  &.radio label,
-  &.checkbox label,
-  &.radio-inline label,
-  &.checkbox-inline label  {
-    color: @text-color;
-  }
-  // Set the border and box shadow on specific inputs to match
-  .form-control {
-    border-color: @border-color;
-    .box-shadow(inset 0 1px 1px rgba(0,0,0,.075)); // Redeclare so transitions work
-    &:focus {
-      border-color: darken(@border-color, 10%);
-      @shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px lighten(@border-color, 20%);
-      .box-shadow(@shadow);
-    }
-  }
-  // Set validation states also for addons
-  .input-group-addon {
-    color: @text-color;
-    border-color: @border-color;
-    background-color: @background-color;
-  }
-  // Optional feedback icon
-  .form-control-feedback {
-    color: @text-color;
-  }
-}
-```
-
-如：
 
 <div class="form-group has-success">
   <label class="control-label" >Input with success</label>
@@ -872,6 +834,77 @@ Bootstrap 对表单控件的校验状态，如 error、warning 和 success 状�
 </div>
 ```
 
+源码：
+
+```
+// Feedback states
+.has-success {
+  .form-control-validation(@state-success-text; @state-success-text; @state-success-bg);
+}
+.has-warning {
+  .form-control-validation(@state-warning-text; @state-warning-text; @state-warning-bg);
+}
+.has-error {
+  .form-control-validation(@state-danger-text; @state-danger-text; @state-danger-bg);
+}
+
+// Reposition feedback icon if input has visible label above
+.has-feedback label {
+
+  & ~ .form-control-feedback {
+     top: (@line-height-computed + 5); // Height of the `label` and its margin
+  }
+  &.sr-only ~ .form-control-feedback {
+     top: 0;
+  }
+}
+```
+
+其中：
+
+```
+// Form validation states
+//
+// Used in forms.less to generate the form validation CSS for warnings, errors,
+// and successes.
+
+.form-control-validation(@text-color: #555; @border-color: #ccc; @background-color: #f5f5f5) {
+  // Color the label and help text
+  .help-block,
+  .control-label,
+  .radio,
+  .checkbox,
+  .radio-inline,
+  .checkbox-inline,
+  &.radio label,
+  &.checkbox label,
+  &.radio-inline label,
+  &.checkbox-inline label  {
+    color: @text-color;
+  }
+  // Set the border and box shadow on specific inputs to match
+  .form-control {
+    border-color: @border-color;
+    .box-shadow(inset 0 1px 1px rgba(0,0,0,.075)); // Redeclare so transitions work
+    &:focus {
+      border-color: darken(@border-color, 10%);
+      @shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px lighten(@border-color, 20%);
+      .box-shadow(@shadow);
+    }
+  }
+  // Set validation states also for addons
+  .input-group-addon {
+    color: @text-color;
+    border-color: @border-color;
+    background-color: @background-color;
+  }
+  // Optional feedback icon
+  .form-control-feedback {
+    color: @text-color;
+  }
+}
+```
+
 ## 控件尺寸
 
 ### 控件高度
@@ -879,6 +912,39 @@ Bootstrap 对表单控件的校验状态，如 error、warning 和 success 状�
 通过 `.input-lg` 类似的类可以为控件设置高度，通过 `.col-lg-*` 类似的类可以为控件设置宽度。
 
 使用 `input-lg` 控制较大一点的尺寸，`input-sm` 控制较小一点的尺寸，适用于 `input`、`select` 等控件。
+
+<input class="form-control input-lg" type="text" placeholder=".input-lg">
+
+<input class="form-control" type="text" placeholder="Default input">
+
+<input class="form-control input-sm" type="text" placeholder=".input-sm">
+
+```html
+<input class="form-control input-lg" type="text" placeholder=".input-lg">
+<input class="form-control" type="text" placeholder="Default input">
+<input class="form-control input-sm" type="text" placeholder=".input-sm">
+```
+
+通过添加 `.form-group-lg` 或 `.form-group-sm` 类，为 `.form-horizontal` 包裹的 `label` 元素和表单控件快速设置尺寸。
+
+```
+<form class="form-horizontal" role="form">
+  <div class="form-group form-group-lg">
+    <label class="col-sm-2 control-label" for="formGroupInputLarge">Large label</label>
+    <div class="col-sm-10">
+      <input class="form-control" type="text" id="formGroupInputLarge" placeholder="Large input">
+    </div>
+  </div>
+  <div class="form-group form-group-sm">
+    <label class="col-sm-2 control-label" for="formGroupInputSmall">Small label</label>
+    <div class="col-sm-10">
+      <input class="form-control" type="text" id="formGroupInputSmall" placeholder="Small input">
+    </div>
+  </div>
+</form>
+```
+
+源码：
 
 ```
 // Form control sizing
@@ -936,37 +1002,6 @@ Bootstrap 对表单控件的校验状态，如 error、warning 和 success 状�
 }
 ```
 
-<input class="form-control input-lg" type="text" placeholder=".input-lg">
-
-<input class="form-control" type="text" placeholder="Default input">
-
-<input class="form-control input-sm" type="text" placeholder=".input-sm">
-
-```html
-<input class="form-control input-lg" type="text" placeholder=".input-lg">
-<input class="form-control" type="text" placeholder="Default input">
-<input class="form-control input-sm" type="text" placeholder=".input-sm">
-```
-
-通过添加 `.form-group-lg` 或 `.form-group-sm` 类，为 `.form-horizontal` 包裹的 `label` 元素和表单控件快速设置尺寸。
-
-```
-<form class="form-horizontal" role="form">
-  <div class="form-group form-group-lg">
-    <label class="col-sm-2 control-label" for="formGroupInputLarge">Large label</label>
-    <div class="col-sm-10">
-      <input class="form-control" type="text" id="formGroupInputLarge" placeholder="Large input">
-    </div>
-  </div>
-  <div class="form-group form-group-sm">
-    <label class="col-sm-2 control-label" for="formGroupInputSmall">Small label</label>
-    <div class="col-sm-10">
-      <input class="form-control" type="text" id="formGroupInputSmall" placeholder="Small input">
-    </div>
-  </div>
-</form>
-```
-
 ### 控件宽度
 
 用栅格系统中的列（column）包裹输入框或其任何父元素，都可很容易的为其设置宽度。
@@ -995,6 +1030,324 @@ Bootstrap 对表单控件的校验状态，如 error、warning 和 success 状�
     <input type="text" class="form-control" placeholder=".col-xs-4">
   </div>
 </div>
+```
+
+## 按钮
+
+基本样式：
+
+```
+// Base styles
+// --------------------------------------------------
+
+.btn {
+  display: inline-block;
+  margin-bottom: 0; // For input.btn
+  font-weight: @btn-font-weight;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  border: 1px solid transparent;
+  white-space: nowrap;
+  .button-size(@padding-base-vertical; @padding-base-horizontal; @font-size-base; @line-height-base; @border-radius-base);
+  .user-select(none);
+
+  &,
+  &:active,
+  &.active {
+    &:focus,
+    &.focus {
+      .tab-focus();
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &.focus {
+    color: @btn-default-color;
+    text-decoration: none;
+  }
+
+  &:active,
+  &.active {
+    outline: 0;
+    background-image: none;
+    .box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    cursor: not-allowed;
+    pointer-events: none; // Future-proof disabling of clicks
+    .opacity(.65);
+    .box-shadow(none);
+  }
+}
+```
+
+### 按钮类
+
+为 `<a>`、`<button>` 或 `<input>` 元素应用按钮类。
+
+<a class="btn btn-default" href="#" role="button">Link</a>
+<button class="btn btn-default" type="submit">Button</button>
+<input class="btn btn-default" type="button" value="Input">
+<input class="btn btn-default" type="submit" value="Submit">
+
+```
+<a class="btn btn-default" href="#" role="button">Link</a>
+<button class="btn btn-default" type="submit">Button</button>
+<input class="btn btn-default" type="button" value="Input">
+<input class="btn btn-default" type="submit" value="Submit">
+```
+
+### 预定义样式
+
+使用下面列出的类可以快速创建一个带有预定义样式的按钮。
+
+<button type="button" class="btn btn-default">Default</button>
+<button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<button type="button" class="btn btn-link">Link</button>
+
+```html
+<!-- Standard button -->
+<button type="button" class="btn btn-default">Default</button>
+
+<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+<button type="button" class="btn btn-primary">Primary</button>
+
+<!-- Indicates a successful or positive action -->
+<button type="button" class="btn btn-success">Success</button>
+
+<!-- Contextual button for informational alert messages -->
+<button type="button" class="btn btn-info">Info</button>
+
+<!-- Indicates caution should be taken with this action -->
+<button type="button" class="btn btn-warning">Warning</button>
+
+<!-- Indicates a dangerous or potentially negative action -->
+<button type="button" class="btn btn-danger">Danger</button>
+
+<!-- Deemphasize a button by making it look like a link while maintaining button behavior -->
+<button type="button" class="btn btn-link">Link</button>
+```
+
+源码：
+
+```
+// Alternate buttons
+// --------------------------------------------------
+
+.btn-default {
+  .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+}
+.btn-primary {
+  .button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border);
+}
+// Success appears as green
+.btn-success {
+  .button-variant(@btn-success-color; @btn-success-bg; @btn-success-border);
+}
+// Info appears as blue-green
+.btn-info {
+  .button-variant(@btn-info-color; @btn-info-bg; @btn-info-border);
+}
+// Warning appears as orange
+.btn-warning {
+  .button-variant(@btn-warning-color; @btn-warning-bg; @btn-warning-border);
+}
+// Danger and error appear as red
+.btn-danger {
+  .button-variant(@btn-danger-color; @btn-danger-bg; @btn-danger-border);
+}
+```
+
+其中：
+
+```
+.button-variant(@color; @background; @border) {
+  color: @color;
+  background-color: @background;
+  border-color: @border;
+
+  &:hover,
+  &:focus,
+  &.focus,
+  &:active,
+  &.active,
+  .open > .dropdown-toggle& {
+    color: @color;
+    background-color: darken(@background, 10%);
+        border-color: darken(@border, 12%);
+  }
+  &:active,
+  &.active,
+  .open > .dropdown-toggle& {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active {
+      background-color: @background;
+          border-color: @border;
+    }
+  }
+
+  .badge {
+    color: @background;
+    background-color: @color;
+  }
+}
+```
+
+### 尺寸
+
+需要让按钮具有不同尺寸吗？使用 `.btn-lg`、`.btn-sm` 或 `.btn-xs` 可以获得不同尺寸的按钮。
+
+<p>
+  <button type="button" class="btn btn-primary btn-lg">Large button</button>
+  <button type="button" class="btn btn-default btn-lg">Large button</button>
+</p>
+<p>
+  <button type="button" class="btn btn-primary">Default button</button>
+  <button type="button" class="btn btn-default">Default button</button>
+</p>
+<p>
+  <button type="button" class="btn btn-primary btn-sm">Small button</button>
+  <button type="button" class="btn btn-default btn-sm">Small button</button>
+</p>
+<p>
+  <button type="button" class="btn btn-primary btn-xs">Extra small button</button>
+  <button type="button" class="btn btn-default btn-xs">Extra small button</button>
+</p>
+
+```
+<p>
+  <button type="button" class="btn btn-primary btn-lg">Large button</button>
+  <button type="button" class="btn btn-default btn-lg">Large button</button>
+</p>
+<p>
+  <button type="button" class="btn btn-primary">Default button</button>
+  <button type="button" class="btn btn-default">Default button</button>
+</p>
+<p>
+  <button type="button" class="btn btn-primary btn-sm">Small button</button>
+  <button type="button" class="btn btn-default btn-sm">Small button</button>
+</p>
+<p>
+  <button type="button" class="btn btn-primary btn-xs">Extra small button</button>
+  <button type="button" class="btn btn-default btn-xs">Extra small button</button>
+</p>
+```
+
+通过给按钮添加 `.btn-block` 类可以将其拉伸至父元素100%的宽度，而且按钮也变为了块级（block）元素。
+
+<button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+<button type="button" class="btn btn-default btn-lg btn-block">Block level button</button>
+
+```html
+<button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+<button type="button" class="btn btn-default btn-lg btn-block">Block level button</button>
+```
+
+源码：
+
+```
+// Button Sizes
+// --------------------------------------------------
+
+.btn-lg {
+  // line-height: ensure even-numbered height of button next to large input
+  .button-size(@padding-large-vertical; @padding-large-horizontal; @font-size-large; @line-height-large; @border-radius-large);
+}
+.btn-sm {
+  // line-height: ensure proper height of button next to small input
+  .button-size(@padding-small-vertical; @padding-small-horizontal; @font-size-small; @line-height-small; @border-radius-small);
+}
+.btn-xs {
+  .button-size(@padding-xs-vertical; @padding-xs-horizontal; @font-size-small; @line-height-small; @border-radius-small);
+}
+```
+
+```
+// Block button
+// --------------------------------------------------
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+// Vertically space out multiple block buttons
+.btn-block + .btn-block {
+  margin-top: 5px;
+}
+```
+
+其中：
+
+```
+// Button sizes
+.button-size(@padding-vertical; @padding-horizontal; @font-size; @line-height; @border-radius) {
+  padding: @padding-vertical @padding-horizontal;
+  font-size: @font-size;
+  line-height: @line-height;
+  border-radius: @border-radius;
+}
+```
+
+### 激活状态
+
+当按钮处于激活状态时，其表现为被按压下去（底色更深、边框夜色更深、向内投射阴影）。对于 `<button>` 元素，是通过 `:active` 状态实现的。对于 `<a>` 元素，是通过 `.active` 类实现的。然而，你还可以将 `.active` 应用到 `<button>` 上，并通过编程的方式使其处于激活状态。
+
+由于 `:active` 是伪状态，因此无需额外添加，但是在需要让其表现出同样外观的时候可以添加 `.active` 类。
+
+<button type="button" class="btn btn-primary btn-lg active">Primary button</button>
+<button type="button" class="btn btn-default btn-lg active">Button</button>
+
+<a href="#" class="btn btn-primary btn-lg active" role="button">Primary link</a>
+<a href="#" class="btn btn-default btn-lg active" role="button">Link</a>
+
+```html
+<button type="button" class="btn btn-primary btn-lg active">Primary button</button>
+<button type="button" class="btn btn-default btn-lg active">Button</button>
+
+<a href="#" class="btn btn-primary btn-lg active" role="button">Primary link</a>
+<a href="#" class="btn btn-default btn-lg active" role="button">Link</a>
+```
+
+### 禁用状态
+
+通过为按钮的背景设置 `disabled` 属性就可以呈现出无法点击的效果。我们把 `.disabled` 作为工具类使用，就像 `.active` 类一样，因此不需要增加前缀。
+
+上面提到的类只是通过设置 `pointer-events: none` 来禁止 `<a>` 元素作为链接的原始功能，但是，这一 CSS 属性并没有被标准化，并且 Opera 18 及更低版本的浏览器并没有完全支持这一属性，同样，Internet Explorer 11 也不支持。因此，为了安全起见，建议通过 JavaScript 代码来禁止链接的原始功能。
+
+虽然按钮类可以应用到 `<a>` 和 `<button>` 元素上，但是，导航和导航条只支持 `<button>` 元素。
+
+<button type="button" class="btn btn-lg btn-primary" disabled="disabled">Primary button</button>
+<button type="button" class="btn btn-default btn-lg" disabled="disabled">Button</button>
+
+<a href="#" class="btn btn-primary btn-lg disabled" role="button">Primary link</a>
+<a href="#" class="btn btn-default btn-lg disabled" role="button">Link</a>
+
+```html
+<a href="#" class="btn btn-primary btn-lg disabled" role="button">Primary link</a>
+<a href="#" class="btn btn-default btn-lg disabled" role="button">Link</a>
+<a href="#" class="btn btn-primary btn-lg disabled" role="button">Primary link</a>
+<a href="#" class="btn btn-default btn-lg disabled" role="button">Link</a>
 ```
 
 ## 辅助文本

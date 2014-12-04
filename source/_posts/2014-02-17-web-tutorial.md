@@ -7,6 +7,7 @@ tags: [web, tutorial]
 
 ## Tutorial
 
+- [Web Fundamentals — Google Developers](https://developers.google.com/web/fundamentals/)
 - [dypsilon/frontend-dev-bookmarks](https://github.com/dypsilon/frontend-dev-bookmarks) A huge list of frontend development resources I collected over time. Sorted from general knowwledge at the top to concrete problems at the bottom.
 - [慕课网-免费的IT技能学习平台](http://www.imooc.com/)
 - [JacksonTian/fks](https://github.com/JacksonTian/fks)
@@ -61,10 +62,10 @@ tags: [web, tutorial]
 
 ### Placeholder Images
 
+* [dummyimage](http://dummyimage.com/)
 * [placehold.it](http://placehold.it/)
 * [temp.im](http://temp.im/)
 * [lorempixel](http://lorempixel.com/)
-* [dummyimage](http://dummyimage.com/)
 * [placekitten](http://placekitten.com/)
 
 ### CDN

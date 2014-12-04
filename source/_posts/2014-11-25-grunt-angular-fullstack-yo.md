@@ -9,6 +9,8 @@ tags: [angular, fullstack, yo, grunt]
 
 Yeoman 生成的 [DaftMonk/generator-angular-fullstack](https://github.com/DaftMonk/generator-angular-fullstack) 脚手架提供了 26 个任务配置和 6 个自定义任务。这 6 个自定义任务分贝为:
 
+<!-- more -->
+
 - serve 启动服务器。
     + default 调试前端代码。前端代码的修改会 livereload，后端代码的修改会导致重启服务。
     + dist 运行打包之后的版本。

@@ -1031,6 +1031,10 @@ PageObjects encapsulate abstractions on how to access certain elements and how t
 - [Home - Chai](http://chaijs.com/) Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.
 - [pivotal/jasmine](https://github.com/pivotal/jasmine) DOM-less simple JavaScript testing framework <http://jasmine.github.io/>.
 
+## Tools
+
+- [SlimerJS](http://slimerjs.org)
+
 ## Reference
 
 - [说说NG里的单元测试 - AngularJS Nice Things](http://www.ngnice.com/posts/dc4b032b537ae0)

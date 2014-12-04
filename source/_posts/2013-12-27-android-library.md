@@ -14,6 +14,7 @@ tags: [android]
 - [square / tape](https://github.com/square/tape) A lightning fast, transactional, file-based FIFO for Android and Java. <http://square.github.io/tape/>
 - [CodeAndMagic/android-deferred-object](https://github.com/CodeAndMagic/android-deferred-object) Android implementation of the deferred object pattern as seen on jQuery.
     + [JDeferred](http://jdeferred.org/) JDeferred is a Java Deferred/Promise library similar to JQuery's Deferred Object.
+- [beworker/tinybus](https://github.com/beworker/tinybus) A lightweight and simple event bus tailored for Android.
 
 ## Http
 

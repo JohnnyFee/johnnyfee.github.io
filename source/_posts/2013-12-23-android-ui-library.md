@@ -37,6 +37,7 @@ tags: [android]
 - [johannilsson / android-actionbar](https://github.com/johannilsson/android-actionbar) Android Action Bar Implementation.
 - [SimonVT / android-menudrawer](https://github.com/SimonVT/android-menudrawer) A slide-out menu implementation, which allows users to navigate between views in your app.
 - [flavienlaurent/NotBoringActionBar](https://github.com/flavienlaurent/NotBoringActionBar)
+- [ksoichiro/Android-ObservableScrollView](https://github.com/ksoichiro/Android-ObservableScrollView) Android library to observe scroll events on scrollable views.
 
 <!--more-->
 

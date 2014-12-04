@@ -43,6 +43,8 @@ Bootstrap 将全局 `font-size` 设置为 **14px**，`line-height` 设置为 **1
 
 如：
 
+<p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.</p>
+
 ```html
 <p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.</p>
 ```
@@ -101,6 +103,14 @@ abbr[data-original-title] {
 
 通过文本对齐类，可以简单方便的将文字重新对齐。
 
+<div style="border: 1px solid #ccc;">
+    <p class="text-left">Left aligned text.</p>
+    <p class="text-center">Center aligned text.</p>
+    <p class="text-right">Right aligned text.</p>
+    <p class="text-justify">Justified text.</p>
+    <p class="text-nowrap">No wrap text.</p>
+</div>
+
 ```html
 <p class="text-left">Left aligned text.</p>
 <p class="text-center">Center aligned text.</p>
@@ -109,12 +119,31 @@ abbr[data-original-title] {
 <p class="text-nowrap">No wrap text.</p>
 ```
 
+源码：
+
+```
+.text-left           { text-align: left; }
+.text-right          { text-align: right; }
+.text-center         { text-align: center; }
+.text-justify        { text-align: justify; }
+.text-nowrap         { white-space: nowrap; }
+```
+
 ## 改变大小写
 
 ```html
 <p class="text-lowercase">Lowercased text.</p>
 <p class="text-uppercase">Uppercased text.</p>
 <p class="text-capitalize">Capitalized text.</p>
+```
+
+源码：
+
+```
+// Transformation
+.text-lowercase      { text-transform: lowercase; }
+.text-uppercase      { text-transform: uppercase; }
+.text-capitalize     { text-transform: capitalize; }
 ```
 
 ## 上下文颜色
@@ -163,6 +192,20 @@ Sometimes contextual background classes cannot be applied due to the specificity
 
 让联系信息以最接近日常使用的格式呈现。
 
+<div style="border: 1px solid #ccc; padding:10px;">
+<address>
+  <strong>Twitter, Inc.</strong><br>
+  795 Folsom Ave, Suite 600<br>
+  San Francisco, CA 94107<br>
+  <abbr title="Phone">P:</abbr> (123) 456-7890
+</address>
+
+<address>
+  <strong>Full Name</strong><br>
+  <a href="mailto:#">first.last@example.com</a>
+</address>
+</div>
+
 ```html
 <address>
   <strong>Twitter, Inc.</strong><br>
@@ -190,6 +233,11 @@ address {
 
 在你的文档中引用其他来源的内容。
 
+<blockquote>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+  <footer>footer</footer>
+</blockquote>
+
 ```html
 <blockquote>
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
@@ -199,18 +247,15 @@ address {
 
 可以添加 `.blockquote-reverse` 或者 `.pull-right` 让引用的样式置于右边，如：
 
+<blockquote class="blockquote-reverse">
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+  <footer>footer</footer>
+</blockquote>
+
 ```html
 <blockquote class="blockquote-reverse">
-  ...
-</blockquote>
-```
-
-`<blockquote>` 中的 `<foot>` 内容千会添加破折号，反向引用的破折号在内容之后，如：
-
-```html
-<blockquote>
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-  <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+  <footer>footer</footer>
 </blockquote>
 ```
 
@@ -325,6 +370,12 @@ ol {
 
 示例：
 
+<ul class="list-inline">
+  <li>Lorem ipsum</li>
+  <li>Phasellus iaculis</li>
+  <li>Nulla volutpat</li>
+</ul>
+
 ```html
 <ul class="list-inline">
   <li>Lorem ipsum</li>
@@ -356,6 +407,17 @@ dd {
 ```
 
 如：
+
+<div style="border: 1px solid #ccc; padding: 10px">
+<dl>
+  <dt>Description lists</dt>
+  <dd>A description list is perfect for defining terms.</dd>
+  <dt>Euismod</dt>
+  <dd>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec el</dd>
+  <dt>Euismod</dt>
+  <dd>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec el</dd>
+</dl>
+</div>
 
 ```html
 <dl>
@@ -396,3 +458,62 @@ dd {
 }
 ```
 
+## 图片
+
+### 响应式图片
+
+在 Bootstrap 版本 3 中，通过为图片添加 `.img-responsive` 类可以让图片支持响应式布局。其实质是为图片设置了 `max-width: 100%;` 和 `height: auto;` 属性，从而让图片在其父元素中更好的缩放。
+
+    <img src="..." class="img-responsive" alt="Responsive image">
+
+源码：
+
+```
+// Responsive images (ensure images don't scale beyond their parents)
+.img-responsive {
+  .img-responsive();
+}
+
+// Responsive image
+//
+// Keep images from scaling beyond the width of their parents.
+.img-responsive(@display: block) {
+  display: @display;
+  max-width: 100%; // Part 1: Set a maximum relative to the parent
+  height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
+}
+```
+
+### 图片形状
+
+通过为 `<img>` 元素添加以下相应的类，可以让图片呈现不同的形状。请时刻牢记：Internet Explorer 8 不支持 CSS3 中的圆角属性。
+
+<img src="http://dummyimage.com/140x140/ccc/333.png" class="img-rounded" />
+<img src="http://dummyimage.com/140x140/ccc/333.png" class="img-circle" />
+<img src="http://dummyimage.com/140x140/ccc/333.png" class="img-thumbnail" />
+
+```html
+<img src="..." alt="..." class="img-rounded">
+<img src="..." alt="..." class="img-circle">
+<img src="..." alt="..." class="img-thumbnail">
+```
+
+## 图标
+
+### 关闭按钮
+
+通过使用一个象征关闭的图标，可以让模态框和警告框消失。
+
+<button type="button" class="close" style="float:none">>&times;</button>
+
+```html
+<button type="button" class="close" style="float:none">>&times;</button>
+```
+
+### 三角符号
+
+通过使用三角符号可以指示某个元素具有下拉菜单的功能。注意，[向上弹出式菜单](http://v3.bootcss.com/components/#btn-dropdowns-dropup)中的三角符号是反方向的。
+
+<span class="caret"></span>
+
+    <span class="caret"></span>

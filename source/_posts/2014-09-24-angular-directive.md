@@ -1128,3 +1128,4 @@ var setUpDatePicker = function () {
 - [AngularJS 指令（Directives）实践指南（三） / Owen Chen](http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-c/)
 - [AngularJS Directives – Basics – One Hungry Mind](http://onehungrymind.com/angularjs-directives-basics/)
 - [AngularJS Sticky Notes Pt 2 – Isolated Scope – One Hungry Mind](http://onehungrymind.com/angularjs-sticky-notes-pt-2-isolated-scope/)
+- [HTML5 Mobile - Long-press to re-order scrollable lists](http://www.scottlogic.com/blog/2014/11/25/ionic-sorter.html)

@@ -1248,6 +1248,7 @@ See [angularjs - how to access the angular $scope variable in browsers console -
 - [Adding Auth to your Ionic app in 5 mins with Auth0](http://ionicframework.com/blog/authentication-in-ionic)
 - [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
 - [Debugging AngularJS Apps from the Console - Modern Web](http://modernweb.com/2014/08/21/debugging-angularjs-apps-console)
+- [All About Angular 2.0](http://eisenbergeffect.bluespire.com/all-about-angular-2-0/)
 
 ### Chart
 

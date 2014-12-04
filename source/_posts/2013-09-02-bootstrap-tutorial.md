@@ -287,6 +287,396 @@ samp | 程序输出 | This text is meant to be treated as <samp>sample output</s
 }
 ```
 
+## 工具类
+
+### 快速浮动
+
+Float an element to the left or right with a class. !important is included to avoid specificity issues. Classes can also be used as mixins.
+
+```html
+<div class="pull-left">...</div>
+<div class="pull-right">...</div>
+```
+
+```
+// Classes
+.pull-left {
+  float: left !important;
+}
+.pull-right {
+  float: right !important;
+}
+
+// Usage as mixins
+.element {
+  .pull-left();
+}
+.another-element {
+  .pull-right();
+}
+```
+
+To align components in navbars with utility classes, use `.navbar-left` or `.navbar-right` instead.
+
+### 居中内容块
+
+Set an element to `display: block` and center via `margin`. Available as a mixin and class.
+
+```html
+<div class="center-block">...</div>
+```
+
+```
+// Classes
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Usage as mixins
+.element {
+  .center-block();
+}
+```
+
+### 清除浮动
+
+Easily clear `float`s by adding `.clearfix` **to the parent element**. Utilizes [the micro clearfix](http://nicolasgallagher.com/micro-clearfix-hack/) as popularized by Nicolas Gallagher. Can also be used as a mixin.
+
+```html
+<!-- Usage as a class -->
+<div class="clearfix">...</div>
+```
+
+```
+// Mixin itself
+.clearfix() {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+```
+
+### 显示隐藏内容
+
+Force an element to be shown or hidden (**including for screen readers**) with the use of `.show` and `.hidden` classes. These classes use `!important` to avoid specificity conflicts, just like the [quick floats](http://v3.bootcss.com/css/#helper-classes-floats). They are only available for block level toggling. They can also be used as mixins.
+
+Furthermore, `.invisible` can be used to toggle only the visibility of an element, meaning its `display` is not modified and the element can still affect the flow of the document.
+
+```html
+<div class="show">...</div>
+<div class="hidden">...</div>
+```
+
+```
+// Classes
+.show {
+  display: block !important;
+}
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+.invisible {
+  visibility: hidden;
+}
+
+// Usage as mixins
+.element {
+  .show();
+}
+.another-element {
+  .hidden();
+}
+```
+
+### 内容替换
+
+Utilize the `.text-hide` class or mixin to help replace an element's text content with a background image.
+
+    <h1 class="text-hide" >Custom heading</h1>
+
+```
+// New mixin to use as of v3.0.1
+.text-hide() {
+  font: ~"0/0" a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+```
+
+## 响应式工具
+
+为了加快对移动设备友好的页面开发工作，利用媒体查询功能并使用这些工具类可以方便的针对不同设备展示或隐藏页面内容。另外还包含了针对打印机显示或隐藏内容的工具类。
+
+有针对性的使用这类工具类，从而避免为同一个网站创建完全不同的版本。相反，通过使用这些工具类可以在不同设备上提供不同的展现形式。
+
+### 响应式显示和隐藏
+
+通过单独或联合使用以下列出的类，可以针对不同屏幕尺寸隐藏或显示页面内容。
+
+&nbsp;|超小屏幕 <small>手机 (&lt;768px)</small> |小屏幕 <small>平板 (≥768px)</small> |中等屏幕 <small>桌面 (≥992px)</small> |大屏幕 <small>桌面 (≥1200px)</small>
+--------------- | ---| ---- | ---- | ---
+`.visible-xs-*` | **可见** | 隐藏| 隐藏 | 隐藏
+`.visible-sm-*` | 隐藏 | **可见**| 隐藏 | 隐藏
+`.visible-md-*` | 隐藏 | 隐藏| **可见** | 隐藏
+`.visible-lg-*` | 隐藏 | 隐藏| 隐藏 | **可见**
+`.hidden-xs`    | 隐藏 | **可见**| **可见** | **可见**
+`.hidden-sm`    | **可见** | 隐藏| **可见** | **可见**
+`.hidden-md`    | **可见** | **可见**| 隐藏 | **可见**
+`.hidden-lg`    | **可见** | **可见**| **可见** | 隐藏
+
+从 v3.2.0 版本起，形如 `.visible-*-*` 的类针对每种屏幕大小都有了三种变体，每个针对 CSS 中不同的 `display` 属性，列表如下：
+
+类组                        | CSS `display`           
+------------------------- | ------------------------
+`.visible-*-block`        | `display: block;`       
+`.visible-*-inline`       | `display: inline;`      
+`.visible-*-inline-block` | `display: inline-block;`
+
+因此，以超小屏幕（`xs`）为例，可用的 `.visible-*-*` 类是：`.visible-xs-block`、`.visible-xs-inline` 和 `.visible-xs-inline-block`。
+
+`.visible-xs`、`.visible-sm`、`.visible-md` 和 `.visible-lg` 类也同时存在。但是**从 v3.2.0 版本开始不再建议使用**。除了 `<table>` 相关的元素的特殊情况外，它们与 `.visible-*-block` 大体相同。
+
+<div class="container">
+    <div class="row" style="border:1px solid #ccc;padding:10px;">
+        <div class="col-xs-6">
+          <span class="hidden-xs">超小屏幕</span>
+          <span class="visible-xs-block">✔ 在超小屏幕上可见</span>
+        </div>
+        <div class="col-xs-6">
+          <span class="hidden-sm">小屏幕</span>
+          <span class="visible-sm-block">✔ 在小屏幕上可见</span>
+        </div>
+        <div class="clearfix visible-xs-block"></div>
+        <div class="col-xs-6">
+          <span class="hidden-md">中等屏幕</span>
+          <span class="visible-md-block">✔ 在中等屏幕上可见</span>
+        </div>
+        <div class="col-xs-6">
+          <span class="hidden-lg">大屏幕</span>
+          <span class="visible-lg-block">✔ 在大屏幕上可见</span>
+        </div>
+    </div>
+</div>
+
+```html
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+          <span class="hidden-xs">超小屏幕</span>
+          <span class="visible-xs-block">✔ 在超小屏幕上可见</span>
+        </div>
+        <div class="col-xs-6">
+          <span class="hidden-sm">小屏幕</span>
+          <span class="visible-sm-block">✔ 在小屏幕上可见</span>
+        </div>
+        <div class="clearfix visible-xs-block"></div>
+        <div class="col-xs-6">
+          <span class="hidden-md">中等屏幕</span>
+          <span class="visible-md-block">✔ 在中等屏幕上可见</span>
+        </div>
+        <div class="col-xs-6">
+          <span class="hidden-lg">大屏幕</span>
+          <span class="visible-lg-block">✔ 在大屏幕上可见</span>
+        </div>
+    </div>
+</div>
+```
+
+<div class="container">
+<div class="row" style="border: 1px solid #ccc; padding: 10px;">
+    <div class="col-xs-6 col-sm-6">
+      <span class="hidden-xs hidden-sm">超小屏幕和小屏幕</span>
+      <span class="visible-xs-block visible-sm-block">✔ 在超小屏幕和小屏幕上可见</span>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+      <span class="hidden-md hidden-lg">中等屏幕和大屏幕</span>
+      <span class="visible-md-block visible-lg-block">✔ 在中等屏幕和大屏幕上可见</span>
+    </div>
+    <div class="clearfix visible-xs-block"></div>
+    <div class="col-xs-6 col-sm-6">
+      <span class="hidden-xs hidden-md">超小屏幕和中等屏幕</span>
+      <span class="visible-xs-block visible-md-block">✔ 在超小屏幕和中等屏幕上可见</span>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+      <span class="hidden-sm hidden-lg">小屏幕和大屏幕</span>
+      <span class="visible-sm-block visible-lg-block">✔ 在小屏幕和大屏幕上可见</span>
+    </div>
+    <div class="clearfix visible-xs-block"></div>
+    <div class="col-xs-6 col-sm-6">
+      <span class="hidden-xs hidden-lg">超小屏幕和大屏幕</span>
+      <span class="visible-xs-block visible-lg-block">✔ 在超小屏幕和大屏幕上可见</span>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+      <span class="hidden-sm hidden-md">小屏幕和中等屏幕</span>
+      <span class="visible-sm-block visible-md-block">✔ 在小屏幕和中等屏幕上可见</span>
+    </div>
+</div>
+</div>
+
+```html
+<div class="container">
+<div class="row">
+    <div class="col-xs-6 col-sm-6">
+      <span class="hidden-xs hidden-sm">超小屏幕和小屏幕</span>
+      <span class="visible-xs-block visible-sm-block">✔ 在超小屏幕和小屏幕上可见</span>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+      <span class="hidden-md hidden-lg">中等屏幕和大屏幕</span>
+      <span class="visible-md-block visible-lg-block">✔ 在中等屏幕和大屏幕上可见</span>
+    </div>
+    <div class="clearfix visible-xs-block"></div>
+    <div class="col-xs-6 col-sm-6">
+      <span class="hidden-xs hidden-md">超小屏幕和中等屏幕</span>
+      <span class="visible-xs-block visible-md-block">✔ 在超小屏幕和中等屏幕上可见</span>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+      <span class="hidden-sm hidden-lg">小屏幕和大屏幕</span>
+      <span class="visible-sm-block visible-lg-block">✔ 在小屏幕和大屏幕上可见</span>
+    </div>
+    <div class="clearfix visible-xs-block"></div>
+    <div class="col-xs-6 col-sm-6">
+      <span class="hidden-xs hidden-lg">超小屏幕和大屏幕</span>
+      <span class="visible-xs-block visible-lg-block">✔ 在超小屏幕和大屏幕上可见</span>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+      <span class="hidden-sm hidden-md">小屏幕和中等屏幕</span>
+      <span class="visible-sm-block visible-md-block">✔ 在小屏幕和中等屏幕上可见</span>
+    </div>
+</div>
+</div>
+```
+
+<div class="container">
+<div class="row" style="border:1px solid #ccc; padding:10px">
+    <div class="col-xs-6 col-sm-3">
+      <span class="hidden-xs">超小屏幕</span>
+      <span class="visible-xs-block">✔ 在超小屏幕上隐藏</span>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <span class="hidden-sm">小屏幕</span>
+      <span class="visible-sm-block">✔ 在小屏幕上隐藏</span>
+    </div>
+    <div class="clearfix visible-xs-block"></div>
+    <div class="col-xs-6 col-sm-3">
+      <span class="hidden-md">中等屏幕</span>
+      <span class="visible-md-block">✔ 在中等屏幕上隐藏</span>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <span class="hidden-lg">大屏幕</span>
+      <span class="visible-lg-block">✔ 在大屏幕上隐藏</span>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="container">
+<div class="row">
+    <div class="col-xs-6 col-sm-3">
+      <span class="hidden-xs">超小屏幕</span>
+      <span class="visible-xs-block">✔ 在超小屏幕上隐藏</span>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <span class="hidden-sm">小屏幕</span>
+      <span class="visible-sm-block">✔ 在小屏幕上隐藏</span>
+    </div>
+    <div class="clearfix visible-xs-block"></div>
+    <div class="col-xs-6 col-sm-3">
+      <span class="hidden-md">中等屏幕</span>
+      <span class="visible-md-block">✔ 在中等屏幕上隐藏</span>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <span class="hidden-lg">大屏幕</span>
+      <span class="visible-lg-block">✔ 在大屏幕上隐藏</span>
+    </div>
+  </div>
+</div>
+```
+
+<div class="container">
+<div class="row" style="border:1px solid #ccc; padding:10px">
+    <div class="col-xs-6">
+      <span class="hidden-xs hidden-sm">超小屏幕与小屏幕</span>
+      <span class="visible-xs-block visible-sm-block">✔ 在超小屏幕和小屏幕上隐藏</span>
+    </div>
+    <div class="col-xs-6">
+      <span class="hidden-md hidden-lg">中等屏幕和大屏幕</span>
+      <span class="visible-md-block visible-lg-block">✔ 在 medium 和 large 上隐藏</span>
+    </div>
+    <div class="clearfix visible-xs-block"></div>
+    <div class="col-xs-6">
+      <span class="hidden-xs hidden-md">超小屏幕和中等屏幕</span>
+      <span class="visible-xs-block visible-md-block">✔ 在超小屏幕和中等屏幕上隐藏</span>
+    </div>
+    <div class="col-xs-6">
+      <span class="hidden-sm hidden-lg">小屏幕和大屏幕</span>
+      <span class="visible-sm-block visible-lg-block">✔ 在小屏幕和大屏幕上隐藏</span>
+    </div>
+    <div class="clearfix visible-xs-block"></div>
+    <div class="col-xs-6">
+      <span class="hidden-xs hidden-lg">超小屏幕和大屏幕</span>
+      <span class="visible-xs-block visible-lg-block">✔ 在超小屏幕和大屏幕上隐藏</span>
+    </div>
+    <div class="col-xs-6">
+      <span class="hidden-sm hidden-md">小屏幕和中等屏幕</span>
+      <span class="visible-sm-block visible-md-block">✔ 在小屏幕和中等屏幕上隐藏</span>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="container">
+<div class="row">
+    <div class="col-xs-6">
+      <span class="hidden-xs hidden-sm">超小屏幕与小屏幕</span>
+      <span class="visible-xs-block visible-sm-block">✔ 在超小屏幕和小屏幕上隐藏</span>
+    </div>
+    <div class="col-xs-6">
+      <span class="hidden-md hidden-lg">中等屏幕和大屏幕</span>
+      <span class="visible-md-block visible-lg-block">✔ 在 medium 和 large 上隐藏</span>
+    </div>
+    <div class="clearfix visible-xs-block"></div>
+    <div class="col-xs-6">
+      <span class="hidden-xs hidden-md">超小屏幕和中等屏幕</span>
+      <span class="visible-xs-block visible-md-block">✔ 在超小屏幕和中等屏幕上隐藏</span>
+    </div>
+    <div class="col-xs-6">
+      <span class="hidden-sm hidden-lg">小屏幕和大屏幕</span>
+      <span class="visible-sm-block visible-lg-block">✔ 在小屏幕和大屏幕上隐藏</span>
+    </div>
+    <div class="clearfix visible-xs-block"></div>
+    <div class="col-xs-6">
+      <span class="hidden-xs hidden-lg">超小屏幕和大屏幕</span>
+      <span class="visible-xs-block visible-lg-block">✔ 在超小屏幕和大屏幕上隐藏</span>
+    </div>
+    <div class="col-xs-6">
+      <span class="hidden-sm hidden-md">小屏幕和中等屏幕</span>
+      <span class="visible-sm-block visible-md-block">✔ 在小屏幕和中等屏幕上隐藏</span>
+    </div>
+  </div>
+</div>
+```
+
+### 打印的响应式类
+
+和常规的响应式类一样，使用下面的类可以针对打印机隐藏或显示某些内容。
+
+class | 浏览器 | 打印机
+----| --- | ---
+<li>`.visible-print-block`  <li>`.visible-print-inline`  <li>`.visible-print-inline-block` | 隐藏  | 可见 
+`.hidden-print`   | 可见  | 隐藏 
+
+`.visible-print` 类也是存在的，但是从 v3.2.0 版本开始**不建议使用**。它与 `.visible-print-block` 类大致相同，除了 `<table>` 相关元素的特殊情况外。
+
 ## 优秀网站
 
 - [乐窝](http://lewoer.com/) 留美找房第一站

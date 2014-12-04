@@ -459,6 +459,7 @@ See [PhoneGap 09 使用Plugman管理Plugins - jacob的专栏 - 博客频道 - CS
 
 ## Tutorial
 
+- [mwbrooks/phonegap-day-workshop-beginner Wiki](https://github.com/mwbrooks/phonegap-day-workshop-beginner/wiki)
 - [busterc/awesome-cordova](https://github.com/busterc/awesome-cordova)
 - [Apache Cordova Tutorial](http://ccoenraets.github.io/cordova-tutorial/create-cordova-project.html)
 - [phonegap - jacob的专栏](http://blog.csdn.net/wangpengch/article/category/1849949)

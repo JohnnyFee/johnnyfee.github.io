@@ -155,6 +155,10 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 - [Ultimate CSS Gradient Generator - ColorZilla.com](http://www.colorzilla.com/gradient-editor/)
 - [Koala](http://koala-app.com/ "Koala")
 
+## Test
+
+- [Automating CSS Regression Testing](http://css-tricks.com/automating-css-regression-testing)
+
 ## Demo
 
 - [CSS Diner - Where we feast on CSS Selectors!](http://flukeout.github.io/)

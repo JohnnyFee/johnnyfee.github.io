@@ -4,6 +4,7 @@ title: "SVG Tutorial"
 category: Css
 tags: [css, svg]
 --- 
+
 ## Quick Start
 
 Let us dive straight in with a simple example. Take a look at the following code.
@@ -188,6 +189,10 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 ## Toos
 
 - [FWeinb/grunt-svgstore](https://github.com/FWeinb/grunt-svgstore)
+
+## Library
+
+- [alexk111/SVG-Morpheus](https://github.com/alexk111/SVG-Morpheus) JavaScript library enabling SVG icons to morph from one to the other. It implements Material Design's Delightful Details transitions.
 
 ## Tutorial
 

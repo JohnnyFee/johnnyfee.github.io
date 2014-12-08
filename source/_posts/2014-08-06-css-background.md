@@ -182,6 +182,10 @@ Here's a simple demo showing the different values of background-clip as well:
 
 <p data-height="268" data-theme-id="0" data-slug-hash="Cpweh" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/chriscoyier/pen/Cpweh/'>The Different Background Clips</a> by Chris Coyier (<a href='http://codepen.io/chriscoyier'>@chriscoyier</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
+## clip-path & clip-mask
+
+See [Clipping and Masking in CSS](http://css-tricks.com/clipping-masking-css/)
+
 ## background-origin
 
 The `background-origin` CSS property determines the background positioning area, that is the position of the origin of an image specified using the [`background-image`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-image) CSS property. Initial value `padding-box`.

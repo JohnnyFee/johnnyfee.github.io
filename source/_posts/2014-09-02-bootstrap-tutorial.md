@@ -287,36 +287,6 @@ samp | 程序输出 | This text is meant to be treated as <samp>sample output</s
 }
 ```
 
-## 字体图标
-
-See [组件 · Bootstrap 中文文档](http://v3.bootcss.com/components/#glyphicons)
-
-包括200个来自 Glyphicon Halflings 的字体图标。[Glyphicons](http://glyphicons.com/) Halflings 一般是收费的，但是他们的作者允许 Bootstrap 免费使用。为了表示感谢，希望你在使用时尽量为 [Glyphicons](http://glyphicons.com/) 添加一个友情链接。
-
-出于性能的考虑，所有图标都需要一个基类和对应每个图标的类。把下面的代码放在任何地方都可以正常使用。注意，为了设置正确的内补（padding），务必在图标和文本之间添加一个空格。
-
-图标类不能和其它组件直接联合使用。它们不能在同一个元素上与其他类共同存在。应该创建一个嵌套的 `<span>` 标签，并将图标类应用到这个 `<span>` 标签上。
-
-图标类只能应用在不包含任何文本内容或子元素的元素上。
-
-<span class="glyphicon glyphicon-search"></span>
-
-```html
-<span class="glyphicon glyphicon-search"></span>
-```
-
-可以把它们应用到按钮、工具条中的按钮组、导航或输入框等地方。
-
-<button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-star"></span> Star
-</button>
-
-```
-<button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-star"></span> Star
-</button>
-```
-
 ## 工具类
 
 ### 快速浮动
@@ -348,7 +318,7 @@ Float an element to the left or right with a class. !important is included to av
 
 To align components in navbars with utility classes, use `.navbar-left` or `.navbar-right` instead.
 
-### 水平居中
+### 居中内容块
 
 Set an element to `display: block` and center via `margin`. Available as a mixin and class.
 
@@ -440,84 +410,6 @@ Utilize the `.text-hide` class or mixin to help replace an element's text conten
   text-shadow: none;
   background-color: transparent;
   border: 0;
-}
-```
-
-### Sizing helpers
-
-Specify the dimensions of an object more easily.
-
-```scss
-// Mixins
-.size(@width; @height) {
-  width: @width;
-  height: @height;
-}
-.square(@size) {
-  .size(@size; @size);
-}
-
-// Usage
-.image { .size(400px; 300px); }
-.avatar { .square(48px); }
-```
-
-### Resizable textareas
-
-Easily configure the resize options for any textarea, or any other element. Defaults to normal browser behavior (`both`).
-
-```scss
-.resizable(@direction: both) {
-  // Options: horizontal, vertical, both
-  resize: @direction;
-  // Safari fix
-  overflow: auto;
-}
-```
-
-### Truncating text
-
-Easily truncate text with an ellipsis with a single mixin. **Requires element to be `block` or `inline-block` level.**
-
-```scss
-// Mixin
-.text-overflow() {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-// Usage
-.branch-name {
-  display: inline-block;
-  max-width: 200px;
-  .text-overflow();
-}
-```
-
-### Retina images
-
-Specify two image paths and the @1x image dimensions, and Bootstrap will provide an @2x media query. **If you have many images to serve, consider writing your retina image CSS manually in a single media query.**
-
-```scss
-.img-retina(@file-1x; @file-2x; @width-1x; @height-1x) {
-  background-image: url("@{file-1x}");
-
-  @media
-  only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (   min--moz-device-pixel-ratio: 2),
-  only screen and (     -o-min-device-pixel-ratio: 2/1),
-  only screen and (        min-device-pixel-ratio: 2),
-  only screen and (                min-resolution: 192dpi),
-  only screen and (                min-resolution: 2dppx) {
-    background-image: url("@{file-2x}");
-    background-size: @width-1x @height-1x;
-  }
-}
-
-// Usage
-.jumbotron {
-  .img-retina("/img/bg-1x.png", "/img/bg-2x.png", 100px, 100px);
 }
 ```
 
@@ -784,6 +676,174 @@ class | 浏览器 | 打印机
 `.hidden-print`   | 可见  | 隐藏 
 
 `.visible-print` 类也是存在的，但是从 v3.2.0 版本开始**不建议使用**。它与 `.visible-print-block` 类大致相同，除了 `<table>` 相关元素的特殊情况外。
+
+## 个性化
+
+- [定制并下载 Bootstrap · Bootstrap 中文文档](http://v3.bootcss.com/customize/)
+
+### 颜色
+
+Easily make use of two color schemes: grayscale and semantic. Grayscale colors provide quick access to commonly used shades of black while semantic include various colors assigned to meaningful contextual values.
+
+
+<div style="overflow: hidden;">
+    <div style="width: 100px; height: 100px; margin: 0 5px; border-radius: 3px; float: left;background-color: #222;"></div>
+    <div style="width: 100px; height: 100px; margin: 0 5px; border-radius: 3px; float: left;background-color: #333;"></div>
+    <div style="width: 100px; height: 100px; margin: 0 5px; border-radius: 3px; float: left;background-color: #555;"></div>
+    <div style="width: 100px; height: 100px; margin: 0 5px; border-radius: 3px; float: left;background-color: #999;"></div>
+    <div style="width: 100px; height: 100px; margin: 0 5px; border-radius: 3px; float: left;background-color: #eee;"></div>
+</div>
+
+```scss
+@gray-darker:  lighten(#000, 13.5%); // #222
+@gray-dark:    lighten(#000, 20%);   // #333
+@gray:         lighten(#000, 33.5%); // #555
+@gray-light:   lighten(#000, 46.7%); // #777
+@gray-lighter: lighten(#000, 93.5%); // #eee
+```
+
+<div style="overflow: hidden;">
+    <div style="width: 100px; height: 100px; margin: 0 5px; border-radius: 3px; float: left;background-color: #428bca;"></div>
+    <div style="width: 100px; height: 100px; margin: 0 5px; border-radius: 3px; float: left;background-color: #5cb85c;"></div>
+    <div style="width: 100px; height: 100px; margin: 0 5px; border-radius: 3px; float: left;background-color: #5bc0de;"></div>
+    <div style="width: 100px; height: 100px; margin: 0 5px; border-radius: 3px; float: left;background-color: #f0ad4e;"></div>
+    <div style="width: 100px; height: 100px; margin: 0 5px; border-radius: 3px; float: left;background-color: #d9534f;"></div>
+</div>
+
+```scss
+gray-darker:  lighten(#000, 13.5%); // #222
+@gray-dark:    lighten(#000, 20%);   // #333
+@gray:         lighten(#000, 33.5%); // #555
+@gray-light:   lighten(#000, 46.7%); // #777
+@gray-lighter: lighten(#000, 93.5%); // #eee
+```
+
+Use any of these color variables as they are or reassign them to more meaningful variables for your project.
+
+<div class="zero-clipboard"><span class="btn-clipboard">Copy</span></div>
+
+```scss
+// Use as-is
+.masthead {
+  background-color: @brand-primary;
+}
+
+// Reassigned variables in Less
+@alert-message-background: @brand-info;
+.alert {
+  background-color: @alert-message-background;
+}
+```
+
+### 变量
+
+#### Scaffolding
+
+A handful of variables for quickly customizing key elements of your site's skeleton.
+
+```scss
+// Scaffolding
+@body-bg:    #fff;
+@text-color: @black-50;
+```
+
+#### Links
+
+Easily style your links with the right color with only one value.
+
+```scss
+// Variables
+@link-color:       @brand-primary;
+@link-hover-color: darken(@link-color, 15%);
+
+// Usage
+a {
+  color: @link-color;
+  text-decoration: none;
+
+  &:hover {
+    color: @link-hover-color;
+    text-decoration: underline;
+  }
+}
+```
+
+Note that the `@link-hover-color` uses a function, another awesome tool from Less, to automagically create the right hover color. You can use `darken`, `lighten`, `saturate`, and `desaturate`.
+
+#### Typography
+
+Easily set your type face, text size, leading, and more with a few quick variables. Bootstrap makes use of these as well to provide easy typographic mixins.
+
+```css
+@font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-serif:       Georgia, "Times New Roman", Times, serif;
+@font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
+@font-family-base:        @font-family-sans-serif;
+
+@font-size-base:          14px;
+@font-size-large:         ceil((@font-size-base * 1.25)); // ~18px
+@font-size-small:         ceil((@font-size-base * 0.85)); // ~12px
+
+@font-size-h1:            floor((@font-size-base * 2.6)); // ~36px
+@font-size-h2:            floor((@font-size-base * 2.15)); // ~30px
+@font-size-h3:            ceil((@font-size-base * 1.7)); // ~24px
+@font-size-h4:            ceil((@font-size-base * 1.25)); // ~18px
+@font-size-h5:            @font-size-base;
+@font-size-h6:            ceil((@font-size-base * 0.85)); // ~12px
+
+@line-height-base:        1.428571429; // 20/14
+@line-height-computed:    floor((@font-size-base * @line-height-base)); // ~20px
+
+@headings-font-family:    inherit;
+@headings-font-weight:    500;
+@headings-line-height:    1.1;
+@headings-color:          inherit;
+```
+
+#### Icons
+
+Two quick variables for customizing the location and filename of your icons.
+
+
+```css
+@icon-font-path:          "../fonts/";
+@icon-font-name:          "glyphicons-halflings-regular";
+```
+
+#### Components
+
+Components throughout Bootstrap make use of some default variables for setting common values. Here are the most commonly used.
+
+```css
+@padding-base-vertical:          6px;
+@padding-base-horizontal:        12px;
+
+@padding-large-vertical:         10px;
+@padding-large-horizontal:       16px;
+
+@padding-small-vertical:         5px;
+@padding-small-horizontal:       10px;
+
+@padding-xs-vertical:            1px;
+@padding-xs-horizontal:          5px;
+
+@line-height-large:              1.33;
+@line-height-small:              1.5;
+
+@border-radius-base:             4px;
+@border-radius-large:            6px;
+@border-radius-small:            3px;
+
+@component-active-color:         #fff;
+@component-active-bg:            @brand-primary;
+
+@caret-width-base:               4px;
+@caret-width-large:              5px;
+```
+
+### 针对特定厂商的 mixin
+
+Vendor mixins are mixins to help support multiple browsers by including all relevant vendor prefixes in your compiled CSS.
 
 ## 优秀网站
 

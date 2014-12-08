@@ -99,6 +99,7 @@ __其他参考：__
 - [jacobmoncur / QuiltViewLibrary](https://github.com/jacobmoncur/QuiltViewLibrary) 在滚动表格中显示不同尺寸的空间。
 - [PinProgress](https://code.google.com/p/romannurik-code/) The Pin/Progress view is a radial progress view with different states.
 	- <http://www.androidviews.net/2012/11/pinprogress/>
+- [AnderWeb/discreteSeekBar](https://github.com/AnderWeb/discreteSeekBar) 
 
 ## Component
 
@@ -127,6 +128,7 @@ __其他参考：__
 - - [WhisperSystems / TextSecure](https://github.com/WhisperSystems/TextSecure) A secure text messaging application for Android.
 - [How to make gradient buttons in Android](http://androidtuts.net/gradient-buttons-in-android/)
 - [danialgoodwin/android-widget-keyboardless-edittext](https://github.com/danialgoodwin/android-widget-keyboardless-edittext)
+- [quiqueqs/BabushkaText](https://github.com/quiqueqs/BabushkaText) A simpler way to style your TextViews.
 
 ## Graph
 
@@ -148,6 +150,7 @@ __其他参考：__
 	- <http://www.androidviews.net/2012/10/indexablelistview/>
 * [jpardogo/ListBuddies](https://github.com/jpardogo/ListBuddies)
 * [Philip Roberts: Help, I'm stuck in an event-loop. on Vimeo](http://vimeo.com/96425312)
+* [rohaanhamid/ScrollableItemList](https://github.com/rohaanhamid/ScrollableItemList) An Android RecyclerView List with items that can scroll to reveal more content.
 
 ## Scroll
 

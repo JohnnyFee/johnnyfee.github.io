@@ -7,7 +7,7 @@ tags: [angular, fullstack, yo, grunt]
 
 本文基于 [使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析](http://inching.org/2014/11/06/grunt-angular-yo/) 中的一些内容，与其中重复的内容不再描述。
 
-Yeoman 生成的 [DaftMonk/generator-angular-fullstack](https://github.com/DaftMonk/generator-angular-fullstack) 脚手架提供了 26 个任务配置和 6 个自定义任务。这 6 个自定义任务分贝为:
+Yeoman 生成的 [DaftMonk/generator-angular-fullstack](https://github.com/DaftMonk/generator-angular-fullstack) 脚手架提供了 26 个任务配置和 4 个自定义任务。这 4 个自定义任务分贝为:
 
 <!-- more -->
 
@@ -261,7 +261,7 @@ useminPrepare: {
 
 ### ngtemplates
 
-[ericclemmons/grunt-angular-templates](https://github.com/ericclemmons/grunt-angular-templates) 用于
+[ericclemmons/grunt-angular-templates](https://github.com/ericclemmons/grunt-angular-templates) 用于将所有的模板文件使用 `$templateCache` 整合到一个 JavaScript 文件中，这样，所有的模板请求无需发起 HTTP 请求，都在内存中加载。
 
 ```js
 // Package all the html partials into a single javascript payload

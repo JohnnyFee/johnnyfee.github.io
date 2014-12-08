@@ -10,6 +10,7 @@ tags: [design, android]
 
 - [Material Design - Google design guidelines](https://www.google.com/design/spec/material-design/introduction.html)
 - [Material Design - Material Design 中文版](http://design.1sters.com/)
+- [Daily Material Design Inspiration - MaterialUp](http://www.materialup.com/designs)
 
 ## Design
 

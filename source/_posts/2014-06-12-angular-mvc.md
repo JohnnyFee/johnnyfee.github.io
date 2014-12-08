@@ -214,19 +214,6 @@ See [AngularJS 数据建模 / Owen Chen](http://owenchen.duapp.com/index.php/ang
     </ul>
 ```
 
-### Templates
-
-在 Angular 中，templates 是包含 Angular 特殊元素和属性的 HTML。Angular 结合 template 和来自模型和控制器的信息，将动态视图显示在浏览器上。
-
-```html
-<div ng-repeat="item in items">
-  <span>{{item.title}}</span>
-  ...
-</div>
-```
-
-Angular 模板可以通过内存加载、AJAX 两种方式加载，See [Angular Template Loading](http://inching.org/2014/09/23/angular-template/).
-
 ## Demo
 
 一个完整的使用 Angular MVC 的例子：[angularjs-book/chapter4/guthub](https://github.com/shyamseshadri/angularjs-book/tree/master/chapter4/guthub)

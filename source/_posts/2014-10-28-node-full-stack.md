@@ -13,10 +13,35 @@ tags: [node, mean]
 - [MEAN Stack – A Quick Start Guide | Flippin' Awesome](http://flippinawesome.org/2014/04/21/mean-stack-a-quick-start-guide/)
 - [Synth - The back-end web framework designed to make (Angular](http://www.synthjs.com) The back-end web framework designed to make (Angular|Ember|Backbone)JS web apps easy to create and manage.
 
-## Framework
+<!-- more -->
 
-- [MEAN.io - A Fullstack Javascript Framework](http://www.mean.io/#!/)/[linnovate/mean](https://github.com/linnovate/mean)
-- [MEAN.JS Generator](http://meanjs.org/)
+## 全栈框架比较
+
+### [yeoman/generator-angular](https://github.com/yeoman/generator-angular)
+
+1. 只支持前端，不支持后端。
+2. 模块使用水平结构。
+3. Gruntfile 便于前端的开发和发布。
+
+### [MEAN - FullStack JS - Development - MEAN - FullStack JS - Development](http://mean.io/#!/)
+ 
+1. 同时支持前端和后端，全栈解决方案。
+2. 模块使用垂直结构。模块内分前端和后端。每个前端模块分别包括 controllers、services、directives 等文件夹。
+3. Gruntfile 对前端的开发和发布的支持不力。
+    
+### [MEAN.JS - Full-Stack JavaScript Using MongoDB, Express, AngularJS, and Node.js](http://meanjs.org/)
+
+1. 同时支持前端和后端，全栈解决方案。
+2. 模块使用垂直结构。前端和后端分离。每个前端模块分别包括 controllers、services、directives 等文件夹。
+3. Gruntfile 对前端的开发和发布的支持不力。
+
+    
+### [DaftMonk/generator-angular-fullstack](https://github.com/DaftMonk/generator-angular-fullstack)
+
+1. 同时支持前端和后端，全栈解决方案。
+2. 模块使用垂直结构。前端和后端分离。模块内的文件平板放置。
+3. Gruntfile 对前端和后端的开发和发布的支持有力。
+
 
 ### Difference between MEAN.js and MEAN.io
 

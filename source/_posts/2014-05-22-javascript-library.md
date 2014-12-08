@@ -6,18 +6,32 @@ category: JavaScript
 tags: [javascript]
 --- 
 
+## Tutorial
+
 - [sorrycc/awesome-javascript](https://github.com/sorrycc/awesome-javascript)
-- [Underscore.js](http://underscorejs.org/)
-    + [Stop writing For loops. Start using underscore. - @jhooks](http://www.joelhooks.com/blog/2014/02/06/stop-writing-for-loops-start-using-underscorejs/)
-- [lodash/lodash](https://github.com/lodash/lodash/)
+
+
 - [Breaking Bad (Loops in JavaScript Libraries)](http://webapplog.com/breaking-bad-loops-in-javascript-libraries)
 - [mortzdk/jsCache](https://github.com/mortzdk/jsCache)
 - [github/fetch](https://github.com/github/fetch) The global `fetch` function is an easier way to make web requests and handle
 responses than using an XMLHttpRequest. 
+- [tjmehta/101](https://github.com/tjmehta/101/) A modern JS utility library.
+
+## Utility
+
+- [Underscore.js](http://underscorejs.org/)
+- [lodash/lodash](https://github.com/lodash/lodash/)
+
+See [underscore.js - Differences between lodash and underscore - Stack Overflow](http://stackoverflow.com/questions/13789618/differences-between-lodash-and-underscore)
+
+### Tutorial
+
+- [Say "Hello" to Lo-Dash - Kit Cambridge](http://kitcambridge.be/blog/say-hello-to-lo-dash/)
 
 ## Data Type
 
 ### is
+
 - [enricomarino/is](https://github.com/enricomarino/is)
 - [landau/is](https://github.com/landau/is) A small predicate library for javascript.
 

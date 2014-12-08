@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "设备像素比devicePixelRatio简单介绍"
+title: "设备像素比 devicePixelRatio 简单介绍"
 category: Mobile
 tags: [mobile]
 --- 

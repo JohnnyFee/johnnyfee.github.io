@@ -38,10 +38,6 @@ Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mau
 </div>
 
 ```css
--webkit-column-count: 3;
--webkit-column-gap:   20px;  
--moz-column-count:    3;
--moz-column-gap:      20px;
 column-count:         3;
 column-gap:           20px;
 ```
@@ -85,17 +81,11 @@ h2 {
 
 ```css
 .container {
-  -webkit-columns: 4 150px;
-  -moz-columns: 4 150px;
   columns: 4 150px;
-  -webkit-column-gap: 2em;
-  -moz-column-gap: 2em;
   column-gap: 2em; 
 }
 
 h1 {
-  -webkit-column-span: all;
-  -moz-column-span: all;
   column-span: all;
   font-size: 2em;
   margin-bottom: 0.5em;

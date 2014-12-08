@@ -5,11 +5,35 @@ category : Angular
 tags : [angular, tutorial]
 --- 
 
-Angular 模板可以通过内存加载、AJAX 两种方式加载。
+## 模板
 
-## 内存加载
+在 Angular 中，templates 是包含 Angular 特殊元素和属性的 HTML。Angular 结合 template 和来自模型和控制器的信息，将动态视图显示在浏览器上。
 
-如果之前使用过 Bootstrap 插件的 ng 版，即 angular-ui，就会了解到这种方式的具体应用。模板本质上是字符串，把字符串直接写入内存，加载时直接从内存获取，速度会更快，有两种方式显式启用内存加载。
+<%raw%>
+```html
+<div ng-repeat="item in items">
+  <span>{{item.title}}</span>
+  ...
+</div>
+```
+<%endraw%>
+
+有以下几种 Angular 元素和属性会使用 Angular 模板：
+
+* [Directive](https://docs.angularjs.org/guide/directive) — An attribute or element that
+    augments an existing DOM element or represents a reusable DOM component.
+* [Markup](https://docs.angularjs.org/api/ng/service/$interpolate) — The double curly brace notation {%raw%}{{ }}{%endraw%} to bind expressions to elements is built-in Angular markup.
+* [Filter](https://docs.angularjs.org/guide/filter) — Formats data for display.
+* [Form controls](https://docs.angularjs.org/guide/forms) — Validates user input.
+
+
+## 模板加载
+
+Angular 模板可以通过 `<script>` 或者 `$templateCache` 添加，通过这两种方式添加的模板存在于内存中，请求模板的时候不会发起 HTTP 请求。除了这种方式，可以通过 HTTP 直接请求单独的模板文件。
+
+模板请求的循序优先级从高到低为：
+
+`<script>` 方式 > `$templateCache` > 独立的模板文件
 
 ### 通过 `script` 标签引入 
 
@@ -25,24 +49,24 @@ Angular 模板可以通过内存加载、AJAX 两种方式加载。
 
 __Note:__ the `script` tag containing the template does not need to be included in the `head` of the document, but it must be below the `ng-app` definition.
 
-### 通过使用 `$templateCache` service 来实现
+### $templateCache 服务
 
-```js
-angular.module('myApp', [])
-  .controller('myCtrl', ['$scope', '$templateCache', function($scope, $templateCache){
-       var tmp = '<h4>lovestory</h4>'
-             + '<p>这是直接调用$templateCache服务获取模板文件的方式</p>'
-             + '<a href="http://www.baidu.com">服务启用templateCache方式</a>';
-       $templateCache.put('lovestory.html',tmp);                
-   }])
-```
+通过 $templateCache 服务添加模板：
 
 ```js
 var myApp = angular.module('myApp', []);
 myApp.run(function($templateCache) {
-    $templateCache.put('templateId.html', 'This is the content of the template');
+  $templateCache.put('templateId.html', 'This is the content of the template');
 });
 ```
+
+可以在 HTML 中通过 `ng-include` 加载模板：
+
+    <div ng-include=" 'templateId.html' "></div>
+
+也可以通过 Javascript 加载:
+
+    $templateCache.get('templateId.html')
 
 `$templateCache` 服务 put 方法负责向内存写入模板内容。
 
@@ -58,70 +82,50 @@ myApp.run(function($templateCache) {
 `destroy`   | 完全销毁缓存对象，从 `$cacheFactory` 集合中移除。
 `info`      | 模板缓存对象的信息。     
 
-__使用 Cache 模板：__
+### HTTP
 
-    <div ng-include="'lovestory.html'" class="well"></div>
+当 NG 在内存中找不到对应模板时，就会发起 HTTP 请求，去拉取对应模板。
 
-使用 `ng-include` 的时候，应该注意，id 不是 `ng-expression`，而只是一个字符串，所以不要忘了加单引号。
+```html
+<div ng-include="'lovestory.html'" class="well"></div>
+```
 
-你也可以通过 JavaScript 来获取缓存模板
+内存中没有对应模板时，AJAX 根据模板的 URL 请求相应的模板， 请求成功后将对应内容写入 `$templateCache` 中，在页面不进行刷新，不手动删除的情况下，写入的内容不会丢失。
 
-    $templateCache.get('templateId.html')
+## 合并模板
 
-### 合并模板
+在开发阶段，我们可以用远程模板，在发布的时候，我们可以将模板压缩到一个文件，以减少 AJAX 请求，提高性能。
 
-在开发阶段，我们可以用远程模板，在发布的时候，我们可以将模板压缩到一个文件，以减少 AJAX 请求，
-
-这里以 [grunt-html2js](https://www.npmjs.org/package/grunt-html2js) 为例：
+可以通过 Grunt 插件 [grunt-angular-templates](https://www.npmjs.org/package/grunt-angular-templates) 将所有的单独的模板文件通过 `$templateCache` 整合到一个 JavaScript 文件中，这样，所有的模板请求无需发起 HTTP 请求，都在内存中加载。
 
 ```js
-grunt.initConfig({
-  html2js: {
-    options: {
-      // custom options, see below
+ngtemplates: {
+  options: {
+    // This should be the name of your apps angular module
+    module: 'landi.argo',
+    htmlmin: {
+      collapseBooleanAttributes: true,
+      collapseWhitespace: true,
+      removeAttributeQuotes: true,
+      removeEmptyAttributes: true,
+      removeRedundantAttributes: true,
+      removeScriptTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true
     },
-    main: {
-      src: ['src/**/*.tpl.html'],
-      dest: 'tmp/templates.js'
-    },
+    usemin: 'app/app.js'
   },
-})
+  main: {
+    cwd: '<%= yeoman.client %>',
+    src: ['{app,components}/**/*.html'],
+    dest: '.tmp/templates.js'
+  },
+  tmp: {
+    cwd: '.tmp',
+    src: ['{app,components}/**/*.html'],
+    dest: '.tmp/tmp-templates.js'
+  }
+}
 ```
-
-`src/` 文件夹下的所有模板文件全部放入 `templates.js` 中。
-
-合并模板之后，不会影响路由的定义：
-
-```js
-angular.module('main', ['templates-main'])
-  .config(['$routeProvider', function ($routeProvidear) {
-    $routeProvider.when('/somepath', {
-      templateUrl:'some/template.tpl.html',
-```
-
-See also [grunt-angular-templates](https://www.npmjs.org/package/grunt-angular-templates)
-
-## AJAX 加载
-
-当 NG 在内存中找不到对应模板时，就会启用 AJAX 请求，去拉取对应模板。假设项目入口文件地址为 <http://127.0.0.1/index.html>。
-
-    <div ng-include="'lovestory.html'" class="well"></div>
-
-在指令中同样可以使用，templateUrl 对应值
-
-```js
-angular.module('myApp', [])
-    .directive('templateDemo', ['$log', function($log){
-        return {
-        restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
-        templateUrl: 'butterfly.html',
-        replace: true,
-        link: function($scope, iElm, iAttrs, controller) {}
-        }
-    }])
-```
-
-内存中没有对应模板时，AJAX请求地址为 <http://127.0.0.1/lovestory.html>, 请求成功后将对应内容写入 `$templateCache`，在页面不进行刷新，不手动删除的情况下，写入的内容不会丢失。
 
 ## Tutorial
 

@@ -89,11 +89,13 @@ tags: [android]
 - [inmite/android-validation-komensky](https://github.com/inmite/android-validation-komensky) A simple library for validating user input in forms using annotations.
 
 ## Other
+
 - [xamarin / XobotOS](https://github.com/xamarin/XobotOS) XobotOS is a Xamarin research project that explored porting Android 4.0 from Java/Dalvik to C# to explore the performance and memory footprint benefits of C#.
 - [TheRealKerni / HockeyKit](https://github.com/TheRealKerni/HockeyKit) A software update kit for iOS and Android. Provided as is. For more functionality and maintained work.
 - [Flowdalic / asmack](https://github.com/flowdalic/asmack) A build environment for the XMPP client library Smack on Android <http://asmack.org>.
 
 ## Database
+
 - [OrmLite](http://ormlite.com/sqlite_java_android_orm.shtml) 编写和维护数据库表通常是很乏味的。OrmLite是一个支持安卓和Sqlite的ORM框架。通常完成这项工作会有数不清的备选工具，但是如果你正在创建一个需要很大数据库的应用也许OrmLite会是你的最佳选择。最好的事情是——OrmLite是通过注解驱动的。
 - [greenrobot / greenDAO](https://github.com/greenrobot/greenDAO) greenDAO is a light & fast ORM solution for Android that maps objects to SQLite databases. <http://greendao-orm.com/>
 

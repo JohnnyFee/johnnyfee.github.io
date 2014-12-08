@@ -309,3 +309,4 @@ _bind()_又创建了一个总是能将`this`的值设置为_counter_的函数。
 ## Reference
 
 - [JavaScript’s “this”: how it works, where it can trip you up](http://www.2ality.com/2014/05/this.html)
+- [Demystifying JavaScript Variable Scope and Hoisting](http://www.sitepoint.com/demystifying-javascript-variable-scope-hoisting)

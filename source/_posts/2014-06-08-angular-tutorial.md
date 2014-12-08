@@ -1062,9 +1062,12 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - [Popular Modules - AngularJS Modules, Plugins and Directives](http://ngmodules.org/)
 - [angular-data: Home](http://angular-data.pseudobry.com) Give your data the treatment it deserves with a data store built for Angular.js.
 - [AngularJS Datatype Editors (ADE)](http://toodledo.github.io/ADE/) ADE is a bunch of directives and filters for displaying and editing various types of data, using AngularJS.
-- [angular-cn/ng-showcase](https://github.com/angular-cn/ng-showcase/)Angular范例程序
+- [angular-cn/ng-showcase](https://github.com/angular-cn/ng-showcase/)Angular范例程序。
 - [Pasvaz/bindonce](https://github.com/Pasvaz/bindonce) Zero watches binding for AngularJs
 - [tymondesigns/angular-locker](https://github.com/tymondesigns/angular-locker) A simple & configurable abstraction for local/session storage in angular projects.
+- [Use ngStorage For All Your AngularJS Local Storage Needs](http://blog.nraboy.com/2014/12/use-ngstorage-angularjs-local-storage-needs)
+- [gsklee/ngStorage](https://github.com/gsklee/ngStorage) localStorage and sessionStorage done right for AngularJS. See [Use ngStorage For All Your AngularJS Local Storage Needs](http://blog.nraboy.com/2014/12/use-ngstorage-angularjs-local-storage-needs)
+
 
 __快捷键：__
 
@@ -1249,6 +1252,7 @@ See [angularjs - how to access the angular $scope variable in browsers console -
 - [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
 - [Debugging AngularJS Apps from the Console - Modern Web](http://modernweb.com/2014/08/21/debugging-angularjs-apps-console)
 - [All About Angular 2.0](http://eisenbergeffect.bluespire.com/all-about-angular-2-0/)
+- [Preparing for the future of AngularJS](https://www.airpair.com/angularjs/posts/preparing-for-the-future-of-angularjs)
 
 ### Chart
 

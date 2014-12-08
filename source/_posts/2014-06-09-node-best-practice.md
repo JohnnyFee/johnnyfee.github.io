@@ -247,3 +247,4 @@ Of course, this list of seven things you should immediately stop doing with Node
 ## Tutorial
 
 - [RisingStack/node-style-guide](https://github.com/RisingStack/node-style-guide)
+- [Top 10 Mistakes Node.js Developers Make](https://www.airpair.com/node.js/posts/top-10-mistakes-node-developers-make)

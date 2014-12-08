@@ -7,7 +7,7 @@ tags: [phonegap, cordova]
 
 ## 概述
 
-Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>，内容为一个压缩包，包括cordova的各个模块。
+Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>，内容为一个压缩包，包括cordova的各个模块。和 Cordova 类似的框架还有 [Trigger.io - mobile platform for web developers](https://trigger.io/)。
 
 ![Cordova源码](http://johnnyimages.qiniudn.com/cordova-zip.png)
 

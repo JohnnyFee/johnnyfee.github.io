@@ -99,6 +99,10 @@ See also [The Lengths of CSS](http://css-tricks.com/the-lengths-of-css/)。
 - [Cross-Browser Development Tips: Part 2 - JavaScript](https://www.tinfoilsecurity.com/blog/cross-browser-development-tips-javascript)
 - [15+ techniques and tools for cross browser CSS coding](http://www.catswhocode.com/blog/15-techniques-and-tools-for-cross-browser-css-coding)
 
+## Properties
+
+- [Keeping CSS short with currentColor — Osvaldas Valutis](http://osvaldas.info/keeping-css-short-with-currentcolor) 介绍 currentColor 的使用。
+
 ## 规范
 
 - [W3Help - 标准 - W3C 标准](http://www.w3help.org/zh-cn/standards/)

@@ -27,6 +27,15 @@ tags: [angular, ui]
 
 ## Framework
 
+- [Ionic](http://ionicframework.com/) The beautiful, open source front-end framework for developing hybrid mobile apps with HTML5. See also in GitHub [driftyco/ionic](https://github.com/driftyco/ionic) 
+    Ionic is focused mainly on the look and feel, and UI interaction of your app. That means we aren't a replacement for PhoneGap or your favorite Javascript framework. Instead, Ionic simply fits in well with these projects in order to simplify one big part of your app: the front end.
+
+    **Ionic currently requires AngularJS** in order to work at its full potential.
+
+    Ionic uses Cordova proper at the core.
+
+    See [Ionic Framework Review](http://moduscreate.com/5-best-mobile-web-app-frameworks-ionic-angulalrjs/)
+
 - [famo.us](http://famo.us/) Famo.us is a JavaScript framework for everyone who wants to build beautiful experiences on any device. [http://famo.us](http://famo.us/)
 - [jQuery Mobile](http://jquerymobile.com/) jQuery Mobile is a HTML5-based user interface system designed to make responsive web sites and apps that are accessible on all smartphone, tablet and desktop devices.
 - [Titanium Mobile Application Development](http://www.appcelerator.com/titanium/) Create bold, beautiful and transformative mobile experiences

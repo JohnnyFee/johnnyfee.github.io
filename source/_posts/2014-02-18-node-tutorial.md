@@ -10,24 +10,7 @@ tags: [node, tutorial]
 
 安装好后系统默认的环境变量 path 是 `C:\Documents and Settings\Administrator\Application Data\npm`。
 
-## Tutorial
-
-- [JohnnyFee/awesome-nodejs](https://github.com/JohnnyFee/awesome-nodejs)
-- [从零开始nodejs系列文章](http://blog.fens.me/series-nodejs/)
-- [Node初学者入门，一本全面的NodeJS教程 - OurJS.com](http://ourjs.com/detail/529ca5950cb6498814000005#event-driven-callbacks)
-- [《JavaScript 应用程序设计》总目录](https://github.com/cssmagic/blog/issues/16)
-- [Writing cross-platform Node.js](http://shapeshed.com/writing-cross-platform-node/)
-- [Node.js软肋之回调大坑](http://www.infoq.com/cn/articles/nodejs-callback-hell)
-- [如何选择Node.js Web开发框架？ - WEB开发者](http://www.admin10000.com/document/5283.html)
-- [Writing Modular Node.js Projects for Express and Beyond](http://strongloop.com/strongblog/modular-node-js-express/)
-
-### Error Handling
-
-- [Error Handling in Nodejs - Developer Center - Joyent](http://www.joyent.com/developers/node/design/errors)
-- [Node.js下自定义错误类型 - CNode](http://cnodejs.org/topic/52090bc944e76d216af25f6f)
-- [Node.js异常捕获的一些实践](http://www.alloyteam.com/2013/12/node-js-series-exception-caught/)
-- [Massa Labs](http://massalabs.com/dev/2013/10/17/handling-errors-in-nodejs.html)
-- [Error Handling in Nodejs - Developer Center - Joyent](http://www.joyent.com/developers/node/design/errors?)
+现已出现一个比较人们的 fork，[iojs/io.js](https://github.com/iojs/io.js)，See [Wesley IO — Node.js is forked, not f***ed.](http://wesleyio.tumblr.com/post/104637877991/node-js-is-forked-not-f-ed)
 
 ## Framework
 
@@ -35,6 +18,7 @@ tags: [node, tutorial]
 - [12 Web Application Frameworks for Node.js | CodeCondo](http://codecondo.com/10-web-application-frameworks-for-node-js/)
 - [10个最好的Node.js MVC框架 - WEB开发者](http://www.admin10000.com/document/3931.html)
 - [Sails.js](http://sailsjs.org/#/) It is designed to emulate the familiar MVC pattern of frameworks like Ruby on Rails, but with support for the requirements of modern apps: data-driven APIs with a scalable, service-oriented architecture. 
+- [All About Sessions in Node.js - Stormpath User Management API](https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions)
 
 ## Security
 
@@ -42,10 +26,16 @@ tags: [node, tutorial]
 - [Node.js Security in the Enterprise - YouTube](https://www.youtube.com/watch?v=Zc8QvuRbdoQ&list=UUXe1qKfGweMKTnmRrMw9yOg&feature=share&index=1)
 - [Node Security](http://www.salttiger.com/node-security/)
 - [Beer Locker: Building a RESTful API with Node - OAuth2 Server - Scott Smith](http://scottksmith.com/blog/2014/07/02/beer-locker-building-a-restful-api-with-node-oauth2-server)
+- [helmetjs/helmet](https://github.com/helmetjs/helmet)
 
 ## Communication
 
 - [amark/coalesce](https://github.com/amark/coalesce) Communication framework for distributed JavaScript.
+
+## bin/www
+
+- [Why did the startup stub get moved to bin/www ? · Issue #25 · expressjs/generator](https://github.com/expressjs/generator/issues/25)
+- [javascript - What does "./bin/www" do in Express 4.x? - Stack Overflow](http://stackoverflow.com/questions/23169941/what-does-bin-www-do-in-express-4-x)
 
 ## Google Map
 
@@ -57,20 +47,16 @@ tags: [node, tutorial]
 - [MrSwitch/hello.js](https://github.com/MrSwitch/hello.js) A Javascript RESTFUL API library for connecting with OAuth2 services, such as Google+ API, Facebook Graph and Windows Live Connect. http://adodson.com/hello.js/
 - [yahoo/gifshot](https://github.com/yahoo/gifshot) JavaScript library that can create animated GIFs from media streams, videos, or images http://yahoo.github.io/gifshot/
 
-### commander
+### Console
 
 - [commander](http://visionmedia.github.io/commander.js/) 是一个轻巧的nodejs模块，提供了用户命令行输入和参数解析强大功能。commander源自一个同名的Ruby项目。commander的特性：自 记录代码,自动生成帮助,合并短参数（“ABC”==“-A-B-C”）,默认选项,强制选项​​,命令解析,提示符。
 - [Omelette by f](http://f.github.io/omelette) Omelette is a simple, template based autocompletion tool for Node projects.
 - [Command-line utilities with Node.js](http://cruft.io/posts/node-command-line-utilities)
 - [substack/node-optimist](https://github.com/substack/node-optimist)
 
-### Web控制台工具: tty.js
-
-[tty.js](https://github.com/chjj/tty.js/) 是一个支持在浏览器中运行的命令行窗口，基于node.js平台，依赖socket.io库，通过websocket与Linux系统通信。特性：支持多 tab窗口模型; 支持vim,mc,irssi,vifm语法; 支持xterm鼠标事件; 支持265色显示; 支持session。
-
 ### Web爬虫
 
-[cheerio](http://matthewmueller.github.io/cheerio/) 是一个为服务器特别定制的，快速、灵活、封装jQuery核心功能工具包。Cheerio包括了 jQuery核心的子集，从jQuery库中去除了所有DOM不一致性和浏览器不兼容的部分，揭示了它真正优雅的API。Cheerio工作在一个非常简 单，一致的DOM模型之上，解析、操作、渲染都变得难以置信的高效。基础的端到端的基准测试显示Cheerio大约比JSDOM快八倍(8x)。 Cheerio封装了@FB55兼容的htmlparser，几乎能够解析任何的 HTML 和 XML document。
+[cheerio](http://matthewmueller.github.io/cheerio/) 是一个为服务器特别定制的，快速、灵活、封装jQuery核心功能工具包。Cheerio包括了 jQuery核心的子集，从jQuery库中去除了所有DOM不一致性和浏览器不兼容的部分，揭示了它真正优雅的API。Cheerio工作在一个非常简单，一致的DOM模型之上，解析、操作、渲染都变得难以置信的高效。基础的端到端的基准测试显示Cheerio大约比JSDOM快八倍(8x)。 Cheerio封装了@FB55兼容的htmlparser，几乎能够解析任何的 HTML 和 XML document。
 
 ### Timer
 
@@ -217,34 +203,8 @@ Javascript with Cody and Node.js.
 - [Node.js: managing child processes - Tech.pro](http://tech.pro/tutorial/2074/nodejs-managing-child-processes?)
 - [Supervisor: A Process Control System — Supervisor 3.1.2 documentation](http://supervisord.org/)
 
-## Http Server
-
-- [Fenix Web Server](http://fenixwebserver.com)
-- [Harp, the static web server with built-in preprocessing](http://harpjs.com/) Harp是一款快速的、轻量级的Web服务器。Harp serves Jade，Markdown，EJS，CoffeeScript, Sass, LESS以及Stylus as HTML、CSS & JavaScrip均可轻松配置。
-
-## WebSocket
-
-- [topcloud/socketcluster](https://github.com/topcloud/socketcluster) Highly scalable realtime WebSockets based on Engine.io.
-
-## HTTP
-
-- [Node: HTTP, HTTPS - Mixu's Node book](http://book.mixu.net/node/ch10.html)
-
-## socket.io
-
-- [13. Comet and Socket.io - Mixu's Node book](http://book.mixu.net/node/ch13.html)
-- [Real-Time Chat With Node.js' Readline & Socket.io - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/real-time-chat-with-nodejs-readline-socketio--cms-20953)
-
-## PhantomJS
-
-- [PhantomJS快速入门教程](http://www.woiweb.net/phantomjs-quick-use-tutorials.html)
-- [peerigon/phridge](https://github.com/peerigon/phridge)
-
-## Ioc
-
-- [当IoC遇见了Node.js](http://www.infoq.com/cn/articles/ioc-meet-nodejs)
-
 ## Other 
+
 - [bipio-server/bipio · GitHub](https://github.com/bipio-server/bipio)
 
 ## Build
@@ -275,7 +235,7 @@ Javascript with Cody and Node.js.
 
 ## Path
 
- 我们看到Nodejs已经被广发地应用在各种的场景了，针对Nodejs的应用场景，我们应该如何学习Nodejs呢？
+我们看到Nodejs已经被广发地应用在各种的场景了，针对Nodejs的应用场景，我们应该如何学习Nodejs呢？
 
 以下内容是我整理的文档和教程，每个软件包对应一篇文章，大家可以根据自己的需要进行阅读，完整的文章列表，可以查看：[从零开始nodejs系列文章](http://blog.fens.me/series-nodejs/ "从零开始nodejs系列文章")。
 
@@ -297,19 +257,41 @@ Nodejs在快速的发展着，软件包版本升级的很快，文章有运行�
 
 - [Stormpath User Management API](https://stormpath.com/) 提供用户管理服务。
 - [Superstatic - Static Web Server for HTML5 Applications](http://superstatic.org) 静态网页服务器。
+- [Fenix Web Server](http://fenixwebserver.com) 静态 HTTP 服务器。
+- [Harp, the static web server with built-in preprocessing](http://harpjs.com/) Harp是一款快速的、轻量级的Web服务器。Harp serves Jade，Markdown，EJS，CoffeeScript, Sass, LESS以及Stylus as HTML、CSS & JavaScrip均可轻松配置。
+
 
 ## FAQ
 
 - [How to change value of process.env.PORT in node.js? - Stack Overflow](http://stackoverflow.com/questions/13333221/how-to-change-value-of-process-env-port-in-node-js)
 
-## Package
-
-- [javascript - Make exe files from node.js app - Stack Overflow](http://stackoverflow.com/questions/8173232/make-exe-files-from-node-js-app)
-
 ## Reference
 
 - [Node.JS 学习路线图 - WEB开发者](http://www.admin10000.com/document/4624.html)
 
+## Tutorial
+
+- [javascript - Make exe files from node.js app - Stack Overflow](http://stackoverflow.com/questions/8173232/make-exe-files-from-node-js-app) 打包。
+- [JohnnyFee/awesome-nodejs](https://github.com/JohnnyFee/awesome-nodejs)
+- [从零开始nodejs系列文章](http://blog.fens.me/series-nodejs/)
+- [Node初学者入门，一本全面的NodeJS教程 - OurJS.com](http://ourjs.com/detail/529ca5950cb6498814000005#event-driven-callbacks)
+- [《JavaScript 应用程序设计》总目录](https://github.com/cssmagic/blog/issues/16)
+- [Writing cross-platform Node.js](http://shapeshed.com/writing-cross-platform-node/)
+- [Node.js软肋之回调大坑](http://www.infoq.com/cn/articles/nodejs-callback-hell)
+- [如何选择Node.js Web开发框架？ - WEB开发者](http://www.admin10000.com/document/5283.html)
+- [Writing Modular Node.js Projects for Express and Beyond](http://strongloop.com/strongblog/modular-node-js-express/)
+- [当IoC遇见了Node.js](http://www.infoq.com/cn/articles/ioc-meet-nodejs)
+
+### Error Handling
+
+- [Error Handling in Nodejs - Developer Center - Joyent](http://www.joyent.com/developers/node/design/errors)
+- [Node.js下自定义错误类型 - CNode](http://cnodejs.org/topic/52090bc944e76d216af25f6f)
+- [Node.js异常捕获的一些实践](http://www.alloyteam.com/2013/12/node-js-series-exception-caught/)
+- [Massa Labs](http://massalabs.com/dev/2013/10/17/handling-errors-in-nodejs.html)
+- [Error Handling in Nodejs - Developer Center - Joyent](http://www.joyent.com/developers/node/design/errors?)
+
 ## Books
 
 - [Node Cookbook, 2nd Edition](http://www.salttiger.com/node-cookbook-2nd-edition/)
+- [Node: HTTP, HTTPS - Mixu's Node book](http://book.mixu.net/node/ch10.html)
+

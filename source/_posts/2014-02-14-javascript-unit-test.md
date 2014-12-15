@@ -5,9 +5,31 @@ description: ""
 category: JavaScript
 tags: [javascript]
 --- 
+
 随着单元测试的普及，尤其是敏捷开发的推动，涌现了许多优秀的JavaScript单元测试框架，如QUnit、Jasmine等。
 
 <!--more-->
+
+## Framework
+
+- [Mocha - the fun, simple, flexible JavaScript test framework](http://mochajs.org/) Mocha is a feature-rich JavaScript test framework running on node.js and the browser, making asynchronous testing simple and fun.
+- [Home - Chai](http://chaijs.com/) Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.
+- [marmelab/gremlins.js](https://github.com/marmelab/gremlins.js) Monkey testing library for web apps and Node.js.
+- [Intern: A next-generation JavaScript testing stack](http://theintern.io/)
+- [Jest](http://facebook.github.io/jest/index.html)
+- [Nightwatch.js](http://nightwatchjs.org/) Browser automated testing done easy. Write efficient and straightforward Javascript End-to-End tests in Node.js which run against a Selenium server.
+- [Mocha - the fun, simple, flexible JavaScript test framework](http://visionmedia.github.io/mocha/)
+- [pivotal/jasmine](https://github.com/pivotal/jasmine) DOM-less simple JavaScript testing framework <http://jasmine.github.io/>.
+- [yahoo/preceptor](https://github.com/yahoo/preceptor)
+- [krasimir/atomus](https://github.com/krasimir/atomus) A small utility library for running client-side tests in Node.js environment.
+
+### E2E
+
+- [Nightwatch.js - Developer Guide](http://nightwatchjs.org/guide)
+
+### Util
+
+- [basicallydan/interfake · GitHub](https://github.com/basicallydan/interfake) 快速创建虚拟 API。
 
 ## QUnit
 
@@ -102,10 +124,6 @@ JsTestDriver是一个JavaScript单元测试工具，易于与持续构建系统�
 - 打开页面http://localhost:9876，点击“捕获浏览器”。
 - 新打开一个终端，运行命令”java –jar JsTestDriver.jar –tests - all”，运行所有测试用例
 - 也可以单独运行某一个用例，如运行命令” java –jar JsTestDriver.jar –tests addTest.testA”
-
-## mocha
-
-[visionmedia/mocha](https://github.com/visionmedia/mocha/tree/master/editors)
 
 ### Reference
 

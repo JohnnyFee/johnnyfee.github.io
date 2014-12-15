@@ -4,55 +4,57 @@ title: "Node Express"
 category: Node
 tags: [node]
 --- 
+
 Node 的框架：<http://nodeframework.com/>。
 
 其中比较流行的MVC框架是 Ruby's Sinatra 风格的 [visionmedia/express](https://github.com/visionmedia/express)，和 Ruby's Rack 风格的 [senchalabs/connect](https://github.com/senchalabs/connect) 。其中 Connect 的领导者为Sencha的[visionmedia (TJ Holowaychuk)](https://github.com/visionmedia)，Express的领导者为还是TJ Holowaychuk，可以看看这个的 Git 首页，无语的。Express 和 Connect 相互补充，而不是取代关系。Express v1.0.0 便是基于 Connect 开发的，时至今日，他们之间仍然维持着这样的关系：Express=Connect+基于Connect的额外功能。Connect的任何修改都会反映到Express。
 
-其他MVC框架列表可参考：[Node.js MVC Frameworks](http://nodeframework.com/index.html#mvc)。
-
-目前 Express 已发展到V4，<http://expressjs.com/4x/api.html>，另外一个大版本为V3 <http://expressjs.com/>。中文文档：[Express - 中文文档( node.js Web应用框架 )](http://expressjs.jser.us/)
-
 <!--more-->
+
+本文以下部分是 <<[Express Web Application Development](http://www.salttiger.com/express-web-application-development/)>> 的读书笔记，基于 Express 3.x 。
 
 关于Express V4 和 Express V3的区别请参考：
 
 - [New features in 4.x · visionmedia/express Wiki](https://github.com/visionmedia/express/wiki/New-features-in-4.x)
 - [ExpressJS 4.0: New Features and Upgrading from 3.0 ♥ Scotch](http://scotch.io/bar-talk/expressjs-4-0-new-features-and-upgrading-from-3-0)
 
+## Framework
+
+See [Node.js MVC Frameworks](http://nodeframework.com/index.html#mvc)
+
 另外，还有一个新的Web框架 [koajs/koa](https://github.com/koajs/koa)。Koa是由Express背后的团队开发的新Web框架，目的是为Web应用和Web API提供更小、更有表达力、更稳固的基础。通过生成器，Koa可以摆脱回调，极大地改进错误处理。Koa核心不绑定任何中间件，但提供了优雅的一组方法，可以快速和愉悦地编写服务器应用。
 
 Koa号称为Node下一代的 Web 框架。但是在官方的FAQ中提到它不会取代Connect，但会不会取代Express，并没有正面回答，参考 [koa/docs/faq.md at master · koajs/koa](https://github.com/koajs/koa/blob/master/docs/faq.md)。
 
-但不管怎么样，哥刚入门 Node，还是从 Express 3 入手。
-
-本文以下部分是 <<[Express Web Application Development](http://www.salttiger.com/express-web-application-development/)>> 的读书笔记，基本都是英文，都是从原文中拷贝下来的。
-
 ## Install
 
-安装 Express ：
+```sh
+# 安装
+npm install express
 
-    npm install express -g
+# 安装指定版本 3.08
+npm install express@3.0.5 -g
 
-以上命令将以全局的方式安装express的最新版。如果你想安装指定版本，可以：
+#查看 expres 的版本：
+express –V
+```
 
-    npm install express@3.0.5 -g
+yeoman 生成器：
 
-查看 expres 的版本：
 
-    express –V
 
 ## Express 三大组件
 
 ### application 对象
 
-The application object is an instance of Express, conventionally represented by the 
-variable named app. This is the main object of your Express app and the bulk of the 
-functionality is built on it.
+The application object is an instance of Express, conventionally represented by the variable named app. This is the main object of your Express app and the bulk of the functionality is built on it.
 
 创建一个Express模块的实例：
 
-    var express = require('express');
-    var app = new express();
+```
+var express = require('express');
+var app = new express();
+```
 
 ### request 对象
 
@@ -196,9 +198,11 @@ The act of sending a response effectively terminates the request flow to any oth
 
 ## Quick Start
 
-    $ cd ~
-    $ mkdir express-app
-    $ cd express-app
+```
+$ cd ~
+$ mkdir express-app
+$ cd express-app
+```
 
 ### create `package.json`
 
@@ -234,24 +238,26 @@ You will find a new directory named node_modulesin the directory; that's where a
 
 Create a file called app.js and put the following code in it:
 
-    // Include the Node HTTP library
-    var http = require('http');
+```js
+// Include the Node HTTP library
+var http = require('http');
 
-    // Include the Express module
-    var express = require('express');
+// Include the Express module
+var express = require('express');
 
-    // Create an instance of Express
-    var app = express();
+// Create an instance of Express
+var app = express();
 
-    // Start the app
-    http.createServer(app).listen(3000, function() {
-        console.log('Express app started');
-    });
+// Start the app
+http.createServer(app).listen(3000, function() {
+    console.log('Express app started');
+});
 
-    // A route for the home page
-    app.get('/', function(req, res) {
-        res.send('Welcome!');
-    });
+// A route for the home page
+app.get('/', function(req, res) {
+    res.send('Welcome!');
+});
+```
 
 You might have noticed that the route in the app is defined after the code for starting the server, but it works anyway. The reason it works is because routes are defined on the appobject, which is passed to the HTTP API as a reference—any time you make a change on the appobject, it is reflected on the server.
 
@@ -259,8 +265,9 @@ You might have noticed that the route in the app is defined after the code for s
 
 Since Express apps are Node programs, starting an Express app is similar to executing a Node program. In our case, the program resides in a file named app.js, so this is how you will start the server:
 
-    $ node app
-    $ node app
+```
+$ node app
+```
 
 > Express app started
 
@@ -276,7 +283,9 @@ Any changes made in the views will be reflected in the HTML output without requi
 
 Let go ahead and create a directory for our views, named views:
 
-    $ mkdir views
+```
+$ mkdir views
+```
 
 Now create two view files in the `views` directory: one named `index.jade` for the home page, another named `hello.jade` for the hello web page.
 
@@ -284,10 +293,12 @@ Note that Jade is just one of the many templating languages that is supported by
 
 Here is the content for index.jade:
 
-    html
-        head
-            title Welcome
-        body Welcome!
+```jade
+html
+    head
+        title Welcome
+    body Welcome!
+```
 
 And here is the content for hello.jade:
 
@@ -1956,15 +1967,13 @@ Since Express depends on the `NODE_ENV` environment variable to determine the en
 
 - [Express-di by luin](http://luin.github.io/express-di/) Bring dependency injection to the Express.
     - [Express 框架 middleware 的依赖问题与解决方案 | Zihua Li](http://zihua.li/2014/03/using-dependency-injection-to-optimise-express-middlewares/)
+- [visionmedia/debug](https://github.com/visionmedia/debug#millisecond-diff) tiny node.js & browser debugging utility for your libraries and applications.
+    - [Debug](http://smalljs.org/logging/debug)
 
 ## Server
 
 - [Heroku Dev Center](https://devcenter.heroku.com/)
     - [Getting Started with Node.js on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-
-## More
-
-- [StrongLoop | Using Streaming Chunked HTML to Get Node.js to Deliver More Data](http://strongloop.com/strongblog/streaming-chunked-html-node-js-data/)
 
 ## Tutorial
 

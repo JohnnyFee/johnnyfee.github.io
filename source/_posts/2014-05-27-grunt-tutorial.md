@@ -779,6 +779,10 @@ watch: {
 
 `{,*/}` 用逗号表达式来表示逻辑或关系。`{,*/}*.less` 表示 `*.less` 或者 `*/*.cess`。这是为了效率考虑，只往下匹配一层子目录，如果你想递归匹配，可是使用 `styles/**/*.less`。
 
+## Debug
+
+- [javascript - How to debug grunt in PHPStorm (WebStorm) - Stack Overflow](http://stackoverflow.com/questions/16233279/how-to-debug-grunt-in-phpstorm-webstorm)
+
 ## Tutorial
 
 - 入门

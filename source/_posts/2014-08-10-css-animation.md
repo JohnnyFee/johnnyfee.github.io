@@ -381,6 +381,7 @@ div:hover {
 
 - [h5bp/Effeckt.css](https://github.com/h5bp/Effeckt.css) A Performant Transitions and Animations Library: <http://h5bp.github.io/Effeckt.css>
 - [CSS3 Animation Cheat Sheet - Justin Aguilar](http://www.justinaguilar.com/animations/index.html#)
+- [visionmedia/move.js](https://github.com/visionmedia/move.js) CSS3 backed JavaScript animation framework <http://visionmedia.github.com/move.js/>.
 
 ## Tools
 

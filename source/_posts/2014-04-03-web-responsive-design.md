@@ -176,6 +176,10 @@ small元素的大小是默认大小的0.875倍，即14像素（14/16=0.875）。
 
 不过，有条件的话，最好还是根据不同大小的屏幕，加载不同分辨率的图片。有[很多方法](http://blog.cloudfour.com/responsive-imgs-part-2/)可以做到这一条，服务器端和客户端都可以实现。
 
+See:
+
+- [Responsive Images in Practice · An A List Apart Article](http://alistapart.com/article/responsive-images-in-practice)
+
 ## Performance
 
 - [lafikl/RWDPerf](https://github.com/lafikl/RWDPerf) Performance testing tool for Responsive web designs.

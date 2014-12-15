@@ -273,7 +273,7 @@ __It's no accident that this syntax appears to treat the jQuery object as an arr
 
 ### window.onload vs $(document).ready()
 
-The `window.onload` event fires when a document is __completely downloaded__ to the browser. This means that every element on the page is ready to be manipulated by JavaScript, which is a boon for writing feature-rich code without worrying about load order.
+当文档 __完全加载__ 到浏览器中时，触发 `window.onload` 事件，此时页面中的每个元素都可以用 JavaScript 操作，which is a boon for writing feature-rich code without worrying about load order.
 
 On the other hand, a handler registered using `$(document).ready()` is invoked when the __DOM is completely ready for use__. This also means that all elements are accessible by our scripts, but does not mean that every associated file has been downloaded. As soon as the HTML file has been downloaded and parsed into a DOM tree, the code can run.
 

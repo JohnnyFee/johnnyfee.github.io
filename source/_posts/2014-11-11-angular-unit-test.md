@@ -1027,10 +1027,8 @@ PageObjects encapsulate abstractions on how to access certain elements and how t
 
 ## Library
 
-- [Mocha - the fun, simple, flexible JavaScript test framework](http://mochajs.org/) Mocha is a feature-rich JavaScript test framework running on node.js and the browser, making asynchronous testing simple and fun.
-- [Home - Chai](http://chaijs.com/) Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.
-- [pivotal/jasmine](https://github.com/pivotal/jasmine) DOM-less simple JavaScript testing framework <http://jasmine.github.io/>.
-- [yahoo/preceptor](https://github.com/yahoo/preceptor)
+- [angular/protractor](https://github.com/angular/protractor)
+    - [Practical End-to-End Testing with Protractor | ng-newsletter](http://www.ng-newsletter.com/posts/practical-protractor.html)
 
 ## Tools
 

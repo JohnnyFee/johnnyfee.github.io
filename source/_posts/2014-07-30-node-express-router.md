@@ -318,3 +318,5 @@ With all the ways we can define routes, I’m sure that our applications will be
 ## Tutorial
 
 - [Express Routing - The Beginners Guide](http://jilles.me/express-routing-the-beginners-guide)
+- [Express.js 4, Node.js and MongoDB REST API Tutorial](http://webapplog.com/express-js-4-node-js-and-mongodb-rest-api-tutorial)
+- [Build a RESTful API Using Node and Express 4 ♥ Scotch](http://scotch.io/tutorials/javascript/build-a-restful-api-using-node-and-express-4)

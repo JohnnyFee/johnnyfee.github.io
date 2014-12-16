@@ -77,6 +77,7 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 ### Timer
 
 - [caike/jQuery-Simple-Timer](https://github.com/caike/jQuery-Simple-Timer)
+- [Later](http://bunkat.github.io/later/) 执行定时任务。
 
 ## Device
 

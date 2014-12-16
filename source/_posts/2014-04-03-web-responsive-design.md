@@ -191,6 +191,8 @@ See:
 - [sindresorhus/pageres](https://github.com/sindresorhus/pageres) Responsive website screenshots.
 - [Responsive.is – Display and present responsive web designs](http://responsive.is/typecast.com)
 - [screenqueri](http://beta.screenqueri.es/)
+- [lafikl/RWDPerf](https://github.com/lafikl/RWDPerf) 性能测试。
+- [Share your local websites with any internet connected device](https://meetfinch.com/) 共享本地网站。
 
 ## Book
 

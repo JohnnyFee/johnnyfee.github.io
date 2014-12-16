@@ -28,18 +28,10 @@ tags: [node, tutorial]
 - [Beer Locker: Building a RESTful API with Node - OAuth2 Server - Scott Smith](http://scottksmith.com/blog/2014/07/02/beer-locker-building-a-restful-api-with-node-oauth2-server)
 - [helmetjs/helmet](https://github.com/helmetjs/helmet)
 
-## Communication
-
-- [amark/coalesce](https://github.com/amark/coalesce) Communication framework for distributed JavaScript.
-
 ## bin/www
 
 - [Why did the startup stub get moved to bin/www ? · Issue #25 · expressjs/generator](https://github.com/expressjs/generator/issues/25)
 - [javascript - What does "./bin/www" do in Express 4.x? - Stack Overflow](http://stackoverflow.com/questions/23169941/what-does-bin-www-do-in-express-4-x)
-
-## Google Map
-
-- [edwlook/node-google-distance](https://github.com/edwlook/node-google-distance)
 
 ## Library
 
@@ -47,55 +39,30 @@ tags: [node, tutorial]
 - [MrSwitch/hello.js](https://github.com/MrSwitch/hello.js) A Javascript RESTFUL API library for connecting with OAuth2 services, such as Google+ API, Facebook Graph and Windows Live Connect. http://adodson.com/hello.js/
 - [yahoo/gifshot](https://github.com/yahoo/gifshot) JavaScript library that can create animated GIFs from media streams, videos, or images http://yahoo.github.io/gifshot/
 
-### Console
+### Log
 
-- [commander](http://visionmedia.github.io/commander.js/) 是一个轻巧的nodejs模块，提供了用户命令行输入和参数解析强大功能。commander源自一个同名的Ruby项目。commander的特性：自 记录代码,自动生成帮助,合并短参数（“ABC”==“-A-B-C”）,默认选项,强制选项​​,命令解析,提示符。
-- [Omelette by f](http://f.github.io/omelette) Omelette is a simple, template based autocompletion tool for Node projects.
-- [Command-line utilities with Node.js](http://cruft.io/posts/node-command-line-utilities)
-- [substack/node-optimist](https://github.com/substack/node-optimist)
-
-### Web爬虫
-
-[cheerio](http://matthewmueller.github.io/cheerio/) 是一个为服务器特别定制的，快速、灵活、封装jQuery核心功能工具包。Cheerio包括了 jQuery核心的子集，从jQuery库中去除了所有DOM不一致性和浏览器不兼容的部分，揭示了它真正优雅的API。Cheerio工作在一个非常简单，一致的DOM模型之上，解析、操作、渲染都变得难以置信的高效。基础的端到端的基准测试显示Cheerio大约比JSDOM快八倍(8x)。 Cheerio封装了@FB55兼容的htmlparser，几乎能够解析任何的 HTML 和 XML document。
-
-### Timer
-
-[Later](http://bunkat.github.io/later/) 是一个基于Nodejs的工具库，用最简单的方式执行定时任务。Later可以运行在Node和浏览器中。
-
-### Web幻灯片
-
-[Cleaver](http://jdan.github.io/cleaver/) 可以生成基于Markdown的演示文稿。如果你已经有了一个Markdown的文档，30秒就可以制作成幻灯片。Cleaver是为Hacker准备的工具。
-
-### HTML/CSS
-
-- [Neamar/document-highlighter](https://github.com/Neamar/document-highlighter/) 
-- [t32k/stylestats](https://github.com/t32k/stylestats) StyleStats is Node.js library to collect css statistics! CSS 分析器。
-
-### Compress
-
-- [Introducing Tamper · Tamper](http://nytimes.github.io/tamper/)
-
-### Image
-
-- [lovell/sharp](https://github.com/lovell/sharp?) The fastest Node.js module for resizing JPEG, PNG, WebP and TIFF images. Uses the libvips library.
-
-### Server
-
-- [mjijackson/mach](https://github.com/mjijackson/mach) A better way to build web servers in node.js.
-- [Scaling Node.js Applications](http://cjihrig.com/blog/scaling-node-js-applications/)
-
-### Continuous Integration
-
-- [Continuous Deployment for node.js apps from Bitbucket to Modulus](http://blog.codeship.io/2014/04/01/continuous-deployment-modulus-bitbucket-nodejs.htm)
-
-### Rpc
-
-- [substack/dnode · GitHub](https://github.com/substack/dnode) turtles all the way down rpc.
+- [flatiron/winston](https://github.com/flatiron/winston)
+- [trentm/node-bunyan](https://github.com/trentm/node-bunyan)
+- [Comparing Winston and Bunyan Node.js Logging](http://npmawesome.com/posts/2014-06-24-comparing-winston-and-bunyan-node-js-logging) 以上两个日志模块的比较。
+- [bpaquet/node-logstash](https://github.com/bpaquet/node-logstash) Log 收集，可以将日志发送到某个服务器。
 
 ### Email
 
-- [Nodemailer](http://www.nodemailer.com/)
-- [Flolagale/mailin](https://github.com/Flolagale/mailin)
+- [Nodemailer](http://www.nodemailer.com/) 从 Node.js 发送邮件。
+- [Flolagale/mailin](https://github.com/Flolagale/mailin) smtp 服务器。
+
+### Console
+
+- [commander](http://visionmedia.github.io/commander.js/) 
+    - [Command-line utilities with Node.js](http://cruft.io/posts/node-command-line-utilities) 教程。
+- [Omelette by f](http://f.github.io/omelette) 为 Node Console 提供自动补全功能。
+- [substack/node-optimist](https://github.com/substack/node-optimist) Node 参数解析库。
+
+### HTML/CSS
+
+- [cheerio](http://matthewmueller.github.io/cheerio/) 把字符串构建成 DOM 结构，提供 jQuery 一样的查询器。
+- [Neamar/document-highlighter](https://github.com/Neamar/document-highlighter/) 
+- [t32k/stylestats](https://github.com/t32k/stylestats) StyleStats is Node.js library to collect css statistics! CSS 分析器。
 
 ### Config
 
@@ -103,78 +70,11 @@ tags: [node, tutorial]
 - [flesler/config-node · GitHub](https://github.com/flesler/config-node)
 - [sgmonda/stdio](https://github.com/sgmonda/stdio) 简易管理模块。
 
-### Log
-
-- [bpaquet/node-logstash](https://github.com/bpaquet/node-logstash) node-logstash is a tool to collect logs on servers. It allow to send its to a central server and to elastic search for indexing.
-- [Comparing Winston and Bunyan Node.js Logging](http://npmawesome.com/posts/2014-06-24-comparing-winston-and-bunyan-node-js-logging)
-- [trentm/node-bunyan](https://github.com/trentm/node-bunyan) a simple and fast JSON logging module for node.js services.
-
-### Message
-
-- [jxm.io » incredibly fast messaging backend](http://jxm.io/) Incredibly fast messaging backend for Node.JS / JXcore
-
-### .Net
-
-- [How to leverage SQL Server with Node.js using Edge.js | via @codeship](http://blog.codeship.io/2014/04/22/leverage-sql-server-with-node-js-using-edge-js.html)
-- ["It's just a software issue"- Edge.js brings Node and .NET together on three platforms - Scott Hanselman](http://www.hanselman.com/blog/ItsJustASoftwareIssueEdgejsBringsNodeAndNETTogetherOnThreePlatforms.aspx)
-
-### IO
-
-- [substack/stream-handbook](https://github.com/substack/stream-handbook) how to write node programs with streams.
-- [Obvious/sculpt](https://github.com/Obvious/sculpt) Manipulate streams.
-- [mafintosh/torrent-stream](https://github.com/mafintosh/torrent-stream) The low level streaming torrent engine that peerflix uses.
-- [sindresorhus/trash](https://github.com/sindresorhus/trash) Cross-platform command-line app for moving files and directories to the trash - A safer alternative to `rm`
-- [sgmonda/stdio](https://github.com/sgmonda/stdio) 标准输入输出管理模块。
-
-### Other
-
-- [afc163/fanyi](https://github.com/afc163/fanyi) 翻译
-- [zertosh/beautify-with-words · GitHub](https://github.com/zertosh/beautify-with-words) Beautifies javascript and replaces variable names with unique "long-ish words". 可用于反编译 `*-min.js`。
-- [GitBook](http://www.gitbook.io/)
-- [busterc/no-exif](https://github.com/busterc/no-exif)
-- [mobile-icon-resizer](https://www.npmjs.org/package/mobile-icon-resizer) Batch iOS and Android icon resizing tool.
-
-## CMS
-
-- [KeystoneJS · Node.js cms and web application platform built on Express and MongoDB](http://keystonejs.com/)
-- [Cody a CMS in Node.js: Home](http://howest.cody-cms.org/en/info) Create your own web environment in
-Javascript with Cody and Node.js.
-- [用node.js和express.js和jade搭建轻型cms系统 - CNode](http://cnodejs.org/topic/4f16442ccae1f4aa270010bf)
-- [pencilblue/pencilblue](https://github.com/pencilblue/pencilblue) Full stack online publishing and CMS for Node.js <https://pencilblue.org>
-
-## Mock
-
-- [Shmock: An Express-Based HTTP Mocking Library for Node.js](http://tech.gilt.com/post/78877878592/shmock-an-express-based-http-mocking-library-for)
-- [moll/node-mitm](https://github.com/moll/node-mitm) 
-
-## bower
-
-- [Managing Bower Components with Grunt](http://flippinawesome.org/2014/01/27/managing-bower-components-with-grunt/)
-- [Introduction to the Component JavaScript Package Manager](http://flippinawesome.org/2014/02/17/introduction-to-the-component-javascript-package-manager/)
-
 ## Debug
 
 - [node-inspector/node-inspector](https://github.com/node-inspector/node-inspector#advanced-use)
-- [ngrok - secure introspectable tunnels to localhost](https://ngrok.com/)
-	- [Expose Yourself with ngrok](http://flippinawesome.org/2014/04/28/expose-yourself-with-ngrok/?-yourself-with-ngrok)
+
 - [node.js调试 - dolphinX - 博客园](http://www.cnblogs.com/dolphinX/archive/2013/12/22/3485345.html)
-
-## 云平台
-
-- [Nitrous.io](https://www.nitrous.io/join/jOTIMMPrQPY), 一个云Node.js, Go, - Ruby, Python平台，还有Web IDE。
-- [百度BAE](http://developer.baidu.com/wiki/index.php?title=docs/cplat/rt/node.js- )
-- [AppFog](https://www.appfog.com/)
-- [Nodejitsu](https://www.nodejitsu.com/)
-- 阿里云
-
-## confusion
-
-- [Code Protection and Packaging for Node.js Projects with JXCore | Flippin' Awesome](http://flippinawesome.org/2014/04/21/code-protection-and-packaging-for-node-js-projects-with-jxcore/)
-- [JXcore – A Node.JS Distribution with Multi-threading](http://flippinawesome.org/2014/03/03/jxcore-a-node-js-distribution-with-multi-threading/)
-
-## ES6
-
-- [astralfoxy/es6inode](https://github.com/astralfoxy/es6inode)
 
 ## Device
 
@@ -255,11 +155,31 @@ Nodejs在快速的发展着，软件包版本升级的很快，文章有运行�
 
 ## Toos
 
-- [Stormpath User Management API](https://stormpath.com/) 提供用户管理服务。
+- [lovell/sharp](https://github.com/lovell/sharp) 修改图片尺寸。
+- [Introducing Tamper · Tamper](http://nytimes.github.io/tamper/) 序列化协议，用于节省流量。
+- [afc163/fanyi](https://github.com/afc163/fanyi) 翻译，使用有道和金山的接口。
+- [zertosh/beautify-with-words · GitHub](https://github.com/zertosh/beautify-with-words) Beautifies javascript and replaces variable names with unique "long-ish words". 可用于反编译 `*-min.js`。
+- [busterc/no-exif](https://github.com/busterc/no-exif) 移除图片的 拍摄信息和 GPS 信息。
+- [mobile-icon-resizer](https://www.npmjs.org/package/mobile-icon-resizer) 批量改变 Mobile 图标的尺寸。
+- [ngrok - secure introspectable tunnels to localhost](https://ngrok.com/) 共享本地网站。
+    - [Expose Yourself with ngrok](http://flippinawesome.org/2014/04/28/expose-yourself-with-ngrok/?-yourself-with-ngrok)
+* [Share your local websites with any internet connected device](https://meetfinch.com/) 共享本地网站。
+
+### 静态服务器
+
+- [leeluolee/puer](https://github.com/leeluolee/puer)
 - [Superstatic - Static Web Server for HTML5 Applications](http://superstatic.org) 静态网页服务器。
 - [Fenix Web Server](http://fenixwebserver.com) 静态 HTTP 服务器。
 - [Harp, the static web server with built-in preprocessing](http://harpjs.com/) Harp是一款快速的、轻量级的Web服务器。Harp serves Jade，Markdown，EJS，CoffeeScript, Sass, LESS以及Stylus as HTML、CSS & JavaScrip均可轻松配置。
 
+### 云平台
+
+- [Nitrous.io](https://www.nitrous.io/join/jOTIMMPrQPY), 一个云Node.js, Go, - Ruby, Python平台，还有Web IDE。
+- [百度BAE](http://developer.baidu.com/wiki/index.php?title=docs/cplat/rt/node.js- )
+- [AppFog](https://www.appfog.com/)
+- [Nodejitsu](https://www.nodejitsu.com/)
+- 阿里云
+- [Stormpath User Management API](https://stormpath.com/) 提供用户管理服务。
 
 ## FAQ
 

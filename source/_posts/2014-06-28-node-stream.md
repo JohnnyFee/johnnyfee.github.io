@@ -182,3 +182,10 @@ By treating your incoming and outgoing data as streams, you can create your own 
 
 - [Using Streams in Node.js](http://blog.safaribooksonline.com/2013/05/01/using-streams-in-node-js/)
 - [Fundamentals: Timers, EventEmitters, Streams and Buffers - Mixu's Node book](http://book.mixu.net/node/ch9.html)
+
+## Library
+
+- [substack/stream-handbook](https://github.com/substack/stream-handbook) streams 使用教程.
+- [Obvious/sculpt](https://github.com/Obvious/sculpt) 数据流操作库。
+- [sindresorhus/trash](https://github.com/sindresorhus/trash) 将文件或者目录移动到回收站中。
+- [sgmonda/stdio](https://github.com/sgmonda/stdio) 标准输入输出管理模块。

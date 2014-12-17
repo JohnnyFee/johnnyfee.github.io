@@ -992,6 +992,7 @@ See:
 ## Performance
 
 - [angular性能优化心得](http://atian25.github.io/2014/05/09/angular-performace/)
+- [AngularJS Performance in Large Applications](https://www.airpair.com/angularjs/posts/angularjs-performance-large-applications)
 
 ## Testing
 

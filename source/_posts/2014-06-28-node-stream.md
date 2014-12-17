@@ -189,3 +189,4 @@ By treating your incoming and outgoing data as streams, you can create your own 
 - [Obvious/sculpt](https://github.com/Obvious/sculpt) 数据流操作库。
 - [sindresorhus/trash](https://github.com/sindresorhus/trash) 将文件或者目录移动到回收站中。
 - [sgmonda/stdio](https://github.com/sgmonda/stdio) 标准输入输出管理模块。
+- [mafintosh/peerflix](https://github.com/mafintosh/peerflix) Streaming torrent client for node.js

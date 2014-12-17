@@ -64,8 +64,10 @@ Event Loop 是一个很重要的概念，指的是计算机系统的一种运行
 - [JavaScript定时机制、以及浏览器渲染机制 浅谈 | 前端攻城师王子墨](http://julying.com/blog/javascript-settimeout-thread/)
 - [javascript线程解释（setTimeout,setInterval你不知道的事）](http://www.iamued.com/qianduan/1645.html)
 
+## Library
+
+- [robertleeplummerjr/thaw.js](https://github.com/robertleeplummerjr/thaw.js) synthetic asynchronous processing in javascript <http://robertleeplummerjr.github.io/thaw.js>
+
 ## Tutorial
 
 - [Introduction to Service Worker: How to use Service Worker - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/service-worker/introduction/)
-
-

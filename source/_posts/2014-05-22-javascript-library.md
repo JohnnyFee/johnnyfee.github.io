@@ -47,6 +47,7 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 
 - [nicholascloud/l33teral](https://github.com/nicholascloud/l33teral) 迭代对象，减少判空的步骤。
     + [l33t literals in JavaScript - appendTo](http://appendto.com/2014/02/l33t-literals-javascript/)
+- [voronianski/xml2obj-stream](https://github.com/voronianski/xml2obj-stream) XML to JavaScript object low memory streaming parser based on node-expat <http://node-xmpp.github.io/doc/nodeexpat.html>
 
 ### BitSet
 
@@ -59,6 +60,7 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 ### Number
 
 - [Numeral.js](http://numeraljs.com/)
+- [MikeMcl/decimal.js](https://github.com/MikeMcl/decimal.js) An arbitrary-precision Decimal type for JavaScript <http://mikemcl.github.io/decimal.js>
 
 ### JSON
 

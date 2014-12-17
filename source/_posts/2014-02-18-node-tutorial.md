@@ -202,6 +202,10 @@ Nodejs在快速的发展着，软件包版本升级的很快，文章有运行�
 - [Writing Modular Node.js Projects for Express and Beyond](http://strongloop.com/strongblog/modular-node-js-express/)
 - [当IoC遇见了Node.js](http://www.infoq.com/cn/articles/ioc-meet-nodejs)
 
+### Publish
+
+- [How to Deploy a Node.js App to Heroku ♥ Scotch](http://scotch.io/tutorials/hosting/how-to-deploy-a-node-js-app-to-heroku)
+
 ### Error Handling
 
 - [Error Handling in Nodejs - Developer Center - Joyent](http://www.joyent.com/developers/node/design/errors)

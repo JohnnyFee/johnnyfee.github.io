@@ -29,7 +29,14 @@ See [Getting Started with Ionic - Ionic Framework](http://ionicframework.com/get
 ## Generator
 
 - [diegonetto/generator-ionic](https://github.com/diegonetto/generator-ionic)
+- [Ionic Expense Tracker Sample: Creating the App - Wijmo](http://wijmo.com/expense-tracker-sample-creating-the-app)
+
+## Demo
+
+- [Ionic Expense Tracker Sample: Creating the Project - Wijmo](http://wijmo.com/expense-tracker-sample-creating-the-project/) 
 
 ## Tutorial
 
 - [OAuth with Ionic and ngCordova](http://ionicframework.com/blog/oauth-ionic-ngcordova/)
+- [Understanding Tabs In Ionic Framework](https://blog.nraboy.com/2014/12/understanding-tabs-ionic-framework)
+- [Build an Instagram clone with AngularJS, Satellizer, Node.js and MongoDB](https://hackhands.com/building-instagram-clone-angularjs-satellizer-nodejs-mongodb) 登陆验证模块。

@@ -21,18 +21,57 @@ tags : [angular, tutorial]
 
 在大多数应用中，一般创建一个 module， 并申明所有的依赖就足够了。
 
-See [AngularJS: Developer Guide: Modules](https://docs.angularjs.org/guide/module) / 翻译 [AngularJs学习笔记--Modules - Lcllao - 博客园](http://www.cnblogs.com/lcllao/archive/2012/09/22/2698208.html)
+See: 
+
+- [AngularJS: Developer Guide: Modules](https://docs.angularjs.org/guide/module) / 翻译 [AngularJs学习笔记--Modules - Lcllao - 博客园](http://www.cnblogs.com/lcllao/archive/2012/09/22/2698208.html)
+- [Jorgen’s Weblog: The AngularJS Module System](http://blog.jorgenschaefer.de/2014/04/the-angularjs-module-system.html)
 
 <!--more-->
 
-## Modules lifecycle
+### 生命周期
 
 AngularJS 可以把模块的生命周期划分为两个阶段，分别是配置阶段和运行阶段。
 
-- __配置阶段：__ It is the phase where all the recipes are collected and configured
-- __运行阶段:__ It is the phase where we can execute any post-instantiation logic
+- __配置阶段：__ get executed during the provider registrations and configuration phase. Only providers and constants can be injected into configuration blocks. This is to prevent accidental instantiation of services before they have been fully configured.
 
-### 配置阶段
+- __运行阶段:__ get executed after the injector is created and are used to kickstart the application. Only instances and constants can be injected into run blocks. This is to prevent further system configuration during application run time.
+
+调用顺序：
+
+1.  `app.config()`
+2.  `app.run()`
+3.  _directive's compile functions (if they are found in the dom)_
+4.  `app.controller()`
+5.  _directive's link functions (again if found)_
+
+Here's a [simple demo](http://jsfiddle.net/ysq3m/) where you can watch each execute (and experiment if you'd like).
+
+See [breeze - AngularJS app.run() documentation? - Stack Overflow](http://stackoverflow.com/questions/20663076/angularjs-app-run-documentation)
+
+#### 配置阶段
+
+There are some convenience methods on the module which are equivalent to the `config` block. For
+example:
+
+```js
+angular.module('myModule', []).
+  value('a', 123).
+  factory('a', function() { return 123; }).
+  directive('directiveName', ...).
+  filter('filterName', ...);
+
+// is same as
+
+angular.module('myModule', []).
+  config(function($provide, $compileProvider, $filterProvider) {
+    $provide.value('a', 123);
+    $provide.factory('a', function() { return 123; });
+    $compileProvider.directive('directiveName', ...);
+    $filterProvider.register('filterName', ...);
+  });
+```
+
+When bootstrapping, first Angular applies all constant definitions. Then Angular applies configuration blocks in the same order they were registered.
 
 我们可以在定义模块的时候配置模块：
 
@@ -55,7 +94,9 @@ angular.module('admin-projects', [])
   });
 ```
 
-### 运行阶段
+#### 运行阶段
+
+Run blocks are the closest thing in Angular to the main method. A run block is the code which needs to run to kickstart the application. It is executed after all of the service have been configured and the injector has been created. Run blocks typically contain code which is hard to unit-test, and for this reason should be declared in isolated modules, so that they can be ignored in the unit-tests.
 
 运行阶段允许我们注册在应用启动的时候需要执行的任何任务。可以把运行阶段等价为其他语言中的 main 函数。不同之处在于 AngularJS 模块可以用多个配置块和运行块。
 

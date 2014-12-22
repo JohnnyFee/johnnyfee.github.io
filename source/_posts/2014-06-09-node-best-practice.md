@@ -244,7 +244,14 @@ Another approach is to disable pooling all together (agent: false) like [LinkedI
 
 Of course, this list of seven things you should immediately stop doing with Node.js is subjective, but it was born out of careful and ongoing observation, as well as some painful real-world experience (i.e., * in package.json). What is on your list of things not to do with Node.js?
 
-## Tutorial
+## Tools
 
 - [RisingStack/node-style-guide](https://github.com/RisingStack/node-style-guide)
+- [jscs-dev/node-jscs](https://github.com/jscs-dev/node-jscs)
+- [jscs-dev/grunt-jscs](https://github.com/jscs-dev/grunt-jscs)
+
+## Tutorial
+
+
 - [Top 10 Mistakes Node.js Developers Make](https://www.airpair.com/node.js/posts/top-10-mistakes-node-developers-make)
+- [Node.js Best Practices - Part 2](http://blog.risingstack.com/node-js-best-practices-part-2)

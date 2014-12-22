@@ -68,7 +68,6 @@ tags: [node, tutorial]
 
 - [flatiron/nconf](https://github.com/flatiron/nconf)
 - [flesler/config-node · GitHub](https://github.com/flesler/config-node)
-- [sgmonda/stdio](https://github.com/sgmonda/stdio) 简易管理模块。
 
 ## Debug
 

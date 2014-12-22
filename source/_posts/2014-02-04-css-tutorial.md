@@ -141,6 +141,7 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 - [Stylify Me - Online Style Guide Generator](http://stylifyme.com/?stylify=inching.org)
 - [Clippy — CSS clip-path maker](http://bennettfeely.com/clippy)
 - [CSS Stats](http://cssstats.com) 统计 CSS。
+- [SC5 Styleguide](http://styleguide.sc5.io/) 生成 CSS 文档。
 
 ### 预编译
 

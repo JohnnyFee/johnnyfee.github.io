@@ -79,6 +79,7 @@ tags: [javascript]
 
 - [sindresorhus/screenfull.js](https://github.com/sindresorhus/screenfull.js) Simple wrapper for cross-browser usage of the JavaScript Fullscreen API.
 - [mrdoob/three.js](https://github.com/mrdoob/three.js) JavaScript 3D library. <http://threejs.org/>
+- [zzarcon/focusable](https://github.com/zzarcon/focusable) Set a spotlight focus on DOM element adding a overlay layer to the rest of the page <http://zzarcon.github.io/focusable/>
 
 ## 开发工具
 

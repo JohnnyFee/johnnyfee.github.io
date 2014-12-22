@@ -212,6 +212,7 @@ Excellent framework made for fast application prototyping. It can become problem
 - [Is jQuery Too Big For Mobile?](http://flippinawesome.org/2014/03/10/is-jquery-too-big-for-mobile/)
 - [Google I/O 2014 - Mobile Web performance auditing - YouTube](https://www.youtube.com/watch?v=WrA85a4ZIaM)
 - [BlendUI，让webapp的体验和交互得到质的提升](http://www.infoq.com/cn/articles/blendul-improve-webapp-experience-and-interactive)
+- [HTML5 Mobile - Optimising for older or slower devices](http://www.scottlogic.com/blog/2014/12/12/html5-android-optimisation.html)
 
 ## Debug
 

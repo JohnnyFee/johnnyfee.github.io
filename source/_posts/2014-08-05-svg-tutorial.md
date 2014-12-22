@@ -212,6 +212,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 - [Making SVGs Responsive with CSS](http://tympanus.net/codrops/2014/08/19/making-svgs-responsive-with-css)
 - [A Guide to SVG Animations (SMIL)](http://css-tricks.com/guide-svg-animations-smil/)
 - [5 Gotchas You're Gonna Face Getting Inline SVG Into Production](http://css-tricks.com/gotchas-on-getting-svg-into-production)
+- [#135: Three Ways to Animate SVG](http://css-tricks.com/video-screencasts/135-three-ways-animate-svg)
 
 ### SVG Attribute reference
 

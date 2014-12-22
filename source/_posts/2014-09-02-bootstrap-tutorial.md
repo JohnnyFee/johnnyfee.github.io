@@ -287,6 +287,36 @@ samp | 程序输出 | This text is meant to be treated as <samp>sample output</s
 }
 ```
 
+## 字体图标
+
+See [组件 · Bootstrap 中文文档](http://v3.bootcss.com/components/#glyphicons)
+
+包括200个来自 Glyphicon Halflings 的字体图标。[Glyphicons](http://glyphicons.com/) Halflings 一般是收费的，但是他们的作者允许 Bootstrap 免费使用。为了表示感谢，希望你在使用时尽量为 [Glyphicons](http://glyphicons.com/) 添加一个友情链接。
+
+出于性能的考虑，所有图标都需要一个基类和对应每个图标的类。把下面的代码放在任何地方都可以正常使用。注意，为了设置正确的内补（padding），务必在图标和文本之间添加一个空格。
+
+图标类不能和其它组件直接联合使用。它们不能在同一个元素上与其他类共同存在。应该创建一个嵌套的 `<span>` 标签，并将图标类应用到这个 `<span>` 标签上。
+
+图标类只能应用在不包含任何文本内容或子元素的元素上。
+
+<span class="glyphicon glyphicon-search"></span>
+
+```html
+<span class="glyphicon glyphicon-search"></span>
+```
+
+可以把它们应用到按钮、工具条中的按钮组、导航或输入框等地方。
+
+<button type="button" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-star"></span> Star
+</button>
+
+```
+<button type="button" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-star"></span> Star
+</button>
+```
+
 ## 工具类
 
 ### 快速浮动
@@ -318,7 +348,7 @@ Float an element to the left or right with a class. !important is included to av
 
 To align components in navbars with utility classes, use `.navbar-left` or `.navbar-right` instead.
 
-### 居中内容块
+### 水平居中
 
 Set an element to `display: block` and center via `margin`. Available as a mixin and class.
 
@@ -410,6 +440,84 @@ Utilize the `.text-hide` class or mixin to help replace an element's text conten
   text-shadow: none;
   background-color: transparent;
   border: 0;
+}
+```
+
+### Sizing helpers
+
+Specify the dimensions of an object more easily.
+
+```scss
+// Mixins
+.size(@width; @height) {
+  width: @width;
+  height: @height;
+}
+.square(@size) {
+  .size(@size; @size);
+}
+
+// Usage
+.image { .size(400px; 300px); }
+.avatar { .square(48px); }
+```
+
+### Resizable textareas
+
+Easily configure the resize options for any textarea, or any other element. Defaults to normal browser behavior (`both`).
+
+```scss
+.resizable(@direction: both) {
+  // Options: horizontal, vertical, both
+  resize: @direction;
+  // Safari fix
+  overflow: auto;
+}
+```
+
+### Truncating text
+
+Easily truncate text with an ellipsis with a single mixin. **Requires element to be `block` or `inline-block` level.**
+
+```scss
+// Mixin
+.text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Usage
+.branch-name {
+  display: inline-block;
+  max-width: 200px;
+  .text-overflow();
+}
+```
+
+### Retina images
+
+Specify two image paths and the @1x image dimensions, and Bootstrap will provide an @2x media query. **If you have many images to serve, consider writing your retina image CSS manually in a single media query.**
+
+```scss
+.img-retina(@file-1x; @file-2x; @width-1x; @height-1x) {
+  background-image: url("@{file-1x}");
+
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    background-image: url("@{file-2x}");
+    background-size: @width-1x @height-1x;
+  }
+}
+
+// Usage
+.jumbotron {
+  .img-retina("/img/bg-1x.png", "/img/bg-2x.png", 100px, 100px);
 }
 ```
 

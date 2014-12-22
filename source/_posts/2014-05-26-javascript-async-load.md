@@ -45,8 +45,6 @@ async属性是HTML5中新增的异步支持，见后文解释，加上好（不�
 
 此方法被称为 Script DOM Element 法，不要求 js 同源。
 
-将js代码包裹在匿名函数中并立即执行的方式是为了保护变量名泄露到外部可见，这是很常见的方式，尤其是在 js 库中被普遍使用。
-
 例如 Google Analytics 和 Google+ Badge 都使用了这种异步加载代码：
 
 	(function() {  

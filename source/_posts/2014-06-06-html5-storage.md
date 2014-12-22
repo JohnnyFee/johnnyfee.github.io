@@ -320,13 +320,17 @@ See [Introduction to IndexedDB: The In-Browser Database](http://www.codemag.com/
 
 - [ask11/storage](https://github.com/ask11/storage) Asynchronous browser storage with multiple back-ends (IndexedDB, WebSQL, localStorage).
 - [jas-/secStore.js](https://github.com/jas-/secStore.js) Encryption enabled browser storage.
+- [arokor/barn](https://github.com/arokor/barn) Fast, atomic persistent storage layer on top of localstorage.
 
 ## Reference
 
 - [QtWebKit Guide](http://qt-project.org/doc/qt-4.8/qtwebkit-guide.html)
 - [HTML5 Storage Wars - localStorage vs. IndexedDB vs. Web SQL - csimms.botonomy.com](http://csimms.botonomy.com/2011/05/html5-storage-wars-localstorage-vs-indexeddb-vs-web-sql.html)
+- [HTML 5 Web 存储](http://www.w3school.com.cn/html5/html_5_webstorage.asp)
+- [JavaScript Cookies](http://www.w3school.com.cn/js/js_cookies.asp)
 
 ## Tutorial
 
 - [Storage - HTML5 Rocks](http://www.html5rocks.com/en/features/storage)
 - [HTML5 Web Storage](http://dev.w3.org/html5/webstorage/)
+- [HTML5 LocalStorage 本地存储 - xiaowei0705 - 博客园](http://www.cnblogs.com/xiaowei0705/archive/2011/04/19/2021372.html)

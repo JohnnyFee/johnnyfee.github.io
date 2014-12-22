@@ -9,8 +9,6 @@ tags: [javascript]
 ## Tutorial
 
 - [sorrycc/awesome-javascript](https://github.com/sorrycc/awesome-javascript)
-
-
 - [Breaking Bad (Loops in JavaScript Libraries)](http://webapplog.com/breaking-bad-loops-in-javascript-libraries)
 - [mortzdk/jsCache](https://github.com/mortzdk/jsCache)
 - [github/fetch](https://github.com/github/fetch) The global `fetch` function is an easier way to make web requests and handle
@@ -81,14 +79,18 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 - [caike/jQuery-Simple-Timer](https://github.com/caike/jQuery-Simple-Timer)
 - [Later](http://bunkat.github.io/later/) 执行定时任务。
 
+## Parser
+
+- [ariya/esprima](https://github.com/ariya/esprima) ECMAScript parsing infrastructure for multipurpose analysis <http://esprima.org>
+    + [Maintaining JavaScript Code Quality with ESLint](https://www.paypal-engineering.com/2014/12/12/maintaining-javascript-code-quality-with-eslint/)
+
 ## Device
 
 - [zzmp/juliusjs](https://github.com/zzmp/juliusjs)
 
-## Spelling
+## 汉字拼音
 
-- [hotoo/pinyin](https://github.com/hotoo/pinyin) 汉字拼音转换工具 Web 版。<http://pinyin.hotoo.me/>
-- [hotoo/node-pinyin](https://github.com/hotoo/node-pinyin)
+- [hotoo/pinyin](https://github.com/hotoo/pinyin) 汉字汉字拼音转换工具。<http://pinyin.hotoo.me/>
 
 ## Async
 

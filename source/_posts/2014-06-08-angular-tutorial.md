@@ -1068,8 +1068,8 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - [tymondesigns/angular-locker](https://github.com/tymondesigns/angular-locker) A simple & configurable abstraction for local/session storage in angular projects.
 - [Use ngStorage For All Your AngularJS Local Storage Needs](http://blog.nraboy.com/2014/12/use-ngstorage-angularjs-local-storage-needs)
 - [gsklee/ngStorage](https://github.com/gsklee/ngStorage) localStorage and sessionStorage done right for AngularJS. See [Use ngStorage For All Your AngularJS Local Storage Needs](http://blog.nraboy.com/2014/12/use-ngstorage-angularjs-local-storage-needs)
-
-
+- [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
+ 
 __快捷键：__
 
 - [AngularHotkeys.js](http://chieffancypants.github.io/angular-hotkeys/) 建议使用。
@@ -1261,8 +1261,8 @@ See [angularjs - how to access the angular $scope variable in browsers console -
 
 ### Style Guide
 
-- [angularjs style guide](https://github.com/mgechev/angularjs-style-guide/blob/master/README-zh-cn.md)
 - [Google's AngularJS Style Guide](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html)
+- [angularjs style guide](https://github.com/mgechev/angularjs-style-guide/blob/master/README-zh-cn.md)
 - [johnpapa/angularjs-styleguide](https://github.com/johnpapa/angularjs-styleguide#modules)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

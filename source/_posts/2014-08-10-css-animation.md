@@ -394,5 +394,6 @@ div:hover {
 - [Using CSS animations - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Using_CSS_animations)
 - [animation](http://css-tricks.com/almanac/properties/a/animation/)
 - [Starting CSS Animations Mid-Way](http://css-tricks.com/starting-css-animations-mid-way)
+- [CSS Animation for Beginners](http://robots.thoughtbot.com/css-animation-for-beginners)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

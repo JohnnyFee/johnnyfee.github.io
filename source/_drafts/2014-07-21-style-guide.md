@@ -28,6 +28,14 @@ tags: [dao, style, guide]
 
 - [Mobile Web Styleguide · GitHub](https://github.com/styleguide/mobile)
 
+## Node
+
+- [RisingStack/node-style-guide](https://github.com/RisingStack/node-style-guide)
+
+## Java
+
+- [Google的Java编码规范](http://www.infoq.com/cn/news/2014/02/google-java-coding-standards)
+
 ## Reference
 
 - [CSS Style Guides](http://css-tricks.com/css-style-guides/)

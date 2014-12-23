@@ -7,26 +7,26 @@ tags: [css]
 
 Let’s start by first talking about something that doesn’t work as many expect. Understanding why vertical-align doesn’t always work will help us better understand vertical centering in general.
 
-## Vertical-Align ##
+## Vertical-Align
 
-[Horizontal centering with css](http://www.vanseodesign.com/css/centering-with-css/) is rather easy. When the element to be centered is an inline element we use text-align center on its parent. When the element is a block level element we give it a width and set the left and right margins to a value of auto.
-
-With text-align: center in mind, most people look first to [vertical-align](http://www.w3.org/TR/CSS2/visudet.html#propdef-vertical-align) in order to center things vertically. It seems logical and I know it was my first choice. 
+[使用 CSS 水平居中](http://www.vanseodesign.com/css/centering-with-css/) 很简单。当元素是一个内联元素时，我们使用 `text-align` 在居中于父元素中。当元素时块元素时，我们为它指定一个宽度，然后设置左右边距为 `auto `。
 
 <!--more-->
 
-`vertical-align` also applies to table cells and it works with some inline elements.
+`vertical-align` 可以用于表格的单元格和对一些内联元素，不能应用到块元素的垂直居中。
 
-The values for vertical-align have meaning with respect to a parent inline element.
+* 对于内联元素，和 `line-height` 相关。
+* 对于单元格，和 [表格的高度算法](http://www.w3.org/TR/CSS2/tables.html#height-layout) 有关，通常是指行高。
 
-* With a line of text the values are relative to the line-height.
-* With a table cell the values are relative to the [table-height-algorithm](http://www.w3.org/TR/CSS2/tables.html#height-layout), which usually means the height of the row.
+```
+<div style="border: 1px solid green;display:table-cell; height: 100px; vertical-align: middle">
+<span>hello world</span>
+</div>
+```
 
-Unfortunately [vertical-align](http://css-tricks.com/2597-what-is-vertical-align/) doesn’t apply to block-level elements like a paragraph inside a div, which is where most of us figure out it isn’t the be all solution to vertical centering.
+See [我所知道的几种display:table-cell的应用 « 张鑫旭-鑫空间-鑫生活](http://www.zhangxinxu.com/wordpress/2010/10/%E6%88%91%E6%89%80%E7%9F%A5%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8Ddisplaytable-cell%E7%9A%84%E5%BA%94%E7%94%A8/)
 
-All is not lost though, as we have other methods for centering block level elements and we can still use vertical-align where appropriate. Which method you choose will depend on what you’re trying to center relative to its container element.
-
-## Line-Height Method ##
+## Line-Height Method
 
 __This method will work when you want to vertically center a single line of text. __ All we need to do is set a line-height on the element containing the text larger than its font-size.
 
@@ -62,7 +62,7 @@ css:
 
 You set the line-height as we did above (It’ll need to be greater than the height of the image) and then set vertical-align: middle on the image.
 
-## CSS Table Method ##
+## CSS Table Method
 
 Above I mentioned that vertical-align applies to table cells which leads us to this method. We’ll display our elements as table and table cell and then use the vertical-align property to center the content.
 
@@ -86,7 +86,7 @@ __Caveats:__
 
 - Requires extra markup
 
-## Absolute Positioning and Negative Margin ##
+## Absolute Positioning and Negative Margin
 
 This method works for block level elements and also works in all browsers. It does require that we set the height of the element we want to center.
 
@@ -113,7 +113,7 @@ __Caveats:__
 - Content can overflow the container
 - Have to compensate for padding or use box-sizing: border-box
 
-## Absolute Positioning and Stretching ##
+## Absolute Positioning and Stretching
 
 As with the method above this one begins by setting positioning on the parent and child elements as relative and absolute respectively. From there things differ.
 
@@ -216,7 +216,7 @@ Note that `height: auto;` works for images, but causes a regular content block t
 **Chrome, Firefox, Safari, Mobile Safari, IE8-10.**  
 Absolute Centering was tested and works flawlessly in the latest versions of Chrome, Firefox, Safari, Mobile Safari, and even IE8-10.
 
-## Equal Top and Bottom Padding ##
+## Equal Top and Bottom Padding
 
 In the method above we allowed the browser to automatically set the margins of the child element so they would be equal. In this method we’ll do something similar and explicitly set the top and bottom padding of the parent to be equal.
 
@@ -236,7 +236,7 @@ This method works anywhere. The downside is that depending on the specifics of y
 
 **Note:** This method works by setting paddings on the outer elements. You can flip things and instead set equal margins on the inner elements. I tend to use padding, but I’ve also used margins with success. Which you choose would depend on the specifics of your project.
 
-## Floater Div ##
+## Floater Div
 
 This last method requires an empty div which is [floated](http://www.vanseodesign.com/css/understanding-css-floats/) and used to control where our child element sits in the document flow. Notice the floater div comes before our child div in the html below.
 
@@ -333,7 +333,7 @@ Unlike some of the existing vertical alignment techniques, with Flexbox the pres
 
 <p data-height="268" data-theme-id="0" data-slug-hash="EIsCe" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/EIsCe/'>EIsCe</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
-## Comparison ##
+## Comparison
 
 Absolute Centering isn't the only option out there. Several unique methods exist for vertical centering, and each has their advantages. Which technique you choose mainly boils down to which browsers you support and what your existing markup looks like, but this comparison table can help make the right choice to match the features you need.
 
@@ -346,7 +346,7 @@ Technique| Browser Support     | Responsive | Overflow| `resize:both`| Variable 
 [Inline-Block](http://localhost:51004/view/28#Inline-Block)         | Modern, IE8+ & IE7* | Yes        | Expands container              | No                                | Yes             | Requires container, hacky styles                                                  
 [Flexbox](http://localhost:51004/view/28#Flexbox)                   | Modern & IE10+      | Yes        | Scroll, can overflow container | Yes                               | Yes             | Requires container, vendor prefixes                                         
 
-## Summary ##
+## Summary
 
 None of the methods above is complicated and I’m sure if you use each once or twice it’ll be easy to use again.
 
@@ -369,5 +369,6 @@ Do you use any of the above methods or do you use a different method I didn’t 
 - [What is Vertical Align?](http://css-tricks.com/what-is-vertical-align/)
 - [三种方式实现动态元素水平居中 / Owen Chen](http://owenchen.duapp.com/index.php/there-are-three-ways-to-implement-dynamic-elements-centered-horizontally/)
 - [4 CSS Tricks for Vertical Alignment — Adnane Belmadiaf's Blog - Front-end Developer](http://daker.me/2014/04/4-css-tricks-for-vertical-alignment.html)
+- [大小不固定的图片和多行文字的垂直水平居中](http://www.zhangxinxu.com/study/200908/img-text-vertical-align.html)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

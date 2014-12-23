@@ -141,6 +141,8 @@ To use, just mimic normal table structure. Simple example:
 </div>
 ```
 
+See [我所知道的几种display:table-cell的应用 « 张鑫旭-鑫空间-鑫生活](http://www.zhangxinxu.com/wordpress/2010/10/%E6%88%91%E6%89%80%E7%9F%A5%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8Ddisplaytable-cell%E7%9A%84%E5%BA%94%E7%94%A8/)
+
 ## other
 
 - list-item : 为元素内容生成一个块型盒，随后再生成一个列表型的行内盒。

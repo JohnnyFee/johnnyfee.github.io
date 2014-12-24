@@ -198,11 +198,13 @@ HTMLElement.prototype.__defineGetter__(
 
 ## Tools
 
-1. [Polyfill service](https://cdn.polyfill.io/v1/) The polyfill service selectively bundles browser polyfills based on the User-Agent header supplied in a request. See also [Polyfills as a service](http://labs.ft.com/2014/09/polyfills-as-a-service).
-1. [Javascript在线解压缩](http://tool.lu/js/)
-1. [jsfiddle](http://jsfiddle.net/)
-1. [jsbin](http://jsbin.com/)
-2. [codepen](http://codepen.io/)
+- [Polyfill service](https://cdn.polyfill.io/v1/) The polyfill service selectively bundles browser polyfills based on the User-Agent header supplied in a request. See also [Polyfills as a service](http://labs.ft.com/2014/09/polyfills-as-a-service).
+- [Javascript在线解压缩](http://tool.lu/js/)
+- [jsfiddle](http://jsfiddle.net/)
+- [jsbin](http://jsbin.com/)
+- [codepen](http://codepen.io/)
+- [ESLint](http://eslint.org/)
+    - [Maintaining JavaScript Code Quality with ESLint](https://www.paypal-engineering.com/2014/12/12/maintaining-javascript-code-quality-with-eslint)
 
 ## FAQ
 

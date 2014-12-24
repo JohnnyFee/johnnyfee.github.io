@@ -13,11 +13,11 @@ tags : [csharp, report]
 
 可以通过Report或者Report Wizard创建报表
 
-![创建报表](/assets/images/rdlc/create_report.jpg) 
+![创建报表](http://johnnyimages.qiniudn.com/rdlc/create_report.jpg) 
 
 右键 Insert-->Table, 可以为插入的Table选择或创建数据源
 
-![创建数据源](/assets/images/rdlc/insert_table.jpg) 
+![创建数据源](http://johnnyimages.qiniudn.com/rdlc/insert_table.jpg) 
 
 
 我们也可以跳过这一步，暂且生成一个空报表，动态地为报表设置数据源，关于这个在后边会提到。
@@ -35,28 +35,28 @@ tags : [csharp, report]
 
 ####添加DataSet数据源
 
-![添加DataSet数据源](/assets/images/rdlc/add_data_set.jpg) 
+![添加DataSet数据源](http://johnnyimages.qiniudn.com/rdlc/add_data_set.jpg) 
 
 在DataSet中新建一个TableAdapter，创建第一个DataAdapter时，会提示创建数据库连接。
 
-![创建数据库](/assets/images/rdlc/add_data_adapter.jpg) 
+![创建数据库](http://johnnyimages.qiniudn.com/rdlc/add_data_adapter.jpg) 
 
 当然，我们也可以不映射数据库中的字段，直接手动添加列，之后为这些DataSet复制，可以参考[这里](http://hi.baidu.com/flowsing/blog/item/f237c3a1e3d877814610646e.html)。
 
 ####为Rdlc报表生成数据源
 
-![生成数据源](/assets/images/rdlc/new_data_set.jpg) 
+![生成数据源](http://johnnyimages.qiniudn.com/rdlc/new_data_set.jpg) 
 
 配置Rdlc的数据源，当然可以在为Rdlc创建Table时根据Wizard配置好：
 
 右键Table-->Tablix Properties-->General-->Data Set Name
 
-![DataSet](/assets/images/rdlc/set_data_set_name.jpg) 
+![DataSet](http://johnnyimages.qiniudn.com/rdlc/set_data_set_name.jpg) 
 
 
 接下来就可以把DataSet中的字段往Table中拖拽或者直接编辑该列的Expression。
 
-![Expression](/assets/images/rdlc/data_expression.jpg) 
+![Expression](http://johnnyimages.qiniudn.com/rdlc/data_expression.jpg) 
 
 
 ####添加页眉和页脚
@@ -188,13 +188,13 @@ Report-->Add Report Header, Add Report Foo。
 
 插入ReportView控件
 
-![插入ReportView控件](/assets/images/rdlc/report_view.jpg) 
+![插入ReportView控件](http://johnnyimages.qiniudn.com/rdlc/report_view.jpg) 
 
 为报表的数据源初始化实例
 
 点击上图的"ReportView Tasks"-->Choose Data Source
 
-![Choose Data Source](/assets/images/rdlc/choose_data_set.jpg) 
+![Choose Data Source](http://johnnyimages.qiniudn.com/rdlc/choose_data_set.jpg) 
 
 在弹出的Wizard中，选择“Object”，输入Data Source Id， 点击OK确认，此时可以选择在”报表数据源“中创建的TableAdapter。当然，我们可以通过代码来创建数据源，代码如下：
 
@@ -219,7 +219,7 @@ Report-->Add Report Header, Add Report Foo。
 
 报表参数的值只能通过程序来设定，在报表上无法接收参数值的输入，只能显示。通过右键“Report Data” View的“Parameters”添加参数，如：
 
-![报表参数](/assets/images/rdlc/parameter.jpg) 
+![报表参数](http://johnnyimages.qiniudn.com/rdlc/parameter.jpg) 
 
 设置报表参数的值：
 
@@ -272,7 +272,7 @@ Report-->Add Report Header, Add Report Foo。
 如果希望单击报表中某个值后，弹出一个新的报表，即钻取报表或自报表，则
 右键报表的某个单元格-->Text Box Property-->制定钻取报表和传递给钻取报表的参数
 
-![插入ReportView控件](/assets/images/rdlc/sub_report.jpg) 
+![插入ReportView控件](http://johnnyimages.qiniudn.com/rdlc/sub_report.jpg) 
 
 在钻取报表中添加一个参数已接收主报表传递过来的参数，参数名和主报表传递给钻取报表的参数名相同。
 
@@ -303,7 +303,7 @@ Report-->Add Report Header, Add Report Foo。
 
 对于新建的Table，有一个默认的分组，名为Details，但是没有制定分组的字段，我们可以为这个分组设置分组字段，如：
 
-![插入ReportView控件](/assets/images/rdlc/group.jpg) 
+![插入ReportView控件](http://johnnyimages.qiniudn.com/rdlc/group.jpg) 
 
 ###在报表中插入图片
 

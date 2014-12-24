@@ -20,6 +20,8 @@ responses than using an XMLHttpRequest.
 - [Underscore.js](http://underscorejs.org/)
 - [lodash/lodash](https://github.com/lodash/lodash/)
 - [Search · circular json](https://github.com/search?q=circular+json&ref=opensearch) 用于处理 JSON 化是序列化和方序列化中的循环引用问题。
+- [ramda/ramda](https://github.com/ramda/ramda) Practical functional Javascript <http://ramdajs.com>
+    + [Practical Functional Javascript with Ramda](http://developer.telerik.com/featured/practical-functional-javascript-ramda/)
 
 See [underscore.js - Differences between lodash and underscore - Stack Overflow](http://stackoverflow.com/questions/13789618/differences-between-lodash-and-underscore)
 
@@ -59,6 +61,7 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 
 - [Numeral.js](http://numeraljs.com/)
 - [MikeMcl/decimal.js](https://github.com/MikeMcl/decimal.js) An arbitrary-precision Decimal type for JavaScript <http://mikemcl.github.io/decimal.js>
+- [googlei18n/libphonenumber](https://github.com/googlei18n/libphonenumber)
 
 ### JSON
 

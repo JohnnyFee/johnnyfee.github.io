@@ -5,7 +5,7 @@ category : Angular
 tags : [angular, tutorial]
 --- 
 
-本书为读 [AngularJS](http://www.salttiger.com/angularjs/) 的读书笔记，该书的例子在 [shyamseshadri/angularjs-book](https://github.com/shyamseshadri/angularjs-book)。
+本文为读 [AngularJS](http://www.salttiger.com/angularjs/) 的读书笔记，该书的例子在 [shyamseshadri/angularjs-book](https://github.com/shyamseshadri/angularjs-book)。
 
 [AngularJS: API: service components in ng](https://docs.angularjs.org/api/ng/service)
 

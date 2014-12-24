@@ -14,6 +14,7 @@ tags: [dao, style, guide]
 - [WordPress CSS Coding Standards →](http://make.wordpress.org/core/handbook/coding-standards/css/)
 - [CSS命名及书写规范](http://www.admin10000.com/document/23.html)
 - [CSS Guidelines (2.0.16) – High-level advice and guidelines for writing sane, manageable, scalable CSS](http://cssguidelin.es)
+- [Website Style Guide Resources](http://styleguides.io/)
 
 ## HTML
 

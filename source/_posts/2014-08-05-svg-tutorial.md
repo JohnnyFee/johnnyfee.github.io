@@ -213,6 +213,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 - [A Guide to SVG Animations (SMIL)](http://css-tricks.com/guide-svg-animations-smil/)
 - [5 Gotchas You're Gonna Face Getting Inline SVG Into Production](http://css-tricks.com/gotchas-on-getting-svg-into-production)
 - [#135: Three Ways to Animate SVG](http://css-tricks.com/video-screencasts/135-three-ways-animate-svg)
+- [3 tricks for adding texture to your text with CSS and SVG](http://www.webdesignerdepot.com/2014/12/3-tricks-for-adding-texture-to-your-text-with-css-and-svg)
 
 ### SVG Attribute reference
 

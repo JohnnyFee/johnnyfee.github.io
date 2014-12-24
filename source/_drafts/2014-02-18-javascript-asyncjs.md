@@ -25,44 +25,50 @@ This lesson covers asynchronous error handling pitfalls, and shows how promises 
 
 We can skip to the final function by passing 'error' = true like this:
 
-	async.waterfall([function (callback) {
-		callback(null); // <--- go to next fn
-	},
-	function (callback) {
-		callback(true); // <--- skip to the last fn
-	},
-	function (callback) {
-		callback(null); // <--- this fn will not be called
-	}
-	], callback);
+```js
+async.waterfall([function (callback) {
+	callback(null); // <--- go to next fn
+},
+function (callback) {
+	callback(true); // <--- skip to the last fn
+},
+function (callback) {
+	callback(null); // <--- this fn will not be called
+}
+], callback);
+```
 
 但是如果我们既想跳出 waterfall，又想得到一个结果：
 
-	var async = require('async');
+```js
+var async = require('async');
 
-	async.waterfall( [
-	  function( callback ){
-	    console.log('one');
-	    callback( null );
-	  },
+async.waterfall( [
+  function( callback ){
+    console.log('one');
+    callback( null );
+  },
 
-	  function( callback ){
-	    console.log('two');
-	    callback( true, 'more info' );
-	  },
+  function( callback ){
+    console.log('two');
+    callback( true, 'more info' );
+  },
 
-	  function( callback ){
-	    console.log('three');
-	    callback( null );
-	  }
-	], function(err, result){
-	  console.log( err, result );
-	} );
+  function( callback ){
+    console.log('three');
+    callback( null );
+  }
+], function(err, result){
+  console.log( err, result );
+});
+```
 
-	// RESULT
-	// one
-	// two
-	// true undefined
+```
+// RESULT
+// one
+// two
+// true undefined
+```
 
 很可惜，得到的是 `undefined`，作者给出的解决方法：
 

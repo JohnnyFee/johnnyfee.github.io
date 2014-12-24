@@ -509,4 +509,8 @@ Let's try something even better by playing with flex items flexibility! What abo
 - [CSS3弹性盒模型flexbox完整版教程](http://caibaojian.com/flexbox-guide.html)
 - [Grids in CSS3 - Modern Web](http://modernweb.com/2014/03/03/grids-in-css3/)
 
+## Tutorial
+
+- [Chris Wright - Experiment: Flexbox Adventures](http://chriswrightdesign.com/experiments/flexbox-adventures)
+
 <script async src="//codepen.io/assets/embed/ei.js"></script>

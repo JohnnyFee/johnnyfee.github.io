@@ -49,6 +49,7 @@ tags: [javascript]
 ## es7
 
 - [My ECMAScript 7 wishlist](http://www.nczonline.net/blog/2014/06/03/my-ecmascript-7-wishlist/)
+- [A Primer on ES7 Async Functions - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/a-primer-on-es7-async-functions--cms-22367)
 
 ## Syntax
 

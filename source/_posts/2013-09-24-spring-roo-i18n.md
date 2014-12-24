@@ -60,7 +60,7 @@ Google Code上提供的语言包 [spring-roo-addon-i18n-chinese](https://code.go
 
 运行你的工程，便可看到中文选项了。
 
-![中文效果](/assets/images/roo/zh_CN.png)
+![中文效果](http://johnnyimages.qiniudn.com/roo/zh_CN.png)
 
 ###参考
 

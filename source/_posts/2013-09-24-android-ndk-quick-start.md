@@ -48,12 +48,12 @@ launch configuration button. Using the Main tab, fill in the tool information as
 Switch to the Refresh tab; put a checkmark next to the “Refresh resource upon completion” and
 select “The project containing the selected resource” from the list.
 
-![javah](/assets/images/ndk/h.png)
+![javah](http://johnnyimages.qiniudn.com/ndk/h.png)
 
 Switch to the Common tab, and put a checkmark next to the External Tools under the “Display in
 favorites menu” group.
 
-![extern-tools](/assets/images/ndk/extern-tools.png)
+![extern-tools](http://johnnyimages.qiniudn.com/ndk/extern-tools.png)
 
 Click the OK button to save the external tool configuration. In order to test the new configuration,
 using the Project Explorer view, select the HelloJni class, then choose **Run --> External Tools-->Generate C and C++ Header File**. The javah tool will parse the selected class file for native
@@ -82,7 +82,7 @@ configuration button. Using the Main tab, fill in the tool information as follow
 Click the OK button to save the external tool configuration. In order to test the new configuration, using
 the Project Explorer view, select the HelloJni class, then choose **Run --> External Tools --> Java Class**.
 
-![javah](/assets/images/ndk/javap.png)
+![javah](http://johnnyimages.qiniudn.com/ndk/javap.png)
 
 ##类型转换
 JNI的基本类型可以直接当做Java对应的类型使用，可以通过Eclipse的F3(代码导航)看看JNI的基本类型对应的C/C++类型。JNI的引用类型通过需要通过JNI提供的特定方法转化之后才能被C/C++代码消费。
@@ -90,12 +90,12 @@ JNI的基本类型可以直接当做Java对应的类型使用，可以通过Ecli
 ###基本类型对应表
 C++中直接可以使用JNI的基本类型，不需要将JNI类型转化为C++的类型。
 
-![基本类型](/assets/images/ndk/basic-type.png)
+![基本类型](http://johnnyimages.qiniudn.com/ndk/basic-type.png)
 
 ###引用类型
 C++中直接不可以使用JNI的引用类型，需要将JNI类型转化为C++的相应类型后再使用。
 
-![引用类型](/assets/images/ndk/object-type.png)
+![引用类型](http://johnnyimages.qiniudn.com/ndk/object-type.png)
 
 
 ###字符串
@@ -503,7 +503,7 @@ The import-module function macro needs to first locate the shared module and the
 
 对于可以通过ndk-build命令编译成功，而Eclipse中报编译错误的原因为，Java对于C/C++的编译器存在问题，可以通过禁用Eclispe一个错误提示来解决。
 
-![Eclipse的编译器问题](/assets/images/ndk/eclipse.png)
+![Eclipse的编译器问题](http://johnnyimages.qiniudn.com/ndk/eclipse.png)
 
 将所有的勾去掉。
 

@@ -231,6 +231,24 @@ See:
 - [Angularjs Controller 间通信机制 - 破狼 - 博客园](http://www.cnblogs.com/whitewolf/archive/2013/04/16/3024843.html)
 - [angular开发 控制器之间的通信 - 专栏 - 前端乱炖](http://www.html-js.com/article/1560)
 
+### ControllerAs
+
+有两种为申明控制器的方式：
+
+- one binds methods and properties directly onto the controller using this: n`g-controller="SettingsController1 as settings"`
+- one injects $scope into the controller: `ng-controller="SettingsController2"`
+
+The second option is more common in the Angular community, and is generally used in boilerplates and in this guide. However, there are advantages to binding properties directly to the controller and avoiding scope.
+
+- Using `controller as` makes it obvious which controller you are accessing in the template when multiple controllers apply to an element.
+- If you are writing your controllers as classes you have easier access to the properties and methods, which will appear on the scope, from inside the controller code.
+- Since there is always a `.` in the bindings, you don't have to worry about prototypal inheritance masking primitives.
+
+See:
+
+- [AngularJS: API: ngController](https://docs.angularjs.org/api/ng/directive/ngController)
+- [AngularJS’s Controller As and the vm Variable](http://www.johnpapa.net/angularjss-controller-as-and-the-vm-variable/)
+
 ## Model
 
 AngularJS 的模型就是那些普通的 JavaScript 对象。使用任何现有的，纯JavaScript类或对象，就跟在模型层一样的去使用它们也是可以的。要把模型暴露给 AngularJS，你只需把它赋值给 `$scope` 的属性即可。

@@ -9,7 +9,6 @@ tags: [android,animation]
 参考官方文档，Android动画分为两类，分别为：
 
 - [Property Animation](http://developer.android.com/guide/topics/resources/animation-resource.html#Property)用于改变目标对象的属性，如背景颜色，透明度等。
-
 - [View Animation](http://developer.android.com/guide/topics/resources/animation-resource.html#View) View动画又分为
 	- [Tween Animation](http://developer.android.com/guide/topics/resources/animation-resource.html#Tween) 通过对场景里的对象不断做图像变换(平移、缩放、旋转)产生动画效果，可以理解为渐变动画或者补间动画。
 	- [Frame Animation](http://developer.android.com/guide/topics/resources/animation-resource.html#Frame) 通过[AnimationDrawable](http://developer.android.com/reference/android/graphics/drawable/AnimationDrawable.html)来顺序显示一组图片，可以理解为逐帧动画。
@@ -19,14 +18,16 @@ tags: [android,animation]
 
 Animator对应的监听接口为`Animator.AnimatorListener`，可以继承AnimatorListenerAdapter而不是实现AnimatorListener接口来简化操作，这个类对AnimatorListener中的函数都定义了一个空函数体，这样我们就只用定义想监听的事件而不用实现每个函数却只定义一空函数体。如：
 
-	ObjectAnimator oa=ObjectAnimator.ofFloat(tv, "alpha", 0f, 1f);
-	oa.setDuration(3000);
-	oa.addListener(new AnimatorListenerAdapter(){
-	    public void on AnimationEnd(Animator animation){
-	        Log.i("Animation","end");
-	    }
-	});
-	oa.start();
+```java
+ObjectAnimator oa=ObjectAnimator.ofFloat(tv, "alpha", 0f, 1f);
+oa.setDuration(3000);
+oa.addListener(new AnimatorListenerAdapter(){
+    public void on AnimationEnd(Animator animation){
+        Log.i("Animation","end");
+    }
+});
+oa.start();
+```
 
 关于Animator的监听器请参考[Animation Listeners](http://developer.android.com/guide/topics/graphics/prop-animation.html#listeners)。
 
@@ -36,32 +37,31 @@ Animator对应的监听接口为`Animator.AnimatorListener`，可以继承Animat
 
 在XML中定义的语法如下：
 
-	<set
-	  android:ordering=["together" | "sequentially"]>
-
-	    <objectAnimator
-	        android:propertyName="string"
-	        android:duration="int"
-	        android:valueFrom="float | int | color"
-	        android:valueTo="float | int | color"
-	        android:startOffset="int"
-	        android:repeatCount="int"
-	        android:repeatMode=["repeat" | "reverse"]
-	        android:valueType=["intType" | "floatType"]/>
-
-	    <animator
-	        android:duration="int"
-	        android:valueFrom="float | int | color"
-	        android:valueTo="float | int | color"
-	        android:startOffset="int"
-	        android:repeatCount="int"
-	        android:repeatMode=["repeat" | "reverse"]
-	        android:valueType=["intType" | "floatType"]/>
-
-	    <set>
-	        ...
-	    </set>
-	</set>
+```xml
+<set
+  android:ordering=["together" | "sequentially"]>
+    <objectAnimator
+        android:propertyName="string"
+        android:duration="int"
+        android:valueFrom="float | int | color"
+        android:valueTo="float | int | color"
+        android:startOffset="int"
+        android:repeatCount="int"
+        android:repeatMode=["repeat" | "reverse"]
+        android:valueType=["intType" | "floatType"]/>
+    <animator
+        android:duration="int"
+        android:valueFrom="float | int | color"
+        android:valueTo="float | int | color"
+        android:startOffset="int"
+        android:repeatCount="int"
+        android:repeatMode=["repeat" | "reverse"]
+        android:valueType=["intType" | "floatType"]/>
+    <set>
+        ...
+    </set>
+</set>
+```
 
 Property Animation不仅可以应用于View，还可以应用于任何对象。Property Animation只是表示一个值在一段时间内的改变，当值改变时要做什么事情完全是你自己决定的。
 
@@ -405,7 +405,18 @@ This application code will set the animation as the background for a View, then 
 - [Building Animations with the android.transition Framework, Part 1](http://blog.bignerdranch.com/4541-building-animations-android-transition-framework-part-1)
 - [Android Property Animations: Building Complex Animations | Cogito Learning](http://cogitolearning.co.uk/?p=1404)
 
+## Material
+
+- [afollestad/material-dialogs](https://github.com/afollestad/material-dialogs)
+- [Styling Android » Material – Part 8](https://blog.stylingandroid.com/material-part-8)
+- [The shape of materials to come • Five](http://five.agency/the-shape-of-materials-to-come)
+
+### Tools
+
+- [Material Design Color Palette Generator - Material Palette](http://www.materialpalette.com/purple/pink)
+
 ## Tutorial
 
 - [Getting Started with Activity & Fragment Transitions (part 1)](http://www.androiddesignpatterns.com/2014/12/activity-fragment-transitions-in-android-lollipop-part1.html)
 - [Getting Started with Activity & Fragment Transitions (part 1)](http://www.androiddesignpatterns.com/2014/12/activity-fragment-transitions-in-android-lollipop-part1.html)
+- [Content Transitions In-Depth (part 2)](http://www.androiddesignpatterns.com/2014/12/activity-fragment-content-transitions-in-depth-part2.html)

@@ -5,14 +5,162 @@ category: JavaScript
 tags: [javascript,performance]
 --- 
 
-> Original: [7 JavaScript Basics Many Developers Aren't Using (Properly)](http://tech.pro/tutorial/1453/7-javascript-basics-many-developers-aren-t-using-properly)
-> 
-> [[译] JavaScript 开发者经常忽略或误用的七个基础知识点 · Issue #21 · cssmagic/blog · GitHub](https://github.com/cssmagic/blog/issues/21) 
-> 
-> Translated by: [> cssmagic](https://github.com/cssmagic) 
+See:
 
+- [7 JavaScript Basics Many Developers Aren't Using (Properly)](http://tech.pro/tutorial/1453/7-javascript-basics-many-developers-aren-t-using-properly)
+- [[译] JavaScript 开发者经常忽略或误用的七个基础知识点 · Issue #21 · cssmagic/blog · GitHub](https://github.com/cssmagic/blog/issues/21) 
+- [45 Useful JavaScript Tips, Tricks and Best Practices - Modern Web](http://modernweb.com/2013/12/23/45-useful-javascript-tips-tricks-and-best-practices)
 
 JavaScript 本身可以算是一门简单的语言，但我们也不断用智慧和灵活的模式来改进它。昨天我们将这些模式应用到了 JavaScript 框架中，今天这些框架又驱动了我们的 Web 应用程序。很多新手开发者被各种强大的 JavaScript 框架吸引进来，但他们却忽略了框架身后浩如星海的 JavaScript 实用技巧。本文将为你呈献其中七个基础知识点：
+
+## Type
+
+`undefined`, `null`, 0, `false`, `NaN`, `''` (empty string) are all falsy.
+
+### How can I check whether a variable is defined in JavaScript
+
+    if (typeof variable === 'undefined') {
+        // variable is undefined
+    }
+
+### Be careful when using `typeof`, `instanceof` and `constructor`
+
+* _typeof_ : a JavaScript unary operator used to return a string that represents the primitive type of a variable, don’t forget that `typeof null` will return “object”, and for the majority of object types (Array, Date, and others) will return also “object”.
+* _constructor_ : is a property of the internal prototype property, which could be overridden by code.
+* _instanceof_ : is another JavaScript operator that check in all the prototypes chain the constructor it returns true if it’s found and false if not.
+
+```js
+var arr = ["a", "b", "c"];
+typeof arr;   // return "object" 
+arr instanceof Array // true
+arr.constructor();  //[]
+```
+
+### Use logical AND/ OR for conditions
+
+```
+var foo = 10;  
+foo == 10 && doSomething(); // is the same thing as if (foo == 10) doSomething(); 
+foo == 5 || doSomething(); // is the same thing as if (foo != 5) doSomething();
+```
+
+The logical OR could also be used to set a default value for function argument.
+
+```
+function doSomething(arg1){ 
+    arg1 = arg1 || 10; // arg1 will have 10 as a default value if it’s not already set
+}
+```
+
+## Object
+
+### Check the properties of an object when using a for-in loop
+
+This code snippet could be useful in order to avoid iterating through the properties from the object’s prototype.
+
+```js
+for (var name in object) {  
+    if (object.hasOwnProperty(name)) { 
+        // do something with name                    
+    }  
+}
+```
+
+### Create an object whose prototype is a given object
+
+It’s possible to write a function that creates an object whose prototype is the given argument like this…
+
+```js
+function clone(object) {  
+    function OneShotConstructor(){}; 
+    OneShotConstructor.prototype= object;  
+    return new OneShotConstructor(); 
+} 
+clone(Array).prototype ;  // []
+```
+
+### 高效探测功能特性和对象属性
+
+很多时候开发者们会像下面这样来探测浏览器的某个特性：
+
+    if(navigator.geolocation) {
+        // Do some stuff
+        // 在这里干点事情
+    }
+
+当然这可以正常工作，但它并不一定有很好的效率。因为这个对象探测方法会在浏览器中初始化资源。在过去，上面的代码片断可能会在某些浏览器下导致内存泄露。更好、更快的方法是检查对象是否包含某个键名：
+
+    if("geolocation" in navigator) {
+        // Do some stuff
+        // 在这里干点事情
+    }
+
+键名检查十分简单，而且可以避免内存泄露。另外请注意，如果这个属性的值是假值，那么前一种探测方式将会得到“否”的结果，并不能真正探测出这个键名是否存在。
+
+See also [Retrieving Property Names with `Object.getOwnPropertyNames` and `Object.keys` · Design Pepper](http://designpepper.com/blog/drips/retrieving-property-names-with-object-getownpropertynames-and-object-keys.html)
+
+## JSON
+
+### Serialization and deserialization (working with JSON)
+
+```js
+var person = {name :'Saad', age : 26, department : {ID : 15, name : "R&D"} }; 
+var stringFromPerson = JSON.stringify(person); 
+/* stringFromPerson is equal to "{"name":"Saad","age":26,"department":{"ID":15,"name":"R&D"}}"   */ 
+var personFromString = JSON.parse(stringFromPerson);  
+/* personFromString is equal to person object  */
+```
+
+## Number
+
+### Get a random number in a specific range
+
+This code snippet can be useful when trying to generate fake data for testing purposes, such as a salary between min and max.
+
+```js
+var x = Math.floor(Math.random() * (max - min + 1)) + min;
+```
+
+### Verify that a given argument is a number
+
+```js
+function isNumber(n){
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+```
+
+### Rounding number to N decimal place
+
+```js
+var num =2.443242342;
+num = num.toFixed(4);  // num will be equal to 2.4432
+```
+
+NOTE : the `toFixed()` function returns a string and not a number.
+
+**Floating point problems**
+
+```
+0.1 + 0.2 === 0.3 // is false 
+9007199254740992 + 1 // is equal to 9007199254740992  
+9007199254740992 + 2 // is equal to 9007199254740994
+```
+
+Why does this happen? 0.1 +0.2 is equal to 0.30000000000000004. What you need to know is that all JavaScript numbers are floating points represented internally in 64 bit binary according to the IEEE 754 standard. For more explanation, take a look to [this blog post](http://www.2ality.com/2012/04/number-encoding.html).
+
+You can use `toFixed()` and `toPrecision()` to resolve this problem.
+
+### Verify the argument before passing it to `isFinite()`
+
+```
+isFinite(0/0) ; // false 
+isFinite("foo"); // false 
+isFinite("10"); // true 
+isFinite(10);   // true 
+isFinite(undefined);  // false 
+isFinite();   // false 
+isFinite(null);  // true  !!!
+```
 
 ## String
 
@@ -20,22 +168,66 @@ JavaScript 本身可以算是一门简单的语言，但我们也不断用智慧
 
 令很多 JavaScript 初学者意外的是，字符串的 replace 方法并不会 [替换所有匹配的子串](http://davidwalsh.name/javascript-replace)——而仅仅替换第一次匹配。当然 JavaScript 老手们都知道这里可以使用正则表达式，并且需要加上一个全局标志位（/g）：
 
-    // Mistake
-    // 踩到坑了
-    var str = "David is an Arsenal fan, which means David is great";
-    str.replace("David", "Darren"); // "Darren is an Arsenal fan, which means David is great"
-    
-    // Desired
-    // 符合预期
-    str.replace(/David/g, "Darren"); // "Darren is an Arsenal fan, which means Darren is great"
+```js
+// Mistake
+// 踩到坑了
+var str = "David is an Arsenal fan, which means David is great";
+str.replace("David", "Darren"); // "Darren is an Arsenal fan, which means David is great"
+
+// Desired
+// 符合预期
+str.replace(/David/g, "Darren"); // "Darren is an Arsenal fan, which means Darren is great"
+```
 
 另一个基本的逻辑错误就是在大小写不敏感的校验场合（字母可大写可小写）没有忽略大小写，此时 /i 标志位就很实用：
 
-    str.replace(/david/gi, "Darren"); // "Darren will always be an Arsenal fan, which means Darren will always be great"
+```js
+str.replace(/david/gi, "Darren"); // "Darren will always be an Arsenal fan, which means Darren will always be great"
+```
 
 （译注：上面这段例程我没有看懂用意，可能是注释有误吧……）
 
 每个 JavaScript 开发者都曾踩过这两个标志位的坑——因此别忘了在适当的时候用上它们！
+
+### String.replaceAll
+
+```js
+function replaceAll(find, replace, str) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
+```
+
+Reference: [Replacing all occurrences of a string in javascript? - Stack Overflow](http://stackoverflow.com/questions/1144783/replacing-all-occurrences-of-a-string-in-javascript)
+
+### String.endsWith
+
+```js
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+```
+
+### toString
+
+In JavaScript, when an object is passed to a function expecting a string (like [window.alert](https://developer.mozilla.org/en-US/docs/Web/API/window.alert) or [document.write](https://developer.mozilla.org/en-US/docs/Web/API/document.write)), the object's toString() method is called and the returned value is passed to the function. This can make the object appear to be a string when used with other functions when it is really an object with properties and methods.
+
+    var selObj = window.getSelection(); 
+
+In the above example, selObj.toString() is automatically called when it is passed to window.alert. However, attempting to use a JavaScript String property or method such as length or substr directly on a Selection object will result in an error if it does not have that property or method and may return unexpected results if it does. To use a Selection object as a string, call its toString method directly:
+
+    var selectedText = selObj.toString();
+
+Refrerence: [Window.getSelection](https://developer.mozilla.org/en-US/docs/Web/API/Window.getSelection)
+
+### A string trim function
+
+The classic trim function of Java, C#, PHP and many other language that remove whitespace from a string doesn’t exist in JavaScript, so we could add it to the `String` object.
+
+```js
+String.prototype.trim = function(){return this.replace(/^\s+|\s+$/g, "");};
+```
+
+A native implementation of the trim() function is available in the recent JavaScript engines.
 
 ## Array
 
@@ -66,27 +258,32 @@ Array.prototype.slice 绝对是 JavaScript 世界中的一玫珍宝，但 JavaSc
 
 [数组的 sort 方法](http://davidwalsh.name/array-sort) 远远没有被充分利用，而且可能比开发者们想像的更加强大。很多开发者可能觉得 sort 方法可以用来做这种事情：
 
-    [1, 3, 9, 2].sort();
-        // Returns: [1, 2, 3, 9]
-        // 返回 [1, 2, 3, 9]
+```js
+[1, 3, 9, 2].sort();
+
+// Returns: [1, 2, 3, 9]
+// 返回 [1, 2, 3, 9]
+```
 
 ……这没错，但它还有更强大的用法，比如这样：
 
-    [
-        { name: "Robin Van PurseStrings", age: 30 },
-        { name: "Theo Walcott", age: 24 },
-        { name: "Bacary Sagna", age: 28  }
-    ].sort(function(obj1, obj2) {
-        // Ascending: first age less than the previous
-        // 实现增序排列：前者的 age 小于后者
-        return obj1.age - obj2.age;
-    });
-        // Returns:  
-        // [
-        //    { name: "Theo Walcott", age: 24 },
-        //    { name: "Bacary Sagna", age: 28  },
-        //    { name: "Robin Van PurseStrings", age: 30 }
-        // ]
+```js
+[
+    { name: "Robin Van PurseStrings", age: 30 },
+    { name: "Theo Walcott", age: 24 },
+    { name: "Bacary Sagna", age: 28  }
+].sort(function(obj1, obj2) {
+    // Ascending: first age less than the previous
+    // 实现增序排列：前者的 age 小于后者
+    return obj1.age - obj2.age;
+});
+// Returns:  
+// [
+//    { name: "Theo Walcott", age: 24 },
+//    { name: "Bacary Sagna", age: 28  },
+//    { name: "Robin Van PurseStrings", age: 30 }
+// ]
+```
 
 你不仅可以对简单类型的数组项进行排序，可以通过属性来排序对象。如果哪天服务器端发来一段 JSON 数据，而且其中的对象需要排序，你可别忘了这一招！
 
@@ -94,17 +291,19 @@ Array.prototype.slice 绝对是 JavaScript 世界中的一玫珍宝，但 JavaSc
 
 几乎所有开发者都踩过 JavaScript 的这个坑——“传对象只是传引用”。开发者们经常会试图 [把一个数组清空](http://davidwalsh.name/empty-array)，但实际上却错误地创建了一个新数组。
 
-    var myArray = yourArray = [1, 2, 3];
-    
-    // :(
-    // 囧
-    myArray = []; // `yourArray` is still [1, 2, 3]
-                  // `yourArray` 仍然是 [1, 2, 3]
-    
-    // The right way, keeping reference
-    // 正确的方法是保持引用
-    myArray.length = 0; // `yourArray` and `myArray` both []
-                        // `yourArray` 和 `myArray`（以及其它所有对这个数组的引用）都变成 [] 了
+```js
+var myArray = yourArray = [1, 2, 3];
+
+// :(
+// 囧
+myArray = []; // `yourArray` is still [1, 2, 3]
+              // `yourArray` 仍然是 [1, 2, 3]
+
+// The right way, keeping reference
+// 正确的方法是保持引用
+myArray.length = 0; // `yourArray` and `myArray` both []
+                    // `yourArray` 和 `myArray`（以及其它所有对这个数组的引用）都变成 [] 了
+```
 
 坑里的人们终于明白，原来传对象只是在传引用。因此当我把 myArray 重新赋值为 [] 时，确实会创建出一个新的空数组，但其它对老数组的引用仍然没变！大坑啊！还是换用截断的方法吧，少年。
 
@@ -112,37 +311,139 @@ Array.prototype.slice 绝对是 JavaScript 世界中的一玫珍宝，但 JavaSc
 
 在上面的第 2 节里，我展示了数组的 slice 和 apply 方法所能组合出的几个小妙招，所以对于数组方法的其它技巧，你应该已经做好心理准备了吧。这次我们使用 push 方法来合并数组：
 
-    var mergeTo = [4,5,6];
-    var mergeFrom = [7,8,9];
-    
-    Array.prototype.push.apply(mergeTo, mergeFrom);
-    
-    mergeTo; // is: [4, 5, 6, 7, 8, 9]
+```js
+var mergeTo = [4,5,6];
+var mergeFrom = [7,8,9];
+
+Array.prototype.push.apply(mergeTo, mergeFrom);
+mergeTo; // is: [4, 5, 6, 7, 8, 9]
+```
 
 这是一项不为人知的小技巧，简单的原生方法就可以实现数组合并这样的常见任务。
 
 See also [Combining JS Arrays](http://davidwalsh.name/combining-js-arrays)
 
-## Property
-### 高效探测功能特性和对象属性
+### Verify that a given argument is an array
 
-很多时候开发者们会像下面这样来探测浏览器的某个特性：
+```js
+function isArray(obj){
+    return Object.prototype.toString.call(obj) === '[object Array]' ;
+}
+```
 
-    if(navigator.geolocation) {
-        // Do some stuff
-        // 在这里干点事情
-    }
+Note that if the toString() method is overridden, you will not get the expected result using this trick.
 
-当然这可以正常工作，但它并不一定有很好的效率。因为这个对象探测方法会在浏览器中初始化资源。在过去，上面的代码片断可能会在某些浏览器下导致内存泄露。更好、更快的方法是检查对象是否包含某个键名：
+Or use…
 
-    if("geolocation" in navigator) {
-        // Do some stuff
-        // 在这里干点事情
-    }
+```js
+Array.isArray(obj); // its a new Array method
+```
 
-键名检查十分简单，而且可以避免内存泄露。另外请注意，如果这个属性的值是假值，那么前一种探测方式将会得到“否”的结果，并不能真正探测出这个键名是否存在。
+You could also use `instanceof` if you are not working with multiple frames. However, if you have many contexts, you will get a wrong result.
 
-See also [Retrieving Property Names with `Object.getOwnPropertyNames` and `Object.keys` · Design Pepper](http://designpepper.com/blog/drips/retrieving-property-names-with-object-getownpropertynames-and-object-keys.html)
+```js
+var myFrame = document.createElement('iframe');
+document.body.appendChild(myFrame);
+
+var myArray = window.frames[window.frames.length-1].Array;
+var arr = new myArray(a,b,10); // [a,b,10]  
+
+// instanceof will not work correctly, myArray loses his constructor 
+// constructor is not shared between frames
+arr instanceof Array; // false
+```
+
+### Get a random item from an array
+
+```js
+var items = [12, 548 , 'a' , 2 , 5478 , 'foo' , 8852, , 'Doe' , 2145 , 119];
+var  randomItem = items[Math.floor(Math.random() * items.length)];
+```
+
+### Generate an array of numbers with numbers from 0 to max
+
+```js
+var numbersArray = [] , max = 100;
+for( var i=1; numbersArray.push(i++) < max;);  // numbers = [1,2,3 ... 100]
+```
+
+### Generate a random set of alphanumeric characters
+
+```
+function generateRandomAlphaNum(len) {
+    var rdmString = "";
+    for( ; rdmString.length < len; rdmString  += Math.random().toString(36).substr(2));
+    return  rdmString.substr(0, len);
+
+}
+```
+
+### Shuffle an array of numbers
+
+```
+var numbers = [5, 458 , 120 , -215 , 228 , 400 , 122205, -85411];
+numbers = numbers.sort(function(){ return Math.random() - 0.5});
+/* the array numbers will be equal for example to [120, 5, 228, -215, 400, 458, -85411, 122205]  */
+```
+
+A better option could be to implement a random sort order by code (e.g. : Fisher-Yates shuffle), than using the native sort JavaScript function. For more details take a look to [this discussion](http://stackoverflow.com/questions/962802/is-it-correct-to-use-javascript-array-sort-method-for-shuffling/962890#962890).
+
+### Get the max or the min in an array of numbers
+
+```js
+var  numbers = [5, 458 , 120 , -215 , 228 , 400 , 122205, -85411]; 
+var maxInNumbers = Math.max.apply(Math, numbers); 
+var minInNumbers = Math.min.apply(Math, numbers);
+```
+
+### Empty an array
+
+```js
+var myArray = [12 , 222 , 1000 ];  
+myArray.length = 0; // myArray will be equal to [].
+```
+
+### Don’t use delete to remove an item from array
+
+Use `splice`&nbsp;instead of using `delete` to delete an item from an array. Using `delete` replaces the item with `undefined` instead of the removing it from the array.
+
+Instead of…
+
+```js
+var items = [12, 548 ,'a' , 2 , 5478 , 'foo' , 8852, , 'Doe' ,2154 , 119 ]; 
+items.length; // return 11 
+delete items[3]; // return true 
+items.length; // return 11 
+/* items will be equal to [12, 548, "a", undefined × 1, 5478, "foo", 8852, undefined × 1, "Doe", 2154,       119]   */
+```
+
+Use…
+
+```js
+var items = [12, 548 ,'a' , 2 , 5478 , 'foo' , 8852, , 'Doe' ,2154 , 119 ]; 
+items.length; // return 11 
+items.splice(3,1) ; 
+items.length; // return 10 
+/* items will be equal to [12, 548, "a", 5478, "foo", 8852, undefined × 1, "Doe", 2154,       119]   */
+```
+
+The delete method should be used to delete an object property.
+
+### Truncate an array using length
+
+Like the previous example of emptying an array, we truncate it using the `length` property.
+
+```js
+var myArray = [12 , 222 , 1000 , 124 , 98 , 10 ];  
+myArray.length = 4; // myArray will be equal to [12 , 222 , 1000 , 124].
+```
+
+As a bonus, if you set the array length to a higher value, the length will be changed and new items will be added with `undefined` as a value. The array length is not a read only property.
+
+```js
+myArray.length = 10; // the new array length is 10 
+myArray[myArray.length - 1] ; // undefined
+```
 
 ## Event
 
@@ -163,7 +464,7 @@ See also [Retrieving Property Names with `Object.getOwnPropertyNames` and `Objec
 
 JavaScript 老鸟们看到这篇文章可能会说“我早知道了”，但说不定什么时候，他们就会在某一点上栽跟头。提醒大家留意 JavaScript 中的各种小细节，失之毫厘谬以千里啊！
 
-## Escape
+## URL
 
 js对文字进行编码涉及3个函数：escape,encodeURI,encodeURIComponent，相应3个解码函数：unescape,decodeURI,decodeURIComponent
 
@@ -187,3 +488,46 @@ js对文字进行编码涉及3个函数：escape,encodeURI,encodeURIComponent，
     encodeURI 不编码字符有82个：!，#，$，&，’，(，)，*，+，,，-，.，/，:，;，=，?，@，_，~，0-9，a-z，A-Z
 
     encodeURIComponent 不编码字符有71个：!， ‘，(，)，*，-，.，_，~，0-9，a-z，A-Z
+
+[javascript对url进行encode的两种方式 - baibaluo - 博客园](http://www.cnblogs.com/baibaluo/archive/2011/03/03/2071250.html)
+
+## Util
+
+- [Learning much javascript from one line of code - arqex](http://arqex.com/939/learning-much-javascript-one-line-code)
+
+### An HTML escaper function
+
+```js
+function escapeHTML(text) {  
+    var replacements= {"<": "&lt;", ">": "&gt;","&": "&amp;", "\"": "&quot;"};                      
+    return text.replace(/[<>&"]/g, function(character) {  
+        return replacements[character];  
+    }); 
+}
+```
+
+### Deal with WebSocket timeout
+
+Generally when a WebSocket connection is established, a server could time out your connection after 30 seconds of inactivity. The firewall could also time out the connection after a period of inactivity.
+
+To deal with the timeout issue you could send an empty message to the server periodically. To do this, add these two functions to your code: one to keep alive the connection and the other one to cancel the keep alive. Using this trick, you’ll control the timeout.
+
+Add a `timerID`…
+
+```js
+var timerID = 0; 
+function keepAlive() { 
+    var timeout = 15000;  
+    if (webSocket.readyState == webSocket.OPEN) {  
+        webSocket.send('');  
+    }  
+    timerId = setTimeout(keepAlive, timeout);  
+}  
+function cancelKeepAlive() {  
+    if (timerId) {  
+        cancelTimeout(timerId);  
+    }  
+}
+```
+
+The `keepAlive()` function should be added at the end of the `onOpen()` method of the webSocket connection and the `cancelKeepAlive()` at the end of the `onClose()` method.

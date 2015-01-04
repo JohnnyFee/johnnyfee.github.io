@@ -56,6 +56,7 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 ### Date
 
 - [Moment.js](http://momentjs.com/timezone/)
+- [bevacqua/rome](https://github.com/bevacqua/rome) Customizable date (and time) picker. Opt-in UI, no jQuery! <https://bevacqua.github.io/rome>
 
 ### Number
 

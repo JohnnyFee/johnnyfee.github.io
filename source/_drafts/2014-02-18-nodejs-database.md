@@ -11,6 +11,7 @@ tags: [web]
 
 ## MySql
 
+- [Building a simple API with Express and Bookshelf.js](http://blog.ragingflame.co.za/2014/12/16/building-a-simple-api-with-express-and-bookshelfjs)
 - [felixge/node-mysql](https://github.com/felixge/node-mysql)
 - [No reconnection after connection lost · Issue #431 · felixge/node-mysql · GitHub](https://github.com/felixge/node-mysql/issues/431)
 - [MySQL数据库连接超时(wait_timeout)问题的处理 - 真是绝佳的头像啊，力量源源不断地涌上来！ - ITeye技术网站](http://sarin.iteye.com/blog/580311/)

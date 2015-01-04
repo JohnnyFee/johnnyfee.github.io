@@ -120,13 +120,13 @@ Promise主要提供以下接口：
     new Promise(function(resolve, reject) {});
 
 - resolve
-    - 类型为thenable. Your promise will be fulfilled/rejected with the outcome of thenable
-    - 类型为object Your promise is fulfilled with obj
+    - 类型为 thenable. Your promise will be fulfilled/rejected with the outcome of thenable
+    - 类型为 object. Your promise is fulfilled with obj
 - reject(obj) Your promise is rejected with obj. For consistency and debugging (eg stack traces), obj should be an instanceof Error. Any errors thrown in the constructor callback will be implicitly passed to reject().
 
 ### Methods
 
-- Promise.prototype.then(onFulfilled, onRejected)
+- `Promise.prototype.then(onFulfilled, onRejected)`
     promise对象的then方法用来添加回调函数。它可以接受两个回调函数，第一个是操作成功（fulfilled）时的回调函数，第二个是操作失败（rejected）时的回调函数（可以不提供）。一旦状态改变，就调用相应的回调函数。
 
     Appends fullfillment and rejection handlers to the promise, and returns a new promise resolving to the return value of the called handler.
@@ -159,7 +159,7 @@ Promise主要提供以下接口：
 
     It sounds a bit complicated, but it's actually pretty simple. If what I've told you doesn't sink in, I'm sorry. I guess I'm just not the best person to talk about it.
 
-- Promise.prototype.catch(onRejected)
+- `Promise.prototype.catch(onRejected)`
 
     Appends a rejection handler callback to the promise, and returns a new promise resolving to the return value of the callback if it is called, or to its original fulfillment value if the promise is instead fulfilled.
 

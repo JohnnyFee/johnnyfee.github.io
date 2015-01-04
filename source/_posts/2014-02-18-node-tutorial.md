@@ -173,6 +173,8 @@ Nodejs在快速的发展着，软件包版本升级的很快，文章有运行�
 
 ### 云平台
 
+- Heroku 
+    + [6 Easy Ways to Prevent Your Heroku Node App From Sleeping - Quick Left Boulder Colorado](http://quickleft.com/blog/6-easy-ways-to-prevent-your-heroku-node-app-from-sleeping)
 - [Nitrous.io](https://www.nitrous.io/join/jOTIMMPrQPY), 一个云Node.js, Go, - Ruby, Python平台，还有Web IDE。
 - [百度BAE](http://developer.baidu.com/wiki/index.php?title=docs/cplat/rt/node.js- )
 - [AppFog](https://www.appfog.com/)

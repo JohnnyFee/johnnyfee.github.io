@@ -18,6 +18,9 @@ tags: [javascript]
 - [ECMAScript 6 promises (2/2): the API](http://www.2ality.com/2014/10/es6-promises-api.html)
 - [Preparing for ECMAScript 6: Set and WeakSet](http://www.sitepoint.com/preparing-ecmascript-6-set-weakset)
 - [astralfoxy/es6inode](https://github.com/astralfoxy/es6inode)
+- [ECMAScript 6: new OOP features besides classes](http://www.2ality.com/2014/12/es6-oop.html)
+- [JS.Next: ES6 - Frontend Masters](https://frontendmasters.com/courses/jsnext-es6)
+- [Symbols in ECMAScript 6](http://www.2ality.com/2014/12/es6-symbols.html)
 
 ## Tools
 

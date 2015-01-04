@@ -47,19 +47,44 @@ async属性是HTML5中新增的异步支持，见后文解释，加上好（不�
 
 例如 Google Analytics 和 Google+ Badge 都使用了这种异步加载代码：
 
-	(function() {  
-	     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;  
-	     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';  
-	     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);  
-	 })();
+```js
+(function() {  
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;  
+     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';  
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);  
+ })();
 
-	 ( function ( )
+ ( function ( )
 
-	        {var po = document.createElement("script");  
-	    po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";  
-	    var s = document.getElementsByTagName("script")[0];  
-	    s.parentNode.insertBefore(po, s);  
-	 })();
+        {var po = document.createElement("script");  
+    po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";  
+    var s = document.getElementsByTagName("script")[0];  
+    s.parentNode.insertBefore(po, s);  
+ })();
+```
+
+可以进一步封装如下：
+
+```js
+// Add scripts to DOM by creating a script tag dynamically.
+// @param {String=} url Url of a js file
+// @param {String=} src Script source code to add the source directly.
+// NB: At least one of the parameters must be specified.
+var hookScripts = function(url, src) {
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.src = url || null;
+    s.innerHTML = src || null;
+    document.getElementsByTagName("head")[0].appendChild(s);
+};
+// usage eg:
+hookScripts('url/path/to/myscript.js');  //url
+hookScripts(null, 'alert("hello");');  //giving the source code directly
+```
+
+We use the native DOM API instead of jQuery for this particular case because of the way [jQuery treats <script> tags](http://api.jquery.com/append/#comment-67912032). jQuery inserts script to DOM, then evaluates the script separately and then it removes the tag from the DOM. So you won't see the script tag, but the script will get executed.
+
+See [♠ qλ | kadaj's musing ♠](http://www.qlambda.com/2012/01/add-script-tags-to-dom-dynamically.html)
 
 但是，**这种加载方式在加载执行完之前会阻止 onload 事件的触发**，而现在很多页面的代码都在 onload 时还要执行额外的渲染工作等，所以还是会阻塞部分页面的初始化处理。
 
@@ -291,3 +316,7 @@ JS的加载其实是由两阶段组成：下载内容（download bytes）和执�
 ## 性能测试
 
 - [Script-injected "async scripts" considered harmful - igvita.com](https://www.igvita.com/2014/05/20/script-injected-async-scripts-considered-harmful)
+
+## See
+
+- [Javascript代码在页面加载时的执行顺序介绍_基础知识_脚本之家](http://www.jb51.net/article/36330.htm)

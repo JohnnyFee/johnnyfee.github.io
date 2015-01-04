@@ -26,10 +26,6 @@ tags: [android, tutorial]
 
 <!--more-->
 
-## Material
-
-- [afollestad/material-dialogs](https://github.com/afollestad/material-dialogs)
-
 ## Toos
 
 - [A productive Android development environment - Cyril Mottier](http://cyrilmottier.com/2013/06/27/a-productive-android-development-environment/)
@@ -37,6 +33,19 @@ tags: [android, tutorial]
 - [inmite/android-butterknife-zelezny](https://github.com/inmite/android-butterknife-zelezny) Android Studio plug-in for generating ButterKnife injections from selected layout XML.
 - [bearstouch/android_img_resizer](https://github.com/bearstouch/android_img_resizer) <http://www.bearstouch.com>
 - [Android Dev Tools ~ KP Bird](http://www.kpbird.com/p/android-dev-tools.html)
+
+### Generator
+
+- [foxykeep/ParcelableCodeGenerator](https://github.com/foxykeep/ParcelableCodeGenerator) A code generator to create Android Parcelable classes.
+- [foxykeep/ContentProviderCodeGenerator](https://github.com/foxykeep/ContentProviderCodeGenerator) A code generator to create Android ContentProvider.
+
+### Android Studio
+
+- [kageiit/gradle-robojava-plugin](https://github.com/kageiit/gradle-robojava-plugin) Gradle plugin to integrate Robolectric tests into Android Studio.
+
+## Deploy
+
+- [Continuous Delivery for Android (part 2) - stable/kernel Blog](http://stablekernel.com/blog/continuous-delivery-android-part-2)
 
 ## Test
 

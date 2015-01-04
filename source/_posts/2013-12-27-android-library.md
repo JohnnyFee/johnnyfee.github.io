@@ -84,6 +84,14 @@ tags: [android]
 ## Secure
 - [guardianproject / NetCipher](https://github.com/guardianproject/NetCipher) Android Library Project for Multi-Layer Network Connections (Better TLS/SSL and Tor).
 
+## JSON
+
+- [Raizlabs/Parser](https://github.com/Raizlabs/Parser) Parser is the fastest JSON-to-Model object parser that uses annotation processing to generate the parsing for you.
+
+## i18n
+
+- [westlinkin/AndroidLocalizationer](https://github.com/westlinkin/AndroidLocalizationer) This is a Android Studio/ IntelliJ IDEA plugin to localize your Android app, translate your string resources automactically. <https://plugins.jetbrains.com/plugin/7629>
+
 ## Form
 
 - [inmite/android-validation-komensky](https://github.com/inmite/android-validation-komensky) A simple library for validating user input in forms using annotations.

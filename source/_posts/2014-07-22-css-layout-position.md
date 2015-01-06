@@ -160,13 +160,18 @@ __几个结论：__
 
 The position value doesn't cascade, so this can be used to specifically force it to, and inherit the positioning value from its parent.
 
-## tutorial
+## Tutorial
 
 - [How Does Auto Positioning Work In CSS? - Vanseo Design](http://www.vanseodesign.com/css/auto-positioning/)
 
-## demo
+## Demo
 
 <p data-height="600" data-theme-id="0" data-slug-hash="Kcgpj" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/Kcgpj/'>position-layout</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+## Library
+
+- [HubSpot/drop](https://github.com/HubSpot/drop/) 用于创建下拉和浮动元素。 <http://github.hubspot.com/drop/docs/welcome>
+- [HubSpot/tether](https://github.com/HubSpot/tether) A positioning engine to make overlays, tooltips and dropdowns faster #hubspot-open-source. <http://tether.io>
 
 ## Reference
 

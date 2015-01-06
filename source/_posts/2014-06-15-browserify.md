@@ -12,13 +12,17 @@ tags: [node, browserify]
 ```shell
 # 安装
 npm install -g browserify
-npm install deamdify #可选
-npm install deglobalify #可选
+
+# 可选
+npm install deamdify 
+
+# 可选
+npm install deglobalify 
 ```
 
 main.js:
 
-```
+```js
 // 使用相对路径加载模块。
 var foo = require('./foo.js');
 
@@ -32,7 +36,7 @@ elem.textContent = gamma(x);
 
 foo.js:
 
-```
+```js
 // 导出模块，供 main.js 使用
 module.exports = function (n) { return n * 111 }
 ```
@@ -43,27 +47,30 @@ browserify 化：
 
 index.html:
 
-    <script src="bundle.js"></script>
-
+```html
+<script src="bundle.js"></script>
+```
 <!--more-->
 
 ## modules
 
-很多没有整 IO npm 模块都可以经过 Browserify 处理后被浏览器使用，有不少 npm 模块同时提供了 Node 版本和 Browser 版本，如 [async.js](https://github.com/caolan/async/raw/master/lib/async.js)(使用暴露全局变量的方式)。
+很多没有做 IO 的 npm 模块都可以经过 Browserify 处理后被浏览器使用；有不少 npm 模块同时提供了 Node 版本和 Browser 版本，如 [async.js](https://github.com/caolan/async/raw/master/lib/async.js)(使用暴露全局变量的方式) 也可以被 Browserify 使用。
 
 ## 命令参数
 
 ### require
 
-要想在页面中只通过引用 bundle.js 来使用 require() 方法，则该 bundle.js 必须是通过 browserify 的 -r 参数编译过的。
+通过 require 命令或函数可以暴露指定模块，在 html 中引用就可以通过 `require()` 引用指定的模块。 
 
-在引用了编译结果 `bundle.js` 后，如果你想通过 `require()` 方法加载指定模块，这个模块必须通过 -r 暴露指定模块，如：
+如通过 -r 命令暴露模块：
 
 ```shell
 $ browserify -r through -r duplexer -r ./my-file.js:my-module > bundle.js
 ```
 
-在你的页面中就可以这样使用：
+其中，暴露了 through、duplexer、./my-file.js 三个模块。`./my-file.js:my-module` 为 my-file.js 模块指定别名为 my-module，在 html 中，只能通过别名来引用模块，而不能通过相对路径。在模块内部，可以相对路径或者模块名来引用其他模块。
+
+在你的页面中就可以单独引用这些模块：
 
 ```html
 <script src="bundle.js"></script>
@@ -75,17 +82,7 @@ $ browserify -r through -r duplexer -r ./my-file.js:my-module > bundle.js
 </script>
 ```
 
-若使用 -r 参数时指定了模块名，如 `-r ./bar.js:bar-global -r ./foo.js:foo-global -o bundle.js`。冒号后边为暴露出去的模块名，也即通过 `require()` 加载模块指定的参数。
-
-- 在内部，可使用相对路径和模块名两种方式来 require 模块。
-    
-    例如，在 foo.js 中可以使用 `require('bar-global')` 也可以使用 `require('./bar.js')` 来获取 bar 模块。
-
-- 在外部，只能使用模块名来 require 模块。
-    
-    例如，在 index.html 中，只能使用 `require('bar-global')` ，而不能使用 `require('./bar.js')` 来获取 bar 模块。
-
-### Source Map
+## Source Map
 
 [browserify v2 adds source maps](http://thlorenz.com/blog/browserify-sourcemaps)
 
@@ -97,11 +94,11 @@ If you prefer the source maps be saved to a separate .js.map source map file, yo
 
 Learn about additional options [here](https://github.com/thlorenz/exorcist#usage).
 
-#### 关于 sourcemap 断点
+### 关于 sourcemap 断点
 
 在源文件中下断点，断点触发时，源文件和 bundle 都会定位到下断点处，只是只能在源文件中进一步调试，而 bundle 只会一直停在断点处。
 
-#### sourcemap 中文乱码
+### sourcemap 中文乱码
 
 该问题由 [lmm0591 (李明敏)](https://github.com/lmm0591) 找到解决方案，目前已向该项目提交 Commit。
 
@@ -129,7 +126,7 @@ Learn about additional options [here](https://github.com/thlorenz/exorcist#usage
 
     修改后重新生成的 bundle.js 中的 sourceMappingURL  会自动包含“charset=utf-8”。
 
-### 共享模块
+## 共享模块
 
 If browserify finds a `require`d function already defined in the page scope, it
 will fall back to that function if it didn't find any matches in its own set of
@@ -185,7 +182,7 @@ but there are plugins for automatically factoring out components which are
 described in the
 [partitioning section of the browserify handbook](https://github.com/substack/browserify-handbook#partitioning).
 
-### 附加参数
+## 参数说明
 
 - --outfile   -o  输出 bundle 文件。
 - --require   -r  需要在外部 require() 模块时用此参数。
@@ -216,7 +213,7 @@ described in the
 - --standalone    -s  生成 UMD 形式的 bundle。
 - --debug -d  生成 sourcemap。
 
-### ignoring and excluding
+__ignoring and excluding__
 
 In browserify parlance, "ignore" means: replace the definition of a module with an empty object. "exclude" means: remove a module completely from a dependency graph.
 

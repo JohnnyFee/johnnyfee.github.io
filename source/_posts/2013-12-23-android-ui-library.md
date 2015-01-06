@@ -55,6 +55,7 @@ tags: [android]
 ### Grid
 
 - [etsy/AndroidStaggeredGrid](https://github.com/etsy/AndroidStaggeredGrid) An Android staggered grid view which supports multiple columns with rows of varying sizes.
+- [Square Island: RecyclerView: Autofit grid](http://blog.sqisland.com/2014/12/recyclerview-autofit-grid.html)
 
 ## Map
 - [MapNavigator Library](https://github.com/tyczj/MapNavigator) 地图导航 For Google Maps V2。

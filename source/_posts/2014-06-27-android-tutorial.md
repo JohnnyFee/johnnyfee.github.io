@@ -23,6 +23,8 @@ tags: [android, tutorial]
 - [Make Your First Android App: Part 1/3 | Ray Wenderlich](http://www.raywenderlich.com/56107/make-first-android-app-part-1)
 - [Make Your First Android App: Part 2/3 | Ray Wenderlich](http://www.raywenderlich.com/56109/make-first-android-app-part-2)
 - [Make Your First Android App: Part 3/3 | Ray Wenderlich](http://www.raywenderlich.com/56111/make-first-android-app-part-3)
+- [All in Together: Android Studio, Gradle and Robolectric](http://www.bignerdranch.com/blog/all-in-together-android-studio-gradle-and-robolectric)
+- [Robust and readable architecture for an Android App, part 2](http://blog.joanzapata.com/robust-and-readable-part-2-introducing-async-service)
 
 <!--more-->
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Angular UI"
+title: "Mobile Web Tutorial"
 category: Angular
 tags: [angular, ui]
 --- 

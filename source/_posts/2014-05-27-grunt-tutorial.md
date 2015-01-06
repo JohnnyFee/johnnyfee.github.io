@@ -7,6 +7,12 @@ tags : [node, grunt]
 
 简单说，Grunt是一个自动任务运行器，会按照预先设定的顺序自动运行一系列的任务。这可以简化工作流程，减轻重复性工作带来的负担。    
 
+## Grunt 学习路线
+
+- [Grunt Tutorial](http://inching.org/2014/05/27/grunt-tutorial/) 本文为学习 Grunt 的基础和入口点。
+- [使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析](http://inching.org/2014/11/06/grunt-angular-yo/) 分析 [yeoman/generator-angular](https://github.com/yeoman/generator-angular) 生成器生成的 Grunt 脚本。
+- [使用 Yoeman generator-angular-fullstack 生成工程的 Gruntfile 源码分析](http://inching.org/2014/11/25/grunt-angular-fullstack-yo/) 分析 [DaftMonk/generator-angular-fullstack](https://github.com/DaftMonk/generator-angular-fullstack) 生成器生成的 Grunt 脚本。
+
 ## Install
 
 安装CLI:

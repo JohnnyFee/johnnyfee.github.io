@@ -63,6 +63,7 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 - [Numeral.js](http://numeraljs.com/)
 - [MikeMcl/decimal.js](https://github.com/MikeMcl/decimal.js) An arbitrary-precision Decimal type for JavaScript <http://mikemcl.github.io/decimal.js>
 - [googlei18n/libphonenumber](https://github.com/googlei18n/libphonenumber)
+- [VanillaMasker by BankFacil](http://bankfacil.github.io/vanilla-masker)
 
 ### JSON
 

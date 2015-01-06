@@ -20,11 +20,13 @@ CSS 应用样式的优先级（从高到低）：
 
 可以使用 important 改变正常的层叠次序，如：
 
-    <style type="text/css">
-        a {
-            color: black !important;
-        }
-    </style>
+```html
+<style type="text/css">
+    a {
+        color: black !important;
+    }
+</style>
+```
 
 在样式后附上 `!important` 即可将属性值标识为重要，浏览器会优先考虑。
 
@@ -80,17 +82,6 @@ See also [The Lengths of CSS](http://css-tricks.com/the-lengths-of-css/)。
 
 另外，可以使用 CSS3 的 `calc` 函数动态计算长度值，如 `width: calc(80% - 20px)` 。
 
-## Tutorial
-
-- [ikkou/awesome-css](https://github.com/ikkou/awesome-css)
-- [开始学CSS - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_started)
-- [CSS 开发者指南 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS)
-- [CSS Almanac | CSS-Tricks](http://css-tricks.com/almanac/)
-- [W3Help - 标准 - W3C 标准](http://www.w3help.org/zh-cn/standards/)
-- [DIVCSS5 - DIV+CSS布局教程学习与CSS资源分享平台](http://www.divcss5.com/)
-- [W3Help - 兼容性 - 知识库](http://www.w3help.org/zh-cn/kb/)
-- [10 CSS3 Properties you Need to be Familiar with - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/10-css3-properties-you-need-to-be-familiar-with--net-16417)
-
 <!--more-->
 
 ### Cross Browser
@@ -128,7 +119,7 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 
 ## Performance
 
-- [CSS Performance Tooling // Speaker Deck](https://speakerdeck.com/addyosmani/css-performance-tooling)
+- [CSS Performance Tooling / Speaker Deck](https://speakerdeck.com/addyosmani/css-performance-tooling)
 
 ## Tools
 
@@ -179,3 +170,14 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 ## Books
 
 - [CSS3 Pushing the Limits](http://www.salttiger.com/css3-pushing-the-limits/)
+
+## Tutorial
+
+- [ikkou/awesome-css](https://github.com/ikkou/awesome-css)
+- [开始学CSS - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_started)
+- [CSS 开发者指南 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS)
+- [CSS Almanac | CSS-Tricks](http://css-tricks.com/almanac/)
+- [W3Help - 标准 - W3C 标准](http://www.w3help.org/zh-cn/standards/)
+- [DIVCSS5 - DIV+CSS布局教程学习与CSS资源分享平台](http://www.divcss5.com/)
+- [W3Help - 兼容性 - 知识库](http://www.w3help.org/zh-cn/kb/)
+- [10 CSS3 Properties you Need to be Familiar with - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/10-css3-properties-you-need-to-be-familiar-with--net-16417)

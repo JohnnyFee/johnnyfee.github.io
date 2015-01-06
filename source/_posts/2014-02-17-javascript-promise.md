@@ -3,7 +3,7 @@ layout: post
 title: "JavaScript Promise"
 category : JavaScript
 tagline: ""
-tags : [javascript, async]
+tags : [javascript, async, promise]
 --- 
 ## 简介
 

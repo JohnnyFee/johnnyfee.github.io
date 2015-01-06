@@ -7,6 +7,28 @@ tags : [angular, tutorial]
 
 本文为读 [AngularJS](http://www.salttiger.com/angularjs/) 的读书笔记，该书的例子在 [shyamseshadri/angularjs-book](https://github.com/shyamseshadri/angularjs-book)。
 
+## Angular 学习路线导航
+
+- [Angular Tutorial](http://inching.org/2014/06/08/angular-tutorial/) 本文作为 Angular 学习的入口点。
+- [Angular Form](http://inching.org/2014/12/22/angular-form/) 在 Angular 世界中如何如理表单。
+- [Angular Filter](http://inching.org/2014/09/26/angular-filter/) Angular 过滤器，可以用来格式化用户输入等。
+- [Angular Directive](http://inching.org/2014/09/24/angular-directive/) Angular 指令。
+- [Angular MVC](http://inching.org/2014/06/12/angular-mvc/) Angular MVC 中的一些概念。
+- [Angular Scope](http://inching.org/2014/09/23/angular-scope/) 作用域。
+- [Angular Services](http://inching.org/2014/08/12/angular-service/) Angular 服务。如何定义和使用 Service、Service 的声明周期，以及 Angular 提供的常用的 Service 服务。
+- [Angular Core](http://inching.org/2014/10/22/angular-core/) 数据绑定的核心，apply、digest、watcher。
+- [Using AngularJS Promises](http://inching.org/2014/12/30/angular-promise/) 当 Angular 遇上 Promise。关于 JavaScript 的 Promise，请参考 [JavaScript Promise](http://inching.org/2014/02/17/javascript-promise/)。
+- [Angular UI Router](http://inching.org/2014/10/10/angular-ui-router/) Angular ui-router 路由。
+- [Angular Best Practice](http://inching.org/2014/08/14/angular-best-practice/) Angular 最佳实践。
+- [Angular Mobile Tutorial](http://inching.org/2014/09/10/mobile-angular/) Angular 
+- [Angular RequireJS](http://inching.org/2014/06/08/angular-requirejs/)
+- [Angular Unit Test](http://inching.org/2014/11/11/angular-unit-test/) Angular 单元测试。
+
+__UI：__
+
+- [Angular Mobile Tutorial](http://inching.org/2014/09/10/mobile-angular/)
+- [Angular UI](http://inching.org/2014/09/04/angular-ui/)
+
 ## Quick Start
 
 对于非正式工程，你可以按照 [Single Page Apps with AngularJS Routing and Templating ♥ Scotch](http://scotch.io/tutorials/javascript/single-page-apps-with-angularjs-routing-and-templating) 创建一个单页面工程。
@@ -1258,11 +1280,5 @@ See [angularjs - how to access the angular $scope variable in browsers console -
 ### Chart
 
 - [angular-chart.js - beautiful, reactive, responsive charts for Angular.JS using Chart.js](http://jtblin.github.io/angular-chart.js)
-
-### Style Guide
-
-- [Google's AngularJS Style Guide](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html)
-- [angularjs style guide](https://github.com/mgechev/angularjs-style-guide/blob/master/README-zh-cn.md)
-- [johnpapa/angularjs-styleguide](https://github.com/johnpapa/angularjs-styleguide#modules)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

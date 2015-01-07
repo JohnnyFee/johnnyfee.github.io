@@ -11,6 +11,8 @@ tags: [node, webkit]
 
 ## Quick Start
 
+脚手架生成器 [Dica-Developer/generator-node-webkit](https://github.com/Dica-Developer/generator-node-webkit)。
+
 __File Structure:__
 
 ```
@@ -50,9 +52,10 @@ Reference to [Manifest format](https://github.com/rogerwang/node-webkit/wiki/Man
 
 Write the app, __index.html__:
 
-```html
+```
 <html><head><title>Show Root Files</title></head> 
-<body><script> 
+<body>
+<script> 
     var generate = require('jade').compile([ 
      '- each file in files', 
      ' .file #{file}', 
@@ -66,7 +69,9 @@ Write the app, __index.html__:
          'files': files 
          }); 
     });
-</script></body></html> 
+    </script>
+</body>
+</html> 
 ```
 
 __Package and run it:__
@@ -88,6 +93,8 @@ $ copy /b nw.exe+app.nw app.exe
 ```
 
 ## Integrates Node.js
+
+See:
 
 - [Using Node modules · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Using-Node-modules)
 - [Changes related to node · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Changes-related-to-node)
@@ -120,12 +127,14 @@ It integrates node.js functions into WebKit.
 
 ### node-main
 
-- [Node main · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/node-main)
+See also [Node main · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/node-main)
 
 The script will be running in Node's context which won't be destructed across page navigation in Webkit. So it can be used to write some 'background' or 'daemon' like code.
 
 
 ## JavaScript contexts
+
+See:
 
 - [Differences of JavaScript contexts · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Differences-of-JavaScript-contexts)
 - [Transfer objects between window and node · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Transfer-objects-between-window-and-node)
@@ -157,9 +166,11 @@ node.js functions live in the renderer thread:
 
 ## Native UI
 
-[Native UI API Manual · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Native-UI-API-Manual)
+See [Native UI API Manual · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Native-UI-API-Manual)
 
 ### Window
+
+See:
 
 - [Window · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Window)
 - [Play with window · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Play-with-window)
@@ -194,6 +205,8 @@ new_win.on('focus', function() {
 ```
 
 ### Menu
+
+See:
 
 - [Menu · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Menu)
 - [Getting Started with node webkit · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Getting-Started-with-node-webkit)
@@ -281,15 +294,17 @@ menu.items[0].click = function() {
 
 ## Security
 
-- [Security · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Security)
+See [Security · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Security)
 
 node-webkit adds Node.js support and enhancement in DOM for trusted code and content. For untrusted code and content, it should remain in a normal frame or iframe, which is the same as the one in browser. So there are 2 kinds of frames in node-webkit: Node frame and normal frame.
 
 ## Notification
 
-- [pbojinov/nodeifications](https://github.com/pbojinov/nodeifications) Simple cross platform desktop notifications for node-webkit.
+See [pbojinov/nodeifications](https://github.com/pbojinov/nodeifications) Simple cross platform desktop notifications for node-webkit.
 
 ## Debug
+
+See:
 
 - [Debugging with devtools · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/Debugging-with-devtools)
 - [Debugging with Sublime Text 2 and 3](https://github.com/rogerwang/node-webkit/wiki/Debugging-with-Sublime-Text-2-and-3)
@@ -297,6 +312,8 @@ node-webkit adds Node.js support and enhancement in DOM for trusted code and con
 - [Crash dump](https://github.com/rogerwang/node-webkit/wiki/Crash-dump)
 
 ## Tutorial
+
+See:
 
 - [Home · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki)
 - [Introduction to node-webkit (slides)](https://speakerdeck.com/u/zcbenz/p/node-webkit-app-runtime-based-on-chromium-and-node-dot-js)

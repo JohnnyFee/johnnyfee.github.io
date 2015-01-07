@@ -12,13 +12,21 @@ tags: [node, tutorial]
 
 现已出现一个比较人们的 fork，[iojs/io.js](https://github.com/iojs/io.js)，See [Wesley IO — Node.js is forked, not f***ed.](http://wesleyio.tumblr.com/post/104637877991/node-js-is-forked-not-f-ed)
 
-## Framework
+## Boilerplate
 
 - [sahat/hackathon-starter](https://github.com/sahat/hackathon-starter) A boilerplate for Node.js web applications.
 - [12 Web Application Frameworks for Node.js | CodeCondo](http://codecondo.com/10-web-application-frameworks-for-node-js/)
 - [10个最好的Node.js MVC框架 - WEB开发者](http://www.admin10000.com/document/3931.html)
 - [Sails.js](http://sailsjs.org/#/) It is designed to emulate the familiar MVC pattern of frameworks like Ruby on Rails, but with support for the requirements of modern apps: data-driven APIs with a scalable, service-oriented architecture. 
 - [All About Sessions in Node.js - Stormpath User Management API](https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions)
+
+- [DaftMonk/generator-angular-fullstack](https://github.com/DaftMonk/generator-angular-fullstack)
+
+### Commander
+
+- [jonschlinkert/generator-node-cli](https://github.com/jonschlinkert/generator-node-cli)
+- [Hypercubed/generator-commander](https://github.com/Hypercubed/generator-commander)
+- [chjj/blessed](https://github.com/chjj/blessed) 在控制台整图形。
 
 ## Security
 
@@ -27,11 +35,8 @@ tags: [node, tutorial]
 - [Node Security](http://www.salttiger.com/node-security/)
 - [Beer Locker: Building a RESTful API with Node - OAuth2 Server - Scott Smith](http://scottksmith.com/blog/2014/07/02/beer-locker-building-a-restful-api-with-node-oauth2-server)
 - [helmetjs/helmet](https://github.com/helmetjs/helmet)
+- [krakenjs/lusca](https://github.com/krakenjs/lusca) Application security for express apps.
 
-## bin/www
-
-- [Why did the startup stub get moved to bin/www ? · Issue #25 · expressjs/generator](https://github.com/expressjs/generator/issues/25)
-- [javascript - What does "./bin/www" do in Express 4.x? - Stack Overflow](http://stackoverflow.com/questions/23169941/what-does-bin-www-do-in-express-4-x)
 
 ## Library
 
@@ -132,6 +137,10 @@ tags: [node, tutorial]
 - [Philip Roberts: Help, I'm stuck in an event-loop. on Vimeo](http://vimeo.com/96425312)
 - [JXcore · a Node.JS distribution with additional features](http://jxcore.com/home/)
 
+## Auth
+
+- [jaredhanson/passport](https://github.com/jaredhanson/passport) Simple, unobtrusive authentication for Node.js. <http://passportjs.org/>
+
 ## Path
 
 我们看到Nodejs已经被广发地应用在各种的场景了，针对Nodejs的应用场景，我们应该如何学习Nodejs呢？
@@ -185,6 +194,11 @@ Nodejs在快速的发展着，软件包版本升级的很快，文章有运行�
 ## FAQ
 
 - [How to change value of process.env.PORT in node.js? - Stack Overflow](http://stackoverflow.com/questions/13333221/how-to-change-value-of-process-env-port-in-node-js)
+
+## bin
+
+- [Why did the startup stub get moved to bin/www ? · Issue #25 · expressjs/generator](https://github.com/expressjs/generator/issues/25)
+- [javascript - What does "./bin/www" do in Express 4.x? - Stack Overflow](http://stackoverflow.com/questions/23169941/what-does-bin-www-do-in-express-4-x)
 
 ## Reference
 

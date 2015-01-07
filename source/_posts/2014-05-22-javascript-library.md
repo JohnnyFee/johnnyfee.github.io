@@ -8,6 +8,7 @@ tags: [javascript]
 
 ## Tutorial
 
+- [The best JavaScript libraries](http://www.javascripting.com/)
 - [sorrycc/awesome-javascript](https://github.com/sorrycc/awesome-javascript)
 - [Breaking Bad (Loops in JavaScript Libraries)](http://webapplog.com/breaking-bad-loops-in-javascript-libraries)
 - [mortzdk/jsCache](https://github.com/mortzdk/jsCache)

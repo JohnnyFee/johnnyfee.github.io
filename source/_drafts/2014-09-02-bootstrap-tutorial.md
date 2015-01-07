@@ -972,11 +972,8 @@ Vendor mixins are mixins to help support multiple browsers by including all rele
 
 ## Theme
 
-- [Bootstrap 3 templates, themes, examples, free premium bootstrap 3Bootstraptor.com](http://bootstraptor.com/bootstrap3/)
-- [Start Bootstrap - Free Bootstrap Themes and Templates](http://startbootstrap.com/)
-- [Bootstrap 3 Themes | WrapBootstrap - Bootstrap Themes & Templates](https://wrapbootstrap.com/themes?branch=3.x)
-	- [Ace - Responsive Admin Template - Live Preview - WrapBootstrap](http://wrapbootstrap.com/preview/WB0B30DGR)
-- [10套超漂亮的Bootstrap UI KIT(已转Html格式)](http://www.shejidaren.com/free-bootstrap-ui-kits.html)
+- [thomaspark/bootswatch](https://github.com/thomaspark/bootswatch) Themes for Bootstrap <http://bootswatch.com>.
+- [Pixelkit/PixelKit-Bootstrap-UI-Kits](https://github.com/Pixelkit/PixelKit-Bootstrap-UI-Kits/)
 
 ### Admin
 

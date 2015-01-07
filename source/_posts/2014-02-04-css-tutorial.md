@@ -133,6 +133,7 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 - [Clippy — CSS clip-path maker](http://bennettfeely.com/clippy)
 - [CSS Stats](http://cssstats.com) 统计 CSS。
 - [SC5 Styleguide](http://styleguide.sc5.io/) 生成 CSS 文档。
+- [Favicon Generator - Generate favicon pictures and HTML](http://realfavicongenerator.net/)
 
 ### 预编译
 

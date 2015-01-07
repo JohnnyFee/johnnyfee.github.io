@@ -12,6 +12,7 @@ tags: [node, mean]
 - [Introduction to the MEAN Stack - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/introduction-to-the-mean-stack--cms-19918)
 - [MEAN Stack – A Quick Start Guide | Flippin' Awesome](http://flippinawesome.org/2014/04/21/mean-stack-a-quick-start-guide/)
 - [Synth - The back-end web framework designed to make (Angular](http://www.synthjs.com) The back-end web framework designed to make (Angular|Ember|Backbone)JS web apps easy to create and manage.
+- [JS Recipes](http://jsrecipes.org/#!/) JavaScript tutorials for backend and frontend development.
 
 <!-- more -->
 

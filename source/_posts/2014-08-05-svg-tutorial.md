@@ -193,6 +193,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 ## Library
 
 - [alexk111/SVG-Morpheus](https://github.com/alexk111/SVG-Morpheus) JavaScript library enabling SVG icons to morph from one to the other. It implements Material Design's Delightful Details transitions.
+- [ConnorAtherton/walkway](https://github.com/ConnorAtherton/walkway) An easy way to animate SVG elements.
 
 ## Tutorial
 
@@ -214,6 +215,12 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 - [5 Gotchas You're Gonna Face Getting Inline SVG Into Production](http://css-tricks.com/gotchas-on-getting-svg-into-production)
 - [#135: Three Ways to Animate SVG](http://css-tricks.com/video-screencasts/135-three-ways-animate-svg)
 - [3 tricks for adding texture to your text with CSS and SVG](http://www.webdesignerdepot.com/2014/12/3-tricks-for-adding-texture-to-your-text-with-css-and-svg)
+- [Elastic SVG Elements](http://tympanus.net/codrops/2014/12/15/elastic-svg-elements)
+- [Page 1: Exporting SVGs](http://www.smashingmagazine.com/2014/11/03/styling-and-animating-svgs-with-css/)
+- [Page 2: Styling SVGs With CSS](http://www.smashingmagazine.com/2014/11/03/styling-and-animating-svgs-with-css/2/)
+- [Page 3: Animating SVGs With CSS](http://www.smashingmagazine.com/2014/11/03/styling-and-animating-svgs-with-css/3/)
+- [Page 4: Embedding SVGs](http://www.smashingmagazine.com/2014/11/03/styling-and-animating-svgs-with-css/4/)
+- [Page 5: Making SVGs Responsive](http://www.smashingmagazine.com/2014/11/03/styling-and-animating-svgs-with-css/5/)
 
 ### SVG Attribute reference
 

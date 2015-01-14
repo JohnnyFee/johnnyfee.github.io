@@ -16,3 +16,7 @@ tags: [angular, ui]
 
 - [AngularUI for AngularJS](http://angular-ui.github.io/#ui-modules) The companion suite(s) to the AngularJS framework.
 - [mgcrea/angular-strap](https://github.com/mgcrea/angular-strap) AngularJS 1.2+ native directives for Bootstrap 3. <http://mgcrea.github.io/angular-strap>
+
+## Library
+
+- [Foxandxss/angular-toastr](https://github.com/Foxandxss/angular-toastr) Angular port of CodeSeven/toastr. <http://foxandxss.github.io/angular-toastr/>

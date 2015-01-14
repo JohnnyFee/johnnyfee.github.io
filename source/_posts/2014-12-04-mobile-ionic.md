@@ -40,3 +40,7 @@ See [Getting Started with Ionic - Ionic Framework](http://ionicframework.com/get
 - [OAuth with Ionic and ngCordova](http://ionicframework.com/blog/oauth-ionic-ngcordova/)
 - [Understanding Tabs In Ionic Framework](https://blog.nraboy.com/2014/12/understanding-tabs-ionic-framework)
 - [Build an Instagram clone with AngularJS, Satellizer, Node.js and MongoDB](https://hackhands.com/building-instagram-clone-angularjs-satellizer-nodejs-mongodb) 登陆验证模块。
+- [Building a hybrid multi-platform real-time mobile applications using Ionic Framework and Firebase](http://www.toptal.com/front-end/building-multi-platform-real-time-mobile-applications-using-ionic-framework-and-firebase)
+- [Automating Icons and Splash Screens](http://ionicframework.com/blog/automating-icons-and-splash-screens)
+- [Adding Auth to your Ionic app in 5 mins with Auth0](http://ionicframework.com/blog/authentication-in-ionic)
+- [ccoenraets/directory-angular-ionic](https://github.com/ccoenraets/directory-angular-ionic) Sample Employee Directory application built with Ionic and AngularJS.

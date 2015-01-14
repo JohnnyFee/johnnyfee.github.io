@@ -128,3 +128,7 @@ JsTestDriver是一个JavaScript单元测试工具，易于与持续构建系统�
 ### Reference
 
 - [javascript单元测试 - 溤淋 - 博客园](http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html)
+
+## Tutorial
+
+- [christian-bromann/awesome-selenium](https://github.com/christian-bromann/awesome-selenium)

@@ -75,6 +75,7 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 
 - [flesler/hashmap](https://github.com/flesler/hashmap) HashMap JavaScript class for NodeJS and the browser. The keys can be anything and won't be stringified.
 - [DataCollection.js](http://thestorefront.github.io/DataCollection.js) Manipulate data from API responses with ease.
+- [andrejewski/seth](https://github.com/andrejewski/seth) JavaScript DSL for functional Set Theory.
 
 ### fn
 
@@ -84,6 +85,10 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 
 - [caike/jQuery-Simple-Timer](https://github.com/caike/jQuery-Simple-Timer)
 - [Later](http://bunkat.github.io/later/) 执行定时任务。
+
+### XML
+
+- [Leonidas-from-XIV/node-xml2js](https://github.com/Leonidas-from-XIV/node-xml2js)
 
 ## Parser
 

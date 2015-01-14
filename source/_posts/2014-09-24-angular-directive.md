@@ -398,7 +398,7 @@ it('creates or removes the element as the if condition changes', function () {
 
 这个指令的具体实现为:
 
-```js
+```
 myModule.directive('if', function () {
   return {
     transclude: 'element',

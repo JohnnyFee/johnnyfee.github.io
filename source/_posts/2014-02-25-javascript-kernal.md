@@ -545,34 +545,35 @@ _任何对象_ 都可以做为上下文中的this的值。我想再一次澄清�
 
 在函数上下文的情况下，对 _函数的每次调用_ ，其中的this值可能是 _不同的_ 。这个this值是通过 _函数调用表达式_ （也就是函数被调用的方式）的形式由 _caller_ 所提供的。举个例子，下面的函数foo是一个 _callee_ ，在全局上下文中被调用，此上下文为caller。让我们通过例子看一下，对于一个代码相同的函数，this值是如何在不同的调用中（函数触发的不同方式），由caller给出 _不同的_ 结果的：
 
-    // the code of the "foo" function
-    // never changes, but the "this" value
-    // differs in every activation
-    
-    function foo() {
-      alert(this);
-    }
-    
-    // caller activates "foo" (callee) and
-    // provides "this" for the callee
-    
-    foo(); // global object
-    foo.prototype.constructor(); // foo.prototype
-    
-    var bar = {
-      baz: foo
-    };
-    
-    bar.baz(); // bar
-    
-    (bar.baz)(); // also bar
-    (bar.baz = bar.baz)(); // but here is global object
-    (bar.baz, bar.baz)(); // also global object
-    (false || bar.baz)(); // also global object
-    
-    var otherFoo = bar.baz;
-    otherFoo(); // again global object
-    
+```js
+// the code of the "foo" function
+// never changes, but the "this" value
+// differs in every activation
+
+function foo() {
+  alert(this);
+}
+
+// caller activates "foo" (callee) and
+// provides "this" for the callee
+
+foo(); // global object
+foo.prototype.constructor(); // foo.prototype
+
+var bar = {
+  baz: foo
+};
+
+bar.baz(); // bar
+
+(bar.baz)(); // also bar
+(bar.baz = bar.baz)(); // but here is global object
+(bar.baz, bar.baz)(); // also global object
+(false || bar.baz)(); // also global object
+
+var otherFoo = bar.baz;
+otherFoo(); // again global object
+```
 
 为了深入理解this为什么（并且更本质一些－ _如何_ ）在每个函数调用中可能会发生变化，你可以阅读[第三章 This](http://dmitrysoshnikov.com/ecmascript/chapter-3-this/)。在那里，上面所提到的情况都会有详细的讨论。
 
@@ -647,5 +648,6 @@ __中文：__
 - [JavaScript中的原型和继承 - WEB开发者](http://www.admin10000.com/document/4343.html)
 - [Guide to JavaScript Prototypes, Scopes, and Performance](http://www.toptal.com/javascript/javascript-prototypes-scopes-and-performance-what-you-need-to-know)
 - [真的懂JavaScript吗？](http://goddyzhao.tumblr.com/post/11478726832/do-i-really-understand-javascript)
-[说说为什么 [] == ![] 为true](http://goddyzhao.tumblr.com/post/13962242607/why-is-this-condition-true)
-[通过什么途径能够深入了解JavaScript引擎是如何工作的？](http://blog.goddyzhao.me/post/18554142516/how-to-dive-into-javascript-engine)
+- [说说为什么 [] == ![] 为true](http://goddyzhao.tumblr.com/post/13962242607/why-is-this-condition-true)
+- [通过什么途径能够深入了解JavaScript引擎是如何工作的？](http://blog.goddyzhao.me/post/18554142516/how-to-dive-into-javascript-engine)
+* [Video: Douglas Crockford, “Advanced JavaScript”](http://yuiblog.com/blog/2006/11/27/video-crockford-advjs/)  <sup>video</sup>。

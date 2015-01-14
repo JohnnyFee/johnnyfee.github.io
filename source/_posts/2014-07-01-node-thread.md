@@ -41,7 +41,7 @@ var argv = require('minimist')(process.argv.slice(2));
 console.dir(argv);
 ```
 
-```shell
+```
 $ node example/parse.js -a beep -b boop
 { _: [], a: 'beep', b: 'boop' }
 
@@ -55,3 +55,10 @@ $ node example/parse.js -x 3 -y 4 -n5 -abc --beep=boop foo bar baz
   c: true,
   beep: 'boop' }
 ```
+
+## Tutorial
+
+- [doxout/recluster](https://github.com/doxout/recluster) Node clustering library with support for zero downtime reloading.
+- [supervizer](https://github.com/oOthkOo/supervizer)
+- [Node.js: managing child processes - Tech.pro](http://tech.pro/tutorial/2074/nodejs-managing-child-processes?)
+- [Supervisor: A Process Control System — Supervisor 3.1.2 documentation](http://supervisord.org/)

@@ -42,7 +42,8 @@ tags: [node, tutorial]
 
 - [felixge/node-formidable](https://github.com/felixge/node-formidable) A node.js module for parsing form data, especially file uploads.
 - [MrSwitch/hello.js](https://github.com/MrSwitch/hello.js) A Javascript RESTFUL API library for connecting with OAuth2 services, such as Google+ API, Facebook Graph and Windows Live Connect. http://adodson.com/hello.js/
-- [yahoo/gifshot](https://github.com/yahoo/gifshot) JavaScript library that can create animated GIFs from media streams, videos, or images http://yahoo.github.io/gifshot/
+- [yahoo/gifshot](https://github.com/yahoo/gifshot) JavaScript library that can create animated GIFs from media streams, videos, or images <http://yahoo.github.io/gifshot/>
+- [node-ffi/node-ffi](https://github.com/node-ffi/node-ffi) Node.js Foreign Function Interface
 
 ### Log
 
@@ -89,23 +90,11 @@ tags: [node, tutorial]
 - [nodejs代码初探 - CNode](http://cnodejs.org/topic/4f571a16a680d212781ccf9f)
 - [rdio/jsfmt](https://github.com/rdio/jsfmt) For formatting, searching, and rewriting JavaScript.
 
-## Grunt
-
-- [Using Grunt? Consider Fez](http://flippinawesome.org/2014/02/24/using-grunt-consider-fez/)
-	- [Scaling Node.js with recluster — Medium](https://medium.com/@garychambers108/f04dd346108c)
-
 ## Performance
 
 - [StrongLoop](http://strongloop.com/strongblog/node-js-performance-tip-of-the-week-memory-leak-diagnosis)
 - [addyosmani/psi](https://github.com/addyosmani/psi/)
     + [Automating Web Performance Measurement With PSI For Node](http://addyosmani.com/blog/automating-web-performance-measurement-with-psi-for-node)
-
-## Process
-
-- [doxout/recluster](https://github.com/doxout/recluster) Node clustering library with support for zero downtime reloading.
-- [supervizer](https://github.com/oOthkOo/supervizer)
-- [Node.js: managing child processes - Tech.pro](http://tech.pro/tutorial/2074/nodejs-managing-child-processes?)
-- [Supervisor: A Process Control System — Supervisor 3.1.2 documentation](http://supervisord.org/)
 
 ## Other 
 
@@ -184,6 +173,7 @@ Nodejs在快速的发展着，软件包版本升级的很快，文章有运行�
 
 - Heroku 
     + [6 Easy Ways to Prevent Your Heroku Node App From Sleeping - Quick Left Boulder Colorado](http://quickleft.com/blog/6-easy-ways-to-prevent-your-heroku-node-app-from-sleeping)
+    + [Deploying Node.js App to Heroku](https://www.youtube.com/watch?v=uLF_hmtxAsY) <sup>video</sup>
 - [Nitrous.io](https://www.nitrous.io/join/jOTIMMPrQPY), 一个云Node.js, Go, - Ruby, Python平台，还有Web IDE。
 - [百度BAE](http://developer.baidu.com/wiki/index.php?title=docs/cplat/rt/node.js- )
 - [AppFog](https://www.appfog.com/)

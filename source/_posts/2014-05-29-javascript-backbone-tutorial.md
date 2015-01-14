@@ -99,3 +99,5 @@ The following diagram shows a typical workflow in a Backbone application:
 
 - [Embracing Command Line Tooling with Backbone Applications](http://javascriptplayground.com/blog/2014/03/command-line-backbone-yeoman/)
 - [7 Battle tested Backbone.js rules for amazing web apps](http://geeks.bizzabo.com/7-battle-tested-backbonejs-rules-for-amazing-web-apps)
+- [Marionette.js](http://marionettejs.com/) Make your Backbone applications dance!
+    + [Polymer Web Components with Marionette.js – Jeremy Fairbank Blog](http://blog.jeremyfairbank.com/javascript/polymer-web-components-with-marionette-js/)

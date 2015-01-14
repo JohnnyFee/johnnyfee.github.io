@@ -144,12 +144,9 @@ tags: [android]
 
 - [Android : Around me Tutorial | Michenux.net](http://www.michenux.net/android-around-me-tutorial-974.html) 周边旅游景点，并显示距离。
 
-## Java8
-
-- [evant/gradle-retrolambda](https://github.com/evant/gradle-retrolambda)
-
 ## Reference
 
 - [Android Boost](http://zouguangxian.github.io/android-boost/)
 - [Android优秀开源项目](http://www.eoeandroid.com/thread-272453-1-1.html)
 - [安卓开发经验分享：资源、UI、函数库、测试、构建一个都不能少](http://www.importnew.com/4868.html)
+- [android-libs](http://android-libs.com/)

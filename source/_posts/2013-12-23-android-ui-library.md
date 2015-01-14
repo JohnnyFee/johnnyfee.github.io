@@ -201,3 +201,5 @@ __其他参考：__
 - [Android Boost](http://zouguangxian.github.io/android-boost/)
 - [FloatLabelLayout](https://gist.github.com/chrisbanes/11247418)
 - [StanKocken/EfficientAdapter](https://github.com/StanKocken/EfficientAdapter) An efficient adapter to make the use of RecyclerView much easier for Android.
+- [Tips and Tricks for Android Material Support Library](http://code.hootsuite.com/tips-and-tricks-for-android-material-support-library)
+- [Archive – froger_mcs dev blog – Coding with love](http://frogermcs.github.io/archive/)

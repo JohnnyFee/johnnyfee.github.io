@@ -29,6 +29,17 @@ tags: [android]
 - [Styling Android » Irregular Shapes – Part 1](http://blog.stylingandroid.com/archives/2656)
 - [Styling Android » Irregular Shapes – Part 2](http://blog.stylingandroid.com/archives/2660)
 
+## Material
+
+- [afollestad/material-dialogs](https://github.com/afollestad/material-dialogs)
+- [Styling Android » Material – Part 8](https://blog.stylingandroid.com/material-part-8)
+- [The shape of materials to come • Five](http://five.agency/the-shape-of-materials-to-come)
+- [Material Design on Android Checklist](http://android-developers.blogspot.com/2014/10/material-design-on-android-checklist.html)
+
+### Tools
+
+- [Material Design Color Palette Generator - Material Palette](http://www.materialpalette.com/purple/pink)
+
 ## Theme
 
 - [negusoft/holoaccent](https://github.com/negusoft/holoaccent?+Weekly-Android_Weekly_105-9ab2d99a2b-337832837)

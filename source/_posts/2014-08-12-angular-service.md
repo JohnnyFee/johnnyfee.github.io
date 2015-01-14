@@ -135,7 +135,7 @@ var NotificationsService = function (notificationsArchive) {
 
 如：
 
-```js
+```
 myMod.factory('notificationsService',function(notificationsArchive){
 
     var MAX_LEN = 10;

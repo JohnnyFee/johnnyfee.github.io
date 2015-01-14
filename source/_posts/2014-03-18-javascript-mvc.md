@@ -175,3 +175,4 @@ sammy             |  5.2     |   16     |      N                |     N
 * [Overview of Popular JavaScript Frameworks' Internal Mechanics - Frontend Masters](https://frontendmasters.com/courses/javascript-frameworks-showdown/overview)
 * [Anatomy of a JavaScript MV* Framework](http://www.sitepoint.com/anatomy-javascript-mv-framework)
 * [Comparison of JavaScript frameworks](http://en.wikipedia.org/wiki/Comparison_of_JavaScript_frameworks)
+* [Dev.Opera — In search of the perfect JavaScript framework](https://dev.opera.com/articles/perfect-javascript-framework)

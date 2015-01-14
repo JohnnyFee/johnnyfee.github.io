@@ -1016,6 +1016,10 @@ See:
 - [angular性能优化心得](http://atian25.github.io/2014/05/09/angular-performace/)
 - [AngularJS Performance in Large Applications](https://www.airpair.com/angularjs/posts/angularjs-performance-large-applications)
 
+## Web Components
+
+- [Integrating Web Components with AngularJS · Pascal Precht](http://pascalprecht.github.io/2014/10/25/integrating-web-components-with-angularjs/)
+
 ## Testing
 
 - [基于Karma和Jasmine的AngularJS测试 / Owen Chen](http://owenchen.duapp.com/index.php/jasmine-and-karma-test-angularjs/)
@@ -1271,7 +1275,6 @@ See [angularjs - how to access the angular $scope variable in browsers console -
 - [A modular way to create your Angular & Node web apps · CleverStack.io](http://cleverstack.io/developer/) A modular way to create your Angular & Node web apps.
 - [Rethinking AngularJS Controllers](http://toddmotto.com/rethinking-angular-js-controllers)
 - [David and Suzi](http://davidandsuzi.com/using-react-for-faster-renders-and-isomorphism-in-angular)
-- [Adding Auth to your Ionic app in 5 mins with Auth0](http://ionicframework.com/blog/authentication-in-ionic)
 - [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
 - [Debugging AngularJS Apps from the Console - Modern Web](http://modernweb.com/2014/08/21/debugging-angularjs-apps-console)
 - [All About Angular 2.0](http://eisenbergeffect.bluespire.com/all-about-angular-2-0/)

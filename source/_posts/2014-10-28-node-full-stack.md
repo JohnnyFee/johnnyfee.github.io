@@ -13,6 +13,7 @@ tags: [node, mean]
 - [MEAN Stack – A Quick Start Guide | Flippin' Awesome](http://flippinawesome.org/2014/04/21/mean-stack-a-quick-start-guide/)
 - [Synth - The back-end web framework designed to make (Angular](http://www.synthjs.com) The back-end web framework designed to make (Angular|Ember|Backbone)JS web apps easy to create and manage.
 - [JS Recipes](http://jsrecipes.org/#!/) JavaScript tutorials for backend and frontend development.
+- [全栈式JavaScript](http://blog.jobbole.com/52745/)
 
 <!-- more -->
 

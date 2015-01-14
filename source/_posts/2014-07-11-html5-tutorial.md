@@ -893,6 +893,8 @@ meter 元素显示了某个范围内所有可能值中的一个。min、max 定�
 ## API
 
 - [Introducing the Screen Orientation API](http://www.sitepoint.com/introducing-screen-orientation-api)
+- [The Screen Orientation API Reloaded](http://www.sitepoint.com/screen-orientation-api-reloaded)
+- [Talk: Keeping secrets with JavaScript - An Introduction to the WebCrypto API - Tim Taubert](https://timtaubert.de/blog/2014/10/keeping-secrets-with-javascript) 加密。
 
 ## Tutorial
 

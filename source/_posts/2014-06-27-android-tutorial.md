@@ -17,6 +17,7 @@ tags: [android, tutorial]
 - [What Should You Localize?](http://blog.danlew.net/2014/09/08/what-should-i-localize)
 - [Top 10 Most Common Android Development Mistakes](http://www.toptal.com/android/top-10-most-common-android-development-mistakes)
 - [DevStore官网_全球首家开发者服务商店](http://www.devstore.cn/)
+- [Chinese Mobile App UI Trends](http://dangrover.com/blog/2014/12/01/chinese-mobile-app-ui-trends.html)
 
 ### 开发过程
 

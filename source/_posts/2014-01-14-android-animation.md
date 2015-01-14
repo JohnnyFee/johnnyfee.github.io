@@ -405,16 +405,6 @@ This application code will set the animation as the background for a View, then 
 - [Building Animations with the android.transition Framework, Part 1](http://blog.bignerdranch.com/4541-building-animations-android-transition-framework-part-1)
 - [Android Property Animations: Building Complex Animations | Cogito Learning](http://cogitolearning.co.uk/?p=1404)
 
-## Material
-
-- [afollestad/material-dialogs](https://github.com/afollestad/material-dialogs)
-- [Styling Android » Material – Part 8](https://blog.stylingandroid.com/material-part-8)
-- [The shape of materials to come • Five](http://five.agency/the-shape-of-materials-to-come)
-
-### Tools
-
-- [Material Design Color Palette Generator - Material Palette](http://www.materialpalette.com/purple/pink)
-
 ## Tutorial
 
 - [Getting Started with Activity & Fragment Transitions (part 1)](http://www.androiddesignpatterns.com/2014/12/activity-fragment-transitions-in-android-lollipop-part1.html)

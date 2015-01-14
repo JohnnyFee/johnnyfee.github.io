@@ -17,7 +17,6 @@ tags: [angular, ui, mobile]
 
 ### Example
 
-- [ccoenraets/directory-angular-ionic](https://github.com/ccoenraets/directory-angular-ionic) Sample Employee Directory application built with Ionic and AngularJS.
 - [mcasimir/mobile-angular-ui](https://github.com/mcasimir/mobile-angular-ui) Angular.js Mobile UI Framework with Bootstrap 3 <http://mobileangularui.com/>.
 
 

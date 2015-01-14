@@ -5,32 +5,35 @@ category: Web
 tags: [web, tutorial]
 --- 
 
-## Tutorial
+## Framework
 
-- [Web Fundamentals — Google Developers](https://developers.google.com/web/fundamentals/)
-- [dypsilon/frontend-dev-bookmarks](https://github.com/dypsilon/frontend-dev-bookmarks) A huge list of frontend development resources I collected over time. Sorted from general knowwledge at the top to concrete problems at the bottom.
-- [慕课网-免费的IT技能学习平台](http://www.imooc.com/)
-- [JacksonTian/fks](https://github.com/JacksonTian/fks)
-- [前端导航站 - 前端工程师专用的导航站](http://123.jser.us/)
-- [UI中国-专业界面设计平台](http://www.ui.cn/)
+- [Sencha ExtJS](http://www.sencha.com)
+- [jQuery EasyUI - helps you build your web pages easily](http://www.jeasyui.com/)
+- [JavaScript Framework & HTML5 UI Library for Web App Development-Webix](http://webix.com/)
+- [Kendo UI Core](http://www.telerik.com/kendo-ui/open-source-core)
+- [DHTMLX JavaScript UI Library for Building Ajax-Powered Web Apps](http://dhtmlx.com/docs/products/dhtmlxSuite/index.shtml)
+- [Topcoat](http://topcoat.io/)
+- [Bootstrap中文网](http://www.bootcss.com/)
+    - [Flat UI - Free Bootstrap Framework and Themes](http://designmodo.github.io/Flat-UI/)
+    - [Bsie（鄙视IE） -- Bootstrap IE6 兼容库](http://www.bootcss.com/p/bsie/) bsie弥补了Bootstrap对IE6的不兼容。
+* [UI for the Web powered by HTML5, jQuery & CSS3](http://wijmo.com/) 收费。Wijmo是一个jQuery UI组件集，有超过30多个jQuery UI 组件；这将是一个CSS3，SVG，HTML5的混合物，目前还处于Beta阶段。授权协议 MIT。
 
-## Design Template
+<!--more-->
 
-- [Website Templates](http://www.wix.com/website/templates)
-- [Premium Web UI Kits & Design Resources](http://pixelkit.com/)
-    + [10套超漂亮的Bootstrap UI KIT(已转Html格式)](http://www.shejidaren.com/free-bootstrap-ui-kits.html)
-    + [Pixelkit/PixelKit-Bootstrap-UI-Kits](https://github.com/Pixelkit/PixelKit-Bootstrap-UI-Kits/)
-- [30个免费的自适应网站模板](http://www.shejidaren.com/30-free-responsive-html-themes.html)
+### React
+
+- [React | A JavaScript library for building user interfaces](http://facebook.github.io/react/)
+- [React.js in pure JavaScript (Facebook library) - Deep explanation for newbies](http://www.webdesignporto.com/react-js-in-pure-javascript-facebook-library/)
+- [A Thrown-to-the-Wolves-Hands-On Introduction to React - Tech.pro](http://tech.pro/blog/2020/a-thrown-to-the-wolves-hands-on-introduction-to-react)
+- [React Bootstrap](http://react-bootstrap.github.io)
+- [Component Interop With React And Custom Elements](http://addyosmani.com/blog/component-interop-with-react-and-custom-elements)
+- [Flux Step By Step - Atlassian Blogs](http://blogs.atlassian.com/2014/08/flux-architecture-step-by-step)
+- [Pomax.github.io](http://pomax.github.io/#gh-weblog-1420592591221)
 
 ## Scaffold
 
 - [h5bp/html5-boilerplate](https://github.com/h5bp/html5-boilerplate)
 - [Favicons, Touch Icons, Tile Icons, etc. What All Do You Need?](http://css-tricks.com/favicon-quiz)
-
-## Design
-
-- [40个良好用户界面Tips](http://www.shejidaren.com/good-user-interface-design.html)
-- [Designer's guide to DPI](http://sebastien-gabriel.com/designers-guide-to-dpi/home)
 
 ## Tool
 
@@ -87,6 +90,15 @@ tags: [web, tutorial]
 1.  [JSFiddle](http://jsfiddle.net/) - 国外，访问慢。
 2. [Plunker](http://plnkr.co/) 支持多文件。
 1.  [RunJS - 在线编辑、展示、分享、交流你的 JavaScript 代码](http://runjs.cn/) - 开源中国提供，访问速度快，功能太简单。
+
+## Tutorial
+
+- [Web Fundamentals — Google Developers](https://developers.google.com/web/fundamentals/)
+- [dypsilon/frontend-dev-bookmarks](https://github.com/dypsilon/frontend-dev-bookmarks) A huge list of frontend development resources I collected over time. Sorted from general knowwledge at the top to concrete problems at the bottom.
+- [慕课网-免费的IT技能学习平台](http://www.imooc.com/)
+- [JacksonTian/fks](https://github.com/JacksonTian/fks)
+- [前端导航站 - 前端工程师专用的导航站](http://123.jser.us/)
+- [UI中国-专业界面设计平台](http://www.ui.cn/)
 
 ## Books
 

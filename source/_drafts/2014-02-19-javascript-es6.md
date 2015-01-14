@@ -21,11 +21,20 @@ tags: [javascript]
 - [ECMAScript 6: new OOP features besides classes](http://www.2ality.com/2014/12/es6-oop.html)
 - [JS.Next: ES6 - Frontend Masters](https://frontendmasters.com/courses/jsnext-es6)
 - [Symbols in ECMAScript 6](http://www.2ality.com/2014/12/es6-symbols.html)
+- [lukehoban/es6features](https://github.com/lukehoban/es6features) Overview of ECMAScript 6 features.
+- [ECMAScript 6: A Better JavaScript for the Ambient Computing Era](http://www.slideshare.net/allenwb/wdc14-allebwb?)
+- [ECMAScript 6 modules: the final syntax](http://www.2ality.com/2014/09/es6-modules-final.html)
+- [jlongster/es6-macros](https://github.com/jlongster/es6-macros) A collection of sweet.js macros that implement ES6 features for ES5.
+- [Solving riddles with Prolog and ES6 generators — curiosity-driven.org](https://curiosity-driven.org/prolog-interpreter)
+- [es6ify by thlorenz](http://thlorenz.github.io/es6ify/)
+- [JustinDrake/node-es6-examples](https://github.com/JustinDrake/node-es6-examples)
+- [Handling required parameters in ECMAScript 6](http://www.2ality.com/2014/04/required-parameters-es6.html)
 
 ## Tools
 
 - [addyosmani/es6-tools](https://github.com/addyosmani/es6-tools)
 - [sebmck/6to5](https://github.com/sebmck/6to5)
+    + [ES6 modules today with 6to5 - ES6 Rocks](http://es6rocks.com/2014/10/es6-modules-today-with-6to5)
 
 ## Argument
 
@@ -36,6 +45,7 @@ tags: [javascript]
 - [Playing with iterators and generators in ECMAScript 6](http://macr.ae/article/iterators-and-generators.html)
 - [Replacing callbacks with ES6 Generators | Flippin' Awesome](http://flippinawesome.org/2014/02/10/replacing-callbacks-with-es6-generators/)
 - [StrongLoop](http://strongloop.com/strongblog/how-to-generators-node-js-yield-use-cases)
+- [Hanging Up On Callbacks: Generators in ECMAScript 6](https://www.youtube.com/watch?v=s-BwEk-Y4kg) <sub>video</sub>
 
 ## Async
 
@@ -49,6 +59,10 @@ tags: [javascript]
 
 - [zenparsing/esparse](https://github.com/zenparsing/esparse)
 
+## Map and Sets
+
+- [ECMAScript 6: maps and sets](http://www.2ality.com/2015/01/es6-maps-sets.html)
+
 ## es7
 
 - [My ECMAScript 7 wishlist](http://www.nczonline.net/blog/2014/06/03/my-ecmascript-7-wishlist/)
@@ -57,13 +71,6 @@ tags: [javascript]
 ## Syntax
 
 - [Multiple return values in ECMAScript 6](http://www.2ality.com/2014/06/es6-multiple-return-values.html)
-
-## Tutorial
-
-- [Solving riddles with Prolog and ES6 generators — curiosity-driven.org](https://curiosity-driven.org/prolog-interpreter)
-- [es6ify by thlorenz](http://thlorenz.github.io/es6ify/)
-- [JustinDrake/node-es6-examples](https://github.com/JustinDrake/node-es6-examples)
-- [Handling required parameters in ECMAScript 6](http://www.2ality.com/2014/04/required-parameters-es6.html)
 
 ## Vidio
 

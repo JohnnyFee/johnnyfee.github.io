@@ -1081,8 +1081,8 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 ## Tools
 
 * [Batarang](https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk). This has been around for a while.
-
 * [ng-inspector](http://ng-inspector.org/). This is the newest one, and as the name suggests, it allows you to inspect your application's scopes.
+* 
 
 ## Library
 

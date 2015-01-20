@@ -90,6 +90,10 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 
 - [Leonidas-from-XIV/node-xml2js](https://github.com/Leonidas-from-XIV/node-xml2js)
 
+## IO
+
+- [winterbe/streamjs](https://github.com/winterbe/streamjs) Object Streaming Pipeline for JavaScript - inspired by Java 8 Streams <http://winterbe.github.io/streamjs/>
+
 ## Parser
 
 - [ariya/esprima](https://github.com/ariya/esprima) ECMAScript parsing infrastructure for multipurpose analysis <http://esprima.org>
@@ -99,7 +103,7 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 
 - [zzmp/juliusjs](https://github.com/zzmp/juliusjs)
 
-## 汉字拼音
+## Pinyin
 
 - [hotoo/pinyin](https://github.com/hotoo/pinyin) 汉字汉字拼音转换工具。<http://pinyin.hotoo.me/>
 

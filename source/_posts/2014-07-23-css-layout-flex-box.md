@@ -17,25 +17,21 @@ CSS3 弹性盒，或者简称弹性盒，是一种当页面需要适应不同的
 
 ![flex_terms.png](https://developer.mozilla.org/files/3739/flex_terms.png)
 
-- __弹性容器__
-    弹性子元素的父元素。 通过设置[`display`](https://developer.mozilla.org/zh-CN/CSS/display "display") 属性的值为`flex` 或 `inline-flex` 将其 定义为弹性容器。 弹性子元素弹性容器的每一个子元素变为一个弹性子元素。弹性容器直接包含的文本变为匿名的弹性子元素。
+- __弹性容器：__ 弹性子元素的父元素。 通过设置[`display`](https://developer.mozilla.org/zh-CN/CSS/display "display") 属性的值为`flex` 或 `inline-flex` 将其定义为弹性容器。
+- __弹性子元素：__ 弹性容器的每一个子元素变为一个弹性子元素。弹性容器直接包含的文本变为匿名的弹性子元素。
 
-- __轴__
-    每个弹性盒布局以两个轴来排列。弹性子元素沿着**主轴**依次相互排列**。侧轴**垂直于主轴**。**
+- __轴：__ 每个弹性盒布局以两个轴来排列。弹性子元素沿着主轴依次相互排列。侧轴垂直于主轴。
+    * 属性 `flex-direction` 定义主轴方向。
+    * 属性 `justify-content` 定义了弹性子元素如何在当前线上沿着主轴排列。
+    * 属性 `align-items` 定义了弹性子元素如何在当前线上沿着侧轴排列。
+    * 属性 `align-self` 覆盖父元素的 `align-items` 属性，定义了单独的弹性子元素如何沿着侧轴排列。
 
-    * 属性 [`flex-direction`](https://developer.mozilla.org/en-US/CSS/flex-direction "flex-direction") 定义主轴方向。
-    * 属性 [`justify-content`](https://developer.mozilla.org/en-US/CSS/justify-content "en-US/CSS/justify-content") 定义了弹性子元素如何在当前线上沿着主轴排列。
-    * 属性 [`align-items`](https://developer.mozilla.org/en-US/CSS/align-items "en-US/CSS/align-items") 定义了弹性子元素如何在当前线上沿着侧轴排列。
-    * 属性 [`align-self`](https://developer.mozilla.org/en-US/CSS/align-self "en-US/CSS/align-self") 覆盖父元素的 `align-items` 属性，定义了单独的弹性子元素如何沿着侧轴排列。
+- __方向：__ 弹性容器的主轴开始、主轴结束和侧轴开始、侧轴结束边缘代表了弹性子元素排列的起始和结束位置。它们具体取决于由 `writing-mode`（从左到右、从右到左等等）属性建立的向量中的主轴和侧轴位置。
 
-- __方向__
-    弹性容器的**主轴开始**、**主轴结束**和**侧轴开始**、**侧轴结束**边缘代表了弹性子元素排列的起始和结束位置。它们具体取决于由`writing-mode`（从左到右、从右到左等等）属性建立的向量中的主轴和侧轴位置。
+    * 属性 `order` 将元素依次分组，并决定谁先出现。
+    * 属性 `flex-flow` 是属性 `flex-direction` 和 `flex-wrap`的简写，用于排列弹性子元素。
 
-    * 属性 [`order`](https://developer.mozilla.org/en-US/CSS/order "en-US/CSS/order") 将元素依次分组，并决定谁先出现。
-    * 属性 [`flex-flow`](https://developer.mozilla.org/en-US/CSS/flex-flow "flex-flow") 是属性 [`flex-direction`](https://developer.mozilla.org/en-US/CSS/flex-direction "flex-direction") 和 [`flex-wrap`](https://developer.mozilla.org/en-US/CSS/flex-wrap "flex-wrap") 的简写，用于排列弹性子元素。
-
-- __线__
-    弹性子元素根据 [`flex-wrap`](https://developer.mozilla.org/en-US/CSS/flex-wrap "flex-wrap") 属性控制的侧轴方向（在这个方向上可以建立垂直的新线），既可以是单独一线也可以是多线排列。
+- __线：__ 弹性子元素根据 [`flex-wrap`](https://developer.mozilla.org/en-US/CSS/flex-wrap "flex-wrap") 属性控制的侧轴方向（在这个方向上可以建立垂直的新线），既可以是单独一线也可以是多线排列。
 
 - __尺寸__
     弹性子元素宽高可相应地等价于**主尺寸**和**侧尺寸**，它们都分别取决于弹性容器的主轴和侧轴。

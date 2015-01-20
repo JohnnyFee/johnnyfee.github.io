@@ -47,10 +47,12 @@ tags: [web, tutorial]
 
 ### Performance
 
-1.  [PageSpeed](https://chrome.google.com/webstore/detail/gplegfbjlmmehdoakndmohflojccocli)
-2.  [YSlow](https://addons.mozilla.org/zh-cn/firefox/addon/yslow/)
-3.  [Alibench](http://alibench.com/)
-4.  [Webkaka](http://pagespeed.webkaka.com/)
+1. [PageSpeed](https://chrome.google.com/webstore/detail/gplegfbjlmmehdoakndmohflojccocli)
+2. [YSlow](https://addons.mozilla.org/zh-cn/firefox/addon/yslow/)
+3. [Alibench](http://alibench.com/)
+4. [Webkaka](http://pagespeed.webkaka.com/)
+5. [addyosmani/psi](https://github.com/addyosmani/psi/)
+    + [Automating Web Performance Measurement With PSI For Node](http://addyosmani.com/blog/automating-web-performance-measurement-with-psi-for-node)
 
 ### API Doc
 

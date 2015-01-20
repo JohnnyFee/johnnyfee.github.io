@@ -5,6 +5,8 @@ category : Angular
 tags : [angular, tutorial]
 --- 
 
+本文为读 [AngularJS](http://www.salttiger.com/angularjs/) 和  [Mastering Web Application Development with AngularJS](http://www.salttiger.com/mastering-web-application-development-angularjs/) 的读书笔记。
+
 ## Directives
 
 指令继承 HTML 语法，是一种为自定义元素和属性与 DOM 变换和行为关联的方式。你可以使用指令来创建可复用的 UI 组件，配置应用和其他所有你想在 UI 模板中做的事情。

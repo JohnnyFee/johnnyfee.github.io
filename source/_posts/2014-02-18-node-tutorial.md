@@ -14,19 +14,14 @@ tags: [node, tutorial]
 
 ## Boilerplate
 
-- [sahat/hackathon-starter](https://github.com/sahat/hackathon-starter) A boilerplate for Node.js web applications.
+- [sahat/hackathon-starter](https://github.com/sahat/hackathon-starter) 模块采用水平结构。
+- [primus/primus](https://github.com/primus/primus) Primus, the creator god of transformers but now also known as universal wrapper for real-time frameworks.  Primus provides a common low level interface to communicate in real-time using various of real-time frameworks.
 - [12 Web Application Frameworks for Node.js | CodeCondo](http://codecondo.com/10-web-application-frameworks-for-node-js/)
 - [10个最好的Node.js MVC框架 - WEB开发者](http://www.admin10000.com/document/3931.html)
 - [Sails.js](http://sailsjs.org/#/) It is designed to emulate the familiar MVC pattern of frameworks like Ruby on Rails, but with support for the requirements of modern apps: data-driven APIs with a scalable, service-oriented architecture. 
 - [All About Sessions in Node.js - Stormpath User Management API](https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions)
 
 - [DaftMonk/generator-angular-fullstack](https://github.com/DaftMonk/generator-angular-fullstack)
-
-### Commander
-
-- [jonschlinkert/generator-node-cli](https://github.com/jonschlinkert/generator-node-cli)
-- [Hypercubed/generator-commander](https://github.com/Hypercubed/generator-commander)
-- [chjj/blessed](https://github.com/chjj/blessed) 在控制台整图形。
 
 ## Security
 
@@ -75,35 +70,45 @@ tags: [node, tutorial]
 - [flatiron/nconf](https://github.com/flatiron/nconf)
 - [flesler/config-node · GitHub](https://github.com/flesler/config-node)
 
-## Debug
+### Device
 
-- [node-inspector/node-inspector](https://github.com/node-inspector/node-inspector#advanced-use)
+- [sandeepmistry/bleno](https://github.com/sandeepmistry/bleno) 实现 Bluetooth low energy，目前只支持 MAC OS 和 Linux。
 
-- [node.js调试 - dolphinX - 博客园](http://www.cnblogs.com/dolphinX/archive/2013/12/22/3485345.html)
+### Auth
 
-## Device
+- [jaredhanson/passport](https://github.com/jaredhanson/passport) Simple, unobtrusive authentication for Node.js. <http://passportjs.org/>
 
-- [sandeepmistry/bleno](https://github.com/sandeepmistry/bleno)
+### Timer
 
-## Src
+- moment
+- [later](http://blog.fens.me/nodejs-cron-later/)
+
+### Algorithm
+
+- ape-algorithm 快速排序
+- ape-algorithm 桶排序
+
+### Publish
+
+- forever
+- pm2
+
+### Commander
+
+- [jonschlinkert/generator-node-cli](https://github.com/jonschlinkert/generator-node-cli)
+- [Hypercubed/generator-commander](https://github.com/Hypercubed/generator-commander)
+- [chjj/blessed](https://github.com/chjj/blessed) 在控制台整图形。
+
+## Source
 
 - [nodejs代码初探 - CNode](http://cnodejs.org/topic/4f571a16a680d212781ccf9f)
 - [rdio/jsfmt](https://github.com/rdio/jsfmt) For formatting, searching, and rewriting JavaScript.
+- [详解Node.js API系列](http://blog.whattoc.com/categories/%E8%AF%A6%E8%A7%A3Node.js%20API%E7%B3%BB%E5%88%97/)
+- [Node.js设计模式](http://blog.whattoc.com/categories/Node.js%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/)
 
 ## Performance
 
 - [StrongLoop](http://strongloop.com/strongblog/node-js-performance-tip-of-the-week-memory-leak-diagnosis)
-- [addyosmani/psi](https://github.com/addyosmani/psi/)
-    + [Automating Web Performance Measurement With PSI For Node](http://addyosmani.com/blog/automating-web-performance-measurement-with-psi-for-node)
-
-## Other 
-
-- [bipio-server/bipio · GitHub](https://github.com/bipio-server/bipio)
-
-## Build
-
-- [gulpjs/gulp](https://github.com/gulpjs/gulp) The streaming build system 
-<http://gulpjs.com>.
 
 ## Discussion
 
@@ -112,55 +117,20 @@ tags: [node, tutorial]
 - [The Business Case for Node - YouTube](https://www.youtube.com/watch?v=bqLXjNbMZpY&app=desktop)
 - [我为什么向后端工程师推荐Node.js](http://www.infoq.com/cn/articles/why-recommend-nodejs)
 
-## source
-
-- [详解Node.js API系列](http://blog.whattoc.com/categories/%E8%AF%A6%E8%A7%A3Node.js%20API%E7%B3%BB%E5%88%97/)
-- [Node.js设计模式](http://blog.whattoc.com/categories/Node.js%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/)
-
-## production
-
-- [Using Node.js in Production](http://flippinawesome.org/2014/06/23/using-node-js-in-production/)
-
 ## Thread
 
 - [Philip Roberts: Help, I'm stuck in an event-loop. on Vimeo](http://vimeo.com/96425312)
 - [JXcore · a Node.JS distribution with additional features](http://jxcore.com/home/)
 
-## Auth
-
-- [jaredhanson/passport](https://github.com/jaredhanson/passport) Simple, unobtrusive authentication for Node.js. <http://passportjs.org/>
-
-## Path
-
-我们看到Nodejs已经被广发地应用在各种的场景了，针对Nodejs的应用场景，我们应该如何学习Nodejs呢？
-
-以下内容是我整理的文档和教程，每个软件包对应一篇文章，大家可以根据自己的需要进行阅读，完整的文章列表，可以查看：[从零开始nodejs系列文章](http://blog.fens.me/series-nodejs/ "从零开始nodejs系列文章")。
-
-* 项目管理：[npm](http://blog.fens.me/nodejs-npm-package/),[grunt](http://blog.fens.me/nodejs-grunt-intro/), [bower](http://blog.fens.me/nodejs-bower-intro/), [yeoman](http://blog.fens.me/nodejs-yeoman-intro/)
-* Web开发：[express](http://blog.fens.me/nodejs-express3/),ejs,[hexo](http://blog.fens.me/hexo-blog-github/), [socket.io](http://blog.fens.me/nodejs-socketio-chat/), [restify](http://blog.fens.me/nodejs-restify/), [cleaver](http://blog.fens.me/nodejs-slide-cleaver/), [stylus](http://blog.fens.me/nodejs-stylus-css/), [browserify](http://blog.fens.me/nodejs-browserify/),cheerio
-* 工具包：[underscore](http://blog.fens.me/nodejs-express3/),moment,[connet](http://blog.fens.me/nodejs-connect/),[later](http://blog.fens.me/nodejs-cron-later/),[log4js](http://blog.fens.me/nodejs-log4js/),[passport](http://blog.fens.me/nodejs-express-passport/),[passport(oAuth)](http://blog.fens.me/nodejs-oauth-passport/),[domain](http://blog.fens.me/nodejs-core-domain/),[require](http://blog.fens.me/nodejs-requirejs/),[reap](http://blog.fens.me/nodejs-gc-reap/),  
-[commander](http://blog.fens.me/nodejs-commander/),[retry](http://blog.fens.me/nodejs-retry/)
-* 数据库：[mysql](http://blog.fens.me/nodejs-mysql-intro/),[mongoose](http://blog.fens.me/nodejs-mongoose-json/),redis
-* 异步：[async](http://blog.fens.me/nodejs-async/),[wind](http://blog.fens.me/nodejs-async-windjs/)
-* 部署：[forever](http://blog.fens.me/nodejs-server-forever/),pm2
-* 测试：[jasmine](http://blog.fens.me/nodejs-jasmine-bdd/),[karma](http://blog.fens.me/nodejs-karma-jasmine/)
-* 跨平台：[rio](http://blog.fens.me/r-rserve-nodejs/),[tty](http://blog.fens.me/nodejs-linux-sh-tty/)
-* 内核：[cluster](http://blog.fens.me/nodejs-core-cluster/),[http](http://blog.fens.me/nodejs-https-server/),[request](http://blog.fens.me/nodejs-crawler-douban/)
-* 算法：[ape-algorithm(快速排序)](http://blog.fens.me/algorithm-quicksort-nodejs/),[ape-algorithm(桶排序)](http://blog.fens.me/algorithm-bucketsort-nodejs/)
-
-Nodejs在快速的发展着，软件包版本升级的很快，文章有运行不通的地方请参考官方文档解决。我也会不定期更新文章，尽量保持文章代码的可用性。
-
 ## Toos
 
-- [lovell/sharp](https://github.com/lovell/sharp) 修改图片尺寸。
 - [Introducing Tamper · Tamper](http://nytimes.github.io/tamper/) 序列化协议，用于节省流量。
-- [afc163/fanyi](https://github.com/afc163/fanyi) 翻译，使用有道和金山的接口。
 - [zertosh/beautify-with-words · GitHub](https://github.com/zertosh/beautify-with-words) Beautifies javascript and replaces variable names with unique "long-ish words". 可用于反编译 `*-min.js`。
 - [busterc/no-exif](https://github.com/busterc/no-exif) 移除图片的 拍摄信息和 GPS 信息。
-- [mobile-icon-resizer](https://www.npmjs.org/package/mobile-icon-resizer) 批量改变 Mobile 图标的尺寸。
 - [ngrok - secure introspectable tunnels to localhost](https://ngrok.com/) 共享本地网站。
     - [Expose Yourself with ngrok](http://flippinawesome.org/2014/04/28/expose-yourself-with-ngrok/?-yourself-with-ngrok)
 * [Share your local websites with any internet connected device](https://meetfinch.com/) 共享本地网站。
+* [bipio-server/bipio · GitHub](https://github.com/bipio-server/bipio) 类似 IFTT
 
 ### 静态服务器
 

@@ -134,6 +134,8 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 - [CSS Stats](http://cssstats.com) 统计 CSS。
 - [SC5 Styleguide](http://styleguide.sc5.io/) 生成 CSS 文档。
 - [Favicon Generator - Generate favicon pictures and HTML](http://realfavicongenerator.net/)
+- [lovell/sharp](https://github.com/lovell/sharp) 修改图片尺寸。
+- [mobile-icon-resizer](https://www.npmjs.org/package/mobile-icon-resizer) 批量改变 Mobile 图标的尺寸。
 
 ### 预编译
 

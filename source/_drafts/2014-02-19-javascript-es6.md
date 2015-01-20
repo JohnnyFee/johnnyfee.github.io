@@ -4,6 +4,7 @@ title: "EcmaScript 6.0"
 category: JavaScript
 tags: [javascript]
 --- 
+
 ## Tutorial
 
 - [FalsyValues. Dmitry Soshnikov - ECMAScript 6](http://www.slideshare.net/dmitrysoshnikov/falsyvalues-dmitry-soshnikov-ecmascript-6)
@@ -30,15 +31,13 @@ tags: [javascript]
 - [JustinDrake/node-es6-examples](https://github.com/JustinDrake/node-es6-examples)
 - [Handling required parameters in ECMAScript 6](http://www.2ality.com/2014/04/required-parameters-es6.html)
 
-## Tools
-
-- [addyosmani/es6-tools](https://github.com/addyosmani/es6-tools)
-- [sebmck/6to5](https://github.com/sebmck/6to5)
-    + [ES6 modules today with 6to5 - ES6 Rocks](http://es6rocks.com/2014/10/es6-modules-today-with-6to5)
-
 ## Argument
 
 - [使用简单的JavaScript，我们为什么应该抵制ES6 - OurJS.com](http://ourjs.com/detail/530b64f23b73342e03000012)
+
+## String
+
+- [HTML templating with ES6 template strings](http://www.2ality.com/2015/01/template-strings-html.html)
 
 ## iterators and generators
 
@@ -59,9 +58,10 @@ tags: [javascript]
 
 - [zenparsing/esparse](https://github.com/zenparsing/esparse)
 
-## Map and Sets
+## Collection
 
 - [ECMAScript 6: maps and sets](http://www.2ality.com/2015/01/es6-maps-sets.html)
+- [ECMAScript 6 sets: union, intersection, difference](http://www.2ality.com/2015/01/es6-set-operations.html)
 
 ## es7
 
@@ -75,3 +75,9 @@ tags: [javascript]
 ## Vidio
 
 - [Ben Newman: Easing into ECMAScript 6 and Beyond - YouTube](https://www.youtube.com/watch?v=kXY9hIPKuLQ)
+
+## Tools
+
+- [addyosmani/es6-tools](https://github.com/addyosmani/es6-tools)
+- [sebmck/6to5](https://github.com/sebmck/6to5)
+    + [ES6 modules today with 6to5 - ES6 Rocks](http://es6rocks.com/2014/10/es6-modules-today-with-6to5)

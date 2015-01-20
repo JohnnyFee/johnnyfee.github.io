@@ -26,10 +26,14 @@ $ ionic emulate ios
 
 See [Getting Started with Ionic - Ionic Framework](http://ionicframework.com/getting-started/)
 
-## Generator
+### Generator
 
 - [diegonetto/generator-ionic](https://github.com/diegonetto/generator-ionic)
 - [Ionic Expense Tracker Sample: Creating the App - Wijmo](http://wijmo.com/expense-tracker-sample-creating-the-app)
+
+## Tools
+
+- [Ionicons: The premium icon font for Ionic Framework](http://ionicons.com/)
 
 ## Demo
 
@@ -44,3 +48,9 @@ See [Getting Started with Ionic - Ionic Framework](http://ionicframework.com/get
 - [Automating Icons and Splash Screens](http://ionicframework.com/blog/automating-icons-and-splash-screens)
 - [Adding Auth to your Ionic app in 5 mins with Auth0](http://ionicframework.com/blog/authentication-in-ionic)
 - [ccoenraets/directory-angular-ionic](https://github.com/ccoenraets/directory-angular-ionic) Sample Employee Directory application built with Ionic and AngularJS.
+- [ionic中文教程](http://haomou.net/2014/10/06/2014_ionic_learn/)
+
+## FAQ
+
+- [build fails on windows (spawn issue) · Issue #15 · diegonetto/generator-ionic](https://github.com/diegonetto/generator-ionic/issues/15#issuecomment-38075095)
+- [Why "ionic serve" fails? - Ionic](http://forum.ionicframework.com/t/why-ionic-serve-fails/4466)

@@ -5,7 +5,7 @@ category : Angular
 tags : [angular, tutorial]
 --- 
 
-本文基于 [AngularJS](http://www.salttiger.com/angularjs/) 的读书笔记，该书的例子在 [shyamseshadri/angularjs-book](https://github.com/shyamseshadri/angularjs-book)。
+本文基于 [Mastering Web Application Development with AngularJS](http://www.salttiger.com/mastering-web-application-development-angularjs/) 的读书笔记。
 
 ## Understanding the input directives
 
@@ -69,7 +69,7 @@ AngularJS provides an additional syntax for dynamically defining a complex list 
 
 ![](http://johnnyimages.qiniudn.com/angular-form-select-data-source.jpg)
 
-The `dataSource ``expression` describes the source of the information about the options to be displayed. It describes elements in an array or properties on an object. One select option will be generated for each item in the `dataSource expression`.
+The `dataSource` expression describes the source of the information about the options to be displayed. It describes elements in an array or properties on an object. One select option will be generated for each item in the `dataSource expression`.
 
 The `optionBinding` expression describes what should be extracted from each data source item and how that item should be bound to the `select` option.
 

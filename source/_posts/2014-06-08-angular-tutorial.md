@@ -5,7 +5,7 @@ category : Angular
 tags : [angular, tutorial]
 --- 
 
-本文为读 [AngularJS](http://www.salttiger.com/angularjs/) 的读书笔记，该书的例子在 [shyamseshadri/angularjs-book](https://github.com/shyamseshadri/angularjs-book)。
+本文为读 [AngularJS](http://www.salttiger.com/angularjs/) 和  [Mastering Web Application Development with AngularJS](http://www.salttiger.com/mastering-web-application-development-angularjs/) 的读书笔记。
 
 ## Angular 学习路线导航
 
@@ -1019,6 +1019,7 @@ See:
 ## Web Components
 
 - [Integrating Web Components with AngularJS · Pascal Precht](http://pascalprecht.github.io/2014/10/25/integrating-web-components-with-angularjs/)
+- [Component-Based Directives in AngularJS](https://www.airpair.com/angularjs/posts/component-based-angularjs-directives)
 
 ## Testing
 
@@ -1095,6 +1096,8 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - [Use ngStorage For All Your AngularJS Local Storage Needs](http://blog.nraboy.com/2014/12/use-ngstorage-angularjs-local-storage-needs)
 - [gsklee/ngStorage](https://github.com/gsklee/ngStorage) localStorage and sessionStorage done right for AngularJS. See [Use ngStorage For All Your AngularJS Local Storage Needs](http://blog.nraboy.com/2014/12/use-ngstorage-angularjs-local-storage-needs)
 - [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
+- [AngularCSS - Routes Demo](http://door3.github.io/angular-css/#/) 动态注入 CSS。
+    - [Introducing AngularCSS: CSS On-Demand for AngularJS](http://door3.com/insights/introducing-angularcss-css-demand-angularjs)
  
 __快捷键：__
 

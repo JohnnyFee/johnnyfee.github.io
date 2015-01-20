@@ -11,6 +11,7 @@ tags: [javascript]
 - [sorrycc/awesome-javascript](https://github.com/sorrycc/awesome-javascript)
 - [JavascriptOO](http://www.javascriptoo.com/)
 - [JS: The Right Way](http://jstherightway.org/)
+- [Essential JavaScript Links](https://gist.github.com/ericelliott/d576f72441fc1b27dace)
 - [JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/)
 - [getify/You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS)
 - [A guide to 2ality’s posts on the JavaScript language](http://www.2ality.com/2012/08/guide-jslang.html)
@@ -36,6 +37,16 @@ tags: [javascript]
 * [bolshchikov/js-must-watch](https://github.com/bolshchikov/js-must-watch)
 * [视频 : Douglas_Crockford_Advanced_JavaScript](http://v.youku.com/v_show/id_XNjA2NDU2NzU2.html) YouKu 上的视频镜像。
 
+### Weekly
+
+- [Node Weekly](http://nodeweekly.com/)
+- [Mobile Web Weekly](http://mobilewebweekly.co/)
+- [HTML5 Weekly](http://html5weekly.com/)
+- [CSS Weekly](http://css-weekly.com/)
+- [Web Desgin Weekly](http://web-design-weekly.com/)
+- [Response Desgin Weekly](http://responsivedesignweekly.com/)
+- [JavaScript Weekly Weekly](http://javascriptweekly.com/)
+ 
 ## Primitive Type
 
 - [The Curious Case of JavaScript NaN](http://ariya.ofilabs.com/2014/05/the-curious-case-of-javascript-nan.html?)

@@ -9,6 +9,8 @@ tags: [node, webkit]
 
 在开发本地应用的时候，WebKit（现在是Blink）负责HTML5 UI 相关的部分，而Node.js负责本地的API接口，比如文件系统，网络，设备等。
 
+See [nwjs](https://github.com/nwjs)
+
 ## Quick Start
 
 脚手架生成器 [Dica-Developer/generator-node-webkit](https://github.com/Dica-Developer/generator-node-webkit)。

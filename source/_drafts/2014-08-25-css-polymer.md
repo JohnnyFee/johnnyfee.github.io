@@ -33,6 +33,8 @@ UI component renderers such as accordions, cards, and sidebars.
 
 ## Creating a Polymer Application
 
+- [Creating a Polymer Chat App with Material Design - PubNub](http://www.pubnub.com/blog/creating-a-polymer-chat-app-with-material-design)
+
 ## Angular Polymer
 
 ## How does Polymer differ from Angular?

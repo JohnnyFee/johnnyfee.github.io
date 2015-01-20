@@ -248,7 +248,7 @@ And use:
 
 然后，计算过滤结果就归结为显示数组的长度：
 
-    Total: {{filteredBacklog.length}}
+    Total: {%raw%}{{filteredBacklog.length}}{%endraw%}
 
 这种方法不是很直观，过滤逻辑只能放在一个地方。
 

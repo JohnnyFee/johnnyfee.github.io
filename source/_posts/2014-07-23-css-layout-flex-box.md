@@ -17,7 +17,7 @@ CSS3 弹性盒，或者简称弹性盒，是一种当页面需要适应不同的
 
 ![flex_terms.png](https://developer.mozilla.org/files/3739/flex_terms.png)
 
-- __弹性容器：__ 弹性子元素的父元素。 通过设置[`display`](https://developer.mozilla.org/zh-CN/CSS/display "display") 属性的值为`flex` 或 `inline-flex` 将其定义为弹性容器。
+- __弹性容器：__ 弹性子元素的父元素。 通过设置`display` 属性的值为`flex` 或 `inline-flex` 将其定义为弹性容器。
 - __弹性子元素：__ 弹性容器的每一个子元素变为一个弹性子元素。弹性容器直接包含的文本变为匿名的弹性子元素。
 
 - __轴：__ 每个弹性盒布局以两个轴来排列。弹性子元素沿着主轴依次相互排列。侧轴垂直于主轴。
@@ -31,17 +31,17 @@ CSS3 弹性盒，或者简称弹性盒，是一种当页面需要适应不同的
     * 属性 `order` 将元素依次分组，并决定谁先出现。
     * 属性 `flex-flow` 是属性 `flex-direction` 和 `flex-wrap`的简写，用于排列弹性子元素。
 
-- __线：__ 弹性子元素根据 [`flex-wrap`](https://developer.mozilla.org/en-US/CSS/flex-wrap "flex-wrap") 属性控制的侧轴方向（在这个方向上可以建立垂直的新线），既可以是单独一线也可以是多线排列。
+- __线：__ 弹性子元素根据 `flex-wrap` 属性控制的侧轴方向（在这个方向上可以建立垂直的新线），既可以是单独一线也可以是多线排列。
 
 - __尺寸__
     弹性子元素宽高可相应地等价于**主尺寸**和**侧尺寸**，它们都分别取决于弹性容器的主轴和侧轴。
 
-    * 属性 [`min-height`](https://developer.mozilla.org/en-US/CSS/min-height "/en-US/CSS/min-height") 和 [`min-width`](https://developer.mozilla.org/en-US/CSS/min-width "/en-US/CSS/min-width") 属性的初始值为0。
-    * 属性 [`flex`](https://developer.mozilla.org/en-US/CSS/flex "en-US/CSS/flex") 是 [`flex-basis`](https://developer.mozilla.org/en-US/CSS/flex-basis "en-US/CSS/flex-basis")，[`flex-grow`](https://developer.mozilla.org/en-US/CSS/flex-grow "en-US/CSS/flex-grow") 和 [`flex-shrink`](https://developer.mozilla.org/en-US/CSS/flex-shrink "en-US/CSS/flex-shrink") 的缩写，代表弹性子元素的伸缩性。
+    * 属性 `min-height` 和 `min-width` 属性的初始值为0。
+    * 属性 `flex` 是 `flex-basis`，`flex-grow` 和 `flex-shrink` 的缩写，代表弹性子元素的伸缩性。
 
 ## 建立弹性盒子
 
-使用CSS建立弹性盒子样式，为 [display](https://developer.mozilla.org/en-US/CSS/display "/en-US/CSS/display") 指定下面的值：
+使用CSS建立弹性盒子样式，为 display 指定下面的值：
 
     display : flex
 
@@ -51,28 +51,11 @@ CSS3 弹性盒，或者简称弹性盒，是一种当页面需要适应不同的
 
 这样做将元素定义为弹性容器，其子元素即弹性子元素。 `flex` 值表示弹性容器为块级。`inline-flex` 值表示弹性容器为原子行级元素 。
 
-## 弹性子元素的注意事项
-
-包含在弹性容器内的文本自动成为匿名的弹性子元素。然而，只包含空白的弹性子元素不会被渲染，就好像它被设定为`display:none`一样。
-
-弹性容器的绝对定位的子元素会被定位，因此其静态位置会根据它们的弹性容器的主起始内容盒的角落上开始。
-
-目前由于一个已知的问题，在弹性子元素上指定`visibility:collapse`  
-会导致其好像被指定了 `display:none` 一样，但该操作的初衷是使元素具有好像被指定了`visibility:hidden`一样的效果。在该问题被解决之前建议使用`visibility:hidden` ，其效果在弹性子元素上等同于`visibility:collapse` 。
-
-相邻的弹性子元素不会发生外边距合并。使用`auto` 的外边距会在垂直和水平方向上带来额外的空间，这种性质可用于对齐或分隔临近的弹性子元素。W3C弹性盒子布局模型的 [使用'auto'的外边距进行对齐](http://dev.w3.org/csswg/css3-flexbox/#auto-margins "http://dev.w3.org/csswg/css3-flexbox/#auto-margins") 部分有更多信息。
-
-弹 性盒子的对齐会进行真正的居中，不像CSS的其他居中方法。这意味着即使弹性容器溢出，子元素仍然保持居中。有些时候这可能有问题，然而即使溢出了页面的 上沿，或左边沿（在从左到右的语言如英语；这个问题在从右到左的语言中发生在右边沿，如阿拉伯文），因为你不能滚动到那里，即使那里有内容！在将来的版本 中，对齐属性会被扩展为有一个“安全”选项。目前，如果关心这个问题，你可以使用外边距来达到居中的目的，这种方式比较“安全”，在溢出的情况下会停止居 中。在你想要居中的弹性子元素上应用自动外边距代替`align-`属性。在弹性容器的第一个和最后一个子元素的外侧应用自动外边距来代替`justify-`属性。自动外边距会伸缩并假定剩余空间，当有剩余空间时居中弹性子元素，没有剩余空间时切换会正常对齐模式。然而，如果你想要在多线弹性盒子中用基于外边距的居中替换`justify-content` 属性，你可能就没那么幸运了，因为你需要在每一线的第一个和最后一个元素上应用外边距。除非你能提前预测哪个元素是哪一线上的最后一个元素，否则你没法稳定地在主轴上用基于外边距的居中代替 `justify-content` 属性。
-
-说起虽然元素的显示顺序与源代码中的顺序无关，这种无关仅对显示效果有效，不包括语音顺序和基于源代码的导航。即使是 [`order`](https://developer.mozilla.org/en-US/docs/CSS/order "") 也不影响语言和导航序列。因此开发者必须小心排列源代码中的元素以免破坏文档的可访问性。
-
-## 弹性盒子的属性
-
-### Properties for the Parent(flex container)
+## 弹性容器的属性
 
 ![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-container.svg)
 
-#### display
+### display
 
 This defines a flex container; inline or block depending on the given value. It enables a flex context for all its direct children.
 
@@ -85,7 +68,7 @@ This defines a flex container; inline or block depending on the given value. It 
 
 Note that CSS columns have no effect on a flex container.
 
-#### flex-direction
+### flex-direction
 
 ![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-direction1.svg)  
 This establishes the main-axis, thus defining the direction flex items are placed in the flex container. Flexbox is (aside from optional wrapping) a single-direction layout concept. Think of flex items as primarily laying out either in horizontal rows or vertical columns.
@@ -97,83 +80,65 @@ This establishes the main-axis, thus defining the direction flex items are place
 }
 ```
 
-
 * `row` (default): left to right in `ltr`; right to left in `rtl`
 * `row-reverse`: right to left in `ltr`; left to right in `rtl`
 * `column`: same as `row` but top to bottom
 * `column-reverse`: same as `row-reverse` but bottom to top
 
-#### flex-wrap
+### flex-wrap
 
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-wrap.svg)  
 By default, flex items will all try to fit onto one line. You can change that and allow the items to wrap as needed with this property. Direction also plays a role here, determining the direction new lines are stacked in.
 
-
-```
-.container{
+```css
+.container {
   flex-wrap: nowrap | wrap | wrap-reverse;
 }
 ```
-
 
 * `nowrap` (default): single-line / left to right in `ltr`; right to left in `rtl`
 * `wrap`: multi-line / left to right in `ltr`; right to left in `rtl`
 * `wrap-reverse`: multi-line / right to left in `ltr`; left to right in `rtl`
 
-#### flex-flow (Applies to: parent flex container element)
+![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-wrap.svg)  
+
+### flex-flow (Applies to: parent flex container element)
 
 This is a shorthand `flex-direction` and `flex-wrap` properties, which together define the flex container's main and cross axes. Default is `row nowrap`.
-
 
 ```
 flex-flow: <‘flex-direction’> || <‘flex-wrap’>
 ```
 
-#### justify-content
-
-![justify-content](http://www.w3.org/TR/css3-flexbox/images/flex-pack.svg)
+### justify-content
 
 This defines the alignment along the __main axis__. It helps distribute extra free space left over when either all the flex items on a line are inflexible, or are flexible but have reached their maximum size. It also exerts some control over the alignment of items when they overflow the line.
 
 
-```
+```js
 .container {
   justify-content: flex-start | flex-end | center | space-between | space-around;
 }
 ```
 
-
 * `flex-start` (default): items are packed toward the start line
 * `flex-end`: items are packed toward to end line
 * `center`: items are centered along the line
 * `space-between`: items are evenly distributed in the line; first item is on the start line, last item on the end line
-* `space-around`: items are evenly distributed in the line with equal space around them
+* `space-around`: items are evenly distributed in the line with equal space around them.
 
-__Demo:__
+![](http://johnnyimages.qiniudn.com/flex-flex-content.png)
 
-The following demo shows how flex items behave depending on `justify-content` value:
+See the [Demo](http://codepen.io/JohnnyFee/pen/IyDvA/)
 
-* The red list is set to `flex-start`
-* The yellow is set to `flex-end`
-* The blue is set to `center`
-* The green is set to `space-between`
-* The pink is set to `space-around`
+### align-items
 
-<p data-height="268" data-theme-id="0" data-slug-hash="IyDvA" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/IyDvA/'>flex</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-
-See [justify-content](http://css-tricks.com/almanac/properties/j/justify-content/)
-
-#### align-items
-
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/align-items.svg)  
 This defines the default behaviour for how flex items are laid out along the cross axis on the current line. Think of it as the `justify-content` version for the cross-axis (perpendicular to the main-axis).
 
-```
+```css
 .container {
   align-items: flex-start | flex-end | center | baseline | stretch;
 }
 ```
-
 
 * `flex-start`: cross-start margin edge of the items is placed on the cross-start line
 * `flex-end`: cross-end margin edge of the items is placed on the cross-end line
@@ -181,20 +146,19 @@ This defines the default behaviour for how flex items are laid out along the cro
 * `baseline`: items are aligned such as their baselines align
 * `stretch` (default): stretch to fill the container (still respect min-width/max-width)
 
-#### align-content
+![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/align-items.svg)  
 
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/align-content.svg)  
+### align-content
+
 This aligns a flex container's lines within when there is extra space in the cross-axis, similar to how `justify-content` aligns individual items within the main-axis. 
 
 **Note:** this property has no effect when there is only one line of flex items.
 
-
-```
+```css
 .container {
   align-content: flex-start | flex-end | center | space-between | space-around | stretch;
 }
 ```
-
 
 * `flex-start`: lines packed to the start of the container
 * `flex-end`: lines packed to the end of the container
@@ -203,39 +167,39 @@ This aligns a flex container's lines within when there is extra space in the cro
 * `space-around`: lines evenly distributed with equal space between them
 * `stretch` (default): lines stretch to take up the remaining space
 
-### Properties for the Children(flex items)
+![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/align-content.svg)
 
-#### order
+## 弹性子元素的属性
 
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/order.svg)  
+### order
+
 By default, flex items are laid out in the source order. However, the `order` property controls the order in which they appear in the flex container.
 
-
-```
+```css
 .item {
   order: <integer>;
 }
 ```
 
-#### flex-grow
+![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/order.svg)  
 
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-grow.svg)  
+### flex-grow
 
 This defines the ability for a flex item to grow if necessary. It accepts a unitless value that serves as a proportion. It dictates what amount of the available space inside the flex container the item should take up. 
 
 If all items have `flex-grow` set to 1, every child will set to an equal size inside the container. If you were to give one of the children a value of 2, that child would take up twice as much space as the others.
 
-
-```
+```css
 .item {
   flex-grow: <number>; /* default 0 */
 }
 ```
 
-
 Negative numbers are invalid.
 
-#### flex-shrink
+![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-grow.svg)  
+
+### flex-shrink
 
 This defines the ability for a flex item to shrink if necessary.
 
@@ -253,7 +217,7 @@ __Demo:__
 
 To see the full potential of this demo, you would have to be able to resize its width, so please have a look at it on CodePen directly.
 
-<p data-height="230" data-theme-id="0" data-slug-hash="hpesF" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/hpesF/'>hpesF</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<p data-height="130" data-theme-id="0" data-slug-hash="hpesF" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/hpesF/'>hpesF</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 In this demo:
 
@@ -264,51 +228,23 @@ Both flex items want to be 20em wide. Because of the flex-grow (first parameter)
 
 Negative numbers are invalid.
 
-#### flex-basis
+### flex-basis
 
 This defines the default size of an element before the remaining space is distributed.
 
-
-```
+```css
 .item {
   flex-basis: <length> | auto; /* default auto */
 }
 ```
 
-<p data-height="268" data-theme-id="0" data-slug-hash="LEGIc" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/LEGIc/'>LEGIc</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<p data-height="130" data-theme-id="0" data-slug-hash="LEGIc" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/LEGIc/'>LEGIc</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 The first flex item want to be 400px, the second flex item want to be 100px. If the flex container is equal to 500px, the results in Chrome37:
 
-__Chrome 37 with `border-width: 5px`:__
-
-container|flex item1 |flex item2
----------|-----------|-----------
-380      |300        |83
-450      |354        |96
-470      |370        |100
-507      |400        |107
-500      |394        |106
-550      |425        |125
-600      |450        |150
-
-__Chrome 37 no Boder:__
-
-container|flex item1 |flex item2
----------|-----------|-----------
-380      |304        |76
-450      |360        |90
-470      |376        |94
-500      |400        |100
-507      |404        |103
-550      |425        |125
-600      |450        |150
-
-Please note flex the position in 400px for flex item1 and 100px for flex item2. Maybe it's not the perfectly desired? 
-
-#### flex
+### flex
 
 This is the shorthand for `flex-grow,` `flex-shrink` and `flex-basis` combined. The second and third parameters (`flex-shrink` and `flex-basis`) are optional. Default is `0 1 auto`.
-
 
 ```
 .item {
@@ -316,22 +252,21 @@ This is the shorthand for `flex-grow,` `flex-shrink` and `flex-basis` combined. 
 }
 ```
 
-See [flex](http://css-tricks.com/almanac/properties/f/flex/)
+See [Chris Wright - Experiment: Flexbox Adventures](http://chriswrightdesign.com/experiments/flexbox-adventures)
 
-#### align-self
+### align-self
 
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/align-self.svg)  
 This allows the default alignment (or the one specified by `align-items`) to be overridden for individual flex items.
 
 Please see the `align-items` explanation to understand the available values.
 
-
-```
+```css
 .item {
   align-self: auto | flex-start | flex-end | center | baseline | stretch;
 }
 ```
 
+![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/align-self.svg)  
 
 Note that `float`, `clear` and `vertical-align` have no effect on a flex item.
 
@@ -340,18 +275,37 @@ Note that `float`, `clear` and `vertical-align` have no effect on a flex item.
 因为弹性盒子使用一种不同的布局逻辑，一些属性会在弹性容器上无效。
 
 * [多列模块](https://developer.mozilla.org/zh-CN/CSS/Using_CSS_multi-column_layouts "Using CSS multi-column layouts") 中的 `column-*` 属性对弹性子元素无效。
-* [`float`](https://developer.mozilla.org/en-US/docs/CSS/float "") 和 [`clear`](https://developer.mozilla.org/en-US/docs/CSS/clear "") 对弹性子元素无效。使用 `float` 会导致 `display` 属性计算为 `block`.
-* [`vertical-align`](https://developer.mozilla.org/en-US/docs/CSS/vertical-align "") 对弹性子元素的对齐无效。
+* `float` 和 `clear` 对弹性子元素无效。使用 `float` 会导致 `display` 属性计算为 `block`.
+* `vertical-align` 对弹性子元素的对齐无效。
 
-## 例子
+## 弹性子元素的注意事项
 
-- [Flexbox Nav Bar with Fixed, Variable, and Take-Up-The-Rest Elements](http://css-tricks.com/flexbox-nav-bar-fixed-variable-take-rest-elements)
+包含在弹性容器内的文本自动成为匿名的弹性子元素。然而，只包含空白的弹性子元素不会被渲染，就好像它被设定为`display:none`一样。
+
+弹性容器的绝对定位的子元素会被定位，因此其静态位置会根据它们的弹性容器的主起始内容盒的角落上开始。
+
+目前由于一个已知的问题，在弹性子元素上指定`visibility:collapse`  
+会导致其好像被指定了 `display:none` 一样，但该操作的初衷是使元素具有好像被指定了`visibility:hidden`一样的效果。在该问题被解决之前建议使用`visibility:hidden` ，其效果在弹性子元素上等同于`visibility:collapse` 。
+
+相邻的弹性子元素不会发生外边距合并。使用`auto` 的外边距会在垂直和水平方向上带来额外的空间，这种性质可用于对齐或分隔临近的弹性子元素。W3C弹性盒子布局模型的 [使用'auto'的外边距进行对齐](http://dev.w3.org/csswg/css3-flexbox/#auto-margins "http://dev.w3.org/csswg/css3-flexbox/#auto-margins") 部分有更多信息。
+
+弹 性盒子的对齐会进行真正的居中，不像CSS的其他居中方法。这意味着即使弹性容器溢出，子元素仍然保持居中。有些时候这可能有问题，然而即使溢出了页面的 上沿，或左边沿（在从左到右的语言如英语；这个问题在从右到左的语言中发生在右边沿，如阿拉伯文），因为你不能滚动到那里，即使那里有内容！在将来的版本 中，对齐属性会被扩展为有一个“安全”选项。目前，如果关心这个问题，你可以使用外边距来达到居中的目的，这种方式比较“安全”，在溢出的情况下会停止居 中。在你想要居中的弹性子元素上应用自动外边距代替`align-`属性。在弹性容器的第一个和最后一个子元素的外侧应用自动外边距来代替`justify-`属性。自动外边距会伸缩并假定剩余空间，当有剩余空间时居中弹性子元素，没有剩余空间时切换会正常对齐模式。然而，如果你想要在多线弹性盒子中用基于外边距的居中替换`justify-content` 属性，你可能就没那么幸运了，因为你需要在每一线的第一个和最后一个元素上应用外边距。除非你能提前预测哪个元素是哪一线上的最后一个元素，否则你没法稳定地在主轴上用基于外边距的居中代替 `justify-content` 属性。
+
+说起虽然元素的显示顺序与源代码中的顺序无关，这种无关仅对显示效果有效，不包括语音顺序和基于源代码的导航。即使是 `order` 也不影响语言和导航序列。因此开发者必须小心排列源代码中的元素以免破坏文档的可访问性。
+
+## Library
+
+- [kristoferjoseph/flexboxgrid](https://github.com/kristoferjoseph/flexboxgrid)
+
+## 应用
+
+See also [Flexbox Nav Bar with Fixed, Variable, and Take-Up-The-Rest Elements](http://css-tricks.com/flexbox-nav-bar-fixed-variable-take-rest-elements)
 
 ### centering
 
 Let's start with a very very simple example, solving an almost daily problem: perfect centering. It couldn't be any simpler if you use flexbox.
 
-```
+```css
 .parent {
   display: flex;
   height: 300px; /* Or whatever */
@@ -370,7 +324,7 @@ This relies on the fact a margin set to `auto` in a flex container absorb extra 
 
 Now let's use some more properties. Consider a list of 6 items, all with a fixed dimensions in a matter of aesthetics but they could be auto-sized. We want them to be evenly and nicely distributed on the horizontal axis so that when we resize the browser, everything is fine (without media queries!).
 
-```
+```css
 .flex-container {
   /* We first create a flex layout context */
   display: flex;
@@ -389,9 +343,9 @@ Now let's use some more properties. Consider a list of 6 items, all with a fixed
 
 Done. Everything else is just some styling concern. Below is a pen featuring this example. Be sure to go to CodePen and try resizing your windows to see what happen.
 
-<p data-height="540" data-theme-id="0" data-slug-hash="LklCv" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/HugoGiraudel/pen/LklCv/'>Demo Flexbox 1</a> by Hugo Giraudel (<a href='http://codepen.io/HugoGiraudel'>@HugoGiraudel</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+See the [Result](http://codepen.io/HugoGiraudel/pen/LklCv/').
 
-### responsive menu
+### Responsive menu
 
 Let's try something else. Imagine we have a right-aligned navigation on the very top of our website, but we want it to be centered on medium-sized screens and single-columned on small devices. Easy enough.
 
@@ -421,13 +375,13 @@ Let's try something else. Imagine we have a right-aligned navigation on the very
 }
 ```
 
-<p data-height="268" data-theme-id="0" data-slug-hash="pkwqH" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/HugoGiraudel/pen/pkwqH/'>Demo Flexbox 2</a> by Hugo Giraudel (<a href='http://codepen.io/HugoGiraudel'>@HugoGiraudel</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+See the [Result](http://codepen.io/HugoGiraudel/pen/pkwqH/).
 
-### responsive layout
+### Responsive layout
 
 Let's try something even better by playing with flex items flexibility! What about a mobile-first 3-columns layout with full-width header and footer. And independent from source order.
 
-```
+```css
 .wrapper {
   display: flex;
   flex-flow: row wrap;
@@ -467,46 +421,18 @@ Let's try something even better by playing with flex items flexibility! What abo
 }
 ```
 
-<p data-height="268" data-theme-id="0" data-slug-hash="qIAwr" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/HugoGiraudel/pen/qIAwr/'>Demo Flexbox 3</a> by Hugo Giraudel (<a href='http://codepen.io/HugoGiraudel'>@HugoGiraudel</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-
-## 操作
-
-有几个在线的弹性盒子操作站点可用于实验：
-
-* [Flexbox Playground](http://demo.agektmr.com/flexbox/ "http://demo.agektmr.com/flexbox/")
-* [Flexy Boxes](http://the-echoplex.net/flexyboxes "http://the-echoplex.net/flexyboxes")
-## 始终要记得的一些事
-
-描述弹性子元素如何排列的逻辑有时候非常隐晦。这是一些在计划使用弹性盒子时应避免的一些事。
-
-弹性盒子会根据[书写模式](https://developer.mozilla.org/en-US/docs/CSS/writing-mode "mode")的需要进行排列。这意味着**主起始点**和**主结束点**需要根据**开始**和**结束**点布局。
-
-**侧起始点**和**侧结束点**取决于依赖[`direction`](https://developer.mozilla.org/en-US/CSS/direction "direction")属性值的**开始**和**结束**点的定义**。**
-
-只要`break-` 属性允许，断页可能出现在弹性盒子布局中。CSS3的 `break-after`， `break-before` 和 `break-inside` a以及CSS2.1的 `page-break-before`，`page-break-after` 和 `page-break-inside` 属性可能出现在弹性容器，弹性子元素以及弹性子元素的内部元素上出现。
+See the [Result](http://codepen.io/HugoGiraudel/pen/qIAwr/).
 
 ## Tools
 
-- [Flexplorer](http://bennettfeely.com/flexplorer/)
+* [Flexplorer](http://bennettfeely.com/flexplorer/)
+* [Flexbox Playground](http://demo.agektmr.com/flexbox/ "http://demo.agektmr.com/flexbox/")
+* [Flexy Boxes](http://the-echoplex.net/flexyboxes "http://the-echoplex.net/flexyboxes")
+## 始终要记得的一些事
 
 ## Reference
 
 - [使用 CSS 弹性盒 - CSS](https://developer.mozilla.org/zh-CN/docs/CSS/Tutorials/Using_CSS_flexible_boxes#.E5.BC.B9.E6.80.A7.E7.9B.92.E6.A6.82.E5.BF.B5)
 - [A Complete Guide to Flexbox](http://css-tricks.com/snippets/css/a-guide-to-flexbox/)
-- [Dive into Flexbox - Bocoup](http://bocoup.com/weblog/dive-into-flexbox/)
-- [Designing CSS Layouts With Flexbox Is As Easy As Pie](http://www.smashingmagazine.com/2013/05/22/centering-elements-with-flexbox/)
-- [Flexbox Revisited: The New Syntax For Flexible Boxes - Vanseo Design](http://www.vanseodesign.com/css/flexbox-revisited/)
-- [Are We Ready to Use Flexbox?](http://www.sitepoint.com/are-we-ready-to-use-flexbox/)
-- [Using Flexbox: Mixing Old and New for the Best Browser Support](http://css-tricks.com/using-flexbox/)
-- [CSS3 弹性盒布局说明（CSS3 Flexible Box Layout Explained）](http://xinyo.org/archives/63075/)
-- [CSS之固定布局、流动布局、弹性布局优缺点分析（下） - 厚朴〖HOPE〗工作室 >> 唯美设计 >> 前端](http://ce.sysu.edu.cn/hope/Item/11239.aspx)
-- [CSS box-flex属性，然后弹性盒子模型简介 « 张鑫旭-鑫空间-鑫生活](http://www.zhangxinxu.com/wordpress/2010/12/css-box-flex%E5%B1%9E%E6%80%A7%EF%BC%8C%E7%84%B6%E5%90%8E%E5%BC%B9%E6%80%A7%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/)
-- [打造无懈可击的Web设计——流动布局和弹性布局](http://www.programmer.com.cn/11732/)
-- [CSS3弹性盒模型flexbox完整版教程](http://caibaojian.com/flexbox-guide.html)
-- [Grids in CSS3 - Modern Web](http://modernweb.com/2014/03/03/grids-in-css3/)
-
-## Tutorial
-
-- [Chris Wright - Experiment: Flexbox Adventures](http://chriswrightdesign.com/experiments/flexbox-adventures)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

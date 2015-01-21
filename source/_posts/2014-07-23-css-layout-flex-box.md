@@ -301,7 +301,7 @@ Note that `float`, `clear` and `vertical-align` have no effect on a flex item.
 
 See also [Flexbox Nav Bar with Fixed, Variable, and Take-Up-The-Rest Elements](http://css-tricks.com/flexbox-nav-bar-fixed-variable-take-rest-elements)
 
-### centering
+### Centering
 
 Let's start with a very very simple example, solving an almost daily problem: perfect centering. It couldn't be any simpler if you use flexbox.
 
@@ -320,7 +320,7 @@ Let's start with a very very simple example, solving an almost daily problem: pe
 
 This relies on the fact a margin set to `auto` in a flex container absorb extra space. So setting a vertical margin of `auto` will make the item perfectly centered in both axis.
 
-### fluid layout
+### Fluid Layout
 
 Now let's use some more properties. Consider a list of 6 items, all with a fixed dimensions in a matter of aesthetics but they could be auto-sized. We want them to be evenly and nicely distributed on the horizontal axis so that when we resize the browser, everything is fine (without media queries!).
 
@@ -345,7 +345,7 @@ Done. Everything else is just some styling concern. Below is a pen featuring thi
 
 See the [Result](http://codepen.io/HugoGiraudel/pen/LklCv/').
 
-### Responsive menu
+### Responsive Menu
 
 Let's try something else. Imagine we have a right-aligned navigation on the very top of our website, but we want it to be centered on medium-sized screens and single-columned on small devices. Easy enough.
 

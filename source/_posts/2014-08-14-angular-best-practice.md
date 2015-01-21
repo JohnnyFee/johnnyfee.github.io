@@ -252,6 +252,13 @@ AngularJS拥有一整套工具使这个过程非常简单;有了ngClass我们可
 - [Google's AngularJS Style Guide](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html)
 - [angularjs style guide](https://github.com/mgechev/angularjs-style-guide/blob/master/README-zh-cn.md)
 
+
+## Best Practice
+
+- [turingou/Angular-Best-Practices](https://github.com/turingou/Angular-Best-Practices) 由支付宝前端开发工程师 @莫登（新浪微博@郭宇）维护，部分案例包括Angular在 支付宝某些系统上的使用经验。
+- [AngularJS移动开发中的坑汇总](http://blog.csdn.net/offbye/article/details/38490821)
+- [AngularJS 最佳实践 – 尘埃落定](http://www.lovelucy.info/angularjs-best-practices.html)
+
 ## Tutorial
 
 - [10 Top Mistakes Angular.js Developers Make](http://www.airpair.com/angularjs/posts/top-10-mistakes-angularjs-developers-make)

@@ -1,4 +1,3 @@
----
 layout: post
 title: "Ionic Tutorial"
 category: Mobile
@@ -7,7 +6,37 @@ tags: [mobile]
 
 [Ionic](http://ionicframework.com/) 是一个使用 HTML5 进行移动混合应用开发的开源框架，它专注于视觉，并集成 Cordova、Angular、Node、Grunt、Bowser、Sass 等，形成混合开发的解决方案。Ionic 的跨平台解决方案使用的是 Cordova。
 
+## Install
+
+Cordova command needs to use some programs located into your `sdk/tools` directory. You need also have installed **apache ant**.
+
+Then you must add these directories into your `PATH` system variable:
+
+**Background:**
+
+* let's assume you have installed your [Android SDK](http://cordova.apache.org/docs/en/3.2.0/guide_platforms_android_index.md.html#Android%20Platform%20Guide_requirements_and_support) to the `c:\sdk\android` directory
+* you have installed you **Apache ant** to the `c:\tools\apache-ant` directory
+
+Then you must create two system variables:
+
+1.  `ANDROID_HOME` with the `c:\sdk\android` value
+2.  `ANT_HOME` with the `c:\tools\apache-ant` value
+
+Finally, you must modify the `PATH` variable and add those two to the end of the `PATH`' value: 
+
+```
+%ANT_HOME%\bin;%ANDROID_HOME%\tools;%ANDROID_HOME%\platform-tools
+```
+
+**NOTE:** for those who uses Linux, the instruction differs a bit.
+
+More documentation available [here](http://docs.phonegap.com/en/3.2.0/guide_platforms_android_index.md.html#Android%20Platform%20Guide).
+
+See [windows - cordova platform add android not working while listing Android targets - Stack Overflow](http://stackoverflow.com/questions/20323787/cordova-platform-add-android-not-working-while-listing-android-targets)
+
 ## Quick Start
+
+See [diegonetto/generator-ionic](https://github.com/diegonetto/generator-ionic)
 
 ```sh
 # 1. Install Ionic
@@ -26,10 +55,9 @@ $ ionic emulate ios
 
 See [Getting Started with Ionic - Ionic Framework](http://ionicframework.com/getting-started/)
 
-### Generator
+## Form
 
-- [diegonetto/generator-ionic](https://github.com/diegonetto/generator-ionic)
-- [Ionic Expense Tracker Sample: Creating the App - Wijmo](http://wijmo.com/expense-tracker-sample-creating-the-app)
+- [ionic framework validation](https://gist.github.com/malixsys/8721568)
 
 ## Tools
 
@@ -52,5 +80,21 @@ See [Getting Started with Ionic - Ionic Framework](http://ionicframework.com/get
 
 ## FAQ
 
+### build fails on windows
+
+See: 
+
 - [build fails on windows (spawn issue) · Issue #15 · diegonetto/generator-ionic](https://github.com/diegonetto/generator-ionic/issues/15#issuecomment-38075095)
 - [Why "ionic serve" fails? - Ionic](http://forum.ionicframework.com/t/why-ionic-serve-fails/4466)
+
+A solution would be to replace spawn by `win-spawn`:
+
+1. npm install `cross-spawn`
+2. Replace the line in the Gruntfile.js:
+    
+        var spawn = require('child_process').spawn;
+
+    by
+
+        var spawn = require('cross-spawn');
+

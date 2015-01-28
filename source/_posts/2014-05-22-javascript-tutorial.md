@@ -84,6 +84,10 @@ __7 PATTERNS TO REFACTOR JAVASCRIPT APPLICATIONS:__
 - [Introducing the JavaScript Internationalization API ✩ Mozilla Hacks – the Web developer blog](https://hacks.mozilla.org/2014/12/introducing-the-javascript-internationalization-api)
 - [Tingan Ho: Translation Workflow and Formatting Complex Translations - JSConf.Asia 2014 - YouTube](https://www.youtube.com/watch?v=4ZXagCR9urg) <sup>video</sup>
 
+## Error
+
+- [Strange JavaScript Errors and How to Fix Them](http://davidwalsh.name/fix-javascript-errors)
+
 ## Tools
 
 - [ECMAScript 5 compatibility table](http://kangax.github.io/es5-compat-table/)

@@ -120,6 +120,8 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 ## Performance
 
 - [CSS Performance Tooling / Speaker Deck](https://speakerdeck.com/addyosmani/css-performance-tooling)
+- [addyosmani/tmi](https://github.com/addyosmani/tmi) TMI (Too Many Images) - discover your image weight on the web.
+- [Tools for image optimization](http://addyosmani.com/blog/image-optimization-tools)
 
 ## Tools
 
@@ -142,6 +144,7 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 - LESS
 - SASS
 - Stalus
+- [Sass MQ](http://sass-mq.github.io/sass-mq)
 
 ### 预编译工具
 
@@ -170,6 +173,7 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 - [利用CSS固定背景交替实现视差滚动效果](http://www.shejidaren.com/css-fixed-scroll-background.html)
 - [动起来！好玩的CSS抖动样式 – CSS Shake](http://www.shejidaren.com/css-shake-animation.html)
 - [ace-subido/spaced-out](https://github.com/ace-subido/spaced-out)
+- [Zero element loading animations · MadebyMike](http://madebymike.com.au/writing/zero-element-loading-animations/)
 
 ## Books
 

@@ -194,6 +194,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 
 - [alexk111/SVG-Morpheus](https://github.com/alexk111/SVG-Morpheus) JavaScript library enabling SVG icons to morph from one to the other. It implements Material Design's Delightful Details transitions.
 - [ConnorAtherton/walkway](https://github.com/ConnorAtherton/walkway) An easy way to animate SVG elements.
+- [gabelerner/canvg](https://github.com/gabelerner/canvg) Javascript SVG parser and renderer on Canvas.
 
 ## Tutorial
 

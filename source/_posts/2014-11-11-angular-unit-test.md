@@ -1041,3 +1041,4 @@ PageObjects encapsulate abstractions on how to access certain elements and how t
 ## Tutorial
 
 - [Testing Angular with Karma](https://www.airpair.com/angularjs/posts/testing-angular-with-karma)
+- [A Journey Through Client-Side Testing with JavaScript -Telerik Developer Network](http://developer.telerik.com/featured/journey-client-side-testing-javascript)

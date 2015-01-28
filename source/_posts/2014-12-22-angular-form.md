@@ -666,3 +666,11 @@ app.controller('MainCtrl', function($scope) {
 Here, we have a button to revert the model back to its original state. Clicking on this button calls `revert()` on the scope. The button is disabled if `canRevert()` returns `false`.
 
 In the controller, you can see that we use `angular.copy()` to make a copy of the model and place it in a local variable. The `revert()` method copies this original back over to the working `user` model and sets the form back to a pristine state so that all the CSS classes are no longer set to `ng-dirty`.
+
+## ngMessage
+ 
+See [AngularJS: API: ngMessages](https://docs.angularjs.org/api/ngMessages) and a demo [Validation in Ionic Framework Apps with ngMessages](https://calendee.com/2014/12/26/validation-in-ionic-framework-apps-with-ngmessages/).
+
+## Tutorial
+
+- [Form validation with AngularJS](http://www.ng-newsletter.com/posts/validations.html)

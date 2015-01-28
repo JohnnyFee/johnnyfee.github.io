@@ -21,10 +21,13 @@ tags: [javascript]
 - [pivotal/jasmine](https://github.com/pivotal/jasmine) DOM-less simple JavaScript testing framework <http://jasmine.github.io/>.
 - [yahoo/preceptor](https://github.com/yahoo/preceptor)
 - [krasimir/atomus](https://github.com/krasimir/atomus) A small utility library for running client-side tests in Node.js environment.
+- [scottburch/sparrow](https://github.com/scottburch/sparrow) Sparrow is designed to solve the problem of async testing inherent in website testing by making async testing easier.
 
 ### E2E
 
 - [Nightwatch.js - Developer Guide](http://nightwatchjs.org/guide)
+- [ariya/phantomjs](https://github.com/ariya/phantomjs)
+    + [johntitus/node-horseman](https://github.com/johntitus/node-horseman)
 
 ### Util
 

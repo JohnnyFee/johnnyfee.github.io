@@ -599,7 +599,20 @@ The `ng-include` directive, while not directly acting as the `if`/`else` stateme
 </div>
 ```
 
+或者：
+
+```html
+<ng-include
+  src=""
+  [onload=""]
+  [autoscroll=""]>
+...
+</ng-include>
+```
+
 The `ng-include` directive accepts an expression as its argument, so you need to pass a quoted string if you plan to use a fixed value pointing to a partial, for example, `<div ng-include="'header.tpl.html'"></div>`.
+
+See [AngularJS: API: ngInclude](https://docs.angularjs.org/api/ng/directive/ngInclude)
 
 ### ng-class & ng-style
 
@@ -1021,69 +1034,10 @@ See:
 - [Integrating Web Components with AngularJS · Pascal Precht](http://pascalprecht.github.io/2014/10/25/integrating-web-components-with-angularjs/)
 - [Component-Based Directives in AngularJS](https://www.airpair.com/angularjs/posts/component-based-angularjs-directives)
 
-## Testing
-
-- [基于Karma和Jasmine的AngularJS测试 / Owen Chen](http://owenchen.duapp.com/index.php/jasmine-and-karma-test-angularjs/)
-
-### Karma’s
-
-Karma’s main reason for existence is to make your test-driven development (TDD) workflow simple, fast, and fun. It uses[NodeJS](http://www.nodejs.org/) and [SocketIO](http://www.socket.io/) (you don’t need to know what they are, just assume that they are awesome, cool libraries) to allow running your code, and tests in multiple browsers at insanely fast speeds. Go find out more at [https://github.com/vojtajina/karma/](https://github.com/vojtajina/karma/).
-
-1. Set up Karma
-
-        npm install -g karma
-
-2. Getting your config file up
-
-    If you used Yeoman to create your app skeleton, then you already have a ready-made Karma config file waiting for you to use. If not, just go ahead and execute the following command from the base folder of your application directory: 
-
-        karma init
-
-    in your terminal console, and it will generate a dummy config file ( _karma.conf.js_ ) for you to edit to your liking, with some pretty standard defaults. You can use that.
-
-3. Starting the Karma server
-
-    Just run the following command: 
-
-        karma start [optionalPathToConfigFile]
-
-    This will start the Karma server on port 9876 (the default, which you can change by editing the _karma.conf.js_ file from the previous step). While Karma should open up a browser and capture it automatically, it will print all the instructions needed to capture another browser in the console. If you are too lazy to do that, just go to [http://localhost:9876](http://localhost:9876/) in another browser or device, and you are good to start running tests in multiple browsers.
-
-4. Running the tests
-
-    Execute the following command: 
-
-        karma run
-
-    That’s it. You should get your results printed right in the console where you ran the command.
-
-
-### Unit Tests
-
-- [An Introduction To Unit Testing In AngularJS Applications](http://www.smashingmagazine.com/2014/10/07/introduction-to-unit-testing-in-angularjs)
-
-AngularJS makes it easy to write your unit tests, and supports the Jasmine style of writing tests by default (as does Karma). Jasmine is what we call a behavior-driven development framework, which allows you to write specifications that denote how your code should behave. A sample test in Jasmine might look something like this.
-describe("MyController:", function() {
-
-    it("to work correctly", function() {
-        var a = 12;
-        var b = a;
-
-        expect(a).toBe(b);
-        expect(a).not.toBe(null);
-      });
-    });
-
-AngularJS provides some nice mockups, as well as testing functions, to allow you to create services, controllers, and filters right in your unit tests, as well as mock out HttpRequests and the like.
-
-Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but you don’t really need any. All you need to do is add a shortcut command to execute “karma start” and “karma run” from within your IDE. This can usually be done by adding a simple script to execute, or the actual shell command, depending on your choice of editor. You should see the results every time it finishes running, of course.
-
-
 ## Tools
 
 * [Batarang](https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk). This has been around for a while.
 * [ng-inspector](http://ng-inspector.org/). This is the newest one, and as the name suggests, it allows you to inspect your application's scopes.
-* 
 
 ## Library
 
@@ -1098,8 +1052,13 @@ Karma does not have plug-ins (yet!) for all the latest and greatest IDEs, but yo
 - [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
 - [AngularCSS - Routes Demo](http://door3.github.io/angular-css/#/) 动态注入 CSS。
     - [Introducing AngularCSS: CSS On-Demand for AngularJS](http://door3.com/insights/introducing-angularcss-css-demand-angularjs)
+
+### Auth
+
+* [Narzerus/angular-permission](https://github.com/Narzerus/angular-permission) Simple route authorization via roles/permissions.
+* [mrgamer/angular-login-example](https://github.com/mrgamer/angular-login-example)
  
-__快捷键：__
+### Shortcut
 
 - [AngularHotkeys.js](http://chieffancypants.github.io/angular-hotkeys/) 建议使用。
 - [bfanger/angular-keyboard](https://github.com/bfanger/angular-keyboard) 仅供参考。

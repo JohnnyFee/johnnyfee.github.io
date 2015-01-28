@@ -67,6 +67,10 @@ tags: [mongodb, database]
 
 - [BAE3.0 mongoose 长连接问题 - CNode](http://cnodejs.org/topic/52e0f31a78990b0411b585d9)
 
+## Library
+
+- [Robe](http://hiddentao.github.io/robe) Node.js ODM for MongoDB using ES6 generators
+
 ## Books
 
 - [MongoDB: The Definitive Guide, 2nd Edition](http://www.salttiger.com/mongodb-the-definitive-guide-2nd-edition/) 2013.05

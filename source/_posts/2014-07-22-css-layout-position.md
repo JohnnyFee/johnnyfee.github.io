@@ -5,9 +5,11 @@ category: CSS
 tags: [web, css, layout]
 --- 
 
+## position
+
 The `position` value in CSS deals with layout and manipulating elements to be in your desired visual place. There are only the five values shown above, and really only three since static and inherit are fairly rarely needed for this property.
 
-## static
+### static
 
 ```css
 .static {
@@ -19,7 +21,7 @@ static 是默认值。任意 position: static; 的元素不会被特殊的定位
 
 <!--more-->
 
-## relative
+### relative
 
 ```css
 .relative1 {
@@ -38,7 +40,7 @@ static 是默认值。任意 position: static; 的元素不会被特殊的定位
 
 ![relativeposition.png](http://johnnyimages.qiniudn.com/relativeposition.png)
 
-## fixed
+### fixed
 
 position 标志为 fixed 的元素将从文档流中删除，换句话说，对于其他元素来说，它是不存在的。一个固定定位（position 属性的值为 fixed）元素总是相对于视窗来定位，位置不受滚动条的影响。和 relative 一样， top 、 right 、 bottom 和 left 属性都可用。
 
@@ -56,7 +58,7 @@ position 标志为 fixed 的元素将从文档流中删除，换句话说，对�
 
 令人惊讶地是移动浏览器对 fixed 的支持很差。[这里有相应的解决方案](http://bradfrostweb.com/blog/mobile/fixed-position/)。
 
-## absolute
+### absolute
 
 absolute 与 fixed 的表现类似，除了它不是相对于视窗而是相对于最近的 __positioned 祖先元素__，并且它会随着页面滚动而移动。如果绝对定位（absolute）的元素没有 positioned 祖先元素，那么它是相对于文档的 body 元素。记住一个 `positioned` 元素是指 position 值不是 static 的元素。
 
@@ -125,9 +127,9 @@ __几个结论：__
 
 1. position: absolute忽略根元素的padding。
 
-        <div id="a" style="background: #fff; width: 200px;">A
-          <div id="b" style="background: #81b6ff; width: 150px; position: relative; padding-top: 100px;">A - 1
-              <div id="c" style="background: #b6ff00; position: absolute; left: 0; top: 0">A - 2
+        <div style="background: #fff; width: 200px;">A
+          <div style="background: #81b6ff; width: 150px; position: relative; padding-top: 100px;">A - 1
+              <div style="background: #b6ff00; position: absolute; left: 0; top: 0">A - 2
               </div>
           </div>
         </div>
@@ -156,13 +158,27 @@ __几个结论：__
 
     ![css-layout-absolute-z-index.png](http://johnnyimages.qiniudn.com/css-layout-absolute-z-index.png)
 
-## Inherit
+### Inherit
 
 The position value doesn't cascade, so this can be used to specifically force it to, and inherit the positioning value from its parent.
 
 ## Tutorial
 
 - [How Does Auto Positioning Work In CSS? - Vanseo Design](http://www.vanseodesign.com/css/auto-positioning/)
+
+## 应用
+
+### 100% 宽高
+
+```css
+.pane, .view {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+```
 
 ## Demo
 

@@ -309,3 +309,4 @@ tags: [web, career]
 - [16 Great JavaScript Interview Questions and Answers](http://www.toptal.com/javascript/interview-questions)
 - [10 Common JavaScript Coding Errors](http://www.toptal.com/javascript/10-most-common-javascript-mistakes)
 - [前端开发面试题](http://caibaojian.com/front-end-developer-interview-questions.html)
+- [JavaScript Quiz系列题集 - SegmentFault](http://segmentfault.com/blog/king/1190000000582486)

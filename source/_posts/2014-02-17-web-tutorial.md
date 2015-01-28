@@ -35,10 +35,17 @@ tags: [web, tutorial]
 - [h5bp/html5-boilerplate](https://github.com/h5bp/html5-boilerplate)
 - [Favicons, Touch Icons, Tile Icons, etc. What All Do You Need?](http://css-tricks.com/favicon-quiz)
 
-## Tool
+## Tools
 
 - [Google I/O 2012 - Better Web App Development Through Tooling - YouTube](https://www.youtube.com/watch?feature=player_embedded&v=Mk-tFn2Ix6g)
 - [Modern Debugging Experience: Part 1 - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/modern-debugging-experience-part-1--cms-22571)
+
+### Sharing local development
+
+- [Share your local websites with any internet connected device](https://meetfinch.com/) 共享本地网站。
+- [ngrok - secure introspectable tunnels to localhost](https://ngrok.com/) 共享本地网站。
+    - [Expose Yourself with ngrok](http://flippinawesome.org/2014/04/28/expose-yourself-with-ngrok/?-yourself-with-ngrok)
+* [Share your local websites with any internet connected device](https://meetfinch.com/) 共享本地网站。
 
 ### API Debugging
 
@@ -53,6 +60,11 @@ tags: [web, tutorial]
 4. [Webkaka](http://pagespeed.webkaka.com/)
 5. [addyosmani/psi](https://github.com/addyosmani/psi/)
     + [Automating Web Performance Measurement With PSI For Node](http://addyosmani.com/blog/automating-web-performance-measurement-with-psi-for-node)
+- [PerfBar](http://lafikl.github.io/perfBar)
+- [Sitespeed.io - Analyze your website speed and performance](http://www.sitespeed.io)
+- [SpeedCurve: Monitor front-end performance](http://speedcurve.com) Monitor front-end performance. Beat the competition.
+- [移动设备适合性测试](https://www.google.com/webmasters/tools/mobile-friendly)
+- [tkadlec/grunt-perfbudget](https://github.com/tkadlec/grunt-perfbudget) Grunt task for performance budgeting.
 
 ### API Doc
 

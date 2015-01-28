@@ -1021,6 +1021,74 @@ var setUpDatePicker = function () {
 });
 ```
 
+### Creating a custom validation directive
+
+We need to check that the password and confirm password field are identical. We will create a custom validation directive that we can apply to an input element that checks whether the model of the input element matches another model value. In use, it will look like this:
+
+```html
+<form name="passwordForm">
+  <input type="password" name="password" ng-model="user.password">
+  <input type="password" name="confirmPassword" ng-model="confirmPassword" validate-equals="user.password">
+</form>
+```
+
+[This custom model validator directive must integrate with `ngModelController` to provide a consistent validation experience for the user.]()
+
+[We can expose the `ngModelController` on the scope by providing a name for the `form` and a name for the `input` element. This allows us to ]()[access model validity in the controller. Our validation directive will set the `confirmPassword` input to valid if its model value is the same as the `user.password` model.]()
+
+[Validation directives require access ]()[to the `ngModelController`, which is the directive controller for the `ng-model` directive. We specify this in our directive definition using the `require` field. This field takes a string or an array of strings. Each string must be the canonical name of the directive whose controller we require.]()
+
+[When the required directive is found, its ]()[directive controller is injected into the linking function as the fourth parameter. For example:]()
+
+```js
+require: 'ngModel',
+link: function(scope, element, attrs, ngModelController) { … }
+```
+
+[The pattern for ]()[testing validation directives is to compile a form containing an input that uses `ng-model` and our validation directive. For example:]()
+
+```html
+<form name="testForm">
+  <input name="testInput"
+         ng-model="model.value"
+         validate-equals="model.compareTo">
+</form>
+```
+
+[This directive is an attribute on the input element. The value of the attribute is an expression that must evaluate to the value on the model. The directive will compare this value with the input's value.]()
+
+[We specify the model bound to this input using the `ng-model` directive. This will create `ngModelController`, which will be exposed on the scope as `$scope.testForm.testInput` and the model value itself will be exposed on the scope as `$scope.value`.]()
+
+[We then make changes to the input value and the model value and check the `ngModelController` for changes to `$valid` and `$error`.]()
+
+Now we have our tests in place, so we can implement the functionality of the directive:
+
+```js
+myModule.directive('validateEquals', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ngModelCtrl) {
+      function validateEqual(myValue) {
+        var valid = (myValue === scope.$eval(attrs.validateEquals));
+        ngModelCtrl.$setValidity('equal', valid);
+        return valid ? myValue : undefined;
+      }
+
+      ngModelCtrl.$parsers.push(validateEqual);
+      ngModelCtrl.$formatters.push(validateEqual);
+
+      scope.$watch(attrs.validateEquals, function() {
+        ngModelCtrl.$setViewValue(ngModelCtrl.$viewValue);
+      });
+    }
+  };
+});
+```
+
+[We create a function called ]()[`validateEqual(value)`, which compares the passed in value with the value of the expression. We push this into the `$parsers` and `$formatters` pipelines, so that the validation function gets called each time either the model or the view changes.]()
+
+[In this directive we also have to take into account the model we are comparing against changing. We do this by setting up a watch on the expression, which we retrieve from the `attrs` parameter of the linking function. When it does change, we artificially trigger the `$parsers` pipeline to run by calling `$setViewValue()`. This ensures that all potential `$parsers` ]()[are run in case any of them modify the model value before it gets to our validator.]()
+
 ## Library
 
 - [voronianski/ngActivityIndicator](https://github.com/voronianski/ngActivityIndicator/) Angular provider for preloader animations 

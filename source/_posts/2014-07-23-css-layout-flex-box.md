@@ -101,7 +101,7 @@ By default, flex items will all try to fit onto one line. You can change that an
 
 ![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-wrap.svg)  
 
-### flex-flow (Applies to: parent flex container element)
+### flex-flow
 
 This is a shorthand `flex-direction` and `flex-wrap` properties, which together define the flex container's main and cross axes. Default is `row nowrap`.
 

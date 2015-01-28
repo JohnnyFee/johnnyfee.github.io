@@ -1,4 +1,3 @@
----
 layout: post
 title: "CSS Selector"
 category: CSS
@@ -151,7 +150,65 @@ p:before {
 :nth-last-of-type(n) |  选择父元素定义类型的倒数第 n 个子元素
 :first-of-type      |  匹配父元素下使用同种标签的第一个子元素，等同于:nth-of-type(1)                                                  
 :last-of-type      |  匹配父元素下使用同种标签的最后一个子元素，等同于:nth-last-of-type(1)
-                                                          
+
+Suppose we are building a CSS grid, and want to remove the margin on every fourth grid module:
+
+```html
+<section class="grid">
+  <article class="module">One</article>
+  <article class="module">Two</article>
+  <article class="module">Three</article>
+  <article class="module">Four</article>
+  <article class="module">Five</article>
+</section>
+```
+
+Rather than adding a class to every fourth item (e.g. .last), we can use :nth-child:
+
+```css
+.module:nth-child(4n) {
+  margin-right: 0;
+}
+```
+
+As you can see, `:nth-child` takes an argument: this can be a single integer, the keywords “even” or “odd”, or a formula. If an integer is specified only one element is selected—but the keywords or a formula will iterate through all the children of the parent element and select matching elements — similar to navigating items in a JavaScript array. Keywords “even” and “odd” are straightforward (2, 4, 6 etc or 1, 3, 5 respectively). The formula is constructed using the syntax `an+b`, where:
+
+* “a” is an integer value
+* “n” is the literal letter “n”
+* “+” is an operator and may be either “+” or “-”
+* “b” is an integer and is required if an operator is included in the formula
+
+It is important to note that this formula is an equation, and iterates through each sibling element, determining which will be selected. The “n” part of the formula, if included, represents a set of increasing positive integers (just like iterating through an array). In our above example, we selected every fourth element with the formula `4n`, which worked because every time an element was checked, “n” increased by one (4×0, 4×1, 4×2, 4×3, etc). If an element’s order matches the result of the equation, it gets selected (4, 8, 12, etc). For a more in-depth explanation of the math involved, please read [this article](http://css-tricks.com/how-nth-child-works/).
+
+__Points of Interest__
+
+* `:nth-child` iterates through elements starting from the top of the source order. The only difference between it and [`:nth-last-child`](http://css-tricks.com/almanac/selectors/n/nth-last-child) is that the latter iterates through elements _starting from the bottom of the source order_.
+* The `:nth-child` selector is very similar to [`:nth-of-type`](http://css-tricks.com/almanac/selectors/n/nth-of-type) but with one **critical difference:** it is [less specific](http://css-tricks.com/the-difference-between-nth-child-and-nth-of-type/). In our example above they would produce the same result because we are iterating over only `.module` elements, but if we were iterating over a more complex group of siblings, `:nth-child` would try to match all siblings, not only siblings of the same element type. This reveals the power of `:nth-child`—it can select any sibling element in an arrangement, _not only elements that are specified before the colon_.
+
+See another demo: [CSS-Tricks: :nth-child](http://codepen.io/zakkain/pen/ALiBx)
+
+```css
+/*select <li> elements that are the first child of their parent*/
+.one li:nth-child(1) {
+  background: lightsteelblue;
+}
+
+/*select the third child element of the second element*/
+.two :nth-child(2) :nth-child(3) {
+  background: lightsteelblue;
+}
+
+/*select the first three <li> elements inside of every odd element*/
+.three :nth-child(odd) li:nth-child(-n+3) {
+  background: lightsteelblue;
+}
+```
+
+See:
+
+- [:nth-child](http://css-tricks.com/almanac/selectors/n/nth-child/).
+- [How nth-child Works](http://css-tricks.com/how-nth-child-works/)
+
 ## UI 伪类选择器
 
 选择器        | 含义

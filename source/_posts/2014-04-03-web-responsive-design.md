@@ -192,7 +192,20 @@ See:
 - [Responsive.is – Display and present responsive web designs](http://responsive.is/typecast.com)
 - [screenqueri](http://beta.screenqueri.es/)
 - [lafikl/RWDPerf](https://github.com/lafikl/RWDPerf) 性能测试。
-- [Share your local websites with any internet connected device](https://meetfinch.com/) 共享本地网站。
+
+### Responsive Desgin
+
+- [Top Responsive Website Builder - Webflow](https://webflow.com)
+- [FROONT — Responsive web design tool](http://froont.com)
+- [Macaw: The Code-Savvy Web Design Tool](http://macaw.co)
+- [Pinegrow Web Editor](http://pinegrow.com)
+
+### Synchronize Brower
+
+- [Ghostlab](http://vanamco.com/ghostlab)
+- [BrowserSync](http://www.browsersync.io)
+- [Cross Browser Testing Tool. 300+ Browsers, Mobile, Real IE.](http://www.browserstack.com)
+- [BBC-News/wraith](https://github.com/BBC-News/wraith)
 
 ## Book
 

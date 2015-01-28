@@ -77,6 +77,13 @@ tags: [node, tutorial]
 ### Auth
 
 - [jaredhanson/passport](https://github.com/jaredhanson/passport) Simple, unobtrusive authentication for Node.js. <http://passportjs.org/>
+- [jaredhanson/oauth2orize](https://github.com/jaredhanson/oauth2orize) OAuth 2.0 authorization server toolkit for Node.js.
+- [vdemedes/cancan](https://github.com/vdemedes/cancan) Pleasant authorization library for Node.js (port of Ryan Bates' cancan).
+- [carlos8f/node-relations](https://github.com/carlos8f/node-relations) Entity relationship, role, and permissions API for Node.js.
+
+__Demo:__
+
+- [eddywashere/node-stripe-membership-saas](https://github.com/eddywashere/node-stripe-membership-saas)
 
 ### Timer
 
@@ -92,6 +99,8 @@ tags: [node, tutorial]
 
 - forever
 - pm2
+- Travis
+- [Publishing your first Browserify/Node module](http://blog.risingstack.com/publishing-your-first-browserify-node-module)
 
 ### Commander
 
@@ -121,15 +130,13 @@ tags: [node, tutorial]
 
 - [Philip Roberts: Help, I'm stuck in an event-loop. on Vimeo](http://vimeo.com/96425312)
 - [JXcore · a Node.JS distribution with additional features](http://jxcore.com/home/)
+- [Understanding the Node.js Event Loop](https://nodesource.com/blog/understanding-the-nodejs-event-loop)
 
 ## Toos
 
 - [Introducing Tamper · Tamper](http://nytimes.github.io/tamper/) 序列化协议，用于节省流量。
 - [zertosh/beautify-with-words · GitHub](https://github.com/zertosh/beautify-with-words) Beautifies javascript and replaces variable names with unique "long-ish words". 可用于反编译 `*-min.js`。
 - [busterc/no-exif](https://github.com/busterc/no-exif) 移除图片的 拍摄信息和 GPS 信息。
-- [ngrok - secure introspectable tunnels to localhost](https://ngrok.com/) 共享本地网站。
-    - [Expose Yourself with ngrok](http://flippinawesome.org/2014/04/28/expose-yourself-with-ngrok/?-yourself-with-ngrok)
-* [Share your local websites with any internet connected device](https://meetfinch.com/) 共享本地网站。
 * [bipio-server/bipio · GitHub](https://github.com/bipio-server/bipio) 类似 IFTT
 
 ### 静态服务器
@@ -144,6 +151,7 @@ tags: [node, tutorial]
 - Heroku 
     + [6 Easy Ways to Prevent Your Heroku Node App From Sleeping - Quick Left Boulder Colorado](http://quickleft.com/blog/6-easy-ways-to-prevent-your-heroku-node-app-from-sleeping)
     + [Deploying Node.js App to Heroku](https://www.youtube.com/watch?v=uLF_hmtxAsY) <sup>video</sup>
+    + - [How to Deploy a Node.js App to Heroku ♥ Scotch](http://scotch.io/tutorials/hosting/how-to-deploy-a-node-js-app-to-heroku)
 - [Nitrous.io](https://www.nitrous.io/join/jOTIMMPrQPY), 一个云Node.js, Go, - Ruby, Python平台，还有Web IDE。
 - [百度BAE](http://developer.baidu.com/wiki/index.php?title=docs/cplat/rt/node.js- )
 - [AppFog](https://www.appfog.com/)
@@ -176,10 +184,6 @@ tags: [node, tutorial]
 - [如何选择Node.js Web开发框架？ - WEB开发者](http://www.admin10000.com/document/5283.html)
 - [Writing Modular Node.js Projects for Express and Beyond](http://strongloop.com/strongblog/modular-node-js-express/)
 - [当IoC遇见了Node.js](http://www.infoq.com/cn/articles/ioc-meet-nodejs)
-
-### Publish
-
-- [How to Deploy a Node.js App to Heroku ♥ Scotch](http://scotch.io/tutorials/hosting/how-to-deploy-a-node-js-app-to-heroku)
 
 ### Error Handling
 

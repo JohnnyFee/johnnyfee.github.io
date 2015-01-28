@@ -52,6 +52,46 @@ function doSomething(arg1){
 }
 ```
 
+### What does `void 0` mean?
+
+[`void`<sup>[MDN]</sup>](https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special_Operators/void_Operator) is a prefix keyword that takes one argument and always returns `undefined`.
+
+**Examples**
+
+```
+void 0
+void (0)
+void "hello"
+void (new Date())
+//all will return undefined
+```
+
+__What's the point of that?__
+
+It seems pretty useless, doesn't it? If it always returns `undefined`, what's wrong with just using `undefined` itself?
+
+In a perfect world we would be able to safely just use `undefined`: it's much simpler and easier to understand than `void 0`. But in case you've never noticed before, _this isn't a perfect world_, especially when it comes to Javascript. 
+
+The problem with using `undefined` is that `undefined` is not a reserved word ([and in some Javascript environments is actually a global variable <sup>[wtfjs]</sup>](http://wtfjs.com/2010/02/15/undefined-is-mutable)). That is, `undefined` is a permissible variable name, so you can assign a new value to it at your own caprice.
+
+```
+alert(undefined); //alerts "undefined"
+var undefined = "new value";
+alert(undefined) //alerts "new value"
+```
+
+Because of this, you cannot safely rely on `undefined` having the value that you expect.
+
+`void`, on the other hand, cannot be overidden. `void 0` will _always_ return `undefined`. `undefined`, on the other hand, can be whatever Mr. Javascript decides he wants it to be.
+
+__Why `void 0`, specifically?__
+
+Why should we use `void 0`? What's so special about `0`? Couldn't we just as easily use `1`, or `42`, or `1000000` or `"Hello, world!"`?
+
+And the answer is, yes, we could, and it would work just as well. The only benefit of passing in `0` instead of some other argument is that `0` is short and idiomatic.
+
+See [javascript - What does `void 0` mean? - Stack Overflow](http://stackoverflow.com/questions/7452341/what-does-void-0-mean)
+
 ## Object
 
 ### Check the properties of an object when using a for-in loop

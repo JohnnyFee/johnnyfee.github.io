@@ -234,3 +234,11 @@ div::after {
 
 - [Meet the Pseudo Class Selectors](http://css-tricks.com/pseudo-class-selectors/)
 - [::after / ::before](http://css-tricks.com/almanac/selectors/a/after-and-before/)
+
+## FAQ
+
+- [Adding HTML entities using CSS content - Stack Overflow](http://stackoverflow.com/questions/190396/adding-html-entities-using-css-content)
+
+## Tutorial
+
+- [CSS Content](http://css-tricks.com/css-content/) 

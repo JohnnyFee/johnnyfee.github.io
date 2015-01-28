@@ -225,4 +225,8 @@ See also [Vojta's google group post](https://groups.google.com/d/msg/angular/TbR
 - [$watch how the $apply runs a $digest - Angular Tips](http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/)
 - [AngularJS and scope.$apply — Jim Hoskins](http://jimhoskins.com/2012/12/17/angularjs-and-apply.html)
 
+## Tutorial
+
+-[AngularJS' Internals In Depth - Smashing Magazine](http://www.smashingmagazine.com/2015/01/22/angularjs-internals-in-depth)
+
 <script async src="//codepen.io/assets/embed/ei.js"></script>

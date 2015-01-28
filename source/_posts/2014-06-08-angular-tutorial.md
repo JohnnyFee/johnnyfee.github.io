@@ -698,6 +698,8 @@ function RestaurantTableController($scope) {
 }
 ```
 
+See [The Many Ways To Use ngClass ♥ Scotch](https://scotch.io/tutorials/the-many-ways-to-use-ngclass)
+
 ### ng-src and ng-href
 
 When data binding to an `<img>` or `<a>` tag, the obvious path of using {%raw%}{{ }}{%endraw%} in the src or href attributes won’t work well. Because browsers are aggressive about loading images parallel to other content, Angular doesn’t get a chance to intercept data binding requests. While the obvious syntax for an `<img> `might be:

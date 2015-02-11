@@ -64,22 +64,15 @@ module.exports = function download(fileUrl, options, callback) {
         });
 
         response.on('end', function () {
-            if (callback) {
-                callback(false, filePath);
-            }
+            callback && callback(false, filePath);
         });
 
         ware.run(response, fileUrl);
     });
 
-    request.setTimeout(options.timeout, function () {
-        request.abort();
-        callback('Timeout');
-    });
+    request.setTimeout(options.timeout);
 
     request.on('error', function (e) {
-        if (callback) {
-            callback(e);
-        }
+        callback && callback(e);
     });
 }

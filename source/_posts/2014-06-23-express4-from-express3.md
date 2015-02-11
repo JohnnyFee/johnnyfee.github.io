@@ -68,7 +68,7 @@ static          | [serve-static](https://github.com/expressjs/serve-static)
 
 例如有一个3.x的代码
 
-```js
+```
 app.use(cookieParser());
 app.use(bodyParser());
 app.use(app.router); // 这行要干掉
@@ -113,12 +113,10 @@ app.route('/users')
 
 它可以帮助我们更好组织代码，假如项目里有个`routes/people.js`
 
-```js
+```
 var people = express.Router();
-
 people.use(function(req, res, next) {
 });
-
 people.get('/', function(req, res, next) {
 });
 ```
@@ -193,3 +191,7 @@ if ('development' == env) {
 * [New features in 4.x](https://github.com/visionmedia/express/wiki/New-features-in-4.x)
 * [New features in 4.x · strongloop/express Wiki](https://github.com/strongloop/express/wiki/New-features-in-4.x)
 * [Express.js 4, Node.js and MongoDB REST API Tutorial](http://webapplog.com/express-js-4-node-js-and-mongodb-rest-api-tutorial/)
+
+## Tutorial
+
+- [Session Management In Your ExpressJS Web Application](https://blog.nraboy.com/2015/01/session-management-expressjs-web-application)

@@ -28,27 +28,22 @@ tags: [javascript]
 
 在下面的例子代码中，我们可以名正言顺地将上下文缓存到一个变量中：
 
-    var myObj = {
-        specialFunction: function () {
-        },
-
-        anotherSpecialFunction: function () {
-        },
-
-        getAsyncData: function (cb) {
-            cb();
-        },
-     
-        render: function () {
-            var that = this;
-            this.getAsyncData(function () {
-                that.specialFunction();
-                that.anotherSpecialFunction();
-            });
-        }
-    };
-     
-    myObj.render();
+```js
+var myObj = {
+    specialFunction: function () {},
+    anotherSpecialFunction: function () {},
+    getAsyncData: function (cb) {cb();},
+    render: function () {
+        var that = this;
+        this.getAsyncData(function () {
+            that.specialFunction();
+            that.anotherSpecialFunction();
+        });
+    }
+};
+ 
+myObj.render();
+```
 
 myObj.render();如果我们简单地使用 this.specialFunction() 来调用方法的话，会收到下面的错误：
 
@@ -93,7 +88,7 @@ myObj.render();如果我们简单地使用 this.specialFunction() 来调用方�
 
 我们创建了一个新的函数，当它被执行的时候，它的 this 会被设置成 foo —— 而不是像我们调用 bar() 时的全局作用域。
 
-## [浏览器](http://blog.jobbole.com/12749/ "现代浏览器的工作原理") 支持
+## 浏览器支持
 
 Browser| Version support
 -------|----------------
@@ -135,7 +130,7 @@ Safari | 5.1.4
 
 在学习技术点的时候，我发现有用的不仅仅在于彻底学习和理解概念，更在于看看在手头的工作中有没有适用它的地方，或者比较接近它的的东西。我希望，下面的某些例子能够适用于你的代码或者解决你正在面对的问题。
 
-#### CLICK HANDLERS（点击处理函数）
+### CLICK HANDLERS（点击处理函数）
 
 一个用途是记录点击事件（或者在点击之后执行一个操作），这可能需要我们在一个对象中存入一些信息，比如：
 
@@ -163,7 +158,7 @@ Safari | 5.1.4
 
 我们巧妙地使用了方便的 .bind() 函数来创建一个新的函数，而将它的作用域绑定为 logger 对象。
 
-#### SETTIMEOUT
+### SETTIMEOUT
 
 如果你使用过模板引擎（比如Handlebars）或者尤其使用过某些`MV*`框架（从我的经验我只能谈论Backbone.js），那么你也许知道下面讨论的关于在渲染模板之后立即访问新的DOM节点时会遇到的问题。
 
@@ -213,7 +208,7 @@ myView.render();你或许发现它能正常工作——但并不是每次都行�
 
 现在，我们的 afterRender() 函数就能够在正确的上下文环境中执行了。
 
-#### 梳理基于 QUERYSELECTORALL的事件绑定
+### 梳理基于 QUERYSELECTORALL的事件绑定
 
 如今的DOM API引入了很多非常有用的方法，比如 querySelector, querySelectorAll 和 classList接口，这些方法给DOM API带来了非常显著的进步。
 
@@ -234,6 +229,6 @@ myView.render();你或许发现它能正常工作——但并不是每次都行�
 
 现在，我们拥有了一个简洁的遍历DOM节点的函数。
 
-#### 结论
+### 结论
 
 正如你所看到的，.bind() 函数可以巧妙地运用于很多不同的用途，同时可以精简现有的代码。但愿这篇概述的内容，能够在你想在代码中使用.bind()（如果需要的话）时派上用场，并且帮助你更好地驾驭改变this值所带来的好处。

@@ -268,7 +268,7 @@ autoprefixer: {
 
 [gruntjs/grunt-contrib-connect](https://github.com/gruntjs/grunt-contrib-connect) 用于启动一个静态 web 服务器。
 
-```js
+```
 connect: {
   options: {
     port: 9000,

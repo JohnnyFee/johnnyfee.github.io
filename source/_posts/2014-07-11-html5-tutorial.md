@@ -896,6 +896,13 @@ meter 元素显示了某个范围内所有可能值中的一个。min、max 定�
 - [The Screen Orientation API Reloaded](http://www.sitepoint.com/screen-orientation-api-reloaded)
 - [Talk: Keeping secrets with JavaScript - An Introduction to the WebCrypto API - Tim Taubert](https://timtaubert.de/blog/2014/10/keeping-secrets-with-javascript) 加密。
 
+### File
+
+- [Exploring the FileSystem APIs - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/file/filesystem/)
+- [阅读以 JavaScript 编写的本地文件 - HTML5 Rocks](http://www.html5rocks.com/zh/tutorials/file/dndfiles/)
+- [Use the HTML5 File API to Work with Files Locally in the Browser ♥ Scotch](http://scotch.io/tutorials/use-the-html5-file-api-to-work-with-files-locally-in-the-browser?&mc_cid=36aa7ac1ca&mc_eid=8a875429cf)
+- [Debugging the Filesystem API](http://updates.html5rocks.com/2011/08/Debugging-the-Filesystem-API)
+
 ## Tutorial
 
 - [Learn to Code HTML & CSS - Beginner & Advanced](http://learn.shayhowe.com/)
@@ -907,24 +914,18 @@ meter 元素显示了某个范围内所有可能值中的一个。min、max 定�
 - [Glyphs](http://css-tricks.com/snippets/html/glyphs/)
 - [HTML5 中 40 个最重要的技术点 - WEB开发者](http://www.admin10000.com/document/5332.html)
 
-## Tools
-
-- [Can I use... Support tables for HTML5, CSS3, etc](http://caniuse.com/)
-
-## video
+### video
 
 - [Adding captions and subtitles to HTML5 video ✩ Mozilla Hacks – the Web developer blog](https://hacks.mozilla.org/2014/07/adding-captions-and-subtitles-to-html5-video)
 - [Google I/O 2014 - HTML5 everywhere: How and why YouTube uses the Web platform - YouTube](https://www.youtube.com/watch?v=2gLq4Ze0Jq4)
 
-## File
-
-- [Exploring the FileSystem APIs - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/file/filesystem/)
-- [阅读以 JavaScript 编写的本地文件 - HTML5 Rocks](http://www.html5rocks.com/zh/tutorials/file/dndfiles/)
-- [Use the HTML5 File API to Work with Files Locally in the Browser ♥ Scotch](http://scotch.io/tutorials/use-the-html5-file-api-to-work-with-files-locally-in-the-browser?&mc_cid=36aa7ac1ca&mc_eid=8a875429cf)
-
-## Argument
+### Argument
 
 - [HTML5 Vs. Native Apps for Mobile - Business Insider](http://www.businessinsider.com/html5-vs-native-apps-for-mobile-2013-6?op=1)
+
+## Tools
+
+- [Can I use... Support tables for HTML5, CSS3, etc](http://caniuse.com/)
 
 ## HTML5 Test
 

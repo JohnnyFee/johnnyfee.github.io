@@ -70,6 +70,7 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 
 - [lloyd/JSONSelect](https://github.com/lloyd/JSONSelect) CSS-like selectors for JSON [http://jsonselect.org](http://jsonselect.org/).
 - [originalmachine/distill](https://github.com/originalmachine/distill)
+- [idevelop/treeql](https://github.com/idevelop/treeql) JSON query and mutation library. It traverses a tree structure in post-order (leaves first, root last), across objects and arrays, returning the nodes which match the partial structure passed in the query, as well as allowing you to mutate or replace matched nodes.
 
 ### Collection
 

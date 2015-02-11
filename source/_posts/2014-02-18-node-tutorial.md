@@ -1,4 +1,3 @@
----
 layout: post
 title: "Node Tutorial"
 category: Node
@@ -12,7 +11,7 @@ tags: [node, tutorial]
 
 现已出现一个比较人们的 fork，[iojs/io.js](https://github.com/iojs/io.js)，See [Wesley IO — Node.js is forked, not f***ed.](http://wesleyio.tumblr.com/post/104637877991/node-js-is-forked-not-f-ed)
 
-## Boilerplate
+## Framework
 
 - [sahat/hackathon-starter](https://github.com/sahat/hackathon-starter) 模块采用水平结构。
 - [primus/primus](https://github.com/primus/primus) Primus, the creator god of transformers but now also known as universal wrapper for real-time frameworks.  Primus provides a common low level interface to communicate in real-time using various of real-time frameworks.
@@ -20,8 +19,8 @@ tags: [node, tutorial]
 - [10个最好的Node.js MVC框架 - WEB开发者](http://www.admin10000.com/document/3931.html)
 - [Sails.js](http://sailsjs.org/#/) It is designed to emulate the familiar MVC pattern of frameworks like Ruby on Rails, but with support for the requirements of modern apps: data-driven APIs with a scalable, service-oriented architecture. 
 - [All About Sessions in Node.js - Stormpath User Management API](https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions)
-
 - [DaftMonk/generator-angular-fullstack](https://github.com/DaftMonk/generator-angular-fullstack)
+- [LoopBack](http://loopback.io/)
 
 ## Security
 
@@ -32,13 +31,16 @@ tags: [node, tutorial]
 - [helmetjs/helmet](https://github.com/helmetjs/helmet)
 - [krakenjs/lusca](https://github.com/krakenjs/lusca) Application security for express apps.
 
-
 ## Library
 
 - [felixge/node-formidable](https://github.com/felixge/node-formidable) A node.js module for parsing form data, especially file uploads.
 - [MrSwitch/hello.js](https://github.com/MrSwitch/hello.js) A Javascript RESTFUL API library for connecting with OAuth2 services, such as Google+ API, Facebook Graph and Windows Live Connect. http://adodson.com/hello.js/
 - [yahoo/gifshot](https://github.com/yahoo/gifshot) JavaScript library that can create animated GIFs from media streams, videos, or images <http://yahoo.github.io/gifshot/>
 - [node-ffi/node-ffi](https://github.com/node-ffi/node-ffi) Node.js Foreign Function Interface
+
+### Pattern
+
+- [sergiolepore/Cation](https://github.com/sergiolepore/Cation) A fast and customizable Dependency Injection Container for Node.js/io.js
 
 ### Log
 
@@ -69,6 +71,7 @@ tags: [node, tutorial]
 
 - [flatiron/nconf](https://github.com/flatiron/nconf)
 - [flesler/config-node · GitHub](https://github.com/flesler/config-node)
+- [dominictarr/rc](https://github.com/dominictarr/rc) The non-configurable configuration loader for lazy people.
 
 ### Device
 
@@ -77,6 +80,7 @@ tags: [node, tutorial]
 ### Auth
 
 - [jaredhanson/passport](https://github.com/jaredhanson/passport) Simple, unobtrusive authentication for Node.js. <http://passportjs.org/>
+    + [User Authentication with Passport and Express 4 - Michael Herman](http://mherman.org/blog/2015/01/31/local-authentication-with-passport-and-express-4/#.VNKnnfWsWIR)
 - [jaredhanson/oauth2orize](https://github.com/jaredhanson/oauth2orize) OAuth 2.0 authorization server toolkit for Node.js.
 - [vdemedes/cancan](https://github.com/vdemedes/cancan) Pleasant authorization library for Node.js (port of Ryan Bates' cancan).
 - [carlos8f/node-relations](https://github.com/carlos8f/node-relations) Entity relationship, role, and permissions API for Node.js.
@@ -101,12 +105,20 @@ __Demo:__
 - pm2
 - Travis
 - [Publishing your first Browserify/Node module](http://blog.risingstack.com/publishing-your-first-browserify-node-module)
+- [shipitjs/shipit](https://github.com/shipitjs/shipit)
 
 ### Commander
 
 - [jonschlinkert/generator-node-cli](https://github.com/jonschlinkert/generator-node-cli)
 - [Hypercubed/generator-commander](https://github.com/Hypercubed/generator-commander)
 - [chjj/blessed](https://github.com/chjj/blessed) 在控制台整图形。
+- [nathanpeck/clui](https://github.com/nathanpeck/clui) Command Line UI toolkit for Node.js.
+- [sindresorhus/chalk](https://github.com/sindresorhus/chalk) Terminal string styling done right.
+- [tj/node-progress](https://github.com/tj/node-progress) Flexible ascii progress bar for nodejs.
+
+### Code
+
+- [highlights](https://www.npmjs.com/package/highlights)
 
 ## Source
 
@@ -163,10 +175,17 @@ __Demo:__
 
 - [How to change value of process.env.PORT in node.js? - Stack Overflow](http://stackoverflow.com/questions/13333221/how-to-change-value-of-process-env-port-in-node-js)
 
+### how can i fix webstorm warning (= unresolved function ) for “require” (firefox add-on-sdk)
+
+See [javascript - how can i fix webstorm warning (= unresolved function ) for "require" (firefox add-on-sdk) - Stack Overflow](http://stackoverflow.com/questions/20136714/how-can-i-fix-webstorm-warning-unresolved-function-for-require-firefox-a)
+
+
+
 ## bin
 
 - [Why did the startup stub get moved to bin/www ? · Issue #25 · expressjs/generator](https://github.com/expressjs/generator/issues/25)
 - [javascript - What does "./bin/www" do in Express 4.x? - Stack Overflow](http://stackoverflow.com/questions/23169941/what-does-bin-www-do-in-express-4-x)
+- [Executables in npm scripts](http://blog.ibangspacebar.com/npm-scripts)
 
 ## Reference
 

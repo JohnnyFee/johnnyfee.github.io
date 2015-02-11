@@ -353,18 +353,21 @@ A native implementation of the trim() function is available in the recent JavaSc
 
 数组的 slice 方法通常用来从一个数组中抽取片断。但很多开发者不了解的是，这个方法还可以用来将“类数组”元素（比如 arguments 参数列表、节点列表和属性列表）转换成真正的数组：（译注：DOM 元素的属性列表通过 attributes 属性获取，比如 document.body.attributes。）
 
-    var nodesArr = Array.prototype.slice.call(document.querySelectorAll("div"));
-    // "true" array of DIVs
-    // 得到一个由 div 元素组成的“真正的”数组
-    
-    var argsArr = Array.prototype.slice.call(arguments);
-    // changes arguments to "true" array
-    // 把 arguments 转换成一个“真正的”数组
+```js
+var nodesArr = Array.prototype.slice.call(document.querySelectorAll("div"));
+// "true" array of DIVs
+// 得到一个由 div 元素组成的“真正的”数组
+
+var argsArr = Array.prototype.slice.call(arguments);
+// changes arguments to "true" array
+// 把 arguments 转换成一个“真正的”数组
+```
 
 你还可以使用一次简单的 slice 调用来克隆一个数组：
 
-    var clone = myArray.slice(0); // naive clone
-                                  // 浅克隆
+```js
+var clone = myArray.slice(0); // naive clone 浅克隆
+```
 
 （译注：这里的参数 0 也可以省略，我估计 undefined 被 slice 方法自动转换为 0 了吧。）
 
@@ -485,7 +488,7 @@ for( var i=1; numbersArray.push(i++) < max;);  // numbers = [1,2,3 ... 100]
 
 ### Generate a random set of alphanumeric characters
 
-```
+```js
 function generateRandomAlphaNum(len) {
     var rdmString = "";
     for( ; rdmString.length < len; rdmString  += Math.random().toString(36).substr(2));
@@ -496,7 +499,7 @@ function generateRandomAlphaNum(len) {
 
 ### Shuffle an array of numbers
 
-```
+```js
 var numbers = [5, 458 , 120 , -215 , 228 , 400 , 122205, -85411];
 numbers = numbers.sort(function(){ return Math.random() - 0.5});
 /* the array numbers will be equal for example to [120, 5, 228, -215, 400, 458, -85411, 122205]  */
@@ -521,7 +524,7 @@ myArray.length = 0; // myArray will be equal to [].
 
 ### Don’t use delete to remove an item from array
 
-Use `splice`&nbsp;instead of using `delete` to delete an item from an array. Using `delete` replaces the item with `undefined` instead of the removing it from the array.
+Use `splice` instead of using `delete` to delete an item from an array. Using `delete` replaces the item with `undefined` instead of the removing it from the array.
 
 Instead of…
 

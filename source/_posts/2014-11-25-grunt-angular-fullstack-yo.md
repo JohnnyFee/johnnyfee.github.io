@@ -632,3 +632,60 @@ grunt.registerTask('test', function(target) {
     ]);
 });
 ```
+
+## FAQ
+
+### 拷贝字体
+
+`copy:dist` 中只拷贝了 _assets/fonts/_ 字体，通过 bower 安装的字体并不会拷贝到目标目录下，在 `copy:dist` 目标中添加如下配置：
+
+```
+copy: {
+dist: {
+    ...,
+    {
+        expand: true,
+        dest: '<%= yeoman.dist %>/public/assets/fonts',
+        src: ['<%= yeoman.app %>/{components,assets}/**/fonts/*', '<%= yeoman.bower %>/**/fonts/*'],
+        flatten: true
+    }
+}}
+```
+
+其中 yeoman.bower 为 _bower_components/_ 路径：
+
+```
+yeoman: {
+  // ...
+  bower: 'bower_components'
+}
+```
+
+### 不拷贝 bower_components 到目标文件夹
+
+修改 `copy:dist` 目标：
+
+```js
+files: [{
+  expand: true,
+  dot: true,
+  cwd: '<%= yeoman.client %>',
+  dest: '<%= yeoman.dist %>/public',
+  src: [
+    '*.{ico,png,txt}',
+    '.htaccess',
+    'bower_components/**/*',
+    'assets/images/{,*/}*.{webp}',
+    'assets/fonts/**/*',
+    'index.html'
+  ]
+},
+...
+]
+```
+
+将 `src:` 下的  ~~'bower_components/**/*',~~。
+
+### TRAVIS CI
+
+See [First Steps In Setting Up Travis CI To Your Javascript Project](http://orizens.com/wp/topics/first-steps-in-setting-up-travis-ci-to-your-javascript-project)

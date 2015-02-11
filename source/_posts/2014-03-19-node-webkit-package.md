@@ -8,7 +8,7 @@ tags: [node, webkit]
 
 ## 下载
 
-- 下载 [node-webkit-v0.9.2-win-ia32](http://dl.node-webkit.org/v0.9.2/node-webkit-v0.9.2-win-ia32.zip) 。这个版本为当前最新，请到[官网](https://github.com/rogerwang/node-webkit)关注最新版本。
+下载 [node-webkit-v0.9.2-win-ia32](http://dl.node-webkit.org/v0.9.2/node-webkit-v0.9.2-win-ia32.zip) 。这个版本为当前最新，请到[官网](https://github.com/rogerwang/node-webkit)关注最新版本。
 
 我们把内容解压缩到`node-webkit/`文件夹中。
 
@@ -67,7 +67,7 @@ tags: [node, webkit]
     |-- ...
     `-- index.html
 
-将app.nw拷贝到`node-webkit/`下，`node-webkit/`目前的文件结构如下：
+将 `app.nw` 拷贝到`node-webkit/`下，`node-webkit/`目前的文件结构如下：
 
 - app.exe
 - app.nw

@@ -785,6 +785,24 @@ watch: {
 
 `{,*/}` 用逗号表达式来表示逻辑或关系。`{,*/}*.less` 表示 `*.less` 或者 `*/*.cess`。这是为了效率考虑，只往下匹配一层子目录，如果你想递归匹配，可是使用 `styles/**/*.less`。
 
+### How do I run grunt from a different folder than my root project
+
+See [node.js - How do I run grunt from a different folder than my root project - Stack Overflow](http://stackoverflow.com/questions/14873356/how-do-i-run-grunt-from-a-different-folder-than-my-root-project)
+
+You can set two parameters `--base` and `--gruntfile`
+
+From `grunt --help`:
+
+`--base` Specify an alternate base path. By default, all file paths are relative to the Gruntfile. (grunt.file.setBase) *
+
+`--gruntfile` Specify an alternate Gruntfile. By default, grunt looks in the current or parent directories for the nearest Gruntfile.js or Gruntfile.coffee file.
+
+So, you can execute:
+
+```
+grunt --base c\my_app --gruntfile c\my_app\GruntFile.js mytask
+```
+
 ## Debug
 
 - [javascript - How to debug grunt in PHPStorm (WebStorm) - Stack Overflow](http://stackoverflow.com/questions/16233279/how-to-debug-grunt-in-phpstorm-webstorm)

@@ -9,7 +9,7 @@ tags: [css, svg]
 
 Let us dive straight in with a simple example. Take a look at the following code.
 
-```
+```xml
 <svg version="1.1"
      baseProfile="full"
      width="300" height="200"
@@ -177,7 +177,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 
 [Path](https://developer.mozilla.org/en-US/Web/SVG/Element/path "en-US/Web/SVG/Element/path") is probably the most general shape that can be used in SVG. Using a path element you can draw rectangles (with or without rounded corners), circles, ellipses, polylines, and polygons. Basically any of the other types of shapes, bezier curves, quadratic curves, and many more. For that reason, paths alone will be [the next section](https://developer.mozilla.org/en-US/Web/SVG/Tutorial/Paths "en-US/Web/SVG/Tutorial/Paths") in this tutorial, but for now I will just point out that there is a single attribute used to control its shape.
 
-```
+```xml
 <path d="M 20 230 Q 40 205, 50 230 T 90230"/>
 ```
 
@@ -195,6 +195,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 - [alexk111/SVG-Morpheus](https://github.com/alexk111/SVG-Morpheus) JavaScript library enabling SVG icons to morph from one to the other. It implements Material Design's Delightful Details transitions.
 - [ConnorAtherton/walkway](https://github.com/ConnorAtherton/walkway) An easy way to animate SVG elements.
 - [gabelerner/canvg](https://github.com/gabelerner/canvg) Javascript SVG parser and renderer on Canvas.
+- [filamentgroup/grunticon](https://github.com/filamentgroup/grunticon#version-20-is-out---heres-whats-new) grunticon takes a folder of SVG/PNG files (typically, icons that you've drawn in an application like Adobe Illustrator), and outputs them to CSS in 3 formats: svg data urls, png data urls, and a third fallback CSS file with references to regular png images.
 
 ## Tutorial
 
@@ -222,6 +223,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 - [Page 3: Animating SVGs With CSS](http://www.smashingmagazine.com/2014/11/03/styling-and-animating-svgs-with-css/3/)
 - [Page 4: Embedding SVGs](http://www.smashingmagazine.com/2014/11/03/styling-and-animating-svgs-with-css/4/)
 - [Page 5: Making SVGs Responsive](http://www.smashingmagazine.com/2014/11/03/styling-and-animating-svgs-with-css/5/)
+- [SVG Basics—Creating Paths With Line Commands - Vanseo Design](http://www.vanseodesign.com/web-design/svg-paths-line-commands)
 
 ### SVG Attribute reference
 

@@ -100,7 +100,7 @@ tags: [jquery]
 
 NProgress.js 是纳米级的进度条插件。拥有逼真的的涓涓细流动画效果来告诉你的用户，某些事情正在发生。它的灵感来自于谷歌，YouTube，应用了，这款苗条的进度条是完美的，适用于 Turbolinks，Pjax 以及其他重 Ajax 的应用程序。
 
-[![](http://img.readitlater.com/i/www.admin10000.com/UploadFiles/Document/201402/10/20140210111632427889/RS/w640.JPG)](http://ricostacruz.com/nprogress/)
+[![](http://johnnyimages.qiniudn.com/w640.JPGundefined)](http://ricostacruz.com/nprogress/)
 
 [插件下载](https://github.com/rstacruz/nprogress/archive/master.zip "Download")[在线演示](http://ricostacruz.com/nprogress/ "Download")
 

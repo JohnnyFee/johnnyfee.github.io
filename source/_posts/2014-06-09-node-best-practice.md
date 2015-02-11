@@ -145,7 +145,7 @@ If the module is installed already you can:
 
 What is the best debugger? Right, it’s console.log! It’s fast, non-interrupting and gives us any information we ask for (like the value of a pesky variable). Then why should you stop using it? Because real debuggers like [Node Inspector](https://github.com/node-inspector/node-inspector) provide not only the value of a variable you just hard-coded, but also give you a dynamic ability to look around, inside the process. 
 
-![](http://webapplog.com/wp-content/uploads/node-inspector-watch.png)
+![](http://johnnyimages.qiniudn.com/node-inspector-watch.pngundefined)
 
 For example, I might have a condition (where resubmit is a boolean) that is not acting right:
 

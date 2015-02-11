@@ -48,7 +48,7 @@ tags: [android]
 - [keyboardsurfer / Crouton](https://github.com/keyboardsurfer/Crouton) Context sensitive notifications for Android.
 - [JohnPersano/SuperToasts](https://github.com/JohnPersano/SuperToasts?utm_source=Android+Weekly&utm_campaign=9c05536e9c-Android_Weekly_89&utm_medium=email&utm_term=0_4eb677ad19-9c05536e9c-337832837)
 
-![Screenshot](https://github-camo.global.ssl.fastly.net/4a4042ca535c0190006a0be4941eea6779b5db03/687474703a2f2f69313031362e70686f746f6275636b65742e636f6d2f616c62756d732f61663238342f547572626f70776e65642f7375706572746f617374735f67726f75705f73637265656e73686f742e706e67)
+![Screenshot](http://johnnyimages.qiniudn.com/687474703a2f2f69313031362e70686f746f6275636b65742e636f6d2f616c62756d732f61663238342f547572626f70776e65642f7375706572746f617374735f67726f75705f73637265656e73686f742e706e67undefined)
 
 ## Layout
 

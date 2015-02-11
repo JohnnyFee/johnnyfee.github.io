@@ -130,7 +130,7 @@ __根目录下的一些配置文件的说明：__
 
 ## Principle
 
-![](http://dl2.iteye.com/upload/attachment/0091/3055/5f89a8fd-bbe6-3d15-85c1-4881ac26075d.png)
+![](http://johnnyimages.qiniudn.com/5f89a8fd-bbe6-3d15-85c1-4881ac26075d.pngundefined)
 
 **Angular没有提供完善的UI，没有提供CSS样式套件，也没有对移动平台进行直接支持。**所以，如果你使用Angular，你一定需要其它东西来配合。例如，如果需要UI，你需要使用jQueryUI，或者自己封装UI组件；如果需要CSS样式，你可以选择bootstrap或者LESS；如果需要支持移动平台，还是需要你自己 去开发。
 

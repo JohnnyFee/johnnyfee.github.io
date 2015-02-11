@@ -53,7 +53,7 @@ front-end framework in the world.
 
 我们先谈谈HTML5原来不如原生应用的地方，业内俗称HTML5有“性工能”障碍。即HTML5**性**能不如原生、开发**工**具不如原生、**能**力调用不如原生。
 
-[![](http://cms.csdnimg.cn/article/201411/06/545ad8faa2704.jpg)](http://cms.csdnimg.cn/article/201411/06/545ad8faa2704.jpg)  
+[![](http://johnnyimages.qiniudn.com/545ad8faa2704.jpgundefined)](http://cms.csdnimg.cn/article/201411/06/545ad8faa2704.jpg)  
 
 这几个问题导致开发者无法使用HTML5做出与原生一样的App。然而，不管是硬件升级还是OS厂商策略变化，以及相关软件技术的成熟，已解决了HTML5的“性工能”障碍。
 

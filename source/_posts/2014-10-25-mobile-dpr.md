@@ -18,7 +18,7 @@ dip或dp,（device independent pixels，设备独立像素）与屏幕密度有�
 
 所有非视网膜屏幕的iphone在垂直的时候，宽度为320物理像素。当你使用`<meta name="viewport" content="width=device-width">`的时候，会设置视窗布局宽度（不同于视觉区域宽度，不放大显示情况下，两者大小一致，见下图）为320px, 于是，页面很自然地覆盖在屏幕上。
 
-![布局视图大小 张鑫旭-鑫空间-鑫生活](http://image.zhangxinxu.com/image/blog/201208/mobile_viewportzoomedout.jpg "布局视图大小 张鑫旭-鑫空间-鑫生活")
+![布局视图大小 张鑫旭-鑫空间-鑫生活](http://johnnyimages.qiniudn.com/mobile_viewportzoomedout.jpg "布局视图大小 张鑫旭-鑫空间-鑫生活")
 
 这样，非视网膜屏幕的iphone上，屏幕物理像素320像素，独立像素也是320像素，因此，`window.devicePixelRatio`等于`1`.
 

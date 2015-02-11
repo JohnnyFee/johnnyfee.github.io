@@ -63,7 +63,7 @@ tags: [browser,kernal]
 6. **JavaScript 解释器**。用于解析和执行 JavaScript 代码。
 7. **数据存储**。这是持久层。浏览器需要在硬盘上保存各种数据，例如 Cookie。新的 HTML 规范 (HTML5) 定义了“网络数据库”，这是一个完整（但是轻便）的浏览器内数据库。
 
-![图：浏览器的主要组件。](http://ux.sohu.com/uploads/1352085800153_layers.png)
+![图：浏览器的主要组件。](http://johnnyimages.qiniudn.com/1352085800153_layers.pngundefined)
 
 _（图：浏览器的主要组件。）_
 

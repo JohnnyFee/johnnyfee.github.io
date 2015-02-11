@@ -177,7 +177,7 @@ QSemaphore是提供一个计数的信号量。信号量是泛化的互斥量。�
 		return a.exec();
 	}
 
-![](http://img.blog.csdn.net/20130811005116453?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGFpMjAwNTAxMDE5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+![](http://johnnyimages.qiniudn.com/Centerundefined)
 
 信号量最著名的就是生产者与消费者的例子，以后再研究了。
 

@@ -267,7 +267,7 @@ div:hover {
 
 此外，还可以等于取 `alternate`、`reverse`、`alternate-reverse` 等值。它们的含义见下图（假定动画连续播放三次）。
 
-![](http://image.beekka.com/blog/201402/bg2014021401.png)
+![](http://johnnyimages.qiniudn.com/bg2014021401.pngundefined)
 
 <p data-height="268" data-theme-id="0" data-slug-hash="nyzpt" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/nyzpt/'>nyzpt</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 

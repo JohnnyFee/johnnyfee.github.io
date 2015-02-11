@@ -39,7 +39,7 @@ There is a fun technique to remember all the link pseduo class selectors. Look a
 
 [:focus](http://css-tricks.com/almanac/selectors/f/focus/) - Defining hover styles for links is great, but it doesn't help out those who used keyboard navigation to get to the link. :focus will select links that are the current focus of the keyboard. This is not limited to links, but can be used (and really should be used) on inputs and textareas as well. [Some would tell you](http://antonpeck.com/journal/article/focus_on_the_hover/) to define a :focus style for anything that has a :hover style.
 
-![Form with a text input in focus. Yellow background is a focus style.](http://css-tricks.com/wp-content/csstricks-uploads/formwithfocus.png)
+![Form with a text input in focus. Yellow background is a focus style.](http://johnnyimages.qiniudn.com/formwithfocus.pngundefined)
 
 - [:target](http://css-tricks.com/almanac/selectors/t/target/) - The target pseudo class is used in conjunction with IDs, and match when the hash tag in the current URL matches that ID. So if you are at URL www.yoursite.com/#home then the selector 
 <tt>#home:target</tt> will match. That can be extremely powerful. For example, you can create a [tabbed area](http://css-tricks.com/css3-tabs/) where the tabs link to hash tags and then the panels "activate" by matching :target selectors and (for example) using z-index to move to the top.

@@ -21,7 +21,7 @@ On the bright side since we’ll skip some of the previously covered details we�
 
 Let’s start with the 2 column liquid layout.
 
-[![2 column fluid layout: content on left, sidebar on right](http://www.vanseodesign.com/blog/wp-content/uploads/2011/05/content-sidebar.png)](http://www.vanseodesign.com/blog/demo/fluid-css-layout/fluid-2.php)
+[![2 column fluid layout: content on left, sidebar on right](http://johnnyimages.qiniudn.com/content-sidebar.pngundefined)](http://www.vanseodesign.com/blog/demo/fluid-css-layout/fluid-2.php)
 
 ## The HTML ##
 

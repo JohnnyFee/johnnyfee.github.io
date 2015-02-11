@@ -21,7 +21,7 @@ As always if you simply want the code here are the demos
 * [ 2 column fluid layout with max-width](http://www.vanseodesign.com/blog/demo/hybrid-css-layout/fluid-2-max-width.php)
 * [ 3 column fluid layout with max-width](http://www.vanseodesign.com/blog/demo/hybrid-css-layout/fluid-3-max-width.php)
 
-[![Layout with fixed content and fluid background](http://www.vanseodesign.com/blog/wp-content/uploads/2011/05/fixed-content-fluid-background.png)](http://www.vanseodesign.com/blog/demo/hybrid-css-layout/fixed-content-fluid-background.php)
+[![Layout with fixed content and fluid background](http://johnnyimages.qiniudn.com/fixed-content-fluid-background.pngundefined)](http://www.vanseodesign.com/blog/demo/hybrid-css-layout/fixed-content-fluid-background.php)
 
 ## Fixed Width Content, Fluid Background ##
 

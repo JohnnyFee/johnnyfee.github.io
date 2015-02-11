@@ -13,7 +13,7 @@ tags: [javascript]
 
 除了正常运行模式，ECMAscript 5添加了第二种运行模式：["严格模式"](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Functions_and_function_scope/Strict_mode)（strict mode）。顾名思义，这种模式使得Javascript在更严格的条件下运行。
 
-![](http://image.beekka.com/blog/201301/bg2013011401.jpg)
+![](http://johnnyimages.qiniudn.com/bg2013011401.jpgundefined)
 
 设立"严格模式"的目的，主要有以下几个：
 

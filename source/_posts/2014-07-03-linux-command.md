@@ -211,7 +211,7 @@ Wget是用于非交互式（例如后台）下载文件的免费工具.支持HTT
 
 [Discordian calendar](http://en.wikipedia.org/wiki/Discordian_calendar) 是一个备用日历，用 1YOLD表示1166BC。ddate 可以显示Discordian date。
 
-![](http://www.admin10000.com/UploadFiles/Document/201407/02/20140702110450667472.PNG)
+![](http://johnnyimages.qiniudn.com/20140702110450667472.PNGundefined)
 
 ### cal
 

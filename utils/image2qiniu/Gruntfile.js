@@ -6,6 +6,12 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
+        resource: {
+            images: 'resources/images'
+        },
+
+        qiniuConfig: grunt.file.readJSON('qiniu-config.json'),
+
         jshint: {
             options: {
                 jshintrc: '.jshintrc',
@@ -28,6 +34,19 @@ module.exports = function (grunt) {
             },
             all: ['test/*.js']
         },
+        qiniu: {
+            life: {
+                options: {
+                    accessKey: '<%= qiniuConfig.access_key %>',
+                    secretKey: '<%= qiniuConfig.secret_key %>',
+                    bucket: '<%= qiniuConfig.bucket %>',
+                    resources: [{
+                        cwd: '<%= resource.images %>',
+                        pattern: '**/*.*'
+                    }]
+                }
+            }
+        },
         watch: {
             gruntfile: {
                 files: '<%= jshint.gruntfile.src %>',
@@ -40,9 +59,17 @@ module.exports = function (grunt) {
             test: {
                 files: '<%= jshint.test.src %>',
                 tasks: ['jshint:test', 'mochacli']
+            },
+            images: {
+                files: ['<%= resource.images %>/**/*'],
+                tasks: ['qiniu']
             }
         }
     });
 
-    grunt.registerTask('default', ['jshint', 'mochacli']);
+    grunt.registerTask('default', ['qiniu', 'watch']);
+    grunt.registerTask('download', function(){
+        var image2qiniu = require('./index');
+        image2qiniu.toQiniu();
+    });
 };

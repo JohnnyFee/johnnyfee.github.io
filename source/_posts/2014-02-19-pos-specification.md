@@ -64,7 +64,7 @@ GlobalPlatform's objective is to create a standardized infrastructure that accel
 
 - Messaging. GlobalPlatform clarifies how market participants from the finance, mobile NFC, government and transit sectors can connect their backend systems to the SE, TEE and any other actor within a secure application's ecosystem. This is achieved by defining 'who' is responsible for 'what' and agreeing the 'language' (messages) that will be used. GlobalPlatform Mobile Messaging can be used over-the-air via a mobile network as well as over-the-internet using the cloud environment. This supports trusted service managers (TSMs), as well as the issuance and personalization of secure chip and TEE technology.
 
-![](http://www.globalplatform.org/images/tee-spot-img.png)
+![](http://johnnyimages.qiniudn.com/tee-spot-img.pngundefined)
 
 参考：[Trusted Execution Environment (TEE) Guide](http://www.globalplatform.org/mediaguidetee.asp)
 

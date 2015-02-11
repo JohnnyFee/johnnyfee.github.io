@@ -42,7 +42,7 @@ _把layout viewport想像成为一张不会变更大小或者形状的大图。�
 
 **visual viewport**是页面当前显示在屏幕上的部分。用户可以通过滚动来改变他所看到的页面的部分，或者通过缩放来改变visual viewport的大小。
 
-![mobile_visualviewport](http://s0-weizhifeng-net.b0.upaiyun.com/images/viewport2/mobile_visualviewport.jpg)
+![mobile_visualviewport](http://johnnyimages.qiniudn.com/mobile_visualviewport.jpgundefined)
 
 无论怎样，CSS布局，尤其是百分比宽度，是以layout viewport做为参照系来计算的，它被认为要比visual viewport宽。
 

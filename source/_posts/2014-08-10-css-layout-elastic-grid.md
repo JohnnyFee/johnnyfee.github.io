@@ -23,7 +23,7 @@ Both fluid and [elastic layouts](http://www.456bereastreet.com/archive/200504/fi
 
 As always if you prefer to skip the explanations below and jump right to the code you can view the [demo layouts here](http://vanseodesign.com/blog/demo/elastic-layout/elastic-2.php).
 
-[![2 column elastic layout](http://www.vanseodesign.com/blog/wp-content/uploads/2011/06/elastic-2-column.png)](http://vanseodesign.com/blog/demo/elastic-layout/elastic-2.php)
+[![2 column elastic layout](http://johnnyimages.qiniudn.com/elastic-2-column.pngundefined)](http://vanseodesign.com/blog/demo/elastic-layout/elastic-2.php)
 
 ## The HTML ##
 

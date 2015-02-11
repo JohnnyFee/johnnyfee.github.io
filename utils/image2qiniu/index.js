@@ -13,7 +13,7 @@ var sourcePath = '../../source/_posts/*.md';
 var unresolvedPath = '../../unresolved.md';
 var downloadPath = '../../resources/images';
 
-exports.toQiniuUrl = function () {
+exports.toQiniu = function () {
     unresolvedImages.length = 0;
     fs.writeFileSync(unresolvedPath, '');
 
@@ -35,7 +35,7 @@ exports.toQiniuUrl = function () {
 
 };
 
-exports.toQiniuUrl();
+
 
 // 下载和替换文件中的图片
 function replaceImgUrl(filePath, callback) {

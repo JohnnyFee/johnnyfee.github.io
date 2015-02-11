@@ -29,7 +29,7 @@ There are several different methods for running executables as well as invoking 
 
 ## 2. Invoke-Expression (IEX)
 
-[Technet ![](http://social.technet.microsoft.com/wiki/cfs-file.ashx/__key/communityserver-components-sitefiles/10_5F00_external.png "This link is external to TechNet Wiki. It will open in a new window.")](http://technet.microsoft.com/en-us/library/dd347550.aspx)  
+[Technet](http://technet.microsoft.com/en-us/library/dd347550.aspx)  
 **Why:** Easy to execute a string. This can be VERY dangerous if used with user input (unless that input has been carefully validated).  
   
 **Details:** Accepts a string to be executed as code. This is NOT the method you want for running an executable. This is useful to run a users input or to run code from a website or text file. There is some interesting uses of this with web apps such as Chocolatey.  
@@ -42,7 +42,7 @@ There are several different methods for running executables as well as invoking 
 
 ## 3. Invoke-Command (ICM)
 
-[Technet ![](http://social.technet.microsoft.com/wiki/cfs-file.ashx/__key/communityserver-components-sitefiles/10_5F00_external.png "This link is external to TechNet Wiki. It will open in a new window.")](http://technet.microsoft.com/en-us/library/dd347578.aspx)  
+[Technet](http://technet.microsoft.com/en-us/library/dd347578.aspx)  
 **Why:** Great for executing code on multiple machines over WSMAN.  
   
 **Details:** Uses WimRM to run commands on the local or remote systems. It is not async and will run in the order provided to -computername. The results are returned in the order in which finishes first. If -AsJob is used, the job object is returned, otherwise it returns the results of script/code.  
@@ -55,7 +55,7 @@ There are several different methods for running executables as well as invoking 
 
 ## 4. Invoke-Item (II)
 
-[Technet ![](http://social.technet.microsoft.com/wiki/cfs-file.ashx/__key/communityserver-components-sitefiles/10_5F00_external.png "This link is external to TechNet Wiki. It will open in a new window.")](http://technet.microsoft.com/en-us/library/dd347658.aspx)  
+[Technet](http://technet.microsoft.com/en-us/library/dd347658.aspx)  
 **Why:** Forces the default action to be run on the item.   
 **Details:** Good when trying to open a file with an associated program. If for example you invoke-item with a PDF file, it opens it in whatever program is associated with PDF files. This can also be used to open multiple files at once. This is not good for executing a program.  
   
@@ -66,7 +66,7 @@ There are several different methods for running executables as well as invoking 
 
 ## 5. The Call Operator &
 
-[Technet ![](http://social.technet.microsoft.com/wiki/cfs-file.ashx/__key/communityserver-components-sitefiles/10_5F00_external.png "This link is external to TechNet Wiki. It will open in a new window.")](http://technet.microsoft.com/en-us/library/dd347588.aspx)  
+[Technet](http://technet.microsoft.com/en-us/library/dd347588.aspx)  
 **Why:** Used to treat a string as a SINGLE command. Useful for dealing with spaces.  
 In PowerShell V2.0, if you are running 7z.exe (7-Zip.exe) or another command that starts with a number, you have to use the command invocation operator &.  
 The PowerShell V3.0 parser do it now smarter, in this case you don’t need the & anymore .  
@@ -109,8 +109,8 @@ Why:** Bypasses PowerShell and runs the command from a cmd shell. Often times us
 
 ## 7. Start-Process (start/saps)
 
-[Technet ![](http://social.technet.microsoft.com/wiki/cfs-file.ashx/__key/communityserver-components-sitefiles/10_5F00_external.png "This link is external to TechNet Wiki. It will open in a new window.")](http://technet.microsoft.com/en-us/library/dd347667.aspx)  
-**Why:** Starts a process and returns the [.Net process object ![](http://social.technet.microsoft.com/wiki/cfs-file.ashx/__key/communityserver-components-sitefiles/10_5F00_external.png "This link is external to TechNet Wiki. It will open in a new window.")](http://msdn.microsoft.com/en-us/library/system.diagnostics.process.aspx) if -PassThru is provided. It also allows you to control the environment in which the process is started (user profile, output redirection etc). You can also use the Verb parameter (right click on a file, that list of actions) so that you can, for example, play a wav file.  
+[Technet](http://technet.microsoft.com/en-us/library/dd347667.aspx)  
+**Why:** Starts a process and returns the [.Net process object](http://msdn.microsoft.com/en-us/library/system.diagnostics.process.aspx) if -PassThru is provided. It also allows you to control the environment in which the process is started (user profile, output redirection etc). You can also use the Verb parameter (right click on a file, that list of actions) so that you can, for example, play a wav file.  
   
 **Details:** Executes a program returning the process object of the application. Allows you to control the action on a file (verb mentioned above) and control the environment in which the app is run. You also have the ability to wait on the process to end. You can also subscribe to the processes Exited event.  
   
@@ -127,7 +127,7 @@ Why:** Bypasses PowerShell and runs the command from a cmd shell. Often times us
 
 ## 8. [Diagnostics.Process] Start()
 
-[MSDN ![](http://social.technet.microsoft.com/wiki/cfs-file.ashx/__key/communityserver-components-sitefiles/10_5F00_external.png "This link is external to TechNet Wiki. It will open in a new window.")](http://msdn.microsoft.com/en-us/library/system.diagnostics.process.start.aspx)  
+[MSDN](http://msdn.microsoft.com/en-us/library/system.diagnostics.process.start.aspx)  
 **Why:** Allows a little more control over the process object vs Start-Process.  
 **Details:** There is a static Start method and a Start method for the process object. There is little advantage that I know of to use this over Start-Process. (Update required as to what this offers over Start-Process)  
   
@@ -147,13 +147,13 @@ Why:** Bypasses PowerShell and runs the command from a cmd shell. Often times us
 
 ## 9. WMI Win32_Process Create() Method
 
-[MSDN ![](http://social.technet.microsoft.com/wiki/cfs-file.ashx/__key/communityserver-components-sitefiles/10_5F00_external.png "This link is external to TechNet Wiki. It will open in a new window.")](http://msdn.microsoft.com/en-us/library/windows/desktop/aa389388%28v=vs.85%29.aspx)
+[MSDN](http://msdn.microsoft.com/en-us/library/windows/desktop/aa389388%28v=vs.85%29.aspx)
 
 **Why:**The Create() method for the Win32_Process class can be run locally or remotely over RPC rather than WSMAN (Invoke-Command), to spawn a process and returns a **_System.Management.ManagementBaseObject#\__PARAMETERS_**object that lists the process id and return code of the process start up.  
   
 **Details:**
 
-This is a method in the Win32_Process class that allows creation of a process on a local or remote computer. There are multiple ways to use the Create() method. You can also provide Process Startup configuration data using the [Win32_ProcessStartup ![](http://social.technet.microsoft.com/wiki/cfs-file.ashx/__key/communityserver-components-sitefiles/10_5F00_external.png "This link is external to TechNet Wiki. It will open in a new window.")](http://msdn.microsoft.com/en-us/library/windows/desktop/aa394375%28v=vs.85%29.aspx) class  
+This is a method in the Win32_Process class that allows creation of a process on a local or remote computer. There are multiple ways to use the Create() method. You can also provide Process Startup configuration data using the [Win32_ProcessStartup](http://msdn.microsoft.com/en-us/library/windows/desktop/aa394375%28v=vs.85%29.aspx) class  
   
 **Examples:**
 
@@ -211,7 +211,7 @@ Invalid Parameter
 
 ## 10. Stop-Parsing Symbol --%
 
-[Technet ![](http://social.technet.microsoft.com/wiki/cfs-file.ashx/__key/communityserver-components-sitefiles/10_5F00_external.png "This link is external to TechNet Wiki. It will open in a new window.")](http://technet.microsoft.com/en-us/library/hh847892.aspx)  
+[Technet](http://technet.microsoft.com/en-us/library/hh847892.aspx)  
 **Why:** Its a quick way to handle program arguments that are not standard. Also its the new cool way to do it.  
 **Details:** The stop-parsing symbol (--%), introduced in Windows PowerShell 3.0, directs Windows PowerShell to refrain from interpreting input as Windows PowerShell commands or expressions. When calling an executable program in Windows PowerShell, place the stop-parsing symbol before the program arguments.  
 After the stop-parsing symbol --% , the arguments up to the end of the line (or pipe, if you are piping) are passed as is.  

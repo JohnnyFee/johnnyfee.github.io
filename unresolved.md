@@ -1,6 +1,0 @@
-- ![2014-07-11-powershell-execute-command.md](http://social.technet.microsoft.com/wiki/cfs-file.ashx/__key/communityserver-components-sitefiles/10_5F00_external.png)
-- ![2014-08-05-svg-tutorial.md](https://developer.mozilla.org/@api/deki/files/4928/=svgdemo1.png)
-- ![2014-08-31-css-animation-timing-function.md](http://www.smashingmagazine.com/wp-content/uploads/2014/04/01-bezier-curve-ease.jpg)
-- ![2014-08-01-css-margin.md](http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2014/04/1398314844css-box-model_collapsing-margins.png)
-- ![2014-11-12-javascript-underscore-lo-dash.md](http://filimanjaro.com/blog/wp-content/uploads/2014/11/lodash-naive.gif)
-- ![2014-06-09-node-best-practice.md](http://webapplog.com/wp-content/uploads/node-inspector-watch.png)

@@ -15,6 +15,7 @@ tags: [javascript]
 
 ![](http://johnnyimages.qiniudn.com/bg2013011401.jpg)
 
+
 设立"严格模式"的目的，主要有以下几个：
 
 - 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;

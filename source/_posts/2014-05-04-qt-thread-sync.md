@@ -179,6 +179,7 @@ QSemaphore是提供一个计数的信号量。信号量是泛化的互斥量。�
 
 ![](http://johnnyimages.qiniudn.com/Center)
 
+
 信号量最著名的就是生产者与消费者的例子，以后再研究了。
 
 ## QWaitCondition

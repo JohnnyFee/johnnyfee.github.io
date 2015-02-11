@@ -269,6 +269,7 @@ div:hover {
 
 ![](http://johnnyimages.qiniudn.com/bg2014021401.png)
 
+
 <p data-height="268" data-theme-id="0" data-slug-hash="nyzpt" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/nyzpt/'>nyzpt</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
 简单说，`animation-direction` 指定了动画播放的方向，最常用的值是 `normal` 和 `reverse`。浏览器对其他值的支持情况不佳，应该慎用。

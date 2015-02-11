@@ -114,6 +114,7 @@ This behavior is best demonstrated with a short example. Consider the following 
 
 ![css-box-model_collapsing-margins](http://johnnyimages.qiniudn.com/1398314844css-box-model_collapsing-margins.png)
 
+
 As you’ll see from Figure 1, the gap between the elements is only `25px`, and the smaller margin has collapsed to zero. If in the above example the elements had equal margins (say, 20 pixels each), the distance between them would be only `20px`.
 
 There is one situation that will cause a slight deviation from the behavior of collapsing margins: should one of the elements have a negative top or bottom margin, the positive and negative margins will be added together to reach the final, true margin. Here’s an example style sheet that demonstrates the concept:

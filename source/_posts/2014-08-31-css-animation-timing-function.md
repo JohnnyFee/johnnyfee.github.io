@@ -64,7 +64,7 @@ The what?!
 
 You might not be familiar with the term, but I’d wager that you’ve actually seen a Bézier curve — heck, if you’ve used graphical editing software, then you’ve probably even created one! That’s right, when you use the Pen or Path tool to create a nice smooth curve, then you’re drawing a Bézier curve! Anyway, to get to the point of this section, **the Bézier curve is the magic behind the timing function**; it basically describes the acceleration pattern on a graph.
 
-![This Bézier curve translates to the ease keyword.](http://johnnyimages.qiniudn.com/01-bezier-curve-ease.jpg "This Bézier curve translates to the ease keyword.")  
+![This Bézier curve translates to the ease keyword.](http://johnnyimages.qiniudn.com/bezier-curve-ease.jpg "This Bézier curve translates to the ease keyword.")  
 _This Bézier curve translates to the `ease` keyword._
 
 If you’re anything like me the first time I saw a Bézier curve like this, then you might be wondering how on earth that curve could be formed from four points plotted on a graph! I couldn’t possibly tell you in words, but, fortunately, I have a particularly fantastic GIF to do the job for me, [courtesy of Wikipedia](http://en.wikipedia.org/wiki/File:Bezier_3_big.gif)<sup class="po">[1](http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/#1)</sup>.

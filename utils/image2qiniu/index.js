@@ -36,16 +36,15 @@ exports.toQiniu = function () {
 };
 
 
-
 // 下载和替换文件中的图片
 function replaceImgUrl(filePath, callback) {
     var content = fs.readFileSync(filePath).toString();
 
-    // 是否需要下载。
-    var downloading = false;
-
     // 是否有下载失败的图片。
     var hasError = false;
+
+    // 是否需要下载。
+    var downloading = false;
 
     var newContent = content.replace(/!\[(.*?)]\((.*?)(\s+".*?")?\)/, function (matched, imgAlt, imgSrc, title, offset, examined) {
         if (_.contains(imgSrc, 'qiniudn.com')) {
@@ -54,7 +53,6 @@ function replaceImgUrl(filePath, callback) {
 
         var imageName = path.basename(imgSrc);
         var imagePath = path.join(downloadPath, imageName);
-
 
         // 异步下载图片。
         if (!fs.existsSync(imagePath)) {
@@ -80,12 +78,15 @@ function replaceImgUrl(filePath, callback) {
             });
         }
 
+        title = title ? title : '';
         return util.format('![%s](http://johnnyimages.qiniudn.com/%s%s)', imgAlt, imageName, title);
     });
 
 
-    // 无需下载
+    // 文件中无需下载图片。
     if (!downloading) {
         callback();
     }
 }
+
+exports.toQiniu();

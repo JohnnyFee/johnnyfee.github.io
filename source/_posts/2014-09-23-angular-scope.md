@@ -83,7 +83,7 @@ HTML:
 
 每一个 ng-include 生成一个子作用域，该子作用域都通过原型继承于父作用域：
 
-![ng-include](http://johnnyimages.qiniudn.com/687474703a2f2f692e737461636b2e696d6775722e636f6d2f7a694466782e706e67undefined)
+![ng-include](http://johnnyimages.qiniudn.com/scope.jpg)
 
 第一个文本框的数据模型为 myPrimitive，为基本类型的数据。如果 在以第一个文本框中敲入数据 (如 "77") 将导致 ChildScope1 得到一个新的作用域属性（myPrimitive），这将覆盖父作用域中的同名属性。这可能不是你所期望的。
 

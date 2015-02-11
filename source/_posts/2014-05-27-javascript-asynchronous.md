@@ -102,10 +102,6 @@ __缺点：__
 - 整个程序都要变成事件驱动型，运行流程会变得相对不清晰。
 - A bit more difficult to setup than callbacks in your own code, you will probably want to use a library e.g. jQuery, [bean.js](https://github.com/fat/bean).
 
-最后整个流程可能是这样的：
-
-![](http://foter.com/image/display/1036313/495x371/)
-
 
 ## 发布/订阅
 

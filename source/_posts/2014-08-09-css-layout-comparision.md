@@ -18,7 +18,7 @@ What are the pros and cons of some of the common [css layouts](http://sixrevisio
 
 <!--more-->
 
-[![Coda code editor](http://johnnyimages.qiniudn.com/code-editor.pngundefined)](http://www.panic.com/coda/)
+[![Coda code editor](http://johnnyimages.qiniudn.com/code-editor.png)](http://www.panic.com/coda/)
 
 ## 6 CSS Layouts ##
 

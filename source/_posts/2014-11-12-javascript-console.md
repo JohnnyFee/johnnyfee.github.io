@@ -29,7 +29,7 @@ If the value passed in the first argument is false, the function will log a mess
 
 This function displays the provided object or array as a table:
 
-![](http://johnnyimages.qiniudn.com/table.pngundefined)
+![](http://johnnyimages.qiniudn.com/table.png)
 
 _For more details on `console.table()` see the article ["Advanced JavaScript Debugging with console.table()"](http://blog.mariusschulz.com/2013/11/13/advanced-javascript-debugging-with-consoletable) by Marius Schulz_
 

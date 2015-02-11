@@ -112,7 +112,7 @@ This behavior is best demonstrated with a short example. Consider the following 
       background: #cf9;
     }
 
-![css-box-model_collapsing-margins](http://johnnyimages.qiniudn.com/1398314844css-box-model_collapsing-margins.pngundefined)
+![css-box-model_collapsing-margins](http://johnnyimages.qiniudn.com/1398314844css-box-model_collapsing-margins.png)
 
 As you’ll see from Figure 1, the gap between the elements is only `25px`, and the smaller margin has collapsed to zero. If in the above example the elements had equal margins (say, 20 pixels each), the distance between them would be only `20px`.
 

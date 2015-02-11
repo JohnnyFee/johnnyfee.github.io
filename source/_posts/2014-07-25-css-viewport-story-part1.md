@@ -30,7 +30,7 @@ tags: [web, css]
 
 一些配图可以解释清楚这个概念。这儿有四个100%缩放比的元素。这儿没有什么值得看的；CSS像素与设备像素完全重叠。
 
-![csspixels_100](http://johnnyimages.qiniudn.com/csspixels_100.gifundefined)
+![csspixels_100](http://johnnyimages.qiniudn.com/csspixels_100.gif)
 
 现在让我们缩小。CSS像素开始收缩，这意味着现在一个设备像素覆盖了多个CSS像素。
 

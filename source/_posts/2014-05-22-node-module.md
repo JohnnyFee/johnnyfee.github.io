@@ -77,7 +77,7 @@ And now on to the interface patterns.
 
 首先，exports和module.exports都是某个对象的引用（reference），初始情况下，它们指向同一个object，如果不修改module.exports的引用的话，这个object稍后会被导出
 
-![](http://johnnyimages.qiniudn.com/SouthEastundefined)
+![](http://johnnyimages.qiniudn.com/SouthEast)
 
 所以不管用exports还是module.exports，给这个object添加属性或函数，都是完全等效的
 

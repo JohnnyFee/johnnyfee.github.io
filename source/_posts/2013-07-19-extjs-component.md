@@ -9,7 +9,7 @@ tags : [extjs, view]
 
 ### EXTJS控件层次
 
-![EXTJS控件层次](http://johnnyimages.qiniudn.com/component_hierarchy.pngundefined)
+![EXTJS控件层次](http://johnnyimages.qiniudn.com/component_hierarchy.png)
 
 ### 悬浮控件
 

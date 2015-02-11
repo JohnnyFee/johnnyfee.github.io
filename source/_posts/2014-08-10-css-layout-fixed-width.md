@@ -17,7 +17,7 @@ If you prefer to skip the explanation and get right to the code you can view the
 
 <!--more-->
 
-[![2 column css layout with sidebar on right](http://johnnyimages.qiniudn.com/2-col-demo.pngundefined)](http://www.vanseodesign.com/blog/demo/2-col-css.html)
+[![2 column css layout with sidebar on right](http://johnnyimages.qiniudn.com/2-col-demo.png)](http://www.vanseodesign.com/blog/demo/2-col-css.html)
 
 ## The HTML ##
 

@@ -45,7 +45,7 @@ var chosen = _(gems).filter(priceLt(10)).take(3).value();
 
 We want to take&nbsp;only&nbsp;first 3 gems with price lower than $10. Regular Lo-Dash approach (strict evaluation) filters all 8 gems – then returns the first three&nbsp;that passed filtering:
 
-[![Lodash naïve approach](http://johnnyimages.qiniudn.com/lodash-naive.gifundefined)](http://filimanjaro.com/blog/wp-content/uploads/2014/11/lodash-naive.gif)
+[![Lodash naïve approach](http://johnnyimages.qiniudn.com/lodash-naive.gif)](http://filimanjaro.com/blog/wp-content/uploads/2014/11/lodash-naive.gif)
 
 It’s not cool though. It processes all 8 elements, while in fact we need to read only 5 of them. Lazy evaluation algorithm, on the contrary, processes the minimal number of elements in an array to get the correct result. Check it out in action:
 

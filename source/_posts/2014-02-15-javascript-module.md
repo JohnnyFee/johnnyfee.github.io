@@ -465,7 +465,7 @@ UMD的实现很简单，先判断是否支持Node.js模块格式（exports是否
 
  虽然UMD八字还没有一撇，有些开源库却开始支持UMD了，如大名鼎鼎的《JavaScript设计模式》作者[Dustin Diaz](http://dustindiaz.com/)开发的 [qwery](https://github.com/ded/qwery) 。 代码如下
 
-![](http://johnnyimages.qiniudn.com/2012031920341233.pngundefined)
+![](http://johnnyimages.qiniudn.com/2012031920341233.png)
 
 ### 参考
 - [UMD和ECMAScript模块 - snandy - 博客园](http://www.cnblogs.com/snandy/archive/2012/03/19/2406596.html)

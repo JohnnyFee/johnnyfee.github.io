@@ -354,7 +354,7 @@ As we've covered, some really old browsers don't support any CSS gradient syntax
 
 Firefox 3.5.8 did this ([see screenshot](http://css-tricks.com/wp-content/csstricks-uploads/gradientisloaded.jpg)), as well as Chrome 5- and Safari 5.0.1. See:
 
-![](http://johnnyimages.qiniudn.com/safariloadsgradient.jpgundefined)  
+![](http://johnnyimages.qiniudn.com/safariloadsgradient.jpg)  
 
 <figcaption>Safari 5.0.1 loading fallbacks improperly</figcaption>  </figure>
 

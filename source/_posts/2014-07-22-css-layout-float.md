@@ -14,7 +14,7 @@ Floated elements _remain a part of the flow of the web page_.  There are four va
 2. float 只有横向浮动，没有纵向浮动。
 3. 容器如果没有明确设定高度，会依照普通流内元素高度设置，这样就会导致脱离普通流的浮动元素溢出容器。
     
-    ![](http://johnnyimages.qiniudn.com/collapse.pngundefined)
+    ![](http://johnnyimages.qiniudn.com/collapse.png)
 
 4. 浮动元素的后一个元素会围绕着浮动元素（典型运用是文字围绕图片），浮动元素的前一个元素不会受到任何影响，如果你想让两个块状元素并排显示，必须让两个块状元素都应用float。
 

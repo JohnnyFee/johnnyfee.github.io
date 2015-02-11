@@ -77,7 +77,8 @@ And now on to the interface patterns.
 
 首先，exports和module.exports都是某个对象的引用（reference），初始情况下，它们指向同一个object，如果不修改module.exports的引用的话，这个object稍后会被导出
 
-![](http://johnnyimages.qiniudn.com/SouthEast)
+![](http://johnnyimages.qiniudn.com/20131010224155750.png)
+
 
 所以不管用exports还是module.exports，给这个object添加属性或函数，都是完全等效的
 
@@ -105,7 +106,7 @@ And now on to the interface patterns.
   
 这个sex属性是不会导出的，因为引用关系已经改变： 
 
-![](http://img.blog.csdn.net/20131010230949562?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQva3lmeGJs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://johnnyimages.qiniudn.com/20131010230949562.png)
 
 而node导出的， 永远是module.exports指向的对象， 在这里就是function。所以exports指向的那个object，现在已经不会被导出了，为其增加的属性当然也就没用了
 
@@ -121,7 +122,7 @@ And now on to the interface patterns.
   
 事实上，查看很多module的源代码，会发现就是这么写的，这时的引用关系： 
 
-![](http://img.blog.csdn.net/20131010231244734?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQva3lmeGJs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://johnnyimages.qiniudn.com/20131010231244734.png)
 
 所以我感觉exports根本是多余的，最终只会导出一个object，却设计了2个引用，很多时候反而会造成迷惑。exports的唯一好处就是可以少敲几个字，还不如只保留module.exports就好了
 

@@ -1,4 +1,7 @@
 'use strict';
+var path = require('path');
+var image2qiniu = require('./utils/image2qiniu/index.js');
+
 module.exports = function (grunt) {
     // Show elapsed time at the end
     require('time-grunt')(grunt);
@@ -35,7 +38,7 @@ module.exports = function (grunt) {
             all: ['test/*.js']
         },
         qiniu: {
-            life: {
+            target: {
                 options: {
                     accessKey: '<%= qiniuConfig.access_key %>',
                     secretKey: '<%= qiniuConfig.secret_key %>',
@@ -69,7 +72,12 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['qiniu', 'watch']);
     grunt.registerTask('download', function(){
-        var image2qiniu = require('./util/image2qiniu');
-        image2qiniu.toQiniu();
+        var options = {
+            source: path.resolve('./source/_posts/*.md'),
+            unresolved: path.resolve('./unresolved.md'),
+            dest: path.resolve('./resources/images')
+        };
+
+        image2qiniu(options);
     });
 };

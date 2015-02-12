@@ -28,7 +28,7 @@ Let us dive straight in with a simple example. Take a look at the following code
 
 Copy the code and paste it in a file demo1.svg. Then open the file in Firefox. It will render as shown in the following screenshot. (Firefox users: click [here](http://johnnyimages.qiniudn.com/vgdemo1.xml "http://developer.mozilla.org/@api/deki/files/4571/=svgdemo1.xml"))
 
-![svgdemo1.png](https://developer.mozilla.org/@api/deki/files/4928/=svgdemo1.png)
+![svgdemo1.png](https://developer.mozilla.org/@api/deki/files/4928/svgdemo1.png)
 
 The rendering process involves the following:
 

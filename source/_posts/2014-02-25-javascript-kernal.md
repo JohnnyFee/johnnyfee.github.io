@@ -29,7 +29,6 @@ ECMAScript做为一个高度抽象的面向对象语言，是通过 _对象_ 来
       x: 10,
       y: 20
     };
-    
 
 我们拥有一个这样的结构，两个明显的自身属性和一个隐含的`__proto__`属性，这个属性是对foo原型对象的引用：
 
@@ -101,60 +100,61 @@ ECMAScript中没有类的概念。但是，代码重用的风格并没有太多�
 
 换句话说，我们可以使用构造函数来重写上一个拥有对象b和对象c的例子。因此，对象a（一个原型对象）的角色由Foo.prototype来扮演：
 
-    // a constructor function
-    function Foo(y) {
-      // which may create objects
-      // by specified pattern: they have after
-      // creation own "y" property
-      this.y = y;
-    }
-    
-    // also "Foo.prototype" stores reference
-    // to the prototype of newly created objects,
-    // so we may use it to define shared/inherited
-    // properties or methods, so the same as in
-    // previous example we have:
-    
-    // inherited property "x"
-    Foo.prototype.x = 10;
-    
-    // and inherited method "calculate"
-    Foo.prototype.calculate = function (z) {
-      return this.x + this.y + z;
-    };
-    
-    // now create our "b" and "c"
-    // objects using "pattern" Foo
-    var b = new Foo(20);
-    var c = new Foo(30);
-    
-    // call the inherited method
-    b.calculate(30); // 60
-    c.calculate(40); // 80
-    
-    // let's show that we reference
-    // properties we expect
-    
-    console.log(
-    
-      b.__proto__ === Foo.prototype, // true
-      c.__proto__ === Foo.prototype, // true
-    
-      // also "Foo.prototype" automatically creates
-      // a special property "constructor", which is a
-      // reference to the constructor function itself;
-      // instances "b" and "c" may found it via
-      // delegation and use to check their constructor
-    
-      b.constructor === Foo, // true
-      c.constructor === Foo, // true
-      Foo.prototype.constructor === Foo // true
-    
-      b.calculate === b.__proto__.calculate, // true
-      b.__proto__.calculate === Foo.prototype.calculate // true
-    
-    );
-    
+```js
+// a constructor function
+function Foo(y) {
+  // which may create objects
+  // by specified pattern: they have after
+  // creation own "y" property
+  this.y = y;
+}
+
+// also "Foo.prototype" stores reference
+// to the prototype of newly created objects,
+// so we may use it to define shared/inherited
+// properties or methods, so the same as in
+// previous example we have:
+
+// inherited property "x"
+Foo.prototype.x = 10;
+
+// and inherited method "calculate"
+Foo.prototype.calculate = function (z) {
+  return this.x + this.y + z;
+};
+
+// now create our "b" and "c"
+// objects using "pattern" Foo
+var b = new Foo(20);
+var c = new Foo(30);
+
+// call the inherited method
+b.calculate(30); // 60
+c.calculate(40); // 80
+
+// let's show that we reference
+// properties we expect
+
+console.log(
+
+  b.__proto__ === Foo.prototype, // true
+  c.__proto__ === Foo.prototype, // true
+
+  // also "Foo.prototype" automatically creates
+  // a special property "constructor", which is a
+  // reference to the constructor function itself;
+  // instances "b" and "c" may found it via
+  // delegation and use to check their constructor
+
+  b.constructor === Foo, // true
+  c.constructor === Foo, // true
+  Foo.prototype.constructor === Foo // true
+
+  b.calculate === b.__proto__.calculate, // true
+  b.__proto__.calculate === Foo.prototype.calculate // true
+
+);
+```
 
 这个代码可以表示为如下关系：
 

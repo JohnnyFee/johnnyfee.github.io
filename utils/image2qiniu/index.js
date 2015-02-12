@@ -9,11 +9,26 @@ var path = require('path');
 var util = require('util');
 
 var unresolvedImages = [];
-var sourcePath = '../../source/_posts/*.md';
-var unresolvedPath = '../../unresolved.md';
-var downloadPath = '../../resources/images';
+var sourcePath;
+var unresolvedPath;
+var downloadPath;
 
-exports.toQiniu = function () {
+/**
+ * 下载文章中的图片，并将图片地址替换为七牛的地址。
+ *
+ * @param options
+ * @param options.source
+ * @param options.unresolved
+ * @param options.dest
+ *
+ */
+var grunt = require('grunt');
+
+module.exports = function (options) {
+    sourcePath = options.source;
+    unresolvedPath = options.unresolved;
+    downloadPath = options.dest;
+
     unresolvedImages.length = 0;
     fs.writeFileSync(unresolvedPath, '');
 
@@ -23,13 +38,17 @@ exports.toQiniu = function () {
     }, function (files, callback) {
         // 替换每个文件中的 URL
         async.each(files, replaceImgUrl, callback);
-    }], function () {
+    }], function (err) {
         var urls = _.map(unresolvedImages, function (unresolvedImage) {
             return util.format('- ![%s](%s)', unresolvedImage.file, unresolvedImage.url);
         });
 
         if (unresolvedImages.length > 0) {
             fs.writeFileSync(unresolvedPath, urls.join('\n'));
+        }
+
+        if (err) {
+            grunt.log.error(err);
         }
     });
 
@@ -89,4 +108,10 @@ function replaceImgUrl(filePath, callback) {
     }
 }
 
-exports.toQiniu();
+var options = {
+    "source": "D:\\project\\johnnyfee.github.io\\source\\_posts\\*.md",
+    "unresolved": "D:\\project\\johnnyfee.github.io\\unresolved.md",
+    "dest": "D:\\project\\johnnyfee.github.io\\resources\\images"
+};
+
+module.exports(options);

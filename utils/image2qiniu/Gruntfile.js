@@ -68,8 +68,4 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', ['qiniu', 'watch']);
-    grunt.registerTask('download', function(){
-        var image2qiniu = require('./index');
-        image2qiniu.toQiniu();
-    });
 };

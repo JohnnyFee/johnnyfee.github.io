@@ -1049,17 +1049,28 @@ See:
 
 ## Library
 
-- [Popular Modules - AngularJS Modules, Plugins and Directives](http://ngmodules.org/)
-- [angular-data: Home](http://angular-data.pseudobry.com) Give your data the treatment it deserves with a data store built for Angular.js.
 - [AngularJS Datatype Editors (ADE)](http://toodledo.github.io/ADE/) ADE is a bunch of directives and filters for displaying and editing various types of data, using AngularJS.
-- [angular-cn/ng-showcase](https://github.com/angular-cn/ng-showcase/)Angular范例程序。
+- [angular-cn/ng-showcase](https://github.com/angular-cn/ng-showcase/)Angular 范例程序。
 - [Pasvaz/bindonce](https://github.com/Pasvaz/bindonce) Zero watches binding for AngularJs
-- [tymondesigns/angular-locker](https://github.com/tymondesigns/angular-locker) A simple & configurable abstraction for local/session storage in angular projects.
-- [Use ngStorage For All Your AngularJS Local Storage Needs](http://blog.nraboy.com/2014/12/use-ngstorage-angularjs-local-storage-needs)
-- [gsklee/ngStorage](https://github.com/gsklee/ngStorage) localStorage and sessionStorage done right for AngularJS. See [Use ngStorage For All Your AngularJS Local Storage Needs](http://blog.nraboy.com/2014/12/use-ngstorage-angularjs-local-storage-needs)
-- [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
 - [AngularCSS - Routes Demo](http://door3.github.io/angular-css/#/) 动态注入 CSS。
     - [Introducing AngularCSS: CSS On-Demand for AngularJS](http://door3.com/insights/introducing-angularcss-css-demand-angularjs)
+
+### Storage
+
+- [tymondesigns/angular-locker](https://github.com/tymondesigns/angular-locker) A simple & configurable abstraction for local/session storage in angular projects.
+- [angular-data: Home](http://angular-data.pseudobry.com) Give your data the treatment it deserves with a data store built for Angular.js.
+
+### Multi-Media
+
+- [nehz/ngWebAudio](https://github.com/nehz/ngWebAudio)
+
+### Auth
+
+- [sahat/satellizer](https://github.com/sahat/satellizer) Token-based AngularJS Authentication <https://satellizer.herokuapp.com>
+
+### Modules
+
+- [Popular Modules - AngularJS Modules, Plugins and Directives](http://ngmodules.org/)
 
 ### Auth
 

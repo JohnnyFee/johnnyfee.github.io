@@ -69,6 +69,29 @@ tags: [android, tutorial]
     - [Genymotion 中文官网](http://www.genymotion.cn/#theme=home)
     - [使用指南 - Genymotion 中文官网](http://www.genymotion.cn/#theme=guide)
 
+## FAQ
+
+### How to exit an android app using code
+
+See [java - How to exit an android app using code? - Stack Overflow](http://stackoverflow.com/questions/17719634/how-to-exit-an-android-app-using-code)
+
+```
+submit=(Button)findViewById(R.id.submit);
+submit.setOnClickListener(new OnClickListener() {
+
+    @Override
+    public void onClick(View arg0) {
+		android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
+
+    }
+});
+```
+
+### Android SDK下载慢的解决办法
+
+See [Hanolex博客 » Android SDK下载慢的解决办法](http://hanolex.org/archives/300.html)
+
 ## Books
 
 - [Android Programming: Pushing the Limits](http://www.salttiger.com/android-programming-pushing-limits/)

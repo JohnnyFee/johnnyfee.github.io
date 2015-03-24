@@ -5,93 +5,76 @@ category: Windows
 tags: [windows]
 --- 
 
-## 常用
+## 必备
 
 - [x] TotolCommand
 - [x] 电脑管家
 - [x] QQ
 - [x] QQ 音乐
 - [x] 2345好压
-- [x] 迅雷
 - [x] Google Chrome
-- [x] 电脑管家
-- [x] 腾讯视频
+    - [ ]  goagent CA.cert
+    - chrome goagent config
 - [x] Sogo 拼音
+    - [ ] sogou 配置。
 - [x] 招行
-
-<!--more-->
-
 - [x] 福昕阅读器
-- [x] 微云
-- [x] 百度云
 - [ ] BitTorrent Sync <input type='hidden' value='UH4Z3PIMHCG2HL6NXGBKTSI2WX2WHAWE' />
-- [ ] Dropbox
-- [x] PP 助手
-- [x] 火云术语
-- [x] GoodSync
-- [ ] 微信 多客服
-- [x] 向日葵
-- [ ] iTune
-- [ ] Brackets
-- [ ] Visual Studio 2013
-- [ ] HttpWatch
-- [x] MiWifi
-- [ ] PastAsFile
-- [x] QQ 音乐
-- [ ] 福昕阅读器
-- [x] 新花生壳
-- [x] 豌豆荚
-- [x] 有道词典
-- [x] 招商银行
-- [ ] Oracle VM VirtualBox
 - [x] 为知笔记
-
-## Development
-
+- [x] 有道词典
+- [ ] 金山词霸
+- [ ] DislayFusion
+- [ ] Visual Studio 2013
 - [x] Node.js
     - [x] browserify
     - [x] hexo
     - [x] anywhere
-- [ ] Adoble Photoshop
-- [x] MarkdownPad2
-- [x] Sencha Architect
 - [ ] QT 5.3.0
-- [x] IntelliJ IDEA
+- [x] Office 2013
+- [ ] Java7/Java8
+- [x] Git/SmartGit
+    - [ ] ~/.ssh/
+- [ ] WebStore
+    - [ ] WebStorm 个性化配置
+
+## Next
+
+- [x] MarkdownPad2
+- [ ] Adoble Photoshop
 - [ ] EPT-DEV
 - [ ] Ruby 2.0
+    - [ ] rubydevkit
+- [ ] Mindjet14
+- [ ] calibre - E-book management
+- [ ] Flux
+
+
+## Next
+
 - [x] MongoDb
 - [ ] MySQL
-- [x] Office 2013
-- [ ] Mindjet14
 - [ ] AxureRPPro7.0
-- [ ] Java7/Java8
-- [ ] Mindjet
 - [ ] MongoVUE1.6.9
 - [ ] PowerShell
-- [x] Git/SmartGit
-- [x] Chrome
-    - [ ]  goagent CA.cert
-- [ ] Visual Studio 6.0
 - [ ] Android Studio
-
-### Sublime
-
-- [x] JS Format
-- [] Lint
-- [x] Emmet
-- [] AutoComments
-- [] LiveReload
-- [x] Typewriter
-- [x] open-url
-- [x] MarkdownEditing
-- [x] OmniMarkupPreviewer
-- [ ] sublimetext-markdown-preview
-- [x] SublimeTableEditor
-- [] JsonLint
-- [x] HTMLBeauty
-- [x] dependents & npm install dependents
-- [x] IMESupport
-- [x] InsertDate
+- [x] MiWifi
+- [ ] iTune
+- [x] 微云
+- [x] 百度云
+- [ ] Dropbox
+- [x] PP 助手
+- [x] 火云术语
+- [x] GoodSync
+- [x] 向日葵
+- [ ] Brackets
+- [ ] HttpWatch
+- [ ] PastAsFile
+- [x] 新花生壳
+- [x] 豌豆荚
+- [ ] Oracle VM VirtualBox
+- [x] 迅雷
+- [x] Sencha Architect
+- [x] IntelliJ IDEA
 
 ## 工具（Green）
 
@@ -103,13 +86,6 @@ tags: [windows]
 - gow 如果你常怀念 Linux 下的 ls, cat, tail 这些东西又不想装上一个几个 G 的 cygwin 的话，[gow](https://github.com/bmatzelle/gow "gow") 正是你在苦苦寻找的东西。
 - ConEmu + clink 装上这个后你就有了一个超级豪华加强版的 cmd.exe，ConEmu 自带了 [clink](http://code.google.com/p/clink/ "clink")。
 
-## backup
-
-- ~/.ssh/
-- chrome goagent config
-- 导出计划任务
-- WebStorm 个性化配置
-- sogou 配置。
 
 ## Reference
 

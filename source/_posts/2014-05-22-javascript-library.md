@@ -118,22 +118,34 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 
 - [Better logging in Node.js — Medium](https://medium.com/@garychambers108/b3cc6fd0dafd) Add context to your log messages.
 
-## Keyboard
-
-- [20个优秀的JavaScript 键盘事件处理库 - WEB开发者](http://www.admin10000.com/document/4212.html)
-
 ## Expression
 
 - [joewalnes/filtrex](https://github.com/joewalnes/filtrex) A simple, safe, JavaScript Filter Expression compiler for end-users.
 
-## Animation
+## Browser
+
+- [browserstate/history.js](https://github.com/browserstate/history.js)
+
+### Animation
 
 - [Velocity.js](http://julian.com/research/velocity)
 
-## Web Workers
+### Web Workers
 
 - [kolodny/webwork](https://github.com/kolodny/webwork)
+
+### Code
+
+- [highlight.js](https://highlightjs.org) Syntax highlighting for the Web
+
+### Keyboard
+
+- [20个优秀的JavaScript 键盘事件处理库 - WEB开发者](http://www.admin10000.com/document/4212.html)
 
 ## Generator
 
 - [Yeoman - Modern workflows for modern webapps](http://yeoman.io/) [Get started](http://yeoman.io/gettingstarted.html) and then [find a generator](http://yeoman.io/community-generators.html) for your webapp. Generators are available for [Angular](https://github.com/yeoman/generator-angular), [Backbone](https://github.com/yeoman/generator-backbone), [Ember](https://github.com/yeoman/generator-ember) and over 400 other projects. Read the [Yeoman Monthly Digest](http://updates.html5rocks.com/tag/front-end) for our latest picks.
+
+## Tools
+
+- [adamdbradley/ionic-present](https://github.com/adamdbradley/ionic-present) A framework for easily creating beautiful presentations using HTML.

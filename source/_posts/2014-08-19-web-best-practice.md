@@ -437,4 +437,8 @@ YSlow是雅虎推出的一款浏览器插件，可以帮助你对网站的页面
 * [面包屑工具](http://www.feedthebot.com/tools/richsnippets/breadcrumb/)：可根据你输入的信息提供面包屑导航的代码。
 * [CSS压缩工具](http://www.feedthebot.com/tools/css/)：用于压缩CSS代码。
 
+## 编码规范
+
+- [各种规范 - SegmentFault](http://segmentfault.com/bookmark/1230000002486653)
+
 通过以上的优化建议和优化工具，可以轻松找到影响你的Web页面性能的瓶颈，轻松实现Web页面性能的提升。如果你也有Web优化方面的经验，欢迎分享。

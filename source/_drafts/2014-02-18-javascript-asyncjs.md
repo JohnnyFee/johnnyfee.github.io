@@ -74,6 +74,10 @@ async.waterfall( [
 
 I think in this circumstance you could use a closure and async.whilst or async.until, or just use a named function for the final callback and call that instead of the task callback passed into the successful task function.
 
+## Library
+
+- [kessler/if-async](https://github.com/kessler/if-async)
+
 ## Debug
 
 - [Debugging Asynchronous JavaScript with Chrome DevTools - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/developertools/async-call-stack/)

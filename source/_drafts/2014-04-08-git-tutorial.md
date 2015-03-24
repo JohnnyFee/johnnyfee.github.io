@@ -333,12 +333,15 @@ $ git push -f
 - [Git - 简易指南](http://rogerdudler.github.io/git-guide/index.zh.html)
 - [Git 参考手册](http://gitref.justjavac.com/)
 - [沉浸式学 Git](http://igit.linuxtoy.org/index.html)
+- [常用 Git 命令使用教程 - 常用 Git 命令使用教程 - 文章 - CCBY - ClassFoo](http://classfoo.com/ccby/article/cBVvbSu)
 
 ## FAQ
 
 - [工单 #351: gitPublickey出现Permission denied (publickey). · GitCafe/Help - GitCafe](https://gitcafe.com/GitCafe/Help/tickets/351)
 - [Generating SSH Keys · GitHub Help](https://help.github.com/articles/generating-ssh-keys)
 - [Git提交时发生SSL certificate problem错误的解决方法 - 宇托的狗窝](http://yutuo.net/archives/2d5c6a3bcfaf69fe.html)
+
+![](http://johnnyimages.qiniudn.com/git-recovery.jpg)
 
 ## Reference
 

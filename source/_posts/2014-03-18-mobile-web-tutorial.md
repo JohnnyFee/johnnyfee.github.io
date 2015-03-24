@@ -223,6 +223,7 @@ Excellent framework made for fast application prototyping. It can become problem
 - [Bringing F5 (or Command+R) to Hybrid Mobile Apps](http://developer.telerik.com/featured/bringing-f5-or-commandr-to-hybrid-mobile-apps/)
 - [使用weinre远程调试手机网页](http://www.2fz1.com/?p=396)
 - [Web应用调试：现在是Weinre和JSConsole，最终会是WebKit的远程调试协议](http://www.infoq.com/cn/news/2011/08/mobile-web-debugging)
+- [目前为止找到最好的移动端调试工具-debugGap - CNode](https://cnodejs.org/topic/54ff176fc1749396754897e5)
 
 ## Test
 

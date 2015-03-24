@@ -15,6 +15,7 @@ tags: [android]
 - [CodeAndMagic/android-deferred-object](https://github.com/CodeAndMagic/android-deferred-object) Android implementation of the deferred object pattern as seen on jQuery.
     + [JDeferred](http://jdeferred.org/) JDeferred is a Java Deferred/Promise library similar to JQuery's Deferred Object.
 - [beworker/tinybus](https://github.com/beworker/tinybus) A lightweight and simple event bus tailored for Android.
+- [inaka/TinyTask](https://github.com/inaka/TinyTask) A Tiny Task Library.
 
 ## Http
 
@@ -102,10 +103,11 @@ tags: [android]
 - [TheRealKerni / HockeyKit](https://github.com/TheRealKerni/HockeyKit) A software update kit for iOS and Android. Provided as is. For more functionality and maintained work.
 - [Flowdalic / asmack](https://github.com/flowdalic/asmack) A build environment for the XMPP client library Smack on Android <http://asmack.org>.
 
-## Database
+## Storage
 
 - [OrmLite](http://ormlite.com/sqlite_java_android_orm.shtml) 编写和维护数据库表通常是很乏味的。OrmLite是一个支持安卓和Sqlite的ORM框架。通常完成这项工作会有数不清的备选工具，但是如果你正在创建一个需要很大数据库的应用也许OrmLite会是你的最佳选择。最好的事情是——OrmLite是通过注解驱动的。
 - [greenrobot / greenDAO](https://github.com/greenrobot/greenDAO) greenDAO is a light & fast ORM solution for Android that maps objects to SQLite databases. <http://greendao-orm.com/>
+- [square/sqlbrite](https://github.com/square/sqlbrite) A lightweight wrapper around SQLiteOpenHelper which introduces reactive stream semantics to SQL operations.
 
 ## OpenSource Project
 - [Apollo音乐播放器](https://github.com/Splitter/android_packages_apps_apolloMod) 就一个播放器，但是实现的很好

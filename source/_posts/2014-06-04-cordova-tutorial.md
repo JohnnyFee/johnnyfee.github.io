@@ -457,6 +457,10 @@ See [PhoneGap 09 使用Plugman管理Plugins - jacob的专栏 - 博客频道 - CS
 - [解决jquery mobile+phonegap页面切换闪屏问题](http://www.feeldesignstudio.com/2013/10/jquery-mobile-phonegap-flicker-when-navigating-between-page)
 - [Cordova Sample: Check for a file and download if it isn't there](http://www.raymondcamden.com/index.cfm/2014/7/1/Cordova-Sample-Check-for-a-file-and-download-if-it-isnt-there)
 
+### How to add Library Resource to Cordova Project?
+
+See [android - How to add Library Resource to Cordova Project? - Stack Overflow](http://stackoverflow.com/questions/26121635/how-to-add-library-resource-to-cordova-project)
+
 ## Performance
 
 - Appgyver:http://www.appgyver.com/
@@ -482,6 +486,10 @@ See [PhoneGap 09 使用Plugman管理Plugins - jacob的专栏 - 博客频道 - CS
 - [PhoneGap Development Mistakes and How to Avoid Them](http://chrisgriffith.wordpress.com/2014/10/10/phonegap-development-mistakes-and-how-to-avoid-them)
 - [Creating a mobile app from a simple HTML site ✩ Mozilla Hacks – the Web developer blog](https://hacks.mozilla.org/2014/10/creating-a-mobile-app-from-a-simple-html-site)
 - [Web Speech API and Phonegap - A Smart Mouth App](http://thejackalofjavascript.com/phonegap-smart-mouth-app)
+
+## Desktop
+
+- [PhoneGap Desktop App 0.1.2](http://phonegap.com/blog/2015/03/02/phonegap-app-desktop-0-1-2/)
 
 ## 参考
 

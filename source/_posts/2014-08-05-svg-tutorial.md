@@ -224,6 +224,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 - [Page 4: Embedding SVGs](http://www.smashingmagazine.com/2014/11/03/styling-and-animating-svgs-with-css/4/)
 - [Page 5: Making SVGs Responsive](http://www.smashingmagazine.com/2014/11/03/styling-and-animating-svgs-with-css/5/)
 - [SVG Basics—Creating Paths With Line Commands - Vanseo Design](http://www.vanseodesign.com/web-design/svg-paths-line-commands)
+- [Caching SVG Sprite in localStorage — Osvaldas Valutis](http://osvaldas.info/caching-svg-sprite-in-localstorage)
 
 ### SVG Attribute reference
 

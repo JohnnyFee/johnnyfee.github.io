@@ -404,3 +404,7 @@ ExplicitCapture(显式捕获)     |仅捕获已被显式命名的组。
 ## JavaScript
 
 - [RegExp - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/JavaScript/Reference/Global_Objects/RegExp)
+
+## 例子
+
+- 匹配双字节字符(包括汉字在内)：`[^\x00-\xff]`

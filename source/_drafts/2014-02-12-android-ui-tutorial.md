@@ -17,6 +17,7 @@ tags: [android]
 - [Grid Spacing on Android](http://cyrilmottier.com/2014/11/17/grid-spacing-on-android/)
 - [Great animations with PageTransformer — Medium](https://medium.com/@BashaChris/the-android-viewpager-has-become-a-fairly-popular-component-among-android-apps-its-simple-6bca403b16d4) 过场动画。
 - [An animated drawable issue in Lollipop](http://blog.danlew.net/2014/12/15/animated-drawables-lollipop)
+- [How to hide/show Toolbar when list is scrolling (part 2) · Michał Z.](http://mzgreen.github.io/2015/02/28/How-to-hideshow-Toolbar-when-list-is-scrolling%28part2%29)
 
 ### App UI / UX
 

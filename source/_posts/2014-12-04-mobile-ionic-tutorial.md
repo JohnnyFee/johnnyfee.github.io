@@ -69,14 +69,23 @@ See [Getting Started with Ionic - Ionic Framework](http://ionicframework.com/get
 
 ## Tutorial
 
-- [OAuth with Ionic and ngCordova](http://ionicframework.com/blog/oauth-ionic-ngcordova/)
 - [Understanding Tabs In Ionic Framework](https://blog.nraboy.com/2014/12/understanding-tabs-ionic-framework)
-- [Build an Instagram clone with AngularJS, Satellizer, Node.js and MongoDB](https://hackhands.com/building-instagram-clone-angularjs-satellizer-nodejs-mongodb) 登陆验证模块。
+- [ionic中文教程](http://haomou.net/2014/10/06/2014_ionic_learn/)
+- [Mastering the Ionic Framework: Learn to Build & Deploy Native Speed HTML5 Based Apps](https://thinkster.io/ionic-framework-tutorial/)
 - [Building a hybrid multi-platform real-time mobile applications using Ionic Framework and Firebase](http://www.toptal.com/front-end/building-multi-platform-real-time-mobile-applications-using-ionic-framework-and-firebase)
 - [Automating Icons and Splash Screens](http://ionicframework.com/blog/automating-icons-and-splash-screens)
-- [Adding Auth to your Ionic app in 5 mins with Auth0](http://ionicframework.com/blog/authentication-in-ionic)
 - [ccoenraets/directory-angular-ionic](https://github.com/ccoenraets/directory-angular-ionic) Sample Employee Directory application built with Ionic and AngularJS.
-- [ionic中文教程](http://haomou.net/2014/10/06/2014_ionic_learn/)
+
+### Auth
+
+- [OAuth with Ionic and ngCordova](http://ionicframework.com/blog/oauth-ionic-ngcordova/)
+- [Build an Instagram clone with AngularJS, Satellizer, Node.js and MongoDB](https://hackhands.com/building-instagram-clone-angularjs-satellizer-nodejs-mongodb) 登陆验证模块。
+- [Adding Auth to your Ionic app in 5 mins with Auth0](http://ionicframework.com/blog/authentication-in-ionic)
+
+
+### ng-confg
+
+- [Ionic and Angular Superpowers for Mobile App Development - Adam Bradley - YouTube](https://www.youtube.com/watch?v=wvr11fvCeu4&feature=youtu.be)
 
 ## FAQ
 
@@ -98,3 +107,6 @@ A solution would be to replace spawn by `win-spawn`:
 
         var spawn = require('cross-spawn');
 
+### Handling CORS issues in Ionic
+
+See [Handling CORS issues in Ionic](http://ionicframework.com/blog/handling-cors-issues-in-ionic/)

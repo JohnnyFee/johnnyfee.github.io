@@ -556,6 +556,42 @@ public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
 }
 ```
 
+### 处理返回键为返回上一页
+
+如果用webview点链接看了很多页以后，如果不做任何处理，点击系统“Back”键，整个浏览器会调用finish()而结束自身，如果希望浏览的网页回退而不是退出浏览器，需要在当前Activity中处理并消费掉该Back事件，覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法，代码如下：
+
+```java
+// To handle the back button key press
+public boolean onKeyDown(int keyCode, KeyEvent event) {
+    LogUtil.i(this, "keyCode="   keyCode);
+    if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+        mWebView.goBack();
+        return true;
+    }
+    return super.onKeyDown(keyCode, event);
+}
+```
+
+### 设置 android WebView 不显示滚动条
+
+可以直接在layout中添加 android:scrollbars="none" 来设置不显示滚动条，如下：
+
+```xml
+<WebView
+    android:id="@ id/wv"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:scrollbars="none" />
+```
+
+### android:scrollbarStyle控制滚动条位置
+
+WebView有一个设置滚动条位置的属性：android:scrollbarStyle 可以是insideOverlay可以是outsideOverlay，两个的区别是SCROLLBARS_INSIDE_OVERLAY的样式是滚动条在整个page里，类似css中的padding，看代码下的这个图吧，很清晰.
+
+    //mWebView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
+    mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+
 ## 线程安全
 
 从 JavaScript 访问 Java 对象时，方法可能运行在一个和 WebView 相关的后台线程中，这个线程不同于主应用线程。这意味着应用开发者在 JavaScript 中访问 Java 对象以及这些方法中的对象域时，应该注意线程安全问题。
@@ -566,7 +602,7 @@ public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
 
 ## WebViewClient
 
-Android 的 WebView 是可扩展的并且有很多具有代表性的类，包括 WebViewClient 和W ebChromeClient，这些类可以用来自定义 WebView 的默认行为，并且可以在请求/相应 调用流中注入数据。
+Android 的 WebView 是可扩展的并且有很多具有代表性的类，包括 WebViewClient 和 W ebChromeClient，这些类可以用来自定义 WebView 的默认行为，并且可以在请求/相应 调用流中注入数据。
 
 WebViewClient is a class that the WebView refers to before it handles everything that, in some way, is related to the rendering of a page. Using this class, you can add callback methods that are invoked to inform you of changes in the rendering.
 
@@ -581,19 +617,120 @@ WebViewClient 是 WebView 引用的是一个和页面显示相关的类。这个
 Android WebView 有一个 WebViewClint 的默认实现，可以使用 WebView 的 `setWebViewClient()` 方法覆盖这个默认实现。
 
 ```java
-webView.setWebViewClient(new WebViewClient(webView) {
+webView.setWebViewClient(new WebViewClient() {
   // override all the methods
 });
 ```
+
+###  处理页面内的url
+
+防止页面内的url使用browser来打开
+
+<http://stackoverflow.com/questions/4066438/android-webview-how-to-handle-redirects-in-app-instead-of-opening-a-browser>
+
+```java
+webview.setWebViewClient(new WebViewClient() {
+    public boolean shouldOverrideUrlLoading(WebView view, String url){
+        // do your handling codes here, which url is the requested url
+        // probably you need to open that url rather than redirect:
+        view.loadUrl(url);
+        return false; // then it is not handled by default action
+   }
+});
+```
+
+以下Demo指定只有url里包含eoe.cn的时候才在webview里打开，否则还是启动浏览器打开.
+
+```java
+@Override
+public boolean shouldOverrideUrlLoading(WebView view, String url) {
+    LogUtil.i(this, "url="   url);
+    if ( url.contains("eoe.cn") == true){
+        view.loadUrl(url);
+        return true;
+    }else{
+        Intent in = new Intent (Intent.ACTION_VIEW , Uri.parse(url));
+        startActivity(in);
+        return true;
+    }
+}
+```
+
 
 ## WebChromeClient
 
 WebChromeClient 负责浏览器 UI 的所有事情。WebChromeClient 可以用来处理浏览器的访问历史，创建新的窗口，关注 alerts, prompts, and console messages。一个没有综合需求的简单应用可以不用覆盖默认的 WebChromeClient。你可以使用 WebView 的 `setWebChromeClient()` 方法来指定你自己的实现。
 
 ```java
-webView.setWebChromeClient(new WebChromeClient(webView){
+webView.setWebChromeClient(new WebChromeClient(){
   // override all the methods
 });
+```
+
+在不设置WebChromeClient实例时，调用alert、prompt等接口时无效果。必须像使用console对象的方法一样，设置WebChromeClient实例，alert和prompt才起作用。
+
+See [java - Alert is not appear from web view in android? - Stack Overflow](http://stackoverflow.com/questions/6463151/alert-is-not-appear-from-web-view-in-android)
+
+    this.webView.setWebChromeClient(new WebChromeClient());
+
+### 使用原生弹出框
+
+我们可以覆盖WebChromeClient的[onJsAlert](http://developer.android.com/reference/android/webkit/WebChromeClient.html#onJsAlert)、[onJsConfirm](http://developer.android.com/reference/android/webkit/WebChromeClient.html#onJsConfirm)、[onJsPrompt](http://developer.android.com/reference/android/webkit/WebChromeClient.html#onJsPrompt)、onReceivedTitle等接口来使用Android原生的界面来显示，如：
+
+```java
+new WebChromeClient() {
+    @Override
+      public void onReceivedTitle(WebView view, String title) {
+        MainWebView3.this.setTitle(modifiedTitle);
+        super.onReceivedTitle(view, title);
+      }
+
+    @Override
+    public boolean onJsAlert(WebView view, String url, String message,
+            final JsResult result) {
+        new AlertDialog.Builder(context)
+                .setTitle("alert")
+                .setMessage(message)
+                .setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                    int which) {
+                                // 处理结果为确定状态 同时唤醒WebCore线程
+                                result.confirm();
+                            }
+                        }).create().show();
+        return true; // 已处理
+    }
+
+    @Override
+    public boolean onJsConfirm(WebView view, String url,
+            String message, final JsResult result) {
+        new AlertDialog.Builder(context)
+                .setTitle("confirm")
+                .setMessage(message)
+                .setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                    int which) {
+                                Toast.makeText(context,
+                                        "you clicked yes", Toast.LENGTH_SHORT).show();
+                                result.confirm();
+                            }
+                        })
+                .setNegativeButton("NO",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                    int which) {
+                                // 处理结果为取消状态 同时唤醒WebCore线程
+                                result.cancel();
+                            }
+                        }).create().show();
+        return true;
+    }
+}
 ```
 
 ## WebSettings
@@ -680,6 +817,18 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
         WebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 }
 ```
+
+### 设置可以自动加载图片
+
+    mWebView.getSettings().setLoadsImagesAutomatically(true);
+
+### 获得UA信息
+
+    String ua = webview.getSettings().getUserAgentString();
+
+Nexus One手机中测试结果UA如下:
+
+Mozilla/5.0 (Linux; U; Android 2.2; zh-cn; Nexus One Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
 
 ## 混合应用的架构
 
@@ -830,14 +979,14 @@ function loadCSS() {
 
 你也可以使用下面的代码为不同的密度将样式添加到 DOM 中，我们也不推荐这样做：
 
-```js
+```
 $('HEAD').append($('<link rel="stylesheet" href="xhdpi.css" type="text/css"
         media="screen and (-webkit-min-device-pixel-ratio: 2.0)" />'));
 ```
 
 以下是混合 Android 应用的模板文件：
 
-```html
+```
 <script type="text/x-tmpl" id="tmpl_contacts_item">
 <div class="contact item" data-id="<%= id %>">
     <div class="edit">Edit</div>
@@ -1144,11 +1293,63 @@ CSS3 变换是硬件加速的，不仅使用 CPU 同时也使用显卡的 GPU。
 
 缓存的 JavaScript 和 DOM 变量可以让你在迭代和以后的代码中更快地访问。
 
+## Database
+
+### localStorage
+
+__启用localStorage__
+
+    settings.setDomStorageEnabled(true);
+
+__防止应用重启之后数据丢失__
+
+    webView.getSettings().setDatabasePath("/data/data/" + webView.getContext().getPackageName() + "/databases/");
+
+<http://stackoverflow.com/questions/5899087/android-webview-localstorage>
+
+__多个 webview 共享数据__
+
+- [didimoo/AndroidLocalStorage](https://github.com/didimoo/AndroidLocalStorage)
+
+### 打开本地缓存提供JS调用
+
+```java   
+mWebView.getSettings().setDomStorageEnabled(true); 
+// Set cache size to 8 mb by default. should be more than enough 
+mWebView.getSettings().setAppCacheMaxSize(1024*1024*8); 
+// This next one is crazy. It's the DEFAULT location for your app's cache 
+// But it didn't work for me without this line. 
+// UPDATE: no hardcoded path. Thanks to Kevin Hawkins 
+String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath(); 
+mWebView.getSettings().setAppCachePath(appCachePath); 
+mWebView.getSettings().setAllowFileAccess(true); 
+mWebView.getSettings().setAppCacheEnabled(true);  
+```
+
+## Library
+
+- [WebView Explorations - Octodroid](http://stefanodacchille.github.io/blog/2014/02/23/webview-explorations/)
+- [pwnall/chromeview](https://github.com/pwnall/chromeview)
+- [mogoweb/chromium_webview](https://github.com/mogoweb/chromium_webview)
+
 ## Tutorial
 
 - [Android WebKit Development](http://goo.gl/j6m2q)
 - [Hybrid Mobile Apps: Providing A Native Experience With Web Technologies](http://www.smashingmagazine.com/2014/10/21/providing-a-native-experience-with-web-technologies)
 - [Meteor, Cordova, and Famo.us: The Chill Way to Build Apps - Discover Meteor](https://www.discovermeteor.com/blog/meteor-cordova-famous-the-chill-way-to-build-apps)
+- [Android中Webview使用经验总结（持续更新）](http://my.eoe.cn/iceskysl/archive/1028.html)
+- [Android WebView使用](http://trinea.iteye.com/blog/1152557)
+- [第二十九讲：WebView学习指南 « { Android学习指南 }](http://android.yaohuiji.com/archives/734#comments)
+- [What WebKit version is in what Android version?](http://jimbergman.net/webkit-version-in-android-version/)
+
+### 内核
+
+- [Android 4.4 WebView实现分析 - 放飞梦想](http://mogoweb.github.io/blog/2014/01/16/analysis-of-android-4-4-webview-implementation/)
+- [Webkit for Android分析](http://mogoweb.net/archives/182)
+- [[译]Android WebView - 放飞梦想](http://mogoweb.github.io/blog/2013/10/24/translated-android-webview/)
+- [Chromium网络加载速度研究(1) - 放飞梦想](http://mogoweb.github.io/blog/2014/03/18/chromium-loading-speed-research-0/)
+- [Chromium网络加载速度研究(2) - 放飞梦想](http://mogoweb.github.io/blog/2014/04/03/chromium-loading-spped-research-1/)
+- [关于 chromium_webview 项目 - 放飞梦想](http://mogoweb.github.io/blog/2014/06/10/about-chromium-webview-project/)
 
 ### Framework
 
@@ -1159,3 +1360,7 @@ CSS3 变换是硬件加速的，不仅使用 CPU 同时也使用显卡的 GPU。
 ### FAQ
 
 - [Android Hybrid App四大坑](http://blog.meathill.com/tech/app/web/traps-in-developing-android-hybrid-app.html)
+
+## Book
+
+- [Building Hybrid Android Apps with Java and JavaScript](http://www.salttiger.com/building-hybrid-android-apps-with-java-and-javascript/)

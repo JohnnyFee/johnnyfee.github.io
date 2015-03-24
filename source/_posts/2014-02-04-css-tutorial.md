@@ -163,6 +163,160 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 
 - [Automating CSS Regression Testing](http://css-tricks.com/automating-css-regression-testing)
 
+## FAQ
+
+### Change an element's CSS class with JavaScript
+
+See [Change an element's CSS class with JavaScript - Stack Overflow](http://stackoverflow.com/questions/195951/change-an-elements-css-class-with-javascript)
+
+The standard JavaScript way to select an element is using [`document.getElementById("Id")`](https://developer.mozilla.org/en-US/docs/DOM/document.getElementById), which is what the following examples use - you can of course obtain elements in other ways, and in the right situation may simply use `this` instead - however, going into detail on this is beyond the scope of the answer.
+
+__To change all classes for an element:__
+
+To replace all existing classes with one or more new classes, set the className attribute:
+
+```js
+document.getElementById("MyElement").className = "MyClass";
+```
+
+(You can use a space-delimited list to apply multiple classes.)
+
+__To add an additional class to an element:__
+
+To add a class to an element, without removing/affecting existing values, append a space and the new classname, like so:
+
+```js
+document.getElementById("MyElement").className += " MyClass";
+```
+
+__To remove a class from an element:__
+
+To remove a single class to an element, without affecting other potential classes, a simple regex replace is required:
+
+```js
+document.getElementById("MyElement").className =
+   document.getElementById("MyElement").className.replace
+      ( /(?:^|\s)MyClass(?!\S)/g , '' )
+/* code wrapped for readability - above is all one statement */
+```
+
+An explanation of this regex is as follows:
+
+```
+(?:^|\s) # match the start of the string, or any single whitespace character
+
+MyClass  # the literal text for the classname to remove
+
+(?!\S)   # negative lookahead to verify the above is the whole classname
+         # ensures there is no non-space character following
+         # (i.e. must be end of string or a space)
+```
+
+The `g` flag tells the replace to repeat as required, in case the class name has been added multiple times.
+
+__To check if a class is already applied to an element:__
+
+The same regex used above for removing a class can also be used as a check as to whether a particular class exists:
+
+```js
+if ( document.getElementById("MyElement").className.match(/(?:^|\s)MyClass(?!\S)/) )
+```
+
+__Assigning these actions to onclick events:__
+
+Whilst it is possible to write JavaScript directly inside the HTML event attributes (such as `onclick="this.className+=' MyClass'"`) this is not recommended behaviour. Especially on larger applications, more maintainable code is achieved by separating HTML markup from JS interaction logic.
+
+The first step to achieving this is by creating a function, and calling the function in the onclick attribute, for example:
+
+```
+<script type="text/javascript">
+    function changeClass()
+    {
+        // code examples from above
+    }
+</script>
+...
+<button onclick="changeClass()">My Button</button>
+```
+
+<sub>_(It is not required to have this code in script tags, this is simply for brevity of example, and including the JS in a distinct file may be more appropriate.)_</sub>
+
+The second step is to move the onclick event out of the HTML and into JavaScript, for example using [addEventListener](https://developer.mozilla.org/en-US/docs/DOM/element.addEventListener)
+
+```
+<script type="text/javascript">
+    function changeClass()
+    {
+        // code examples from above
+    }
+
+    window.onload = function()
+    {
+        document.getElementById("MyElement").addEventListener( 'click' , changeClass );
+    }
+</script>
+...
+<button id="MyElement">My Button</button>
+```
+
+(Note that the window.onload part is required so that the contents of that function are executed _after_ the HTML has finished loading - without this, the MyElement might not exist when the JS is called, so that line would fail.)
+
+__JavaScript Frameworks and Libraries__
+
+The above code is all in standard JavaScript, however it is common practise to use either a framework or a library to simplify common tasks, as well as benefit from fixed bugs and edge cases that you might not think of when writing your code.
+
+Whilst some people consider it overkill to add a ~50KB framework for simply changing a class, if you are doing any substantial amount of JavaScript work, or anything that might have unusual cross-browser behaviour, it is well worth considering.
+
+_(Very roughly, a library is a set of tools designed for a specific task, whilst a framework generally contains multiple libraries and performs a complete set of duties.)_
+
+The examples above have been reproduced below using [jQuery](http://jquery.com/), probably the most commonly used JavaScript library (though there are others worth investigating too).
+
+(Note that `$` here is the jQuery object.)
+
+__Changing Classes with jQuery__
+
+```js
+$('#MyElement').addClass('MyClass');
+
+$('#MyElement').removeClass('MyClass');
+
+if ( $('#MyElement').hasClass('MyClass') )
+```
+
+In addition, jQuery provides a shortcut for adding a class if it doesn't apply, or removing a class that does:
+
+```js
+$('#MyElement').toggleClass('MyClass');
+```
+
+__Assigning a function to a click event with jQuery:__
+
+```js
+$('#MyElement').click(changeClass);
+```
+
+or, without needing an id:
+
+```js
+$(':button:contains(My Button)').click(changeClass);
+```
+
+__HTML5 Techniques for changing classes__
+
+Modern browsers have added [**classList**](https://developer.mozilla.org/en-US/docs/DOM/element.classList) which provides methods to make it easier to manipulate classes without needing a library:
+
+```js
+document.getElementById("MyElement").classList.add('class');
+
+document.getElementById("MyElement").classList.remove('class');
+
+if ( document.getElementById("MyElement").classList.contains('class') )
+
+document.getElementById("MyElement").classList.toggle('class');
+```
+
+Unfortunately, these do not work in Internet Explorer prior to v10, though there is a [shim](http://en.wikipedia.org/wiki/Shim_%28computing%29) to add support for it to IE8 and IE9, available from [this page](https://developer.mozilla.org/en-US/docs/DOM/element.classList).
+
 ## Demo
 
 - [CSS Diner - Where we feast on CSS Selectors!](http://flukeout.github.io/)
@@ -174,6 +328,7 @@ When writing CSS3 properties, the modern wisdom is to list the "real" property l
 - [动起来！好玩的CSS抖动样式 – CSS Shake](http://www.shejidaren.com/css-shake-animation.html)
 - [ace-subido/spaced-out](https://github.com/ace-subido/spaced-out)
 - [Zero element loading animations · MadebyMike](http://madebymike.com.au/writing/zero-element-loading-animations/)
+- [Clocks - CSS Animation](https://cssanimation.rocks/clocks)
 
 ## Books
 

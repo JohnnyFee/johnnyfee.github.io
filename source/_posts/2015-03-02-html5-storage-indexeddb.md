@@ -91,35 +91,6 @@ request.onsuccess = function(event) {
 
 在打开数据库时常见的可能出现的错误之一是 `VER_ERR`。这表明存储在磁盘上的数据库的版本高于你试图打开的版本。这是一种必须要被错误处理程序处理的一种出错情况。
 
-__Using a key generator:__
-
-Setting up an `autoIncrement `flag when creating the object store would enable the key generator for that object store. By default this flag is not set.
-
-With the key generator, the key would be generated automatically as you add the value to the object store. The current number of a key generator is always set to 1 when the object store for that key generator is first created. Basically the newly auto-generated key is increased by 1 based on the previous key. The current number for a key generator never decreases, other than as a result of database operations being reverted, for example, the database transaction is aborted. Therefore deleting a record or even clearing all records from an object store never affects the object store's key generator.
-
-We can create another object store with the key generator as below:
-
-```js
-// Open the indexedDB.
-var request = indexedDB.open(dbName, 3);
-
-request.onupgradeneeded = function (event) {
-
-    var db = event.target.result;
-
-    // Create another object store called "names" with the autoIncrement flag set as true.    
-    var objStore = db.createObjectStore("names", { autoIncrement : true });
-
-    // Because the "names" object store has the key generator, the key for the name value is generated automatically.
-    // The added records would be like:
-    // key : 1 => value : "Bill"
-    // key : 2 => value : "Donna"
-    for (var i in customerData) {
-        objStore.add(customerData[i].name);
-    }
-}
-```
-
 ## 关闭与删除数据库
 
 关闭数据库可以直接调用数据库对象的 `close` 方法，删除数据库使用 indexedDB 对象的 `deleteDatabase` 方法。
@@ -243,6 +214,36 @@ request.onupgradeneeded = function(event) {
 我们也请求了一个名为 “name” 的着眼于存储的对象的 `name` 属性的索引。如同 `createObjectStore()`，`createIndex()` 使用了一个完善了我们希望创建的索引类型的可选的 `options` 对象。添加一个不带 `name` 属性的对象也会成功，但是这个对象不会出现在 "name" 索引中。
 
 我们现在可以使用存储的用户对象的 `ssn` 直接从对象存储空间中把它们提取出来，或者通过使用索引来使用他们的 name 进行提取。要了解这些是如何实现的，请参见 [使用索引](https://developer.mozilla.org/en/IndexedDB/Using_IndexedDB#Using_an_index) 章节。
+
+__Using a key generator:__
+
+Setting up an `autoIncrement `flag when creating the object store would enable the key generator for that object store. By default this flag is not set.
+
+With the key generator, the key would be generated automatically as you add the value to the object store. The current number of a key generator is always set to 1 when the object store for that key generator is first created. Basically the newly auto-generated key is increased by 1 based on the previous key. The current number for a key generator never decreases, other than as a result of database operations being reverted, for example, the database transaction is aborted. Therefore deleting a record or even clearing all records from an object store never affects the object store's key generator.
+
+We can create another object store with the key generator as below:
+
+```js
+// Open the indexedDB.
+var request = indexedDB.open(dbName, 3);
+
+request.onupgradeneeded = function (event) {
+
+    var db = event.target.result;
+
+    // Create another object store called "names" with the autoIncrement flag set as true.    
+    var objStore = db.createObjectStore("names", { autoIncrement : true });
+
+    // Because the "names" object store has the key generator, the key for the name value is generated automatically.
+    // The added records would be like:
+    // key : 1 => value : "Bill"
+    // key : 2 => value : "Donna"
+    for (var i in customerData) {
+        objStore.add(customerData[i].name);
+    }
+}
+```
+
 
 ## 事务
 
@@ -483,6 +484,32 @@ index.openKeyCursor(null, IDBCursor.nextunique).onsuccess = function(event) {
   }
 };
 ```
+
+## Library
+
+- [bramski/angular-indexedDB](https://github.com/bramski/angular-indexedDB) An angularjs serviceprovider to utilize indexedDB with angular.
+
+## FAQ
+
+### How to delete indexedDB in Chrome
+
+See [html5 - How to delete indexedDB in Chrome - Stack Overflow](http://stackoverflow.com/questions/9384128/how-to-delete-indexeddb-in-chrome)
+
+In theory, all you need to do to delete an IndexedDB in Chrome is:
+
+1.  In Chrome, go to Options > Under the Hood > Content Settings > All cookies and Site Data > find the domain where you created the IndexedDB
+2.  Hit either the "X" or click "Indexed Database" > Remove
+
+In windows, the file is located here:
+
+C:\Users[USER_NAME]\AppData\Local\Google\Chrome\User Data\Default\IndexedDB
+
+On Mac, do the following:
+
+1.  In Chrome, go to "Settings" (or "Preferences" under the Chrome menu) 
+2.  Click "show advanced settings" (at the bottom of the page)
+3.  Go to "Privacy" > "Content Settings" > "All cookies and Site Data" > find the domain where you created the IndexedDB
+4.  Hit either the "X" or click "Indexed Database" > Remove
 
 ## Ref
 

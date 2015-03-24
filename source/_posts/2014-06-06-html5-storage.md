@@ -236,6 +236,10 @@ window.addEventListener("storage", function(event){
 
 The storage event's storageArea attribute returns the localStorage or sessionStorage object being modified. The key is the name of the field being modified, and oldValue and newValue are its values before and after the event. The url is the page that called the method triggering the change.
 
+### Library
+
+- [grevory/angular-local-storage](https://github.com/grevory/angular-local-storage)
+
 ## WebSQL Databases
 
 参考：<http://dev.w3.org/html5/webdatabase/>

@@ -135,12 +135,12 @@ Command+Q: 退出程序
 按键或组合键                | 功能
 --------------------------- | ------
 Option 或 Alt               | 显示所有启动宗卷（[启动管理器](http://support.apple.com/kb/HT1310?viewlocale=zh_CN)）
-Shift.  | 在[安全模式](http://support.apple.com/kb/HT1455?viewlocale=zh_CN)下启动
-C.      | 从可引导介质（DVD、CD、USB 闪存驱动器）启动
-T.      | 在[目标磁盘模式](http://support.apple.com/kb/PH19021?viewlocale=zh_CN)下启动
-N.      | 从 NetBoot 服务器启动.  
-X.      | 强制 OS X 启动（如果非 OS X 启动宗卷可用）
-D.      | 使用 Apple Hardware Test                
+Shift  | 在[安全模式](http://support.apple.com/kb/HT1455?viewlocale=zh_CN)下启动
+C      | 从可引导介质（DVD、CD、USB 闪存驱动器）启动
+T      | 在[目标磁盘模式](http://support.apple.com/kb/PH19021?viewlocale=zh_CN)下启动
+N      | 从 NetBoot 服务器启动.  
+X      | 强制 OS X 启动（如果非 OS X 启动宗卷可用）
+D      | 使用 Apple Hardware Test                
 Command-R                   | 使用 [OS X 恢复功能](http://support.apple.com/kb/HT4718?viewlocale=zh_CN)（OS&nbsp;X&nbsp;Lion 或更高版本）
 Command-Option-R            | 在受支持的电脑上使用[互联网恢复](http://support.apple.com/kb/HT4718?viewlocale=zh_CN).   
 Command-V                   | 以[详细模式](http://support.apple.com/kb/HT1492?viewlocale=zh_CN)启动    
@@ -152,9 +152,9 @@ Command-Option-P-R          | [重置](http://support.apple.com/kb/PH18761?viewl
 
 Mac 启动后使用这些组合键可让电脑进入睡眠状态、关机、注销或重新启动。
 
-按键或组合键.   | 功能
+按键或组合键   | 功能
 ----------------------------- | --------------------------------------
-电源按钮.     | 轻按可开机。在通电后，轻按“电源”按钮可使您的 Mac 唤醒或进入睡眠状态。
+电源按钮     | 轻按可开机。在通电后，轻按“电源”按钮可使您的 Mac 唤醒或进入睡眠状态。
 按住电源按钮 1.5 秒                  | 显示重新启动/睡眠/关闭对话框.  
 按住电源按钮 5 秒                    | 强制 Mac 关机.        
 Control-电源按钮  
@@ -171,59 +171,54 @@ Command-Shift-Option-Q        | 立即注销.
 
 这些键盘快捷键适用于大部分 app。
 
-组合键.    | 功能
+组合键    | 功能
 --------------- | -------- 
 Command-A   | 在最前面的窗口中选择所有项目或文本
-Command-Z.           | 撤消上一命令（有些 app 可让您撤消多次）
-Command-Shift-Z.     | 重做，恢复上次使用撤消进行的更改（有些 app 可让您重做多次）. 
-Command-空格键.         | 显示或隐藏 Spotlight 搜索栏  
-
-（如果同时使用多语种，此快捷键可能会转而循环显示启用的脚本系统）            
-Command-Option-空格键.  | 显示 Spotlight 搜索结果窗口（如果安装了多语种，则可能循环显示某一脚本中的键盘布局和输入法）                
-Command-Tab.         | 在打开的 app 列表中，向下移动到下一个最近使用的 app.   
-Option-介质推出键 (⏏).    | 从备选光盘驱动器中推出（如果已安装）.       
-Command-调低亮度 (F1).   | 切换针对多显示器配置的“镜像显示器”.       
-Command-调高亮度 (F2).   | 切换[目标显示器模式](http://support.apple.com/kb/PH19038?viewlocale=zh_CN)  
+Command-Z           | 撤消上一命令（有些 app 可让您撤消多次）
+Command-Shift-Z     | 重做，恢复上次使用撤消进行的更改（有些 app 可让您重做多次）. 
+Command-空格键         | 显示或隐藏 Spotlight 搜索栏（如果同时使用多语种，此快捷键可能会转而循环显示启用的脚本系统）      
+Command-Option-空格键  | 显示 Spotlight 搜索结果窗口（如果安装了多语种，则可能循环显示某一脚本中的键盘布局和输入法）
+Command-Tab         | 在打开的 app 列表中，向下移动到下一个最近使用的 app.   
+Command-调低亮度 (F1)   | 切换针对多显示器配置的“镜像显示器”.       
+Command-调高亮度 (F2)   | 切换[目标显示器模式](http://support.apple.com/kb/PH19038?viewlocale=zh_CN)  
 Command-Mission Control (F3)             | 显示桌面.                     
-Command-F5.          | 切换 VoiceOver 的开关.         
-Option-亮度 (F2).      | 打开“显示器”系统偏好设置.            
+Command-F5          | 切换 VoiceOver 的开关.         
+Option-亮度 (F2)      | 打开“显示器”系统偏好设置.            
 Option-Mission Control (F3)              | 打开“Mission Control”偏好设置.  
-Option-音量键 (F12).    | 打开“声音”偏好设置.               
-Command-减号 (–).      | 缩小所选项.                    
-Command-冒号 (:).      | 显示“拼写和语法”窗口.              
-Command-分号 (;).      | 查找文稿中拼写错误的词.              
-Command-逗号 (,).      | 打开最前面的 app 的偏好设置窗口.       
-Command-问号 (?).      | 打开“帮助”菜单.                 
-Command-加号 (+)  
-
-或 Command-Shift-等号 (=) | 放大所选项.                    
-Command-Option-D.    | 显示或隐藏 Dock.               
-Command-Control-D.   | 显示或隐藏选中字词的定义.             
-Command-D.           | 在“打开和存储”对话框中选择“桌面”文件夹.    
-Command-Delete.      | 选择包含“删除”或“不存储”按钮的对话框中的“不存储”.      
-Command-E.           | 使用所选内容进行查找.               
-Command-F.           | 打开“查找”窗口，或在文稿中查找文本.       
-Command-Option-F.    | 移到搜索栏控件.                  
-Command-G.           | 查找所选内容出现的下一个位置.           
-Command-Shift-G.     | 查找所选内容出现的上一个位置.           
-Command-H.           | 隐藏当前正在运行的 app 的窗口.        
-Command-Option-H.    | 隐藏所有其他正在运行的 app 的窗口.      
-Command-Option-I.    | 显示检查器窗口.                  
-Command-M.           | 将活跃窗口最小化至 Dock.           
-Command-Option-M.    | 将处于活动状态的 app 的所有窗口最小化至 Dock 中.    
-Command-N.           | 在最前面的 app 中创建新文稿.         
-Command-O.           | 显示一个对话框，用于选择要在最前面的 app 中打开的文稿.    
-Command-P.           | 打印当前文稿.                   
-Command-Shift-P.     | 显示用于指定文稿参数（页面设置）的对话框.     
-Command-Q.           | 退出最前面的 app.               
-Command-S.           | 存储活跃文稿.                   
-Command-Shift-S.     | 显示“存储为”对话框或复制当前文稿.        
-Command-Option-T.    | 显示或隐藏工具栏.                 
-Command-W.           | 关闭最前面的窗口.                 
-Command-Option-W.    | 关闭当前 app 中的所有窗口.          
-Command-Z.           | 撤消上一命令（有些 app 允许多次撤消）.    
-Command-Shift-Z.     | 重做，恢复上次使用撤消进行的更改（有些 app 可让您重做多次）. 
-Command-Option-esc.  | 选择要[强制退出](http://support.apple.com/kb/HT3411?viewlocale=zh_CN)的 app
+Option-音量键 (F12)    | 打开“声音”偏好设置.               
+Command-减号 (–)      | 缩小所选项.                    
+Command-冒号 (:)      | 显示“拼写和语法”窗口.              
+Command-分号 (;)      | 查找文稿中拼写错误的词.              
+Command-逗号 (,)      | 打开最前面的 app 的偏好设置窗口.       
+Command-问号 (?)      | 打开“帮助”菜单.                 
+Command-加号 (+)  或 Command-Shift-等号 (=) | 放大所选项.                    
+Command-Option-D    | 显示或隐藏 Dock.               
+Command-Control-D   | 显示或隐藏选中字词的定义.             
+Command-D           | 在“打开和存储”对话框中选择“桌面”文件夹.    
+Command-Delete      | 选择包含“删除”或“不存储”按钮的对话框中的“不存储”.      
+Command-E           | 使用所选内容进行查找.               
+Command-F           | 打开“查找”窗口，或在文稿中查找文本.       
+Command-Option-F    | 移到搜索栏控件.                  
+Command-G           | 查找所选内容出现的下一个位置.           
+Command-Shift-G     | 查找所选内容出现的上一个位置.           
+Command-H           | 隐藏当前正在运行的 app 的窗口.        
+Command-Option-H    | 隐藏所有其他正在运行的 app 的窗口.      
+Command-Option-I    | 显示检查器窗口.                  
+Command-M           | 将活跃窗口最小化至 Dock.           
+Command-Option-M    | 将处于活动状态的 app 的所有窗口最小化至 Dock 中.    
+Command-N           | 在最前面的 app 中创建新文稿.         
+Command-O           | 显示一个对话框，用于选择要在最前面的 app 中打开的文稿.
+Command-P           | 打印当前文稿.                   
+Command-Shift-P     | 显示用于指定文稿参数（页面设置）的对话框.     
+Command-Q           | 退出最前面的 app.               
+Command-S           | 存储活跃文稿.                   
+Command-Shift-S     | 显示“存储为”对话框或复制当前文稿.        
+Command-Option-T    | 显示或隐藏工具栏.                 
+Command-W           | 关闭最前面的窗口.                 
+Command-Option-W    | 关闭当前 app 中的所有窗口.          
+Command-Z           | 撤消上一命令（有些 app 允许多次撤消）.    
+Command-Shift-Z     | 重做，恢复上次使用撤消进行的更改（有些 app 可让您重做多次）. 
+Command-Option-esc  | 选择要[强制退出](http://support.apple.com/kb/HT3411?viewlocale=zh_CN)的 app
 Command-Shift-Option-Esc（按住三秒钟）          | [强制退出](http://support.apple.com/kb/HT3411?viewlocale=zh_CN)最前面的 app
 
 ## 对文本进行处理

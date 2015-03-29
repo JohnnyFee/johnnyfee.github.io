@@ -1,4 +1,3 @@
----
 layout: post
 title: "Backbone Models"
 category: JavaScript

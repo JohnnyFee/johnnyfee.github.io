@@ -1,4 +1,3 @@
----
 layout: post
 title: "Backbone Collections"
 category: JavaScript

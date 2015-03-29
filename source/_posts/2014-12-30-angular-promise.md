@@ -1,4 +1,3 @@
----
 layout: post
 title: "Using AngularJS Promises"
 category : Angular

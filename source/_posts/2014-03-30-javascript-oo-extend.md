@@ -1,4 +1,3 @@
----
 layout: post
 title: "OO 模拟那些事儿"
 category: JavaScript

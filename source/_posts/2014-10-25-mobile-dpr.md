@@ -1,4 +1,3 @@
----
 layout: post
 title: "设备像素比 devicePixelRatio 简单介绍"
 category: Mobile

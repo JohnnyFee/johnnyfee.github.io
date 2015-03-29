@@ -1,4 +1,3 @@
----
 layout: post
 title: "Android绝招一——利用weight属性居中View"
 description: ""

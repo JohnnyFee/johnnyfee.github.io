@@ -1,4 +1,3 @@
----
 layout: post
 title: "Android Thread"
 category: Android

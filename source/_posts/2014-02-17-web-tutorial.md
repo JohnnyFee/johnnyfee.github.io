@@ -1,4 +1,3 @@
----
 layout: post
 title: "Web Front Tutorial"
 category: Web

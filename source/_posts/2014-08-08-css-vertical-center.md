@@ -1,4 +1,3 @@
----
 layout: post
 title: "Vertical Centering With CSS"
 category: Css

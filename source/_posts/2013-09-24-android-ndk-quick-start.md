@@ -1,4 +1,3 @@
----
 layout: post
 title: "Android NDK Quick Start"
 description: ""

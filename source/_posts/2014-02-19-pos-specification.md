@@ -1,4 +1,3 @@
----
 layout: post
 title: "POS Specification"
 category: JavaScript

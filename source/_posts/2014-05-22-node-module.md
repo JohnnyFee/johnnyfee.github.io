@@ -1,4 +1,3 @@
----
 layout: post
 title: "Export This: Interface Design Patterns for Node.js Modules"
 category: Node

@@ -1,4 +1,3 @@
----
 layout: post
 title: "SVG Viewport and View Box"
 category: SVG

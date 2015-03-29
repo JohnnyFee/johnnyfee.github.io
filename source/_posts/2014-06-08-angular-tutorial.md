@@ -1,4 +1,3 @@
----
 layout: post
 title: "Angular Tutorial"
 category : Angular

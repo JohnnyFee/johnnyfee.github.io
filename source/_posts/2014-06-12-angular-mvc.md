@@ -1,4 +1,3 @@
----
 layout: post
 title: "Angular MVC"
 category : Angular

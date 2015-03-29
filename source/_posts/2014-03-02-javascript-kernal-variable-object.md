@@ -1,4 +1,3 @@
----
 layout: post
 title: "变量对象（Variable object）"
 category: JavaScript

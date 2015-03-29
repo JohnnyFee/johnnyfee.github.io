@@ -1,4 +1,3 @@
----
 layout: post
 title: "jQuery Defered"
 category: JavaScript

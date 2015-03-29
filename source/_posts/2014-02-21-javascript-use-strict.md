@@ -1,4 +1,3 @@
----
 layout: post
 title: "Javascript 严格模式详解"
 description: ""

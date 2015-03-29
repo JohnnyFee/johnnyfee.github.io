@@ -1,4 +1,3 @@
----
 layout: post
 title: "Node Global Objects"
 category: Node

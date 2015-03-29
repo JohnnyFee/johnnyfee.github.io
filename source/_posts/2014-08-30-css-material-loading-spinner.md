@@ -1,4 +1,3 @@
----
 layout: post
 title: "Material Design Loading Spinner"
 category: CSS

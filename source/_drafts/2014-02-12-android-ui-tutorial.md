@@ -1,4 +1,3 @@
----
 layout: post
 title: "Android UI Tips"
 category: android

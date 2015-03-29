@@ -1,4 +1,3 @@
----
 layout: post
 title: "How To Work With Linear, Radial, And Repeating CSS Gradients"
 category: Css

@@ -1,4 +1,3 @@
----
 layout: post
 title: "Angular Mobile Tutorial"
 category: Angular

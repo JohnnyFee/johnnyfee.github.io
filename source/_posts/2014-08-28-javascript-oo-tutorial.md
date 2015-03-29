@@ -1,4 +1,3 @@
----
 layout: post
 title: "JavaScript OO Tutorial"
 category: JavaScript

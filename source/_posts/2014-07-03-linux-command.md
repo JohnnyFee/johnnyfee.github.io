@@ -1,4 +1,3 @@
----
 layout: post
 title: "Linux Common Command"
 category: Linux

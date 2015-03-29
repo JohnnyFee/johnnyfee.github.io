@@ -1,4 +1,3 @@
----
 layout: post
 title: "编写更好的jQuery代码的建议"
 category: JavaScript

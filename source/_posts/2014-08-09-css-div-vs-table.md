@@ -1,4 +1,3 @@
----
 layout: post
 title: "CSS vs Tables: The Debate That Won’t Die"
 category: Css

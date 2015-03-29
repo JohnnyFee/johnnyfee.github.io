@@ -1,4 +1,3 @@
----
 layout: post
 title: "JavaScript 模式"
 category : JavaScript

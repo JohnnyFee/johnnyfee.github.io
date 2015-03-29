@@ -1,4 +1,3 @@
----
 layout: post
 title: "使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析"
 category: Grunt

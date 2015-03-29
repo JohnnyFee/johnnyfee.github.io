@@ -1,4 +1,3 @@
----
 layout: post
 title: "Spring SpEl"
 tagline: "Spring Expression Language"

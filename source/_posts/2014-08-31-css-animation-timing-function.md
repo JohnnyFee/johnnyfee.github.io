@@ -1,4 +1,3 @@
----
 layout: post
 title: "Understanding CSS Timing Functions"
 category: CSS

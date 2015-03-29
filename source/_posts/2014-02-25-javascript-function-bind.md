@@ -1,4 +1,3 @@
----
 layout: post
 title: "理解JavaScript中的Function.prototype.bind"
 description: ""

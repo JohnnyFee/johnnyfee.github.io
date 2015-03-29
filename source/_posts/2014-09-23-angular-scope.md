@@ -1,4 +1,3 @@
----
 layout: post
 title: "Angular Scope"
 category : Angular

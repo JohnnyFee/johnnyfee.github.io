@@ -1,4 +1,3 @@
----
 layout: post
 title: "Android Hybrid Develpment Tutorial"
 category: Android

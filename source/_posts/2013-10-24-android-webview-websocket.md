@@ -1,4 +1,3 @@
----
 layout: post
 title: "Android WebView WebSocket"
 description: ""

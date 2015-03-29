@@ -1,4 +1,3 @@
----
 layout: post
 title: "JavaScript SetTimeout和SetInterval"
 category: JavaScript

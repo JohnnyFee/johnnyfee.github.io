@@ -1,4 +1,3 @@
----
 layout: post
 title: "Android绝招五——TextSwitcher和ImageSwitcher"
 category: android

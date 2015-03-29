@@ -1,4 +1,3 @@
----
 layout: post
 title: "A Guide to Web Components"
 category: Web

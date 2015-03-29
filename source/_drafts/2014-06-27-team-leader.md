@@ -1,4 +1,3 @@
----
 layout: post
 title: "Team Leader"
 category: PM

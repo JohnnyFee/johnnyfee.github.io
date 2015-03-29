@@ -1,4 +1,3 @@
----
 layout: post
 title: "Simulate JavaScript Key Events"
 category : JavaScript

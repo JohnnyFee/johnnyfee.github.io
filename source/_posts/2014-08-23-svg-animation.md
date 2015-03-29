@@ -1,4 +1,3 @@
----
 layout: post
 title: "SVG Animation"
 category: SVG

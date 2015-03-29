@@ -1,4 +1,3 @@
----
 layout: post
 title: "JavaScript 技巧"
 category: JavaScript

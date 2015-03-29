@@ -1,4 +1,3 @@
----
 layout: post
 title: "Node Full Stack —— MEAN"
 category: Node

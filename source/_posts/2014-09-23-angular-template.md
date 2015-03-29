@@ -1,4 +1,3 @@
----
 layout: post
 title: "Angular Template Loading"
 category : Angular

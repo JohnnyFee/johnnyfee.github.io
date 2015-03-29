@@ -1,4 +1,3 @@
----
 layout: post
 title: "JavaScript 核心"
 category: JavaScript

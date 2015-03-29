@@ -1,4 +1,3 @@
----
 layout: post
 title: "JavaScript 继承"
 category: JavaScript

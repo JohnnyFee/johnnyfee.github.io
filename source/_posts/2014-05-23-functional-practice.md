@@ -1,4 +1,3 @@
----
 layout: post
 title: "函数式编程初探"
 category: Zen

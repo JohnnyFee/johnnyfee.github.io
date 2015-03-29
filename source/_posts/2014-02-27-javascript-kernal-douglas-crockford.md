@@ -1,4 +1,3 @@
----
 layout: post
 title: "JavaScript 大牛 Douglas Crockford"
 description: ""

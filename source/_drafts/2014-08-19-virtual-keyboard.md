@@ -1,4 +1,3 @@
----
 layout: post
 title: "Virtual Keyboard"
 category : JavaScript

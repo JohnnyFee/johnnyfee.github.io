@@ -1,4 +1,3 @@
----
 layout: post
 title: "Html5 Storage"
 category: Html5

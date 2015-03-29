@@ -1,4 +1,3 @@
----
 layout: post
 title: "Sencha Cmd"
 category : ExtJS

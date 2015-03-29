@@ -1,4 +1,3 @@
----
 layout: post
 title: "ExtJS Class System"
 category : ExtJS

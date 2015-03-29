@@ -1,4 +1,3 @@
----
 layout: post
 title: "CSS Layout"
 category: CSS

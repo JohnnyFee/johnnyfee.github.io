@@ -461,6 +461,10 @@ See [PhoneGap 09 使用Plugman管理Plugins - jacob的专栏 - 博客频道 - CS
 
 See [android - How to add Library Resource to Cordova Project? - Stack Overflow](http://stackoverflow.com/questions/26121635/how-to-add-library-resource-to-cordova-project)
 
+### Cordova + Angularjs + Device Ready
+
+See [Cordova + Angularjs + Device Ready - Stack Overflow](http://stackoverflow.com/questions/21556090/cordova-angularjs-device-ready)
+
 ## Performance
 
 - Appgyver:http://www.appgyver.com/

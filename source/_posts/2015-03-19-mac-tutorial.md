@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "JavaScript Tutorial"
+title: "Mac Basic Tutorial"
 description: ""
-category: JavaScript
-tags: [javascript]
+category: Mac
+tags: [macbook, tutorial]
 ---
 
 ## Application Manager
@@ -11,6 +11,10 @@ tags: [javascript]
 ### 安装文件
 
 Mac 系统的安装文件后缀名是 `.dmg`，双击打开后，会出现一个安装对话框， 把图标拖拽到 Application 中就可以了。
+
+如果网上下载应用无法安装使用的话，打开“安全性与隐私”里面 打开左下脚的小锁 先鉴定一下，然后选中“来自任何来源”，这样就好了：
+
+![](http://images.macx.cn/album/201212/28/120834rabafrvlbh7383ta.png)
 
 ### 卸载软件
 
@@ -35,7 +39,7 @@ brew cask install vagrant            #用来在后台跑Windows的虚拟机
 brew cask install alfred               #Mac独特软件，用来帮你快速调用程序与算账
 ```
 
-### 更新软件
+#### 更新软件
 
     brew update && brew upgrade
 
@@ -48,6 +52,33 @@ brew cask install alfred               #Mac独特软件，用来帮你快速调�
 * [V2EX › MacBook Air](http://v2ex.com/go/mba)
 * [V2EX › Mac OS X](http://v2ex.com/go/macosx)
 * [V2EX › MacBook Pro](http://v2ex.com/go/mbp)
+
+### 权限
+
+启用 Root：_/System/Library/CoreServices_  找到“目录实用工具”-点击左下角-鉴定-（有设开机密码的需要输入开机密码）鉴定完了-菜单栏 编辑-启用root账户 -设置root账户密码。ok 这样就启用成功了，如果管理员密码忘了，就可以通过root账号重设 管理员密码！
+
+## Software
+
+- iLife 包括 iPhoto、iMovie、GrageBand。iMovie 影片剪辑；GarageBand，音乐爱好者的神器。Download from [Apple - Press Info - Product Images & Info - iLife](http://www.apple.com/pr/products/ilife/ilife.html).
+- iWork 办公三件套。Download from [Apple - Press Info - Product Images & Info - iWork](http://www.apple.com/pr/products/iwork/iWork.html).
+- [Aperture](https://www.apple.com/cn/aperture/) 照片处理。
+- MplayerX 或 VLC。 视频软件。
+- xee 图片预览。
+- Splashtop iphone 远程控制 mac。
+- Cleanapp 应用程序卸载。
+- DynamicLyrics itunes 增强，这个绝对是精品 能够自动搜索歌词并且非常漂亮。
+- Paparazzi 截取网页。
+- paragon NTFS 格式for mac 必备。 NTFS 格式支持，如果你发现无法往u盘或者硬盘拷贝文件那么基本上就是不支持ntfs这个格式，安装这个插件就能解决了，必装。
+- screentest 屏幕坏点检测软件。
+
+### Office
+
+- [Pages 09 官方视频教程](http://v.youku.com/v_show/id_XNDkzNzI4MTY4.html) 兼容 Word。
+- [Keynote 09 官方教程视频](http://v.youku.com/v_show/id_XNDkzNjg3Nzg4.html) 兼容 PowerPoint。
+- [Numbers 09官方视频教程](http://v.youku.com/v_show/id_XNDkzNzM3ODM2.html) 兼容 Excel。
+- [GarageBand 11官方教程视频](http://v.youku.com/v_show/id_XNDkzNjgxMTg0.html) 音乐教程和工具。
+- [iMovie 11官方视频教程](http://v.youku.com/v_show/id_XNDkzNjc4OTA4.html)
+    - [Apple – iCloud 版 iWork (测试版)](https://www.apple.com/cn/iwork-for-icloud/)
 
 ## Common Operation
 
@@ -66,9 +97,27 @@ brew cask install alfred               #Mac独特软件，用来帮你快速调�
 
 小技巧： Chrome中，按住Shift键，然后点击“最适化”。 可以实现最大化。把窗口铺满整个屏幕。
 
+### Finder
+
+OS X 中通过 Finder 您能访问自己的文件和文件夹。
+
+鼠标选中一个文件，然后按一下 Space 空格键，可以快速预览文件内容。
+
+勾选 _Finder/偏好设置/通用/_ -> 硬盘、外置磁盘。
+
+See [Mac 101：Finder - Apple 支持](https://support.apple.com/zh-cn/HT2470)
+
 ### 搜索程序和文档
 
 类似 Windows 开始菜单中的搜索，可以用来搜索文档，也可以搜索本机的程序。 点击右上角的“放大镜”图标，或者快捷键 `Command+Space` 来调用 Spotlight。
+
+如果您想要在终端脚本中使用 Spotlight，请使用“
+<tt>mdfind</tt>”命令。
+
+如果您想要使用终端来管理 Spotlight 使用的元数据储存，请使用“
+<tt>mdutil</tt>”命令。
+
+See [Mac 基础知识：Spotlight - Apple 支持](https://support.apple.com/zh-cn/HT2531)
 
 ### 进程管理
 
@@ -83,6 +132,30 @@ MAC 中的 Activity Monitor 类似于 Windows 中的任务管理器，用来管�
 ### 访问远程共享的目录
 
 先打开 Finder，`Command+K` 打开共享目录，输入：`smb://192.168.0.4/share`。
+
+### 输入法
+
+Mac OS X Lion 系统自带的中文输入法里也内置了颜文字表情输入功能，同时按下 `shift+6` 两个键即可调出颜文字表情列表。
+
+如果你想用苹果logo，一般情况都是网上找或者自己ps，其实mac下可以就像打字一样打一个出来，快捷键是：`option+shift+K `。
+
+### 菜单栏
+
+屏幕最上边那栏软件多了，不需要的小图标也多了，可以按住 Command 从上面拖出来 扔掉。
+
+### 听写与语音
+
+按两下 Fn 键启动。
+
+### 多显示器
+
+您可以在“系统偏好设置”的“显示器”部分找到“检测显示器”按钮。进入“显示器”部分后，按住 Option 键即可在右下角看到“检测显示器”按钮。您可以点按此按钮以手动检测另一个显示器。
+
+### 双系统
+
+搜索栏搜 BootCamp ，这个应用会一步一步教你安装 Windows。See ![ ](https://support.apple.com/library/content/dam/edam/applecare/images/en_US/macbookpro/mac_yos_poster-boot_camp-hero.png)
+
+See also [Boot Camp - 使用入门 - Apple 支持](http://www.apple.com/cn/support/bootcamp/getstarted/)
 
 ## Terminal
 
@@ -141,7 +214,7 @@ T      | 在[目标磁盘模式](http://support.apple.com/kb/PH19021?viewlocale=
 N      | 从 NetBoot 服务器启动.
 X      | 强制 OS X 启动（如果非 OS X 启动宗卷可用）
 D      | 使用 Apple Hardware Test
-Command-R                   | 使用 [OS X 恢复功能](http://support.apple.com/kb/HT4718?viewlocale=zh_CN)（OS&nbsp;X&nbsp;Lion 或更高版本）
+Command-R                   | 使用 [OS X 恢复功能](http://support.apple.com/kb/HT4718?viewlocale=zh_CN)（OS X Lion 或更高版本）
 Command-Option-R            | 在受支持的电脑上使用[互联网恢复](http://support.apple.com/kb/HT4718?viewlocale=zh_CN).
 Command-V                   | 以[详细模式](http://support.apple.com/kb/HT1492?viewlocale=zh_CN)启动
 Command-S                   | 以[单用户模式](http://support.apple.com/kb/HT1492?viewlocale=zh_CN)启动
@@ -276,7 +349,7 @@ Command-Control-V      | 将格式设置应用于所选对象（粘贴标尺）.
 
 ### 全键盘控制
 
-通过全键盘控制，您可以使用键盘进行导航，并与屏幕上的项目进行交互。使用这些快捷键可选择并调整文本栏和滑块等控件。按 Control-F7 或从“系统偏好设置”中“键盘”偏好设置的“快捷键”面板中选择“全键盘控制”，可以切换此设置开/关。&nbsp;
+通过全键盘控制，您可以使用键盘进行导航，并与屏幕上的项目进行交互。使用这些快捷键可选择并调整文本栏和滑块等控件。按 Control-F7 或从“系统偏好设置”中“键盘”偏好设置的“快捷键”面板中选择“全键盘控制”，可以切换此设置开/关。 
 
 组合键                    | 功能
 ---------------------- | ----------------------------------------------
@@ -379,6 +452,18 @@ See:
 
 - [Mac入门（一）基本用法 - 小坦克 - 博客园](http://www.cnblogs.com/TankXiao/p/2845413.html)
 - [Mac入门笔记（1）：开机ABC - 阳志平的网志](http://www.yangzhiping.com/tech/mac1.html)
+
+### TO SEE
+
+- 你需要知道的15条OS X Mountain Lion提示和技巧 http://tech.hexun.com/2012-08-09/144573828.html
+- Mac OS X Lion技巧全集（不断更新）http://www.macx.cn/thread-2037901-1-1.html  
+- Mission Control的几个操作小贴士，你都知道么？ http://www.macx.cn/a/a100i1980525.htm
+- Mission Control 桌面背景可以不同： http://www.macx.cn/a/a100i1980352.htm
+- Misson Control中的一些设置技巧： http://www.macx.cn/a/a100i1970204.htm
+- Lion：为你的程序分配一个桌面Space http://www.macx.cn/a/a100i1980396.htm
+- 开启或关闭Lion中全屏程序的快捷键 http://www.macx.cn/a/a100i1976055.htm
+- 10 个 Lion 纯新用户可能会忽略的系统设置 http://www.macx.cn/a/a100i1978995.htm
+- 分享一下本人收集的Lion小技巧与新发现 http://www.macx.cn/a/a100i1966457.htm
 
 
 

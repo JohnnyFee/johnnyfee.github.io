@@ -116,4 +116,6 @@ tags: [tool, tc]
 - Alt+ENTER   显示选定文件(夹)的属性 (调用 WINDOWS 的属性对话框)
 - Shift+Alt+ENTER 同时计算当前文件夹下，所有子文件夹 (含其下层)的大小。适用于“详细资料”视图，并于原来显示 <DIR> 处显示文件夹的大小。
 
+## Plugin
 
+- [Listary download page - Listary Freeware and Listary Pro](http://www.listary.com/download)

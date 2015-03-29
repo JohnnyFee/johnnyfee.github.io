@@ -2,7 +2,7 @@ layout: post
 title: "Angular Services"
 category : Angular
 tags : [angular, tutorial]
---- 
+---
 
 本文基于 [Mastering Web Application Development with AngularJS](http://www.salttiger.com/mastering-web-application-development-angularjs/) 的读书笔记。
 
@@ -267,7 +267,7 @@ angular.module('cars', [])
 总结一下服务中创建对象的不同方法和这些方法对应模块的生命周期的阶段：
 
 &nbsp; | 注册的内容 | 配置阶段可注入 | 运行阶段可注入
----------- | ------------------ | --------- | --------
+----------| ------------------| ---------| --------
 Constant   | Constant's value  | Yes  | Yes
 Variable   | Variable's value   | -  | Yes
 Service  | A new object created by a constructor function      | -  | Yes

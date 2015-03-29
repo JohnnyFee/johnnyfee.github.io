@@ -185,7 +185,7 @@ When you define an SVG animation you specify when the animation start time and d
 Inside these attributes you can specify a number followed by a time unit, as done in the examples in this text. For instance `5s` means 5 seconds. Here is a list of the time units you can use:
 
 Time Unit | Description 
---------- | ------------
+---------| ------------
 `h`       | Hours       
 `min`     | Minutes     
 `s`       | Seconds     

@@ -2,7 +2,7 @@ layout: post
 title: "JavaScript Binary"
 category: JavaScript
 tags: [javascript, data]
---- 
+---
 
 原文：<http://noyesno.net/page/javascript/binary>
 

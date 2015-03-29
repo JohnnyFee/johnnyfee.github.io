@@ -3,7 +3,7 @@ title: "Spring Roo Entity"
 description: ""
 category: Spring
 tags: [spring,roo,entity]
---- 
+---
 ###创建Entity
 
 注意：创建Entity前需要使用jpa setup命令创建数据库，具体请参考数据库一章。

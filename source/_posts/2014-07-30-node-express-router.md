@@ -2,7 +2,7 @@ layout: post
 title: "Learn to Use the New Router in ExpressJS 4.0"
 category: Nodew
 tags: [node, router, express]
---- 
+---
 
 原文：<http://scotch.io/tutorials/javascript/learn-to-use-the-new-router-in-expressjs-4>
 

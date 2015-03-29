@@ -3,7 +3,7 @@ title: "Console object you didn’t know"
 description: ""
 category: JavaScript
 tags: [javascript]
---- 
+---
 
 > origin: [5 functions of the Console object you didn’t know - Blog - Shelly Cloud](https://shellycloud.com/blog/2014/11/five-functions-of-the-console-object-you-didnt-know)
 

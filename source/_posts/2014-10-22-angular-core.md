@@ -2,7 +2,7 @@ layout: post
 title: "Angular Core"
 category : Angular
 tags : [angular, tutorial]
---- 
+---
 
 This post is meant for beginners, for those that just started to learn Angular and want to know how data-binding works. If you already know how to use Angular properly, I highly suggest you go to the source code instead.
 

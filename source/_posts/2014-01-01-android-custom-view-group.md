@@ -2,7 +2,7 @@ layout: post
 title: "自定义ViewGroup"
 category: Android
 tags: [android,hack]
---- 
+---
 ##目标
 
 实现类似这样的层叠布局：

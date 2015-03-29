@@ -2,7 +2,7 @@ layout: post
 title: "SVG Stroke"
 category: SVG
 tags: [css, svg]
---- 
+---
 
 > origin: <http://tutorials.jenkov.com/svg/stroke.html>
 

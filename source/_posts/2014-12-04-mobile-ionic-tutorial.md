@@ -2,7 +2,7 @@ layout: post
 title: "Ionic Tutorial"
 category: Mobile
 tags: [mobile]
---- 
+---
 
 [Ionic](http://ionicframework.com/) 是一个使用 HTML5 进行移动混合应用开发的开源框架，它专注于视觉，并集成 Cordova、Angular、Node、Grunt、Bowser、Sass 等，形成混合开发的解决方案。Ionic 的跨平台解决方案使用的是 Cordova。
 

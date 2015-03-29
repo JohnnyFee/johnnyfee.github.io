@@ -2,7 +2,7 @@ layout: post
 title: "Export This: Interface Design Patterns for Node.js Modules"
 category: Node
 tags: [node, module]
---- 
+---
 
 原文： <http://bites.goodeggs.com/posts/export-this>
 

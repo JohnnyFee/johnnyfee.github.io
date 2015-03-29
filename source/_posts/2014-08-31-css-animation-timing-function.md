@@ -2,7 +2,7 @@ layout: post
 title: "Understanding CSS Timing Functions"
 category: CSS
 tags: [css, animation]
---- 
+---
 
 > orign: <http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/>
 
@@ -401,7 +401,7 @@ We’ve established that you can’t use a CSS timing function unless the browse
 #### Support for CSS Transitions
 
 col 1             | col 2                | col 3                 
------------------ | -------------------- | ----------------------
+-----------------| --------------------| ----------------------
 **Browser**       | **Prefixed support** | **Unprefixed support**
 Internet Explorer | N/A                  | 10+                   
 Firefox           | 4+ (`-moz-`)         | 16+                   
@@ -414,7 +414,7 @@ Although all current browser versions have dropped the prefix for transitions (w
 #### Support for CSS Animation
 
 Browser       | Prefixed support  | Unprefixed support
------------------ | ------------- | -------                          
+-----------------| -------------| -------
 Internet Explorer | N/A                                        | 10+                                             
 Firefox           | 5+ (`-moz-`)                               | 16+                                             
 Chrome            | 4+ (`-webkit-`)                            | Not supported                                   
@@ -428,7 +428,7 @@ Evidently, browser support for CSS-based animation is in excellent shape, but su
 #### Support for CSS Timing Functions
 
 Browser   | Basic support | cubic-bezier() outside of 0-1 range | steps()
------------------ | --------------- | --------- | -----------
+-----------------| ---------------| ---------| -----------
 Internet Explorer | 10+               | 10+                                     | 10+        
 Firefox           | 4+                | 4+                                      | 4+         
 Chrome            | 4+                | 16+                                     | 8+         

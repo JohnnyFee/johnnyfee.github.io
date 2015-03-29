@@ -3,7 +3,7 @@ title: "数据格式转化"
 description: ""
 category: Financial
 tags: [data, format]
---- 
+---
 ###十进制字符串"1942"
 
 - 用BCD表示

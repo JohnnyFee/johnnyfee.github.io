@@ -2,7 +2,7 @@ layout: post
 title: "微信开放平台开发"
 category: 微信
 tags: [微信]
---- 
+---
 
 - [微信营销,微信公众平台开发,微信运营,社会化媒体营销整体服务平台-微触角—微信营销,无触不在](http://www.weifeeler.com/)
 

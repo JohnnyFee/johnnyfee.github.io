@@ -2,7 +2,7 @@ layout: post
 title: "Angular Form"
 category : Angular
 tags : [angular, tutorial]
---- 
+---
 
 本文基于 [Mastering Web Application Development with AngularJS](http://www.salttiger.com/mastering-web-application-development-angularjs/) 的读书笔记。
 
@@ -302,7 +302,7 @@ myModule.directive('validateEquals', function() {
 `ngModelController`  的相关属性和方法：
 
 Name                                        | Description
-------------------------------------------- | -----------
+-------------------------------------------| -----------
 `$parsers`                                  | 当输入元素的值发生变化时，函数管道将以此运行。
 `$formatters`                               | 当模型的值发生变化时，函数管道将依次运行。
 `$setValidity(validationErrorKey, isValid)` | A function called to set whether the model is valid for a given kind of validation error.       

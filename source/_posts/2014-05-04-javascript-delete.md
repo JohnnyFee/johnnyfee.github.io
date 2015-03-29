@@ -3,7 +3,7 @@ title: "JavaScript delete 操作符"
 description: ""
 category: JavaScript
 tags: [javascript, operator]
---- 
+---
 
 ## 理论
 

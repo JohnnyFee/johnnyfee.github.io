@@ -2,7 +2,7 @@ layout: post
 title: "Node Global Objects"
 category: Node
 tags: [node, syntax]
---- 
+---
 
 ## global
 

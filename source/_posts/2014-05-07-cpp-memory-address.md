@@ -2,7 +2,7 @@ layout: post
 title: "C语言内存地址基础"
 category: C++
 tags: [c++, syntax]
---- 
+---
 
 > 原文：<http://blog.jobbole.com/44845/>
 

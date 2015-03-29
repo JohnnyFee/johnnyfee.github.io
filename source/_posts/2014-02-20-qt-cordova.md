@@ -3,7 +3,7 @@ title: "Qt Cordova"
 description: ""
 category: Qt
 tags: [qt, cordova]
---- 
+---
 
 ## 编译cordova-qt
 

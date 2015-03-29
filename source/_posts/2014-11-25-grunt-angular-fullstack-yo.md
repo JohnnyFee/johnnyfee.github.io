@@ -2,7 +2,7 @@ layout: post
 title: "使用 Yoeman generator-angular-fullstack 生成工程的 Gruntfile 源码分析"
 category: Grunt
 tags: [angular, fullstack, yo, grunt]
---- 
+---
 
 本文基于 [使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析](http://inching.org/2014/11/06/grunt-angular-yo/) 中的一些内容，与其中重复的内容不再描述。
 

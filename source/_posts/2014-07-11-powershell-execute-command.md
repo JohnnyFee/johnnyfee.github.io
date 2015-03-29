@@ -2,7 +2,7 @@ layout: post
 title: "PowerShell: Running Executables"
 category: PowerShell
 tags: [powershell]
---- 
+---
 
 原文：<http://social.technet.microsoft.com/wiki/contents/articles/7703.powershell-running-executables.aspx>
 

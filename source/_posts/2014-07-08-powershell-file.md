@@ -2,7 +2,7 @@ layout: post
 title: "Powershell File"
 category: PowerShell
 tags: [powershell, file]
---- 
+---
 
 ## 概述
 
@@ -391,7 +391,7 @@ Get-Content 逐行读取文本的内容，然后把文本的每一行传递给�
 输出结果：
 
     Name Value
-    ---- -----
+    ---------
     6      * Added update {17A5424C-4C70-4BB4-8F83-66DABE5E7CA2}.201 to search result
     5    Agent
     4    19a4
@@ -453,7 +453,7 @@ $matches返回了每个圆括号中定义的子正则表达式的匹配项，这
     $result
 
     Name        Value
-    ----        -----
+    ---------
     SMS     0
     Defender    1
     AutoUpdate  8
@@ -562,8 +562,8 @@ Dir |Where-Object{$_.Name-contains"-x86"} |ForEach-Object{Rename-Item$_.Name$_.N
     Directory: Microsoft.PowerShell.Core\FileSystem::C:\Users\Tobias Weltner\Sources\docs
 
     Mode LastWriteTime Length Name
-    ---- ------------- ------ ----
-    d---- 13.10.2007 13:31 testdirectory
+    ---------------------------
+    d----13.10.2007 13:31 testdirectory
 
     # 在目录中新建一个文件
     Set-Content .\testdirectory\testfile.txt "Hello"

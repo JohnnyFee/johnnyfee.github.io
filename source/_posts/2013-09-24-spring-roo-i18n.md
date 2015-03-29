@@ -3,7 +3,7 @@ title: "Spring Roo 国际化"
 description: ""
 category: Spring
 tags: [spring,roo,i18n]
---- 
+---
 ###国际化消息
 WEB-INF/i18n目录下的`messages.properties`存放的是Roo Web框架级别的元素标签，如保存按钮的标签。application.properties存放项目级别的标签以及导航标签，如application_name，the label to use for each field。
 

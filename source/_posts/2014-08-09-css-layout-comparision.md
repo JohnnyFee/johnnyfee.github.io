@@ -2,7 +2,7 @@ layout: post
 title: "Pros And Cons Of 6 CSS Layout Patterns"
 category: Css
 tags: [css, layout]
---- 
+---
 
 > source posts: 
 > 

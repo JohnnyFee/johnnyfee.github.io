@@ -2,7 +2,7 @@ layout: post
 title: "Using AngularJS Promises"
 category : Angular
 tags : [angular, promise]
---- 
+---
 
 >origin: [Using AngularJS Promises - Liam Kaufman](http://liamkaufman.com/blog/2013/09/09/using-angularjs-promises/)
 

@@ -2,7 +2,7 @@ layout: post
 title: "Windows Bat"
 category: OS
 tags: [ps]
---- 
+---
 ## 概述
 
 1、.bat: 这是微软的第一个批处理文件的后缀名，在几乎所有的Windows 操作系统内都能运行。

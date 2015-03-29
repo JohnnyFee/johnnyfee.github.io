@@ -3,7 +3,7 @@ title: "ExtJS 设计规范"
 category : ExtJS
 tagline: "设计规范和优化"
 tags : [extjs, bestpractice]
---- 
+---
 ## 设计
 ### 模版方法
 

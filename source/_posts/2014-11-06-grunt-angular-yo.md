@@ -2,7 +2,7 @@ layout: post
 title: "使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析"
 category: Grunt
 tags: [angular, yo, grunt]
---- 
+---
 
 [yeoman/generator-angular](https://github.com/yeoman/generator-angular) 脚手架提供了 27 个任务配置和 4 个自定义任务。这四个自定义任务分贝为:
 

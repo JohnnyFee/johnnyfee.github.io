@@ -2,7 +2,7 @@ layout: post
 title: "设备像素比 devicePixelRatio 简单介绍"
 category: Mobile
 tags: [mobile]
---- 
+---
 
 原文：<http://www.zhangxinxu.com/wordpress/?p=2568>
 

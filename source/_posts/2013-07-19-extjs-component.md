@@ -3,7 +3,7 @@ title: "ExtJS Component"
 category : ExtJS
 tagline: "表单、表格等常用控件"
 tags : [extjs, view]
---- 
+---
 ##	Component
 
 ### EXTJS控件层次

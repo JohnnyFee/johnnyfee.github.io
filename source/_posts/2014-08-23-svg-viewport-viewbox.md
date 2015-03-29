@@ -32,7 +32,7 @@ If you prefer to use different units than pixels, you can. Here is a list of the
 units you can use with the `<svg>` element:
 
 Unit | Description                                               
----- | ----------------------------------------------------------
+----| ----------------------------------------------------------
 `em` | The default font size - usually the height of a character.
 `ex` | The height of the character `x`                           
 `px` | Pixels                                                    
@@ -109,7 +109,7 @@ The `preserveAspectRatio` attribute takes two values separated by a space. The f
 The first value specifying the alignment consists of two parts. The first part specifies the x-alignment and the second part specifies the y-alignment. Here is a list of the values for x- and y-alignment:
 
 Value | Description
------ | ------
+-----| ------
 xMin  | Align minimum x of view box with the left edge of the viewport.
 xMid  | Align midpoint on the x-axis of view box with the center of the viewport on the x-axis.      
 xMax  | Align maximum x of view box with the right edge of the viewport.
@@ -127,7 +127,7 @@ These two examples aligns the view box with the viewport differently. The first 
 The second part of the `preserveAspectRatio` attribute value can take three different values:
 
 Value   | Description                     
-------- | ------------
+-------| ------------
 `meet`  | Preserves aspect ratio and scales view box to fit within viewport.
 `slice` | Preserves aspect ratio and slices off any part of the image that does not fit inside the viewport.              
 `none`  | Does not preserve aspect ratio. Scales image to fit view box fully into viewport. Proportions will be distorted.

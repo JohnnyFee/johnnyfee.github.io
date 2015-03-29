@@ -2,7 +2,7 @@ layout: post
 title: "Total Command Tutorial"
 category: Tool
 tags: [tool, tc]
---- 
+---
 
 推荐的原因有这样几个：
 

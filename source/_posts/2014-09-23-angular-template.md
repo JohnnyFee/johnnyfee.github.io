@@ -2,7 +2,7 @@ layout: post
 title: "Angular Template Loading"
 category : Angular
 tags : [angular, tutorial]
---- 
+---
 
 ## 模板
 
@@ -73,7 +73,7 @@ myApp.run(function($templateCache) {
 `$templateCache = $cacheFactory('template');`
 
 方法        | 功能                    
---------- | ----------------------
+---------| ----------------------
 `put`       | 向内存写入模板内容             
 `get`       | 从内存获取模板内容             
 `remove`    | 传入key值，删除对应模板内容       

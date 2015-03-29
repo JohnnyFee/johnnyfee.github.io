@@ -2,7 +2,7 @@ layout: post
 title: "JavaScript 核心之this"
 category: JavaScript
 tags: [javascript]
---- 
+---
 本文由 [伯乐在线](http://blog.jobbole.com/) - [kmokidd](http://blog.jobbole.com/author/kmokidd/) 翻译自 [2ality](http://www.2ality.com/2014/05/this.html)。
   
 在JavaScript中，`this`的概念比较复杂。除了在面向对象编程中，`this`还是随处可用的。这篇文章介绍了`this`的工作原理，它会造成什么样的问题以及`this`的相关例子。 要根据`this`所在的位置来理解它，情况大概可以分为3种：

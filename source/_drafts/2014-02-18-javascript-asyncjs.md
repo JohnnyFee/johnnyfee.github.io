@@ -3,7 +3,7 @@ title: "JavaScript Async.js"
 description: ""
 category: JavaScript
 tags: [javascript]
---- 
+---
 
 ## Async programming
 
@@ -26,13 +26,13 @@ We can skip to the final function by passing 'error' = true like this:
 
 ```js
 async.waterfall([function (callback) {
-	callback(null); // <--- go to next fn
+	callback(null); // <---go to next fn
 },
 function (callback) {
-	callback(true); // <--- skip to the last fn
+	callback(true); // <---skip to the last fn
 },
 function (callback) {
-	callback(null); // <--- this fn will not be called
+	callback(null); // <---this fn will not be called
 }
 ], callback);
 ```

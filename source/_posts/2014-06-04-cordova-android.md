@@ -2,7 +2,7 @@ layout: post
 title: "Cordova For Android"
 category: Cordova
 tags: [phonegap, cordova, android]
---- 
+---
 
 ## Setup
 

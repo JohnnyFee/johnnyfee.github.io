@@ -2,7 +2,7 @@ layout: post
 title: "PhotoShop"
 category: PhotoShop
 tags: [ps]
---- 
+---
 
 ## Tutorial
 

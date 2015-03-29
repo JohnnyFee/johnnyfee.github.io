@@ -2,7 +2,7 @@ layout: post
 title: "CSS 动画简介"
 category: CSS
 tags: [css, animation]
---- 
+---
 
 原文：<http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html>
 
@@ -213,7 +213,7 @@ div:hover {
 ```
 
 Property            |可选值   | Description                                
-------------------- | -----|-------
+-------------------| -----|-------
 timing-function     | <li>ease <li>ease-out <li>ease-in <li>ease-in-out <li>linear <li>cubic-bezier(x1, y1, x2, y2)| 设置动画速度， 即通过建立加速度曲线，设置动画在关键帧之间是如何变化。
 duration & delay    | Xs or Xms | 设置延时，即从元素加载完成之后到动画序列开始执行的这段时间。
 duration-count      | X   

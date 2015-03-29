@@ -2,7 +2,7 @@ layout: post
 title: "CSS vs Tables: The Debate That Won’t Die"
 category: Css
 tags: [css]
---- 
+---
 
 > source post: [CSS vs Tables: The Debate That Won't Die - Vanseo Design](http://www.vanseodesign.com/css/css-divs-vs-tables/)
 

@@ -2,7 +2,7 @@ layout: post
 title: "Javascript 异步加载"
 category: JavaScript
 tags: [javascript, loader]
---- 
+---
 
 原文： <http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html>
 

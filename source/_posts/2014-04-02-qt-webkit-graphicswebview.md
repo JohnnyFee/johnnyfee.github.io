@@ -3,7 +3,7 @@ title: "Qt QGraphicsWebView "
 description: ""
 category: Qt
 tags: [qt, webkit]
---- 
+---
 
 A lot of effort has been put into [QtWebKit](http://qt-project.org/doc/qt-4.8/qtwebkit.html) to make it attractive for use on mobile devices.
 

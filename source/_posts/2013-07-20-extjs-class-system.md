@@ -3,7 +3,7 @@ title: "ExtJS Class System"
 category : ExtJS
 tagline: "类系统"
 tags : [extjs, class]
---- 
+---
 ## 命名规则
 
 [Class System](http://docs.sencha.com/extjs/4.0.7/#!/guide/class_system)

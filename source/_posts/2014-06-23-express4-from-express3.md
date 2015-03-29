@@ -2,7 +2,7 @@ layout: post
 title: "express4.x新特性以及如何从3.x升级到4.x"
 category: Node
 tags: [node, express]
---- 
+---
 
 > 原文：[ExpressJS 4.0: New Features and Upgrading from 3.0 ♥ Scotch](http://scotch.io/bar-talk/expressjs-4-0-new-features-and-upgrading-from-3-0)
 > 翻译: [express4.x新特性以及如何从3.x升级到4.x](http://jser.me/2014/03/18/express4.x%E6%96%B0%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E4%BB%8E3.x%E5%8D%87%E7%BA%A7%E5%88%B04.x.html)
@@ -42,7 +42,7 @@ app.use(methodOverride());
 下面是3.x的内置模块和4.x模块的对照表，你可以发现，模块名有点混乱，有的是把驼峰改成了连字符，有的是反过来的，有的前缀express，有的是没有，真不知道怎么命名的，这个应该好好跟grunt或者gulp学习一下。
 
 3.x             | 4.x                                                            
---------------- | ---------------
+---------------| ---------------
 bodyParser      | [body-parser](https://github.com/expressjs/body-parser)        
 compress        | [compression](https://github.com/expressjs/compression)        
 cookieSession   | [cookie-session](https://github.com/expressjs/cookie-session)  

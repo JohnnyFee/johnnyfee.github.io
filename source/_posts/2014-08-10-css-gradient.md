@@ -2,7 +2,7 @@ layout: post
 title: "How To Work With Linear, Radial, And Repeating CSS Gradients"
 category: Css
 tags: [css, layout]
---- 
+---
 
 Just as you can declare the [background](http://css-tricks.com/almanac/properties/b/background/) of an element to be a solid color in CSS, you can also declare that background to be a gradient. Using gradients declared in CSS, rather using an actual image file, is better for control and performance.
 

@@ -2,7 +2,7 @@ layout: post
 title: "两个 viewport 的故事（第一部分）"
 category: CSS
 tags: [web, css]
---- 
+---
 
 原文：<http://www.quirksmode.org/mobile/viewports.html>
 翻译：<http://weizhifeng.net/viewports.html>

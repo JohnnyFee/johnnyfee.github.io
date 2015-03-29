@@ -3,7 +3,7 @@ title: "Spring Roo Web"
 description: ""
 category: Spring
 tags: [spring,roo,web]
---- 
+---
 一个Spring MVC项目至少分三个层，用户界面、服务层、持久化层。
 ###Srping MVC
 

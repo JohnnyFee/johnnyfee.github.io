@@ -2,7 +2,7 @@ layout: post
 title: "CSS Normalize"
 category: CSS
 tags: [css, normalize]
---- 
+---
 
 ## Difference between Normalize.css and Reset CSS?
 

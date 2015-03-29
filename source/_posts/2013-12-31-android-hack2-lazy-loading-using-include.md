@@ -2,7 +2,7 @@ layout: post
 title: "Android绝招二——延迟加载与避免重复"
 category: Android
 tags: [android,hack]
---- 
+---
 ##目标
 
 - 在xml布局文件中使用`include`标签来避免重复代码。

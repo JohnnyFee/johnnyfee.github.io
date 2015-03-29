@@ -2,7 +2,7 @@ layout: post
 title: "Web Front Tutorial"
 category: Web
 tags: [web, tutorial]
---- 
+---
 
 ## Framework
 

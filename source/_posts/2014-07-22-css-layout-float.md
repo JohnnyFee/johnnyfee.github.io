@@ -2,7 +2,7 @@ layout: post
 title: "CSS Layout —— Float"
 category: CSS
 tags: [web, css, layout]
---- 
+---
 ## float
 
 Floated elements _remain a part of the flow of the web page_.  There are four valid values for the float property. The values `left` and `right` float elements those directions respectively. The value `none` (default) tells the element not to float either direction and `inherit` which will assume the float value from that elements parent element.

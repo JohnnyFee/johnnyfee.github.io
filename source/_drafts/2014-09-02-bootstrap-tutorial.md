@@ -531,7 +531,7 @@ Specify two image paths and the @1x image dimensions, and Bootstrap will provide
 通过单独或联合使用以下列出的类，可以针对不同屏幕尺寸隐藏或显示页面内容。
 
 &nbsp;|超小屏幕 <small>手机 (&lt;768px)</small> |小屏幕 <small>平板 (≥768px)</small> |中等屏幕 <small>桌面 (≥992px)</small> |大屏幕 <small>桌面 (≥1200px)</small>
---------------- | ---| ---- | ---- | ---
+---------------| ---| ----| ----| ---
 `.visible-xs-*` | **可见** | 隐藏| 隐藏 | 隐藏
 `.visible-sm-*` | 隐藏 | **可见**| 隐藏 | 隐藏
 `.visible-md-*` | 隐藏 | 隐藏| **可见** | 隐藏
@@ -544,7 +544,7 @@ Specify two image paths and the @1x image dimensions, and Bootstrap will provide
 从 v3.2.0 版本起，形如 `.visible-*-*` 的类针对每种屏幕大小都有了三种变体，每个针对 CSS 中不同的 `display` 属性，列表如下：
 
 类组                        | CSS `display`           
-------------------------- | ------------------------
+-------------------------| ------------------------
 `.visible-*-block`        | `display: block;`       
 `.visible-*-inline`       | `display: inline;`      
 `.visible-*-inline-block` | `display: inline-block;`
@@ -778,7 +778,7 @@ Specify two image paths and the @1x image dimensions, and Bootstrap will provide
 和常规的响应式类一样，使用下面的类可以针对打印机隐藏或显示某些内容。
 
 class | 浏览器 | 打印机
-----| --- | ---
+----| ---| ---
 <li>`.visible-print-block`<li>`.visible-print-inline`<li>`.visible-print-inline-block` | 隐藏  | 可见 
 `.hidden-print`   | 可见  | 隐藏 
 

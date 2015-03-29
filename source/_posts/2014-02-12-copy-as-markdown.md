@@ -2,7 +2,7 @@ layout: post
 title: "Chrome 插件: Copy As Markdown"
 category: Tool
 tags: [markdown]
---- 
+---
 This is a Chrome Extension used to copy the element in current page as markdown format.
 
 <!--more-->

@@ -2,7 +2,7 @@ layout: post
 title: "Node Thread"
 category: Node
 tags: [node, thread]
---- 
+---
 
 - [Node.js: managing child processes - Tech.pro](http://tech.pro/tutorial/2074/nodejs-managing-child-processes)
 

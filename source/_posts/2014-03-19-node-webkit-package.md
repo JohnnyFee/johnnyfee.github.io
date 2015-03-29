@@ -2,7 +2,7 @@ layout: post
 title: "使用 Node-Webkit 打包 Web 应用"
 category: Node
 tags: [node, webkit]
---- 
+---
 本教程仅针对Windows，其他平台请直接参考[rogerwang/node-webkit](https://github.com/rogerwang/node-webkit)。
 
 ## 下载

@@ -3,7 +3,7 @@ title: "Spring Roo Database"
 description: ""
 category: Spring
 tags: [spring,roo,database]
---- 
+---
 当前实现JPA持久化接口的框架主要有Hibernate、EclipseLink,、Open-JPA。HSQLDB为独立运行的数据库，占用空间很小，支持JDBC接口，可以用来做小型项目。
 
 ### 建立jpa

@@ -3,7 +3,7 @@ title: "JavaScript 获取选取范围"
 description: ""
 category: JavaScript
 tags: [javascript]
---- 
+---
 ##概述
 
 获取选中的功能有如下应用场景：

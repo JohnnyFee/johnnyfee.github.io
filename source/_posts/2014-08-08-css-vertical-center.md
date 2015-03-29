@@ -2,7 +2,7 @@ layout: post
 title: "Vertical Centering With CSS"
 category: Css
 tags: [css]
---- 
+---
 
 Let’s start by first talking about something that doesn’t work as many expect. Understanding why vertical-align doesn’t always work will help us better understand vertical centering in general.
 
@@ -337,7 +337,7 @@ Unlike some of the existing vertical alignment techniques, with Flexbox the pres
 Absolute Centering isn't the only option out there. Several unique methods exist for vertical centering, and each has their advantages. Which technique you choose mainly boils down to which browsers you support and what your existing markup looks like, but this comparison table can help make the right choice to match the features you need.
 
 Technique| Browser Support     | Responsive | Overflow| `resize:both`| Variable Height | Major Caveats
-------- | ------- | ---------- | ------ | ------ | ---------- | ----
+-------| -------| ----------| ------| ------| ----------| ----
 [Absolute Centering](http://localhost:51004/view/28#Overview)       | Modern & IE8+       | Yes        | Scroll, can overflow container | Yes                               | Yes*            | [Variable Height](http://localhost:51004/view/28#Height) not perfect cross-browser
 [Negative Margins](http://localhost:51004/view/28#Negative-Margins) | All                 | No         | Scroll                         | Resizes but doesn't stay centered | No              | Not responsive, margins must be calculated manually                               
 [Transforms](http://localhost:51004/view/28#Transforms)             | Modern & IE9+       | Yes        | Scroll, can overflow container | Yes                               | Yes             | Blurry rendering                                                                  

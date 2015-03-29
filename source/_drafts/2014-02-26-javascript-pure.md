@@ -2,7 +2,7 @@ layout: post
 title: "Jquery"
 category: JavaScript
 tags: [javascript]
---- 
+---
 为了效率，我们不得不尽可能地减少代码行数，有的时候得避免使用大型框架，如jQuery。
 
 ## 使用原生代码

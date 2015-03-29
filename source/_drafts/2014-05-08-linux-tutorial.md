@@ -2,7 +2,7 @@ layout: post
 title: "Linux Tutorial"
 category: Linux
 tags: [linux, tutorial]
---- 
+---
 
 ## Tutorial
 

@@ -2,7 +2,7 @@ layout: post
 title: "Android Hybrid Develpment Tutorial"
 category: Android
 tags: [mobile, android, hybrid]
---- 
+---
 
 See [Building Hybrid Android Apps with Java and JavaScript](http://www.salttiger.com/building-hybrid-android-apps-with-java-and-javascript/)
 

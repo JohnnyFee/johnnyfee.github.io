@@ -2,7 +2,7 @@ layout: post
 title: "Css Border"
 category: CSS
 tags: [web, css]
---- 
+---
 
 ## border
 
@@ -38,7 +38,7 @@ tags: [web, css]
 所有边框样式如表：
 
 style    | demo    | description                   
--------- | --------------- | -----
+--------| ---------------| -----
 `none`   | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: none; background-color: palegreen;"></div>   | Like for the `hidden` keyword, displays no border. In that case, except if a background image is set, the calculated values of [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) will be `0`, even if specified otherwise through the property. In case of table cell and border collapsing, the `none` value has the lowest priority: it means that if any other conflicting border is set, it will be displayed.  
 `hidden` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: hidden; background-color: palegreen;"></div> | Like for the `none` keyword, displays no border. In that case, except if a background image is set, the calculated values of [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) will be `0`, even if specified otherwise through the property. In case of table cell and border collapsing, the `hidden` value has the highest priority: it means that if any other conflicting border is set, it won't be displayed.
 `dotted` | <div style="margin: 0.5em; width: 3em; height: 3em; border-width: 3px; border-style: dotted; background-color: palegreen;"></div> | Displays a series of rounded dots. The spacing of the dots are not defined by the specification and are implementation-specific. The radius of the dots is half the calculated [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width).

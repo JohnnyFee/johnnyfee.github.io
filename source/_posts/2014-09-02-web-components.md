@@ -2,7 +2,7 @@ layout: post
 title: "A Guide to Web Components"
 category: Web
 tags: [web, component]
---- 
+---
 
 ## Library
 

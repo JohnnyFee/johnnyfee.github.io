@@ -2,7 +2,7 @@ layout: post
 title: "jQuery Defered"
 category: JavaScript
 tags: [javascript]
---- 
+---
 
 ## Deferred Object Pattern
 

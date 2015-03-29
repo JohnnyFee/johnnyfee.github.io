@@ -2,7 +2,7 @@ layout: post
 title: "JavaScript OO Tutorial"
 category: JavaScript
 tags: [javascript, oo]
---- 
+---
 
 ## 私有化
 

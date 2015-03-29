@@ -2,7 +2,7 @@ layout: post
 title: "浏览器的工作原理：新式网络浏览器幕后揭秘"
 category: Browser
 tags: [browser,kernal]
---- 
+---
 
 原文：<http://ux.sohu.com/topics/50972d9ae7de3e752e0081ff>
 

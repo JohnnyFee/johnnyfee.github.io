@@ -2,7 +2,7 @@ layout: post
 title: "CSS Layout —— Display"
 category: CSS
 tags: [web, css, layout]
---- 
+---
 
 ## display
 

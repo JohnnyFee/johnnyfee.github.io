@@ -2,7 +2,7 @@ layout: post
 title: "Angular RequireJS"
 category : Angular
 tags : [angular, tutorial]
---- 
+---
 
 本书为读 [AngularJS](http://www.salttiger.com/angularjs/) 的读书笔记，该书的例子在 [shyamseshadri/angularjs-book](https://github.com/shyamseshadri/angularjs-book)。
 

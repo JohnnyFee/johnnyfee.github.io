@@ -2,7 +2,7 @@ layout: post
 title: "Android Adb 常用命令"
 category: Android
 tags: [android, adb]
---- 
+---
 原文：[Handy adb commands for Android - Growing with the Web](http://www.growingwiththeweb.com/2014/01/handy-adb-commands-for-android.html)
 
 ## Adb

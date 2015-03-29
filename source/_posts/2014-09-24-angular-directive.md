@@ -2,7 +2,7 @@ layout: post
 title: "Angular Directive"
 category : Angular
 tags : [angular, tutorial]
---- 
+---
 
 本文为读 [AngularJS](http://www.salttiger.com/angularjs/) 和  [Mastering Web Application Development with AngularJS](http://www.salttiger.com/mastering-web-application-development-angularjs/) 的读书笔记。
 
@@ -66,7 +66,7 @@ CSS 类 | 'C' | `<input type="text" class="data-picker"/>`
 ### 属性列表
 
 属性         | 描述 
-------------- | --------
+-------------| --------
 `name`        | The name of the directive.
 `restrict`    | In what kind of mark-up this directive can appear.
 `priority`    | Hint to the compiler of the order that directives should be executed.  
@@ -896,7 +896,7 @@ Sometimes there is a third party widget that is complex enough and it is not wor
 Here we will look at making a `datepicker` input directive that wraps the jQueryUI `datepicker` widget. The widget exposes the following API that we will use to integrate into AngularJS, where element is the jQuery wrapper around the element on which the widget is to be attached.
 
 Function   | Description
-------------------------------------- | --------------
+-------------------------------------| --------------
 `element.datepicker(options)`         | Create a new widget using the given options and attach it to the element.
 `element.datepicker("setDate", date)` | Set the date on the widget.                                              
 `element.datepicker("getDate")`       | Get the date on the widget.                                              

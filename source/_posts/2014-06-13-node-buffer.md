@@ -2,7 +2,7 @@ layout: post
 title: "Node Buffer"
 category: Node
 tags: [node,io,buffer]
---- 
+---
 
 > 原文：<http://docs.nodejitsu.com/articles/advanced/buffers/how-to-use-buffers>
 

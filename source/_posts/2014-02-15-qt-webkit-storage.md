@@ -2,7 +2,7 @@ layout: post
 title: "Html5 Storage"
 category: Html5
 tags: [html5, storage]
---- 
+---
 
 ## Client Storage
 

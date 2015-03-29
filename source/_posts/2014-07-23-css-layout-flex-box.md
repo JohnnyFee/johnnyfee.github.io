@@ -2,7 +2,7 @@ layout: post
 title: "CSS 弹性盒布局"
 category: CSS
 tags: [web, css, layout]
---- 
+---
 
 CSS3 弹性盒，或者简称弹性盒，是一种当页面需要适应不同的屏幕大小以及设备类型时确保元素拥有恰当的行为的[布局方式](https://developer.mozilla.org/zh-CN/docs/CSS/Layout_mode "/zh-CN/docs/CSS/Layout_mode")。对于很多应用来讲，弹性盒在两个方面相对于盒模型进行了提升，它既不使用浮动，也不会导致弹性盒容器的外边距与其内容的外边距之间发生塌陷。
 

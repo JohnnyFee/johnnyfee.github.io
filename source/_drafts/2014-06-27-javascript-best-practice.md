@@ -2,7 +2,7 @@ layout: post
 title: "JavaScript Best Practice"
 category: JavaScript
 tags: [javascript, best practice]
---- 
+---
 
 > **本文由 [伯乐在线](http://blog.jobbole.com/) - 翻译自 [net.tutsplus](http://net.tutsplus.com/tutorials/JavaScript-ajax/24-JavaScript-best-practices-for-beginners/)。
 

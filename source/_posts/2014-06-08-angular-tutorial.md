@@ -2,7 +2,7 @@ layout: post
 title: "Angular Tutorial"
 category : Angular
 tags : [angular, tutorial]
---- 
+---
 
 本文为读 [AngularJS](http://www.salttiger.com/angularjs/) 和  [Mastering Web Application Development with AngularJS](http://www.salttiger.com/mastering-web-application-development-angularjs/) 的读书笔记。
 

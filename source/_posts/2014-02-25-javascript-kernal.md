@@ -2,7 +2,7 @@ layout: post
 title: "JavaScript 核心"
 category: JavaScript
 tags: [javascript]
---- 
+---
 
 >原文：<http://dmitrysoshnikov.com/ecmascript/javascript-the-core/>作者：Dmitry Soshnikov
 

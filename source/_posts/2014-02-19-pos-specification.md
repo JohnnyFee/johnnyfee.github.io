@@ -2,7 +2,7 @@ layout: post
 title: "POS Specification"
 category: JavaScript
 tags: [javascript]
---- 
+---
 ##[ARTS](http://www.nrf-arts.org/ "Learn more about ARTS.")
 
 The Association for Retail Technology Standards (ARTS) of the National Retail Federation is an international membership organization dedicated to reducing the costs of technology through standards. Since 1993, ARTS has been delivering application standards exclusively to the retail industry. ARTS has four standards: 

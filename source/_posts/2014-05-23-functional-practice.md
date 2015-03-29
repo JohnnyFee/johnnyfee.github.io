@@ -2,7 +2,7 @@ layout: post
 title: "函数式编程初探"
 category: Zen
 tags: [node, module]
---- 
+---
 
 原文： http://www.ruanyifeng.com/blog/2012/04/functional_programming.html
 

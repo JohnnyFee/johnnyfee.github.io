@@ -2,7 +2,7 @@ layout: post
 title: "Css Padding"
 category: CSS
 tags: [web, css]
---- 
+---
 
 The `padding` property in CSS defines the innermost portion of the [box model](http://css-tricks.com/the-css-box-model/), creating space around an element's content, inside of any defined margins and/or borders.
 

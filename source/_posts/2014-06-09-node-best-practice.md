@@ -2,7 +2,7 @@ layout: post
 title: "Node 最佳实践"
 category: Node
 tags: [node]
---- 
+---
 
 原文： <http://webapplog.com/seven-things-you-should-stop-doing-with-node-js/
 

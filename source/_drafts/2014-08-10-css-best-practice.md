@@ -2,7 +2,7 @@ layout: post
 title: "DRY CSS: Don’t Repeat Your CSS"
 category: Css
 tags: [css, layout]
---- 
+---
 
 ## Tutorial
 

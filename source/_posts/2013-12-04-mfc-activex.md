@@ -3,7 +3,7 @@ title: "MFC ActiveX"
 description: ""
 category: ActiveX
 tags: [activex, c++]
---- 
+---
 
 ##Tutorial
 

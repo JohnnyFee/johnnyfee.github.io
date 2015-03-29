@@ -3,7 +3,7 @@ title: "Spring SpEl"
 tagline: "Spring Expression Language"
 category: Spring
 tags: [spring,spel]
---- 
+---
 SpEl是Spring Expression Language的缩写，可以为bean的属性装配运行时的值。但是有没有IDE的只能提示，尽量不要使用太复杂的功能。
 
 ###基本类型

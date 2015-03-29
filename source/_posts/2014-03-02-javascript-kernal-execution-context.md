@@ -2,7 +2,7 @@ layout: post
 title: "执行上下文（Execution Context）"
 category: JavaScript
 tags: [javascript, kernel]
---- 
+---
 > 译文原文：[[JavaScript]ECMA-262-3 深入解析.第一章.执行上下文 - Justin - 博客园](http://www.cnblogs.com/justinw/archive/2010/04/16/1713086.html)
 > 
 > 原文：[ECMA-262 » ECMA-262-3 in detail. Chapter 1. Execution Contexts.](http://dmitrysoshnikov.com/ecmascript/chapter-1-execution-contexts/)

@@ -2,7 +2,7 @@ layout: post
 title: "JavaScript 继承"
 category: JavaScript
 tags: [javascript, oo]
---- 
+---
 
 > 这篇文章是根据 《JavaScript 模式》中关于继承的章节整理完成。整理之后脉络比较清晰，便于比较各种继承方式。
 

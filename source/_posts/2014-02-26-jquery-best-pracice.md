@@ -2,7 +2,7 @@ layout: post
 title: "编写更好的jQuery代码的建议"
 category: JavaScript
 tags: [javascript]
---- 
+---
 >**本文由 [yanhaijing](http://blog.jobbole.com/author/yanhaijing/) 翻译自 [Mathew Carella](http://flippinawesome.org/2013/11/25/writing-better-jquery-code/)**
 
 ##参考

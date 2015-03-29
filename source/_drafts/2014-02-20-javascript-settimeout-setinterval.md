@@ -2,7 +2,7 @@ layout: post
 title: "JavaScript SetTimeout和SetInterval"
 category: JavaScript
 tags: [javascript]
---- 
+---
 ##setTimeout与setInterval的区别
 
     setTimeout(function(){

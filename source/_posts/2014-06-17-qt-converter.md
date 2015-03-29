@@ -2,7 +2,7 @@ layout: post
 title: "QT Converter"
 category: Qt
 tags: [qt]
---- 
+---
 
 ### QString和string的相互转换
 

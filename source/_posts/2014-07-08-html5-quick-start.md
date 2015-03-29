@@ -2,7 +2,7 @@ layout: post
 title: "Html5 Quick Start"
 category: Web
 tags: [web, html, tutorial]
---- 
+---
 
 本节为读 [HTML5 in Action](http://www.salttiger.com/html5-action/) 部分章节的笔记。
 

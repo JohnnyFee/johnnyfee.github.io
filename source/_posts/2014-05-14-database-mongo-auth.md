@@ -2,7 +2,7 @@ layout: post
 title: "MongoDb 权限"
 category: MongoDb
 tags: [mongodb, database, auth]
---- 
+---
 
 > 原文：http://www.cnblogs.com/zengen/archive/2011/04/23/2025722.html
 

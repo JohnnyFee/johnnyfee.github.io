@@ -3,7 +3,7 @@ title: "Html5 Storage —— IndexedDB"
 description: ""
 category: HTML5
 tags: [html5, storage, indexeddb]
---- 
+---
 
 This API is available in the underlying WebView. Indexed DB offers more features than LocalStorage but fewer than WebSQL.
 
@@ -159,7 +159,7 @@ function useDatabase(db) {
 下面的表格显示了几种不同的提供键的方法。
 
 Key Path | Key Generator | Description                                                                                                      
--------- | ------------- | -----
+--------| -------------| -----
 No       | No            | 这种对象存储空间可以持有任意类型的值，甚至是像数字和字符串这种基本数据类型的值。每当我们想要增加一个新值的时候，必须提供一个单独的键参数。                                            
 Yes      | No            | 这种对象存储空间只能持有 JavaScript 对象。这些对象必须具有一个和 key path 同名的属性。                                                           
 No       | Yes           | 这种对象存储空间可以持有任意类型的值。键会为我们自动生成，或者如果你想要使用一个特定键的话你可以提供一个单独的键参数。                                                      

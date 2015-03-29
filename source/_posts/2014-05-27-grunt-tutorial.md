@@ -2,7 +2,7 @@ layout: post
 title: "Grunt Tutorial"
 category : Grunt
 tags : [node, grunt]
---- 
+---
 
 简单说，Grunt是一个自动任务运行器，会按照预先设定的顺序自动运行一系列的任务。这可以简化工作流程，减轻重复性工作带来的负担。    
 

@@ -2,7 +2,7 @@ layout: post
 title: "Node Webkit Tutorial"
 category: Node
 tags: [node, webkit]
---- 
+---
 
 基于 node.js 和 chromium 的应用程序实时运行环境，可运行通过HTML5、CSS3、Javascript来编写的本地应用程序。node.js和webkit的结合体，webkit提供DOM操作，node.js提供本地化操作；且将二者的context完全整合，可在HTML代码中直接使用node.js的API。
 

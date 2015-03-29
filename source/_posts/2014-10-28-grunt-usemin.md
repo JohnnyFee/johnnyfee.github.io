@@ -2,7 +2,7 @@ layout: post
 title: "Grunt usemin"
 category: Node
 tags: [node, grunt]
---- 
+---
 
 [yeoman/grunt-usemin](https://github.com/yeoman/grunt-usemin) 用来将 HTML 文件中（或者 templates/views）中没有优化的 script 和 stylesheets 替换为优化过的版本。
 

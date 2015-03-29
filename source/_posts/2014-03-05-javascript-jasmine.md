@@ -3,7 +3,7 @@ title: "Jasmine—— JavaScript 单元测试框架"
 description: ""
 category: JavaScript
 tags: [javascript]
---- 
+---
 对于JavaScript世界比较流行的测试框架的介绍及比较，请参考 [JavaScript 单元测试](/javascript/2014/02/14/javascript-unit-test/)。
 
 ## 源码结构

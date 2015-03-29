@@ -2,7 +2,7 @@ layout: post
 title: "QT 的信号与槽机制介绍"
 category: Qt
 tags: [qt]
---- 
+---
 > 原文：<https://www.ibm.com/developerworks/cn/linux/guitoolkit/qt/signal-slot/>
 
 ## 概述

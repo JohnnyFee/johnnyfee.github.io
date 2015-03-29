@@ -3,7 +3,7 @@ title: "Sencha Touch"
 description: ""
 category: JavaScript
 tags: [sencha, touch]
---- 
+---
 
 ## Tutorial
 

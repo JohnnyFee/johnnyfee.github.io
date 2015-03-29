@@ -2,7 +2,7 @@ layout: post
 title: "Angular MVC"
 category : Angular
 tags : [angular, tutorial]
---- 
+---
 
 本文为读 [AngularJS](http://www.salttiger.com/angularjs/) 和  [Mastering Web Application Development with AngularJS](http://www.salttiger.com/mastering-web-application-development-angularjs/) 的读书笔记。
 
@@ -300,7 +300,7 @@ If the resolve function returns an AngularJS promise, then AngularJS is smart en
 ## Reference
 
 - [AngularJS：何时应该使用Directive、Controller、Service？](http://damoqiongqiu.iteye.com/blog/1971204)
-- [【译】《精通使用AngularJS开发Web App》（二） --- 框架概览，双向数据绑定，MVC，scope，控制器，模型](http://segmentfault.com/blog/chao2/1190000000360976)
+- [【译】《精通使用AngularJS开发Web App》（二） ---框架概览，双向数据绑定，MVC，scope，控制器，模型](http://segmentfault.com/blog/chao2/1190000000360976)
 
 ## Tutorial
 

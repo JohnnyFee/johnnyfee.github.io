@@ -2,7 +2,7 @@ layout: post
 title: "Html5 Modernizr"
 category: Web
 tags: [web, html, tutorial]
---- 
+---
 
 ## IE对HTML5的支持
 

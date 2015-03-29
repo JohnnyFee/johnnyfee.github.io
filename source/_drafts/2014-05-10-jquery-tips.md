@@ -2,7 +2,7 @@ layout: post
 title: "jQuery Tips"
 category: JavaScript
 tags: [javascript, jquery]
---- 
+---
 
 ## Get Query String Parameters
 

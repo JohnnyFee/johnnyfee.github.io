@@ -2,7 +2,7 @@ layout: post
 title: "Angular Mobile Tutorial"
 category: Angular
 tags: [angular, ui, mobile]
---- 
+---
 ## Mobile Framework
 
 - [Mobile Angular UI - Angular JS Mobile UI framework with Bootstrap 3 Css](http://mobileangularui.com/)

@@ -2,7 +2,7 @@ layout: post
 title: "Mobile Web Tutorial"
 category: Angular
 tags: [angular, ui]
---- 
+---
 
 ## Tutorial
 

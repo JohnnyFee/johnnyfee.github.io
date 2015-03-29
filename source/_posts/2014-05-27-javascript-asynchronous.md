@@ -2,7 +2,7 @@ layout: post
 title: "JavaScript 异步编程"
 category: JavaScript
 tags: [javascript]
---- 
+---
 
 Javascript语言的执行环境是"单线程"（single thread）。所谓"单线程"，就是指一次只能完成一件任务。如果有多个任务，就必须排队，前面一个任务完成，再执行后面一个任务，以此类推。
 

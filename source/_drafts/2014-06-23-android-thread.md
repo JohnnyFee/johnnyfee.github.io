@@ -2,7 +2,7 @@ layout: post
 title: "Android Thread"
 category: Android
 tags: [android, thread]
---- 
+---
 
 ## Tutorial
 

@@ -2,7 +2,7 @@ layout: post
 title: "Angular Scope"
 category : Angular
 tags : [angular, tutorial]
---- 
+---
 
 ## 作用域
 
@@ -626,4 +626,4 @@ $scope.$on('$locationChangeSuccess', function(event, newUrl, oldUrl){
 ## Reference
 
 - [Understanding Scopes · angular/angular.js Wiki](https://github.com/angular/angular.js/wiki/Understanding-Scopes)
-- [【译】《精通使用AngularJS开发Web App》（三）--- 深入scope，继承结构，事件系统和生命周期](http://segmentfault.com/blog/chao2/1190000000361245)
+- [【译】《精通使用AngularJS开发Web App》（三）---深入scope，继承结构，事件系统和生命周期](http://segmentfault.com/blog/chao2/1190000000361245)

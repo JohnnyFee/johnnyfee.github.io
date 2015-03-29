@@ -3,7 +3,7 @@ title: "Console object you didn’t know"
 description: ""
 category: JavaScript
 tags: [javascript]
---- 
+---
 
 The spiritual successor to underscore.js, lodash maintains backwards compatibility with underscore code (if you use the compatible version), and takes bold steps forward to help you manipulate those objects and arrays quickly and easily.
 

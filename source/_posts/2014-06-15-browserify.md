@@ -2,7 +2,7 @@ layout: post
 title: "Node Browserify"
 category: Node
 tags: [node, browserify]
---- 
+---
 
 简而言之，Broserfiy 是使 Node 风格的模块能够在浏览器中运行的工具。
 

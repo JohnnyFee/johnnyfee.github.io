@@ -2,7 +2,7 @@ layout: post
 title: "CSS 伪选择器"
 category: CSS
 tags: [web, css, selector]
---- 
+---
 
 The pseudo-elements contain no true content and are __absolutely positioned__. This
 means that they can be stretched to sit over any area of the “parent” element

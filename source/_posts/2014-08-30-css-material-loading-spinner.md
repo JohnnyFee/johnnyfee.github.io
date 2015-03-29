@@ -2,7 +2,7 @@ layout: post
 title: "Material Design Loading Spinner"
 category: CSS
 tags: [web, design, material, css]
---- 
+---
 
 在 [CodePen](http://codepen.io/) 看到一个 Material 风格的 Loading Spinner，甚是喜欢，于是研究一番。用到的技术主要有 SVG、CSS 动画以及 flex 弹性盒布局，下面是分析过程。
 

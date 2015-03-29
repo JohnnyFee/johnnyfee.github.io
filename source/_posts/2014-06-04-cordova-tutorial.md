@@ -2,7 +2,7 @@ layout: post
 title: "Cordova Tutorial"
 category: Cordova
 tags: [phonegap, cordova]
---- 
+---
 
 ## 概述
 

@@ -2,7 +2,7 @@ layout: post
 title: "Custom Elements"
 category: HTML
 tags: [web, component]
---- 
+---
 
 > origin: <http://www.html5rocks.com/zh/tutorials/webcomponents/customelements/#disqus_thread>
 
@@ -134,7 +134,7 @@ document.createElement('x-tabs').__proto__ == HTMLElement.prototype
 下面这个表格看起来更直观一些：
 
 类型            | 继承自                  | 示例                                          
-------------- | -------------------- | --------------------------------------------
+-------------| --------------------| --------------------------------------------
 unresolved 元素 | `HTMLElement`        | `<x-tabs>`、`<my-element>`、`<my-awesome-app>`
 未知元素          | `HTMLUnknownElement` | `<tabs>`、`<foo_bar>`                        
 
@@ -248,7 +248,7 @@ var XFoo = document.registerElement('x-foo', {
 元素可以定义特殊的方法，来注入其生存期内关键的时间点。这些方法各自有特定的名称和用途，它们被恰如其分地命名为**生命周期回调**：
 
 回调名称                                               | 调用时间点        
--------------------------------------------------- | -------------
+--------------------------------------------------| -------------
 createdCallback                                    | 创建元素实例       
 attachedCallback                                   | 向文档插入实例      
 detachedCallback                                   | 从文档中移除实例     

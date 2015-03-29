@@ -2,7 +2,7 @@ layout: post
 title: "EcmaScript 6.0"
 category: JavaScript
 tags: [javascript]
---- 
+---
 
 ## Tutorial
 

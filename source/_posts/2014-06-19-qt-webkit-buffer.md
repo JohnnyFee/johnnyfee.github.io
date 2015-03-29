@@ -2,7 +2,7 @@ layout: post
 title: "QT Webkit——JavaScript Buffer"
 category: Qt
 tags: [javascript, qt, buffer]
---- 
+---
 
 ## Buffer
 

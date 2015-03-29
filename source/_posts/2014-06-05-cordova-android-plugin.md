@@ -2,7 +2,7 @@ layout: post
 title: "Cordova Android Plugin"
 category: Cordova
 tags: [phonegap, cordova]
---- 
+---
 
 ## 插件开发指南
 

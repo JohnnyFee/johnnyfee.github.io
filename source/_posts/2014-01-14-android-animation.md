@@ -2,7 +2,7 @@ layout: post
 title: "Android动画"
 category: Android
 tags: [android,animation]
---- 
+---
 ## 概述
 
 参考官方文档，Android动画分为两类，分别为：

@@ -2,7 +2,7 @@ layout: post
 title: "MongoDb"
 category: Node
 tags: [mongodb, database]
---- 
+---
 
 ## Tutorial
 

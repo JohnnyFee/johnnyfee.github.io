@@ -3,7 +3,7 @@ title: "Git Submodule"
 description: ""
 category: Git
 tags: [git]
---- 
+---
 
 本文介绍使用SmartGit来操作子模块的方法和步骤。操作平台为Windows8和SmartGit 5.0。
 

@@ -58,7 +58,7 @@ Event Loop 是一个很重要的概念，指的是计算机系统的一种运行
 其实异步请求是由浏览器新开一个线程请求！当请求的状态变更时，如果先前已设置回调，这异步线程就产生状态变更事件放到JavaScript引擎的处理队列中等待处理！
 所以当任务被处理时，JavaScript引擎始终是单线程运行回调函数！
 
-## 参考
+## Ref
 
 - [JavaScript定时机制、以及浏览器渲染机制 浅谈 | 前端攻城师王子墨](http://julying.com/blog/javascript-settimeout-thread/)
 - [javascript线程解释（setTimeout,setInterval你不知道的事）](http://www.iamued.com/qianduan/1645.html)

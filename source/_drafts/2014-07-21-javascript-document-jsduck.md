@@ -114,8 +114,11 @@ Events are a lot like methods, except that they don't have return values.
 
 See [@event](https://github.com/senchalabs/jsduck/wiki/@event) for details.
 
-
-
 ### link
 
 {@link Class#member link text}
+
+## FAQ
+
+1. 各种 warning 的屏蔽：<https://github.com/senchalabs/jsduck/wiki/Usage>
+2. 例子：<http://tidesdk.multipart.net/docs/user-dev/generated/#!/api>

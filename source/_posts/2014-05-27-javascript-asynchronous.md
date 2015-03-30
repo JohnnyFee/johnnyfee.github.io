@@ -300,6 +300,16 @@ __缺点：__
 - [continuation.js](https://github.com/BYVoid/continuation)
 - [JeffreyZhao/wind](https://github.com/JeffreyZhao/wind)
 
+## Library
+
+- [yortus/asyncawait](https://github.com/yortus/asyncawait) Callback heaven for Node.js with async/await.
+    + [asyncawait/comparison at master · yortus/asyncawait](https://github.com/yortus/asyncawait/tree/master/comparison#comparison-summary) 各种异步库的比较。
+- [promise](https://github.com/stackp/promisejs)
+- [Q](https://github.com/kriskowal/q)
+- [async](https://github.com/caolan/async)
+- [step](https://github.com/creationix/step)
+
+
 ## 参考
 
 - [Javascript异步编程的4种方法 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2012/12/asynchronous%EF%BC%BFjavascript.html)

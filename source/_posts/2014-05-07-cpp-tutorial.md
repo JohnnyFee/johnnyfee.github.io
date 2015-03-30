@@ -135,6 +135,28 @@ typedef为保留字，使用它可以为一个类型定义创建一个别名。�
 
 - [Step By Step(C++模板目录) - Stephen_Liu - 博客园](http://www.cnblogs.com/stephen-liu74/archive/2012/09/12/2639736.html)
 
+## Library
+
+### Boost
+
+- 源码解析：<http://blog.csdn.net/pongba/article/category/37521>
+- Boost For Android：<https://github.com/MysticTreeGames/Boost-for-Android>
+- [boost中文手册](http://cpp.ezbty.org/myfiles/boost/libs/libraries.htm)
+- [boost-doc-zh](https://code.google.com/p/boost-doc-zh/downloads/list)
+- [官网](http://www.boost.org/)
+
+__状态机：__
+
+- [Boost的状态机库教程(1)]()
+- [Boost的状态机库教程(2) ]()
+- [Boost的状态机库教程(3)]()
+- [Boost的状态机库教程 补充 ]()
+
+__线程：__
+
+- [C++ Boost Thread 编程指南](http://www.cppblog.com/shaker/archive/2007/10/06/33583.html)
+
+
 ## Tutorial
 
 - [fffaraz/awesome-cpp](https://github.com/fffaraz/awesome-cpp)

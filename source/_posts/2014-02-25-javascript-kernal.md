@@ -584,7 +584,19 @@ otherFoo(); // again global object
 
 祝学习ECMAScript好运！
 
-## Dmitry Soshnikov
+## Tutorial
+
+- [JavaScript. The core](http://dmitrysoshnikov.com/ecmascript/javascript-the-core/). 原文是俄罗斯人写的，英文。
+- [JavaScript核心](http://weizhifeng.net/javascript-the-core.html) 这个版本翻译得较通顺，官网推荐版本。
+- [JavaScript核心详解](http://www.w3cfuns.com/article-5599061-1-1.html)
+- [JavaScript. The core](http://ued.ctrip.com/blog/?p=2795). [1] 携程前端翻译的
+- [[译] JavaScript核心指南(JavaScript Core)](http://www.cnblogs.com/ifishing/archive/2010/12/08/1900594.html) 【转】 [2]
+- 深入理解JavaScript系列（10）：JavaScript核心（晋级高手必读篇） [3]
+    
+上述都是同一篇文章的翻译。其中 [3] 是综合了 [1] 和 [2] 的翻译，可读性不一定是最佳。可以几个版本穿插着看。
+    
+[3] 的作者写了 [深入理解JavaScript系列](http://www.cnblogs.com/TomXu/archive/2011/12/15/2288411.html) 系列博客，该系列很值得阅读，并且翻译了《JavaScript 设计模式》
+
 ### ECMA-262-3
 
 - [JavaScript. The core.](http://dmitrysoshnikov.com/ecmascript/javascript-the-core/ "Permanent Link to JavaScript. The core.")

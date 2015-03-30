@@ -6,7 +6,7 @@ tags: [android, ndk, jni]
 ---
 **以下配置均在Windows8 x64系统下配置。**
 
-##搭建NDK环境
+## 搭建NDK环境
 
 - 下载并安装jdk
 - 下载ADT Bundle的最新版本<http://developer.android.com/sdk/index.html>
@@ -25,7 +25,8 @@ JDK、ADT Bundle、NDK的平台一定要一致，本人都是用x86版本，亲�
 
 <!--more-->
 
-##生成.h文件
+## 生成.h文件
+
 根据native方法生成JNI对应的头文件，可以直接使用javah命令，也可以将改命令配置为Eclipse的外部工具，便于调用。
 
 对应的jdk命令：
@@ -62,7 +63,7 @@ the jni directory with the method descriptions.
 Now that you have automated the way to generate the native method declarations, let’s look into the
 generated method declarations more in detail.
 
-##生成方法签名
+## 生成方法签名
 在C/C++中调用Java方法，需要知道Java方法或者属性的签名，我们可以使用javap命令方便地得到签名信息。为了方便调用javap命令，我同样提供讲javap配置为Eclipse的外部工具的方法。
 
 对应的jdk命令：
@@ -83,21 +84,21 @@ the Project Explorer view, select the HelloJni class, then choose **Run --> Exte
 
 ![javah](http://johnnyimages.qiniudn.com/ndk/javap.png)
 
-##类型转换
+## 类型转换
 JNI的基本类型可以直接当做Java对应的类型使用，可以通过Eclipse的F3(代码导航)看看JNI的基本类型对应的C/C++类型。JNI的引用类型通过需要通过JNI提供的特定方法转化之后才能被C/C++代码消费。
 
-###基本类型对应表
+### 基本类型对应表
 C++中直接可以使用JNI的基本类型，不需要将JNI类型转化为C++的类型。
 
 ![基本类型](http://johnnyimages.qiniudn.com/ndk/basic-type.png)
 
-###引用类型
+### 引用类型
 C++中直接不可以使用JNI的引用类型，需要将JNI类型转化为C++的相应类型后再使用。
 
 ![引用类型](http://johnnyimages.qiniudn.com/ndk/object-type.png)
 
 
-###字符串
+### 字符串
 创建（C字符串转化为Java字符串）：
 
 	jstring javaString = pEnv->NewStringUTF("Hello World!");
@@ -111,7 +112,7 @@ Java字符串转C字符串：
 
 	pEnv->ReleaseStringUTFChars(javaString, str);
 
-###数组
+### 数组
 
 创建数组：
 
@@ -158,9 +159,9 @@ Java字符串转C字符串：
 
 `nativeContent`为输出结果。		
 
-##C++与Java互调
+## C++与Java互调
 
-###Java调用NDK步骤
+### Java调用NDK步骤
 
 - 在Java中编写native方法
 - 使用javah（参考“生成.h文件”）生成对应的C/C++头文件
@@ -170,7 +171,7 @@ Java字符串转C字符串：
 其中JniStudy为模块名，对应的文件为libs/assembly/libJniStudy.so
 
 
-###NDK调用Java
+### NDK调用Java
 
 注意：以下方法均在.C中实现，如果在.CPP中，调用JNIEnv的方法为env->(args)。
 NDK的方法签名如：
@@ -186,7 +187,7 @@ NDK的方法签名如：
 
 对于静态方法对应的C/C++代码中不能调用JAVA端的任何非静态方法。[Problem for call of Java method from c++ with jni](http://stackoverflow.com/questions/6584269/android-ndk-problem-for-call-of-java-method-from-c-with-jni)
 
-###获取类的属性：
+### 获取类的属性：
 根据jobject获取jclass
 
 	jclass clazz;
@@ -204,7 +205,7 @@ NDK的方法签名如：
 
 对于static域，使用GetStaticFieldID和GetStaticObjectField方法。
 
-###执行类的方法：
+### 执行类的方法：
 获取MethodId
 
 	jmethodID instanceMethodId;
@@ -219,7 +220,7 @@ NDK的方法签名如：
 
 参考：http://developer.51cto.com/art/201204/332810.htm
 
-###调用构造方法
+### 调用构造方法
 
 	// 先获得class对象  
 	jclass classMyCallback = env->FindClass("com/landi/jnistudy/MyCallback");
@@ -234,7 +235,7 @@ NDK的方法签名如：
 
 来自 <http://developer.51cto.com/art/201204/332810.htm> 
 
-##全局变量
+## 全局变量
 
 通常class信息，object变量，方法ID等获取之后通常要保存到全局变量中，可以通过以下方法创建全局变量，详情请参考`参考/最贱实践`。
 
@@ -252,9 +253,9 @@ NDK的方法签名如：
 
 对于一些不再使用的局部变量，也可以显示调用`pEnv->DeleteLocalRef`来删除，以提高效率。
 
-##异常处理
+## 异常处理
 
-###捕获异常
+### 捕获异常
 NDK调用Java方法，Java方法抛出异常时（此时Java VM挂起），使用ExceptionOccurred来检查是否有异常，处理完后调用ExceptionClear清除异常。
 
 	jthrowable ex;
@@ -266,7 +267,7 @@ NDK调用Java方法，Java方法抛出异常时（此时Java VM挂起），使�
 		/* Exception handler. */
 	}
 
-###抛出异常
+### 抛出异常
 As the code execution of native functions are not under the control of the virtual machine, throwing
 an exception does not stop the execution of the native function and transfer control to the exception
 handler.
@@ -279,9 +280,9 @@ handler.
 	// 是否会return，是否会抛到调用者的最外层
 	}
 
-##线程
+## 线程
 
-###子线程中调用Java
+### 子线程中调用Java
 在C++的字线程中需要调用Java相关的类、方法、属性，需要调用
 
 	JNIEnv *pEnv = NULL;
@@ -302,7 +303,7 @@ handler.
 
 来获取jclass信息，再调用java方法或属性。
 
-###创建子线程
+### 创建子线程
 
 	pthread_t pth;
 	pthread_create(&pth, NULL, startServer, NULL);
@@ -310,7 +311,7 @@ handler.
 
 来自 <http://stackoverflow.com/questions/8230361/jni-crashing-after-repeatedly-calling-a-method> 
 
-###用C实现延时
+### 用C实现延时
 
 	struct timespec delay;
 	delay.tv_sec = 2;
@@ -319,11 +320,11 @@ handler.
 
 来自 <http://blog.csdn.net/sojohn/article/details/334719> 
 
-##构建系统(Android.mk)
+## 构建系统(Android.mk)
 
 以下若无说明，都是修改Android.mk
 
-###预编译宏
+### 预编译宏
 
 	LOCAL_CFLAGS := -DUSE_FILE32API 
 	LOCAL_EXPORT_CFLAGS := -DUSE_FILE32API
@@ -342,7 +343,7 @@ because it needs an Android logging module, then a module B that depends on A wi
 To specify any options, flags, or macro definitions, forcompilation and linking. The first one works for bothC and C++, the second one is for C++ only, and the lastone is for the linker.
 
 	
-###构建动态库
+### 构建动态库
 
 	LOCAL_PATH := $(call my-dir)
 	include $(CLEAR_VARS)
@@ -359,7 +360,7 @@ To specify any options, flags, or macro definitions, forcompilation and linking.
 	LOCAL_SRC_FILES := module.c
 	LOCAL_SHARED_LIBRARIES += avilib
 
-###构建静态库
+### 构建静态库
 
 将构建动态库中的最后一行修改为
 
@@ -381,7 +382,7 @@ To specify any options, flags, or macro definitions, forcompilation and linking.
 	
 注：不可以直接在Android应用程序中使用静态库，需要编译到动态库中才能被Android应用程序消费。
 
-###在同一个NDK工程中构建多个动态库
+### 在同一个NDK工程中构建多个动态库
 
 	LOCAL_PATH := $(call my-dir)
 	#
@@ -401,14 +402,14 @@ To specify any options, flags, or macro definitions, forcompilation and linking.
 	LOCAL_SRC_FILES := module2.c
 	include $(BUILD_SHARED_LIBRARY)
 	
-###添加子文件夹中所有的mk文件
+### 添加子文件夹中所有的mk文件
 
 	include $(call all-subdir-makefiles)
 
 	来自 <http://stackoverflow.com/questions/6942730/android-ndk-how-to-include-android-mk-into-another-android-mk> 
 
 
-###使用预编译方法引用第三方库
+### 使用预编译方法引用第三方库
 
 	#------------------
 	#预编译app-lib
@@ -428,13 +429,13 @@ To specify any options, flags, or macro definitions, forcompilation and linking.
 通过该方法导入的库如果不存在于Android系统中，则必须存在于`libs/armeabi/`目录下，且要在Java端通过loadLibrary加载该库。
 来自 <http://www.kandroid.org/ndk/docs/IMPORT-MODULE.html> 
 
-###通过LOCAL_LDFLAGS引用第三方库：
+### 通过LOCAL_LDFLAGS引用第三方库：
 
 	LOCAL_LDFLAGS +=  -L$(LOCAL_PATH)/../../../../app-lib/src/app-lib/libs/$(TARGET_ARCH_ABI)/ -lapp-lib
 
 其中，-L指定动态库的路径，-l指定动态库的名称。通过该方法导入的库如果不存在于Android系统中，则必须存在于libs/armeabi/目录下，且要在Java端通过loadLibrary加载该库。
 
-###多个NDK工程共享模块
+### 多个NDK工程共享模块
 该种方式未经实践，仅供参考。
 
 共享库的Android.mk，假设位于`C:\android\shared-modules\transcode\avilib`.
@@ -472,22 +473,22 @@ The import-module function macro needs to first locate the shared module and the
 
 	
 
-##FAQ
+## FAQ
 
-###在Android.mk中输入变量
+### 在Android.mk中输入变量
 
 	$(warning $(LOCAL_PATH))
 
-###ReferenceTable overflow问题
+### ReferenceTable overflow问题
 对于频繁调用的方法，其中的一些局部变量需要及时释放，否会导致ReferenceTable overflow问题，如FindClass返回值，jbyteArray类型，通过NewString/NewStringUTF/NewObject/GetObjectField生成的变量。
 
 参考 <http://bbs.csdn.net/topics/380134134?page=1#post-393496160> 
 
-###批量添加工程文件
+### 批量添加工程文件
 
 <http://www.cfanz.cn/?c=article&a=read&id=38462>
 
-###添加STL
+### 添加STL
 
 在jni目录下添加Application.mk，并添加以下内容：
 
@@ -498,7 +499,7 @@ The import-module function macro needs to first locate the shared module and the
 
 	LOCAL_SHARED_LIBRARIES := libstlport
 
-###Eclipse的编译器问题
+### Eclipse的编译器问题
 
 对于可以通过ndk-build命令编译成功，而Eclipse中报编译错误的原因为，Java对于C/C++的编译器存在问题，可以通过禁用Eclispe一个错误提示来解决。
 
@@ -506,7 +507,14 @@ The import-module function macro needs to first locate the shared module and the
 
 将所有的勾去掉。
 
-##参考
+### C/C++添加注释
+
+- 安装eclox插件 http://home.gna.org/eclox/#download
+- In c/c++->Editor->Documentation tool comments, Workspace default set doxygen. Then above a function write /** and press return.
+
+See <http://stackoverflow.com/questions/3537542/a-doxygen-eclipse-plugin-with-automatic-code-completion>
+
+## 参考
 
 - [Apress.Pro.Android.CPP.with.the.NDK.Dec.2012.pdf](http://dl.dbank.com/c0z1lurn5u)
 - [Android Native Development Kit Cookbook](http://www.salttiger.com/android-native-development-kit-cookbook/)

@@ -91,6 +91,8 @@ submit.setOnClickListener(new OnClickListener() {
 
 See [Hanolex博客 » Android SDK下载慢的解决办法](http://hanolex.org/archives/300.html)
 
+See also [解决Android SDK Manager下载慢的问题](http://www.opensoce.com/3035.html)
+
 ## Books
 
 - [Android Programming: Pushing the Limits](http://www.salttiger.com/android-programming-pushing-limits/)

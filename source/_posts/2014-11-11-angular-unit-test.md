@@ -1024,6 +1024,12 @@ describe('Routing Test With PageObjects', function() {
 
 PageObjects encapsulate abstractions on how to access certain elements and how to interact with them in a single place, thus allowing for simple reuse as well as handling change in a single place rather than making the change in multiple places. PageObject 在如何访问元素、如何在一个单一的地方与元素进行交互上进行抽象封装，这样就允许简单的复用，在一个地方处理变化而不是在很多个地方产生变化（最后一句话可能翻译得不是很清楚。。。）
 
+## phantomjs
+
+    set PHANTOMJS_CDNURL=https://npm.taobao.org/dist/phantomjs
+    npm install phantomjs --registry=https://registry.npm.taobao.org --no-proxy
+
+
 ## Library
 
 - [angular/protractor](https://github.com/angular/protractor)

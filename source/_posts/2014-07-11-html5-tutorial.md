@@ -151,7 +151,7 @@ s    | 表示不精确或不正确的内容| Orange at my local store cost <s>$1
 small | 表示小号字体内容，常用于免责声明和澄清声明。| It costs $1 each <small>(plus tax)</small>
 sup/sub | 表示上标或下标 | <sup>1</sup>/<sub>3</sub>
 br | 使用与换行也是内容的一部分，切勿用于创建段落或别的内容组。
-wbr | 表示成果当前浏览器窗口的内容适合在此换行。
+wbr <sup>5</sup> | 表示成果当前浏览器窗口的内容适合在此换行。
 code| 计算机代码 code {font-family: monospace;}
 var| 变量 var {font-style: italic;}
 samp | 程序输出 samp { font-family: monospace; }
@@ -160,13 +160,13 @@ abbr| 表示缩写，无习惯样式 | <abbr title="Florida Department of Citrus
 dfn | 表示术语定义，没有习惯样式。如果要为 dfn 定义 title，则必须定义 title = 所定义的术语。如果 dfn 元素包含一个 abbr 元素，则该缩写词就是要定义的术语。| <dfn title="apple">apple</dfn>
 q   | 表示引用内容，属性 cite 用来指定原文章的 URL。习惯样式是使用 :before 和 :after 这两个伪元素选择器在内容前后生成引号。 | <q cite="http://inching.org">Oh, It's my life.</q>
 cite | 表示作品的标题。| My favorite book on fruit is <cite>Fruit: Editable, Inedible</cite> by Stuppy.
-ruby、rt、rp | 表示东亚预研中的注音符号。ruby 元素表示一段包含注音符号的文字，rt 用来标记注音符号，rp 用来标记供不支持注音符号特性的浏览器显示在注音符号前后的括号。| <ruby>吃<rp>(</rp><rt>chī</rt><rp>)</rp></ruby>
+ruby、rt、rp <sup>5</sup> | 表示东亚预研中的注音符号。ruby 元素表示一段包含注音符号的文字，rt 用来标记注音符号，rp 用来标记供不支持注音符号特性的浏览器显示在注音符号前后的括号。| <ruby>吃<rp>(</rp><rt>chī</rt><rp>)</rp></ruby>
 bdo | 指定内容的文本方向。使用的 dir 属性指定方向，rtl（从右到左），ltr（从左到右）。| <bdo dir="rtl"> I love you.</bdo>
-bdi | 出于文本方向的考虑将文本与其他内容隔离开来。| 
+bdi <sup>5</sup> | 出于文本方向的考虑将文本与其他内容隔离开来。| 
 span | 对一段内容应用全局属性，无任何语义。
-mark | 表示与另一段上下文相关而被突出显示的内容。| I would like a  <mark>pair</mark> of <mark>pears</mark>.
+mark <sup>5</sup> | 表示与另一段上下文相关而被突出显示的内容。| I would like a  <mark>pair</mark> of <mark>pears</mark>.
 ins/del | 表示添加/删除的文本。属性 cite 指定解释添加或删除文字原因的文档的 URL，属性 datetime 用来设置修改时间。| <ins>I', ins.</ins><br/><del>I'm del.</del>
-time | 表示时间或日期。如果布尔属性 pubdate 存在，则 time 元素表示的是整个 HTML 文档或离该文档最近的 article 元素的发布日期。datetime 属性以 [RFC 3330](http://tools.ietf.org/html/rfc3339) 规定的格式指定日期或时间。有了 datetime， 可以在元素中以便于阅读的形式设置日期或时间，同时又确保计算机能无歧义地解析指定的日期或时间。  | I bought it at <time datetime="15:00">3 o'clock</time>
+time <sup>5</sup> | 表示时间或日期。如果布尔属性 pubdate 存在，则 time 元素表示的是整个 HTML 文档或离该文档最近的 article 元素的发布日期。datetime 属性以 [RFC 3330](http://tools.ietf.org/html/rfc3339) 规定的格式指定日期或时间。有了 datetime， 可以在元素中以便于阅读的形式设置日期或时间，同时又确保计算机能无歧义地解析指定的日期或时间。  | I bought it at <time datetime="15:00">3 o'clock</time>
 
 align、width、noshade、size、color 属性在 HTML 中已不再使用。
 
@@ -617,7 +617,7 @@ textarea 用来输入多行文字。textare 可以用 rows 和cols 属性设置�
 
     <textarea name="" id="" cols="30" rows="10"></textarea>
 
-### output
+### output <sup>5</sup>
 
 output 用来表示输出结果。
 
@@ -873,7 +873,7 @@ iframe 元素允许我们在现有的 HTML 文档中嵌入另一张文档。
 
 width 和 height 用来指定大小，src 用来指定 URL。
 
-### progress
+### progress <sup>5</sup>
 
 progress 用来表现某项任务进度逐渐完成的过程。progress 的 value 属性定义了当前的进度，它位于 0 和 max 属性的值（省略时为 1）所定义的范围之间。
 
@@ -881,7 +881,7 @@ progress 用来表现某项任务进度逐渐完成的过程。progress 的 valu
 
 <progress value="10" max="30"></progress>
 
-### meter
+### meter <sup>5</sup>
 
 meter 元素显示了某个范围内所有可能值中的一个。min、max 定义了可能值所处范围的边界，可以用浮点数来表示。meter 元素的显示可分为三个部分：过低、过高、最佳。< low 属性值都认为是过低，> high 属性值则认为过高，optimum 指定了最佳值。
 
@@ -925,6 +925,39 @@ meter 元素显示了某个范围内所有可能值中的一个。min、max 定�
 ## Tools
 
 - [Can I use... Support tables for HTML5, CSS3, etc](http://caniuse.com/)
+
+### 将 JavaScript、CSS 合并（内联）到单个 HTML 文件中
+
+做出来的效果类似 .mht 文件。但是 .mht 文件只能用 IE 打开。我们这种方案做出来的是纯正的单一 .html 文件。
+
+命令行版：[0gust1/cli-html-smoosher](https://github.com/0gust1/cli-html-smoosher)
+
+grunt 版：[motherjones/grunt-html-smoosher](https://github.com/motherjones/grunt-html-smoosher)
+
+示例代码（gruntfile.js）：
+
+```
+module.exports = function (grunt) {
+    grunt.initConfig({
+        smoosher: {
+            options: {
+                minify: true,
+                jsTags: { // optional
+                    start: '<script type="text/javascript">', // default: <script>
+                    end: '</script>'                          // default: </script>
+                }
+            },
+            all: {
+                files: {
+                    'dest-index.html': 'index.html'
+                }
+            }
+        }
+    });
+
+    grunt.loadNpmTasks('grunt-html-smoosher');
+}
+```
 
 ## HTML5 Test
 

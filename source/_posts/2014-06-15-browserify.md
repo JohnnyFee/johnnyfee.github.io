@@ -501,6 +501,7 @@ See [Max Ogden Blogotronz](http://maxogden.com/node-packaged-modules.html)
 - [substack/browserify-handbook](https://github.com/substack/browserify-handbook#node-packaged-manuscript)  This document written by @substack covers how to use browserify to build modular applications. Recommended as a starting point.
 - [Sharing code between Node.js and the browser](https://blog.codecentric.de/en/2014/02/cross-platform-javascript/) A detailed introduction to Browserify and Grunt.js and how to leverage Browserify to write code that runs on Node.js and in the browser.
 - [Using npm on the client side](dontkry.com/posts/code/using-npm-on-the-client-side.html) A very thorough introduction to using npm, Browserify, and Grunt.js.
+- [Using Browserify with npm modules](http://javascriptplayground.com/blog/2013/11/backbone-browserify/)
 
 ### cooperate with other frameworks
 

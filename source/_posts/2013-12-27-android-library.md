@@ -44,7 +44,8 @@ tags: [android]
 
 ## Framework
 
-- [Google Guice on Android, version 2.0](https://github.com/roboguice/roboguice) https://github.com/roboguice/roboguice.
+- [Google Guice on Android, version 2.0](https://github.com/roboguice/roboguice) https://github.com/roboguice/roboguice. 基于google-guice扩展，针对Android系统的轻量级依赖注入框架（例如增加了View注入等）。
+    + 国内最详细的中文博客： <http://blog.csdn.net/mapdigit/article/category/1138155/1>
 - [Spring for Android](http://www.springsource.org/spring-android) 
     - [Spring RESTtemplate]() 一个非常流行的基于Java REST客户端。Spring for Android RestTemplate模块提供了一个可以在安卓环境下工作的RestTemplate版本，为你的安卓应用程序提供了一个非常灵活的REST API。
     - [验证支持](http://static.springsource.org/spring-android/docs/1.0.x/reference/html/auth.html)  OAuth是该领域快速崛起一个的协议。OAuth是一个开源协议，为用户提供第三方应用支持，提供对其他网站受限资源或服务的访问。

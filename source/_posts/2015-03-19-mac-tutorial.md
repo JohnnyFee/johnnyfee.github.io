@@ -13,7 +13,7 @@ Mac 系统的安装文件后缀名是 `.dmg`，双击打开后，会出现一个
 
 如果网上下载应用无法安装使用的话，打开“安全性与隐私”里面 打开左下脚的小锁 先鉴定一下，然后选中“来自任何来源”，这样就好了：
 
-![](http://images.macx.cn/album/201212/28/120834rabafrvlbh7383ta.png)
+![](http://johnnyimages.qiniudn.com/120834rabafrvlbh7383ta.png)
 
 ### 卸载软件
 

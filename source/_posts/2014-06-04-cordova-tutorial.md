@@ -32,9 +32,16 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
 
 ## Setup
 
-1. 下载和安装 [Node.js](http://nodejs.org/)
-2. 下载安装 [git client](http://git-scm.com/)
-3. 安装 cordova
+1. 安装JDK、ANT（绿色）、node.js
+2. 添加环境变量 JAVA_HOME _C:\Program Files (x86)\Java\jdk1.7.0_25_
+3. 将以下目录（参考）加入PATH：
+
+    - _C:\adt-bundle-windows-x86-20130522\sdk\platform-tools\_
+    - _C:\adt-bundle-windows-x86-20130522\sdk\tools\_
+    - _%JAVA_HOME%\bin_
+    - ANT目录/bin
+4. 下载安装 [git client](http://git-scm.com/)
+5. 安装 cordova
 
         $ sudo npm install -g cordova
 

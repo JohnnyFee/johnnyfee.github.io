@@ -191,6 +191,17 @@ See [javascript - how can i fix webstorm warning (= unresolved function ) for "r
 
 - [Node.JS 学习路线图 - WEB开发者](http://www.admin10000.com/document/4624.html)
 
+## Package
+
+目标，将 node 和多个 JavaScript  以单个 .exe 文件的形式分发。
+
+问题贴，各个链接在里面：[Make exe files from node.js app](http://stackoverflow.com/questions/8173232/make-exe-files-from-node-js-app)
+
+采用批处理 + 合并工具的方法：[Create a standalone EXE to run a Node.js application](http://www.alexjamesbrown.com/blog/development/create-a-standalone-exe-to-run-a-node-js-application/)
+
+node2exe，采用 `copy /b` 的方式，将宿主和资源连接起来。See [areve/node2exe](
+https://github.com/areve/node2exe)
+
 ## Tutorial
 
 - [javascript - Make exe files from node.js app - Stack Overflow](http://stackoverflow.com/questions/8173232/make-exe-files-from-node-js-app) 打包。

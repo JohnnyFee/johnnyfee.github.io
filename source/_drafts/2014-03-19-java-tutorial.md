@@ -41,6 +41,18 @@ tags: [java]
 
 - [九大工具助你玩转Java性能优化 - WEB开发者](http://www.admin10000.com/document/4693.html)
 
+## Library
+
+### google-guice
+
+google开发的，基于java的轻量级依赖注入框架。<https://code.google.com/p/google-guice/>
+
+文档：<https://code.google.com/p/google-guice/downloads/detail?name=Guice-Google-IO-2009.pdf&can=2&q=>
+
+中文学习专题：<http://tech.it168.com/zt/guice/>
+
+Guice指南-自举（Bootstrapping）你的应用： <http://space.itpub.net/13270562/viewspace-214955>
+
 ## Tutorial
 
 - [akullpp/awesome-java](https://github.com/akullpp/awesome-java)

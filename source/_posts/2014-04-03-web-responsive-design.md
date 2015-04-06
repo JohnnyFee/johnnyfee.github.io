@@ -23,7 +23,7 @@ tags: [responsive, web]
 - [10 Responsive Design Problems and Fixes](http://uxmag.com/articles/10-responsive-design-problems-and-fixes)
 
 
-<!--more-->
+<!-- more -->
 
 ## "自适应网页设计"的概念
 

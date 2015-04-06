@@ -17,7 +17,7 @@ Streams are EventEmitters. If our 1 GB file would, for example, need to be proce
 
 The Node stream interface consists of two parts: Readable streams and Writable streams. Some streams are both readable and writable.
 
-<!--more-->
+<!-- more -->
 
 ## Readable Streams
 

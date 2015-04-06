@@ -17,7 +17,7 @@ press.which = 65;
 $("#test").trigger(press);
 ```
 
-<!--more-->
+<!-- more -->
 
 But when I load the page, the `#test` input field has no typed characters,  the keycode of '65' represents 'A', but there is no 'A' input.
 

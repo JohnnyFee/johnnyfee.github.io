@@ -26,7 +26,7 @@ HTML5以来，JavaScript增加了新的数据类型，从而对二进制数据�
     var bytes = Uint8Array(buffer);
     var value = bytes[1];
 
-<!--more-->
+<!-- more -->
 
 另一个更底层的接口是DataView，提供了一组方法用于读取或修改ArrayBuffer 
 

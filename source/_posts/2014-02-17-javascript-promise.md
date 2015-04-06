@@ -11,7 +11,7 @@ Promises对象是CommonJS工作组提出的一种规范，目的是为异步编�
 
 Promise/A+的规范内容请参考 [Promises/A+](http://promises-aplus.github.io/promises-spec/)。
 
-<!--more-->
+<!-- more -->
 
 那么，什么是Promises？首先，它是一个对象，也就是说与其他JavaScript对象的用法，没有什么两样；其次，它起到代理作用（proxy），使得异步操作具备同步操作（synchronous code）的接口，即充当异步操作与回调函数之间的中介，使得程序具备正常的同步运行的流程，回调函数不必再一层层包裹起来。
 

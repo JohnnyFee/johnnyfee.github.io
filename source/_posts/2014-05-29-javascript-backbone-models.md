@@ -18,7 +18,7 @@ Define a model by extending Backbone.Model.
 
 	});
 
-<!--more-->
+<!-- more -->
 
 There is no need to define a data structure inside the model object, because Backbone allows it to be defined dynamically when the model is initialized.
 

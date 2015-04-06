@@ -23,7 +23,7 @@ WebSocket是HTML5开始提供的一种浏览器与服务器间进行全双工通
 - WebLogic - <http://www.oracle.com/us/products/middleware/cloud-app-foundation/weblogic/overview/index.html> (12.1.2 开始支持)
 - node.js - <https://github.com/Worlize/WebSocket-Node>
 
-<!--more-->
+<!-- more -->
 ### Android Webview与WebSocket
 
 众所周知，Android的WebView控件目前为止并不支持WebSocket。github上已经提供Java实现的WebSocket，包括服务端和客户端。

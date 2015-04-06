@@ -23,7 +23,7 @@ WEB-INF/i18n目录下的`messages.properties`存放的是Roo Web框架级别的�
 
 messages.properties中定义的titlepanel=welcome_titlepane=Welcome to {0}
 
-<!--more-->
+<!-- more -->
 
 ###添加新的国际化语言：
 

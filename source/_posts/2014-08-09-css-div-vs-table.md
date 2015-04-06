@@ -10,7 +10,7 @@ One of the debates that never seems to go away in the web development community 
 <span id="more-918"></span>  
 Let me start by letting you know I fall on the css side of things. Having developed and worked on sites both ways I’m 100% certain structuring your layout with tables is not the way to go. However, you can build a great site using tables and a poor site using css. To compare we really need to look at sites that are well developed on both sites.
 
-<!--more-->
+<!-- more -->
 
 Let me also say that if you prefer to develop sites with a table-based layout, good for you. I’m not going to tell you that you’re doing anything wrong or evil or that the world is going to come to an end. I do think [css is the better option](http://www.adobe.com/devnet/dreamweaver/articles/why_css.html), but feel free to develop sites any way you want.
 

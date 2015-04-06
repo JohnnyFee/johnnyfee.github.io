@@ -20,7 +20,7 @@ Setup Spring MVC，并且将数据修改为war
 
 命令除了创建Controller之外，也会创建相应的view和menu，以及国际化文件。
 
-<!--more-->	
+<!-- more -->	
 
 **为某个entity生成Controller**
 

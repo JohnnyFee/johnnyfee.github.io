@@ -20,7 +20,7 @@ selenium test：针对controller的测试
 	
 	@Transactional表示当但愿测试成功后，对数据库的所有更改都将被回滚。
 
-<!--more-->	
+<!-- more -->	
 
 ###生成测试用例
 

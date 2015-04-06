@@ -22,7 +22,7 @@ process.argv.forEach(function(val, index, array) {
 This will generate:
 ```
 
-<!--more-->
+<!-- more -->
 
 ```shell
 $ node process-2.js one two=three four

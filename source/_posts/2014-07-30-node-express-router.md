@@ -16,7 +16,7 @@ Since Express has a such a large presence in our Node applications, let’s take
 
 Express 4.0 comes with the new `Router`. Router is like a mini express application. It doesn’t bring in views or settings, but provides us with the routing APIs like `.use`, `.get`, `.param`, and `route`.
 
-<!--more-->
+<!-- more -->
 
 Let’s look at how many of us route our applications and let’s see how we can recreate that with Router.
 

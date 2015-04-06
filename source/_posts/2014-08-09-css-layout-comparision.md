@@ -15,7 +15,7 @@ What are the pros and cons of some of the common [css layouts](http://sixrevisio
 <span id="more-2849"></span>  
 **Note:** While you can’t always tell from the screenshots throughout this post I’ve tried to match the screenshot with the layout described below it. You can click through on any of the images to see the site in question and then resize your browser of font size to see how the layouts react.
 
-<!--more-->
+<!-- more -->
 
 [![Coda code editor](http://johnnyimages.qiniudn.com/code-editor.png)](http://www.panic.com/coda/)
 

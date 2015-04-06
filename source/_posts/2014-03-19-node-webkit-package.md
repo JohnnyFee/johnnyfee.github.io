@@ -11,7 +11,7 @@ tags: [node, webkit]
 
 我们把内容解压缩到`node-webkit/`文件夹中。
 
-<!--more-->
+<!-- more -->
 
 ## 创建 `package.json`
 

@@ -10,7 +10,7 @@ tags: [web, design, material, css]
 
 使用 SVG 画一个圆圈，并使用弹性盒布局使它居中。
 
-<!--more-->
+<!-- more -->
 
 <p data-height="268" data-theme-id="0" data-slug-hash="flpLc" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/flpLc/'>flpLc</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 

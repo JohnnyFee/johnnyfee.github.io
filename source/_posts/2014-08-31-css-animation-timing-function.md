@@ -12,7 +12,7 @@ OK, so the subject matter of this article probably hasn’t sent your blood raci
 
 First of all, let’s set the scene and ensure we’re all familiar with the scenarios in which the timing function is relevant. As alluded to, the functionality becomes available when you’re working in the realm of CSS animation, which includes CSS transitions as well as keyframe-based animation. So, what exactly is it and what does it do?
 
-<!--more-->
+<!-- more -->
 
 ### The CSS Timing Function Explained
 

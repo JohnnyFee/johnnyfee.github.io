@@ -17,7 +17,7 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
 - [Is there a difference between PhoneGap and Cordova commands? - Stack Overflow](http://stackoverflow.com/questions/18174511/is-there-a-difference-between-phonegap-and-cordova-commands)
 - [PhoneGap](http://phonegap.com/2012/03/19/phonegap-cordova-and-what%E2%80%99s-in-a-name/)
 
-<!--more-->
+<!-- more -->
 
 ### PhoneGap 3.0 的变化
 

@@ -30,7 +30,7 @@ tags : [node, grunt]
 
     npm install
 
-<!--more-->
+<!-- more -->
 
 ## Gruntfile
 

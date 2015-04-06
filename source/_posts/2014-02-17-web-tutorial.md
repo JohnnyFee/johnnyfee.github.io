@@ -17,7 +17,7 @@ tags: [web, tutorial]
     - [Bsie（鄙视IE） -- Bootstrap IE6 兼容库](http://www.bootcss.com/p/bsie/) bsie弥补了Bootstrap对IE6的不兼容。
 * [UI for the Web powered by HTML5, jQuery & CSS3](http://wijmo.com/) 收费。Wijmo是一个jQuery UI组件集，有超过30多个jQuery UI 组件；这将是一个CSS3，SVG，HTML5的混合物，目前还处于Beta阶段。授权协议 MIT。
 
-<!--more-->
+<!-- more -->
 
 ### React
 

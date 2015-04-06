@@ -582,7 +582,7 @@ plugman 会检查必须的 preferences 传入，如果没有，报错退出。
     \---www
             device.js JavaScript 层代码的实现。
 
-<!--more-->
+<!-- more -->
 
 ### plugin.xml
 

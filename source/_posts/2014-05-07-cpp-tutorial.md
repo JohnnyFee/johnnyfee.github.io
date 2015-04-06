@@ -19,7 +19,7 @@ tags: [c++]
 
 - [让C程序更高效的10种方法 - 博客 - 伯乐在线](http://blog.jobbole.com/1198/)
 
-<!--more-->
+<!-- more -->
 
 ## friend
 

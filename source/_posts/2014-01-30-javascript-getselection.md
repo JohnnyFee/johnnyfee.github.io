@@ -15,7 +15,7 @@ tags: [javascript]
 
 参考 [用getSelection来获取网页的选中内容](http://classjs.com/2011/11/17/%E7%94%A8getselection%E6%9D%A5%E8%8E%B7%E5%8F%96%E7%BD%91%E9%A1%B5%E7%9A%84%E9%80%89%E4%B8%AD%E5%86%85%E5%AE%B9/)
 
-<!--more-->
+<!-- more -->
 
 ##Window.getSelection
 

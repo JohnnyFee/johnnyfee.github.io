@@ -8,7 +8,7 @@ The `padding` property in CSS defines the innermost portion of the [box model](h
 
 Padding values are set using [lengths](http://css-tricks.com/the-lengths-of-css/) or percentages, and cannot accept negative values. The initial, or default, value for all padding properties is `0`.
 
-<!--more-->
+<!-- more -->
 
 Here's a simple example:
 

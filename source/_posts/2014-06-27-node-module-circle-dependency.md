@@ -26,7 +26,7 @@ b.js
     console.log('b.js get a:' + a.a);  
     module.exports.b = 2;
  
-<!--more-->  
+<!-- more -->  
   
 执行  
   

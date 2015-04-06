@@ -35,7 +35,7 @@ tags: [android,hack]
 
 对于简单的布局使用这种方法相对简单，下面我们使用自定的ViewGroup实现一个通用的布局容器，使用起来会更加简单和直观，我们称之为CascadeLayout。
 
-<!--more-->
+<!-- more -->
 
 ##Android 控件的渲染原理
 在使用自定义ViewGroup实现之前我们需要知道Android View的渲染Android 控件的渲染过程。

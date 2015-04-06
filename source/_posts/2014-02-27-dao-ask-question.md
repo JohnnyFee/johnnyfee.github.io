@@ -10,7 +10,7 @@ tags: [node]
 
 >原文 ：[How To Ask Questions The Smart Way](http://www.catb.org/~esr/faqs/smart-questions.html) 
 
-<!--more-->
+<!-- more -->
 
 ## 弃权申明
 

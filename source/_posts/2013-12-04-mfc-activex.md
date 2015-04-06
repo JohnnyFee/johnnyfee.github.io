@@ -16,7 +16,7 @@ tags: [activex, c++]
 - [创建基于MFC的ActiveX控件时各选项的说明](http://blog.csdn.net/mole/article/details/4147608)
 - [CreateFile,ReadFile等API详解](http://www.cnblogs.com/transcom/articles/1384946.html)
 
-<!--more-->
+<!-- more -->
 
 **修改控件的GUID：**
 

@@ -30,7 +30,7 @@ oa.start();
 
 关于Animator的监听器请参考[Animation Listeners](http://developer.android.com/guide/topics/graphics/prop-animation.html#listeners)。
 
-<!--more-->
+<!-- more -->
 
 ## Property Animation
 

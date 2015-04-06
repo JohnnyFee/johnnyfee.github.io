@@ -21,7 +21,7 @@ tags: [spring,wire]
 		<property name="instrument" ref="saxophone"/>
 	</bean>
 
-<!--more-->	
+<!-- more -->	
 	
 ####使用p命名空间
 

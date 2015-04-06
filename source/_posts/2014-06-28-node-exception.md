@@ -29,7 +29,7 @@ tags: [node, exception]
         console.error('Error caught by catch block:', e);
     }
 
-<!--more-->
+<!-- more -->
 
 执行的结果是代码进到了uncaughtException的回调里而不是catch块。
 

@@ -37,7 +37,7 @@ TODO
 - [Sencha Example](http://senchaexamples.com/)
 - [jsduck](https://github.com/senchalabs/jsduck)
 
-<!--more-->	
+<!-- more -->	
 
 ## 其他
 

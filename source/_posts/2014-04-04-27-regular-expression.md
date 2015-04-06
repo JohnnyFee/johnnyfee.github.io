@@ -21,7 +21,7 @@ tags: [git]
 
 [隐藏边注](http://deerchao.net/tutorials/regex/regex.htm) 本文右边有一些注释，主要是用来提供一些相关信息，或者给没有程序员背景的读者解释一些基本概念，通常可以忽略。
 
-<!--more-->
+<!-- more -->
 
 ## 正则表达式到底是什么东西？
 

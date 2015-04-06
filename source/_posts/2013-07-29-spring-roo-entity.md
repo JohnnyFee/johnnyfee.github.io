@@ -21,7 +21,7 @@ entity创建后会自动使用创建的entity作为上下文，之后执行的�
 	field number --fieldName maximumCapacity --type java.lang.Integer
 	field date --fieldName runDate --type java.util.Date --persistenceType JPA_DATE --dateFormat SHORT
 
-<!--more-->	
+<!-- more -->	
 
 **枚举类型**
 

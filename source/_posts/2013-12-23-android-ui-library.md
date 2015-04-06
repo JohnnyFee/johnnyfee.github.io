@@ -38,7 +38,7 @@ tags: [android]
 - [flavienlaurent/NotBoringActionBar](https://github.com/flavienlaurent/NotBoringActionBar)
 - [ksoichiro/Android-ObservableScrollView](https://github.com/ksoichiro/Android-ObservableScrollView) Android library to observe scroll events on scrollable views.
 
-<!--more-->
+<!-- more -->
 
 ## Toast
 - [SimonVT / MessageBar](https://github.com/SimonVT/MessageBar). 提示信息可以同时包含文本和按钮。

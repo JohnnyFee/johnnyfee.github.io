@@ -20,7 +20,7 @@ tags: [web, css]
         margin: <margin-top> || <margin-right> || <margin-bottom> || <margin-left>
     }
 
-<!--more-->
+<!-- more -->
 
 `margin` 也可是接收少于 4 个值，如接收 2 个值时：
 

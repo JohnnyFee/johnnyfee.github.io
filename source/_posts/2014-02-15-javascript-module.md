@@ -12,7 +12,7 @@ Web在发展，浏览器中出现了更多的标准API，这些过程发生在�
 
 规范内容参考： [JavaScript模块化开发（二）——CommonJS规范](http://www.feeldesignstudio.com/2013/09/javascript-module-pattern-commonjs)
 
-<!--more-->
+<!-- more -->
 
 - 没有模块系统。
 - 标准库较少。ECMAScript仅定义了部分核心库，对于文件系统，I/O流等常见需求却没有标准的API。就HTML5的发展状况而言，W3C标准化在一定意义上是在推进这个过程，但是它仅限于浏览器端。

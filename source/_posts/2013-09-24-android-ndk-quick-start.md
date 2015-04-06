@@ -23,7 +23,7 @@ tags: [android, ndk, jni]
 
 JDK、ADT Bundle、NDK的平台一定要一致，本人都是用x86版本，亲测可以单步调试C/C++代码。
 
-<!--more-->
+<!-- more -->
 
 ## 生成.h文件
 

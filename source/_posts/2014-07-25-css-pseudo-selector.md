@@ -20,7 +20,7 @@ a:hover {
 
 They are immensely useful in a variety of situations. Some of them are CSS3, some CSS2... it depends on each particular one. Outside of IE, they have great browser support. In IE land, even IE8, support is pretty barren. However, the IE9 preview has [full support of them](http://ie.microsoft.com/testdrive/benchmarks/CSS3info/Default.html). The link-related ones work but not much else.  Let's take a brief look at each one of them. Don't worry, there isn't that many.
 
-<!--more-->
+<!-- more -->
 
 ### Link-related pseudo class selectors
 

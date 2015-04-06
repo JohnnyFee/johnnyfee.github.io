@@ -20,7 +20,7 @@ jasmine-html.js用来展示测试结果，jasmine.css用来美化测试结果。
     + src/: 存放了我们需要测试的js文件对象
     + SpecRunner.html: 运行测试用例的环境
 
-<!--more-->
+<!-- more -->
 
 ## 核心概念
 

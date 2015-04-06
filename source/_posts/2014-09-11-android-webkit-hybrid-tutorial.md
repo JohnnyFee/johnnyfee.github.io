@@ -10,7 +10,7 @@ See [Building Hybrid Android Apps with Java and JavaScript](http://www.salttiger
 
 "混合" 应用是一种特殊的 WEB 应用，它扩展基于 WEB 的应用，并且可以使用设备平台的本地 API。混合应用的设计模式同时适用于移动和桌面环境。
 
-<!--more-->
+<!-- more -->
 
 __相对本地应用的优点：__
 
@@ -22,7 +22,7 @@ __相对本地应用的优点：__
 
 - 混合应用是未来。展望移动系统技术，你可以很容易认为混合应用是开发的未来。 Windows Phone 8，Google 提出合并 Chrome OS 和 Android，Tizen OS 和 Firefox，这些都证实了这一点，因此，在不久的将来，构建和发布混合应用是具有战略性的正确选择。
 
-<!--more-->
+<!-- more -->
 
 __相对本地应用的不足：__
 

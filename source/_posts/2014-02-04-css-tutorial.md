@@ -81,7 +81,7 @@ See also [The Lengths of CSS](http://css-tricks.com/the-lengths-of-css/)。
 
 另外，可以使用 CSS3 的 `calc` 函数动态计算长度值，如 `width: calc(80% - 20px)` 。
 
-<!--more-->
+<!-- more -->
 
 ### Cross Browser
 

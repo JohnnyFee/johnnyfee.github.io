@@ -20,7 +20,7 @@ SpEl是Spring Expression Language的缩写，可以为bean的属性装配运行�
 
 	<property name="song” value="#{kenny.song}"/>
 
-<!--more-->	
+<!-- more -->	
 
 ####引用bean的方法
 

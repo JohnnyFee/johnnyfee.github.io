@@ -22,7 +22,7 @@ tags: [angular, ui]
 
 - [Angelina Fabbro: CSS In Your Pocket - Mobile CSS Tips From The Trenches [CSSConfUS2014] - YouTube](https://www.youtube.com/watch?v=vBHt61yDO9U)
 
-<!--more-->
+<!-- more -->
 
 ## Framework
 

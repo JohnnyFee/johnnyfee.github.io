@@ -21,7 +21,7 @@ tags: [qt, thread]
 
 下面我们分别来看它们的用法：
 
-<!--more-->
+<!-- more -->
 
 ## QMutex
 

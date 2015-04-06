@@ -18,7 +18,7 @@ But hex codes aren't the only way to declare color. There are also named colors.
     footer { background: black; }
     button.warning { background: red; }
 
-<!--more-->
+<!-- more -->
 
 RGB / RGBa / HSL / HSLa are yet another way to declare colors:
 

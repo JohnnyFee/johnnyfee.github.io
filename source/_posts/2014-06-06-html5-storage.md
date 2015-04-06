@@ -15,7 +15,7 @@ Local storage persists indefinitely, while session storage lasts only for the du
 
 Local and session storage are not the only client storage available. HTML 5 WebSQL serves as a more full-featured, client-side database. WebSQL brings SQLite-based structured database functionality, typically deployed on servers, to client browser applications. WebSQL is appropriate for data-intensive applications requiring complex queries rather than simple key/value access. WebSQL database transaction calls help avoid interfaces from locking up, facilitate rollback and error handling, and protect against SQL injection. Database versioning allows you to manage schema changes incrementally.
 
-<!--more-->
+<!-- more -->
 
 ### Storage on the Client Device
 

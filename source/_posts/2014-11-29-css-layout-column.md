@@ -10,7 +10,7 @@ The `column-count` property in CSS controls how many vertical columns text in a 
 
 `column-count` 属性用于控制元素垂直划分的列数，如：
 
-<!--more-->
+<!-- more -->
 
 ```css
 p.intro-text {

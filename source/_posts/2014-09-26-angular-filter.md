@@ -8,7 +8,7 @@ tags : [angular, tutorial]
 
 过滤器的内容非常简单，只要明白了内置的如何使用，自己如何定义一个filter就OK了~今天系统的学习了下，下面做个介绍。
 
-<!--more-->
+<!-- more -->
 
 ## filter的两种使用方法
 

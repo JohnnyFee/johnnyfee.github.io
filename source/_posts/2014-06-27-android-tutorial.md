@@ -26,7 +26,7 @@ tags: [android, tutorial]
 - [All in Together: Android Studio, Gradle and Robolectric](http://www.bignerdranch.com/blog/all-in-together-android-studio-gradle-and-robolectric)
 - [Robust and readable architecture for an Android App, part 2](http://blog.joanzapata.com/robust-and-readable-part-2-introducing-async-service)
 
-<!--more-->
+<!-- more -->
 
 ## Toos
 

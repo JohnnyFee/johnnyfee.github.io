@@ -21,7 +21,7 @@ tags: [qt, tutorial]
 - Nokia Ftp <ftp://ftp.qt.nokia.com/misc/MinGW-gcc440_1.zip>
 - Csdn <http://download.csdn.net/detail/vah101/4863585>
 
-<!--more-->
+<!-- more -->
 
 分步安装过程可参考：
 

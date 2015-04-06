@@ -13,7 +13,7 @@ github提供的[GitHub Pages](http://pages.github.com/)服务使用户可以为�
 	
 GitHub Pages分为User, Organization Pages(博客或网站)和Project Pages(项目doc)。不过所有的页面必须的静态的，也就是说只能使用HTML/CSS/JavaScript等前端技术。但Github后台使用Jekyll[^1][^2]将一些特殊格式的文本文档（[Markdown](http://daringfireball.net/projects/markdown/) ,[Textile](http://textile.sitemonks.com/), [Liquid](http://wiki.shopify.com/Liquid)）转化为html文档。所以我们可以使用[Markdown](http://markdownpad.com/)等编辑器、提交markdown文档到github后，即可正常访问它生成的页面，通常提交之后要等上一会儿，10分钟以内。所以作为新手，可以现在本地搭建一个jekyll服务，实时查看更改。待熟悉之后，就可以使用程序员最喜欢方式写博客了，编辑，提交，编辑，提交...
 
-<!--more-->	
+<!-- more -->	
 
 ### 创建User Pages
 

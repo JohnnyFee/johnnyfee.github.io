@@ -9,7 +9,7 @@ tags: [javascript, kernel]
 > 
 > 另一个版本的翻译：[goddyzhao • 变量对象（Variable object）](http://zh.blog.goddyzhao.me/post/11141710441/variable-object)
 
-<!--more-->
+<!-- more -->
 
 ## 介绍
 

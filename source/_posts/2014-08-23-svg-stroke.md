@@ -17,7 +17,7 @@ The `stroke` and `fill` CSS properties are specified inside the `style` attribut
         style="stroke: #000066; fill: 3333ff;" />
 ```
 
-<!--more-->
+<!-- more -->
 
 This example defines a circle with a darker blue stroke color, and a lighter blue fill color.
 

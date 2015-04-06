@@ -31,7 +31,7 @@ Use the install command to install an apk, the optional -r argument reinstalls a
     # example
     adb uninstall com.growingwiththeweb.example
 
-<!--more-->
+<!-- more -->
 
 ### Start an activity
 

@@ -7,7 +7,7 @@ tags: [javascript]
 
 The Association for Retail Technology Standards (ARTS) of the National Retail Federation is an international membership organization dedicated to reducing the costs of technology through standards. Since 1993, ARTS has been delivering application standards exclusively to the retail industry. ARTS has four standards: 
 
-<!--more-->
+<!-- more -->
 
 - The Standard Relational Data Model
 - UnifiedPOS

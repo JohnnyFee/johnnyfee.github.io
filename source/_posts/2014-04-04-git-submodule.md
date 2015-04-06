@@ -13,7 +13,7 @@ The link between working tree entry and __`foreign repository`__ is stored in th
 
 Setting submodule repositories involves an initialization process, in which the required entries are added to the __`.git/config`__ file. The user may later adjust it, for example to fix SSH login names.
 
-<!--more-->
+<!-- more -->
 
 ## Cloning Repositories with Submodules
 

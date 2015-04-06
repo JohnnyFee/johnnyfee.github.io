@@ -17,7 +17,7 @@ tags: [web, bestpractice]
 
 下面来看看Google和雅虎提供的Web页面优化最佳实践。
 
-<!--more-->
+<!-- more -->
 
 ## 一、Google的Web优化最佳实践
 

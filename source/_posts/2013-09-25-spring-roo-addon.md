@@ -32,7 +32,7 @@ result.
 - --refresh—The list of add-ons are loaded on startup. Use this option to force
 a reload of the list.
 
-<!--more-->
+<!-- more -->
 
 ###搜索插件
 

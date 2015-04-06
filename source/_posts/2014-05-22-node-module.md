@@ -14,7 +14,7 @@ On my journey with Node I've been keeping an eye out the Good Way to do things a
 
 In this post I'll share my observations of the Node module system and the ways in which you can use it to encapsulate and share code. My goal is to identify and illustrate useful patterns for module interface design and to help you understand when and how to use them in your own work.
 
-<!--more-->
+<!-- more -->
 
 I discuss seven patterns below, many of which can be used in combination. They are:
 

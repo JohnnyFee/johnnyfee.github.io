@@ -19,7 +19,7 @@ global里定义了一些全局的对象或函数，在node的任何一个模块�
     require("./b");// 执行b.js里的代码
     console.log(name);// Tony
 
-<!--more-->
+<!-- more -->
   
 另外一种更简单（也更容易引起错误）的做法，是不用var关键字声明变量，也会成为global的属性 
 

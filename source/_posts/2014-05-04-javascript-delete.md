@@ -25,7 +25,7 @@ tags: [javascript, operator]
 	delete x; // false
 	typeof x; // "function"
 
-<!--more-->
+<!-- more -->
 
 注意 `delete` 只有在无法删除的情况下才会返回 `false`。为了理解这一点，我们必须解释一下变量初始化以及变量属性的一些基本概念--不幸的是很少有 Javascript 的书能讲到这些。如果你只想知其然而不是知其所以然的话，你完全可以跳过这一节。
 

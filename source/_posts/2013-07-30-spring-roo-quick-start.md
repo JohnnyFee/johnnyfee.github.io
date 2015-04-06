@@ -47,7 +47,7 @@ tags: [spring,roo]
 
 	mvn package jetty:run 或者 mvn package tomcat:run
 
-<!--more-->	
+<!-- more -->	
 
 ### 常用命令
 **hint**

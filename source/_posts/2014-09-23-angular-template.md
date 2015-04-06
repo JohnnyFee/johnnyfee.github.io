@@ -44,7 +44,7 @@ Angular 模板可以通过 `<script>` 或者 `$templateCache` 添加，通过这
 
 其中，`type="text/ng-template"` 是指明这是 ng 模板。id 是模板标识。
 
-<!--more-->
+<!-- more -->
 
 __Note:__ the `script` tag containing the template does not need to be included in the `head` of the document, but it must be below the `ng-app` definition.
 

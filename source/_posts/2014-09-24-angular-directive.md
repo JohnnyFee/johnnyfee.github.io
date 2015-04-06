@@ -14,7 +14,7 @@ tags : [angular, tutorial]
 
 相对 JQuery 实现控件的方式，Directives 更具语义性，从 HTML 便可知控件的含义。
 
-<!--more-->
+<!-- more -->
 
 ## 定义指令
 

@@ -17,7 +17,7 @@ Here is a simple SVG animation example:
 
 Notice how the `<rect>` element has a `<animateTransform>` element nested inside it. It is this element that animates the rectangle.
 
-<!--more-->
+<!-- more -->
 
 ## Overview of Animation Options
 

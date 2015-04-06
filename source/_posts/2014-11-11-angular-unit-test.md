@@ -12,7 +12,7 @@ AngularJS 采用 Jasmine 作为它的测试框架，而且 AngularJS 为 Jasmine
 
 所有测试相关的扩展和模拟对象都发布在一个分离的文件 [`angular-mocks.js` ](https://github.com/angular/bower-angular-mocks) 中。在 test runner 中不要忘记包含这个脚本，同时，不要在应用的发布版本中不要包含这个脚本。
 
-<!--more-->
+<!-- more -->
 
 ## 测试服务
 

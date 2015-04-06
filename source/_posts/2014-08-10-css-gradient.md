@@ -8,13 +8,13 @@ Just as you can declare the [background](http://css-tricks.com/almanac/propertie
 
 Gradients are typically one color that fades into another, but in CSS you can control every aspect of how that happens, from the direction to the colors (as many as you want) to where those color changes happen. Let's go through it all.
 
-<!--more-->
+<!-- more -->
 
 ## Gradients are background-image
 
 While declaring the a solid color uses `background-color` property in CSS, gradients use `background-image`. This comes in useful in a few ways which we'll get into later. The shorthand `background` property will know what you mean if you declare one or the other.
 
-<!--more-->
+<!-- more -->
 
 ```
 .gradient {

@@ -28,7 +28,7 @@ tags: [javascript,backbone,mvc]
             }
         });
 
-<!--more-->
+<!-- more -->
 
 2. Create an instance of the view:
     

@@ -290,7 +290,7 @@ Let's look another example:
 
 There is a recipe service, which returns what we call an Angular Resource. With just that single line of code—return `$resource`—(and of course, a dependency on the guthub.services module), we can now put recipe as an argument in any of our controllers, and it will be injected into the controller. Furthermore, each recipe object has the following methods built in:
 
-<!--more-->
+<!-- more -->
 
 1. Recipe.get()
 1. Recipe.save()

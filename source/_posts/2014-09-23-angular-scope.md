@@ -8,7 +8,7 @@ tags : [angular, tutorial]
 
 Angular 中作用域的继承使用的是原型继承，也就在说子作用域的 prototype 会指向父作用域。在子作用域中查找属性时，先查找子作用域中的属性，如果未找到，在去父作用域中查找，以此类推，直到找到跟作用域 $rootScope。
 
-<!--more-->
+<!-- more -->
 
 Angular 中，总共有四种作用域：
 

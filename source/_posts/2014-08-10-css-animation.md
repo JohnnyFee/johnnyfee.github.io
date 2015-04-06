@@ -23,7 +23,7 @@ img:hover{
 }
 ```
 
-<!--more-->
+<!-- more -->
 
 transition的作用在于，指定状态变化所需要的时间。
 

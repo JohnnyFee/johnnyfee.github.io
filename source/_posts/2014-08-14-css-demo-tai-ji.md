@@ -18,7 +18,7 @@ tags : [css, form]
         background-color: linear-gradient(to right, #222 50%, #eee 50%); 
     }
 
-<!--more-->
+<!-- more -->
 
 `border-radius: 50%` 是将边框由直角变成圆角，而且是最平滑的圆角。因为 `50%` 已经使圆角变得最平滑，所以即使 `border-radius: >50%` 也仍然还是圆角。
 

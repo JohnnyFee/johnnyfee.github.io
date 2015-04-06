@@ -7,7 +7,7 @@ tags: [javascript]
 >本文由 [伯乐在线](http://blog.jobbole.com/) - [陈 鑫伟](http://blog.jobbole.com/author/owenchen/) 翻译自 [Smashing Magazine](http://coding.smashingmagazine.com/2014/01/23/understanding-javascript-function-prototype-bind/)。
 > 原文链接：<http://blog.jobbole.com/58032/>
 
-<!--more-->
+<!-- more -->
 
 函数绑定(Function binding)很有可能是你在开始使用JavaScript时最少关注的一点，但是当你意识到你需要一个解决方案来解决如何在另一个函数中保持this上下文的时候，你真正需要的其实就是 Function.prototype.bind()，只是你有可能仍然没有意识到这点。
 

@@ -12,7 +12,7 @@ tags: [phonegap, cordova, android]
 - 添加 `tools/` 和 `platform-tools/` 到环境变量。
 - 可能还需要 将 Java 和 Ant 添加到环境变量。`;%JAVA_HOME%\bin;%ANT_HOME%\bin`
 
-<!--more-->
+<!-- more -->
 
 ## App
 
@@ -78,7 +78,7 @@ tags: [phonegap, cordova, android]
             android:layout_width="match_parent"  
             android:layout_height="match_parent" />  
 
-    <!--more-->
+    <!-- more -->
 
 5. 修改 Activity，使它实现 CordovaInterface 接口，它应该实现包含的方法。你可以从  `/framework/src/org/apache/cordova/CordovaActivity.java` 拷贝也可以自己实现。下面的代码片段显示了一个基于这个接口的基本应用。
 

@@ -21,7 +21,7 @@ tags : [extjs, cmd]
 
 如果报错可以在命令尾部加--debug –V，看调试信息，一般是由于网络原因，可以通过修改DNS为google的DNS可以解决问题。
 
-<!--more-->	
+<!-- more -->	
 
 #### 下载Sencha CMD并安装
 运行build失败可能跟cygwin有关，卸载cygwin可能解决问题。

@@ -10,7 +10,7 @@ Let’s start by first talking about something that doesn’t work as many expec
 
 [使用 CSS 水平居中](http://www.vanseodesign.com/css/centering-with-css/) 很简单。当元素是一个内联元素时，我们使用 `text-align` 在居中于父元素中。当元素时块元素时，我们为它指定一个宽度，然后设置左右边距为 `auto `。
 
-<!--more-->
+<!-- more -->
 
 `vertical-align` 可以用于表格的单元格和对一些内联元素，不能应用到块元素的垂直居中。
 

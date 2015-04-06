@@ -10,7 +10,7 @@ tags: [web, css, layout]
 
 ![css-layout-box-model.png](http://johnnyimages.qiniudn.com/css-layout-box-model0.png)
 
-<!--more-->
+<!-- more -->
 
 在 Firebug 中：
 

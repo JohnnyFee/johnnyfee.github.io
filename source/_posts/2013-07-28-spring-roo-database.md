@@ -28,7 +28,7 @@ jpa setup --database HYPERSONIC_PERSISTENT --provider HIBERNATE
 
 	<property name="hibernate.hbm2ddl.auto" value="create"/>
 
-<!--more-->	
+<!-- more -->	
 
 用来配置启动时，数据库的处理。
 

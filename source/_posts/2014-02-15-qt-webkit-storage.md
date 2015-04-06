@@ -40,4 +40,4 @@ LandiWebView::LandiWebView(QWidget * parent) : QWebView(parent)
 }
 ```
 
-<!--more-->
+<!-- more -->

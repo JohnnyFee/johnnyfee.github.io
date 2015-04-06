@@ -22,7 +22,7 @@ Window控件默认是悬浮控件，任何控件都可以通过制定float属性
 	    html: 'Test Panel'
 	});
 	
-<!--more-->	
+<!-- more -->	
 
 Floating Components are automatically rendered to the document body the first time their show method is called
  

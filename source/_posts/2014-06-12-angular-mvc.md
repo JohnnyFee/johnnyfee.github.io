@@ -25,7 +25,7 @@ See:
 - [AngularJS: Developer Guide: Modules](https://docs.angularjs.org/guide/module) / 翻译 [AngularJs学习笔记--Modules - Lcllao - 博客园](http://www.cnblogs.com/lcllao/archive/2012/09/22/2698208.html)
 - [Jorgen’s Weblog: The AngularJS Module System](http://blog.jorgenschaefer.de/2014/04/the-angularjs-module-system.html)
 
-<!--more-->
+<!-- more -->
 
 ### 生命周期
 

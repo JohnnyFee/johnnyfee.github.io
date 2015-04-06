@@ -13,7 +13,7 @@ tags: [web, css, selector]
 类选择器 | class 或 element.class | 选择指定类的元素 | <li>`p.info { background:#ff0; }` <li> `span.class1.class2`
 ID 选择器 |\#<id值\>| 匹配所有 ID 属性等于 id 的元素 | `#info { background:#ff0; }`
 
-<!--more-->
+<!-- more -->
 
 ### 属性选择器
 

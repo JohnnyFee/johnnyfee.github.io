@@ -18,7 +18,7 @@ tags: [qt]
 		return string((const char *)s.toLocal8Bit());
 	}
 
-<!--more-->
+<!-- more -->
 
 ### QString to Char*
 

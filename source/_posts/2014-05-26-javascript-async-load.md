@@ -22,7 +22,7 @@ js 之所以要同步执行，是因为 js 中可能有输出 document 内容、
 
 简单说：加载的网络 timeline 是瀑布模型，而异步加载的 timeline 是并发模型。
 
-<!--more-->
+<!-- more -->
 
 ### 常见异步加载（Script DOM Element）
 

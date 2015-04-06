@@ -27,7 +27,7 @@ To illustrate the drastic difference, here is an example in which we perform mul
     })
     
 
-<!--more-->
+<!-- more -->
 
 The series example:
 

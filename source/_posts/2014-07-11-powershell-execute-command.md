@@ -16,7 +16,7 @@ There are several different methods for running executables as well as invoking 
   
 **Details:** If a cmd is used without the prefixed '.\'. it is only run if it is in the environment path. PowerShell does not execute from the current directory without it. This approach is not advised for using in scripts unless its for a system tool. Accepts args as if it were at a cmd prompt.   
  
-<!--more-->
+<!-- more -->
 
 **Example:**  
   

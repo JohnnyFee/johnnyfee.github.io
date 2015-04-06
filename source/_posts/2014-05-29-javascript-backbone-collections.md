@@ -17,7 +17,7 @@ Extend the Backbone.Collection object and pass the model's object name as an opt
       model: InvoiceItemModel
     });
 
-<!--more-->
+<!-- more -->
 
 Initialize a new collection instance and pass the initial array of models.
 

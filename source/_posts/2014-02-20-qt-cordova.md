@@ -27,7 +27,7 @@ Qt Cordova对应的开源工程为：[apache/cordova-qt](https://github.com/apac
 
 构建，运行。
 
-<!--more-->
+<!-- more -->
 
 ## 源码分析
 

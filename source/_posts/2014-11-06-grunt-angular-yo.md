@@ -11,7 +11,7 @@ tags: [angular, yo, grunt]
 - test 执行应用的单元测试。
 - default 构建一个优化过的，产品化的应用版本。
 
-<!--more-->
+<!-- more -->
 
 ```js
 module.exports = function(grunt) {

@@ -8,7 +8,7 @@ tags: [android,hack]
 - 在xml布局文件中使用`include`标签来避免重复代码。
 - 使用ViewStub来实现View的延迟加载。
 
-<!--more-->
+<!-- more -->
 
 ##include
 

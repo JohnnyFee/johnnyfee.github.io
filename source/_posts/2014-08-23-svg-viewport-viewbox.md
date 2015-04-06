@@ -20,7 +20,7 @@ the `<svg>` element. Here is an example:
 
 This examples defines a viewport that is 500 units wide and 300 units high.
 
-<!--more-->
+<!-- more -->
 
 ## Coordinate System Units
 

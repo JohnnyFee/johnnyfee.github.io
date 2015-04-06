@@ -12,7 +12,7 @@ Backbone.js was started by Jeremy Ashkenas from DocumentCloud in 2010 and is now
 
 MVC is adesign pattern that is widely used in user-facing software, such as web applications. It is intended for splitting data and representing it in a way that makes it convenient for user interaction. To understand what it does, understand the following:
 
-<!--more-->
+<!-- more -->
 
 * Model: Thiscontains data and provides business logic used to run the application
 * View: Thispresents the model to the user

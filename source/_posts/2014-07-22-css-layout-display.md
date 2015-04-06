@@ -18,7 +18,7 @@ div {
 }
 ```
 
-<!--more-->
+<!-- more -->
 
 The default value for all elements is inline. Most "User Agent stylesheets" (the default styles the browser applies to all sites) reset many elements to "block". Let's go through each of these, and then cover some of the other less common values.
 

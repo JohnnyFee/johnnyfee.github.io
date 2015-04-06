@@ -36,7 +36,7 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 - [enricomarino/is](https://github.com/enricomarino/is)
 - [landau/is](https://github.com/landau/is) A small predicate library for javascript.
 
-<!--more-->
+<!-- more -->
 
 ### String
 

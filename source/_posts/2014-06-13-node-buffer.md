@@ -14,7 +14,7 @@ One way to handle this problem is to just use strings _anyway_, which is exactly
 
 Don't use binary strings. Use _buffers_ instead!
 
-<!--more-->
+<!-- more -->
 
 ## What Are Buffers?
 

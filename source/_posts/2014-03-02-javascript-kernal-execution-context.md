@@ -9,7 +9,7 @@ tags: [javascript, kernel]
 > 
 > 另一个版本的翻译：[goddyzhao • 执行上下文（Execution Context）](http://zh.blog.goddyzhao.me/post/10020230352/execution-context)
 
-<!--more-->
+<!-- more -->
 
 DOTO 使用 goddyzhao 的翻译。
 

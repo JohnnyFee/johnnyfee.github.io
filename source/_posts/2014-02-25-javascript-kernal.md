@@ -35,7 +35,7 @@ ECMAScript做为一个高度抽象的面向对象语言，是通过 _对象_ 来
 
 这些prototype有什么用？让我们以 _原型链_（prototype chain）的概念来回答这个问题。
 
-<!--more-->
+<!-- more -->
 
 ## 原型链
 

@@ -17,7 +17,7 @@ Floated elements _remain a part of the flow of the web page_.  There are four va
 
 4. 浮动元素的后一个元素会围绕着浮动元素（典型运用是文字围绕图片），浮动元素的前一个元素不会受到任何影响，如果你想让两个块状元素并排显示，必须让两个块状元素都应用float。
 
-<!--more-->
+<!-- more -->
 
 Floats are also helpful for layout in smaller instances. Take for example this little area of a web page. If we use float for our little avatar image, when that image changes size the text in the box will reflow to accommodate:
 

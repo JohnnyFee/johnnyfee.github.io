@@ -12,7 +12,7 @@ div {
 }
 ```
 
-<!--more-->
+<!-- more -->
 
 or with proper prefixes:
 

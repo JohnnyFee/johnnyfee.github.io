@@ -18,4 +18,4 @@ tags: [data, format]
 
 	0x07, 0x96 [高位在前，地位在后]
 
-<!--more-->		
+<!-- more -->		

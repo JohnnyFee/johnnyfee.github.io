@@ -48,7 +48,7 @@ tags : [angular, tutorial]
 
         npm install -g generator-angular
 
-    <!--more-->
+    <!-- more -->
 
 1. Starting a Fresh AngularJS project
         
@@ -187,7 +187,7 @@ Manage only a part of the page by placing it on some element like a `<div>`withi
         …
     </html>
 
-<!--more-->
+<!-- more -->
 
 AngularJS会在`DOMContentLoaded`事件触发时执行，并通过`ng-app`指令 寻找你的应用根作用域。如果 `ng-app`指令找到了，那么AngularJS将会：
 

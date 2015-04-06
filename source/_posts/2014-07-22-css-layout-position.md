@@ -18,7 +18,7 @@ The `position` value in CSS deals with layout and manipulating elements to be in
 
 static 是默认值。任意 position: static; 的元素不会被特殊的定位。一个 static 元素表示它不会被 `positioned`，一个 position 属性被设置为其他值的元素表示它会被`positioned`。此时，设置 left/right/top/bottom/z-index 等属性无效。
 
-<!--more-->
+<!-- more -->
 
 ### relative
 

@@ -12,7 +12,7 @@ Backboneprovides a unified way for triggering and handling events in otherBackbo
 
 Perform the following steps to handle object events.
 
-<!--more-->
+<!-- more -->
 
 1. Define a new object.
 	

@@ -6,7 +6,7 @@ tags: [javascript]
 ---
 原文：[Javascript 严格模式详解 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html)
 
-<!--more-->
+<!-- more -->
 
 ##一、概述
 

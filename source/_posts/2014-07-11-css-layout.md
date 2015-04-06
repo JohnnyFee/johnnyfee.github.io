@@ -13,7 +13,7 @@ tags: [web, css, layout]
 - 伸缩布局（Flexbox）
 - [网格布局（Grids）](http://www.w3cplus.com/css3/css3-grid-layout.html)只有 IE10+ 支持。
 
-<!--more-->
+<!-- more -->
 
 ## Example
 

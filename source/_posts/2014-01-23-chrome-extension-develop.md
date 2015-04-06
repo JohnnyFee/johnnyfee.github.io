@@ -22,7 +22,7 @@ Chrome扩展文件以.crx为后缀名，在Google Chrome扩展官方网站下载
 
 Google发布的[Manifest v2](http://developer.chrome.com/extensions/manifest.html)中支持的域。
 
-<!--more-->
+<!-- more -->
 
 ## 核心概念
 

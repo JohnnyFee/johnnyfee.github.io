@@ -28,7 +28,7 @@ Preferences的使用方法如下：
 	        android:defaultValue="@string/pref_syncConnectionTypes_default" />
 	</PreferenceScreen>
 
-<!--more-->
+<!-- more -->
 
 A Preference object is the building block for a single setting. Each Preference appears as an item in a list and provides the appropriate UI for users to modify the setting. Each Preference you add has a corresponding key-value pair that the system uses to save the setting in a default SharedPreferences file for your app's settings. When the user changes a setting, the system updates the corresponding value in the SharedPreferences file for you. **The only time you should directly interact with the associated SharedPreferences file is when you need to read the value in order to determine your app's behavior based on the user's setting.** The value saved in SharedPreferences for each setting can be one of the following data types:
 

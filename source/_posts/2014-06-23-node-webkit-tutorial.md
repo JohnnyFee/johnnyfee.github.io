@@ -30,7 +30,7 @@ App
  `-- … 
 ```
 
-<!--more-->
+<!-- more -->
 
 __package.json:__
 

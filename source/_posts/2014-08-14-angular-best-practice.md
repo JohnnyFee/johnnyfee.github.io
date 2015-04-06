@@ -16,7 +16,7 @@ tags : [angular, tutorial]
 
 类似的，不要以这样的思维开始：用jQuery来做X，Y和Z，然后只需要把AngularJS的models和controllers加在这上面。这在刚开始的时候显得非常诱人，这也是为什么我总是建议AngularJS的新手完全不使用jQuery，至少不要在习惯使用“Angular Way”开发之前这么做。
 
-<!--more-->
+<!-- more -->
 
 我在邮件列表里看到很多开发者使用150或200行代码的jQuery插件创造出这些复杂的解决方案，然后使用一堆callback函数以及$apply把它粘合到AngularJS里，看起来复杂难懂；但是他们最终还是把它搞定了！问题是在大多数情况下这些jQuery插件可以使用很少的AngularJS代码重写，而且所有的一切都很简单直接容易理解。
 

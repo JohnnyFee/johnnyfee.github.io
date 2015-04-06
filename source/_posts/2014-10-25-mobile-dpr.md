@@ -25,7 +25,7 @@ dip或dp,（device independent pixels，设备独立像素）与屏幕密度有�
 
 这样，在视网膜屏幕的iphone上，屏幕物理像素640像素，独立像素还是320像素，因此，`window.devicePixelRatio`等于`2`.
 
-<!--more-->
+<!-- more -->
 
 ## 浏览器支持
 

@@ -39,7 +39,7 @@ Let’s look more closely at these differences by examining hello.html, the HTML
         </body>
     </html>
 
-<!--more-->
+<!-- more -->
 
 ![html-order-demo.jpg](http://johnnyimages.qiniudn.com/html-order-demo.jpg)
 

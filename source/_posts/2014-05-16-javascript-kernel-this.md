@@ -21,7 +21,7 @@ tags: [javascript]
 * 构造器
 * 方法
 
-<!--more-->
+<!-- more -->
 
 ### 1.1 在实函数中的 `this`
 

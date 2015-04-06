@@ -22,7 +22,7 @@ tags: [web, html, tutorial]
     <input disabled="disabled">
     <input disabled="true">
 
-<!--more-->
+<!-- more -->
 
 contenteditable: 
 

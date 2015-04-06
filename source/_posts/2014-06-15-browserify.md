@@ -49,7 +49,7 @@ index.html:
 ```html
 <script src="bundle.js"></script>
 ```
-<!--more-->
+<!-- more -->
 
 ## modules
 

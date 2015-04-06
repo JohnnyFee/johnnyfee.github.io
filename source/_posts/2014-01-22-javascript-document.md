@@ -23,7 +23,7 @@ tags : [js, doc]
 
 综合考虑，个人偏向于sencha的jsduck。
 
-<!--more-->
+<!-- more -->
 
 ## JsDoc
 

@@ -11,7 +11,7 @@ tags: [node, grunt]
 - `useminPrepare` 为将指定文件中的 usemin block 转换为单独的一行（优化版本）准备配置。这通过为每个优化步骤生成名为 `generated` 的子任务来完成。
 - `usemin` 使用优化版本替换 usemin 块，如果在磁盘上可以找到 revisioned 版本，则替换为 revisioned 版本。
 
-<!--more-->
+<!-- more -->
 
 `usemin` 可能用到的插件：
 

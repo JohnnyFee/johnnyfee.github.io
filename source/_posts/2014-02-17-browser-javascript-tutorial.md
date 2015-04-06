@@ -18,7 +18,7 @@ tags: [javascript]
 - [Announcing JS Error Reporting and AJAX Timing - New Relic blog](http://blog.newrelic.com/2014/03/13/javascript-error-reporting-ajax-timing-new-relic/)
 - [JavaScript Memory Management Masterclass // Speaker Deck](https://speakerdeck.com/addyosmani/javascript-memory-management-masterclass)
 
-<!--more-->
+<!-- more -->
 
 ### Test Tools
 

@@ -12,7 +12,7 @@ tags: [javascript, qt, buffer]
 
 QT 返回 QByteArray 时，JavaScript 端接收到的类型为 `Uint8ClampedArray`，我们可以很轻松地将这个对象转化为 `Buffer`。
 
-<!--more-->
+<!-- more -->
 
 ## 实现
 

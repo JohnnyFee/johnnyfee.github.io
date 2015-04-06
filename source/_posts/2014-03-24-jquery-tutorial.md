@@ -42,7 +42,7 @@ tags: [javascript]
 	    </li>
 	</ul>
 
-<!--more-->
+<!-- more -->
 
 默认的显示效果：
 

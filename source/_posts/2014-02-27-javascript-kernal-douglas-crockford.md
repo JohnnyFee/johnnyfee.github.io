@@ -6,7 +6,7 @@ tags: [javascript]
 ---
 ![douglas](http://johnnyimages.qiniudn.com/douglas.jpg)
 
-<!--more-->
+<!-- more -->
 
 ##Douglas Crockford
 

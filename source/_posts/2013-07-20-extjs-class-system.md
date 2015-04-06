@@ -33,7 +33,7 @@ tags : [extjs, class]
 	
 	`MyCompany.alien.Math.PI = "4.13"`	
 
-<!--more-->		
+<!-- more -->		
 
 ## 定义类
 ### 使用旧的方式

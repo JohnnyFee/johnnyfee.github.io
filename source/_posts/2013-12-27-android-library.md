@@ -40,7 +40,7 @@ tags: [android]
     + [Hands on Retrofit (A Rest Api Client) – s3xy4ngyc Dev Journey](http://s3xy4ngyc.github.io/articles/hands-on-retrofit/)
     + [Matt Swanson - Integration Testing against REST APIs in Android](http://www.mdswanson.com/blog/2014/02/24/integration-testing-rest-apis-for-android.html)
 
-<!--more-->
+<!-- more -->
 
 ## Framework
 

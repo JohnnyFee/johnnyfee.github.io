@@ -11,7 +11,7 @@ The goal of this tutorial is to help you understand the mobile features and how 
 
 If you want to target mobile devices you should consider using [QGraphicsWebView](http://qt-project.org/doc/qt-4.8/qgraphicswebview.html) instead of [QWebView](http://qt-project.org/doc/qt-4.8/qwebview.html). Since [QWebView](http://qt-project.org/doc/qt-4.8/qwebview.html) is based on the [QWidget](http://qt-project.org/doc/qt-4.8/qwidget.html) system, it cannot easily support __rotation, overlays, hardware accelerated compositing and tiling__. If you need a [QWidget](http://qt-project.org/doc/qt-4.8/qwidget.html) anyway, you can always construct a [QGraphicsView](http://qt-project.org/doc/qt-4.8/qgraphicsview.html) (which is a [QWidget](http://qt-project.org/doc/qt-4.8/qwidget.html)) with a [QGraphicsWebView](http://qt-project.org/doc/qt-4.8/qgraphicswebview.html) inside.
 
-<!--more-->
+<!-- more -->
 
 The QGraphicsWebView class allows Web content to be added to a [GraphicsView](http://qt-project.org/doc/qt-4.8/graphicsview.html#graphicsview).
 

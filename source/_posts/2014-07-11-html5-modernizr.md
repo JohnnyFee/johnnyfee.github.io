@@ -18,7 +18,7 @@ header, footer, article, section, nav, menu, hgroup {
 
 尽管如此，IE还是不能解析这些新增的HTML5标签，这个时候就需要借助Javascript来解决这个问题：
 
-<!--more-->
+<!-- more -->
 
 ```js
 document.createElement("article");

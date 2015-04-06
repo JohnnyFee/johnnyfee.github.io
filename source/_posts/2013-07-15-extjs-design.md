@@ -20,7 +20,7 @@ tags : [extjs, bestpractice]
 	    }
 	});
 
-<!--more-->	
+<!-- more -->	
 
 常用的模版方法：
 

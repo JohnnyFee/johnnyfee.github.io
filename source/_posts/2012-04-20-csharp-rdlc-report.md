@@ -6,7 +6,7 @@ tags : [csharp, report]
 ---
 本文原发表在[ITEYE](http://feiqiang.iteye.com/blog/1490634)上,均为本作者原创。
 
-<!--more-->
+<!-- more -->
 
 ###创建报表
 

@@ -308,6 +308,7 @@ __缺点：__
 - [Q](https://github.com/kriskowal/q)
 - [async](https://github.com/caolan/async)
 - [step](https://github.com/creationix/step)
+- [petkaantonov/bluebird](https://github.com/petkaantonov/bluebird) Bluebird is a full featured promise library with unmatched performance.
 
 
 ## 参考

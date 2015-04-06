@@ -13,7 +13,7 @@ See [JavaScript 秘密花园](https://bonsaiden.github.io/JavaScript-Garden/zh/)
 
 等于操作符由两个等号组成：`==`
 
-JavaScript 是_弱类型_语言，这就意味着，等于操作符会为了比较两个值而进行**强制类型转换**。
+JavaScript 是 _弱类型_ 语言，这就意味着，等于操作符会为了比较两个值而进行**强制类型转换**。
 
 ```js
 ""           ==   "0"           // false
@@ -26,6 +26,8 @@ false        ==   null          // false
 null         ==   undefined     // true
 " \t\r\n"    ==   0             // true
 ```
+
+<!-- more -->
 
 上面的表格展示了强制类型转换，这也是使用 `==` 被广泛认为是不好编程习惯的主要原因，
 由于它的复杂转换规则，会导致难以跟踪的问题。

@@ -13,6 +13,8 @@ tags: [javascript]
 - [Replacing jQuery with Vanilla JavaScript](http://flippinawesome.org/2014/05/05/replacing-jquery-with-vanilla-javascript/?-jquery-with-vanilla-javascript)
 - [barberboy/dom-elements](https://github.com/barberboy/dom-elements) DOM Elements is a polyfill supporting the .query and .queryAll methods recently added to the DOM Standard.
 
+<!-- more -->
+
 ## jQuery
 
 - [如何做到 jQuery-free？ - WEB开发者](http://www.admin10000.com/document/2043.html)

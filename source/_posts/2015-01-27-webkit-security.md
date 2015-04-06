@@ -12,6 +12,8 @@ tags : [WebKit]
 
 2007 年，Mozilla 项目组的 Gervase Markham 和 WEB 安全界大牛 Robert Hansen 两人共同提出 _内容安全策略_（ContentSecurity Policy，CSP），这是一个全新的、有效的安全防御策略来减轻这种风险。
 
+<!-- more -->
+
 ### 内容安全策略
 
 内容安全策略（Content Security Policy，简称CSP）是一种以可信白名单作机制，来限制网站中是否可以包含某来源内容。目前，各大主流浏览器均已支持 CSP。

@@ -14,6 +14,8 @@ Then you must add these directories into your `PATH` system variable:
 
 **Background:**
 
+<!-- more -->
+
 * let's assume you have installed your [Android SDK](http://cordova.apache.org/docs/en/3.2.0/guide_platforms_android_index.md.html#Android%20Platform%20Guide_requirements_and_support) to the `c:\sdk\android` directory
 * you have installed you **Apache ant** to the `c:\tools\apache-ant` directory
 

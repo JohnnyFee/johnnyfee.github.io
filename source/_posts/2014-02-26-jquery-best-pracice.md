@@ -3,6 +3,7 @@ title: "编写更好的jQuery代码的建议"
 category: JavaScript
 tags: [javascript]
 ---
+
 >**本文由 [yanhaijing](http://blog.jobbole.com/author/yanhaijing/) 翻译自 [Mathew Carella](http://flippinawesome.org/2013/11/25/writing-better-jquery-code/)**
 
 ##参考
@@ -12,6 +13,8 @@ tags: [javascript]
 讨论jQuery和javascript性能的文章并不罕见。然而，本文我计划总结一些速度方面的技巧和我本人的一些建议，来提升你的jQuery和javascript代码。好的代码会带来速度的提升。快速渲染和响应意味着更好的用户体验。
 
 首先，在脑子里牢牢记住jQuery就是javascript。这意味着我们应该采取相同的编码惯例,风格指南和最佳实践。
+
+<!-- more -->
 
 首先，如果你是一个javascript新手，我建议您阅读 《[JavaScript初学者的最佳实践](http://net.tutsplus.com/tutorials/JavaScript-ajax/24-JavaScript-best-practices-for-beginners/)》 ，这是一篇高质量的javascript教程，接触jQuery之前最好先阅读。
 

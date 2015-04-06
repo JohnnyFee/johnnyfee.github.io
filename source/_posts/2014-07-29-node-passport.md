@@ -8,6 +8,8 @@ tags: [node, auth]
 
 [Passport](http://passportjs.org/)项 目是一个基于Nodejs的认证中间件。Passport目的只是为了“登陆认证”，因此，代码干净，易维护，可以方便地集成到其他的应用中。Web应用 一般有2种登陆认证的形式：用户名和密码认证登陆,OAuth认证登陆。Passport可以根据应用程序的特点，配置不同的认证机制。本文将介绍，用户 名和密码的认证登陆。
 
+<!-- more -->
+
 ## Reference
 
 - [Fixing Up Passport.js ‘passport-http’ for Express v4 – Composite Code](http://compositecode.com/2014/04/29/fixing-up-passport-js-passport-http-for-express-v4/)

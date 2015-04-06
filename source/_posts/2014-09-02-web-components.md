@@ -10,6 +10,8 @@ tags: [web, component]
 - [skatejs/skatejs](https://github.com/skatejs/skatejs)
 - [erikringsmuth/app-router](https://github.com/erikringsmuth/app-router)
 
+<!-- more -->
+
 ## Tutorial
 
 - [A Guide to Web Components](http://css-tricks.com/modular-future-web-components/)

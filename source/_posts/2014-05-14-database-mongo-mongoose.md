@@ -10,6 +10,8 @@ tags: [mongodb, database]
 - [How To Write A Simple Node.js/MongoDB Web Service for an iOS App | Ray Wenderlich](http://www.raywenderlich.com/61078/write-simple-node-jsmongodb-web-service-ios-app)
 
 
+<!-- more -->
+
 ## Query
 
 - [Queries - Mongoose Guide](http://cnodejs.org/topic/5206581b44e76d216aae072e)

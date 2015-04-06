@@ -11,6 +11,8 @@ tags: [angular, ui]
 - [All Search and Social Media Meta Tags Starter Template ♥ Scotch](http://scotch.io/quick-tips/all-search-and-social-media-meta-tags-starter-template)
 - [Thumbtack Engineering](http://www.thumbtack.com/engineering/introducing-smarty)
 
+<!-- more -->
+
 ## UI Framework
 
 - [AngularUI for AngularJS](http://angular-ui.github.io/#ui-modules) The companion suite(s) to the AngularJS framework.

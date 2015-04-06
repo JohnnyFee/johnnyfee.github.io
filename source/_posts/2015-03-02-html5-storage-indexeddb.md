@@ -11,6 +11,8 @@ IndexedDB是基于简单的平面文件（flat-file）数据库，采用了分�
 
 So far, we have seen that Web Storage and Web SQL Database both have major strengths as well as major weaknesses. [Indexed Database](http://www.w3.org/TR/IndexedDB/) has arisen from experiences with both of those earlier APIs, and can be seen as an attempt to combine their strengths without incurring their weaknesses.
 
+<!-- more -->
+
 An Indexed Database is a collection of "object stores" which you can just drop objects into. The stores are something like SQL tables, but in this case, there's no constraints on the object structure and so no need to define anything upfront. So this is similar to Web Storage, with the advantage that you can have as many databases as you like, and as many stores within each database. But unlike Web Storage, there are important performance benefits: An asynchronous API, and you can create indexes on stores to improve search speed.
 
 优点：

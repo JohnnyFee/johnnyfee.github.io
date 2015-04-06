@@ -14,6 +14,9 @@ tags: [windows]
 - [x] Google Chrome
     - [ ]  goagent CA.cert
     - chrome goagent config
+
+<!-- more -->
+
 - [x] Sogo 拼音
     - [ ] sogou 配置。
 - [x] 招行

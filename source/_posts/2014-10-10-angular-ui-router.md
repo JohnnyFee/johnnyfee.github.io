@@ -8,6 +8,8 @@ tags : [angular, tutorial]
 
 [ui-router](https://github.com/angular-ui/ui-router) is a 3rd-party module and is very powerful.  It supports everything the normal ngRoute can do as well as many extra functions.
 
+<!-- more -->
+
 Here are some common reason ui-router is chosen over ngRoute:
 
 * ui-router allows for [nested views](https://github.com/angular-ui/ui-router/wiki/Nested-States-%26-Nested-Views) and [multiple named views](https://github.com/angular-ui/ui-router/wiki/Multiple-Named-Views).  This is very useful with larger app where you may have pages that inherit from other sections.

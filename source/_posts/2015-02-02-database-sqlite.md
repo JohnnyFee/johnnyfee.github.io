@@ -20,6 +20,8 @@ In the same way, you can remove a table only if it exists by using:
 drop table if exists TableName
 ```
 
+<!-- more -->
+
 Otherwise, you can use:
 
 ```

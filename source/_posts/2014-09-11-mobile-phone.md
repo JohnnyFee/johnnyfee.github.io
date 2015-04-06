@@ -9,7 +9,10 @@ tags: [mobile, phone]
 - [友盟指数 - 设备指数以全新数据可视化方式呈现Android及iOS设备的相关数据](http://www.umindex.com/)
 - [Screen Sizes](http://screensiz.es/phone)
 
+<!-- more -->
+
 分辨率：
+
 Android：主流机型主要为 480x800, 480x854, 540x960, 720x1280, 800x1280 这五种。
 （非主流机型还包括：240x320, 320x480, 640x960 这三种，其中两种都与 iPhone 一致。）
 iOS: 主流机型主要为 320x480, 640x960, 640x1136, 1024x768, 2048x1536, 这五种。

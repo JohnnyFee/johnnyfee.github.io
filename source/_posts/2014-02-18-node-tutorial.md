@@ -11,6 +11,8 @@ tags: [node, tutorial]
 
 现已出现一个比较人们的 fork，[iojs/io.js](https://github.com/iojs/io.js)，See [Wesley IO — Node.js is forked, not f***ed.](http://wesleyio.tumblr.com/post/104637877991/node-js-is-forked-not-f-ed)
 
+<!-- more -->
+
 ## Framework
 
 - [sahat/hackathon-starter](https://github.com/sahat/hackathon-starter) 模块采用水平结构。

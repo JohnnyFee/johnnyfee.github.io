@@ -503,7 +503,7 @@ public boolean onJsPrompt(WebView view, String url, String message,
 
 ```java
 String js = "alert('Alert from Java');";
-WebView.loadUrl("JavaScript:" + js);
+WebView.loadUrl("javascript:" + js);
 ```
 
 从 Java 调用 JavaScript 不像 Java 调 JavaScript 那么直观。JavaScript 对象没有暴露给 Java 层。你调用 JavaScript 方法是通过创建 JavaScript URL，然后传到 WebView 执行。使用这个方法有两个注意点，首先你必须知道 JavaScript 运行时的代码结构，其次，你必须保证 JavaScript URL 有合适的错误处理代码。JavaScript URL 中的变量必须是可寻址的，为了做到这个，你可以通过把这些变量的作用域设置为全局的，也可以通过构建调度框架来将响应路由到正确的接收对象。
@@ -1212,13 +1212,13 @@ function triggerEvent(eventName, args, delay) {
   onKeyUp="triggerEvent('NAME_UPDATE', { name : $(this).val().trim() }, 100);" />
 
 // from URL location (Android WebView can trigger this)
-JavaScript: triggerEvent('NAME_UPDATE', { name : 'Karura' }, 100)
+javascript: triggerEvent('NAME_UPDATE', { name : 'Karura' }, 100)
 
 // or from JavaScript code
 triggerEvent('NAME_UPDATE', { name : 'Karura' }, 100);
 ```
 
-处于某些原因，在 form 中输入的时候，当 Android WebView 在 URL 地址中执行 JavaScript: func(); 时，软键盘隐藏 WebView 会消失。这可能会导致很不好的用户体验。一个理想的解决方案是，当用户的焦点在表单项的时候，你要么在 Java 层检测焦点，要么从 JavaScript 通知 Java 层，然后使用 JavaScript 从 Java 层拉取内容和事件。这样，在派发事件到 UI 层时可以防止 Android WebView 获取焦点。
+处于某些原因，在 form 中输入的时候，当 Android WebView 在 URL 地址中执行 javascript: func(); 时，软键盘隐藏 WebView 会消失。这可能会导致很不好的用户体验。一个理想的解决方案是，当用户的焦点在表单项的时候，你要么在 Java 层检测焦点，要么从 JavaScript 通知 Java 层，然后使用 JavaScript 从 Java 层拉取内容和事件。这样，在派发事件到 UI 层时可以防止 Android WebView 获取焦点。
 
 ## CSS, DOM, and JavaScript: Optimization Tips and Useful Snippets 
 

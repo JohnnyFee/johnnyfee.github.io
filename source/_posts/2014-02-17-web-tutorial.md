@@ -28,11 +28,24 @@ tags: [web, tutorial]
 - [Component Interop With React And Custom Elements](http://addyosmani.com/blog/component-interop-with-react-and-custom-elements)
 - [Flux Step By Step - Atlassian Blogs](http://blogs.atlassian.com/2014/08/flux-architecture-step-by-step)
 - [Pomax.github.io](http://pomax.github.io/#gh-weblog-1420592591221)
-
-## Scaffold
-
 - [h5bp/html5-boilerplate](https://github.com/h5bp/html5-boilerplate)
 - [Favicons, Touch Icons, Tile Icons, etc. What All Do You Need?](http://css-tricks.com/favicon-quiz)
+
+## Templates
+
+- [HTML Website Templates for Online Store](http://www.wix.com/website/templates/html/online-store/1)
+- [Website Templates](http://www.templatemonster.com/)
+- [ShapeBootstrap](http://shapebootstrap.net/)
+
+
+### E-Commerce
+
+- [E-SHOPPER](http://shapebootstrap.net/preview/?id=412) <sup>Y</sup>
+- [trizzy](http://vasterad.com/themes/?theme=trizzy) <sup>$ 16</sup>
+- [Media Center - Electronic eCommerce HTML Template Preview - ThemeForest](http://themeforest.net/item/media-center-electronic-ecommerce-html-template/full_screen_preview/8178892?ref=freshdesignweb) <sup>$ 16</sup>
+- [Venedor - Premium Bootstrap Ecommerce HTML5 Template Preview - ThemeForest](http://themeforest.net/item/venedor-premium-bootstrap-ecommerce-html5-template/full_screen_preview/7426521?ref=freshdesignweb) <sup>$ 16</sup>
+- [BUYSHOP](http://www.ethemeuk.com/demo/?itemid=6795553) <sup>$ 16</sup>
+- [HOMESHOP](http://velikorodnov.com/themeforest/preview/?theme=Home%20Shop)
 
 ## Tools
 

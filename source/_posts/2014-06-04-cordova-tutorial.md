@@ -477,6 +477,45 @@ See [Cordova + Angularjs + Device Ready - Stack Overflow](http://stackoverflow.c
 - Steroids:http://www.appgyver.com/steroids
 - Composer:http://www.appgyver.com/composer
 
+### PhoneGap: Detect if running on desktop browser
+
+I use this code: 
+
+```
+if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+  document.addEventListener("deviceready", onDeviceReady, false);
+} else {
+  onDeviceReady(); //this is the browser
+}
+```
+
+UPDATE
+
+There are many other ways to detect if phonegap is running on a browser or not, here is another great option: 
+
+```
+var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+if ( app ) {
+    // PhoneGap application
+} else {
+    // Web page
+}
+```
+
+as seen here: [Detect between a mobile browser or a PhoneGap application](http://stackoverflow.com/questions/10347539/detect-between-a-mobile-browser-or-a-phonegap-application/12255930#12255930)
+
+### Phonegap HTML app and various alerts hang browser
+
+If you're testing your app in your desktop browser, you can simply exclude the file.
+For Chrome:
+
+```
+<script type="text/javascript">
+    if (!navigator.userAgent.toLowerCase().match('chrome')) {
+        document.write("<script src='phonegap.js'><\/script>");
+    }
+</script>
+```
 
 ## Library
 

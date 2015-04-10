@@ -471,12 +471,6 @@ See [android - How to add Library Resource to Cordova Project? - Stack Overflow]
 
 See [Cordova + Angularjs + Device Ready - Stack Overflow](http://stackoverflow.com/questions/21556090/cordova-angularjs-device-ready)
 
-## Performance
-
-- Appgyver:http://www.appgyver.com/
-- Steroids:http://www.appgyver.com/steroids
-- Composer:http://www.appgyver.com/composer
-
 ### PhoneGap: Detect if running on desktop browser
 
 I use this code: 
@@ -504,6 +498,8 @@ if ( app ) {
 
 as seen here: [Detect between a mobile browser or a PhoneGap application](http://stackoverflow.com/questions/10347539/detect-between-a-mobile-browser-or-a-phonegap-application/12255930#12255930)
 
+See [javascript - Detect between a mobile browser or a PhoneGap application - Stack Overflow](http://stackoverflow.com/questions/10347539/detect-between-a-mobile-browser-or-a-phonegap-application/12255930#12255930)
+
 ### Phonegap HTML app and various alerts hang browser
 
 If you're testing your app in your desktop browser, you can simply exclude the file.
@@ -516,6 +512,14 @@ For Chrome:
     }
 </script>
 ```
+
+See [cordova - Phonegap HTML app and various alerts hang browser - Stack Overflow](http://stackoverflow.com/questions/16920596/phonegap-html-app-and-various-alerts-hang-browser)
+
+## Performance
+
+- Appgyver:http://www.appgyver.com/
+- Steroids:http://www.appgyver.com/steroids
+- Composer:http://www.appgyver.com/composer
 
 ## Library
 

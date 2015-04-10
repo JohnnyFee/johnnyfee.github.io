@@ -37,7 +37,6 @@ tags: [web, tutorial]
 - [Website Templates](http://www.templatemonster.com/)
 - [ShapeBootstrap](http://shapebootstrap.net/)
 
-
 ### E-Commerce
 
 - [E-SHOPPER](http://shapebootstrap.net/preview/?id=412) <sup>Y</sup>

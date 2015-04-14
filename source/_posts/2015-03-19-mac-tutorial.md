@@ -156,6 +156,10 @@ Mac OS X Lion 系统自带的中文输入法里也内置了颜文字表情输入
 
 See also [Boot Camp - 使用入门 - Apple 支持](http://www.apple.com/cn/support/bootcamp/getstarted/)
 
+## 文件管理
+
+- [Total Commander for Mac: download free alternatives](http://formac.informer.com/total-commander)
+
 ## Terminal
 
 ### 编辑 Hosts 文件
@@ -184,10 +188,27 @@ See [OS X：键盘快捷键 - Apple 支持](https://support.apple.com/zh-cn/HT20
 
 ```
 Command+M: 最小化窗口
+Command+Option+M: 最小化当前程序的所有窗口
 Command+T: 在浏览器中打开新的选项卡
 Command+W: 关闭窗口
 Command+Q: 退出程序
+Command + Option + H: 隐藏所有其他软件的的窗口
+Command + Control + F: 进入全屏模式
 ```
+
+__最大化当前窗口__
+
+当然，这个操作我们可以通过窗口左上角的绿色符号实现，但是我们也可以为这个功能设置一个键盘快捷键，虽然不是系统默认自带的，但设置也不麻烦：  
+
+-打开 系统偏好设置=》键盘=》键盘快捷键 标签  
+
+-选中左侧栏中的“应用程序快捷键”，点击下方的“+”加号符号来新增快捷键  
+
+-在菜单标题填入“缩放”（英文系统填入“Zoom”），快捷键这只成为 Control+Command+=  
+
+确认添加后即可使用这个快捷键对窗口进行最大化的控制了  
+
+<img id="aimg_442359" src="http://images.macx.cn/forum/201303/23/1609421hzhjylole7z4h7e.jpg"></img>
 
 ### 截图
 

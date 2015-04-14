@@ -23,6 +23,7 @@ See:
 最快，coffeescript 语法
 
 ```
+{% raw %}
 <% extend 'layout' %>
 <div id="<%- @id %>">
     <h1><%- @upperHelper @title %></h1>
@@ -32,17 +33,20 @@ See:
 <% block 'footer-info' : %>
     <div class="right">page: main</div>
 <% end %>
+{% endraw %}
 ```
 
 ## EJS
 类似 PHP 或 ASP.NET MVC 语法（ASPX 引擎）<%..%>，比较常用，《Node.js 实战》用的是EJS。适合新手用，上手快，理解快。
 
 ```
+{% raw %}
 <ul>
 <% for(var i=0; i<supplies.length; i++) {%>
    <li><%= supplies[i] %></li>
 <% } %>
 </ul>
+{% endraw %}
 ```
 
 ## Underscore
@@ -53,17 +57,19 @@ See:
 
 双花括号语法 
 
-    {{变量}}、{{#each comments}}、{{#if condition}}
+    {% raw %}{{变量}}、{{#each comments}}、{{#if condition}}{% endraw %}
 
 前后端都能用。
 
 ```
+{% raw %}
 <div class="entry">
   <h1>{{title}}</h1>
   <div class="body">
     {{body}}
   </div>
 </div>
+{% endraw %}
 ```
 
 ## Jade

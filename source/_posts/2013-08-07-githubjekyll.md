@@ -128,11 +128,13 @@ Output:
 
 引入default.html中引入css文件	
 
+{% raw %}
 	// default目录如
 	%github pages project folder%\includes\themes\twitter\
 
 	// 引入如下代码
 	<link href='{{ ASSET_PATH }}/css/pygments.css' rel="stylesheet" media="all">
+{% endraw %}
 
 在文章中高亮代码	
 {% raw %}
@@ -222,6 +224,7 @@ Output:
 
 在_includes/custom下添加文件duoshuo，内容为从duoshuo.com获取到的代码，以下代码把`short_name`的值改为jekyll `_config.yml`中配置的值，故以下代码通用。
 
+{% raw %}
 	<!-- Duoshuo Comment BEGIN -->
 	<div class="ds-thread"></div>
 	<script type="text/javascript">
@@ -236,21 +239,24 @@ Output:
 	})();
 	</script>
 	<!-- Duoshuo Comment END -->
+{% endraw %}
 
 其中 short_name的值在_config.yml中配置，之后会提到。
 
 修改‘_includes/JB/’下的comments文件，添加以下分支
 
+{% raw %}
 	{{ '{% when "duoshuo"'  }}%}
 	<hr>
 	{{'{% include custom/duoshuo' }}%}
-
+{% endraw %}
 
 ###关联
 
 ####关联推荐
 在_includes/themes/[theme-name]/post.html的末尾添加通过[安装关联推荐插件](http://www.wumii.com/widget/getWidget)中的两段代码，注意两段脚本的顺序要一致。
 
+{% raw %}
 	//第一段
 	<script type="text/javascript" id="wumiiRelatedItems"></script>
 
@@ -264,6 +270,7 @@ Output:
     var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
 	</script>
 	<script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+{% endraw %}
 
 - [wumii 关联推荐](http://www.wumii.com/widget/getWidget)
 - [在jekyll里使用无觅相关文章插件](http://www.wumii.com/topbar/HTYezSxL)

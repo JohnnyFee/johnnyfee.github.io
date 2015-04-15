@@ -159,6 +159,7 @@ See also [Boot Camp - 使用入门 - Apple 支持](http://www.apple.com/cn/suppo
 ## 文件管理
 
 - [Total Commander for Mac: download free alternatives](http://formac.informer.com/total-commander)
+- [XtraFinder adds Tabs and features to Mac Finder.](https://www.trankynam.com/xtrafinder/)
 
 ## Terminal
 
@@ -194,6 +195,7 @@ Command+W: 关闭窗口
 Command+Q: 退出程序
 Command + Option + H: 隐藏所有其他软件的的窗口
 Command + Control + F: 进入全屏模式
+command+~: 可切换同一个程序的不同窗口。 
 ```
 
 __最大化当前窗口__

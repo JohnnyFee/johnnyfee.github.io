@@ -342,6 +342,10 @@ $ git push -f
 
 ![](http://johnnyimages.qiniudn.com/git-recovery.jpg)
 
+### Reading configuration data /etc/ssh_config
+
+See [ssh is no longer using ~/.ssh/config - Server Fault](http://serverfault.com/questions/609334/ssh-is-no-longer-using-ssh-config)
+
 ## Reference
 
 - [version control - git workflow and rebase vs merge questions - Stack Overflow](http://stackoverflow.com/questions/457927/git-workflow-and-rebase-vs-merge-questions)

@@ -1,5 +1,5 @@
 layout: post
-title: "Console object you didn’t know"
+title: "JavaScript UnderScore"
 description: ""
 category: JavaScript
 tags: [javascript]

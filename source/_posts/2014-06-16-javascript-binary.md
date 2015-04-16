@@ -13,6 +13,8 @@ HTML5以来，JavaScript增加了新的数据类型，从而对二进制数据�
 
 其中最主要的数据类型是ArrayBuffer，用来表示一串bytes。 
 
+ArrayBuffer （缓冲数组）是一种用于呈现通用、固定长度的二进制数据的类型。不能直接构造并填充 ArrayBuffer 的内容，而应该先创建一个 [`ArrayBufferView`](https://developer.mozilla.org/zh-CN/JavaScript_typed_arrays/ArrayBufferView) 对象，该对象用具体的格式来呈现 ArrayBuffer 的内容，你可以使用此对象来读写 ArrayBuffer 的内容。
+
 对二进制数据的处理则交由不同的ArrayBufferView来处理，比如： 
 
 * Int8Array / Uint8Array
@@ -22,9 +24,11 @@ HTML5以来，JavaScript增加了新的数据类型，从而对二进制数据�
 
 字节序使用本机的字节序。 
 
-    var buffer = new ArrayBuffer(2);
-    var bytes = Uint8Array(buffer);
-    var value = bytes[1];
+```js
+var buffer = new ArrayBuffer(2);
+var bytes = Uint8Array(buffer);
+var value = bytes[1];
+```
 
 <!-- more -->
 
@@ -35,12 +39,13 @@ HTML5以来，JavaScript增加了新的数据类型，从而对二进制数据�
 * getInt32() / getUint32() / setInt32() / setUint32()
 * getFloat32() / getFloat64() / setFloat32() /setFloat64()
 
-    var buffer = new ArrayBuffer(2);
-    var view = new DataView(buffer);
-    var little_endian = true;
-    view.setInt16(0, 256, little_endian); // use little endian
-    view.getInt16(0, little_endian );
-    
+```js
+var buffer = new ArrayBuffer(2);
+var view = new DataView(buffer);
+var little_endian = true;
+view.setInt16(0, 256, little_endian); // use little endian
+view.getInt16(0, little_endian );
+```
 
 ### 本机字节序的判断
 
@@ -88,6 +93,12 @@ window.btoa()可以把数据编码为base64。
       }
     }
 
+## Node Buffer
+
+Node 提供了 Buffer 机制，Browserify 也提供了浏览器版本，See [feross/buffer](https://github.com/feross/buffer)。
+
+
+
 ## FAQ
 
 ### Uint8ClampedArray and Uint8Array
@@ -113,7 +124,7 @@ console.log(x.length); // 2
 
 ### Convert binary NodeJS Buffer and Javascript ArrayBuffer
 
-参考：[node.js - Convert a binary NodeJS Buffer to Javascript ArrayBuffer - Stack Overflow](http://stackoverflow.com/questions/8609289/convert-a-binary-nodejs-buffer-to-javascript-arraybuffer)
+See [node.js - Convert a binary NodeJS Buffer to Javascript ArrayBuffer - Stack Overflow](http://stackoverflow.com/questions/8609289/convert-a-binary-nodejs-buffer-to-javascript-arraybuffer)
 
 1. node.js has both ArrayBuffer as part of v8, but the Buffer class provides a more flexible API. In order to read or write to an ArrayBuffer, you only need to create a view and copy across.
 

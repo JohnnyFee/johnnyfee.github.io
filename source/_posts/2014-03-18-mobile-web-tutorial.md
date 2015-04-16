@@ -224,10 +224,8 @@ Excellent framework made for fast application prototyping. It can become problem
 
 ### Weinre
 
-- [用weinre远程调试手机网页（nodejs、phoneGap）](http://www.2fz1.com/?p=396)
 - [使用 Weinre 调试移动网站及 PhoneGap 应用
 ](http://www.cnblogs.com/lhb25/p/debug-mobile-site-and-app-with-weinre.html)
-- [使用weinre远程调试手机网页](http://www.2fz1.com/?p=396)
 - [Web应用调试：现在是Weinre和JSConsole，最终会是WebKit的远程调试协议](http://www.infoq.com/cn/news/2011/08/mobile-web-debugging)
 
 ## Test

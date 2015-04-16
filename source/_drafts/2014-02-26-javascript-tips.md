@@ -91,6 +91,22 @@ And the answer is, yes, we could, and it would work just as well. The only benef
 
 See [javascript - What does `void 0` mean? - Stack Overflow](http://stackoverflow.com/questions/7452341/what-does-void-0-mean)
 
+### Better way to get type of a Javascript variable?
+
+Angus Croll recently wrote an interesting blog post about this -
+
+http://javascriptweblog.wordpress.com/2011/08/08/fixing-the-javascript-typeof-operator/
+
+He goes through the pros and cons of the various methods then defines a new method 'toType' -
+
+```js
+var toType = function(obj) {
+  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+}
+```
+
+See [Better way to get type of a Javascript variable? - Stack Overflow](http://stackoverflow.com/questions/7390426/better-way-to-get-type-of-a-javascript-variable)
+
 ## Object
 
 ### Check the properties of an object when using a for-in loop

@@ -120,7 +120,7 @@ See [Mac 基础知识：Spotlight - Apple 支持](https://support.apple.com/zh-c
 
 ### 进程管理
 
-MAC 中的 Activity Monitor 类似于 Windows 中的任务管理器，用来管理当前运行的进程。在Spotlight中搜索 Activity， 可以快速启动 Activity Monitor。
+MAC 中的 Activity Monitor 类似于 Windows 中的任务管理器，用来管理当前运行的进程。在Spotlight中搜索 Activity， 可以快速启动 Activity Monitor。.
 
 ### 修改系统的语言
 

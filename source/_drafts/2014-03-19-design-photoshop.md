@@ -7,6 +7,7 @@ tags: [ps]
 ## Tutorial
 
 - [Designer's guide to DPI](http://sebastien-gabriel.com/designers-guide-to-dpi/home)
+- [Photoshop CC 2014最新版软件下载及安装破解教程（含苹果MAC跟win64位&32位） – 三人行PS学堂](http://www.ren3.cn/14573.htm)
 
 ## Demo
 

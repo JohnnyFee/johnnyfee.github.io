@@ -158,8 +158,14 @@ See also [Boot Camp - 使用入门 - Apple 支持](http://www.apple.com/cn/suppo
 
 ## 文件管理
 
+### 文件管理工具
+
 - [Total Commander for Mac: download free alternatives](http://formac.informer.com/total-commander)
 - [XtraFinder adds Tabs and features to Mac Finder.](https://www.trankynam.com/xtrafinder/)
+
+### 文件系统
+
+- [paragon ntfs for mac 免费版](http://www.pc6.com/mac/112001.html)
 
 ## Terminal
 

@@ -11,17 +11,7 @@ With Apples’ new OSX 10.10 Yosemite out of the bag, getting the **AMP** stack 
 
 This tutorial sets up the AMP stack in more of a traditional way using the loaded Apache and PHP and downloading MySQL and phpMyAdmin.
 
-## Setting Stuff Up
-
-+ [Web Sharing / Apache](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#apache "apache")
-+ [Webroot – System and User level](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#webroot "webroot")
-+ [.htaccess overrides and mod rewrites](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#htaccess "htaccess")
-+ [PHP](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#php "boston")
-+ [MySQL](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#mysql "mysql")
-+ [phpMyAdmin](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#phpmyadmin "phpmyadmin")
-+ [Permissions](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#permissions)
-
-## [Apache/WebSharing](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#ssu)
+## Apache/WebSharing
 
 Their is no GUI to toggle Web Sharing on or off in OSX 10.10, which was previously a GUI [option](http://support.apple.com/kb/HT5230?viewlocale=en_US&locale=en_US "apple drop web sharing") in System Preferences way back in 10.7, but fear not Apache is installed ready to be fired up.
 
@@ -51,7 +41,7 @@ The Apache version that comes in OSX Yosemite is **Apache/2.4.9**
 
 After starting **Apache** – test to see if the webserver is working in the browser – http://localhost – you should see the “It Works!” text.
 
-## [Document Root](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#ssu)
+## Document Root
 
 Document root is the location where the files are shared from the file system and is similar to the traditional names of ‘**public_html**‘ and ‘**htdocs**‘, OSX has historically had 2 web roots one at a system level and one at a user level – you can set both up or just run with one, the user level one allows multiple accounts to have their own web root whilst the system one is global for all users. It seems there is less effort from Apple in continuing with the user level one but it still can be set up with a couple of extra tweaks in configuration files. It is easier to use the user level one as you don’t have to keep on authenticating as an admin user.
 
@@ -143,16 +133,14 @@ You should only see a directory tree like structure if the folder is empty.
 
 ![osx-yosemite-user-site](http://coolestguidesontheplanet.com/wp-content/uploads/2014/07/osx-yosemite-user-site.png)
 
-## [Override .htaccess and allow URL Rewrites](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#ssu)
+## Override .htaccess and allow URL Rewrites
 
 If you are going to use the document root at /Library/WebServer/Documents it is a good idea to allow any **.htaccess** files used to override the default settings – this can be accomplished by editing the **httpd.conf** file at line 217 and setting the **AllowOverride** to **All** and then restart Apache. This is already taken care of at the Sites level webroot by following the previous step.
 
 
     sudo nano /etc/apache2/httpd.conf
 
-## 
-
-<div id="attachment_9177" style="width: 600px" class="wp-caption aligncenter">![osx-htaccess-override](http://coolestguidesontheplanet.com/wp-content/uploads/2014/07/osx-htaccess-override.png)
+![osx-htaccess-override](http://coolestguidesontheplanet.com/wp-content/uploads/2014/07/osx-htaccess-override.png)
 
 osx-htaccess-override
 
@@ -160,10 +148,9 @@ Also whilst here allow URL **rewrites** so your permalinks look clean not ugly.
 
 Uncomment in httpd.conf
 
-
     LoadModule rewrite_module libexec/apache2/mod_rewrite.so
 
-## [PHP](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#ssu)
+## PHP
 
 **PHP 5.5.14** is loaded in the final build of OSX 10.10 Yosemite and needs to be turned on by uncommenting a line in the **httpd.conf** file.
 
@@ -186,15 +173,15 @@ To see and test PHP, create a file name it “phpinfo.php” and file it in your
 
     <?php phpinfo(); ?>
 
-## ![osx-yosemite-php-site](http://coolestguidesontheplanet.com/wp-content/uploads/2014/07/osx-yosemite-php-site.png)
+![osx-yosemite-php-site](http://coolestguidesontheplanet.com/wp-content/uploads/2014/07/osx-yosemite-php-site.png)
 
-## [MySQL](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#ssu)
+## MySQL
 
 MySQL is again a missing component in OS X 10.10 and needs to be [dowloaded from the MySQL site](http://dev.mysql.com/downloads/mysql/) use the **Mac OS X ver. 10.9 (x86, 64-bit), DMG Archive** version (works on 10.10). The latest version available is MySQL 5.6.21. Their is an issue with this version and Yosemite in that it won’t start on reboot – it will need to be started via command line explained below.
 
 If you are upgrading from a previous OSX and have an older MySQL version you do not have to update it, it will work just with the same start up issue. One thing with MySQL upgrades always take a[ data dump of your database](http://coolestguidesontheplanet.com/import-export-mysql-database-command-line/ "Import / Export a mysql database on the command line") in case things go south and before you upgrade to Yosemite make sure your MySQL Server is **not** running.
 
-When downloading you don’t have to sign up, look for **<span style="background-color: #ffff00;">» No thanks, just take me to the downloads!</span>**  – go straight to the download mirrors and download the software from a mirror which is closest to you.
+When downloading you don’t have to sign up, look for  – go straight to the download mirrors and download the software from a mirror which is closest to you.
 
 Once downloaded open the .dmg and run the installer.
 
@@ -249,7 +236,7 @@ Note that this is not the same as the root or admin password of OSX – this is 
 
     /usr/local/mysql/bin/mysqladmin -u root password 'yourpasswordhere'
 
-**<span style="background-color: #ffff00;">Use the single ‘quotes’ surrounding the password</span>**
+
 
 ### Fix the 2002 MySQL Socket error
 
@@ -294,7 +281,7 @@ sudo launchctl load -w /Library/LaunchDaemons/com.mysql.mysql.plist
 
 Then it will load on a restart.
 
-## [phpMyAdmin](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#ssu)
+## phpMyAdmin
 
 [phpMyAdmin is installed pretty much the same way as before](http://www.coolestguyplanettech.com/installing-phpmyadmin-on-mac-osx-10-7-lion/).
 
@@ -320,7 +307,7 @@ Run the set up in the browser
 
 **![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-set-new-server.png)**
 
-You need to create a new <span style="line-height: 1.538em;">localhost </span><span style="line-height: 1.538em;">mysql server connection, click **new server**.</span>
+You need to create a new 
 
 ![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-set-new-server-mysql-password.png)  
 Switch to the **Authentication** tab and set the local mysql root user and the password.  
@@ -328,15 +315,15 @@ Add in the username “root” (maybe already populated, add in the password tha
 (This is not the OSX Admin or root password – it is the MySQL root user).
 
 ![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-save-config.png)  
-Make sure you click on **save**, then a config.inc.php is now in the /config directory of phpmyadmin directory, **<span style="background-color: #ffff00;">move</span>** this file to the root level of /phpmyadmin and then remove the now **<span style="background-color: #ffff00;">empty</span>** /config directory.
+Make sure you click on **save**, then a config.inc.php is now in the /config directory of phpmyadmin directory,  /config directory.
 
-<span style="line-height: 1.538em;">Now going to http://localhost/~username/phpmyadmin/ will now allow you to interact with your MySQL databases.</span>
+
 
 ![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-4-no-frames.png)
 
 To upgrade phpmyadmin just download the latest version and copy the older ‘**config.inc.php**‘ from the existing directory into the new folder and replace – backup the older one just in case.
 
-## [Permissions](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#ssu)
+## Permissions
 
 To run a website with no permission issues it is best to set the web root and its contents to be writeable by all, since it’s a local development it should’nt be a security issue.
 

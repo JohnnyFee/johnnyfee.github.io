@@ -664,9 +664,22 @@ Karma 有个概念叫“插件”，这些插件允许你只选择你的工程�
 
     npm install karma-jasmine karma-chrome-launcher
 
+使用 [yeoman/generator-angular · GitHub](https://github.com/yeoman/generator-angular) 生成的脚手架默认使用 jasmine 测试框架，如果你想使用功能更加强大的 mocha，需要安装：
+
+```shell
+npm install karma-mocha --save-dev
+npm install karma-chrome-launcher
+bower install mocha --save-dev
+bower install chai --save-dev
+```
+
+另外把测试用例改成 mocha 的形态。
+
+See [Setting up a project using karma with mocha and chai](http://attackofzach.com/setting-up-a-project-using-karma-with-mocha-and-chai/)。另外可以参考 demo [ludovicofischer/mocha-chai-browser-demo](https://github.com/ludovicofischer/mocha-chai-browser-demo)。
+
 ### Karma Plugins
 
-前面我们安装了两个 Karma 的插件，让我们进一步了解一下 Karma 的插件。Karma 的插件大体上可以分为以下几个类别：
+Karma 的插件大体上可以分为以下几个类别：
 
 - Browser launchers
     
@@ -1024,7 +1037,7 @@ describe('Routing Test With PageObjects', function() {
 
 PageObjects encapsulate abstractions on how to access certain elements and how to interact with them in a single place, thus allowing for simple reuse as well as handling change in a single place rather than making the change in multiple places. PageObject 在如何访问元素、如何在一个单一的地方与元素进行交互上进行抽象封装，这样就允许简单的复用，在一个地方处理变化而不是在很多个地方产生变化（最后一句话可能翻译得不是很清楚。。。）
 
-## phantomjs
+## PhantomJS
 
     set PHANTOMJS_CDNURL=https://npm.taobao.org/dist/phantomjs
     npm install phantomjs --registry=https://registry.npm.taobao.org --no-proxy

@@ -7,6 +7,10 @@ tags: [javascript]
 
 随着单元测试的普及，尤其是敏捷开发的推动，涌现了许多优秀的JavaScript单元测试框架，如QUnit、Jasmine等。
 
+## Tutorial
+
+- [Testing your frontend JavaScript code using mocha, chai, and sinon](https://nicolas.perriault.net/code/2013/testing-frontend-javascript-code-using-mocha-chai-and-sinon/)
+
 <!-- more -->
 
 ## Framework
@@ -130,6 +134,10 @@ JsTestDriver是一个JavaScript单元测试工具，易于与持续构建系统�
 ### Reference
 
 - [javascript单元测试 - 溤淋 - 博客园](http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html)
+
+## FAQ
+
+- [Jasmine vs. Mocha, Chai, and Sinon - The JS Guy](http://thejsguy.com/2015/01/12/jasmine-vs-mocha-chai-and-sinon.html)
 
 ## Tutorial
 

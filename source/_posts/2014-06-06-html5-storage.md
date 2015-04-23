@@ -238,14 +238,8 @@ The storage event's storageArea attribute returns the localStorage or sessionSto
 ### Library
 
 - [grevory/angular-local-storage](https://github.com/grevory/angular-local-storage)
-
-## WebSQL Databases
-
-See ...
-
-## IndexedDB
-
-See ...
+- [localForage: Offline Storage](https://hacks.mozilla.org/2014/02/localforage-offline-storage-improved/)
+- [mozilla/around](https://github.com/mozilla/around)
 
 ## FileSystem
 

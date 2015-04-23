@@ -10,26 +10,27 @@ tags: [javascript]
 - [The best JavaScript libraries](http://www.javascripting.com/)
 - [sorrycc/awesome-javascript](https://github.com/sorrycc/awesome-javascript)
 - [Breaking Bad (Loops in JavaScript Libraries)](http://webapplog.com/breaking-bad-loops-in-javascript-libraries)
-- [mortzdk/jsCache](https://github.com/mortzdk/jsCache)
+- [mortzdk/jsCache](https://github.com/mortzdk/jsCache) jsCache 是一个 JavaScript 库，它使用 localStorage 技术来缓存 JS，CSS 和图像。这对于移动网站特别有用，因为它节省了 HTTP 请求，并且所有的文件载入都是异步的。
 - [github/fetch](https://github.com/github/fetch) The global `fetch` function is an easier way to make web requests and handle
 responses than using an XMLHttpRequest. 
 - [tjmehta/101](https://github.com/tjmehta/101/) A modern JS utility library.
 
-## Utility
+## Data Type
+
+## Collection & Object
 
 - [Underscore.js](http://underscorejs.org/)
 - [lodash/lodash](https://github.com/lodash/lodash/)
-- [Search · circular json](https://github.com/search?q=circular+json&ref=opensearch) 用于处理 JSON 化是序列化和方序列化中的循环引用问题。
 - [ramda/ramda](https://github.com/ramda/ramda) Practical functional Javascript <http://ramdajs.com>
     + [Practical Functional Javascript with Ramda](http://developer.telerik.com/featured/practical-functional-javascript-ramda/)
+- [flesler/hashmap](https://github.com/flesler/hashmap) HashMap JavaScript class for NodeJS and the browser. The keys can be anything and won't be stringified.
+- [DataCollection.js](http://thestorefront.github.io/DataCollection.js) Manipulate data from API responses with ease.
+- [andrejewski/seth](https://github.com/andrejewski/seth) JavaScript DSL for functional Set Theory.
 
-See [underscore.js - Differences between lodash and underscore - Stack Overflow](http://stackoverflow.com/questions/13789618/differences-between-lodash-and-underscore)
+__Usage:__
 
-### Tutorial
-
+- [underscore.js - Differences between lodash and underscore - Stack Overflow](http://stackoverflow.com/questions/13789618/differences-between-lodash-and-underscore)
 - [Say "Hello" to Lo-Dash - Kit Cambridge](http://kitcambridge.be/blog/say-hello-to-lo-dash/)
-
-## Data Type
 
 ### is
 
@@ -70,12 +71,7 @@ See [underscore.js - Differences between lodash and underscore - Stack Overflow]
 - [lloyd/JSONSelect](https://github.com/lloyd/JSONSelect) CSS-like selectors for JSON [http://jsonselect.org](http://jsonselect.org/).
 - [originalmachine/distill](https://github.com/originalmachine/distill)
 - [idevelop/treeql](https://github.com/idevelop/treeql) JSON query and mutation library. It traverses a tree structure in post-order (leaves first, root last), across objects and arrays, returning the nodes which match the partial structure passed in the query, as well as allowing you to mutate or replace matched nodes.
-
-### Collection
-
-- [flesler/hashmap](https://github.com/flesler/hashmap) HashMap JavaScript class for NodeJS and the browser. The keys can be anything and won't be stringified.
-- [DataCollection.js](http://thestorefront.github.io/DataCollection.js) Manipulate data from API responses with ease.
-- [andrejewski/seth](https://github.com/andrejewski/seth) JavaScript DSL for functional Set Theory.
+- [Search · circular json](https://github.com/search?q=circular+json&ref=opensearch) 用于处理 JSON 化是序列化和方序列化中的循环引用问题。
 
 ### fn
 

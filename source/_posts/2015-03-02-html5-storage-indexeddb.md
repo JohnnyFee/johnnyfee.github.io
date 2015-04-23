@@ -522,3 +522,4 @@ On Mac, do the following:
 - [HTML5 Web Storage](http://dev.w3.org/html5/webstorage/)
 - [Indexed Database API](http://www.w3.org/TR/IndexedDB/)
 - [Using the HTML5 IndexedDB API](http://www.ibm.com/developerworks/library/wa-indexeddb/)
+- [Dev.Opera — An Introduction to IndexedDB](http://dev.opera.com/articles/introduction-to-indexeddb)

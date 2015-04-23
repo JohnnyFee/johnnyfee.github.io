@@ -673,6 +673,14 @@ bower install mocha --save-dev
 bower install chai --save-dev
 ```
 
+其中，chai 是 mocha 依赖的断言库，你也可以安装其他的断言库，如 [should.js](、https://github.com/visionmedia/should.js)、[expect.js](https://github.com/LearnBoost/expect.js)、[better-assert](https://github.com/visionmedia/better-assert) 等。使用 chai 作为断言库，可以自由选择 should、expect、asset 三种断言方式：
+
+```js
+chai.should();
+var expect = chai.expect;
+var assert = chai.assert;
+```
+
 另外把测试用例改成 mocha 的形态。
 
 See [Setting up a project using karma with mocha and chai](http://attackofzach.com/setting-up-a-project-using-karma-with-mocha-and-chai/)。另外可以参考 demo [ludovicofischer/mocha-chai-browser-demo](https://github.com/ludovicofischer/mocha-chai-browser-demo)。

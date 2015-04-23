@@ -221,6 +221,7 @@ Excellent framework made for fast application prototyping. It can become problem
 - [A Concise Guide to Remote Debugging on iOS, Android, and Windows Phone](http://developer.telerik.com/featured/a-concise-guide-to-remote-debugging-on-ios-android-and-windows-phone/)
 - [Bringing F5 (or Command+R) to Hybrid Mobile Apps](http://developer.telerik.com/featured/bringing-f5-or-commandr-to-hybrid-mobile-apps/)
 - [目前为止找到最好的移动端调试工具-debugGap - CNode](https://cnodejs.org/topic/54ff176fc1749396754897e5)
+- [Using Chrome DevTools to Debug JavaScript in Any Browser with Ghostlab 2](https://css-tricks.com/using-chrome-devtools-to-debug-javascript-in-any-browser-with-ghostlab-2)
 
 ### Weinre
 

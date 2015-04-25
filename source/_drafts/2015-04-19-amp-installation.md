@@ -66,8 +66,6 @@ You have to make a few additional tweaks to get the **~/Sites** folder back up a
 
 ![user-level-webroot-sites-folder](http://coolestguidesontheplanet.com/wp-content/uploads/2014/07/user-level-webroot-sites-folder.png)
 
-Sites Folder
-
 Add  a “username.conf” filed under:
 
     /etc/apache2/users/
@@ -141,8 +139,6 @@ If you are going to use the document root at /Library/WebServer/Documents it is 
     sudo nano /etc/apache2/httpd.conf
 
 ![osx-htaccess-override](http://coolestguidesontheplanet.com/wp-content/uploads/2014/07/osx-htaccess-override.png)
-
-osx-htaccess-override
 
 Also whilst here allow URL **rewrites** so your permalinks look clean not ugly.
 
@@ -303,21 +299,20 @@ Change the permissions
 
 Run the set up in the browser
 
-**http://localhost/~username/phpmyadmin/setup/** or **http://localhost/phpmyadmin/setup/**
+<http://localhost/~username/phpmyadmin/setup/> or <http://localhost/phpmyadmin/setup/>
 
-**![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-set-new-server.png)**
+![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-set-new-server.png)
 
-You need to create a new 
+You need to create a new localhost mysql server connection, click new server.
 
 ![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-set-new-server-mysql-password.png)  
+
 Switch to the **Authentication** tab and set the local mysql root user and the password.  
 Add in the username “root” (maybe already populated, add in the password that you set up **[earlier](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#password)** for the MySQL root user set up, click on save and you are returned to the previous screen.  
 (This is not the OSX Admin or root password – it is the MySQL root user).
 
 ![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-save-config.png)  
 Make sure you click on **save**, then a config.inc.php is now in the /config directory of phpmyadmin directory,  /config directory.
-
-
 
 ![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-4-no-frames.png)
 

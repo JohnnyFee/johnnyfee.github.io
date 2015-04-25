@@ -145,6 +145,7 @@ tags: [android]
 ## Sample
 
 - [Android : Around me Tutorial | Michenux.net](http://www.michenux.net/android-around-me-tutorial-974.html) 周边旅游景点，并显示距离。
+- [GitHub 上有哪些值得关注和学习的经典 Android 项目？ - 知乎](http://www.zhihu.com/question/24689070)
 
 ## Reference
 

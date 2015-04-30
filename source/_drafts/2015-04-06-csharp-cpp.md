@@ -4,7 +4,7 @@ category : C#
 tags : [c#, csharp, c++, cpp]
 ---
 
-## 几个概念：
+## 几个概念
 
 1. CLR：通用语言运行平台（Common Language Runtime，简称CLR）定义了一个代码运行的环境，核心功能包括：内存管理、程序集加载、安全性、异常处理和线程同步等。
 2. 非托管C++：不能享受一些运行库所提供的服务，必须自己提供垃圾回收、类型检查、安全支持等操作。
@@ -108,6 +108,26 @@ DOUBLE  |Double | System.Double |  64 位
 
 See also <http://www.cppblog.com/mzty/archive/2006/08/17/11358.html>
 
+## C++ 消费C#
+
+1. c#注册为控件：<http://www.cppblog.com/free2000fly/archive/2009/03/23/77578.html>
+2. c#注册为控件：<http://dearymz.blog.163.com/blog/static/2056574201191295525523/> 这个文章下面的参考里有英文文档链接，英文文档链接里有源码下载
+3. 直接引用c#工程：<http://developer.51cto.com/art/201104/254308.htm>
+ C#调用C++的DLL搜集整理的所有数据类型转换方式 ：<http://blog.csdn.net/xqf222/article/details/5877795>
+C#调用VC的DLL的接口函数参数类型转换一览表：<http://www.cnblogs.com/afishman/archive/2009/03/27/1422874.html>
+
+### C++函数指针转化为C#代理
+
+    TmsPluginImpl::LPFN_ONREADDATA ^ dOnReadData = (TmsPluginImpl:: LPFN_ONREADDATA ^)Marshal::GetDelegateForFunctionPointer((IntPtr )pOnReadData , TmsPluginImpl::LPFN_ONREADDATA ::typeid );
+
+C# byte[]对应Clr的类型
+
+    array<Byte > ^data = gcnew array<Byte>(100);
+
+C++指针转化为C# ref
+
+    unsigned char ret = *pRet ;
+    unsigned char% refRet = ret;
 
 ## 相关资料链接
 

@@ -68,6 +68,36 @@ tags: [android, tutorial]
     - [Genymotion 中文官网](http://www.genymotion.cn/#theme=home)
     - [使用指南 - Genymotion 中文官网](http://www.genymotion.cn/#theme=guide)
 
+## ADB
+
+解决adb运行故障：
+
+    adb kill-server
+
+看进程, 确保没有其他adb在运行
+然后重启eclipse
+
+    adb start-server 重启服务
+
+__Eclipse通过无线连接PAD__
+
+1. PAD通过USB连接PC
+2. 在PC上执行adb tcpip 5555
+3. 在PC上执行adb connect ip:5555
+4. 可以使用adb usb从tcp连接切换回usb连接
+
+__查看设备__
+
+    adb shell
+    cd dev
+    ls -l ttyU*
+
+    adb connect 172.16.3.145:5555
+
+
+
+停用跟豌豆荚相关的服务
+
 ## FAQ
 
 ### How to exit an android app using code
@@ -89,9 +119,9 @@ submit.setOnClickListener(new OnClickListener() {
 
 ### Android SDK下载慢的解决办法
 
-See [Hanolex博客 » Android SDK下载慢的解决办法](http://hanolex.org/archives/300.html)
-
-See also [解决Android SDK Manager下载慢的问题](http://www.opensoce.com/3035.html)
+- [Hanolex博客 » Android SDK下载慢的解决办法](http://hanolex.org/archives/300.html)
+- [解决Android SDK Manager下载慢的问题](http://www.opensoce.com/3035.html)
+- [解决Android SDK Manager下载慢的问题](http://www.opensoce.com/2011/09/Jie_Jue_Android_SDK_Manager_Xia_Zai_Man_De_Wen_Ti/)
 
 ## Books
 

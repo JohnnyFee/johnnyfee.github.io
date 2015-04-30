@@ -145,13 +145,6 @@ typedef为保留字，使用它可以为一个类型定义创建一个别名。�
 - [boost-doc-zh](https://code.google.com/p/boost-doc-zh/downloads/list)
 - [官网](http://www.boost.org/)
 
-__状态机：__
-
-- [Boost的状态机库教程(1)]()
-- [Boost的状态机库教程(2) ]()
-- [Boost的状态机库教程(3)]()
-- [Boost的状态机库教程 补充 ]()
-
 __线程：__
 
 - [C++ Boost Thread 编程指南](http://www.cppblog.com/shaker/archive/2007/10/06/33583.html)
@@ -161,6 +154,8 @@ __线程：__
 
 - [fffaraz/awesome-cpp](https://github.com/fffaraz/awesome-cpp)
 - [写给大家看的C++书_读书频道_51CTO.COM_领先的中文IT技术网站](http://book.51cto.com/art/200906/126956.htm#book_content)
+- [C++ Data Structure and Union Tutorial](http://www.yolinux.com/TUTORIALS/LinuxTutorialC++Structures.html)
+
 
 ## Books
 

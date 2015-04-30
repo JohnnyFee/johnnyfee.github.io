@@ -312,21 +312,19 @@ noparms（如果这里的if、%1、%2你不明白的话，先跳过去，后面�
 
 ## net
 
-1. 管理服务: Net start, stop, pause, continue [service]。
-2. 连接到一个共享文件：Net use。
-          NET USE [磁盘名:] \\共享名称[\子目录名] [密码] [/USER:[域名\]用户名]
-          NET USE磁盘名:]: /delete
-3. Net share: 显示本地的所有共享，包括隐藏的共享。
-4. Net share ShareName: 显示共享的相关信息。
-5. 创建一个本地共享: NET SHARE sharename=drive:path /REMARK:"text" [/CACHE:Manual | Automatic | No ]
-6. 修改用户数量限制和标示。
-          NET SHARE sharename /USERS:number /REMARK:"text"
-          NET SHARE sharename /UNLIMITED /REMARK:"text"
-7. 删除共享: NET SHARE {sharename | devicename | drive:path} /DELETE
-8. Net view \\计算机名: 列出远程机器的所有共享。
-9. Net localgroup: 把一个账户加入一个本地组，如加入管理员组：net localgroup administrators DomainName\UserName /add
-10. 机器重命名: netdom renamecomputer 原机器名 /newname:修改后的机器名 /UserD:user /PasswordD:password
-11. 加入域: net dom join 计算机名/domain:域名 /UserD:域管理员账户 /PasswordD:域管理员密码
+跟踪路由：tracert www.baidu.com
+
+查出占用端口的进程：
+     
+    netstat -aon|findstr "8088"    
+
+    结果：TCP    127.0.0.1:9050         0.0.0.0:0              LISTENING       2016     
+
+根据进程ID查看进程信息：
+
+    tasklist|findstr "2016"     
+    结果：tor.exe                     2016 Console       
+
 
 ## dir
 

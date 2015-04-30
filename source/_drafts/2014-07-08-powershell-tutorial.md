@@ -80,17 +80,17 @@ Listing All Your Windows PowerShell Aliases
 - Get-Date | Select-Object -ExpandProperty DayOfWeek
 - 字符串转化为日期格式   ([datetime]'2012/02/01').ToString("MM-dd-yyyy") [#PSTip Converting a String to a System.DateTime object](http://www.powershellmagazine.com/2013/07/08/pstip-converting-a-string-to-a-system-datetime-object/)
 
-## 可执行程序
-
-- [PowerShell: Running Executables](http://social.technet.microsoft.com/wiki/contents/articles/7703.powershell-running-executables.aspx) 使用其中的第5个方法。
-- [获取当前路径](http://superuser.com/questions/237902/how-can-one-show-the-current-directory-in-powershell)
-
-## Performance
+运行消耗时间：
 
     (Measure-Command {Dir $home -filter *.ps1 -recurse}).TotalSeconds
     4,6830099
     (Measure-Command {Dir $home -include *.ps1 -recurse}).TotalSeconds
     28,1017376
+
+## 可执行程序
+
+- [PowerShell: Running Executables](http://social.technet.microsoft.com/wiki/contents/articles/7703.powershell-running-executables.aspx) 使用其中的第5个方法。
+- [获取当前路径](http://superuser.com/questions/237902/how-can-one-show-the-current-directory-in-powershell)
 
 ## 对象
 
@@ -127,3 +127,49 @@ There is also:
 
     [Environment]::UserDomainName
     [Environment]::MachineName
+
+### 编码转换
+
+```
+dir -File -Recurse   | ? {
+       $FileName = $_.Name
+       $FileName.EndsWith( ".h") -or $FileName .EndsWith(".c") -or $FileName.EndsWith(".cpp" )
+   } |% {
+    $FullName = $_.FullName
+    gc $FullName | Out-String | sc $FullName -Encoding UTF8
+   }
+```
+
+### Renive Empty Line
+
+```
+dir | % {
+        $file = $_;
+        ( gc $file | ?  { ![string] ::IsNullOrWhiteSpace( $_)} | Out-String).Trim() | sc $file
+}
+
+dir | % {
+        $file = $_;
+        ( gc $file | ?  { ![string] ::IsNullOrWhiteSpace( $_)} | Out-String ).Trim() | sc $file
+}
+```
+
+### Unique
+
+    Get-Content c:\scripts\test.txt | Sort-Object | Get-Unique
+
+### Decode 目录中的文件
+
+```
+dir | % { ren -LiteralPath $_ ([System.Web.HttpUtility]::UrlDecode($_)) }
+Add-Type -AssemblyName System.Web
+```
+
+### 设置命令的缺省参数
+
+    $PSDefaultParameterValues.Add('Get-ChildItem:Path', $env:temp)
+
+用通配符：
+
+    $PSDefaultParameterValues.Add('*:Path', $env:temp)
+

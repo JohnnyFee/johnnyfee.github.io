@@ -4,6 +4,56 @@ category: C++
 tags: [c++]
 ---
 
+## 语法
+ 
+- [C++中的虚函数](http://www.vckbase.com/document/viewdoc/?id=950)
+- [C++ 默认构造函数](http://weihe6666.iteye.com/blog/1124174)
+ 
+### 类型
+ 
+- [string, char*, int类型转换 , c++强制转化](http://sealbird.iteye.com/blog/866701)
+- [C++ string 用法详解](http://www.byvoid.com/blog/cpp-string/)
+- [标准C++的一些约定](http://www.cppblog.com/cxiaojia/archive/2011/04/19/cpp.html)
+- [C++的File类文件操作](http://archive.cnblogs.com/a/1993077/)
+- [C++文件操作](http://www.cppblog.com/lmlf001/archive/2011/05/16/5815.html)
+- [正确的使用CComSafeArray,CComVariant和CComBSTR](http://www.cppblog.com/xiaxili/archive/2008/07/17/56466.html)
+ 
+### 静态成员变量的初始化
+ 
+    .h     static LogFile ExceptionFile;
+    .cpp  LogFile Log::FullFile("full.log");
+ 
+### 成员变量初始化
+ 
+    .h     LogFile FullFile;
+    .cpp Log::Log:FullFile("full.log"){}
+ 
+    ifstream& open_file(ifstream &in,const string &file)
+
+只要是fsteam作为参数，一定要传入引用，因为ifstream的拷贝构造函数是私有的。引用
+ 
+C语言中
+
+    '/0' == 0 == NULL
+ 
+c++ string类型如何转成int
+ 
+    atoi(str.c_str())
+ 
+### 日志
+ 
+- [简单易用的日志类](http://hi.baidu.com/eternity8013/blog/item/36748cf41ce4df68ddc474c3.html)
+ 
+### 文件
+ 
+- [c++中如何创建目录](http://wlx.westgis.ac.cn/464/)
+- [LPTSTR CString 相互转换](http://yinengsoft.blog.163.com/blog/static/45958957200952341510414/)
+ 
+ 
+### 其他
+
+- [#pragma once与 #ifndef的区别](http://www.cppblog.com/szhoftuncun/archive/2007/10/28/35356.html)
+
 ## 编码规范
 
 - [darcyliu/google-styleguide](https://github.com/darcyliu/google-styleguide)

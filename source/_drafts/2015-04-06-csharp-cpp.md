@@ -11,7 +11,9 @@ tags : [c#, csharp, c++, cpp]
 （从C++到C++/CLI）
 3. [托管C++](http://zh.wikipedia.org/wiki/C%2B%2B%E6%89%98%E7%AE%A1%E6%89%A9%E5%B1%95)：是微软对C++的一个语法扩展，允许C++程序员在.NET框架和CLR的基础上进行托管编程，可以无缝地集成托管和非托管代码，所以经常被用于其他语言和非托管代码之间的桥梁。
 4. [C++/CLI](http://zh.wikipedia.org/zh-cn/C%2B%2B/CLI)：是用来代替托管C++的语言规范，在兼容原有的C++标准的同时，重新简化了托管C++的语法，提供了更好的代码可读性。C++/CLI现在可以被Visual C++ 2005和更高版本的编译器支持。
-    
+
+<!-- more -->
+
 ## C#、C++/CLI、非托管C++三层架构：
 
 1. 创建非托管C++的static library工程：

@@ -227,7 +227,7 @@ describe('ItemCtrl with SpyReturn', function() {
 
 ### 单元测试服务器调用
 
-在 Angular 中，只要在 Karma 配置中包含了 _angular-mocks.js_ 文件，AngularJS 就让调用 `$httpservice` 时，并不真正发生服务器调用。所有的服务器调用都叫被拦截，让我们可以在单元测试上下文中测试，所有我们的单元测试也会更快更稳定。
+在 Angular 中，只要在 Karma 配置中包含了 _angular-mocks.js_ 文件，AngularJS 就让调用 `$http` service 时，并不真正发生服务器调用。所有的服务器调用都叫被拦截，让我们可以在单元测试上下文中测试，所有我们的单元测试也会更快更稳定。
 
 让我们使用 `$http` 来编写服务器调用：
 

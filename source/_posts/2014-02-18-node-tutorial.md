@@ -3,7 +3,8 @@ title: "Node Tutorial"
 category: Node
 tags: [node, tutorial]
 ---
-## 环境
+
+## Install
 
 官网下载并安装 <http://www.nodejs.org/download/>.
 
@@ -13,16 +14,14 @@ tags: [node, tutorial]
 
 <!-- more -->
 
-## Framework
+## MVC
 
-- [sahat/hackathon-starter](https://github.com/sahat/hackathon-starter) 模块采用水平结构。
-- [primus/primus](https://github.com/primus/primus) Primus, the creator god of transformers but now also known as universal wrapper for real-time frameworks.  Primus provides a common low level interface to communicate in real-time using various of real-time frameworks.
-- [12 Web Application Frameworks for Node.js | CodeCondo](http://codecondo.com/10-web-application-frameworks-for-node-js/)
-- [10个最好的Node.js MVC框架 - WEB开发者](http://www.admin10000.com/document/3931.html)
-- [Sails.js](http://sailsjs.org/#/) It is designed to emulate the familiar MVC pattern of frameworks like Ruby on Rails, but with support for the requirements of modern apps: data-driven APIs with a scalable, service-oriented architecture. 
+- [Express - Node.js web application framework](http://expressjs.com/)
+- [Express.io - Realtime-Web Framework for Nodejs](http://express-io.org/)
+- [Koa - next generation web framework for node.js](http://koajs.com/)
+- [balderdashy/sails](https://github.com/balderdashy/sails/)
+- [Sails.js](http://sailsjs.org/#/)
 - [All About Sessions in Node.js - Stormpath User Management API](https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions)
-- [DaftMonk/generator-angular-fullstack](https://github.com/DaftMonk/generator-angular-fullstack)
-- [LoopBack](http://loopback.io/)
 
 ## Security
 
@@ -86,6 +85,7 @@ tags: [node, tutorial]
 - [jaredhanson/oauth2orize](https://github.com/jaredhanson/oauth2orize) OAuth 2.0 authorization server toolkit for Node.js.
 - [vdemedes/cancan](https://github.com/vdemedes/cancan) Pleasant authorization library for Node.js (port of Ryan Bates' cancan).
 - [carlos8f/node-relations](https://github.com/carlos8f/node-relations) Entity relationship, role, and permissions API for Node.js.
+- [All About Sessions in Node.js - Stormpath User Management API](https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions/)
 
 __Demo:__
 
@@ -128,10 +128,6 @@ __Demo:__
 - [rdio/jsfmt](https://github.com/rdio/jsfmt) For formatting, searching, and rewriting JavaScript.
 - [详解Node.js API系列](http://blog.whattoc.com/categories/%E8%AF%A6%E8%A7%A3Node.js%20API%E7%B3%BB%E5%88%97/)
 - [Node.js设计模式](http://blog.whattoc.com/categories/Node.js%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/)
-
-## Performance
-
-- [StrongLoop](http://strongloop.com/strongblog/node-js-performance-tip-of-the-week-memory-leak-diagnosis)
 
 ## Discussion
 
@@ -182,16 +178,16 @@ __Demo:__
 See [javascript - how can i fix webstorm warning (= unresolved function ) for "require" (firefox add-on-sdk) - Stack Overflow](http://stackoverflow.com/questions/20136714/how-can-i-fix-webstorm-warning-unresolved-function-for-require-firefox-a)
 
 
+## Reference
 
-## bin
+- [Node.JS 学习路线图 - WEB开发者](http://www.admin10000.com/document/4624.html)
+
+
+### bin
 
 - [Why did the startup stub get moved to bin/www ? · Issue #25 · expressjs/generator](https://github.com/expressjs/generator/issues/25)
 - [javascript - What does "./bin/www" do in Express 4.x? - Stack Overflow](http://stackoverflow.com/questions/23169941/what-does-bin-www-do-in-express-4-x)
 - [Executables in npm scripts](http://blog.ibangspacebar.com/npm-scripts)
-
-## Reference
-
-- [Node.JS 学习路线图 - WEB开发者](http://www.admin10000.com/document/4624.html)
 
 ## Package
 
@@ -204,9 +200,10 @@ See [javascript - how can i fix webstorm warning (= unresolved function ) for "r
 node2exe，采用 `copy /b` 的方式，将宿主和资源连接起来。See [areve/node2exe](
 https://github.com/areve/node2exe)
 
+See also [javascript - Make exe files from node.js app - Stack Overflow](http://stackoverflow.com/questions/8173232/make-exe-files-from-node-js-app) 打包。
+
 ## Tutorial
 
-- [javascript - Make exe files from node.js app - Stack Overflow](http://stackoverflow.com/questions/8173232/make-exe-files-from-node-js-app) 打包。
 - [JohnnyFee/awesome-nodejs](https://github.com/JohnnyFee/awesome-nodejs)
 - [从零开始nodejs系列文章](http://blog.fens.me/series-nodejs/)
 - [Node初学者入门，一本全面的NodeJS教程 - OurJS.com](http://ourjs.com/detail/529ca5950cb6498814000005#event-driven-callbacks)

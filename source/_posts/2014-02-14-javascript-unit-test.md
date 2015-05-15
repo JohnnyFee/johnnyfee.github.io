@@ -142,3 +142,4 @@ JsTestDriver是一个JavaScript单元测试工具，易于与持续构建系统�
 ## Tutorial
 
 - [christian-bromann/awesome-selenium](https://github.com/christian-bromann/awesome-selenium)
+- [JavaScript unit test tools for TDD - Stack Overflow](http://stackoverflow.com/questions/300855/javascript-unit-test-tools-for-tdd/680713#680713)

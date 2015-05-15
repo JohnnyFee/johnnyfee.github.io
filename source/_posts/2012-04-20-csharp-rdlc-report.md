@@ -8,7 +8,7 @@ tags : [csharp, report]
 
 <!-- more -->
 
-###创建报表
+##创建报表
 
 可以通过Report或者Report Wizard创建报表
 
@@ -30,9 +30,9 @@ tags : [csharp, report]
 - [WinForm中创建Rdlc报表](http://www.cnblogs.com/robinli/archive/2011/09/27/2192440.html) 
 - [Windows Forms Control in Local Processing Mode](http://www.cnblogs.com/robinli/archive/2011/09/27/2192440.html) 
 
-###报表数据源
+##报表数据源
 
-####添加DataSet数据源
+###添加DataSet数据源
 
 ![添加DataSet数据源](http://johnnyimages.qiniudn.com/rdlc/add_data_set.jpg) 
 
@@ -42,7 +42,7 @@ tags : [csharp, report]
 
 当然，我们也可以不映射数据库中的字段，直接手动添加列，之后为这些DataSet复制，可以参考[这里](http://hi.baidu.com/flowsing/blog/item/f237c3a1e3d877814610646e.html)。
 
-####为Rdlc报表生成数据源
+###为Rdlc报表生成数据源
 
 ![生成数据源](http://johnnyimages.qiniudn.com/rdlc/new_data_set.jpg) 
 
@@ -58,7 +58,7 @@ tags : [csharp, report]
 ![Expression](http://johnnyimages.qiniudn.com/rdlc/data_expression.jpg) 
 
 
-####添加页眉和页脚
+###添加页眉和页脚
 
 Report-->Add Report Header, Add Report Foo。
 
@@ -171,7 +171,7 @@ Report-->Add Report Header, Add Report Foo。
         public string Email { get; set; }
     }
 
-###在apsx页面中显示报表
+##在apsx页面中显示报表
 
 新建Aspx页面，拖拽一个ScriptManager(在Toolbox-->Ajax Extensions中)到具有runat="server"的控件之下，如
  
@@ -214,7 +214,7 @@ Report-->Add Report Header, Add Report Foo。
 
 我在以上代码中使用EF调用存储过程发挥的结果作为报表的数据源。
 
-###报表参数
+##报表参数
 
 报表参数的值只能通过程序来设定，在报表上无法接收参数值的输入，只能显示。通过右键“Report Data” View的“Parameters”添加参数，如：
 
@@ -229,7 +229,7 @@ Report-->Add Report Header, Add Report Foo。
 
 多次添加相同参数名的报表参数，前者将会被覆盖。
 
-###报表变量和常量
+##报表变量和常量
 
 - ExecutionTime 生成报表的时间
 - PageNumber 当前的页号
@@ -252,7 +252,7 @@ Report-->Add Report Header, Add Report Foo。
 
 参考：[RDLC 报表系列（三） 参数、常量及常用表达式的使用](http://www.cnblogs.com/jack86514/archive/2009/10/17/1585254.html)
 
-###报表表达式
+##报表表达式
 
 回车拼接字符串：
 
@@ -267,7 +267,7 @@ Report-->Add Report Header, Add Report Foo。
 
 
 
-###子报表
+##子报表
 如果希望单击报表中某个值后，弹出一个新的报表，即钻取报表或自报表，则
 右键报表的某个单元格-->Text Box Property-->制定钻取报表和传递给钻取报表的参数
 
@@ -298,17 +298,17 @@ Report-->Add Report Header, Add Report Foo。
 	
 详细请参考：[使用RDLC报表(四)--钻取式报表](http://www.cnblogs.com/wjhx/archive/2007/03/07/666928.html)
 
-###分组
+##分组
 
 对于新建的Table，有一个默认的分组，名为Details，但是没有制定分组的字段，我们可以为这个分组设置分组字段，如：
 
 ![插入ReportView控件](http://johnnyimages.qiniudn.com/rdlc/group.jpg) 
 
-###在报表中插入图片
+##在报表中插入图片
 
 将图片复制到工程，右键“Report Data”视图中的Image，选择“Add”，将图片引入报表。之后便可以将图标拖到报表中，我们这里插入图片的方式为Embedded，参考[这里](http://www.cnblogs.com/jack86514/archive/2009/10/17/1584862.html)。
 
-###阅读
+##阅读
 
 - [蜡人张](http://www.gotreportviewer.com/) 
 - [gotreportviewer ](http://www.gotreportviewer.com/)

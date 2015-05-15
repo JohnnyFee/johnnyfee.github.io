@@ -77,7 +77,7 @@ tags: [android, tutorial]
 看进程, 确保没有其他adb在运行
 然后重启eclipse
 
-    adb start-server 重启服务
+    adb start-server
 
 __Eclipse通过无线连接PAD__
 

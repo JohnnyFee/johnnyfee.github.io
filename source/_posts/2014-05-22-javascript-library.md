@@ -17,7 +17,7 @@ responses than using an XMLHttpRequest.
 
 ## Data Type
 
-## Collection & Object
+### Collection & Object
 
 - [Underscore.js](http://underscorejs.org/)
 - [lodash/lodash](https://github.com/lodash/lodash/)
@@ -26,11 +26,13 @@ responses than using an XMLHttpRequest.
 - [flesler/hashmap](https://github.com/flesler/hashmap) HashMap JavaScript class for NodeJS and the browser. The keys can be anything and won't be stringified.
 - [DataCollection.js](http://thestorefront.github.io/DataCollection.js) Manipulate data from API responses with ease.
 - [andrejewski/seth](https://github.com/andrejewski/seth) JavaScript DSL for functional Set Theory.
+- [joewalnes/filtrex](https://github.com/joewalnes/filtrex) A simple, safe, JavaScript Filter Expression compiler for end-users.
 
 __Usage:__
 
 - [underscore.js - Differences between lodash and underscore - Stack Overflow](http://stackoverflow.com/questions/13789618/differences-between-lodash-and-underscore)
 - [Say "Hello" to Lo-Dash - Kit Cambridge](http://kitcambridge.be/blog/say-hello-to-lo-dash/)
+- [winterbe/streamjs](https://github.com/winterbe/streamjs) Object Streaming Pipeline for JavaScript - inspired by Java 8 Streams <http://winterbe.github.io/streamjs/>
 
 ### is
 
@@ -86,61 +88,21 @@ __Usage:__
 
 - [Leonidas-from-XIV/node-xml2js](https://github.com/Leonidas-from-XIV/node-xml2js)
 
-## IO
-
-- [winterbe/streamjs](https://github.com/winterbe/streamjs) Object Streaming Pipeline for JavaScript - inspired by Java 8 Streams <http://winterbe.github.io/streamjs/>
-
-## Parser
-
-- [ariya/esprima](https://github.com/ariya/esprima) ECMAScript parsing infrastructure for multipurpose analysis <http://esprima.org>
-    + [Maintaining JavaScript Code Quality with ESLint](https://www.paypal-engineering.com/2014/12/12/maintaining-javascript-code-quality-with-eslint/)
-
-## Device
-
-- [zzmp/juliusjs](https://github.com/zzmp/juliusjs)
-
-## Pinyin
-
-- [hotoo/pinyin](https://github.com/hotoo/pinyin) 汉字汉字拼音转换工具。<http://pinyin.hotoo.me/>
-
-## Async
+### Async
 
 - [angular/zone.js](https://github.com/angular/zone.js) Implements Zones for JavaScript. 
 - [yortus/asyncawait · GitHub](https://github.com/yortus/asyncawait)
 - [chajs/cha](https://github.com/chajs/cha) Cha allows tasks to be connected together into a chain that makes better readability and easier to maintain.
 
-### Logger
-
-- [Better logging in Node.js — Medium](https://medium.com/@garychambers108/b3cc6fd0dafd) Add context to your log messages.
-
-## Expression
-
-- [joewalnes/filtrex](https://github.com/joewalnes/filtrex) A simple, safe, JavaScript Filter Expression compiler for end-users.
-
 ## Browser
 
 - [browserstate/history.js](https://github.com/browserstate/history.js)
-
-### Animation
-
-- [Velocity.js](http://julian.com/research/velocity)
-
-### Web Workers
-
 - [kolodny/webwork](https://github.com/kolodny/webwork)
-
-### Code
-
+- [Velocity.js](http://julian.com/research/velocity)
 - [highlight.js](https://highlightjs.org) Syntax highlighting for the Web
-
-### Keyboard
-
-- [20个优秀的JavaScript 键盘事件处理库 - WEB开发者](http://www.admin10000.com/document/4212.html)
-
-## Generator
-
-- [Yeoman - Modern workflows for modern webapps](http://yeoman.io/) [Get started](http://yeoman.io/gettingstarted.html) and then [find a generator](http://yeoman.io/community-generators.html) for your webapp. Generators are available for [Angular](https://github.com/yeoman/generator-angular), [Backbone](https://github.com/yeoman/generator-backbone), [Ember](https://github.com/yeoman/generator-ember) and over 400 other projects. Read the [Yeoman Monthly Digest](http://updates.html5rocks.com/tag/front-end) for our latest picks.
 
 ## Tools
 
+- [hotoo/pinyin](https://github.com/hotoo/pinyin) 汉字汉字拼音转换工具。<http://pinyin.hotoo.me/>
+- [Better logging in Node.js — Medium](https://medium.com/@garychambers108/b3cc6fd0dafd) Add context to your log messages.
 - [adamdbradley/ionic-present](https://github.com/adamdbradley/ionic-present) A framework for easily creating beautiful presentations using HTML.

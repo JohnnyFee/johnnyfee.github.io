@@ -313,7 +313,7 @@ See [PhoneGap 09 使用Plugman管理Plugins - jacob的专栏 - 博客频道 - CS
 
 ### 移除插件
 
-    $ plugman --uninstall --platform <ios|amazon-fireos|android|blackberry10|wp7|wp8> 
+    $ plugman uninstall --platform <ios|amazon-fireos|android|blackberry10|wp7|wp8> 
     --project <directory> --plugin <id> [--www <directory>] [--plugins_dir <directory>]
 
 ### Registry Actions

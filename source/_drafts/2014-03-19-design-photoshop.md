@@ -741,6 +741,8 @@ __自己设定一个简单的阴影效果：__
 
 图层复合中的内容会随着图像一起保存，这样下次打开图像后图层复合选项还可以继续使用。按照这个思路，我们在设计网页的时候就可以事先存储多个布局轮流给客户进行展示。当然，附带图层复合信息将会增加保存文件的字节数。此外，除了删除图层之外，还有许多操作也不能被图层复合所记录。这些操作包括绘制、色彩调整、滤镜、变换等。正由于这些局限性，其实图层复合状态能够记录的内容非常有限，只限于图层的可视性、位置和样式。
 
+### 历史记录画笔
+
 ## 色彩调整
 
 ### 色相/饱和度
@@ -781,8 +783,183 @@ __自己设定一个简单的阴影效果：__
 
 可用鼠标移动这4个边界以改变中心或辐射色域的范围大小，在中心色域上按住鼠标左右拖动可移至其他色域。
 
-使用色谱条上方的吸管工具![](http://www.99ut.com/library/turlib/serieslib/07/P_Sampler_Lg_N.gif)在图像中点击可以将中心色域移动到所点击的颜色区域。使用添加到取样工具![](http://www.99ut.com/library/turlib/serieslib/07/P_SamplerPlus_Lg_N.gif)可以扩展目前的色域范围到所点击的颜色区域。从取样减去工具![](http://www.99ut.com/library/turlib/serieslib/07/P_SamplerMinus_Lg_N.gif)则和添加到取样工具的作用相反。添加到取样工具![](http://www.99ut.com/library/turlib/serieslib/07/P_SamplerPlus_Lg_N.gif)在使用时，可以在图像中按住拖动以观察中心区域改变的效果。
+使用色谱条上方的吸管工具![](http://www.99ut.com/library/turlib/serieslib/07/P_Sampler_Lg_N.gif)在图像中点击可以将中心色域移动到所点击的颜色区域。使用添加到取样工具![](http://www.99ut.com/library/turlib/serieslib/07/P_SamplerPlus_Lg_N.gif)可以扩展目前的色域范围到所点击的颜色区域。从取样减去工具![](http://www.99ut.com/library/turlib/serieslib/07/P_SamplerMinus_Lg_N.gif)则和添加到取样工具的作用相反。添加到取样工具![](http://www.99ut.com/library/turlib/serieslib/07/P_SamplerPlus_Lg_N.gif)在使用时，可以在图像中按住拖动以观察中心区域改变的效果。取样减去工具和添加到取样工具不适合这样操作，因为添加和减去的效果变化得比较急剧。
 
+使用色相/饱和度〖CTRL U〗工具，在编辑选项中选择红色，将色相改为+180。看到图片中的西瓜果肉都变为了蓝色：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_a25.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_a26.jpg)
+
+使用色相/饱和度〖CTRL U〗工具，在编辑选项中选择红色，将色相改为+180。
+
+See more [<#07_色相/饱和度>Photoshop](http://www.99ut.com/text/photoshop/basic/07/pss07_02.html)。
+
+### 色彩平衡
+
+色彩平衡〖CTRL B〗是一个功能较少，但操作直观方便的色彩调整工具。在色调平衡选项中将图像笼统地分为暗调、中间调和高光3个色调，每个色调可以进行独立的色彩调整。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_b01.jpg)
+
+以下三图分别是暗调部分红色+100，中间调部分红色+100，高光部分红色+100的效果。可以很明显地对比出不同加亮的部位的区别。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_b03.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_b04.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_b05.jpg)
+
+绿色、蓝色也是如此。
+
+色彩平衡设置框的最下方有一个“保持亮度”的选项，它的作用是在三基色增加时下降亮度，在三基色减少时提高亮度，从而抵消三基色增加或减少时带来的亮度改变。
+
+中间调+100时，关闭和打开保持亮度选项的效果：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_b06.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_b04.jpg) 
+
+中间调-100时，关闭和打开保持亮度选项的效果：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_b07.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_b08.jpg)
+
+### 暗调/高光
+
+在色彩平衡设置对话框中，启动暗调/高光调整工具后勾选下方“显示其他选项”，会出现一个很大的设置框。分为暗调、高光、调整3大部分。
+
+现在先将高光的数量设为0%，单独来看看暗调的调整效果。暗调部分调整的作用是增加暗调部分的亮度，从而改进照片中曝光不足的部分，也可称为补偿暗调。
+
+数量的数值越大，增加的程度也就越高，现在保持色调宽度50%，半径30像素，以下分别是原图、数量50%、数量100%的效果：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_c01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_c02.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_c03.jpg)
+
+色调宽度就是暗调改变范围的大小，色调宽度越大，涉及的亮度就越多，改变的效果也就越明显。以下分别是将色调宽度设为50%和100%的效果：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_c03.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_c04.jpg)
+
+半径的概念类似于上面的色调宽度，不过色调宽度是针对全图作用的。而半径是针对图像中暗调区域的大小而言的。他们的区别有点类似魔棒工具的邻近选取与非邻近选取一样。
+
+高光调整的作用是降低高光部分图像的亮度，也可称为高光抑制。
+
+先关闭补偿暗调的效果(将暗调数量设为0%)，试着将高光设为：数量50%，色调宽度50%，半径30像素的效果：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_c01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_c05.jpg)
+
+中间调对比度就是控制中间调偏向暗调，或偏向高光：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_c08.jpg)
+
+黑色剪贴”和“减少白色像素”两个选项的作用如同于曲线工具中的合并暗调区域或合并高光区域。调解时候需要细微，过大的数值会造成图像的严重失真。
+
+### 匹配颜色
+
+匹配颜色是 Photoshop 提供了在多幅图像之间进行色调匹配的命令。需要注意的是，必须在Photoshop中同时开启多幅RGB模式(CMYK模式下不可用)的图像，才能够在多幅图像中进行色彩匹配。
+
+打开如下两幅图片：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_d01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_d02.jpg)
+
+启动匹配颜色命令：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_d03.jpg)
+
+顶部的目标图像中显示着被修改的图像文件名，下方的图像统计选项中可以选择颜色匹配所参照的源图像文件名。如果源文件包含了多个图层，可在图层选项列表中选择只参照其中某一层进行匹配。
+
+最下方存储统计数据按钮的作用是将本次匹配的色彩数据存储起来，文件扩展名为.sta。这样下次进行匹配的时候可选择载入这次匹配的数据，而不再需要打开这次的源文件。
+
+可以设置匹配的效果设置。“中和”选项的作用将使颜色匹配的效果减半，这样最终效果中将保留一部分原先的色调。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_d04.jpg)
+
+除了参照另外一幅图像进行匹配以外，如果正在制作的图像中有多个图层，那么也可以在本图像中的不同图层之间进行匹配，所选择的图层将作为目标图像。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_d05.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_d06.jpg)
+
+### 替换颜色
+
+替换颜色命令和我们在前面学习过的色相/饱和度命令的作用是类似的，可以说它其实就是色相/饱和度命令功能的一个分支。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_a31.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_e01.jpg)
+
+使用时在图像中点击所要改变的颜色区域，设置框中就会出现有效区域的灰度图像(需选择显示选区选项)，呈白色的是有效区域，呈黑色的是无效区域。改变颜色容差可以扩大或缩小有效区域的范围。也可以使用添加到取样工具![](http://www.99ut.com/library/turlib/serieslib/07/P_SamplerPlus_Lg_N.gif)和从取样中减去工具![](http://www.99ut.com/library/turlib/serieslib/07/P_SamplerMinus_Lg_N.gif)来扩大和缩小有限范围。颜色容差和增减取样虽然都是针对有效区域范围的改变，但应该说颜色容差的改变是基于在取样范围的基础上的。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_e02.jpg)
+
+### 色彩范围选取
+
+【选择>色彩范围】是通过灰度图来表达选择有效范围的色彩范围命令。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_e03.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_e04.jpg)
+
+在图像中点击或拖动确定所选的颜色，可以增减色彩取样和颜色容差。可以在顶部的选择中选取固定的色彩，可以在底部的选区预览中改变图像的预览效果。
+
+除了直接针对全图进行色彩范围选择以外，也可以事先创建一个选区，然后在使用色彩范围选择选取命令，这样在色彩范围命令的预览图中只会出现所选中的范围，产生的选区也将只限于原先的选区之内。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_e05.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_e06.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_e07.jpg)
+
+当然，也可以在针对全图创建选区后再减去某一片区域。可以在针对全图创建选区后再使用矩形选框工具 ![](http://www.99ut.com/library/turlib/serieslib/07/P_RectSelect_Lg_N.gif)〖M/SHIFT M〗减去右边除了集装箱和龙门吊以外的部分。
+
+### 自动色阶/自动对比度/自动颜色
+
+自动色阶是将红色绿色蓝色3个通道的色阶分布扩展至全色阶范围。这种操作可以增加色彩对比度，但可能会引起图像偏色：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_f01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_f02.jpg)
+
+自动对比度是以RGB综合通道作为依据来扩展色阶的，因此增加色彩对比度的同时不会产生偏色现象。也正因为如此，在大多数情况下，颜色对比度的增加效果不如自动色阶来得显著：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_f03.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_f04.jpg)
+
+自动颜色命令除了增加颜色对比度以外，还将对一部分高光和暗调区域进行亮度合并。最重要的是，它把处在128级亮度的颜色纠正为128级灰色。正因为这个对齐灰色的特点，使得它既有可能修正偏色，也有可能引起偏色：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_f05.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_f06.jpg)
+
+曲线设置框中的自动功能已经内含以上3种自动命令。
+
+在自动按钮下方有一个选项按钮，点击后出现一个自动颜色的设置框：
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_f07.jpg)
+
+其中有3种算法：
+
+- 增强单色对比度：等同于前面所说的自动对比度的效果。
+- 增强每通道的对比度：等同于自动色阶的效果。
+- 查找深色与浅色：再勾选“对齐中性中间调”选项，就等同于自动颜色的效果。
+
+下方的剪贴数值即是指定进行亮度合并的高光和暗调的范围，如果设置得过大将会造成图像细节的损失。另外点击暗调、中间调和高光的色块可以改变它们的颜色值，建议不要更改这些颜色和数值。
+
+### 亮度/对比度
+
+是曲线功能的一个分支，用来简单地增加减少图像亮度和颜色对比度。
+
+### 去色
+
+相当于在色相/饱和度中将饱和度设为最低，把图层转变为不包含色相的灰度图象。
+
+### 反相
+
+将图像中的的色彩转换为反转色，白色转为黑色，红色转为青色，蓝色转为黄色等。效果类似于普通彩色胶卷冲印后的底片效果。
+
+### 照片滤镜
+
+相当于传统摄影中使用的有色滤镜，可改变图像的色调。效果等同于色彩平衡或曲线调整的效果，但其设定更符合摄影师等专业人士的使用习惯。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_g01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g02.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g03.jpg)
+
+### 阈值
+
+将图像转化为黑白2色图像(位图)，可以指定为0至255亮度中任意一级。使用时应反复移动色阶滑杆观察效果。一般设置在像素分布最多的亮度级上可以保留最丰富的图像细节。其效果可用来制作漫画或版刻画。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_g01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g04.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g05.jpg)
+
+### 色调分离
+
+大量合并亮度，最小数值为2时合并所有亮度到暗调和高光两部分，数值为255时相当于没有效果。此操作可以在保持图像轮廓的前提下，有效地减少图像中的色彩数量。使用时开启RGB直方图调板即可看见合并后的色阶效果。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_g01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g06.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g07.jpg)
+
+### 色调均化
+
+将图像中最亮的部分提升为白色，最暗部分降低为黑色。这两点与我们在以前就接触过。但不同的是，这个命令会按照灰度重新分布亮度。使得图像看上去更加鲜明。这个命令也是一个很好的调整数码照片的工具。因为是以原来的像素为准，因此它无法纠正色偏。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_g01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g08.jpg)
+
+### 变化
+
+变化命令是一种较为直观的色彩平衡类工具，它使用较为通俗的文字来提供操作指导，因此初学者较为喜欢。点击相应名字的图片即可改变原图像的色调和亮度。越偏向精细则每次改变的幅度越小。事实上在实际使用中很少被用来改变图像色调，更多地被用来判断哪种色调最适合图像。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_g09.jpg)
 
 ### 曲线
 
@@ -945,7 +1122,9 @@ See [<#06_自动及黑灰白场>Photoshop](http://www.99ut.com/text/photoshop/ba
 
 大部分的数码相机，都很难拍摄到充足的亮度范围，尤其是暗调。这是因为，由于电流的杂波干扰使得感光电子元件对黑色的感应不平稳，常造成“黑场下不去”的情况，就是说该黑的部分不够黑。在直方图中就表现为暗调部分缺失。而在阴雨天气下拍摄的照片，很容易因为光线不足而导致高光部分缺失。
 
-这两个因素和在一起，造成很多照片看上去显得灰蒙蒙的，就如同我们上面的例子所使用的图。如果打开直方图，就会看到这样的图片色阶范围较为狭窄。那么我们就将色阶范围拉大，让0和255都有一定像素存在。如下左图。右图是调整前的直方图。
+这两个因素和在一起，造成很多照片看上去显得灰蒙蒙的，这也就是为什么在调整数码照片的时候常使用到提高高光和降低暗调的手法。
+
+如果打开直方图，就会看到这样的图片色阶范围较为狭窄。那么我们就将色阶范围拉大，让0和255都有一定像素存在。如下左图。右图是调整前的直方图。
 
 ![](http://www.99ut.com/library/turlib/serieslib/06/06_c06.jpg) ![](http://www.99ut.com/library/turlib/serieslib/06/06_c07.jpg)
 
@@ -959,7 +1138,9 @@ See [<#06_自动及黑灰白场>Photoshop](http://www.99ut.com/text/photoshop/ba
 
 只要是图像中有较多的高光部分(约四分之三)而暗调只占少数的情况下，使用这种曲线都可以调整的很好。判断图像是否属于这种类型也很简单，在直方图中如果大部分像素聚集在中央右侧，就说明大部分是较亮的像素。
 
-### S形曲线
+### S 形曲线
+
+S型曲线的可以在不明显造成高光合并和暗调合并的前提下增加明暗对比。
 
 在室内灯光下拍摄的照片，有严重的色偏现象。
 
@@ -978,6 +1159,30 @@ See [<#06_自动及黑灰白场>Photoshop](http://www.99ut.com/text/photoshop/ba
 一般来说，A点只适合上升，B点只适合下降。
 
 如果原图像较暗，就维持A点基本不动而上升B点。如果原图像较亮则维持B点基本不动而下降A点。如果图像既不亮也不暗则可上升B点同时下降A点。不过在此种情况下应优先使用自动颜色命令。
+
+如下图片：
+
+![](http://www.99ut.com/library/turlib/serieslib/06/06_c21.jpg)
+
+经过自动颜色和 S 型曲线调整：
+
+![](http://www.99ut.com/library/turlib/serieslib/06/06_c23.jpg) ![](http://www.99ut.com/library/turlib/serieslib/06/06_c24.jpg)
+
+![](http://www.99ut.com/library/turlib/serieslib/06/06_c22.jpg)
+
+下图是给人的感觉是整体较亮，从亮度色阶直方图中可以看到大部分像素集中在高光区域。因此将曲线的中间调向下移动，把色阶的分布“拉平”一些：
+
+![](http://www.99ut.com/library/turlib/serieslib/06/06_d24.jpg) ![](http://www.99ut.com/library/turlib/serieslib/06/06_d25.jpg) ![](http://www.99ut.com/library/turlib/serieslib/06/06_d26.jpg)
+
+下图是用电脑摄像头拍摄的照片。在使用自动命令后，再将暗调部分下降一些，这样深色的衣服更能衬托面部，然后做一个S型的调整。
+
+![](http://www.99ut.com/library/turlib/serieslib/06/06_d27.jpg)
+
+风景照如果在取景上偏重于天空，两者比例经常在2:1至4:1之间，属于高光较多的图像，可适当合并高光并下降中间调。如果偏重于地面就属于暗调较多的图像，则适当合并暗调并提升中间调。两者都是为了加强对比并同时保留细节。
+
+人物照重点大都在于人物的面部，其光影构成较复杂，基本都包含了从高光到暗调的变化。高光的典型部位是眼白，也可参照此设置白场。暗调的典型部位是头发阴影，可参照头发阴影设置黑场。如果染了其他颜色的头发，那就只好参照眼珠了。
+
+白场的设定不应在照片中造成大范围的高光。因为在同样是过度调整的情况下，过暗的图像看起来比过亮的图像要好些。这是由于人眼感光细胞分为两种，而负责弱光感知的杆状细胞数量约为负责强光感知的锥状细胞的两倍(一亿三千万和七百万)。并且锥状细胞在视网膜中央较为集中，而杆状细胞平均分布在四周。因此若图像中有较多高光区，眼睛需要来回扫视以获得足够信息，而若图像中有较多暗调区，眼睛扫视的范围和次数则相对较少。并且从色彩心理上来说，整体过亮的图像往往令人有找不到重点的感觉，会引起烦躁，不愿多看。因此宁可暗些也不要亮些。大家去看看一些获奖的风景摄影照片，大部分都具有较广泛的暗调分布。
 
 ## Demo
 

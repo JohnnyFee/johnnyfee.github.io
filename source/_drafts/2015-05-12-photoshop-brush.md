@@ -1,4 +1,4 @@
-  layout: post
+layout: post
 title: "PhotoShop 画笔"
 category: PhotoShop
 tags: [ps]

@@ -1,4 +1,4 @@
-  layout: post
+layout: post
 title: "PhotoShop 选区"
 category: PhotoShop
 tags: [ps]

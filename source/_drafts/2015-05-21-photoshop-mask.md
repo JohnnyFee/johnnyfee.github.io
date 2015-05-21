@@ -1,4 +1,4 @@
-  layout: post
+layout: post
 title: "PhotoShop 蒙板"
 category: PhotoShop
 tags: [ps]

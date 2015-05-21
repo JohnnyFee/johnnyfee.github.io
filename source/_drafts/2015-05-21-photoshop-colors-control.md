@@ -1,4 +1,4 @@
-  layout: post
+layout: post
 title: "PhotoShop 色彩调整"
 category: PhotoShop
 tags: [ps]

@@ -1,5 +1,5 @@
-  layout: post
-title: "PhotoShop"
+layout: post
+title: "PhotoShop Tutorial"
 category: PhotoShop
 tags: [ps]
 ---
@@ -57,14 +57,3 @@ tags: [ps]
 - [30个苹果系列产品模型（Mock Up:iPhone/iMac…）](http://www.shejidaren.com/apple-product-psd-mockups.html)
 - [iPhone GUI PSD](http://www.teehanlax.com/tools/iphone/)
 - [iOS 7 iPhone GUI PSD](http://www.teehanlax.com/tools/ios7-iphone/)
-
-
-
-
-
-
-
-
-
-
-

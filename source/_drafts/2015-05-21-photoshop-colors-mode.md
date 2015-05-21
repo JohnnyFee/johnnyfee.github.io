@@ -1,4 +1,4 @@
-  layout: post
+layout: post
 title: "PhotoShop 颜色模式"
 category: PhotoShop
 tags: [ps]

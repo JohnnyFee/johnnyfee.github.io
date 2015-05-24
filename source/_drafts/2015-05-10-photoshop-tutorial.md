@@ -10,6 +10,18 @@ tags: [ps]
 - [Photoshop CC 2014最新版软件下载及安装破解教程（含苹果MAC跟win64位&32位） – 三人行PS学堂](http://www.ren3.cn/14573.htm)
 - <http://www.99ut.com/text/photoshop/basic/01/pss01_02.html>
 
+## 软件协作
+
+See [<#15_软件协作>文字教程](http://www.99ut.com/text/photoshop/basic/15/pss15_01.html)
+
+## 常见的协作流程
+
+See [<#15_常见的协作流程>文字教程](http://www.99ut.com/text/photoshop/basic/15/pss15_02.html)
+
+## 关于网页设计和网站策划
+
+See [<#15_关于网页设计和网站策划>文字教程](http://www.99ut.com/text/photoshop/basic/15/pss15_03.html)
+
 ## Demo
 
 - [16个创意Photoshop图像处理教程](http://www.shejidaren.com/photoshop-image-processing-tutorials.html)

@@ -5,6 +5,8 @@ category: AMP
 tags: [mac, amp]
 ---
 
+WAMP, MAMP, and LAMP are abbreviations for “Windows, Apache, MySQL, and PHP,” “Mac, Apache, MySQL, and PHP,” and “Linux, Apache, MySQL, and PHP.” These abbreviations describe a fully functioning setup used for developing dynamic Internet web pages.
+
 See: [Apache, MySQL, PHP and phpMyAdmin on OSX 10.10 Yosemite for Local Development](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/)
 
 With Apples’ new OSX 10.10 Yosemite out of the bag, getting the **AMP** stack up and running on the new OSX may cause a few bumps on the upgrade from [OS X Mavericks 10.9](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-9-mavericks/ "Get Apache, MySQL, PHP and phpMyAdmin working on OSX 10.9 Mavericks"). This tutorial will go through the process on getting **Apache, MySQL, PHP** (or otherwise known as the ‘AMP’ stack) and **phpMyAdmin** running on the new Yosemite OS.

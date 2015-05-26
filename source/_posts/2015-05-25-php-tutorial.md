@@ -135,14 +135,6 @@ _END;
 
 using the `<<<_END..._END;` heredoc construct, you don’t have to add `\n` linefeed characters to send a linefeed—just press Return and start a new line. Also, unlike either a double-quote- or single-quote-delimited string, you are free to use all the single and double quotes you like within a heredoc, without escaping them by preceding them with a slash (`\`).
 
-###  echo and print
-
-The two commands are quite similar, but `print` is a function-like construct that takes a single parameter and has a return value (which is always `1`), whereas `echo` is purely a PHP language construct. 
-
-By and large, the `echo` command will be a tad faster than `print` in general text output, because it doesn’t set a return value. On the other hand, because it isn’t implemented like a function, `echo` cannot be used as part of a more complex expression, whereas `print` can. Here’s an example to output whether the value of a variable is `TRUE` or `FALSE` using `print`, something you could not perform in the same manner with `echo`, because it would display a `Parse error` message:
-
-    $b ? print "TRUE" : print "FALSE";
-
 ### Functions
 
 To create a function:
@@ -328,31 +320,319 @@ Therefore, here is a much better way to access `$_SERVER` (and other superglobal
 
 Using the `htmlentities` function for sanitization is an important practice in any circumstance where user or other third-party data is being processed for output, not just with superglobals.
 
-## Including and Requiring Files
+## Arrays
 
-As you progress in your use of PHP programming, you are likely to start building a library of functions that you think you will need again. You’ll also probably start using libraries created by other programmers.There’s no need to copy and paste these functions into your code. You can save them in separate files and use commands to pull them in. There are two types of command to perform this action: `include` and `require`.
+Some arrays are referenced by numeric indices; others allow alphanumeric identifiers. 
 
-Using `include`, you can tell PHP to fetch a particular file and load all its contents. 
+### Numerically Indexed Arrays
 
-```php
+```
 <?php
-  include "library.php";
+  $paper[] = "Copier";
+  $paper[] = "Inkjet";
+  $paper[] = "Laser";
+  $paper[] = "Photo";
 
-  // Your code goes here
+  print_r($paper);
 ?>
 ```
 
-Each time you issue the `include` directive, it includes the requested file again, even if you’ve already inserted it. For instance, suppose that _library.php_ contains a lot of useful functions, so you include it in your file, but also include another library that includes _library.php_. Through nesting, you’ve inadvertently included _library.php_ twice. This will produce error messages, because you’re trying to define the same constant or function multiple times. So you should use `include_once` instead. 
+In this example, each time you assign a value to the array `$paper`, the first empty location within that array is used to store the value, and a pointer internal to PHP is incremented to point to the next free location, ready for future insertions.
 
-```php
+The previous code could also have been written:
+
+```
 <?php
-  include_once "library.php";
+  $paper[0] = "Copier";
+  $paper[1] = "Inkjet";
+  $paper[2] = "Laser";
+  $paper[3] = "Photo";
 
-  // Your code goes here
+  print_r($paper);
 ?>
 ```
 
-Then, whenever another `include` or `include_once` is encountered, if it has already been executed, it will be completely ignored. To determine whether the file has already been executed, the absolute file path is matched after all relative paths are resolved and the file is found in your `include` path.
+So unless you wish to specify a different order, it’s usually better to simply let PHP handle the actual location numbers.
 
-In general, it’s probably best to stick with `include_once` and ignore the basic `include` statement. That way, you will never have the problem of files being included multiple times.
+### Associative Arrays
+
+```
+<?php
+  $paper['copier'] = "Copier & Multipurpose";
+  $paper['inkjet'] = "Inkjet Printer";
+  $paper['laser']  = "Laser Printer";
+  $paper['photo']  = "Photographic Paper";
+
+  echo $paper['laser'];
+?>
+```
+
+In place of a number (which doesn’t convey any useful information, aside from the position of the item in the array), each item now has a unique name that you can use to reference it elsewhere.
+
+This very powerful feature of PHP is often used when you are extracting information from XML and HTML. For example, an HTML parser such as those used by a search engine could place all the elements of a web page into an associative array whose names reflect the page’s structure:
+
+    $html['title'] = "My web page";
+    $html['body']  = "... body of web page ...";
+
+The program would also probably break down all the links found within a page into another array, and all the headings and subheadings into another. When you use associative rather than numeric arrays, the code to refer to all of these items is easy to write and debug.
+
+### Assignment Using the array Keyword
+
+```
+<?php
+  $p1 = array("Copier", "Inkjet", "Laser", "Photo");
+
+  echo "p1 element: " . $p1[2] . "<br>";
+
+  $p2 = array('copier' => "Copier & Multipurpose",
+              'inkjet' => "Inkjet Printer",
+              'laser'  => "Laser Printer",
+              'photo'  => "Photographic Paper");
+
+  echo "p2 element: " . $p2['inkjet'] . "<br>";
+?>
+```
+
+The first half of this snippet assigns the old, shortened product descriptions to the array `$p1`. There are four items, so they will occupy slots 0 through 3. 
+
+The second half assigns associative identifiers and accompanying longer product descriptions to the array `$p2` using the format _`index`_ `=>` _`value`_.
+
+### The foreach...as Loop
+
+Numberic array:
+
+```
+<?php
+  $paper = array("Copier", "Inkjet", "Laser", "Photo");
+  $j = 0;
+
+  foreach($paper as $item)
+  {
+    echo "$j: $item<br>";
+    ++$j;
+  }
+?>
+```
+
+Now let’s see how foreach works with an associative array:
+
+```
+<?php
+  $paper = array('copier' => "Copier & Multipurpose",
+                 'inkjet' => "Inkjet Printer",
+                 'laser'  => "Laser Printer",
+                 'photo'  => "Photographic Paper");
+
+  foreach($paper as $item => $description)
+    echo "$item: $description<br>";
+?>
+```
+
+Each item of the array `$paper` is fed into the key/value pair of variables `$item` and `$description`, from which they are printed out. 
+
+As an alternative syntax to `foreach...as`, you can use the `list` function in conjunction with the `each` function:
+
+```
+<?php
+  $paper = array('copier' => "Copier & Multipurpose",
+                 'inkjet' => "Inkjet Printer",
+                 'laser'  => "Laser Printer",
+                 'photo'  => "Photographic Paper");
+
+  while (list($item, $description) = each($paper))
+    echo "$item: $description<br>";
+?>
+```
+
+A `while` loop is set up and will continue looping until `each` returns a value of `FALSE`. The `each` function acts like `foreach`: it returns an array containing a key/value pair from the array `$paper` and then moves its built-in pointer to the next pair in that array. When there are no more pairs to return, `each` returns `FALSE`.
+
+The `list` function takes an array as its argument (in this case, the key/value pair returned by the function `each`) and then assigns the values of the array to the variables listed within parentheses.
+
+```
+<?php
+  list($a, $b) = array('Alice', 'Bob');
+  echo "a=$a b=$b";
+?>
+```
+
+So you can take your pick when walking through arrays. Use `foreach...as` to create a loop that extracts values to the variable following the `as`, or use the `each` function and create your own looping system.
+
+### Using Array Functions
+
+See [PHP: Array Functions - Manual](http://php.net/manual/en/ref.array.php)
+
+## printf
+
+###  echo and print
+
+The two commands are quite similar, but `print` is a function-like construct that takes a single parameter and has a return value (which is always `1`), whereas `echo` is purely a PHP language construct. 
+
+By and large, the `echo` command will be a tad faster than `print` in general text output, because it doesn’t set a return value. On the other hand, because it isn’t implemented like a function, `echo` cannot be used as part of a more complex expression, whereas `print` can. Here’s an example to output whether the value of a variable is `TRUE` or `FALSE` using `print`, something you could not perform in the same manner with `echo`, because it would display a `Parse error` message:
+
+    $b ? print "TRUE" : print "FALSE";
+
+A much more powerful function, `printf`, controls the format of the output by letting you put special formatting characters in a string.
+
+For instance, the following example uses the `%d` conversion specifier to display the value `3` in decimal:
+
+    printf("There are %d items in your basket", 3);
+
+If you replace the `%d` with `%b`, the value `3` would be displayed in binary (`11`). 
+
+Specifier |  Conversion action on argument arg  | Example (for an arg of 123)
+--------|--------|--------
+`%` |  Display a % character (no arg required) |%
+`b` |  Display arg as a binary integer |1111011
+`c` |  Display ASCII character for the arg |{
+`d` |  Display arg as a signed decimal integer |123
+`e` |  Display arg using scientific notation   |1.23000e+2
+`f` |  Display arg as floating point  | 123.000000
+`o` |  Display arg as an octal integer |173
+`s` |  Display arg as a string |123
+`u` |  Display arg as an unsigned decimal  |123
+`x` |  Display arg in lowercase hexadecimal |   7b
+`X` |  Display arg in uppercase hexadecimal  |  7B
+
+You can have as many specifiers as you like in a `printf` function, as long as you pass a matching number of arguments, and as long as each specifier is prefaced by a `%` symbol. Therefore, the following code is valid, and will output `"My name is Simon. I'm 33 years old, which is 21 in hexadecimal"`:
+
+    printf("My name is %s. I'm %d years old, which is %X in hexadecimal", 'Simon', 33, 33);
+
+A more practical example of `printf` sets colors in HTML using decimal. For example, suppose you know you want a color that has a triplet value of 65 red, 127 green, and 245 blue, but don’t want to convert this to hexadecimal yourself. Here’s an easy solution is:
+
+    printf("<span style='color:#%X%X%X'>Hello</span>", 65, 127, 245);
+
+Check the format of the color specification between the apostrophes (`''`) carefully. First comes the pound, or hash, sign (`#`) expected by the color specification. Then come three `%X` format specifiers, one for each of your numbers. The resulting output from this command is as follows:
+
+    <span style='color:#417FF5'>Hello</span>
+
+### Precision Setting
+
+Not only can you specify a conversion type, but you can also set the precision of the displayed result. 
+
+    printf("The result is: $%.2f", 123.42 / 12); // The result is $10.29
+
+You can also specify whether to pad output with either zeros or spaces by prefacing the specifier with certain values.
+
+```php
+<?php
+  echo "<pre>"; // Enables viewing of the spaces
+
+  // Pad to 15 spaces
+  printf("The result is $%15f\n", 123.42 / 12); //  $      10.285000
+
+  // Pad to 15 spaces, fill with zeros
+  printf("The result is $%015f\n", 123.42 / 12); // $00000010.285000
+
+  // Pad to 15 spaces, 2 decimal places precision
+  printf("The result is $%15.2f\n", 123.42 / 12); // $          10.29
+
+  // Pad to 15 spaces, 2 decimal places precision, fill with zeros
+  printf("The result is $%015.2f\n", 123.42 / 12); // $000000000010.29
+
+  // Pad to 15 spaces, 2 decimal places precision, fill with # symbol
+  printf("The result is $%'#15.2f\n", 123.42 / 12); // $##########10.29
+?>
+```
+
+### String Padding
+
+You can also pad strings to required lengths (as you can with numbers), select different padding characters, and even choose between left and right justification.
+
+```php
+<?php
+  echo "<pre>"; // Enables viewing of the spaces
+
+  $h = 'Rasmus';
+
+  // [Rasmus]
+  printf("[%s]\n",         $h); // Standard string output
+  
+  // [      Rasmus]
+  printf("[%12s]\n",       $h); // Right justify with spaces to width 12
+
+  // [Rasmus      ]
+  printf("[%-12s]\n",      $h); // Left justify with spaces
+
+  // [000000Rasmus]
+  printf("[%012s]\n",      $h); // Zero padding
+
+  // [######Rasmus]
+  printf("[%'#12s]\n\n",   $h); // Use the custom padding character '#'
+
+  $d = 'Rasmus Lerdorf';        // The original creator of PHP
+
+  // [    Rasmus L]
+  printf("[%12.8s]\n",     $d); // Right justify, cutoff of 8 characters
+
+  // [Rasmus Lerdo]
+  printf("[%-12.12s]\n",   $d); // Left justify, cutoff of 12 characters
+
+  // [Rasmus Ler@@]
+  printf("[%-'@12.10s]\n", $d); // Left justify, pad '@', cutoff 10 chars
+?>
+```
+
+### Using sprintf
+
+Often, you don’t want to output the result of a conversion but need it to use elsewhere in your code. This is where the `sprintf` function comes in. With it, you can send the output to another variable rather than to the browser.You might use it to make a conversion, as in the following example, which returns the hexadecimal string value for the RGB color group 65, 127, 245 in `$hexstring`:
+
+    $hexstring = sprintf("%X%X%X", 65, 127, 245);
+
+Or you may wish to store output ready to display later on:
+
+    $out = sprintf("The result is: $%.2f", 123.42 / 12);
+    echo $out;
+
+## Date and Time
+
+To keep track of the date and time, PHP uses standard Unix timestamps, which are simply the number of seconds since the start of January 1, 1970. To determine the current timestamp, you can use the `time` function:
+
+    echo time();
+
+Because the value is stored as seconds, to obtain the timestamp for this  time next week, you would use the following, which adds 7 days times 24 hours times 60 minutes times 60 seconds to the returned value:
+
+    echo time() + 7 * 24 * 60 * 60;
+
+If you wish to create a timestamp for a given date, you can use the `mktime` function. Its output is the timestamp `946684800` for the first second of the first minute of the first hour of the first day of the year 2000:
+
+    echo mktime(0, 0, 0, 1, 1, 2000); // (hour, minute, seconds, month, day, year)
+
+To display the date, use the `date` function, which supports a plethora of formatting options, enabling you to display the date any way you wish. The format is as follows:
+
+    date($format, $timestamp);
+
+The parameter `$format` should be a string containing formatting specifiers as bellowing, and `$timestamp` should be a Unix timestamp. See [PHP: date - Manual](http://php.net/manual/en/function.date.php).
+
+Format|  Description| Returned value
+------|------|------
+Day specifiers | |
+d |  Day of month, two digits, with leading zeros  |  01 to 31
+D |  Day of the week, three letters | Mon to Sun
+j |  Day of the month, no leading zeros | 1 to 31
+l |  Day of week, full names Sunday to Saturday
+N |  Day of week, numeric, Monday to Sunday | 1 to 7
+S |  Suffix for day of month (useful with specifier j)  | st, nd, rd, or th
+w |  Day of week, numeric, Sunday to Saturday  |  0 to 6
+z |  Day of year | 0 to 365
+Week specifier | |
+W |  Week number of year |01 to 52
+Month specifiers | |
+F |  Month name  |January to December
+m |  Month number with leading zeros| 01 to 12
+M |  Month name, three letters |  Jan to Dec
+n |  Month number, no leading zeros| 1 to 12
+t |  Number of days in given month |  28 to 31
+Year specifiers | |
+L |  Leap year  | 1 = Yes, 0 = No
+y |  Year, 2 digits  |00 to 99
+Y |  Year, 4 digits |0000 to 9999
+Time specifiers | |
+a |  Before or after midday, lowercase  | am or pm
+A |  Before or after midday, uppercase  | AM or PM
+g |  Hour of day, 12-hour format, no leading zeros  | 1 to 12
+G |  Hour of day, 24-hour format, no leading zeros   |00 to 23
+h |  Hour of day, 12-hour format, with leading zeros |01 to 12
+H |  Hour of day, 24-hour format, with leading zeros |00 to 23
+i |  Minutes, with leading zeros |00 to 59
+s |  Seconds, with leading zeros |00 to 59
 

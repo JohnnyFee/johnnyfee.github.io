@@ -636,3 +636,35 @@ H |  Hour of day, 24-hour format, with leading zeros |00 to 23
 i |  Minutes, with leading zeros |00 to 59
 s |  Seconds, with leading zeros |00 to 59
 
+## Using Regular Expressions in PHP
+
+The most common regular expression functions that you are likely to use in PHP are `preg_match`, `preg_match_all`, and `preg_replace`.
+
+To test whether the word _cats_ appears anywhere within a string, in any combination of upper- and lowercase, you could use `preg_match` like this:
+
+    $n = preg_match("/cats/i", "Cats are crazy. I like cats.");
+
+Because PHP uses `1` for `TRUE` and `0` for `FALSE`, the preceding statement sets `$n` to `1`. The first argument is the regular expression, and the second is the text to match. But `preg_match` is actually a good deal more powerful and complicated, because it takes a third argument that shows what text matched:
+
+    $n = preg_match("/cats/i", "Cats are curious. I like cats.", $match);
+    echo "$n Matches: $match[0]";
+
+The third argument is an array (here, given the name `$match`). The function puts the text that matches into the first element, so if the match is successful, you can find the text that matched in `$match[0]`. In this example, the output lets us know that the matched text was capitalized:
+
+    **1 Matches: Cats**
+
+If you wish to locate all matches, you use the `preg_match_all` function, like this:
+
+```
+$n = preg_match_all("/cats/i", "Cats are strange. I like cats.", $match);
+echo "$n Matches: ";
+for ($j=0 ; $j < $n ; ++$j) echo $match[0][$j]." ";
+```
+
+As before, `$match` is passed to the function and the element `$match[0]` is assigned the matches made, but this time as a subarray. To display the subarray, this example iterates through it with a `for` loop.
+
+When you want to replace part of a string, you can use `preg_replace` as shown here. This example replaces all occurrences of the word _cats_ with the word _dogs_, regardless of case:
+
+```
+echo preg_replace("/cats/i", "dogs", "Cats are furry. I like cats.");
+```

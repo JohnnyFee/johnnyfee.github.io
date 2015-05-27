@@ -593,7 +593,7 @@ formnovalidate | 覆盖 form 元素的 novalidate 属性。
 </select>
 ```
 
-optgroup 元素可以用来给 option 元素分组，其 label
+`optgroup` 元素可以用来给 option 元素分组，其 `label`
 属性可以用来为整租选项提供一个小标题，disabled 属性可以用来阻止选择选项组内的任何选择。
 
 ```html

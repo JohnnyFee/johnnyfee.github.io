@@ -320,6 +320,138 @@ Therefore, here is a much better way to access `$_SERVER` (and other superglobal
 
 Using the `htmlentities` function for sanitization is an important practice in any circumstance where user or other third-party data is being processed for output, not just with superglobals.
 
+## Namespaces
+
+Let’s see how a real-world PHP component uses namespaces. The Symfony Framework’s own  [`symfony/httpfoundation`](https://github.com/symfony/HttpFoundation) is a popular PHP component that manages HTTP requests and responses. More important, the `symfony/httpfoundation` component uses common PHP class names like `Request`, `Response`, and `Cookie`.  I guarantee you there are many other PHP components that use these same class names.  How can we use the `symfony/httpfoundation` PHP component if other PHP code uses the same class names? We can safely use the `symfony/httpfoundation` component precisely because its code is sandboxed beneath the unique `Symfony` vendor namespace.
+
+### Declaration
+
+Every PHP class, interface, function, and constant lives beneath a namespace (or subnamespace). Namespaces are declared at the top of a PHP file on a new line immediately after the opening `<?php` tag. The namespace declaration begins with `namespace`, then a space character, then the namespace name, and then a closing semicolon `;` character.
+
+Remember that namespaces are often used to establish a top-level vendor name.
+This example namespace declaration establishes the `Oreilly` vendor name:
+
+```
+<?php
+namespace Oreilly;
+```
+
+All PHP classes, interfaces, functions, or constants declared beneath this namespace declaration live in the `Oreilly` namespace and are, in some way, related to O’Reilly Media. What if we wanted to organize code related to this book? We use a subnamespace.
+
+Subnamespaces are declared exactly the same as in the previous example. The only difference is that we separate namespace and subnamespace names with the `\` character. The following example declares a subnamespace named `ModernPHP` that lives beneath the topmost `Oreilly` vendor namespace:
+
+```
+<?php
+namespace Oreilly\ModernPHP;
+```
+
+All classes in the same namespace or subnamespace don’t have to be declared in the same PHP file. You can specify a namespace or subnamespace at the top of any PHP file, and that file’s code becomes a part of that namespace or subnamespace. This makes it possible to write multiple classes in separate files that belong to a common namespace.
+
+Unlike your operating system’s physical filesystem, PHP namespaces are a virtual concept and do not necessarily map 1:1 with filesystem directories. That being said, most PHP components do, in fact, map subnamespaces to filesystem directories for compatibility with the popular PSR-4 autoloader standard.
+
+### Import and Alias
+
+```
+<?php
+use Symfony\Component\HttpFoundation\Response;
+
+$response = new Response('Oops', 400);
+$response->send();
+```
+
+We tell PHP we intend to use the `Symfony\Component\HttpFoundation\Response` class with the `use` keyword. We type the long, fully qualified class name once. Then we can instantiate the `Response` class without using its fully namespaced class name.
+
+```
+use Symfony\Component\HttpFoundation\Response as Res;
+
+$r = new Res('Oops', 400);
+$r->send();
+```
+
+In this example, I changed the import line to import the `Response` class. I also appended `as Res` to the end of the import line; this tells PHP to consider `Res` an alias for the `Response` class. If we don’t append the `as Res` alias to the import line, PHP assumes a default alias that is the same as the imported class name.
+
+As of PHP 5.6, it’s possible to import functions and constants. This requires a tweak to the use keyword syntax. To import a function, change use to use func:
+
+```
+<?php
+use func Namespace\functionName;
+
+functionName();
+```
+
+To import a constant, change `use` to `use constant`:
+
+```
+<?php
+use constant Namespace\CONST_NAME;
+
+echo CONST_NAME;
+```
+
+Function and constant aliases work the same as classes
+
+### Multiple imports
+
+If you import multiple classes, interfaces, functions, or constants into a single PHP file, you’ll end up with multiple `use` statements at the top of your PHP file. PHP accepts a shorthand import syntax that combines multiple `use` statements on a single line like this:
+
+```
+<?php
+use Symfony\Component\HttpFoundation\Request,
+    Symfony\Component\HttpFoundation\Response,
+    Symfony\Component\HttpFoundation\Cookie;
+```
+
+Don’t do this. It’s confusing and easy to mess up. I recommend you keep each use statement on its own line like this:
+
+```
+<?php
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Cookie;
+```
+
+You’ll type a few extra characters, but your code is easier to read and troubleshoot.
+
+### Multiple namespaces in one file
+
+PHP lets you define multiple namespaces in a single PHP file like this:
+
+```
+<?php
+namespace Foo {
+    // Declare classes, interfaces, functions, and constants here
+}
+
+namespace Bar {
+    // Declare classes, interfaces, functions, and constants here
+}
+```
+
+This is confusing and violates the recommended one class per file good practice. Use only one namespace per file to make your code simpler and easier to troubleshoot
+
+### Global namespace
+
+If you reference a class, interface, function, or constant _without a namespace_, PHP assumes the class, interface, function, or constant lives in the current namespace. If this assumption is wrong, PHP attempts to resolve the class, interface, function, or constant. If you need to reference a namespaced class, interface, function, or constant _inside another namespace_, you must use the fully qualified PHP class name (namespace + class name).
+
+Some code might not have a namespace and, therefore, lives in the _global namespace_. The native `Exception` class is a good example. You can reference globally namespaced code inside another namespace by prepending a `\` character to the class, interface, function, or constant name.
+
+```
+<?php
+namespace My\App;
+
+class Foo
+{
+    public function doSomething()
+    {
+        $exception = new Exception();
+    }
+}
+```
+
+Add a `\` prefix to the `Exception` class name. This tells PHP to look for the `Exception` class in the global namespace instead of the current namespace.
+
+
+
 ## Arrays
 
 Some arrays are referenced by numeric indices; others allow alphanumeric identifiers. 
@@ -668,3 +800,66 @@ When you want to replace part of a string, you can use `preg_replace` as shown h
 ```
 echo preg_replace("/cats/i", "dogs", "Cats are furry. I like cats.");
 ```
+
+## Including and Requiring Files
+
+As you progress in your use of PHP programming, you are likely to start building a library of functions that you think you will need again. You’ll also probably start using libraries created by other programmers.There’s no need to copy and paste these functions into your code. You can save them in separate files and use commands to pull them in. There are two types of command to perform this action: `include` and `require`.
+
+Using `include`, you can tell PHP to fetch a particular file and load all its contents. 
+
+```php
+<?php
+  include "library.php";
+
+  // Your code goes here
+?>
+```
+
+Each time you issue the `include` directive, it includes the requested file again, even if you’ve already inserted it. For instance, suppose that _library.php_ contains a lot of useful functions, so you include it in your file, but also include another library that includes _library.php_. Through nesting, you’ve inadvertently included _library.php_ twice. This will produce error messages, because you’re trying to define the same constant or function multiple times. So you should use `include_once` instead. 
+
+```php
+<?php
+  include_once "library.php";
+
+  // Your code goes here
+?>
+```
+
+Then, whenever another `include` or `include_once` is encountered, if it has already been executed, it will be completely ignored. To determine whether the file has already been executed, the absolute file path is matched after all relative paths are resolved and the file is found in your `include` path.
+
+In general, it’s probably best to stick with `include_once` and ignore the basic `include` statement. That way, you will never have the problem of files being included multiple times.
+
+A potential problem with `include` and `include_once` is that PHP will only _attempt_ to include the requested file. Program execution continues even if the file is not found.
+
+When it is absolutely essential to include a file, `require` it. For the same reasons I gave for using `include_once`, I recommend that you generally stick with `require_once` whenever you need to `require` a file:
+
+```php
+<?php
+  require_once "library.php";
+
+  // Your code goes here
+?>
+```
+
+## PHP Version Compatibility
+
+PHP is in an ongoing process of development, and there are multiple versions. If you need to check whether a particular function is available to your code, you can use the `function_exists` function, which checks all predefined and user-created functions.
+
+```php
+<?php
+  if (function_exists("array_combine"))
+  {
+    echo "Function exists";
+  }
+  else
+  {
+    echo "Function does not exist - better write our own";
+  }
+?>
+```
+
+Using code such as this, you can take advantage of features in newer versions of PHP and yet still have your code run on earlier versions, as long as you replicate any features that are missing. Your functions may be slower than the built-in ones, but at least your code will be much more portable.
+
+You can also use the `phpversion` function to determine which version of PHP your code is running on. The returned result will be similar to the following, depending on the version:
+
+    **5.5.11**

@@ -320,138 +320,6 @@ Therefore, here is a much better way to access `$_SERVER` (and other superglobal
 
 Using the `htmlentities` function for sanitization is an important practice in any circumstance where user or other third-party data is being processed for output, not just with superglobals.
 
-## Namespaces
-
-Let’s see how a real-world PHP component uses namespaces. The Symfony Framework’s own  [`symfony/httpfoundation`](https://github.com/symfony/HttpFoundation) is a popular PHP component that manages HTTP requests and responses. More important, the `symfony/httpfoundation` component uses common PHP class names like `Request`, `Response`, and `Cookie`.  I guarantee you there are many other PHP components that use these same class names.  How can we use the `symfony/httpfoundation` PHP component if other PHP code uses the same class names? We can safely use the `symfony/httpfoundation` component precisely because its code is sandboxed beneath the unique `Symfony` vendor namespace.
-
-### Declaration
-
-Every PHP class, interface, function, and constant lives beneath a namespace (or subnamespace). Namespaces are declared at the top of a PHP file on a new line immediately after the opening `<?php` tag. The namespace declaration begins with `namespace`, then a space character, then the namespace name, and then a closing semicolon `;` character.
-
-Remember that namespaces are often used to establish a top-level vendor name.
-This example namespace declaration establishes the `Oreilly` vendor name:
-
-```
-<?php
-namespace Oreilly;
-```
-
-All PHP classes, interfaces, functions, or constants declared beneath this namespace declaration live in the `Oreilly` namespace and are, in some way, related to O’Reilly Media. What if we wanted to organize code related to this book? We use a subnamespace.
-
-Subnamespaces are declared exactly the same as in the previous example. The only difference is that we separate namespace and subnamespace names with the `\` character. The following example declares a subnamespace named `ModernPHP` that lives beneath the topmost `Oreilly` vendor namespace:
-
-```
-<?php
-namespace Oreilly\ModernPHP;
-```
-
-All classes in the same namespace or subnamespace don’t have to be declared in the same PHP file. You can specify a namespace or subnamespace at the top of any PHP file, and that file’s code becomes a part of that namespace or subnamespace. This makes it possible to write multiple classes in separate files that belong to a common namespace.
-
-Unlike your operating system’s physical filesystem, PHP namespaces are a virtual concept and do not necessarily map 1:1 with filesystem directories. That being said, most PHP components do, in fact, map subnamespaces to filesystem directories for compatibility with the popular PSR-4 autoloader standard.
-
-### Import and Alias
-
-```
-<?php
-use Symfony\Component\HttpFoundation\Response;
-
-$response = new Response('Oops', 400);
-$response->send();
-```
-
-We tell PHP we intend to use the `Symfony\Component\HttpFoundation\Response` class with the `use` keyword. We type the long, fully qualified class name once. Then we can instantiate the `Response` class without using its fully namespaced class name.
-
-```
-use Symfony\Component\HttpFoundation\Response as Res;
-
-$r = new Res('Oops', 400);
-$r->send();
-```
-
-In this example, I changed the import line to import the `Response` class. I also appended `as Res` to the end of the import line; this tells PHP to consider `Res` an alias for the `Response` class. If we don’t append the `as Res` alias to the import line, PHP assumes a default alias that is the same as the imported class name.
-
-As of PHP 5.6, it’s possible to import functions and constants. This requires a tweak to the use keyword syntax. To import a function, change use to use func:
-
-```
-<?php
-use func Namespace\functionName;
-
-functionName();
-```
-
-To import a constant, change `use` to `use constant`:
-
-```
-<?php
-use constant Namespace\CONST_NAME;
-
-echo CONST_NAME;
-```
-
-Function and constant aliases work the same as classes
-
-### Multiple imports
-
-If you import multiple classes, interfaces, functions, or constants into a single PHP file, you’ll end up with multiple `use` statements at the top of your PHP file. PHP accepts a shorthand import syntax that combines multiple `use` statements on a single line like this:
-
-```
-<?php
-use Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\HttpFoundation\Response,
-    Symfony\Component\HttpFoundation\Cookie;
-```
-
-Don’t do this. It’s confusing and easy to mess up. I recommend you keep each use statement on its own line like this:
-
-```
-<?php
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Cookie;
-```
-
-You’ll type a few extra characters, but your code is easier to read and troubleshoot.
-
-### Multiple namespaces in one file
-
-PHP lets you define multiple namespaces in a single PHP file like this:
-
-```
-<?php
-namespace Foo {
-    // Declare classes, interfaces, functions, and constants here
-}
-
-namespace Bar {
-    // Declare classes, interfaces, functions, and constants here
-}
-```
-
-This is confusing and violates the recommended one class per file good practice. Use only one namespace per file to make your code simpler and easier to troubleshoot
-
-### Global namespace
-
-If you reference a class, interface, function, or constant _without a namespace_, PHP assumes the class, interface, function, or constant lives in the current namespace. If this assumption is wrong, PHP attempts to resolve the class, interface, function, or constant. If you need to reference a namespaced class, interface, function, or constant _inside another namespace_, you must use the fully qualified PHP class name (namespace + class name).
-
-Some code might not have a namespace and, therefore, lives in the _global namespace_. The native `Exception` class is a good example. You can reference globally namespaced code inside another namespace by prepending a `\` character to the class, interface, function, or constant name.
-
-```
-<?php
-namespace My\App;
-
-class Foo
-{
-    public function doSomething()
-    {
-        $exception = new Exception();
-    }
-}
-```
-
-Add a `\` prefix to the `Exception` class name. This tells PHP to look for the `Exception` class in the global namespace instead of the current namespace.
-
-
-
 ## Arrays
 
 Some arrays are referenced by numeric indices; others allow alphanumeric identifiers. 
@@ -767,6 +635,172 @@ h |  Hour of day, 12-hour format, with leading zeros |01 to 12
 H |  Hour of day, 24-hour format, with leading zeros |00 to 23
 i |  Minutes, with leading zeros |00 to 59
 s |  Seconds, with leading zeros |00 to 59
+
+### Dates, Times, and Time Zones
+
+Working with dates and times is hard. Pretty much every PHP developer has, at one time or another, made a mistake working with dates and times. This is precisely why I recommend you do not manage dates and times on your own. There are too many considerations to juggle, including date formats, time zones, daylight saving, leap years, leap seconds, and months with variable numbers of days. It’s too easy for your own calculations to become inaccurate. Instead, use the `DateTime`, `DateInterval`, and `DateTimeZone` classes introduced in PHP 5.2.0. These helpful classes provide a simple object-oriented interface to accurately create and manipulate dates, times, and timezones.
+
+### Set a Default Time Zone
+
+The first thing you should do is declare a default time zone for PHP’s date and time functions. If you don’t set a default time zone, PHP shows an `E_WARNING` message. There are two ways to set the default time zone. You can declare the default time zone in the _php.ini_ file like this:
+
+    date.timezone = 'America/New_York';
+
+You can also declare the default time zone during runtime with the `date_default_timezone_set()` function.
+
+```
+<?php
+date_default_timezone_set('America/New_York');
+```
+
+Either solution requires a valid time-zone identifier. You can find a complete list of PHP time-zone identifiers at <http://php.net/manual/timezones.php>.
+
+### The DateTime Class
+
+The `DateTime` class provides an object-oriented interface to manage date and time values. A single `DateTime` instance represents a specific date and time. The `DateTime` class constructor is the simplest way to create a new `DateTime` instance.
+
+```
+<?php
+$datetime = new DateTime();
+```
+
+Without arguments, the `DateTime` class constructor creates an instance that represents the current date and time. You can pass a string argument into the `DateTime` class constructor to specify a custom date and time (Example 5-11). The string argument must use one of the valid date and time formats listed at <http://php.net/manual/datetime.formats.php>.
+
+```
+<?php
+$datetime = new DateTime('2014-04-27 5:03 AM');
+```
+
+In an ideal world, you are given date and time data in a format that PHP understands. Unfortunately, this is not always the case. Sometimes you must work with date and time values in different and unexpected formats. I experience this problem on a daily basis. Many of my clients send Excel spreadsheets with data to import into an application, and each client provides date and time values in wildly different formats. The `DateTime` class makes this a nonissue.
+
+Use the `DateTime::createFromFormat()` static method to create a `DateTime` instance with a date and time string that uses a custom format. This method’s first argument is the date and time string _format_. The second argument is the date and time string that uses said format:
+
+```
+<?php
+$datetime = DateTime::createFromFormat('M j, Y H:i:s', 'Jan 2, 2014 23:04:12');
+```
+
+The `DateTime::createFromFormat()` static method accepts the same date and time formats as the `date()` function. Valid date and time formats are available at <http://php.net/manual/datetime.createfromformat.php>.
+
+### The DateInterval Class
+
+The `DateInterval` class is pretty much prerequisite knowledge for manipulating `DateTime` instances. A `DateInterval` instance represents a fixed length of time (e.g., “two days”) or a relative length of time (e.g., “yesterday”). You use `DateInterval` instances to modify `DateTime` instances. For example, the `DateTime` class provides `add()` and `sub()` methods to manipulate a `DateTime` instance’s value. Both methods accept a `DateInterval` argument that specifies the amount of time added to or subtracted from a `DateTime` instance.
+
+Instantiate the `DateInterval` class with its constructor. The `DateInterval` class constructor accepts a string argument that provides an _interval specification_. Interval specifications are a little tricky at first, but there’s not much to them. First, an interval specification is a string that begins with the letter `P`. Next, you append an integer. And last, you append a _period designator_ that qualifies the preceding integer value. Valid period designators are:* `Y` (years)
+
+* `M` (months)
+* `D` (days)
+* `W` (weeks)
+* `H` (hours)
+* `M` (minutes)
+* `S` (seconds)
+
+An interval specification can include both date and time values. If you include a time value, separate the date and time parts with the letter `T`. For example, the interval specification `P2D` means _two days_. The interval specification `P2DT5H2M` means _two days, five hours, and two minutes_.
+
+```
+<?php
+// Create DateTime instance
+$datetime = new DateTime('2014-01-01 14:00:00');
+
+// Create two weeks interval
+$interval = new DateInterval('P2W');
+
+// Modify DateTime instance
+$datetime->add($interval);
+echo $datetime->format('Y-m-d H:i:s');
+```
+
+You can create an _inverted_ `DateInterval`, too. This lets you traverse a `DatePeriod` instance in reverse chronology!
+
+```
+$dateStart = new \DateTime();
+$dateInterval = \DateInterval::createFromDateString('-1 day');
+$datePeriod = new \DatePeriod($dateStart, $dateInterval, 3);
+foreach ($datePeriod as $date) {
+    echo $date->format('Y-m-d'), PHP_EOL;
+}
+```
+
+This outputs:
+
+```
+2014-12-08
+2014-12-07
+2014-12-06
+2014-12-05
+```
+
+### The DateTimeZone Class
+
+If your application caters to an international clientele, you’ve probably wrestled with time zones. Time zones are tricky, and they are a constant source of confusion for many PHP developers.
+
+PHP represents time zones with the `DateTimeZone` class. All you have to do is pass a valid time-zone identifier into the `DateTimeZone` class constructor:
+
+```
+<?php
+$timezone = new DateTimeZone('America/New_York');
+```
+
+Find a complete list of valid time-zone identifiers at <http://php.net/manual/timezones.php>.
+
+You often use `DateTimeZone` instances when creating `DateTime` instances. The `DateTime` class constructor’s optional second argument is a `DateTimeZone` instance. The `DateTime` instance’s value, and all modifications to its value, are now relative to the specified time zone. If you omit the constructor’s second argument, the time zone is determined by your default time-zone setting:
+
+```
+<?php
+$timezone = new DateTimeZone('America/New_York');
+$datetime = new DateTime('2014-08-20', $timezone);
+```
+
+You can change a `DateTime` instance’s time zone after instantiation with the `setTimezone()` method:
+
+```
+<?php
+$timezone = new DateTimeZone('America/New_York');
+$datetime = new \DateTime('2014-08-20', $timezone);
+$datetime->setTimezone(new DateTimeZone('Asia/Hong_Kong'));
+```
+
+I find it easiest if I always work in the `UTC` time zone. My server’s time zone is `UTC`, and my PHP default time zone is `UTC`. If I persist date and time values into a database, I save them as the `UTC` timezone. I convert the `UTC` date and time values to the appropriate time zone when I display the data to application users.
+
+### The DatePeriod Class
+
+Sometimes you need to iterate a sequence of dates and times that recur over a specific interval of time. Repeating calendar events are a good example. The `DatePeriod` class solves this problem. The `DatePeriod` class constructor accepts three required arguments:* A `DateTime` instance that represents the date and time from which iteration begins
+
+* A `DateInterval` instance that represents the interval of time between subsequent dates and times 
+* An integer that represents the number of total iterations A `DatePeriod` instance is an iterator, and each iteration yields a `DateTime` instance. 
+
+```
+<?php
+$start = new DateTime();
+$interval = new DateInterval('P2W');
+$period = new DatePeriod($start, $interval, 3);
+
+foreach ($period as $nextDateTime) {
+    echo $nextDateTime->format('Y-m-d H:i:s'), PHP_EOL;
+}
+```
+
+The `DatePeriod` class constructor accepts an optional fourth argument that specifies the period’s explicit end date and time. If you want to exclude the start date from the period’s iteration, pass the `DatePeriod::EXCLUDE_START_DATE` constant as the final constructor argument.
+
+```
+<?php
+$start = new DateTime();
+$interval = new DateInterval('P2W');
+$period = new DatePeriod(
+    $start,
+    $interval,
+    3,
+    DatePeriod::EXCLUDE_START_DATE
+);
+
+foreach ($period as $nextDateTime) {
+    echo $nextDateTime->format('Y-m-d H:i:s'), PHP_EOL;
+}
+```
+
+### The nesbot/carbon Component
+
+If you work with dates and times more often than not, you should use Brian Nesbitt’s [`nesbot/carbon`](https://github.com/briannesbitt/Carbon) PHP component. Carbon provides a simple user interface with many useful methods for working with date and time values.
 
 ## Using Regular Expressions in PHP
 

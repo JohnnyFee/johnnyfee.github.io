@@ -863,3 +863,115 @@ Using code such as this, you can take advantage of features in newer versions of
 You can also use the `phpversion` function to determine which version of PHP your code is running on. The returned result will be similar to the following, depending on the version:
 
     **5.5.11**
+
+## Logger Interface
+
+The third PHP-FIG recommendation is not a set of guidelines like its predecessors. PSR-3 is an interface, and it prescribes methods that can be implemented by PHP logger components.
+
+Many PHP frameworks implement logging in some capacity. Before the PHP-FIG, each framework solved logging differently, often with a proprietary implementation. In the spirit of interoperability and specialization—recurring motifs in modern PHP—the PHP-FIG established the PSR-3 logger interface. Frameworks that accept PSR-3 compatible loggers accomplish two important things: logging concerns are delegated to a third party, and end users can provide their preferred logger component. It’s a win-win for everyone.
+
+A PHP logger component compatible with the PSR-3 recommendation must include a PHP class that implements the interface named Psr\Log\LoggerInterface. The PSR-3 interface replicates the RFC 5424 syslog protocol and prescribes nine methods:
+
+```
+<?php
+namespace Psr\Log;
+
+interface LoggerInterface
+{
+    public function emergency($message, array $context = array());
+    public function alert($message, array $context = array());
+    public function critical($message, array $context = array());
+    public function error($message, array $context = array());
+    public function warning($message, array $context = array());
+    public function notice($message, array $context = array());
+    public function info($message, array $context = array());
+    public function debug($message, array $context = array());
+    public function log($level, $message, array $context = array());
+}
+```
+
+Each interface method maps to a corresponding RFC 5424 protocol level and accepts two arguments. The first `$message` argument must be a string or an object with a `__toString()` method. The second `$context` argument is optional and provides an array of placeholder values that replace tokens in the first argument.
+
+Use the `$context` argument to construct complicated logger messages. You use _placeholders_ in the message text. A placeholder looks like `{placeholder_name}`; it contains a `{`, the placeholder name, and a `}`. A placeholder does not contain spaces. The `$context` argument is an associative array; its keys are placeholder names (without brackets), and its values replace the related placeholders in the message text.
+
+To write a PSR-3 logger, create a new PHP class that implements the `Psr\Log\LoggerInterface` interface and provide a concrete implementation for each interface method.
+
+If you are creating your own PSR-3 logger, stop and reconsider if you are spending your time wisely. I strongly discourage you from writing your own logger. Why? Because there are some truly amazing PHP logger components already available!
+
+If you need a PSR-3 logger, just use [`monolog/monolog`](https://packagist.org/packages/monolog/monolog). Don’t waste time looking elsewhere. The Monolog PHP component fully implements the PSR-3 interface, and it’s easily extended with custom message formatters and handlers. Monolog’s message handlers let you send log messages to text files, syslog, email, HipChat, Slack, networked servers, remote APIs, databases, and pretty much anywhere else you can imagine. In the very unlikely event Monolog does not provide a handler for your desired output destination, it’s super-easy to write and integrate your own Monolog message handler. Example 3-1 demonstrates how easy it is to setup Monolog and log messages to a text file.
+
+```
+<?php
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+// Prepare logger
+$log = new Logger('myApp');
+$log->pushHandler(new StreamHandler('logs/development.log', Logger::DEBUG));
+$log->pushHandler(new StreamHandler('logs/production.log', Logger::WARNING));
+
+// Use logger
+$log->debug('This is a debug message');
+$log->warning('This is a warning message');
+```
+
+## COMMAND-LINE SCRIPTS WITH PHP
+
+- [PHP: php:// - Manual](http://php.net/manual/en/wrappers.php.php)
+- [PHP: $argv - Manual](https://php.net/manual/en/reserved.variables.argv.php)
+- [PHP: $argc - Manual](https://php.net/manual/reserved.variables.argc.php)
+
+## Built-in HTTP server
+
+This is another hidden gem unknown to PHP developers who assume they need Apache or nginx to preview PHP applications. You shouldn’t use it for production, but PHP’s built-in web server is a perfect tool for local development.
+
+I use PHP’s built-in web server every day, whether I’m writing PHP or not. I use it to preview [Laravel](http://laravel.com) and [Slim Framework](http://slimframework.com) applications. I use it while building websites with the Drupal content-management framework. I also use it to preview static HTML and CSS if I’m just building out markup.
+
+PHP’s built-in web server should not be used for production. It is for local development only. If you use the PHP built-in web server on a production machine, be prepared for a lot of disappointed users and a flood of [Pingdom](https://www.pingdom.com) downtime notifications.
+
+* The built-in server performs suboptimally because it handles one request at a time, and each HTTP request is blocking. Your web application will stall if a PHP file must wait on a slow database query or remote API response.
+* The built-in server supports only a [limited number of mimetypes](http://bit.ly/built-in-ws).
+* The built-in server has limited URL rewriting with router scripts. You’ll need Apache or nginx for more advanced URL rewrite behavior.
+
+### Start the Server
+
+It’s easy to start the PHP web server. Open your terminal application, navigate to your project’s document root directory, and execute this command:
+
+    php -S localhost:4000
+
+Sometimes it’s useful to access the PHP web server from other machines on your local network (e.g., for previewing on your iPad or local Windows box). To do this, tell the PHP web server to listen on all interfaces by using `0.0.0.0` instead of `localhost`:
+
+    php -S 0.0.0.0:4000
+
+### Configure the Server
+
+It’s not uncommon for an application to require its own PHP INI configuration file, especially if it has unique requirements for memory usage, file uploads, profiling, or bytecode caching. You can tell the PHP built-in server to use a specific INI file with the `-c` option:
+
+    php -S localhost:8000 -c app/config/php.ini
+
+It’s a good idea to keep the custom INI file beneath the application’s root directory and, optionally, version-control the INI file if it should be shared with other developers on your team.
+
+### Router Scripts
+
+The PHP built-in server has one glaring omission. Unlike Apache or nginx, it doesn’t support .htaccess files. This makes it difficult to use front controllers that are common in many popular PHP frameworks.
+
+A front controller is a single PHP file to which all HTTP requests are forwarded (via .htaccess files or rewrite rules). The front-controller PHP file is responsible for routing the request and dispatching the appropriate PHP code. This is a common pattern used by Symfony and other popular frameworks.
+
+The PHP built-in server mitigates this omission with _router scripts_. The router script is executed before every HTTP request. If the router script returns false, the static asset referenced by the current HTTP request URI is returned. Otherwise, the output of the router script is returned as the HTTP response body. In other words, if you use a router script you’re effectively hardcoding the same functionality as an _.htaccess_ file.
+
+Using a router script is easy. Just pass the PHP script file path as a an argument when you start up the PHP built-in server:
+
+    php -S localhost:8000 router.php
+
+### Detect the Built-in Server
+
+Sometimes it’s helpful to know if your PHP script is served by PHP’s built-in web server versus a traditional web server like Apache or nginx. Perhaps you need to set specific headers for nginx (e.g., `Status:`) that should not be set for the PHP web server. You can detect the PHP web server with the `php_sapi_name()` function. This function returns the string `cli-server` if the current script is served with the PHP built-in server:
+
+```
+<?php
+if (php_sapi_name() === 'cli-server') {
+    // PHP web server
+} else {
+    // Other web server
+}
+```

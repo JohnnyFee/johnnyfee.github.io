@@ -5,6 +5,8 @@ category: PHP
 tags: [php, tutorial]
 ---
 
+See [《Modern PHP》](http://www.salttiger.com/modern-php/) and [《Learning PHP, MySQL & JavaScript, 4th Edition》](http://www.salttiger.com/learning-php-mysql-javascript-4th-edition/).
+
 The most popular modern PHP frameworks include:
 
 * [Aura](http://auraphp.com/framework)
@@ -12,6 +14,8 @@ The most popular modern PHP frameworks include:
 * [Symfony](http://symfony.com/)
 * [Yii](http://www.yiiframework.com/)
 * [Zend](http://framework.zend.com/)
+
+<!-- more -->
 
 Should you use components or a framework? _Use the right tool for the job_. Most modern PHP frameworks are only a set of conventions built atop smaller PHP components.If you are working on a smaller project that can be solved with a precise collection of PHP components, then use components. Components make it super-easy to shop for and use existing tools so we can focus less on boilerplate and more on the larger task at hand. Components also help our code remain lightweight and nimble. We use only the code we need, and it’s super-easy to swap one component with another that may be better suited for our project.
 

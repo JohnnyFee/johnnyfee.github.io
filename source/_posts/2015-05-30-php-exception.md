@@ -5,9 +5,13 @@ category: PHP
 tags: [php, tutorial]
 ---
 
+See [《Modern PHP》](http://www.salttiger.com/modern-php/) and [《Learning PHP, MySQL & JavaScript, 4th Edition》](http://www.salttiger.com/learning-php-mysql-javascript-4th-edition/).
+
 It’s possible to circumvent PHP errors with the `@` prefix in front of a PHP function that might trigger an error (e.g., `@fopen()`). _This is an antipattern_. I recommend you change your code to avoid these situations.
 
 Exceptions are an object-oriented evolution of PHP’s error handling system. They are instantiated, thrown, and caught. Exceptions are a more flexible device that anticipates and handles problems _in situ_ without halting script execution. Exceptions are also an offensive _and_ defensive device. We must anticipate exceptions thrown by third-party vendor code with `try {} catch {}` blocks. We can also act offensively by throwing an exception; this delegates exception handling to other developers when we don’t know how to handle a given situation on our own.
+
+<!-- more -->
 
 ## Exceptions
 

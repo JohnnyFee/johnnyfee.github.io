@@ -5,11 +5,16 @@ category: PHP
 tags: [php, tutorial]
 ---
 
+See [《Modern PHP》](http://www.salttiger.com/modern-php/) and [《Learning PHP, MySQL & JavaScript, 4th Edition》](http://www.salttiger.com/learning-php-mysql-javascript-4th-edition/).
+
 ## Basic Syntax
 
 By default, PHP documents end with the extension .php. When a web server encounters this extension in a requested file, it automatically passes it to the PHP processor. 
 
 To trigger the PHP commands, you need to learn a new tag. Here is the first part:
+
+<!-- more -->
+
 
 ```php
 <?php

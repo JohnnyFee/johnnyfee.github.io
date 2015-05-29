@@ -5,7 +5,11 @@ category: PHP
 tags: [php, tutorial]
 ---
 
+See [《Modern PHP》](http://www.salttiger.com/modern-php/) and [《Learning PHP, MySQL & JavaScript, 4th Edition》](http://www.salttiger.com/learning-php-mysql-javascript-4th-edition/).
+
 Many PHP applications persist information in a wide assortment of databases like MySQL, PostgreSQL, SQLite, MSSQL, and Oracle. Each database provides its own PHP extension to establish communication between PHP and the database. MySQL, for example, uses the `mysqli` extension, which adds various `mysqli_*()` functions to the PHP language. SQLite3 uses the `SQLite3` extension, which adds the `SQLite3`, `SQLite3Stmt`, and `SQLite3Result` classes to the PHP language. If you work with different databases in one or more projects, you have to install and learn various PHP database extensions and interfaces. This increases your cognitive and technical overhead.
+
+<!-- more -->
 
 ### The PDO Extension
 

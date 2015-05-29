@@ -102,7 +102,7 @@ $heading = "Date\tName\tPayment";
 ?>
 ```
 
-#### Multiple-Line Commands
+#### Multiple-Line Strings
 
 There are times when you need to output quite a lot of text from PHP, and using several `echo` (or `print`) statements would be time-consuming and messy. To overcome this, PHP offers two conveniences. The first is just to put multiple lines between quotes:
 
@@ -134,6 +134,41 @@ _END;
 ```
 
 using the `<<<_END..._END;` heredoc construct, you don’t have to add `\n` linefeed characters to send a linefeed—just press Return and start a new line. Also, unlike either a double-quote- or single-quote-delimited string, you are free to use all the single and double quotes you like within a heredoc, without escaping them by preceding them with a slash (`\`).
+
+### Multibyte Strings
+
+PHP assumes each character in a string is an 8-bit character that occupies a single byte of memory. Unfortunately, this is a naive assumption that breaks down as soon as you work with non-English characters. You might localize your PHP application for international users. Your blog might receive comments written in Spanish, German, or Norwegian. Your users’ names might contain accented characters. My point is that you’ll often encounter _multibyte_ characters, and you must accommodate them correctly.
+
+When I say _multibyte character_, I mean any character that is not one of the 128 characters in the traditional ASCII character set. Some examples are `ñ`, `ë`, `â`, `ô`, `à`, `æ`, and `ø`. There are many others. PHP’s default string-manipulation functions assume all strings use only 8-bit characters. If you manipulate a Unicode string that contains multibyte characters with PHP’s native string functions, you will get incorrect and unexpected results.
+
+You can avoid multibyte string errors by installing the [`mbstring`](http://php.net/manual/book.mbstring.php) PHP extension. This extension introduces multibyte-aware string functions that replace most of PHP’s native string-manipulation functions. For example, use the multibyte-aware `mb_strlen()` function instead of PHP’s native `strlen()` function.
+
+To this day I’m still training myself to use the `mbstring` multibyte string functions instead of PHP’s default string functions. It’s a tough habit to form, but you must use the multibyte string functions if you work with Unicode strings. Otherwise, it’s easy for multibyte Unicode data to become malformed.
+
+### Character Encoding
+
+UTF-8, is the most popular character encoding and is supported by all modern web browsers.
+
+Tom Scott provides [the best explanation of Unicode and UTF-8 that I’ve seen](http://bit.ly/ts-unicode). Joel Spolsky also [writes a nice explanation of character encodings on his website](http://bit.ly/jspolsky).
+
+The `mbstring` extension doesn’t just manipulate Unicode strings. It also converts multibyte strings between various character encodings. This is useful when clients export Excel spreadsheet data with a Windows-specific character encoding when what I really want is UTF-8 encoded data. Use the `mb_detect_encoding()` and `mb_convert_encoding()` functions to convert Unicode strings from one character encoding to another.
+
+When you work with multibyte characters, it is important that you tell PHP you are working with the UTF-8 character encoding. It’s easiest to do this in your _php.ini_ file like this:
+
+    default_charset = "UTF-8";
+
+The default character set is used by many PHP functions, including `htmlentities()`, `html_entity_decode()`, `htmlspecialchars()`, and the `mbstring` functions. This value is also added to the default `Content-Type` header returned by PHP unless explicitly specified with the `header()` function like this:
+
+```
+<?php
+header('Content-Type: application/json;charset=utf-8');
+```
+
+You cannot use the `header()` function after _any_ output is returned from PHP.
+
+I also recommend you include this `meta` tag in your HTML document header:
+
+    <meta charset="UTF-8"/>
 
 ### Functions
 
@@ -1009,3 +1044,20 @@ if (php_sapi_name() === 'cli-server') {
     // Other web server
 }
 ```
+
+## PaaS
+
+Platforms as a service (PaaS) are a quick way to launch your PHP application, and—unlike with a virtual private or dedicated server—you don’t have to manage a PaaS. All you have to do is log into your PaaS provider’s control panel and click a few buttons. Some PaaS providers have a command-line or HTTP API with which you can deploy and manage your hosted PHP applications. Popular PHP PaaS providers include:
+
+* [AppFog](https://appfog.com/)
+* [AWS Elastic Beanstalk](http://aws.amazon.com/elasticbeanstalk/)
+* [Engine Yard](https://www.engineyard.com/products/cloud)
+* [Fortrabbit](http://fortrabbit.com/)
+* [Google App Engine](http://bit.ly/g-app-engine)
+* [Heroku](https://devcenter.heroku.com/categories/php)
+* [Microsoft Azure](http://www.windowsazure.com/)
+* [Pagoda Box](https://pagodabox.com/)
+* [Red Hat OpenShift](http://openshift.com/)
+* [Zend Developer Cloud](http://bit.ly/z-dev-cloud)
+
+PaaS pricing varies by provider but is similar to virtual private servers: $10–100/month. You pay for the system resources allocated to your PHP application. System resources can be scaled up or down on demand. I recommend PaaS hosting plans for developers who do not want to manage their own servers.

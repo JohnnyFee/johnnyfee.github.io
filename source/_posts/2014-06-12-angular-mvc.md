@@ -151,18 +151,6 @@ $scope.$on('$viewContentLoaded', function readyToTrick() {
 
 [Here is a Plunker](http://plnkr.co/edit/ZddQ5W?p=preview) with a concept proof (open your console window).
 
-### 全局控制器
-
-我们可以向下面这样定义一个全局控制器：
-
-```js
-function TextController($scope) {
-  $scope.someText = 'You have started your journey.';
-}
-```
-
-全局定义的控制器构造函数只适用于快速示例和原型开发。永远不要在大型的、真实的应用中使用全局定义的控制器。
-
 ### 嵌套控制器
 
 ```html

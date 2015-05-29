@@ -4,6 +4,8 @@ category: PhotoShop
 tags: [ps]
 ---
 
+See [《赵鹏 - 大师之路 Photoshop 基础教程》](http://www.99ut.com/text/photoshop/basic/index.html)
+
 ## 路径
 
 路径是矢量的。如果说图像中什么东西是矢量的，那么它就是由路径所组成的。
@@ -11,6 +13,8 @@ tags: [ps]
 路径可以是与选区类似的封闭区域，也可以只是一条首尾并不相连的线段，分别称作封闭路径和开放路径。而线段可以是直线也可以是曲线，或两者兼而有之。
 
 路径在Photoshop中是指示性的，本身并不能直接构成图像的一部分，只有在将其作为图层蒙版或填色及画笔描边后，才可以对图像像素产生影响。在这点上与选区类似，单纯的创建或修改选区也不能直接令图像发生改变。
+
+<!-- more -->
 
 在Photoshop中只有特定的几个工具能够针对路径进行操作，它们分别是钢笔工具![](http://www.99ut.com/library/turlib/serieslib/12/P_VectorDraw_Lg_N.jpg)，自由钢笔工具![](http://www.99ut.com/library/turlib/serieslib/12/P_FreeformVectorDraw_Lg_N.jpg)，添加锚点工具![](http://www.99ut.com/library/turlib/serieslib/12/P_AnchorAdd_Lg_N.jpg)，删除锚点工具![](http://www.99ut.com/library/turlib/serieslib/12/P_AnchorDel_Lg_N.jpg)，转换点工具![](http://www.99ut.com/library/turlib/serieslib/12/P_ConvertAnchor_Lg_N.jpg)。这5种工具用来绘制及修改路径。此外还有路径选择工具![](http://www.99ut.com/library/turlib/serieslib/12/P_Select_Lg_N.jpg)和直接选择工具![](http://www.99ut.com/library/turlib/serieslib/12/P_AnchorSelect_Lg_N.jpg)，这两者都是用来选取路径的，但在功能上有所区别。
 

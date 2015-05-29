@@ -4,9 +4,13 @@ category: PhotoShop
 tags: [ps]
 ---
 
+See [《赵鹏 - 大师之路 Photoshop 基础教程》](http://www.99ut.com/text/photoshop/basic/index.html)
+
 ## 图层
 
 如果新建图像时背景内容选择白色或背景色，那么新图像中就会有一个背景层存在，并且有一个锁定的标志。
+
+<!-- more -->
 
 ![](http://www.99ut.com/library/turlib/serieslib/05/005_002.jpg)
 

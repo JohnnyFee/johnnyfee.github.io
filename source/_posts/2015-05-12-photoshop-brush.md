@@ -4,11 +4,15 @@ category: PhotoShop
 tags: [ps]
 ---
 
+See [《赵鹏 - 大师之路 Photoshop 基础教程》](http://www.99ut.com/text/photoshop/basic/index.html)
+
 ## 绘图类工具
 
 常用的绘图工具有画笔![](http://www.99ut.com/library/turlib/serieslib/09/P_Brush_Lg_N.jpg)、铅笔![](http://www.99ut.com/library/turlib/serieslib/09/P_Draw_Lg_N.jpg)。
 
 其他绘图类的工具有：
+
+<!-- more -->
 
 - 历史纪录画笔![](http://www.99ut.com/library/turlib/serieslib/09/P_HistoryBrush_Lg_N.jpg)
 - 污点修复画笔工具![](http://www.99ut.com/library/turlib/serieslib/09/P_HealSpot_Lg_N.jpg)

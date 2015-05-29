@@ -4,6 +4,8 @@ category: PhotoShop
 tags: [ps]
 ---
 
+See [《赵鹏 - 大师之路 Photoshop 基础教程》](http://www.99ut.com/text/photoshop/basic/index.html)
+
 ## 色相/饱和度
 
 色彩调整工具中的“色相/饱和度”工具〖CTRL U〗。
@@ -11,6 +13,8 @@ tags: [ps]
 亮度/对比度调整工具存放在菜单【图像 调整】里面。Photoshop的大部分色彩调整工具都可从这里找到。
 
 下方有两个色相色谱，其中上方的色谱是固定的，下方的色相添加 128。
+
+<!-- more -->
 
 ![](http://www.99ut.com/library/turlib/serieslib/07/07_a12.jpg)
 

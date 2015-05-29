@@ -3,9 +3,14 @@ title: "PhotoShop 字体工具"
 category: PhotoShop
 tags: [ps]
 ---
+
+See [《赵鹏 - 大师之路 Photoshop 基础教程》](http://www.99ut.com/text/photoshop/basic/index.html)
+
 ## 文本工具
 
 文本工具共有4个，分别是横排文字![](http://www.99ut.com/library/turlib/serieslib/10/P_TypeHoriz_Lg_N.jpg)、直排文字![](http://www.99ut.com/library/turlib/serieslib/10/P_TypeVert_Lg_N.jpg)、横排文字蒙版![](http://www.99ut.com/library/turlib/serieslib/10/P_TypeHorizMask_Lg_N.jpg)、直排文字蒙版![](http://www.99ut.com/library/turlib/serieslib/10/P_TypeVertMask_Lg_N.jpg)。
+
+<!-- more -->
 
 择横排文字工具〖T/SHIFT_T〗，回车键可换行。若要结束输入可按〖CTRL_回车〗或点击公共栏的提交按钮![](http://www.99ut.com/library/turlib/serieslib/10/P_Accept_Md_N.jpg)。
 

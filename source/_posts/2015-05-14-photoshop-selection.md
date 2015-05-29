@@ -4,10 +4,14 @@ category: PhotoShop
 tags: [ps]
 ---
 
+See [《赵鹏 - 大师之路 Photoshop 基础教程》](http://www.99ut.com/text/photoshop/basic/index.html)
+
 ## 选区
 
 1. 选区是封闭的区域，可以是任何形状，但一定是封闭的。不存在开放的选区。
 2. 选区一旦建立，大部分的操作就只针对选区范围内有效。如果要针对全图操作，必须先取消选区。
+
+<!-- more -->
 
 Photoshop中的选区大部分是靠使用选取工具来实现的。选取工具共8个，集中在工具栏上部。分别是矩形选框工具![](http://www.99ut.com/library/turlib/serieslib/04/P_RectSelect_Lg_N.gif)、椭圆选框工具![](http://www.99ut.com/library/turlib/serieslib/04/P_EllipseSelect_Lg_N.gif)、单行选框工具![](http://www.99ut.com/library/turlib/serieslib/04/P_RowSelect_Lg_N.gif)、单列选框工具![](http://www.99ut.com/library/turlib/serieslib/04/P_ColumnSelect_Lg_N.gif)、套索工具![](http://www.99ut.com/library/turlib/serieslib/04/P_RegionSelect_Lg_N.gif)、多边形套索工具![](http://www.99ut.com/library/turlib/serieslib/04/P_PolygonSelect_Lg_N.gif)、磁性套索工具![](http://www.99ut.com/library/turlib/serieslib/04/P_MagneticSelect_Lg_N.gif)、魔棒工具![](http://www.99ut.com/library/turlib/serieslib/04/P_SimilarSelect_Lg_N.gif)。其中前4个属于规则选取工具。
 

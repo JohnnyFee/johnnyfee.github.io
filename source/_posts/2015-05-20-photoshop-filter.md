@@ -4,11 +4,15 @@ category: PhotoShop
 tags: [ps]
 ---
 
+See [《赵鹏 - 大师之路 Photoshop 基础教程》](http://www.99ut.com/text/photoshop/basic/index.html)
+
 ## 滤镜
 
 所谓滤镜就是允许其他人利用Photoshop的图像处理内核来快速制作指定的效果。滤镜属于一种外部插件，所谓插件(Plug-ins)就是针对软件的某项功能扩展。
 
 滤镜都集中在【滤镜】菜单中，分门别类地存放。现在我们对下左图使用【滤镜_模糊_高斯模糊】。
+
+<!-- more -->
 
 ![](http://www.99ut.com/library/turlib/serieslib/14/14a01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/14/14a02.jpg)
 

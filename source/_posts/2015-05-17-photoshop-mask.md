@@ -28,7 +28,7 @@ See [《赵鹏 - 大师之路 Photoshop 基础教程》](http://www.99ut.com/tex
 
 ![](http://www.99ut.com/library/turlib/serieslib/08/08_a03.jpg)
 
-蒙版中的白色，表示有效，表示图层有效，就是看得见图层的内容。蒙版中的黑色表示图层无效，也就是将图层中的该区域屏蔽起来了，看不见内容了。
+蒙版中的白色表示图层有效，就是看得见图层的内容。蒙版中的黑色表示图层无效，也就是将图层中的该区域屏蔽起来了，看不见内容了。
 
 在实际操作中，99.9%的蒙版都是通过选区建立的。蒙版作用于图层，与图层综合形成效果，对外来说两者是一个整体。
 
@@ -302,11 +302,11 @@ See more [<#08_渐变及半透明蒙版>文字教程](http://www.99ut.com/text/p
 
 在Photoshop中还有一个称为快速蒙版的，其与屏蔽图层内容的蒙版有本质区别，它的作用是创建或修改选区。我们可以再新建一幅图像，并随意创建一个选区。
 
-![](../../../../library/turlib/serieslib/08/08f05.jpg) ![](../../../../library/turlib/serieslib/08/08f06.jpg)
+![](http://www.99ut.com/library/turlib/serieslib/08/08f05.jpg) ![](http://www.99ut.com/library/turlib/serieslib/08/08f06.jpg)
 
 然后在Photoshop的工具栏点击如下中图红色箭头处的快速蒙版按钮，或〖Q〗。
 
-![](../../../../library/turlib/serieslib/08/08f07.jpg)
+![](http://www.99ut.com/library/turlib/serieslib/08/08f07.jpg)
 
 快速蒙版的使用价值不高。
 
@@ -366,14 +366,14 @@ See more [<#08_实战蒙版>文字教程](http://www.99ut.com/text/photoshop/bas
 
 除了水流是白色以外，还有一些不属于水流的部分也是白色，比如一些树干，还有天空。使用画笔工具涂抹，将不需要的地方涂黑即可。注意控制笔刷的大小和软硬度，并且不要破坏轮廓细节。如果没有把握的地方就宁可不去涂抹。
 
-![](../../../../library/turlib/serieslib/08/08_c08.jpg)
+![](http://www.99ut.com/library/turlib/serieslib/08/08_c08.jpg)
 
 涂抹完成后将这个通道转为选区〖CTRL_点击通道缩览图〗。有些流水并没有出现流动的虚线，其原因就是由于那50%的界限。
 
-![](../../../../library/turlib/serieslib/08/08_c09.jpg)
+![](http://www.99ut.com/library/turlib/serieslib/08/08_c09.jpg)
 
 回到RGB方式，利用这个选区为原先的图层建立蒙版，就会看到除了流水以外的部分都被隐藏了。
 
-![](../../../../library/turlib/serieslib/08/08_c10.jpg)
+![](http://www.99ut.com/library/turlib/serieslib/08/08_c10.jpg)
 
 在选取人物的时候，最经常遇到的困难就是头发的末梢，由于其非常细小很难选取，即使是在蒙版涂抹修改也很难达到理想效果。

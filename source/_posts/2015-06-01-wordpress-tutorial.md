@@ -313,11 +313,164 @@ You guessed it: this function deletes a user and can also reassign any of their 
 
 ### wp_usermeta
 
-Sometimes you may want to store additional data along with a user. WordPress provides an easy way to do this without having to add additional columns to the users table. You can store as much user metadata as you need to in the wp_usermeta table. Each record is associated to a user ID in the wp_user table by the user_id field. 
+Sometimes you may want to store additional data along with a user. WordPress provides an easy way to do this without having to add additional columns to the users table. You can store as much user metadata as you need to in the `wp_usermeta` table. Each record is associated to a user ID in the `wp_user` table by the user_id field. 
 
 Column     | Type         | Collation       | Null | Default | Extra         
 ---------- | ------------ | --------------- | ---- | ------- | --------------
 umeta_id   | bigint(20)   |                 | No   | None    | AUTO_INCREMENT
 user_id    | bigint(20)   |                 | No   | 0       |               
 meta_key   | varchar(255) | utf8_general_ci | Yes  | NULL    |               
-meta_value | longtext     | utf8_general_ci | Yes  | NULL    |               
+meta_value | longtext     | utf8_general_ci | Yes  | NULL    | 
+
+```php
+<?php
+// get brian's id
+$brian_id = get_user_by( 'login', 'brian' )->ID;
+
+// add user meta - unique is set to true. no polygamy! only
+   one wife at a time.
+add_user_meta( $brian_id, 'bwawwp_wife', 'Robin Jade Morales Messenlehner', true);
+
+// get user meta - returning a single value
+$brians_wife = get_user_meta( $brian_id, 'bwawwp_wife', true);
+echo "Brian's wife: " . $brians_wife . "<br>";
+
+// add user meta - no 3rd parameter/unique. can have as many kids
+   as wife will let me.
+add_user_meta( $brian_id, 'bwawwp_kid', 'Dalya' );
+add_user_meta( $brian_id, 'bwawwp_kid', 'Brian' );
+add_user_meta( $brian_id, 'bwawwp_kid', 'Nina' );
+
+// update user meta - this will update brian to brian jr.
+update_user_meta( $brian_id, 'bwawwp_kid', 'Brian Jr', 'Brian' );
+
+// get user meta - returning an array
+$brians_kids = get_user_meta( $brian_id, 'bwawwp_kid' );
+echo "Brian's kids:";
+echo '<pre>';
+print_r($brians_kids);
+echo '</pre>';
+
+// delete brian's user meta
+delete_user_meta( $brian_id, 'bwawwp_wife' );
+delete_user_meta( $brian_id, 'bwawwp_kid' );
+
+// get jason's id
+$jason_id = get_user_by( 'login', 'jason' )->ID;
+
+// update user meta - this will create meta if the key doesn't exist for the user.
+update_user_meta( $jason_id, 'bwawwp_wife', 'Kimberly Ann Coleman' );
+
+// get user meta - returning an array
+$jasons_wife = get_user_meta( $jason_id, 'bwawwp_wife' );
+echo "Jason's wife:";
+echo '<pre>';
+print_r($jasons_wife);
+echo '</pre>';
+
+// add user meta - storing as an array
+add_user_meta( $jason_id, 'bwawwp_kid', array( 'Isaac', 'Marin' ) );
+
+// get user meta - returning a single value which happens to be an array.
+$jasons_kids = get_user_meta( $jason_id, 'bwawwp_kid', true );
+echo "Jason's kids:";
+echo '<pre>';
+print_r($jasons_kids);
+echo '</pre>';
+
+// delete jason's user meta
+delete_user_meta( $jason_id, 'bwawwp_wife' );
+delete_user_meta( $jason_id, 'bwawwp_kid' );
+
+/*
+The output from the above example should look something like this:
+Brian's wife: Robin Jade Morales Messenlehner
+Brian's kids:
+Array
+(
+    [0] => Dalya
+    [1] => Brian Jr
+    [2] => Nina
+)
+Jason's wife:
+Array
+(
+    [0] => Kimberly Ann Coleman
+)
+Jason's kids:
+Array
+(
+    [0] => Isaac
+    [1] => Marin
+)
+*/
+?>
+```
+
+#### get_user_meta( $user_id, $key = '', $single = false )
+
+Gets a user’s meta value for a specified key:
+
+* $user_id—A required integer of a user ID.
+* $key—An optional string of the meta key of the value you would like to return. If blank then all metadata for the given user will be returned.
+* $single—A Boolean of whether to return a single value or not. The default is false and the value will be returned as an array.
+
+`There can be more than one meta key for the same user ID with different values. If you set `$single` to `true`, you will get the first key’s value; if you set it to `false`, you will get an array of the values of each record with the same key.`
+
+#### update_user_meta( $user_id, $meta_key, $meta_value, $prev_value = '' )
+
+This function will update user metadata but will also insert metadata if the passed-in key doesn’t already exist:
+
+* $user_id—A required integer of a user ID.
+* $meta_key—A required string of the meta key name for the meta value you would like to store. If this meta key already exists, it will update the current row’s meta value, if not it will insert a new row.
+* $meta_value—A required mixed value of an integer, string, array, or object. Arrays and objects will automatically be serialized.
+* $prev_value—An optional mixed value of the current metadata value. If a match is found, it will replace the previous/current value with the new value you specified. If left blank, the new meta value will replace the first instance of the matching key.  If you have five rows of metadata with the same key and you don’t specify which row to update with this value, it will update the first row and remove the other four.
+
+This function relies on the `update_metadata()` function located in /wp-includes/meta.php. Check it out!
+
+#### add_user_meta($user_id, $meta_key, $meta_value, $unique = false)
+
+Yup, this function will insert brand-new user meta into the `wp_usermeta` table. We don’t use this function often anymore because we can just use `update_user_meta()` to insert new rows as well as update them. If you want to ensure that a given meta key is only ever used once per user, you should use this function and set the `$unique` parameter to `true`:
+
+* $user_id—A required integer of a user ID.
+* $meta_key—A required string of the meta key name for the meta value you would like to store.
+* $meta_value—A required mixed value of an integer, string, array, or object.
+* $unique—An optional Boolean, which when set to `true` will make sure the meta key can only ever be added once for a given ID.
+
+#### delete_user_meta($user_id, $meta_key, $meta_value = '')
+
+Deletes user metadata for a provided user ID and matching key. You can also specify a matching meta value if you only want to delete that value and not other metadata rows with the same meta key:
+
+* $user_id—A required integer of a user ID.
+* $meta_key—A required string of the meta key name for the meta value you would like to delete.
+* $meta_value—An optional mixed value of the meta value. If you have more than one record with the same meta key, you can specify which one to delete by matching the meta value. It defaults to nothing, which will delete all meta rows with a matching `user_id` and `meta_key`.
+
+### wp_posts
+
+Ah, the meat of WordPress. The `wp_posts` table is where most of your post data is stored. By default, WordPress comes with posts and pages. Both of these are technically posts and are stored in this table. The `post_type` field is what distinguishes what type of post a post is, whether it is a post, a page, a menu item, a revision, or any custom post type that you may later create.
+
+Column     | Type         | Collation       | Null | Default  | Extra         
+-----------| ------------ | -------- | ---- | -------- | -----
+ID         | bigint(20)   |      | No   | None     | AUTO_INCREMENT
+post_author| bigint(20)   |      | No   | 0        |    
+post_date  | datetime     |      | No   | 0000-00-00 00:00:00 |    
+post_date_gmt         | datetime     |      | No   | 0000-00-00 00:00:00 |    
+post_content          | longtext     | utf8_general_ci | No   | None     |    
+post_title | text         | utf8_general_ci | No   | None     |    
+post_excerpt          | text         | utf8_general_ci | No   | None     |    
+post_status| varchar(20)  | utf8_general_ci | No   | Publish  |    
+comment_status        | varchar(20)  | utf8_general_ci | No   | Open     |    
+ping_status| varchar(20)  | utf8_general_ci | No   | Open     |    
+post_password         | varchar(20)  | utf8_general_ci | No   |          |    
+post_name  | varchar(200) | utf8_general_ci | No   |          |    
+to_ping    | text         | utf8_general_ci | No   | None     |    
+pinged     | text         | utf8_general_ci | No   | None     |    
+post_modified         | datetime     |      | No   | 0000-00-00 00:00:00 |    
+post_modified_gmt     | datetime     |      | No   | 0000-00-00 00:00:00 |    
+post_content_filtered | longtext     | utf8_general_ci | No   | None     |    
+post_parent| bigint(20)   |      | No   | 0        |    
+guid       | varchar(255) | utf8_general_ci | No   |          |    
+menu_order | int(11)      |      | No   | 0        |    
+post_type  | varchar(20)  | utf8_general_ci | No   | Post     |    
+post_mime_type        | varchar(100) | utf8_general_ci | No   |          |    
+comment_count         | bigint(20)   |      | No   | 0       

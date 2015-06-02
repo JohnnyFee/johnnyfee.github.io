@@ -189,6 +189,35 @@ $ git commit -a -m 'added new benchmarks'
 
     git add -i
 
+## GIT 数据迁移
+
+1. 按照《gitolite + cygwin + windows xp》要求安装cygwin(版本v2.852)
+2. 当客户端安装完git时请按照以下步骤进行
+      
+    1. 把旧的id_rsa.pub(gitolite管理员证书)上传到server的git目录下.
+          - 客户端在桌面右键打开git bash.
+          - 输入scp id_rsa.pub(相对路径)  git@server:id_rsa.pub
+    2. 初始化gitolite
+         
+        - 输入`ssh git@server`登录到服务器server(先删除 `.ssh/known_hosts`)
+        - 输入 `mkdir -p $home/bin`
+        - 输入 `./gitolite/install -t $home/bin`
+        - 输入 `$home/bin/gitolite setup -pk ./id_rsa.pub`
+        - 输入 `exit` 离开 `ssh`
+    
+    3. 克隆gitolite管理
+    
+        + `git clone git@server:gitolite-admin`(如果提示输入密码，则前面的设置有问题，需要重新安装cygwin,gitolite)
+        + 找到旧的gitolite-admin/keydir,gitolite-admin/conf，覆盖刚刚clone的gitolite-admin目录下，然后add,commit,push
+        + 登录server，将旧的repository覆盖到新的git目录下
+    
+    4. 客户端测试git
+         
+        - 删除 %USERPROFILE%\.ssh\known_hosts 
+        - 在 cmd 命令行中执行 git clone server:testing ，当遇到 yes/no 提示时，选择 yes。 (如果提示输入密码，请重装git)
+        - 使用smartgit进行push操作
+
+
 ## 文件的三种状态
 
 对于任何一个文件，在 Git 内都只有三种状态：
@@ -206,6 +235,44 @@ __基本的 Git 工作流程如下：__
 3. 提交更新，将保存在暂存区域的文件快照永久转储到 Git 目录中。
 
 所以，我们可以从文件所处的位置来判断状态：如果是 Git 目录中保存着的特定版本文件，就属于已提交状态；如果作了修改并已放入暂存区域，就属于已暂存状态；如果自上次取出后，作了修改但还没有放到暂存区域，就 是已修改状态。
+
+## GIT Flow
+
+- 主分支（master）：用于发布产品
+
+    -  作用：每一次提交对应一个版本。
+    -  生命周期：一直存在。
+    -  命名规则：master。
+
+- 开发分支（develop）：
+
+    - 作用：可以在此分支上修改bug，如果需要开发新的功能，则应该新建一个feature分支。
+    - 生命周期：一直存在。
+    - 命名规则：develop。
+
+- 发布分支（release）：
+
+    - 作用：当开发到一个里程碑，完成该阶段的功能，需要release版本给客户时，创建一个release分支。可以在该分支上修复一些小bug，修改版本号等。
+    - 生命周期：产生于develop分支，当完成发布准备时，合并到master和develop分支，为master分支上的此次提交添加TAG（以版本号命名），删除该分支。当完成bug修复时，可以随时合并到develop分支。禁止在该分支上完成新功能。
+    - 命名规则：release-1.2
+
+- 新功能分支（feature）：
+
+    - 作用：完成一个功能模块。
+    - 生命周期：产生于develop分支，当完成新功能时，合并到develop分支（如果该功能无法直实现，则不需要合并到develop分支），删除分支。
+    合并到开发develop时，需要先将该分支上的提交合并在一起。对于develop分支来说，一个新功能只对应一个提交。实现这一目的的指令为git merge --no-ff myfeature，对于SmartGit来说，默认就是这种方式。
+    - 命名规则如：feature-bluetooth-communication
+
+- 热修复分支（hotfix）：
+    
+    - 作用：用来修复已发布的产品（在线产品）的bug。
+    - 生命周期：产生于master分支，当修复完成时，合并到develop分支（如果此时存在release分支，则需合并到release分支，而不是develop分支）和master分支（并发布新版本），删除分支。
+    - 命名规则：hotfix-1.2.1。
+
+See:
+
+- [A successful Git branching model » nvie.com](http://nvie.com/posts/a-successful-git-branching-model/)
+- [GIT分支管理是一门艺术_知识库_博客园](http://kb.cnblogs.com/page/132209/)
 
 ## .gitignore
 

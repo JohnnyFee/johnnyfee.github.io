@@ -36,6 +36,10 @@ See [《赵鹏 - 大师之路 Photoshop 基础教程》](http://www.99ut.com/tex
 
 ## 笔刷工具
 
+### 历史记录画笔
+
+See [<#07_使用历史记录画笔>Photoshop](http://www.99ut.com/text/photoshop/basic/07/pss07_10.html)
+
 ### 画笔工具
 
 画笔工具和铅笔工具的快捷键都是〖B〗，按下后选择的是上一次使用的画笔或铅笔工具。按住 〖SHIFT〗 再按 〖B〗 即可在画笔和铅笔之间切换，也可以按住ALT键单击。

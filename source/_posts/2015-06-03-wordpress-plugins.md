@@ -247,3 +247,145 @@ Place any _.php_ code that is related to cron jobs or code that is meant to be r
 ### /schoolpress.php
 
 This is the main plugin file. For small plugins, this may be the only file needed. For large plugins, the main plugin file will only contain include statements, constant definitions, and some comments about which other files contain the code you might be looking for.
+
+## Use Cases
+
+### The WordPress Loop
+
+The great and powerful WordPress Loop is what makes WordPress display its posts.Depending on what theme template file is being called on when navigating your website, WordPress queries the database and retrieves the posts that need to be returned to the end user and then loops through them.
+
+Most correctly built WordPress themes usually have the following files that contain the WordPress loop:
+
+1.  _index.php_
+2.  _archive.php_
+3.  _category.php_
+4.  _tag.php_
+5.  _single.php_
+6.  _page.php_
+
+If you open up any of these files, will contain code that may look something like this:
+
+```
+<?php
+if ( have_posts() ) {
+        while ( have_posts() ) {
+                the_post();
+                // show each post title, excerpt/content , featured image and more
+                the_title( '<h2>', '</h2>' );
+                the_content();
+        }
+} else {
+        // show a message like sorry no posts!
+}
+?>
+```
+
+### WordPress Global Variables
+
+Global variables are variables that can be defined and then used anywhere after in the rest of your code. WordPress has a few built-in global variables that can really help you save a lot of time and resources when writing code.
+
+If you wanted to see a full list of every global variable available to you, you can run the following code:
+
+```
+<?php
+echo '<pre>';
+print_r( $GLOBALS );
+echo '</pre>';
+?>
+```
+
+To access a global variable in any custom code you are writing, use code like this:
+
+```
+<?php
+global $global_variable_name;
+?>
+```
+
+Some global variables are only made available to you depending on where you are in WordPress. Below is a short list of some of the more popular global variables:
+
+* `$post—An object that contains all of the post data from the `wp_posts` table for the current post that you are on within the WordPress loop.``
+* $authordata—An object with all of the author data of the current post that you are on within the WordPress loop.
+
+### $wpdb
+
+The `$wpdb` class is used to interact with the database directly. Once globalized, you can use `$wpdb` in custom functionality to select, update, insert, and delete database records. If you are new to WordPress and aren’t familiar with all of the functions to push and pull from the database, `$wpdb` is going to be your best friend.
+
+Queries using `$wpdb` are also useful when you need to manage custom tables required by your app or perform a complicated query (perhaps joining many tables) faster than the core WordPress functions would run on their own. Please don’t assume that the built-in WordPress functions for querying the database are slow. Unless you know exactly what you are doing, you’ll want to use the built-in functions for getting posts, users, and metadata. The WordPress core is smart about optimizing queries and caching the results from these calls, which will work well across all of the plugins you are running. However, in certain situations, you can shave a bit of time by rolling your own query.
+
+### Using custom DB tables
+
+To add our table to the database, we need to write up the SQL for the CREATE TABLE command and query it against the WordPress database. You can use either the `$wpdb->query()` method or the `dbDelta()` function in the WordPress core.
+
+There are a few things we need to do to keep track of our custom tables. We want to store a `db_version` for our app plugin so we know what version of the database schema we are working with in case it updates between versions. We can also check the version so we only run the setup SQL once for each version. Another common practice is to store your custom table name as a property of `$wpdb` to make querying it a bit easier later.
+
+```
+<?php
+// setup the database for the SchoolPress app
+function sp_setupDB() {
+        global $wpdb;
+
+        // shortcuts for SchoolPress DB tables
+        $wpdb->schoolpress_assignment_submissions = $wpdb->prefix .
+                'schoolpress_assignment_submissions';
+
+        $db_version = get_option( 'sp_db_version', 0 );
+
+        // create tables on new installs
+        if ( empty( $db_version ) ) {
+                global $wpdb;
+
+                $sqlQuery = "
+                CREATE TABLE '" . $wpdb->schoolpress_assignment_submissions . "' (
+                  `assignment_id` bigint(11) unsigned NOT NULL,
+                  `submission_id` bigint(11) unsigned NOT NULL,
+                UNIQUE KEY `assignment_submission` (`assignment_id`,`submission_id`),
+                UNIQUE KEY `submission_assignment` (`submission_id`,`assignment_id`)
+                )
+                ";
+
+                require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+                dbDelta( $sqlQuery );
+
+                $db_version = '1.0';
+                update_option( 'sp_db_version', '1.0' );
+        }
+}
+add_action( 'init', 'sp_dbSetup', 0 );
+?>
+```
+
+The `sp_dbSetup()` function is run early in init (priority 0) so the table shortcuts are available to any other code you have running. You can’t always assume a `wp_` prefix, so the `$wpdb->prefix` property is used to get the database prefix for the WordPress install.``
+
+A DB version for the SchoolPress app is stored in the WordPress options table. We get the value out of options, and if it is empty, we run code to create our custom tables. The CREATE TABLE SQL statement here is pretty standard. You should always try to run these commands directly on the MySQL database before pasting them into your plugin code to make sure they work.
+
+We use the `dbDelta()` function to create the database table. This function will create a new table if it doesn’t exist. Or if a table with the same name already exists, it will figure out the correct ALTER TABLE query to get the old table to match the new schema.
+
+To use `dbDelta()`, you must be sure to include the _wp-admin/includes/upgrade.php_ file since that file is only loaded when needed. Then pass `dbDelta()` the SQL for a CREATE TABLE query. Your SQL must be in a specific format a little more strict than the general MySQL format.
+
+From the [WordPress Codex on Creating Tables with Plugins](http://bit.ly/create-table):
+
+1.  You must put each field on its own line in your SQL statement.
+2.  You must have two spaces between the words PRIMARY KEY and the definition of your primary key.
+3.  You must use the keyword KEY rather than its synonym INDEX, and you must include at least one KEY.
+4.  You must not use any apostrophes or backticks around field names.
+
+`Using `dbDelta()` is preferred when creating tables because it will automatically update older versions of your tables, but you can also run the CREATE TABLE query using `$wpdb->query($sqlQuery);`.`
+
+`You can run any valid SQL statement using the `$wpdb->query()` method. The `query()` method sets a lot of properties on the `$wpdb` object that are useful for debugging or just keeping track of your queries:`
+
+* ``$wpdb->result` will contain the raw result from your SQL query.`
+* ``$wpdb->num_queries` is incremented each time a query is run.`
+* ``$wpdb->last_query` will contain the last SQL query run.`
+* ``$wpdb->last_error` will contain a string with the last SQL error generated if there was one.`
+* ``$wpdb->insert_id` will contain the ID created from the last successful INSERT query.`
+* ``$wpdb->rows_affected` is set to the number of affected rows.`
+* ``$wpdb->num_rows` is set to the number of rows in a result for a SELECT query.`
+* ``$wpdb->last_result` will contain an array of row objects generated through the `mysql_fetch_object()` PHP function.`
+
+`The return value of the `$wpdb->query()` method is based on the top of query run and if the query was successful or not:`
+
+* ``False` is returned if the query failed. You can test for this using code like `if($wpdb->query($query) === false) { wp_die(“it failed!”); }`.`
+* The raw MySQL result is returned on CREATE, ALTER, TRUNCATE, and DROP queries.
+* The number of rows affected is returned for INSERT, UPDATE, DELETE, and REPLACE queries.
+* The number of rows returned is returned for SELECT queries.

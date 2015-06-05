@@ -1094,3 +1094,302 @@ This function adds taxonomy terms to a provided object ID and taxonomy. It has t
 * $append—An optional Boolean that defaults to `false` that will replace any existing terms related to an object ID with the new terms you provided. If set to `true`, your new terms will be appended to the existing terms.
 
 Discussion is underway to remove the `wp_terms` table from WordPress in a future release. The `name` and `slug` columns of `wp_terms` will be moved into the `wp_terms_taxonomy` table, and a MySQL view will be created called `wp_terms` that can be queried against, preserving backward compatibility for your custom queries.
+
+## $wpdb
+
+The `$wpdb` class is used to interact with the database directly. Once globalized, you can use `$wpdb` in custom functionality to select, update, insert, and delete database records. If you are new to WordPress and aren’t familiar with all of the functions to push and pull from the database, `$wpdb` is going to be your best friend.
+
+Queries using `$wpdb` are also useful when you need to manage custom tables required by your app or perform a complicated query (perhaps joining many tables) faster than the core WordPress functions would run on their own. Please don’t assume that the built-in WordPress functions for querying the database are slow. Unless you know exactly what you are doing, you’ll want to use the built-in functions for getting posts, users, and metadata. The WordPress core is smart about optimizing queries and caching the results from these calls, which will work well across all of the plugins you are running. However, in certain situations, you can shave a bit of time by rolling your own query.
+
+### Using custom DB tables
+
+To add our table to the database, we need to write up the SQL for the CREATE TABLE command and query it against the WordPress database. You can use either the `$wpdb->query()` method or the `dbDelta()` function in the WordPress core.
+
+There are a few things we need to do to keep track of our custom tables. We want to store a `db_version` for our app plugin so we know what version of the database schema we are working with in case it updates between versions. We can also check the version so we only run the setup SQL once for each version. Another common practice is to store your custom table name as a property of `$wpdb` to make querying it a bit easier later.
+
+```php
+<?php
+// setup the database for the SchoolPress app
+function sp_setupDB() {
+        global $wpdb;
+
+        // shortcuts for SchoolPress DB tables
+        $wpdb->schoolpress_assignment_submissions = $wpdb->prefix .
+                'schoolpress_assignment_submissions';
+
+        $db_version = get_option( 'sp_db_version', 0 );
+
+        // create tables on new installs
+        if ( empty( $db_version ) ) {
+                global $wpdb;
+
+                $sqlQuery = "
+                CREATE TABLE '" . $wpdb->schoolpress_assignment_submissions . "' (
+                  `assignment_id` bigint(11) unsigned NOT NULL,
+                  `submission_id` bigint(11) unsigned NOT NULL,
+                UNIQUE KEY `assignment_submission` (`assignment_id`,`submission_id`),
+                UNIQUE KEY `submission_assignment` (`submission_id`,`assignment_id`)
+                )
+                ";
+
+                require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+                dbDelta( $sqlQuery );
+
+                $db_version = '1.0';
+                update_option( 'sp_db_version', '1.0' );
+        }
+}
+add_action( 'init', 'sp_dbSetup', 0 );
+?>
+```
+
+The `sp_dbSetup()` function is run early in init (priority 0) so the table shortcuts are available to any other code you have running. You can’t always assume a `wp_` prefix, so the `$wpdb->prefix` property is used to get the database prefix for the WordPress install.``
+
+A DB version for the SchoolPress app is stored in the WordPress options table. We get the value out of options, and if it is empty, we run code to create our custom tables. The CREATE TABLE SQL statement here is pretty standard. You should always try to run these commands directly on the MySQL database before pasting them into your plugin code to make sure they work.
+
+We use the `dbDelta()` function to create the database table. This function will create a new table if it doesn’t exist. Or if a table with the same name already exists, it will figure out the correct ALTER TABLE query to get the old table to match the new schema.
+
+To use `dbDelta()`, you must be sure to include the _wp-admin/includes/upgrade.php_ file since that file is only loaded when needed. Then pass `dbDelta()` the SQL for a CREATE TABLE query. Your SQL must be in a specific format a little more strict than the general MySQL format.
+
+Using `dbDelta()` is preferred when creating tables because it will automatically update older versions of your tables, but you can also run the CREATE TABLE query using `$wpdb->query($sqlQuery);`.
+
+You can run any valid SQL statement using the `$wpdb->query()` method. The `query()` method sets a lot of properties on the `$wpdb` object that are useful for debugging or just keeping track of your queries:
+
+* `$wpdb->result` will contain the raw result from your SQL query.
+* `$wpdb->num_queries` is incremented each time a query is run.
+* `$wpdb->last_query` will contain the last SQL query run.
+* `$wpdb->last_error` will contain a string with the last SQL error generated if there was one.
+* `$wpdb->insert_id` will contain the ID created from the last successful INSERT query.
+* `$wpdb->rows_affected` is set to the number of affected rows.
+* `$wpdb->num_rows` is set to the number of rows in a result for a SELECT query.
+* `$wpdb->last_result` will contain an array of row objects generated through the `mysql_fetch_object()` PHP function.
+
+The return value of the `$wpdb->query()` method is based on the top of query run and if the query was successful or not:
+
+* `False` is returned if the query failed. You can test for this using code like `if($wpdb->query($query) === false) { wp_die(“it failed!”); }`.
+* The raw MySQL result is returned on CREATE, ALTER, TRUNCATE, and DROP queries.
+* The number of rows affected is returned for INSERT, UPDATE, DELETE, and REPLACE queries.
+* The number of rows returned is returned for SELECT queries.
+
+### Escaping in DB queries
+
+It should be noted that values passed into the `query()` method are not escaped automatically. Therefore, you will always need to escape untrusted input when using the `query()` method directly.
+
+There are two main ways of escaping values used in your SQL queries: you can wrap your variables in the `esc_sql()` function or you can use the `$wpdb->prepare()` method to build your query.
+
+```
+global $wpdb;
+$user_query = $_REQUEST[‘uq’];
+
+$sqlQuery = “SELECT user_login FROM $wpdb->users WHERE
+user_login LIKE ‘%” . esc_sql($user_query) . “%’ OR
+user_email LIKE ‘%” . esc_sql($user_query) . “%’ OR
+display_name LIKE ‘%” . esc_sql($user_query) . “%’
+”;
+$user_logins = $wpdb->get_col($sqlQuery);
+
+if(!empty($user_logins))
+{
+        echo “<ul>”;
+foreach($user_logins as $user_login)
+        {
+                echo “<li>$user_login</li>”;
+}
+echo “</ul>”;
+}
+```
+
+Alternatively, you could create the query using the `prepare()` method, which functions similarly to the `sprintf()` and `printf()` functions in PHP. This method of the $wpdb class located in _wp-includes/wp-db.php_ accepts two or more parameters:
+
+* $query—A string of your custom SQL statement with placeholders for each dynamic value.
+* $args—One or more additional parameters to be used to replace the placeholders in your SQL statement.
+
+The following directives can be used in the SQL statement string:
+
+* %d (integer)
+* %f (float)
+* %s (string)
+* %% (literal percentage sign–-no argument needed)
+
+The directives %d, %f, and %s should be left unquoted in the SQL statement, and each placeholder used needs to have a corresponding argument passed in for it. Literals (%) as part of the query must be properly written as %%:
+
+```
+$sqlQuery = $wpdb->prepare(“SELECT user_login FROM $wpdb->users WHERE
+user_login LIKE %%%s%% OR
+user_email LIKE %%%s%% OR
+display_name LIKE %%%s%%”, $user_query, $user_query, $user_query);
+$user_logins = $wpdb->get_col($sqlQuery);
+```
+
+If you use `$wpdb->prepare()` without including the `$args` parameter, you will get a PHP warning message: “Missing argument 2 for `wpdb::prepare()`“. If your SQL doesn’t use any placeholder values, you don’t need to use `prepare()`.
+
+Holy percent sign, Batman! The `%` is used in SQL as a wildcard in SELECT statements when using the LIKE keyword. So if you searched for `user_login LIKE %coleman%`, it would return users with user logins like “jcoleman” and “jasoncoleman” and “coleman1982.” To keep these _literal_ % signs in place with the `prepare()` method, we need to double them up to `%%`, which is translated into just one % in the final query.
+
+The other % in there is used with `%s`, which is the placeholder where our `$user_query` parameter is going to be swapped in after being escaped.
+
+You may have noticed we used the `$wpdb->get_col()` method in the previous code segment. WordPress offers many useful methods on the `$wpdb` object to SELECTs, INSERTs, and other common queries in MySQL.
+
+### SELECT queries with $wpdb
+
+The WordPress `$wpdb` object has a few useful methods for selecting arrays, objects, rows, columns, or even single values out of the MySQL database using SQL queries.
+
+`$wpdb→get_results($query, $output_type)` will run your query and return the `last_results` array, including all of the rows from your SQL query in the output type specified. By default, the result will be a “numerically indexed array of row objects.” Here’s the full list of output types from the WordPress Codex:
+
+- OBJECT 
+
+    Result will be output as a numerically indexed array of row objects.
+
+- OBJECT_K
+
+    Result will be output as an associative array of row objects, using the first column’s values as keys (duplicates will be discarded).
+
+- ARRAY_A
+
+    Result will be output as an numerically indexed array of associative arrays, using column names as keys.
+
+- ARRAY_N
+
+    Result will be output as a numerically indexed array of numerically indexed arrays.
+
+The following code helps show how to use the array returned by `$wpdb->get_results()` when using the `OBJECT` output type:
+
+```php
+<?php
+global $wpdb;
+$sqlQuery = "SELECT * FROM $wpdb->posts
+        WHERE post_type = 'assignment'
+        AND post_status = 'publish' LIMIT 10";
+$assignments = $wpdb->get_results( $sqlQuery );
+
+// rows are stored in an array, use foreach to loop through them
+foreach ( $assignments as $assignment ) {
+// each item is an object with property names equal to the SQL column names?>
+<h3><?php echo $assignment->post_title;?></h3>
+<?php echo apply_filters( "the_content", $assignment->post_content );?>
+<?php
+}
+?>
+```
+
+`$wpdb→get_col($query, $collumn_offset = 0)` will return an array of the values in the first column of the MySQL results. The `$collumn_offset` parameter can be used to grab other columns from the results (0 is the first, 1 is the second, and so on).
+
+This function is most commonly used to grab IDs from a database table to be used in another function call or DB query:
+
+```
+<?php
+global $wpdb;
+$sqlQuery = "SELECT ID FROM $wpdb->posts
+        WHERE post_type = 'assignment'
+        AND post_status = 'publish'
+        LIMIT 10";
+// getting IDs
+$assignment_ids = $wpdb->get_col( $sqlQuery );
+
+// result is an array, loop through them
+foreach ( $assignment_ids as $assignment_id ) {
+        // we have the id, we can use get_post to get more data
+        $assignment = get_post( $assignment_id );
+        ?>
+        <h3><?php echo $assignment->post_title;?></h3>
+        <?php echo apply_filters( "the_content", $assignment->post_content );?>
+        <?php
+}
+?>
+```
+
+Note that we’re putting that `global $wpdb;` line in most of our examples here to reinforce the point that you need to make sure that `$wpdb` is in scope before calling one of its methods. In practice, this line is usually at the top of the function or file you are working within.
+
+`$wpdb→get_row($query,  $output_type, $row_offset)` is used to get just one row from a result. Instead of getting an array of results, you will just get the first object (or array if the `$output_type` is specified) from the result set.
+
+You can use the `$row_offset` parameter to grab a different row from the results (0 is the first, 1 is the second, and so on).
+
+### Insert, replace, and update
+
+`$wpdb→insert($table, $data, $format)` can be used to insert data into the database. Rather than building your own INSERT query, you simply pass the table name and an associative array containing the row data and WordPress will build the query and escape it for you. The keys of your `$data` array must map to column names in the table. The values in the array are the values to insert into the table row:
+
+```
+<?php
+// processing new submissions for assignments
+global $wpdb, $current_user;
+
+// create submission
+$assignment_id = intval( $_REQUEST['assignment_id'] );
+$submission_id = wp_insert_post(
+        array(
+                'post_type'    => 'submission',
+                'post_author'  => $current_user->ID,
+                'post_title'   => sanitize_title( $_REQUEST['title'] ),
+                'post_content' => sanitize_text_field( $_POST['submission'] )
+        )
+);
+
+// connect the submission to the assignment
+$wpdb->insert(
+  $wpdb->schoolpress_assignment_submissions,
+  array( "assignment_id"=>$assignment_id, "submission_id"=>$submission_id ),
+  array( '%d', '%d' )
+);
+
+/*
+        This insert call will generate a SQL query like:
+        INSERT INTO
+        'wp_schoolpress_assignment_submissions'
+
+        ('assignment_id','submission_id' VALUES (101,10)
+*/
+?>
+```
+
+In the previous code, we use `wp_insert_post()` to create the submission then use `$wpdb->insert()` to insert a row into our custom table connecting assignments with submissions.
+
+We pass an array of formats to the third parameter to tell the method to format the data as integers when constructing the SQL query. The available formats are %s for strings, %d for integers, and %f for floats. If no format is specified, all data will be formatted as a string. In most cases, MySQL will properly cast your string into the format needed to store it in the actual table.
+
+To relate two posts like this, we could also simply put the `assignment_id` into the `post_parent` column of the `wp_posts` table. This is adequate to create a parent/child relationship. However, if you want to do a many-to-many relationship (e.g., if you can post the same submission to multiple assignments), you need a separate table or some other way to connect a post to many other posts.
+
+`$wpdb→replace($table, $data, $format)` is similar to the `$wpdb->insert()` method. The `$wpdb->replace()` method will literally generate the same exact SQL query as `$wpdb->insert()` but uses the MySQL REPLACE command instead of INSERT, which will override any row with the same keys as the `$data` passed in.
+
+`$wpdb→update($table, $data, $where, $format = null, $where_format = null )` can be used to update rows in a database table. Rather than building your own UPDATE query, you simply pass the table and an associative array containing the updated columns and new data along with an associative array `$where` containing the fields to check against in the WHERE clause and WordPress will build the query and escape the UPDATE query for you.
+
+The `$where` and `$where_format` parameters work the same as the `$data` and `$format` arrays, respectively.
+
+The WHERE clause generated by the `update()` method will check that the columns are equal to the values passed and those checks are combined together by AND conditions.
+
+The `update()` method is particularly useful in that you can update any number of fields in an table row using the same function. Here is some code that could be used to update orders in an ecommerce plugin:
+
+```php
+<?php
+global $wpdb;
+// just update the status
+$wpdb->update(
+        'ecommerce_orders',   //table name
+        array( 'status' => 'paid' ),  //data fields
+        array( 'id' => $order_id )  //where fields
+);
+
+// update more data about the order
+$wpdb->update(
+        'ecommerce_orders',   //table name
+        array( 'status' => 'pending',  //data fields
+                'subtotal' => '100.00',
+                'tax' => '6.00',
+                'total' => '106.00'
+        ),
+        array( 'id' => $order_id )  //where fields
+);
+?>
+```
+
+1.  $wp_query—An object of the `WP_Query` class that can show you all of the post content returned by WordPress for any given page that you are on.``` We will talk more about the WP_Query class and its methods in the next chapter.`````````
+2.  $current_user—An object of all of the data associated with the currently logged-in user. Not only does this object return all of the data for the current user from the `wp_users` table, but it will also tell you the roles and capabilities of the current user:
+
+```
+<?php
+//welcome the logged-in user
+global $current_user;
+if ( !empty( $current_user->ID ) ) {
+        echo 'Howdy, ' . $current_user->display_name;
+}
+?>
+```
+
+When writing your own code to run on WordPress, you can define and use your own global variables if it makes sense. Global variables can save you the hassle of rewriting code and recalling functions because once they are defined, you can use them over and over again.

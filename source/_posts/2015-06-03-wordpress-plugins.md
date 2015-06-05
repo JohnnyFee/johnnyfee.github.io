@@ -304,88 +304,76 @@ global $global_variable_name;
 
 Some global variables are only made available to you depending on where you are in WordPress. Below is a short list of some of the more popular global variables:
 
-* `$post—An object that contains all of the post data from the `wp_posts` table for the current post that you are on within the WordPress loop.``
+* $post—An object that contains all of the post data from the `wp_posts` table for the current post that you are on within the WordPress loop.`
 * $authordata—An object with all of the author data of the current post that you are on within the WordPress loop.
 
-### $wpdb
+### Action Hooks
 
-The `$wpdb` class is used to interact with the database directly. Once globalized, you can use `$wpdb` in custom functionality to select, update, insert, and delete database records. If you are new to WordPress and aren’t familiar with all of the functions to push and pull from the database, `$wpdb` is going to be your best friend.
+WordPress developers hook for a living! Hooks are great and they make adding functionality into WordPress plugins and themes simple and easy. Any place an action hook, or technically a `do_action()` function, exists in code running on WordPress, you can insert your own code by calling the `add_action()` function and passing in the action hook name and your custom function with the code you want to run: `do_action( $tag, $arg );`
 
-Queries using `$wpdb` are also useful when you need to manage custom tables required by your app or perform a complicated query (perhaps joining many tables) faster than the core WordPress functions would run on their own. Please don’t assume that the built-in WordPress functions for querying the database are slow. Unless you know exactly what you are doing, you’ll want to use the built-in functions for getting posts, users, and metadata. The WordPress core is smart about optimizing queries and caching the results from these calls, which will work well across all of the plugins you are running. However, in certain situations, you can shave a bit of time by rolling your own query.
-
-### Using custom DB tables
-
-To add our table to the database, we need to write up the SQL for the CREATE TABLE command and query it against the WordPress database. You can use either the `$wpdb->query()` method or the `dbDelta()` function in the WordPress core.
-
-There are a few things we need to do to keep track of our custom tables. We want to store a `db_version` for our app plugin so we know what version of the database schema we are working with in case it updates between versions. We can also check the version so we only run the setup SQL once for each version. Another common practice is to store your custom table name as a property of `$wpdb` to make querying it a bit easier later.
++ $tag—The name of the action hook being executed.
++ `$arg—One or more additional arguments that will get passed through to the function called from the `add_action()` function referencing this `do_action()` function. Say what? Keep reading…`
 
 ```
 <?php
-// setup the database for the SchoolPress app
-function sp_setupDB() {
-        global $wpdb;
+add_action( 'init', 'my_user_check' );
 
-        // shortcuts for SchoolPress DB tables
-        $wpdb->schoolpress_assignment_submissions = $wpdb->prefix .
-                'schoolpress_assignment_submissions';
-
-        $db_version = get_option( 'sp_db_version', 0 );
-
-        // create tables on new installs
-        if ( empty( $db_version ) ) {
-                global $wpdb;
-
-                $sqlQuery = "
-                CREATE TABLE '" . $wpdb->schoolpress_assignment_submissions . "' (
-                  `assignment_id` bigint(11) unsigned NOT NULL,
-                  `submission_id` bigint(11) unsigned NOT NULL,
-                UNIQUE KEY `assignment_submission` (`assignment_id`,`submission_id`),
-                UNIQUE KEY `submission_assignment` (`submission_id`,`assignment_id`)
-                )
-                ";
-
-                require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-                dbDelta( $sqlQuery );
-
-                $db_version = '1.0';
-                update_option( 'sp_db_version', '1.0' );
+function my_user_check() {
+        if ( is_user_logged_in() ) {
+                // do something because a user is logged in
         }
 }
-add_action( 'init', 'sp_dbSetup', 0 );
 ?>
 ```
 
-The `sp_dbSetup()` function is run early in init (priority 0) so the table shortcuts are available to any other code you have running. You can’t always assume a `wp_` prefix, so the `$wpdb->prefix` property is used to get the database prefix for the WordPress install.``
+So what just happened? In the core of WordPress, there is an action hook, ``do_action(_`init`_)``, and we are calling a function called “my_user_check” from the `add_action()` function. At whatever point in time the code is being executed, when it gets to the `init` action hook, it will then run our custom `my_user_check` function to do whatever we want before continuing on.
 
-A DB version for the SchoolPress app is stored in the WordPress options table. We get the value out of options, and if it is empty, we run code to create our custom tables. The CREATE TABLE SQL statement here is pretty standard. You should always try to run these commands directly on the MySQL database before pasting them into your plugin code to make sure they work.
+Check out ``[WordPress’s reference page](http://bit.ly/plugin-api) for a list of the most used WordPress hooks.
 
-We use the `dbDelta()` function to create the database table. This function will create a new table if it doesn’t exist. Or if a table with the same name already exists, it will figure out the correct ALTER TABLE query to get the old table to match the new schema.
+## Filters
 
-To use `dbDelta()`, you must be sure to include the _wp-admin/includes/upgrade.php_ file since that file is only loaded when needed. Then pass `dbDelta()` the SQL for a CREATE TABLE query. Your SQL must be in a specific format a little more strict than the general MySQL format.
+Filters are kind of like action hooks in the sense that you can tap into them wherever they exist in WordPress. However, instead of inserting your own code where the hook or `do_action()` exists, you are filtering the returned value of existing functions that are using the `apply_filters()` function in WordPress core, plugins, and/or themes. In other words, by utilizing filters, you can hijack content before it is inserted into the database or before it is displayed to the browser as HTML:`apply_filters( $tag, $value, $var );`
 
-From the [WordPress Codex on Creating Tables with Plugins](http://bit.ly/create-table):
++ $tag—The name of the filter hook.
++ $value—The value that the filter can be applied on.
++ $var—Any additional variables, such as a string or an array, passed into the filter function.
 
-1.  You must put each field on its own line in your SQL statement.
-2.  You must have two spaces between the words PRIMARY KEY and the definition of your primary key.
-3.  You must use the keyword KEY rather than its synonym INDEX, and you must include at least one KEY.
-4.  You must not use any apostrophes or backticks around field names.
+If you search the core WordPress files for `apply_filters` you will find that the `apply_filters()` function is called all over the place, and like action hooks, the `apply_filters()` function can also be added to and called from any theme or plugin. Anywhere in code running on your WordPress site that you see the `apply_filters()` function being called, you can filter the value being returned by that function. For our example, we are going to filter the title of all posts before they are displayed to the browser. We can hook into any existing filters using the `add_filter()` function:
 
-`Using `dbDelta()` is preferred when creating tables because it will automatically update older versions of your tables, but you can also run the CREATE TABLE query using `$wpdb->query($sqlQuery);`.`
+* `add_filter( $tag, $function, $priority, $accepted_args );`
 
-`You can run any valid SQL statement using the `$wpdb->query()` method. The `query()` method sets a lot of properties on the `$wpdb` object that are useful for debugging or just keeping track of your queries:`
+    * $tag—The name of the filter hook you want to filter. This should match the `$tag` parameter of the `apply_filters()` function call you want to filter the results for.
+    * `````````$function—The name of the custom function used to actually filter the results.`````````
+    * $priority—This number sets the priority in which your `add_filter` will run compared to other places in the code that might be referencing the same filter hook tag. By default, this value is 10.
+    * $accepted_args—You can set the number of parameters that your custom function that handles the filtering can except. The default is 1, which is the `$value` parameter of the `apply_filters` function.
 
-* ``$wpdb->result` will contain the raw result from your SQL query.`
-* ``$wpdb->num_queries` is incremented each time a query is run.`
-* ``$wpdb->last_query` will contain the last SQL query run.`
-* ``$wpdb->last_error` will contain a string with the last SQL error generated if there was one.`
-* ``$wpdb->insert_id` will contain the ID created from the last successful INSERT query.`
-* ``$wpdb->rows_affected` is set to the number of affected rows.`
-* ``$wpdb->num_rows` is set to the number of rows in a result for a SELECT query.`
-* ``$wpdb->last_result` will contain an array of row objects generated through the `mysql_fetch_object()` PHP function.`
+OK, so how would real code for this look? Let’s start by adding a filter to alter the title of any post returned to the browser. We know of a filter hook for `the_title` that looks like this:
 
-`The return value of the `$wpdb->query()` method is based on the top of query run and if the query was successful or not:`
+`apply_filters( 'the_title', $title, $id );`
 
-* ``False` is returned if the query failed. You can test for this using code like `if($wpdb->query($query) === false) { wp_die(“it failed!”); }`.`
-* The raw MySQL result is returned on CREATE, ALTER, TRUNCATE, and DROP queries.
-* The number of rows affected is returned for INSERT, UPDATE, DELETE, and REPLACE queries.
-* The number of rows returned is returned for SELECT queries.
+`$title` is the title of the post and `$id` is the ID of the post:
+
+```
+<?php
+add_filter( 'the_title', 'my_filtered_title', 10, 2 );
+
+function my_filtered_title( $value, $id ) {
+        $value = '[' . $value . ']';
+        return $value;
+}
+?>
+```
+
+The preceding code should wrap any post titles in brackets.  If your post title was “hello world,” it would now read “[hello world].” Note that we didn’t use the `$id` in our custom function.  If we wanted to, we could have only applied the brackets to specific post IDs.
+
+`While `add_action()` is meant to be used with `do_action()` hooks and `add_filter()` is meant to be used with `apply_filters()` hooks, ```the functions work the same way and are interchangeable. For readability, it is still a good idea to use the proper function depending on whether you intend to return a filtered result or just perform some code at a specific time.
+
+## Free Plugins
+
+### All in One SEO Pack
+
+This is [a great plugin](http://bit.ly/1-seo-pack) to use if you are concerned about SEO (search engine optimization).  This plugin was created by Semper Fi Web Design and once installed, it automatically optimizes your site for search engines. It also adds custom meta fields to each page and post that then allow you to add in custom titles as well as descriptions and keywords. There are pro or premium versions of the plugin that extend the functionality to allow for customization of search engine settings for each individual post or page as well as the option to set sitewide defaults in WordPress.
+
+### BadgeOS
+
+[This plugin](http://bit.ly/badgeOS) can transform any website into a platform for rewarding members achievements based on their activities. It allows the site admin to create different achievement types and award the members sharable badges once they complete all the requirements to earn that particular achievement or achievements. Badges are Mozilla OBI compatible and sharable via Credly.com.

@@ -343,7 +343,7 @@ If you search the core WordPress files for `apply_filters` you will find that th
 * `add_filter( $tag, $function, $priority, $accepted_args );`
 
     * $tag—The name of the filter hook you want to filter. This should match the `$tag` parameter of the `apply_filters()` function call you want to filter the results for.
-    * `````````$function—The name of the custom function used to actually filter the results.`````````
+    * $function—The name of the custom function used to actually filter the results.
     * $priority—This number sets the priority in which your `add_filter` will run compared to other places in the code that might be referencing the same filter hook tag. By default, this value is 10.
     * $accepted_args—You can set the number of parameters that your custom function that handles the filtering can except. The default is 1, which is the `$value` parameter of the `apply_filters` function.
 
@@ -377,3 +377,70 @@ This is [a great plugin](http://bit.ly/1-seo-pack) to use if you are concerned a
 ### BadgeOS
 
 [This plugin](http://bit.ly/badgeOS) can transform any website into a platform for rewarding members achievements based on their activities. It allows the site admin to create different achievement types and award the members sharable badges once they complete all the requirements to earn that particular achievement or achievements. Badges are Mozilla OBI compatible and sharable via Credly.com.
+
+### Custom Post Type UI
+
+This is [a very powerful plugin](http://bit.ly/custom-ui) for building a web application. Custom Post Type UI allows you to create your own custom post types and taxonomies without touching any lines of code.
+
+### Posts 2 Posts
+
+This is [another very powerful plugin](http://bit.ly/posts2posts) for building a web application. This plugin allows you to create many-to-many relationships between posts, pages, and custom post types as well as many-to-many relationships between posts and users.
+
+For an example, you could use P2P to make connections between custom post types for schools, teachers, and subjects. A school could have multiple teachers, and each teacher could be tied to one or more subjects.
+
+P2P provides intuitive settings, feature-rich widgets, and an easy-to-use meta box attached to any post add/edit page for making new connections.
+
+Most of the time, custom plugin developers should avoid creating additional database tables unless it absolutely makes sense. If we wanted to connect posts to other posts, we could store an array of post IDs in a custom field of another post, but this can become inefficient in a large scale application. P2P creates its own database tables for storing the relationships between posts more efficiently.
+
+_DB schema for wp_p2p table_
+
+Column   | Type        | Collation       | Null | Default | Extra         
+-------- | ----------- | --------------- | ---- | ------- | --------------
+p2p_id   | bigint(20)  |                 | No   | None    | AUTO_INCREMENT
+p2p_from | bigint(20)  |                 | No   | None    |               
+p2p_to   | bigint(20)  |                 | No   | None    |               
+p2p_type | varchar(44) | utf8_general_ci | No   |         |      
+
+_DB schema for wp_p2pmeta table_         
+
+Column     | Type         | Collation       | Null | Default | Extra         
+---------- | ------------ | --------------- | ---- | ------- | --------------
+meta_id    | bigint(20)   |                 | No   | None    | AUTO_INCREMENT
+p2p_id     | bigint(20)   |                 | No   | 0       |               
+meta_key   | varchar(255) | utf8_general_ci | Yes  | NULL    |               
+meta_value | longtext     | utf8_general_ci | Yes  | NULL    |               
+
+For more information on this plugin, make sure to check out the [wiki on GitHub](http://bit.ly/p2p-wiki).
+
+### Members
+
+[Members](http://bit.ly/members-wp) extends the control that you have over user roles and capabilities in your site. It enables you to edit as well as create and delete user roles and capabilities.  This plugin also allows you to set permissions for different user roles to determine which roles have the ability to add, edit, and/or delete various pieces of content. This is another must-have plugin for building an extensible web application because you can completely customize each user’s experience by defining and managing the roles and capabilities he will have access to.
+
+### W3 Total Cache
+
+Caching your content is a great idea for optimizing the performance of your website. You can save a lot of processing time by displaying cached pages to the end user instead of querying the database every time someone requests data. W3 Total Cache has a lot of built-in features for managing what content gets cached and when the cache should be cleared.
+
+## Premium Plugins
+
+### Gravity Forms
+
+[This plugin](http://www.gravityforms.com/) is an absolute must because it enables you to easily create custom contact forms for your site.  It is extremely easy to create a form using the visual form editor, which allows you to drag and drop the fields you need into the form and reposition them as needed.  Standard fields are included as well as the option to create your own custom fields.  The forms are very flexible and can be set up as multiple page forms with progress bars.  Conditional fields allow you to show or hide fields based on the user’s selections in previous fields. Another great feature of this plugin is the ability for the forms, once completed, to be forwarded anywhere as chosen by the site admin in the form settings.  All in all, this plugin is extremely useful and flexible for anyone needing to create a form on their site and easy to use for someone without coding knowledge.
+
+### Backup Buddy
+
+The [Backup Buddy plugin](http://bit.ly/backup-b) provides you with the opportunity to back up your entire WordPress install for safekeeping, restoring, or moving your site.  Backups can be scheduled on a recurring basis, and the file can then be downloaded to your computer, emailed to you, or sent off to the storage location of your choice, such as Dropbox or an FTP server.  This plugin also features a restore option that will easily restore your themes, widgets, and plugins.  The plugin also allows you to easily move your site to a new server or domain right from the WordPress dashboard, which comes in handy if you work on a dev server and then move the sites over to a production environment upon launch.
+
+### WP All Import
+
+[This plugin](http://www.wpallimport.com/) comes in handy if you are looking to import data into WordPress from another source that is in either an XML or CSV file, which are two formats not routinely accepted by WordPress.  There is also a pro or premium version of the plugin available for purchase that extends the functionality to allow you to import data into custom post types as well as custom fields.  The pro version also allows you to import images from a URL and have them saved in the media library.  Another helpful feature is the ability to set up recurring imports that will periodically check a file for changes or updates and then modify the corresponding post as needed.
+
+
+## Community Plugins
+
+You can build a full-blown social network with WordPress and a few free plugins. Social networks are great to bring a niche community together. If you have an active social network, you will have lots of organic content being indexed by search engines. If you think you get a lot of comments and interaction on your existing WordPress website, try turning it into a social network to really get the conversions flowing.
+
+### BuddyPress
+
+[BuddyPress](http://buddypress.org) is social networking in a box. You can start up a social network with most of the same features as Facebook in a matter of minutes.
+
+Since version 1.7, BuddyPress has been theme agnostic, meaning you can turn it on and it will work with any theme—well, most themes—if coded properly. Prior to version 1.7 , you needed to use a BuddyPress theme in order to properly use the plugin. This was good for people wanting to build a social network from scratch because they could use the default theme that comes with BuddyPress, purchase a nice premium BuddyPress child theme, or plan to build their own BuddyPress child theme. It was kind of limiting to people that already had a WordPress website because they couldn’t just turn on BuddyPress and have it work with their existing theme. In most cases, people with existing websites that wanted to turn on BuddyPress needed to do some customization, which is OK for someone who knows CSS, PHP, and how WordPress works. But noncoders would have to hire someone to turn their existing theme (which they may have already paid for) into a BuddyPress child or compatible theme. With newer version of BuddyPress, it just works!

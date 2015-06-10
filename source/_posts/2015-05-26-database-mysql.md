@@ -14,6 +14,8 @@ tags: [database, mysql]
 
 This command tells MySQL to log you in as user _root_, without a password. You will now be logged into MySQL and can start entering commands. 
 
+<!-- more -->
+
 If you prefer, you can place your password immediately following the -p (without any spaces) to avoid having to enter it when prompted.
 
     SHOW databases;

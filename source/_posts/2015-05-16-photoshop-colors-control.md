@@ -156,6 +156,30 @@ See more [<#07_色相/饱和度>Photoshop](http://www.99ut.com/text/photoshop/ba
 
 将图像中的的色彩转换为反转色，白色转为黑色，红色转为青色，蓝色转为黄色等。效果类似于普通彩色胶卷冲印后的底片效果。
 
+### 照片滤镜
+
+相当于传统摄影中使用的有色滤镜，可改变图像的色调。效果等同于色彩平衡或曲线调整的效果，但其设定更符合摄影师等专业人士的使用习惯。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_g01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g02.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g03.jpg)
+
+### 阈值
+
+将图像转化为黑白2色图像(位图)，可以指定为0至255亮度中任意一级。使用时应反复移动色阶滑杆观察效果。一般设置在像素分布最多的亮度级上可以保留最丰富的图像细节。其效果可用来制作漫画或版刻画。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_g01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g04.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g05.jpg)
+
+### 色调分离
+
+大量合并亮度，最小数值为2时合并所有亮度到阴影和高光两部分，数值为255时相当于没有效果。此操作可以在保持图像轮廓的前提下，有效地减少图像中的色彩数量。使用时开启RGB直方图调板即可看见合并后的色阶效果。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_g01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g06.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g07.jpg)
+
+### 色调均化
+
+将图像中最亮的部分提升为白色，最暗部分降低为黑色。这两点与我们在以前就接触过。但不同的是，这个命令会按照灰度重新分布亮度。使得图像看上去更加鲜明。这个命令也是一个很好的调整数码照片的工具。因为是以原来的像素为准，因此它无法纠正色偏。
+
+![](http://www.99ut.com/library/turlib/serieslib/07/07_g01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g08.jpg)
+
 ## 色彩范围选取
 
 【选择>色彩范围】是通过灰度图来表达选择有效范围的色彩范围命令。
@@ -199,36 +223,6 @@ See more [<#07_色相/饱和度>Photoshop](http://www.99ut.com/text/photoshop/ba
 - 查找深色与浅色：再勾选“对齐中性中间调”选项，就等同于自动颜色的效果。
 
 下方的剪贴数值即是指定进行亮度合并的高光和阴影的范围，如果设置得过大将会造成图像细节的损失。另外点击阴影、中间调和高光的色块可以改变它们的颜色值，建议不要更改这些颜色和数值。
-
-## 照片滤镜
-
-相当于传统摄影中使用的有色滤镜，可改变图像的色调。效果等同于色彩平衡或曲线调整的效果，但其设定更符合摄影师等专业人士的使用习惯。
-
-![](http://www.99ut.com/library/turlib/serieslib/07/07_g01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g02.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g03.jpg)
-
-## 阈值
-
-将图像转化为黑白2色图像(位图)，可以指定为0至255亮度中任意一级。使用时应反复移动色阶滑杆观察效果。一般设置在像素分布最多的亮度级上可以保留最丰富的图像细节。其效果可用来制作漫画或版刻画。
-
-![](http://www.99ut.com/library/turlib/serieslib/07/07_g01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g04.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g05.jpg)
-
-## 色调分离
-
-大量合并亮度，最小数值为2时合并所有亮度到阴影和高光两部分，数值为255时相当于没有效果。此操作可以在保持图像轮廓的前提下，有效地减少图像中的色彩数量。使用时开启RGB直方图调板即可看见合并后的色阶效果。
-
-![](http://www.99ut.com/library/turlib/serieslib/07/07_g01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g06.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g07.jpg)
-
-## 色调均化
-
-将图像中最亮的部分提升为白色，最暗部分降低为黑色。这两点与我们在以前就接触过。但不同的是，这个命令会按照灰度重新分布亮度。使得图像看上去更加鲜明。这个命令也是一个很好的调整数码照片的工具。因为是以原来的像素为准，因此它无法纠正色偏。
-
-![](http://www.99ut.com/library/turlib/serieslib/07/07_g01.jpg) ![](http://www.99ut.com/library/turlib/serieslib/07/07_g08.jpg)
-
-## 变化
-
-变化命令是一种较为直观的色彩平衡类工具，它使用较为通俗的文字来提供操作指导，因此初学者较为喜欢。点击相应名字的图片即可改变原图像的色调和亮度。越偏向精细则每次改变的幅度越小。事实上在实际使用中很少被用来改变图像色调，更多地被用来判断哪种色调最适合图像。
-
-![](http://www.99ut.com/library/turlib/serieslib/07/07_g09.jpg)
 
 ## 曲线
 

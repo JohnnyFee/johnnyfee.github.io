@@ -582,88 +582,98 @@ add_action( 'init', 'ps_registration_fields' );
 
 Full instructions on how to use PMPro Register Helper and the syntax for defining fields can be found in the plugin’s readme file. Instead of covering that here, let’s go through adding one field to the register and profile pages by hand using the same hooks and filters PMPro Register Helper uses.
 
-1. Add our field to the registration page:
+### Add our field to the registration page
 
-        <?php
-        function sp_register_form(){
-            // get the age value passed into the form
-            if ( ! empty( $_REQUEST['age'] ) )
-                $age = intval( $_REQUEST['age'] );
-            else
-                $age = '';
+```php
+<?php
+function sp_register_form(){
+    // get the age value passed into the form
+    if ( ! empty( $_REQUEST['age'] ) )
+        $age = intval( $_REQUEST['age'] );
+    else
+        $age = '';
 
-            // show input
-            $age = esc_attr( $age );?>
-            <p>
-            <label for="age">Age<br />
-            <input type="text" name="age" id="age" class="input"
-                value="<?php echo $age ?>" />
-            </label>
-            </p>
-            <?php
-        }
-        add_action( 'register_form', 'sp_register_form');
-        ?>
+    // show input
+    $age = esc_attr( $age );?>
+    <p>
+    <label for="age">Age<br />
+    <input type="text" name="age" id="age" class="input"
+        value="<?php echo $age ?>" />
+    </label>
+    </p>
+    <?php
+}
+add_action( 'register_form', 'sp_register_form');
+?>
+```
 
-    We check `if ( ! empty( $_REQUEST['age'] ) )` to avoid a PHP warning when users first visit the registration page and there isn’t any form data in $_REQUEST yet.
+We check `if ( ! empty( $_REQUEST['age'] ) )` to avoid a PHP warning when users first visit the registration page and there isn’t any form data in $_REQUEST yet.
 
-2. Update our user’s age after registering:
+### Update our user’s age after registering
 
-        function sp_register_user( $user_id ){
-            // get the age value passed into the form
-            $age = intval( $_REQUEST['age'] );
+```
+function sp_register_user( $user_id ){
+    // get the age value passed into the form
+    $age = intval( $_REQUEST['age'] );
 
-            // update user meta
-            update_user_meta( $user_id, 'age', $age );
-        }
-        add_action( 'register_user', 'sp_register_user' );
+    // update user meta
+    update_user_meta( $user_id, 'age', $age );
+}
+add_action( 'register_user', 'sp_register_user' );
+```
 
-3. Add the age field to the user profile page. We need to hook into both show_user_profile and edit_user_profile to show our custom field both when users are viewing their own profile and when admins are editing other users’ profiles:
+### Add the age field to the user profile page. 
 
-        <?php
-        function sp_user_profile( $user ){
-            // show input
-            $age = esc_attr( $user->age );?>
-            <table class="form-table">
-            <tbody>
-            <tr>
-                        <th><label for="age">Age</label></th>
-                        <td>
-                        <input type="text" name="age" id="age" class="input"
-                    value="<?php echo $age; ?>"/>
-                        </td>
-                </tr>
-            </tbody>
-            </table>
-            <?php
-        }
-        //user's own profile
-        add_action( 'show_user_profile', 'sp_user_profile' );
-        //admins editing user profiles
-        add_action( 'edit_user_profile', 'sp_user_profile' );
-        ?>
+We need to hook into both show_user_profile and edit_user_profile to show our custom field both when users are viewing their own profile and when admins are editing other users’ profiles:
 
-    Note how the default WordPress registration page HTML uses `<p>` tags to separate fields, while the default profile HTML in the dashboard uses table rows.
+```
+<?php
+function sp_user_profile( $user ){
+    // show input
+    $age = esc_attr( $user->age );?>
+    <table class="form-table">
+    <tbody>
+    <tr>
+                <th><label for="age">Age</label></th>
+                <td>
+                <input type="text" name="age" id="age" class="input"
+            value="<?php echo $age; ?>"/>
+                </td>
+        </tr>
+    </tbody>
+    </table>
+    <?php
+}
+//user's own profile
+add_action( 'show_user_profile', 'sp_user_profile' );
+//admins editing user profiles
+add_action( 'edit_user_profile', 'sp_user_profile' );
+?>
+```
 
-4. Update our field when updating a profile:
+Note how the default WordPress registration page HTML uses `<p>` tags to separate fields, while the default profile HTML in the dashboard uses table rows.
 
-        <?php
-        function sp_profile_update( $user_id ){
-            //make sure the current user can edit this user
-            if ( ! current_user_can( 'edit_user', $user_id ) )
-                return false;
+### Update our field when updating a profile:
 
-            // check if value has been posted
-            if ( isset( $_POST['age'] ) ){
-                // update user meta
-                update_user_meta( $user_id, 'age', intval( $_POST['age'] ) );
-            }
-        }
-        // user's own profile
-        add_action( 'personal_options_update', 'sp_profile_update' );
-        // admins editing
-        add_action( 'edit_user_profile_update', 'sp_profile_update' );
-        ?>
+```php
+<?php
+function sp_profile_update( $user_id ){
+    //make sure the current user can edit this user
+    if ( ! current_user_can( 'edit_user', $user_id ) )
+        return false;
+
+    // check if value has been posted
+    if ( isset( $_POST['age'] ) ){
+        // update user meta
+        update_user_meta( $user_id, 'age', intval( $_POST['age'] ) );
+    }
+}
+// user's own profile
+add_action( 'personal_options_update', 'sp_profile_update' );
+// admins editing
+add_action( 'edit_user_profile_update', 'sp_profile_update' );
+?>
+```
 
 Again, we’re hooking into two separate hooks. One for when users are viewing their own profile, and one for when admins are editing other users’ profiles.
 
@@ -677,7 +687,7 @@ You can create your own admin page, with custom queries, and a report that mimic
 
 To do this, we use the `manage_users_columns` and `manage_users_custom_column` filters. Let’s add our age field to the user’s list:
 
-```
+```php
 // add our column to the table
 function sp_manage_users_columns( $columns ){
     $columns['age'] = 'Age';

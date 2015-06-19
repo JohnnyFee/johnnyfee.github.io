@@ -113,21 +113,20 @@ Test out your site and make sure everything is working as it should.
 
 If you don’t feel comfortable manually making these changes, there are some plugins that can change your table prefix for you:
 
-* `[Change Table Prefix](http://bit.ly/change-tp)`
-* `[Change DB Prefix](http://bit.ly/change-db)`
+* [Change Table Prefix](http://bit.ly/change-tp)
+* [Change DB Prefix](http://bit.ly/change-db)
 
 ### Move wp-config.php
 
-`The WordPress _wp-config.php_ file stores valuable information like your database location, username, and password and your WordPress authentication keys. Since these values are stored in PHP variables and they are not displayed to the browser, it is not likely that anybody could gain access to this data, but it could happen. You can move _wp-config.php_ to one level above your WordPress install, which in most cases should be a nonpublic directory. WordPress will automatically look one level up for _wp-config.php_ if it doesn’t find it in your root directory. For example, move _/username/public_html/wp-config.php_ to _/username/wp-config.php_.`
+The WordPress _wp-config.php_ file stores valuable information like your database location, username, and password and your WordPress authentication keys. Since these values are stored in PHP variables and they are not displayed to the browser, it is not likely that anybody could gain access to this data, but it could happen. You can move _wp-config.php_ to one level above your WordPress install, which in most cases should be a nonpublic directory. WordPress will automatically look one level up for _wp-config.php_ if it doesn’t find it in your root directory. For example, move _/username/public_html/wp-config.php_ to _/username/wp-config.php_.
 
-``You can also store _wp-config.php_ as any filename in any directory location. To do this, make a copy of _wp-config.php_, name the copy whatever you want, and move it to any directory above your root install of WordPress. In your original _wp-config.php_ file, remove all of the code and add an include to the relative path and filename of the copy you made. For example, copy _/username/public_html/wp-config.php_ to _/username/someotherfolder/stuff.php_. Change the code in _wp-config.php_ to
-`include(‘/username/someotherfolder/stuff.php’);```
+You can also store _wp-config.php_ as any filename in any directory location. To do this, make a copy of _wp-config.php_, name the copy whatever you want, and move it to any directory above your root install of WordPress. In your original _wp-config.php_ file, remove all of the code and add an include to the relative path and filename of the copy you made. For example, copy _/username/public_html/wp-config.php_ to _/username/someotherfolder/stuff.php_. Change the code in _wp-config.php_ to `include(‘/username/someotherfolder/stuff.php’);`
 
 ### Hide Login Error Messages
 
-`Normally when trying to login in to your site, WordPress will display a message if you have put in the wrong username or password. Unfortunately this lets hackers know exactly what they are doing wrong or right when attempting to access your site.`
+Normally when trying to login in to your site, WordPress will display a message if you have put in the wrong username or password. Unfortunately this lets hackers know exactly what they are doing wrong or right when attempting to access your site.
 
-`Luckily there is a simple fix for this, which is to add a line of code into your theme _functions.php_ file or in a custom plugin which will hide or alter those messages:`
+Luckily there is a simple fix for this, which is to add a line of code into your theme _functions.php_ file or in a custom plugin which will hide or alter those messages:
 
 ```
 <?php
@@ -143,9 +142,9 @@ password.";'
 
 A lot of bots will scour the Internet in search of WordPress sites to target specifically by the version of WordPress they are running. They are looking for sites with known vulnerabilities they can exploit. By default, WordPress displays the following code within the `<head></head>` of every page:
 
-<meta name="generator" content="WordPress 3.8.1" />
+    <meta name="generator" content="WordPress 3.8.1" />
 
-```You can easily hide the version of WordPress you are using by implementing the following code:```
+You can easily hide the version of WordPress you are using by implementing the following code:
 
 ```
 <?php
@@ -513,7 +512,7 @@ add_action( 'wp_footer', 'schoolpress_footer_create_nonce' );
 
 #### wp_verify_nonce($nonce, $action = -1)
 
-This function is used to verify that the correct nonce was used within the allocated time limit.``` If the correct nonce is passed into this function and everything checks out OK, then the function will return a value that evaluates to `true`.<sup>[</sup>23] If not, it will return `false`. This function is located in _wp-includes/pluggable.php_:
+This function is used to verify that the correct nonce was used within the allocated time limit. If the correct nonce is passed into this function and everything checks out OK, then the function will return a value that evaluates to `true`. If not, it will return `false`. This function is located in _wp-includes/pluggable.php_:
 
 * $nonce—A required string of the nonce value being used to verify.
 * $action—An optional string or int that should be descriptive to what is taking place and should match the action from when the nonce was created.
@@ -556,7 +555,7 @@ add_action( 'init', 'schoolpress_init_check_admin_referer' );
 
 #### wp_nonce_url( $actionurl, $action = -1 )
 
-This function also utilizes the `wp_create_nonce()` function and adds a nonce to any URL.``` If you create any actions based off of a query string, you should always tie a nonce to your URL with this function:
+This function also utilizes the `wp_create_nonce()` function and adds a nonce to any URL. If you create any actions based off of a query string, you should always tie a nonce to your URL with this function:
 
 * $actionurl—A required string of the URL to add a nonce action to.
 * $action—An optional string for the action name. You should always set this.

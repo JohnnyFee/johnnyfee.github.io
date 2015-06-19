@@ -56,33 +56,33 @@ add_action( 'admin_enqueue_scripts', 'sp_admin_enqueue_scripts' );
 ?>
 ```
 
-``Using `wp_enqueue_scripts` and `admin_enqueue_scripts` lets you load different JS files on the frontend and backend of your site. You could add other checks in here to make sure that jQuery is only loaded on certain pages, which could improve load times on those pages that don’t need jQuery loaded. Common methods include checking attributes of the global `$post` or checking `$_REQUEST` values used in the admin like `$_REQUEST['page']` or `$_REQUEST['post_type']`.
+Using `wp_enqueue_scripts` and `admin_enqueue_scripts` lets you load different JS files on the frontend and backend of your site. You could add other checks in here to make sure that jQuery is only loaded on certain pages, which could improve load times on those pages that don’t need jQuery loaded. Common methods include checking attributes of the global `$post` or checking `$_REQUEST` values used in the admin like `$_REQUEST['page']` or `$_REQUEST['post_type']`.
 
-``Remember, the first parameter of the `wp_enqueue_script()` function is a reference label. The second parameter of the _wp_enqueue_script()_ function tells WordPress where the script is located. The `plugins_url()` function is used to figure out the URL relative to the current file `__FILE__`. This works when this code is included in the main plugin file. You would pass `dirname(__FILE__)` as the parameter to this call if the file you are editing is in a subdirectory of the plugin.``
+Remember, the first parameter of the `wp_enqueue_script()` function is a reference label. The second parameter of the _wp_enqueue_script()_ function tells WordPress where the script is located. The `plugins_url()` function is used to figure out the URL relative to the current file `__FILE__`. This works when this code is included in the main plugin file. You would pass `dirname(__FILE__)` as the parameter to this call if the file you are editing is in a subdirectory of the plugin.
 
-``The third parameter of the `wp_enqueue_script()` function allows you to state dependencies for your script. By passing `array('jquery')` for our _frontend.js_ and _admin.js_ scripts, we make sure that jQuery is loaded first.``
+The third parameter of the `wp_enqueue_script()` function allows you to state dependencies for your script. By passing `array('jquery')` for our _frontend.js_ and _admin.js_ scripts, we make sure that jQuery is loaded first.
 
 ### Where to Put Your Custom JavaScript
 
-`Once again we will run into situations where we need to decide where to put a certain bit of code. Should it go into the theme code or the plugin code? Here are the general rules we use when deciding where a particular bit of JavaScript code will go:`
+Once again we will run into situations where we need to decide where to put a certain bit of code. Should it go into the theme code or the plugin code? Here are the general rules we use when deciding where a particular bit of JavaScript code will go:
 
-1.  ``If the code will be only used once and is generally specific to the page it is used on, it is coded directly into that page within a `<script>` tag.``
-2.  `If the JavaScript is used more than once (a function or module) and is related to theme functionality or UI, it is placed in a JS file within the theme (e.g., _/themes/schoolpress/js/schoolpress.js_).`
-3.  `If the JavaScript is used more than once on admin screens of your app, it is placed in an _admin.js_ file inside of your plugin (e.g., _/plugins/schoolpress/js/admin.js_).`
-4.  `If the JavaScript is used more than once on the frontend of your app, but not part of the theme UI, it is placed in a _frontend.js_ file inside of your plugin (e.g., _/plugins/schoolpress/js/frontend.js_).`
-5.  `If splitting some JS code into its own file, to be loaded on specific pages, will result in a needed increase in performance, than that code will be placed in a separate JS file.<sup>[</sup>24]`
+1.  If the code will be only used once and is generally specific to the page it is used on, it is coded directly into that page within a `<script>` tag.
+2.  If the JavaScript is used more than once (a function or module) and is related to theme functionality or UI, it is placed in a JS file within the theme (e.g., _/themes/schoolpress/js/schoolpress.js_).
+3.  If the JavaScript is used more than once on admin screens of your app, it is placed in an _admin.js_ file inside of your plugin (e.g., _/plugins/schoolpress/js/admin.js_).
+4.  If the JavaScript is used more than once on the frontend of your app, but not part of the theme UI, it is placed in a _frontend.js_ file inside of your plugin (e.g., _/plugins/schoolpress/js/frontend.js_).
+5.  If splitting some JS code into its own file, to be loaded on specific pages, will result in a needed increase in performance, than that code will be placed in a separate JS file.<sup>[</sup>24]
 
-`These rules are specific to how we like to develop and are only a suggestion. Some developers will cringe particularly hard at the thought of adding JavaScript code inside of script tags instead of placing all JavaScript inside of _.js_ files. If you like coding this way or perhaps have a dedicated JavaScript programmer on your team, by all means put all of your JavaScript code inside of _.js_ files.`
+These rules are specific to how we like to develop and are only a suggestion. Some developers will cringe particularly hard at the thought of adding JavaScript code inside of script tags instead of placing all JavaScript inside of _.js_ files. If you like coding this way or perhaps have a dedicated JavaScript programmer on your team, by all means put all of your JavaScript code inside of _.js_ files.
 
-`The important thing is that _you_ understand how your JavaScript files and code are organized so that working on your site is intuitive.`
+The important thing is that _you_ understand how your JavaScript files and code are organized so that working on your site is intuitive.
 
 ## AJAX Calls with WordPress and jQuery
 
-`AJAX calls in WordPress will require two components: the JavaScript code on the frontend to kick off the AJAX request and the PHP code in the backend to process the request and return HTML or JSON-encoded data.`
+AJAX calls in WordPress will require two components: the JavaScript code on the frontend to kick off the AJAX request and the PHP code in the backend to process the request and return HTML or JSON-encoded data.
 
-`Say you want to adjust your signup page to automatically check if the username entered has been used already. You could warn the person signing up before he hits the submit button and allow him to change the username he picked, saving a bit of grief.`
+Say you want to adjust your signup page to automatically check if the username entered has been used already. You could warn the person signing up before he hits the submit button and allow him to change the username he picked, saving a bit of grief.
 
-``The first thing we need to do is add a quick JavaScript to the head of our pages to define our `ajaxurl`. This is the URL that all AJAX queries will run through. It looks like this:``
+The first thing we need to do is add a quick JavaScript to the head of our pages to define our `ajaxurl`. This is the URL that all AJAX queries will run through. It looks like this:
 
 ```
 <script type="text/JavaScript">
@@ -90,7 +90,7 @@ var ajaxurl = '/wp-admin/admin-ajax.php';
 </script>
 ```
 
-``In the WordPress dashboard, this script will be embedded by default. But for frontend AJAX, we’ll need to embed it ourselves. Here’s the code to define the `ajaxurl` variable for frontend AJAX:``
+In the WordPress dashboard, this script will be embedded by default. But for frontend AJAX, we’ll need to embed it ourselves. Here’s the code to define the `ajaxurl` variable for frontend AJAX:
 
 ```
 function my_wp_head_ajax_url()
@@ -211,8 +211,8 @@ add_action( 'wp_ajax_nopriv_check_username', 'wp_ajax_check_username' );
 ?>
 ```
 
-* wp_ajax_{action}`—Runs for logged-in users
-* wp_ajax_nopriv_{action}`—Runs for nonusers
+* `wp_ajax_{action}`—Runs for logged-in users
+* `wp_ajax_nopriv_{action}`—Runs for nonusers
 
 On the registration page, users are by definition not logged in, so we need to use the `wp_ajax_nopriv_` hook. But we may also want to use this check on the add new user screen in the admin, so we’ll hook into `wp_ajax_` as well to handle that case.
 
@@ -405,108 +405,6 @@ In our template, the assignment count will be displayed something like this:
 <?php
 ```
 
-n### Initialization
-
-```
-function sp_init_assignments_heartbeat()
-{
-    //Ignore if we're not on an assignment page.
-        if(strpos($_SERVER['REQUEST_URI'], "/assignment/") === false)
-                return;
-
-    //enqueue the Heartbeat API
-    wp_enqueue_script('heartbeat');
-
-    //load our JavaScript in the footer
-    add_action("wp_footer", "sp_wp_footer_assignments_heartbeat");
-}
-add_action('init', 'sp_init_assignments_heartbeat');
-```
-
-Things are pretty similar to our minimal example so far. We’re just making sure we don’t run this code on nonassignment pages by checking for _/assignment/_ in the URI:
-
-### Client-side JavaScript
-
-```s2
-<?php
-function sp_wp_footer_assignments_heartbeat()
-{
-    global $post;   //post for current assignment
-?>
-<script>
-jQuery(document).ready(function() {
-  //heartbeat-send
-  jQuery(document).on('heartbeat-send', function(e, data) {
-        //make sure we have an array for SchoolPress data
-  if(!data['schoolpress'])
-    data['schoolpress'] = new Array();
-
-  //send to server the post_id of this assignment and current count
-  data['schoolpress']['assignment_post_id'] = '<?php echo $post->ID;?>';
-  data['schoolpress']['assignment_count'] = jQuery('#assignment-count').val();
-  });
-
-  //heartbeat-tick
-  jQuery(document).on('heartbeat-tick', function(e, data) {
-        //update assignment count
-  if(data['schoolpress']['assignment_count'])
-        jQuery('#assignment-count').val(data['schoolpress']['assignment_count']);
-  });
-});
-</script>
-<?php
-}
-?>
-```
-
-Notice that we’re storing our data in a `schoolpress` array within the data array. We’ll store all Heartbeat-related data in this array as a kind of namespacing to make sure our variable names don’t conflict with any other plugins that might be using the Heartbeat API.
-
-Each time the heartbeat sends data to the server, we send along the assignment’s post ID and the current count value.
-
-It’s important that you send something to the server through the heartbeat. If there is no data to send, the heartbeat won’t bother hitting the server at all.
-
-### Server-side PHP
-
-```s2
-//processing the message on the server
-function sp_heartbeat_received_assignment_count($response, $data)
-{
-    //check for assignment post id
-        if(!empty($data['schoolpress']['assignment_post_id']))
-        {
-                $assignment = new Assignment(
-                        $data['schoolpress']['assignment_post_id']
-                        );
-                $response['schoolpress']['assignment_count'] = count(
-                        $assignment->submissions
-                        );
-        }
-
-        return $response;
-}
-add_filter('heartbeat_received',
-        'sp_heartbeat_received_assignment_count', 10, 2);
-```
-
-Here we check for the `assignment_post_id` value passed from the client. If found, we load up the assignment and return the count of submissions as `assignment_count`, which our frontend JavaScript will be looking for.
-
-This code could be updated to detect changes in the assignment count (by comparing the number sent from the client to the number found server side) and in those cases pass back a message notifying the teacher to refresh to view the new submissions. Or we could send some data about the new submissions themselves and push them into the list on the page.
-
-Finally, if you want to speed up or slow down the heartbeat, you can override the settings using the following code:
-
-```s2
-function sp_heartbeat_settings($settings = array())
-{
-    $settings['interval'] = 20;  //20 seconds vs. 15 second default
-    return $settings;
-}
-add_filter('heartbeat_settings', 'sp_heartbeat_settings');
-```
-
-Note that at the time of this writing, the API will only let you use a value between 15 and 60 seconds. Anything faster or slower will be set to 15 or 60 seconds, respectively. This limitation is actually a good idea for the Heartbeat API, since at any given time, multiple plugins and processes may be using that same heartbeat. If you need a certain poll to occur faster than once every 15 seconds, you should probably set it up as a separate AJAX call using your own `setInterval` or `setTimeout` calls in JavaScript.
-
-You can think of the Heartbeat API as a more casual way of doing polling between the client and server. If you need something more hardcore (and polling your server every second is pretty hardcore), then you should roll your own heartbeat-like system.
-
 ## WordPress Limitations with Asynchronous Processing
 
 Most WordPress applications execute PHP scripts through an Apache or Nginx server. When optimized, you can serve a lot of small, simultaneous connections on these setups, which is perfect for asynchronous JavaScript applications. However, the servers themselves, and perhaps more importantly, the general overhead of loading WordPress on server-side calls, means that a WordPress service running on Apache or Nginx will never be as fast as a smaller JavaScript service running on something like _node.js_, which was built specifically to handle asynchronous JavaScript calls.
@@ -518,8 +416,6 @@ Does your app have a user base consisting solely of the 30 people inside your co
 Do you plan to have thousands of users, with dozens of simultaneous connections? You’ll need some beefy hardware, but you’ll also probably be fine keeping everything in WordPress.
 
 Do you plan to have millions of users, with tens of thousands of simultaneous connections? If so, you need some top-notch engineers, so hopefully you have the money for them. In any case, you’ll either be pushing WordPress to its limits or using other platforms to serve your realtime interactions.
-
-These kinds of scaling questions are covered further in [Chapter 16](ch16.html "Chapter 16. WordPress Optimization and Scaling").
 
 ## Backbone.js
 

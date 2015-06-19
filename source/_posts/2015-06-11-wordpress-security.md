@@ -116,14 +116,14 @@ If you don’t feel comfortable manually making these changes, there are some pl
 * `[Change Table Prefix](http://bit.ly/change-tp)`
 * `[Change DB Prefix](http://bit.ly/change-db)`
 
-### `Move wp-config.php`
+### Move wp-config.php
 
 `The WordPress _wp-config.php_ file stores valuable information like your database location, username, and password and your WordPress authentication keys. Since these values are stored in PHP variables and they are not displayed to the browser, it is not likely that anybody could gain access to this data, but it could happen. You can move _wp-config.php_ to one level above your WordPress install, which in most cases should be a nonpublic directory. WordPress will automatically look one level up for _wp-config.php_ if it doesn’t find it in your root directory. For example, move _/username/public_html/wp-config.php_ to _/username/wp-config.php_.`
 
 ``You can also store _wp-config.php_ as any filename in any directory location. To do this, make a copy of _wp-config.php_, name the copy whatever you want, and move it to any directory above your root install of WordPress. In your original _wp-config.php_ file, remove all of the code and add an include to the relative path and filename of the copy you made. For example, copy _/username/public_html/wp-config.php_ to _/username/someotherfolder/stuff.php_. Change the code in _wp-config.php_ to
 `include(‘/username/someotherfolder/stuff.php’);```
 
-### `Hide Login Error Messages`
+### Hide Login Error Messages
 
 `Normally when trying to login in to your site, WordPress will display a message if you have put in the wrong username or password. Unfortunately this lets hackers know exactly what they are doing wrong or right when attempting to access your site.`
 
@@ -139,9 +139,9 @@ password.";'
 ?>
 ```
 
-### ```Hide Your WordPress Version```
+### Hide Your WordPress Version
 
-```A lot of bots will scour the Internet in search of WordPress sites to target specifically by the version of WordPress they are running.``` They are looking for sites with known vulnerabilities they can exploit. By default, WordPress displays the following code within the `<head></head>` of every page:
+A lot of bots will scour the Internet in search of WordPress sites to target specifically by the version of WordPress they are running. They are looking for sites with known vulnerabilities they can exploit. By default, WordPress displays the following code within the `<head></head>` of every page:
 
 <meta name="generator" content="WordPress 3.8.1" />
 

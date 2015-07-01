@@ -120,21 +120,21 @@ display_name        | varchar(250) | utf8_general_ci | No   | |
 
 The following functions are found in _/wp-includes/pluggable.php_ and _/wp-includes/user.php_:
 
-```
+```php
 <?php
 // insert user
 $userdata = array(
     'user_login'    => 'brian',
-        'user_pass'     => 'KO03gT7@n*',
-        'user_nicename' => 'Brian',
-        'user_url'      => 'http://webdevstudios.com/',
-        'user_email'    => 'brian@schoolpress.me',
-        'display_name'  => 'Brian',
-        'nickname'      => 'Brian',
-        'first_name'    => 'Brian',
-        'last_name'     => 'Messenlehner',
-        'description'   => 'This is a SchoolPress Administrator account.',
-        'role'          => 'administrator'
+    'user_pass'     => 'KO03gT7@n*',
+    'user_nicename' => 'Brian',
+    'user_url'      => 'http://webdevstudios.com/',
+    'user_email'    => 'brian@schoolpress.me',
+    'display_name'  => 'Brian',
+    'nickname'      => 'Brian',
+    'first_name'    => 'Brian',
+    'last_name'     => 'Messenlehner',
+    'description'   => 'This is a SchoolPress Administrator account.',
+    'role'          => 'administrator'
 );
 wp_insert_user( $userdata );
 
@@ -918,7 +918,7 @@ Deletes comment metadata for a provided comment ID and matching key. You can als
 
 ## wp_links
 
-This table stores any links, URLs, or bookmarks you create.`` Since WordPress version 3.5, the links/blogroll manager UI has been hidden, so if you do a fresh install and don’t see it, don’t freak out.  You can still use the links/blogroll manager if you choose by installing [Andrew Nacin’s](https://twitter.com/nacin) [link manager plugin](http://bit.ly/link-manager). If you are upgrading WordPress from a version prior to 3.5, you will still be able to access the UI. Why was this removed, you might ask? If Andrew pulled it out of core, you can bet he had a good reason for it. 
+This table stores any links, URLs, or bookmarks you create. Since WordPress version 3.5, the links/blogroll manager UI has been hidden, so if you do a fresh install and don’t see it, don’t freak out.  You can still use the links/blogroll manager if you choose by installing [Andrew Nacin’s](https://twitter.com/nacin) [link manager plugin](http://bit.ly/link-manager). If you are upgrading WordPress from a version prior to 3.5, you will still be able to access the UI. Why was this removed, you might ask? If Andrew pulled it out of core, you can bet he had a good reason for it. 
 
 Column  | Type| Collation       | Null | Default    | Extra
 ----- | ------------ | -------- | ---- | ------- | --------------
@@ -958,25 +958,25 @@ Gets the terms of a specific taxonomy or an array of taxonomies:
 * $taxonomies—A required string or array of a taxonomy or list of taxonomies.
 * $args—An optional string or array of arguments. Available arguments are:
 
-    1.  `_orderby_—Default is `name`. Can be `name`, `count`, `term_group`, `slug`, or nothing, which will use `term_id`. Passing a custom value other than these will cause the terms to be ordered on that custom value.`
-    2.  `_order_—`ASC` or `DESC`. The default is `ASC`.`
-    3.  `_hide_empty_—The default value is `true`, which will only return terms that are attached to a post. If set to `false`, you can return all terms regardless, if they are being used by a post or not.`
-    4.  _exclude_—An array or comma-separated or space-delimited string of term IDs to exclude from the query results. If include is being used, exclude will be ignored.
-    5.  _exclude_tree_—An array or comma-separated or space-delimited
+    1.  `orderby` — Default is `name`. Can be `name`, `count`, `term_group`, `slug`, or nothing, which will use `term_id`. Passing a custom value other than these will cause the terms to be ordered on that custom value.`
+    2.  `_order_` — ASC` or `DESC`. The default is `ASC`.`
+    3.  `hide_empty` — The default value is `true`, which will only return terms that are attached to a post. If set to `false`, you can return all terms regardless, if they are being used by a post or not.`
+    4.  `exclude` — An array or comma-separated or space-delimited string of term IDs to exclude from the query results. If include is being used, exclude will be ignored.
+    5.  `exclude_tree` — An array or comma-separated or space-delimited
           string of term IDs to exclude from the query results, including any child terms. If include is being used, _exclude_tree_ will be ignored.
-    6.  _include_—An array or comma-separated or space-delimited string of term IDs to include in the query results.
-    7.  `_number_—The number of terms for the query to return. The default is `all`.`
-    8.  _offset_—The number by which to offset the terms query.
-    9.  `_fields_—You can specify if you want to return term IDs or names. The default is `all`, which returns an array of term objects.`
-    10.  _slug_—A string that will return any terms that have a matching slug.
-    11.  `_hierarchical_—Includes all child terms if they are attached to posts. The default is `true`, so to not return terms hierarchically, set this to `false`.`
-    12.  _search_—A string that will return any terms whose names match the value provided. The search is case-insensitive.
-    13.  _name_like_—A string that will return any terms whose names begin with the value provided. Like the search, this is case-insensitive.
-    14.  `_pad_counts_—If set to `true`, the query results will include the count of each term’s children.`
-    15.  `_get_—If set to `all`, returns terms regardless of ancestry or whether the terms are empty.`
-    16.  _child_of_—When set to a term ID, the query results will contain all descendants of the provided term ID. The default is 0, which returns everything.
-    17.  _parent_—When set to a term ID, the query results will contain the direct children of the provided term ID. The default is an empty string.
-    18.  _cache_domain_—Enables a unique cache key to be produced when this query is stored in object cache.
+    6.  `include` —An array or comma-separated or space-delimited string of term IDs to include in the query results.
+    7.  `number` — The number of terms for the query to return. The default is `all`.`
+    8.  `offset` — The number by which to offset the terms query.
+    9.  `fields` —You can specify if you want to return term IDs or names. The default is `all`, which returns an array of term objects.`
+    10.  `slug` — A string that will return any terms that have a matching slug.
+    11.  `hierarchical` — Includes all child terms if they are attached to posts. The default is `true`, so to not return terms hierarchically, set this to `false`.`
+    12.  `search` — A string that will return any terms whose names match the value provided. The search is case-insensitive.
+    13.  `name_like` — A string that will return any terms whose names begin with the value provided. Like the search, this is case-insensitive.
+    14.  `pad_counts` —If set to `true`, the query results will include the count of each term’s children.`
+    15.  `get` — If set to `all`, returns terms regardless of ancestry or whether the terms are empty.`
+    16.  `child_of` — When set to a term ID, the query results will contain all descendants of the provided term ID. The default is 0, which returns everything.
+    17.  `parent` — When set to a term ID, the query results will contain the direct children of the provided term ID. The default is an empty string.
+    18.  `cache_domain` — Enables a unique cache key to be produced when this query is stored in object cache.
 
 ### get_term( $term, $taxonomy, $output = OBJECT, $filter = _raw_ )
 
@@ -1037,7 +1037,7 @@ The following functions are found in _/wp-includes/taxonomy.php_.
 
 This function returns a list of registered taxonomy objects or a list of taxonomy names:
 
-* $args—An optional array of arguments to query what taxonomy objects get returned. There are a lot, and we will cover all of them in [Chapter 5](ch05.html "Chapter 5. Custom Post Types, Post Metadata, and Taxonomies").
+* $args—An optional array of arguments to query what taxonomy objects get returned.
 * $output—An optional string of either `names` or `objects`. The default is `names`, which will return a list of taxonomy names.
 * $operator—An optional string of either `and` or `or`. The default is `and`, which means that all of the arguments passed in must match. If set to `or`, any of the arguments passed in can match.
 

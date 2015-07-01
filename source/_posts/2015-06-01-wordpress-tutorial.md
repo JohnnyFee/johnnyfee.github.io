@@ -170,8 +170,6 @@ To recap, the more the following statements are true, the more it makes sense to
 
 ### Use Standards When Adding Settings
 
-If and when you do need to add settings to your plugin or theme, be sure to use the tutorials listed earlier in this chapter to make sure you are using the Settings API correctly to add your settings.
-
 Using the Settings API takes a little bit of up-front work, but does let you add and edit settings more easily later on. Also, since you are doing things the WordPress way, other developers will understand how your code works and will be able to hook into it. If a developer wants to make an add-on for your plugin, she will be able to hook into your existing menus and settings sections to add additional settings for her plugins.
 
 Using the Settings API will also ensure that your settings look similar to the other settings through a user’s WordPress dashboard. You don’t want developers to have to learn a new UI just to use your plugin.
@@ -313,12 +311,12 @@ WordPress offers some other functions to insert special kinds of rewrite rules. 
     </dd>
 </dl>
 
-The Codex pages for each function explains things well. Some functions will make more sense for certain uses versus others. [Example 7-3](ch07.html#ex7-3code "Example 7-3. The WP DOC plugin") shows how to use the `add_rewrite_endpoint()` function to detect when _/doc/_ is added to the end of a URL and to force the download of a _.doc_ file. This code makes use of the fact that any HTML document with a _.doc_ extension will be read by Microsoft Word as a _.doc_ file.
+The Codex pages for each function explains things well. Some functions will make more sense for certain uses versus others. The next example shows how to use the `add_rewrite_endpoint()` function to detect when _/doc/_ is added to the end of a URL and to force the download of a _.doc_ file. This code makes use of the fact that any HTML document with a _.doc_ extension will be read by Microsoft Word as a _.doc_ file.
 
 The `add_rewrite_endpoint()` function takes two parameters:
 
-* $name*—Name of the endpoint, for example, `'doc'`.
-* $places*—Specifies which pages to add the endpoint rule to. Uses the `EP_*` constants defined in _wp-includes/rewrite.php_.
+* `$name` —Name of the endpoint, for example, `'doc'`.
+* `$places` —Specifies which pages to add the endpoint rule to. Uses the `EP_*` constants defined in _wp-includes/rewrite.php_.
 
 ```php
 <?php
@@ -532,27 +530,27 @@ To disable the WordPress cron timer, simply add the following to your _wp-config
 
     define('DISABLE_WP_CRON', true);
 
-`````This constant just enables or disables the _check_ for events that are ready to fire. You still add and manage events as we did up above. We just need to manually hit the _wp-cron.php_ file in our WordPress install often enough to fire our scripts when needed.`````
+This constant just enables or disables the _check_ for events that are ready to fire. You still add and manage events as we did up above. We just need to manually hit the _wp-cron.php_ file in our WordPress install often enough to fire our scripts when needed.
 
-``````If all you have are daily scripts, you can add a cron job like this via the `crontab -e` command:``````
+If all you have are daily scripts, you can add a cron job like this via the `crontab -e` command:
 
     0 0 * * * wget -O - -q -t 1 http://yoursite.com/wp-cron.php?doing_wp_cron=1
 
-``````Information on how to use cron can be found at [its Wikipedia entry](http://bit.ly/cronwiki). Information on how to use `wget` can be found at [the `wget` manual](http://bit.ly/gnu-manual).``````
+Information on how to use cron can be found at [its Wikipedia entry](http://bit.ly/cronwiki). Information on how to use `wget` can be found at [the `wget` manual](http://bit.ly/gnu-manual).
 
-``````The `0 0 * * *` part of the preceding entry tells cron to execute this script at 0 minutes on the 0th hour (midnight) every day of the week.``````
+The `0 0 * * *` part of the preceding entry tells cron to execute this script at 0 minutes on the 0th hour (midnight) every day of the week.
 
-``````The `wget -O - -q -t 1 http://yoursite.com/wp-cron.php?doing_wp_cron=1` part uses the `wget` command to load up the _wp-cron.php_ page in your WordPress install. The `-O -` tells `wget` to send output to devnull, and the `-q` enables quiet mode. This will keep cron from adding files to your server or emailing you the outputs of each cron run. The `-t 1` tells cron to try once. This will keep `wget` from hitting your server multiple times if the first try fails. If the call to _wp-cron.php_ is failing, the rest of your website is probably failing too; hopefully you’ve already been notified.``````
+The `wget -O - -q -t 1 http://yoursite.com/wp-cron.php?doing_wp_cron=1` part uses the `wget` command to load up the _wp-cron.php_ page in your WordPress install. The `-O -` tells `wget` to send output to devnull, and the `-q` enables quiet mode. This will keep cron from adding files to your server or emailing you the outputs of each cron run. The `-t 1` tells cron to try once. This will keep `wget` from hitting your server multiple times if the first try fails. If the call to _wp-cron.php_ is failing, the rest of your website is probably failing too; hopefully you’ve already been notified.
 
-``````Be sure to change `yoursite.com` to your actual site URL. And finally, the `?doing_wp_cron=1` on the end of the URL is needed since _wp-cron.php_ will check for that `$_GET` parameter before running.``````
+Be sure to change `yoursite.com` to your actual site URL. And finally, the `?doing_wp_cron=1` on the end of the URL is needed since _wp-cron.php_ will check for that `$_GET` parameter before running.
 
 Make sure that the URL to _wp-cron.php_ is excluded from any caching mechanisms you may have installed on your site.
 
-`````This one cron job will fire every day, and any daily cron jobs you scheduled inside of WordPress will fire daily. If you need your crons to run more often, you can change the cron entry to run every hour or every few minutes. Note that a call to _wp-cron.php_ is basically a hit to your website. A check every minute is effectively the same as an additional 1,440 users hitting your site. So schedule your cron jobs conservatively.`````
+This one cron job will fire every day, and any daily cron jobs you scheduled inside of WordPress will fire daily. If you need your crons to run more often, you can change the cron entry to run every hour or every few minutes. Note that a call to _wp-cron.php_ is basically a hit to your website. A check every minute is effectively the same as an additional 1,440 users hitting your site. So schedule your cron jobs conservatively.
 
-### `````Using Server Crons Only`````
+### Using Server Crons Only
 
-`````If you aren’t distributing your code or don’t mind telling your users that they have to set up server-side cron jobs, you don’t need to schedule your cron events in WordPress at all. You can just schedule a server-side cron job that calls a special URL to kick off your callback function. This is especially useful if you need to have more control over what times of day your crons run or otherwise just feel more comfortable managing your cron jobs in Unix instead of WordPress.`````
+If you aren’t distributing your code or don’t mind telling your users that they have to set up server-side cron jobs, you don’t need to schedule your cron events in WordPress at all. You can just schedule a server-side cron job that calls a special URL to kick off your callback function. This is especially useful if you need to have more control over what times of day your crons run or otherwise just feel more comfortable managing your cron jobs in Unix instead of WordPress.
 
 The information on scheduling server-side cron jobs in this section can be used to replace WP-Cron for recurring events. Single events set using `wp_schedule_single_event()` will need to be handled using WP-Cron still or some other mechanism.
 
@@ -579,32 +577,32 @@ Again, make sure that the URL to `?sp_cron_monday=1` is excluded from any cachin
 
 ## WP Mail
 
-``````The `wp_mail()` function is a replacement for PHP’s built-in `mail()` function. It looks like this:``````
+The `wp_mail()` function is a replacement for PHP’s built-in `mail()` function. It looks like this:
 
-```````wp_mail($to, $subject, $message, $headers, $attachments)```````
+    wp_mail($to, $subject, $message, $headers, $attachments)
 
-`````and its attributes are:`````
+and its attributes are:
 
-* `````$to—A single email address, comma-separated list of email addresses, or array of email addresses the email will be sent to (using the “To:” field).`````
-* `````$subject—The subject of the email.`````
-* `````$message—The body of the email. By default, the email is sent as a plain-text message and should not include HTML. However, if you change the content type (see the following example), you should include HTML in your message.`````
-* `````$headers—Optional array of mail headers to send with the message. This can be used to add CCs, BCCs, and other advanced mail headers.`````
-* `````$attachments—A single filename or array of filenames to be attached to the outgoing email.`````
+* $to—A single email address, comma-separated list of email addresses, or array of email addresses the email will be sent to (using the “To:” field).
+* $subject—The subject of the email.
+* $message—The body of the email. By default, the email is sent as a plain-text message and should not include HTML. However, if you change the content type (see the following example), you should include HTML in your message.
+* $headers—Optional array of mail headers to send with the message. This can be used to add CCs, BCCs, and other advanced mail headers.
+* $attachments—A single filename or array of filenames to be attached to the outgoing email.
 
-``````There are two major improvements `wp_mail()` makes over `mail()`.``````
+There are two major improvements `wp_mail()` makes over `mail()`.
 
-1.  ``````The `wp_mail()` function is hookable. The `wp_mail` filter will pass an array of all of the parameters passed into the `wp_mail()` function for you to filter. You can also filter the sending address using the `wp_mail_from` and `wp_mail_from_name` filters.``````
-2.  ``````The `wp_mail()` function can be passed a single filename or array of filenames in the `$attachments` parameters, which will be attached to the outgoing email. Attaching files to emails is very complicated, but `wp_mail()` makes it easy by wrapping around the PHPMailer class, which itself wraps around the default PHP `mail()` function.``````
+1.  The `wp_mail()` function is hookable. The `wp_mail` filter will pass an array of all of the parameters passed into the `wp_mail()` function for you to filter. You can also filter the sending address using the `wp_mail_from` and `wp_mail_from_name` filters.
+2.  The `wp_mail()` function can be passed a single filename or array of filenames in the `$attachments` parameters, which will be attached to the outgoing email. Attaching files to emails is very complicated, but `wp_mail()` makes it easy by wrapping around the PHPMailer class, which itself wraps around the default PHP `mail()` function.
 
-### `````Sending Nicer Emails with WordPress`````
+### Sending Nicer Emails with WordPress
 
-``````By default, emails sent through the `wp_mail()` function are sent from the admin email address set on the General Settings page of the admin dashboard, with “WordPress” used as the name. This is not ideal. You can change these values using the `wp_mail_from` and `wp_mail_from_name` filters.``````
+By default, emails sent through the `wp_mail()` function are sent from the admin email address set on the General Settings page of the admin dashboard, with “WordPress” used as the name. This is not ideal. You can change these values using the `wp_mail_from` and `wp_mail_from_name` filters.
 
-``````Also by default, emails are sent using plain text. You can use the `wp_mail_content_type` filter to send your emails using HTML.``````
+Also by default, emails are sent using plain text. You can use the `wp_mail_content_type` filter to send your emails using HTML.
 
-``````Finally, it is nice to add a styled header and footer to all of your outgoing emails. This can be done by filtering the email message using the `wp_email` filter.``````
+Finally, it is nice to add a styled header and footer to all of your outgoing emails. This can be done by filtering the email message using the `wp_email` filter.
 
-`````The following code combines these techniques to pretty up the emails being sent by your WordPress app:`````
+The following code combines these techniques to pretty up the emails being sent by your WordPress app:
 
 ```
 //Update from email and name
@@ -659,9 +657,9 @@ Sending emails from your server can present interesting network problems. Runnin
 
 ## File Header API
 
-``````The comment block at the top of the main theme and plugin files are often referred to as headers. The File Header API consists of three functions, `get_plugin_data()`, `wp_get_theme()`, and `get_file_data()`, which allow you to parse these comment blocks.``````
+The comment block at the top of the main theme and plugin files are often referred to as headers. The File Header API consists of three functions, `get_plugin_data()`, `wp_get_theme()`, and `get_file_data()`, which allow you to parse these comment blocks.
 
-`````As a reminder, here is what a plugin’s file header may look like:`````
+As a reminder, here is what a plugin’s file header may look like:
 
 ```
 /*
@@ -674,17 +672,17 @@ Author URI: http://www.strangerstudios.com
 */
 ```
 
-``````You can pull this data into an array by calling the `get_plugin_data()` function:``````
+You can pull this data into an array by calling the `get_plugin_data()` function:
 
-```````get_plugin_data($plugin_file, $markup = true, $translate = true)```````
+    get_plugin_data($plugin_file, $markup = true, $translate = true)
 
-`````Its attributes are:`````
+Its attributes are:
 
-* `````$plugin_file—The absolute path to the main plugin file where the header will be parsed.`````
-* ``````$markup—A flag, which if set to `true`, will apply HTML markup to some of the header values. For example, the plugin URI will be turned into a link.``````
-* ``````$translate—A flag, which if set to `true`, will translate the header values using the current locale and text domain.``````
+* $plugin_file—The absolute path to the main plugin file where the header will be parsed.
+* $markup—A flag, which if set to `true`, will apply HTML markup to some of the header values. For example, the plugin URI will be turned into a link.
+* $translate—A flag, which if set to `true`, will translate the header values using the current locale and text domain.
 
-``````The following code loops through the plugins directory and will show data for _most_ of the plugins there. It actually takes quite a bit of logic to find all plugins in all formats. For that you can use the `get_plugins()` function, which will return an array of all plugins or take a look at the code for that function found in _wp-admin/includes/plugin.php_. More information on `get_plugins()` can be found in the [WordPress Codex](http://bit.ly/funct-ref):``````
+The following code loops through the plugins directory and will show data for _most_ of the plugins there. It actually takes quite a bit of logic to find all plugins in all formats. For that you can use the `get_plugins()` function, which will return an array of all plugins or take a look at the code for that function found in _wp-admin/includes/plugin.php_. More information on `get_plugins()` can be found in the [WordPress Codex](http://bit.ly/funct-ref):
 
 ```
 //must include this file
@@ -713,16 +711,16 @@ echo "</pre>";
 chdir($cwd);
 ```
 
-``````Similarly, you can use `wp_get_theme()` to get information out of a theme’s file header:``````
+Similarly, you can use `wp_get_theme()` to get information out of a theme’s file header:
 
-```````wp_get_theme($stylesheet, $theme_root)```````
+wp_get_theme($stylesheet, $theme_root)
 
-`````Its attributes are:`````
+Its attributes are:
 
-* `````$stylesheet—The name of the directory for the theme. If not set, this parameter will be the current theme’s directory.`````
-* ``````$theme_root—The absolute path to the theme’s root folder. If not set, the value returned by `get_raw_theme_root()` is used.``````
+* $stylesheet—The name of the directory for the theme. If not set, this parameter will be the current theme’s directory.
+* $theme_root—The absolute path to the theme’s root folder. If not set, the value returned by `get_raw_theme_root()` is used.
 
-``````The following code loops through the themes directory and will show data for _most_ of the themes there. It actually takes quite a bit of logic to find all themes. For that you can use the `wp_get_themes()` function, which will return an array of all `WP_Theme` objects or take a look at the code for that function found in _wp-includes/theme.php_. More information on `wp_get_themes()` can be found in the [WordPress Codex](http://bit.ly/wp-get-theme):``````
+The following code loops through the themes directory and will show data for _most_ of the themes there. It actually takes quite a bit of logic to find all themes. For that you can use the `wp_get_themes()` function, which will return an array of all `WP_Theme` objects or take a look at the code for that function found in _wp-includes/theme.php_. More information on `wp_get_themes()` can be found in the [WordPress Codex](http://bit.ly/wp-get-theme):
 
 ```
 //remember current directory
@@ -747,15 +745,15 @@ echo "</pre>";
 chdir($cwd);
 ```
 
-### `````Adding File Headers to Your Own Files`````
+### Adding File Headers to Your Own Files
 
-``````Both the `get_plugin_info()` and `wp_get_theme()` functions make use of the `get_file_data()` function. You can access the `get_file_data()` function directly to pull file headers out any file. This can help you to create your own drop-ins or sub-plugins (often referred to as modules or add-ons) for your plugins.``````
+Both the `get_plugin_info()` and `wp_get_theme()` functions make use of the `get_file_data()` function. You can access the `get_file_data()` function directly to pull file headers out any file. This can help you to create your own drop-ins or sub-plugins (often referred to as modules or add-ons) for your plugins.
 
-```````get_file_data($file, $default_headers, $context = "")` has the following attributes:``````
+`get_file_data($file, $default_headers, $context = "")` has the following attributes:
 
-* `````$file—The full path and filename of the file to pull data from.`````
-* `````$default_headers—An array of the header fields to look for. The keys of the array should be the header names, and the values of the array should be regex expressions for parsing the label that comes before the “:” in the comment. You can usually just enter the header name as the regex as well.`````
-* ``````$context—A label to differentiate between different kinds of headers. This parameter determines which `extra_{context}_headers` filter is applied to the default headers passed in:``````
+* $file—The full path and filename of the file to pull data from.
+* $default_headers—An array of the header fields to look for. The keys of the array should be the header names, and the values of the array should be regex expressions for parsing the label that comes before the “:” in the comment. You can usually just enter the header name as the regex as well.
+* $context—A label to differentiate between different kinds of headers. This parameter determines which `extra_{context}_headers` filter is applied to the default headers passed in:
 
 ```
 //set headers for our files
@@ -789,7 +787,7 @@ chdir($cwd);
 
 ### Adding New Headers to Plugins and Themes
 
-```
+```php
 <?php
 /*
 Plugin Name: Stop Plugin Updates
@@ -843,6 +841,8 @@ add_action(
 ```
 
 It adds an `Allow Updates` header to plugins. If this header is found and the value is `no` or `false`, then that plugin will not be flagged to update.
+
 ## Tutorial
 
+- [zh-cn:WordPress 官方中文文档 « WordPress Codex](http://codex.wordpress.org/zh-cn:Main_Page)
 - [Smashing Magazine – For Professional Web Designers and Developers](http://www.smashingmagazine.com/)

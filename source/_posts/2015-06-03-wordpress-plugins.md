@@ -60,8 +60,6 @@ Some plugins only do one or two things, and one _.php_ file is all you need to g
 
 Here is our proposed file structure for an app’s main plugin, using the SchoolPress plugin as an example. Not all of these folders and files may be necessary. We add them to a plugin as needed:
 
-Here is our proposed file structure for an app’s main plugin, using the SchoolPress plugin as an example. Not all of these folders and files may be necessary. We add them to a plugin as needed:
-
 * _/plugins/schoolpress/adminpages/_
 * _/plugins/schoolpress/classes/_
 * _/plugins/schoolpress/css/_
@@ -265,7 +263,7 @@ Most correctly built WordPress themes usually have the following files that cont
 
 If you open up any of these files, will contain code that may look something like this:
 
-```
+```php
 <?php
 if ( have_posts() ) {
         while ( have_posts() ) {
@@ -304,7 +302,7 @@ global $global_variable_name;
 
 Some global variables are only made available to you depending on where you are in WordPress. Below is a short list of some of the more popular global variables:
 
-* $post—An object that contains all of the post data from the `wp_posts` table for the current post that you are on within the WordPress loop.`
+* $post—An object that contains all of the post data from the `wp_posts` table for the current post that you are on within the WordPress loop.
 * $authordata—An object with all of the author data of the current post that you are on within the WordPress loop.
 
 ### Action Hooks

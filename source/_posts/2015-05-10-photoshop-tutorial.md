@@ -23,6 +23,13 @@ See [<#15_常见的协作流程>文字教程](http://www.99ut.com/text/photoshop
 
 See [<#15_关于网页设计和网站策划>文字教程](http://www.99ut.com/text/photoshop/basic/15/pss15_03.html)
 
+## FAQ
+
+### Remove WaterMark
+
+- [How To Add (and Remove!) Watermarks, Text, or Logos To And From Images](http://www.howtogeek.com/102128/how-to-add-and-remove-watermarks-text-or-logos-to-and-from-images/)
+- [How to remove watermark from an image or picture](http://www.instantfundas.com/2010/04/how-to-remove-watermark-from-image-or.html)
+
 ## Demo
 
 - [16个创意Photoshop图像处理教程](http://www.shejidaren.com/photoshop-image-processing-tutorials.html)

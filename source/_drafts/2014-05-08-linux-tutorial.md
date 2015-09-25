@@ -1,6 +1,6 @@
 layout: post
 title: "Linux Tutorial"
-category: Linux
+category: OS
 tags: [linux, tutorial]
 ---
 

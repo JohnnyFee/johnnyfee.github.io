@@ -1,7 +1,7 @@
 layout: post
 title: "Less Sass"
 description: ""
-category: Css
+category: CSS
 tags: [css]
 ---
 ##比较

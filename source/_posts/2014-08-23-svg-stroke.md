@@ -1,6 +1,6 @@
 layout: post
 title: "SVG Stroke"
-category: SVG
+category: CSS
 tags: [css, svg]
 ---
 

@@ -1,6 +1,6 @@
 layout: post
 title: "Vertical Centering With CSS"
-category: Css
+category: CSS
 tags: [css]
 ---
 

@@ -1,7 +1,7 @@
 layout: post
 title: "Windows Hosts 文件"
 description: ""
-category: Windows
+category: Tool
 tags: [windows, hosts]
 ---
 

@@ -11,6 +11,8 @@ There are many different plugins that will allow you to accept payments on your 
 
 WordPress ecommerce plugins generally fall into two main categories: shopping cart plugins and membership plugins. We’ll also cover a couple of plugins that don’t fall inside these categories exactly.
 
+<!-- more -->
+
 All plugins in this section have these features in common:
 
 * Integration with multiple payment gateways

@@ -1,6 +1,6 @@
 layout: post
 title: "Linux Common Command"
-category: Linux
+category: OS
 tags: [linux, tutorial]
 ---
 

@@ -11,6 +11,8 @@ WordPress comes installed with the latest version of jQuery, which is used in th
 
 The jQuery JS file is located at _/wp-includes/lib/js/jquery.js_. Typically you would add a link like this to the `<head>` tag of your website to load jQuery:
 
+<!-- more -->
+
     <script lang="JavaScript" src="/wp-includes/lib/js/jquery.js" />
 
 This will work if added to your theme’s _header.php_ or through the `wp_head` hook; however, the proper way to include a JavaScript file in your WordPress site is to use the `wp_enqueue_script()` function. You can add the line `wp_enqueue_script('jquery');` to an init function called by the inside of your main plugin file, like so:

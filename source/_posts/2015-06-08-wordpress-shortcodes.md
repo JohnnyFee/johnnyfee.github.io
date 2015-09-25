@@ -9,6 +9,8 @@ See [WordPress Shortcodes: A Complete Guide](http://www.smashingmagazine.com/201
 
 WordPress shortcodes were introduced in version 2.5 and since then have proved to be one of the most useful features. The average user acting as editor has the ability to publish dynamic content using macros, without the need for programming skills.
 
+<!-- more -->
+
 When a shortcode is inserted in a WordPress post or page, it is replaced with some other content. In other words, we instruct WordPress to find the macro that is in square brackets (`[]`) and replace it with the appropriate dynamic content, which is produced by a PHP function.
 
 [![](http://media.mediatemple.netdna-cdn.com/wp-content/uploads/2012/04/shortcodes.jpg "Shortcodes")](http://media.mediatemple.netdna-cdn.com/wp-content/uploads/2012/04/shortcodes.jpg)<sup class="po" id="note-1">1</sup>

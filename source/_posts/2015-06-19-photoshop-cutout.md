@@ -14,6 +14,8 @@ tags: [ps]
 
 ![](http://www.99ut.com/library/turlib/serieslib/08/08_c01.jpg)
 
+<!-- more -->
+
 图像是由3个通道组成的，分别为 RGB 通道。
 
 ![](http://www.99ut.com/library/turlib/serieslib/08/08_c02.jpg) ![](http://www.99ut.com/library/turlib/serieslib/08/08_c03.jpg) ![](http://www.99ut.com/library/turlib/serieslib/08/08_c04.jpg)

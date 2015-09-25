@@ -1,6 +1,6 @@
 layout: post
 title: "SVG Tutorial"
-category: Css
+category: CSS
 tags: [css, svg]
 ---
 

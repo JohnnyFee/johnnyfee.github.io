@@ -9,6 +9,8 @@ Dashboard widgets are the boxes that show up on the homepage of your WordPress a
 
 By default, WordPress includes a few different dashboard widgets. By adding and removing widgets from the dashboard using the Dashboard Widgets API, you can make your WordPress app more useful by placing the information and tools most required by your app right there on the dashboard homepage. It’s a nice touch that should be done by all WordPress apps with users who will be accessing the WordPress admin.
 
+<!-- more -->
+
 ![](http://johnnyimages.qiniudn.com/wordpress-dashboard.png)
 
 ### Removing Dashboard Widgets

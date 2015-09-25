@@ -11,6 +11,8 @@ In this section, we’ll go over how to instantiate a WordPress user object in c
 
 The workhorse for managing WordPress users in code is the `WP_User` class. Just like anything else in WordPress and PHP, there are a few different ways to get a WP_User object to work with. Here are some of the most popular methods:
 
+<!-- more -->
+
 ```
 // get the WP_User object WordPress creates for the currently logged-in user
 global $current_user;

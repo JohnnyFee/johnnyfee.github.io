@@ -9,6 +9,8 @@ We mentioned GitHub more than a few times, but it is a great place to find funct
 
 Depending on what your requirements are, you can interact with various libraries and APIs in many different ways. You can cache data from an API in a transient. You can create posts and post metadata. You can create users and user meta. You can sideload post attachments. You can push post data to a web service. These are just a few examples; the sky’s the limit!
 
+<!-- more -->
+
 We are going to walk through some popular libraries and APIs that can be easily integrated into WordPress and talk about some use cases.
 
 ## Imagick

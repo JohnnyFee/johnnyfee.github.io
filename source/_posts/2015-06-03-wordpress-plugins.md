@@ -9,6 +9,8 @@ There are over 26,000 plugins available that can be accessed through the officia
 
 There are a couple of plugins that come standard with any new WordPress install: Hello Dolly and Akismet. 
 
+<!-- more -->
+
 - The Hello Dolly plugin adds a random lyric from the song “Hello Dolly” by Louis Armstrong to the top of your dashboard on each page load. It’s not useful, but is a good way to see how to structure your own plugins. 
 - The Akismet plugin integrates with Akismet.com to auotmatically filter out spam comments from your blog. While Hello Dolly is useless outside of its educational value, Akismet is downright necessary on any site with commenting turned on. You always have the ability to deactivate these plugins or delete them altogether if you do not see any use for them on your site.
 

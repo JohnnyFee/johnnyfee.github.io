@@ -1,7 +1,7 @@
 layout: post
 title: "MFC ActiveX"
 description: ""
-category: MFC
+category: C++
 tags: [activex, c++]
 ---
 

@@ -1,7 +1,7 @@
 layout: post
 title: "Android NDK Quick Start"
 description: ""
-category: Jni
+category: Android
 tags: [android, ndk, jni]
 ---
 **以下配置均在Windows8 x64系统下配置。**

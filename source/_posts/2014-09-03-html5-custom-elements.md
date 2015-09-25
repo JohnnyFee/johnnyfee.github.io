@@ -1,6 +1,6 @@
 layout: post
 title: "Custom Elements"
-category: HTML
+category: HTML5
 tags: [web, component]
 ---
 

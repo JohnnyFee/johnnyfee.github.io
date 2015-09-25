@@ -1,6 +1,6 @@
 layout: post
 title: "浏览器的工作原理：新式网络浏览器幕后揭秘"
-category: Browser
+category: HTML5
 tags: [browser,kernal]
 ---
 

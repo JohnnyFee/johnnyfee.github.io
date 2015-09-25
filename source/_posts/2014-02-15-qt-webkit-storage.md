@@ -1,6 +1,6 @@
 layout: post
 title: "Html5 Storage"
-category: Html5
+category: HTML5
 tags: [html5, storage]
 ---
 

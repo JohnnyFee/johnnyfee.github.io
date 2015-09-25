@@ -1,10 +1,10 @@
 layout: post
 title: "数据格式转化"
 description: ""
-category: Financial
+category: Tool
 tags: [data, format]
 ---
-###十进制字符串"1942"
+### 十进制字符串"1942"
 
 - 用BCD表示
 

@@ -13,6 +13,8 @@ These are the simplest but most important security tips to consider. Pay attenti
 
 The first and most important security tip is to always make sure you upgrade to the most recent version of WordPress as soon as a new version becomes available and also always update any plugins/themes that you have installed on your site. Many of the updates that are pushed out involve security updates; therefore, it is always important to upgrade your software in order to stay up to date and safe.
 
+<!-- more -->
+
 ### Don’t Use the Username “admin”
 
 Another important item to take care of is making sure not to use “admin” as one of your user accounts. Many bots will automatically try to login to your site with the username “admin.” Knowing that most people don’t change this account is half the battle; all they really need to focus on is guessing the password. When installing WordPress, the default username will be “admin” unless you specifically change it, and you SHOULD specifically change it! If you are already using WordPress and are using the username “admin,” you should create a new user account with an administrator role, login with that new user, and delete the default admin account. _Make sure to change any posts or pages created by your admin account to this new account._

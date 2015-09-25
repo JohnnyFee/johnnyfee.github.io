@@ -7,6 +7,8 @@ tags: [wordpress, tutorial]
 
 WordPress runs on top of a MySQL database and creates its own tables to store data and content. Below is the database schema created by a default install of WordPress. We have also included some basic information on built-in WordPress functions for interacting with these tables. If you can grasp the database (DB) schema and get comfortable with the list functions in this chapter, you can push and pull any data into and out of WordPress.
 
+<!-- more -->
+
 ## wp_options
 
 The `wp_options` table stores any sitewide data for you. This table stores the name, description, and admin email that you entered when running a typical install. This table will also come prepopulated with a few records that store the various default settings within WordPress. The following table shows the database structure for the `wp_options` table.

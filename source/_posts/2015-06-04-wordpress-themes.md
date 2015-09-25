@@ -11,6 +11,8 @@ At some level, all source files in your themes and plugins are just .php files l
 
 Where you decide to put some code will depend on whether you are primarily building a full app or an individual plugin or theme.
 
+<!-- more -->
+
 ## The Template Hierarchy
 
 When a user visits your site and navigates to a page, WordPress uses a system called the _Template Hierarchy_ to figure out which file in the active theme should be used to render the page. For example, if the user browses to a single post page, WordPress will look for _single-post.php_. If that’s not found, it will look for _single.php_. If that’s not found it will look for _index.php_.

@@ -1,6 +1,6 @@
 layout: post
 title: "DRY CSS: Don’t Repeat Your CSS"
-category: Css
+category: CSS
 tags: [css, layout]
 ---
 

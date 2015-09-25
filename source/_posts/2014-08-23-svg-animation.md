@@ -1,6 +1,6 @@
 layout: post
 title: "SVG Animation"
-category: SVG
+category: CSS
 tags: [animation, svg]
 ---
 

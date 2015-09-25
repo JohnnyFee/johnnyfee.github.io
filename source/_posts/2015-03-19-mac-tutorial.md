@@ -1,7 +1,7 @@
 layout: post
 title: "Mac Basic Tutorial"
 description: ""
-category: Mac
+category: OS
 tags: [macbook, tutorial]
 ---
 

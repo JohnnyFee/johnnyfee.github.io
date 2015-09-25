@@ -1,6 +1,6 @@
 layout: post
-title: "Css Background"
-category: Css
+title: "CSS Background"
+category: CSS
 tags: [css]
 ---
 

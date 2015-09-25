@@ -11,6 +11,8 @@ Custom post types (CPTs) are what really make WordPress a content management sys
 
 With a default installation of WordPress, you have several post types already being used. The post types you may be most familiar with are pages and posts, but there are a few more. These post type values are all stored in the database `wp_posts` table, and they all use the `post_type` field to separate them.
 
+<!-- more -->
+
 ### Page
 
 WordPress pages are what you use for your static content pages like home, about, contact info, bio, or any custom page you want. Pages can be indefinitely nested under each other in any hierarchical structure. Pages can also be sorted by `menu_order` value.

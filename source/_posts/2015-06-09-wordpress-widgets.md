@@ -7,6 +7,8 @@ tags: [wordpress, tutorial]
 
 Widgets allow you to place contained pieces of code and content in various widget areas throughout your WordPress site. The most typical use cases are to add widgets to a sidebar or footer area. You could always hardcode these sections on a website, but using widgets allows your nondevelopers to drag and drop widgets from one area to another or to tweak their settings through the widgets page in the admin dashboard.
 
+<!-- more -->
+
 ![](http://johnnyimages.qiniudn.com/wordpress-widget.png)
 
 Plenty of plugins also include widgets for showing various content. We won’t go into the use and styling of widgets here, since their use is covered well in the [WordPress Codex page on widgets](http://bit.ly/widgets-codex), but we will cover how to add widgets and widget areas to your plugins and themes.

@@ -1,6 +1,6 @@
 layout: post
 title: "SVG Viewport and View Box"
-category: SVG
+category: CSS
 tags: [css, svg]
 ---
 

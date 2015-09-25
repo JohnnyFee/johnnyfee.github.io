@@ -1,6 +1,6 @@
 layout: post
 title: "SASS用法指南"
-category: Css
+category: CSS
 tags: [css, layout]
 ---
 

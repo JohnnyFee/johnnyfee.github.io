@@ -1,7 +1,7 @@
 layout: post
 title: "基于GitHub搭建jekyll博客"
 description: ""
-category: Blog
+category: Tool
 tags: [github, blog]
 ---
 

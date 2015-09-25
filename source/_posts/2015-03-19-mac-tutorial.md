@@ -202,6 +202,7 @@ Command+Q: 退出程序
 Command + Option + H: 隐藏所有其他软件的的窗口
 Command + Control + F: 进入全屏模式
 command+~: 可切换同一个程序的不同窗口。 
+Command + F3: 显示桌面。
 ```
 
 __最大化当前窗口__

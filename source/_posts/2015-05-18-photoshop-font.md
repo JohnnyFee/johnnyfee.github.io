@@ -136,3 +136,21 @@ OpenType的特殊特征为：标准连字、上下文替代字、自由连字、
 ## 路径文字排版
 
 See [<#10_路径文字排版>Photoshop](http://www.99ut.com/text/photoshop/basic/10/pss10_04.html)
+
+## FAQ
+
+### How to add (C) copyright, (R) registered, (TM)
+
+- copyright - 0169 - ©
+- registered - 0174 - ®
+- trademark - 0153 - ™ 
+
+hold down the alt key and use the num pad of your keyboard
+
+can just copy and paste from jopels post
+
+for the mac users
+
+- option G for ©
+- option R for ®
+- option 2 for ™

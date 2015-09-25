@@ -11,7 +11,7 @@ tags: [wordpress, tutorial]
 * [Churro](http://bit.ly/churro-plugin)
 * [Tina MVC](http://bit.ly/tina-mvc)
 
-There are a couple of ways to map an MVC process to WordPress.
+There are a couple of ways to Vap an MVC process to WordPress.
 
 ### Models = plugins
 

@@ -1,6 +1,6 @@
 layout: post
 title: "MongoDb 权限"
-category: MongoDb
+category: Database
 tags: [mongodb, database, auth]
 ---
 

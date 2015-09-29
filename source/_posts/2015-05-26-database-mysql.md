@@ -1,7 +1,7 @@
 layout: post
 title: "MySQL Tutorial"
 description: ""
-category: MySQL
+category: Database
 tags: [database, mysql]
 ---
 

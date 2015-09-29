@@ -1,6 +1,6 @@
 layout: post
 title: "MongoDb"
-category: Node
+category: Database
 tags: [mongodb, database]
 ---
 

@@ -324,4 +324,4 @@ See:
 ### example
 
 - [zcbenz/nw-sample-apps](https://github.com/zcbenz/nw-sample-apps)
-- [List of apps and companies using node webkit · rogerwang/node-webkit Wiki](https://github.com/rogerwang/node-webkit/wiki/List-of-apps-and-companies-using-node-webkit)
+- [List of apps and companies using node webkit · rogerwang/node-webkit Wiki](https://github.com/nwjs/nw.js/wiki/List-of-apps-and-companies-using-nw.js)

@@ -94,6 +94,11 @@ __Usage:__
 - [yortus/asyncawait · GitHub](https://github.com/yortus/asyncawait)
 - [chajs/cha](https://github.com/chajs/cha) Cha allows tasks to be connected together into a chain that makes better readability and easier to maintain.
 
+## Image
+
+- [lokesh/color-thief](https://github.com/lokesh/color-thief/) Grabs the dominant color or a representative color palette from an image. Uses javascript and canvas.
+
+
 ## Browser
 
 - [browserstate/history.js](https://github.com/browserstate/history.js)

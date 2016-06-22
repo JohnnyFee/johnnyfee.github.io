@@ -162,60 +162,7 @@ HTML解析器机制是其它所有框架所不具备也不敢这样做的，它�
 
 ## Anatomy of an AngularJS Application
 
-### ng-app
 
-Loading the Script:
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
-    
-
-If you’re building an all-Angular application:
-
-    <html ng-app>
-    …
-    </html>
-
-Manage only a part of the page by placing it on some element like a `<div>`within the page:
-
-    <html>
-        …
-        <div ng-app>
-        …
-        </div>
-        …
-    </html>
-
-<!-- more -->
-
-AngularJS会在`DOMContentLoaded`事件触发时执行，并通过`ng-app`指令 寻找你的应用根作用域。如果 `ng-app`指令找到了，那么AngularJS将会：
-
-* 载入和 指令 内容相关的模块。
-* 创建一个应用的“注入器(injector)”。
-* 已拥有 `ng-app` 指令 的标签为根节点来编译其中的DOM。这使得你可以只指定DOM中的一部分作为你的AngularJS应用。
-
-如果你需要主动控制一下初始化的过程，你可以使用手动执行引导程序的方法。比如当你使用“脚本加载器(script loader)”，或者需要在AngularJS编译页面之前做一些操作，你就会用到它了。
-
-下面的例子演示了手动初始化AngularJS的方法。它的效果等同于使用`ng-app`指令 。
-
-```
-<!doctype html>
-<html xmlns:ng="http://angularjs.org">
-    <body>
-        Hello {{'World'}}!
-        <script src="http://code.angularjs.org/angular.js"></script>
-        <script>
-            angular.element(document).ready(function() {
-            angular.bootstrap(document);
-            });
-        </script>
-    </body>
-</html>
-```
-
-下面是一些你的代码必须遵守的顺序：
-
-1.  等页面和所有的脚本加载完之后，找到HTML模板的根节点——通常就是文档的根节点。
-2.  调用 api/angular.bootstrap将模板编译成可执行的、数据双向绑定的应用程序。
 
 ### ng-init
 
@@ -716,35 +663,6 @@ Instead, you should use the `ng-src` attribute and write your template as:
 Similarly, for the `<a>` tag, you should use `ng-href`:
 
     <a ng-href="/shop/category={{numberOfBalloons}}">some text</a>
-
-### Expressions
-
-The goal behind the expressions that you use in templates is to let you be as clever as you need to be to create hooks between your template, your application logic, and your data, but at the same time prevent application logic from sneaking into the template.
-
-Until this point, we’ve been mostly using references to data primitives as the expressions passed to Angular directives. But these expressions can do much more. You can do simple math (+, -, /, *, %), make comparisons (==, !=, >, <, >=), perform boolean logic (&&, ||, !) and bitwise operations (\^, &, |). 
-
-You can call functions you expose on `$scope` in your controller and you can reference arrays and object notation ([ ], { }, .).
-All of these are valid examples of expressions:
-
-```html
-<div ng-controller='SomeController'>
-  <div>{{recompute() / 10}}</div>
-  <ul ng-repeat='thing in things'>
-    <li ng-class='{highlight: $index % 4 >= threshold($index)}'>
-      {{otherFunction($index)}}
-    </li>
-  </ul>
-</div>
-```
-
-
-The first expression here, `recompute() / 10`, while valid, is a good example of putting logic in the template, and should be avoided. Keeping a separation of responsibilities between your view and controllers ensures that they’re easy to reason and easy to test.
-
-While you can do quite a lot with expressions, they are computed with a custom parser that’s part of Angular. They are not evaluated using JavaScript’s `eval()`, and are considerably more restrictive.
-
-Instead, they are evaluated using a custom parser that comes with Angular. In it, you won’t find looping constructs (for, while, and so on), flow-of-control operators (if-else, throw) or operators that modify data (++, --). When you need these types of operations, do them in your controller or via a directive.
-
-Though expressions are more restrictive than JavaScript in many ways, they are more forgiving to undefined and null. Instead of throwing a NullPointerException error, templates will simply render nothing. This allows you to safely use model values that haven’t been set yet, and have them appear in the UI as soon as they get populated.
 
 ### $watch
 

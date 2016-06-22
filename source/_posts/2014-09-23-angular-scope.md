@@ -19,7 +19,7 @@ Angular 中，总共有四种作用域：
     - ng-controller
     - directive with `scope: true`
     
-2. 通过拷贝/复制的原型继承作用域。ng-repeat 的每个迭代都会创建一个子作用域，并且每个作用域总是得到一个新的属性。 
+2. 通过拷贝/复制的原型继承作用域。ng-repeat 的每个迭代都会创建一个子作用域，并且每个作用域总是得到一个新的属性，这个新的属性名为循环变量名。 
 
     - ng-repeat
     
@@ -41,17 +41,19 @@ Angular 中，总共有四种作用域：
 - directive with `scope: true`
 - directive with `transclude: true`.
 
-隔离作用域也会创建新的作用域，但不会从父作用域中继承：
+隔离作用域(isolate scope)也会创建新的作用域，但不会从父作用域中继承：
 
 - directive with scope: { ... }
-
-这样的作用域，我们成为隔离作用域（isolate scope）。
 
 其他情况不会自动创建作用域，即 `scope: false`。
 
 ### 原型继承
 
-作用域继承通常比较简单，你甚至经常不需要知道它的存在。除非你使用双向绑定到父作用域的一个基本类型(e.g., number, string, boolean) 的值时，并不会像我们期望的那样运行。实际上，子作用域得到的是自己的属性，这会隐藏父作用域中的同名属性。 这个问题是有由 JavaScript 的原型继承导致的，跟 AngularJS 没有什么关系。新的 Angular 开发者可能不会意识到 repeat, ng-switch, ng-view and ng-include 对会创建新的作用域，所以使用的时候，这类问题时有发生。
+作用域继承通常比较简单，你甚至经常不需要知道它的存在。
+
+除非你使用双向绑定到父作用域的一个基本类型(e.g., number, string, boolean) 的值时，并不会像我们期望的那样运行。实际上，子作用域得到的是自己的属性，这会隐藏父作用域中的同名属性。 这个问题是有由 JavaScript 的原型继承导致的，跟 AngularJS 没有什么关系。
+
+新的 Angular 开发者可能不会意识到 repeat, ng-switch, ng-view and ng-include 对会创建新的作用域，所以使用的时候，这类问题时有发生。
 
 ## ng-include
 
@@ -70,6 +72,7 @@ HTML:
     <input ng-model="myPrimitive">
 </script>
 
+<!-- 使用 tmpl1 模板 -->
 <div ng-include src="'/tpl1.html'"></div>
 
 <!-- 模板 tpl2.html -->
@@ -77,6 +80,7 @@ HTML:
     <input ng-model="myObject.aNumber">
 </script>
 
+<!-- 使用 tpl2.html 模板-->
 <div ng-include src="'/tpl2.html'"></div>
 ```
 
@@ -189,7 +193,7 @@ See also：
           };
         });
 
-2. `scope：true` 这会为指令创建一个新的scope，并且原型继承自父scope。如果多于一个指令（在同样的 DOM 元素长）要求新的作用域时，只有一个新的作用域会被创建。因为是原型继承，所以和父作用域的基本类型双向绑定时，也会有 ng-include 一样的问题。
+2. `scope：true` 这会为指令创建一个新的scope，并且原型继承自父scope。如果多于一个指令（在同样的 DOM 元素中）要求新的作用域时，只有一个新的作用域会被创建。因为是原型继承，所以和父作用域的基本类型双向绑定时，也会有 ng-include 一样的问题。
 
     如：
 
@@ -595,8 +599,6 @@ Note that we pass the page variable to the expression in a map of variables. The
 ## 作用域和事件系统
 
 层级关系中的作用域可以使用 `event bus`（一种事件系统）。AngularJS可以在作用域层级中传播具名的装备齐全的事件。事件可以从任何一个作用域中发出，然后向上（$emit）和向下（$broadcast）四处传播。  
-
-![截图](http://www.peichao01.com/Mastering_AngularJS_book/ch1_p20.png)  
 
 AngularJS核心服务和指令使用这种事件巴士来发出一些应用程序状态变化的重要事件。比如，我们可以监听 `$locationChangeSuccess` 事件（由 `$rootScope` 实例发出），然后在任何 location（浏览器中就是URL）变化的时候都会得到通知，如下所示：
 

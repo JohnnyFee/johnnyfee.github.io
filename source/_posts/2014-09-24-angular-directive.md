@@ -346,7 +346,7 @@ compile: function(element, attrs, transcludeFn) {
 }
 ```
 
-我们把移动内嵌的元素追加到指令元素内的 `<p>` 元素中。这里，我们创建乐意个新的作用域，该作用域是指令作用域的兄弟，也就是指令作用域的 `$parent` 的一个子作用域。
+我们把移动内嵌的元素追加到指令元素内的 `<p>` 元素中。这里，我们创建了一个新的作用域，该作用域是指令作用域的兄弟，也就是指令作用域的 `$parent` 的一个子作用域。
 
 
 这在指令有一个隔离作用域时特别需要，因为传入 link 函数的作用域是隔离作用域，并不继承于父作用域，而 transcluded 元素的作用域需要继承与作用域。
@@ -523,7 +523,7 @@ post-link 函数是在当前元素极其子元素编译和链接完成后被调�
 
 [Angular Scope](http://inching.org/2014/09/23/angular-scope) 中的 pagination demo 是用 link 函数实现的，我们可以把它改成 directive controller 的版本：
 
-```
+```js
 myModule.directive('pagination', function() {
   return {
     restrict: 'E',

@@ -259,6 +259,7 @@ AngularJS拥有一整套工具使这个过程非常简单;有了ngClass我们可
 
 ## Tutorial
 
+- [angular-styleguide](https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md)
+- [Best Practices · angular/angular.js Wiki](https://github.com/angular/angular.js/wiki/Best-Practices)
 - [10 Top Mistakes Angular.js Developers Make](http://www.airpair.com/angularjs/posts/top-10-mistakes-angularjs-developers-make)
 - [Angularjs开发一些经验总结 - 破狼 - 博客园](http://www.cnblogs.com/whitewolf/archive/2013/03/24/2979344.html)
-- [Best Practices · angular/angular.js Wiki](https://github.com/angular/angular.js/wiki/Best-Practices)

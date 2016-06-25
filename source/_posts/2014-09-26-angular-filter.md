@@ -19,11 +19,14 @@ tags : [angular, tutorial]
     {%raw%}{{ expression | filter }}{%endraw%}
 
 也可以多个filter连用，上一个filter的输出将作为下一个filter的输入（怪不得这货长的跟管道一个样。。）
-    {%raw%}
-    {{ expression | filter1 | filter2 | ... }}
-    // 如
-    {{12.9 | currency | number:0 }} 
-    {%endraw%}
+
+```
+{%raw%}
+{{ expression | filter1 | filter2 | ... }}
+// 如
+{{12.9 | currency | number:0 }} 
+{%endraw%}
+```
 
 > displays: $13
 
@@ -33,7 +36,9 @@ filter可以接收参数，参数用 : 进行分割，如下：
 
 除了对 `{%raw%}{{}}{%endraw%}` 中的数据进行格式化，我们还可以在指令中使用filter，例如先对数组array进行过滤处理，然后再循环输出：
 
-    {%raw%}<span ng-repeat="a in array | filter ">{%endraw%}
+    <span ng-repeat="a in array | filter ">
+
+Using a filter in a view template will reevaluate the filter on every digest, which can be costly if the array is big.
 
 ### 在 JavaScript 中使用 filter
 
@@ -79,6 +84,17 @@ angular.module('trimFilter', [])
 其中，我们使用 `limitToFilter` 来获取过滤器，这种方式的命名规则为  `[filter name]Filter`，`[filter name]` 为过滤器名字。
 
 使用 `Filter` 后缀的方式更简单自然，使用 `$filter` 服务的唯一场合是当我们想得到多个过滤器实例或者想根据变量来获取过滤器实例时，如 `$filter(filterName)`。
+
+The example below therefore calls the filter directly in the controller. By this, the controller is able to call the filter only when needed (e.g. when the data is loaded from the backend or the filter expression is changed). 
+
+<iframe style="width: 100%; height: 600px" src="https://embed.plnkr.co/hele35wyuR23dJboirs5/" frameborder="0" allowfullscren="allowfullscren"></iframe>
+
+## When filters are executed
+
+In templates, filters are only executed when their inputs have changed. This is more performant than executing a filter on each [`$digest`](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest) as is the case with [expressions](https://docs.angularjs.org/guide/expression). There are two exceptions to this rule:
+
+1.  In general, this applies only to filters that take [primitive values](https://developer.mozilla.org/docs/Glossary/Primitive) as inputs. Filters that receive [Objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Objects) as input are executed on each `$digest`, as it would be too costly to track if the inputs have changed.
+2.  Filters that are marked as `$stateful` are also executed on each $digest. See [Stateful filters](https://docs.angularjs.org/guide/filter#stateful-filters) for more information. Note that no Angular core filters are $stateful.
 
 ## ng的内置过滤器
 
@@ -323,6 +339,49 @@ $scope.isSortDown = function (fieldName) {
 ```
 
 ## 自定义过滤器
+
+Writing your own filter is very easy: just register a new filter factory function with your module. Internally, this uses the [`filterProvider`](https://docs.angularjs.org/api/ng/provider/$filterProvider). This factory function should return a new filter function which takes the input value as the first argument. Any filter arguments are passed in as additional arguments to the filter function.
+
+The filter function should be a [pure function](http://en.wikipedia.org/wiki/Pure_function), which means that it should be stateless and idempotent, and not rely for example on other Angular services. Angular relies on this contract and will by default execute a filter only when the inputs to the function change. [Stateful filters](https://docs.angularjs.org/guide/filter#stateful-filters) are possible, but less performant.
+
+**Note:** Filter names must be valid angular [`Expressions`](https://docs.angularjs.org/guide/expression) identifiers, such as `uppercase` or `orderBy`. Names with special characters, such as hyphens and dots, are not allowed.  If you wish to namespace your filters, then you can use capitalization (`myappSubsectionFilterx`) or underscores (`myapp_subsection_filterx`).
+
+The following sample filter reverses a text string. In addition, it conditionally makes the text upper-case.
+
+The following sample filter reverses a text string. In addition, it conditionally makes the text upper-case.
+
+```html
+<div ng-controller="MyController">
+  <input ng-model="greeting" type="text"><br>
+  No filter: {{greeting}}<br>
+  Reverse: {{greeting|reverse}}<br>
+  Reverse + uppercase: {{greeting|reverse:true}}<br>
+  Reverse, filtered in controller: {{filteredGreeting}}<br>
+</div>  
+```
+
+```js
+
+angular.module('myReverseFilterApp', [])
+.filter('reverse', function() {
+  return function(input, uppercase) {
+    input = input || '';
+    var out = "";
+    for (var i = 0; i < input.length; i++) {
+      out = input.charAt(i) + out;
+    }
+    // conditional based on optional argument
+    if (uppercase) {
+      out = out.toUpperCase();
+    }
+    return out;
+  };
+})
+.controller('MyController', ['$scope', 'reverseFilter', function($scope, reverseFilter) {
+  $scope.greeting = 'hello';
+  $scope.filteredGreeting = reverseFilter($scope.greeting);
+}]);
+```
 
 除了使用内置的过滤器，我们也可以自定义过滤器。以下一个让单词首字母大写的例子：
 

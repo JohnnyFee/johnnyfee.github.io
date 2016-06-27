@@ -17,6 +17,7 @@ You can call functions you expose on `$scope` in your controller and you can ref
 All of these are valid examples of expressions:
 
 ```html
+{%raw%}
 <div ng-controller='SomeController'>
   <div>{{recompute() / 10}}</div>
   <ul ng-repeat='thing in things'>
@@ -25,6 +26,7 @@ All of these are valid examples of expressions:
     </li>
   </ul>
 </div>
+{%endraw%}
 ```
 
 The first expression here, `recompute() / 10`, while valid, is a good example of putting logic in the template, and should be avoided. Keeping a separation of responsibilities between your view and controllers ensures that they’re easy to reason and easy to test.
@@ -53,14 +55,17 @@ Angular expressions are like JavaScript expressions with the following differenc
 If you want to run more complex JavaScript code, you should make it a controller method and call the method from your view. If you want to `eval()` an Angular expression yourself, use the [`$eval()`](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$eval) method.
 
 ```html
+{%raw%}
 <span>
   1+2={{1+2}}
 </span>
+{%endraw%}
 ```
 
 You can try evaluating different expressions here:
 
 ```html
+{%raw%}
 <div ng-controller="ExampleController" class="expressions">
   Expression:
   <input type='text' ng-model="expr" size="80"/>
@@ -72,6 +77,7 @@ You can try evaluating different expressions here:
     </li>
   </ul>
 </div>
+{%endraw%}
 ```
 
 ```js
@@ -123,10 +129,12 @@ angular.module('expressionExample', [])
 Expression evaluation is forgiving to undefined and null. In JavaScript, evaluating `a.b.c` throws an exception if `a` is not an object. While this makes sense for a general purpose language, the expression evaluations are primarily used for data binding, which often look like this:
 
 ```
+{%raw%}
 {{a.b.c}}
+{%endraw%}
 ```
 
-It makes more sense to show nothing than to throw an exception if `a` is undefined (perhaps we are waiting for the server response, and it will become defined soon). If expression evaluation wasn't forgiving we'd have to write bindings that clutter the code, for example: `{{((a||{}).b||{}).c}}` Similarly, invoking a function `a.b.c()` on `undefined` or `null` simply returns `undefined`.
+It makes more sense to show nothing than to throw an exception if `a` is undefined (perhaps we are waiting for the server response, and it will become defined soon). If expression evaluation wasn't forgiving we'd have to write bindings that clutter the code, for example: `{%raw%}{{((a||{}).b||{}).c}}{%endraw%}` Similarly, invoking a function `a.b.c()` on `undefined` or `null` simply returns `undefined`.
 
 ## No Control Flow Statements
 
@@ -141,11 +149,13 @@ You can't declare functions or create regular expressions from within AngularJS 
 Directives like [`ngClick`](https://docs.angularjs.org/api/ng/directive/ngClick) and [`ngFocus`](https://docs.angularjs.org/api/ng/directive/ngFocus) expose a `$event` object within the scope of that expression. The object is an instance of a [jQuery Event Object](http://api.jquery.com/category/events/event-object/) when jQuery is present or a similar jqLite object.
 
 ```html
+{%raw%}
 <div ng-controller="EventController">
   <button ng-click="clickMe($event)">Event</button>
   <p><code>$event</code>: <pre> {{$event | json}}</pre></p>
   <p><code>clickEvent</code>: <pre>{{clickEvent | json}}</pre></p>
 </div>
+{%endraw%}
 ```
 
 ```js
@@ -172,18 +182,20 @@ controller('EventController', ['$scope', function($scope) {
 }]);
 ```
 
-Note in the example above how we can pass in `$event` to `clickMe`, but how it does not show up in `{{$event}}`. This is because `$event` is outside the scope of that binding.
+Note in the example above how we can pass in `$event` to `clickMe`, but how it does not show up in `{%raw%}{{$event}}{%endraw%}`. This is because `$event` is outside the scope of that binding.
 
 ## One-time binding
 
 An expression that starts with `::` is considered a one-time expression. One-time expressions will stop recalculating once they are stable, which happens after the first digest if the expression result is a non-undefined value (see value stabilization algorithm below).
 
 ```html
+{%raw%}
 <div ng-controller="EventController">
   <button ng-click="clickMe($event)">Click Me</button>
   <p id="one-time-binding-example">One time binding: {{::name}}</p>
   <p id="normal-binding-example">Normal binding: {{name}}</p>
 </div>
+{%endraw%}
 ```
 
 ```js
@@ -251,7 +263,9 @@ Here are three example cases.
 When interpolating text or attributes:
 
 ```html
+{%raw%}
 <div name="attr: {{::color}}">text: {{::name | uppercase}}</div>
+{%endraw%}
 ```
 
 When using a directive with bidirectional binding and parameters that will not change:
@@ -269,13 +283,17 @@ someModule.directive('someDirective', function() {
 ```
 
 ```html
+{%raw%}
 <div some-directive name="::myName" color="My color is {{::myColor}}"></div>
+{%endraw%}
 ```
 
 When using a directive that takes an expression:
 
 ```html
+{%raw%}
 <ul>
   <li ng-repeat="item in ::items | orderBy:'name'">{{item.name}};</li>
 </ul>
+{%endraw%}
 ```

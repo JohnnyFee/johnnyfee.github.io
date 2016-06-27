@@ -417,6 +417,41 @@ function HomeController($scope) {
 }
 ```
 
+### Stateful filters
+
+It is strongly discouraged to write filters that are stateful, because the execution of those can't be optimized by Angular, which often leads to performance issues. Many stateful filters can be converted into stateless filters just by exposing the hidden state as a model and turning it into an argument for the filter.
+
+If you however do need to write a stateful filter, you have to mark the filter as `$stateful`, which means that it will be executed one or more times during the each `$digest` cycle.
+
+```html
+<div ng-controller="MyController">
+  Input: <input ng-model="greeting" type="text"><br>
+  Decoration: <input ng-model="decoration.symbol" type="text"><br>
+  No filter: {{greeting}}<br>
+  Decorated: {{greeting | decorate}}<br>
+</div>
+```
+
+```js
+angular.module('myStatefulFilterApp', [])
+.filter('decorate', ['decoration', function(decoration) {
+
+  function decorateFilter(input) {
+    return decoration.symbol + input + decoration.symbol;
+  }
+  decorateFilter.$stateful = true;
+
+  return decorateFilter;
+}])
+.controller('MyController', ['$scope', 'decoration', function($scope, decoration) {
+  $scope.greeting = 'hello';
+  $scope.decoration = decoration;
+}])
+.value('decoration', {symbol: '*'});
+```
+
+
+
 ### 分页的例子
 
 我们将创建一个名为 `pagination` 的过滤器用来分页，以下是使用分页过滤器的例子：

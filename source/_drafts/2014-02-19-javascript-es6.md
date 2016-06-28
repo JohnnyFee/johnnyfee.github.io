@@ -30,6 +30,7 @@ tags: [javascript]
 - [JustinDrake/node-es6-examples](https://github.com/JustinDrake/node-es6-examples)
 - [Handling required parameters in ECMAScript 6](http://www.2ality.com/2014/04/required-parameters-es6.html)
 - [addyosmani/es6-equivalents-in-es5](https://github.com/addyosmani/es6-equivalents-in-es5) WIP - ES6 Equivalents In ES5.
+- [ECMAScript® 2016 Language Specification](http://www.ecma-international.org/ecma-262/7.0/index.html)
 
 ## Argument
 

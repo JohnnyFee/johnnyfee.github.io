@@ -31,7 +31,7 @@ ECMAScript做为一个高度抽象的面向对象语言，是通过 _对象_ 来
 
 我们拥有一个这样的结构，两个明显的自身属性和一个隐含的`__proto__`属性，这个属性是对foo原型对象的引用：
 
-[![](http://johnnyimages.qiniudn.com/basic-object.png)](http://s0-weizhifeng-net.b0.upaiyun.com/images/tech/basic-object.png)
+[![](http://s0-weizhifeng-net.b0.upaiyun.com/images/tech/basic-object.png)](http://s0-weizhifeng-net.b0.upaiyun.com/images/tech/basic-object.png)
 
 这些prototype有什么用？让我们以 _原型链_（prototype chain）的概念来回答这个问题。
 

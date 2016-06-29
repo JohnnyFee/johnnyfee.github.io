@@ -5,12 +5,16 @@ category: JavaScript
 tags: [javascript]
 ---
 
+[shekhargulati/52-technologies-in-2016: Let's learn a new technology every week. A new technology blog every Sunday in 2016.](https://github.com/shekhargulati/52-technologies-in-2016)
+
 ## Tutorial
 
 - [JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/#advanced)
 - [A List of Foundational JavaScript Tools](https://www.codefellows.org/blogs/complete-list-of-javascript-tools)
 - [web开发设计人员不可不用的在线web工具和应用](http://www.qianduan.net/web-development-and-design-staff-can-not-be-without-online-web-tools-and-applications.html)
 - [Source map](http://javascript.ruanyifeng.com/tool/sourcemap.html)
+
+<!-- more -->
 
 ## Performance
 
@@ -20,13 +24,19 @@ tags: [javascript]
 - [Announcing JS Error Reporting and AJAX Timing - New Relic blog](http://blog.newrelic.com/2014/03/13/javascript-error-reporting-ajax-timing-new-relic/)
 - [JavaScript Memory Management Masterclass // Speaker Deck](https://speakerdeck.com/addyosmani/javascript-memory-management-masterclass)
 
-<!-- more -->
+### Library
+
+- [polygonplanet/chillout: Reduce CPU usage in JavaScript](https://github.com/polygonplanet/chillout)
 
 ### Performance Test Tools
 
 - [Kraken JavaScript Benchmark](http://kraken-mirror.googlecode.com/svn/trunk/kraken/hosted/kraken-1.1/driver.html)
 - [SunSpider 1.0.2 JavaScript Benchmark](http://www.webkit.org/perf/sunspider/sunspider.html) 
 - [**dromaeo**](http://dromaeo.com/)
+
+## Bug
+
+- [Javascript developers, be warned about this crazy JIT bug in V8!：javascript](https://www.reddit.com/r/javascript/comments/4oxtgk/javascript_developers_be_warned_about_this_crazy/)
 
 ## Library
 

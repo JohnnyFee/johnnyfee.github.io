@@ -852,6 +852,10 @@ avaScript Promise 的 API 会把任何包含有 then 方法的对象当作“类
 * Bryan Klimt, [What’s so great about JavaScript Promises?](http://blog.parse.com/2013/01/29/whats-so-great-about-javascript-promises/)
 * Jake Archibald, [JavaScript Promises There and back again](http://www.html5rocks.com/en/tutorials/es6/promises/)
 
+## Library
+
+- [facundoolano/promise-log: shortcut for console.loggin' your promises](https://github.com/facundoolano/promise-log)
+
 ## Tutorial
 
 - [在 Node.js 中用 Q 实现 Promise – Callback 之外的另一种选择](http://www.ghostchina.com/promises-in-node-js-with-q-an-alternative-to-callbacks/)

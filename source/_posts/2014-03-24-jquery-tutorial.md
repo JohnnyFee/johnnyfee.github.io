@@ -770,7 +770,11 @@ When this sneaky bit of code fetches the content of the pull quote with `$cloned
 
 - [zehfernandes/jQuery.DebugCssAnimation](https://github.com/zehfernandes/jQuery.DebugCssAnimation)
 
-## FAQ
+## Library
+
+### Images
+
+- [Picla - jQuery plugin that converts Alt-texts into simple image labels](http://arunmichaeldsouza.github.io/picla)
 
 ## Tutorial
 

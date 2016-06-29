@@ -969,6 +969,7 @@ See:
 - [Pasvaz/bindonce](https://github.com/Pasvaz/bindonce) Zero watches binding for AngularJs
 - [AngularCSS - Routes Demo](http://door3.github.io/angular-css/#/) 动态注入 CSS。
     - [Introducing AngularCSS: CSS On-Demand for AngularJS](http://door3.com/insights/introducing-angularcss-css-demand-angularjs)
+- [bevacqua/dragula: Drag and drop so simple it hurts](https://github.com/bevacqua/dragula#drakeon-events)
 
 ### Storage
 
@@ -977,7 +978,7 @@ See:
 
 ### Multi-Media
 
-- [nehz/ngWebAudio](https://github.com/nehz/ngWebAudio)
+- [nehz/ngWebAudio](https://github.com/nehz/ngWebAudio) Drag and drop for angular and react.
 
 ### Auth
 

@@ -22,11 +22,13 @@ Karma 作为 test runner，全权负责在我们的代码库中查找所有的�
 
 ### Setup
 
-安装 Karma CLI
+安装 Karma CLI，以便在控制台中调用 karma 命令：
 
-    sudo npm install -g karma-cli
+    npm install -g karma-cli
 
-Karma 有个概念叫“插件”，这些插件允许你只选择你的工程需要的组件来用。通过这些插件，你可以选择使用哪个框架来写你的单元测试（Karma 是框架未知的），启动哪些浏览器，等等。开始之前，我们先安装 Jasmine 插件，以便我们可以使用 Jasmine 框架来写单元测试，以及 Chrome launcher 插件来自动启动 Google Chrome 浏览器。安装这两个插件的命令如下：
+Karma 有个概念叫“插件”，这些插件允许你只选择你的工程需要的组件来用。通过这些插件，你可以选择使用哪个框架来写你的单元测试（Karma 是框架未知的），启动哪些浏览器，等等。
+
+开始之前，我们先安装 Jasmine 插件，以便我们可以使用 Jasmine 框架来写单元测试，以及 Chrome launcher 插件来自动启动 Google Chrome 浏览器。安装这两个插件的命令如下：
 
     npm install karma-jasmine karma-chrome-launcher
 
@@ -34,7 +36,6 @@ Karma 有个概念叫“插件”，这些插件允许你只选择你的工程�
 
 ```shell
 npm install karma-mocha --save-dev
-npm install karma-chrome-launcher
 bower install mocha --save-dev
 bower install chai --save-dev
 ```
@@ -48,8 +49,6 @@ var assert = chai.assert;
 ```
 
 另外把测试用例改成 mocha 的形态。
-
-See [Setting up a project using karma with mocha and chai](http://attackofzach.com/setting-up-a-project-using-karma-with-mocha-and-chai/)。另外可以参考 demo [ludovicofischer/mocha-chai-browser-demo](https://github.com/ludovicofischer/mocha-chai-browser-demo)。
 
 ### Karma Plugins
 
@@ -995,8 +994,8 @@ At its core, there are a few key steps (some of which parallel the unit tests fo
 2. Create the HTML element that will trigger the directive you have created.
 3. Create the scopeagainst which you want the directive to be tested again.
 4. Remember that there is no server in the unit test. If the directive loads a template using the `templateUrl` key, add an expectation on `$httpBackend`  for loading the `templateUrl` and designate the HTML that’s to be used instead of the template in the test.
-5. Compile the HTML element using the  $compileservice with the scope you’ve created.
-6. Write expectations on how the directive should be rendered and on the functions that are defined in the linkfunction.
+5. Compile the HTML element using the `$compile` service with the scope you’ve created.
+6. Write expectations on how the directive should be rendered and on the functions that are defined in the link function.
 
 The first five tests are going to be standard for any unit test we write for a directive. Only the last two—where we start testing the rendering and business logic encapsulated in a directive—change from one directive to another.
 

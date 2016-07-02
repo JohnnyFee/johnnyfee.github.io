@@ -14,7 +14,7 @@ AngularJS 采用 Jasmine 作为它的测试框架，而且 AngularJS 为 Jasmine
 
 <!-- more -->
 
-## Karma
+## [Karma](https://github.com/karma-runner/karma)
 
 Karma 是能够让测试以惊人的速度无痛运行的 test runner。它使用 NodeJS 和 SocketIO 加快了在多种浏览器中的执行测试的速度。
 
@@ -26,13 +26,95 @@ Karma 作为 test runner，全权负责在我们的代码库中查找所有的�
 
     npm install -g karma-cli
 
+可以通过 `karma init` 来初始化 karma 配置，类似于 `npm init` 功能。具体配置项 See [Karma - Configuration File](https://karma-runner.github.io/1.0/config/configuration-file.html)
+
 Karma 有个概念叫“插件”，这些插件允许你只选择你的工程需要的组件来用。通过这些插件，你可以选择使用哪个框架来写你的单元测试（Karma 是框架未知的），启动哪些浏览器，等等。
 
 开始之前，我们先安装 Jasmine 插件，以便我们可以使用 Jasmine 框架来写单元测试，以及 Chrome launcher 插件来自动启动 Google Chrome 浏览器。安装这两个插件的命令如下：
 
     npm install karma-jasmine karma-chrome-launcher
 
-使用 [yeoman/generator-angular · GitHub](https://github.com/yeoman/generator-angular) 生成的脚手架默认使用 jasmine 测试框架，如果你想使用功能更加强大的 mocha，需要安装：
+_karma.conf.js_ 的主要配置如下：
+
+```js
+// Karma configuration
+// Generated on Tue Jun 28 2016 16:45:44 GMT+0800 (中国标准时间)
+
+module.exports = function(config) {
+  config.set({
+
+    // base path that will be used to resolve all patterns (eg. files, exclude)
+    basePath: './js',
+
+
+    // frameworks to use
+    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+    frameworks: ['jasmine'],
+
+
+    // list of files / patterns to load in the browser
+    files: [
+        '*.js'
+    ],
+
+
+    // list of files to exclude
+    exclude: [
+    ],
+
+
+    // preprocess matching files before serving them to the browser
+    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+    preprocessors: {
+    },
+
+    plugins: [
+        // Karma will require() these plugins
+        'karma-jasmine',
+        'karma-chrome-launcher'
+    ],
+
+
+    // test results reporter to use
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['progress'],
+
+
+    // web server port
+    port: 9876,
+
+
+    // enable / disable colors in the output (reporters and logs)
+    colors: true,
+
+
+    // level of logging
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    logLevel: config.LOG_INFO,
+
+
+    // enable / disable watching file and executing tests whenever any file changes
+    autoWatch: true,
+
+
+    // start these browsers
+    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    browsers: ['Chrome'],
+
+
+    // Continuous Integration mode
+    // if true, Karma captures browsers, runs the tests and exits
+    singleRun: false,
+
+    // Concurrency level
+    // how many browser should be started simultaneous
+    concurrency: Infinity
+  })
+}
+```
+
+使用 [yeoman/generator-angular · GitHub](https://github.com/yeoman/generator-angular) 生成的脚手架默认使用 jasmine 测试框架，如果你想使用 mocha 测试框架，需要安装：
 
 ```shell
 npm install karma-mocha --save-dev
@@ -40,17 +122,19 @@ bower install mocha --save-dev
 bower install chai --save-dev
 ```
 
-其中，chai 是 mocha 依赖的断言库，你也可以安装其他的断言库，如 [should.js](、https://github.com/visionmedia/should.js)、[expect.js](https://github.com/LearnBoost/expect.js)、[better-assert](https://github.com/visionmedia/better-assert) 等。使用 chai 作为断言库，可以自由选择 should、expect、asset 三种断言方式：
+_karma.conf.js_ 的主要配置如下：
 
 ```js
-chai.should();
-var expect = chai.expect;
-var assert = chai.assert;
+//... 其他配置同 jasmine
+frameworks: ['mocha', 'chai'],
+//...
 ```
 
 另外把测试用例改成 mocha 的形态。
 
 ### Karma Plugins
+
+See [Karma - Developing Plugins](https://karma-runner.github.io/1.0/dev/plugins.html)
 
 Karma 的插件大体上可以分为以下几个类别：
 
@@ -58,18 +142,43 @@ Karma 的插件大体上可以分为以下几个类别：
     
     这些插件在测试运行的时候帮助 Karma 自动启动浏览器。我们之前安装了 Chrome 浏览器的 launcher 插件，对于其他浏览器如 Firefox 和 IE 等，也是有类似的 launcher 插件的。
 
+    1.  example plugins: [karma-chrome-launcher](https://github.com/karma-runner/karma-chrome-launcher), [karma-sauce-launcher](https://github.com/karma-runner/karma-sauce-launcher)
+    2.  use naming convention is `karma-*-launcher`
+    3.  use NPM keywords `karma-plugin`, `karma-launcher`
+
 - Testing frameworks
 
     我们也可以选择使用哪种框架来编写单元测试。因为前面我们安装了 Jasmine 插件，所以我们将使用 Jasmine 框架来编写单元测试。但是如果你更喜欢其他风格的单元测试，比如 mocha 或者 qunit，你也可以安装这些框架的插件。
+
+    1.  example plugins: [karma-jasmine](https://github.com/karma-runner/karma-jasmine), [karma-mocha](https://github.com/karma-runner/karma-mocha), [karma-requirejs](https://github.com/karma-runner/karma-requirejs)
+    2.  use naming convention is `karma-*`
+    3.  use NPM keywords `karma-plugin`, `karma-framework`.
 
 - Reporters
 
     Karma 可以提供多种格式的测试结果。默认的 progress reporter 是内置的，但是如果你需要像 junit.xml 文件那样的测试结果，你可以安装一个相关的 Karma 插件。
 
-- Integrations
+- Preprocessors
 
-    这类插件允许我们集成其他已经存在的 JavaScript 库或者工具，比如 Google’s Closure，或者 RequireJS。大多数这些插件你都可以在你需要的时候安装它们。
+   预处理器。
 
+    1.  example plugins: [karma-coffee-preprocessor](https://github.com/karma-runner/karma-coffee-preprocessor), [karma-ng-html2js-preprocessor](https://github.com/karma-runner/karma-ng-html2js-preprocessor)
+    2.  use naming convention is `karma-*-preprocessor`
+    3.  user NPM keywords `karma-plugin`, `karma-preprocessor`
+
+- Crazier stuff
+
+    Karma is assembled by Dependency Injection and a plugin is just an additional DI module (see [node-di](https://github.com/vojtajina/node-di) for more), that can be loaded by Karma. Therefore, it can ask for pretty much any Karma component and interact with it. There are a couple of plugins that do more interesting stuff like this, check out [karma-closure](https://github.com/karma-runner/karma-closure), [karma-intellij](https://github.com/karma-runner/karma-intellij), [karma-dart](https://github.com/karma-runner/karma-dart).
+
+You can find more on npm [karma plugins](https://www.npmjs.com/browse/keyword/karma-plugin)
+
+### 运行调试
+
+当 karma 配置完成后，可以通过以下命令运行测试用例。
+
+    karma start
+
+如果使用 Webstorm，可以右键 _karma.conf.js_ -> _Debug_。如果你想 focus 某一个 `describe` 或者 `it`，可以在为 `describe` 或者 `it` 前缀 `f`，如 `fdescribe`, `fit`。
 
 ### Explaining the Karma Config
 
@@ -172,6 +281,15 @@ module.exports = function(config) {
 该命令会自动在你运行此命令的目录下寻找 karma.conf.js 文件，并获取其中的配置。为了防止你的配置文件不是以 karma.conf.js 命名，或者 karma.conf.js 在另外一个目录下，你可以将你的配置文件作为一个参数传给此命令，如下：
 
     karma start my.conf.js
+
+### FAQ
+
+- [How to resolve promises in AngularJS, Jasmine 2.0 when there is no $scope to force a digest? - Stack Overflow](http://stackoverflow.com/questions/24021031/how-to-resolve-promises-in-angularjs-jasmine-2-0-when-there-is-no-scope-to-for)
+- [javascript - Testing AngularJS promises in Jasmine 2.0 - Stack Overflow](http://stackoverflow.com/questions/23131838/testing-angularjs-promises-in-jasmine-2-0)
+
+### Tutorial
+
+- [Intro to Webstorm, Jasmine, and Karma - (for .Net developers) - YouTube](https://www.youtube.com/watch?v=6osY4HsCRm4)
 
 ## End-to-End Testing
 
@@ -1088,5 +1206,9 @@ describe('Stock Widget Directive Rendering', function() {
 
 ## Tutorial
 
+- [AngularJS Testing - Unit Testing Tutorials](http://www.bradoncode.com/tutorials/angularjs-unit-testing/)
 - [Testing Angular with Karma](https://www.airpair.com/angularjs/posts/testing-angular-with-karma)
 - [A Journey Through Client-Side Testing with JavaScript -Telerik Developer Network](http://developer.telerik.com/featured/journey-client-side-testing-javascript)
+- [Unit testing AngularJS applications](https://www.airpair.com/angularjs/posts/unit-testing-angularjs-applications)
+- [An Introduction To Unit Testing In AngularJS Applications – Smashing Magazine](https://www.smashingmagazine.com/2014/10/introduction-to-unit-testing-in-angularjs/)
+- [Full-Spectrum Testing with AngularJS and Karma - yearofmoo.com](http://www.yearofmoo.com/2013/01/full-spectrum-testing-with-angularjs-and-karma.html#testing-services-factories)

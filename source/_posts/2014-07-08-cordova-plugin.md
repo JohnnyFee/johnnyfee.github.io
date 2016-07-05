@@ -1,7 +1,7 @@
 layout: post
-title: "Cordova Android Plugin"
+title: "Cordova Plugin"
 category: Cordova
-tags: [phonegap, cordova]
+tags: [cordova, plugin]
 ---
 
 ## 插件开发指南
@@ -12,7 +12,7 @@ _插件_ 是应用中用来显示的 Cordova WebView 和原生平台通信的植
 
 插件包含每一个支持的平台的一个单独的 JavaScript 接口和一个相应的原生代码。我们通过一个简单的 _echo_ 插件逐步讲解，这个例子可以作为编写插件模板。
 
-### 编译插件
+## Building a Plugin
 
 应用开发者使用 CLI 的 `plugin add` 命令来添加一个插件到工程中，命令参数为插件代码的 GIT 库的 URL。这个例子实现了 Cordova 的 Device API：
 
@@ -20,7 +20,7 @@ _插件_ 是应用中用来显示的 Cordova WebView 和原生平台通信的植
 $ cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git
 ```
 
-插件代码库的顶层目录中必须包含 `plugin.xml` 文件。以下是 `Device` 插件的简化版本：
+插件代码库的顶层目录中必须包含 `plugin.xml` 文件。There are many ways to configure this file, details for which are available in the [Plugin Specification](https://cordova.apache.org/docs/en/latest/plugin_ref/spec.html). This abbreviated version of the `Device` plugin provides a simple example to use as a model: 
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -45,25 +45,23 @@ $ cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-devi
 </plugin>
 ```
 
-### 验证插件
+The top-level `plugin` tag's `id` attribute uses the same reverse-domain format to identify the plugin package as the apps to they're added.  The `js-module` tag specifies the path to the common JavaScript interface.  The `platform` tag specifies a corresponding set of native code, for the `ios` platform in this case.  The `config-file` tag encapsulates a `feature` tag that is injected into the platform-specific `config.xml` file to make the platform aware of the additional code library.  The `header-file` and `source-file` tags specify the path to the library's component files.
+
+## Validating a Plugin using Plugman
 
 可以使用 plugman 工具去检查插件在每一个平台是是否安装成功。
 
-你需要一个有效的 app 源文件目录，如 `www` 目录，确保 `index.html` 页面引用了插件的 JavaScript 接口：
+You need an valid app source directory, such as the top-level `www` directory included in a default CLI-generated project as described in [Create your first app](https://cordova.apache.org/docs/en/latest/guide/cli/index.html) guide.
 
-```html
-<script src="myplugin.js"></script>
-```
-
-然后，运行下面的代码去测试插件是否正确载入：
+Then run a command such as the following to test whether iOS dependencies load properly:
 
 ```shell
 $ plugman install --platform ios --project /path/to/my/project/www --plugin /path/to/my/plugin
 ```
 
-### JavaScript 接口
+## The JavaScript Interface
 
-JavaScript 提供了一个前端接口，它是插件最重要的组成部分。你可以按你喜欢的方式去组织你的插件，但是你需要调用 `cordova.exec()`去与本地平台通信：
+he JavaScript provides the front-facing interface, making it perhaps the most important part of the plugin.  You can structure your plugin's JavaScript however you like, but you need to call `cordova.exec` to communicate with the native platform, using the following syntax:
 
 ```js
 cordova.exec(function(winParam) {},  
@@ -73,60 +71,97 @@ cordova.exec(function(winParam) {},
     ["firstArgument", "secondArgument", 42, false]);  
 ```
 
-参数说明为：
+Here is how each parameter works:
 
-* `function(winParam){}`: 成功的回调函数。
-* `function(error){ }`：失败回调。
-* `service`：调用原生接口的服务名称。
-* `action`：调用原生接口的行为，一般为插件的函数名称。
-* `[/* arguments */]`: 传递给原生接口的参数数组。
+* `function(winParam) {}`: A success callback function. Assuming your `exec` call completes successfully, this function executes along with any parameters you pass to it.
+* `function(error) {}`: An error callback function. If the operation does not complete successfully, this function executes with an optional error parameter.
+* `"service"`: The service name to call on the native side. This corresponds to a native class, for which more information is available in the native guides listed below.
+* `"action"`: The action name to call on the native side. This generally corresponds to the native class method. See the native guides listed below.
+* `[/* arguments */]`: An array of arguments to pass into the native environment.
 
-如：
+## Sample JavaScript
 
-```js
-window.echo = function(str, callback) {  
-    cordova.exec(callback, function(err) {  
-        callback('Nothing to echo.');  
-    }, "Echo", "echo", [str]);  
-};  
+This example shows one way to implement the plugin's JavaScript
+interface:
+
+```javascript
+window.echo = function(str, callback) {
+    cordova.exec(callback, function(err) {
+        callback('Nothing to echo.');
+    }, "Echo", "echo", [str]);
+};
 ```
 
-在这个例子中，插件被关联到 `window` 对象上，可以这样调用：
+In this example, the plugin attaches itself to the `window` object as
+the `echo` function, which plugin users would call as follows:
 
-```js
-window.echo("echome", function(echoValue) {  
-    alert(echoValue == "echome"); // should alert true.  
-});  
+```javascript
+window.echo("echome", function(echoValue) {
+    alert(echoValue == "echome"); // should alert true.
+});
 ```
 
-### 原生接口
+Look at the last three arguments to the `cordova.exec` function. The first calls the `Echo` _service_, a class name. The second requests the `echo` _action_, a method within that class. The third is an array of arguments containing the echo string, which is the `window.echo` function's the first parameter.
 
-一旦你定义了你的 JavaScript 接口，你至少需要一个本地实现。详细信息可以参考：
+The success callback passed into `exec` is simply a reference to the callback function `window.echo` takes. If the native platform fires the error callback, it simply calls the success callback and passes it a default string.
 
-* [Amazon Fire OS Plugins](http://docs.phonegap.com/en/3.3.0/guide_platforms_amazonfireos_plugin.md.html#Amazon%20Fire%20OS%20Plugins)
-* [](http://docs.phonegap.com/en/3.3.0/guide_platforms_android_plugin.md.html#Android%20Plugins)[PhoneGap
-     08 Android 插件介绍](http://blog.csdn.net/jacob_wang520/article/details/18306383)
-* [iOS Plugins](http://docs.phonegap.com/en/3.3.0/guide_platforms_ios_plugin.md.html#iOS%20Plugins)
-* [BlackBerry 10 Plugins](http://docs.phonegap.com/en/3.3.0/guide_platforms_blackberry10_plugin.md.html#BlackBerry%2010%20Plugins)
-* [Windows Phone Plugins](http://docs.phonegap.com/en/3.3.0/guide_platforms_wp8_plugin.md.html#Windows%20Phone%20Plugins)
-* [Amazon Fire OS Plugins](http://docs.phonegap.com/en/edge/guide_platforms_amazonfireos_plugin.md.html#Amazon%20Fire%20OS%20Plugins)
-* [Android Plugins](http://docs.phonegap.com/en/edge/guide_platforms_android_plugin.md.html#Android%20Plugins)
-* [iOS Plugins](http://docs.phonegap.com/en/edge/guide_platforms_ios_plugin.md.html#iOS%20Plugins)
-* [BlackBerry 10 Plugins](http://docs.phonegap.com/en/edge/guide_platforms_blackberry10_plugin.md.html#BlackBerry%2010%20Plugins)
-* [Windows Phone Plugins](http://docs.phonegap.com/en/edge/guide_platforms_wp8_plugin.md.html#Windows%20Phone%20Plugins)
+## Native Interfaces
 
-Tizen平台暂时不支持插件。
+Once you define JavaScript for your plugin, you need to complement it
+with at least one native implementation. Details for each platform are
+listed below, and each builds on the simple Echo Plugin example above:
 
-### 发布插件
+* [Android Plugins](https://cordova.apache.org/docs/en/latest/guide/platforms/android/plugin.html)
+* [iOS Plugins](https://cordova.apache.org/docs/en/latest/guide/platforms/ios/plugin.html)
+* [BlackBerry 10 Plugins](https://cordova.apache.org/docs/en/latest/guide/platforms/blackberry10/plugin.html)
+* [Windows Phone 8 Plugins](https://cordova.apache.org/docs/en/latest/guide/platforms/wp8/plugin.html)
+* [Windows Plugins](https://cordova.apache.org/docs/en/latest/guide/platforms/win8/plugin.html)
 
-一旦开发完成你的插件，你可能想要将其发布到社区与别人进行分享。你可以发布你的插件到 cordova [注册中心](http://plugins.cordova.io/) 或者发布到任何其他基于 npm 的注册中心。
+## Publishing Plugins
 
-你需要使用 `plugman` 工具按照下面的步骤发布插件：
+You can publish your plugin to any `npmjs`-based registry, but the recommended one is the [NPM registry](https://www.npmjs.com/). Other developers can install your plugin automatically using either `plugman` or the Cordova CLI.
 
-```shell
-$ plugman adduser # that is if you don't have an account yet
-$ plugman publish /path/to/your/plugin
+To publish a plugin to NPM registry you need to follow steps below:
+
+* install the `plugman` CLI:
+
+    ```
+    $ npm install -g plugman
+    ```
+
+* create `package.json` file for your plugin:
+
+    ```
+    $ plugman createpackagejson /path/to/your/plugin
+    ```
+
+* publish it:
+
+    ```
+    $ npm adduser # that is if you don't have an account yet
+    $ npm publish /path/to/your/plugin
+    ```
+
+For more details on npm usage refer to [publishing a npm package](https://docs.npmjs.com/getting-started/publishing-npm-packages) on the NPM documentation site.
+
+## Integrating with Plugin Search
+
+To surface the plugin in [Cordova Plugin Search](https://cordova.apache.org/plugins/), add the `ecosystem:cordova` keyword to the `package.json` file of your plugin before publishing.
+
+To indicate support for a particular platform add a keyword with the `<platformName>` as `**cordova-<platformName>**` to the list of keywords in package.json. Plugman's `createpackagejson` command does this for you, but if you did not use it to generate your `package.json`, you should manually edit it as shown below.
+
+For example, for a plugin that supports android, iOS & Windows, the keywords in package.json should include:
+
+```json
+"keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-windows"
+]
 ```
+
+For more detailed example of a package.json, review the [package.json file of cordova-plugin-device](https://github.com/apache/cordova-plugin-device/blob/master/package.json).
 
 ## 插件规范
 

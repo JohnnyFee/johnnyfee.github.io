@@ -4,46 +4,77 @@ category: Cordova
 tags: [phonegap, cordova]
 ---
 
-## 概述
+## Cordova
 
-Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>，内容为一个压缩包，包括cordova的各个模块。和 Cordova 类似的框架还有 [Trigger.io - mobile platform for web developers](https://trigger.io/)。
+### Setup
 
-![Cordova源码](http://johnnyimages.qiniudn.com/cordova-zip.png)
+To install the `cordova` command-line tool, follow these steps:
+
+1.  Download and install [Node.js](https://nodejs.org/en/download/). On
+    installation you should be able to invoke `node` and `npm` on your
+    command line.
+
+2.  (Optional) Download and install a [git client](http://git-scm.com/downloads), if you don't
+    already have one. Following installation, you should be able to invoke `git`
+    on your command line. The CLI uses it to download assets when they are referenced using a url to a git repo.
+
+3.  Install the `cordova` module using `npm` utility of Node.js. The `cordova`
+    module will automatically be downloaded by the `npm` utility.
+
+    - on OS X and Linux:
+
+        ```
+        $ sudo npm install -g cordova
+        ```
+
+        On OS X and Linux, prefixing the `npm` command with
+        `sudo` may be necessary to install this development utility in
+        otherwise restricted directories such as
+        `/usr/local/share`. If you are using the optional
+        nvm/nave tool or have write access to the install directory,
+        you may be able to omit the `sudo` prefix. There are
+        [more tips](http://justjs.com/posts/npm-link-developing-your-own-npm-modules-without-tears)
+        available on using `npm` without `sudo`, if you desire to do that.
+
+    - on Windows:
+
+        ```
+        C:\>npm install -g cordova
+        ```
+
+### pre-requisites
+
+[Install pre-requisites for building](https://cordova.apache.org/docs/en/latest/guide/cli/#install-pre-requisites-for-building)
+
+To build and run apps, you need to install SDKs for each platform you wish to target. Alternatively, if you are using browser for development you can use `browser` platform which does not require any platform SDKs.
+
+To check if you satisfy requirements for building the platform:
+
+```
+$ cordova requirements
+```
+
+See Also 
+
+* [Android platform requirements](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html#requirements-and-support)
+* [iOS platform requirements](https://cordova.apache.org/docs/en/latest/guide/platforms/ios/index.html#requirements-and-support)
+* [Windows platform requirements](https://cordova.apache.org/docs/en/latest/guide/platforms/win8/index.html#requirements-and-support)
 
 ### PhoneGap & Cordova
 
 - PhoneGap是Apache Cordova的一个分支。你可以这样想，Apache Cordova是一台发动机，运行在PhoneGap上，就像WebKit这个浏览器引擎运行在Chrome浏览器和Safari浏览器上一样。
 - PhoneGap是Adobe在Cordova的基础上加入了自家的各种服务而成的。例如，“PhoneGap构建服务”，可以让程序员将他的源代码上传到“云编译器”，生成应用程序每一个所支持平台的安装包。
-- [Is there a difference between PhoneGap and Cordova commands? - Stack Overflow](http://stackoverflow.com/questions/18174511/is-there-a-difference-between-phonegap-and-cordova-commands)
-- [PhoneGap](http://phonegap.com/2012/03/19/phonegap-cordova-and-what%E2%80%99s-in-a-name/)
+
+
+See [Is there a difference between PhoneGap and Cordova commands? - Stack Overflow](http://stackoverflow.com/questions/18174511/is-there-a-difference-between-phonegap-and-cordova-commands)
 
 <!-- more -->
-
-### PhoneGap 3.0 的变化
-
-将cordova原先的官方核心插件剥离出来与自定义插件处于同一层次。新插件架构所带来的好处是可以让应用更小更快，只需要加载所需要的API。
-
-![phonegap2.x&3.x.png](http://johnnyimages.qiniudn.com/phonegap2.x&3.x.png)
 
 ### 开发路线
 
 - __跨平台工作流：__  如果你想让你的应用可以跑在尽可能多的移动平台，可以使用这种开发路线。
 - __以平台为中心的工作流：__ 如果你想专注于单个平台，并且向在更底层修改应用，那么你应该使用以平为中心的工作流。平台平台相关的工具包在[这里](https://www.apache.org/dist/cordova/)下载。
 
-## Setup
-
-1. 安装JDK、ANT（绿色）、node.js
-2. 添加环境变量 JAVA_HOME _C:\Program Files (x86)\Java\jdk1.7.0_25_
-3. 将以下目录（参考）加入PATH：
-
-    - _C:\adt-bundle-windows-x86-20130522\sdk\platform-tools\_
-    - _C:\adt-bundle-windows-x86-20130522\sdk\tools\_
-    - _%JAVA_HOME%\bin_
-    - ANT目录/bin
-4. 下载安装 [git client](http://git-scm.com/)
-5. 安装 cordova
-
-        $ sudo npm install -g cordova
 
 ## Quick Start
 
@@ -85,13 +116,22 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
 
 在 Windows 上，可以添加以下平台：
 
-    $ cordova platform add wp7
-    $ cordova platform add wp8
-    $ cordova platform add windows8
-    $ cordova platform add amazon-fireos
-    $ cordova platform add android
-    $ cordova platform add blackberry10
-    $ cordova platform add firefoxos
+    $ cordova platform add wp7 --save
+    $ cordova platform add wp8 --save
+    $ cordova platform add windows8 --save
+    $ cordova platform add amazon-fireos --save
+    $ cordova platform add android --save
+    $ cordova platform add blackberry10 --save
+    $ cordova platform add firefoxos --save
+
+Running commands to add or remove platforms affects the contents of
+the project's _platforms_ directory, where each specified platform
+appears as a subdirectory.
+
+> Note: When using the CLI to build your application, you should
+> _not_ edit any files in the `/platforms/` directory. The files
+> in this directory are routinely overwritten when preparing
+> applications for building, or when plugins are re-installed.
 
 检查允许安装的平台和已经安装的平台：
 
@@ -102,6 +142,78 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
       $ cordova platform rm android
 
 添加或删除平台会影响 `platforms/` 下的内容。添加平台或者 `build` 时，`www/` 的内容将拷贝到所有平台下，如 `platforms/ios/www` 和 `platforms/android/assets/www`。开发时，只能修改与 `platforms/` 平行的 `www` 目录。
+
+#### Saving platforms
+
+See [Platforms and Plugins Version Management - Apache Cordova](https://cordova.apache.org/docs/en/latest/platform_plugin_versioning_ref/index.html)
+
+To save a platform, you issue the following command :
+
+```language-bash
+$ cordova platform add <platform[@<version>] | directory | git_url> --save
+```
+
+After running the above command, the resulting config.xml looks like :
+
+```language-xml
+<?xml version='1.0' encoding='utf-8'?>
+    ...
+    <engine name="android" spec="~4.0.0" />
+    ...
+</xml>
+```
+
+Some examples :
+
+* **'cordova platform add android --save'** => retrieves the pinned version of the android platform, adds it to the project and then updates config.xml.
+* **'cordova platform add android@3.7.0 --save'** => retrieves the android platform, version 3.7.0 from npm, adds it to the project and then updates config.xml.
+* **'cordova platform add android@https://github.com/apache/cordova-android.git​ --save'** => clones the specified cordova-android git repository, adds the android platform to the project, then updates config.xml and point its version to the specified git-url.
+* **'cordova platform add C:/path/to/android/platform --save'** => retrieves the android platform from the specified directory, adds it to the project, then updates config.xml and point to the directory.
+
+#### Mass saving platforms on an existing project
+
+The '--save' flag described above is only useful when you remember to use it during the platform addition.
+If you have a pre-existing project and you want to save all the currently added platforms in your project, you can use :
+
+```language-bash
+$ cordova platform save
+```
+
+#### Updating / Removing platforms
+
+It is also possible to update/delete from config.xml during the commands 'cordova platform update' and 'cordova platform remove' :
+
+```language-bash
+$ cordova platform update <platform[@<version>] | directory | git_url> --save
+$ cordova platform remove <platform> --save
+```
+
+Some examples :
+
+* **'cordova platform update android --save'** => In addition to updating the android platform to the pinned version, update config.xml entry
+* **'cordova platform update android@3.8.0 --save'** => In addition to updating the android platform to version 3.8.0, update config.xml entry
+* **'cordova platform update /path/to/android/platform --save'** => In addition to updating the android platform to version in the folder, update config.xml entry
+* **'cordova platform remove android --save'** => Removes the android platform from the project and deletes its entry from config.xml.
+
+#### Restoring platforms
+
+Platforms are automatically restored from config.xml when the **'cordova prepare'** command is run.
+
+If you add a platform without specifying a version/folder/git_url, the version to install is taken from config.xml, **if found**.
+
+Example:
+
+Suppose your config.xml file contains the following entry:
+
+```language-xml
+<?xml version='1.0' encoding='utf-8'?>
+    ...
+    <engine name="android" spec="3.7.0" />
+    ...
+</xml>
+```
+
+If you run the command **'cordova platform add android'** (no version/folder/git_url specified), the platform 'android@3.7.0' (as retrieved from config.xml) will be installed.
 
 ### 构建
 
@@ -114,6 +226,8 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
     $ cordova prepare ios
     $ cordova compile ios
 
+See more [Cordova build command reference documentation](https://cordova.apache.org/docs/en/latest/reference/cordova-cli/index.html#cordova-build-command)
+
 ### 运行
 
     // 在模拟器上运行
@@ -121,6 +235,15 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
 
     // 在设备上运行，如果设备不存在，会选择模拟器运行。
     $ cordova run android
+
+    // 查看可用的设备
+    $ cordova run --list
+
+See also:
+
+* [Setting up Android emulator](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html#setting-up-an-emulator)
+* [Cordova run command reference documentation](https://cordova.apache.org/docs/en/latest/reference/cordova-cli/index.html#cordova-run-command)
+* [Cordova emulate command reference documentation](https://cordova.apache.org/docs/en/latest/reference/cordova-cli/index.html#cordova-emulate-command)
 
 ### Using merges to Customize Each Platform
 
@@ -144,7 +267,6 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
 
 ### 帮助
 
-
     cordova or cordova help
     cordova info
 
@@ -161,278 +283,145 @@ Cordova开发的相关源码可以从官网下载 <http://cordova.apache.org/>�
 
 升级工程：
     
-    $ cordova platform update android
-    $ cordova platform update ios
+    $ cordova platform update android --save
+    $ cordova platform update ios --save
 
 ## 插件
 
-- [Cordova Plugin Registry](http://plugins.cordova.io/#/)
+A _plugin_ exposes a Javascript API for native SDK functionality. Plugins are typically hosted on npm and you can search for them on the [plugin search page](https://cordova.apache.org/plugins/). 
+
+Some key APIs are provided by the Apache Cordova open source project and these are referred to as [Core Plugin APIs](https://cordova.apache.org/docs/en/latest/guide/support/index.html#core-plugin-apis). You can also use the CLI to launch the search page.
+
+See more
+
+* [Cordova plugin command reference documentation](https://cordova.apache.org/docs/en/latest/reference/cordova-cli/index.html#cordova-plugin-command)
+* [Cordova plugin search page](https://cordova.apache.org/plugins/)
+* [Core Plugin APIs](https://cordova.apache.org/docs/en/latest/guide/support/index.html#core-plugin-apis)
+
+### 搜索插件
+
+    $ cordova plugin search camera
 
 ### 添加插件
 
-插件官网：[plugins.cordova.io](http://plugins.cordova.io/)
+To add the camera plugin, we will specify the npm package name for the camera plugin:
 
-- 搜索插件：
+    $ cordova plugin add 插件名
 
-        $ cordova plugin search bar code
-        -> com.phonegap.plugins.barcodescanner - Scans Barcodes
+为插件指定版本：
 
-- 添加插件：
+    $ cordova plugin add org.apache.cordova.console@latest
+    $ cordova plugin add org.apache.cordova.console@0.2.1
 
-        $ cordova plugin add 插件名
+插件的默认下载地址为 `registry.phonegap.com`，我们可以指定插件的下载地址：
 
-    同时添加多个插件：
+    $ cordova plugin add https://github.com/apache/cordova-plugin-console.git
 
-        $ cordova plugin add org.apache.cordova.console org.apache.cordova.device
+默认从指定地址的 `master` 分支下载插件，我们可以指定 `git-ref` 如分支或者 `tag`：
 
-    为插件指定版本：
+    $ cordova plugin add https://github.com/apache/cordova-plugin-console.git#r0.2.0
 
-        $ cordova plugin add org.apache.cordova.console@latest
-        $ cordova plugin add org.apache.cordova.console@0.2.1
+如果插件存在 git repo 的子目录中，我们可以通过 `:` 来指定：
 
-    插件的默认下载地址为 `registry.phonegap.com`，我们可以指定插件的下载地址：
+    $ cordova plugin add https://github.com/someone/aplugin.git#:/my/sub/dir
 
-        $ cordova plugin add https://github.com/apache/cordova-plugin-console.git
-    
-    默认从指定地址的 `master` 分支下载插件，我们可以指定 `git-ref` 如分支或者 `tag`：
+同时指定 `git-ref`：
 
-        $ cordova plugin add https://github.com/apache/cordova-plugin-console.git#r0.2.0
+    $ cordova plugin add https://github.com/someone/aplugin.git#r0.0.1:/my/sub/dir
 
-    如果插件存在 git repo 的子目录中，我们可以通过 `:` 来指定：
+添加本地路径的插件，该插件目录中需要包含 `plugin.xml` 文件：
 
-        $ cordova plugin add https://github.com/someone/aplugin.git#:/my/sub/dir
+    $ cordova plugin add ../my_plugin_dir
 
-    同时指定 `git-ref`：
+### 查看插件
 
-        $ cordova plugin add https://github.com/someone/aplugin.git#r0.0.1:/my/sub/dir
+Use `plugin ls` (or `plugin list`, or `plugin` by itself) to view
+currently installed plugins. Each displays by its identifier:
 
-    添加本地路径的插件，该插件目录中需要包含 `plugin.xml` 文件：
+    $ cordova plugin ls    # or 'plugin list'
 
-        $ cordova plugin add ../my_plugin_dir
+### 移除插件
 
-- 查看插件：
+    $ cordova plugin rm org.apache.cordova.console
+    $ cordova plugin remove org.apache.cordova.console    # same
 
-        $ cordova plugin ls    # or 'plugin list'
-        -> [ 'org.apache.cordova.console' ]
+### Saving plugins
 
-- 移除插件：
-    
-        $ cordova plugin rm org.apache.cordova.console
-        $ cordova plugin remove org.apache.cordova.console    # same
+See [Platforms and Plugins Version Management - Apache Cordova](https://cordova.apache.org/docs/en/latest/platform_plugin_versioning_ref/index.html)
 
-__常用插件：__
+To save a plugin, you issue the following command :
 
-- 基本设备信息 (Device API)
-    
-        $ cordova plugin add org.apache.cordova.device
+```language-bash
+$ cordova plugin add <plugin[@<version>] | directory | git_url> --save
+```
 
-- 网络连接和电池 [Events](http://docs.phonegap.com/en/edge/cordova_events_events.md.html#Events):
+After running the above command, the resulting config.xml looks like :
 
-        $ cordova plugin add org.apache.cordova.network-information  
-        $ cordova plugin add org.apache.cordova.battery-status  
+```language-xml
+<?xml version='1.0' encoding='utf-8'?>
+    ...
+    <plugin name="cordova-plugin-console" spec="~1.0.0" />
+    ...
+</xml>
+```
 
-- 加速器, 指南针, 定位:
+Some examples :
 
-        $ cordova plugin add org.apache.cordova.device-motion  
-        $ cordova plugin add org.apache.cordova.device-orientation  
-        $ cordova plugin add org.apache.cordova.geolocation  
+* **'cordova plugin add cordova-plugin-console --save'** => retrieves the pinned version of the console plugin, adds it to the project and then updates config.xml.
+* **'cordova plugin add cordova-plugin-console@0.2.13 --save'** => retrieves the android plugin, version 0.2.13 from npm, adds it to the project and then updates config.xml.
+* **'cordova plugin add https://github.com/apache/cordova-plugin-console.git --save'** => clones the specified console plugin git repository, adds the console plugin to the project, then updates config.xml and point its version to the specified git-url.
+* **'cordova plugin add C:/path/to/console/plugin --save'** => retrieves the console plugin from the specified directory, adds it to the project, then updates config.xml and point to the directory.
 
-- 照相机, 媒体播放 and 截图:
+### Mass saving plugins on an existing project
 
-        $ cordova plugin add org.apache.cordova.camera  
-        $ cordova plugin add org.apache.cordova.media-capture  
-        $ cordova plugin add org.apache.cordova.media  
+The '--save' flag described above is only useful when you remember to use it during the plugin addition.
+If you have a pre-existing project and you want to save all currently added plugins in the project, you can use :
 
-- 访问设备文件或者网络 (File API):
+```language-bash
+$ cordova plugin save
+```
 
-        $ cordova plugin add org.apache.cordova.file  
-        $ cordova plugin add org.apache.cordova.file-transfer  
+### Updating / Removing plugins
 
-- 对话框或者震动通知:
+It is also possible to update/delete from config.xml during the commands 'cordova plugin update' and 'cordova plugin remove' :
 
-        $ cordova plugin add org.apache.cordova.dialogs  
-        $ cordova plugin add org.apache.cordova.vibration  
+```language-bash
+$ cordova plugin update <plugin[@<version>] | directory | git_url> --save
+$ cordova plugin remove <plugin> --save
+```
 
-- 联系人:
+Some examples :
 
-        $ cordova plugin add org.apache.cordova.contacts  
+* **'cordova plugin update cordova-plugin-console --save'** => In addition to updating the console plugin to the pinned version, update config.xml entry
+* **'cordova plugin update cordova-plugin-console@0.2.13 --save'** => In addition to updating the android plugin to version 3.8.0, update config.xml entry
+* **'cordova plugin update /path/to/console/plugin --save'** => In addition to updating the console plugin to version in the folder, update config.xml entry
+* **'cordova plugin remove cordova-plugin-console --save'** => Removes the console plugin from the project and deletes its entry from config.xml.
 
-- 全球化:
+### Restoring plugins
 
-        $ cordova plugin add org.apache.cordova.globalization  
+Plugins are automatically restored from config.xml when the **'cordova prepare'** command is run.
 
-- 启动动画:
+If you add a plugin without specifying a version/folder/git_url, the version to be installed is taken from config.xml, **if found**.
 
-        $ cordova plugin add org.apache.cordova.splashscreen  
+Example:
 
-- 打开浏览器窗口 (InAppBrowser):
+Suppose your config.xml file contains the following entry:
 
-        $ cordova plugin add org.apache.cordova.inappbrowser  
+```language-xml
+<?xml version='1.0' encoding='utf-8'?>
+    ...
+    <plugin name="cordova-plugin-console" spec="0.2.11" />
+    ...
+</ xml>
+```
 
-- 调试控制台:
-
-        $ cordova plugin add org.apache.cordova.console
-
-参考：[Which Core PhoneGap/Cordova Plugins Do I Need?](http://developer.telerik.com/featured/which-core-phonegapcordova-plugins-do-i-need/)
+If you run the command **'cordova plugin add cordova-plugin-console'** (no version/folder/git_url specified), the plugin 'cordova-plugin-console@0.2.11' (as retrieved from config.xml) will be installed.
 
 ### 自定义插件
 
 - [PhoneGap API Documentation](http://docs.phonegap.com/en/edge/guide_hybrid_plugins_index.md.html#Plugin%20Development%20Guide)
 - [Cordova Android Plugin](http://inching.org/2014/06/05/cordova-android-plugin/)
 
-## Plugman
-
-See [PhoneGap 09 使用Plugman管理Plugins - jacob的专栏 - 博客频道 - CSDN.NET](http://blog.csdn.net/jacob_wang520/article/details/18319471)
-
-如果你使用的是以平台为中心(Platform-centered)的方法开发插件，你需要使用更底层的 [Plugman](https://github.com/apache/cordova-plugman/) 来管理插件。
-
-### 安装
-
-    $ npm install -g plugman
-
-### 添加插件
-
-    $ plugman --platform <ios|amazon-fireos|android|blackberry10|wp7|wp8> 
-    --project <directory> 
-    --plugin <name|url|path> [--plugins_dir <directory>] 
-    [--www <directory>] [--variable <name>=<value> [--variable <name>=<value> ...]]
-
-- `--platform` 指定平台。
-- `--project` cordova 项目的平台位置。
-- `--plugin` 指定插件。允许的值有以下几种：
-    + name: 插件所在的目录名。该目录必须是 `--plugins_dir` 目录下存在的目录或者是 Cordova registry 中的插件。
-    + url: 以 `https://` or `git://` 开头 git repo 地址，该库中必须包含 `plugin.xml` 文件。git 库中的内容将拷贝到 `--plugins_dir` 下。
-    + path: 包含 `plugin.xml` 文件的插件路径。内容也会被拷贝到 `--plugins_dir` 下。
-- `--plugins_dir` defaults to `<project>/cordova/plugins`。 插件路径。
-- `--www` defaults to the `<project>/www`。 `www` 路径。
-- `--variable` 安装插件时需要指定的变量。
-
-如：
-
-       $ plugman install --platform ios --project /path/to/my/project --plugin /path/to/my/plugin
-
-### 移除插件
-
-    $ plugman uninstall --platform <ios|amazon-fireos|android|blackberry10|wp7|wp8> 
-    --project <directory> --plugin <id> [--www <directory>] [--plugins_dir <directory>]
-
-### Registry Actions
-
-    // 查找
-    plugman search <plugin keywords>
-
-    // 获取和设置插件镜像
-    plugman config set registry <url-to-registry>
-    plugman config get registry
-
-    // 获取插件信息
-    plugman info <id>
-
-## config.xml
-
-参考：
-
-- [PhoneGap API Documentation](http://docs.phonegap.com/en/edge/config_ref_index.md.html#The%20config.xml%20File)
-- [PhoneGap 10 全局配置文件config.xml - jacob的专栏 - 博客频道 - CSDN.NET](http://blog.csdn.net/jacob_wang520/article/details/18321239)
-
-该文件位于 `app/config.xml`，当调用 `build` 时，该文件将会被拷贝到不同的地方：
-
-    app/platforms/ios/AppName/config.xml
-    app/platforms/blackberry10/www/config.xml
-    app/platforms/android/res/xml/config.xml
-
-使用 CLI 生成的 `config.xml` 默认内容为：
-
-```xml
-<widget id="com.example.hello" version="0.0.1">
-    <name>HelloWorld</name>
-    <description>
-        A sample Apache Cordova application that responds to the deviceready event.
-    </description>
-    <author email="dev@callback.apache.org" href="http://phonegap.com">
-        Apache Cordova Team
-    </author>
-    <content src="index.html" />
-    <access origin="*" />
-    <preference name="disable-cursor" value="false" />
-</widget>
-```
-
-- `widget.id` 为应用的标识，`widget.version`  为应用版本，命名格式为 `major/minor/patch`。
-- `name` 应用名称。
-- `description` 和 `author` 分别为应用描述和作者。
-- `content` 为应用的启用页，默认为 `index.html`，相对 `www/`下的文件路径。
-- `access` 可以访问的网络的白名单，参考 [Whitelist Guide](http://docs.phonegap.com/en/edge/guide_appdev_whitelist_index.md.html#Whitelist%20Guide)。
-- `preference` 为对应到平台的特性，如 `全屏` 等。
-
-
-### 全局偏好设置
-
-所有平台都支持的特性：
-
-- Fullscreen 全屏，默认为false。
-
-        <preference name="Fullscreen" value="true" />
-
-- Orientation 横屏、竖屏设置，可选值为 `default`, `landscape`, or `portrait`。默认为 default。
-    
-        <preference name="Orientation" value="landscape" />
-
-### 多平台偏好设置
-
-- DisallowOverscroll(boolean,false)：在用户滚动过程中，当你不想要显示任何反馈，可以将该值设置为true。适用于 Android 和 IOS。
-
-        <preference name="DisallowOverscroll" value="true"/> 
-
-- BackgroundColor：设置背景颜色，支持32位色彩，首字节代表 alpha 通道，其他代表 RGB 通道。
-
-    可用于 Android 和 BlackBerry，通过重写CSS可以用于所有平台，如：body{background-color:blue;}
-
-        <preference name="BackgroundColor" value="0xff0000ff"/>
-
-- HideKeyboardFormAccessoryBar（boolean，false）：在下面键盘出现是，需要隐藏工具栏，从而帮助用户从一个 form 转到另一个 form 的时候，可以将该值设置为 true。应用于 IOS 和 BlackBerry
-
-        <preference name="HideKeyboardFormAccessoryBar" value="true"/>  
-
-### 特征元素
-
-如果你使用 CLI 去编译项目，你可以使用 plugin 命令启用设备 API，它不会修改顶级的 config.xml 文件，所以 `<feature>` 不会应用到工作流中。如果你直接工作在一个 SDK 下，并且使用特定平台的 `config.xml`，你可以使用 `<feature>` 来启用设备级别的 API 和外部插件。以下为 Android 项目指定设备 API
-
-```xml
-<feature name="Device">
-    <param name="android-package" value="org.apache.cordova.device.Device" />
-</feature>
-```
-
-他们通常以自定义值出现在平台特定的config.xml文件中。比如，这儿有一个为android项目指明设备API的例子：
-
-```xml
-<feature name="Device">  
-    <param name="android-package" value="org.apache.cordova.device.Device" />  
-</feature> 
-```
-
-这个元素如何出现在 iOS 项目中：
-
-```xml
-<feature name="Device">  
-    <param name="ios-package" value="CDVDevice" />  
-</feature>  
-```
-
-### 平台元素
-
-使用 CLI 编译应用时，有时需要制定需要制定偏好这只或者其他特殊平台的元素规格。使用 `<platform>` 来指定只出现在一个指定平台的 `config.xml` 文件中的特殊配置。比如，以下是如何指定只有 Android 使用 Fullscreen 偏好：
-
-```xml
-<platform name="android">
-    <preference name="Fullscreen" value="true" />
-</platform>
-```
-
-## Icons and Splash Screens
-
-为所有平台或者为特殊平台指定图标和启动画面，参考 [PhoneGap API Documentation](http://docs.phonegap.com/en/edge/config_ref_images.md.html)。
 
 ## Debug
 
@@ -525,6 +514,10 @@ See [cordova - Phonegap HTML app and various alerts hang browser - Stack Overflo
 
 - [jxp/phonegap-desktop](https://github.com/jxp/phonegap-desktop) Desktop shim library to implement PhoneGap API and return sample data.
 - [phonegap/phonegap-start](https://github.com/phonegap/phonegap-start) PhoneGap Hello World app
+
+## Tools
+
+- [Crosswalk - build world class hybrid apps](https://crosswalk-project.org/)
 
 ## Tutorial
 

@@ -1199,6 +1199,7 @@ describe('Stock Widget Directive Rendering', function() {
 ## Tools
 
 - [SlimerJS](http://slimerjs.org)
+- [GapDebug Features for Mobile App Debugging - Genuitec](https://www.genuitec.com/products/gapdebug/features/)
 
 ## Reference
 

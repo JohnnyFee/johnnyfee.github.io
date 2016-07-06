@@ -18,6 +18,8 @@ tags: [android, cordova, config]
     app/platforms/blackberry10/www/config.xml
     app/platforms/android/res/xml/config.xml
 
+<!-- more -->
+
 使用 CLI 生成的 `config.xml` 默认内容为：
 
 ```xml

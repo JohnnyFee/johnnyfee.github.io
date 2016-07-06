@@ -7,7 +7,7 @@ tags: [android, cordova, plugin, plugman]
 
 如果你使用的是以平台为中心(Platform-centered)的方法开发插件，你需要使用更底层的 [Plugman](https://github.com/apache/cordova-plugman/) 来管理插件。
 
-<!-- see -->
+<!-- more -->
 
 See [Using Plugman to Manage Plugins - Apache Cordova](https://cordova.apache.org/docs/en/latest/plugin_ref/plugman.html)
 

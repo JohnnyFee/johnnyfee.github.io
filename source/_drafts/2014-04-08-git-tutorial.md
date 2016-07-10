@@ -419,3 +419,8 @@ See [ssh is no longer using ~/.ssh/config - Server Fault](http://serverfault.com
 - [gitguru » Rebase v Merge in Git](http://gitguru.com/2009/02/03/rebase-v-merge-in-git/)
 - [Git教程 - 廖雪峰的官方网站](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
 - [git 使用简易指南](http://www.bootcss.com/p/git-guide/)
+
+## Solution
+
+- [更新從 GitHub 上 fork 出來的 repository (或是同步兩個不同 server 端的 repository)](https://www.peterdavehello.org/2014/02/update_forked_repository/)
+- [git - How do I update a GitHub forked repository? - Stack Overflow](http://stackoverflow.com/questions/7244321/how-do-i-update-a-github-forked-repository)

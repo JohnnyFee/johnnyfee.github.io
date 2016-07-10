@@ -320,3 +320,4 @@ JS的加载其实是由两阶段组成：下载内容（download bytes）和执�
 
 - [Javascript代码在页面加载时的执行顺序介绍_基础知识_脚本之家](http://www.jb51.net/article/36330.htm)
 - [Everything I Know About The Script Tag - Eager Blog](https://eager.io/blog/everything-I-know-about-the-script-tag/)
+- [javascript - load scripts asynchronously - Stack Overflow](http://stackoverflow.com/questions/7718935/load-scripts-asynchronously)

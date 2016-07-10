@@ -11,6 +11,8 @@ A submodule is a nested repository that is embedded in a dedicated subdirectory 
 
 The link between working tree entry and __`foreign repository`__ is stored in the __`.gitmodules`__ file of the parent repository. The .gitmodules file is usually versioned, so it can be maintained by all users and/or changes are propagated to all users.
 
+<!-- more -->
+
 Setting submodule repositories involves an initialization process, in which the required entries are added to the __`.git/config`__ file. The user may later adjust it, for example to fix SSH login names.
 
 <!-- more -->

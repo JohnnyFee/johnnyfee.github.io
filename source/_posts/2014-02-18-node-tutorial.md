@@ -108,7 +108,7 @@ __Demo:__
 ### Publish
 
 - forever
-- pm2
+- [Unitech/pm2: Production process manager for Node.js apps with a built-in load balancer](https://github.com/Unitech/pm2)
 - Travis
 - [Publishing your first Browserify/Node module](http://blog.risingstack.com/publishing-your-first-browserify-node-module)
 - [shipitjs/shipit](https://github.com/shipitjs/shipit)

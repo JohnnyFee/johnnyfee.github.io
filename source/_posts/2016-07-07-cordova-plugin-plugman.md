@@ -17,7 +17,7 @@ See [Using Plugman to Manage Plugins - Apache Cordova](https://cordova.apache.or
 
 ## 添加插件
 
-    $ plugman --platform <ios|amazon-fireos|android|blackberry10|wp7|wp8> 
+    $ plugman install --platform <ios|amazon-fireos|android|blackberry10|wp7|wp8> 
     --project <directory> 
     --plugin <name|url|path> [--plugins_dir <directory>] 
     [--www <directory>] [--variable <name>=<value> [--variable <name>=<value> ...]]

@@ -7,6 +7,10 @@ Java 反编译工具当前比较好用的有JadClipse和JD-Eclipse，其中JadCl
 
 注意，Android官方class反编译出来的源代码看不到方法体，只能看到一堆"stub"
 
+## java-decompiler <sup><span style="color:red">Recommend</span></sup>
+
+[java-decompiler/jd-gui: A standalone Java Decompiler GUI](https://github.com/java-decompiler/jd-gui)
+
 ## JadClipse
 
 Jad是一个Java的一个反编译工具，是用命令行执行，和通常JDK自带的java，javac命令是一样的。不过因为是控制台运行，所以用起来不太方便。不过幸好有一个eclipse的插件JadClipse，二者结合可以方便的在eclipse中查看class文件的源代码。

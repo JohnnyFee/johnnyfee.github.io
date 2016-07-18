@@ -39,8 +39,6 @@ Though expressions are more restrictive than JavaScript in many ways, they are m
 
 ## Angular Expressions vs. JavaScript Expressions
 
-## Angular Expressions vs. JavaScript Expressions
-
 Angular expressions are like JavaScript expressions with the following differences:
 
 * **Context:** JavaScript expressions are evaluated against the global `window`. In Angular, expressions are evaluated against a [`scope`](https://docs.angularjs.org/api/ng/type/$rootScope.Scope) object.

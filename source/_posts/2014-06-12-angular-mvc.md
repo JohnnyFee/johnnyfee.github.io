@@ -12,6 +12,14 @@ The concept of a scope in Angular is crucial. A scope can be seen as the glue wh
 
 ![](https://docs.angularjs.org/img/tutorial/tutorial_02.png)
 
+MVC components in angular:
+
+* Model — Models are the properties of a scope; scopes are attached to the DOM where scope properties are accessed through bindings.
+* View — The template (HTML with data bindings) that is rendered into the View.
+* Controller — The `ngController` directive specifies a Controller class; the class contains business logic behind the application to decorate the scope with functions and values
+
+Note that you can also attach controllers to the DOM by declaring it in a route definition via the [$route](https://docs.angularjs.org/api/ngRoute/service/$route) service. A common mistake is to declare the controller again using `ng-controller` in the template itself.  This will cause the controller to be attached and executed twice.
+
 ## module
 
 `module` 扮演一个其他的AngularJS需要管理的对象（控制器、服务等）的容器。要定义一个新的模块，我们需要给 `module` 方法的第一个参数提供模块的名字，第二个参数指定所需要依赖的模块。
@@ -225,6 +233,8 @@ See:
 - [angular开发 控制器之间的通信 - 专栏 - 前端乱炖](http://www.html-js.com/article/1560)
 
 ### ControllerAs
+
+See [Digging into Angular’s “Controller as” syntax @toddmotto](https://toddmotto.com/digging-into-angulars-controller-as-syntax/)
 
 有两种为申明控制器的方式：
 

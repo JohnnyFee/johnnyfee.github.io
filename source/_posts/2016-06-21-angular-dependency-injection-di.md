@@ -13,6 +13,14 @@ The Angular injector subsystem is in charge of creating components, resolving th
 
 <!-- more -->
 
+When the application bootstraps, Angular creates an injector that will be used to find and inject all of the services that are required by your application. The injector itself doesn't know anything about what the `$http` or `$route` services do. In fact, the injector doesn't even know about the existence of these services, unless it is configured with proper module definitions.
+
+The injector only carries out the following steps:
+
+* Load the module definition(s) that you specify in your application.
+* Register all Providers defined in these module definition(s).
+* When asked to do so, lazily instantiate services and their dependencies, via their Providers, as parameters to an injectable function.
+
 ## Using Dependency Injection
 
 DI is pervasive throughout Angular. You can use it when defining components or when providing `run` and `config` blocks for a module.

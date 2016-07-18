@@ -7,6 +7,32 @@ tags: [angular, bootstrap, npapp]
 
 See [AngularJS: Developer Guide: Bootstrap](https://docs.angularjs.org/guide/bootstrap)
 
+## Bootstrapping Angular Applications
+
+Bootstrapping Angular applications automatically using the `ngApp` directive is very easy and
+suitable for most cases. In advanced cases, such as when using script loaders, you can use the
+[imperative/manual way](https://docs.angularjs.org/guide/bootstrap#manual-initialization) to bootstrap the application.
+
+There are 3 important things that happen during the bootstrap phase:
+
+1.  The [injector](https://docs.angularjs.org/api/auto/service/$injector) that will be used for dependency injection is created.
+
+2.  The injector will then create the [root scope](https://docs.angularjs.org/api/ng/service/$rootScope) that will become the context
+    for the model of our application.
+
+3.  Angular will then "compile" the DOM starting at the `ngApp` root element, processing any
+    directives and bindings found along the way.
+
+Once an application is bootstrapped, it will then wait for incoming browser events (such as mouse
+clicks, key presses or incoming HTTP responses) that might change the model. Once such an event
+occurs, Angular detects if it caused any model changes and if changes are found, Angular will
+reflect them in the view by updating all of the affected bindings.
+
+The structure of our application is currently very simple. The template contains just one directive
+and one static binding, and our model is empty. That will soon change!
+
+![](https://docs.angularjs.org/img/tutorial/tutorial_00.png)
+
 ## ng-app
 
 ```

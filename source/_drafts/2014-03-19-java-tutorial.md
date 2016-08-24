@@ -186,6 +186,7 @@ Guice指南-自举（Bootstrapping）你的应用： <http://space.itpub.net/132
 ## Tutorial
 
 - [akullpp/awesome-java](https://github.com/akullpp/awesome-java)
+- [Java知识图谱收集整理 - 简书](http://www.jianshu.com/p/746c01a8535a)
 
 ## Book
 

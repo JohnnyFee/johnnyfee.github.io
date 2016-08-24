@@ -205,6 +205,10 @@ Here's a simple demo showing the different values of background-orgin as well:
 
 <p data-height="268" data-theme-id="0" data-slug-hash="yvpBk" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/JohnnyFee/pen/yvpBk/'>border-transparent</a> by Johnny Fee (<a href='http://codepen.io/JohnnyFee'>@JohnnyFee</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
+## Tools
+
+- [Exploring the Physical Web (Without Buying Beacons) — Medium](https://medium.com/@urish/exploring-the-physical-web-without-buying-beacons-efae51e36c2e#.9bn78t1xd)
+
 ## Tutorial
 
 - [CSS Background: There's More To Know Than You Think - Vanseo Design](http://www.vanseodesign.com/css/background-properties/)

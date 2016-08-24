@@ -188,6 +188,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 ## Toos
 
 - [FWeinb/grunt-svgstore](https://github.com/FWeinb/grunt-svgstore)
+- [svg/svgo: Nodejs-based tool for optimizing SVG vector graphics files.](https://github.com/svg/svgo)
 
 ## Library
 

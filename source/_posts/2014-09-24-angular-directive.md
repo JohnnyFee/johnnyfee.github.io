@@ -1109,3 +1109,4 @@ In this directive we also have to take into account the model we are comparing a
 - [AngularJS Directives – Basics – One Hungry Mind](http://onehungrymind.com/angularjs-directives-basics/)
 - [AngularJS Sticky Notes Pt 2 – Isolated Scope – One Hungry Mind](http://onehungrymind.com/angularjs-sticky-notes-pt-2-isolated-scope/)
 - [HTML5 Mobile - Long-press to re-order scrollable lists](http://www.scottlogic.com/blog/2014/11/25/ionic-sorter.html)
+- [A Practical Guide to AngularJS Directives - SitePoint](https://www.sitepoint.com/practical-guide-angularjs-directives/)

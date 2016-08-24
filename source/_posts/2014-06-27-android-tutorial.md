@@ -47,6 +47,8 @@ tags: [android, tutorial]
 
 ## Debug
 
+- [Android wifi无线调试App新玩法ADB WIFI - 简书](http://www.jianshu.com/p/21d1b65d92a4?from=timeline&isappinstalled=0)
+
 ### Eclipse DDMS error “Can't bind to local 8600 for debugger”
 
 In addition to adding "127.0.0.1 localhost" to your hosts file, make the following changes in Eclipse.
@@ -189,12 +191,57 @@ Try to upgrade your buildToolsVersion to "23.0.1",like this:
 
 ```
 compileSdkVersion 23
-buildToolsVersion "23.0.1"
-```
+buildToolsVersion "23.0.1"   
 
 If you didn't install the buildTools for this version,please download it with SDKManager as hint.
 
 See [java - Execution Failed for task :app:compileDebugJavaWithJavac in Android Studio - Stack Overflow](http://stackoverflow.com/questions/33404552/execution-failed-for-task-appcompiledebugjavawithjavac-in-android-studio)
+
+### Changing API level Android Studio
+
+See [Changing API level Android Studio - Stack Overflow](http://stackoverflow.com/questions/19465049/changing-api-level-android-studio)
+
+When you want to update your minSdkVersion in an existent project...
+
+1.  **Update build.Gradle(Module:app)** - Make sure is the one under **Gradle Script** and it is **NOT** build.Gradle(Project: yourproject)
+
+Example of build.gradle:
+
+```
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "com.stackoverflow.answer"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+}
+
+dependencies {
+    androidTestCompile 'junit:junit:4.12'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+```
+
+1.  **Sync gradle button**
+2.  **Rebuild project**
+
+**After** updating the _build.gradle_'s `minSdkVersion`, you have to click on the button to sync gradle file ("Sync Project with Gradle files"). That will clear the marker.
+
+Updating _manifest.xml_, for e.g. deleting any references to SDK levels in the manifest file, is NOT necessary anymore in Android Studio.
+
+That's all folks.
 
 ## Books
 

@@ -623,32 +623,34 @@ And there we have it ([see example](http://www.html5rocks.com/en/tutorials/es6/p
 
 To do this, we fetch JSON for all our chapters at the same time, then create a sequence to add them to the document:
 
-    getJSON('story.json').then(function(story) {
-      addHtmlToPage(story.heading);
-    
-      // Map our array of chapter urls to
-      // an array of chapter json promises.
-      // This makes sure they all download parallel.
-      return story.chapterUrls.map(getJSON)
-        .reduce(function(sequence, chapterPromise) {
-          // Use reduce to chain the promises together,
-          // adding content to the page for each chapter
-          return sequence.then(function() {
-            // Wait for everything in the sequence so far,
-            // then wait for this chapter to arrive.
-            return chapterPromise;
-          }).then(function(chapter) {
-            addHtmlToPage(chapter.html);
-          });
-        }, Promise.resolve());
-    }).then(function() {
-      addTextToPage("All done");
-    }).catch(function(err) {
-      // catch any error that happened along the way
-      addTextToPage("Argh, broken: " + err.message);
-    }).then(function() {
-      document.querySelector('.spinner').style.display = 'none';
-    });
+```js
+getJSON('story.json').then(function(story) {
+  addHtmlToPage(story.heading);
+
+  // Map our array of chapter urls to
+  // an array of chapter json promises.
+  // This makes sure they all download parallel.
+  return story.chapterUrls.map(getJSON)
+    .reduce(function(sequence, chapterPromise) {
+      // Use reduce to chain the promises together,
+      // adding content to the page for each chapter
+      return sequence.then(function() {
+        // Wait for everything in the sequence so far,
+        // then wait for this chapter to arrive.
+        return chapterPromise;
+      }).then(function(chapter) {
+        addHtmlToPage(chapter.html);
+      });
+    }, Promise.resolve());
+}).then(function() {
+  addTextToPage("All done");
+}).catch(function(err) {
+  // catch any error that happened along the way
+  addTextToPage("Argh, broken: " + err.message);
+}).then(function() {
+  document.querySelector('.spinner').style.display = 'none';
+});
+```
 
 这里的重点是先使用`Array.map`，使所有的章节异步加载；在使用reduce使异步加载的章节顺序显示。
 

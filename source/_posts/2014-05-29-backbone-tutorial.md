@@ -96,7 +96,9 @@ The following diagram shows a typical workflow in a Backbone application:
 
 ## Tutorial
 
+- [cdnjs.com - The best FOSS CDN for web related libraries to speed up your websites!](https://cdnjs.com/libraries/backbone.js/tutorials/)
 - [Embracing Command Line Tooling with Backbone Applications](http://javascriptplayground.com/blog/2014/03/command-line-backbone-yeoman/)
 - [7 Battle tested Backbone.js rules for amazing web apps](http://geeks.bizzabo.com/7-battle-tested-backbonejs-rules-for-amazing-web-apps)
+- [Backbone Application Walkthrough Part 5: RequireJS - Video Tutorial](https://www.joezimjs.com/javascript/backbone-application-walkthrough-part-5-requirejs-video-tutorial/)
 - [Marionette.js](http://marionettejs.com/) Make your Backbone applications dance!
     + [Polymer Web Components with Marionette.js – Jeremy Fairbank Blog](http://blog.jeremyfairbank.com/javascript/polymer-web-components-with-marionette-js/)

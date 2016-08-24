@@ -296,6 +296,11 @@ a:link:after { content: " (" attr(href) ") "; }
 - [CSS选择器笔记 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2009/03/css_selectors.html)
 - 《HTML5 和 CSS3 权威指南》
 
+## Library
+
+- [eqcss/eqcss](https://github.com/eqcss/eqcss)
+    + [The Search For The Holy Grail: How I Ended Up With Element Queries, And How You Can Use Them Today – Smashing Magazine](https://www.smashingmagazine.com/2016/07/how-i-ended-up-with-element-queries-and-how-you-can-use-them-today)
+- [Exploring the Physical Web (Without Buying Beacons) — Medium](https://medium.com/@urish/exploring-the-physical-web-without-buying-beacons-efae51e36c2e#.9bn78t1xd)
 ## Tutorial
 
 - [选择器 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_Started/Selectors)

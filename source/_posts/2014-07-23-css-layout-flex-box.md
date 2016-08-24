@@ -296,9 +296,11 @@ Note that `float`, `clear` and `vertical-align` have no effect on a flex item.
 
 - [kristoferjoseph/flexboxgrid](https://github.com/kristoferjoseph/flexboxgrid)
 
-## 应用
+## Demo
 
-See also [Flexbox Nav Bar with Fixed, Variable, and Take-Up-The-Rest Elements](http://css-tricks.com/flexbox-nav-bar-fixed-variable-take-rest-elements)
+- See also [Flexbox Nav Bar with Fixed, Variable, and Take-Up-The-Rest Elements
+- ](http://css-tricks.com/flexbox-nav-bar-fixed-variable-take-rest-elements)
+- [SitePoint's Tiles: A Case Study in Components, Theming and Flexbox](https://www.sitepoint.com/sitepoints-tiles-a-case-study)
 
 ### Centering
 

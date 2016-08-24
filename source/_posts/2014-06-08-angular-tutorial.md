@@ -1182,3 +1182,7 @@ See [angularjs - how to access the angular $scope variable in browsers console -
 - [angular-chart.js - beautiful, reactive, responsive charts for Angular.JS using Chart.js](http://jtblin.github.io/angular-chart.js)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+## Optimizer
+
+- [Speeding up AngularJS apps with simple optimizations - Tutorial - Binpress](https://www.binpress.com/tutorial/speeding-up-angular-js-with-simple-optimizations/135)

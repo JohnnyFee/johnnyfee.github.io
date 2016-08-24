@@ -67,20 +67,6 @@ CSS 中表示颜色的方法有以下几种：
     - rgba(r, g, b, a) 如 `rgba(112, 128, 144, 0)`
     - hsl(h, s, l) 用 HSL 模型，（色相 hue， 饱和度 saturation， 亮度 lightness）。如：`hsl(120, 100%, 22%)`
 
-### 长度单位
-
-CSS 中可以使用绝对长度单位，也可以使用相对长度单位。绝对程度单位不常用，常见的有 in（英寸），cm（厘米），mm（毫米）等。相对长度单位有：
-
-- em 相对字号大小。如字号是 16px，则 2em = 2 × 16px = 32px。
-- ex 与元素字体的 _x 高度_ 相关，字体基线到中线的距离，一般和字母 x 的高度相当，通常 1ex ≈ 0.5 em。
-- rem 与根元素的字号相关
-- px CSS 像素
-- % 另一属性的值得百分比
-
-See also [The Lengths of CSS](http://css-tricks.com/the-lengths-of-css/)。
-
-另外，可以使用 CSS3 的 `calc` 函数动态计算长度值，如 `width: calc(80% - 20px)` 。
-
 <!-- more -->
 
 ### Cross Browser
@@ -344,3 +330,8 @@ Unfortunately, these do not work in Internet Explorer prior to v10, though there
 - [DIVCSS5 - DIV+CSS布局教程学习与CSS资源分享平台](http://www.divcss5.com/)
 - [W3Help - 兼容性 - 知识库](http://www.w3help.org/zh-cn/kb/)
 - [10 CSS3 Properties you Need to be Familiar with - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/10-css3-properties-you-need-to-be-familiar-with--net-16417)
+- [Coding mobile-first emails — Campaign Monitor Engineering — Medium](https://medium.com/cm-engineering/coding-mobile-first-emails-1513ac4673e#.lsvaw9wh3)
+
+## Guidelines
+
+- [Vox Product Accessibility Guidelines](http://accessibility.voxmedia.com)

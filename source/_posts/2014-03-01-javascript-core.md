@@ -1,6 +1,6 @@
 layout: post
 title: "JavaScript 核心"
-category: JavaScript
+category: [JavaScript, Core]
 tags: [javascript]
 ---
 

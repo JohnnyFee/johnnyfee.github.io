@@ -1,6 +1,6 @@
 layout: post
 title: "this"
-category: JavaScript
+category: [JavaScript, Core]
 tags: [javascript, core, kernal]
 ---
 

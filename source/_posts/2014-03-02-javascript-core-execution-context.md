@@ -1,6 +1,6 @@
 layout: post
 title: "执行上下文（Execution Context）"
-category: JavaScript
+category: [JavaScript, Core]
 tags: [javascript, kernel]
 ---
 > 译文原文：[goddyzhao • 执行上下文（Execution Context）](http://goddyzhao.tumblr.com/post/10020230352/execution-context)

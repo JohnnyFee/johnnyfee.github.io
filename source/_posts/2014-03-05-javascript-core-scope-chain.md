@@ -1,6 +1,6 @@
 layout: post
 title: "作用域链（Scope Chain）"
-category: JavaScript
+category: [JavaScript, Core]
 tags: [javascript, core, kernal]
 ---
 

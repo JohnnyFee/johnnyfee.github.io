@@ -1,6 +1,6 @@
 layout: post
 title: "闭包（Closures）"
-category: JavaScript
+category: [JavaScript, Core]
 tags: [javascript, core, kernal]
 
 > 译文： [goddyzhao • 闭包（Closures）](http://goddyzhao.tumblr.com/post/11311499651/closures)

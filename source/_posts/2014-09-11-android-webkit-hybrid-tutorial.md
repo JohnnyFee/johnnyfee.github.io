@@ -1360,6 +1360,10 @@ mWebView.getSettings().setAppCacheEnabled(true);
 
 - [Android Hybrid App四大坑](http://blog.meathill.com/tech/app/web/traps-in-developing-android-hybrid-app.html)
 
+## Performance
+
+- [QQ空间面向移动时代Hybrid架构设计](http://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2650993637&idx=1&sn=8a2673272575abbef4b0f6dbc25e0186&scene=1&srcid=0807wbgKvqjTjMD555ZBcIxO#rd)
+
 ## Book
 
 - [Building Hybrid Android Apps with Java and JavaScript](http://www.salttiger.com/building-hybrid-android-apps-with-java-and-javascript/)

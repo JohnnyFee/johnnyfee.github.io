@@ -1,6 +1,6 @@
 layout: post
 title: "函数（Functions）"
-category: JavaScript
+category: [JavaScript, Core]
 tags: [javascript, core, kernal]
 ---
 

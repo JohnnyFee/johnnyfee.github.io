@@ -10,6 +10,7 @@ tags: [android, decompile]
 
 See [Install - android-apktool - Install Guide - A tool for reverse engineering Android apk files - Google Project Hosting](https://code.google.com/p/android-apktool/wiki/Install)
 
+
 Windows:
 
 1. Download Windows [wrapper script](https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/windows/apktool.bat) (Right click, Save Link As `apktool.bat`)

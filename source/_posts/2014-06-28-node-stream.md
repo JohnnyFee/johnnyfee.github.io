@@ -4,6 +4,10 @@ category: Node
 tags: [node, io]
 ---
 
+## Tutorial
+
+
+
 We’ve discussed the three main alternatives when it comes to controlling execution: Sequential, Full Parallel and Parallel. Streams are an alternative way of accessing data from various sources such as the network (TCP/UDP), files, child processes and user input. In doing I/O, Node offers us multiple options for accessing the data:
 
 &nbsp; | Synchoronous |   Asynchronous

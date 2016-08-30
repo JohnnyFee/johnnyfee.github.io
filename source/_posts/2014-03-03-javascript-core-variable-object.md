@@ -1,6 +1,6 @@
 layout: post
 title: "变量对象（Variable object）"
-category: [JavaScript, Core]
+category: [JavaScript, ES5 Core]
 tags: [javascript, kernel]
 ---
 > 译文：[goddyzhao • 变量对象（Variable object）](http://goddyzhao.tumblr.com/post/11141710441/variable-object)

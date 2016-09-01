@@ -7,6 +7,7 @@ tags: [android, tutorial]
 
 ## Tutorial
 
+- [Android Training](https://developer.android.com/training/index.html) <sup>official</sup>
 - [Android Design Patterns](http://www.salttiger.com/android-design-patterns/)
 - [Mastering the Android Touch System - YouTube](https://www.youtube.com/watch?v=EZAoJU-nUyI)
 - [Supporting Multiple Screens | Android Developers](http://developer.android.com/guide/practices/screens_support.html)
@@ -170,6 +171,10 @@ submit.setOnClickListener(new OnClickListener() {
 - [Hanolex博客 » Android SDK下载慢的解决办法](http://hanolex.org/archives/300.html)
 - [解决Android SDK Manager下载慢的问题](http://www.opensoce.com/3035.html)
 - [解决Android SDK Manager下载慢的问题](http://www.opensoce.com/2011/09/Jie_Jue_Android_SDK_Manager_Xia_Zai_Man_De_Wen_Ti/)
+
+## SDK 闪退
+
+See [java - Android SDK installation doesn't find JDK - Stack Overflow](http://stackoverflow.com/questions/4382178/android-sdk-installation-doesnt-find-jdk?page=1&tab=votes#tab-top)
 
 ### “Gradle Version 2.10 is required.” Error
 

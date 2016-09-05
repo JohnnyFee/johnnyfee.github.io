@@ -13,6 +13,7 @@ tags: [javascript]
 - [A List of Foundational JavaScript Tools](https://www.codefellows.org/blogs/complete-list-of-javascript-tools)
 - [web开发设计人员不可不用的在线web工具和应用](http://www.qianduan.net/web-development-and-design-staff-can-not-be-without-online-web-tools-and-applications.html)
 - [Source map](http://javascript.ruanyifeng.com/tool/sourcemap.html)
+- [The State Of JavaScript: JavaScript Flavors – Medium](https://medium.com/@sachagreif/the-state-of-javascript-javascript-flavors-1e02b0bfefb6#.gdb0jefch) <sup>which to choose</sup>
 
 <!-- more -->
 
@@ -46,6 +47,7 @@ tags: [javascript]
 - [zzarcon/focusable](https://github.com/zzarcon/focusable) Set a spotlight focus on DOM element adding a overlay layer to the rest of the page <http://zzarcon.github.io/focusable/>
 - [The PourOver Book](http://newsdev.github.io/pourover/) A library for simple, fast filtering and sorting of large collections in the browser.
 - [Fuse.js](http://github.com/krisk/fuse) Lightweight fuzzy-search, in JavaScript.
+- [thejameskyle/itsy-bitsy-data-structures: All the things you didn't know you wanted to know about data structures](https://github.com/thejameskyle/itsy-bitsy-data-structures) <sup>data structure</sup>
 
 ## Books
 

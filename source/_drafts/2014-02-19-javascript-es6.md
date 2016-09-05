@@ -55,6 +55,10 @@ tags: [javascript]
 
 - [ECMAScript 6’s new array methods](http://www.2ality.com/2014/05/es6-array-methods.html)
 
+## Proxy
+
+- [Using ES2015 Proxy for fun and profit](https://snyk.io/blog/using-es2015-proxy-for-fun-and-profit)
+
 ## Parser
 
 - [zenparsing/esparse](https://github.com/zenparsing/esparse)
@@ -79,6 +83,13 @@ tags: [javascript]
 
 ## Tools
 
-- [addyosmani/es6-tools](https://github.com/addyosmani/es6-tools)
-- [sebmck/6to5](https://github.com/sebmck/6to5)
-    + [ES6 modules today with 6to5 - ES6 Rocks](http://es6rocks.com/2014/10/es6-modules-today-with-6to5)
+- [addyosmani/es6-tools](https://github.com/addyosmani/es6-tools) <sup>many tools</sup>
+- [babel/babel: Babel is a compiler for writing next generation JavaScript.](https://github.com/babel/babel) <sup>babel</sup>
+- [babel/babili: An ES6+ aware minifier based on the Babel toolchain (beta)](https://github.com/babel/babili) <sup>minifier</sup>
+- [vutran/dext: A smart launcher for Mac. Powered by JavaScript.](https://github.com/vutran/dext) <sup>launcher</sup>
+- [sourcelair/xterm.js: Full xterm terminal, in your browser](https://github.com/sourcelair/xterm.js) <sup>terminal in browser</sup>
+- [dollarshaveclub/postmate: A powerful, simple, promise-based postMessage library](https://github.com/dollarshaveclub/postmate) <sup>postMessage for iframe</sup>
+- [cdglabs/ohm: A library and language for building parsers, interpreters, compilers, etc.](https://github.com/cdglabs/ohm) <sup>parser</sup>
+    + [JavaScript Parser that Creates a Language in 200 Lines of Code](https://www.pubnub.com/blog/2016-08-30-javascript-parser-ohm-makes-creating-a-programming-language-easy)
+- [thejameskyle/the-super-tiny-compiler: Possibly the smallest compiler ever](https://github.com/thejameskyle/the-super-tiny-compiler)
+- [thejameskyle/the-super-tiny-compiler: Possibly the smallest compiler ever](https://github.com/thejameskyle/the-super-tiny-compiler) <sup>compiler</sup>

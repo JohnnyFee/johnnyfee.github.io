@@ -1,6 +1,6 @@
 layout: post
 title: "JavaScript 核心"
-category: [JavaScript, ES5 Core]
+category: JavaScript
 tags: [javascript]
 ---
 
@@ -628,12 +628,6 @@ __中文：__
 - [Chapter 2. Strict Mode.](http://dmitrysoshnikov.com/ecmascript/es5-chapter-2-strict-mode/)
 - [Chapter 3.1. Lexical environments: Common Theory.](http://dmitrysoshnikov.com/ecmascript/es5-chapter-3-1-lexical-environments-common-theory/)
 - [Chapter 3.2. Lexical environments: ECMAScript implementation.](http://dmitrysoshnikov.com/ecmascript/es5-chapter-3-2-lexical-environments-ecmascript-implementation/)
-- [ECMA-262 » Notes. ECMAScript: Unresolved references](http://dmitrysoshnikov.com/notes/unresolved-references/)
-
-### ECMA-262-6
-
-- [ECMA-262 » ES6 Notes: Default values of parameters](http://dmitrysoshnikov.com/ecmascript/es6-notes-default-values-of-parameters/) [ES6笔记之参数默认值(译)](http://bosn.me/articles/es6-default-param/)
-- [ECMA-262 » Pattern Matching](http://dmitrysoshnikov.com/notes/pattern-matching/)
 
 ### Essentials of interpretation
 

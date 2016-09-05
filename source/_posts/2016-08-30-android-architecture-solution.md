@@ -9,6 +9,38 @@ tags: [android]
 
 - [googlesamples/android-architecture: A collection of samples to discuss and showcase different architectural tools and patterns for Android apps.](https://github.com/googlesamples/android-architecture)
 
+### MVP
+
+See
+
+- [Android MVP 详解（上） - 简书](http://www.jianshu.com/p/9a6845b26856) <sup> introduction</sup>
+- [Android MVP 详解（下） - 简书](http://www.jianshu.com/p/0590f530c617) <sup>best practice</sup>
+
+除了 Google 官方的实现，还有以下实现:
+
+- [konmik/nucleus: Nucleus is a simple Android library, which utilizes the Model-View-Presenter pattern to properly connect background tasks with visual parts of an application.](https://github.com/konmik/nucleus)
+    + [介绍ModelViewPresenter在Android中的应用](http://www.it165.net/pro/html/201505/41758.html) <sup>translation</sup>
+- [sockeqwe/mosby: A Model-View-Presenter library for modern Android apps](https://github.com/sockeqwe/mosby)
+    + [MVP框架 – Ted Mosby的软件架构](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0528/2945.html) <sup>tranlation</sup>
+
+### Samples
+
+- [chrisbanes/philm: Movie collection and information app for Android.](https://github.com/chrisbanes/philm)
+- [wenhuaijun/SearchPictureTool: 图片搜索APP源码，Material Design，Rxjava](https://github.com/wenhuaijun/SearchPictureTool)
+- [Jude95/Fishing: 空钩 APP](https://github.com/Jude95/Fishing)
+- [drakeet/Meizhi: gank.io unofficial client, RxJava & Retrofit](https://github.com/drakeet/Meizhi)
+- [oxoooo/mr-mantou-android: On the importance of taste](https://github.com/oxoooo/mr-mantou-android) 
+- [GankApp](https://github.com/oxoooo/mr-mantou-android)  
+- [GanK](https://github.com/dongjunkun/GanK)  
+- [Gank4Android](https://github.com/zzhoujay/Gank4Android)  
+- [GankDaily](https://github.com/maoruibin/GankDaily)
+
+## Loader
+
+- [benoitletondor/Android-Studio-MVP-template: Android MVP template for Android Studio](https://github.com/benoitletondor/Android-Studio-MVP-template)
+    - [Presenter surviving orientation changes with Loaders](https://medium.com/@czyrux/presenter-surviving-orientation-changes-with-loaders-6da6d86ffbbf#.3t97rb4t2)
+    - [通过Loader延长Presenter生命周期](http://blog.chengdazhi.com/index.php/131) <sup>translation</sup>
+
 ## i18n
 
 See [Supporting Different Languages](https://developer.android.com/training/basics/supporting-devices/languages.html)

@@ -172,6 +172,10 @@ submit.setOnClickListener(new OnClickListener() {
 - [解决Android SDK Manager下载慢的问题](http://www.opensoce.com/3035.html)
 - [解决Android SDK Manager下载慢的问题](http://www.opensoce.com/2011/09/Jie_Jue_Android_SDK_Manager_Xia_Zai_Man_De_Wen_Ti/)
 
+## Android Studio
+
+[osx - Removing Java 8 JDK from Mac - Stack Overflow](http://stackoverflow.com/questions/19039752/removing-java-8-jdk-from-mac)
+
 ## SDK 闪退
 
 See [java - Android SDK installation doesn't find JDK - Stack Overflow](http://stackoverflow.com/questions/4382178/android-sdk-installation-doesnt-find-jdk?page=1&tab=votes#tab-top)
@@ -196,7 +200,8 @@ Try to upgrade your buildToolsVersion to "23.0.1",like this:
 
 ```
 compileSdkVersion 23
-buildToolsVersion "23.0.1"   
+buildToolsVersion "23.0.1"
+```
 
 If you didn't install the buildTools for this version,please download it with SDKManager as hint.
 

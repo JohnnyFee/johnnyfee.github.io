@@ -82,3 +82,11 @@ usage: apktool d[ecode] [options] <file_apk>
 此处需输入第2步的密码123456，执行完即可生成签名后的apk文件out.apk。
 
 See also [apk破解实战](http://blog.csdn.net/cloudwu007/article/details/6851800)
+
+## Tutorial
+
+[Android Reverse Engineering 101 – Part 4 – Daniele Altomare](http://www.fasteque.com/android-reverse-engineering-101-part-4/)
+
+## Tools
+
+- [Android APK Decompiler](http://www.decompileandroid.com/) <sup>online decompile android apk</sup>

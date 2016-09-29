@@ -11,6 +11,7 @@ tags: [android, build, gradle]
 - [Gradle for Android 第一篇( 从 Gradle 和 AS 开始 ) - neu - SegmentFault](https://segmentfault.com/a/1190000004229002) <sup>book</sup>
 - [Gradle for Android](https://www.safaribooksonline.com/library/view/gradle-for-android/9781491941102/) <sup>video</sup>
 - [Gradle Recipes for Android](https://www.safaribooksonline.com/library/view/gradle-recipes-for/9781491947272/) <sup>book</sup>
+- [Bruce Lee's Blog](http://blog.jinkuyinku.com/) <sup>大头鬼</sup>
 
 ## Plugins
 

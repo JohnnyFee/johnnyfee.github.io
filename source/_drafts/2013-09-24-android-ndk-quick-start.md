@@ -4,6 +4,7 @@ description: ""
 category: Android
 tags: [android, ndk, jni]
 ---
+
 **以下配置均在Windows8 x64系统下配置。**
 
 ## 搭建NDK环境
@@ -526,3 +527,7 @@ See <http://stackoverflow.com/questions/3537542/a-doxygen-eclipse-plugin-with-au
 - Oracle DOC <http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html>
 
 - [NDK 视频教程](http://www.tudou.com/programs/view/edkMm1D6gjY/)
+
+## Tutorial
+
+[JNI/NDK开发指南（开山篇）](http://blog.csdn.net/xyang81/article/details/41759643)

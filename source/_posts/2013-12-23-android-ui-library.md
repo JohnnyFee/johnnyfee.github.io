@@ -21,7 +21,7 @@ tags: [android]
 - [Prototik / HoloEverywhere](https://github.com/Prototik/HoloEverywhere) 支持4.2-的Holo风格的导航。
 - [Androguide / cardsui-for-android](https://github.com/Androguide/cardsui-for-android) 一个非常漂亮简介的UI组件，可以让你的应用看起来和Google Home一样。你可以在屏幕上添加一个或者层叠若干个卡片。
 - [jfeinstein10 / SlidingMenu](https://github.com/jfeinstein10/SlidingMenu/) 这是时下非常流行的UI模式。Google Play市场上很多最佳应用都采用了这个UI模式，比如Google Plus、Facebook、Youtube以及其他的应用程序都采用了Sliding Menu。
-- [WizardPager](https://code.google.com/p/romannurik-code/) Entering data and filling out forms on mobile devices kind of sucks. 
+- [WizardPager](https://code.google.com/p/romannurik-code/) Entering data and filling out forms on mobile devices kind of sucks.
 	- <http://www.androidviews.net/2012/11/wizardpager/>
 - [nadavfima / GlowPadView](https://github.com/nadavfima/GlowPadView/) The GlowPadView library is basically Android's Lock Ring (way of screen-unlocking and alarm dismissing), but extended and targeted to Honeycomb and later versions of Android.
 	- <http://www.androidviews.net/2012/11/glowpadview-lockring/>
@@ -61,7 +61,11 @@ tags: [android]
 
 ## Image
 
+- [Fresco](http://fresco-cn.org/) facebook 的图面加载组件。
+- [Google推荐的图片加载库Glide介绍 - 泡在网上的日子](http://jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0327/2650.html)
+
 ### Effective
+
 - [vinc3m1 / RoundedImageView](https://github.com/vinc3m1/RoundedImageView) a fast ImageView that supports rounded corners.
 - [Circle Image on Android](http://www.androidviews.net/2012/12/circle-image/)
 - [maurycyw / StaggeredGridView](https://github.com/maurycyw/StaggeredGridView) 瀑布流布局的实现。一个更完善的库，[bulletnoid / StaggeredGridView](https://github.com/bulletnoid/StaggeredGridView)。
@@ -69,6 +73,7 @@ tags: [android]
 - [jasonpolites / gesture-imageview](https://github.com/jasonpolites/gesture-imageview) Implements pinch-zoom, rotate, pan as an ImageView for Android 2.1+.
 - [chrisbanes / PhotoView](https://github.com/chrisbanes/PhotoView) implementation of ImageView for Android that supports zooming, by various touch gestures.
 	- <http://www.androidviews.net/2012/11/photoview/>
+- [facebook/fresco: An Android library for managing images and the memory they use.](https://github.com/facebook/fresco)
 
 ### Process
 
@@ -97,12 +102,12 @@ __其他参考：__
 - [jacobmoncur / QuiltViewLibrary](https://github.com/jacobmoncur/QuiltViewLibrary) 在滚动表格中显示不同尺寸的空间。
 - [PinProgress](https://code.google.com/p/romannurik-code/) The Pin/Progress view is a radial progress view with different states.
 	- <http://www.androidviews.net/2012/11/pinprogress/>
-- [AnderWeb/discreteSeekBar](https://github.com/AnderWeb/discreteSeekBar) 
+- [AnderWeb/discreteSeekBar](https://github.com/AnderWeb/discreteSeekBar)
 
 ## Component
 
 - [jgilfelt / android-simpl3r](https://github.com/jgilfelt/android-simpl3r) Amazon S3 multipart file upload for Android, made simple. 支持断点续传。
-- [atermenji / IconicDroid](https://github.com/atermenji/IconicDroid) 
+- [atermenji / IconicDroid](https://github.com/atermenji/IconicDroid)
 - [Switch Button for Android 2.3 Gingerbread](http://ankri.de/switch-button-for-android-2-3-gingerbread/)
 - [ankri / SwitchCompatLibrary](https://github.com/ankri/SwitchCompatLibrary) I backported the ICS Switch (api level 14+) to Froyo (api level 8).
 - [BoD / android-switch-backport](https://github.com/BoD/android-switch-backport) 支持Android 2.1。
@@ -112,11 +117,11 @@ __其他参考：__
 	- <http://www.androidviews.net/2012/11/showcase-view/>
 	- git clone https://android.googlesource.com/platform/frameworks/ex
 - [sephiroth74 / AndroidWheel](https://github.com/sephiroth74/AndroidWheel)
-- [Android Lock Pattern](http://www.androidviews.net/2012/11/android-lock-pattern/) Android has an useful tool in security settings, it is Lock Pattern. 
+- [Android Lock Pattern](http://www.androidviews.net/2012/11/android-lock-pattern/) Android has an useful tool in security settings, it is Lock Pattern.
 - [Wheel Widget](http://code.google.com/p/android-wheel/) The wheel widget for Android
 	- <http://www.androidviews.net/2012/10/wheel-widget/>
 - [jgilfelt / android-viewbadger](https://github.com/jgilfelt/android-viewbadger) A simple way to "badge" any given Android view at runtime without having to cater for it in layout
-- [romannurik / Android-SwipeToDismiss](https://github.com/romannurik/android-swipetodismiss) Android swipe-to-dismiss(滑动消失) mini-library and sample code. 
+- [romannurik / Android-SwipeToDismiss](https://github.com/romannurik/android-swipetodismiss) Android swipe-to-dismiss(滑动消失) mini-library and sample code.
 
 ## TextView
 
@@ -136,7 +141,7 @@ __其他参考：__
 ## ListView
 
 - [amigold / FunDapter] ListViews的Simple Adapter，提供标题、图标、描述的列表Adapter。
-    - [github](https://github.com/amigold/FunDapter)  
+    - [github](https://github.com/amigold/FunDapter)
     - [FunDapter – Simplify Adapter creation](http://www.androidviews.net/2013/08/fundapter-baseadapter-implementation-library/)
 - [ManuelPeinado / MultiChoiceAdapter](https://github.com/ManuelPeinado/MultiChoiceAdapter) 具有多项选择的Adapter。
 - [bauerca / drag-sort-listview](https://github.com/bauerca/drag-sort-listview) 支持列表项的拖拽。
@@ -179,13 +184,19 @@ __其他参考：__
 
 - [tyczj / ExtendedCalendarView](https://github.com/tyczj/ExtendedCalendarView) 日历组件。
 - [tyczj/ExtendedCalendarView](https://github.com/tyczj/ExtendedCalendarView)
-- [square/android-times-square](https://github.com/square/android-times-square) Standalone Android widget for picking a single date from a calendar view. 
+- [square/android-times-square](https://github.com/square/android-times-square) Standalone Android widget for picking a single date from a calendar view.
 - [flavienlaurent/datetimepicker](https://github.com/flavienlaurent/datetimepicker)
+- [square/android-times-square](https://github.com/square/android-times-square) Standalone Android widget for picking a single date from a calendar view.
+
+## Alert
+
+- [pedant/sweet-alert-dialog: SweetAlert for Android, a beautiful and clever alert dialog](https://github.com/pedant/sweet-alert-dialog)
 
 ## 工具
+
 - [Android DPI Calculator](http://coh.io/adpi/)
 	- [查看描述](http://www.androidviews.net/2013/01/android-dpi-calculator/)
-- [chrisjenx / ParallaxScrollView](https://github.com/chrisjenx/ParallaxScrollView)  
+- [chrisjenx / ParallaxScrollView](https://github.com/chrisjenx/ParallaxScrollView)
 	- [查看效果图](http://www.androidviews.net/2013/01/parallax-scrollview/)
 - [Android Action Bar Style Generator](http://jgilfelt.github.io/android-actionbarstylegenerator/)
 - [Android Assets Studio](http://android-ui-utils.googlecode.com/hg/asset-studio/dist/index.html) 最佳工具之一。它可以为你生成各种分辨率 (mdpi, hdpi, xhdpi)的启动器、标签、工具栏、菜单图标，可以按照你的配色[生成主题](http://android-holo-colors.com/)，还可以生成工具栏资源 适用于Sherlock Action Bar.

@@ -192,6 +192,8 @@ article section.view {
 
 ## WebView
 
+- [lzyzsd/JsBridge: android java and javascript bridge, inspired by wechat webview jsbridge](https://github.com/lzyzsd/JsBridge)
+
 ### 加载网页
 
 一旦你创建了 WevView 控件，通过调用 `loadURL()` API，并且传入请求的 URL 来加载页面。

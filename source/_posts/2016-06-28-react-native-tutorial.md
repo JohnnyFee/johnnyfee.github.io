@@ -13,6 +13,7 @@ tags: [react native, tutorial]
 ## Tutorial
 
 - [Realtime App Development with RethinkDB and React Native](https://www.sitepoint.com/realtime-app-development-with-rethinkdb-and-react-native)
+- [React Native 0.31 Bundle 预加载优化](http://blog.zhaiyifan.cn/2016/08/20/react-native-0-31-preload-optimization/)
 
 ### Video
 

@@ -5,11 +5,6 @@ category: Android
 tags: [android, utils]
 ---
 
-## Flow
-
-- [square/flow](https://github.com/square/flow) Name UI states, navigate between them, remember where you've been.
-
-
 ## Logger
 
 - [timber](https://github.com/JakeWharton/timber) 自动为日志提供类名。

@@ -6,9 +6,9 @@ tags: [rx, android, ui, data binding]
 ---
 
 
-## RxBinding
+## [RxBinding](https://github.com/JakeWharton/RxBinding)
 
-[JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding) RxJava binding APIs for Android's UI widgets.
+RxJava binding APIs for Android's UI widgets.
 
 将 UI 空间的时间绑定形式转化为 Rx 形式。如可以用 `throttleFirst()` ，用于去抖动，也就是消除手抖导致的快速连环点击。
 

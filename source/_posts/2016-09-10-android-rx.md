@@ -47,21 +47,6 @@ RxView.clickEvents(button)
 - [Android事件驱动编程（二）](https://asce1885.gitbooks.io/android-rd-senior-advanced/content/androidshi_jian_qu_dong_bian_cheng_ff08_er_ff09.html)
 - [事件总线 —— otto的bus和eventbus对比分析](http://frodoking.github.io/2015/03/30/android-eventbus-otto-analysis/)
 
-## Mortar
-
-[square/mortar: A simple library that makes it easy to pair thin views with dedicated controllers, isolated from most of the vagaries of the Activity life cycle.](https://github.com/square/mortar)
-
-[Mortar](https://github.com/square/mortar)工作于Dagger之上，它具有两大优点：
-
-* 它为被注入组件提供简单的生命周期回调。这使你可以编写在屏幕旋转时不会被销毁的presenters单例，而且可以保存状态到bundle中从而在进程死亡中存活下来。
-
-* 它为你管理Dagger子图，并帮你把它绑定到activity的生命周期中。这让你有效的实现范围的概念：一个views生成的时候，它的presenter和依赖会作为子图创建；当views销毁的时候，你可以很容易的销毁这个范围，并让垃圾回收起作用。
-
-See [我为什么主张反对使用Android Fragment](https://asce1885.gitbooks.io/android-rd-senior-advanced/content/wo_wei_shi_yao_zhu_zhang_fan_dui_shi_yong_android_fragment.html)
-
-## RxAndroid
-
-[ReactiveX/RxAndroid: RxJava bindings for Android](https://github.com/ReactiveX/RxAndroid)
 
 ## Library
 

@@ -22,4 +22,4 @@ tags: [android, networking, http]
 
 ## REST
 
-- [Retrofit](http://square.github.io/retrofit/) - Retrofit turns your REST API into a Java interface.
+- [Retrofit](http://square.github.io/retrofit/) - Retrofit turns your REST API into a Java interface. 支持 Rx.

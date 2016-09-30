@@ -20,7 +20,8 @@ RxView.clickEvents(button)
 
 基本用法，Go [使用RxBinding响应控件的异步事件 - 简书](http://www.jianshu.com/p/c2c7c46e6b97)。
 
-## butterknife
+## Library
 
 - [butterknife](https://github.com/JakeWharton/butterknife) Bind Android views and callbacks to fields and methods.
   - [android-butterknife-zelezny](https://github.com/avast/android-butterknife-zelezny)  Android Studio plug-in for generating ButterKnife injections from selected layout XML.
+- [AndroidAnnotations](http://androidannotations.org/) @ViewById, @ViewById, @App, @RestService, @AnimationRes, @SystemService, @AfterViews, @Click, @Background, @UiThread, @ItemClick, @Rest.

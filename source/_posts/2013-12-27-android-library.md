@@ -5,21 +5,12 @@ category: Android
 tags: [android]
 ---
 
-### DI
-
-- [square/dagger](https://github.com/square/dagger) A fast dependency injector for Android and Java. [http://square.github.io/dagger/](http://square.github.io/dagger/).
-    + [JakeWharton/u2020](https://github.com/JakeWharton/u2020)
-    + [Dependency injection on Android: Dagger (Part 1)](http://antonioleiva.com/dependency-injection-android-dagger-part-1/)
-    + [Dagger: dependency injection on Android (Part 2) - Antonio Leiva](http://antonioleiva.com/dagger-android-part-2/)
-    + [Dagger: Scoped object graphs (Part 3) - Antonio Leiva](http://antonioleiva.com/dagger-3/?+Weekly-Android_Weekly_107-ac89b26b9e-337832837)
-
 ### Annotaion
 
 - [excilys / androidannotations](https://github.com/excilys/androidannotations) UI和代码之间的粘合剂，通过它可以编写更少的代码并且轻松维护现存的代码。
 - [Butter Knife](http://jakewharton.github.io/butterknife/) View "injection" library for Android.
 - [greenrobot / EventBus](https://github.com/greenrobot/EventBus) 简化不同组件之间的事件传递。
 - [square / otto](https://github.com/square/otto) An enhanced Guava-based event bus with emphasis on Android support. <http://square.github.io/otto/>
-- [RomainPiel/Michelangelo](https://github.com/RomainPiel/Michelangelo)
 
 ## Exception
 

@@ -5,6 +5,8 @@ category: Android
 tags: [android]
 ---
 
+[google/dagger](https://github.com/google/dagger) A fast dependency injector for Android and Java.
+
 ## Tutorial
 
 - [Dagger ‡ A fast dependency injector for Android and Java.](http://google.github.io/dagger/users-guide.html) <sup>official</sup>
@@ -16,6 +18,6 @@ tags: [android]
 - [Android：dagger2让你爱不释手-重点概念讲解、融合篇 - 简书](http://www.jianshu.com/p/1d42d2e6f4a5) <sup>analyse</sup>
 - [从零开始的Android新项目4 - Dagger2篇](http://blog.zhaiyifan.cn/2016/03/27/android-new-project-from-0-p4/#) <sup>important</sup>
 
-## Sample 
+## Sample
 
 [android10/Android-CleanArchitecture](https://github.com/android10/Android-CleanArchitecture)

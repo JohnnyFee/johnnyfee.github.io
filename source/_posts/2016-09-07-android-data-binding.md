@@ -5,8 +5,7 @@ category: Android
 tags: [android]
 ---
 
-Translation from: [Data Binding（数据绑定）用户指南](http://www.jianshu.com/p/b1df61a4df77)
-Original: [Data Binding Guide (Android)](https://developer.android.com/tools/data-binding/guide.html)
+From [Data Binding（数据绑定）用户指南](http://www.jianshu.com/p/b1df61a4df77) by [Data Binding Guide (Android)](https://developer.android.com/tools/data-binding/guide.html)
 
 ## 介绍
 

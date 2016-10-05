@@ -25,8 +25,8 @@ tags : [angular, tutorial]
 ### UI
 
 - [Angular UI Router](http://inching.org/2014/10/10/angular-ui-router/) Angular ui-router 路由。
-- [Angular Mobile Tutorial](http://inching.org/2014/09/10/mobile-angular/) Angular 
-- [Angular Mobile Tutorial](http://inching.org/2014/09/10/mobile-angular/) Angular 
+- [Angular Mobile Tutorial](http://inching.org/2014/09/10/mobile-angular/) Angular
+- [Angular Mobile Tutorial](http://inching.org/2014/09/10/mobile-angular/) Angular
 
 ### Other
 
@@ -51,12 +51,12 @@ tags : [angular, tutorial]
     <!-- more -->
 
 1. Starting a Fresh AngularJS project
-        
+
         mkdir my-new-project && cd my-new-project
         yo angular [app-name]
 
 1. Running Your Server
-        
+
         grunt or grunt serve
 
 1. Adding New Routes, Views, and Controllers
@@ -188,7 +188,7 @@ HTML解析器机制是其它所有框架所不具备也不敢这样做的，它�
 
     <p>{{greeting}}</p>
 
-在应用首页 `idnex.html` 中，建议使用 `ng-bind`，在子视图中，建议使用 `{%raw%}{{ }}{%endraw%}`。因为当首页加载时，在 AngularJS 有机会替换模板中的双大括号表达式前，未渲染的模板可能被用户看见，而子视图不会受这个影响。       
+在应用首页 `idnex.html` 中，建议使用 `ng-bind`，在子视图中，建议使用 `{%raw%}{{ }}{%endraw%}`。因为当首页加载时，在 AngularJS 有机会替换模板中的双大括号表达式前，未渲染的模板可能被用户看见，而子视图不会受这个影响。
 
 如果模板在 Angular 编译之前就会显示，那么最好使用 `ngBind`，因为 `ngBind` 是元素属性，页面加载的时候，绑定表达式对用于来说是不可见的。
 
@@ -422,16 +422,16 @@ __Altering tables, rows, and classes__
 Zebra-striping is often added to lists in order to improve their readability. AngularJS has a pair of directives (`ngClassEven` and `ngClassOdd`) that make this task trivial:
 
 ```html
-<tr ng-repeat="user in users" 
+<tr ng-repeat="user in users"
 ng-class-even="'light-gray'" ng-class-odd="'dark-gray'">
-  . . . 
+  . . .
 </tr>
 ```
 
 The `ngClassEven` and `ngClassOdd` directives are just specialization of the more generic `ngClass` directive. The `ngClass` is very versatile and can be applied in many different situations. To demonstrate its power we could rewrite the preceding example like follows:
 
 ```html
-<tr ng-repeat="user in users" 
+<tr ng-repeat="user in users"
 ng-class="{'dark-gray' : !$index%2, 'light-gray' : $index%2}">
 ```
 
@@ -689,7 +689,7 @@ function StartUpController($scope) {
 
 `$watch` 的方法签名为:
 
-    $watch(watchExpression, listener, objectEquality) 
+    $watch(watchExpression, listener, objectEquality)
 
 参数描述为：
 
@@ -774,9 +774,9 @@ dereg();
           // newValues array contains the current values of the watch expressions
           // with the indexes matching those of the watchExpression array
           // i.e.
-          // newValues[0] -> $scope.foo 
-          // and 
-          // newValues[1] -> $scope.bar 
+          // newValues[0] -> $scope.foo
+          // and
+          // newValues[1] -> $scope.bar
         });
 
 * 把它们放在一个数组或者对象中，然后调用 `$watchGroup` 函数。
@@ -992,7 +992,7 @@ See:
 
 * [Narzerus/angular-permission](https://github.com/Narzerus/angular-permission) Simple route authorization via roles/permissions.
 * [mrgamer/angular-login-example](https://github.com/mrgamer/angular-login-example)
- 
+
 ### Shortcut
 
 - [AngularHotkeys.js](http://chieffancypants.github.io/angular-hotkeys/) 建议使用。
@@ -1092,7 +1092,7 @@ function FruitCtrl($scope)
 
 使用 `ng-switch` 指令的好处是你可以轻易添加任意多的状态。
 
-See: 
+See:
 
 - [javascript - How do I switch views in AngularJS from a controller function? - Stack Overflow](http://stackoverflow.com/questions/11003916/how-do-i-switch-views-in-angularjs-from-a-controller-function)
 - [javascript - AngularJS change partial in controller on click - Stack Overflow](http://stackoverflow.com/questions/16649617/angularjs-change-partial-in-controller-on-click)
@@ -1177,6 +1177,7 @@ See [angularjs - how to access the angular $scope variable in browsers console -
 - [All About Angular 2.0](http://eisenbergeffect.bluespire.com/all-about-angular-2-0/)
 - [Preparing for the future of AngularJS](https://www.airpair.com/angularjs/posts/preparing-for-the-future-of-angularjs)
 
+
 ### Chart
 
 - [angular-chart.js - beautiful, reactive, responsive charts for Angular.JS using Chart.js](http://jtblin.github.io/angular-chart.js)
@@ -1186,3 +1187,4 @@ See [angularjs - how to access the angular $scope variable in browsers console -
 ## Optimizer
 
 - [Speeding up AngularJS apps with simple optimizations - Tutorial - Binpress](https://www.binpress.com/tutorial/speeding-up-angular-js-with-simple-optimizations/135)
+- [优化Angular应用的性能 · Issue #23 · xufei/blog · GitHub](https://github.com/xufei/blog/issues/23)

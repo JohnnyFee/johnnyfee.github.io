@@ -1,5 +1,5 @@
 layout: post
-title: "Rx Java"
+title: "Rx Android"
 description: ""
 category: Android
 tags: [rx, java]
@@ -11,4 +11,4 @@ tags: [rx, java]
 
 ## Library
 
-- [reark/reark](https://github.com/reark/reark) RxJava architecture library for Android. 
+- [reark/reark](https://github.com/reark/reark) RxJava architecture library for Android.

@@ -69,7 +69,7 @@ Note that CSS columns have no effect on a flex container.
 
 ### flex-direction
 
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-direction1.svg)  
+![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-direction1.svg)
 This establishes the main-axis, thus defining the direction flex items are placed in the flex container. Flexbox is (aside from optional wrapping) a single-direction layout concept. Think of flex items as primarily laying out either in horizontal rows or vertical columns.
 
 
@@ -98,7 +98,7 @@ By default, flex items will all try to fit onto one line. You can change that an
 * `wrap`: multi-line / left to right in `ltr`; right to left in `rtl`
 * `wrap-reverse`: multi-line / right to left in `ltr`; left to right in `rtl`
 
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-wrap.svg)  
+![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-wrap.svg)
 
 ### flex-flow
 
@@ -145,11 +145,11 @@ This defines the default behaviour for how flex items are laid out along the cro
 * `baseline`: items are aligned such as their baselines align
 * `stretch` (default): stretch to fill the container (still respect min-width/max-width)
 
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/align-items.svg)  
+![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/align-items.svg)
 
 ### align-content
 
-This aligns a flex container's lines within when there is extra space in the cross-axis, similar to how `justify-content` aligns individual items within the main-axis. 
+This aligns a flex container's lines within when there is extra space in the cross-axis, similar to how `justify-content` aligns individual items within the main-axis.
 
 **Note:** this property has no effect when there is only one line of flex items.
 
@@ -180,11 +180,11 @@ By default, flex items are laid out in the source order. However, the `order` pr
 }
 ```
 
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/order.svg)  
+![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/order.svg)
 
 ### flex-grow
 
-This defines the ability for a flex item to grow if necessary. It accepts a unitless value that serves as a proportion. It dictates what amount of the available space inside the flex container the item should take up. 
+This defines the ability for a flex item to grow if necessary. It accepts a unitless value that serves as a proportion. It dictates what amount of the available space inside the flex container the item should take up.
 
 If all items have `flex-grow` set to 1, every child will set to an equal size inside the container. If you were to give one of the children a value of 2, that child would take up twice as much space as the others.
 
@@ -196,7 +196,7 @@ If all items have `flex-grow` set to 1, every child will set to an equal size in
 
 Negative numbers are invalid.
 
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-grow.svg)  
+![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-grow.svg)
 
 ### flex-shrink
 
@@ -265,7 +265,7 @@ Please see the `align-items` explanation to understand the available values.
 }
 ```
 
-![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/align-self.svg)  
+![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/align-self.svg)
 
 Note that `float`, `clear` and `vertical-align` have no effect on a flex item.
 
@@ -283,7 +283,7 @@ Note that `float`, `clear` and `vertical-align` have no effect on a flex item.
 
 弹性容器的绝对定位的子元素会被定位，因此其静态位置会根据它们的弹性容器的主起始内容盒的角落上开始。
 
-目前由于一个已知的问题，在弹性子元素上指定`visibility:collapse`  
+目前由于一个已知的问题，在弹性子元素上指定`visibility:collapse`
 会导致其好像被指定了 `display:none` 一样，但该操作的初衷是使元素具有好像被指定了`visibility:hidden`一样的效果。在该问题被解决之前建议使用`visibility:hidden` ，其效果在弹性子元素上等同于`visibility:collapse` 。
 
 相邻的弹性子元素不会发生外边距合并。使用`auto` 的外边距会在垂直和水平方向上带来额外的空间，这种性质可用于对齐或分隔临近的弹性子元素。W3C弹性盒子布局模型的 [使用'auto'的外边距进行对齐](http://dev.w3.org/csswg/css3-flexbox/#auto-margins "http://dev.w3.org/csswg/css3-flexbox/#auto-margins") 部分有更多信息。
@@ -330,7 +330,7 @@ Now let's use some more properties. Consider a list of 6 items, all with a fixed
   /* We first create a flex layout context */
   display: flex;
 
-  /* Then we define the flow direction and if we allow the items to wrap 
+  /* Then we define the flow direction and if we allow the items to wrap
    * Remember this is the same as:
    * flex-direction: row;
    * flex-wrap: wrap;
@@ -411,7 +411,7 @@ Let's try something even better by playing with flex items flexibility! What abo
 /* Large screens */
 @media all and (min-width: 800px) {
   /* We invert order of first sidebar and main
-   * And tell the main element to take twice as much width as the other two sidebars 
+   * And tell the main element to take twice as much width as the other two sidebars
    */
   .main { flex: 2 0px; }
 

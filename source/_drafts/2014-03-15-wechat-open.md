@@ -6,6 +6,10 @@ tags: [微信]
 
 - [微信营销,微信公众平台开发,微信运营,社会化媒体营销整体服务平台-微触角—微信营销,无触不在](http://www.weifeeler.com/)
 
+## Tutorial
+
+- [justjavac/awesome-wechat-weapp: 微信小程序开发资源汇总 wechat weapp](https://github.com/justjavac/awesome-wechat-weapp)
+
 ## 微信库
 
 - [node-webot/wechat](https://github.com/node-webot/wechat) 微信公共平台消息接口服务中间件。

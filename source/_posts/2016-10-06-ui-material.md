@@ -9,6 +9,10 @@ tags: [ui, material]
 
 [Material design - Material design guidelines](https://material.google.com/)
 
+### Icons
+
+- [Material icons - Google Design](https://design.google.com/icons/)
+
 ## Frameworks
 
 ### [Polymer Project](https://www.polymer-project.org)
@@ -32,9 +36,11 @@ Material Design Components in HTML/CSS/JS, but not Web Component.
 
 ### [Materialize](https://github.com/Dogfalo/materialize)
 
-## Icons
+a CSS Framework based on Material Design.
 
-- [Material icons - Google Design](https://design.google.com/icons/)
+### Bootstrap
+
+- [FezVrasta/bootstrap-material-design](https://github.com/FezVrasta/bootstrap-material-design) Material design theme for Bootstrap 3 and 4. Based on jQuery.
 
 ## Compare
 

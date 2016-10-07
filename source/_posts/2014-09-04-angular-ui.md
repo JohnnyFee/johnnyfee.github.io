@@ -10,6 +10,7 @@ tags: [angular, ui]
 - [AngularJS Multi-Step Form Using UI Router ♥ Scotch](http://scotch.io/tutorials/javascript/angularjs-multi-step-form-using-ui-router?) AngularJS 1.2+ native directives for Bootstrap 3. <http://mgcrea.github.io/angular-strap>
 - [All Search and Social Media Meta Tags Starter Template ♥ Scotch](http://scotch.io/quick-tips/all-search-and-social-media-meta-tags-starter-template)
 - [Thumbtack Engineering](http://www.thumbtack.com/engineering/introducing-smarty)
+- [angular/material-start at es6-tutorial](https://github.com/angular/material-start/tree/es6-tutorial)
 
 <!-- more -->
 

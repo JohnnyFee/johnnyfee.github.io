@@ -93,3 +93,4 @@ tags: [javascript]
     + [JavaScript Parser that Creates a Language in 200 Lines of Code](https://www.pubnub.com/blog/2016-08-30-javascript-parser-ohm-makes-creating-a-programming-language-easy)
 - [thejameskyle/the-super-tiny-compiler: Possibly the smallest compiler ever](https://github.com/thejameskyle/the-super-tiny-compiler)
 - [thejameskyle/the-super-tiny-compiler: Possibly the smallest compiler ever](https://github.com/thejameskyle/the-super-tiny-compiler) <sup>compiler</sup>
+- [WebStorm ES6 语法支持设置 - 简书](http://www.jianshu.com/p/b4390919a5b5)/[ECMAScript 6 in WebStorm: Transpiling](https://blog.jetbrains.com/webstorm/2015/05/ecmascript-6-in-webstorm-transpiling/)

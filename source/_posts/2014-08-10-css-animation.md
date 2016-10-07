@@ -212,12 +212,12 @@ div:hover {
 }
 ```
 
-Property            |可选值   | Description                                
+Property            |可选值   | Description
 -------------------| -----|-------
 timing-function     | <li>ease <li>ease-out <li>ease-in <li>ease-in-out <li>linear <li>cubic-bezier(x1, y1, x2, y2)| 设置动画速度， 即通过建立加速度曲线，设置动画在关键帧之间是如何变化。
 duration & delay    | Xs or Xms | 设置延时，即从元素加载完成之后到动画序列开始执行的这段时间。
-duration-count      | X   
-fill-mode           | <li>forwards <li>backwards <li>both <li>none  |指定动画执行前后如何为目标元素应用样式。  
+duration-count      | X
+fill-mode           | <li>forwards <li>backwards <li>both <li>none  |指定动画执行前后如何为目标元素应用样式。
 direction | <li>normal <li>alternate | 设置动画在每次运行完后是反向运行还是重新回到开始位置重复运行。
 iteration-count | X |设置动画重复次数， 可以指定 infinite 无限次重复动画
 
@@ -361,7 +361,7 @@ div:hover {
 ```css
 div:hover {
   -webkit-animation: 1s rainbow;
-  animation: 1s rainbow;  
+  animation: 1s rainbow;
 }
 
 @-webkit-keyframes rainbow {
@@ -379,6 +379,7 @@ div:hover {
 
 ## Library
 
+- [daneden/animate.css: A cross-browser library of CSS animations. As easy to use as an easy thing.](https://github.com/daneden/animate.css)
 - [h5bp/Effeckt.css](https://github.com/h5bp/Effeckt.css) A Performant Transitions and Animations Library: <http://h5bp.github.io/Effeckt.css>
 - [CSS3 Animation Cheat Sheet - Justin Aguilar](http://www.justinaguilar.com/animations/index.html#)
 - [visionmedia/move.js](https://github.com/visionmedia/move.js) CSS3 backed JavaScript animation framework <http://visionmedia.github.com/move.js/>.

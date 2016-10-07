@@ -20,6 +20,7 @@ tags: [javascript]
 ## Guideline
 
 - [lzyzsd/javascript: Airbnb JavaScript 编码规范](https://github.com/lzyzsd/javascript#arrow-functions)
+- [airbnb/javascript: JavaScript Style Guide](https://github.com/airbnb/javascript)
 
 ## Performance
 

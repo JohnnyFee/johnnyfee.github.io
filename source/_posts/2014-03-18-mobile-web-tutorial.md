@@ -26,7 +26,7 @@ tags: [angular, ui]
 
 ## Framework
 
-- [Ionic](http://ionicframework.com/) The beautiful, open source front-end framework for developing hybrid mobile apps with HTML5. See also in GitHub [driftyco/ionic](https://github.com/driftyco/ionic) 
+- [Ionic](http://ionicframework.com/) The beautiful, open source front-end framework for developing hybrid mobile apps with HTML5. See also in GitHub [driftyco/ionic](https://github.com/driftyco/ionic)
     Ionic is focused mainly on the look and feel, and UI interaction of your app. That means we aren't a replacement for PhoneGap or your favorite Javascript framework. Instead, Ionic simply fits in well with these projects in order to simplify one big part of your app: the front end.
 
     **Ionic currently requires AngularJS** in order to work at its full potential.
@@ -38,10 +38,10 @@ tags: [angular, ui]
 - [famo.us](http://famo.us/) Famo.us is a JavaScript framework for everyone who wants to build beautiful experiences on any device. [http://famo.us](http://famo.us/)
 - [jQuery Mobile](http://jquerymobile.com/) jQuery Mobile is a HTML5-based user interface system designed to make responsive web sites and apps that are accessible on all smartphone, tablet and desktop devices.
 - [Titanium Mobile Application Development](http://www.appcelerator.com/titanium/) Create bold, beautiful and transformative mobile experiences
-- [Sencha Touch](http://docs.sencha.com/touch/2.4.0/) 
+- [Sencha Touch](http://docs.sencha.com/touch/2.4.0/)
 - [React](http://facebook.github.io/react/) A JAVASCRIPT LIBRARY FOR BUILDING USER INTERFACES. See [React Review](http://moduscreate.com/5-best-mobile-web-app-frameworks-reactjs/)
 - [Kendo UI](http://www.telerik.com/kendo-ui)
-- [Foundation](http://foundation.zurb.com/) The most advanced responsive 
+- [Foundation](http://foundation.zurb.com/) The most advanced responsive
 front-end framework in the world.
 - [Ratchet](http://goratchet.com/) Build mobile apps with simple HTML‚ CSS‚ and JS components.
 - [Meteor](https://www.meteor.com/) 提供完整解决方案。暂不支持 Windows。
@@ -111,7 +111,7 @@ This is most commonly used mobile application HTML5 framework. But don’t let t
 * Good official documentation, it could be better, according to some information jQM developers are working on making it better.
 * Support every HTML5 browser you can think which makes it good for a desktop and mobile use
 * Excellent theme support
-* Large number of 3rd party plugins  
+* Large number of 3rd party plugins
 
 <div style="width:100%height: 0.35em;"></div>
 
@@ -125,7 +125,7 @@ This is most commonly used mobile application HTML5 framework. But don’t let t
 
 __Author notes__
 
-Currently my favorite framework, mostly because I am a sucker for a jQuery. 
+Currently my favorite framework, mostly because I am a sucker for a jQuery.
 
 ### Kendo UI
 
@@ -140,7 +140,7 @@ Another jQuery based framework. Unlike previous 3 this one is beautiful, support
 * HTML based
 * Great documentation (there’s room for the improvement)
 * Native look depending on mobile platform
-* Great template system, themes are native like, depending on platform (iOS, Android …)  
+* Great template system, themes are native like, depending on platform (iOS, Android …)
 
 
 **Con**
@@ -165,14 +165,14 @@ This framework is almost an alien in this jQuery based frameworks sea. It is fas
 * Best SVG support you can find, usable for game development
 * Perfect documentation
 * Native look depending on mobile platform
-* Excellent in-house native app wrapping / packaging system  
+* Excellent in-house native app wrapping / packaging system
 
 **Con**
 
 * Commercial license and support
 * Commercial IDE, you can’t believe how bad it feels to develop in anything else then its IDE
 * Hard to master, unlike previously mentioned frameworks this one is purely javascript based
-* Lack of 3rd party support, mainly due commercial license  
+* Lack of 3rd party support, mainly due commercial license
 
 __Author notes__
 
@@ -180,13 +180,13 @@ My second framework of choice. It is complex but that is why I like it. It requi
 
 ### Titanium Appcelerator
 
-Another alien here, also this one is not HTML5 framework. It uses similar pure javascript approach like Sencha Touch, but unlike Sencha Touch this one converts javascript to native code. 
+Another alien here, also this one is not HTML5 framework. It uses similar pure javascript approach like Sencha Touch, but unlike Sencha Touch this one converts javascript to native code.
 
 **Pro**
 
 * Final native code makes it natively fast
 * Can be used for fast prototyping
-* Cross-platform, one code can be used to create iOS, Android and other mobile platform applications  
+* Cross-platform, one code can be used to create iOS, Android and other mobile platform applications
 
 **Con**
 
@@ -196,7 +196,7 @@ Another alien here, also this one is not HTML5 framework. It uses similar pure j
 * Cross-platform is also has a negative side, complex GUI will require different code for Android, iOS …
 
 __Author notes__
- 
+
 Excellent framework made for fast application prototyping. It can become problematic if you need to create a complex cross-platform application. Not to mention it require some knowledge of native Android / iOS development.
 
 ## Scaffold
@@ -207,6 +207,7 @@ Excellent framework made for fast application prototyping. It can become problem
 
 - [Device.js](https://github.com/matthewhudson/device.js) Device.js makes it easy to write conditional CSS _and/or_ JavaScript based on device operating system (iOS, Android, Blackberry, Windows, Firefox OS, MeeGo), orientation (Portrait vs. Landscape), and type (Tablet vs. Mobile). <http://matthewhudson.me/projects/device.js/>
 - [GestureKit](http://www.gesturekit.com/) GestureKit (requires registration) is a development kit that allows the creation of gestures across device platforms.
+- [Hammer.JS - Hammer.js](http://hammerjs.github.io/#try-it)
 
 ## Performance
 

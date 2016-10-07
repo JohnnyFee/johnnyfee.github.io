@@ -7,6 +7,7 @@ tags: [web, tutorial]
 ## Framework
 
 - [Sencha ExtJS](http://www.sencha.com)
+- [Semantic-Org/Semantic-UI: Semantic is a UI component framework based around useful principles from natural language.](https://github.com/Semantic-Org/Semantic-UI)
 - [jQuery EasyUI - helps you build your web pages easily](http://www.jeasyui.com/)
 - [JavaScript Framework & HTML5 UI Library for Web App Development-Webix](http://webix.com/)
 - [Kendo UI Core](http://www.telerik.com/kendo-ui/open-source-core)
@@ -50,6 +51,7 @@ tags: [web, tutorial]
 
 - [Google I/O 2012 - Better Web App Development Through Tooling - YouTube](https://www.youtube.com/watch?feature=player_embedded&v=Mk-tFn2Ix6g)
 - [Modern Debugging Experience: Part 1 - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/modern-debugging-experience-part-1--cms-22571)
+
 
 ### Sharing local development
 

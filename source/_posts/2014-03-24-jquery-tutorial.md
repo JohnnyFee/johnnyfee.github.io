@@ -52,7 +52,7 @@ tags: [javascript]
 
 The jQuery library supports nearly all the selectors included in CSS specifications 1 through 3.
 
-Let's suppose that we want the top-level items, and only the top-level items—Comedies, Tragedies, and Histories—to be arranged horizontally. We can start by defining a `horizontal` class in the stylesheet: 
+Let's suppose that we want the top-level items, and only the top-level items—Comedies, Tragedies, and Histories—to be arranged horizontally. We can start by defining a `horizontal` class in the stylesheet:
 
 	.horizontal {
 		float: left;
@@ -152,10 +152,10 @@ In contrast, CSS is one-based, so a CSS selector such as `$('div:nth-child(1)')`
 We can add a style to the stylesheet for all the table rows and use an altclass for the odd rows:
 
 	tr {
-		background-color: #fff; 
+		background-color: #fff;
 	}
 	.alt {
-		background-color: #ccc; 
+		background-color: #ccc;
 	}
 
 	$(document).ready(function() {
@@ -288,7 +288,7 @@ There are two ways to call ready method:
 	  // Our code here...
 	});
 
-and 
+and
 
 	$(function() {
 	  // Our code here...
@@ -340,7 +340,7 @@ With this in mind, we can write the following:
 		$('#switcher-narrow').on('click', function() {
 			$('body').addClass('narrow').removeClass('large');
 		});
-		
+
 		$('#switcher-large').on('click', function() {
 			$('body').removeClass('narrow').addClass('large');
 		});
@@ -358,7 +358,7 @@ The `.removeClass()` method's parameter is optional; when omitted, it removes al
 
 	$(document).ready(function() {
 	  $('#switcher-default').addClass('selected');
-	  
+
 	  $('#switcher button').on('click', function() {
 	    $('body').removeClass();
 	    $('#switcher button').removeClass('selected');
@@ -368,7 +368,7 @@ The `.removeClass()` method's parameter is optional; when omitted, it removes al
 	  $('#switcher-narrow').on('click', function() {
 	    $('body').addClass('narrow');
 	  });
-	  
+
 	  $('#switcher-large').on('click', function() {
 	    $('body').addClass('large');
 	  });
@@ -619,13 +619,13 @@ Once we add the corresponding .appendTo() method, we now have a complete set of 
 
 ### Moving elements
 
-	<p>How admirable is the Law of Compensation! <span    
-	   class="footnote">And how perfect a proof of the natural 
-	   fitness and, I may almost say, the divine origin of the 
+	<p>How admirable is the Law of Compensation! <span
+	   class="footnote">And how perfect a proof of the natural
+	   fitness and, I may almost say, the divine origin of the
 	   aristocratic constitution of the States of Flatland!</span>
-	   By a judicious use of this Law of Nature, the Polygons and 
-	   Circles are almost always able to stifle sedition in its 
-	   very cradle, taking advantage of the irrepressible and 
+	   By a judicious use of this Law of Nature, the Polygons and
+	   Circles are almost always able to stifle sedition in its
+	   very cradle, taking advantage of the irrepressible and
 	   boundless hopefulness of the human mind.&hellip;
 	</p>
 

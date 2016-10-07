@@ -42,6 +42,7 @@ tags: [node, tutorial]
 - [MrSwitch/hello.js](https://github.com/MrSwitch/hello.js) A Javascript RESTFUL API library for connecting with OAuth2 services, such as Google+ API, Facebook Graph and Windows Live Connect. http://adodson.com/hello.js/
 - [yahoo/gifshot](https://github.com/yahoo/gifshot) JavaScript library that can create animated GIFs from media streams, videos, or images <http://yahoo.github.io/gifshot/>
 - [node-ffi/node-ffi](https://github.com/node-ffi/node-ffi) Node.js Foreign Function Interface
+- [typicode/json-server: Get a full **fake** REST API with zero coding in less than 30 seconds (seriously)](https://github.com/typicode/json-server)
 
 ### Pattern
 
@@ -61,7 +62,7 @@ tags: [node, tutorial]
 
 ### Console
 
-- [commander](http://visionmedia.github.io/commander.js/) 
+- [commander](http://visionmedia.github.io/commander.js/)
     - [Command-line utilities with Node.js](http://cruft.io/posts/node-command-line-utilities) 教程。
 - [Omelette by f](http://f.github.io/omelette) 为 Node Console 提供自动补全功能。
 - [substack/node-optimist](https://github.com/substack/node-optimist) Node 参数解析库。
@@ -69,7 +70,7 @@ tags: [node, tutorial]
 ### HTML/CSS
 
 - [cheerio](http://matthewmueller.github.io/cheerio/) 把字符串构建成 DOM 结构，提供 jQuery 一样的查询器。
-- [Neamar/document-highlighter](https://github.com/Neamar/document-highlighter/) 
+- [Neamar/document-highlighter](https://github.com/Neamar/document-highlighter/)
 - [t32k/stylestats](https://github.com/t32k/stylestats) StyleStats is Node.js library to collect css statistics! CSS 分析器。
 
 ### Config
@@ -162,7 +163,7 @@ __Demo:__
 
 ### 云平台
 
-- Heroku 
+- Heroku
     + [6 Easy Ways to Prevent Your Heroku Node App From Sleeping - Quick Left Boulder Colorado](http://quickleft.com/blog/6-easy-ways-to-prevent-your-heroku-node-app-from-sleeping)
     + [Deploying Node.js App to Heroku](https://www.youtube.com/watch?v=uLF_hmtxAsY) <sup>video</sup>
     + - [How to Deploy a Node.js App to Heroku ♥ Scotch](http://scotch.io/tutorials/hosting/how-to-deploy-a-node-js-app-to-heroku)
@@ -230,4 +231,3 @@ See also [javascript - Make exe files from node.js app - Stack Overflow](http://
 
 - [Node Cookbook, 2nd Edition](http://www.salttiger.com/node-cookbook-2nd-edition/)
 - [Node: HTTP, HTTPS - Mixu's Node book](http://book.mixu.net/node/ch10.html)
-

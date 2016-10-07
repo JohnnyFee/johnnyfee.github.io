@@ -7,12 +7,14 @@ tags: [git]
 
 ## Quick Start
 
+- [github/gitignore: A collection of useful .gitignore templates](https://github.com/github/gitignore)
+
 ### clone
 
 执行如下命令以创建一个本地仓库的克隆版本：
 
 ```shell
-git clone /path/to/repository 
+git clone /path/to/repository
 ```
 
 如果是远端服务器上的仓库，你的命令会是这个样子：
@@ -59,7 +61,7 @@ $ git commit -a -m 'added new benchmarks'
 一般情况下，你通常直接在文件管理器中把没用的文件删了，或者用rm命令删了：
 
     $ rm test.txt
-    
+
 
 这个时候，Git知道你删除了文件，因此，工作区和版本库就不一致了，_git status_命令会立刻告诉你哪些文件被删除了：
 
@@ -72,7 +74,7 @@ $ git commit -a -m 'added new benchmarks'
     #       deleted:    test.txt
     #
     no changes added to commit (use "git add" and/or "git commit -a")
-    
+
 
 现在你有两个选择，一是确实要从版本库中删除该文件，那就用命令_git rm_删掉，并且commit：
 
@@ -82,7 +84,7 @@ $ git commit -a -m 'added new benchmarks'
     [master d17efd8] remove test.txt
      1 file changed, 1 deletion(-)
      delete mode 100644 test.txt
-    
+
 
 现在，文件就从版本库中被删除了。
 
@@ -104,7 +106,7 @@ $ git commit -a -m 'added new benchmarks'
 
     git push origin master
 
-可以把 master 换成你想要推送的任何分支。 
+可以把 master 换成你想要推送的任何分支。
 
 如果你还没有克隆现有仓库，并欲将你的仓库连接到某个远程服务器，你可以使用如下命令添加：
 
@@ -114,19 +116,19 @@ $ git commit -a -m 'added new benchmarks'
 
 ### branch
 
-创建一个叫做“feature_x”的分支，并切换过去：  
+创建一个叫做“feature_x”的分支，并切换过去：
 
-    git checkout -b feature_x  
+    git checkout -b feature_x
 
-切换回主分支：  
+切换回主分支：
 
-    git checkout master  
+    git checkout master
 
-再把新建的分支删掉：  
+再把新建的分支删掉：
 
-    git branch -d feature_x  
+    git branch -d feature_x
 
-除非你将分支推送到远端仓库，不然该分支就是 _不为他人所见的_：  
+除非你将分支推送到远端仓库，不然该分支就是 _不为他人所见的_：
 
     git push origin <branch>
 
@@ -178,11 +180,11 @@ $ git commit -a -m 'added new benchmarks'
     gitk
 
 彩色的 git 输出：
-    
+
     git config color.ui true
 
 显示历史记录时，只显示一行注释信息：
-    
+
     git config format.pretty oneline
 
 交互地添加文件至缓存区：
@@ -193,27 +195,27 @@ $ git commit -a -m 'added new benchmarks'
 
 1. 按照《gitolite + cygwin + windows xp》要求安装cygwin(版本v2.852)
 2. 当客户端安装完git时请按照以下步骤进行
-      
+
     1. 把旧的id_rsa.pub(gitolite管理员证书)上传到server的git目录下.
           - 客户端在桌面右键打开git bash.
           - 输入scp id_rsa.pub(相对路径)  git@server:id_rsa.pub
     2. 初始化gitolite
-         
+
         - 输入`ssh git@server`登录到服务器server(先删除 `.ssh/known_hosts`)
         - 输入 `mkdir -p $home/bin`
         - 输入 `./gitolite/install -t $home/bin`
         - 输入 `$home/bin/gitolite setup -pk ./id_rsa.pub`
         - 输入 `exit` 离开 `ssh`
-    
+
     3. 克隆gitolite管理
-    
+
         + `git clone git@server:gitolite-admin`(如果提示输入密码，则前面的设置有问题，需要重新安装cygwin,gitolite)
         + 找到旧的gitolite-admin/keydir,gitolite-admin/conf，覆盖刚刚clone的gitolite-admin目录下，然后add,commit,push
         + 登录server，将旧的repository覆盖到新的git目录下
-    
+
     4. 客户端测试git
-         
-        - 删除 %USERPROFILE%\.ssh\known_hosts 
+
+        - 删除 %USERPROFILE%\.ssh\known_hosts
         - 在 cmd 命令行中执行 git clone server:testing ，当遇到 yes/no 提示时，选择 yes。 (如果提示输入密码，请重装git)
         - 使用smartgit进行push操作
 
@@ -230,8 +232,8 @@ $ git commit -a -m 'added new benchmarks'
 
 __基本的 Git 工作流程如下：__
 
-1. 在工作目录中修改某些文件。 
-2. 对修改后的文件进行快照，然后保存到暂存区域。 
+1. 在工作目录中修改某些文件。
+2. 对修改后的文件进行快照，然后保存到暂存区域。
 3. 提交更新，将保存在暂存区域的文件快照永久转储到 Git 目录中。
 
 所以，我们可以从文件所处的位置来判断状态：如果是 Git 目录中保存着的特定版本文件，就属于已提交状态；如果作了修改并已放入暂存区域，就属于已暂存状态；如果自上次取出后，作了修改但还没有放到暂存区域，就 是已修改状态。
@@ -264,7 +266,7 @@ __基本的 Git 工作流程如下：__
     - 命名规则如：feature-bluetooth-communication
 
 - 热修复分支（hotfix）：
-    
+
     - 作用：用来修复已发布的产品（在线产品）的bug。
     - 生命周期：产生于master分支，当修复完成时，合并到develop分支（如果此时存在release分支，则需合并到release分支，而不是develop分支）和master分支（并发布新版本），删除分支。
     - 命名规则：hotfix-1.2.1。
@@ -316,7 +318,7 @@ doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 
 - ignore folders:
     <http://stackoverflow.com/questions/2545602/git-ignore-sub-folders>
-    
+
         **/bin/Debug/
         **/bin/Release/
         ## Advanced

@@ -4,6 +4,7 @@ description: ""
 category: Android
 tags: [android, faq]
 ---
+
 ## Eclipse DDMS error “Can't bind to local 8600 for debugger”
 
 In addition to adding "127.0.0.1 localhost" to your hosts file, make the following changes in Eclipse.

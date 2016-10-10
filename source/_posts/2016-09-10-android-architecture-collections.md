@@ -106,8 +106,6 @@ github地址：
 * [android-flux-todo-app](https://github.com/lgvalle/android-flux-todo-app)(示例代码，利用Facebook的Flux实现TODO项目)
 * [flux-comparison](https://github.com/voronianski/flux-comparison)(各种flux实现对比)
 
-## 
-
 ## 6 架构心得体会系列：
 
 * [Android APP架构心得](http://www.jianshu.com/p/2d5c1d855c31)

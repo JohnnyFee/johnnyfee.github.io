@@ -5,26 +5,9 @@ category: Android
 tags: [android]
 ---
 
-### Annotaion
-
-- [excilys / androidannotations](https://github.com/excilys/androidannotations) UI和代码之间的粘合剂，通过它可以编写更少的代码并且轻松维护现存的代码。
-- [Butter Knife](http://jakewharton.github.io/butterknife/) View "injection" library for Android.
-- [greenrobot / EventBus](https://github.com/greenrobot/EventBus) 简化不同组件之间的事件传递。
-- [square / otto](https://github.com/square/otto) An enhanced Guava-based event bus with emphasis on Android support. <http://square.github.io/otto/>
-
-## Exception
-
-- [ACRA / acra](https://github.com/ACRA/acra) Application Crash Reports for Android.
-
-## Protocol Message
-
-- [square/wire](https://github.com/square/wire) Clean, lightweight protocol buffers for Android.
-
-## App
-
-- [Otto](http://square.github.io/otto/) Otto is an event bus designed to decouple different parts of your application while still allowing them to communicate efficiently.
 
 ## Secure
+
 - [guardianproject / NetCipher](https://github.com/guardianproject/NetCipher) Android Library Project for Multi-Layer Network Connections (Better TLS/SSL and Tor).
 
 ## JSON

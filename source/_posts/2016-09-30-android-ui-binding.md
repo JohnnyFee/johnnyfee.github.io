@@ -3,7 +3,7 @@ title: "Rx Android UI Binding"
 description: ""
 category: Android
 tags: [rx, android, ui, data binding]
----
+----
 
 
 ## [RxBinding](https://github.com/JakeWharton/RxBinding)
@@ -22,6 +22,7 @@ RxView.clickEvents(button)
 
 ## Library
 
+- [Data Binding Guide (Android)](https://developer.android.com/tools/data-binding/guide.html) by Google.
 - [butterknife](https://github.com/JakeWharton/butterknife) Bind Android views and callbacks to fields and methods.
   - [android-butterknife-zelezny](https://github.com/avast/android-butterknife-zelezny)  Android Studio plug-in for generating ButterKnife injections from selected layout XML.
-- [AndroidAnnotations](http://androidannotations.org/) @ViewById, @ViewById, @App, @RestService, @AnimationRes, @SystemService, @AfterViews, @Click, @Background, @UiThread, @ItemClick, @Rest.
+- [androidannotations: Fast Android Development. Easy maintainance.](https://github.com/androidannotations/androidannotations) @ViewById, @ViewById, @App, @RestService, @AnimationRes, @SystemService, @AfterViews, @Click, @Background, @UiThread, @ItemClick, @Rest.

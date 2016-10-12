@@ -20,7 +20,7 @@ logcat 经常刷新过快，冲掉之前的数据，可以改下logcat的缓存�
 添加一行
 
 ```
-idea.cycle.buffer.size=1024000  
+idea.cycle.buffer.size=1024000
 ```
 
 ## Android Studio －修改LogCat的颜色
@@ -31,6 +31,14 @@ idea.cycle.buffer.size=1024000
 
 1. Tools/Android/Enable AdbIntegration
 2. Tools/Android/Android Device Monitor
+
+## Plugins
+
+- BorePlugin 给不想用butterknife又不想写findviewbyid的人推荐。
+- Android Parcelable code generator. 在类中插入实现了Parcelable接口的代码。
+- GsonFormat 将Json自动转化成类。
+- Android Material Design Icon Generator 可以生成Material Design图标的插件。
+- Android ButterKnife Zelezny
 
 ## Tools
 

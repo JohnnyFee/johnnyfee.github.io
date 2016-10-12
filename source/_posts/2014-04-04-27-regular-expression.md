@@ -362,7 +362,7 @@ ExplicitCapture(显式捕获)     |仅捕获已被显式命名的组。
             )+
         )*
         (?(Open)(?!))         #在遇到最外层的右括号前面，判断黑板上还有没有没擦掉的"Open"；如果还有，则匹配失败
-    
+
     >                         #最外层的右括号
 
 平衡组的一个最常见的应用就是匹配HTML,下面这个例子可以匹配 嵌套的`<div>`标签 ： `<div[^>]*>[^<>]*(((?'Open'<div[^>]*>)[^<>]*)+((?'-Open'</div>)[^<>]*)+)*(?(Open)(?!))</div>` .
@@ -407,3 +407,13 @@ ExplicitCapture(显式捕获)     |仅捕获已被显式命名的组。
 ## 例子
 
 - 匹配双字节字符(包括汉字在内)：`[^\x00-\xff]`
+
+## Tools
+
+- [RegExr: Learn, Build, & Test RegEx](http://regexr.com/)
+- [Online regex tester and debugger: PHP, PCRE, Python, Golang and JavaScript](https://regex101.com/#javascript)
+- [Regexper](https://regexper.com/#%5B%5Eresource%5C%2F%5D%2B%5Cd)
+
+## Snippets
+
+- [知道这20个正则表达式，能让你少写1,000行代码 - 简书](http://www.jianshu.com/p/e7bb97218946)

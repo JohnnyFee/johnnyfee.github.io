@@ -9,11 +9,13 @@ tags: [react native, tutorial]
 
 - [React 入门教程](https://hulufei.gitbooks.io/react-tutorial/content/)
 - [Exploring React's State Propagation](https://www.sitepoint.com/exploring-reacts-state-propagation)
+- [React For Beginners — The best way to learn React](https://reactforbeginners.com/) <sup>video</sup>
 
 ## React
 
 - [A JavaScript library for building user interfaces](https://facebook.github.io/react/)
 - [从零开始的Android新项目5 - Repository层(上) Retrofit、Repository组装](http://blog.zhaiyifan.cn/2016/04/30/android-new-project-from-0-p5/)
+
 
 ## Flux
 

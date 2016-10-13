@@ -17,6 +17,7 @@ tags: [android, utils]
 ## Utils
 
 - [greenrobot/essentials)](https://github.com/greenrobot/essentials) Utils for IO, File, String, Date, Stream, Hash Set, Multimap, Object cache, Base64.
+- [square/phrase](https://github.com/square/phrase/) Phrase is an Android **string** resource templating library
 
 ## Cache
 

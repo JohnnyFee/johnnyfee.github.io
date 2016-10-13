@@ -13,8 +13,15 @@ tags: [android, tutorial]
 - [android-security-awesome](https://github.com/ashishb/android-security-awesome)
 - [Square Open Source](http://square.github.io/#android)
 - [android10 (Fernando Cejas)](https://github.com/android10)
+- [android-libs](http://android-libs.com/)
 
 <!-- more -->
+
+## OpenSource Project
+
+- [github / android](https://github.com/github/android) Android client for Github.
+- [Anki-Android](https://github.com/nicolas-raoul/Anki-Android) 注明的单词学习卡片。
+- [ahorn / android-rss](https://github.com/ahorn/android-rss)Lightweight Android library to read parts of RSS 2.0 feeds.
 
 ## Books
 

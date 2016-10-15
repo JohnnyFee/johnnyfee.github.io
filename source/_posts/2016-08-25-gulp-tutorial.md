@@ -8,6 +8,7 @@ tags: [gulp]
 ## Tutorial
 
 - [gulp/docs](https://github.com/gulpjs/gulp/tree/master/docs)
+- [[译] Gulp 4 入门指南 · Issue #62 · cssmagic/blog](https://github.com/cssmagic/blog/issues/62)
 
 ## FAQ
 

@@ -68,11 +68,11 @@ The response object is created along with the request object, and is conventiona
 
 ### Middlewares
 
-A middleware is a JavaScript function to handle HTTP requests to an Express app. It can manipulate the request and the response objects or perform an isolated action, or terminate the request flow by sending a response to the client, or pass on the control to the next middleware. 
+A middleware is a JavaScript function to handle HTTP requests to an Express app. It can manipulate the request and the response objects or perform an isolated action, or terminate the request flow by sending a response to the client, or pass on the control to the next middleware.
 
 Middlewares are loaded in an Express app using the app.use()method.
 
-Following is an example of a middleware. All it does is print the IP address of the client that made the request. Although it may seem like a trivial middleware, it gives you a very good overview of how middlewares work: 
+Following is an example of a middleware. All it does is print the IP address of the client that made the request. Although it may seem like a trivial middleware, it gives you a very good overview of how middlewares work:
 
     app.use(function(req, res, next) {
         console.log('Request from: ' + req.ip);
@@ -81,7 +81,7 @@ Following is an example of a middleware. All it does is print the IP address of 
 
 - res is the request object
 - res is the response object
-- next is a reference to the next middleware in line. 
+- next is a reference to the next middleware in line.
 
 Any middleware can end a request by sending a response back to the client using one of the response methods on the resobject. Any middleware that does not call a response method must call the next middleware in line, else the request will be left hanging in there.
 
@@ -176,7 +176,7 @@ The following is the content of the `routes.js` Node module:
             // Send a plain text response
             res.send('Hola!');
         });
-        
+
         app.get('/contact', function(req, res) {
             // Render a view
             res.render('contact');
@@ -222,9 +222,9 @@ What is Express?, we learned that Express apps are actually Node modules, which 
 
 参数：
 
-- `private` Indicates whether this module is meant to be published on the 
+- `private` Indicates whether this module is meant to be published on the
 npmregistry or not.
-- `scripts` npm commands for the module. In our case, we will support only 
+- `scripts` npm commands for the module. In our case, we will support only
 the startcommand. npm startwill call the node app.
 
 在`package.json`所在的文件夹中执行：
@@ -272,13 +272,13 @@ $ node app
 
 To stop the server, press Ctrl+ C.
 
-To send HTML response, just change `res.send('Welcome!')` to `res.send('<h1>Welcome!</h1>')`, and restart the server. 
+To send HTML response, just change `res.send('Welcome!')` to `res.send('<h1>Welcome!</h1>')`, and restart the server.
 
 For the changes made in application files to reflect, you need to restart the server. This can be a tedious process; you can make it easier for yourself by using __supervisor__, a Node module that will watch the application files and restart the server when any one of them changes. You can learn more about supervisor at <https://github.com/ isaacs/node-supervisor>.
 
 ### views
 
-Any changes made in the views will be reflected in the HTML output without requiring the server to be restarted. 
+Any changes made in the views will be reflected in the HTML output without requiring the server to be restarted.
 
 Let go ahead and create a directory for our views, named views:
 
@@ -309,12 +309,12 @@ And here is the content for hello.jade:
 
 Make sure to consistently use spaces or tabs for indentation, or else Jade will throw an error.
 
-Let's update app.js to use our newly created views: 
+Let's update app.js to use our newly created views:
 
     var http = require('http');
     var express = require('express');
     var app = express();
-    
+
     // Set the view engine
     app.set('view engine', 'jade');
 
@@ -391,13 +391,13 @@ Update `app.js` to set a static directory:
     // ...
     app.set('view engine', 'jade');
     app.set('views', './views');
-    
+
     // Mark the public dir as a static dir
     app.use(express.static('./public'));
 
     // ...
 
-    
+
 ![effective](http://johnnyimages.qiniudn.com/express-public.png)
 
 ### auto generate experss app skeleton
@@ -411,7 +411,7 @@ Let's create a new app using our newfound knowledge of express:
     $ express --sessions ~/auto-express
 
 run the app:
-    
+
     $ node app
 
 Take a look at the content of the directory auto generated:
@@ -696,7 +696,7 @@ String-based routes are created by passing a string pattern as the first argumen
 The characters ?, +, *, and () are subsets of their Regular Expression counterparts. The hyphen (-) and the dot (.) are interpreted literally by string-based route identifiers.
 
 There is another set of string-based route identifiers, which is used to specify named placeholders in the request path. Take a look at the following example:
- 
+
     app.get('/user/:id', function(req, res) {
         res.send('user id: ' + req.params.id);
     });
@@ -705,7 +705,7 @@ There is another set of string-based route identifiers, which is used to specify
     }
 
 The value of the named placeholder is available in the req.params object in a property with a similar name. Named placeholders can also be used with special characters for interesting and useful effects, as shown here:
-    
+
     app.get('/route/:from-:to', function(req, res) {
         res.send(req.params.from + ' to ' + req.params.to);
     });
@@ -750,10 +750,10 @@ Route handler functions accept a third parameter, commonly named next, which ref
 
     app.get('/abc*', function(req, res, next) {
         // If the request path is /abcd, don't handle it
-        if (req.path == '/abcd') { 
+        if (req.path == '/abcd') {
             next(); }
-        else { 
-            res.send('abc*'); 
+        else {
+            res.send('abc*');
         }
     });
 
@@ -965,7 +965,7 @@ Next, we need to create a Node module to handle the resourceful routes. Create a
         res.send('delete user ' + req.params.user);
     };
 
-Now modify app.js to use the express-resourcemodule and load the 
+Now modify app.js to use the express-resourcemodule and load the
 route-handling Node module:
 
     var http = require('http');
@@ -992,7 +992,7 @@ Start the app and load the following URLs in your browser to see the resourceful
 ## Response From the Server
 
 
-Express can send an HTTP response using one of its response methods: 
+Express can send an HTTP response using one of its response methods:
 
 - res.send()
 - res.json()
@@ -1000,7 +1000,7 @@ Express can send an HTTP response using one of its response methods:
 - res.sendfile()
 - res. download()
 - res.render()
-- res.redirect()`. 
+- res.redirect()`.
 
 If none of them is called, the request will be left hanging till the connection times out. If more than one response methods are specified in a route handler, only the first method will take effect, the rest will generate non-fatal, run-time errors.
 
@@ -1041,7 +1041,7 @@ It is important to note that res.render(), res.sendfile(), and res.download() do
 
 ### Setting HTTP headers
 
-In the following example, we set a standard HTTP header along with two 
+In the following example, we set a standard HTTP header along with two
 custom headers:
 
     app.get('/', function(req, res) {
@@ -1179,11 +1179,11 @@ The following is a very simple example of using res.sendfile():
 
     app.get('/file', function(req, res) {
         res.sendfile('./secret-file.png', function(err) {
-            if (err) { 
-                condole.log(err); 
+            if (err) {
+                condole.log(err);
             }
-            else { 
-                console.log('file sent'); 
+            else {
+                console.log('file sent');
             }
         });
     });
@@ -1199,7 +1199,7 @@ app.get('/download', function(req, res) {
     });
 });
 
-If you examine the HTTP headers for this response, you will find that the ContentDispositionheader has been set to attachment, because of which the file is being 
+If you examine the HTTP headers for this response, you will find that the ContentDispositionheader has been set to attachment, because of which the file is being
 prompted for download or being downloaded:
 
 ![express-download.png](http://johnnyimages.qiniudn.com/express-download.png)
@@ -1260,7 +1260,7 @@ Now create the corresponding 500.jadeview file in the viewsdirectory:
 
 Content negotiation is the mechanism of specifying the data types a user agent is capable of consuming and prefers, and the server fulfilling the request when it can, and informing when it cannot.
 
-User agents send their preferred content type for a resource using the AcceptHTTP request header. Express supports content negotiation using the `res.format()`method. 
+User agents send their preferred content type for a resource using the AcceptHTTP request header. Express supports content negotiation using the `res.format()`method.
 
 This is a useful feature if you want to send different types of content based on the capability of the user agent. `res.format()` accepts an object whose keys are the canonical content type name (text/plain, text/html, and so on), and whose values are functions that will be used as the handler for the route, for the matching content type. Let's implement content negotiation in the home page route handler to find out how it works:
 
@@ -1308,7 +1308,7 @@ The previous code can be re-written in a less verbose manner by using just the s
 
 #### Redirecting a request
 
-Sometimes you may want to redirect the request to a different URL, instead of responding with data. This is made possible in Express using the res.redirect() method. This method takes an optional redirection code that defaults to 302, and the URL to redirect to. The URLparameter can be an absolute URL or relative to the current URL. 
+Sometimes you may want to redirect the request to a different URL, instead of responding with data. This is made possible in Express using the res.redirect() method. This method takes an optional redirection code that defaults to 302, and the URL to redirect to. The URLparameter can be an absolute URL or relative to the current URL.
 
 The following are some examples of redirecting requests from an Express app:
 
@@ -1327,7 +1327,7 @@ GET forms are submitted using the GET HTTP method and the form data is sent in t
 
 ### Handling GET submissions
 
-Let's create a route and view for a search form. We will set this form to be submitted 
+Let's create a route and view for a search form. We will set this form to be submitted
 via the GET method by specifying it in its method attribute:
 
     !!! 5
@@ -1364,7 +1364,7 @@ Trying to read a non-existent key will return undefined, because we are dealing 
         res.send(name + ' : ' + source);
     });
 
-In case, a GET parameter contains characters that cannot be used as a JavaScript identifier name, you can use a subscript notation to read the value: 
+In case, a GET parameter contains characters that cannot be used as a JavaScript identifier name, you can use a subscript notation to read the value:
 
     var firstname = req.query['first name'];
 
@@ -1456,7 +1456,7 @@ With the bodyParser middleware enabled, we are ready to parse the data submitted
 
 __Reading form data__
 
-The `bodyParser` middleware will add two new properties: body and files on the request object and populate them with the key-value pairs of the parameters submitted via the POST request. 
+The `bodyParser` middleware will add two new properties: body and files on the request object and populate them with the key-value pairs of the parameters submitted via the POST request.
 
 Text data from the form is populated in the `req.body` object and files from the form are populated in the req.filesobject.
 
@@ -1551,13 +1551,13 @@ Next, we will modify the route handler. Make sure to include the callback functi
 
         // Reference to the profile_image object
         var profile_image = req.files.profile_image;
-        
+
         // Temporary location of the uploaded file
         var tmp_path = profile_image.path;
-        
+
         // New location of the file
         var target_path = './public/images/' + profile_image.name;
-        
+
         // Move the file from the new location
         // fs.rename() will create the necessary directory
         fs.rename(tmp_path, target_path, function(err) {
@@ -1565,14 +1565,14 @@ Next, we will modify the route handler. Make sure to include the callback functi
             if (err) {
                 next(err);
             }
-        
+
             // Delete the temporary file
             fs.unlink(tmp_path, function() {
                 // If an error is encountered, pass it to the next handler
                 if (err) {
                     next(err);
                 }
-        
+
                 console.log('File uploaded to: ' + target_path + ' - ' +
                     profile_image.size + ' bytes');
                 res.redirect('/images/' + profile_image.name);
@@ -1582,7 +1582,7 @@ Next, we will modify the route handler. Make sure to include the callback functi
 
 __Note：__The updated route handler will print some details about the file on the console and redirect the browser to the uploaded file, if everything goes successfully.
 
-A reference is created in the req.filesobject for each uploaded file. If you upload multiple files in a form, all of them will have a reference in this object. You can process them all by looping through the req.filesobject: 
+A reference is created in the req.filesobject for each uploaded file. If you upload multiple files in a form, all of them will have a reference in this object. You can process them all by looping through the req.filesobject:
 
     req.files.forEach(function(file) {
         // Code to handle the file
@@ -1643,7 +1643,7 @@ path     |   Path for the cookie. Defaults to "/".
 secure   |   Marks the cookie to be used with HTTPS only.
 expires  |   Expiry date of the cookie in GMT. If not specified or set to 0, creates a session cookie.
 maxAge   |   Convenient option for setting the expiry time relative to the current time in milliseconds.
-httpOnly |   Flags the cookie to be accessible only to the web server. It helps 
+httpOnly |   Flags the cookie to be accessible only to the web server. It helps
 prevent  |   XSS attacks by disallowing client-side JavaScript access to it.
 signed   |   Indicates if the cookie should be signed. Signed cookies cannot be tampered with without invalidating them.
 
@@ -1746,7 +1746,7 @@ The sessionmiddleware accepts an options object that can be used for defining th
 Option    |  Description
 ----------|--------------------
 key       |  Name of the cookie. Defaults to connect.sid.
-store     |  Instance of a session store. Defaults to MemoryStore. The session 
+store     |  Instance of a session store. Defaults to MemoryStore. The session
 store     |  may support options of its own.
 secret    |  Secret for signing session cookie. Required if not passed to cookieParser().
 cookie    |  Session cookie settings. Regular cookie defaults apply.
@@ -1766,7 +1766,7 @@ Let's explore three popular session stores for Express.
 
 __MemoryStore__
 
-Express comes with a built-in session store called MemoryStore, which is the default 
+Express comes with a built-in session store called MemoryStore, which is the default
 when you don't specify one explicitly.
 
 MemoryStoreuses the application RAM for storing session data and works right out of the box, without the need for any database. Seeing how easily it is to set up, you might be tempted to make it the session store of your choice, but it is not recommended to do so because of the following reasons:
@@ -1850,14 +1850,14 @@ __Updating session variables__
 
 Updating a session variable is just about updating the property in the req.session object or overwriting the existing property with a new value:
 
-    // Assuming req.session.skills and req.session.name were already 
+    // Assuming req.session.skills and req.session.name were already
     defined
     req.session.skills.push('Baking');
     req.session.name = 'Pedro';
 
 __Deleting session variables__
 
-To delete a session variable, just delete the property from the req.sessionobject: 
+To delete a session variable, just delete the property from the req.sessionobject:
 
     delete req.session.name
     delete req.session['primary skill'];
@@ -1879,7 +1879,7 @@ Session store-based sessions have a method called `destroy()` that is used for d
     req.session.destroy();
 
 The `destroy()` method accepts an optional callback function to be executed after the session is cleared from the store:
-    
+
     req.session.destroy(function() {
         res.send('Session deleted');
     });
@@ -1896,28 +1896,28 @@ The body is presented to the user as plain text, rendered HTML, image, file down
 
 Following is a list of all the HTTP status codes for your information and general knowledge:
 
-- 1xx The 1xx series of status codes is classified as __Informational__, and is used for conveying provisional response from the server. 
+- 1xx The 1xx series of status codes is classified as __Informational__, and is used for conveying provisional response from the server.
 
     The available codes in this series are: 100, 101, and 102.
 
-- 2xx The 2xx series of status codes is classified as __Success__, and is used for conveying a 
+- 2xx The 2xx series of status codes is classified as __Success__, and is used for conveying a
 successful request for a resource on the server.
 
-    The available codes in this series are: __200__, 201, 202, 303, 204, 205, 206, 207, 208, 250, 
+    The available codes in this series are: __200__, 201, 202, 303, 204, 205, 206, 207, 208, 250,
 and 226.
 
-- 3xx The 3xx series of status codes is classified as __Redirection__, and is used for information 
+- 3xx The 3xx series of status codes is classified as __Redirection__, and is used for information
 by the user agent about taking additional action to retrieve the requested resource.
 
     The available codes in this series are: 300, 301, 302, 303, 304, 305, 306, 307, and 308.
 
 - 4xx The 4xx series of status codes is classified as __Client Error__, and is used for informing the user agent of its erroneous requests to the server.
 
-    The available codes in this series are: __400__, 401, 402, 403, 404, 405, 406, 407, 408, 409, 
-410, 411, 412, 413, 414, 415, 416, 417, 422, 423, 424, 425, 426, 428, 429, 431, 444, 449, 
+    The available codes in this series are: __400__, 401, 402, 403, 404, 405, 406, 407, 408, 409,
+410, 411, 412, 413, 414, 415, 416, 417, 422, 423, 424, 425, 426, 428, 429, 431, 444, 449,
 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 494, 495, 496, 497, and 499.
 
-- 5xx The 5xx series of status codes is classified as Server Error, and is used for informing the user agent that the server has encountered an error because of which the request was not fulfilled. 
+- 5xx The 5xx series of status codes is classified as Server Error, and is used for informing the user agent that the server has encountered an error because of which the request was not fulfilled.
 
     The available codes in this series are: 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 551, 598, and 599.
 
@@ -1982,3 +1982,9 @@ Since Express depends on the `NODE_ENV` environment variable to determine the en
 ### Restful
 
 [restify](http://mcavage.me/node-restify/) 是一个基于Nodejs的REST应用框架，支持服务器端和客户端。restify比起express更专注于REST服务，去掉了express中的template, render等功能，同时强化了REST协议使用，版本化支持，HTTP的异常处理。
+
+## FAQ
+
+### bin
+- [javascript - What does "./bin/www" do in Express 4.x? - Stack Overflow](http://stackoverflow.com/questions/23169941/what-does-bin-www-do-in-express-4-x)
+- [Executables in npm scripts](http://blog.ibangspacebar.com/npm-scripts/)

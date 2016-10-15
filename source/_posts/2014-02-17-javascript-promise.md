@@ -131,10 +131,10 @@ Promise主要提供以下接口：
 
     Appends fullfillment and rejection handlers to the promise, and returns a new promise resolving to the return value of the called handler.
 
-    Sometimes, the then method takes up to three arguments: a success callback, a failure callback, and a progress callback (the spec does not require implementations to include the progress feature, but many do). 
+    Sometimes, the then method takes up to three arguments: a success callback, a failure callback, and a progress callback (the spec does not require implementations to include the progress feature, but many do).
 
     For the implementations that include the progress feature, a promise can be updated on its progress at any time before it leaves the unfulfilled state. When the progress is updated, all of the progress callbacks will be immediately invoked and passed the progress value. Progress callbacks are handled differently than the success and failure callbacks; If you register a progress callback after a progress update has already happened, the new progress callback will only be called for progress updates that occur after it was registered.
-    
+
     Just like an example below:
 
         asyncOperation()
@@ -150,7 +150,7 @@ Promise主要提供以下接口：
             // Yay we're finished!
         });
 
-    asyncOperation returns a promise object. So we call then on that promise object and pass it a callback function; `then` will also return a promise. When the asyncOperation finishes, it'll fulfill the promise with data. The callback is then invoked and data is passed in as an argument to it. 
+    asyncOperation returns a promise object. So we call then on that promise object and pass it a callback function; `then` will also return a promise. When the asyncOperation finishes, it'll fulfill the promise with data. The callback is then invoked and data is passed in as an argument to it.
 
     * If the callback doesn't have a return value, the promise that was returned by `then` is immediately fulfilled with no value.
     * If the callback returns something other than a promise, then the promise that was returned by `then` will be immediately fulfilled with that value.
@@ -169,8 +169,8 @@ Promise主要提供以下接口：
 
     Returns a Promise object that is resolved with the given value. If the value is a thenable (i.e. has a then method), the returned promise will "follow" that thenable, adopting its eventual state; otherwise the returned promise will be fulfilled with the value.
 
-    - If you pass it something promise-like (has a 'then' method), it creates a new promise that fulfills/rejects in the same way, effectively a clone. 
-    - If you pass in any other value, eg Promise.resolve('Hello'), it creates a promise that fulfills with that value. 
+    - If you pass it something promise-like (has a 'then' method), it creates a new promise that fulfills/rejects in the same way, effectively a clone.
+    - If you pass in any other value, eg Promise.resolve('Hello'), it creates a promise that fulfills with that value.
     - If you call it with no value, as above, it fulfills with "undefined".
 
     `reject`接口同理。
@@ -181,7 +181,7 @@ Promise主要提供以下接口：
 
 - Promise.cast(value)
 
-    Casts a value to a promise. Useful for quick returns from methods that should return promises. 
+    Casts a value to a promise. Useful for quick returns from methods that should return promises.
 
         Promise.cast(3).then(function(result) {
           // result == 3;
@@ -189,7 +189,7 @@ Promise主要提供以下接口：
 
 - Promise.all(iterable)
 
-    Returns a promise that resolves when all of the promises in iterable have resolved. The result is passed an array of values from all the promises. If something passed in the iterable array is not a promise, it's converted to one by Promise.cast. If any of the passed in promises rejects, the all Promise should also reject (and receives the value of the promise that rejected. 
+    Returns a promise that resolves when all of the promises in iterable have resolved. The result is passed an array of values from all the promises. If something passed in the iterable array is not a promise, it's converted to one by Promise.cast. If any of the passed in promises rejects, the all Promise should also reject (and receives the value of the promise that rejected.
 
         var p = new Promise(function(resolve, reject) { resolve(3); });
         Promise.all([true, p]).then(function(values) {
@@ -198,7 +198,7 @@ Promise主要提供以下接口：
 
 - Promise.race(iterable)
 
-    Returns a promise that resolves when the first promise in the iterable resolves. 
+    Returns a promise that resolves when the first promise in the iterable resolves.
 
         var p1 = new Promise(function(resolve, reject) { setTimeout(resolve, 500, "one"); });
         var p2 = new Promise(function(resolve, reject) { setTimeout(resolve, 100, "two"); });
@@ -229,7 +229,7 @@ __将 Promise 用于 XMLHttpRequest__
         // 经典 XHR 操作
         var req = new XMLHttpRequest();
         req.open('GET', url);
-    
+
         req.onload = function() {
           // 当发生 404 等状况的时候调用此函数
           // 所以先检查状态码
@@ -243,12 +243,12 @@ __将 Promise 用于 XMLHttpRequest__
             reject(Error(req.statusText));
           }
         };
-    
+
         // 网络异常的处理方法
         req.onerror = function() {
           reject(Error("Network Error"));
         };
-    
+
         // 发出请求
         req.send();
       });
@@ -285,7 +285,7 @@ console.log和console.error这两个最后的回调函数，用法上有一点�
     var promise = new Promise(function(resolve, reject) {
       resolve(1);
     });
-    
+
     promise.then(function(val) {
       console.log(val); // 1
       return val + 2;
@@ -336,15 +336,15 @@ getJSON 会返回一个获取 JSON 并加以解析的 Promise。
 这里我们发起一个对“story.json”的异步请求，返回给我们更多 URL，然后我们会请求其中的第一个。Promise 开始首次显现出相较事件回调的优越性了。你甚至可以写一个抓取章节内容的独立函数：
 
     var storyPromise;
-    
+
     function getChapter(i) {
       storyPromise = storyPromise || getJSON('story.json');
-      
+
       return storyPromise.then(function(story) {
         return getJSON(story.chapterUrls[i]);
       })
     }
-    
+
     // 用起来非常简单：
     getChapter(0).then(function(chapter) {
       console.log(chapter);
@@ -381,7 +381,7 @@ then接受两个参数，一个处理成功，一个处理失败（或者说确�
       console.log("Failed!", error);
     });
 
-这里的 catch 并无任何特殊之处，只是`then(undefined, func)`的语法糖衣，更直观一点而已。使用`then(func1, func2)`和使用`then(func1).catch(func2)`处理错误并不相同。With then(func1, func2), func1 or func2 will be called, never both. But with then(func1).catch(func2), both will be called if func1 rejects, as they're separate steps in the chain. 
+这里的 catch 并无任何特殊之处，只是`then(undefined, func)`的语法糖衣，更直观一点而已。使用`then(func1, func2)`和使用`then(func1).catch(func2)`处理错误并不相同。With then(func1, func2), func1 or func2 will be called, never both. But with then(func1).catch(func2), both will be called if func1 rejects, as they're separate steps in the chain.
 
 Promise 的否定回调可以由 Promise.reject() 触发，也可以由构造器回调中抛出的错误触发：
 
@@ -422,7 +422,7 @@ Promise 的否定回调可以由 Promise.reject() 触发，也可以由构造器
       // 可以作为隐性的否定结果：
       resolve(JSON.parse("This ain't JSON"));
     });
-    
+
     jsonPromise.then(function(data) {
       // 永远不会发生：
       console.log("It worked!", data);
@@ -470,7 +470,7 @@ Promise 的否定回调可以由 Promise.reject() 触发，也可以由构造器
     catch (e) {
       addTextToPage("Failed to show chapter");
     }
-    
+
     document.querySelector('.spinner').style.display = 'none';
 
 如果只是要捕捉异常做记录输出而不打算在用户界面上对错误进行反馈的话，只要抛出 Error 就行了，这一步可以放在 getJSON 中：
@@ -491,18 +491,18 @@ Promise 的否定回调可以由 Promise.reject() 触发，也可以由构造器
     try {
       var story = getJSONSync('story.json');
       addHtmlToPage(story.heading);
-    
+
       story.chapterUrls.forEach(function(chapterUrl) {
         var chapter = getJSONSync(chapterUrl);
         addHtmlToPage(chapter.html);
       });
-    
+
       addTextToPage("All done");
     }
     catch (err) {
       addTextToPage("Argh, broken: " + err.message);
     }
-    
+
     document.querySelector('.spinner').style.display = 'none';
 
 但是用异步的方式来实现并非易事儿，代码的结构是这样的：
@@ -556,7 +556,7 @@ Our reduce callback is called for each item in the array. "sequence" is `Promise
 
     getJSON('story.json').then(function(story) {
       addHtmlToPage(story.heading);
-    
+
       return story.chapterUrls.reduce(function(sequence, chapterUrl) {
         // Once the last chapter's promise is done…
         return sequence.then(function() {
@@ -594,7 +594,7 @@ And there we have it ([see example](http://www.html5rocks.com/en/tutorials/es6/p
 
     getJSON('story.json').then(function(story) {
       addHtmlToPage(story.heading);
-    
+
       // Take an array of promises and wait on them all
       return Promise.all(
         // Map our array of chapter urls to
@@ -677,7 +677,7 @@ Promises只是一个规范，JavaScript语言原生还未提供支持。一般�
 
     Promise.prototype.resolve = function (value) {
       if (this.state != 'pending') return;
-    
+
       this.state = 'fulfilled';
       this.value = value;
       this._handleThen();
@@ -690,7 +690,7 @@ Promises只是一个规范，JavaScript语言原生还未提供支持。一般�
 
     Promise.prototype.reject = function (reason) {
       if (this.state != 'pending') return;
-    
+
       this.state = 'rejected';
       this.reason = reason;
       this._handleThen();
@@ -701,24 +701,24 @@ Promises只是一个规范，JavaScript语言原生还未提供支持。一般�
 
     Promise.prototype.then = function (onFulfilled, onRejected) {
       var thenable = {};
-    
+
       if (typeof onFulfilled == 'function') {
         thenable.fulfill = onFulfilled;
       };
-    
+
       if (typeof onRejected == 'function') {
         thenable.reject = onRejected;
       };
-    
+
       if (this.state != 'pending') {
         setImmediate(function () {
           this._handleThen();
         }.bind(this));
       }
-    
+
       thenable.promise = new Promise();
       this.thenables.push(thenable);
-    
+
       return thenable.promise;
     }
 
@@ -728,7 +728,7 @@ Promises只是一个规范，JavaScript语言原生还未提供支持。一般�
 
     Promise.prototype._handleThen = function () {
       if (this.state === 'pending') return;
-    
+
       if (this.thenables.length) {
         for (var i = 0; i < this.thenables.length; i++) {
           var thenPromise = this.thenables[i].promise;
@@ -764,8 +764,8 @@ Promises只是一个规范，JavaScript语言原生还未提供支持。一般�
               }
               break;
           }
-  
-            if (returnedVal === null) { 
+
+            if (returnedVal === null) {
               this.thenables[i].promise.resolve(returnedVal);
             }
             else if (returnedVal instanceof Promise || typeof returnedVal.then === 'function') {
@@ -816,7 +816,7 @@ avaScript Promise 的 API 会把任何包含有 then 方法的对象当作“类
 这里 jQuery 的 $.ajax 返回一个 Deferred 对象，含有“then”方法，因此 Promise.cast 可以将其转换为 JavaScript Promise。不过有时候 Deferred 对象会给它的回调函数传递多个参数，例如：
 
     var jqDeferred = $.ajax('/whatever.json');
-    
+
     jqDeferred.then(function(response, statusText, xhrObj) {
       // ...
     }, function(xhrObj, textStatus, err) {
@@ -857,6 +857,8 @@ avaScript Promise 的 API 会把任何包含有 then 方法的对象当作“类
 ## Library
 
 - [facundoolano/promise-log: shortcut for console.loggin' your promises](https://github.com/facundoolano/promise-log)
+- [petkaantonov/bluebird: Bluebird is a full featured promise library with unmatched performance.](https://github.com/petkaantonov/bluebird)
+- [kriskowal/q: A promise library for JavaScript](https://github.com/kriskowal/q)
 
 ## Tutorial
 

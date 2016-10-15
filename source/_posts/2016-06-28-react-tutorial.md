@@ -19,6 +19,8 @@ tags: [react native, tutorial]
 
 ## Flux
 
+[facebook/flux: Application Architecture for Building User Interfaces](https://github.com/facebook/flux)
+
 See [怎样理顺react，flux，redux这些概念的关系，开发中有必要使用它们吗? - 北冥小鱼hk 的回答 - 知乎](https://www.zhihu.com/question/47686258/answer/107209140)
 
 ## Redux
@@ -33,6 +35,7 @@ See [怎样理顺react，flux，redux这些概念的关系，开发中有必要�
 - [kriasoft/react-starter-kit: React Starter Kit — isomorphic web app boilerplate (Node.js, Express, GraphQL, React.js, Babel 6, PostCSS, Webpack, Browsersync)](https://github.com/kriasoft/react-starter-kit)
 - [深入浅出React（二）：React开发神器Webpack](http://www.infoq.com/cn/articles/react-and-webpack)
 - [Webpack 入门指迷 - 题叶, JiyinYiyong - SegmentFault](https://segmentfault.com/a/1190000002551952)
+- [facebookincubator/create-react-app: Create React apps with no build configuration.](https://github.com/facebookincubator/create-react-app)
 
 ## Tools
 

@@ -12,6 +12,7 @@ tags: [code]
 ## Books
 
 - [vhf/free-programming-books](https://github.com/vhf/free-programming-books) Freely available programming books.
+- [justjavac/free-programming-books-zh_CN: 免费的计算机编程类中文书籍，欢迎投稿](https://github.com/justjavac/free-programming-books-zh_CN#cc)
 
 ## Tools
 

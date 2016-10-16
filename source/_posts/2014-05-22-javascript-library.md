@@ -12,7 +12,7 @@ tags: [javascript]
 - [Breaking Bad (Loops in JavaScript Libraries)](http://webapplog.com/breaking-bad-loops-in-javascript-libraries)
 - [mortzdk/jsCache](https://github.com/mortzdk/jsCache) jsCache 是一个 JavaScript 库，它使用 localStorage 技术来缓存 JS，CSS 和图像。这对于移动网站特别有用，因为它节省了 HTTP 请求，并且所有的文件载入都是异步的。
 - [github/fetch](https://github.com/github/fetch) The global `fetch` function is an easier way to make web requests and handle
-responses than using an XMLHttpRequest. 
+responses than using an XMLHttpRequest.
 - [tjmehta/101](https://github.com/tjmehta/101/) A modern JS utility library.
 
 ## Data Type
@@ -90,19 +90,9 @@ __Usage:__
 
 ### Async
 
-- [angular/zone.js](https://github.com/angular/zone.js) Implements Zones for JavaScript. 
+- [angular/zone.js](https://github.com/angular/zone.js) Implements Zones for JavaScript.
 - [yortus/asyncawait · GitHub](https://github.com/yortus/asyncawait)
 - [chajs/cha](https://github.com/chajs/cha) Cha allows tasks to be connected together into a chain that makes better readability and easier to maintain.
-
-## UI
-
-### Image
-
-- [lokesh/color-thief](https://github.com/lokesh/color-thief/) Grabs the dominant color or a representative color palette from an image. Uses javascript and canvas.
-
-### Datetimepicker
-
-- [chmln/flatpickr: lightweight, powerful datetimepicker. zero dependencies](https://github.com/chmln/flatpickr)
 
 ## Browser
 

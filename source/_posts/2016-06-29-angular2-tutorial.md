@@ -5,7 +5,14 @@ category: Angular
 tags: [angular, angular2, tutorial]
 ---
 
-[Explore Angular Resources](https://angular.io/resources/)
+## Resources
+
+- [AngularClass/awesome-angular2](https://github.com/AngularClass/awesome-angular2) A curated list of awesome Angular 2 resources by @AngularClass.
+- [Explore Angular Resources](https://angular.io/resources/)
+
+## Starter
+
+[AngularClass/angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter) An Angular 2 Starter kit featuring Angular 2 (Router, Http, Forms, Services, Tests, E2E, Dev/Prod, HMR, Async/Lazy Routes), Material Design, Karma, Protractor, Jasmine, Istanbul, TypeScript 2, TsLint, Codelyzer, Hot Module Replacement, @types, and Webpack 2 by @AngularClass]
 
 ## Tools
 

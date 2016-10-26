@@ -1,24 +1,76 @@
 layout: post
-title: "Android Utils"
+title: "Android Util Gson"
 description: ""
 category: Android
-tags: [android, utils]
+tags: [android, utils, gson]
 ---
 
-## Logger
+## How to exclude specific fields
 
-- [timber](https://github.com/JakeWharton/timber) 自动为日志提供类名。
-- [pidcat](https://github.com/JakeWharton/pidcat/) 在 PC 端只显示指定报名的日志。
+### transient
 
-## Collections
+Any fields you don't want serialized in general you should use the "transient" modifier, and this also applies to json serializers (at least it does to a few that I have used, including gson).
 
-- [square / tape](https://github.com/square/tape) 可持久化的对象队列。
+If you don't want name to show up in the serialized json give it a transient keyword, eg:
 
-## Utils
+```java
+private transient String name;
+```
 
-- [greenrobot/essentials)](https://github.com/greenrobot/essentials) Utils for IO, File, String, Date, Stream, Hash Set, Multimap, Object cache, Base64.
-- [square/phrase](https://github.com/square/phrase/) Phrase is an Android **string** resource templating library
+See [java - Gson: How to exclude specific fields from Serialization without annotations - Stack Overflow](http://stackoverflow.com/questions/4802887/gson-how-to-exclude-specific-fields-from-serialization-without-annotations)
 
-## Cache
+### @Expose
 
-- [DiskLruCache](https://github.com/JakeWharton/DiskLruCache) 最近最少使用缓存。
+Nishant provided a good solution, but there's an easier way. Simply mark the desired fields with the @Expose annotation, such as:
+
+```java
+@Expose private Long id;
+```
+
+Leave out any fields that you do not want to serialize. Then just create your Gson object this way:
+
+```java
+Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+```
+
+### ExclusionStrategy
+
+This `ExclusionStrategy` will do the thing, but you need to pass "Fully Qualified Field Name". See below:
+
+```java
+public class TestExclStrat implements ExclusionStrategy {
+
+        private Class<?> c;
+        private String fieldName;
+        public TestExclStrat(String fqfn) throws SecurityException, NoSuchFieldException, ClassNotFoundException
+        {
+            this.c = Class.forName(fqfn.substring(0, fqfn.lastIndexOf(".")));
+            this.fieldName = fqfn.substring(fqfn.lastIndexOf(".")+1);
+        }
+        public boolean shouldSkipClass(Class<?> arg0) {
+            return false;
+        }
+
+        public boolean shouldSkipField(FieldAttributes f) {
+
+            return (f.getDeclaringClass() == c && f.getName().equals(fieldName));
+        }
+
+    }
+```
+
+Here is how we can use it generically.
+
+```java
+Gson gson = new GsonBuilder()
+        .setExclusionStrategies(new TestExclStrat("in.naishe.test.Country.name"))
+        //.serializeNulls()
+        .create();
+    Student src = new Student();
+    String json = gson.toJson(src);
+    System.out.println(json);
+```
+
+It returns
+
+> {"firstName":"Philip","middleName":"J.","initials":"P.F","lastName":"Fry","country":{"id":91}}

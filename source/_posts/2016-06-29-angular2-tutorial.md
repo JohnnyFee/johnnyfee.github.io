@@ -12,7 +12,8 @@ tags: [angular, angular2, tutorial]
 
 ## Starter
 
-[AngularClass/angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter) An Angular 2 Starter kit featuring Angular 2 (Router, Http, Forms, Services, Tests, E2E, Dev/Prod, HMR, Async/Lazy Routes), Material Design, Karma, Protractor, Jasmine, Istanbul, TypeScript 2, TsLint, Codelyzer, Hot Module Replacement, @types, and Webpack 2 by @AngularClass]
+- [AngularClass/angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter) An Angular 2 Starter kit featuring Angular 2 (Router, Http, Forms, Services, Tests, E2E, Dev/Prod, HMR, Async/Lazy Routes), Material Design, Karma, Protractor, Jasmine, Istanbul, TypeScript 2, TsLint, Codelyzer, Hot Module Replacement, @types, and Webpack 2 by @AngularClass]
+- [mgechev/angular-seed](https://github.com/mgechev/angular-seed) Modular starter project for Angular 2 (and beyond) with statically typed build and AoT compilation.
 
 ## Tools
 

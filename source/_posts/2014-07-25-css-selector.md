@@ -19,14 +19,14 @@ ID 选择器 |\#<id值\>| 匹配所有 ID 属性等于 id 的元素 | `#info { b
 
 使用方法为 [<条件>]或 element[<条件>]，用于匹配具有符合指定条件属性的所有元素。
 
-选择器 | 含义     | 示例   
+选择器 | 含义     | 示例
 -----| -------------| ---------
 [attr] | 选择所有定义 attr 属性的元素，不考虑它的值。| `p[title] {}`
 [attr="val"]  | 选择定义 attr 属性且值为 "val" 的元素 | `div[class=error] {}`
-[attr^="val"] | 选择定义 attr 属性且属性值以 "val" 打头的元素。 
-[attr$="val"] | 选择定义 attr 属性且属性值以 "val" 结尾的元素。 
-[attr*="val"] | 选择定义 attr 属性且属性值包含 "val" 的元素。 
-[attr~="val"] |  选择定义 attr属性且具有多个之，其中一个等于 "val" 的元素 | `td[headers~=col1] { color:#f00; }` | 处理多个属性值，且不同值用空格分隔的属性会用到 ~= 条件。
+[attr^="val"] | 选择定义 attr 属性且属性值以 "val" 打头的元素。
+[attr$="val"] | 选择定义 attr 属性且属性值以 "val" 结尾的元素。
+[attr*="val"] | 选择定义 attr 属性且属性值包含 "val" 的元素。
+[attr~="val"] |  选择定义 attr属性且具有多个值，其中一个等于 "val" 的元素 | `td[headers~=col1] { color:#f00; }` | 处理多个属性值，且不同值用空格分隔的属性会用到 ~= 条件。
 [attr竖线="val"] | 选择定义 attr 属性且具有多个连字符分隔的多个值，其中第一个值为 "val" 开头的元素。|
 
 实例：lang 属性可以跟包括子标记的语言说明符一起使用，例如 es-us 代表美国英语，en-gb 代表英国英语。以下代码选中所有标记为 en 的元素，而无需枚举不同的区域。
@@ -44,8 +44,8 @@ ID 选择器 |\#<id值\>| 匹配所有 ID 属性等于 id 的元素 | `#info { b
 并集选择器 | selector, selector, selector | 以逗号分隔的单个选择器匹配的所有元素的并集。| `.class1, p.class2`
 后代选择器 | selector selector   | 匹配第一个选择器的后代中匹配匹配第二个选择器的元素。后代选择器匹配任意包含在匹配第一个选择器的元素中的元素，而不仅仅是直接子元素。| `div p`
 子代选择器 | selector1 > selector2 | 匹配第一个选择器的直接后代中匹配第二个选择器的元素。| `body > * > span`
-相邻兄弟选择器| selector1 + selector2 | 紧跟与第一个选择器匹配的元素，且匹配第二个选择器的元素 | `p + a`     
-普通兄弟选择器| selector1 ~ selector2 | 位于第一个选择器匹配的元素之后，且匹配第二个选择器的元素 | `p ~ a`     
+相邻兄弟选择器| selector1 + selector2 | 紧跟与第一个选择器匹配的元素，且匹配第二个选择器的元素 | `p + a`
+普通兄弟选择器| selector1 ~ selector2 | 位于第一个选择器匹配的元素之后，且匹配第二个选择器的元素 | `p ~ a`
 
 ## 伪元素选择器
 
@@ -58,9 +58,9 @@ ID 选择器 |\#<id值\>| 匹配所有 ID 属性等于 id 的元素 | `#info { b
 选择器        | 含义
 -------------| --------------------
 ::first-line  |  匹配文本快的首行
-::first-letter|  选择文本快的首字母。 
+::first-letter|  选择文本快的首字母。
 ::before      |  在选中元素之前插入生成的内容
-::after       |  在选中元素之后插入生成的内容  
+::after       |  在选中元素之后插入生成的内容
 
 示例：
 
@@ -88,7 +88,7 @@ paracount 的默认初始值为 1， 可以通过以下方式指定初始值：
     counter-reset: paracount 10;
 
 指定多个计数器：
-    
+
     counter-reset: paracount 10 othercount;
 
 __使用计数器：__
@@ -135,8 +135,8 @@ p:before {
 ---------------------| --------|------------
 :first-child | 选择元素的第一个子元素。| p:first-child
 :last-child         |  选择元素的最后一个元素。| p:last-child
-:only-child | 选择元素的唯一子元素。等同于 等同于:first-child:last-child或 :nth-child(1):nth-last-child(1) | p:only-child
-:only-of-type | 选择元素指定类型的唯一子元素。等同于 等同于:first-of-type:last-of-type或 :nth-of-type(1):nth-last-of-type(1) | p:only-of-type
+:only-child | 选择元素的唯一子元素。等同于:first-child:last-child或 :nth-child(1):nth-last-child(1) | p:only-child
+:only-of-type | 选择元素指定类型的唯一子元素。等同于:first-of-type:last-of-type或 :nth-of-type(1):nth-last-of-type(1) | p:only-of-type
 
 注： 这里所说的子元素指的都是直接子元素。
 
@@ -146,9 +146,9 @@ p:before {
 ---------------------| --------|------------
 :nth-child(n)       | 选择父元素的第 n 个子元素 | <li>p:nth-child(3) <li>p:nth-child(odd) <li>p:nth-child(even) <li> p:nth-child(3n+0)
 :nth-last-child(n) |  选择父元素的倒数第n个子元素 | tr:nth-last-child(2)
-:nth-of-type(n)    |  选择父元素定义类型的第 n 个子元素 | 
+:nth-of-type(n)    |  选择父元素定义类型的第 n 个子元素 |
 :nth-last-of-type(n) |  选择父元素定义类型的倒数第 n 个子元素
-:first-of-type      |  匹配父元素下使用同种标签的第一个子元素，等同于:nth-of-type(1)                                                  
+:first-of-type      |  匹配父元素下使用同种标签的第一个子元素，等同于:nth-of-type(1)
 :last-of-type      |  匹配父元素下使用同种标签的最后一个子元素，等同于:nth-last-of-type(1)
 
 Suppose we are building a CSS grid, and want to remove the margin on every fourth grid module:
@@ -246,8 +246,6 @@ See:
 }
 ```
 
-提交按钮也会被选中。
-
 
     input[type="text"]:disabled { background:#ddd; }
 
@@ -255,12 +253,12 @@ See:
 
 选择器        | 含义
 --------------| --------------------------------
-::link        |  匹配所有未访问的链接         
-::visited     |  匹配所有已访问的链接         
+::link        |  匹配所有未访问的链接
+::visited     |  匹配所有已访问的链接
 ::active      |  匹配鼠标已经其上按下、还没有释放的E元素
-::hover       |  匹配鼠标悬停其上的元素        
-::focus       |  匹配获得当前焦点的元素        
-  
+::hover       |  匹配鼠标悬停其上的元素
+::focus       |  匹配获得当前焦点的元素
+
 实例：
 
 ```css
@@ -276,7 +274,7 @@ p:first-line { font-weight:bold; color;#600; }
 .preamble:first-letter { font-size:1.5em; font-weight:bold; }
 
 .cbb:before { content:""; display:block; height:17px; width:18px; background:url(top.png) no-repeat 0 0; margin:0 0 0 -18px; }
- 
+
 a:link:after { content: " (" attr(href) ") "; }
 ```
 
@@ -289,7 +287,7 @@ a:link:after { content: " (" attr(href) ") "; }
 :lang(<目标语言>) | 选择基于 lang 全局属性的元素。| :lang(en) 选择采用英语表达的元素
 :target |  URL 片段标识符指向的元素。| 如 URL为 example.html#myElement 时，id 为 myElement 的元素被选中。
 :empty | 匹配一个不包含任何子元素的元素，注意，文本节点也被看作子元素 | p:empty { background:#ff0; }
-:selection   |  匹配用户当前选中的元素 
+:selection   |  匹配用户当前选中的元素
 
 ## Referece
 
@@ -301,6 +299,8 @@ a:link:after { content: " (" attr(href) ") "; }
 - [eqcss/eqcss](https://github.com/eqcss/eqcss)
     + [The Search For The Holy Grail: How I Ended Up With Element Queries, And How You Can Use Them Today – Smashing Magazine](https://www.smashingmagazine.com/2016/07/how-i-ended-up-with-element-queries-and-how-you-can-use-them-today)
 - [Exploring the Physical Web (Without Buying Beacons) — Medium](https://medium.com/@urish/exploring-the-physical-web-without-buying-beacons-efae51e36c2e#.9bn78t1xd)
+
+
 ## Tutorial
 
 - [选择器 - Web 开发者指南](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_Started/Selectors)

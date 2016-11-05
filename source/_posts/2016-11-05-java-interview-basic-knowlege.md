@@ -49,13 +49,14 @@ categories:
 
 饿汉式
 
-```cs
-private static Single s = new Single ( ) ;
-          private Single ( ) { }
-          public static Single getInstance ()
-          {
-          return s ;
-          }
+```java
+private static Single s = new Single ( );
+  private Single ( ) { }
+  public static Single getInstance ()
+  {
+    return s ;
+  }
+}
 ```
 
 懒汉式
@@ -82,7 +83,7 @@ class Single {
 4.    被final 修饰的变量是一个常量，只能赋值一次。
 5.    内部类定义在类中的局部位置上时，只能访问该局部被final修饰的局部变量。
 
-### 异常：
+### 异常
 
 （关于问题1，谢谢[ylt](http://www.jianshu.com/users/5843d441d2ff/timeline)提醒）
 

@@ -1,10 +1,10 @@
 ---
 layout: "post"
-title: "Java InterView Basic Knowlege"
+title: "Java Interview Basic Knowlege"
 date: "2016-11-05 22:51"
 categories:
   - Java
-  - InterView
+  - Interview
 ---
 
 ## 基础

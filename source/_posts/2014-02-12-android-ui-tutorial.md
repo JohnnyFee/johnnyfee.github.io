@@ -1,7 +1,10 @@
 layout: post
-title: "Android UI Tips"
-category: android
-tags: [android]
+title: Android UI Tips
+tags:
+  - android
+categories:
+  - Android
+  - UI
 ---
 
 ## Tutorial
@@ -53,7 +56,7 @@ tags: [android]
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginTop="16dp"             
+              android:layout_marginTop="16dp"
               android:gravity="center"
               android:layout_gravity="center_horizontal"
               android:text="@string/my_contacts"

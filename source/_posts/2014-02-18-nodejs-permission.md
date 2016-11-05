@@ -1,7 +1,6 @@
 layout: post
 title: "NodeJS"
-category: Web
-tags: [web]
+category: Node
 ---
 
 ## Tutorial

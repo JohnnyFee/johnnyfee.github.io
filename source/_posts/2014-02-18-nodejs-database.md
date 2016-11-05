@@ -1,7 +1,6 @@
 layout: post
 title: "Node Tutorial"
-category: Web
-tags: [web]
+category: Node
 ---
 
 ## Sql

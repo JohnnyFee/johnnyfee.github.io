@@ -1,7 +1,6 @@
 layout: post
 title: "Node Tutorial"
-category: Web
-tags: [web]
+category: Node
 ---
 
 ## Module
@@ -11,9 +10,9 @@ tags: [web]
 - [How to use exports in NodeJS - Liang Zan - Blog](http://blog.liangzan.net/blog/2012/06/04/how-to-use-exports-in-nodejs/)
 - [Node.js: Calling one exported function from another in the same module - Stack Overflow](http://stackoverflow.com/questions/12091379/node-js-calling-one-exported-function-from-another-in-the-same-module)
 
-### exports 
+### exports
 
-The attachment to exportsapproach is pretty straightforward, as you can 
+The attachment to exportsapproach is pretty straightforward, as you can
 see from the following example:
 
 mymod.js：
@@ -33,8 +32,8 @@ mymod.js：
 
 ### module.exports
 
-The assignment to module.exportsapproach is straightforward too. If you were 
-to implement the previous module using the assignment method, this is how it 
+The assignment to module.exportsapproach is straightforward too. If you were
+to implement the previous module using the assignment method, this is how it
 would look like:
 
     var secret = 'zoltan';
@@ -48,7 +47,7 @@ would look like:
         }
     }
 
-There is an interesting thing about the second method of writing Node modules: 
+There is an interesting thing about the second method of writing Node modules:
 you can assign any valid JavaScript object to the module.exportsproperty, and it becomes the module. In the following example, we assign a function to the module.exports property:
 
     module.exports = function(word) {

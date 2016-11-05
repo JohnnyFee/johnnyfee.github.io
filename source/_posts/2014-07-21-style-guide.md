@@ -43,4 +43,3 @@ tags: [dao, style, guide]
 ## Tutorial
 
 - [Website Style Guide Resources](http://styleguides.io/)
-

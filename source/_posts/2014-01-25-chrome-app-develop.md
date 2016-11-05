@@ -1,8 +1,7 @@
 layout: post
 title: "Chrome 应用开发"
 description: ""
-category: chrome
-tags: [chrome]
+category: Chrome
 ---
 
 ## 概述

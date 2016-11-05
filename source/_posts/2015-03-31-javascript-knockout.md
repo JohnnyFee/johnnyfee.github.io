@@ -1,7 +1,6 @@
 layout: post
 title: "Knockout Tutorial"
 category : JavaScript
-tags : [javascript, knockout]
 ---
 
 ## Tools

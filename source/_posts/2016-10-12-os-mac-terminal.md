@@ -1,5 +1,5 @@
 layout: post
-title: "Mac Command Snippets"
+title: "Mac Terminal"
 description: ""
 category: OS
 tags: [os, mac, command]

@@ -426,3 +426,7 @@ See [ssh is no longer using ~/.ssh/config - Server Fault](http://serverfault.com
 
 - [更新從 GitHub 上 fork 出來的 repository (或是同步兩個不同 server 端的 repository)](https://www.peterdavehello.org/2014/02/update_forked_repository/)
 - [git - How do I update a GitHub forked repository? - Stack Overflow](http://stackoverflow.com/questions/7244321/how-do-i-update-a-github-forked-repository)
+
+## Books
+
+- [Pro Git 简体中文版](http://iissnan.com/progit/)

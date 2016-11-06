@@ -1,6 +1,6 @@
 layout: post
 title: "常见的 HTML5 技巧和实际应用"
-category: HTML
+category: HTML5
 tags: [web, html]
 ---
 
@@ -33,9 +33,9 @@ view sourceprint?
 
 ```html
 <script>
- if (!'pattern' in document.createElement('input') ) {  
-    // do client/server side validation  
- }  
+ if (!'pattern' in document.createElement('input') ) {
+    // do client/server side validation
+ }
 </script>
 ```
 
@@ -49,8 +49,8 @@ HTML5中提供了`<audio>`标签，解决了以往必须依靠第三方插件才
 
 ```html
 <audio autoplay="autoplay" controls="controls">
-    <source src="file.ogg" />  
-    <source src="file.mp3" />  
+    <source src="file.ogg" />
+    <source src="file.mp3" />
     <a href="file.mp3">Download this file.</a>
 </audio>
 ```
@@ -63,13 +63,13 @@ HTML5中提供了`<audio>`标签，解决了以往必须依靠第三方插件才
 
 ```html
 <video controls preload>
-    <source src="cohagenPhoneCall.ogv" 
+    <source src="cohagenPhoneCall.ogv"
     type="video/ogg; codecs='vorbis, theora'" />
-    <source src="cohagenPhoneCall.mp4" 
+    <source src="cohagenPhoneCall.mp4"
     type="video/mp4; 'codecs='avc1.42E01E, mp4a.40.2'" />
-    <div> Your browser is old. 
+    <div> Your browser is old.
     <a href="cohagenPhoneCall.mp4">Download this video instead.</a> </div>
-</video> 
+</video>
 ```
 
 需要注意的是，type属性虽然可以省略掉，但是如果加上的话，浏览器就可以更快的准确的解析该视频文件。并不是所有的浏览器都支持HTML5的视频，所以得做好使用Flash版本来代替，当然，这个决定权在于你。
@@ -101,7 +101,7 @@ HTML5中提供了`<audio>`标签，解决了以往必须依靠第三方插件才
 文本框中的占位符(看看本博的搜索框效果)有利于提升用户体验，之前，我们只能依靠JS来实现占位符的效果，在HTML5中新增了占位符属性placeholder。
 
 ```html
-<input name="email" type="email" placeholder="doug@givethesepeopleair.com" />  
+<input name="email" type="email" placeholder="doug@givethesepeopleair.com" />
 ```
 
 同样，目前的主流现代浏览器对该属性的支持不大好，暂时只有Chrome和Safari支持该属性，Firefox和Opera不支持该属性。
@@ -147,7 +147,7 @@ HMTL5中新增了一个输入框的电子邮件属性，可以检测输入的内
 ```
 <form method="post">
     <label for="someInput"> Your Name: </label>
-    <input id="someInput" name="someInput" 
+    <input id="someInput" name="someInput"
     type="text" placeholder="Douglas Quaid" required="required" />
     <button>Go</button>
 </form>
@@ -162,12 +162,12 @@ HMTL5中新增了一个输入框的电子邮件属性，可以检测输入的内
 在HTML5中，我们可以直接使用正则表达式。
 
 ```html
-<form action="" method="post"> 
+<form action="" method="post">
     <label for="username">Create a Username: </label>
-    <input type="text" name="username"  id="username"  
-    placeholder="4,10" pattern="[A-Za-z]{4,10}" 
+    <input type="text" name="username"  id="username"
+    placeholder="4,10" pattern="[A-Za-z]{4,10}"
     autofocus="autofocus" required="required" />
-    <button type="submit">Go </button> 
+    <button type="submit">Go </button>
 </form>
 ```
 ### 自动获取焦点

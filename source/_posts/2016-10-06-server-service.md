@@ -1,8 +1,8 @@
 layout: post
 title: "Server Service"
 description: ""
-category: [server]
-tags: [server]
+category: [FullStack]
+tags: [fullstack, server]
 ---
 
 ## Cloud Server Service

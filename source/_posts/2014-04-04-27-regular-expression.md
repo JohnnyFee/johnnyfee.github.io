@@ -2,7 +2,7 @@ layout: post
 title: "正则表达式"
 description: ""
 category: Tool
-tags: [git]
+tags: [tool, regex]
 ---
 
 > 原文：[正则表达式30分钟入门教程](http://deerchao.net/tutorials/regex/regex.htm)

@@ -1,7 +1,7 @@
 layout: post
 title: "微软简体中文本地化规范"
-category : Writing
-tags : [writing]
+category : Norm
+tags : [norm, writing]
 ---
 
 See [Susan的翻译博客 - IT博客](http://www.cnitblog.com/susanster/default.html?page=2)
@@ -287,8 +287,8 @@ UP ARROW | 向上键
 其他  ||  |
 产品名  |不翻译     | Internet Explorer      | Internet Explorer
 组件名称        | 翻译，不加中文双引号| Form Field Help  | 窗体域帮助
-组件名称        | 容易引起异议时，可加中文双引号或改变句型 | Help on Cube Editor | “多维数据集编辑器”帮助    
-Help on Cube Editor    | 关于多维数据集编辑器的帮助 
+组件名称        | 容易引起异议时，可加中文双引号或改变句型 | Help on Cube Editor | “多维数据集编辑器”帮助
+Help on Cube Editor    | 关于多维数据集编辑器的帮助
 文件、路径及URL
 的名称          |不翻译     | Open the letter to Joe file       |打开文件letter to Joe
        || Lexirom.exe | Lexirom.exe
@@ -300,9 +300,8 @@ Help on Cube Editor    | 关于多维数据集编辑器的帮助
 新词及强调|加中文双引号  | …look on the World Wide Web. The World Wide Web is…     |到“万维网”上查看。万维网是……
 程序码举例|保留原文    | Sub Main    | Sub Main
 硬件名称 |全部大写    | LPT1, COM1, IRQ        | LPT1, COM2, IRQ
-程序写作及产品特有项目（data types, argumemts, functions, macro names,etc) |视情况而定   |  |可向产品组或 Microsoft Language Excellence 询问     
+程序写作及产品特有项目（data types, argumemts, functions, macro names,etc) |视情况而定   |  |可向产品组或 Microsoft Language Excellence 询问
 
 ## 与法律有关的翻译规则
 
 ## 软件中的标点符号
-

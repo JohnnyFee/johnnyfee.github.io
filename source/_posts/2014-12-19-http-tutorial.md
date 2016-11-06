@@ -1,6 +1,6 @@
 layout: post
 title: "HTTP Tutorial"
-category: HTTP
+category: Network
 tags: [http]
 ---
 

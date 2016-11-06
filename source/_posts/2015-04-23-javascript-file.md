@@ -1,7 +1,7 @@
 layout: post
 title: "JavaScript File"
 description: ""
-category: JavaScrpit
+category: JavaScript
 tags: [file, javascript]
 ---
 

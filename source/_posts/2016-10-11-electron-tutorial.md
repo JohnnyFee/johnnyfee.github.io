@@ -1,8 +1,8 @@
 layout: post
 title: "Electron Tutorial"
 description: ""
-category: Electron
-tags: [electron]
+category: FullStack
+tags: [fullstack, electron]
 ---
 
 ## Tutorial

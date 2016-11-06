@@ -1,7 +1,7 @@
 layout: post
 title: "VIM Tutorial"
-category : VIM
-tags : [vim, tutorial]
+category : Tool
+tags : [tool, vim]
 ---
 
 ## vundle
@@ -34,6 +34,3 @@ Bundle 'AutoComplPop'
 - [谁说Vim不是IDE？（一）](http://www.cnblogs.com/chijianqiang/archive/2012/10/30/vim-1.html)
 - [将Vim改造为强大的IDE—Vim集成](http://blog.csdn.net/bokee/article/details/6633193)
 - <http://blog.csdn.net/bokee/article/details/6633193>
-
-
-

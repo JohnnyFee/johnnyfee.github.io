@@ -1,7 +1,7 @@
 layout: post
 title: "Windows IIS"
-category: Windows
-tags: [windows, iis]
+category: OS
+tags: [os, windows, iis]
 ---
 
 ## 安装

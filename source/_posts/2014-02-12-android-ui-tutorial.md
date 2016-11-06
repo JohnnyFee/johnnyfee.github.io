@@ -2,9 +2,7 @@ layout: post
 title: Android UI Tips
 tags:
   - android
-categories:
-  - Android
-  - UI
+category: Android
 ---
 
 ## Tutorial

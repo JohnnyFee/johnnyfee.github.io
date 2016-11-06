@@ -1,6 +1,6 @@
 layout: post
 title: "Fastest Way to install WordPress on OSX"
-category : MAC
+category : PHP
 tags : [mac, amp, php]
 ---
 

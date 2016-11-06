@@ -1,8 +1,8 @@
 layout: post
 title: "UI Material"
 description: ""
-category: [UI]
-tags: [ui, material]
+category: [Web]
+tags: [web, ui, material]
 ---
 
 ## Material design

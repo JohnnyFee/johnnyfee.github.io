@@ -1,8 +1,8 @@
 layout: post
 title: "Get Apache, MySQL, PHP and phpMyAdmin working on OSX 10.10 Yosemite"
 description: ""
-category: AMP
-tags: [mac, amp]
+category: PHP
+tags: [mac, amp, php]
 ---
 
 WAMP, MAMP, and LAMP are abbreviations for “Windows, Apache, MySQL, and PHP,” “Mac, Apache, MySQL, and PHP,” and “Linux, Apache, MySQL, and PHP.” These abbreviations describe a fully functioning setup used for developing dynamic Internet web pages.
@@ -264,7 +264,7 @@ And paste in:
     <array>
       <string>/usr/local/mysql/bin/mysqld_safe</string>
       <string>--user=mysql</string>
-    </array>        
+    </array>
   </dict>
 </plist>
 ```
@@ -307,13 +307,13 @@ Run the set up in the browser
 
 You need to create a new localhost mysql server connection, click new server.
 
-![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-set-new-server-mysql-password.png)  
+![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-set-new-server-mysql-password.png)
 
-Switch to the **Authentication** tab and set the local mysql root user and the password.  
-Add in the username “root” (maybe already populated, add in the password that you set up **[earlier](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#password)** for the MySQL root user set up, click on save and you are returned to the previous screen.  
+Switch to the **Authentication** tab and set the local mysql root user and the password.
+Add in the username “root” (maybe already populated, add in the password that you set up **[earlier](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/#password)** for the MySQL root user set up, click on save and you are returned to the previous screen.
 (This is not the OSX Admin or root password – it is the MySQL root user).
 
-![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-save-config.png)  
+![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-save-config.png)
 Make sure you click on **save**, then a config.inc.php is now in the /config directory of phpmyadmin directory,  /config directory.
 
 ![](http://coolestguidesontheplanet.com/wp-content/uploads/2013/08/phpmyadmin-4-no-frames.png)

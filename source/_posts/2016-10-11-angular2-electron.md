@@ -1,7 +1,7 @@
 layout: post
 title: "Angular2 Electron"
 description: ""
-category: Angular2
+category: [Angular, Angular2]
 tags: [angualr2, electron]
 ---
 

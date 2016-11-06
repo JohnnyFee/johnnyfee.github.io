@@ -1,7 +1,7 @@
 layout: post
 title: "函数式编程初探"
-category: Zen
-tags: [node, module]
+category: FullStack
+tags: [fullstack, functional]
 ---
 
 原文： http://www.ruanyifeng.com/blog/2012/04/functional_programming.html
@@ -12,7 +12,7 @@ tags: [node, module]
 
 也许继"面向对象编程"之后，"函数式编程"会成为下一个编程的主流范式（paradigm）。未来的程序员恐怕或多或少都必须懂一点。
 
-![](http://johnnyimages.qiniudn.com/bg2012040601.png) 
+![](http://johnnyimages.qiniudn.com/bg2012040601.png)
 
 但是，"函数式编程"看上去比较难，缺乏通俗的入门教程，各种介绍文章都充斥着数学符号和专用术语，让人读了如坠云雾。就连最基本的问题"什么是函数式编程"，网上都搜不到易懂的回答。
 
@@ -31,7 +31,7 @@ tags: [node, module]
     (1 + 2) * 3 - 4
 
 传统的过程式编程，可能这样写：
-    
+
     var a = 1 + 2;
     var b = a * 3;
     var c = b - 4;
@@ -52,7 +52,7 @@ tags: [node, module]
 
 举例来说，下面代码中的print变量就是一个函数，可以作为另一个函数的参数。
 
-    var print = function(i){ console.log(i);};  
+    var print = function(i){ console.log(i);};
     [1,2,3].forEach(print);
 
 ### 2. 只用"表达式"，不用"语句"
@@ -142,6 +142,3 @@ Paul Graham在[《黑客与画家》](http://www.ruanyifeng.com/docs/pg/)一书�
 ### 5. 代码的热升级*
 
 函数式编程没有副作用，只要保证接口不变，内部实现是外部无关的。所以，可以在运行状态下直接升级代码，不需要重启，也不需要停机。[Erlang](http://en.wikipedia.org/wiki/Erlang_(programming_language))语言早就证明了这一点，它是瑞典爱立信公司为了管理电话系统而开发的，电话系统的升级当然是不能停机的。
-
-
-

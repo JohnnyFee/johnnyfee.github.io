@@ -1,8 +1,8 @@
 layout: post
 title: "当你想学一门技术时"
 description: ""
-category: Fullstack
-tags: [fullstack]
+category: FullStack
+tags: [fullstack, tutorial]
 ---
 
 ## [awesome](https://github.com/sindresorhus/awesome)
@@ -33,4 +33,3 @@ More on [CSDN 知识库](http://lib.csdn.net/bases)
 [Source](https://github.com/TeamStuQ/skill-map)
 
 只提供了知识概念，不提供教程。
-

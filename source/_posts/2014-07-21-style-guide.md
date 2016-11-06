@@ -1,7 +1,7 @@
 layout: post
 title: "Style Guides"
-category: Dao
-tags: [dao, style, guide]
+category: Norm
+tags: [norm, styleguide]
 ---
 
 ## CSS

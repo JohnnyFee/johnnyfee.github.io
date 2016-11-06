@@ -1,9 +1,7 @@
 ---
 layout: post
 title: Android绝招五——TextSwitcher和ImageSwitcher
-categories:
-  - Android
-  - UI
+categories: Android
 ---
 
 ##概述

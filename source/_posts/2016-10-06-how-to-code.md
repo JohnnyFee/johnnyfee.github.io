@@ -1,8 +1,8 @@
 layout: post
 title: "How to Code"
 description: ""
-category: [code]
-tags: [code]
+category: [FullStack]
+tags: [fullstack, code]
 ---
 
 ## Library

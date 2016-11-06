@@ -1,7 +1,7 @@
 layout: post
 title: "Angular Server Render"
 description: ""
-category: [Angular, Angular2]
+categories: [Angular, Angular2]
 tags: [angular, angular2]
 
 ---

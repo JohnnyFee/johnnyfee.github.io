@@ -1,7 +1,7 @@
 layout: post
 title: "Angular2 Code Style Guide"
 description: ""
-category: Angular2
+category: [Angular, Angular2]
 tags: [angular2, code]
 ---
 

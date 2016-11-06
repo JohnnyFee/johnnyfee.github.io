@@ -1,8 +1,8 @@
 layout: post
 title: "MVC，MVP 和 MVVM"
 description: ""
-category: Desktop
-tags: [desktop]
+category: FullStack
+tags: [fullstack, pattern]
 ---
 
 See [MVC，MVP 和 MVVM 的图示 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html)

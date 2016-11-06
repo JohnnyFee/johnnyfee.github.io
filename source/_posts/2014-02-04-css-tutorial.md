@@ -1,8 +1,8 @@
 layout: post
-title: "Css FAQ"
+title: "Css Tutorial"
 description: ""
-category: Tool
-tags: [markdown]
+category: CSS
+tags: [css]
 ---
 
 ## CSS

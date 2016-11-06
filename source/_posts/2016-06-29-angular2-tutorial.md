@@ -1,7 +1,7 @@
 layout: post
 title: "Angular2 Tutorial"
 description: ""
-category: Angular
+category: [Angular, Angular2]
 tags: [angular, angular2, tutorial]
 ---
 

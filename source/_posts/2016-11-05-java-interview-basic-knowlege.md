@@ -2,9 +2,7 @@
 layout: "post"
 title: "Java Interview Basic Knowlege"
 date: "2016-11-05 22:51"
-categories:
-  - Java
-  - Interview
+categories: Java
 ---
 
 ## 基础

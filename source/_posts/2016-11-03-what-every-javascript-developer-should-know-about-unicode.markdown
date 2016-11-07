@@ -88,11 +88,11 @@ Unicode的神奇之处就在于将代码点与抽象字符关联起来。例如`
 
 * 平面0包含从`U+0000`到`U+FFFF`的代码点
 
-* 平面1包含从`U+**1**0000`到`U+**1**FFFF`的代码点
+* 平面1包含从`U+1 0000`到`U+1 FFFF`的代码点
 
 * ...
 
-* 平面16包含从`U+**10**0000`到`U+**10**FFFF`的代码点
+* 平面16包含从`U+10 0000`到`U+10 FFFF`的代码点
 
 ![Unicode planes](http://p0.qhmsg.com/t0111a133814cbe5ae1.png)
 
@@ -124,13 +124,13 @@ BMP之后的16个平面（平面1，平面2，…，平面16）被称为**星光
 
 来看几个星光平面里的字符：
 
-* `?`对应`U+1D11E`抽象字符名：_MUSICAL SYMBOL G CLEF_
+* `𝄞`对应`U+1D11E`抽象字符名：_MUSICAL SYMBOL G CLEF_
 
-* `?`对应`U+1D401`抽象字符名：_MATHEMATICAL BOLD CAPITAL B_
+* `𝐁`对应`U+1D401`抽象字符名：_MATHEMATICAL BOLD CAPITAL B_
 
-* `?`对应`U+1F035`抽象字符名：_DOMINO TITLE HORIZONTAL-00-04_
+* `🀵`对应`U+1F035`抽象字符名：_DOMINO TITLE HORIZONTAL-00-04_
 
-* `?`对应`U+1F600`抽象字符名：_GRINNING FACE_
+* `😀`对应`U+1F600`抽象字符名：_GRINNING FACE_
 
 ## 2.3 码元
 
@@ -163,18 +163,18 @@ UTF-16（全称：16位统一码转换格式）是一种[变长](https://en.wiki
 
 ## 2.4 代理对
 
-现在让我们来研究一个复杂些的例子。假设我们想存储一个星光代码点（属于星光平面）： _GRINNING FACE_ character `?`。该字符对应的代码点是 `U+1F600`。
+现在让我们来研究一个复杂些的例子。假设我们想存储一个星光代码点（属于星光平面）： _GRINNING FACE_ character `😀`。该字符对应的代码点是 `U+1F600`。
 
 由于星光代码点需要21个比特来存储字符信息，UTF-16需要**两个码元**来编码，每个16比特。代码点 `U+1F600` 被拆分为所谓的代理对：`0xD83D`（高位代理码元）与 `0xDE00`（低位代理码元）。
 
 > **代理对**用来表示那些对应2个16位码元序列的抽象字符，其中第一个码元是**高位代理码元**而第二个是**低位代理码元**。
 
-编码一个星光代码点需要两个码元：即一个代理对。比如前面那个例子，使用UTF-16编码`U+1F600` (`?`)就使用了一个代理对：`0xD83D 0xDE00`。
+编码一个星光代码点需要两个码元：即一个代理对。比如前面那个例子，使用UTF-16编码`U+1F600` (`😀`)就使用了一个代理对：`0xD83D 0xDE00`。
 
 [Try in repl.it](https://repl.it/D9RF)
 
 ```
-`console.log('\uD83D\uDE00'); // => '?'`
+console.log('\uD83D\uDE00'); // => ''
 ```
 
 高位代理码元的取值范围是从`0xD800`到`0xDBFF`。
@@ -184,7 +184,7 @@ UTF-16（全称：16位统一码转换格式）是一种[变长](https://en.wiki
 
 [Try in repl.it](https://repl.it/DXI0)
 
-```
+```js
 function getSurrogatePair(astralCodePoint) {
   let highSurrogate =
      Math.floor((astralCodePoint - 0x10000) / 0x400) + 0xD800;
@@ -266,7 +266,7 @@ console.log('café');       // => 'café'
 
 ```
 let smile = '\uD83D\uDE00';
-console.log(smile);        // => '?'
+console.log(smile);        // => '😀'
 console.log(smile.length); // => 2
 
 let letter = 'e\u0301';
@@ -274,7 +274,7 @@ console.log(letter);        // => 'é'
 console.log(letter.length); // => 2
 ```
 
-字符串`smile`包含两个码元：`\uD83D` （高位代理）和`\uDE00`（低位代理）。由于字符串是码元的序列，因此尽管 `smile` 的渲染结果只有一个字符`'?'`，`smile.length`的值却为`2`。
+字符串`smile`包含两个码元：`\uD83D` （高位代理）和`\uDE00`（低位代理）。由于字符串是码元的序列，因此尽管 `smile` 的渲染结果只有一个字符`😀`，`smile.length`的值却为`2`。
 
 对于字符串`letter`也一样。组合用字符`U+0301`应用于前一个字符，渲染结果是一个字符`'é'`。然而`letter`包含2个码元，因此`letter.length`值为2。
 
@@ -336,7 +336,7 @@ Unicode转义序列可以编码从`U+0000`到`U+FFFF`的有限数量的代码点
 
 ```
 var str = 'My face \uD83D\uDE00';
-console.log(str); // => 'My face ?'
+console.log(str); // => 'My face 😀'
 ```
 
 #### 代码点转义序列
@@ -344,17 +344,17 @@ console.log(str); // => 'My face ?'
 ECMAScript 2015提供了能够表示整个Unicode空间：从`U+0000`到`U+10FFFF`，也就是BMP与星光平面的转义序列。
 
 这种新格式被称为**代码点转义序列**：`\u{<hex>}`，`<hex>`是一个长度为1至6位的16进制数。
-比如`'\u{7A}'`（字符`'z'`）和`'\u{1F639}'`（Funny cat符号`?`）。
+比如`'\u{7A}'`（字符`'z'`）和`'\u{1F639}'`（Funny cat符号`😹`）。
 
 来看看它应该如何应用：
 
 [Try in repl.it](https://repl.it/D9RN)
 
-```
+```js
 var str = 'Funny cat \u{1F639}';
 console.log(str);                      // => 'Funny cat ?'
 var reg = /\u{1F639}/u;
-console.log(reg.test('Funny cat ?')); // => true
+console.log(reg.test('Funny cat 😹')); // => true
 ```
 
 注意正则表达式`/\u{1F639}/u`有一个特殊flag`u`,它支持额外的Unicode特性（详情见3.5正则匹配）。
@@ -364,9 +364,9 @@ console.log(reg.test('Funny cat ?')); // => true
 
 ```
 var niceEmoticon = '\u{1F607}';
-console.log(niceEmoticon);   // => '?'
+console.log(niceEmoticon);   // => '😇'
 var spNiceEmoticon = '\uD83D\uDE07'
-console.log(spNiceEmoticon); // => '?'
+console.log(spNiceEmoticon); // => '😇'
 console.log(niceEmoticon === spNiceEmoticon); // => true
 ```
 
@@ -382,7 +382,7 @@ console.log(niceEmoticon === spNiceEmoticon); // => true
 
 [Try in repl.it](https://repl.it/D9RS)
 
-```
+```js
 var reg1 = /\x4A \u0020 \u{1F639}/;
 var reg2 = new RegExp('\\x4A \\u0020 \\u{1F639}');
 console.log(reg1.source === reg2.source); // => true
@@ -490,11 +490,11 @@ console.log(color.length); // => 5
 
 ```
 var str = 'cat\u{1F639}';
-console.log(str);        // => 'cat?'
+console.log(str);        // => 'cat😹'
 console.log(str.length); // => 5
 ```
 
-字符串`str`的渲染结果是4个字符`cat?`。
+字符串`str`的渲染结果是4个字符`cat😹`。
 
 然而`smile.length`等于`5`，因为`U+1F639`是一个星光代码点，它被编码成了2个码元（一个代理对）。
 
@@ -512,12 +512,12 @@ console.log(str.length); // => 5
 
 ```
 var str = 'cat\u{1F639}';
-console.log(str);             // => 'cat?'
-console.log([...str]);        // => ['c', 'a', 't', '?']
+console.log(str);             // => 'cat😹'
+console.log([...str]);        // => ['c', 'a', 't', '😹']
 console.log([...str].length); // => 4
 ```
 
-`[...str]`创建了一个包含4个字符的数组。编码`U+1F639` _CAT FACE WITH TEARS OF JOY_ ?的代理对原封不动地保留了下来，因为字符串迭代器能够识别Unicode。
+`[...str]`创建了一个包含4个字符的数组。编码`U+1F639` _CAT FACE WITH TEARS OF JOY_ 😹的代理对原封不动地保留了下来，因为字符串迭代器能够识别Unicode。
 
 #### 长度与组合用字符
 
@@ -581,9 +581,9 @@ console.log(str[4]); // => 'o'
 
 [Try in repl.it](https://repl.it/D9R8/1)
 
-```
+```js
 var omega = '\u{1D6C0} is omega';
-console.log(omega);        // => '? is omega'
+console.log(omega);        // => '𝛀 is omega'
 console.log(omega[0]);     // => '' (unprintable symbol)
 console.log(omega[1]);     // => '' (unprintable symbol)
 ```
@@ -602,20 +602,20 @@ console.log(omega[1]);     // => '' (unprintable symbol)
 
 [Try in repl.it](https://repl.it/D9Ra)
 
-```
+```js
 var omega = '\u{1D6C0} is omega';
-console.log(omega);                        // => '? is omega'
+console.log(omega);                        // => '𝛀 is omega'
 // Option 1
-console.log([...omega][0]);                // => '?'
+console.log([...omega][0]);                // => '𝛀'
 // Option 2
 var number = omega.codePointAt(0);
 console.log(number.toString(16));          // => '1d6c0'
-console.log(String.fromCodePoint(number)); // => '?'
+console.log(String.fromCodePoint(number)); // => '𝛀'
 ```
 
-`[...smile]`返回一个包含字符串`omega`中字符的数组。代理对被正确识别，因此访问第一个字符返回了符合预期的结果：`[...smile][0]`返回`'?'`.
+`[...smile]`返回一个包含字符串`omega`中字符的数组。代理对被正确识别，因此访问第一个字符返回了符合预期的结果：`[...smile][0]`返回`'𝛀'`.
 
-函数`omega.codePointAt(0)`能够识别Unicode，因此它返回了字符串`omega`第一个字符的星光代码点数字`0x1D6C0`。函数`String.fromCodePoint(number)`则返回了这个代码点对应的字符：`'?'`。
+函数`omega.codePointAt(0)`能够识别Unicode，因此它返回了字符串`omega`第一个字符的星光代码点数字`0x1D6C0`。函数`String.fromCodePoint(number)`则返回了这个代码点对应的字符：`'𝛀'`。
 
 #### 字符定位与组合用字符
 
@@ -677,7 +677,7 @@ console.log(regex.test(greetings)); // => true
 [Try in repl.it](https://repl.it/D9Rg)
 
 ```
-var smile = '?';
+var smile = '😀';
 var regex = /^.$/;
 console.log(regex.test(smile)); // => false
 ```
@@ -691,7 +691,7 @@ console.log(regex.test(smile)); // => false
 [Try in repl.it](https://repl.it/D9Rh)
 
 ```
-var regex = /[?-?]/;
+var regex = /[😀-😎]/;
 // => SyntaxError: Invalid regular expression: /[?-?]/:
 // Range out of order in character class
 ```
@@ -711,7 +711,7 @@ var regex = /[?-?]/;
 [Try in repl.it](https://repl.it/D9Ri)
 
 ```
-var smile = '?';
+var smile = '😀';
 var regex = /^.$/u;
 console.log(regex.test(smile)); // => true
 ```
@@ -723,16 +723,16 @@ console.log(regex.test(smile)); // => true
 [Try in repl.it](https://repl.it/D9Rm)
 
 ```
-var smile = '?';
-var regex = /[?-?]/u;
-var regexEscape = /[\u{1F600}-\u{1F60E}]/u;
-var regexSpEscape = /[\uD83D\uDE00-\uD83D\uDE0E]/u;
-console.log(regex.test(smile));         // => true
-console.log(regexEscape.test(smile));   // => true
-console.log(regexSpEscape.test(smile)); // => true
+var smile = '😀';  
+var regex = /[😀-😎]/u;  
+var regexEscape = /[\u{1F600}-\u{1F60E}]/u;  
+var regexSpEscape = /[\uD83D\uDE00-\uD83D\uDE0E]/u;  
+console.log(regex.test(smile));         // => true  
+console.log(regexEscape.test(smile));   // => true  
+console.log(regexSpEscape.test(smile)); // => true 
 ```
 
-现在`[?-?]`被视为一个星光字符的区间了。`/[?-?]/u`成功匹配了`'?'`。
+现在`[😀-😎]`被视为一个星光字符的区间了。`/[😀-😎]/u`成功匹配了`'😀'`。
 
 #### 正则表达式与组合用字符
 

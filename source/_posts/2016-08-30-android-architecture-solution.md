@@ -31,10 +31,10 @@ See
 - [wenhuaijun/SearchPictureTool: 图片搜索APP源码，Material Design，Rxjava](https://github.com/wenhuaijun/SearchPictureTool)
 - [Jude95/Fishing: 空钩 APP](https://github.com/Jude95/Fishing)
 - [drakeet/Meizhi: gank.io unofficial client, RxJava & Retrofit](https://github.com/drakeet/Meizhi)
-- [oxoooo/mr-mantou-android: On the importance of taste](https://github.com/oxoooo/mr-mantou-android) 
-- [GankApp](https://github.com/oxoooo/mr-mantou-android)  
-- [GanK](https://github.com/dongjunkun/GanK)  
-- [Gank4Android](https://github.com/zzhoujay/Gank4Android)  
+- [oxoooo/mr-mantou-android: On the importance of taste](https://github.com/oxoooo/mr-mantou-android)
+- [GankApp](https://github.com/oxoooo/mr-mantou-android)
+- [GanK](https://github.com/dongjunkun/GanK)
+- [Gank4Android](https://github.com/zzhoujay/Gank4Android)
 - [GankDaily](https://github.com/maoruibin/GankDaily)
 
 ## Loader
@@ -85,7 +85,7 @@ Using Espresso
 
 Tasty mocking framework for unit tests in Java
 
-- [crittercism/dexmaker](https://github.com/crittercism/dexmaker) A Java-language API for doing compile time or runtime code generation targeting the Dalvik VM. 
+- [crittercism/dexmaker](https://github.com/crittercism/dexmaker) A Java-language API for doing compile time or runtime code generation targeting the Dalvik VM.
 - [hamcrest/JavaHamcrest: Java (and original) version of Hamcrest](https://github.com/hamcrest/JavaHamcrest) Hamcrest is a library of matchers, which can be combined in to create flexible expressions of intent in tests. They've also been used for other purposes.
 - [hamcrest/hamcrest-junit: Integration between Hamcrest and JUnit](https://github.com/hamcrest/hamcrest-junit) Integration between Hamcrest and JUnit
 
@@ -99,4 +99,3 @@ Tasty mocking framework for unit tests in Java
 如果你习惯使用 Retrolambda ，你也可以直接把代码写成上面这种简洁的形式。而如果你看到这里还不知道什么是 Retrolambda ，我不建议你现在就去学习它。原因有两点：1. Lambda 是把双刃剑，它让你的代码简洁的同时，降低了代码的可读性，因此同时学习 RxJava 和 Retrolambda 可能会让你忽略 RxJava 的一些技术细节；2. Retrolambda 是 Java 6/7 对 Lambda 表达式的非官方兼容方案，它的向后兼容性和稳定性是无法保障的，因此对于企业项目，使用 Retrolambda 是有风险的。所以，与很多 RxJava 的推广者不同，我并不推荐在学习 RxJava 的同时一起学习 Retrolambda。事实上，我个人虽然很欣赏 Retrolambda，但我从来不用它。
 
 From [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
-

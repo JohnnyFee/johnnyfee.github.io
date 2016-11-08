@@ -20,4 +20,4 @@ tags: [android]
 
 ## Sample
 
-[android10/Android-CleanArchitecture](https://github.com/android10/Android-CleanArchitecture)
+- [android10/Android-CleanArchitecture](https://github.com/android10/Android-CleanArchitecture)

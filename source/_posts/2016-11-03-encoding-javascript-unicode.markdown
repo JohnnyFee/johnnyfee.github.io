@@ -2,242 +2,14 @@
 layout: "post"
 title: "What every JavaScript developer should know about Unicode"
 date: "2016-11-03 23:02"
+categories: [Data]
 ---
 
 原文链接： [What every JavaScript developer should know about Unicode](https://rainsoft.io/what-every-javascript-developer-should-know-about-unicode/)
 
 翻译原文：[每个JavaScript开发者都该懂的 Unicode](http://www.zcfy.cc/article/1303)
 
-# 1. Unicode背后的思想
-
-首先问一个最基础的问题：你是怎样阅读并理解这篇文章的？答案很简单，因为你明白这些字以及由字组成的单词的含义。
-
-那你又是如何明白这些字的含义的呢？答案也很简单，因为你（读者）和我（作者）对于这些（呈现在屏幕上的）图形与汉字（即含义）之间的联系有着相同的认知。
-
-对计算机来说这个原理也差不多，只有一点不同：计算机不懂这些字（字母）的含义，只是将其理解为特定的比特序列。
-
-让我们设想一个情景：计算机_User1_向计算机_User2_发送一条消息`'hello'`。
-
-<!-- more -->
-
-计算机并不知道这些字母的含义。所以计算机_User1_将消息`'hello'`转换为一串数字序列`0x68 0x65 0x6C 0x6C 0x6F`，每个字母对应一个数字：`h`对应`0x68`, `e`对应`0x65`，等等。
-
-接着将这些数字发送给计算机_User2_。
-
-计算机_User2_收到数字序列`0x68 0x65 0x6C 0x6C 0x6F`后，使用同一套字母与数字的对应关系重建消息内容，`'hello'`就能正确地显示出来了。
-
-不同计算机之间对字母与数字之间对应关系的协议就是**Unicode**进行标准化的结果。
-
-根据Unicode，`h`是一个名为_LATIN SMALL LETTER H_的抽象字符。这个抽象字符对应数字`0x68`，也就是一个标记为`U+0068`的代码点。这些概念将在下一章中说明。
-
-Unicode的作用就是提供一个抽象字符列表（字符集），并给每一个字符分配一个独一无二的标识符代码点（编码字符集）。
-
-# 2. Unicode基本概念
-
-[`www.unicode.org`](http://unicode.org/)网站提到：
-
-> **Unicode**为每一个字符分配一个专有的数字
->
-> 不分平台
->
-> 不分程序
->
-> 不分语言
-
-Unicode是一个世界通用的字符集，它定义了全世界大部分书写体系的字符集，并为每一个字符分配了一个独一无二的数字（代码点）。
-
-![Unicode logo](http://s2.qhmsg.com/static/1b0b41c029b3aafd.svg)
-
-Unicode囊括了大部分现代语言、标点符号、附加符号（变音符）、数学符号、技术符号、箭头和表情符号等。
-
-Unicode第一版1.0于1991年10月发布，包含7161个字符。最新版9.0（2016年6月发布）则提供了128172个字符的编码。
-
-Unicode的通用性与开放性解决了过去一直存在的一个问题：供应商们各自实现不同的字符集和编码规则，很难处理。
-
-创建一个支持所有字符集和编码规则的应用是十分复杂的。更不用说你选用的编码可能不支持所有你需要的语言。
-
-如果你觉得Unicode很难，那就想想如果没有它编程会更难。
-
-我还记得从前随机选择所需的字符集和编码规则去读取文件内容的时候。全靠人品啊！
-
-## 2.1 字符与代码点
-
-> **抽象字符**（即文本字符）是用来组织、管理或表现文本数据的信息单位。
-
-Unicode中的字符是一个抽象概念。每一个抽象字符都有一个对应的名称，例如_LATIN SMALL LETTER A_。该抽象字符的图像表现形式（glyph）是`a`。（译者注：glyph即图像字符）
-
-> **代码点**是指被分配给某个抽象字符的数字
-
-代码点以`U+<hex>`的形式表示，`U+`是代表Unicode的前缀，而`<hex>`是一个16进制数。例如`U+0041`和`U+2603`都是代码点。
-
-代码点的取值范围是从`U+0000`到`U+10FFFF`。
-
-记住代码点就是一个简单的数字。思考有关Unicode的问题时要记得这一点。
-
-代码点就好像数组元素的下标。
-
-Unicode的神奇之处就在于将代码点与抽象字符关联起来。例如`U+0041`对应的抽象字符名为_LATIN CAPITAL LETTER A_ (表现为`A`)，而`U+2603`对应的抽象字符名为_SNOWMAN_(表现为`☃`)
-
-注意，并非所有的代码点都有对应的抽象字符。可用的代码点有1114112个，但分配了抽象字符的只有128237个。
-
-## 2.2 Unicode平面
-
-> **平面**是指从`U+n0000`到`U+nFFFF`的区间，也就是65536（10000<sup>16</sup>）个连续的Unicode代码点，n的取值范围是从0<sup>16</sup>到10<sup>16</sup>。
-
-这些平面将Unicode代码点分为17个大小相等的集合：
-
-* 平面0包含从`U+0000`到`U+FFFF`的代码点
-
-* 平面1包含从`U+1 0000`到`U+1 FFFF`的代码点
-
-* ...
-
-* 平面16包含从`U+10 0000`到`U+10 FFFF`的代码点
-
-![Unicode planes](http://p0.qhmsg.com/t0111a133814cbe5ae1.png)
-
-#### 基本多文种平面
-
-平面0比较特殊，被称为**基本多文种平面**或简称**BMP**。它包含了大多数现代语言的字符 ([基本拉丁字母](https://en.wikipedia.org/wiki/Basic_Latin_(Unicode_block), [西里尔字母](https://en.wikipedia.org/wiki/Cyrillic_(Unicode_block), [希腊字母](https://en.wikipedia.org/wiki/Greek_and_Coptic)等)和大量的[符号](https://en.wikipedia.org/wiki/Unicode_symbols)。
-
-如上文所述，基本多文种平面的代码点取值范围是从`U+0000`到`U+FFFF`，最多可以有4位16进制数字。
-
-大多数时候开发者处理的都是BMP中的字符。它包含了大多数情况下的必需字符。
-
-BMP中的一些字符：
-
-* `e`对应代码点`U+0065` 抽象字符名： _LATIN SMALL LETTER E_
-
-* `|`对应代码点`U+007C` 抽象字符名： _VERTICAL BAR_
-
-* `■`对应代码点`U+25A0` 抽象字符名： _BLACK SQUARE_
-
-* `☂`对应代码点`U+2602` 抽象字符名： _UMBRELLA_
-
-#### 星光平面
-
-BMP之后的16个平面（平面1，平面2，…，平面16）被称为**星光平面**或**辅助平面**。
-
-星光平面的代码点被称为**星光代码点**。这些代码点的取值范围是从`U+10000`到`U+10FFFF`。
-
-星光代码点可能会有5位或6位16进制数字：`U+ddddd`或`U+dddddd`。
-
-来看几个星光平面里的字符：
-
-* `𝄞`对应`U+1D11E`抽象字符名：_MUSICAL SYMBOL G CLEF_
-
-* `𝐁`对应`U+1D401`抽象字符名：_MATHEMATICAL BOLD CAPITAL B_
-
-* `🀵`对应`U+1F035`抽象字符名：_DOMINO TITLE HORIZONTAL-00-04_
-
-* `😀`对应`U+1F600`抽象字符名：_GRINNING FACE_
-
-## 2.3 码元
-
-计算机在存储时当然不会使用代码点或抽象字符，它们是存在于开发者大脑中的概念。
-
-所以自然要有一种在物理层面表示Unicode代码点的方式：码元。
-
-> **码元**是指使用某种给定的编码规则给抽象字符编码后得到的比特序列。
-
-[字符编码](https://en.wikipedia.org/wiki/Character_encoding)将抽象层面的代码点转换为物理层面的比特序列：码元。
-
-换句话说，字符编码的作用就是将Unicode代码点翻译成独一无二的码元序列。
-
-常用的字符编码有[UTF-8](https://en.wikipedia.org/wiki/UTF-8), [UTF-16](https://en.wikipedia.org/wiki/UTF-16) 和 [UTF-32](https://en.wikipedia.org/wiki/UTF-32).
-
-大多数**JavaScript引擎使用UTF-16**编码字符。它会影响JavaScript处理Unicode的方式。所以从这里开始让我们集中精力于UTF-16吧。
-
-UTF-16（全称：16位统一码转换格式）是一种[变长](https://en.wikipedia.org/wiki/Variable-width_encoding)编码:
-
-* BMP中的代码点编码为单个16位的码元
-* 星光平面的代码点编码为两个16位的码元
-
-来看几个例子
-
-假设我们想把_LATIN SMALL LETTER A_，也就是抽象字符`a`存入硬盘。Unicode告诉我们抽象字符_LATIN SMALL LETTER A_对应代码点`U+0061`。
-
-现在我们来看看UTF-16如何转换`U+0061`。编码规范上说，对于BMP中的代码点只需将它的16进制数字U+**0061**存入一个16位的码元就行了。
-
-显然，BMP中的代码点刚好能存进一个16位的码元。编码BMP可谓小菜一碟。
-
-## 2.4 代理对
-
-现在让我们来研究一个复杂些的例子。假设我们想存储一个星光代码点（属于星光平面）： _GRINNING FACE_ character `😀`。该字符对应的代码点是 `U+1F600`。
-
-由于星光代码点需要21个比特来存储字符信息，UTF-16需要**两个码元**来编码，每个16比特。代码点 `U+1F600` 被拆分为所谓的代理对：`0xD83D`（高位代理码元）与 `0xDE00`（低位代理码元）。
-
-> **代理对**用来表示那些对应2个16位码元序列的抽象字符，其中第一个码元是**高位代理码元**而第二个是**低位代理码元**。
-
-编码一个星光代码点需要两个码元：即一个代理对。比如前面那个例子，使用UTF-16编码`U+1F600` (`😀`)就使用了一个代理对：`0xD83D 0xDE00`。
-
-[Try in repl.it](https://repl.it/D9RF)
-
-```
-console.log('\uD83D\uDE00'); // => ''
-```
-
-高位代理码元的取值范围是从`0xD800`到`0xDBFF`。
-低位代理码元的取值范围是从`0xDC00`到`0xDFFF`。
-
-代理对与代码点之间互相转换的算法如下所示：
-
-[Try in repl.it](https://repl.it/DXI0)
-
-```js
-function getSurrogatePair(astralCodePoint) {
-  let highSurrogate =
-     Math.floor((astralCodePoint - 0x10000) / 0x400) + 0xD800;
-  let lowSurrogate = (astralCodePoint - 0x10000) % 0x400 + 0xDC00;
-  return [highSurrogate, lowSurrogate];
-}
-getSurrogatePair(0x1F600); // => [0xDC00, 0xDFFF]
-
-function getAstralCodePoint(highSurrogate, lowSurrogate) {
-  return (highSurrogate - 0xD800) * 0x400
-      + lowSurrogate - 0xDC00 + 0x10000;
-}
-getAstralCodePoint(0xD83D, 0xDE00); // => 0x1F600
-```
-
-代理对并不是一个令人愉快的东西。在JavaScript中处理字符串时我们必须将它们视为特殊情况来处理，具体内容我们在下章细说。
-
-但UTF-16的存储效率很高。因为99%需要处理的字符都属于BMP，只需要1个码元。
-
-## 2.5 组合用字符
-
-> 在一个书写系统的上下文中，一个**字素**或者**符号**是最小的可区分单元。
-
-字素就是用户所认为的一个字符。屏幕上所展示的一个有形的字素称为**图像字符**（glyph）。
-
-在大多数情况下，一个Unicode字符就代表一个字素。例如 `U+0066` _LATIN SMALL LETTER F_就是一个英文字母`f`。
-
-但有时候一个字素会包含一系列字符。
-
-例如`å`在丹麦语书写系统中是一个不可再分的字素。但它是用`U+0061` _LATIN SMALL LETTER A_ (渲染为`a`) 结合一个特殊字符`U+030A` [_COMBINING RING ABOVE_](https://en.wikipedia.org/wiki/Ring_(diacritic)（渲染为◌̊）来显示的。
-
-`U+030A`用来修饰前一个字符，这种字符称为**组合用字符**。
-
-[Try in repl.it](https://repl.it/D9RG)
-
-```
-console.log('\u0061\u030A'); // => 'å'
-console.log('\u0061');       // => 'a'
-```
-
-> **组合用字符**是应用在前一个基础字符上以形成完整字素的字符。
-
-组合用字符包括以下字符：重音符号、变音符、希伯来语点、阿拉伯语元音符号和印度语节拍符。
-
-组合用字符通常不会离开基础字符单独使用。我们应该避免单独显示它们。
-
-与代理对一样，在JavaScript中处理组合用字符也很棘手。
-
-在用户看来一个组合字符序列（基础字符+组合用字符）是【一】个符号（例如`'\u0061\u030A'`就是`'å'`）。但开发者必须清楚实际上要用到两个代码点`U+0061`和`U+030A`来生成`å`。
-
-![Unicode basic terms](http://p3.qhmsg.com/t012c1af4e49cc76519.png)
-
-# 3. JavaScript中的Unicode
+# JavaScript中的Unicode
 
 ES2015规范[提到](http://www.ecma-international.org/ecma-262/6.0/#sec-source-text)源代码文本使用Unicode（5.1及以上版本）表示。源码文本是一串取值范围从`U+0000`到`U+10FFFF`的代码点序列。尽管ECMAScript规范没有指明源码储存和交换的方式，但通常都以UTF-8编码（在web中推荐使用的编码）。
 
@@ -286,7 +58,7 @@ console.log(letter.length); // => 2
 
 大多数JavaScript字符串方法都不能识别Unicode。如果字符串含有混合的Unicode字符，在调用`myString.slice()`、`myString.substring()`等方法时就要小心了。
 
-## 3.1 转义序列
+## 转义序列
 
 JavaScript字符串中的转义序列通常都是基于代码点数字的。JavaScript有3种转义模式，在ECMAScript 2015中有相关介绍。
 
@@ -388,7 +160,7 @@ var reg2 = new RegExp('\\x4A \\u0020 \\u{1F639}');
 console.log(reg1.source === reg2.source); // => true
 ```
 
-## 3.2 字符串比较
+## 字符串比较
 
 JavaScript中的字符串是码元的序列。因此字符串的比较可以看作是码元的计算与匹配。
 
@@ -465,7 +237,7 @@ console.log(str1 === str2);             // => false
 
 但为了使操作符两端都取得标准化字符串，将待比较的2个字符串都标准化也是合理的。
 
-## 3.3 字符串长度
+## 字符串长度
 
 想要知道一个字符串的长度通常我们会访问`myString.length`这个属性。该属性表明了字符串中包含的码元个数。
 
@@ -555,7 +327,7 @@ console.log(drink.normalize().length); // => 5
 
 标准化函数`drink.normalize()`将组合序列`'e\u0327\u0301'`转换为含有2个字符的标准形式`'ȩ\u0301'`（只去掉了一个组合用字符）。于是我们很难过地发现`drink.normalize().length`的值为`5`，仍然不能正确地计算字符的个数。
 
-## 3.4 字符定位
+## 字符定位
 
 由于字符串是码元的序列，通过字符串索引来访问字符同样会有困难。
 
@@ -656,7 +428,7 @@ console.log(drink.normalize()[3]);     // => 'é'
 
 好在对于欧洲/北美语言来说它可以解决大部分问题。
 
-## 3.5 正则匹配
+## 正则匹配
 
 正则表达式与字符串一样，是基于码元工作的。因此与上文描述的情形相似，使用正则表达式在处理代理对和组合字符序列时也会遇到困难。
 
@@ -723,13 +495,13 @@ console.log(regex.test(smile)); // => true
 [Try in repl.it](https://repl.it/D9Rm)
 
 ```
-var smile = '😀';  
-var regex = /[😀-😎]/u;  
-var regexEscape = /[\u{1F600}-\u{1F60E}]/u;  
-var regexSpEscape = /[\uD83D\uDE00-\uD83D\uDE0E]/u;  
-console.log(regex.test(smile));         // => true  
-console.log(regexEscape.test(smile));   // => true  
-console.log(regexSpEscape.test(smile)); // => true 
+var smile = '😀';
+var regex = /[😀-😎]/u;
+var regexEscape = /[\u{1F600}-\u{1F60E}]/u;
+var regexSpEscape = /[\uD83D\uDE00-\uD83D\uDE0E]/u;
+console.log(regex.test(smile));         // => true
+console.log(regexEscape.test(smile));   // => true
+console.log(regexSpEscape.test(smile)); // => true
 ```
 
 现在`[😀-😎]`被视为一个星光字符的区间了。`/[😀-😎]/u`成功匹配了`'😀'`。
@@ -757,7 +529,7 @@ console.log(regex2.test(drink)); // => true
 
 然而成功匹配`'cafe\u0301'`的正则表达式是匹配5个元素的`/^.{5}$/`。
 
-# 4. 结语
+# 结语
 
 也许在JavaScript中有关Unicode的最重要的概念就是**将字符串视为码元序列**，事实也确实如此。
 

@@ -5,6 +5,28 @@ tags:
 category: Android
 ---
 
+## Layout
+
+* To add layout files, see [Build a UI with Layout Editor](https://developer.android.com/studio/write/layout-editor.html).
+* To add string files, see [Localize the UI with Translations Editor](https://developer.android.com/studio/write/translations-editor.html).
+
+See See [Add App Resources](https://developer.android.com/studio/write/add-resources.html)
+
+## Theme
+
+* [Design App Themes with Theme Editor](https://developer.android.com/studio/write/theme-editor.html)
+
+##  Graphics
+
+* To add bitmaps, see [Create App Icons with Image Asset Studio](https://developer.android.com/studio/write/image-asset-studio.html).
+* To add SVG files, see [Add Multi-Density Vector Graphics](https://developer.android.com/studio/write/vector-asset-studio.html).
+* [Add Multi-Density Vector Graphics](https://developer.android.com/studio/write/vector-asset-studio.html#about)
+* [Create Resizable Bitmaps (9-Patch files)](https://developer.android.com/studio/write/draw9patch.html)
+
+For information about how to reference the resources from your app
+code, see
+[Providing Resources](https://developer.android.com/guide/topics/resources/providing-resources.html).
+
 ## Tutorial
 
 - [How to create simple view separators](http://envyandroid.com/archives/1193/view-separators)

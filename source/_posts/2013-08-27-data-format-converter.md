@@ -5,6 +5,10 @@ category: Data
 tags: [data, format]
 ---
 
+## Library
+
+- [cryptocoinjs](https://github.com/cryptocoinjs?page=2)
+
 ## 十进制字符串"1942"
 
 - 用BCD表示

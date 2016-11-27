@@ -5,6 +5,8 @@ date: "2016-11-26 15:58"
 categories: Android
 ---
 
+See [进程和线程](https://developer.android.com/guide/components/processes-and-threads.html#Threads)
+
 ## 进程
 
 ### 在 AndroidManifest中开启一个新进程

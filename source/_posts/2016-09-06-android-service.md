@@ -414,6 +414,10 @@ See [绑定服务](https://developer.android.com/guide/components/bound-services
 创建提供绑定的服务时，您必须提供 `IBinder`，用以提供客户端用来与服务进行交互的编程接口。
 您可以通过三种方法定义接口：扩展 Binder 类，使用 Messenger，使用 AIDL。
 
+只有允许不同应用的客户端用 IPC 方式访问服务，并且想要在服务中处理多线程时，才有必要使用 AIDL。
+
+如果您不需要执行跨越不同应用的并发 IPC，就应该通过[实现一个 Binder](https://developer.android.com/guide/components/bound-services.html#Binder) 创建接口；或者，如果您想执行 IPC，但根本不__需要处理多线程，则[使用 Messenger 类](https://developer.android.com/guide/components/bound-services.html#Messenger)来实现接口。无论如何，在实现 AIDL 之前，请您务必理解[绑定服务](https://developer.android.com/guide/components/bound-services.html)。
+
 ### 扩展 Binder 类
 
 如果您的服务仅供本地应用使用，不需要跨进程工作，则可以实现自有 `Binder` 类，让您的客户端通过该类直接访问服务中的公共方法。
@@ -429,7 +433,7 @@ See [绑定服务](https://developer.android.com/guide/components/bound-services
     * 或返回由服务承载的其他类的实例，其中包含客户端可调用的公共方法
 2. 从 `onBind()` 回调方法返回此 `Binder` 实例。
 3. 在客户端中，从 `onServiceConnected()` 回调方法接收
-    `Binder`，并使用提供的方法调用绑定服务。
+     `Binder`，并使用提供的方法调用绑定服务。
 
 例如，以下这个服务可让客户端通过 `Binder` 实现访问服务中的方法：
 
@@ -679,12 +683,45 @@ See [Android 接口定义语言 (AIDL)](https://developer.android.com/guide/comp
 
 AIDL（Android 接口定义语言）执行所有将对象分解成原语的工作，操作系统可以识别这些原语并将它们编组到各进程中，以执行 IPC。
 
+AIDL（Android 接口定义语言）与您可能使用过的其他 IDL 类似。 您可以利用它定义客户端与服务使用进程间通信 (IPC) 进行相互通信时都认可的编程接口。 在 Android 上，一个进程通常无法访问另一个进程的内存。 尽管如此，进程需要将其对象分解成操作系统能够识别的原语，并将对象编组成跨越边界的对象。 编写执行这一编组操作的代码是一项繁琐的工作，因此 Android 会使用 AIDL 来处理。
+
 之前采用 `Messenger` 的方法实际上是以 AIDL 作为其底层结构。 如上所述，`Messenger` 会在单一线程中创建包含所有客户端请求的队列，以便服务一次接收一个请求。 不过，如果您想让服务同时处理多个请求，则可直接使用 AIDL。 在此情况下，您的服务必须具备多线程处理能力，并采用线程安全式设计。
 
 如需直接使用 AIDL，您必须创建一个定义编程接口的 `.aidl` 文件。Android SDK 工具利用该文件生成一个实现接口并处理 IPC 的抽象类，您随后可在服务内对其进行扩展。
 
 **注**：大多数应用“都不会”****使用
 AIDL 来创建绑定服务，因为它可能要求具备多线程处理能力，并可能导致实现的复杂性增加。因此，AIDL 并不适合大多数应用，本文也不会阐述如何将其用于您的服务。如果您确定自己需要直接使用 AIDL，请参阅 [AIDL](https://developer.android.com/guide/components/aidl.html) 文档。
+
+Before you begin designing your AIDL interface, be aware that calls to an AIDL interface are direct function calls.  You should not make assumptions about the thread in which the call occurs.  What happens is different depending on whether the call is from a thread in the local process or a remote process. Specifically:
+
+* Calls made from the local process are executed in the same thread that is making the call. If this is your main UI thread, that thread continues to execute in the AIDL interface.  If it is another thread, that is the one that executes your code in the service.  Thus, if only local threads are accessing the service, you can completely control which threads are executing in it (but if that is the case, then you shouldn't be using AIDL at all, but should instead create the interface by [implementing a Binder](https://developer.android.com/guide/components/bound-services.html#Binder)). 
+* Calls from a remote process are dispatched from a thread pool the platform maintains inside of your own process.  You must be prepared for incoming calls from unknown threads, with multiple calls happening at the same time.  In other words, an implementation of an AIDL interface must be completely thread-safe. 
+* The `oneway` keyword modifies the behavior of remote calls.  When used, a remote call does not block; it simply sends the transaction data and immediately returns. The implementation of the interface eventually receives this as a regular call from the `Binder` thread pool as a normal remote call. If `oneway` is used with a local call, there is no impact and the call is still synchronous.
+
+#### 定义 AIDL 接口
+
+您必须使用 Java 编程语言语法在 `.aidl` 文件中定义 AIDL
+接口，然后将它保存在托管服务的应用以及任何其他绑定到服务的应用的源代码（`src/` 目录）内。
+
+您开发每个包含 `.aidl` 文件的应用时，Android SDK 工具都会生成一个基于该 `.aidl` 文件的 `IBinder` 接口，并将其保存在项目的 `gen/` 目录中。服务必须视情况实现 `IBinder` 接口。然后客户端应用便可绑定到该服务，并调用 `IBinder` 中的方法来执行 IPC。
+
+如需使用 AIDL 创建绑定服务，请执行以下步骤：
+
+1.  [创建 .aidl 文件](https://developer.android.com/guide/components/aidl.html#CreateAidl)
+
+    此文件定义带有方法签名的编程接口。
+
+2.  [实现接口](https://developer.android.com/guide/components/aidl.html#ImplementTheInterface)
+
+    Android SDK 工具基于您的
+    `.aidl` 文件，使用 Java 编程语言生成一个接口。此接口具有一个名为 `Stub` 的内部抽象类，用于扩展
+    `Binder` 类并实现 AIDL 接口中的方法。您必须扩展
+    `Stub` 类并实现方法。
+
+3.  [向客户端公开该接口](https://developer.android.com/guide/components/aidl.html#ExposeTheInterface)
+
+    实现 `Service` 并重写 `onBind()` 以返回 `Stub`
+    类的实现。
 
 ### 绑定到服务
 
@@ -707,7 +744,7 @@ AIDL 来创建绑定服务，因为它可能要求具备多线程处理能力，
 3.  当系统调用您的 `onServiceConnected()` 回调方法时，您可以使用接口定义的方法开始调用服务。
 4.  要断开与服务的连接，请调用 `unbindService()`。
 
-    如果应用在客户端仍绑定到服务时销毁客户端，则销毁会导致客户端取消绑定。 更好的做法是在客户端与服务交互完成后立即取消绑定客户端。 这样可以关闭空闲服务。
+     如果应用在客户端仍绑定到服务时销毁客户端，则销毁会导致客户端取消绑定。 更好的做法是在客户端与服务交互完成后立即取消绑定客户端。 这样可以关闭空闲服务。
 
 例如，以下代码段将客户端与上面创建的服务相连，它只需将返回的 `IBinder` 转换为 `LocalService` 类：
 

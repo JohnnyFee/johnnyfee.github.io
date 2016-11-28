@@ -139,6 +139,10 @@ Learn more about the
 
 See [Add Code from a Template](https://developer.android.com/studio/projects/templates.html#SelectTemplate)
 
+### Improve Code Inspection with Annotations
+
+See [Improve Code Inspection with Annotations](https://developer.android.com/studio/write/annotations.html#value-constraint)
+
 ## Shortcuts
 
 See [Keyboard Shortcuts](https://developer.android.com/studio/intro/keyboard-shortcuts.html)

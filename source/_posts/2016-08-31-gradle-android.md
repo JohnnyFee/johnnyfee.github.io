@@ -22,13 +22,13 @@ Gradle 构建您的项目](https://developer.android.com/studio/build/index.html
 
 Android Gradle插件提供了大量的DSL来自定义构建过程。
 
-DSL提供了配置以下Manifest条目的功能:  
+DSL提供了配置以下Manifest条目的功能:
 
 - `minSdkVersion`
 - `targetSdkVersion`
 - `versionCode`
 - `versionName`
-- `applicationId` (更加方便有效的包名 — [Set the Application ID](https://developer.android.com/studio/build/application-id.html)) 
+- `applicationId` (更加方便有效的包名 — [Set the Application ID](https://developer.android.com/studio/build/application-id.html))
 
 例如：
 
@@ -119,4 +119,4 @@ See [Configure Your Build](https://developer.android.com/studio/build/index.html
 ## UserGuide
 
 - [Gradle User Guide Version 3.0](https://docs.gradle.org/current/userguide/userguide.html)
-- [翻译](http://avatarqing.github.io/Gradle-Plugin-User-Guide-Chinese-Verision/) 
+- [翻译](http://avatarqing.github.io/Gradle-Plugin-User-Guide-Chinese-Verision/)

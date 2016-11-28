@@ -88,9 +88,12 @@ Service 是一个可以在后台执行长时间运行操作而不提供用户界
 
 不过，如果您选择实现 `onStartCommand()` 回调方法，则您必须显式停止服务，因为系统现在已将服务视为_已启动_。在此情况下，服务将一直运行到其通过 `stopSelf()` 自行停止，或其他组件调用 `stopService()` 为止，无论其是否绑定到任何客户端。
 
+
+<img style="float: left;" src="http://ww4.sinaimg.cn/large/006y8mN6jw1fa72qf8yysj30em0frgn8.jpg" alt="">
+
 Additionally, if your service is started and accepts binding, then when the system calls your `onUnbind()` method, you can optionally return `true` if you would like to receive a call to `onRebind()` the next time a client binds to the service. `onRebind()` returns void, but the client still receives the `IBinder` in its `onServiceConnected()` callback. The following figure illustrates the logic for this kind of lifecycle.
 
-![81CDECB9-B96F-4468-A16D-8E2A5DDD4ADA](http://ww4.sinaimg.cn/large/006y8mN6jw1fa72qf8yysj30em0frgn8.jpg)
+<div style="clear: both;"></div>
 
 ### 绑定到已启动服务
 

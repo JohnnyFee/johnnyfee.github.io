@@ -154,13 +154,3 @@ android {
 ## 写在最后
 
 发布一款应用除了设`minifyEnabled`为`ture`，你也应该设置`zipAlignEnabled`为`true`，像`Google Play`强制要求开发者上传的应用必须是经过zipAlign的，zipAlign可以让安装包中的资源按4字节对齐，这样可以减少应用在运行时的内存消耗。
-
-
-dsds  | ds
---|--
-ddddd  | s s
-s  |  dddd
-
-1. 232
-5. 3..ew
-3. 43

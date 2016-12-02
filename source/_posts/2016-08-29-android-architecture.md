@@ -5,36 +5,97 @@ category: Android
 tags: [android]
 ---
 
-## IPC 机制
+## Architecture
 
-1、[三枪干掉 IPC 机制系列](http://bigmercu.top/2016/06/08/%E4%B8%89%E6%9E%AA%E5%B9%B2%E6%8E%89IPC%E6%9C%BA%E5%88%B6%E4%B9%8B%E4%B8%80/)
-2、[Android进程间通信（IPC）机制Binder简要介绍和学习计划 ](http://blog.csdn.net/luoshengyang/article/details/6618363)
+- [googlesamples/android-architecture: A collection of samples to discuss and showcase different architectural tools and patterns for Android apps.](https://github.com/googlesamples/android-architecture)
+- [从零开始的Android新项目3 - MVPVM in Action, 谁告诉你MVP和MVVM是互斥的](http://blog.zhaiyifan.cn/2016/03/16/android-new-project-from-0-p3/)
 
-## 进程保活
+### MVP
 
-1、[Android 进程保活招式大全 —–腾讯](http://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&mid=2653577617&idx=1&sn=623256a2ff94641036a6c9eea17baab8&scene=1&srcid=0818EecQYYkaSkd5HD8WjDf8#rd)
-2、[微信Android客户端后台保活经验分享](https://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&mid=403254393&idx=1&sn=8dc0e3a03031177777b5a5876cb210cc)
+See
 
-## 缓存机制
+- [Android MVP 详解（上） - 简书](http://www.jianshu.com/p/9a6845b26856) <sup> introduction</sup>
+- [Android MVP 详解（下） - 简书](http://www.jianshu.com/p/0590f530c617) <sup>best practice</sup>
+- [Android MVP模式](https://segmentfault.com/a/1190000003927200)
 
-1、[自己设计Android中图片的三级缓存](http://www.jianshu.com/p/2cd59a79ed4a)
-2、[Android 三大图片缓存原理、特性对比](http://www.trinea.cn/android/android-image-cache-compare/)
-3、[Android图片库Glide - Glide3.x 官方wiki文档](https://muzhi1991.gitbooks.io/android-glide-wiki/content/chapter0.html)
+除了 Google 官方的实现，还有以下实现:
 
-## 线程
+- [konmik/nucleus: Nucleus is a simple Android library, which utilizes the Model-View-Presenter pattern to properly connect background tasks with visual parts of an application.](https://github.com/konmik/nucleus)
+    + [介绍ModelViewPresenter在Android中的应用](http://www.it165.net/pro/html/201505/41758.html) <sup>translation</sup>
+- [sockeqwe/mosby: A Model-View-Presenter library for modern Android apps](https://github.com/sockeqwe/mosby)
+    + [MVP框架 – Ted Mosby的软件架构](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0528/2945.html) <sup>tranlation</sup>
 
-1、[Android的线程和线程池 ](https://imuhao.github.io/2016/08/19/Thread-Executors/)
-2、[Java线程面试题 Top 50](http://www.importnew.com/12773.html)
+### Samples
 
-## 反射
+- [chrisbanes/philm: Movie collection and information app for Android.](https://github.com/chrisbanes/philm)
+- [wenhuaijun/SearchPictureTool: 图片搜索APP源码，Material Design，Rxjava](https://github.com/wenhuaijun/SearchPictureTool)
+- [Jude95/Fishing: 空钩 APP](https://github.com/Jude95/Fishing)
+- [drakeet/Meizhi: gank.io unofficial client, RxJava & Retrofit](https://github.com/drakeet/Meizhi)
+- [oxoooo/mr-mantou-android: On the importance of taste](https://github.com/oxoooo/mr-mantou-android)
+- [GankApp](https://github.com/oxoooo/mr-mantou-android)
+- [GanK](https://github.com/dongjunkun/GanK)
+- [Gank4Android](https://github.com/zzhoujay/Gank4Android)
+- [GankDaily](https://github.com/maoruibin/GankDaily)
 
-1、[反射技术在Android中的应用 ](http://mp.weixin.qq.com/s?__biz=MzA5MzI3NjE2MA==&mid=2650236432&idx=1&sn=1da63ff74cb6082ffe3df5f344f9f5f1&scene=0#wechat_redirect)
+## Loader
 
-## 注解
+[加载器](https://developer.android.com/guide/components/loaders.html)
 
-1、[一分钟秒懂注解](https://dreamerhome.github.io/2016/08/02/annotaion/)
-2、[自定义实现ButterKnife框架 ](http://blog.csdn.net/qq_23547831/article/details/51713824)
+- [benoitletondor/Android-Studio-MVP-template: Android MVP template for Android Studio](https://github.com/benoitletondor/Android-Studio-MVP-template) <sup>template for android studeio. Use load in presenters.</sup>
+    - [Presenter surviving orientation changes with Loaders](https://medium.com/@czyrux/presenter-surviving-orientation-changes-with-loaders-6da6d86ffbbf#.3t97rb4t2)
+    - [通过Loader延长Presenter生命周期](http://blog.chengdazhi.com/index.php/131) <sup>translation</sup>
 
-## From
+## i18n
 
-- [android 学习资料整理 ----- 高级篇 - 掘金](http://gold.xitu.io/entry/57bfedc679bc440063cc03ce)
+See [Supporting Different Languages](https://developer.android.com/training/basics/supporting-devices/languages.html)
+
+To add support for more languages, create additional `values` directories inside
+`res/` that include a hyphen and the ISO language code at the end of the
+directory name. For example, `values-es/` is the directory containing simple
+resources for the Locales with the language code "es".  Android loads the appropriate resources
+according to the locale settings of the device at run time. For more information, see
+[Providing Alternative Resources](https://developer.android.com/guide/topics/resources/providing-resources.html#AlternativeResources).
+
+Once you’ve decided on the languages you will support, create the resource subdirectories and
+string resource files. For example:
+
+<pre class="classic no-pretty-print">
+MyProject/
+    res/
+       values/
+           strings.xml
+       values-es/
+           strings.xml
+       values-fr/
+           strings.xml
+</pre>
+
+## Test
+
+示例项目在可测试方面做的非常好，由于对视图逻辑(view层)和业务逻辑(presenter层)进行了拆分，所以我们就可以对UI、业务代码分别进行测试。为了进行UI测试引入了Espresso，为了对业务层进行单元测试引入了junit，为了生成测试mock对象引入了mockito，为了支撑mockito又引入了 dexmaker，hamcrest的引入使得测试代码的匹配更接近自然语言，可读性更高，更加灵活。
+
+### UI Test
+
+Using Espresso
+
+- [Testing Support Library](https://developer.android.com/topic/libraries/testing-support-library/index.html)
+- [Testing UI for a Single App](https://developer.android.com/training/testing/ui-testing/espresso-testing.html#setup)
+
+### [Mockito](http://mockito.org/)
+
+Tasty mocking framework for unit tests in Java
+
+- [crittercism/dexmaker](https://github.com/crittercism/dexmaker) A Java-language API for doing compile time or runtime code generation targeting the Dalvik VM.
+- [hamcrest/JavaHamcrest: Java (and original) version of Hamcrest](https://github.com/hamcrest/JavaHamcrest) Hamcrest is a library of matchers, which can be combined in to create flexible expressions of intent in tests. They've also been used for other purposes.
+- [hamcrest/hamcrest-junit: Integration between Hamcrest and JUnit](https://github.com/hamcrest/hamcrest-junit) Integration between Hamcrest and JUnit
+
+
+## Library
+
+- [google/guava](https://github.com/google/guava) The Guava project contains several of Google's core libraries that we rely on in our Java-based projects: collections, caching, primitives support, concurrency libraries, common annotations, string processing, I/O, and so forth.
+
+### Retrolambda
+
+如果你习惯使用 Retrolambda ，你也可以直接把代码写成上面这种简洁的形式。而如果你看到这里还不知道什么是 Retrolambda ，我不建议你现在就去学习它。原因有两点：1. Lambda 是把双刃剑，它让你的代码简洁的同时，降低了代码的可读性，因此同时学习 RxJava 和 Retrolambda 可能会让你忽略 RxJava 的一些技术细节；2. Retrolambda 是 Java 6/7 对 Lambda 表达式的非官方兼容方案，它的向后兼容性和稳定性是无法保障的，因此对于企业项目，使用 Retrolambda 是有风险的。所以，与很多 RxJava 的推广者不同，我并不推荐在学习 RxJava 的同时一起学习 Retrolambda。事实上，我个人虽然很欣赏 Retrolambda，但我从来不用它。
+
+From [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)

@@ -356,6 +356,7 @@ public interface ILoginView {
 - [MVP Architecture in Android Development – Medium](https://medium.com/@kenjuwagatsuma/mvp-architecture-in-android-development-3d63cc32707a#.blkuqetl8)
 - [A useful stack on android #1, architecture · Saúl Molinero](http://saulmm.github.io/2015/02/02/A-useful-stack-on-android-1,-architecture/)
 - [Android MVP模式 简单易懂的介绍方式](https://segmentfault.com/a/1190000003927200)
+- [【译】Android应用架构 - 简书](http://www.jianshu.com/p/8ca27934c6e6)
 - [Android MVP 详解（上） - 简书](http://www.jianshu.com/p/9a6845b26856)
 - [Android MVP 详解（下） - 简书](http://www.jianshu.com/p/0590f530c617)
 - [Android应用中MVP最佳实践 - 简书](http://www.jianshu.com/p/ed2aa9546c2c) [Jude95/Beam: MVP开发框架](https://github.com/Jude95/Beam) 作者。

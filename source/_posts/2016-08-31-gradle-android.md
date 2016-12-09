@@ -104,6 +104,10 @@ if (android.defaultConfig.testInstrumentationRunner == null) {
 
 See [Configure Your Build](https://developer.android.com/studio/build/index.html#build-config)
 
+## FAQ
+
+- [Android Studio集成 crashlytics 后无法编译的问题](http://blog.csdn.net/zhuobattle/article/details/50555393)
+
 ## Tutorial
 
 - [深入理解Android（一）：Gradle详解](http://www.infoq.com/cn/articles/android-in-depth-gradle) <sup>中文教程</sup>

@@ -8,6 +8,7 @@ tags: [android]
 ## Architecture
 
 - [googlesamples/android-architecture: A collection of samples to discuss and showcase different architectural tools and patterns for Android apps.](https://github.com/googlesamples/android-architecture)
+- [AndroidArchitectureCollection](https://github.com/CameloeAnthony/AndroidArchitectureCollection)
 
 ## See Also
 

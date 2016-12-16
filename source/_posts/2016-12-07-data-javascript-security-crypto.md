@@ -10,4 +10,5 @@ tags: [javascript, crypto]
 
 - [brix/crypto-js: JavaScript library of crypto standards.](https://github.com/brix/crypto-js)
 - [cryptocoinjs](https://github.com/cryptocoinjs?page=2)
+- [bitwiseshiftleft/sjcl: Stanford Javascript Crypto Library](https://github.com/bitwiseshiftleft/sjcl)
 

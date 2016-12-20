@@ -191,9 +191,9 @@ logcat 经常刷新过快，冲掉之前的数据，可以改下logcat的缓存�
 idea.cycle.buffer.size=1024000
 ```
 
-## Android Studio －修改 LogCat 的颜色
+## Android Studio
 
-[Android Studio －修改LogCat的颜色＊美爆了＊ - JavAndroid - 博客频道 - CSDN.NET](http://blog.csdn.net/yy1300326388/article/details/45825123)
+[Android Studio －修改LogCat的颜色 - 简书](http://www.jianshu.com/p/d205e07c7f50)
 
 ### 打开 DDMS
 

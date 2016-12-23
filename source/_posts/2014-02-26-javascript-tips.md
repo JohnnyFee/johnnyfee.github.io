@@ -910,6 +910,15 @@ myArray.length = 10; // the new array length is 10
 myArray[myArray.length - 1] ; // undefined
 ```
 
+### Create array sequence [0, 1, ..., N-1] in one line
+
+- [Create array sequence `[0, 1, ..., N-1]` in one line – JS Tips – A JS tip per day!](http://www.jstips.co/en/create-range-0...n-easily-using-one-line/)
+- [javascript - How to generate range of numbers from 0 to n in ES2015 only? - Stack Overflow](http://stackoverflow.com/questions/36947847/how-to-generate-range-of-numbers-from-0-to-n-in-es2015-only)
+
+### filled JavaScript array
+
+[Most efficient way to create a zero filled JavaScript array? - Stack Overflow](http://stackoverflow.com/questions/1295584/most-efficient-way-to-create-a-zero-filled-javascript-array)
+
 ## Function
 
 下面是将参数从一个函数传递到另一个函数的推荐做法。

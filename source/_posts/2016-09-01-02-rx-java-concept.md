@@ -126,13 +126,145 @@ main: 7
 main: After
 ```
 
-#### Mastering Observable.create()
+#### Create Oberservable with Observable.create()
 
+```
+Observable<Integer> ints = Observable
+    .create(new Observable.OnSubscribe<Integer>() {
+        @Override
+        public void call(Subscriber<? super Integer> subscriber) {
+            log("Create");
+            subscriber.onNext(5);
+            subscriber.onNext(6);
+            subscriber.onNext(7);
+            subscriber.onCompleted();
+            log("Completed");
+        }
+    });
+```
 
+`Observable.create()` is so versatile that in fact you can mimic all
+of the previously discovered factory methods on top of it. For example,
+`Observable.just(x)`, emits a single value `x` and immediately
+completes afterward, might look like this:
 
-What we are interested in is the thread that executed each log statement:
+```java
+static <T> Observable<T> just(T x) {
+    return Observable.create(subscriber -> {
+            subscriber.onNext(x);
+            subscriber.onCompleted();
+        }
+    );
+}
+```
 
-### Subscribing to Notifications from Observable
+As an exercise, try to implement `never()`, `empty()`, or even `range()` by using only `create()`.
+
+#### Managing multiple subscribers
+
+Every time `subscribe()` is called, our subscription handler inside
+`create()` is invoked. 
+
+For example, `Observable.just(42)` should emit `42` to every subscriber, not just the first one. On the other hand, if you put a database query or heavyweight computation inside `create()`, it might be beneficial to share a single invocation among all subscribers.
+
+Consider the following code sample that subscribes to the same Observable twice:
+
+```java
+Observable<Integer> ints =
+        Observable.create(subscriber -> {
+                    log("Create");
+                    subscriber.onNext(42);
+                    subscriber.onCompleted();
+                }
+        );
+log("Starting");
+ints.subscribe(i -> log("Element A: " + i));
+ints.subscribe(i -> log("Element B: " + i));
+log("Exit");
+```
+
+The out put is:
+
+```
+main: Starting
+main: Create
+main: Element A: 42
+main: Create
+main: Element B: 42
+main: Exit
+```
+
+If you would like to avoid calling `create()` for each subscriber and simply reuse events that were already computed, there exists a handy `cache()` operator:
+
+```java
+Observable<Integer> ints =
+    Observable.<Integer>create(subscriber -> {
+                //...
+            }
+    )
+    .cache();
+```
+
+With caching, the output for two `Subscriber`s is quite different:
+
+```
+main: Starting
+main: Create
+main: Element A: 42
+main: Element B: 42
+main: Exit
+```
+
+When the first subscriber appears, `cache()` delegates subscription to the underlying `Observable` and forwards all notifications (events, completions, or errors) downstream. However, at the same time, it keeps a copy of all notifications internally. When a subsequent subscriber wants to receive pushed notifications, `cache()` no longer delegates to the underlying `Observable` but instead feeds cached values.
+
+Of course, you must keep in mind that `cache()` plus infinite stream is the recipe for a disaster, also known as `OutOfMemoryError`. 
+
+#### Subscriber.isUnsubscribed
+
+It is advised to check the `isUnsubscribed()` flag as often as possible to avoid sending events after a subscriber no longer wants to receive new events. 
+
+```java
+Observable<BigInteger> naturalNumbers = Observable.create(
+    subscriber -> {
+        Runnable r = () -> {
+            BigInteger i = ZERO;
+            while (!subscriber.isUnsubscribed()) {
+                subscriber.onNext(i);
+                i = i.add(ONE);
+            }
+        };
+        new Thread(r).start();
+    });
+```
+
+Rather than have a blocking loop running directly in the client thread, we spawn a custom thread and emit events directly from there. 
+
+__Please note that you should not use explicit threads inside
+`create()`. Concurrency and custom schedulers that allow you to write concurrent code without really interacting with threads yourself.__
+
+Even if someone poorly implemented the `Observable`, we can easily fix it by applying the `serialize()` operator, such as `loadAll(...).serialize()`. This operator ensures that events are serialized and sequenced. It also enforces that no more events are sent after completion or error.
+
+```java
+Observable<Data> loadAll(Collection<Integer> ids) {
+    return Observable.create(subscriber -> {
+        ExecutorService pool = Executors.newFixedThreadPool(10);
+        AtomicInteger countDown = new AtomicInteger(ids.size());
+        //DANGER, violates Rx contract. Don't do this!
+        ids.forEach(id -> pool.submit(() -> {
+            final Data data = load(id);
+            subscriber.onNext(data);
+            if (countDown.decrementAndGet() == 0) {
+                pool.shutdownNow();
+                subscriber.onCompleted();
+            }
+        }));
+    });
+}
+```
+
+### Subscribing Observable
+
+#### Subscribing to notifications from Observable
 
 An instance of `Observable` does not emit any events until someone is actually interested in receiving them. To begin watching an `Observable`, you use the `subscribe()` family of methods:
 
@@ -176,7 +308,7 @@ tweets.subscribe(
     this::noMore);
 ```
 
-### Subscribing to Notifications by Using Observer<T>
+#### Subscribing to notifications by using Observer<T>
 
 It turns out that providing all three arguments to `subscribe()` is quite useful, thus it would be helpful to have a simple wrapper holding all three callbacks. This is what `Observer<T>`  was designed for. `Observer<T>` is a container for all three callbacks, receiving all possible notifications from `Observable<T>`. Here is how you can register an `Observer<T>`:
 
@@ -204,7 +336,7 @@ tweets.subscribe(observer);
 
 As a matter of fact `Observer<T>` is the core abstraction for listening in RxJava. Yet if you want even greater control, `Subscriber` (`Observer`s abstract implementation) is even more powerful.
 
-### Unsubscribing from Observable
+#### Unsubscribing from Observable
 
 There are two means to support that: `Subscription`  and  `Subscriber` to `unsubscribe` to cancel a subscription.
 
@@ -242,3 +374,32 @@ Subscriber<Tweet> subscriber = new Subscriber<Tweet>() {
 };
 tweets.subscribe(subscriber);
 ```
+
+## Error Handling
+
+It is a good practice to wrap entire expressions within `create()` in a `try`-`catch` block. `Throwable`s should be propagated downstream rather than logged or rethrown, as demonstrated here:
+
+```java
+Observable<Data> rxLoad(int id) {
+    return Observable.create(subscriber -> {
+        try {
+            subscriber.onNext(load(id));
+            subscriber.onCompleted();
+        } catch (Exception e) {
+            subscriber.onError(e);
+        }
+    });
+}
+```
+
+The pattern of completing an `Observable` with one value and wrapping with the `try`-`catch` statement is so prevalent that the built-in `fromCallable()` operator was introduced:
+
+```java
+Observable<Data> rxLoad(int id) {
+    return Observable.fromCallable(() ->
+        load(id));
+}
+```
+
+It is semantically equivalent but much shorter and has some other benefits over `create()` that you will discover later.
+

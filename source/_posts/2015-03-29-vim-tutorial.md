@@ -29,6 +29,7 @@ Bundle 'AutoComplPop'
 
 ## Tutorial
 
+- [简明 Vim 练级攻略](http://coolshell.cn/articles/5426.html)
 - [拼装的艺术：vim之IDE进化实录](http://blog.csdn.net/yangyang_gnu/article/details/6642271)
 - [手把手教你把Vim改装成一个IDE编程环境(图文)](http://blog.csdn.net/wooin/article/details/1858917)
 - [谁说Vim不是IDE？（一）](http://www.cnblogs.com/chijianqiang/archive/2012/10/30/vim-1.html)

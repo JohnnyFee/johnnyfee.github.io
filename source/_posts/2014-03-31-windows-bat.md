@@ -316,13 +316,13 @@ noparms（如果这里的if、%1、%2你不明白的话，先跳过去，后面�
 
 查出占用端口的进程：
      
-    netstat -aon|findstr "8088"    
+    netstat -aon|findstr "8100"
 
     结果：TCP    127.0.0.1:9050         0.0.0.0:0              LISTENING       2016     
 
 根据进程ID查看进程信息：
 
-    tasklist|findstr "2016"     
+    tasklist|findstr "2016"
     结果：tor.exe                     2016 Console       
 
 

@@ -35,8 +35,35 @@ both system and installed apps.</dd>
 2. [AssertJ](http://joel-costigliola.github.io/assertj/index.html) Fluent assertions for java.
 1. [AssertJ Android](https://github.com/square/assertj-android) - AssertJ assertions geared towards Android.
 
+## FAQ
+
+### Get context of test project in Android junit test case
+
+See [Get context of test project in Android junit test case - Stack Overflow](http://stackoverflow.com/questions/8605611/get-context-of-test-project-in-android-junit-test-case)
+
+`InstrumentationRegistry` is an exposed registry
+instance that holds a reference to the instrumentation running in the
+process and it's arguments and allows injection of the following
+instances:
+
+* `InstrumentationRegistry.getInstrumentation()`, returns the
+      Instrumentation currently running.
+* `InstrumentationRegistry.getContext()`, returns the Context of this
+      Instrumentation’s package. 
+* `InstrumentationRegistry.getTargetContext()`,
+      returns the application Context of the target application.
+* `InstrumentationRegistry.getArguments()`, returns a copy of arguments
+      Bundle that was passed to this Instrumentation. This is useful when
+      you want to access the command line arguments passed to
+      Instrumentation for your test.
+
+### getApplication() vs. getApplicationContext()
+
+See [android - getApplication() vs. getApplicationContext() - Stack Overflow](http://stackoverflow.com/questions/5018545/getapplication-vs-getapplicationcontext)
+
 ## Tutorial
 
-- [世界级的Android测试开发流程（一）](http://blog.zhaiyifan.cn/2016/02/23/world-class-testing-development-pipeline-for-android-part-1/)
-- [世界级的Android测试开发流程（二）](http://blog.zhaiyifan.cn/2016/02/23/world-class-testing-development-pipeline-for-android-part-2/)
-- [在Android Studio中进行单元测试和UI测试 - 简书](http://www.jianshu.com/p/03118c11c199)
+- [Getting Started with Testing](https://developer.android.google.cn/training/testing/start/index.html?hl=zh-cn)
+- [测试应用](https://developer.android.google.cn/studio/test/index.html?hl=zh-cn#_2)
+- [Best Practices for Testing](https://developer.android.com/training/testing/index.html)
+

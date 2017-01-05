@@ -191,6 +191,21 @@ logcat 经常刷新过快，冲掉之前的数据，可以改下logcat的缓存�
 idea.cycle.buffer.size=1024000
 ```
 
+### Can't bind to local XXXX for debugger
+
+[android - Can't bind to local XXXX for debugger - Stack Overflow](http://stackoverflow.com/questions/13198646/cant-bind-to-local-xxxx-for-debugger)
+
+
+C:\WINDOWS\system32\drivers\etc\host
+
+And should contain this line : 
+
+```
+127.0.0.1       localhost
+```
+
+If you have ipv6 ip address ::1 in your host file you need to delete or remark it.
+
 ## Android Studio
 
 [Android Studio －修改LogCat的颜色 - 简书](http://www.jianshu.com/p/d205e07c7f50)

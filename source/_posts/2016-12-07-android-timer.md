@@ -53,6 +53,10 @@ public abstract void onTick (long millisUntilFinished);
 public final CountDownTimer start();
 ```
 
+### FAQ
+
+- [timer - Pause CountDownTimer in Android when activity is not in front - Stack Overflow](http://stackoverflow.com/questions/5738362/pause-countdowntimer-in-android-when-activity-is-not-in-front)
+
 ## Timer
 
 See [Timer](https://developer.android.com/reference/java/util/Timer.html)

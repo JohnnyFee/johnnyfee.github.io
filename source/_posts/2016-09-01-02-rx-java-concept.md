@@ -66,6 +66,17 @@ Indeed, `Observable<T>` can actually produce three types of events:
 
 The specification of reactive extensions clearly states that every `Observable` can emit an arbitrary number of values optionally followed by completion or error (but not both). Strictly speaking _Rx Design Guidelines_ define this rule as follows: `OnNext* (OnCompleted | OnError)?`—where `OnNext` represents a new event.
 
+### Hot and Cold Observables
+
+A cold `Observable` is entirely lazy and never begins to emit events until
+someone is actually interested. A cold `Observable` is entirely lazy and never begins to emit events until someone is actually interested.
+
+A hold of such an `Observable` it might already be emitting events no matter how many `Subscriber`s they have. `Observable` pushes events downstream, even if no one listens and events are possibly missed. Examples of such `Observable`s include mouse movements, keyboard inputs, or button clicks.
+
+How to ensure that every subscriber received all events:
+
+-  One such technique already sneaked into this chapter: the `cache()` operator. Technically, it can buffer all events from a hot `Observable` and allow subsequent subscribers to receive the same sequence of events. However, because it consumes theoretically an unlimited amount of memory, be careful with caching hot `Observable`s.
+
 ### Creating Observables
 
 Unless you work with an external API that already exposes `Observable`s, you first must learn where `Observable`s come from and how you can create a stream and handle subscriptions.
@@ -159,6 +170,112 @@ static <T> Observable<T> just(T x) {
 ```
 
 As an exercise, try to implement `never()`, `empty()`, or even `range()` by using only `create()`.
+
+#### From Callback API to Observable Stream
+
+We will use the open source [Twitter4J](http://twitter4j.org/)  library that can push a subset of new tweets using a callback-based API:
+
+```java
+import twitter4j.Status;
+import twitter4j.StatusDeletionNotice;
+import twitter4j.StatusListener;
+import twitter4j.TwitterStream;
+import twitter4j.TwitterStreamFactory;
+
+void consume(
+            Consumer<Status> onStatus,
+            Consumer<Exception> onException) {
+    TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
+    twitterStream.addListener(new StatusListener() {
+        @Override
+        public void onStatus(Status status) {
+            onStatus.accept(status);
+        }
+
+        @Override
+        public void onException(Exception ex) {
+            onException.accept(ex);
+        }
+
+        //other callbacks
+    });
+    twitterStream.sample();
+}
+```
+
+Calling `twitterStream.sample()` starts a background thread that logs in to Twitter and awaits new messages. Every time a tweet appears, the `onStatus` callback is executed.Execution can jump between threads, therefore we can no longer rely on throwing exceptions. Instead the `onException()` notification is used.
+
+Use it as:
+
+```java
+consume(
+    status -> log.info("Status: {}", status),
+    ex     -> log.error("Error callback", ex)
+);
+```
+
+What if we want to count the number of tweets per second? Or consume just the first five? And what if we would like to have multiple listeners? In these situations, each of these situations opens a new HTTP connection. Last but not least, this API does not allow unsubscribing when we are done, risking resource leak.
+
+```java
+Observable<Status> observe() {
+    return Observable.create(subscriber -> {
+        TwitterStream twitterStream =
+            new TwitterStreamFactory().getInstance();
+        twitterStream.addListener(new StatusListener() {
+            @Override
+            public void onStatus(Status status) {
+                if (subscriber.isUnsubscribed()) {
+                    twitterStream.shutdown();
+                } else {
+                    subscriber.onNext(status);
+                }
+            }
+
+            @Override
+            public void onException(Exception ex) {
+                if (subscriber.isUnsubscribed()) {
+                    twitterStream.shutdown();
+                } else {
+                    subscriber.onError(ex);
+                }
+            }
+
+            //other callbacks
+        });
+        subscriber.add(Subscriptions.create(twitterStream::shutdown));
+    });
+}
+```
+
+When someone subscribes only to receive a small fraction of the stream, our `Observable` will make sure to clean up the resources.
+
+We know a second technique to implement clean-up that does not require waiting for an upstream event. The moment a subscriber unsubscribes, we call `shutdown()` immediately, rather than waiting for the next tweet to come just to trigger clean-up behavior (last line):
+
+```java
+twitterStream.addListener(new StatusListener() {
+    //callbacks...
+});
+twitterStream.sample();
+
+subscriber.add(Subscriptions.create(twitterStream::shutdown));
+```
+
+The subscription is very similar:
+
+```java
+observe().subscribe(
+        status -> log.info("Status: {}", status),
+        ex -> log.error("Error callback", ex)
+);
+```
+
+However, keep in mind that the implementation still opens a new network connection for each `Subscriber`.
+
+This `Observable` blurs the difference between hot and cold streams. On one hand, it represents external events that appear without our control (hot behavior). On the other hand, events will not begin flowing (no underlying HTTP connection) to our system until we actually `subscribe()`.
+
+#### Manually Managing Subscribers
+
+
 
 #### Managing multiple subscribers
 
@@ -374,6 +491,31 @@ Subscriber<Tweet> subscriber = new Subscriber<Tweet>() {
 };
 tweets.subscribe(subscriber);
 ```
+
+## Operators
+
+### Timing: timer() and interval()
+
+`timer()` and `interval()` use threads underneath. 
+The former simply creates an `Observable` that emits a `long` value of zero after a specified delay and then completes:
+
+```java
+Observable
+   .timer(1, TimeUnit.SECONDS)
+   .subscribe((Long zero) -> log(zero));
+```
+
+The fixed value of `0` (in variable `zero`) is just a convention without any specific meaning. It is basically an asynchronous equivalent of `Thread.sleep()`. Rather than blocking the current thread, we create an `Observable` and `subscribe()` to it.
+
+`interval()` generates a sequence of `long` numbers, beginning with zero, with a fixed delay between each one of them:
+
+```java
+Observable
+    .interval(1_000_000 / 60, MICROSECONDS)
+    .subscribe((Long i) -> log(i));
+```
+
+`interval()` is sometimes used to control animations or processes that need to run with certain frequency.
 
 ## Error Handling
 

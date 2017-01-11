@@ -273,9 +273,65 @@ However, keep in mind that the implementation still opens a new network connecti
 
 This `Observable` blurs the difference between hot and cold streams. On one hand, it represents external events that appear without our control (hot behavior). On the other hand, events will not begin flowing (no underlying HTTP connection) to our system until we actually `subscribe()`.
 
-#### Manually Managing Subscribers
+Manually keeping track of all subscribers and shutting down the connection to the external system only when all subscribers leave is a Sisyphean task that we will implement anyway, just to appreciate idiomatic solutions later on. The idea is to keep track of all subscribers in some sort of `Set<Subscriber<Status>>` and start/shut down the external system connection when it becomes empty/nonempty:
 
+```java
+//DON'T DO THIS, very brittle and error prone
+class LazyTwitterObservable {
 
+  private final Set<Subscriber<? super Status>> subscribers =
+    new CopyOnWriteArraySet<>();
+
+  private final TwitterStream twitterStream;
+
+  public LazyTwitterObservable() {
+    this.twitterStream = new TwitterStreamFactory().getInstance();
+    this.twitterStream.addListener(new StatusListener() {
+      @Override
+      public void onStatus(Status status) {
+        subscribers.forEach(s -> s.onNext(status));
+      }
+
+      @Override
+      public void onException(Exception ex) {
+        subscribers.forEach(s -> s.onError(ex));
+      }
+
+      //other callbacks
+    });
+  }
+
+  private final Observable<Status> observable = Observable.create(
+      subscriber -> {
+        register(subscriber);
+        subscriber.add(Subscriptions.create(() ->
+            this.deregister(subscriber)));
+      });
+
+  Observable<Status> observe() {
+    return observable;
+  }
+
+  private synchronized void register(Subscriber<? super Status> subscriber) {
+    if (subscribers.isEmpty()) {
+      subscribers.add(subscriber);
+      twitterStream.sample();
+    } else {
+      subscribers.add(subscriber);
+    }
+  }
+
+  private synchronized void deregister(Subscriber<? super Status> subscriber) {
+    subscribers.remove(subscriber);
+    if (subscribers.isEmpty()) {
+      twitterStream.shutdown();
+    }
+  }
+
+}
+```
+
+The `subscribers` set thread-safely stores a collection of currently subscribed `Observer`s. Every time a new `Subscriber` appears, we add it to a set and connect to the underlying source of events lazily. Conversely, when the last `Subscriber` disappears, we shut down the upstream source. The key here is to always have exactly one connection to the upstream system rather than one connection per subscriber. This works and is quite robust, however, the implementation seems too low-level and error-prone. Access to the `subscribers` set must be `synchronized`, but the collection itself must also support safe iteration. Calling `register()` _must_ appear before adding the `deregister()` callback; otherwise, the latter can be called before we register. There must be a better way to implement such a common scenario of multiplexing a single upstream source to multiple `Observer`s—luckily, there are at least two such mechanisms. RxJava is all about reducing such dangerous boilerplate and abstracting away concurrency.
 
 #### Managing multiple subscribers
 

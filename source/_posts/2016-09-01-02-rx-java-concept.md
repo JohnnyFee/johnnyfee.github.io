@@ -333,107 +333,7 @@ class LazyTwitterObservable {
 
 The `subscribers` set thread-safely stores a collection of currently subscribed `Observer`s. Every time a new `Subscriber` appears, we add it to a set and connect to the underlying source of events lazily. Conversely, when the last `Subscriber` disappears, we shut down the upstream source. The key here is to always have exactly one connection to the upstream system rather than one connection per subscriber. This works and is quite robust, however, the implementation seems too low-level and error-prone. Access to the `subscribers` set must be `synchronized`, but the collection itself must also support safe iteration. Calling `register()` _must_ appear before adding the `deregister()` callback; otherwise, the latter can be called before we register. There must be a better way to implement such a common scenario of multiplexing a single upstream source to multiple `Observer`s—luckily, there are at least two such mechanisms. RxJava is all about reducing such dangerous boilerplate and abstracting away concurrency.
 
-#### Managing multiple subscribers
-
-Every time `subscribe()` is called, our subscription handler inside
-`create()` is invoked. 
-
-For example, `Observable.just(42)` should emit `42` to every subscriber, not just the first one. On the other hand, if you put a database query or heavyweight computation inside `create()`, it might be beneficial to share a single invocation among all subscribers.
-
-Consider the following code sample that subscribes to the same Observable twice:
-
-```java
-Observable<Integer> ints =
-        Observable.create(subscriber -> {
-                    log("Create");
-                    subscriber.onNext(42);
-                    subscriber.onCompleted();
-                }
-        );
-log("Starting");
-ints.subscribe(i -> log("Element A: " + i));
-ints.subscribe(i -> log("Element B: " + i));
-log("Exit");
-```
-
-The out put is:
-
-```
-main: Starting
-main: Create
-main: Element A: 42
-main: Create
-main: Element B: 42
-main: Exit
-```
-
-If you would like to avoid calling `create()` for each subscriber and simply reuse events that were already computed, there exists a handy `cache()` operator:
-
-```java
-Observable<Integer> ints =
-    Observable.<Integer>create(subscriber -> {
-                //...
-            }
-    )
-    .cache();
-```
-
-With caching, the output for two `Subscriber`s is quite different:
-
-```
-main: Starting
-main: Create
-main: Element A: 42
-main: Element B: 42
-main: Exit
-```
-
-When the first subscriber appears, `cache()` delegates subscription to the underlying `Observable` and forwards all notifications (events, completions, or errors) downstream. However, at the same time, it keeps a copy of all notifications internally. When a subsequent subscriber wants to receive pushed notifications, `cache()` no longer delegates to the underlying `Observable` but instead feeds cached values.
-
-Of course, you must keep in mind that `cache()` plus infinite stream is the recipe for a disaster, also known as `OutOfMemoryError`. 
-
-#### Subscriber.isUnsubscribed
-
-It is advised to check the `isUnsubscribed()` flag as often as possible to avoid sending events after a subscriber no longer wants to receive new events. 
-
-```java
-Observable<BigInteger> naturalNumbers = Observable.create(
-    subscriber -> {
-        Runnable r = () -> {
-            BigInteger i = ZERO;
-            while (!subscriber.isUnsubscribed()) {
-                subscriber.onNext(i);
-                i = i.add(ONE);
-            }
-        };
-        new Thread(r).start();
-    });
-```
-
-Rather than have a blocking loop running directly in the client thread, we spawn a custom thread and emit events directly from there. 
-
-__Please note that you should not use explicit threads inside
-`create()`. Concurrency and custom schedulers that allow you to write concurrent code without really interacting with threads yourself.__
-
-Even if someone poorly implemented the `Observable`, we can easily fix it by applying the `serialize()` operator, such as `loadAll(...).serialize()`. This operator ensures that events are serialized and sequenced. It also enforces that no more events are sent after completion or error.
-
-```java
-Observable<Data> loadAll(Collection<Integer> ids) {
-    return Observable.create(subscriber -> {
-        ExecutorService pool = Executors.newFixedThreadPool(10);
-        AtomicInteger countDown = new AtomicInteger(ids.size());
-        //DANGER, violates Rx contract. Don't do this!
-        ids.forEach(id -> pool.submit(() -> {
-            final Data data = load(id);
-            subscriber.onNext(data);
-            if (countDown.decrementAndGet() == 0) {
-                pool.shutdownNow();
-                subscriber.onCompleted();
-            }
-        }));
-    });
-}
-```
+## ConnectableObservable
 
 ### Subscribing Observable
 
@@ -547,6 +447,170 @@ Subscriber<Tweet> subscriber = new Subscriber<Tweet>() {
 };
 tweets.subscribe(subscriber);
 ```
+
+#### Managing multiple subscribers
+
+Every time `subscribe()` is called, our subscription handler inside
+`create()` is invoked. 
+
+For example, `Observable.just(42)` should emit `42` to every subscriber, not just the first one. On the other hand, if you put a database query or heavyweight computation inside `create()`, it might be beneficial to share a single invocation among all subscribers.
+
+Consider the following code sample that subscribes to the same Observable twice:
+
+```java
+Observable<Integer> ints =
+        Observable.create(subscriber -> {
+                    log("Create");
+                    subscriber.onNext(42);
+                    subscriber.onCompleted();
+                }
+        );
+log("Starting");
+ints.subscribe(i -> log("Element A: " + i));
+ints.subscribe(i -> log("Element B: " + i));
+log("Exit");
+```
+
+The out put is:
+
+```
+main: Starting
+main: Create
+main: Element A: 42
+main: Create
+main: Element B: 42
+main: Exit
+```
+
+If you would like to avoid calling `create()` for each subscriber and simply reuse events that were already computed, there exists a handy `cache()` operator:
+
+```java
+Observable<Integer> ints =
+    Observable.<Integer>create(subscriber -> {
+                //...
+            }
+    )
+    .cache();
+```
+
+With caching, the output for two `Subscriber`s is quite different:
+
+```
+main: Starting
+main: Create
+main: Element A: 42
+main: Element B: 42
+main: Exit
+```
+
+When the first subscriber appears, `cache()` delegates subscription to the underlying `Observable` and forwards all notifications (events, completions, or errors) downstream. However, at the same time, it keeps a copy of all notifications internally. When a subsequent subscriber wants to receive pushed notifications, `cache()` no longer delegates to the underlying `Observable` but instead feeds cached values.
+
+Of course, you must keep in mind that `cache()` plus infinite stream is the recipe for a disaster, also known as `OutOfMemoryError`. 
+
+#### Subscriber.isUnsubscribed
+
+It is advised to check the `isUnsubscribed()` flag as often as possible to avoid sending events after a subscriber no longer wants to receive new events. 
+
+```java
+Observable<BigInteger> naturalNumbers = Observable.create(
+    subscriber -> {
+        Runnable r = () -> {
+            BigInteger i = ZERO;
+            while (!subscriber.isUnsubscribed()) {
+                subscriber.onNext(i);
+                i = i.add(ONE);
+            }
+        };
+        new Thread(r).start();
+    });
+```
+
+Rather than have a blocking loop running directly in the client thread, we spawn a custom thread and emit events directly from there. 
+
+__Please note that you should not use explicit threads inside
+`create()`. Concurrency and custom schedulers that allow you to write concurrent code without really interacting with threads yourself.__
+
+Even if someone poorly implemented the `Observable`, we can easily fix it by applying the `serialize()` operator, such as `loadAll(...).serialize()`. This operator ensures that events are serialized and sequenced. It also enforces that no more events are sent after completion or error.
+
+```java
+Observable<Data> loadAll(Collection<Integer> ids) {
+    return Observable.create(subscriber -> {
+        ExecutorService pool = Executors.newFixedThreadPool(10);
+        AtomicInteger countDown = new AtomicInteger(ids.size());
+        //DANGER, violates Rx contract. Don't do this!
+        ids.forEach(id -> pool.submit(() -> {
+            final Data data = load(id);
+            subscriber.onNext(data);
+            if (countDown.decrementAndGet() == 0) {
+                pool.shutdownNow();
+                subscriber.onCompleted();
+            }
+        }));
+    });
+}
+```
+
+## Subject
+
+The `Subject` class is quite interesting because it extends `Observable` and implements `Observer`  at the same time. What that means is that you can treat it as `Observable` on the client side (subscribing to upstream events) and as `Observer` on the provider side (pushing events downstream on demand by calling `onNext()` on it). 
+
+Typically, what you do is keep a reference to `Subject` internally so that you can push events from any source you like but externally expose this `Subject` as `Observable`.
+
+```java
+class TwitterSubject {
+
+    private final PublishSubject<Status> subject = PublishSubject.create();
+
+    public TwitterSubject() {
+        TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
+        twitterStream.addListener(new StatusListener() {
+            @Override
+            public void onStatus(Status status) {
+                subject.onNext(status);
+            }
+
+            @Override
+            public void onException(Exception ex) {
+                subject.onError(ex);
+            }
+
+            //other callbacks
+        });
+        twitterStream.sample();
+    }
+
+    public Observable<Status> observe() {
+        return subject;
+    }
+
+}
+```
+
+`Subject` is a useful tool for creating `Observable` instances when `Observable.create(...)` seems too complex to manage.
+
+`Subject`s are useful, but there are many subtleties you must understand. For example, after calling `subject.onError()`, the `Subject` silently drops subsequent `onError` notifications, effectively swallowing them.
+
+`PublishSubject` is one of the flavors (subclasses) of `Subject`. Other types of `Subject`s include the following:
+
+
+- `AsyncSubject`
+
+    Remembers last emitted value and pushes it to subscribers when `onComplete()` is called. As long as `AsyncSubject` has not completed, events except the last one are discarded. 
+- `BehaviorSubject`
+
+    Pushes all events emitted after subscription happened, just like `PublishSubject`. However, first it emits the most recent event that occurred just before subscription. This allows `Subscriber` to be immediately notified about the state of the stream. For example, `Subject` may represent the current temperature broadcasted every minute. When a client subscribes, he will receive the last seen temperature immediately rather than waiting several seconds for the next event. But the same `Subscriber` is not interested in historical temperatures, only the last one. If no events have yet been emitted, a special default event is pushed first (if provided).
+
+- `ReplaySubject`
+
+    The most interesting type of `Subject` that caches events pushed through the entire history. If someone subscribes, first he receives a batch of missed (cached) events and only later events in real-time. By default, all events since the creation of this `Subject` are cached. This can be become dangerous if the stream is infinite or very long. In that case, there are overloaded versions of `ReplaySubject` that keep only the following:
+
+        + Configurable number of events in memory (`createWithSize()`)
+        + Configurable time window of most recent events (`createWithTime()`)
+        + Or even constraint both size and time (whichever limit is reached first) with `createWithTimeAndSize()`
+
+`Subject`s should be treated with caution: often there are more idiomatic ways of sharing subscriptions and caching events—for example, “ConnectableObservable”. For the time being, prefer relatively low-level `Observable.create()` or even better, consider standard factory methods like `from()` and `just()`.
+
+One more thing to keep in mind is concurrency. By default calling `onNext()` on a `Subject` is directly propagated to all `Observer`’s `onNext()` callback methods. It is not a surprise that these methods share the same name. In a way, calling `onNext()` on `Subject` indirectly invokes `onNext()` on each and every `Subscriber`. But you need to keep in mind that according to _Rx Design Guidelines_ all calls to `onNext()` on `Observer` must be serialized (i.e., sequential), thus two threads cannot call `onNext()` at the same time. However, depending on the way you stimulate `Subject`, you can easily break this rule—e.g., calling `Subject.onNext()` from multiple threads from a thread pool. Luckily, if you are worried that this might be the case, simply call `.toSerialized()` on a `Subject`, which is quite similar to calling `Observable.serialize()`. This operator makes sure downstream events occur in the correct order.
 
 ## Operators
 

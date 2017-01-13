@@ -781,6 +781,29 @@ class TwitterSubject {
 
 One more thing to keep in mind is concurrency. By default calling `onNext()` on a `Subject` is directly propagated to all `Observer`’s `onNext()` callback methods. It is not a surprise that these methods share the same name. In a way, calling `onNext()` on `Subject` indirectly invokes `onNext()` on each and every `Subscriber`. But you need to keep in mind that according to _Rx Design Guidelines_ all calls to `onNext()` on `Observer` must be serialized (i.e., sequential), thus two threads cannot call `onNext()` at the same time. However, depending on the way you stimulate `Subject`, you can easily break this rule—e.g., calling `Subject.onNext()` from multiple threads from a thread pool. Luckily, if you are worried that this might be the case, simply call `.toSerialized()` on a `Subject`, which is quite similar to calling `Observable.serialize()`. This operator makes sure downstream events occur in the correct order.
 
+## Timing: timer() and interval()
+
+`timer()` and `interval()` use threads underneath. 
+The former simply creates an `Observable` that emits a `long` value of zero after a specified delay and then completes:
+
+```java
+Observable
+   .timer(1, TimeUnit.SECONDS)
+   .subscribe((Long zero) -> log(zero));
+```
+
+The fixed value of `0` (in variable `zero`) is just a convention without any specific meaning. It is basically an asynchronous equivalent of `Thread.sleep()`. Rather than blocking the current thread, we create an `Observable` and `subscribe()` to it.
+
+`interval()` generates a sequence of `long` numbers, beginning with zero, with a fixed delay between each one of them:
+
+```java
+Observable
+    .interval(1_000_000 / 60, MICROSECONDS)
+    .subscribe((Long i) -> log(i));
+```
+
+`interval()` is sometimes used to control animations or processes that need to run with certain frequency.
+
 ## Error Handling
 
 It is a good practice to wrap entire expressions within `create()` in a `try`-`catch` block. `Throwable`s should be propagated downstream rather than logged or rethrown, as demonstrated here:

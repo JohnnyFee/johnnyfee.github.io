@@ -5,7 +5,13 @@ category: Android
 tags: [android]
 ---
 
-From [Data Binding（数据绑定）用户指南](http://www.jianshu.com/p/b1df61a4df77) by [Data Binding Guide (Android)](https://developer.android.com/tools/data-binding/guide.html)
+## Tutorial
+
+- [Data Binding（数据绑定）用户指南](http://www.jianshu.com/p/b1df61a4df77)
+- [Data Binding Guide (Android)](https://developer.android.com/tools/data-binding/guide.html)
+- [LyndonChin/MasteringAndroidDataBinding: A comprehensive tutorial for Android Data Binding](https://github.com/LyndonChin/MasteringAndroidDataBinding)
+- [Applying Data Binding for Views](https://guides.codepath.com/android/Applying-Data-Binding-for-Views)
+- [Two-way Android data binding – Medium](https://medium.com/@fabioCollini/android-data-binding-f9f9d3afc761#.z2gx4qqdv)
 
 ## 介绍
 
@@ -794,3 +800,7 @@ Android Studio为数据绑定支持许多的代码编辑。例如，它支持以
 - [从零开始的Android新项目8 - Data Binding高级篇](http://blog.zhaiyifan.cn/2016/07/06/android-new-project-from-0-p8/)
 - [Data Binding Component详解 - 换肤什么的只是它的一个小应用！](http://blog.zhaiyifan.cn/2016/07/21/data-binding-component/)
 - [从零开始的Android新项目7 - Data Binding入门篇](http://blog.zhaiyifan.cn/2016/06/16/android-new-project-from-0-p7/)
+
+## FAQ
+
+- [Android Data Binding: That <include> Thing – Google Developers – Medium](https://medium.com/google-developers/android-data-binding-that-include-thing-1c8791dd6038#.965zwocww)

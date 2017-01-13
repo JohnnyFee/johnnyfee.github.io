@@ -57,6 +57,14 @@ instances:
       you want to access the command line arguments passed to
       Instrumentation for your test.
 
+### IntelliJ IDEA with Junit 4.7 “!!! JUnit version 3.8 or later expected:”
+
+[java - IntelliJ IDEA with Junit 4.7 "!!! JUnit version 3.8 or later expected:" - Stack Overflow](http://stackoverflow.com/questions/2422378/intellij-idea-with-junit-4-7-junit-version-3-8-or-later-expected)
+
+This problem happens because Android Platform (`android.jar`) already contains JUnit classes. IDEA test runner loads these classes and sees that they are from the old JUnit, while you are trying to use annotated tests which is a feature of the new JUnit, therefore you get the error from the test runner.
+
+The solution is simple, open the `Project Structure` | `Modules` | `Dependencies`, and move the `junit-4.7.jar` up, so that it comes **before** `Android 1.6 Platform` in the classpath. Now the test runner will be happy as it loads the new JUnit version.
+
 ### getApplication() vs. getApplicationContext()
 
 See [android - getApplication() vs. getApplicationContext() - Stack Overflow](http://stackoverflow.com/questions/5018545/getapplication-vs-getapplicationcontext)

@@ -207,3 +207,157 @@ just('S', 'p', 'a', 'r', 't', 'a')
 ```
 
 As you can clearly see, every character is replaced by a sequence of `DI` and `DAH` sounds (_dots_ and _dashes_). When character is unrecognizable, an empty sequence is returned. `flatMap()` ensures that we get a steady, flat stream of sounds, as opposed to `Observable<Observable<Sound>>`, which we would get with plain `map()`. At this point, we touch an important aspect of `flatMap()`: order of events. This is best explained with an example, which will be much more enjoyable with _delay()_ operator.
+
+## Postponing Events Using the delay() Operator
+
+`delay()` basically takes an upstream `Observable` and shifts all events further in time. So, a construct as simple as:
+
+```java
+just(x, y, z).delay(1, TimeUnit.SECONDS);
+```
+
+will not emit `x`, `y` and `z` immediately upon subscription but after given delay.
+
+We can replace `delay()` with `timer()` and (surprise!) `flatMap()` like this:
+
+```
+Observable
+    .timer(1, TimeUnit.SECONDS)
+    .flatMap(i -> Observable.just(x, y, z))
+```
+
+I hope this is clear: we generate an artificial event from `timer()` that we completely ignore. However, using `flatMap()` we replace that artificial event (zero, in `i` value) with three immediately emitted values: `x`, `y`, and `z`. This is somewhat equivalent to `just(x, y, z).delay(1, SECONDS)` in this particular case; however, it is not so in general.
+
+### Order of Events After flatMap()
+
+`flatMap()` __cannot__ give _any_ guarantee about what order of those subevents will arrive at the downstream operator/subscriber. 
+
+What `flatMap()` essentially does is take a _master_ sequence (`Observable`) of values appearing over time (events) and replaces each of the events with an independent subsequence. These subsequences are generally unrelated to one another and to the event that generated them from master sequence. To make it clear, you no longer have a single the master sequence but a set of `Observable`s, each working on its own, coming and going over time.
+
+Take this simple code snippet as an example:
+
+```java
+just(10L, 1L)
+    .flatMap(x ->
+        just(x).delay(x, TimeUnit.SECONDS))
+    .subscribe(System.out::println);
+```
+
+In this example, we delay event `10L` by 10 seconds and event `1L` (chronologically appearing later in upstream) by 1 second. As a result, we see `1` after a second and `10` nine seconds later—the order of events in upstream and downstream is different! Even worse, imagine a `flatMap()` transformation producing multiple events (even infinite number of them) over wide range of time:
+
+```java
+Observable
+        .just(DayOfWeek.SUNDAY, DayOfWeek.MONDAY)
+        .flatMap(this::loadRecordsFor);
+```
+
+The `loadRecordsFor()` method returns different streams depending on the day of the week:
+
+```java
+Observable<String> loadRecordsFor(DayOfWeek dow) {
+    switch(dow) {
+        case SUNDAY:
+            return Observable
+                .interval(90, MILLISECONDS)
+                .take(5)
+                .map(i -> "Sun-" + i);
+        case MONDAY:
+            return Observable
+                .interval(65, MILLISECONDS)
+                .take(5)
+                .map(i -> "Mon-" + i);
+        //...
+    }
+}
+```
+
+The result is like this:
+
+```
+Mon-0, Sun-0, Mon-1, Sun-1, Mon-2, Mon-3, Sun-2, Mon-4, Sun-3, Sun-4
+```
+
+But not:
+
+```
+Sun-0, Sun-1, Sun-2, Sun-3, Sun-4, Mon-0, Mon-1, Mon-2, Mon-3, Mon-4
+```
+
+If you carefully track all delays, you will notice that this order is in fact correct. For example, even though Sunday was the first event in the upstream `Observable`, `Mon-0` event appeared first because the substream produced by Monday begins emitting faster. This is also the reason why `Mon-4` appears before `Sun-3` and `Sun-4`.
+
+You have two streams that work independently but their results must somehow _merge_ into a single `Observable`.
+
+When `flatMap()` encounters Sunday in the upstream, it immediately invokes `loadRecordsFor(Sunday)` and redirects all events emitted by the result of that function (`Observable<String>`) downstream. However, almost exactly at the same time, Monday appears and `flatMap()` calls `loadRecordsFor(Monday)`. Events from the latter substream are also passed downstream, interleaving with events from first substream. `flatMap()` instead subscribes to all substreams immediately and merges them together, pushing events downstream whenever any of the inner streams emit anything. All subsequences returned from flatMap() are merged and treated equally. 
+
+### Preserving Order Using concatMap()
+
+There is a handy `concatMap()` operator that has the exact same syntax as `flatMap()` but works quite differently:
+
+```java
+Observable
+        .just(DayOfWeek.SUNDAY, DayOfWeek.MONDAY)
+        .concatMap(this::loadRecordsFor);
+```
+
+This time the output is exactly what we anticipated:
+
+```
+Sun-0, Sun-1, Sun-2, Sun-3, Sun-4, Mon-0, Mon-1, Mon-2, Mon-3, Mon-4
+```
+
+When the first event (Sunday) appears from upstream, `concatMap()` subscribes to an `Observable` returned from `loadRecordsFor()` and passes all events emitted from it downstream. When this inner stream completes, `concatMap()` waits for the next upstream event (Monday) and continues. `concatMap()` does not introduce any concurrency whatsoever but it preserves the order of upstream events, avoiding overlapping.
+
+`flatMap()` uses the `merge()` operator internally that subscribes to all sub-`Observable`s at the same time and does not make any distinction between them. That is why downstream events interleave with one another. `concatMap()`, on the other hand, could technically use the `concat()` operator. `concat()` subscribes only to the first underlying `Observable` and continues with the second one when the first one completes.
+
+### Controlling the concurrency of flatMap()
+
+Suppose that you have a large list of users wrapped in an `Observable`. Each `User` has a `loadProfile()` method that returns an `Observable<Profile>` instance fetched using an HTTP request. Our aim is to load the profiles of all users as fast as possible. 
+
+```java
+class User {
+    Observable<Profile> loadProfile() {
+        //Make HTTP request...
+    }
+}
+
+class Profile {/* ... */}
+
+//...
+
+List<User> veryLargeList = //...
+Observable<Profile> profiles = Observable
+        .from(veryLargeList)
+        .flatMap(User::loadProfile);
+```
+
+If we have, say 10,000 `User`s, we suddenly triggered 10,000 concurrent HTTP connections.
+
+`flatMap()` has a very simple overloaded version that limits the total number of concurrent subscriptions to inner streams:
+
+```java
+flatMap(User::loadProfile, 10);
+```
+
+he `maxConcurrent`  parameter limits the number of ongoing inner `Observable`s. In practice when `flatMap()` receives the first 10 `User`s it invokes `loadProfile()` for each of them. However, when the 11th `User` appears from upstream, `flatMap()` will not even call `loadProfile()`. Instead, it will wait for any ongoing inner streams to complete. Therefore, the `maxConcurrent` parameter limits the number of background tasks that are forked from `flatMap()`.
+
+You can probably see that `concatMap(f)` is semantically equivalent to `flatMap(f, 1)`—`flatMap()` with `maxConcurrent` equal to one. We could spend a couple of extra pages discussing the nuances of `flatMap()`, but more exciting operators lie ahead of us.
+
+## Treating Several Observables as One Using merge()
+
+The `merge()` operator is used extensively when you want to treat multiple sources of events of the same type as a single source. Also, if you have just two `Observable`s you want to `merge()`, you can use `obs1.mergeWith(obs2)` instance method.
+
+![](../uploads/rprx_03in05.png)
+
+The order of `Observable`s passed to `merge()` is rather arbitrary. No matter which one emits a value first, it will be forwarded to the `Observer` of `all`.
+
+Keep in mind that errors appearing in any of the underlying `Observable`s will be eagerly propagated to `Observer`s. You can use the `mergeDelayError()` variant of `merge()` to postpone any errors until all of the other streams have finished. `mergeDelayError()` will even make sure to collect all exceptions, not only the first one, and encapsulate them in `rx.exceptions.CompositeException`.
+
+```java
+Observable<LicensePlate> all = Observable.merge(
+        preciseAlgo(photo),
+        fastAlgo(photo),
+        experimentalAlgo(photo)
+);
+```
+
+## Pairwise Composing Using zip() and zipWith()

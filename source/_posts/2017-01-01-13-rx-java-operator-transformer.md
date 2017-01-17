@@ -361,3 +361,44 @@ Observable<LicensePlate> all = Observable.merge(
 ```
 
 ## Pairwise Composing Using zip() and zipWith()
+
+Zipping is the act of taking two (or more) streams and combining them with each other in such a way that each element from one stream is paired with corresponding event from the other. A downstream event is produced by composing the first event from each, second event from each stream, and so on.
+
+![](../uploads/rprx_03in06.png)
+
+The `zip()` and `zipWith()` operators are equivalent. We use the former when we want to fluently compose one stream with another, like so: `s1.zipWith(s2, ...)`. Static `zip()` on `Observable` can take up to nine streams:
+
+```java
+Observable.zip(s1, s2, s3...)
+```
+
+For example, think about the `WeatherStation` API that exposes temperature and wind measurements precisely every minute at the same time:
+
+```java
+interface WeatherStation {
+    Observable<Temperature> temperature();
+    Observable<Wind> wind();
+}
+```
+
+We have to make an assumption that events from these two `Observable`s are emitted at the same time and thus with the same frequency. Under this restriction, we can safely join these two streams by combining every pair of events.
+
+```java
+class Weather {
+    public Weather(Temperature temperature, Wind wind) {
+        //...
+    }
+}
+
+//...
+
+Observable<Temperature> temperatureMeasurements = station.temperature();
+Observable<Wind> windMeasurements = station.wind();
+
+temperatureMeasurements
+    .zipWith(windMeasurements,
+        (temperature, wind) -> new Weather(temperature, wind));
+```
+
+When a new `Temperature` event occurs, `zipWith()` waits (obviously without blocking!) for `Wind`, and vice versa. Two events are passed to our custom lambda and combined into a `Weather` object.
+

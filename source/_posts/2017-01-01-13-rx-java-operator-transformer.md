@@ -208,25 +208,22 @@ just('S', 'p', 'a', 'r', 't', 'a')
 
 As you can clearly see, every character is replaced by a sequence of `DI` and `DAH` sounds (_dots_ and _dashes_). When character is unrecognizable, an empty sequence is returned. `flatMap()` ensures that we get a steady, flat stream of sounds, as opposed to `Observable<Observable<Sound>>`, which we would get with plain `map()`. At this point, we touch an important aspect of `flatMap()`: order of events. This is best explained with an example, which will be much more enjoyable with _delay()_ operator.
 
-## Postponing Events Using the delay() Operator
-
-`delay()` basically takes an upstream `Observable` and shifts all events further in time. So, a construct as simple as:
+For the time being, let’s study an example. We will need to produce a _Cartesian product_ of all values from two streams. For example we might have two `Observable`s, one with  chessboard’s rows (_ranks_, 1 to 8) and one with columns (_files_, a to h). We would like to find all possible 64 squares on a chessboard:
 
 ```java
-just(x, y, z).delay(1, TimeUnit.SECONDS);
+Observable<Integer> oneToEight = Observable.range(1, 8);
+Observable<String> ranks = oneToEight
+    .map(Object::toString);
+Observable<String> files = oneToEight
+    .map(x -> 'a' + x - 1)
+    .map(ascii -> (char)ascii.intValue())
+    .map(ch -> Character.toString(ch));
+
+Observable<String> squares = files
+    .flatMap(file -> ranks.map(rank -> file + rank));
 ```
 
-will not emit `x`, `y` and `z` immediately upon subscription but after given delay.
-
-We can replace `delay()` with `timer()` and (surprise!) `flatMap()` like this:
-
-```
-Observable
-    .timer(1, TimeUnit.SECONDS)
-    .flatMap(i -> Observable.just(x, y, z))
-```
-
-I hope this is clear: we generate an artificial event from `timer()` that we completely ignore. However, using `flatMap()` we replace that artificial event (zero, in `i` value) with three immediately emitted values: `x`, `y`, and `z`. This is somewhat equivalent to `just(x, y, z).delay(1, SECONDS)` in this particular case; however, it is not so in general.
+The `squares` `Observable` will emit exactly 64 events: for `1` it generates `a1`, `a2`,…`a8`, followed by `b1`, `b2`, and so on until it finally reaches `h7` and `h8`.
 
 ### Order of Events After flatMap()
 
@@ -342,6 +339,26 @@ he `maxConcurrent`  parameter limits the number of ongoing inner `Observable`s. 
 
 You can probably see that `concatMap(f)` is semantically equivalent to `flatMap(f, 1)`—`flatMap()` with `maxConcurrent` equal to one. We could spend a couple of extra pages discussing the nuances of `flatMap()`, but more exciting operators lie ahead of us.
 
+## Postponing Events Using the delay() Operator
+
+`delay()` basically takes an upstream `Observable` and shifts all events further in time. So, a construct as simple as:
+
+```java
+just(x, y, z).delay(1, TimeUnit.SECONDS);
+```
+
+will not emit `x`, `y` and `z` immediately upon subscription but after given delay.
+
+We can replace `delay()` with `timer()` and (surprise!) `flatMap()` like this:
+
+```
+Observable
+    .timer(1, TimeUnit.SECONDS)
+    .flatMap(i -> Observable.just(x, y, z))
+```
+
+I hope this is clear: we generate an artificial event from `timer()` that we completely ignore. However, using `flatMap()` we replace that artificial event (zero, in `i` value) with three immediately emitted values: `x`, `y`, and `z`. This is somewhat equivalent to `just(x, y, z).delay(1, SECONDS)` in this particular case; however, it is not so in general.
+
 ## Treating Several Observables as One Using merge()
 
 The `merge()` operator is used extensively when you want to treat multiple sources of events of the same type as a single source. Also, if you have just two `Observable`s you want to `merge()`, you can use `obs1.mergeWith(obs2)` instance method.
@@ -364,7 +381,11 @@ Observable<LicensePlate> all = Observable.merge(
 
 Zipping is the act of taking two (or more) streams and combining them with each other in such a way that each element from one stream is paired with corresponding event from the other. A downstream event is produced by composing the first event from each, second event from each stream, and so on.
 
+However if one of the streams outperforms the other even slightly, events from the faster `Observable` will need to wait longer and longer for the lagging stream.
+
 ![](../uploads/rprx_03in06.png)
+
+`zip()` completes early if any of the upstream `Observable`s complete, discarding other streams early.
 
 The `zip()` and `zipWith()` operators are equivalent. We use the former when we want to fluently compose one stream with another, like so: `s1.zipWith(s2, ...)`. Static `zip()` on `Observable` can take up to nine streams:
 
@@ -402,3 +423,63 @@ temperatureMeasurements
 
 When a new `Temperature` event occurs, `zipWith()` waits (obviously without blocking!) for `Wind`, and vice versa. Two events are passed to our custom lambda and combined into a `Weather` object.
 
+```java
+Observable<Long> red   = Observable.interval(10, TimeUnit.MILLISECONDS);
+Observable<Long> green = Observable.interval(10, TimeUnit.MILLISECONDS);
+
+Observable.zip(
+    red.timestamp(),
+    green.timestamp(),
+    (r, g) -> r.getTimestampMillis() - g.getTimestampMillis()
+).forEach(System.out::println);
+```
+
+When streams are synchronized, this value oscillates around zero. However, if we slightly slow down one `Observable`, say `green` becomes `Observable.interval(11, MILLISECONDS)`, the situation is much different. The time difference between `red` and `green` keeps going up: `red` is consumed in real time but it must wait, increasing the amount of time for the slower item. Over time this difference piles up and can lead to stale data or even memory leak.
+
+## When Streams Are Not Synchronized with One Another
+
+### combineLatest() 
+
+![](../uploads/rprx_03in07.png)
+
+Take the following artificial example. One stream produces `S0`, `S1`, `S2` values every 17 milliseconds whereas the other `F0`, `F1`, `F2` every 10 milliseconds (considerably faster):
+
+```java
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static rx.Observable.interval;
+
+Observable.combineLatest(
+    interval(17, MILLISECONDS).map(x -> "S" + x),
+    interval(10, MILLISECONDS).map(x -> "F" + x),
+    (s, f) -> f + ":" + s
+).forEach(System.out::println);
+```
+
+We combine these two streams and produce a new value every time any of the streams produces something. The output quickly becomes out-of-sync, but at least values are consumed in real time, and the faster stream does not need to wait for the slower one:
+
+```
+F0:S0
+F1:S0
+F2:S0
+F2:S1
+F3:S1
+F4:S1
+F4:S2
+F5:S2
+F5:S3
+...
+F998:S586
+F998:S587
+F999:S587
+F1000:S587
+F1000:S588
+F1001:S588
+```
+
+RxJava notices the new event on the fast stream so takes whatever the latest value was of the slow stream (it still has two wait for at least one event!)—`S0` in this case—and produces a new pair. However, neither stream is distinguished: when the new slow `S1` appears, the latest known fast value (`F2`) is taken and combined, as well. After about 10 seconds we encounter the `F1000:S588` event. Everything adds up: during 10 seconds, fast stream produced about 1,000 events, whereas the slow stream only 588 (10 seconds divided by 17 milliseconds).
+
+### withLatestFrom()
+
+
+
+### amb()

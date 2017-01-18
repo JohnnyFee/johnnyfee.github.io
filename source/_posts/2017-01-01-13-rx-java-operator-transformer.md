@@ -480,6 +480,109 @@ RxJava notices the new event on the fast stream so takes whatever the latest val
 
 ### withLatestFrom()
 
+![](../uploads/withLatestFrom.png)
 
+It is similar to combineLatest, but only emits items when the single source Observable emits an item. Events from the second stream do not trigger a downstream event; they are used only when first stream emits.
+
+```java
+Observable<String> fast = interval(10, MILLISECONDS).map(x -> "F" + x);
+Observable<String> slow = interval(17, MILLISECONDS).map(x -> "S" + x);
+slow
+    .withLatestFrom(fast, (s, f) -> s + ":" + f)
+    .forEach(System.out::println);
+```
+
+The `slow` stream is primary, the resulting `Observable` will _always_ emit an event when `slow` emits. Conversely, `fast` stream is just a helper used only when `slow` emits something.
+
+```
+S0:F1
+S1:F2
+S2:F4
+S3:F5
+S4:F7
+S5:F9
+S6:F11
+...
+```
+
+All `slow` events appearing before the first `fast` event are silently dropped because there is nothing with which to combine them. This is by design, but if you truly need to preserve all events from the primary stream, you must ensure that the other stream emits some dummy event as soon as possible.
+
+```java
+Observable<String> fast = interval(10, MILLISECONDS)
+        .map(x -> "F" + x)
+        .delay(100, MILLISECONDS)
+        .startWith("FX");
+Observable<String> slow = interval(17, MILLISECONDS).map(x -> "S" + x);
+slow
+        .withLatestFrom(fast, (s, f) -> s + ":" + f)
+        .forEach(System.out::println);
+```
+
+The output reveals that no `slow` events are dropped. However, in the beginning we see dummy `"FX"` events a few times, until the first `"F0"` shows up after 100 milliseconds:
+
+```
+S0:FX
+S1:FX
+S2:FX
+S3:FX
+S4:FX
+S5:FX
+S6:F1
+S7:F3
+S8:F4
+S9:F6
+...
+```
+
+`startWith()` basically returns a new `Observable` that, upon subscription, first emits some constant values (like `"FX"`) followed by original `Observable`. For example, the following code block yields `0`, `1` and `2`, in that order:
+
+```java
+Observable
+    .just(1, 2)
+    .startWith(0)
+    .subscribe(System.out::println);
+```
 
 ### amb()
+
+![](../uploads/rprx_03in08.png)
+
+amb() (together with ambWith()) waits for the very first item emitted. When one of the `Observable`s emits the first event, `amb()` discards all other streams and just keep forwarding events from the first `Observable` that woke up.
+
+```java
+Observable<String> stream(int initialDelay, int interval, String name) {
+    return Observable
+        .interval(initialDelay, interval, MILLISECONDS)
+        .map(x -> name + x)
+        .doOnSubscribe(() ->
+            log.info("Subscribe to " + name))
+        .doOnUnsubscribe(() ->
+            log.info("Unsubscribe from " + name));
+}
+
+//...
+
+Observable.amb(
+        stream(100, 17, "S"),
+        stream(200, 10, "F")
+).subscribe(log::info);
+```
+
+You can write an equivalent program using nonstatic `ambWith()`, but it is less readable because it hides the symmetry of `amb()`.
+
+The `slow` stream produces events less frequently, but the first event appears after 100 milliseconds, whereas the `fast` stream begins after 200 milliseconds. What `amb()` does is first subscribe to both `Observable`s, and when it encounters the first event in the `slow` stream, it immediately unsubscribes from the fast one and forwards events from only the slow one:
+
+```
+14:46:13.334: Subscribe to S
+14:46:13.341: Subscribe to F
+14:46:13.439: Unsubscribe from F
+14:46:13.442: S0
+14:46:13.456: S1
+14:46:13.473: S2
+14:46:13.490: S3
+14:46:13.507: S4
+14:46:13.525: S5
+```
+
+`doOnSubscribe()` and `doOnUnsubscribe()` callbacks are useful for debugging purposes. Notice how unsubscription from `F` occurs roughly 100 millisecond after subscription to `S`; this is the moment when first event from `S` `Observable` appeared. At this point, listening for events from `F` no longer makes any sense.
+

@@ -685,6 +685,141 @@ The `single` operator is similar to `first`, but throws a `NoSuchElementExceptio
 
 ## Dropping Duplicates Using distinct() and distinctUntilChanged()
 
+Suppress duplicate items emitted by an Observable. The Distinct operator filters an Observable by only allowing items through that have not already been emitted. `distinct()` is useful when we want to process unique events only once. Be sure to remember that `distinct()` must keep in mind all events/keys seen so far for eternity.
+
+The comparison happens by means of `equals()` and `hashCode()`, so ensure that you implement them according to Java guidelines (two equal objects _must_ have the same hash code). 
+
 ![](../uploads/distinct.png)
 
+```java
+Observable.just(1, 2, 1, 1, 2, 3)
+          .distinct() // [1, 2, 3]
+```
+
+In practice, `distinctUntilChanged()` is often more reasonable. In the case of `distinctUntilChanged()`, any given event is discarded only if the previous event was the same (by default using `equals()` for comparison). `distinctUntilChanged()` works best when we receive a steady stream of some measurements and we want to be notified only when the measured value actually changed.
+
 ![](../uploads/distinctUntilChanged.png)
+
+We experimented with `Observable<Weather>`, with `Weather` having two attributes: `Temperature` and `Wind`. A new `Weather` event can appear once every minute, but the weather does not change that often, so we would like to drop duplicated events and focus only on changes:
+
+```java
+Observable<Weather> measurements = //...
+
+Observable<Weather> tempChanges = measurements
+        .distinctUntilChanged(Weather::getTemperature);
+```
+
+Obviously, if we want to an emit event every time either `Temperature` or `Wind` changes, parameterless `distinctUntilChanged()` would work great, assuming that `Weather` implements  `equals()`.
+
+The important difference between `distinct()` and `distinctUntilChanged()` is that the latter can produce duplicates but only if they were separated by a different value. 
+
+Also `distinctUntilChanged()` must only remember the last seen value, as opposed to `distinct()`, which must keep track of all unique values since the beginning of the stream. This means that `distinctUntilChanged()` has a predictable, constant memory footprint, as opposed to `distinct()`.
+
+## Slicing and Dicing Using skip(), takeWhile(), and Others
+
+As a matter of fact, it is a common practice to slice `Observable` and consume just a small subset. Most operators in this section have examples unless they follow the principle of least astonishment.
+
+### `take(n)` and `skip(n)`
+
+The `take(n)` operator will truncate the source `Observable` prematurely after emitting only the first `n` events from upstream, unsubscribing afterward (or complete earlier if upstream did not have `n` items). `skip(n)` is the exact opposite; it discards the first `n` elements and begins emitting events from the upstream `Observable` beginning with event `n+1`. Both operators are quite liberal: negative numbers are treated as zero, exceeding the `Observable` size is not treated as a bug:
+
+```java
+Observable.range(1, 5).take(3);  // [1, 2, 3]
+Observable.range(1, 5).skip(3);  // [4, 5]
+Observable.range(1, 5).skip(5);  // []
+```
+
+### `takeLast(n)` and `skipLast(n)`
+
+`takeLast(n)` emits only the last `n` values from the stream before it completes. Internally, this operator must keep a buffer of the last `n` values and when it receives completion notification, it immediately emits the entire buffer. It makes no sense to call `takeLast()` on an infinite stream because it will never emit anything—the stream never ends, so there are no _last events_. `skipLast(n)`, on the other hand, emits all values from upstream `Observable` except the last `n`. Internally, `skipLast()` can emit the first value from upstream only when it received `n+1` elements, second when it received `n+2`, and so on.
+
+```java
+Observable.range(1, 5).takeLast(2);  // [4, 5]
+Observable.range(1, 5).skipLast(2);  // [1, 2, 3]
+```
+
+### `first()` and `last()`
+
+The parameterless `first()` and `last()` operators can be implement via `take(1).single()` and `takeLast(1).single()` accordingly, which should pretty much describe their behavior. The extra `single()` operator ensures that the downstream `Observable` emits precisely one value or exception. Additionally, both `first()` and `last()` have overloaded versions that take predicates. Rather than returning the very first/last value they emit first/last value, matching a given condition.
+
+### `takeFirst(predicate)`
+
+The `takeFirst(predicate)` operator can be expressed by `filter(predicate).take(1)`. The only difference between this one and `first(predicate)` is that it will not break with `NoSuchElementException` in case of missing matching values.
+
+### `takeUntil(predicate)` and `takeWhile(predicate)`
+
+`takeUntil()` emits values from the source `Observable` but completes and unsubscribes after emitting the very first value _matching_ `predicate`. 
+
+![](../uploads/takeUntil.png)
+
+`takeWhile()`, conversely, emits values as long as they match a given predicate. 
+
+![](../uploads/takeWhile.png)
+
+So the only difference is that `takeUntil()` will emit the first nonmatching value, whereas `takeWhile()` will not. These operators are quite important because they provide a means of conditionally unsubscribing from an `Observable` based on the events being emitted. Otherwise, the operator would need to somehow interact with the `Subscription` instance, which is not available when the operator is invoked.
+
+```java
+Observable.range(1, 5).takeUntil(x -> x == 3);  // [1, 2, 3]
+Observable.range(1, 5).takeWhile(x -> x != 3);  // [1, 2]
+```
+
+### elementAt(n)
+
+Extracting a specific item by index is rather uncommon, but you can use the built-in `elementAt(n)` operator for that. It is quite strict, and it can result in an `IndexOutOfBoundsException` being emitted when upstream `Observable` is not long enough or the index is negative. Of course, it returns `Observable<T>` of the same type `T` as upstream.
+
+![](../uploads/elementAt.png)
+
+### `…OrDefault()` operators
+
+Many operators in this section are strict and can result in exceptions being thrown—for example, `first()` when upstream `Observable` is empty. Under these circumstances many `...OrDefault` operators were introduced to replace exceptions with a default value. All of them are rather self-explanatory: `elementAtOrDefault()`, `firstOrDefault()`, `lastOrDefault()`, and `singleOrDefault()`.
+
+### `count()`
+
+`count()` is an interesting operator that calculates how many events were emitted by upstream `Observable`. By the way, if you need to know how many items matching a given predicate that the upstream `Observable` emitted, `filter(predicate).count()` can do that idiomatically. Do not worry, all operators are lazy so this will work even for quite large streams. Obviously, `count()` never emits any value in case of infinite stream. You can implement`count()` easily by using `reduce()` ):
+
+```java
+Observable<Integer> size = Observable
+        .just('A', 'B', 'C', 'D')
+        .reduce(0, (sizeSoFar, ch) -> sizeSoFar + 1);
+```
+
+### `all(predicate)`, `exists(predicate)`, and `contains(value)`
+
+Sometimes, it is useful to ensure that all events from a given `Observable` match some predicate. The `all(predicate)` operator will emit `true` when upstream completes and all values matched the predicate. However, `false` will be emitted as soon as first nonconforming value is found. `exists(predicate)` is the exact opposite of `all()`; it emits `true` when the first matching value is found but `false` in case of upstream completing without any matching value found. Often, our predicate in `exists()` simply compares upstream values with some constants. In that case, you can use the `contains()` operator:
+
+```java
+Observable<Integer> numbers = Observable.range(1, 5);
+
+numbers.all(x -> x != 4);    // [false]
+numbers.exists(x -> x == 4); // [true]
+numbers.contains(4);         // [true]
+```
+
+## Ways of Combining Streams: concat(), merge(), and switchOnNext()
+
+`concat()` (and instance method  `concatWith()`) allow joining together two `Observable`s: when the first one completes, `concat()` subscribes to the second one. Importantly, `concat()` will subscribe to the second `Observable` if, and only if, the first one is completed.
+
+`concat()` can even work with the same upstream `Observable` with different operators applied. 
+
+![](../uploads/concat.png)
+
+`concat()` is providing fallback value when first stream did not emit anything:
+
+```java
+Observable<Car> fromCache = loadFromCache();
+Observable<Car> fromDb = loadFromDb();
+
+Observable<Car> found = Observable
+        .concat(fromCache, fromDb)
+        .first();
+```
+
+`Observable`s are lazy, so neither `loadFromCache()` nor `loadFromDb()` actually load any data yet. `loadFromCache()` can complete without emitting any events when cache is empty, but `loadFromDb()` always emits one `Car`. `concat()` followed by `first()` will initially subscribe to `fromCache` and if that emits one item, `concat()` will not subscribe to `fromDb`. However, if `fromCache` is empty, `concat()` will continue with `fromDb`, subscribe to it, and load data from database.
+
+`concat()` is nonblocking, it emits events only when the underlying stream emits something.
+
+```
+Observable<String> words = Observable.from(tokens);
+```
+
+

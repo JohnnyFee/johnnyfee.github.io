@@ -586,3 +586,105 @@ The `slow` stream produces events less frequently, but the first event appears a
 
 `doOnSubscribe()` and `doOnUnsubscribe()` callbacks are useful for debugging purposes. Notice how unsubscription from `F` occurs roughly 100 millisecond after subscription to `S`; this is the moment when first event from `S` `Observable` appeared. At this point, listening for events from `F` no longer makes any sense.
 
+## Scanning Through the Sequence with Scan and Reduce
+
+`scan()` is like a bulldozer, going through the source (upstream) `Observable` and accumulating items. 
+
+![](../uploads/scan.png)
+
+`scan()` takes two parameters: the last generated value (known as the _accumulator_) and current value from upstream `Observable`. In the first iteration, `total` is simply the first item from `progress`, whereas in the second iteration it becomes the result of `scan()` from the previous one.
+
+```java
+Observable<Long> totalProgress = progress // [10, 14, 12, 13, 14, 16]
+    .scan((total, chunk) -> total + chunk); // [10, 24, 36, 49, 63, 79]
+```
+
+Overloaded version of `scan()` can provide an initial value (if it is different than simply the first element):
+
+```java
+Observable<BigInteger> factorials = Observable
+    .range(2, 100)
+    .scan(BigInteger.ONE, (big, cur) ->
+        big.multiply(BigInteger.valueOf(cur)));
+```
+
+`factorials` will generate `1`, `2`, `6`, `24`, `120`, `720`…, and so forth. 
+
+`scab`  care about intermediate results, but `reduce` just the final one.
+
+![](../uploads/reduce.png)
+
+Imagine that you have a source of `CashTransfer` objects with `getAmount()` method returning `BigDecimal`. We would like to calculate the total amount on all transfers. 
+
+The following two transformations are equivalent. They iterate over all transfers and add up amounts, beginning at `ZERO`:
+
+```java
+Observable<CashTransfer> transfers = //...;
+
+Observable<BigDecimal> total1 = transfers
+    .reduce(BigDecimal.ZERO,
+        (totalSoFar, transfer) ->
+            totalSoFar.add(transfer.getAmount()));
+
+Observable<BigDecimal> total2 = transfers
+    .map(CashTransfer::getAmount)
+    .reduce(BigDecimal.ZERO, BigDecimal::add);
+```
+
+The second one seems simpler, despite using two steps. This is another reason to prefer smaller, more composable transformations over a single big one.
+
+Also you can probably see that `reduce()` is basically `scan()` talking only to the last element. As a matter of fact, you can implement it as follows:
+
+```java
+public <R> Observable<R> reduce(
+        R initialValue,
+        Func2<R, T, R> accumulator) {
+    return scan(initialValue, accumulator).takeLast(1);
+}
+```
+
+## Reduction with Mutable Accumulator: collect()
+
+The `collect` operator is similar to `reduce` but is specialized for the purpose of collecting the whole set of items emitted by the source Observable into a single mutable data structure to be emitted by the resulting Observable.
+
+![](../uploads/collect.png)
+
+```java
+Observable<List<Integer>> all = Observable
+    .range(10, 20)
+    .collect(ArrayList::new, List::add);
+```
+
+It's equivalent to:
+
+```
+Observable<List<Integer>> all = Observable
+    .range(10, 20)
+    .reduce(new ArrayList<>(), (list, item) -> {
+        list.add(item);
+        return list;
+    });
+```
+
+Another useful use case for `collect()` is aggregating all events into a  `StringBuilder`. In that case, the accumulator is an empty `StringBuilder` and an operation appends one item to that builder:
+
+```java
+Observable<String> str = Observable
+    .range(1, 10)
+    .collect(
+            StringBuilder::new,
+            (sb, x) -> sb.append(x).append(", "))
+    .map(StringBuilder::toString);
+```
+
+Transforming `Observable<T>` into `Observable<List<T>>` is so common that a built-in `toList()` operator exists. 
+
+## Asserting Observable Has Exactly One Item Using single()
+
+The `single` operator is similar to `first`, but throws a `NoSuchElementException` if the source Observable does not emit exactly one item before successfully completing.
+
+## Dropping Duplicates Using distinct() and distinctUntilChanged()
+
+![](../uploads/distinct.png)
+
+![](../uploads/distinctUntilChanged.png)

@@ -797,9 +797,40 @@ numbers.contains(4);         // [true]
 
 ## Ways of Combining Streams: concat(), merge(), and switchOnNext()
 
-`concat()` (and instance method  `concatWith()`) allow joining together two `Observable`s: when the first one completes, `concat()` subscribes to the second one. Importantly, `concat()` will subscribe to the second `Observable` if, and only if, the first one is completed.
+Consider a group of people, each one having microphone. Every microphone is modeled as an `Observable<String>`, for which an event represents a single word. Obviously, events appear over time, as soon as they are spoken. To simulate this behavior we will construct a simple `Observable` for demonstration purposes, interesting on its own:
 
-`concat()` can even work with the same upstream `Observable` with different operators applied. 
+```java
+Observable<String> speak(String quote, long millisPerChar) {
+    String[] tokens = quote.replaceAll("[:,]", "").split(" ");
+    Observable<String> words = Observable.from(tokens);
+    Observable<Long> absoluteDelay = words
+        .map(String::length)
+        .map(len -> len * millisPerChar)
+        .scan((total, current) -> total + current);
+    return words
+        .zipWith(absoluteDelay.startWith(0L), Pair::of)
+        .flatMap(pair -> just(pair.getLeft())
+            .delay(pair.getRight(), MILLISECONDS));
+}
+```
+
+Suppose that three people were quoting _Hamlet_ by William Shakespeare:
+
+```java
+Observable<String> alice = speak(
+        "To be, or not to be: that is the question", 110);
+Observable<String> bob = speak(
+        "Though this be madness, yet there is method in't", 90);
+Observable<String> jane = speak(
+        "There are more things in Heaven and Earth, " +
+        "Horatio, than are dreamt of in your philosophy", 100);
+```
+
+We can finally see how `concat()`, `merge()`, and `switchOnNext()` differ.
+
+### concat
+
+`concat()` (and instance method  `concatWith()`) allow joining together two `Observable`s: when the first one completes, `concat()` subscribes to the second one. Importantly, `concat()` will subscribe to the second `Observable` if, and only if, the first one is completed.
 
 ![](../uploads/concat.png)
 
@@ -818,8 +849,162 @@ Observable<Car> found = Observable
 
 `concat()` is nonblocking, it emits events only when the underlying stream emits something.
 
-```
-Observable<String> words = Observable.from(tokens);
+### merge
+
+`merge()` subscribes to words of each person immediately and forwards them downstream, no matter which person is speaking. If two streams emit an event at more or less the same time, they are both forwarded right away. There is no buffering or halting events within this operator.
+
+![](../uploads/merge.png)
+
+```java
+Observable
+    .merge(
+        alice.map(w -> "Alice: " + w),
+        bob.map(w   -> "Bob:   " + w),
+        jane.map(w  -> "Jane:  " + w)
+    )
+.subscribe(System.out::println);
 ```
 
+The output is very chaotic:
 
+```
+Alice: To
+Bob:   Though
+Jane:  There
+Alice: be
+Alice: or
+Jane:  are
+Alice: not
+Bob:   this
+Jane:  more
+Alice: to
+Jane:  things
+Alice: be
+Bob:   be
+Alice: that
+Bob:   madness
+Jane:  in
+Alice: is
+Jane:  Heaven
+Alice: the
+Bob:   yet
+Alice: question
+Jane:  and
+Bob:   there
+Jane:  Earth
+Bob:   is
+Jane:  Horatio
+Bob:   method
+Jane:  than
+Bob:   in't
+Jane:  are
+Jane:  dreamt
+Jane:  of
+Jane:  in
+Jane:  your
+Jane:  philosophy
+```
+
+replace `merge` with `concat()` operator:
+
+```
+Alice: To
+Alice: be
+Alice: or
+Alice: not
+Alice: to
+Alice: be
+Alice: that
+Alice: is
+Alice: the
+Alice: question
+Bob:   Though
+Bob:   this
+Bob:   be
+Bob:   madness
+Bob:   yet
+Bob:   there
+Bob:   is
+Bob:   method
+Bob:   in't
+Jane:  There
+Jane:  are
+Jane:  more
+Jane:  things
+Jane:  in
+Jane:  Heaven
+Jane:  and
+Jane:  Earth
+Jane:  Horatio
+Jane:  than
+Jane:  are
+Jane:  dreamt
+Jane:  of
+Jane:  in
+Jane:  your
+Jane:  philosophy
+```
+
+### switchOnNext
+
+![](../uploads/switchDo.png)
+
+`switchOnNext()` begins by subscribing to an outer `Observable<Observable<T>>`, which emits inner `Observable<T>`s. As soon as the first inner `Observable<T>` appears, this operator subscribes to it and begins pushing events of type `T` downstream. Now what happens if next inner `Observable<T>` appears? `switchOnNext()` discards the first `Observable<T>` by unsubscribing from it and switches to the next one (thus, the name). In other words, when we have a stream of streams, `switchOnNext()` always forwards downstream events from the last inner stream, even if older streams keep forwarding fresh events.
+
+This is how it looks in our _Hamlet_ quoting example:
+
+```java
+Random rnd = new Random();
+Observable<Observable<String>> quotes = just(
+                alice.map(w -> "Alice: " + w),
+                bob.map(w   -> "Bob:   " + w),
+                jane.map(w  -> "Jane:  " + w))
+        .flatMap(innerObs -> just(innerObs)
+                .delay(rnd.nextInt(5), SECONDS));
+
+Observable
+        .switchOnNext(quotes)
+        .subscribe(System.out::println);
+```
+
+One of the possible outcomes, due to the random nature of this example, could look like this:
+
+```
+Jane:  There
+Jane:  are
+Jane:  more
+Alice: To
+Alice: be
+Alice: or
+Alice: not
+Alice: to
+Bob:   Though
+Bob:   this
+Bob:   be
+Bob:   madness
+Bob:   yet
+Bob:   there
+Bob:   is
+Bob:   method
+Bob:   in't
+```
+
+To illustrate how `switchOnNext()` works, we shall delay the emission of inner `Observable`s. We are not delaying each word within that `Observable` (variant _A_) but the entire `Observable` (variant _B_ is subtly different):
+
+```java
+//A
+map(innerObs ->
+        innerObs.delay(rnd.nextInt(5), SECONDS))
+
+//B
+flatMap(innerObs -> just(innerObs)
+        .delay(rnd.nextInt(5), SECONDS))
+```
+
+In variant _A_, the `Observable` appears immediately in the outer stream but begins emitting events with some delay. In variant _B_, on the other hand, we shift the entire `Observable` event forward in time so that it appears in the outer `Observable` much later.
+
+Both static `concat()` and `merge()` operators can work with either a fixed list of `Observable`s or `Observable` of `Observable`s. In the case of `switchOnNext()`, the ladder makes sense.
+
+In the case of delaying only events in every inner `Observable` (variant _A_) three inner `Observable`s would appear at the same time in outer `Observable`, and `switchOnNext()` would only subscribe to one of them.
+
+## Criteria-Based Splitting of Stream Using groupBy()

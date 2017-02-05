@@ -408,3 +408,82 @@ The output:
 ```
 
 ## Declarative Concurrency with observeOn()
+
+`subscribeOn()` allows choosing which `Scheduler` will be used to invoke  `OnSubscribe` (lambda expression inside `create()`). `observeOn()` controls which `Scheduler` is used to invoke downstream `Subscriber`s occurring after `observeOn()`.
+
+For example, calling `create()` happens in the `io()` `Scheduler` (via `subscribeOn(io())`) to avoid blocking the user interface. However, updating the user interface widgets must happen in the UI thread (both  Swing and  Android have this constraint), so we use `observeOn()` for example with `AndroidSchedulers.mainThread()` before operators or subscribers changing UI.
+
+```java
+log("Starting");
+final Observable<String> obs = simple();
+log("Created");
+obs
+        .doOnNext(x -> log("Found 1: " + x))
+        .observeOn(schedulerA)
+        .doOnNext(x -> log("Found 2: " + x))
+        .subscribe(
+                x -> log("Got 1: " + x),
+                Throwable::printStackTrace,
+                () -> log("Completed")
+        );
+log("Exiting");
+```
+
+`observeOn()` occurs somewhere in the pipeline chain, and this time, as opposed to `subscribeOn()`, the position of `observeOn()` is quite important. No matter what `Scheduler` was running operators above `observeOn()` (if any), everything below uses the supplied `Scheduler`.
+
+```
+23  | main  | Starting
+136 | main  | Created
+163 | main  | Subscribed
+163 | main  | Found 1: A
+163 | main  | Found 1: B
+163 | main  | Exiting
+163 | Sched-A-0 | Found 2: A
+164 | Sched-A-0 | Got 1: A
+164 | Sched-A-0 | Found 2: B
+164 | Sched-A-0 | Got 1: B
+164 | Sched-A-0 | Completed
+```
+
+```java
+log("Starting");
+final Observable<String> obs = simple();
+log("Created");
+obs
+        .doOnNext(x -> log("Found 1: " + x))
+        .observeOn(schedulerB)
+        .doOnNext(x -> log("Found 2: " + x))
+        .observeOn(schedulerC)
+        .doOnNext(x -> log("Found 3: " + x))
+        .subscribeOn(schedulerA)
+        .subscribe(
+                x -> log("Got 1: " + x),
+                Throwable::printStackTrace,
+                () -> log("Completed")
+        );
+log("Exiting");
+```
+
+Everything below `observeOn()` is run within the supplied `Scheduler`, of course until another `observeOn()` is encountered. Additionally `subscribeOn()` can occur anywhere between `Observable` and `subscribe()`, but this time it only affects operators down to the first `observeOn()`:
+
+```
+21  | main  | Starting
+98  | main  | Created
+108 | main  | Exiting
+129 | Sched-A-0 | Subscribed
+129 | Sched-A-0 | Found 1: A
+129 | Sched-A-0 | Found 1: B
+130 | Sched-B-0 | Found 2: A
+130 | Sched-B-0 | Found 2: B
+130 | Sched-C-0 | Found 3: A
+130 | Sched-C-0 | Got: A
+130 | Sched-C-0 | Found 3: B
+130 | Sched-C-0 | Got: B
+130 | Sched-C-0 | Completed
+```
+
+Subscription occurs in `schedulerA` because that is what we specified in `subscribeOn()`. Also `"Found 1"` operator was executed within that `Scheduler` because it is before the first `observeOn()`. Later, the situation becomes more interesting. `observeOn()` switches current `Scheduler` to `schedulerB`, and `"Found 2"` is using this one, instead. The last `observeOn(schedulerC)` affects both `"Found 3"` operator as well as `Subscriber`. Remember that `Subscriber` works within the context of the last encountered `Scheduler`. 
+
+
+
+

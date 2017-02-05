@@ -16,6 +16,8 @@ In RxJava, you must forget about mutating data structures internally: modifying 
 
 Every time you use any operator, including those that we did not explain yet, you basically create a wrapper around original `Observable`. This wrapper can intercept events flying through it but typically does not subscribe on its own.
 
+This is an antipattern in RxJava, operators should be nonblocking, fast, and as pure as possible.
+
 ## Marble Diagrams
 
 A marble diagram illustrates how various operators work. Most of the time you will see two horizontal axes representing time flying by from left to right. Shapes on these diagrams (the aforementioned marbles) visualize events. Between the top and bottom axes there is an operator in question that somehow alters the sequence of events coming from the source `Observable` (upstream) to form the resulting `Observable` (downstream), as demonstrated in the following graphic:
@@ -80,7 +82,7 @@ Technically, `doOnNext()` can mutate the event. However, having mutable events c
 
 `flatMap()` first constructs `Observable<Observable<R>>` replacing all upstream values of type `T` with `Observable<R>` (just like `map()`). However, it does not stop there: it automatically subscribes to these inner `Observable<R>` streams to produce a single stream of type `R`, containing all values from all inner streams, as they come.
 
-![](../uploads/rprx_03in04.png)
+![](../uploads/mergeMap.png)
 
 `flatMap()` is the most fundamental operator in RxJava, using it one can easily implement `map()` or `filter()`:
 
@@ -121,6 +123,8 @@ Observable<Order> orders = customers
 ```
 
 The need to map from a single item to `Iterable` is so popular that an operator, `flatMapIterable()`, was created to perform just such a transformation:
+
+![](../uploads/mergeMapIterable.png)
 
 ```java
 Observable<Order> orders = customers
@@ -287,6 +291,8 @@ You have two streams that work independently but their results must somehow _mer
 When `flatMap()` encounters Sunday in the upstream, it immediately invokes `loadRecordsFor(Sunday)` and redirects all events emitted by the result of that function (`Observable<String>`) downstream. However, almost exactly at the same time, Monday appears and `flatMap()` calls `loadRecordsFor(Monday)`. Events from the latter substream are also passed downstream, interleaving with events from first substream. `flatMap()` instead subscribes to all substreams immediately and merges them together, pushing events downstream whenever any of the inner streams emit anything. All subsequences returned from flatMap() are merged and treated equally. 
 
 ### Preserving Order Using concatMap()
+
+![](../uploads/concatMap.png)
 
 There is a handy `concatMap()` operator that has the exact same syntax as `flatMap()` but works quite differently:
 
@@ -614,6 +620,8 @@ Observable<BigInteger> factorials = Observable
 
 ![](../uploads/reduce.png)
 
+`reduce()` is implemented using `scan().takeLast(1).single()`.
+
 Imagine that you have a source of `CashTransfer` objects with `getAmount()` method returning `BigDecimal`. We would like to calculate the total amount on all transfers. 
 
 The following two transformations are equivalent. They iterate over all transfers and add up amounts, beginning at `ZERO`:
@@ -714,6 +722,24 @@ Obviously, if we want to an emit event every time either `Temperature` or `Wind`
 The important difference between `distinct()` and `distinctUntilChanged()` is that the latter can produce duplicates but only if they were separated by a different value. 
 
 Also `distinctUntilChanged()` must only remember the last seen value, as opposed to `distinct()`, which must keep track of all unique values since the beginning of the stream. This means that `distinctUntilChanged()` has a predictable, constant memory footprint, as opposed to `distinct()`.
+
+You are building an API that will notify clients about every new item. Obviously, you can use `java.nio.file.WatchService` or database triggers, but take this as an educational example.
+
+```java
+Observable<Item> observeNewItems() {
+    return Observable
+            .interval(1, TimeUnit.SECONDS)
+            .flatMapIterable(x -> query())
+            .distinct();
+}
+
+List<Item> query() {
+    //take snapshot of file system directory
+    //or database table
+}
+```
+
+This simple pattern allows us to replace a bunch of `Thread.sleep()` invocations and manual caching with periodic polling. It is applicable in many areas, like [File Transfer Protocol (FTP)](https://en.wikipedia.org/wiki/File_Transfer_Protocol)  polling, web scraping, and so on.
 
 ## Slicing and Dicing Using skip(), takeWhile(), and Others
 
@@ -1007,4 +1033,43 @@ Both static `concat()` and `merge()` operators can work with either a fixed list
 
 In the case of delaying only events in every inner `Observable` (variant _A_) three inner `Observable`s would appear at the same time in outer `Observable`, and `switchOnNext()` would only subscribe to one of them.
 
+## Buffer
+
+Periodically gather items emitted by an Observable into bundles and emit these bundles rather than emitting the items one at a time.
+
+![](../uploads/buffer3.png)
+
+![](../uploads/buffer4.png)
+
 ## Criteria-Based Splitting of Stream Using groupBy()
+
+Divide an Observable into a set of Observables that each emit a different subset of items from the original Observable.
+
+![](../uploads/groupBy.png)
+
+```java
+Observable<ReservationEvent> facts = factStore.observe();
+
+Observable<GroupedObservable<UUID, ReservationEvent>> grouped =
+        facts.groupBy(ReservationEvent::getReservationUuid);
+
+grouped.subscribe(byUuid -> {
+    byUuid.subscribe(this::updateProjection);
+});
+
+Observable<ReservationEvent> updateProjectionAsync(ReservationEvent event) {
+    //possibly asynchronous
+}
+```
+
+Whenever a new `UUID` is discovered, the new `GroupedObservable<UUID, ReservationEvent>` is emitted, pushing events related to that `UUID`. So it becomes clear that the outer data structure must be an `Observable`.
+
+`GroupedObservable` is a simple subclass of `Observable` that apart from the standard `Observable` contract returns a key to which all events in that stream belong (`UUID`, in our case). The number of emitted `GroupedObservable`s can be anything from one (in case of all events having the same key) to the total number of events (if each upstream event has a unique key).
+
+When we `subscribe` to the outer `Observable`, every emitted value is actually another `Observable` (`GroupedObservable`) to which you can subscribe. 
+
+* `Observable` without any `Scheduler` works like a single-threaded program with blocking method calls passing data between one another.
+* `Observable` with a single `subscribeOn()` is like starting a big task in the background `Thread`. The program within that `Thread` is still sequential, but at least it runs in the background.
+* `Observable` using `flatMap()` where each internal `Observable` has `subscribeOn()` works like `ForkJoinPool` from `java.util.concurrent`, where each substream is a _fork_ of execution and `flatMap()` is a safe _join_ stage.
+
+Of course, the preceding tips only apply to blocking `Observable`s, which are rarely seen in real applications. If your underlying `Observable`s are already asynchronous, achieving concurrency is a matter of understanding how they are combined and when subscription occurs. For example, `merge()` on two streams will subscribe to both of them concurrently, whereas the `concat()` operator waits until the first stream finishes before it subscribes to the second one.

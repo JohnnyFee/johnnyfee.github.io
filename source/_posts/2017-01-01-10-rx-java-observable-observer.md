@@ -1,9 +1,14 @@
+---
 layout: post
 title: "Rx Java Concept"
 description: ""
 category: Rx
 tags: [rx, java]
 ---
+
+## Rx
+
+Designing an API with Rx in mind doesn’t influence the entire architecture, because we can always fall back to `BlockingObservable` and Java collections. But it’s better to have wide range of possibilities that we can further trim down if necessary.
 
 ## Observable vs Observer vs Subscription
 
@@ -136,6 +141,8 @@ main: 6
 main: 7
 main: After
 ```
+
+Unfortunately, for better or worse, `null`  is a valid event value in RxJava; that is, `Observable.just("A", null, "B")` is as good as any other stream. You need to take that into account when designing custom operators as well as when applying operators. However, passing `null` is generally considered nonidiomatic, and you should use wrapper value types, instead.
 
 #### Create Oberservable with Observable.create()
 
@@ -332,6 +339,17 @@ class LazyTwitterObservable {
 ```
 
 The `subscribers` set thread-safely stores a collection of currently subscribed `Observer`s. Every time a new `Subscriber` appears, we add it to a set and connect to the underlying source of events lazily. Conversely, when the last `Subscriber` disappears, we shut down the upstream source. The key here is to always have exactly one connection to the upstream system rather than one connection per subscriber. This works and is quite robust, however, the implementation seems too low-level and error-prone. Access to the `subscribers` set must be `synchronized`, but the collection itself must also support safe iteration. Calling `register()` _must_ appear before adding the `deregister()` callback; otherwise, the latter can be called before we register. There must be a better way to implement such a common scenario of multiplexing a single upstream source to multiple `Observer`s—luckily, there are at least two such mechanisms. RxJava is all about reducing such dangerous boilerplate and abstracting away concurrency.
+
+### Observable.defer
+
+The underlying `Observable` is eager, so we want to postpone its creation. `defer()` will wait until the last possible moment to actually create `Observable`; that is, until someone actually subscribes to it.
+
+```
+public Observable<Person> listPeople() {
+    return Observable.defer(() ->
+        Observable.from(query("SELECT * FROM PEOPLE")));
+}
+```
 
 ### ConnectableObservable
 
@@ -765,6 +783,7 @@ class TwitterSubject {
 - `AsyncSubject`
 
     Remembers last emitted value and pushes it to subscribers when `onComplete()` is called. As long as `AsyncSubject` has not completed, events except the last one are discarded. 
+
 - `BehaviorSubject`
 
     Pushes all events emitted after subscription happened, just like `PublishSubject`. However, first it emits the most recent event that occurred just before subscription. This allows `Subscriber` to be immediately notified about the state of the stream. For example, `Subject` may represent the current temperature broadcasted every minute. When a client subscribes, he will receive the last seen temperature immediately rather than waiting several seconds for the next event. But the same `Subscriber` is not interested in historical temperatures, only the last one. If no events have yet been emitted, a special default event is pushed first (if provided).
@@ -773,13 +792,15 @@ class TwitterSubject {
 
     The most interesting type of `Subject` that caches events pushed through the entire history. If someone subscribes, first he receives a batch of missed (cached) events and only later events in real-time. By default, all events since the creation of this `Subject` are cached. This can be become dangerous if the stream is infinite or very long. In that case, there are overloaded versions of `ReplaySubject` that keep only the following:
 
-        + Configurable number of events in memory (`createWithSize()`)
-        + Configurable time window of most recent events (`createWithTime()`)
-        + Or even constraint both size and time (whichever limit is reached first) with `createWithTimeAndSize()`
+      + Configurable number of events in memory (`createWithSize()`)
+      + Configurable time window of most recent events (`createWithTime()`)
+      + Or even constraint both size and time (whichever limit is reached first) with `createWithTimeAndSize()`
 
 `Subject`s should be treated with caution: often there are more idiomatic ways of sharing subscriptions and caching events—for example, “ConnectableObservable”. For the time being, prefer relatively low-level `Observable.create()` or even better, consider standard factory methods like `from()` and `just()`.
 
 One more thing to keep in mind is concurrency. By default calling `onNext()` on a `Subject` is directly propagated to all `Observer`’s `onNext()` callback methods. It is not a surprise that these methods share the same name. In a way, calling `onNext()` on `Subject` indirectly invokes `onNext()` on each and every `Subscriber`. But you need to keep in mind that according to _Rx Design Guidelines_ all calls to `onNext()` on `Observer` must be serialized (i.e., sequential), thus two threads cannot call `onNext()` at the same time. However, depending on the way you stimulate `Subject`, you can easily break this rule—e.g., calling `Subject.onNext()` from multiple threads from a thread pool. Luckily, if you are worried that this might be the case, simply call `.toSerialized()` on a `Subject`, which is quite similar to calling `Observable.serialize()`. This operator makes sure downstream events occur in the correct order.
+
+
 
 ## Timing: timer() and interval()
 
@@ -803,32 +824,3 @@ Observable
 ```
 
 `interval()` is sometimes used to control animations or processes that need to run with certain frequency.
-
-## Error Handling
-
-It is a good practice to wrap entire expressions within `create()` in a `try`-`catch` block. `Throwable`s should be propagated downstream rather than logged or rethrown, as demonstrated here:
-
-```java
-Observable<Data> rxLoad(int id) {
-    return Observable.create(subscriber -> {
-        try {
-            subscriber.onNext(load(id));
-            subscriber.onCompleted();
-        } catch (Exception e) {
-            subscriber.onError(e);
-        }
-    });
-}
-```
-
-The pattern of completing an `Observable` with one value and wrapping with the `try`-`catch` statement is so prevalent that the built-in `fromCallable()` operator was introduced:
-
-```java
-Observable<Data> rxLoad(int id) {
-    return Observable.fromCallable(() ->
-        load(id));
-}
-```
-
-It is semantically equivalent but much shorter and has some other benefits over `create()` that you will discover later.
-

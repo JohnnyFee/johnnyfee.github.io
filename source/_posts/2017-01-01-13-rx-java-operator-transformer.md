@@ -124,12 +124,12 @@ Observable<Order> orders = customers
 
 The need to map from a single item to `Iterable` is so popular that an operator, `flatMapIterable()`, was created to perform just such a transformation:
 
-![](../uploads/mergeMapIterable.png)
-
 ```java
 Observable<Order> orders = customers
         .flatMapIterable(Customer::getOrders);
 ```
+
+![](../uploads/mergeMapIterable.png)
 
 If `getOrders()` was not a simple getter but an expensive operation in terms of run time, it is better to implement `getOrders()` to explicitly return `Observable<Order>`.
 

@@ -14,6 +14,18 @@ Schedulers are used together with `subscribeOn()` and `observeOn()` operators as
 
 You will find examples of this API later on, but first familiarize yourself with available built-in schedulers:
 
+There are numerous operators that by default use some `Scheduler`.
+Typically, `Schedulers.computation()` is used if none is supplied. For example, the `delay()` operator takes upstream events and pushes them downstream after a given time. 
+
+```java
+Observable
+    .just('A', 'B')
+    .delay(1, SECONDS, schedulerA)
+    .subscribe(this::log);
+```
+
+Without supplying a custom `schedulerA`, all operators below `delay()` would use the `computation()` `Scheduler`. Other important operators that support custom `Scheduler` are: `interval()`, `range()`, `timer()`, `repeat()`, `skip()`, `take()`, `timeout()`. If you do not provide a scheduler to such operators, `computation()` `Scheduler` is utilized, which is a safe default in most cases.
+
 ### `Schedulers.newThread()`
 
 This scheduler simply starts a new thread every time it is requested via `subscribeOn()` or `observeOn()`. `newThread()` is hardly ever a good choice, not only because of the latency involved when starting a thread, but also because this thread is not reused. 
@@ -407,7 +419,7 @@ The output:
 1354 | Sched-A-2 | Done 3 egg
 ```
 
-## Declarative Concurrency with observeOn()
+## observeOn()
 
 `subscribeOn()` allows choosing which `Scheduler` will be used to invoke  `OnSubscribe` (lambda expression inside `create()`). `observeOn()` controls which `Scheduler` is used to invoke downstream `Subscriber`s occurring after `observeOn()`.
 
@@ -543,3 +555,33 @@ The output:
 
 RxJava controls concurrency with just two operators (`subscribeOn()` and `observeOn()`), but the more you use reactive extensions, the less frequently you will see these in production code.
 
+## Schedulers in Android
+
+```gradle
+compile 'io.reactivex:rxandroid:1.1.0'
+```
+
+This small library will add the `AndroidSchedulers`  class to your CLASSPATH, which is essential for writing concurrent code on Android with RxJava.
+
+```java
+button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        meetup
+            .listCities(52.229841, 21.011736)
+            .concatMapIterable(extractCities())
+            .map(toCityName())
+            .toList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                    putOnListView(),
+                    displayError());
+    }
+
+    //...
+
+});
+```
+
+When all transformations are done, we invoke a UI update only on the main thread because we want to carry out as little processing as possible there.

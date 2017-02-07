@@ -107,7 +107,90 @@ Just make sure that you unsubscribe from `afterTextChangeEvents()`; failing to d
 
 ## Avoiding Memory Leaks in Activities
 
+If your `Observer` holds a reference to such an `Activity`, it might never be garbage-collected, leading to memory leak and device killing your application in its entirety. Take the following innocent code:
 
+```java
+public class MainActivity extends AppCompatActivity {
+
+    private final byte[] blob = new byte[32 * 1024 * 1024];
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        TextView text = (TextView) findViewById(R.id.textView);
+        Observable
+                .interval(100, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(x -> {
+                    text.setText(Long.toString(x));
+                });
+    }
+
+}
+```
+
+The `blob` field is there just to speed up the memory-leak effects; imagine `MainActivity` being quite a complex tree of objects, instead.
+
+If you rotate your device a couple of times it crashes with `OutOfMemoryError` for some reason. Here is what happens:
+
+1.  `MainActivity` is created, and during `onCreate()` we subscribe to `interval()`.
+2.  Every 100 milliseconds, we update `text` with the current counter value. Ignore `mainThread()` `Scheduler` for a second, it will be explained in [“Schedulers in Android”](http://192.168.31.250:8000/ch08.html#Schedulers-in-Android).
+3.  The device changes orientation.
+4.  `MainActivity` is destroyed, a new one is created, and `onCreate()` is executed again.
+5.  We currently have two `Observable.interval()` running because we never unsubscribed from the first one.
+
+The `interval()` operator uses a background thread (via `computation()` `Scheduler`) to emit counter events. These events are subsequently propagated to `Observer`, one of them holding a reference to `TextView` which in turn holds a reference to old `MainActivity`.
+
+Even though the first instance of `MainActivity` was destroyed, it cannot be garbage-collected and the memory of our `blob` cannot be reclaimed. Every change of orientation (or whenever Android decides to destroy a particular `Activity`) increases memory leak. The solution is simple: let `interval()` know when it is no longer needed by unsubscribing from it. Just like `onCreate()`, Android has a callback on destruction called `onDestroy()`:
+
+```java
+private Subscription subscription;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    //...
+    subscription = Observable
+        .interval(100, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(x -> {
+            text.setText(Long.toString(x));
+        });
+}
+
+@Override
+protected void onDestroy() {
+    super.onDestroy();
+    subscription.unsubscribe();
+}
+```
+
+When an `Observable` is created as part of `Activity`’s lifecycle, make sure to unsusbcribe from it when the `Activity` is destroyed. Calling `unsusbcribe()` will detach `Observer` from `Observable` so that it is eligible for garbage collection. Together with `Observer`, the entire `MainActivity` can be collected, as well. Also the `interval()` itself will stop emitting events because no one is listening to them. Double win.
+
+When you create multiple `Observable`s together with some `Activity`, holding a reference to all `Subscription`s can become tedious.
+A `CompositeSubscription` is a handy container in such cases.
+Each `Subscription` can simply be inserted into `CompositeSubscription` and on destruction we can unsubscribe all of them in one easy step:
+
+```java
+private CompositeSubscription allSubscriptions = new CompositeSubscription();
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    //...
+    Subscription subscription = Observable
+        .interval(100, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(x -> {
+            text.setText(Long.toString(x));
+        });
+    allSubscriptions.add(subscription);
+}
+
+@Override
+protected void onDestroy() {
+    super.onDestroy();
+    allSubscriptions.unsubscribe();
+}
+```
 
 ## (RxAndrod](https://github.com/ReactiveX/RxAndroid)
 

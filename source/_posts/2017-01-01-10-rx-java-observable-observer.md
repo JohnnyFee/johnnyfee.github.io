@@ -800,8 +800,6 @@ class TwitterSubject {
 
 One more thing to keep in mind is concurrency. By default calling `onNext()` on a `Subject` is directly propagated to all `Observer`’s `onNext()` callback methods. It is not a surprise that these methods share the same name. In a way, calling `onNext()` on `Subject` indirectly invokes `onNext()` on each and every `Subscriber`. But you need to keep in mind that according to _Rx Design Guidelines_ all calls to `onNext()` on `Observer` must be serialized (i.e., sequential), thus two threads cannot call `onNext()` at the same time. However, depending on the way you stimulate `Subject`, you can easily break this rule—e.g., calling `Subject.onNext()` from multiple threads from a thread pool. Luckily, if you are worried that this might be the case, simply call `.toSerialized()` on a `Subject`, which is quite similar to calling `Observable.serialize()`. This operator makes sure downstream events occur in the correct order.
 
-
-
 ## Timing: timer() and interval()
 
 `timer()` and `interval()` use threads underneath. 
@@ -824,3 +822,139 @@ Observable
 ```
 
 `interval()` is sometimes used to control animations or processes that need to run with certain frequency.
+
+## Observable versus Single
+
+`Single<T>` is basically a container for a future value of type `T` or `Exception`. `Single` is typically used for APIs known to return a single value (duh!) asynchronously and with high probability of failure.
+
+### Creating and Consuming Single
+
+There are few ways to create a `Single`, beginning with the constant `just()` and `error()` operators:
+
+```java
+import rx.Single;
+
+
+Single<String> single = Single.just("Hello, world!");
+single.subscribe(System.out::println);
+
+Single<Instant> error =
+        Single.error(new RuntimeException("Opps!"));
+error
+    .observeOn(Schedulers.io())
+    .subscribe(
+            System.out::println,
+            Throwable::printStackTrace
+    );
+```
+
+The `subscribe()` method takes two arguments rather than three. There is simply no point in having an `onComplete()` callback.
+
+We will use [async-http-client](http://bit.ly/UbSPq1) that happens to use Netty underneath, as well. After making an HTTP request we can provide a callback implementation that will be invoked asynchronously whenever a response or error comes back. This fits very nicely into how `Single` is created:
+
+```java
+import com.ning.http.client.AsyncCompletionHandler;
+import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.Response;
+
+
+AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+
+Single<Response> fetch(String address) {
+    return Single.create(subscriber ->
+            asyncHttpClient
+                    .prepareGet(address)
+                    .execute(handler(subscriber)));
+}
+
+AsyncCompletionHandler handler(SingleSubscriber<? super Response> subscriber) {
+    return new AsyncCompletionHandler() {
+        public Response onCompleted(Response response) {
+            subscriber.onSuccess(response);
+            return response;
+        }
+
+        public void onThrowable(Throwable t) {
+            subscriber.onError(t);
+        }
+    };
+}
+```
+
+`Single.create()` looks similar to `Observable.create()` but it has some important constraints; you must call either `onSuccess()` once or `onError()` once. Technically, it is also possible to have a `Single` that never completes, but multiple `onSuccess()` invocations are not allowed. Speaking of `Single.create()` you can also try `Single.fromCallable()` that accepts `Callable<T>` and returns `Single<T>`. As simple as that.
+
+You can use `Single` in similar fashion to `Observable`:
+
+```java
+Single<String> example =
+    fetch("http://www.example.com")
+        .flatMap(this::body);
+
+String b = example.toBlocking().value();
+
+//...
+
+Single<String> body(Response response) {
+    return Single.create(subscriber -> {
+        try {
+            subscriber.onSuccess(response.getResponseBody());
+        } catch (IOException e) {
+            subscriber.onError(e);
+        }
+    });
+}
+
+//Same functionality as body():
+Single<String> body2(Response response) {
+    return Single.fromCallable(() ->
+        response.getResponseBody());
+}
+```
+
+Unfortunately, `Response.getResponseBody()` throws an `IOException`, so we cannot simply say: `map(Response::getResponseBody)`. By wrapping the potentially dangerous `getResponseBody()` method with `Single<String>`, we make sure potential failure is encapsulated and clearly expressed in type system. 
+
+Just like `BlockingObservable`, `Single` has its very own `BlockingSingle` created with `Single.toBlocking()`. Analogously, creating `BlockingSingle<T>` does not yet block. However, calling `value()` on it blocks until value of type `T` (the `String` containing the response body in our example) is available. In case of exception, it will be rethrown from `value()` method.
+
+### Combining Responses Using zip, merge, and concat
+
+Suppose that you are rendering an article to be displayed on your website.
+Three independent operations need to be made to fulfill the request: reading the article content from the database, asking a social media website for a number of likes collected so far, and updating the read count metric.
+
+```java
+import org.springframework.jdbc.core.JdbcTemplate;
+
+//...
+
+Single<String> content(int id) {
+    return Single.fromCallable(() -> jdbcTemplate
+        .queryForObject(
+            "SELECT content FROM articles WHERE id = ?",
+            String.class, id))
+        .subscribeOn(Schedulers.io());
+}
+
+Single<Integer> likes(int id) {
+    //asynchronous HTTP request to social media website
+}
+
+Single<Void> updateReadCount() {
+    //only side effect, no return value in Single
+}
+```
+
+Combining these three operations with `zip` is quite straightforward:
+
+```java
+Single<Document> doc = Single.zip(
+        content(123),
+        likes(123),
+        updateReadCount(),
+        (con, lks, vod) -> buildHtml(con, lks)
+);
+
+//...
+
+Document buildHtml(String content, int likes) {
+    //...
+}
+```

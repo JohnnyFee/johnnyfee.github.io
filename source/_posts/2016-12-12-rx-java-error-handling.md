@@ -4,6 +4,139 @@ title: "Rx Java Error Handling"
 date: "2016-12-12 14:50"
 categories: Android
 ---
+## Error Handling
+
+In RxJava, failures are just another type of notification. Every `Observable<T>` is a sequence of events of type `T` optionally followed by completion or error notification. This means that errors are implicitly a part of every stream, and even though we are not required to handle them, there are plenty of operators that declaratively handle errors in a more elegant way. Also, an obtrusive `try`-`catch` around `Observable` will not capture any errors, they are only propagated through the aforementioned error notifications.
+
+`subscribe()` only listening for values and not errors is often a bad sign and possibly missed errors. Even if you do not expect any exceptions to happen (which is rarely the case), at least place error logging that plugs into your logging framework:
+
+```java
+private static final Logger log = LoggerFactory.getLogger(My.class);
+
+//....
+.subscribe(
+    System.out::println,
+    throwable -> log.error("That escalated quickly", throwable));
+```
+
+It is a good practice to surround a lambda expression within `create()` with a `try`-`catch()` block, just like in the previous example:
+
+```java
+Observable.create(subscriber -> {
+    try {
+        subscriber.onNext(1 / 0);
+    } catch (Exception e) {
+        subscriber.onError(e);
+    }
+});
+```
+
+However, if you forget about the `try`-`catch` and let `create()` throw an exception, RxJava does its best and propagates such an exception as an `onError()` notification:
+
+```java
+Observable.create(subscriber -> subscriber.onNext(1 / 0));
+```
+
+The two preceding code examples are semantically equivalent. Exceptions thrown from `create()` are caught internally by RxJava and translated to error notification. Yet, it is advised to explicitly propagate exceptions via `subscriber.onError()` if possible. Even better, use `fromCallable()` ):
+
+```java
+Observable.fromCallable(() -> 1 / 0);
+```
+
+All lambda expressions passed to higher-order functions like `map()` or `filter()` should be pure, whereas throwing an exception is an impure side effect. RxJava again does its best to handle unexpected exceptions here and the behavior is exactly what you would expect. If any operator in the pipeline throws an exception, it is translated to error notification and passed downstream.
+
+```java
+Observable
+    .just(1, 0)
+    .map(x -> 10 / x);
+
+Observable
+    .just("Lorem", null, "ipsum")
+    .filter(String::isEmpty);
+```
+
+Despite RxJava making an effort to fix broken user code, if you suspect your lambda expression to potentially throw an exception, make it explicit by using `flatMap()`:
+
+```java
+Observable
+    .just(1, 0)
+    .flatMap(x -> (x == 0) ?
+            Observable.error(new ArithmeticException("Zero :-(")) :
+            Observable.just(10 / x)
+    );
+```
+
+`flatMap()` is a very versatile operator, it does not need to manifest the next step of asynchronous computation. `Observable` is a container for values or errors, so if you want to declaratively express even very fast computation that can result in an error, wrapping it with `Observable` is a good choice, as well.
+
+This is fine: ordinary operators transform values flowing through but skip completion and error notifications, letting them flow downstream. This means that a single error from any upstream `Observable` will propagate with a cascading failure to all downstream subscribers.
+
+Again, this is fine if your business logic requires absolutely all steps to succeed. But sometimes you can safely ignore failures and replace them with fallback values or secondary sources.
+
+## Replacing errors with a fixed result using onErrorReturn()
+
+The simplest error handling operator in RxJava is `onErrorReturn()`: when encountered, an error simply replaces it with a fixed value:
+
+```
+Observable<Income> income = person
+    .flatMap(this::determineIncome)
+    .onErrorReturn(error -> Income.no())
+
+//...
+
+private Observable<Income> determineIncome(Person person) {
+    return Observable.error(new RuntimeException("Foo"));
+}
+
+class Income {
+    static Income no() {
+        return new Income(0);
+    }
+}
+```
+
+`onErrorReturn()` is a fluent and very pleasant to read alternative to a `try`-`catch` block that returns fixed result in the `catch` statement known from imperative style:
+
+```java
+try {
+    return determineIncome(Person person)
+} catch(Exception e) {
+    return Income.no();
+}
+```
+
+## Lazily computing fallback value using onErrorResumeNext()
+
+```java
+Observable<Person> person = //...
+Observable<Income> income = person
+    .flatMap(this::determineIncome)
+    .onErrorResumeNext(person.flatMap(this::guessIncome));
+
+//...
+
+private Observable<Income> guessIncome(Person person) {
+  //...
+}
+```
+
+The `onErrorResumeNext()` operator basically replaces error notification with another stream. If you subscribe to an an `Observable` guarded with `onErrorResumeNext()` in case of failure, RxJava transparently switches from main `Observable` to the fallback one, specified as an argument.
+
+Theoretically we can return a different fallback stream based on the exception message or type. The `onErrorResumeNext()` operator has an overloaded version that allows just that:
+
+```java
+Observable<Income> income = person
+    .flatMap(this::determineIncome)
+    .onErrorResumeNext(th -> {
+        if (th instanceof NullPointerException) {
+            return Observable.error(th);
+        } else {
+            return person.flatMap(this::guessIncome);
+        }
+    });
+```
+
+## Timing Out When Events Do Not Occur
+
 
 From [RxJava中的错误处理 - 简书](http://www.jianshu.com/p/916b72778145)
 

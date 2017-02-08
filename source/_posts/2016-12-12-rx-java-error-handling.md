@@ -137,6 +137,74 @@ Observable<Income> income = person
 
 ## Timing Out When Events Do Not Occur
 
+TODO
+
+## Retrying After Failures
+
+TODO
+
+## Monitoring and Debugging
+
+Gives you few tips on how to make monitoring and debugging easier in applications using RxJava.
+
+### doOn…() Callbacks
+
+Every `Observable` has a set of callback methods that you can use to peek into various events, namely:* `doOnCompleted()`
+
+* `doOnEach()`
+* `doOnError()`
+* `doOnNext()`
+* `doOnRequest()`
+* `doOnSubscribe()`
+* `doOnTerminate()`
+* `doOnUnsubscribe()`
+
+What they all have in common is that they are not allowed to alter the state of an `Observable` in any way and they all return the same `Observable`, which makes them an ideal place to sprinkle some logging logic.
+
+```java
+Observable<Instant> timestamps = Observable
+    .fromCallable(() -> dbQuery())
+    .doOnSubscribe(() -> log.info("subscribe()"));
+
+timestamps
+    .zipWith(timestamps.skip(1), Duration::between)
+    .map(Object::toString)
+    .subscribe(log::info);
+```
+
+`zipWith()` actually subscribes to all of the underlying streams, effectively subscribing to the same `timestamps` `Observable` twice. This is a problem that you can discover by observing `doOnSubscribe()` is being invoked twice.
+
+Speaking of `zip()`, thanks to backpressure it no longer buffers faster stream infinitely, waiting for a slower one to emit events.
+Instead, it asks for a fixed batch of values from each `Observable`, throwing `MissingBackpressureException` if it received more:
+
+```
+.doOnSubscribe(() -> log.info("subscribe()"))
+.doOnRequest(c -> log.info("Requested {}", c))
+.doOnNext(instant -> log.info("Got: {}", instant));
+```
+
+`doOnRequest()` logs `Requested 128`, the value chosen by `zip` operator.
+Even when the source is infinite or very large, we should see at most 128 messages such as `Got: ...` afterward from a well-behaving `Observable`.
+
+You **CANNOT** use `doOnError()` for any error handling; it is for logging only. It does not consume the error notification, which keeps propagating downstream:
+
+```java
+Observable<String> obs = Observable
+  .<String>error(new RuntimeException("Swallowed"))
+  .doOnError(th -> log.warn("onError", th))
+  .onErrorReturn(th -> "Fallback");
+```
+
+As clean as `onErrorReturn()` looks, it is very easy to swallow exceptions with it. It does provide the exception that we want to replace with a fallback value, but logging it is our responsibility. To keep functions small and composable, logging the error first in `doOnError()` and then handling the exception in the following line silently is a little bit more robust. Forgetting to log the exception is rarely a good idea and must be a careful decision, not an oversight.
+
+
+`doOnEach()`: This is invoked for each `Notification`, namely `onNext()`, `onCompleted()`, and `onError()`. It can accept either a lambda invoked for each `Notofication` or an  `Observer`.
+
+`doOnTerminate()`: This is invoked when either `onCompleted()` or `onError()` occurs. It is impossible to distinguish between them, so it might be better to use `doOnCompleted()` and `doOnError()` independently.
+
+### Measuring and Monitoring
+
+TODO
 
 From [RxJava中的错误处理 - 简书](http://www.jianshu.com/p/916b72778145)
 

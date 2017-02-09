@@ -1073,3 +1073,273 @@ When we `subscribe` to the outer `Observable`, every emitted value is actually a
 * `Observable` using `flatMap()` where each internal `Observable` has `subscribeOn()` works like `ForkJoinPool` from `java.util.concurrent`, where each substream is a _fork_ of execution and `flatMap()` is a safe _join_ stage.
 
 Of course, the preceding tips only apply to blocking `Observable`s, which are rarely seen in real applications. If your underlying `Observable`s are already asynchronous, achieving concurrency is a matter of understanding how they are combined and when subscription occurs. For example, `merge()` on two streams will subscribe to both of them concurrently, whereas the `concat()` operator waits until the first stream finishes before it subscribes to the second one.
+
+## Taking Periodic Samples and Throttling
+
+The `sample()` operator looks at the upstream `Observable` periodically (for example, every second) and emits the last encountered event. If there were no event at all in the last one-second period, no sample is forwarded downstream and the next sample will be taken after one second, as illustrated in this sample:
+
+```java
+long startTime = System.currentTimeMillis();
+Observable
+    .interval(7, TimeUnit.MILLISECONDS)
+    .timestamp()
+    .sample(1, TimeUnit.SECONDS)
+    .map(ts -> ts.getTimestampMillis() - startTime + "ms: " + ts.getValue())
+    .take(5)
+    .subscribe(System.out::println);
+```
+
+The preceding code snippet will print something similar to the following:
+
+```
+1088ms: 141
+2089ms: 284
+3090ms: 427
+4084ms: 569
+5085ms: 712
+```
+
+Imagine that you have a list of names that appear with some absolute delays, like so:
+
+```java
+Observable<String> names = Observable
+    .just("Mary", "Patricia", "Linda",
+        "Barbara",
+        "Elizabeth", "Jennifer", "Maria", "Susan",
+        "Margaret", "Dorothy");
+
+Observable<Long> absoluteDelayMillis = Observable
+    .just(0.1, 0.6, 0.9,
+        1.1,
+        3.3, 3.4, 3.5, 3.6,
+        4.4, 4.8)
+    .map(d -> (long)(d * 1_000));
+
+Observable<String> delayedNames = names
+    .zipWith(absoluteDelayMillis,
+        (n, d) -> Observable
+                .just(n)
+                .delay(d, MILLISECONDS))
+    .flatMap(o -> o);
+
+delayedNames
+    .sample(1, SECONDS)
+    .subscribe(System.out::println);
+```
+
+After the first second, we `println` _Linda_, followed by _Barbara_ a second later. Two seconds after _Barbara_ was emitted, we see _Susan_. `sample()` will forward completion (and errors, as well) discarding the last period.
+
+If we want to see _Dorothy_ appearing as well, we can artificially postpone the completion notification, as is done here:
+
+```java
+static <T> Observable<T> delayedCompletion() {
+    return Observable.<T>empty().delay(1, SECONDS);
+}
+
+//...
+
+delayedNames
+    .concatWith(delayedCompletion())
+    .sample(1, SECONDS)
+    .subscribe(System.out::println);
+```
+
+`sample()` has a more advanced variant taking `Observable` as an argument rather than a fixed period. This second `Observable` (known as sampler) basically dictates when to take a sample from the upstream source: every time sampler emits any value, a new sample is taken (if any new value appeared since the last sample). You can use this overloaded version of `sample()` to dynamically change the sampling rate or take samples only at very specific points in time. For example, taking a snapshot of some value when a new frame is redrawn or when a key is pressed. A trivial example can simply emulate the fixed period by using the `interval()` operator:
+
+```java
+//equivalent:
+obs.sample(1, SECONDS);
+obs.sample(Observable.interval(1, SECONDS));
+```
+
+`sample()` has an alias in RxJava called `throttleLast()`. Symmetrically, there is also the `throttleFirst()` ) operator that emits the very first event that appeared in each period. So, applying `throttleFirst()` instead of `sample()` in our name stream yields rather expected results:
+
+```java
+Observable<String> names = Observable
+    .just("Mary", "Patricia", "Linda",
+        "Barbara",
+        "Elizabeth", "Jennifer", "Maria", "Susan",
+        "Margaret", "Dorothy");
+
+Observable<Long> absoluteDelayMillis = Observable
+    .just(0.1, 0.6, 0.9,
+        1.1,
+        3.3, 3.4, 3.5, 3.6,
+        4.4, 4.8)
+    .map(d -> (long)(d * 1_000));
+
+//...
+
+delayedNames
+    .throttleFirst(1, SECONDS)
+    .subscribe(System.out::println);
+```
+
+The output looks like this:
+
+```
+Mary
+Barbara
+Elizabeth
+Margaret
+```
+
+## Buffering Events to a List
+
+The `buffer()` operator aggregates batches of events in real time into a `List`. However, unlike the `toList()` operator, `buffer()` emits several lists grouping some number of subsequent events as opposed to just one containing all events (like `toList()`). The simplest form of `buffer()` groups values from upstream `Observable` into a lists of equal size:
+
+```java
+Observable
+    .range(1, 7)  //1, 2, 3, ... 7
+    .buffer(3)
+    .subscribe((List<Integer> list) -> {
+            System.out.println(list);
+        }
+    );
+```
+
+The output shows three events emitted from the `buffer(3)` operator:
+
+```
+[1, 2, 3]
+[4, 5, 6]
+[7]
+```
+
+By using the `buffer(int)` operator you can replace several fine-grained events with less but bigger batches. For example, if you want to reduce database load, you might want to replace storing each event individually by storing them in batches:
+
+```java
+interface Repository {
+    void store(Record record);
+    void storeAll(List<Record> records);
+}
+
+//...
+
+Observable<Record> events = //...
+
+events
+        .subscribe(repository::store);
+//vs.
+events
+        .buffer(10)
+        .subscribe(repository::storeAll);
+```
+
+You can use `flatMap()` or `flatMapIterable()` to get back a simple `Observable<Integer>`:
+
+```java
+Observable<Integer> odd = Observable
+    .range(1, 7)
+    .buffer(1, 2)
+    .flatMapIterable(list -> list);
+```
+
+`flatMapIterable()` expects a function that transforms each value in the stream (one-element `List<Integer>`) into a `List`. Identity transformation (`list -> list`) is enough here.
+
+### Buffering by time periods
+
+An overloaded version of `buffer()` that accepts time period (one second in the preceding example) aggregates all upstream events within that period.
+Therefore, `buffer()` collects all events that happened during first time period, second time period, and so on.
+
+```java
+Observable<String> names = just(
+        "Mary",     "Patricia", "Linda", "Barbara", "Elizabeth",
+        "Jennifer", "Maria",    "Susan", "Margaret", "Dorothy");
+Observable<Long> absoluteDelays = just(
+    0.1, 0.6, 0.9, 1.1, 3.3,
+    3.4, 3.5, 3.6, 4.4, 4.8
+).map(d -> (long) (d * 1_000));
+
+Observable<String> delayedNames = Observable.zip(names,
+        absoluteDelays,
+        (n, d) -> just(n).delay(d, MILLISECONDS)
+).flatMap(o -> o);
+
+delayedNames
+        .buffer(1, SECONDS)
+        .subscribe(System.out::println);
+```
+
+Output:
+
+```
+[Mary, Patricia, Linda]
+[Barbara]
+[]
+[Elizabeth, Jennifer, Maria, Susan]
+[Margaret, Dorothy]
+```
+
+TODO ch06 for more.
+
+## Moving window
+
+Window is similar to [Buffer](http://reactivex.io/documentation/operators/buffer.html), but rather than emitting packets of items from the source Observable, it emits Observables, each one of which emits a subset of items from the source Observable and then terminates with an `onCompleted` notification.
+
+![](../uploads/window3.png)
+
+```java
+Observable<KeyEvent> keyEvents = //...
+
+Observable<Integer> eventPerSecond = keyEvents
+    .buffer(1, SECONDS)
+    .map(List::size);
+```
+
+We batch all events from `Observable<KeyEvent>` that occurred in each second into `Observable<List<KeyEvent>>`. In the next step, we map `List` into its `size`. This is quite wasteful, especially if the number of events in each second is significant:
+
+```java
+Observable<Observable<KeyEvent>> windows = keyEvents.window(1, SECONDS);
+Observable<Integer> eventPerSecond = windows
+    .flatMap(eventsInSecond -> eventsInSecond.count());
+```
+
+`window()`, as opposed to `buffer()`, returns an `Observable<Observable<KeyEvent>>`. The `count()` operator transforms an `Observable<T>` into an `Observable<Integer>` that emits just one item representing the number of events in the original `Observable`.
+
+## Skipping Stale Events by Using debounce()
+
+`buffer()` and `window()` group several events together so that you can process them in batches. `sample()` picks one fairly arbitrary event once in a while. These operators do not take into account how much time elapsed between events.
+
+`debounce()` (alias: `throttleWithTimeout()`) discards all of the events that are shortly followed by another event.
+
+```java
+Observable<BigDecimal> prices = tradingPlatform.pricesOf("NFLX");
+Observable<BigDecimal> debounced = prices.debounce(100, MILLISECONDS);
+```
+
+If the price goes above $150, we would like to forward such an update downstream much faster without hesitation:
+
+```java
+prices
+    .debounce(x -> {
+        boolean goodPrice = x.compareTo(BigDecimal.valueOf(150)) > 0;
+        return Observable
+            .empty()
+            .delay(goodPrice? 10 : 100, MILLISECONDS);
+    })
+```
+
+If you still struggle to understand how `debounce()` works, here is a stock price simulator you can try:
+
+```java
+Observable<BigDecimal> pricesOf(String ticker) {
+    return Observable
+            .interval(50, MILLISECONDS)
+            .flatMap(this::randomDelay)
+            .map(this::randomStockPrice)
+            .map(BigDecimal::valueOf);
+}
+
+Observable<Long> randomDelay(long x) {
+    return Observable
+            .just(x)
+            .delay((long) (Math.random() * 100), MILLISECONDS);
+}
+
+double randomStockPrice(long x) {
+    return 100 + Math.random() * 10 +
+           (Math.sin(x / 100.0)) * 60.0;
+}
+```
+

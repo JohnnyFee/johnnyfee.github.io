@@ -50,8 +50,6 @@ i -> {
 
 * 对于flowable, 在创建时我们设定了`FlowableEmitter.BackpressureMode.DROP`，一开始他会输出`0,1,2,3....127`但之后会忽然跳跃到`966,967,968 ...`。中间的部分数据由于缓存不了，被抛弃掉了。
 
----
-
 ## Single
 
 和Observable，Flowable一样会发送数据，不同的是订阅后只能接受到一次:
@@ -77,8 +75,6 @@ single.subscribe(new SingleObserver<Long>() {
 
 普通Observable可以使用toSingle转换:`Observable.just(1).toSingle()`
 
----
-
 ## Completable
 
 与Single类似，只能接受到完成(onComplete)和错误(onError)
@@ -86,8 +82,6 @@ single.subscribe(new SingleObserver<Long>() {
 同样也可以由普通的Observable转换而来:`Observable.just(1).toCompletable()`
 
 > 可订阅的对象在RxJava1中只有Observable一种，之前我们经常会直接把数据源称作Observable。而在RxJava2中扩充成了4种，因此在之后还是把他们统称为`数据源`为宜
-
----
 
 ## Base reactive interfaces
 
@@ -109,7 +103,7 @@ interface CompletableSource {
 
 因此许多操作符接受的参数从以前的具体对象，变成了现在的接口:
 
-```scala
+```
 Flowable<R> flatMap(
     Function<? super T, ? extends Publisher<? extends R>> mapper
 );
@@ -124,8 +118,6 @@ Observable<R> flatMap(Func1<? super T, ? extends Observable<? extends R>> func) 
 ```
 
 由于接收的都是接口，在使用其他遵循`Reactive-Streams`设计的第三方库的时候，就不需要把他自定义的`Flowable`转换成标准Flowable了。
-
----
 
 ## Subjects and Processors
 
@@ -145,15 +137,11 @@ Observable<R> flatMap(Func1<? super T, ? extends Observable<? extends R>> func) 
 
 支持`backpressure`
 
----
-
 ## Other classes
 
 `rx.observables.ConnectableObservable`变成了`io.reactivex.observables.ConnectableObservable<T>`和`io.reactivex.flowables.ConnectableFlowable<T>`
 
 类似的还有`rx.observables.GroupedObservable`。
-
----
 
 ## Functional interfaces
 
@@ -167,21 +155,15 @@ ublic interface Consumer<T> {
 
 意味着在这些方法里调用一些会发生异常的方法不需要`try-catch`了
 
----
-
 ## Actions
 
 另外大部分接口方法都按照Java8的接口方法名进行了相应的修改，比如上面那个`Consumer<T>`接口原来叫`Action1<T>`，而`Action2<T>`改名成了`BiConsumer`
 
 `Action3`-`Action9`被删掉了，大概因为没人用。。
 
----
-
 ## Functions
 
 同上，基本就是名字的修改和不常用类的删除
-
----
 
 ## Subscriber
 
@@ -238,29 +220,21 @@ composite2.add(Flowable.range(1, 5).subscribeWith(subscriber));
 * `SerialSubscription` 和 `MultipleAssignmentSubscription`被合并到了`SerialDisposable`里. set() 方法会处理掉就的值，而replace()方法不会。
 * `RefCountSubscription`被移除了
 
----
-
 ## Backpressure
 
 在第一节Observable and Flowable里已经说到了这个问题，在2中，Observable将不会处理backpressure，也就不会发生`MissingBackpressureException`问题，但内存仍然会缓存多余的数据。
 
 而在使用Flowable时，如果配置Backpressure有问题，那么`MissingBackpressureException`依然存在
 
----
-
 ## Schedulers
 
 RxJava2里仍然包含了`computation`, `io`, `newThread` 和 `trampoline`这些默认线程调度。而`immediate`被移除了，因为他经常被人错误使用。同时`Schedulers.test`也被移除了。
-
----
 
 ## Entering the reactive world
 
 将普通方法转换成RxJava的数据源，在RxJava1中，提供了`Observable.create()`方法，但是这个方法过于强大，但使用时需要注意的东西太多经常会发生错误。
 
 因此在RxJava2中，把原来的`fromAsync`重命名成了`create`，`fromAsync`是一个和`create`类似但更为简单和安全的方法。这样大部分旧代码都能够继续使用。
-
----
 
 ## Leaving the reactive world
 
@@ -309,14 +283,10 @@ Flowable.just(1).subscribe(subscriber::onNext, subscriber::onError, subscriber::
 
 这样的方法，之前的代码仍然可以继续throw错误。
 
----
-
 ## Operator differences
 
 操作符的改动不大，大部分是扩充了参数数量。  
 或者是加入`prefetch`代表可以加入预置数据。
-
----
 
 ## 总结
 

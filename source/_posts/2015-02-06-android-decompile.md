@@ -90,3 +90,4 @@ See also [apk破解实战](http://blog.csdn.net/cloudwu007/article/details/68518
 ## Tools
 
 - [Android APK Decompiler](http://www.decompileandroid.com/) <sup>online decompile android apk</sup>
+- [APKIDE改之理3.3.5少月增强版发布【20170130】 - 『逆向资源区』 - 吾爱破解 - LCG - LSG](http://www.52pojie.cn/thread-399571-1-1.html)

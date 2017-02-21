@@ -2,8 +2,8 @@
 layout: post
 title: "Applying Reactive Programming to Existing Applications"
 description: ""
-category: [RxJava]
-tags: [rx, rxjava]
+categories: RxJava
+tags: [rx, java, rxjava]
 ---
 
 ## From Collections to Observables

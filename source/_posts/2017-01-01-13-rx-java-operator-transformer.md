@@ -2,8 +2,8 @@
 layout: post
 title: "Rx Operators and Transformations"
 description: ""
-category: Rx
-tags: [rx, java, operator]
+categories: RxJava
+tags: [rx, java, rxjava]
 ---
 
 ## Operators

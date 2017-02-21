@@ -3,7 +3,8 @@ layout: post
 title: "RxJava Thead"
 description: ""
 category: [RxJava]
-tags: [rx, rxjava, thread]
+categories: RxJava
+tags: [rx, java, rxjava]
 ---
 
 ## What Is a Scheduler?

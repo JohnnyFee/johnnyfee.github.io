@@ -2,7 +2,8 @@
 layout: "post"
 title: "Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns"
 date: "2016-12-15 09:51"
-categories: Android
+categories: RxJava
+tags: [rx, java, rxjava]
 ---
 
 From  [android-tech-frontier/androidweekly/使用RxJava.Observable取代AsyncTask和AsyncTaskLoader at master · hehonghui/android-tech-frontier](https://github.com/hehonghui/android-tech-frontier/tree/master/androidweekly/%E4%BD%BF%E7%94%A8RxJava.Observable%E5%8F%96%E4%BB%A3AsyncTask%E5%92%8CAsyncTaskLoader)

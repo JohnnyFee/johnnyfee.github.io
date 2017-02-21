@@ -2,8 +2,8 @@
 layout: post
 title: "Rx Java Concept"
 description: ""
-category: Rx
-tags: [rx, java]
+categories: RxJava
+tags: [rx, java, rxjava]
 ---
 
 ## Rx

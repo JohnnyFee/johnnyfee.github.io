@@ -2,8 +2,8 @@
 layout: post
 title: "RxJava Custom Operator"
 description: ""
-category: [RxJava]
-tags: [rx, rxjava]
+categories: RxJava
+tags: [rx, java, rxjava]
 ---
 
 See [Implementing Your Own Operators · ReactiveX/RxJava Wiki](https://github.com/ReactiveX/RxJava/wiki/Implementing-Your-Own-Operators)

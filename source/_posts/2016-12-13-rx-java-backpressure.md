@@ -2,7 +2,8 @@
 layout: "post"
 title: "RxJava Backpressure"
 date: "2016-12-13 13:45"
-categories: Android
+categories: RxJava
+tags: [rx, java, rxjava]
 ---
 
 - [Backpressure · ReactiveX/RxJava Wiki](https://github.com/ReactiveX/RxJava/wiki/Backpressure)

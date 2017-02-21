@@ -2,7 +2,8 @@
 layout: "post"
 title: "Rx Java Error Handling"
 date: "2016-12-12 14:50"
-categories: Android
+categories: RxJava
+tags: [rx, java, rxjava]
 ---
 ## Error Handling
 

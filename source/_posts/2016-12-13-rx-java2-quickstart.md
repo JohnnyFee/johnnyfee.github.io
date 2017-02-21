@@ -2,7 +2,8 @@
 layout: "post"
 title: "RxJava2 QuickStart"
 date: "2016-12-13 13:57"
-categories: Android
+categories: RxJava
+tags: [rx, java, rxjava]
 ---
 
 - [What's different in 2.0 · ReactiveX/RxJava Wiki](https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0)

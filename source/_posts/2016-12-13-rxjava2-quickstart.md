@@ -293,3 +293,8 @@ Flowable.just(1).subscribe(subscriber::onNext, subscriber::onError, subscriber::
 可以明显的看到，RxJava2最大的改动就是对于`backpressure`的处理，为此将原来的`Observable`拆分成了新的`Observable`和`Flowable`，同时其他相关部分也同时进行了拆分。
 
 除此之外，他和我们最熟悉和喜爱的RxJava~
+
+## Tutorial
+
+- [关于 RxJava 最友好的文章—— RxJava 2.0 全新来袭 - 简书](http://www.jianshu.com/p/220955eefc1f)
+- [RxJava2-Android-Samples: RxJava 2 Android Examples](https://github.com/amitshekhariitbhu/RxJava2-Android-Samples)

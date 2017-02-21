@@ -8,6 +8,11 @@ tags: [rx, rxjava, thread]
 
 ## What Is a Scheduler?
 
+
+* `Observable` without any `Scheduler` works like a single-threaded program with blocking method calls passing data between one another.
+* `Observable` with a single `subscribeOn()` is like starting a big task in the background `Thread`. The program within that `Thread` is still sequential, but at least it runs in the background.
+* `Observable` using `flatMap()` where each internal `Observable` has `subscribeOn()` works like `ForkJoinPool` from `java.util.concurrent`, where each substream is a _fork_ of execution and `flatMap()` is a safe _join_ stage.
+
 In principle it works similarly to `ScheduledExecutorService`  from `java.util.concurrent`.
 
 Schedulers are used together with `subscribeOn()` and `observeOn()` operators as well as when creating certain types of `Observable`s. A scheduler only creates instances of `Worker`s that are responsible for scheduling and running code. When RxJava needs to schedule some code it first asks `Scheduler` to provide a `Worker` and uses the latter to schedule subsequent tasks.

@@ -1068,10 +1068,6 @@ Whenever a new `UUID` is discovered, the new `GroupedObservable<UUID, Reservatio
 
 When we `subscribe` to the outer `Observable`, every emitted value is actually another `Observable` (`GroupedObservable`) to which you can subscribe. 
 
-* `Observable` without any `Scheduler` works like a single-threaded program with blocking method calls passing data between one another.
-* `Observable` with a single `subscribeOn()` is like starting a big task in the background `Thread`. The program within that `Thread` is still sequential, but at least it runs in the background.
-* `Observable` using `flatMap()` where each internal `Observable` has `subscribeOn()` works like `ForkJoinPool` from `java.util.concurrent`, where each substream is a _fork_ of execution and `flatMap()` is a safe _join_ stage.
-
 Of course, the preceding tips only apply to blocking `Observable`s, which are rarely seen in real applications. If your underlying `Observable`s are already asynchronous, achieving concurrency is a matter of understanding how they are combined and when subscription occurs. For example, `merge()` on two streams will subscribe to both of them concurrently, whereas the `concat()` operator waits until the first stream finishes before it subscribes to the second one.
 
 ## Taking Periodic Samples and Throttling

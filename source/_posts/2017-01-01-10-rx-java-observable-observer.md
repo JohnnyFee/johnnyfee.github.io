@@ -12,7 +12,7 @@ Designing an API with Rx in mind doesn’t influence the entire architecture, be
 
 ## Observable vs Observer vs Subscription
 
-The Observable represents the stream of data and can be sub-scribed to by an Observer (which you’ll learn more about in “Capturing All Notifications by Using Observer<T>”):
+The Observable represents the stream of data and can be sub-scribed to by an Observer:
 
 ```
 interface Observable<T> {
@@ -74,13 +74,13 @@ The specification of reactive extensions clearly states that every `Observable` 
 ### Hot and Cold Observables
 
 A cold `Observable` is entirely lazy and never begins to emit events until
-someone is actually interested. A cold `Observable` is entirely lazy and never begins to emit events until someone is actually interested.
+someone is actually interested.
 
-A hold of such an `Observable` it might already be emitting events no matter how many `Subscriber`s they have. `Observable` pushes events downstream, even if no one listens and events are possibly missed. Examples of such `Observable`s include mouse movements, keyboard inputs, or button clicks.
+An hot `Observable` might already be emitting events no matter how many `Subscriber`s they have. `Observable` pushes events downstream, even if no one listens and events are possibly missed. Examples of such `Observable`s include mouse movements, keyboard inputs, or button clicks.
 
 How to ensure that every subscriber received all events:
 
--  One such technique already sneaked into this chapter: the `cache()` operator. Technically, it can buffer all events from a hot `Observable` and allow subsequent subscribers to receive the same sequence of events. However, because it consumes theoretically an unlimited amount of memory, be careful with caching hot `Observable`s.
+One such technique already sneaked into this chapter: the `cache()` operator. Technically, it can buffer all events from a hot `Observable` and allow subsequent subscribers to receive the same sequence of events. However, because it consumes theoretically an unlimited amount of memory, be careful with caching hot `Observable`s.
 
 ### Creating Observables
 
@@ -109,6 +109,8 @@ First, there are several factory methods that create fixed constant `Observable`
 - `Observable.error()`
 
     Emits an `onError()` notification immediately to every subscriber. No other values are emitted and according to contract `onCompleted()` cannot occur as well.
+
+- `Observable.empty()`
 
 All the `empty()`, `never()`, and `error()` factories don’t seem terribly useful; however, they are quite handy when composing with genuine `Observable`s.
 

@@ -6,6 +6,9 @@ tags: [android]
 ---
 本片文章针对比较流行的UI方面的开源项目进行初步分类，关于非UI方便的类库，请参考姐妹篇 [Android Views](http://johnnyfee.github.io/android/2013/12/27/android-library)。
 
+- [umano/AndroidSlidingUpPanel: This library provides a simple way to add a draggable sliding up panel (popularized by Google Music and Google Maps) to your Android application. Brought to you by Umano.](https://github.com/umano/AndroidSlidingUpPanel)
+- [How to Create a Bubble Selection Animation on Android – Medium](https://medium.com/@igalata13/how-to-create-a-bubble-selection-animation-on-android-627044da4854#.gc4ghubrv)
+
 ## Navigation
 
 - [Android-TabCarousel](https://bitbucket.org/adneal/tabcarousellib/wiki/Home) 选项卡导航。

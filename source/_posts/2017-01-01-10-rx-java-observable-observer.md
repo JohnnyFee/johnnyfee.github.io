@@ -741,6 +741,8 @@ Observable<Data> loadAll(Collection<Integer> ids) {
 
 ## Subject
 
+- [RxJava 第二篇 - Subject使用及示例 - 简书](http://www.jianshu.com/p/1257c8ba7c0c)
+
 The `Subject` class is quite interesting because it extends `Observable` and implements `Observer`  at the same time. What that means is that you can treat it as `Observable` on the client side (subscribing to upstream events) and as `Observer` on the provider side (pushing events downstream on demand by calling `onNext()` on it). 
 
 Typically, what you do is keep a reference to `Subject` internally so that you can push events from any source you like but externally expose this `Subject` as `Observable`.

@@ -804,3 +804,7 @@ Android Studio为数据绑定支持许多的代码编辑。例如，它支持以
 ## FAQ
 
 - [Android Data Binding: That <include> Thing – Google Developers – Medium](https://medium.com/google-developers/android-data-binding-that-include-thing-1c8791dd6038#.965zwocww)
+
+## Library
+
+- [Ilhasoft/data-binding-validator: Android fields validation library based on data binding adapters.](https://github.com/Ilhasoft/data-binding-validator)

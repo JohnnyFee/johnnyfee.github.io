@@ -5,6 +5,8 @@ category: Android
 tags: [android, performance]
 ---
 
+- [lqcandqq13/BlockCanaryEx: make performance bottleneck detection easily when app blocked](https://github.com/lqcandqq13/BlockCanaryEx)
+
 ## Tutorial
 
 - [awesome-android-performance](https://github.com/Juude/awesome-android-performance) - A list of awesome Android tutorials, videos and tools for performance optimization. <sup>awesome</sup>

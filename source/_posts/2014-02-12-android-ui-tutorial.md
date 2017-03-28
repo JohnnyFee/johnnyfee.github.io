@@ -7,6 +7,7 @@ category: Android
 
 ## Layout
 
+* [From design to android, part 1 · Saúl Molinero](http://saulmm.github.io/from-design-to-android-part1)
 * To add layout files, see [Build a UI with Layout Editor](https://developer.android.com/studio/write/layout-editor.html).
 * To add string files, see [Localize the UI with Translations Editor](https://developer.android.com/studio/write/translations-editor.html).
 

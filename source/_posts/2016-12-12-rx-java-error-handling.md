@@ -138,11 +138,207 @@ Observable<Income> income = person
 
 ## Timing Out When Events Do Not Occur
 
-TODO
+`timeout()` operator that listens to the upstream `Observable`, constantly monitoring how much time elapsed since the last event or subscription. If it so happens that the silence between consecutive events is longer than a given period, the `timeout()` operator publishes an error notification that contains  `TimeoutException`.
+
+```java
+Observable<Confirmation> confirmation() {
+    Observable<Confirmation> delayBeforeCompletion =
+        Observable
+            .<Confirmation>empty()
+            .delay(200, MILLISECONDS);
+    return Observable
+            .just(new Confirmation())
+            .delay(100, MILLISECONDS)
+            .concatWith(delayBeforeCompletion);
+}
+```
+
+Now, let’s test drive the `timeout()` operator in its simplest overloaded version:
+
+```java
+import java.util.concurrent.TimeoutException;
+
+//...
+
+confirmation()
+    .timeout(210, MILLISECONDS)
+    .forEach(
+        System.out::println,
+        th -> {
+            if ((th instanceof TimeoutException)) {
+                System.out.println("Too long");
+            } else {
+                th.printStackTrace();
+            }
+        }
+    );
+```
+
+The overloaded version of `timeout()` does just that: it accept two factories of `Observable`s, one marking the timeout of the first event, and the second one for each subsequent element. An example is worth a thousand words:
+
+```java
+nextSolarEclipse(LocalDate.of(2016, SEPTEMBER, 1))
+    .timeout(
+        () -> Observable.timer(1000, TimeUnit.MILLISECONDS),
+        date -> Observable.timer(100, MILLISECONDS))
+```
+
+Here, the first `Observable` emits exactly one event after one second—this is the acceptable latency threshold for the first event. The second `Observable` is created for each event that appears on the stream and allows fine tuning of the timeout for the subsequent event.
+
+It is sometimes useful to also track the latency of each event, even if we do not timeout. The handy `timeInterval()` operator does just that: it replaces each event of type `T` with `TimeInterval<T>`  that encapsulates the event but also shows how much time has elapsed since the previous event (or subscription in case of first event):
+
+```
+Observable<TimeInterval<LocalDate>> intervals =
+        nextSolarEclipse(LocalDate.of(2016, JANUARY, 1))
+                .timeInterval();
+```
+
+Apart from `getValue()` that returns `LocalDate`, `TimeInterval<LocalDate>` also has `getIntervalInMilliseconds()` but it is easier to see how it looks studying the output of the preceding program after subscription. You can clearly see that it took 533 milliseconds for the first event to arrive but only around 50 milliseconds for each one subsequently:
+
+```
+TimeInterval [intervalInMilliseconds=533, value=2016-03-09]
+TimeInterval [intervalInMilliseconds=49, value=2016-09-01]
+TimeInterval [intervalInMilliseconds=50, value=2017-02-26]
+TimeInterval [intervalInMilliseconds=50, value=2017-08-21]
+TimeInterval [intervalInMilliseconds=50, value=2018-02-15]
+TimeInterval [intervalInMilliseconds=50, value=2018-07-13]
+TimeInterval [intervalInMilliseconds=50, value=2018-08-11]
+TimeInterval [intervalInMilliseconds=50, value=2019-01-06]
+TimeInterval [intervalInMilliseconds=51, value=2019-07-02]
+TimeInterval [intervalInMilliseconds=49, value=2019-12-26]
+```
+
+The `timeout()` operator has yet another overloaded version that accepts the fallback `Observable` replacing the original source in case of error. It is very similar in behavior to `onErrorResumeNext()`.
 
 ## Retrying After Failures
 
-TODO
+The simplest version of the `retry()` operator resubscribes to a failed `Onservable` hoping that it will keep producing normal events rather than failures. For educational purposes, we will create an `Observable` that misbehaves severely:
+
+```java
+Observable<String> risky() {
+    return Observable.fromCallable(() -> {
+        if (Math.random() < 0.1) {
+            Thread.sleep((long) (Math.random() * 2000));
+            return "OK";
+        } else {
+            throw new RuntimeException("Transient");
+        }
+    });
+}
+```
+
+In 90 percent of the cases, subscribing to `risky()` ends with a `RuntimeException`. If you somehow make it to the `"OK"` branch an artificial delay between zero and two seconds is injected. Such a risky operation will serve as a demonstration of `retry()`:
+
+```java
+risky()
+    .timeout(1, SECONDS)
+    .doOnError(th -> log.warn("Will retry", th))
+    .retry()
+    .subscribe(log::info);
+```
+
+The behavior of `retry()` is fairly straightforward: it pushes all events and completion notification downstream, but not `onError()`. The error notification is swallowed (so no exception is logged whatsoever), thus we use `doOnError()` callback. Every time `retry()` encounters a simulated `RuntimeException` or `TimeoutException`, it tries subscribing again.
+
+A word of caution here: if your `Observable` is cached or otherwise guaranteed to always return the same sequence of elements, `retry()` will not work:
+
+```
+risky().cached().retry()  //BROKEN
+```
+
+If `risky()` emits errors once, it will continue emitting them forever, no matter how many times you resubscribe. To overcome this issue, you can delay the creation of `Observable` even further by using ) `defer()`:
+
+```java
+Observable
+    .defer(() -> risky())
+    .retry()
+```
+
+Even if an `Observable` returned from `risky()` is cached, `defer()` calls `risky()` multiple times, possibly getting a new `Observable` each time.
+
+### Retrying by using delay and limited attempts
+
+Basically, parameterless `retry()` is a `while` loop with a `try` block within it, followed by an empty `catch`.
+
+First, we should limit the number of attempts, which happens to be built in:
+
+```java
+risky()
+    .timeout(1, SECONDS)
+    .retry(10)
+```
+
+The integer parameter to `retry()` instructs how many times to resubscribe, thus `retry(0)` is equivalent to no retry at all. If the upstream `Observable` failed for the tenth time, the last seen exception is propagated downstream.
+
+A more flexible version of `retry()` leaves you with a decision about retry, based on the attempt number and the actual exception:
+
+```java
+risky()
+    .timeout(1, SECONDS)
+    .retry((attempt, e) ->
+        attempt <= 10 && !(e instanceof TimeoutException))
+```
+
+This version not only limits the number of resubscription attempts to 10, but also drops retrying prematurely if the exception happens to be `TimeoutException`.
+
+If failures are transient, waiting a little bit prior to a resubscription attempt sounds like a good idea. The `retry()` operator does not provide such a possibility out of the box, but it is relatively easy to implement. A more robust version of `retry()` called `retryWhen()` takes a function receiving an `Observable` of failures. Every time an upstream fails, this `Observable` emits a `Throwable`. Our responsibility is to transform this `Observable` in such a way that it emits some arbitrary event when we want to retry (hence the name):
+
+```java
+risky()
+    .timeout(1, SECONDS)
+    .retryWhen(failures -> failures.delay(1, SECONDS))
+```
+
+The preceding example of `retryWhen()` receives an `Observable` that emits a `Throwable` every time the upstream fails. We simply delay that event by one second so that it appears in the resulting stream one second later. This is a signal to `retryWhen()` that it should attempt retry. If we simply returned the same stream (`retryWhen(x -> x)`), `retryWhen()` would behave exactly like `retry()`, resubscribing immediately when an error occurs. With `retryWhen()`, we can also easily simulate `retry(10)` (well, almost… keep reading):
+
+```
+.retryWhen(failures -> failures.take(10))
+```
+
+We receive an event each time a failure occurs. The stream we return is supposed to emit an arbitrary event when we want to retry. Thus, we simply forward the first 10 failures, causing each one of them to be retried immediately.
+
+But what happens when eleventh failure occurs in a `failures` `Observable`? This is where it becomes tricky. The `take(10)` operator emits an `onComplete` event immediately following the 10th failure. Therefore, after the 10th retry, `retryWhen()` receives a completion event. This completion event is interpreted as a signal to stop retrying and complete downstream. It means that after 10 failed attempts, we simply emit nothing and complete. However, if we complete `Observable` returned inside `retryWhen()` with an error, this error will be propagated downstream.
+
+In other words, as long as we emit any event from an `Observable` inside `retryWhen()`, they are interpreted as retry requests. However, if we send a completion or error notification, retry is abandoned and this completion or error is passed downstream. Doing just `failures.take(10)` _will_ retry 10 times, but in case of yet another failure, we do not propagate the last error but the successful completion, instead. Let’s have a look at it:
+
+```java
+static final int ATTEMPTS = 11;
+
+//...
+
+.retryWhen(failures -> failures
+        .zipWith(Observable.range(1, ATTEMPTS), (err, attempt) ->
+                attempt < ATTEMPTS ?
+                        Observable.timer(1, SECONDS) :
+                        Observable.error(err))
+        .flatMap(x -> x)
+)
+```
+
+This looks quite complex, but it is also really powerful. We `zip` failures with sequence numbers from 1 to 11. We would like to perform as many as 10 retry attempts, so if the attempt sequence number is smaller than 11, we return `timer(1, SECONDS)`. The `retryWhen()` operator will capture this event and retry one second after failure. However, when the 10th retry ends with a failure, we return an `Observable` with that error, completing the retry mechanism with the last seen exception.
+
+This gives us a lot of flexibility. We can stop retrying when a certain exception appears or when too many attempts were already performed. Moreover, we can adjust the delay time between attempts! For example, the first retry can appear immediately but the delays between subsequent retries should grow exponentially:
+
+```java
+.retryWhen(failures -> failures
+    .zipWith(Observable.range(1, ATTEMPTS),
+         this::handleRetryAttempt)
+    .flatMap(x -> x)
+)
+
+//...
+
+Observable<Long> handleRetryAttempt(Throwable err, int attempt) {
+    switch (attempt) {
+        case 1:
+            return Observable.just(42L);
+        case ATTEMPTS:
+            return Observable.error(err);
+        default:
+            long expDelay = (long) Math.pow(2, attempt - 2);
+            return Observable.timer(expDelay, SECONDS);
+    }
+}
+```
 
 ## Monitoring and Debugging
 

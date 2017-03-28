@@ -6,6 +6,9 @@ category: Android
 tags: [android]
 ---
 
+
+- [ActivityStarter by MarcinMoskala](http://marcinmoskala.com/ActivityStarter/) Activity 传参。
+
 ## Actvity
 
 - [Activity](https://developer.android.com/guide/components/activities.html)

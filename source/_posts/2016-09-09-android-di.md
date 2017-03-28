@@ -18,6 +18,10 @@ tags: [android]
 - [Android：dagger2让你爱不释手-重点概念讲解、融合篇 - 简书](http://www.jianshu.com/p/1d42d2e6f4a5) <sup>analyse</sup>
 - [从零开始的Android新项目4 - Dagger2篇](http://blog.zhaiyifan.cn/2016/03/27/android-new-project-from-0-p4/#) <sup>important</sup>
 
+## Usage
+
+- [Rewriting Uber Engineering’s Android Rider App with Deep Scope Hierarchies](https://eng.uber.com/deep-scope-hierarchies)
+
 ## Sample
 
 - [android10/Android-CleanArchitecture](https://github.com/android10/Android-CleanArchitecture)

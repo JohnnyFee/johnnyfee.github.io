@@ -7,3 +7,5 @@ tags: [rx, java, rxjava]
 ---
 
 TODO ch7
+
+- [Testing RxJava2](https://www.infoq.com/articles/Testing-RxJava2)

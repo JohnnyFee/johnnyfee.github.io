@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "RxJava Thead"
+title: "RxJava Schedulers"
 description: ""
 category: [RxJava]
 categories: RxJava

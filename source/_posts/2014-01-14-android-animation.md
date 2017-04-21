@@ -11,7 +11,9 @@ tags: [android,animation]
 - [View Animation](http://developer.android.com/guide/topics/resources/animation-resource.html#View) View动画又分为
 	- [Tween Animation](http://developer.android.com/guide/topics/resources/animation-resource.html#Tween) 通过对场景里的对象不断做图像变换(平移、缩放、旋转)产生动画效果，可以理解为渐变动画或者补间动画。
 	- [Frame Animation](http://developer.android.com/guide/topics/resources/animation-resource.html#Frame) 通过[AnimationDrawable](http://developer.android.com/reference/android/graphics/drawable/AnimationDrawable.html)来顺序显示一组图片，可以理解为逐帧动画。
-
+- [Drawable Animation in Android](http://www.zoftino.com/drawable-animation-in-android)
+- [Designing for the Appearance of Speed – Mobify Design Team – Medium](https://medium.com/mobify-design-team/designing-for-the-appearance-of-speed-aaabc7f568c2)
+- [Make a moving Gradient Background in Android - TheTechnoCafe](http://thetechnocafe.com/make-a-moving-gradient-background-in-android)
 
 所有关于动画的定义均应放在res/anim/目录下，在Java中通过`R.anim.filename`来引用，在XML中通过` @[package:]anim/filename`来引用。
 
@@ -410,3 +412,7 @@ This application code will set the animation as the background for a View, then 
 - [Getting Started with Activity & Fragment Transitions (part 1)](http://www.androiddesignpatterns.com/2014/12/activity-fragment-transitions-in-android-lollipop-part1.html)
 - [Content Transitions In-Depth (part 2)](http://www.androiddesignpatterns.com/2014/12/activity-fragment-content-transitions-in-depth-part2.html)
 - <sup>video</sup>[Render 2016 - Val Head on Vimeo](https://vimeo.com/165995133)
+
+## Resource
+
+- [LottieFiles - Free high quality Lottie animation files](http://www.lottiefiles.com/popular)

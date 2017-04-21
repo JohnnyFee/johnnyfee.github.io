@@ -161,6 +161,7 @@ __其他参考：__
 ## Scroll
 
 - [flavienlaurent/discrollview](https://github.com/flavienlaurent/discrollview) Scroll + discover = DiscrollView
+- [yarolegovich/DiscreteScrollView: Scrollable list of items, where current item is centered and can be changed using swipes](https://github.com/yarolegovich/DiscreteScrollView)
 
 ## Slider
 

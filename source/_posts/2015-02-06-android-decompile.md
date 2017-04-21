@@ -4,23 +4,22 @@ category: Android
 tags: [android, decompile]
 ---
 
-- [borisf/classyshark-export: Exporting all data from ClassyShark](https://github.com/borisf/classyshark-export)
+You need Three Tools to _`decompile an APK`_ file.
 
-## 反编译资源文件
+> 1.  [Dex2jar](http://code.google.com/p/dex2jar/) - Tools to work with android .dex and java .class files
+>
+> 2.  [ApkTool](http://ibotpeaches.github.io/Apktool/) - A tool for reverse engineering Android apk files
+>
+> 3.  [JD-GUI](http://jd.benow.ca/) - Java Decompiler is a tools to decompile and analyze Java 5 “byte code” and the later versions.
+>
+
+for more [how-to-use-dextojar](http://stackoverflow.com/questions/5257830/how-to-use-dextojar/19954951#19954951). Hope this will help You and all! :)
+
+## 反编译 APK
 
 ## Install
 
-See [Install - android-apktool - Install Guide - A tool for reverse engineering Android apk files - Google Project Hosting](https://code.google.com/p/android-apktool/wiki/Install)
-
-
-Windows:
-
-1. Download Windows [wrapper script](https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/windows/apktool.bat) (Right click, Save Link As `apktool.bat`)
-2. Download apktool-2 ([find newest here](https://bitbucket.org/iBotPeaches/apktool/downloads)) See also [android-apktool - A tool for reverse engineering Android apk files](https://code.google.com/p/android-apktool/)
-3. Rename downloaded jar to apktool.jar
-4. Move both files (apktool.jar & apktool.bat) to your Windows directory (Usually `C://Windows`)
-5. If you do not have access to C://Windows, you may place the two files anywhere then add that directory to your Environment Variables System PATH variable.
-6. Try running apktool via command prompt
+Install [Apktool - A tool for reverse engineering 3rd party, closed, binary Android apps.](https://ibotpeaches.github.io/Apktool/)
 
 <!-- more -->
 

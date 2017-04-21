@@ -29,6 +29,7 @@ both system and installed apps.</dd>
 2.  [Roboletric](http://robolectric.org/) - Unit test framework to run tests inside the JVM on your workstation, not in the emulator.
 4.  [Green Coffee](https://github.com/mauriciotogneri/green-coffee) - Run your Cucumber tests in your Android instrumentation tests.
 5. [square/spoon](https://github.com/square/spoon) 同时在多个设备运行测试用例，并生成测试报告。
+6. [Testing MVP using Espresso and Mockito](https://josiassena.com/testing-mvp-using-espresso-and-mockito)
 
 ## AssertJ
 

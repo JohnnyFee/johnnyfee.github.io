@@ -21,6 +21,11 @@ tags: [android]
 ## Usage
 
 - [Rewriting Uber Engineering’s Android Rider App with Deep Scope Hierarchies](https://eng.uber.com/deep-scope-hierarchies)
+- [Retaining Dagger components across configuration change using Service-Tree](https://medium.com/@Zhuinden/retaining-dagger-components-across-configuration-change-using-service-tree-3709c78bf6d2#.6jvjx2tb6)
+
+## Mock
+
+- [How to be a Mock-Star…😎 – Fueled Android – Medium](https://medium.com/fueled-android/how-to-be-a-mock-star-fc00714d8c2f#.9a8fj7mcj)
 
 ## Sample
 

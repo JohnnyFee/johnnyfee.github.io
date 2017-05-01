@@ -13,6 +13,8 @@ Exceptions are an object-oriented evolution of PHP’s error handling system. Th
 
 <!-- more -->
 
+![](assets/2015-05-30-php-exception-338a4c05.png)
+
 ## Exceptions
 
 An exception is an object of class `Exception` that is _thrown_ when you encounter an irreparable situation from which you cannot recover (e.g., a remote API is unresponsive, a database query fails, or a precondition is not satisfied). I call these _exceptional situations_. Exceptions are used offensively to delegate responsibility when a problem occurs, and they are used defensively to anticipate and mitigate potential problems.
@@ -70,7 +72,7 @@ exception?_, and document your choice.
 
 ### Catch exceptions
 
-Surround code that might throw an exception with a `try/catch` block to intercept and handle potential exceptions. 
+Surround code that might throw an exception with a `try/catch` block to intercept and handle potential exceptions.
 
 ```
 <?php
@@ -136,7 +138,7 @@ restore_exception_handler();
 
 PHP provides error-reporting functions in addition to exceptions. This confuses many PHP developers. PHP can trigger different types of errors, including fatal errors, runtime errors, compile-time errors, startup errors, and (more rarely) user-triggered errors. You’ll most often encounter PHP errors caused by syntax mistakes or uncaught exceptions.
 
-The difference between errors and exceptions is subtle. Errors are often triggered when a PHP script cannot fundamentally run as expected for whatever reason (e.g., there is a syntax mistake). It is also possible to trigger your own errors with the `trigger_error()` function and handle them with a custom error handler, but it is better to use exceptions when writing userland code. Unlike errors, PHP exceptions can be thrown and caught at any level of your PHP application. Exceptions provide more contextual information than PHP errors. And you can extend the topmost `Exception` class with your own custom exception subclasses. Exceptions and a good logger like Monolog are a far more versatile solution than PHP errors. However, modern PHP developers must anticipate and handle both PHP errors and PHP exceptions. 
+The difference between errors and exceptions is subtle. Errors are often triggered when a PHP script cannot fundamentally run as expected for whatever reason (e.g., there is a syntax mistake). It is also possible to trigger your own errors with the `trigger_error()` function and handle them with a custom error handler, but it is better to use exceptions when writing userland code. Unlike errors, PHP exceptions can be thrown and caught at any level of your PHP application. Exceptions provide more contextual information than PHP errors. And you can extend the topmost `Exception` class with your own custom exception subclasses. Exceptions and a good logger like Monolog are a far more versatile solution than PHP errors. However, modern PHP developers must anticipate and handle both PHP errors and PHP exceptions.
 
 You can instruct PHP which errors to report, and which to ignore, with the `error_reporting()` function or the `error_reporting` directive in your _php.ini_ file. Both accept named `E_*` constants that determine which errors are reported and which are ignored.
 
@@ -199,7 +201,7 @@ Your error-handler callable receives five arguments:
 - $errfile The filename in which the error occurred.
 - $errline The file line number on which the error occurred.
 - $errcontext
-    
+
     An array that points to the active symbol table when the error occurred. This is optional and is only useful for advanced debugging purposes. I usually ignore this argument.
 
 There’s one important caveat that you absolutely must know when using a custom error handler. PHP will send _all_ errors to your error handler, even those that are excluded by your current error-reporting setting. It is your responsibility to inspect each error code (the first argument) and act appropriately. You _can_ instruct your error handler to only respond to a subset of error types with a second argument to the `set_error_handler()` function; this argument is a bitwise mask of `E_*` constants (e.g., `E_ALL | E_STRICT`).

@@ -5,7 +5,12 @@ categories: PHP
 tags: [centos, php, nginx, lamp]
 ---
 
-See [How To Install PHP 7, NGINX & MySQL 5.6 on CentOS/RHEL 7.1 & 6.7](https://tecadmin.net/install-php-7-nginx-mysql-5-on-centos/#)
+See 
+
+- [How To Install PHP 7, NGINX & MySQL 5.6 on CentOS/RHEL 7.1 & 6.7](https://tecadmin.net/install-php-7-nginx-mysql-5-on-centos/#)
+- [CentOS 7 安裝 Apache + PHP 7 + MySQL + phpMyAdmin + FTP](https://jsnwork.kiiuo.com/archives/2118/centos-7-%E5%AE%89%E8%A3%9D-apache-php-mysql-phpmyadmin-ftp)
+
+
 
 Few days back PHP version 7.0 has been released. Which has number of changes and improvements  over PHP version 5.X.  This article will help you to install  PHP 7, NGINX and  MySQL 5.6 on CentOS / RHEL 7.1 & 6.7 operating systems. This tutorial has been tested with CentOS 7.1, so all the services command are used with systemctl, For CentOS 6 users change all **systemctl** command correspondence **service** command.
 
@@ -208,13 +213,42 @@ yum remove php* php-common
 
 If you don't care the newest php version, you can use default version. See [How To Install Linux, Nginx, MySQL, PHP (LEMP) stack On CentOS 7](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-centos-7)
 
+### centos nginx bind() to 0.0.0.0:8090 failed (13: Permission denied)
+
+[nginx: no permission to bind port 8090 but it binds to 80 and 8080 - Server Fault](https://serverfault.com/questions/566317/nginx-no-permission-to-bind-port-8090-but-it-binds-to-80-and-8080)
+
+cnetos下修改端口成非常规端口出现报错
+
+```hljs
+2014/01/10 09:20:02 [emerg] 30181#0: bind() to 0.0.0.0:8090 failed (13: Permission denied)
+```
+
+This will most likely be related to SELinux
+
+```
+semanage port -l | grep http_port_t
+http_port_t                    tcp      80, 81, 443, 488, 8008, 8009, 8443, 9000
+```
+
+As you can see from the output above with SELinux in enforcing mode http is only allowed to bind to the listed ports. The solution is to add the ports you want to bind on to the list
+
+```
+semanage port -a -t http_port_t  -p tcp 8090
+```
+
+will add port 8090 to the list.
+
+如果出现 semanage command not found错误就执行  
+
+```
+yum -y install policycoreutils-python
+```
+
+See [semanage command not found on CentOS 7 and RHEL 7](http://sharadchhetri.com/2014/10/07/semanage-command-found-centos-7-rhel-7/)
+
 ### SElinux error :ValueError: Port tcp/5000 already defined
 
 [httpd - SElinux error :ValueError: Port tcp/5000 already defined - Server Fault](https://serverfault.com/questions/790404/selinux-error-valueerror-port-tcp-5000-already-defined)
-
-
-        4
-        down vote
 
 On the systems I have to hand (C6, C7 and F24), tcp port 5000 has an SELinux context of `commplex_port_t`. This will be why, when you try to add it you get the error message 
 

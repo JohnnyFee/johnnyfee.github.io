@@ -15,7 +15,7 @@ You’ll need to have a LEMP (Linux, Nginx, MySQL, and PHP) installed on your Ce
 **On RHEL/CentOS 7** 
 # yum install nginx mariadb mariadb-server php php-fpm php-common php-mysql php-gd php-xml php-mbstring php-mcrypt 
 **On RHEL/CentOS 6/5** 
-# yum install nginx mysql mysql-server php php-fpm php-common php-mysql php-gd php-xml php-mbstring php-mcrypt 
+# yum install nginx mysql mysql-server php php-fpm php-common php-mysql php-gd php-xml php-mbstring php-mcrypt
 ```
 
 <!-- more -->
@@ -86,25 +86,20 @@ Open the Nginx configuration file with “vi” editor and add the following lin
 ```
 server {
         listen 80;
-        server_name blog.techoism.com;
+        server_name localhost;
         root   /usr/share/nginx/html/wordpress;
         index index.php index.html;
         location / {
-                     try_files $uri $uri/ @handler;
-                    }
-        location @handler {
-                fastcgi_pass 127.0.0.1:9000;
-                fastcgi_param SCRIPT_FILENAME /usr/share/nginx/html/wordpress/index.php;
-                include /etc/nginx/fastcgi_params;
-                fastcgi_param SCRIPT_NAME /index.php;
-                          }
+            try_files $uri $uri/ /index.php?$args;
+        }
+        
         location ~ .php$ {
-                try_files $uri @handler;
-                fastcgi_pass    127.0.0.1:9000;
-                fastcgi_index   index.php;
-                fastcgi_param SCRIPT_FILENAME /usr/share/nginx/html/wordpress$fastcgi_script_name;
-                include fastcgi_params;
-                        }
+            try_files $uri =404;
+            fastcgi_pass    127.0.0.1:9000;
+            fastcgi_index   index.php;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            include fastcgi_params;
+        }
 }
 ```
 

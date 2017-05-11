@@ -70,12 +70,8 @@ NGINX is the popular web server used on Linux systems. Let’s install Nginx web
 Now start nginx service and enable to start on boot using below commands.
 
 <pre>
-# systemctl 
-
-<orange>enable</orange> nginx.service
-# systemctl 
-
-<orange>start</orange> nginx.service
+# systemctl enable nginx.service
+# systemctl start nginx.service
 </pre>
 
 ## Step 4. Install MySQL 5.6 
@@ -99,6 +95,8 @@ Now restart MySQL service and enable to start on system boot.
 # systemctl restart mysqld.service
 # systemctl enable mysqld.service
 </pre>
+
+See more [How To Install MySQL on CentOS 7](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-centos-7)
 
 ## Step 5 — Setup PHP-FPM 
 
@@ -274,3 +272,21 @@ should do what you want
 semanage port -l | grep 5000
 http_port_t                tcp      5000, 80, 81, 443, 488, 8008, 8009, 8443, 9000
 ```
+
+### ERROR 1396 (HY000): Operation CREATE USER failed for 'xxx'@'localhost'
+
+yes this bug is there. However, I found a small workaround.
+
+* Assume the user is there, so drop the user
+* After deleting the user, there is need to flush the mysql privileges
+* Now create the user.
+
+That should solve it. Assuming we want to create the user admin @ localhost, these would be the commands:
+
+```shell
+drop user admin@localhost;
+flush privileges;
+create user admin@localhost identified by '_admins_password_'
+```
+
+See [mysql - ERROR 1396 (HY000): Operation CREATE USER failed for 'jack'@'localhost' - Stack Overflow](http://stackoverflow.com/questions/5555328/error-1396-hy000-operation-create-user-failed-for-jacklocalhost)

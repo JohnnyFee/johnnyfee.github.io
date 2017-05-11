@@ -11,11 +11,16 @@ WordPress is the most widely used open source web blogging and content managemen
 
 You’ll need to have a LEMP (Linux, Nginx, MySQL, and PHP) installed on your CentOS/RHEL server. If LEMP hasn’t installed or configured on server, you can use below articles to install LEMP.
 
+**On RHEL/CentOS 7**
+
 ```shell
-**On RHEL/CentOS 7** 
-# yum install nginx mariadb mariadb-server php php-fpm php-common php-mysql php-gd php-xml php-mbstring php-mcrypt 
+yum install nginx mariadb mariadb-server php php-fpm php-common php-mysql php-gd php-xml php-mbstring php-mcrypt 
+```
+
 **On RHEL/CentOS 6/5** 
-# yum install nginx mysql mysql-server php php-fpm php-common php-mysql php-gd php-xml php-mbstring php-mcrypt
+
+```
+yum install nginx mysql mysql-server php php-fpm php-common php-mysql php-gd php-xml php-mbstring php-mcrypt
 ```
 
 <!-- more -->
@@ -24,12 +29,17 @@ It will install php5, if you want to install PHP7, do as [How to Install PHP 7, 
 
 Next, start the service to reflect changes.
 
-```shell
 **On RHEL/CentOS 7** 
+
+```shell
 # systemctl start nginx
 # systemctl start mysqld
 # systemctl start php-fpm
+```
+
 **On RHEL/CentOS 6/5** 
+
+```shell
 # service nginx start
 # service mysqld start
 # service php-fpm start

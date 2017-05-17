@@ -70,6 +70,7 @@ Note that CSS columns have no effect on a flex container.
 ### flex-direction
 
 ![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-direction1.svg)
+
 This establishes the main-axis, thus defining the direction flex items are placed in the flex container. Flexbox is (aside from optional wrapping) a single-direction layout concept. Think of flex items as primarily laying out either in horizontal rows or vertical columns.
 
 
@@ -100,6 +101,8 @@ By default, flex items will all try to fit onto one line. You can change that an
 
 ![](http://cdn.css-tricks.com/wp-content/uploads/2014/05/flex-wrap.svg)
 
+There are some [visual demos of `flex-wrap` here](https://css-tricks.com/almanac/properties/f/flex-wrap/).
+
 ### flex-flow
 
 This is a shorthand `flex-direction` and `flex-wrap` properties, which together define the flex container's main and cross axes. Default is `row nowrap`.
@@ -111,7 +114,6 @@ flex-flow: <‘flex-direction’> || <‘flex-wrap’>
 ### justify-content
 
 This defines the alignment along the __main axis__. It helps distribute extra free space left over when either all the flex items on a line are inflexible, or are flexible but have reached their maximum size. It also exerts some control over the alignment of items when they overflow the line.
-
 
 ```js
 .container {
@@ -212,6 +214,12 @@ It specifies the "flex shrink factor", which determines how much the flex item w
 
 When omitted, it is set to `1` and the flex shrink factor is multiplied by the flex basis when distributing negative space.
 
+`flex-shrink`属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。
+
+如果所有项目的`flex-shrink`属性都为1，当空间不足时，都将等比例缩小。如果一个项目的`flex-shrink`属性为0，其他项目都为1，则空间不足时，前者不缩小。
+
+![](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071015.jpg)
+
 __Demo:__
 
 To see the full potential of this demo, you would have to be able to resize its width, so please have a look at it on CodePen directly.
@@ -231,6 +239,10 @@ Negative numbers are invalid.
 
 This defines the default size of an element before the remaining space is distributed.
 
+`flex-basis`属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为`auto`，即项目的本来大小。
+
+它可以设为跟`width`或`height`属性一样的值（比如350px），则项目将占据固定空间。
+
 ```css
 .item {
   flex-basis: <length> | auto; /* default auto */
@@ -245,6 +257,12 @@ The first flex item want to be 400px, the second flex item want to be 100px. If 
 
 This is the shorthand for `flex-grow,` `flex-shrink` and `flex-basis` combined. The second and third parameters (`flex-shrink` and `flex-basis`) are optional. Default is `0 1 auto`.
 
+`flex`属性是`flex-grow`, `flex-shrink` 和 `flex-basis`的简写，默认值为`0 1 auto`。后两个属性可选。
+
+该属性有两个快捷值：`auto` (`1 1 auto`) 和 none (`0 0 auto`)。
+
+建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。
+
 ```
 .item {
   flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
@@ -258,6 +276,10 @@ See [Chris Wright - Experiment: Flexbox Adventures](http://chriswrightdesign.com
 This allows the default alignment (or the one specified by `align-items`) to be overridden for individual flex items.
 
 Please see the `align-items` explanation to understand the available values.
+
+`align-self`属性允许单个项目有与其他项目不一样的对齐方式，可覆盖`align-items`属性。默认值为`auto`，表示继承父元素的`align-items`属性，如果没有父元素，则等同于`stretch`。
+
+该属性可能取6个值，除了auto，其他都与align-items属性完全一致。
 
 ```css
 .item {
@@ -435,5 +457,7 @@ See the [Result](http://codepen.io/HugoGiraudel/pen/qIAwr/).
 
 - [使用 CSS 弹性盒 - CSS](https://developer.mozilla.org/zh-CN/docs/CSS/Tutorials/Using_CSS_flexible_boxes#.E5.BC.B9.E6.80.A7.E7.9B.92.E6.A6.82.E5.BF.B5)
 - [A Complete Guide to Flexbox](http://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+- [A Visual Guide to CSS3 Flexbox Properties ― Scotch](https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties)
+- [Flex 布局教程：语法篇 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
 
 <script async src="//codepen.io/assets/embed/ei.js"></script>

@@ -2,7 +2,7 @@
 layout: "post"
 title: "How To Install WordPress with Nginx on a CentOS 7 Server"
 categories: PHP
-tags: [centos, php, nginx, lamp, phpMyAdmin]
+tags: [centos, php, nginx, lamp, wordpress]
 ---
 
 WordPress is the most widely used open source web blogging and content management software written in php and MySQL. In this article, I will show you how to install WordPress using Nginx on CentOS/RHEL 7/6/5.

@@ -10,8 +10,6 @@ See
 - [How To Install PHP 7, NGINX & MySQL 5.6 on CentOS/RHEL 7.1 & 6.7](https://tecadmin.net/install-php-7-nginx-mysql-5-on-centos/#)
 - [CentOS 7 安裝 Apache + PHP 7 + MySQL + phpMyAdmin + FTP](https://jsnwork.kiiuo.com/archives/2118/centos-7-%E5%AE%89%E8%A3%9D-apache-php-mysql-phpmyadmin-ftp)
 
-
-
 Few days back PHP version 7.0 has been released. Which has number of changes and improvements  over PHP version 5.X.  This article will help you to install  PHP 7, NGINX and  MySQL 5.6 on CentOS / RHEL 7.1 & 6.7 operating systems. This tutorial has been tested with CentOS 7.1, so all the services command are used with systemctl, For CentOS 6 users change all **systemctl** command correspondence **service** command.
 
 <!-- more -->

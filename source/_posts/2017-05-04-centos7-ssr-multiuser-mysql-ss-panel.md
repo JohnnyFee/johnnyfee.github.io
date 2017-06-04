@@ -1,4 +1,4 @@
----
+ssp---
 layout: "post"
 title: "ShadowsocksR 多用户版安装教程"
 categories: SSR
@@ -101,7 +101,7 @@ See [php - 'Failed to open stream: Permission denied' error - Laravel - Stack Ov
 
 ### 安装
 
-[Server Setup(manyuser with mysql) · breakwa11/shadowsocks-rss Wiki](https://github.com/breakwa11/shadowsocks-rss/wiki/Server-Setup(manyuser-with-mysql))
+[Server Setup(manyuser with mysql) · breakwa11/shadowsocks-rss Wiki](https://github.com/breakwa11/shadowsocks-rss/wiki/Server-Setup\manyuser-with-mysql))
 
 ## Tutorial
 

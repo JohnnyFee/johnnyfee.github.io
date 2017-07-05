@@ -86,6 +86,15 @@ mysql> FLUSH PRIVILEGES;
 mysql> quit
 ```
 
+如果需要在其他主机也可以访问该数据库，则需要添加 User：
+
+```
+mysql> CREATE USER <username>@'%' IDENTIFIED BY 'password';
+mysql> GRANT ALL PRIVILEGES ON <dbname>.* TO <username>@'%';
+mysql> FLUSH PRIVILEGES;
+```
+
+
 ## **Step #4 Creating Nginx VirtualHost**
 
 Open the Nginx configuration file with “vi” editor and add the following lines:

@@ -312,3 +312,51 @@ CSP可以由两种方式指定：HTTP Header 和HTML。HTTP是在HTTP由增加 H
 - 只允许 https，预装证书（避免钓鱼、中间人攻击）
 - 只能访问有限本地 API
 - Javascript 不允许直接内存操作，避免缓冲区溢出攻击
+
+## 开发者
+
+### 执行输入验证
+
+See [安全要点](https://developer.android.com/training/articles/security-tips.html?hl=zh-cn#InputValidation)
+
+无论应用是在哪种平台上运行，输入验证功能不完善都是影响应用的最常见安全问题。Android 为此提供了平台级对策，可降低应用出现输入验证问题的可能性。如果可行，请尽量使用这些功能。另请注意，选择类型安全的语言通常也有助于降低出现输入验证问题的可能性。
+
+如果使用原生代码，那么系统从文件读取、通过网络接收或从 IPC 接收的任何数据都有可能会引发安全问题。最常见的问题包括[缓冲区溢出](http://en.wikipedia.org/wiki/Buffer_overflow)、[释放后重用](http://en.wikipedia.org/wiki/Double_free#Use_after_free)和[差一错误](http://en.wikipedia.org/wiki/Off-by-one_error)。Android 为此提供了多项技术，例如 
+<acronym>ASLR</acronym> 和 
+<acronym>DEP</acronym> ，可以降低这些错误被利用的可能性，但无法解决根本问题。因此，请谨慎管理指针和缓冲区，预防这些漏洞造成破坏。
+
+使用基于字符串的动态语言（如 JavaScript 和 SQL）也可能因为转义字符和[脚本注入](http://en.wikipedia.org/wiki/Code_injection)而出现输入验证问题。
+
+如果使用提交到 SQL 数据库或内容提供程序的查询中的数据，也可能出现 SQL 注入问题。最好的预防措施是使用参数化查询（请参阅上文[内容提供程序](https://developer.android.com/training/articles/security-tips.html?hl=zh-cn#ContentProviders)部分的相关内容）。将权限限制为只读或只写，也可以降低 SQL 注入引发破坏的可能性。
+
+如果您无法使用上述安全功能，我们强烈建议您使用结构合理的数据格式，并验证数据是否符合预期的格式。虽然将字符列入黑名单或替换字符是一种有效的策略，但这些技术在实际操作中很容易出错，因此应尽量避免使用。
+
+## 使用 WebView
+
+---
+
+由于 `[WebView](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn)` 使用的网络内容可能包含 HTML 和 JavaScript，当的使用可能引入常见的网络安全问题，例如[跨站脚本攻击](http://en.wikipedia.org/wiki/Cross_site_scripting)（JavaScript 注入）。Android 内置了多种机制，可将 `[WebView](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn)` 的功能限制为您应用所需的最低功能，以缩小这些潜在问题的影响范围。
+
+如果您的应用不直接使用 `[WebView](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn)` 中的 JavaScript，请_勿_调用 `[setJavaScriptEnabled()](https://developer.android.com/reference/android/webkit/WebSettings.html?hl=zh-cn#setJavaScriptEnabled(boolean))`。部分示例代码会使用这种方法，不过您可能需要在实际应用时根据具体情况进行调整。因此，如果不需要使用这种调用方法，请将其移除。默认情况下，`[WebView](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn)` 不会执行 JavaScript，因此不可能出现跨站脚本攻击这样的安全问题。
+
+`[addJavaScriptInterface()](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn#addJavascriptInterface(java.lang.Object, java.lang.String))` 允许 JavaScript 调用正常情况下是为 Android 应用预留的操作，因此在使用时请格外小心。如果要使用，请仅将 `[addJavaScriptInterface()](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn#addJavascriptInterface(java.lang.Object, java.lang.String))` 用于所有输入内容都可信的网页。如果您接受不受信任的输入内容，那么不受信任的 JavaScript 可能会调用您应用中的 Android 方法。一般情况下，我们建议您仅将 `[addJavaScriptInterface()](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn#addJavascriptInterface(java.lang.Object, java.lang.String))` 用于应用 APK 内含的 JavaScript。
+
+如果您的应用通过 `[WebView](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn)` 访问敏感数据，您可能需要使用 `[clearCache()](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn#clearCache(boolean))` 方法来删除本地存储的所有文件。您也可以使用服务器端标头（例如 `no-cache`）来指示应用不应缓存特定内容。
+
+在 Android 4.4（API 级别 19）之前平台上运行的设备使用的 `[webkit](https://developer.android.com/reference/android/webkit/package-summary.html?hl=zh-cn)` 版本存在多个安全问题。如果您的应用在这些设备上运行，解决方法是确认 `[WebView](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn)` 对象只显示值得信任的内容。还应使用可更新的安全 `[Provider](https://developer.android.com/reference/java/security/Provider.html?hl=zh-cn)` 对象确保您的应用在 SSL 中不会暴露给潜在的漏洞，如[更新您的安全提供程序以防范 SSL 攻击](https://developer.android.com/training/articles/security-gms-provider.html?hl=zh-cn)中所述。如果您的应用必须从开放网络渲染内容，请考虑提供您自己的渲染程序，以便使用最新的安全补丁程序保持其处于最新状态。
+
+### 处理凭据
+
+一般情况下，我们建议您尽量降低要求用户凭据的频率；这样会让钓鱼攻击显得比较可疑，从而能够降低其成功率。作为替代方法，您可以使用授权令牌并根据需要刷新。
+
+请尽量避免将用户名和密码存储在设备上。您可以使用用户提供的用户名和密码进行初始身份验证，然后使用针对特定服务的短时效授权令牌。
+
+可供多个应用访问的服务应使用 `[AccountManager](https://developer.android.com/reference/android/accounts/AccountManager.html?hl=zh-cn)` 进行访问。如果可行，请使用 `[AccountManager](https://developer.android.com/reference/android/accounts/AccountManager.html?hl=zh-cn)` 类来调用基于云的服务；此外，请勿将密码存储在设备上。
+
+使用 `[AccountManager](https://developer.android.com/reference/android/accounts/AccountManager.html?hl=zh-cn)` 检索 `[Account](https://developer.android.com/reference/android/accounts/Account.html?hl=zh-cn)` 后，请先确认 `[CREATOR](https://developer.android.com/reference/android/accounts/Account.html?hl=zh-cn#CREATOR)` 再传送凭据，以免无意中将凭据传送给错误的应用。
+
+如果凭据仅供您创建的应用使用，那么您可以使用 `[checkSignature()](https://developer.android.com/reference/android/content/pm/PackageManager.html?hl=zh-cn#checkSignatures(int, int))` 验证访问 `[AccountManager](https://developer.android.com/reference/android/accounts/AccountManager.html?hl=zh-cn)` 的应用。另外，如果只有一个应用使用该凭据，那么您可以使用 `[KeyStore](https://developer.android.com/reference/java/security/KeyStore.html?hl=zh-cn)` 存储凭据。
+
+## More
+
+- [Android Developers Blog: What’s new in WebView security](https://android-developers.googleblog.com/2017/06/whats-new-in-webview-security.html)

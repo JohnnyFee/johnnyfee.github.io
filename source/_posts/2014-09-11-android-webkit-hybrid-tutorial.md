@@ -1362,6 +1362,10 @@ mWebView.getSettings().setAppCacheEnabled(true);
 
 - [Android Hybrid App四大坑](http://blog.meathill.com/tech/app/web/traps-in-developing-android-hybrid-app.html)
 
+### How to listen for a WebView finishing loading a URL?
+
+See [android - How to listen for a WebView finishing loading a URL? - Stack Overflow](https://stackoverflow.com/questions/3149216/how-to-listen-for-a-webview-finishing-loading-a-url)
+
 ## Performance
 
 - [QQ空间面向移动时代Hybrid架构设计](http://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2650993637&idx=1&sn=8a2673272575abbef4b0f6dbc25e0186&scene=1&srcid=0807wbgKvqjTjMD555ZBcIxO#rd)

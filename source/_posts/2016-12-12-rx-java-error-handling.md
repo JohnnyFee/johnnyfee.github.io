@@ -306,10 +306,10 @@ static final int ATTEMPTS = 11;
 //...
 
 .retryWhen(failures -> failures
-        .zipWith(Observable.range(1, ATTEMPTS), (err, attempt) ->
+        .zipWith(Flowerble.range(1, ATTEMPTS), (err, attempt) ->
                 attempt < ATTEMPTS ?
-                        Observable.timer(1, SECONDS) :
-                        Observable.error(err))
+                        Flowable.timer(1, SECONDS) :
+                        Flowable.error(err))
         .flatMap(x -> x)
 )
 ```

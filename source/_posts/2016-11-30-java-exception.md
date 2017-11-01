@@ -5,7 +5,6 @@ date: "2016-11-30 14:22"
 categories: Java
 ---
 
-
 ## What is an Exception?
 
 Exceptions are events that occurs when executing the programs that will disrupt or terminate the normal flow of the program. In Java, an exception is an object that contains the type of the exception and details of the root cause for that exception.

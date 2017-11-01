@@ -305,13 +305,12 @@ static final int ATTEMPTS = 11;
 
 //...
 
-.retryWhen(failures -> failures
-        .zipWith(Flowerble.range(1, ATTEMPTS), (err, attempt) ->
-                attempt < ATTEMPTS ?
-                        Flowable.timer(1, SECONDS) :
-                        Flowable.error(err))
-        .flatMap(x -> x)
-)
+risky().retryWhen(failures -> failures.zipWith(Observable.range(1, ATTEMPTS), (err, attempt) -> {
+                    return attempt < ATTEMPTS ?
+                            Observable.timer(1, SECONDS) :
+                            Observable.error(err);
+                }).flatMap(x -> x)
+        );
 ```
 
 This looks quite complex, but it is also really powerful. We `zip` failures with sequence numbers from 1 to 11. We would like to perform as many as 10 retry attempts, so if the attempt sequence number is smaller than 11, we return `timer(1, SECONDS)`. The `retryWhen()` operator will capture this event and retry one second after failure. However, when the 10th retry ends with a failure, we return an `Observable` with that error, completing the retry mechanism with the last seen exception.

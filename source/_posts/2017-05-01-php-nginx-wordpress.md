@@ -66,7 +66,7 @@ Once the download finish, run the following command extract it.
 Next, change the permissions and ownership of the WordPress content folders.
 
 ```shell
-# chown -R nginx:nginx /usr/share/nginx/html/wordpress
+# chown -R apache: /usr/share/nginx/html/wordpress
 # chmod -R 755 /usr/share/nginx/html/wordpress
 ```
 
@@ -140,7 +140,7 @@ Use following command to configure WordPress installation.
 # cd /usr/share/nginx/html/wordpress
 # cp wp-config-sample.php wp-config.php
 # chmod 777 wp-config.php
-# chown nginx:nginx wp-config.php
+# chown apache:apache wp-config.php
 ```
 
 Open wordpress configuration file and change MySQL setting.

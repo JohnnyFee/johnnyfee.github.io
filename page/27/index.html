@@ -411,6 +411,67 @@ Jorgen’s Weblog: The AngularJS Module System
         </li>
     
         <li class="post-list-item fade">
+            <article id="post-node-best-practice"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-06-09 00:00:00" datetime="2014-06-08T16:00:00.000Z"  itemprop="datePublished">2014-06-09</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/Node/2014-06-09-node-best-practice.html">Node 最佳实践</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        原文： &lt;http://webapplog.com/seven-things-you-should-stop-doing-with-node-js/
+Inspired by 5 Things You Should Stop Doing With jQuery by Burke Holland, I decided to open a discussion and highlight seven things you should immediately stop doing with Node.js.
+Stop Using Callbacks in Node.jsCallbacks are the bread and butter (or the meat and veggies for paleo lifestyle readers) of the JavaScript/Node.js language and the main pattern. However, you should stop using callbacks for nesting code of multiple methods unless you want to end up with the Callback Hell.
+Async is for the win. Particularly its series() and waterfall() methods. 
+To illustrate the drastic difference, here is an example in which we perform multiple operations with callbacks to find a user, then find posts that belong to the user:
+codeA(function(a){
+  codeB(function(b){
+    codeC(function(c){
+      codeD(function(d){
+        // Final callback code        
+      })
+    })
+  })
+})
+
+    
+
+        <a href="/Node/2014-06-09-node-best-practice.html" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-cordova-android-plugin"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -509,14 +570,14 @@ External location，填入随jdk安装的zip源码路径，例如 _C:/Program Fi
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-node-best-practice"
+            <article id="post-angular-requirejs"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2014-06-09 00:00:00" datetime="2014-06-08T16:00:00.000Z"  itemprop="datePublished">2014-06-09</time>
+        <time class="post-time" title="2014-06-08 00:00:00" datetime="2014-06-07T16:00:00.000Z"  itemprop="datePublished">2014-06-08</time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
 
 
 
@@ -527,7 +588,7 @@ External location，填入随jdk安装的zip源码路径，例如 _C:/Program Fi
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/Node/2014-06-09-node-best-practice.html">Node 最佳实践</a>
+      <a class="post-title-link" href="/Angular/2014-06-08-angular-requirejs.html">Angular RequireJS</a>
     </h3>
   
 
@@ -537,31 +598,45 @@ External location，填入随jdk安装的zip源码路径，例如 _C:/Program Fi
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        原文： &lt;http://webapplog.com/seven-things-you-should-stop-doing-with-node-js/
-Inspired by 5 Things You Should Stop Doing With jQuery by Burke Holland, I decided to open a discussion and highlight seven things you should immediately stop doing with Node.js.
-Stop Using Callbacks in Node.jsCallbacks are the bread and butter (or the meat and veggies for paleo lifestyle readers) of the JavaScript/Node.js language and the main pattern. However, you should stop using callbacks for nesting code of multiple methods unless you want to end up with the Callback Hell.
-Async is for the win. Particularly its series() and waterfall() methods. 
-To illustrate the drastic difference, here is an example in which we perform multiple operations with callbacks to find a user, then find posts that belong to the user:
-codeA(function(a){
-  codeB(function(b){
-    codeC(function(c){
-      codeD(function(d){
-        // Final callback code        
-      })
-    })
-  })
-})
+        本书为读 AngularJS 的读书笔记，该书的例子在 shyamseshadri/angularjs-book。
+Let us take a look at the project organization (similar to the skeletons previously described, with minor changes):
 
+app : This folder hosts all the app code that is displayed to the user. This includes HTML, JS, CSS, images, and dependent libraries. 
+
+/styles : Contains all the CSS/LESS files
+/images : Contains images for our project
+/scripts : The main AngularJS codebase. This folder also includes our bootstrapping code, and the main integration with RequireJS 
+
+/controllers : AngularJS controllers go here
+/directives : AngularJS Directives go here
+/filters : AngularJS filters go here
+/services : AngularJS services go here
+
+
+/vendor : The libraries we depend on (Bootstrap, RequireJS, jQuery)
+
+/views : The HTML partials for the views and the components used in our project
+
+
+config : Contains Karma configs for unit and scenario tests
+test : Contains the unit and scenario (integration) tests for the app 
+
+/spec : Contains the unit tests, mirroring the structure of the JS folder in the app directory
+/e2e : Contains the end-to-end scenario specs
+
+
+
+The first thing we need is the main.js file (in the app folder) that RequireJS loads, which then triggers loading of all the other dependencies. In this example, our JS project will depend on jQuery and Twitter Bootstrap in addition to our code.
     
 
-        <a href="/Node/2014-06-09-node-best-practice.html" class="post-more waves-effect waves-button">
+        <a href="/Angular/2014-06-08-angular-requirejs.html" class="post-more waves-effect waves-button">
             Continue reading...
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorial/">tutorial</a></li></ul>
 
     </div>
     
@@ -635,81 +710,6 @@ npm install -g generator-angular
     
 
         <a href="/Angular/2014-06-08-angular-tutorial.html" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorial/">tutorial</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-angular-requirejs"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2014-06-08 00:00:00" datetime="2014-06-07T16:00:00.000Z"  itemprop="datePublished">2014-06-08</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/Angular/2014-06-08-angular-requirejs.html">Angular RequireJS</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        本书为读 AngularJS 的读书笔记，该书的例子在 shyamseshadri/angularjs-book。
-Let us take a look at the project organization (similar to the skeletons previously described, with minor changes):
-
-app : This folder hosts all the app code that is displayed to the user. This includes HTML, JS, CSS, images, and dependent libraries. 
-
-/styles : Contains all the CSS/LESS files
-/images : Contains images for our project
-/scripts : The main AngularJS codebase. This folder also includes our bootstrapping code, and the main integration with RequireJS 
-
-/controllers : AngularJS controllers go here
-/directives : AngularJS Directives go here
-/filters : AngularJS filters go here
-/services : AngularJS services go here
-
-
-/vendor : The libraries we depend on (Bootstrap, RequireJS, jQuery)
-
-/views : The HTML partials for the views and the components used in our project
-
-
-config : Contains Karma configs for unit and scenario tests
-test : Contains the unit and scenario (integration) tests for the app 
-
-/spec : Contains the unit tests, mirroring the structure of the JS folder in the app directory
-/e2e : Contains the end-to-end scenario specs
-
-
-
-The first thing we need is the main.js file (in the app folder) that RequireJS loads, which then triggers loading of all the other dependencies. In this example, our JS project will depend on jQuery and Twitter Bootstrap in addition to our code.
-    
-
-        <a href="/Angular/2014-06-08-angular-requirejs.html" class="post-more waves-effect waves-button">
             Continue reading...
         </a>
     </div>

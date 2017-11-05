@@ -1,5 +1,4 @@
-title: categories
-date: 2016-11-06 02:39:14
+title: Categories
 type: "categories"
 comments: false
 ---

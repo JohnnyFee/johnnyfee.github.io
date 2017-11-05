@@ -1,4 +1,3 @@
-ssp---
 layout: "post"
 title: "ShadowsocksR 多用户版安装教程"
 categories: SSR

@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Angular Services | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tutorial,angular">
+    <meta name="description" content="本文基于 Mastering Web Application Development with AngularJS 的读书笔记。
+AngularJS: API: service components in ng
+服务是用来实现应用功能的单例对象。Angular 本身提供了很多服务，如操作浏览器地址的 $location，根据地址的改变来切换视图的 $route，和服务器通信的 $http。 服务可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular Services">
+<meta property="og:url" content="http://blog.inching.org/Angular/2014-08-12-angular-service.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文基于 Mastering Web Application Development with AngularJS 的读书笔记。
+AngularJS: API: service components in ng
+服务是用来实现应用功能的单例对象。Angular 本身提供了很多服务，如操作浏览器地址的 $location，根据地址的改变来切换视图的 $route，和服务器通信的 $http。 服务可">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular Services">
+<meta name="twitter:description" content="本文基于 Mastering Web Application Development with AngularJS 的读书笔记。
+AngularJS: API: service components in ng
+服务是用来实现应用功能的单例对象。Angular 本身提供了很多服务，如操作浏览器地址的 $location，根据地址的改变来切换视图的 $route，和服务器通信的 $http。 服务可">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Angular Services</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Angular Services</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-08-11T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-08-12
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义服务"><span class="post-toc-text">定义服务</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Constants"><span class="post-toc-text">Constants</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Values"><span class="post-toc-text">Values</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Services"><span class="post-toc-text">Services</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Factories"><span class="post-toc-text">Factories</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Provider"><span class="post-toc-text">Provider</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#decorator"><span class="post-toc-text">decorator</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Service-跨模块可见性"><span class="post-toc-text">Service 跨模块可见性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#生命周期"><span class="post-toc-text">生命周期</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#常用的-Angular-服务"><span class="post-toc-text">常用的 Angular 服务</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#resource"><span class="post-toc-text">$resource</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Changing-Views-with-Routes-and-location"><span class="post-toc-text">Changing Views with Routes and $location</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#location"><span class="post-toc-text">$location</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#HTML5-Mode-and-Hashbang-Mode"><span class="post-toc-text">HTML5 Mode and Hashbang Mode</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Server-side-configuration"><span class="post-toc-text">Server-side configuration</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#http"><span class="post-toc-text">$http</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Communicating-Over-http"><span class="post-toc-text">Communicating Over $http</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Configuring-Your-Request-Further"><span class="post-toc-text">Configuring Your Request Further</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Setting-HTTP-Headers"><span class="post-toc-text">Setting HTTP Headers</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Working-with-RESTful-Resources"><span class="post-toc-text">Working with RESTful Resources</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-angular-service"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Angular Services</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-08-12 00:00:00" datetime="2014-08-11T16:00:00.000Z"  itemprop="datePublished">2014-08-12</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文基于 <a href="http://www.salttiger.com/mastering-web-application-development-angularjs/" target="_blank" rel="external">Mastering Web Application Development with AngularJS</a> 的读书笔记。</p>
+<p><a href="https://docs.angularjs.org/api/ng/service" target="_blank" rel="external">AngularJS: API: service components in ng</a></p>
+<p>服务是用来实现应用功能的单例对象。Angular 本身提供了很多服务，如操作浏览器地址的 <code>$location</code>，根据地址的改变来切换视图的 <code>$route</code>，和服务器通信的 <code>$http</code>。 服务可以是注册的构造函数，也可以是被 AngularJS DI 系统创建和管理的单例对象。</p>
+<p>AngularJS 的 DI 机制要求所有的服务具有唯一的服务名。</p>
+<p>Angular 内置的服务都是以 <code>$</code> 开头，当你定义自己的服务时，请尽量避免使用 <code>$</code> 开头。</p>
+<p>使用服务和依赖注入，我们可以更简单地编写 controller：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">ShoppingController</span>(<span class="params">$scope, Items</span>) </span>&#123;</div><div class="line">  $scope.items = Items.query();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么我们什么时候应该使用service呢？答案是：无论何时，当我们需要在不同的域中共享数据的时候。另外，多亏了Angular的依赖注入系统，实现这一点是很容易并且很清晰的。</p>
+<p>通过 <code>$scope</code> 来维护数据是非常粗暴的一种方式。由于其它 <code>controller</code>、<code>directive</code>、<code>model</code> 的影响，<code>$scope</code> 很容易就会崩溃或者变脏。它很快就会变成一团乱麻。通过一种集中的途径（在这里就是 <code>service</code>）来管理数据，然后通过某种方式来请求修改它，这样不仅仅会更加清晰，同时当应用的体积不断增大的时候也更加容易管理。</p>
+<h2 id="定义服务"><a href="#定义服务" class="headerlink" title="定义服务"></a>定义服务</h2><p>服务 module 对象的 API 来定义，可以通过以下几种方法来创建服务。</p>
+<h3 id="Constants"><a href="#Constants" class="headerlink" title="Constants"></a>Constants</h3><p><code>constant</code> 用来为不会改变的基本类型和对象定义服务，该服务可以在 module 对象的 <code>config</code> 方法中使用。如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'logging'</span>).constant(<span class="string">'logging_config'</span>, &#123;</div><div class="line">    <span class="attr">traceLevel</span>: &#123;</div><div class="line">    <span class="attr">_LOG_TRACE_</span>: <span class="string">'_LOG_TRACE_'</span>,</div><div class="line">    <span class="attr">_LOG_DEBUG_</span>: <span class="string">'_LOG_DEBUG_'</span>,</div><div class="line">    <span class="attr">_LOG_INFO_</span>: <span class="string">'_LOG_INFO_'</span>,</div><div class="line">    <span class="attr">_LOG_WARN_</span>: <span class="string">'_LOG_WARN_'</span>,</div><div class="line">    <span class="attr">_LOG_ERROR_</span>: <span class="string">'_LOG_ERROR_'</span>,</div><div class="line">    <span class="attr">_LOG_FATAL_</span>: <span class="string">'_LOG_FATAL_'</span>,</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="Values"><a href="#Values" class="headerlink" title="Values"></a>Values</h3><p>让 Angular 管理一个对象的最简单方式是注册一个已经实例化的对象：</p>
+<p><code>value</code> 方法用来定义供用户组件使用的基本类型的值或者对象类型的值。和 <code>constant</code> 定义服务的不同之处是，使用 <code>value</code> 方法的值可以被修改，而使用 <code>constant</code> 定义的不能修改。另外，使用 <code>value</code> 方法创建的服务不能再 config 阶段使用，<code>constant</code> 方法可以。 </p>
+<p><code>value</code> 方法另一个用处是定义 model 对象和基于 model 对象的操作，这可以让你可以重用的代码从组件中解耦，并存在于单独的文件中。这个编码模式也可以让控制器的代码尽可能薄。</p>
+<p>以下定义了 <code>Brewer</code> 模型，以及其中的两个方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"><span class="meta">    'use strict'</span>;</div><div class="line">    <span class="keyword">var</span> Brewer = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line">        self.userName = <span class="string">''</span>;</div><div class="line">        self.firstName = <span class="string">''</span>;</div><div class="line">        self.lastName = <span class="string">''</span>;</div><div class="line">        self.email = <span class="string">''</span>;</div><div class="line">        self.location = <span class="string">''</span>;</div><div class="line">        self.bio = <span class="string">''</span>;</div><div class="line">        self.webSite = <span class="string">''</span>;</div><div class="line">        self.avatar = <span class="string">''</span>;</div><div class="line">        self.photo = <span class="string">''</span>;</div><div class="line">        self.dateJoined = <span class="string">''</span>;</div><div class="line">        self.inventory = [];</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    Brewer.prototype = &#123;</div><div class="line">        <span class="attr">fullName</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.firstName + <span class="string">' '</span> + <span class="keyword">this</span>.lastName;</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">hasItemInInventory</span>: <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> result = <span class="literal">false</span>;</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.inventory &amp;&amp; <span class="keyword">this</span>.inventory.length &gt; <span class="number">0</span>) &#123;</div><div class="line">                angular.forEach(<span class="keyword">this</span>.inventory, <span class="function"><span class="keyword">function</span>(<span class="params">item</span>) </span>&#123;</div><div class="line">                    <span class="keyword">if</span> (item.name === value) &#123;</div><div class="line">                        result = <span class="literal">true</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    angular.module(<span class="string">'brew-everywhere'</span>).value(<span class="string">'brewer'</span>, Brewer);</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<p>当你可以把它注入控制器或者指令，并且通过 <code>$inject</code> 服务获取模型的构造函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myMod = angular.module(<span class="string">'myMod'</span>, []);</div><div class="line">myMod.value(<span class="string">'notificationsArchive'</span>, <span class="keyword">new</span> NotificationsArchive());</div></pre></td></tr></table></figure>
+<p>这种方式非常简单，无法定义服务的依赖，所以仅适用于与注册已经实例化的对象。</p>
+<h3 id="Services"><a href="#Services" class="headerlink" title="Services"></a>Services</h3><p><code>service(name, constructor())</code> 适用于创建无配置，只有简单逻辑的服务。Angular 使用这个方法来创建服务实例。</p>
+<p>它提供了一个注册构造函数的方法，这个构造函数会通过 <code>new</code> 来实例化。把通过这种方法注册的服务注入到其他服务时，得到的是通过 <code>new</code> 实例化的对象，而 <code>value</code> 得到的仍然是构造函数。</p>
+<p>假设 <code>NotificationsService</code> 服务需要依赖一个 archive 服务，那么这就不能用 Value 方法定义了。最简单的方法是通过 <code>service</code> 方法注册一个构造函数。如：</p>
+<pre><code>myMod.service(&apos;notificationsService&apos;, NotificationsService);
+</code></pre><p><code>NotificationsService</code> 构造函数依赖其他服务，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> NotificationsService = <span class="function"><span class="keyword">function</span> (<span class="params">notificationsArchive</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.notificationsArchive = notificationsArchive;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>通过使用依赖注入，我们可以从 <code>NoficiationsService</code>  构造函数中消除 <code>new</code> 关键字。现在这个服务不用关心依赖的实例化，并且可以接受任何 archiving 服务。</p>
+<p>实际上，<code>service</code> 方法不常用，主要用于注册已经存在的构造函数，从而让 AngularJS 能够管理这些构造函数创建出来的对象。</p>
+<h3 id="Factories"><a href="#Factories" class="headerlink" title="Factories"></a>Factories</h3><p><code>factory(name, $getFunction())</code> 适用于创建无配置，具有复杂逻辑的服务。如果你使用 type/class 定义服务，而且也不需要在模型的 <code>config</code> 方法中配置，这是你就可以使用 <code>factory</code> 方法。</p>
+<p><code>factory</code> 方法等效于 <code>provider(name, { $get: $getFunction() } )</code>，可以返回任意合法的 JavaScript 对象，包括 <code>function</code> 对象。</p>
+<p>如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">myMod.factory(&apos;notificationsService&apos;,function(notificationsArchive)&#123;</div><div class="line"></div><div class="line">    var MAX_LEN = 10;</div><div class="line">    var notifications = [];</div><div class="line"></div><div class="line">    return &#123;</div><div class="line">      push:function (notification) &#123;</div><div class="line">        var notificationToArchive;</div><div class="line">        var newLen = notifications.unshift(notification);</div><div class="line"></div><div class="line">        //push method can rely on the closure scope now!</div><div class="line">        if (newLen &gt; MAX_LEN) &#123;</div><div class="line">          notificationToArchive = this.notifications.pop();</div><div class="line">          notificationsArchive.archive(notificationToArchive);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      // other methods of the NotificationsService</div><div class="line">    &#125;;</div></pre></td></tr></table></figure>
+<p><code>factory</code> 方法是把对象注入到 AngularJS DI 系统最常用的方式。这种方式很灵活，并且可以包含复杂的逻辑。因为放到服务实例的工厂只是普通的函数，所以我们可以利用词法作用域来模拟私有变量。如上例中，<code>MAX_LEN</code> 和 <code>notifications</code> 都是私有变量。</p>
+<h3 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h3><p>以上所有的注册方法都是 <code>provider</code> 方法的特殊案例。 <code>provider(name, Object OR constructor())</code> 适用于创建可配置的具有复杂逻辑的服务。</p>
+<p>首先，<code>provider</code> 是返回包含 <code>$get</code> 属性的对象的方法，<code>$get</code> 是返回 <code>service</code> 实例的方法。我们可以认为 providers 是把工厂方法嵌入在 <code>$get</code> 属性中的对象。</p>
+<p>其次，<code>provider</code> 函数中返回的对象可以有其他方法和属性。这些方法和属性被暴露出去，所以可以在 <code>$get</code> 工厂方法调用之前设置配置选项。 </p>
+<p>如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">myMod.provider(<span class="string">'notificationsService'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> config = &#123;</div><div class="line">      <span class="attr">maxLen</span> : <span class="number">10</span></div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">var</span> notifications = [];</div><div class="line"></div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">setMaxLen</span> : <span class="function"><span class="keyword">function</span>(<span class="params">maxLen</span>) </span>&#123;</div><div class="line">        config.maxLen = maxLen || config.maxLen;</div><div class="line">      &#125;,</div><div class="line"></div><div class="line">      <span class="attr">$get</span> : <span class="function"><span class="keyword">function</span>(<span class="params">notificationsArchive</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">          <span class="attr">push</span>:<span class="function"><span class="keyword">function</span> (<span class="params">notification</span>) </span>&#123;</div><div class="line">            …</div><div class="line">            <span class="keyword">if</span> (newLen &gt; config.maxLen) &#123;</div><div class="line">              …</div><div class="line">            &#125;</div><div class="line">          &#125;,</div><div class="line">          <span class="comment">// other methods go here</span></div><div class="line">        &#125;;</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>在配置阶段，可以通过以下方式来调用 <code>setMaxLen</code> 等配置方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">myMode.config(<span class="function"><span class="keyword">function</span>(<span class="params">notificationsServiceProvider</span>)</span>&#123;</div><div class="line">     notificationsServiceProvider.setMaxLen(<span class="number">100</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="decorator"><a href="#decorator" class="headerlink" title="decorator"></a>decorator</h3><pre><code>decorator(name, decorator);
+</code></pre><p>Register a service decorator with the $injector. A service decorator intercepts the creation of a service, allowing it to override or modify the behaviour of the service. The object returned by the decorator may be the original service, or a new service object which replaces or wraps and delegates to the original service.</p>
+<p>See <a href="http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/" target="_blank" rel="external">Enhancing AngularJS Logging using Decorators</a></p>
+<h2 id="Service-跨模块可见性"><a href="#Service-跨模块可见性" class="headerlink" title="Service 跨模块可见性"></a>Service 跨模块可见性</h2><p>定义在相邻模块的服务对彼此也是可见的。比如下例中，我们可以把 <code>car</code> 服务移动到单独的模块中，然后改变模块的依赖，使应用同时依赖 <code>engines</code> and <code>cars</code>： </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'app'</span>, [<span class="string">'engines'</span>, <span class="string">'cars'</span>])</div><div class="line"></div><div class="line">angular.module(<span class="string">'cars'</span>, [])</div><div class="line">  .factory(<span class="string">'car'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$log, dieselEngine</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">start</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        $log.info(<span class="string">'Starting '</span> + dieselEngine.type);</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">angular.module(<span class="string">'engines'</span>, [])</div><div class="line">  .factory(<span class="string">'dieselEngine'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">type</span>: <span class="string">'diesel'</span></div><div class="line">    &#125;;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>在一个 AnuglarJS 应用中服务的名字都不能相同。靠近应用模块的服务将覆盖其他子模块的同名服务。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'app'</span>, [<span class="string">'engines'</span>, <span class="string">'cars'</span>])</div><div class="line">  .controller(<span class="string">'AppCtrl'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope, car</span>) </span>&#123;</div><div class="line">    car.start();</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">angular.module(<span class="string">'cars'</span>, [])</div><div class="line">  .factory(<span class="string">'car'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$log, dieselEngine</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">start</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        $log.info(<span class="string">'Starting '</span> + dieselEngine.type);</div><div class="line">      &#125;;</div><div class="line">    &#125;</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  .factory(<span class="string">'dieselEngine'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">type</span>: <span class="string">'custom diesel'</span></div><div class="line">    &#125;;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>在上例中，<code>car</code> 服务被注入 <code>dieselEngine</code> 服务，<code>dieselEngine</code> 服务和 <code>car</code> 服务在同一个模块中。<code>car</code> 模块中的 <code>dieselEngine</code> 服务将覆盖 <code>engines</code> 模块中 <code>dieselEngine</code> 服务。</p>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>对象创建的 <code>provider</code> 方法可以在创建对象实例之前可以进行一些配置。为了支持这个功能，AngularJS 可以把模块的生命周期划分为两个阶段，分别是配置阶段和运行阶段。</p>
+<p>总结一下服务中创建对象的不同方法和这些方法对应模块的生命周期的阶段：</p>
+<table>
+<thead>
+<tr>
+<th>&nbsp;</th>
+<th>注册的内容</th>
+<th>配置阶段可注入</th>
+<th>运行阶段可注入</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Constant</td>
+<td>Constant’s value</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Variable</td>
+<td>Variable’s value</td>
+<td>-</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Service</td>
+<td>A new object created by a constructor function</td>
+<td>-</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Factory</td>
+<td>A new object returned from a <code>factory</code> function</td>
+<td>-</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Provider</td>
+<td>A new object created by the <code>$get</code> factory function</td>
+<td>Yes</td>
+<td>-  </td>
+</tr>
+</tbody>
+</table>
+<h2 id="常用的-Angular-服务"><a href="#常用的-Angular-服务" class="headerlink" title="常用的 Angular 服务"></a>常用的 Angular 服务</h2><h3 id="resource"><a href="#resource" class="headerlink" title="$resource"></a>$resource</h3><p>Let’s look another example:</p>
+<pre><code>// This file is app/scripts/services/services.js
+var services = angular.module(&apos;guthub.services&apos;, [&apos;ngResource&apos;]);
+
+services.factory(&apos;Recipe&apos;, [&apos;$resource&apos;,
+    function($resource) {
+  return $resource(&apos;/recipes/:id&apos;, {id: &apos;@id&apos;});
+}]);
+</code></pre><p>There is a recipe service, which returns what we call an Angular Resource. With just that single line of code—return <code>$resource</code>—(and of course, a dependency on the guthub.services module), we can now put recipe as an argument in any of our controllers, and it will be injected into the controller. Furthermore, each recipe object has the following methods built in:</p>
+<a id="more"></a>
+<ol>
+<li>Recipe.get()</li>
+<li>Recipe.save()</li>
+<li>Recipe.query()</li>
+<li>Recipe.remove()</li>
+<li>Recipe.delete()</li>
+</ol>
+<p>If you are going to use Recipe.delete, and want your application to work in IE, you will have to call it like so: <code>Recipe[delete]()</code>. This is because delete is a keyword in IE.</p>
+<p>The line of code that declares the resource—return <code>$resource</code>—also does a few more nice things for us:</p>
+<ol>
+<li><p>Notice the <code>:id</code> in the URL specified for the RESTful resource. It basically says that when you make any query (say, <code>Recipe.get()</code>), if you pass in an object with an id field, then the value of that field will be added to the end of the URL.</p>
+<p> That is, calling <code>Recipe.get({id: 15})</code> will make a call to <em>/recipe/15</em> .</p>
+</li>
+<li><p>What about that second object? The <code>{id: @id}</code>? Well, as they say, a line of code is worth a thousand explanations, so let’s take a simple example.</p>
+<p> Say we have a recipe object, which has the necessary information already stored within it, including an id.</p>
+<p> Then, we can save it by simply doing the following:</p>
+<pre><code>// Assuming existingRecipeObj has all the necessary fields,
+// including id (say 13)
+var recipe = new Recipe(existingRecipeObj);
+recipe.$save();
+</code></pre><p> This will make a POST request to <em>/recipe/13</em> . The <code>@id</code> tells it to pick the <code>id</code> field from its object and use that as the <code>id</code> parameter. It’s an added convenience that can save a few lines of code.</p>
+</li>
+</ol>
+<h4 id="Changing-Views-with-Routes-and-location"><a href="#Changing-Views-with-Routes-and-location" class="headerlink" title="Changing Views with Routes and $location"></a>Changing Views with Routes and $location</h4><p>We’re building an email app that will easily win out over Gmail, Hotmail, and all the others. We’ll call it…A-Mail.</p>
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">ng-app</span>=<span class="string">"AMail"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"src/angular.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"src/controllers.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>A-Mail<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-view</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>As our view templates will be inserted into the shell we just created, we can write them as partial HTML documents. For the email list, we’ll use <code>ng-repeat</code> to iterate through a list of messages and render them into a table.<br>list.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">table</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>Sender<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>Subject<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>Date<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span> <span class="attr">ng-repeat</span>=<span class="string">'message in messages'</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;message.sender&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'#/view/&#123;&#123;message.id&#125;&#125;'</span>&gt;</span>&#123;&#123;message.subject&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;message.date&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>To create this message detail view, we’ll create a template that displays properties from a single message object.</p>
+<p>detail.html</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;div&gt;&lt;strong&gt;Subject:&lt;/strong&gt; &#123;&#123;message.subject&#125;&#125;&lt;/div&gt;</div><div class="line">&lt;div&gt;&lt;strong&gt;Sender:&lt;/strong&gt; &#123;&#123;message.sender&#125;&#125;&lt;/div&gt;</div><div class="line">&lt;div&gt;&lt;strong&gt;Date:&lt;/strong&gt; &#123;&#123;message.date&#125;&#125;&lt;/div&gt;</div><div class="line">&lt;div&gt;</div><div class="line">    &lt;strong&gt;To:&lt;/strong&gt;</div><div class="line">    &lt;span ng-repeat=&apos;recipient in message.recipients&apos;&gt;&#123;&#123;recipient&#125;&#125; &lt;/span&gt;</div><div class="line">&lt;div&gt;&#123;&#123;message.message&#125;&#125;&lt;/div&gt;</div><div class="line">&lt;a href=&apos;#/&apos;&gt;Back to message list&lt;/a&gt;</div></pre></td></tr></table></figure>
+<p>Now, to associate these templates with some controllers, we’ll configure the <code>$routeProvider</code> with the URLs that invoke our controllers and templates.</p>
+<p>controllers.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Create a module for our core AMail services</span></div><div class="line"><span class="keyword">var</span> aMailServices = angular.module(<span class="string">'AMail'</span>, []);</div><div class="line"></div><div class="line"><span class="comment">// Set up our mappings between URLs, templates, and controllers</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">emailRouteConfig</span>(<span class="params">$routeProvider</span>) </span>&#123;</div><div class="line">  $routeProvider.</div><div class="line">  when(<span class="string">'/'</span>, &#123;</div><div class="line">    <span class="attr">controller</span>: ListController,</div><div class="line">    <span class="attr">templateUrl</span>: <span class="string">'list.html'</span></div><div class="line">  &#125;).</div><div class="line">  <span class="comment">// Notice that for the detail view, we specify a parameterized URL component</span></div><div class="line">  <span class="comment">// by placing a colon in front of the id</span></div><div class="line">  when(<span class="string">'/view/:id'</span>, &#123;</div><div class="line">    <span class="attr">controller</span>: DetailController,</div><div class="line">    <span class="attr">templateUrl</span>: <span class="string">'detail.html'</span></div><div class="line">  &#125;).</div><div class="line">  otherwise(&#123;</div><div class="line">    <span class="attr">redirectTo</span>: <span class="string">'/'</span></div><div class="line">  &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Set up our route so the AMail service can find it</span></div><div class="line">aMailServices.config(emailRouteConfig);</div><div class="line"></div><div class="line"><span class="comment">// Some fake emails</span></div><div class="line">messages = [&#123;</div><div class="line">  <span class="attr">id</span>: <span class="number">0</span>, <span class="attr">sender</span>: <span class="string">'jean@somecompany.com'</span>, <span class="attr">subject</span>: <span class="string">'Hi there, old friend'</span>,</div><div class="line">  <span class="attr">date</span>: <span class="string">'Dec 7, 2013 12:32:00'</span>, <span class="attr">recipients</span>: [<span class="string">'greg@somecompany.com'</span>],</div><div class="line">  <span class="attr">message</span>: <span class="string">'Hey, we should get together for lunch sometime and catch up.'</span></div><div class="line">  +<span class="string">'There are many things we should collaborate on this year.'</span></div><div class="line">&#125;, ...];</div><div class="line"></div><div class="line"><span class="comment">// Publish our messages for the list template</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">ListController</span>(<span class="params">$scope</span>) </span>&#123;</div><div class="line">  $scope.messages = messages;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Get the message id from the route (parsed from the URL) and use it to</span></div><div class="line"><span class="comment">// find the right message object.</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">DetailController</span>(<span class="params">$scope, $routeParams</span>) </span>&#123;</div><div class="line">  $scope.message = messages[$routeParams.id];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>We’ve created the basic structure for an app with many views. We switch views by changing the URL. This means that the forward and back buttons just work for users. Users are able to bookmark and email links to views within the app, even though there is only one real HTML page.</p>
+<h3 id="location"><a href="#location" class="headerlink" title="$location"></a>$location</h3><p>Let’s consider a small example of how you would use the <code>$location</code> service in a real-world application. Consider a case where we have a datepicker, and when a date is selected, the app navigates to a certain URL. Let us take a look at how that might look:</p>
+<pre><code>// Assume that the datepicker calls $scope.dateSelected with the date
+$scope.dateSelected = function(dateTxt) {
+  $location.path(&apos;/filteredResults?startDate=&apos; + dateTxt);
+  // If this were being done in the callback for
+  // an external library, like jQuery, then we would have to
+  $scope.$apply();
+};
+</code></pre><p>Let us take a look at how the <code>$location</code> service would behave, if the URL in the browser was <code>http://www.host.com/base/index.html#!/path?param1=value1#hashValue</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Getter Function</th>
+<th>Getter Value</th>
+<th>Setter Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>absUrl()</td>
+<td><a href="http://www.host.com/base/index.html#!/path?param1=value1#hashValue" target="_blank" rel="external">http://www.host.com/base/index.html#!/path?param1=value1#hashValue</a></td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>hash()</td>
+<td>hashValue</td>
+<td>hash(‘newHash’) </td>
+</tr>
+<tr>
+<td>host()</td>
+<td>www.host.com</td>
+<td>N/A </td>
+</tr>
+<tr>
+<td>path()</td>
+<td>/path path(‘/newPath’)</td>
+</tr>
+<tr>
+<td>protocol()</td>
+<td>http</td>
+<td>N/A </td>
+</tr>
+<tr>
+<td>search()</td>
+<td>{‘a’: ‘b’}</td>
+<td>search({‘c’: ‘def’})</td>
+</tr>
+<tr>
+<td>url()</td>
+<td>/path?param1=value1?hashValue</td>
+<td>url(‘/newPath?p2=v2’) ### Model</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the <code>search()</code> setter has a few modes of operation:</p>
+<ul>
+<li>Calling <code>search(searchObj)</code> with an object<string, string=""> basically denotes all the parameters and their values</string,></li>
+<li>Calling <code>search(string)</code> will set the URL params as q=String directly in the URL</li>
+<li>Calling <code>search(param, value)</code> with a string and value sets (or calling with null removes) a particular search parameter in the URL.</li>
+</ul>
+<p>Here are four quick tips about when (and how) to call <code>$apply</code>.</p>
+<ul>
+<li><strong>DO NOT</strong> call it all the time. Calling <code>$apply</code> when AngularJS is happily ticking away (in its <code>$digest</code> cycle, as we call it) will cause an exception. So “better safe than sorry” is not the approach you want to use.</li>
+<li><strong>DO CALL</strong> it when controls outside of AngularJS (DOM events, external callbacks such as jQuery UI controls, and so on) are calling AngularJS functions. At that point, you want to tell AngularJS to update itself (the models, the views, and so on), and <code>$apply</code> does just that.</li>
+<li>Whenever possible, execute your code or function by passing it to <code>$apply</code>, rather than executing the function and then calling <code>$apply()</code>. For example, execute the following code:</li>
+</ul>
+<p>E.g</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$scope.$apply(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  $scope.variable1 = <span class="string">'some value'</span>;</div><div class="line">  executeSomeAction();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>instead of the following:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$scope.variable1 = <span class="string">'some value'</span>;</div><div class="line">executeSomeAction();</div><div class="line">$scope.$apply();</div></pre></td></tr></table></figure>
+<p>While both of these will have the same effect, they differ in one significant way.</p>
+<p>The first will capture any errors that happen when <code>executeSomeAction</code> is called, while the latter will quietly ignore any such errors. You will get error notifications from AngularJS only when you do the first.</p>
+<p>Consider using something like <a href="https://coderwall.com/p/ngisma" target="_blank" rel="external">safeApply</a>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;%raw%&#125;</div><div class="line">$scope.safeApply = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> phase = <span class="keyword">this</span>.$root.$$phase;</div><div class="line">  <span class="keyword">if</span>(phase == <span class="string">'$apply'</span> || phase == <span class="string">'$digest'</span>) &#123;</div><div class="line">    <span class="keyword">if</span>(fn &amp;&amp; (<span class="keyword">typeof</span>(fn) === <span class="string">'function'</span>)) &#123;</div><div class="line">      fn();</div><div class="line">    &#125;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">this</span>.$apply(fn);</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line">&#123;%endraw%&#125;</div></pre></td></tr></table></figure>
+<h4 id="HTML5-Mode-and-Hashbang-Mode"><a href="#HTML5-Mode-and-Hashbang-Mode" class="headerlink" title="HTML5 Mode and Hashbang Mode"></a>HTML5 Mode and Hashbang Mode</h4><p>The <code>$location</code> service can be configured using the <code>$locationProvider</code> (which can be injected, just like everything else in AngularJS). Of particular interest are two properties on this provider, which are:</p>
+<ul>
+<li><p>html5Mode</p>
+<p>  A boolean value which dictates whether the <code>$location</code> service works in HTML5 mode or not</p>
+</li>
+<li><p>hashPrefix</p>
+<p>  A string value (actually a single character) that is used as the prefix for Hashbang URLs (in Hashbang mode or legacy browsers in HTML5 mode). By default it is empty, so Angular’s hash is just <code>&#39;&#39;</code>. If the hashPrefix is set to ‘!’, then Angular uses what we call Hashbang URLs (! followed by the url).</p>
+</li>
+</ul>
+<p>You might ask, just what are these modes? Well, pretend that you have this super awesome website at <em>www.superawesomewebsite.com</em> that uses AngularJS.</p>
+<p>Let’s say you have a particular route (with some parameters and a hash), such as <em>/foo?bar=123#baz</em> .</p>
+<p>In normal Hashbang mode (with the hashPrefix set to ‘!’), or in legacy browsers without HTML5 mode support, your URL would look something like:</p>
+<pre><code>http://www.superawesomewebsite.com/#!/foo?bar=123#baz
+</code></pre><p>While in HTML5 mode, the URL would simply look like this:</p>
+<pre><code>http://www.superawesomewebsite.com/foo?bar=123#baz
+</code></pre><p>In both cases, <code>location.path()</code> would be <code>/foo</code>, <code>location.search()</code> would be <code>bar=123</code>, and <code>location.hash()</code> would be <code>baz</code>. So if that is the case, why wouldn’t you want to use the HTML5 mode?</p>
+<p>The Hashbang approach works seamlessly across all browsers, and requires the least amount of configuration. You just need to set the hashBang prefix (! by default) and you are good to go.</p>
+<p>The HTML5 mode, on the other hand, talks to the browser URL through the use of HTML5 History API. The <code>$location</code> service is smart enough to figure out whether HTML5 mode is supported or not, and fall back to the Hashbang approach if necessary, so you don’t need to worry about additional work. But you do have to take care of the following.</p>
+<h4 id="Server-side-configuration"><a href="#Server-side-configuration" class="headerlink" title="Server-side configuration"></a>Server-side configuration</h4><p>Because HTML5 links look like any other URL on your application, you need to take care on the server side to route all links within your app to your main HTML (most likely, the <em>index.html</em> ). For example, if your app is the landing page for <em>superawesomewebsite.com</em> , and you have a route <em>/amazing?who=me</em> in your app, then the URL that the browser would show is <em><a href="http://www.superawesomewebsite.com/amazing?who=me+" target="_blank" rel="external">http://www.superawesomewebsite.com/amazing?who=me+</a></em> .</p>
+<p>When you browse through your app, this will be fine, as the HTML5 History API kicks in and takes care of things. But if you try to browse directly to this URL, your server will look at you as if you have gone crazy, as there is no such known resource on its side. So you would have to ensure that all requests to <em>/amazing</em> get redirected to <em>/index.html#!/amazing</em> .</p>
+<p>AngularJS will kick in from that point onward and take care of things. It will detect changes to the path and redirect to the correct AngularJS routes that were defined.</p>
+<p><strong>Link rewriting</strong></p>
+<p>You can easily specify URLs as follows:</p>
+<pre><code>&lt;a href=&quot;/some?foo=bar&quot;&gt;link&lt;/a&gt;
+</code></pre><p>Depending on whether you are using HTML5 mode or not, AngularJS will take care to redirect to <em>/some?foo=bar</em> or <em>index.html#!/some?foo=bar</em> , respectively. No additional steps are required on your part. Awesome, isn’t it?</p>
+<p>But the following types of links will not be rewritten, and the browser will perform a full reload on the page:</p>
+<ol>
+<li><p>Links that contain a target element such as the following:</p>
+<pre><code>&lt;a href=&quot;/some/link&quot; target=&quot;_self&quot;&gt;link&lt;/a&gt;
+</code></pre></li>
+<li><p>Absolute links going to a different domain:</p>
+<pre><code>&lt;a href=&quot;http://www.angularjs.org&quot;&gt;link&lt;/a&gt;
+</code></pre><p> This is different because it is an absolute URL, while the previous example used the existing base URL.</p>
+</li>
+<li><p>Links starting with a different base path when one is already defined:</p>
+<pre><code>&lt;a href=&quot;/some-other-base/link&quot;&gt;link&lt;/a&gt;
+</code></pre></li>
+</ol>
+<p><strong>Relative Links</strong></p>
+<p>Be sure to check all relative links, images, scripts, and so on. You must either specify the URL base in the head of your main HTML file (<code>&lt;base href=&quot;/my-base&quot;&gt;</code>), or you must use absolute URLs (starting with <code>/</code>) everywhere because relative URLs will be resolved to absolute URLs using the initial absolute URL of the document, which is often different from the root of the application.</p>
+<p>Running Angular apps with the History API enabled from document root is strongly encouraged, as it takes care of all relative link issues.</p>
+<h3 id="http"><a href="#http" class="headerlink" title="$http"></a>$http</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">ShoppingController</span>(<span class="params">$scope, $http</span>) </span>&#123;</div><div class="line">  $http.get(<span class="string">'/products'</span>).success(<span class="function"><span class="keyword">function</span>(<span class="params">data, status, headers, config</span>) </span>&#123;</div><div class="line">    $scope.items = data;</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Communicating-Over-http"><a href="#Communicating-Over-http" class="headerlink" title="Communicating Over $http"></a>Communicating Over $http</h4><p>Angular’s core <code>$http</code> service would look something like the following:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$http.get(<span class="string">'api/user'</span>, &#123;<span class="attr">params</span>: &#123;<span class="attr">id</span>: <span class="string">'5'</span>&#125;</div><div class="line">&#125;).success(<span class="function"><span class="keyword">function</span>(<span class="params">data, status, headers, config</span>) </span>&#123;</div><div class="line"> <span class="comment">// Do something successful.</span></div><div class="line">&#125;).error(<span class="function"><span class="keyword">function</span>(<span class="params">data, status, headers, config</span>) </span>&#123;</div><div class="line"> <span class="comment">// Handle the error</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>The <code>$http.get</code> method we used in the preceding example is just one of the many convenience methods that the core <code>$http</code> AngularJS service provides. Similarly, if you wanted to make a POST request using AngularJS with the same URL parameters and some POST data, you would do so as follows:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> postData = &#123;<span class="attr">text</span>: <span class="string">'long blob of text'</span>&#125;;</div><div class="line">  <span class="comment">// The next line gets appended to the URL as params</span></div><div class="line">  <span class="comment">// so it would become a post request to /api/user?id=5</span></div><div class="line"><span class="keyword">var</span> config = &#123;<span class="attr">params</span>: &#123;<span class="attr">id</span>: <span class="string">'5'</span>&#125;&#125;;</div><div class="line">$http.post(<span class="string">'api/user'</span>, postData, config)</div><div class="line">    .success(<span class="function"><span class="keyword">function</span>(<span class="params">data, status, headers, config</span>) </span>&#123;</div><div class="line">    <span class="comment">// Do something successful</span></div><div class="line">    &#125;).error(<span class="function"><span class="keyword">function</span>(<span class="params">data, status, headers, config</span>) </span>&#123;</div><div class="line">    <span class="comment">// Handle the error</span></div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>Similar convenience methods are provided for most of the common request types, including:</p>
+<ul>
+<li>GET</li>
+<li>HEAD</li>
+<li>POST</li>
+<li>DELETE</li>
+<li>PUT</li>
+<li>JSONP</li>
+</ul>
+<h4 id="Configuring-Your-Request-Further"><a href="#Configuring-Your-Request-Further" class="headerlink" title="Configuring Your Request Further"></a>Configuring Your Request Further</h4><p>At times, the standard request options provided out of the box are not enough. This could be because you want to:</p>
+<ul>
+<li>Add some authorization headers for your request</li>
+<li>Change how caching is handled for the request</li>
+<li>Transform the request going out, or the response coming in, in certain set ways</li>
+</ul>
+<p>The barebones method call would look something like:</p>
+<pre><code>$http(config)
+</code></pre><p>What follows is a basic pseudo-code template for calling this method:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$http(&#123;</div><div class="line">  <span class="attr">method</span>: string,</div><div class="line">  <span class="attr">url</span>: string,</div><div class="line">  <span class="attr">params</span>: object,</div><div class="line">  <span class="attr">data</span>: string or object,</div><div class="line">  <span class="attr">headers</span>: object,</div><div class="line">  <span class="attr">transformRequest</span>: <span class="function"><span class="keyword">function</span> <span class="title">transform</span>(<span class="params">data, headersGetter</span>) <span class="title">or</span></span></div><div class="line">                    <span class="title">an</span> <span class="title">array</span> <span class="title">of</span> <span class="title">functions</span>,</div><div class="line">  <span class="title">transformResponse</span>: <span class="title">function</span> <span class="title">transform</span>(<span class="params">data, headersGetter</span>) <span class="title">or</span></div><div class="line">                     <span class="title">an</span> <span class="title">array</span> <span class="title">of</span> <span class="title">functions</span>,</div><div class="line">  <span class="title">cache</span>: <span class="title">boolean</span> <span class="title">or</span> <span class="title">Cache</span> <span class="title">object</span>,</div><div class="line">  <span class="title">timeout</span>: <span class="title">number</span>,</div><div class="line">  <span class="title">withCredentials</span>: <span class="title">boolean</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>The GET, POST, and other convenience methods set the method, so you don’t need to. </p>
+<h4 id="Setting-HTTP-Headers"><a href="#Setting-HTTP-Headers" class="headerlink" title="Setting HTTP Headers"></a>Setting HTTP Headers</h4><p>These are set in the $httpProvider.defaults.headers configuration object. This step is usually done in the config part of setting up your app. So if you wanted to enable “DO NOT TRACK” for all your GET requests, while removing the Requested-With header for all your requests, you could simply do the following:</p>
+<pre><code>angular.module(&apos;MyApp&apos;,[]).
+  config(function($httpProvider) {
+    // Remove the default AngularJS X-Request-With header
+    delete $httpProvider.default.headers.common[&apos;X-Requested-With&apos;];
+    // Set DO NOT TRACK for all Get requests
+    $httpProvider.default.headers.get[&apos;DNT&apos;] = &apos;1&apos;;
+ });
+</code></pre><p>If you want to set the headers for only certain requests, but not as a default, then you can pass the <code>header</code> in as part of the config object to <code>$http</code> service. The same custom header can be passed to a GET request as part of the second parameter, which also takes your URL parameters:</p>
+<pre><code>$http.get(&apos;api/user&apos;, {
+   // Set the Authorization header. In an actual app, you would get the auth
+   // token from a service
+   headers: {&apos;Authorization&apos;: &apos;Basic Qzsda231231&apos;},
+   params: {id: 5}
+}).success(function() { // Handle success });
+</code></pre><h4 id="Working-with-RESTful-Resources"><a href="#Working-with-RESTful-Resources" class="headerlink" title="Working with RESTful Resources"></a>Working with RESTful Resources</h4><p>The <code>ngResource</code> is a separate, optional module. To use it, you need to:</p>
+<ul>
+<li>Include the <em>angular-resource.js</em> in your script files that are sourced.</li>
+<li>Include <code>ngResource</code> in your module dependency declaration (such as, <code>angular.module(‘myModule’, [‘ngResource’])</code>).</li>
+<li>Use inject <code>$resource</code> where needed.</li>
+</ul>
+<p>E.g.</p>
+<pre><code>myAppModule.factory(&apos;CreditCard&apos;, [&apos;$resource&apos;, function($resource) {
+  return $resource(&apos;/user/:userId/card/:cardId&apos;,
+        {userId: 123, cardId: &apos;@id&apos;},
+        {charge: {method:&apos;POST&apos;, params:{charge:true}, isArray:false});
+}]);
+</code></pre><p>Declaring your own <code>$resource</code> is as simple as calling the injected <code>$resource</code> function (you know how to inject things by now, right?) with the right parameters.</p>
+<p>The <code>$resource</code> function takes one required argument—the URL at which the resource is available—and two optional arguments: default parameters and additional actions you want to configure on the resource.</p>
+<p>Notice that the URL parameter is parametrized (the <code>:</code> denotes a parameter. The <code>:userId</code> states that the <code>userId</code> parameter will replace the text there, and the <code>:cardId</code> will be replaced by the value of the <code>cardId</code> parameter). If the parameter is not passed, then it will be replaced by an empty string.</p>
+<p>The second parameter takes care of the default parameters to be passed along with each request. In this case, we pass in the <code>userId</code> as a constant 123. The <code>cardId</code> parameter is more interesting. We say <code>cardId</code> is “@id.” This denotes that if I am using a returned object from the server, and I call any method on it (such as <code>$save</code>), then the <code>cardId</code> field is to be picked from the <code>id</code> property on the object.</p>
+<p>The third argument to the <code>$resource</code> call is optional additional methods you want to expose on your resource.</p>
+<p>In this case, we specify a method <code>charge</code>. This can be configured by passing in an object, with the key being the method name to be exposed. The configuration needs to specify the method type of the request (GET, POST, and so on), the <code>parameters</code> that need to be passed as part of that request (<code>charge=true</code> in this case), and if the returned result is an array or not (not, in this case). Once that is done, you are free to start calling CreditCard.charge() whenever you want (as long as the user has charged in real life, of course!).</p>
+<p>Now, whenever we ask for a CreditCard from the AngularJS injector, we get an Angular resource, which by default gives us a few methods to start off with:</p>
+<table>
+<thead>
+<tr>
+<th>Resource Function</th>
+<th>Method</th>
+<th>URL Expected</th>
+<th>Return</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CreditCard.get({id: 11})</td>
+<td>GET</td>
+<td>/user/123/card/11</td>
+<td>Single JSON</td>
+</tr>
+<tr>
+<td>CreditCard.save({}, ccard)</td>
+<td>POST</td>
+<td>/user/123/card with post data “ccard”</td>
+<td>Single JSON </td>
+</tr>
+<tr>
+<td>CreditCard.save({id: 11}, ccard)</td>
+<td>POST</td>
+<td>/user/123/card/11 with post data “ccard”</td>
+<td>Single JSON </td>
+</tr>
+<tr>
+<td>CreditCard.query()</td>
+<td>GET</td>
+<td>/user/123/card</td>
+<td>JSON Array</td>
+</tr>
+<tr>
+<td>CreditCard.remove({id: 11})</td>
+<td>DELETE</td>
+<td>/user/123/card/11</td>
+<td>Single JSON</td>
+</tr>
+<tr>
+<td>CreditCard.delete({id: 11})</td>
+<td>DELETE</td>
+<td>/user/123/card/11</td>
+<td>Single JSON</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s take the example of a credit card, which should make things clearer.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Let us assume that the CreditCard service is injected here</span></div><div class="line"></div><div class="line"><span class="comment">// We can retrieve a collection from the server which makes the request</span></div><div class="line"><span class="comment">// GET: /user/123/card</span></div><div class="line"><span class="keyword">var</span> cards = CreditCard.query();</div></pre></td></tr></table></figure>
+<p>Take a look at the <code>CreditCard.query()</code> call again. You will see that instead of assigning the cards in a callback, we are directly assigning them to the card’s variable.</p>
+<p>You would be correct to worry about whether the code will work, but the code is actually correct and will work. What’s happening here is that AngularJS assigned a reference (an object or an array, depending on the expected return type), which will get populated at some point in the future when the server requests returns. In the meantime, the object will remain empty.</p>
+<p>Since the most common flow with AngularJS apps is to fetch data from the server, assign it to a variable, and display it in the template, this shortcut is nice. In your controller code, all you have to do is make the server-side call, assign the return value to the right scope variable, and let the template worry about rendering it when it returns.</p>
+<p>This approach will not work for you if you have some business logic you want executed on the return value. In such a case, you will have to depend on the callback, which is used in the <code>CreditCard.get()</code> call.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// We can get a single card, and work with it from the callback as well</span></div><div class="line">CreditCard.get(&#123;<span class="attr">cardId</span>: <span class="number">456</span>&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">card</span>) </span>&#123;</div><div class="line"> <span class="comment">// each item is an instance of CreditCard</span></div><div class="line"> expect(card <span class="keyword">instanceof</span> CreditCard).toEqual(<span class="literal">true</span>);</div><div class="line"> card.name = <span class="string">"J. Smith"</span>;</div><div class="line"> <span class="comment">// non-GET methods are mapped onto the instances</span></div><div class="line"> card.$save();</div><div class="line"></div><div class="line"> <span class="comment">// our custom method is mapped as well.</span></div><div class="line"> card.$charge(&#123;<span class="attr">amount</span>:<span class="number">9.99</span>&#125;);</div><div class="line"> <span class="comment">// Makes a POST: /user/123/card/456?amount=9.99&amp;charge=true</span></div><div class="line"> <span class="comment">// with data &#123;id:456, number:'1234', name:'J. Smith'&#125;</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Regardless of whether you use the shortcut return type or the callback, there are some other points you should note about the returned object.</p>
+<p>The return value is not a plain old JS object, but in fact a “resource” type object. This means that in addition to the value returned by the server, it has some additional behavior attached to it (the <code>$save()</code> and <code>$charge()</code> in this case). This allows you to perform server-side operations with ease, for example by fetching data, making some changes, and persisting the changes to the server (the most common behavior in any CRUD app).</p>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="https://github.com/mbertolacci/angular-service-utilities" target="_blank" rel="external">mbertolacci/angular-service-utilities</a> AngularJS utilities for bringing two-way data binding into services, plus some other goodies.</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Angular/2014-08-12-angular-service.html" target="_blank" rel="external">http://blog.inching.org/Angular/2014-08-12-angular-service.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorial/">tutorial</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2014-08-12-angular-service.html&title=《Angular Services》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2014-08-12-angular-service.html&title=《Angular Services》 — Balance&source=本文基于 Mastering Web Application Development with AngularJS 的读书笔记。
+AngularJS: A..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2014-08-12-angular-service.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Services》 — Balance&url=http://blog.inching.org/Angular/2014-08-12-angular-service.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2014-08-12-angular-service.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/CSS/2014-08-14-css-demo-tai-ji.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">如何使用 CSS 绘制太极图</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/CSS/2014-08-11-sass-tutorial.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">SASS用法指南</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2014-08-12-angular-service.html&title=《Angular Services》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2014-08-12-angular-service.html&title=《Angular Services》 — Balance&source=本文基于 Mastering Web Application Development with AngularJS 的读书笔记。
+AngularJS: A..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2014-08-12-angular-service.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Services》 — Balance&url=http://blog.inching.org/Angular/2014-08-12-angular-service.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2014-08-12-angular-service.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrElEQVR42u3a0WrDMAwF0P7/T3ewp0KX5Eqy2wyOn4q3xToZ2KrkxyMez9/x+vl15v13zuffn3D0+XzFZQMPDw+vFfrRyBfoMY5WPGcnMePh4eHt5uWHQXVMVkle04UFDw8P76u8avKdpOD5Knh4eHj/nZdv30nSfJEW4+Hh4d2SlyfESQE3CXcew+JaCx4eHl7M6zXAvvt5e38PDw8Pr7UdVwuyUYLbaow1o8XDw8PbwEse10t/qwXcXnkieiYeHh7eBl41L8039x2Y3vUvPDw8vFW8/EjI09xewyxJ4s/Lx9E3Bjw8PLwxL098qyWJXpI9abYdzuDh4eEt5e1o7edPq65VTq/x8PDwNvOqZYVJypv/VRLt6BsDHh4eXpE3bztVE+h5K6v5Uzw8PLxFvOrlp2obrBdudd3DePDw8PA+wkvKB9VEOQ+xWjJu1qfx8PDwxrzeI3obd35hq3fA/NEAw8PDw9vGqxYXkuJFryCbp90XZRQ8PDy8Dbxqn31+ISDZ0KvttOi14uHh4S3iVTF5k2wyPy9G4OHh4e3j5YB56jw5PHrlYDw8PLzdvDzoaplgchGhWrzAw8PD282rvolVv9/b3PHw8PDuxkuCywup1UsAvUguihR4eHh4G3g9Rq88kV9EqCbxF68bDw8PbylvVVl20hib1FEuZvDw8PA+yMs34ioyD7Ha9DpMpvHw8PCW8la1u5IG2I6rBoXWHR4eHt4i3rM4egfG5OpA9TA4TKnx8PDwFvHykaTdeVE4Xys/cqqr4OHh4U1WqW7Z1Y14fhhUC77R8nh4eHhjXnWDzqmT+clBgoeHh3cHXu9qVPVKVi+NPpzHw8PDuzFvHvT8UMHDw8P7JG9ejKjiJ8WLws0IPDw8vA28eQNscnicPyf5B5QxeHh4eH3eDzbZkpcC/4zTAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

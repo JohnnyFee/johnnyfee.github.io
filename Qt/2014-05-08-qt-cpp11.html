@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Qt C++ 11 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="qt,syntax">
+    <meta name="description" content="原文：http://blog.qt.digia.com/cn/2012/07/09/cpp11-in-qt/
+
+参考原文：woboq: Olivier Goffart – C++11 in Qt5
+C++ 11现在已经是C++标准，也就没有理由不在新的应用中使用。
+Qt 4.8是第一个支持C++ 11特性的Qt版本。我在4.8发布之前写过一篇博客——Qt中的C++0x，这里就不再重复了。
+显而易">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt C++ 11">
+<meta property="og:url" content="http://blog.inching.org/Qt/2014-05-08-qt-cpp11.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文：http://blog.qt.digia.com/cn/2012/07/09/cpp11-in-qt/
+
+参考原文：woboq: Olivier Goffart – C++11 in Qt5
+C++ 11现在已经是C++标准，也就没有理由不在新的应用中使用。
+Qt 4.8是第一个支持C++ 11特性的Qt版本。我在4.8发布之前写过一篇博客——Qt中的C++0x，这里就不再重复了。
+显而易">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Qt C++ 11">
+<meta name="twitter:description" content="原文：http://blog.qt.digia.com/cn/2012/07/09/cpp11-in-qt/
+
+参考原文：woboq: Olivier Goffart – C++11 in Qt5
+C++ 11现在已经是C++标准，也就没有理由不在新的应用中使用。
+Qt 4.8是第一个支持C++ 11特性的Qt版本。我在4.8发布之前写过一篇博客——Qt中的C++0x，这里就不再重复了。
+显而易">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Qt C++ 11</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Qt C++ 11</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-07T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Qt/">Qt</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#槽中使用Lambda表达式"><span class="post-toc-text">槽中使用Lambda表达式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Unicode字符串常量"><span class="post-toc-text">Unicode字符串常量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#常量表达式-constexpr"><span class="post-toc-text">常量表达式 constexpr</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#static-assert"><span class="post-toc-text">static_assert</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#override和final"><span class="post-toc-text">override和final</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#deleted成员"><span class="post-toc-text">deleted成员</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#右值引用和移动构造函数"><span class="post-toc-text">右值引用和移动构造函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结论"><span class="post-toc-text">结论</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-qt-cpp11"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Qt C++ 11</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-08 00:00:00" datetime="2014-05-07T16:00:00.000Z"  itemprop="datePublished">2014-05-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Qt/">Qt</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>原文：<a href="http://blog.qt.digia.com/cn/2012/07/09/cpp11-in-qt/" target="_blank" rel="external">http://blog.qt.digia.com/cn/2012/07/09/cpp11-in-qt/</a></p>
+</blockquote>
+<p>参考原文：<a href="http://woboq.com/blog/" target="_blank" rel="external">woboq: Olivier Goffart</a> – <a href="http://woboq.com/blog/cpp11-in-qt5.html" target="_blank" rel="external">C++11 in Qt5</a></p>
+<p>C++ 11现在已经是C++标准，也就没有理由不在新的应用中使用。</p>
+<p>Qt 4.8是第一个支持C++ 11特性的Qt版本。我在4.8发布之前写过一篇博客——<a href="http://labs.qt.nokia.com.cn/2011/08/22/cpp0x-in-qt/" target="_blank" rel="external">Qt中的C++0x</a>，这里就不再重复了。</p>
+<p>显而易见的是，比起Qt 4.8，Qt 5利用了更多的C++ 11新特性。下面我们来一个个见识一下。</p>
+<a id="more"></a>
+<h2 id="槽中使用Lambda表达式"><a href="#槽中使用Lambda表达式" class="headerlink" title="槽中使用Lambda表达式"></a>槽中使用Lambda表达式</h2><p><a href="http://en.wikipedia.org/wiki/Anonymous_function#C.2B.2B" target="_blank" rel="external">Lambda表达式</a>是C++ 11带来的最激动人心的特性之一。简而言之，它允许创建匿名函数。匿名函数则允许我们直接将一个函数作为参数传递，无需显式地声明。</p>
+<p>在此之前，使用利用operator()在结构体中实现<a href="http://en.wikipedia.org/wiki/Function_object#In_C_and_C.2B.2B" target="_blank" rel="external">仿函数</a>需要很多技巧性代码。</p>
+<p>Qt 4.8实际已经可以使用这个特性。只不过在Qt 4.8中，Lambda表达式只能用在QtConcurrent的某些函数。现在，前面我们也介绍过，Qt 5有<a href="http://www.devbean.info/2012/04/signals-slots-in-qt5/" target="_blank" rel="external">Qt 5中新的信号/槽语法</a>，Lambda表达式有了更大的用武之地。回忆一下，在你需要编写槽代码的时候，即使只有一条语句，你也必须为它单独建立一个函数。这不是很麻烦吗？现在，我们有了更好的写法：</p>
+<pre><code>connect(sender, &amp;Sender::valueChanged, [=](const QString &amp;newValue) {
+    receiver-&gt;updateValue(&quot;senderValue&quot;, newValue);
+});
+</code></pre><p>Lambda表达式现在已经被MSVC 2010、GCC 4.5和clang 3.1实现。</p>
+<h2 id="Unicode字符串常量"><a href="#Unicode字符串常量" class="headerlink" title="Unicode字符串常量"></a>Unicode字符串常量</h2><p>C++ 11允许你使用u”HelloWorld”的形式生成UTF-16字符串。Qt利用这个特性增加了一个新的类QStringLiteral。这个类能够在编译时初始化QString，没有了运行时的时间消耗。参考之前<a href="http://woboq.com/blog/qstringliteral.html" target="_blank" rel="external">关于QStringLiteral的文章</a>。</p>
+<pre><code>QString str = QStringLiteral(&quot;HelloWorld&quot;);
+</code></pre><h2 id="常量表达式-constexpr"><a href="#常量表达式-constexpr" class="headerlink" title="常量表达式 constexpr"></a>常量表达式 constexpr</h2><p>C++ 11增加了新的关键字constexpr，指示某些内联函数可以在编译期运算。在Qt 5中，我们引入了<a href="http://qt-project.org/doc/qt-5.0/qtglobal.html#Q_DECL_CONSTEXPR" target="_blank" rel="external">Q_DECL_CONSTEXPR</a>宏，当所使用的编译期支持constexpr时，这个宏可以生成constexpr，否则的话则是空白。</p>
+<p>在Qt源代码中，我们也利用这个宏改写了许多函数，例如：</p>
+<pre><code>enum SomeEnum { Value1, Value2, Value3 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(QFlags&lt;SomeEnum&gt;)
+// 上面一句声明了下述函数：
+// Q_DECL_CONSTEXPR QFlags&lt;SomeValue&gt; operator|(SomeValue,SomeValue) {...}
+
+int someFunction(QFlags&lt;SomeEnum&gt; value) {
+    switch (value) {
+        case SomeEnum::Value1:
+            return 1;
+        case SomeEnum::Value2:
+            return 2;
+        case SomeEnum::Value1 | SomeEnum::Value3:
+        // 这一个 case 仅在 C++ 11 中通过编译
+        // 因为 QFlags 运算符是 constexpr 的，也就是在编译期即可确定
+        // 而在之前版本则必须是 
+        //        QFlags&lt;SomeValue&gt; operator|(SomeValue,SomeValue)
+        // 这会引发一个错误，因为 case 语句要求编译期常量
+            return 3;
+        default:
+            return 0;
+    }
+}
+</code></pre><p>注意，这里我们在枚举值前面使用可SomeEnum::前缀，这是C++ 11允许的，但是之前版本的C++则不允许。</p>
+<h2 id="static-assert"><a href="#static-assert" class="headerlink" title="static_assert"></a>static_assert</h2><p>在编译期使用<code>static_assert</code>检测问题，可以让C++ 11帮助我们可以组织处更好的错误信息。Qt 5引入了<code>Q_STATIC_ASSERT</code>和<code>Q_STATIC_ASSERT_X</code>两个宏。当<code>static_assert</code>可用时，这两个宏将使用<code>static_assert</code>，否则使用一些模板技巧。</p>
+<p>为了产生更好的编译错误信息，Qt在API不方便的地方大量使用了宏。</p>
+<h2 id="override和final"><a href="#override和final" class="headerlink" title="override和final"></a>override和final</h2><p>你遇到过这样的错误吗？自己定义的函数名看上去同父类的某个函数同名，但却的确有某些字母打错了，以至于并没有覆盖父类函数，从而让程序不能正确运行（或者是忘记了那函数名最后面的该死的const）？</p>
+<p>现在，你可以选择在的确需要覆盖父类虚函数的地方加上Q_DECL_OVERRIDE。如果编译器支持的话，这个宏将展开为新增加的“override”关键字。这样的话，如果编译器支持C++ 11，那么如果是简单的字母错误，你就会得到一个错误；当你重构虚函数、却忘记修改子类时，同样会引发一个错误。</p>
+<pre><code>class MyModel : public QStringListModel {
+    //...
+protected:
+     Qt::ItemFlags flags (const QModelIndex &amp; index) Q_DECL_OVERRIDE;
+};
+</code></pre><p>注意，上面的flags()函数实际是想覆盖父类的同名函数，但是我们忘记了一个const，就会出现类似下面的错误：</p>
+<pre><code>mymodel.h:15: error: `Qt::ItemFlags MyModel::flags(const QModelIndex&amp;)`
+ marked override, but does not override
+</code></pre><p>如果虚函数不能覆盖，Qt也提供了另外一个宏，<code>Q_DECL_FINAL</code>，这个宏展开为final。</p>
+<h2 id="deleted成员"><a href="#deleted成员" class="headerlink" title="deleted成员"></a>deleted成员</h2><p>当编译器支持deleted函数时，新增加的宏<code>Q_DECL_DELETE</code>将展开为<code>=delete</code>。这就允许我们能够为一些常见错误提供更好的编译器错误信息。</p>
+<p>deleted函数用于显式地删除那些不允许编译器自动生成的函数（例如默认构造函数、默认拷贝运算符等）。deleted函数不能被调用，如果被使用的话，将会出现一个编译器错误。</p>
+<p>我们可以将其用于<code>Q_DISABLE_COPY</code>宏。在此之前，为了实现同样的目的，我们的做法是将其声明为私有的。尽管效果相同，但是错误信息却并不友好。</p>
+<h2 id="右值引用和移动构造函数"><a href="#右值引用和移动构造函数" class="headerlink" title="右值引用和移动构造函数"></a>右值引用和移动构造函数</h2><p>在这里，我假定你明白什么叫做“右值引用”。如果不明白，我们会在后面的文章中详细说明。Qt 5已经在内部进行了调整，以便<a href="https://qt.gitorious.org/qt/qtbase/commit/f92fdd190d056fe929f723e3f2ce9e0c0b141cec" target="_blank" rel="external">支持移动构造函数</a>。因此，你可以大胆的使用它们了！</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>对于C++ 11，MSVC不需要任何特殊的编译参数，而GCC和Clang则需要添加-std=c++0x。</p>
+<p>默认情况下，Qt 5本身会使用C++ 11编译参数进行编译（如果可能的话）。</p>
+<p>如果你使用的是qmake，那么，在使用Qt 5构建的程序的.pro文件中，你需要增加这么一句：</p>
+<pre><code>CONFIG += c++11
+</code></pre><p>（顺便提一句，在Qt 4中，如果你需要使用C++ 11的新特性，则应该增加gcc:CXXFLAGS += -std=c++0x。具体细节，我们会在后面的文章中说明。）</p>
+<p>现在，好好利用C++ 11所带来的新特性吧！私以为，仅仅为了auto这一特性，就应该尽快使用C++ 11了！</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Qt/2014-05-08-qt-cpp11.html" target="_blank" rel="external">http://blog.inching.org/Qt/2014-05-08-qt-cpp11.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/qt/">qt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/syntax/">syntax</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Qt/2014-05-08-qt-cpp11.html&title=《Qt C++ 11》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Qt/2014-05-08-qt-cpp11.html&title=《Qt C++ 11》 — Balance&source=
+原文：http://blog.qt.digia.com/cn/2012/07/09/cpp11-in-qt/
+
+参考原文：woboq: Olivier ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Qt/2014-05-08-qt-cpp11.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Qt C++ 11》 — Balance&url=http://blog.inching.org/Qt/2014-05-08-qt-cpp11.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Qt/2014-05-08-qt-cpp11.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/OS/2014-05-08-linux-tutorial.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Linux Tutorial</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/C/2014-05-07-cpp-tutorial.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">C++ Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Qt/2014-05-08-qt-cpp11.html&title=《Qt C++ 11》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Qt/2014-05-08-qt-cpp11.html&title=《Qt C++ 11》 — Balance&source=
+原文：http://blog.qt.digia.com/cn/2012/07/09/cpp11-in-qt/
+
+参考原文：woboq: Olivier ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Qt/2014-05-08-qt-cpp11.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Qt C++ 11》 — Balance&url=http://blog.inching.org/Qt/2014-05-08-qt-cpp11.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Qt/2014-05-08-qt-cpp11.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3aW4orMQwFwOx/031/B0Kac+TkQtvlr9CTh8sDQrL0esXrelvt879/ff/m90+9frEwMDAey7hu1/12P33P/ZPk1/O9YWBgnMNIQmEbKBP8/W8le8PAwMC4f0+eIM7ej4GBgTFjrKSM7RYxMDAw2iI2/9Ss3E2O6Qu1OAYGxgMZ+a37/3/9k/4GBgbGoxhXuVaCZrKH4a4wMDC2ZuQBrr3ibxsJbcDFwMA4jZGXqbPmZZt0Lg2KYWBgbMdoxyPa7SYthHwE7eOnMDAwDmCslKMro2Bt8P14fBgYGFsz2oGGPLy2F2qzpBMDA+NkxvrIRV6U5t//kyocAwPjIYw2BVxJ+/IRtHy8DAMDY29GPuLQjoitnGv+GgMD4xzGbNBhNiSRJIj1RR4GBsYxjDxRaxO+bzVKh1knBgbGwxnteFZ+HLO0r72Yi2pxDAyMjRh522B9Q/noWHJ8GBgYezNmIbVtXs6ef62ngYGB8XDGbABrlqIlgxR5cvnxf4KBgXEAYyWjbEfE8l+PnmNgYBzAaBsG+aXbrA0w7HJgYGBszWhD3qy1uTLkUY9cYGBgbMG4yjVLE9uDyIvneuIDAwPjgYx8rSSL+eZWhjMwMDD2ZiRbzANfe0Jfa0hgYGAcwMgHv9oQ/IsiNmoMYGBgYJRlah5qh6EcAwMD47YczS/mZkNm0egGBgbGAYy86Zgndvn13MrlHQYGxgmM2aXYbCJr1lTI00cMDIztGP8AnTPRP7BpjD4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

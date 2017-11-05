@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>jQuery Tutorial | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="本文为读 Learning jQuery, 4th Edition 的读书笔记。
+
+DOMhttp://api.jquery.com/category/selectors/
+我们将对以下示例进行改造：
+&amp;lt;ul id=&amp;quot;selected-plays&amp;quot;&amp;gt;
+    &amp;lt;li&amp;gt;Comedies
+        &amp;lt;ul&amp;gt;
+            &amp;lt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery Tutorial">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-03-24-jquery-tutorial.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文为读 Learning jQuery, 4th Edition 的读书笔记。
+
+DOMhttp://api.jquery.com/category/selectors/
+我们将对以下示例进行改造：
+&amp;lt;ul id=&amp;quot;selected-plays&amp;quot;&amp;gt;
+    &amp;lt;li&amp;gt;Comedies
+        &amp;lt;ul&amp;gt;
+            &amp;lt">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jquery-example-ul.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jquery-ui-horizontal.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jquery-ui-a.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jquery-table-alternative.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jquery-dom-filter.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jquery-dom-next.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jquery-event-pro.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jquery-event-capture.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jquery-event-bubbling.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jquery-dom-wrapper.jpg">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery Tutorial">
+<meta name="twitter:description" content="本文为读 Learning jQuery, 4th Edition 的读书笔记。
+
+DOMhttp://api.jquery.com/category/selectors/
+我们将对以下示例进行改造：
+&amp;lt;ul id=&amp;quot;selected-plays&amp;quot;&amp;gt;
+    &amp;lt;li&amp;gt;Comedies
+        &amp;lt;ul&amp;gt;
+            &amp;lt">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/jquery-example-ul.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">jQuery Tutorial</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">jQuery Tutorial</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-03-23T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-03-24
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DOM"><span class="post-toc-text">DOM</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CSS-selectors"><span class="post-toc-text">CSS selectors</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Attribute-selectors"><span class="post-toc-text">Attribute selectors</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Styling-links"><span class="post-toc-text">Styling links</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Custom-selectors"><span class="post-toc-text">Custom selectors</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DOM-traversal-methods"><span class="post-toc-text">DOM traversal methods</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Accessing-DOM-elements"><span class="post-toc-text">Accessing DOM elements</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Handling-Events"><span class="post-toc-text">Handling Events</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#window-onload-vs-document-ready"><span class="post-toc-text">window.onload vs $(document).ready()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#simple-events"><span class="post-toc-text">simple events</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Event-propagation"><span class="post-toc-text">Event propagation</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Stopping-event-propagation"><span class="post-toc-text">Stopping event propagation</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Preventing-default-actions"><span class="post-toc-text">Preventing default actions</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Delegating-events"><span class="post-toc-text">Delegating events</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Removing-an-event-handler"><span class="post-toc-text">Removing an event handler</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Giving-namespaces-to-event-handlers"><span class="post-toc-text">Giving namespaces to event handlers</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Styling"><span class="post-toc-text">Styling</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Hiding-and-showing-elements"><span class="post-toc-text">Hiding and showing elements</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Manipulating-the-DOM"><span class="post-toc-text">Manipulating the DOM</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Non-class-attributes"><span class="post-toc-text">Non-class attributes</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DOM-element-properties"><span class="post-toc-text">DOM element properties</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#The-value-of-form-controls"><span class="post-toc-text">The value of form controls</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Inserting-new-elements"><span class="post-toc-text">Inserting new elements</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Moving-elements"><span class="post-toc-text">Moving elements</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Wrapping-elements"><span class="post-toc-text">Wrapping elements</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Copying-elements"><span class="post-toc-text">Copying elements</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Content-getter-and-setter-methods"><span class="post-toc-text">Content getter and setter methods</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DOM-manipulation-methods"><span class="post-toc-text">DOM manipulation methods</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Animation"><span class="post-toc-text">Animation</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Images"><span class="post-toc-text">Images</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-jquery-tutorial"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">jQuery Tutorial</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-03-24 00:00:00" datetime="2014-03-23T16:00:00.000Z"  itemprop="datePublished">2014-03-24</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>本文为读 <a href="http://www.salttiger.com/learning-jquery-4th-edition/" target="_blank" rel="external">Learning jQuery, 4th Edition</a> 的读书笔记。</p>
+</blockquote>
+<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><p><a href="http://api.jquery.com/category/selectors/" target="_blank" rel="external">http://api.jquery.com/category/selectors/</a></p>
+<p>我们将对以下示例进行改造：</p>
+<pre><code>&lt;ul id=&quot;selected-plays&quot;&gt;
+    &lt;li&gt;Comedies
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href=&quot;/asyoulikeit/&quot;&gt;As You Like It&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;All&apos;s Well That Ends Well&lt;/li&gt;
+            &lt;li&gt;A Midsummer Night&apos;s Dream&lt;/li&gt;
+            &lt;li&gt;Twelfth Night&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Tragedies
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href=&quot;hamlet.pdf&quot;&gt;Hamlet&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;Macbeth&lt;/li&gt;
+            &lt;li&gt;Romeo and Juliet&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Histories
+        &lt;ul&gt;
+            &lt;li&gt;Henry IV (&lt;a href=&quot;mailto:henryiv@king.co.uk&quot;&gt;email&lt;/a&gt;)
+            &lt;ul&gt;
+                &lt;li&gt;Part I&lt;/li&gt;
+                &lt;li&gt;Part II&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;li&gt;&lt;a href=&quot;http://www.shakespeare.co.uk/henryv.htm&quot;&gt;
+            Henry V&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;Richard II&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><a id="more"></a>
+<p>默认的显示效果：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jquery-example-ul.png" alt="jquery-example-ul.png" title="">
+                </div>
+                <div class="image-caption">jquery-example-ul.png</div>
+            </figure>
+<h3 id="CSS-selectors"><a href="#CSS-selectors" class="headerlink" title="CSS selectors"></a>CSS selectors</h3><p>The jQuery library supports nearly all the selectors included in CSS specifications 1 through 3.</p>
+<p>Let’s suppose that we want the top-level items, and only the top-level items—Comedies, Tragedies, and Histories—to be arranged horizontally. We can start by defining a <code>horizontal</code> class in the stylesheet:</p>
+<pre><code>.horizontal {
+    float: left;
+    list-style: none;
+    margin: 10px;
+}
+</code></pre><p><strong>The <code>horizontal</code> class floats the element to the left-hand side of the one following it</strong>, removes the bullet from it if it’s a list item, and adds a 10-pixel margin on all sides of it.</p>
+<p>Rather than attaching the <code>horizontal</code> class directly in our HTML, we’ll add it dynamically to the top-level list items only, to demonstrate jQuery’s use of selectors:</p>
+<pre><code>$(document).ready(function() {
+    $(&apos;#selected-plays &gt; li&apos;).addClass(&apos;horizontal&apos;);
+});
+</code></pre><p><strong>The second line uses the child combinator (&gt;) to add the horizontal class to all the top-level items only</strong>. In effect, the selector inside the $()function is saying, “Find each list item (li) that is a child (&gt;) of the element with an ID of selected-plays (#selected-plays)”</p>
+<p>Now our nested list looks like this:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jquery-ui-horizontal.png" alt="jquery-ui-horizontal.png" title="">
+                </div>
+                <div class="image-caption">jquery-ui-horizontal.png</div>
+            </figure>
+<p>Styling all the other items—those that are not in the top level—can be done in a number of ways. Since we have already applied the horizontalclass to the top-level items, one way to select <strong>all sub-level</strong> items is to use a negation <em>pseudo-class</em> to identify all list items that do not have a class of horizontal. Note the addition of the third line of code:</p>
+<pre><code>$(document).ready(function() {
+    $(&apos;#selected-plays &gt; li&apos;).addClass(&apos;horizontal&apos;);
+    $(&apos;#selected-plays li:not(.horizontal)&apos;).addClass(&apos;sublevel&apos;);
+});
+</code></pre><p>This time we are selecting every list item (<code>&lt;li&gt;</code>) that:</p>
+<ul>
+<li>Is a descendant of the element with an ID of selected-plays (#selected-plays)</li>
+<li>Does not have a class of horizontal (:not(.horizontal))</li>
+</ul>
+<p>When we add the sub-levelclass to these items, they receive the shaded background defined in the stylesheet:</p>
+<pre><code>.sub-level {
+    background: #ccc;
+}
+</code></pre><h3 id="Attribute-selectors"><a href="#Attribute-selectors" class="headerlink" title="Attribute selectors"></a>Attribute selectors</h3><p>Attribute selectors are a particularly helpful subset of CSS selectors. They allow us to specify an element by one of its HTML attributes, such as a link’s titleattribute or an image’s altattribute. For example, to select all images that have an altattribute, we write the following:</p>
+<pre><code>$(&apos;img[alt]&apos;)
+</code></pre><h3 id="Styling-links"><a href="#Styling-links" class="headerlink" title="Styling links"></a>Styling links</h3><p>Attribute selectors accept a wildcard syntax inspired by regular expressions for identifying the value at the beginning (^) or end ($) of a string. They can also take an asterisk (*) to indicate the value at an arbitrary position within a string or an exclamation mark (!) to indicate a negated value.</p>
+<p>Let’s say we want to have different styles for different types of links. We first define the styles in our stylesheet:</p>
+<pre><code>a {
+    color: #00c;
+}
+a.mailto {
+    background: url(images/email.png) no-repeat right top;
+    padding-right: 18px;
+}
+a.pdflink {
+    background: url(images/pdf.png) no-repeat right top;
+    padding-right: 18px;
+}
+a.henrylink {
+    background-color: #fff;
+    padding: 2px;
+    border: 1px solid #000;
+}
+</code></pre><p>Then, we add the three classes—mailto, pdflink, and henrylink—to the appropriate links using jQuery.</p>
+<p>To add a class for all e-mail links, we construct a selector that looks for all anchor elements (a) with an hrefattribute ([href]) that begins with mailto: (^=”mailto:”), and toher css like so, as follows:</p>
+<pre><code>$(document).ready(function() {
+    $(&apos;a[href^=&quot;mailto:&quot;]&apos;).addClass(&apos;mailto&apos;);
+    $(&apos;a[href$=&quot;.pdf&quot;]&apos;).addClass(&apos;pdflink&apos;);
+    $(&apos;a[href^=&quot;http&quot;][href*=&quot;henry&quot;]&apos;) .addClass(&apos;henrylink&apos;);
+});
+</code></pre><p>});</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jquery-ui-a.png" alt="jquery-ui-a.png" title="">
+                </div>
+                <div class="image-caption">jquery-ui-a.png</div>
+            </figure>
+<h3 id="Custom-selectors"><a href="#Custom-selectors" class="headerlink" title="Custom selectors"></a>Custom selectors</h3><p>To the wide variety of CSS selectors, jQuery adds its own custom selectors. These custom selectors enhance the already impressive capabilities of CSS selectors to locate page elements in new ways.</p>
+<p>When possible, jQuery uses the native DOM selector engine of the browser to find elements. This extremely fast approach is not possible when custom jQuery selectors are used. For this reason, it is recommended to avoid frequent use of custom selectors when a native option is available and performance is very important.</p>
+<p>The custom selector syntax is the same as the CSS pseudo-class syntax, where the selector starts with a colon (:). For example, to select the second item from a set of <code>&lt;div&gt;</code> elements with a class of horizontal, we write this:</p>
+<pre><code>$(&apos;div.horizontal:eq(1)&apos;)
+</code></pre><p>Note that <code>:eq(1)</code> selects the second item in the set because JavaScript array numbering is zero-based, meaning that it starts with zero.</p>
+<p>In contrast, CSS is one-based, so a CSS selector such as <code>$(&#39;div:nth-child(1)&#39;)</code> would select all div selectors that are the first child of their parent.</p>
+<p>We can add a style to the stylesheet for all the table rows and use an altclass for the odd rows:</p>
+<pre><code>tr {
+    background-color: #fff;
+}
+.alt {
+    background-color: #ccc;
+}
+
+$(document).ready(function() {
+    $(&apos;tr:even&apos;).addClass(&apos;alt&apos;);
+});
+</code></pre><p>We can expect our simple bit of code to produce tables that look like this:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jquery-table-alternative.png" alt="jquery-table-alternative.png" title="">
+                </div>
+                <div class="image-caption">jquery-table-alternative.png</div>
+            </figure>
+<p>Note that for the second table, this result may not be what we intend. Since the last row in the Playstable has the alternate gray background, the first row in the Sonnets table has the plain white background. One way to avoid this type of problem is to use the <code>:nth-child()</code> selector instead, which <strong>counts an element’s position relative to its parent element rather than relative to all the elements selected so far</strong>. This selector can take a number, odd, or evenas its argument</p>
+<pre><code>$(document).ready(function() {
+    $(&apos;tr:nth-child(odd)&apos;).addClass(&apos;alt&apos;);
+});
+</code></pre><p><strong>Note that <code>:nth-child()</code> is the only jQuery selector that is one-based.</strong></p>
+<p>For one final custom-selector touch, let’s suppose for some reason we want to highlight any table cell that referred to one of the Henryplays. All we have to do—after adding a class to the stylesheet to make the text bold and italicized (<code>.highlight {font-weight:bold; font-style: italic;}</code>)—is add a line to our jQuery code using the <code>:contains()</code> selector:</p>
+<pre><code>$(document).ready(function() {
+    $(&apos;tr:nth-child(odd)&apos;).addClass(&apos;alt&apos;);
+    $(&apos;td:contains(Henry)&apos;).addClass(&apos;highlight&apos;);
+});
+</code></pre><p>The capabilities of custom selectors are not limited to locating elements based on their position. For example, when working with forms, jQuery’s custom selectors and complementary CSS3 selectors can make short work of selecting just the elements we need. The following table describes a handful of these form selectors:</p>
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th>Match</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:input</td>
+<td>Input, text area, select, and button elements</td>
+</tr>
+<tr>
+<td>:button</td>
+<td>Button elements and input elements with a typeattribute equal to button</td>
+</tr>
+<tr>
+<td>:enabled</td>
+<td>Form elements that are enabled</td>
+</tr>
+<tr>
+<td>:disabled</td>
+<td>Form elements that are disabled</td>
+</tr>
+<tr>
+<td>:checked</td>
+<td>Radio buttons or checkboxes that are checked</td>
+</tr>
+<tr>
+<td>:selected</td>
+<td>Option elements that are selected</td>
+</tr>
+</tbody>
+</table>
+<p>As with the other selectors, form selectors can be combined forgreater specificity. We can, for example, select all checked radio buttons (but not checkboxes) with <code>$(&#39;input[type=&quot;radio&quot;]:checked&#39;)</code> or select all password inputs and disabled text inputs with <code>$(&#39;input[type=&quot;password&quot;]</code>, <code>$(input[type=&quot;text&quot;]:disabled&#39;)</code>. Even with custom selectors, we can use the same basic principles of CSS to build the list of matched elements.</p>
+<h3 id="DOM-traversal-methods"><a href="#DOM-traversal-methods" class="headerlink" title="DOM traversal methods"></a>DOM traversal methods</h3><p>Some of the methods have a nearly identical counterpart among the selector expressions. For example, the line we first used to add the altclass, <code>$(&#39;tr:even&#39;).addClass(&#39;alt&#39;)</code>, could be rewritten with the <code>.filter()</code> method as follows:</p>
+<pre><code>$(&apos;tr&apos;).filter(&apos;:even&apos;).addClass(&apos;alt&apos;);
+</code></pre><p>Also, the .filter()method in particular has enormous power because it can take a function as its argument. The function allows us to create complex tests for whether elements should be kept in the matched set. Let’s suppose, for example, we want to add a class to all external links:</p>
+<pre><code>a.external {
+    background: #fff url(images/external.png) no-repeat 100% 2px;
+    padding-right: 16px;
+}
+</code></pre><p>jQuery has no selector for this sort of case. Without a filter function, we’d be forced to explicitly loop through each element, testing each one separately. With the following filter function, however, we can still rely on jQuery’s implicit iteration and keep our code compact:</p>
+<pre><code>$(&apos;a&apos;).filter(function() {
+    return this.hostname &amp;&amp; this.hostname != location.hostname;
+}).addClass(&apos;external&apos;)
+</code></pre><p>More precisely, the <code>.filter()</code> method iterates through the matched set of elements, <strong>calling the function once for each and testing the return value</strong>. If the function returns false, the element is removed from the matched set. If it returns true, the element is kept.</p>
+<p>With the <code>.filter()</code> method in place, the Henry Vlink is styled to indicate it is external:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jquery-dom-filter.png" alt="jquery-dom-filter.png" title="">
+                </div>
+                <div class="image-caption">jquery-dom-filter.png</div>
+            </figure>
+<p><strong>Styling specific cells</strong></p>
+<p>Earlier, we added a highlight class to all cells containing the text Henry. To instead style the cell next to each cell containing Henry, we can begin with the selector that we have already written and simply call the <code>.next()</code> method on the result:</p>
+<pre><code>$(document).ready(function() {
+    $(&apos;td:contains(Henry)&apos;).next().addClass(&apos;highlight&apos;);
+});
+</code></pre><p>The tables should now look like this:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jquery-dom-next.png" alt="jquery-dom-filter.png" title="">
+                </div>
+                <div class="image-caption">jquery-dom-filter.png</div>
+            </figure>
+<p>The <code>.next()</code> method selects only the very next sibling element. To highlight all of the cells following the one containing Henry, we could use the <code>.nextAll()</code> method instead:</p>
+<pre><code>$(document).ready(function() {
+    $(&apos;td:contains(Henry)&apos;).nextAll().addClass(&apos;highlight&apos;);
+});
+</code></pre><p>As we might expect, the <code>.next()</code> and <code>.nextAll()</code> methods have counterparts: <code>.prev()</code> and <code>.prevAll()</code>. Additionally, <code>.siblings()</code> selects all other elements at the same DOM level, regardless of whether they come before or after the previously selected element.</p>
+<p>To include the original cell (the one that contains Henry) along with the cells that follow, we can add the <code>.addBack()</code> method:</p>
+<pre><code>$(document).ready(function() {
+    $(&apos;td:contains(Henry)&apos;).nextAll().addBack()
+    .addClass(&apos;highlight&apos;);
+});
+</code></pre><p>There are a multitude of selector and traversal-method combinations by which we can select the same set of elements. Here, for example, is another way to select every cell in each row where at least one of the cells contains Henry:</p>
+<pre><code>$(document).ready(function() {
+    $(&apos;td:contains(Henry)&apos;).parent().children().addClass(&apos;highlight&apos;);
+});
+</code></pre><h3 id="Accessing-DOM-elements"><a href="#Accessing-DOM-elements" class="headerlink" title="Accessing DOM elements"></a>Accessing DOM elements</h3><p>Every selector expression and most jQuery methods return a jQuery object. This is almost always what we want because of the implicit iteration and chaining capabilities that it affords.</p>
+<p>To access the first DOM element referred to by a jQuery object, for example, we would use <code>.get(0)</code>.</p>
+<p>So, if we want to know the tag name of an element with an ID of my-element, we would write:</p>
+<pre><code>varmyTag = $(&apos;#my-element&apos;).get(0).tagName;
+</code></pre><p>For even greater convenience, jQuery provides a shorthand for .get(). Instead of writing the previous line, we can use square brackets immediately following the selector:</p>
+<pre><code>varmyTag = $(&apos;#my-element&apos;)[0].tagName;
+</code></pre><p><strong>It’s no accident that this syntax appears to treat the jQuery object as an array of DOM elements</strong>; using the square brackets is like peeling away the jQuery layer to get at the node list, and including the index (in this case, 0) is like plucking out the DOM element itself.</p>
+<h2 id="Handling-Events"><a href="#Handling-Events" class="headerlink" title="Handling Events"></a>Handling Events</h2><h3 id="window-onload-vs-document-ready"><a href="#window-onload-vs-document-ready" class="headerlink" title="window.onload vs $(document).ready()"></a>window.onload vs $(document).ready()</h3><p>当文档 <strong>完全加载</strong> 到浏览器中时，触发 <code>window.onload</code> 事件，此时页面中的每个元素都可以用 JavaScript 操作，which is a boon for writing feature-rich code without worrying about load order.</p>
+<p>On the other hand, a handler registered using <code>$(document).ready()</code> is invoked when the <strong>DOM is completely ready for use</strong>. This also means that all elements are accessible by our scripts, but does not mean that every associated file has been downloaded. As soon as the HTML file has been downloaded and parsed into a DOM tree, the code can run.</p>
+<p>To ensure that the page has also been styled before the JavaScript code executes, it is good practice to place the <code>&lt;link rel=&quot;stylesheet&quot;&gt;</code> and <code>&lt;style&gt;</code> tags prior to any <code>&lt;script&gt;</code> tags within the document’s <code>&lt;head&gt;</code> element.</p>
+<p>Using <code>$(document).ready()</code> is almost always preferred over using an onload handler, but we need to keep in mind that because supporting files may not have loaded, attributes such as image height and width are not necessarily available at this time. If these are needed, we may at times also choose to implement an onload handler (or more likely, use jQuery to bind a handler to the load event); the two mechanisms can coexist peacefully.</p>
+<p>Consider, for example, a page that presents an image gallery; such a page may have many large images on it, which we can hide, show, move, and otherwise manipulate with jQuery. If we set up our interface using the onload event, users will have to wait until each and every image is completely downloaded before they can use those features. Even worse, if behaviors are not yet attached to elements that have default behaviors (such as links), user interactions could produce unintended outcomes. However, when we use <code>$(document).ready()</code> for the setup, the interface is ready to be used earlier with the correct behavior.</p>
+<p>There are two ways to call ready method:</p>
+<pre><code>(document).ready(function() {
+  // Our code here...
+});
+</code></pre><p>and</p>
+<pre><code>$(function() {
+  // Our code here...
+});
+</code></pre><p>jQuery provides a method called <code>jQuery.noConflict()</code> to return control of the <code>$</code> identifier back to other libraries. Typical usage of <code>jQuery.noConflict()</code> follows the following pattern:</p>
+<pre><code>&lt;script src=&quot;prototype.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  jQuery.noConflict();
+&lt;/script&gt;
+&lt;script src=&quot;myscript.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>First, the other library (Prototype in this example) is included. Then, jQuery itself is included, taking over <code>$</code> for its own use. Next, a call to <code>.noConflict()</code> frees up <code>$</code>, so that control of it reverts to the first included library (Prototype). Now in our custom script we can use both libraries—but whenever we want to use a jQuery method, we need to write jQuery instead of $ as an identifier.</p>
+<p>The <code>.ready()</code> method has one more trick up its sleeve to help us in this situation. The callback function we pass to it can take a single parameter—the jQuery object itself. This allows us to effectively rename it without fear of conflicts using the following syntax:</p>
+<pre><code>jQuery(document).ready(function($) {
+  // In here, we can use $ like normal!
+});
+</code></pre><p>Or we can use the shorter syntax we learned previously:</p>
+<pre><code>jQuery(function($) {
+  // Code that uses $.
+});
+</code></pre><h3 id="simple-events"><a href="#simple-events" class="headerlink" title="simple events"></a>simple events</h3><pre><code>$(document).ready(function() {
+  $(&apos;#switcher-large&apos;).on(&apos;click&apos;, function() {
+    $(&apos;body&apos;).addClass(&apos;large&apos;);
+  });
+});
+</code></pre><p>When any event handler is triggered, the keyword <code>this</code> refers to the DOM element to which the behavior was attached. Earlier we noted that the <code>$()</code> function could take a DOM element as its argument; this is one of the key reasons why that facility is available. <strong>By writing <code>$(this)</code> within the event handler, we create a jQuery object corresponding to the element, and we can act on it just as if we had located it with a CSS selector.</strong></p>
+<p>With this in mind, we can write the following:</p>
+<pre><code>$(document).ready(function() {
+    $(&apos;#switcher-default&apos;)
+    .addClass(&apos;selected&apos;)
+    .on(&apos;click&apos;, function() {
+        $(&apos;body&apos;).removeClass(&apos;narrow&apos;).removeClass(&apos;large&apos;);
+    });
+
+    $(&apos;#switcher-narrow&apos;).on(&apos;click&apos;, function() {
+        $(&apos;body&apos;).addClass(&apos;narrow&apos;).removeClass(&apos;large&apos;);
+    });
+
+    $(&apos;#switcher-large&apos;).on(&apos;click&apos;, function() {
+        $(&apos;body&apos;).removeClass(&apos;narrow&apos;).addClass(&apos;large&apos;);
+    });
+
+    $(&apos;#switcher button&apos;).on(&apos;click&apos;, function() {
+        $(&apos;#switcher button&apos;).removeClass(&apos;selected&apos;);
+        $(this).addClass(&apos;selected&apos;);
+    });
+});
+</code></pre><p>This optimization takes advantage of three jQuery features we have already discussed. First, <strong>implicit iteration</strong> is once again useful when we bind the same click handler to each button with a single call to .on(). Second, <strong>behavior queuing</strong> allows us to bind two functions to the same click event without the second overwriting the first. Lastly, we’re using jQuery’s <strong>chaining</strong> capabilities to collapse the adding and removing of classes into a single line of code each time.</p>
+<p>The <code>.removeClass()</code> method’s parameter is optional; when omitted, it removes all classes from the element. We can streamline our code a bit by exploiting this as follows:</p>
+<pre><code>$(document).ready(function() {
+  $(&apos;#switcher-default&apos;).addClass(&apos;selected&apos;);
+
+  $(&apos;#switcher button&apos;).on(&apos;click&apos;, function() {
+    $(&apos;body&apos;).removeClass();
+    $(&apos;#switcher button&apos;).removeClass(&apos;selected&apos;);
+    $(this).addClass(&apos;selected&apos;);
+  });
+
+  $(&apos;#switcher-narrow&apos;).on(&apos;click&apos;, function() {
+    $(&apos;body&apos;).addClass(&apos;narrow&apos;);
+  });
+
+  $(&apos;#switcher-large&apos;).on(&apos;click&apos;, function() {
+    $(&apos;body&apos;).addClass(&apos;large&apos;);
+  });
+});
+</code></pre><p>在jQuery中，我们可以通过<code>on</code>方法来绑定所有事件，第一个参数为事件的名称。</p>
+<p>除了<code>addClass()</code>和<code>removeClass()</code>外，还可以使用<code>toggleClass</code>来开关指定的class。</p>
+<h3 id="Event-propagation"><a href="#Event-propagation" class="headerlink" title="Event propagation"></a>Event propagation</h3><pre><code>&lt;div class=&quot;foo&quot;&gt;
+  &lt;span class=&quot;bar&quot;&gt;
+    &lt;a href=&quot;http://www.example.com/&quot;&gt;
+      The quick brown fox jumps over the lazy dog.
+    &lt;/a&gt;
+  &lt;/span&gt;
+  &lt;p&gt;
+    How razorback-jumping frogs can level six piqued gymnasts!
+  &lt;/p&gt;
+&lt;/div&gt;
+</code></pre><p>We then visualize the code as a set of nested elements:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jquery-event-pro.jpg" alt="jquery-event-pro.jpg" title="">
+                </div>
+                <div class="image-caption">jquery-event-pro.jpg</div>
+            </figure>
+<p>For any event, there are multiple elements that could logically be responsible for reacting. When the link on this page is clicked, for example, the <code>&lt;div&gt;</code>, <code>&lt;span&gt;</code>, and <code>&lt;a&gt;</code> elements should all get the opportunity to respond to the click. After all, these three elements are all under the user’s mouse cursor at the time. The <code>&lt;p&gt;</code> element, on the other hand, is not part of this interaction at all.</p>
+<p>One strategy for allowing multiple elements to respond to a user interaction is called <strong>event capturing</strong>. <strong>With event capturing, the event is first given to the most all-encompassing element, and then to progressively more specific ones</strong>. In our example, this means that first the <code>&lt;div&gt;</code> element gets passed the event, then the <code>&lt;span&gt;</code> element, and finally the <code>&lt;a&gt;</code> element, as shown in the following figure:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jquery-event-capture.jpg" alt="jquery-event-capture.jpg" title="">
+                </div>
+                <div class="image-caption">jquery-event-capture.jpg</div>
+            </figure>
+<p>The opposite strategy is called <strong>event bubbling</strong>. The event gets sent to the most specific element, and after this element has an opportunity to react, the event bubbles up to more general elements. In our example, the <code>&lt;a&gt;</code> element would be handed the event first, and then the <code>&lt;span&gt;</code> and <code>&lt;div&gt;</code> elements in that order, as shown in the following figrure:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jquery-event-bubbling.jpg" alt="jquery-event-bubbling.jpg" title="">
+                </div>
+                <div class="image-caption">jquery-event-bubbling.jpg</div>
+            </figure>
+<p> The DOM standard that was eventually developed thus specified that both strategies should be used: first the event is captured from general elements to specific ones, and then the event bubbles back up to the top of the DOM tree. Event handlers can be registered for either part of the process.</p>
+<p>Event bubbling can cause unexpected behavior, especially when the wrong element responds to a mouseover or mouseout event. Consider a mouseout event handler attached to the <code>&lt;div&gt;</code> element in our example. When the user’s mouse cursor exits the <code>&lt;div&gt;</code> element, the mouseout handler is run as anticipated. Since this is at the top of the hierarchy, no other elements get the event. On the other hand, when the cursor exits the <code>&lt;a&gt;</code> element, a mouseout event is sent to that. This event will then bubble up to the <code>&lt;span&gt;</code> element and then to the <code>&lt;div&gt;</code> element, firing the same event handler. This bubbling sequence is likely not desired.</p>
+<p>The mouseenter and mouseleave events, either bound individually or combined in the .hover() method, are aware of these bubbling issues, and <strong>when we use them to attach events, we can ignore the problems caused by the wrong element getting a mouseover or mouseout event.</strong></p>
+<p>必要的时候我们可以访问事件回调的event属性：</p>
+<pre><code>// Unfinished code
+$(document).ready(function() {
+  $(&apos;#switcher&apos;).click(function(event) {
+    if (event.target == this) {
+      $(&apos;#switcher button&apos;).toggleClass(&apos;hidden&apos;);
+    }
+  });
+});
+</code></pre><p>This code ensures that the item clicked on was <code>&lt;div id=&quot;switcher&quot;&gt;</code>, not one of its sub-elements. Now, clicking on buttons will not collapse the style switcher, but clicking on the switcher’s background will. However, clicking on the label, <code>&lt;h3&gt;</code>, now does nothing, because it too is a sub-element. Instead of placing this check here, we can modify the behavior of the buttons to achieve our goals.</p>
+<h4 id="Stopping-event-propagation"><a href="#Stopping-event-propagation" class="headerlink" title="Stopping event propagation"></a>Stopping event propagation</h4><p>The event object provides the .stopPropagation() method, which can halt the bubbling process completely for the event. Like .target, this method is a basic DOM feature, but cannot be safely used as such in Internet Explorer 8 or older. As long as we register all of our event handlers using jQuery, though, we can use it with impunity.</p>
+<p>We’ll remove the event.target == this check we just added, and instead add some code in our buttons’ click handlers:</p>
+<pre><code>$(document).ready(function() {
+    $(&apos;#switcher&apos;).click(function(event) {
+        $(&apos;#switcher button&apos;).toggleClass(&apos;hidden&apos;);
+    });
+});
+
+$(document).ready(function() {
+  $(&apos;#switcher-default&apos;).addClass(&apos;selected&apos;);
+  $(&apos;#switcher button&apos;).click(function(event) {
+    var bodyClass = this.id.split(&apos;-&apos;)[1];
+    $(&apos;body&apos;).removeClass().addClass(bodyClass);
+    $(&apos;#switcher button&apos;).removeClass(&apos;selected&apos;);
+    $(this).addClass(&apos;selected&apos;);
+    event.stopPropagation();
+  });
+});
+</code></pre><p>As before, we need to add a parameter to the function we’re using as the click handler so we have access to the event object. Then, we simply call event.stopPropagation() to prevent any other DOM element from responding to the event. Now our click is handled by the buttons, and only the buttons; clicks anywhere else on the style switcher will collapse or expand it.</p>
+<h4 id="Preventing-default-actions"><a href="#Preventing-default-actions" class="headerlink" title="Preventing default actions"></a>Preventing default actions</h4><p>If our click event handler was registered on a link element (<code>&lt;a&gt;</code>) rather than a generic <code>&lt;button&gt;</code> element outside of a form, we would face another problem. When a user clicks on a link, the browser loads a new page. This behavior is not an event handler in the same sense as the ones we have been discussing; instead, this is the default action for a click on a link element. Similarly, when the Enter key is pressed while the user is editing a form, the submit event may be triggered on the form, but then the form submission actually occurs after this.</p>
+<p>If these default actions are undesired, calling .stopPropagation() on the event will not help. These actions occur nowhere in the normal flow of event propagation. Instead, the <code>.preventDefault()</code> method will serve to stop the event in its tracks before the default action is triggered.</p>
+<p>Calling <code>.preventDefault()</code> is often useful after we have done some tests on the environment of the event. For example, during a form submission, we might wish to check that required fields are filled in and prevent the default action only if they are not.</p>
+<p>Event propagation and default actions are independent mechanisms; either of them can be stopped while the other still occurs. <strong>If we wish to halt both, we can return false at the end of our event handler, which is a shortcut for calling both .stopPropagation() and .preventDefault() on the event</strong>.</p>
+<h4 id="Delegating-events"><a href="#Delegating-events" class="headerlink" title="Delegating events"></a>Delegating events</h4><p>Event bubbling isn’t always a hindrance; we can often use it to great benefit. One great technique that exploits bubbling is called event delegation. With it, we can use an event handler on a single element to do the work of many.</p>
+<p>In our example, there are just three <code>&lt;button&gt;</code> elements that have attached click handlers. But what if there were many? This is more common than you might think. Consider, for example, a large table of information in which each row has an interactive item requiring a click handler. Implicit iteration makes assigning all of these click handlers easy, but performance can suffer because of the looping being done internally to jQuery, and because of the memory footprint of maintaining all the handlers.</p>
+<p>Because event delegation can be helpful in so many situations, jQuery includes a set of tools to aid developers in using this technique. The .on() method we have already discussed can perform event delegation when provided with appropriate parameters:</p>
+<pre><code>$(&apos;#switcher&apos;).on(&apos;click&apos;, &apos;button&apos;, function() {
+  var bodyClass = event.target.id.split(&apos;-&apos;)[1];
+  $(&apos;body&apos;).removeClass().addClass(bodyClass);
+  $(&apos;#switcher button&apos;).removeClass(&apos;selected&apos;);
+  $(this).addClass(&apos;selected&apos;);
+});
+</code></pre><p>When a selector expression is provided as the second argument to .on(), jQuery binds the click handler to the #switcher object, but compares event.target against the selector expression—in this case, ‘button’. If it matches, jQuery maps the this keyword to the matched element. Otherwise, the event handler is not executed at all.</p>
+<h3 id="Removing-an-event-handler"><a href="#Removing-an-event-handler" class="headerlink" title="Removing an event handler"></a>Removing an event handler</h3><pre><code>$(document).ready(function() {
+  $(&apos;#switcher&apos;).click(function(event) {
+    if (!$(event.target).is(&apos;button&apos;)) {
+      $(&apos;#switcher button&apos;).toggleClass(&apos;hidden&apos;);
+    }
+  });
+  $(&apos;#switcher-narrow, #switcher-large&apos;).click(function() {
+    $(&apos;#switcher&apos;).off(&apos;click&apos;);
+  });
+});
+</code></pre><p>Now when a button such as Narrow Column is clicked, the click handler on the style switcher <code>&lt;div&gt;</code> is removed, and clicking on the background of the box no longer collapses it. However, the buttons don’t work anymore! They are affected by the click event of the style switcher <code>&lt;div&gt;</code> as well, because we rewrote the button-handling code to use event delegation. This means that when we call $(‘#switcher’).off(‘click’), both behaviors are removed.</p>
+<h4 id="Giving-namespaces-to-event-handlers"><a href="#Giving-namespaces-to-event-handlers" class="headerlink" title="Giving namespaces to event handlers"></a>Giving namespaces to event handlers</h4><p>We need to make our .off() call more specific so that it does not remove both of the click handlers we have registered. One way of doing this is to use <strong>event namespacing</strong>. We can introduce additional information when an event is bound that allows us to identify that particular handler later. To use namespacing, we need to return to the non-shorthand method of binding event handlers, the .on() method itself.</p>
+<p>The first parameter we pass to .on() is the name of the event we want to watch for. We can use a special syntax here, though, that allows us to subcategorize the event:</p>
+<pre><code>$(document).ready(function() {
+  $(&apos;#switcher&apos;).on(&apos;click.collapse&apos;, function(event) {
+    if (!$(event.target).is(&apos;button&apos;)) {
+      $(&apos;#switcher button&apos;).toggleClass(&apos;hidden&apos;);
+    }
+  });
+  $(&apos;#switcher-narrow, #switcher-large&apos;).click(function() {
+    $(&apos;#switcher&apos;).off(&apos;click.collapse&apos;);
+  });
+});
+</code></pre><p>The .collapse suffix is invisible to the event handling system; click events are handled by this function, just as if we wrote .on(‘click’). However, the addition of the namespace means that we can unbind just this handler without affecting the separate click handler we wrote for the buttons.</p>
+<h2 id="Styling"><a href="#Styling" class="headerlink" title="Styling"></a>Styling</h2><p>This <code>css()</code> method acts as both a getter and a setter. To get the value of a single style property, we simply pass the name of the property as a string and get a string in return. To get the value of multiple style properties, we can pass the property names as an array of strings to get an object of property-value pairs in return. Multiword property names such as backgroundColor can be interpreted by jQuery when in hyphenated CSS notation (background-color) or camel-cased DOM notation (backgroundColor):</p>
+<pre><code>// Get a single property&apos;s value
+.css(&apos;property&apos;)
+// returns &quot;value&quot;
+
+// Get multiple properties&apos; values
+.css([&apos;property1&apos;, &apos;property-2&apos;])
+// returns {&quot;property1&quot;: &quot;value1&quot;, &quot;property-2&quot;: &quot;value2&quot;}
+</code></pre><p>For setting style properties, the .css() method comes in two flavors. One flavor takes a single style property and its value and the other takes an object of property-value pairs:</p>
+<pre><code>// Single property and its value
+.css(&apos;property&apos;, &apos;value&apos;)
+
+// Object of property-value pairs
+.css({
+  property1: &apos;value1&apos;,
+  &apos;property-2&apos;: &apos;value2&apos;
+})
+</code></pre><p>We use the <code>.css()</code> method the same way we’ve been using <code>.addClass()</code>; we apply it to a jQuery object, which in turn points to a collection of DOM elements.</p>
+<h3 id="Hiding-and-showing-elements"><a href="#Hiding-and-showing-elements" class="headerlink" title="Hiding and showing elements"></a>Hiding and showing elements</h3><p>The basic <code>.hide()</code> and .<code>show()</code> methods, without any parameters, can be thought of as smart shorthand methods for .css(‘display’, ‘string’), where ‘string’ is the appropriate display value. The effect, as might be expected, is that the matched set of elements will be immediately hidden or shown with no animation.</p>
+<p>The <code>.hide()</code> method sets the inline style attribute of the matched set of elements to display: none. The smart part here is that it remembers the value of the display property—typically block, inline, or inline-block—before it was changed to none. Conversely, the <code>.show()</code> method restores the display properties of the matched set of elements to whatever they initially were before display: none was applied.</p>
+<h2 id="Manipulating-the-DOM"><a href="#Manipulating-the-DOM" class="headerlink" title="Manipulating the DOM"></a>Manipulating the DOM</h2><h3 id="Non-class-attributes"><a href="#Non-class-attributes" class="headerlink" title="Non-class attributes"></a>Non-class attributes</h3><p>Much like the <code>.css()</code> method, <code>.attr()</code> can accept a pair of parameters, the first specifying the attribute name and the second being its new value. More typically, though, we supply an object of key-value pairs. The following syntax allows us to easily expand our example to modify multiple attributes at once:</p>
+<pre><code>$(document).ready(function() {
+  $(&apos;div.chapter a&apos;).attr({
+    rel: &apos;external&apos;,
+    title: &apos;Learn more at Wikipedia&apos;
+  });
+});
+</code></pre><p><strong>Value callbacks</strong></p>
+<p>The straightforward technique for passing .attr() a simple object of constants is sufficient when we want the attribute or attributes to have the same value for each matched element. Often, though, the attributes we add or change must have different values each time. One common example is that for any given document, each id value must be unique if we want our JavaScript code to behave predictably. To set a unique id value for each link, we can harness another feature of jQuery methods such as .css() and .each()—value callbacks.</p>
+<p>A value callback is simply a function that is supplied instead of the value for an argument. This function is then invoked once per element in the matched set. Whatever data is returned from the function is used as the new value for the attribute. For example, we can use the following technique to generate a different id value for each element:</p>
+<pre><code>$(document).ready(function() {
+  $(&apos;div.chapter a&apos;).attr({
+    rel: &apos;external&apos;,
+    title: &apos;Learn more at Wikipedia&apos;,
+    id: function(index, oldValue) {
+      return &apos;wikilink-&apos; + index;
+    }
+  });
+});
+</code></pre><h3 id="DOM-element-properties"><a href="#DOM-element-properties" class="headerlink" title="DOM element properties"></a>DOM element properties</h3><p>In most cases, attributes and properties are functionally interchangeable, and jQuery takes care of the naming inconsistencies for us. However, at times we do need to be mindful of the differences between the two. Some DOM properties, such as nodeName, nodeType, selectedIndex, and childNodes, have no equivalent attribute, and therefore are not accessible via .attr(). Moreover, data types may differ: the checked attribute, for example, has a string value, while the checked property has a Boolean value. For these Boolean attributes, it is best to test and set the property rather than the attribute to ensure consistent cross-browser behavior.</p>
+<p>We can get and set properties from jQuery using the .prop() method:</p>
+<pre><code>// Get the current value of the &quot;checked&quot; property
+var currentlyChecked = $(&apos;.my-checkbox&apos;).prop(&apos;checked&apos;);
+
+// Set a new value for the &quot;checked&quot; property
+$(&apos;.my-checkbox&apos;).prop(&apos;checked&apos;, false);
+</code></pre><h3 id="The-value-of-form-controls"><a href="#The-value-of-form-controls" class="headerlink" title="The value of form controls"></a>The value of form controls</h3><p>Perhaps the most troublesome difference between attributes and properties arises when trying to get or set the value of a form control. For text inputs, the value attribute is equivalent to the defaultValue property, not the value property. For select elements, the value is usually obtained via the element’s selectedIndex property or the selected property of its option elements.</p>
+<p>Because of these discrepancies, we should avoid using <code>.attr()</code>—and, in the case of select elements, even <code>.prop()</code>—to get or set form element values. Instead, we can use the <code>.val()</code> method, which jQuery provides for these occasions:</p>
+<pre><code>// Get the current value of a text input
+var inputValue = $(&apos;#my-input&apos;).val();
+// Get the current value of a select list
+var selectValue = $(&apos;#my-select&apos;).val();
+//Set the value of a single select list
+$(&apos;#my-single-select&apos;).val(&apos;value3&apos;);
+// Set the value of a multiple select list
+$(&apos;#my-multi-select&apos;).val([&apos;value1&apos;, &apos;value2&apos;]);
+</code></pre><p>As with .attr() and .prop(), .val() can take a function for its setter argument. With its multi-purpose .val() method, jQuery yet again makes developing for the web much easier.</p>
+<h3 id="Inserting-new-elements"><a href="#Inserting-new-elements" class="headerlink" title="Inserting new elements"></a>Inserting new elements</h3><p>The jQuery library has a number of methods available for inserting elements into the document. Each one dictates the relationship the new content will have to the existing content. For example, we will want our back to top links to appear after each paragraph, so we’ll use the appropriately-named .insertAfter() method to accomplish this:</p>
+<pre><code>$(document).ready(function() {
+  $(&apos;&lt;a href=&quot;#top&quot;&gt;back to top&lt;/a&gt;&apos;).insertAfter(&apos;div.chapter p&apos;);
+  $(&apos;&lt;a id=&quot;top&quot;&gt;&lt;/a&gt;&apos;).prependTo(&apos;body&apos;);
+});
+</code></pre><p>This additional code inserts the anchor right at the beginning of the <code>&lt;body&gt;</code> tag; in other words, at the top of the page. Now, with the .insertAfter() method for the links and the .prependTo() method for the anchor, we have a fully functioning set of back to top links for the page.</p>
+<p>Once we add the corresponding .appendTo() method, we now have a complete set of options for inserting new elements before and after other elements:</p>
+<ul>
+<li>.insertBefore() adds content outside of and before existing elements</li>
+<li>.prependTo() adds content inside of and before existing elements</li>
+<li>.appendTo() adds content inside of and after existing elements</li>
+<li>.insertAfter() adds content outside of and after existing elements</li>
+</ul>
+<h3 id="Moving-elements"><a href="#Moving-elements" class="headerlink" title="Moving elements"></a>Moving elements</h3><pre><code>&lt;p&gt;How admirable is the Law of Compensation! &lt;span
+   class=&quot;footnote&quot;&gt;And how perfect a proof of the natural
+   fitness and, I may almost say, the divine origin of the
+   aristocratic constitution of the States of Flatland!&lt;/span&gt;
+   By a judicious use of this Law of Nature, the Polygons and
+   Circles are almost always able to stifle sedition in its
+   very cradle, taking advantage of the irrepressible and
+   boundless hopefulness of the human mind.&amp;hellip;
+&lt;/p&gt;
+</code></pre><p>Now we need to grab the footnotes and move them to the bottom of the document. Specifically, we’ll insert them in between <code>&lt;div class=&quot;chapter&quot;&gt;</code> and <code>&lt;div id=&quot;footer&quot;&gt;</code>.</p>
+<pre><code>$(document).ready(function() {
+  $(&apos;span.footnote&apos;).insertBefore(&apos;#footer&apos;);
+});
+</code></pre><h3 id="Wrapping-elements"><a href="#Wrapping-elements" class="headerlink" title="Wrapping elements"></a>Wrapping elements</h3><p>When wrapping elements in another element, we need to be clear about whether we want each element wrapped in its own container or all elements wrapped in a single container. For our footnote numbering, we need both types of wrapper:</p>
+<pre><code>$(document).ready(function() {
+  $(&apos;span.footnote&apos;)
+    .insertBefore(&apos;#footer&apos;)
+    .wrapAll(&apos;&lt;ol id=&quot;notes&quot;&gt;&lt;/ol&gt;&apos;)
+    .wrap(&apos;&lt;li&gt;&lt;/li&gt;&apos;);
+});
+</code></pre><p>Once we have inserted the footnotes before the footer, we wrap the entire set inside a single <code>&lt;ol&gt;</code> element using <code>.wrapAll()</code>. We then proceed to wrap each individual footnote inside its own <code>&lt;li&gt;</code> element using .wrap(). We can see that this has created properly-numbered footnotes:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jquery-dom-wrapper.jpg" alt="jquery-dom-wrapper.jpg" title="">
+                </div>
+                <div class="image-caption">jquery-dom-wrapper.jpg</div>
+            </figure>
+<p>Each of the insertion methods, such as <code>.insertBefore()</code> or <code>.appendTo()</code>, has a corresponding inverted method. The inverted methods perform exactly the same task as the standard ones, but the subject and target are reversed. For example:</p>
+<pre><code>$(&apos;&lt;p&gt;Hello&lt;/p&gt;&apos;).appendTo(&apos;#container&apos;);
+</code></pre><p>is the same as:</p>
+<pre><code>$(&apos;#container&apos;).append(&apos;&lt;p&gt;Hello&lt;/p&gt;&apos;);
+</code></pre><p>Using <code>.before()</code>, the inverted form of .insertBefore(), we can now re-factor our code to exploit chaining:</p>
+<pre><code>$(document).ready(function() {
+  var $notes = $(&apos;&lt;ol id=&quot;notes&quot;&gt;&lt;/ol&gt;&apos;)
+    .insertBefore(&apos;#footer&apos;);
+  $(&apos;span.footnote&apos;).each(function(index) {
+    $(this)
+      .before(&apos;&lt;sup&gt;&apos; + (index + 1) + &apos;&lt;/sup&gt;&apos;)
+      .appendTo($notes)
+      .wrap(&apos;&lt;li&gt;&lt;/li&gt;&apos;);
+  });
+});
+</code></pre><p>The inverted insertion methods can accept a function as an argument, much like .attr() and .css() can. This function is invoked once per target element, and should return the HTML string to be inserted.</p>
+<h3 id="Copying-elements"><a href="#Copying-elements" class="headerlink" title="Copying elements"></a>Copying elements</h3><p>For copying elements, jQuery’s .clone() method is just what we need; it takes any set of matched elements and creates a copy of them for later use. As in the case of the $() function’s element-creation process we explored earlier in this chapter, the copied elements will not appear in the document until we apply one of the insertion methods.</p>
+<p>For example, the following line creates a copy of the first paragraph inside <code>&lt;div class=&quot;chapter&quot;&gt;</code>:</p>
+<pre><code>$(&apos;div.chapter p:eq(0)&apos;).clone();
+</code></pre><p>This alone is not enough to change the content of the page. We can make the cloned paragraph appear before <div class="chapter"> with an insertion method:</div></p>
+<pre><code>$(&apos;div.chapter p:eq(0)&apos;).clone().insertBefore(&apos;div.chapter&apos;);
+</code></pre><p>This will cause the first paragraph to appear twice. So, to use a familiar analogy, .clone() is related to the insertion methods just as copy is to paste.</p>
+<p>The .clone() method, by default, does not copy any events that are bound to the matching element or any of its descendants. However, it can take a single Boolean parameter that, when set to true (.clone(true)), clones events as well.</p>
+<h3 id="Content-getter-and-setter-methods"><a href="#Content-getter-and-setter-methods" class="headerlink" title="Content getter and setter methods"></a>Content getter and setter methods</h3><p>It would be nice to be able to modify the pull quote a bit by dropping some words and replacing them with ellipses to keep the content brief. To demonstrate this, we have wrapped a few words of the example text in a <span class="drop"> tag.</span></p>
+<p>The easiest way to accomplish this replacement is to directly specify the new HTML entity that is to replace the old one. The .html() method is perfect for our needs:</p>
+<pre><code>$(document).ready(function() {
+  $(&apos;span.pull-quote&apos;).each(function(index) {
+    var $parentParagraph = $(this).parent(&apos;p&apos;);
+    $parentParagraph.css(&apos;position&apos;, &apos;relative&apos;);
+
+    var $clonedCopy = $(this).clone();
+    $clonedCopy
+      .addClass(&apos;pulled&apos;)
+      .find(&apos;span.drop&apos;)
+      .html(&apos;&amp;hellip;&apos;)
+      .end()
+      .prependTo($parentParagraph);
+  });
+});
+</code></pre><p>We use <code>.find()</code> to search inside the pull quote for any <code>&lt;span class=&quot;drop&quot;&gt;</code> elements, operate on them, and then return to the pull quote itself by calling <code>.end()</code>. In between these methods, we invoke .html() to change the content into an ellipsis (using the appropriate HTML entity).</p>
+<p><strong>When called without arguments, .html() returns a string representation of the HTML entity inside the matched element. With an argument, the contents of the element are replaced by the supplied HTML entity.</strong> We must take care to only specify a valid HTML entity, escaping special characters properly when using this technique.</p>
+<p>Like <code>.html()</code>, the <code>.text()</code> method can either retrieve the content of the matched element or replace its content with a new string. Unlike <code>.html(), however, .text()</code> always gets or sets a plain text string. When <code>.text()</code> retrieves content, all of the included tags are ignored, and HTML entities are translated into plain characters. When it sets content, special characters such as <code>&lt;</code> are translated into their HTML entity equivalents:</p>
+<pre><code>$(document).ready(function() {
+  $(&apos;span.pull-quote&apos;).each(function(index) {
+    var $parentParagraph = $(this).parent(&apos;p&apos;);
+    $parentParagraph.css(&apos;position&apos;, &apos;relative&apos;);
+    var $clonedCopy = $(this).clone();
+    $clonedCopy
+      .addClass(&apos;pulled&apos;)
+      .find(&apos;span.drop&apos;)
+        .html(&apos;&amp;hellip;&apos;)
+      .end()
+      .text($clonedCopy.text())
+      .prependTo($parentParagraph);
+  });
+});
+</code></pre><p>When this sneaky bit of code fetches the content of the pull quote with <code>$clonedCopy.text()</code>, we get a plain string containing the text without tags. Therefore, when that text is fed right back into <code>.text()</code>, the markup is removed and the bold text in our example is no longer bold.</p>
+<h3 id="DOM-manipulation-methods"><a href="#DOM-manipulation-methods" class="headerlink" title="DOM manipulation methods"></a>DOM manipulation methods</h3><ul>
+<li>To <em>create</em> new elements from HTML, use the $() function</li>
+<li><p>To <em>insert</em> new elements <em>inside</em> every matched element, use the following functions:</p>
+<ul>
+<li>.append()</li>
+<li>.appendTo()</li>
+<li>.prepend()</li>
+<li>.prependTo()</li>
+</ul>
+</li>
+<li><p>To <em>insert</em> new elements <em>adjacent to</em> every matched element, use the following functions:</p>
+<ul>
+<li>.after()</li>
+<li>.insertAfter()</li>
+<li>.before()</li>
+<li>.insertBefore()</li>
+</ul>
+</li>
+<li><p>To <em>insert</em> new elements <em>around</em> every matched element, use the following functions:</p>
+<ul>
+<li>.wrap()</li>
+<li>.wrapAll()</li>
+<li>.wrapInner()</li>
+</ul>
+</li>
+<li><p>To <em>replace</em> every matched element with new elements or text, use the following functions:</p>
+<ul>
+<li>.html()</li>
+<li>.text()</li>
+<li>.replaceAll()</li>
+<li>.replaceWith()</li>
+</ul>
+</li>
+<li><p>To <em>remove</em> elements inside every matched element, use the following function: * .empty()</p>
+</li>
+<li>To <em>remove</em> every matched element and descendants from the document without actually deleting them, use the following functions: <em> .remove() </em> .detach()</li>
+</ul>
+<h2 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h2><ul>
+<li><a href="https://github.com/zehfernandes/jQuery.DebugCssAnimation" target="_blank" rel="external">zehfernandes/jQuery.DebugCssAnimation</a></li>
+</ul>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><h3 id="Images"><a href="#Images" class="headerlink" title="Images"></a>Images</h3><ul>
+<li><a href="http://arunmichaeldsouza.github.io/picla" target="_blank" rel="external">Picla - jQuery plugin that converts Alt-texts into simple image labels</a></li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://www.sitepoint.com/use-jquerys-ajax-function" target="_blank" rel="external">How to Use jQuery’s $.ajax() Function</a></li>
+<li><a href="http://www.admin10000.com/document/3961.html" target="_blank" rel="external">8个对程序员来说有用的jQuery小贴士和技巧 - WEB开发者</a></li>
+<li><a href="http://lab.abhinayrathore.com/jquery-standards/" target="_blank" rel="external">jQuery Coding Standards and Best Practices</a></li>
+<li><a href="http://quickleft.com/blog/18-surprises-from-reading-jquery-s-source-code" target="_blank" rel="external">18 Surprises From Reading jQuery’s Source Code - Quick Left Boulder Colorado</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-03-24-jquery-tutorial.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-03-24-jquery-tutorial.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-03-24-jquery-tutorial.html&title=《jQuery Tutorial》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-03-24-jquery-tutorial.html&title=《jQuery Tutorial》 — Balance&source=
+本文为读 Learning jQuery, 4th Edition 的读书笔记。
+
+DOMhttp://api.jquery.com/category/..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-03-24-jquery-tutorial.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jQuery Tutorial》 — Balance&url=http://blog.inching.org/JavaScript/2014-03-24-jquery-tutorial.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-03-24-jquery-tutorial.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-03-30-javascript-oo-extend.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">OO 模拟那些事儿</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Qt/2014-03-19-qt-signal-slot.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">QT 的信号与槽机制介绍</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-03-24-jquery-tutorial.html&title=《jQuery Tutorial》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-03-24-jquery-tutorial.html&title=《jQuery Tutorial》 — Balance&source=
+本文为读 Learning jQuery, 4th Edition 的读书笔记。
+
+DOMhttp://api.jquery.com/category/..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-03-24-jquery-tutorial.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jQuery Tutorial》 — Balance&url=http://blog.inching.org/JavaScript/2014-03-24-jquery-tutorial.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-03-24-jquery-tutorial.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuklEQVR42u3aQXIiQQwEQP//096IvWKgSurGPiSnCRuYzjlIQtLXV/z6/v96vH58z+N/v8vXs297dt8DLzw8PLzR0ZObtYzkEeTI5FM/3BcPDw/vGi9JBq/D9IyUpKI2OeHh4eH9HV4eyjdHzB8QHh4e3t/nteC2UD7VEMHDw8P7DK9tquYPYhbo2wd0oNeCh4eHF/M2Qfm3rj8038PDw8Mrp+qvA27bdMjbFm0aeHpaPDw8vAu8/Sirbb+2fz+wkoWHh4d3gdcW0+2KQNsyTh5BnnLw8PDwbvBmgfjUsKods+VFNh4eHt7neUkOOdV0yAdmedsCDw8P7wZvFrKToX6bPGbtjOEN8PDw8Ba8WUt3toyVtx5mR48+i4eHh3eIN+v7Jmlj1vxti/vhLwY8PDy8BS8P1gl4tiw1I+UrYnh4eHhneZuAO1sjyNcC8uunp8LDw8M7ymsbDXlx/DoLzZa36hSCh4eHd4E3a6TmKwJt6M9TVN38xcPDwzvKy9u1edNhFu5nBfSbd+Lh4eFd4G0+kJe5+fXmcRdrB3h4eHgjXh6aW95m8D9rQPxwjYeHh3eNlxyuHdtv0sBsWQEPDw/vk7z8R37Lyxew2kZwVHbj4eHhXeAlRfNmOSAP97P1Ajw8PLzP884uCiTvb7/tdYp6M+7Cw8PDu8abje1vNCzy1m30sPDw8PAu8NpQ3lbrm2I9X2h4U+Lj4eHhHeW1Y/6W1DYginI5+RQeHh7eR3ibUdZs7bVdCMj/joeHh3eDV4fauMCdLZhumiObRIKHh4fX8trGaN3tiNsQydHrxICHh4d3jTcL+vlx8xFa3haJSnw8PDy8X+VtRlazlDM7zzAx4OHh4V3jtaF/togwG8IdSAx4eHh4MW8/7J8V05v2R3IGPDw8vBu82QBs36qYNRqOzfTw8PDwJrx/Hh/5PoB86KEAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

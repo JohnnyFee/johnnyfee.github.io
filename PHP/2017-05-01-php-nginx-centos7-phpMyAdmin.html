@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="php,centos,nginx,lamp,phpMyAdmin">
+    <meta name="description" content="IntroductionRelational database management systems like MySQL and MariaDB are needed for a significant portion of web sites and applications.  However, not all users feel comfortable administering the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server">
+<meta property="og:url" content="http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="IntroductionRelational database management systems like MySQL and MariaDB are needed for a significant portion of web sites and applications.  However, not all users feel comfortable administering the">
+<meta property="og:image" content="https://assets.digitalocean.com/articles/phpmyadmin_lemp_centos7/login.png">
+<meta property="og:image" content="https://assets.digitalocean.com/articles/phpmyadmin_lemp_centos7/main_page.png">
+<meta property="og:image" content="https://assets.digitalocean.com/articles/phpmyadmin_lemp_centos7/404_error.png">
+<meta property="og:image" content="https://assets.digitalocean.com/articles/phpmyadmin_lemp_centos7/login.png">
+<meta property="og:image" content="https://assets.digitalocean.com/articles/phpmyadmin_lemp_centos7/auth_gate.png">
+<meta property="og:updated_time" content="2017-05-13T03:16:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server">
+<meta name="twitter:description" content="IntroductionRelational database management systems like MySQL and MariaDB are needed for a significant portion of web sites and applications.  However, not all users feel comfortable administering the">
+<meta name="twitter:image" content="https://assets.digitalocean.com/articles/phpmyadmin_lemp_centos7/login.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-30T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-05-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/PHP/">PHP</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Introduction"><span class="post-toc-text">Introduction</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Prerequisites"><span class="post-toc-text">Prerequisites</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Step-One-—-Install-phpMyAdmin"><span class="post-toc-text">Step One — Install phpMyAdmin</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Step-Two-—-Secure-your-phpMyAdmin-Instance"><span class="post-toc-text">Step Two — Secure your phpMyAdmin Instance</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Changing-the-Application’s-Access-Location"><span class="post-toc-text">Changing the Application’s Access Location</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Setting-up-a-Web-Server-Authentication-Gate"><span class="post-toc-text">Setting up a Web Server Authentication Gate</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-text">Conclusion</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#FAQ"><span class="post-toc-text">FAQ</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Phpmyadmin-Session-Start-error-on-last-version"><span class="post-toc-text">Phpmyadmin Session Start error on last version</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-php-nginx-centos7-phpMyAdmin"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-05-01 00:00:00" datetime="2017-04-30T16:00:00.000Z"  itemprop="datePublished">2017-05-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/PHP/">PHP</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>Relational database management systems like MySQL and MariaDB are needed for a significant portion of web sites and applications.  However, not all users feel comfortable administering their data from the command line.</p>
+<p>To solve this problem, a project called phpMyAdmin was created in order to offer an alternative in the form of a web-based management interface.  In this guide, we will demonstrate how to install and secure a phpMyAdmin configuration on a CentOS 7 server.  We will build this setup on top of the Nginx web server, which has a good performance profile and can handle heavy loads better than some other web servers.</p>
+<a id="more"></a>
+<h2 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h2><p>Before we begin, there are a few requirements that need to be settled.</p>
+<p>To ensure that you have a solid base to build this system upon, you should run through our <a href="https://www.digitalocean.com/community/articles/initial-server-setup-with-centos-7" target="_blank" rel="external">initial server setup guide for CentOS 7</a>.  Among other things, this will walk you through setting up a non-root user with <code>sudo</code> access for administrative commands.</p>
+<p>The second prerequisite that must be fulfilled in order to start on this guide is to install a LEMP (Linux, Nginx, MariaDB, and PHP) stack on your CentOS 7 server.  This is the platform that we will use to serve our phpMyAdmin interface (MariaDB is also the database management software that we are wishing to manage).  If you do not yet have a LEMP installation on your server, follow our tutorial on <a href="http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin">installing LEMP on CentOS 7</a>.</p>
+<p>When your server is in a properly functioning state after following these guides, you can continue on with the rest of this page.</p>
+<h2 id="Step-One-—-Install-phpMyAdmin"><a href="#Step-One-—-Install-phpMyAdmin" class="headerlink" title="Step One — Install phpMyAdmin"></a>Step One — Install phpMyAdmin</h2><p>With our LEMP platform already in place, we can begin right away with installing the phpMyAdmin software.  Unfortunately, phpMyAdmin is not available in CentOS 7’s default repository.</p>
+<p>To get the packages we need, we’ll have to add an additional repo to our system.  The EPEL repo (<strong>E</strong>xtra <strong>P</strong>ackages for <strong>E</strong>nterprise <strong>L</strong>inux) contains many additional packages, including the phpMyAdmin package we are looking for.</p>
+<p>Luckily, the procedure for adding the EPEL repository has gotten a lot easier.  There is actually a package called <code>epel-release</code> that reconfigures our package manager to use the EPEL repos.</p>
+<p>We can install that now by typing:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install epel-release</div></pre></td></tr></table></figure>
+<p>Now that you have access to the EPEL repository, you can install phpMyAdmin through yum:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install phpmyadmin</div></pre></td></tr></table></figure>
+<p>The installation will now complete.  For the Nginx web server to find and serve the phpMyAdmin files correctly, we just need to create a symbolic link from the installation files to our Nginx document root directory by typing this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ln -s /usr/share/phpMyAdmin /usr/share/nginx/html</div></pre></td></tr></table></figure>
+<p>We should also restart our PHP processor to be sure that it can load the additional PHP modules that we installed:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl restart php-fpm</div></pre></td></tr></table></figure>
+<p>With that, our phpMyAdmin installation is now operational.  To access the interface, go to your server’s domain name or public IP address followed by <code>/phpMyAdmin</code>, in your web browser:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://server_domain_or_IP/phpMyAdmin</div></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://assets.digitalocean.com/articles/phpmyadmin_lemp_centos7/login.png" alt="phpMyAdmin login screen" title="">
+                </div>
+                <div class="image-caption">phpMyAdmin login screen</div>
+            </figure>
+<p>To sign in, use a username/password pair of a valid MariaDB user.  The <code>root</code> user and the MariaDB administrative password is a good choice to get started.  You will then be able to access the administrative interface:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://assets.digitalocean.com/articles/phpmyadmin_lemp_centos7/main_page.png" alt="phpMyAdmin admin interface" title="">
+                </div>
+                <div class="image-caption">phpMyAdmin admin interface</div>
+            </figure>
+<p>Click around to get familiar with the interface.  In the next section, we will take steps to secure our new interface.</p>
+<h2 id="Step-Two-—-Secure-your-phpMyAdmin-Instance"><a href="#Step-Two-—-Secure-your-phpMyAdmin-Instance" class="headerlink" title="Step Two — Secure your phpMyAdmin Instance"></a>Step Two — Secure your phpMyAdmin Instance</h2><p>The phpMyAdmin instance installed on our server should be completely usable at this point.  However, by installing a web interface, we have exposed our MySQL system to the outside world.</p>
+<p>Even with the included authentication screen, this is quite a problem.  Because of phpMyAdmin’s popularity combined with the large amount of data it provides access to, installations like these are common targets for attackers.</p>
+<p>We will implement two simple strategies to lessen the chances of our installation being targeted and compromised.  We will change the location of the interface from <code>/phpMyAdmin</code> to something else to sidestep some of the automated bot brute-force attempts.  We will also create an additional, web server-level authentication gateway that must be passed before even getting to the phpMyAdmin login screen.</p>
+<h3 id="Changing-the-Application’s-Access-Location"><a href="#Changing-the-Application’s-Access-Location" class="headerlink" title="Changing the Application’s Access Location"></a>Changing the Application’s Access Location</h3><p>In order for our Nginx web server to find and serve our phpMyAdmin files, we created a symbolic link from the phpMyAdmin directory to our document root in an earlier step.</p>
+<p>To change the URL where our phpMyAdmin interface can be accessed, we simply need to rename the symbolic link.  Move into the Nginx document root directory to get a better idea of what we are doing:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/share/nginx/html</div><div class="line">ls -l</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-rw-r--r-- 1 root root 537 Aug  5 08:15 50x.html</div><div class="line">-rw-r--r-- 1 root root 612 Aug  5 08:15 index.html</div><div class="line">lrwxrwxrwx 1 root root  21 Aug  6 17:29 phpMyAdmin -&gt; /usr/share/phpMyAdmin</div></pre></td></tr></table></figure>
+<p>As you can see, we have a symbolic link called <code>phpMyAdmin</code> in this directory.  We can change this link name to whatever we would like.  This will change the location where phpMyAdmin can be accessed from a browser, which can help obscure the access point from hard-coded bots.</p>
+<p>Choose a name that does not indicate the purpose of the location.  In this guide, we will name our access location <code>/nothingtosee</code>.  To accomplish this, we will just rename the link:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mv phpMyAdmin nothingtosee</div><div class="line">ls -l</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">total 8</div><div class="line">-rw-r--r-- 1 root root 537 Aug  5 08:15 50x.html</div><div class="line">-rw-r--r-- 1 root root 612 Aug  5 08:15 index.html</div><div class="line">lrwxrwxrwx 1 root root  21 Aug  6 17:29 nothingtosee -&gt; /usr/share/phpMyAdmin</div></pre></td></tr></table></figure>
+<p>Now, if you go to the previous location of your phpMyAdmin installation, you will get a 404 error:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://server_domain_or_IP/phpMyAdmin</div></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://assets.digitalocean.com/articles/phpmyadmin_lemp_centos7/404_error.png" alt="phpMyAdmin 404 error" title="">
+                </div>
+                <div class="image-caption">phpMyAdmin 404 error</div>
+            </figure>
+<p>However, your phpMyAdmin interface will be available at the new location we selected:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://server_domain_or_IP/nothingtosee</div></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://assets.digitalocean.com/articles/phpmyadmin_lemp_centos7/login.png" alt="phpMyAdmin login screen" title="">
+                </div>
+                <div class="image-caption">phpMyAdmin login screen</div>
+            </figure>
+<h3 id="Setting-up-a-Web-Server-Authentication-Gate"><a href="#Setting-up-a-Web-Server-Authentication-Gate" class="headerlink" title="Setting up a Web Server Authentication Gate"></a>Setting up a Web Server Authentication Gate</h3><p>The next feature we wanted for our installation was an authentication prompt that a user would be required to pass before ever seeing the phpMyAdmin login screen.</p>
+<p>Fortunately, most web servers, including Nginx, provide this capability natively.  We will just need to modify our Nginx configuration file with the details.</p>
+<p>Before we do this, we will create a password file that will store our the authentication credentials.  Nginx requires that passwords be encrypted using the <code>crypt()</code> function.  The OpenSSL suite, which should already be installed on your server, includes this functionality.</p>
+<p>To create an encrypted password, type:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl passwd</div></pre></td></tr></table></figure>
+<p>You will be prompted to enter and confirm the password that you wish to use.  The utility will then display an encrypted version of the password that will look something like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">O5az.RSPzd.HE</div></pre></td></tr></table></figure>
+<p>Copy this value, as you will need to paste it into the authentication file we will be creating.</p>
+<p>Now, create an authentication file.  We will call this file <code>pma_pass</code> and place it in the Nginx configuration directory:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/nginx/pma_pass</div></pre></td></tr></table></figure>
+<p>Within this file, you simply need to specify the username you would like to use, followed by a colon (:), followed by the encrypted version of your password you received from the <code>openssl passwd</code> utility.</p>
+<p>We are going to name our user <code>demo</code>, but you should choose a different username.  The file for this guide looks like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">demo:O5az.RSPzd.HE</div></pre></td></tr></table></figure>
+<p>Save and close the file when you are finished.</p>
+<p>Now, we are ready to modify our Nginx configuration file.  Open this file in your text editor to get started:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/nginx/conf.d/default.conf</div></pre></td></tr></table></figure>
+<p>Within this file, we need to add a new location section.  This will target the location we chose for our phpMyAdmin interface (we selected <code>/nothingtosee</code> in this guide).</p>
+<p>Create this section within the <code>server</code> block, but outside of any other blocks.  We will put our new location block below the <code>location /</code> block in our example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    . . .</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        try_file $uri $uri/ =404;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /nothingtosee &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    . . .</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Within this block, we need to set the value of a directive called <code>auth_basic</code> to an authentication message that our prompt will display to users.  We do not want to indicate to unauthenticated users what we are protecting, so do not give specific details.  We will just use “Admin Login” in our example.</p>
+<p>We then need to use a directive called <code>auth_basic_user_file</code> to point our web server to the authentication file that we created.  Nginx will prompt the user for authentication details and check that the inputted values match what it finds in the specified file.</p>
+<p>After we are finished, the file should look like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    . . .</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        try_file $uri $uri/ =404;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /nothingtosee &#123;</div><div class="line">        auth_basic &quot;Admin Login&quot;;</div><div class="line">        auth_basic_user_file /etc/nginx/pma_pass;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    . . .</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Save and close the file when you are finished.</p>
+<p>To implement our new authentication gate, we must restart the web server:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl restart nginx</div></pre></td></tr></table></figure>
+<p>Now, if we visit our phpMyAdmin location in our web browser (you may have to clear your cache or use a different browser session if you have already been using phpMyAdmin), you should be prompted for the username and password you added to the <code>pma_pass</code> file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://server_domain_or_IP/nothingtosee</div></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://assets.digitalocean.com/articles/phpmyadmin_lemp_centos7/auth_gate.png" alt="Nginx authentication page" title="">
+                </div>
+                <div class="image-caption">Nginx authentication page</div>
+            </figure>
+<p>Once you enter your credentials, you will be taken to the normal phpMyAdmin login page.  This added layer of protection will help keep your MySQL logs clean of authentication attempts in addition to the added security benefit.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>You can now manage your MySQL databases from a reasonably secure web interface.  This UI exposes most of the functionality that is available from the MySQL command prompt.  You can view databases and schema, execute queries, and create new data sets and structures.</p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="Phpmyadmin-Session-Start-error-on-last-version"><a href="#Phpmyadmin-Session-Start-error-on-last-version" class="headerlink" title="Phpmyadmin Session Start error on last version"></a>Phpmyadmin Session Start error on last version</h3><p>I’ve updated Phpmyadmin from 4.4.1 version to 4.4.2 version and started to get this error:</p>
+<blockquote>
+<p>Warning in ./libraries/session.inc.php#101  session_start(): open(/var/lib/php/session/sess_bsv20h8gq58qq1ep33qbfrb7r62jtksi,<br>O_RDWR) failed: Permission denied (13)</p>
+<p>Backtrace</p>
+<p>./libraries/session.inc.php#101: session_start()<br>./libraries/common.inc.php#349: require(./libraries/session.inc.php)<br>./index.php#12: require_once(./libraries/common.inc.php)</p>
+</blockquote>
+<p>This happened on two different machines with Centos 6.6 installed.<br>The serber have Apache 2.2, PHP 5.4 and Nginx as reverse proxy.</p>
+<p>In my case, I was running nginx primarily so needed to chown the sessions directory to nginx for user and group… (By default, the session folder was in the apache group).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown nginx:nginx /var/lib/php/session</div></pre></td></tr></table></figure>
+<p>Then force refresh the phpMyAdmin page and the session permission related errors are resolved.</p>
+<p>And if existing sessions, the contents too:-</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown -R nginx:nginx /var/lib/php/session</div></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-05-13T03:16:55.000Z" itemprop="dateUpdated">2017-05-13 11:16:55</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html" target="_blank" rel="external">http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lamp/">lamp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/phpMyAdmin/">phpMyAdmin</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html&title=《How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html&title=《How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server》 — Balance&source=IntroductionRelational database management systems like MySQL and MariaDB are..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server》 — Balance&url=http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/SSR/2017-05-04-centos7-ssr-multiuser-mysql-ss-panel.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">ShadowsocksR 多用户版安装教程</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Nginx/2017-05-01-php-nginx-location.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Nginx location 匹配规则</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html&title=《How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html&title=《How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server》 — Balance&source=IntroductionRelational database management systems like MySQL and MariaDB are..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server》 — Balance&url=http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACq0lEQVR42u3aQY7jMAwEwPz/0xlgrgM7TVL0ZoHyKQgcR6WDRLf4esXX+/f6+/nqm+RXyZ3vP9dr48LDw8NrDf3quicl39/fcz/0+/FEz8HDw8Nb41UX64R6diNJthk8PDy8b+NVF/HqlnD1j3h4eHj/Ly8ZRPWe3maAh4eH9w28ZMlOBp0HCsn282jWgoeHhxfzJgdg/+rzQ+d7eHh4eMVT9d7imxe+SUk9GSceHh7eBq9aHFfL2d5kVaONDyPHw8PDO8qrvuRXW7LySDf/VR5/4OHh4W3wesdRyaREf9nC51OJh4eHt8Grvvz3IoZk85iAK/sDHh4e3pSXh6q9cra62VRD3miEeHh4eMu8PAiYLPST9oU8MsbDw8Pb5vVihd6BVi8KGbVe4eHh4R3i5Ydbk/ap/JnVFoQP04SHh4e3xusVvvf3lAvfwXp+OXF4eHh4y7zq30yGOGnkylvE8PDw8LZ5+RFXEtEWWqNaTV3RpODh4eEt8PLieJITzyOGaqMYHh4e3h6vGrBWw4LJQA80FuDh4eE9wuvFCvMiu1dqf3gxwMPDw1vgHajHWy1Zk8OzJgwPDw/vEC8PTKv4pAErv78XJePh4eE9z+st1vmhVzXeLd+Jh4eHt8DrbQb54j4JLPLtqnAMhoeHh3eIV40V8gdV26eqgW+1+MbDw8M7xest7vPhVo/WeodqeHh4eE/yegFBcqg2adXKn4+Hh4e3wXsXr0l02zsSm9yJh4eHt8E7G0zkLVy9ErlcTOPh4eGt8c4GCsl0VDH5xnAZRuDh4eEt8HonR8lWkQ90cuHh4eF9M68a0Z5qEai2IODh4eF9A696qJ8Uzb1CPP8eDw8Pb4+XLOLzBqlqm0IyuR+Kcjw8PLwF3rxvKw8j8knJp/jDxoCHh4d3kvcDb1lK3+TqA6IAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

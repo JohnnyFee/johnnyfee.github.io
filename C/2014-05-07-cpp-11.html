@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>C++11语言扩展：常规特性 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="c++,syntax">
+    <meta name="description" content="原文：http://blog.jobbole.com/55063/
+
+本节内容：auto、decltype、基于范围的for语句、初始化列表、统一初始化语法和语义、右值引用和移动语义、Lambdas、noexcept防止抛出异常、constexpr、nullptr——一个指针空值常量、复制并再抛出异常、内联命名空间、用户自定义数据标识。
+auto推导
+auto x = 7;
+在这里因为它的初始化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++11语言扩展：常规特性">
+<meta property="og:url" content="http://blog.inching.org/C/2014-05-07-cpp-11.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文：http://blog.jobbole.com/55063/
+
+本节内容：auto、decltype、基于范围的for语句、初始化列表、统一初始化语法和语义、右值引用和移动语义、Lambdas、noexcept防止抛出异常、constexpr、nullptr——一个指针空值常量、复制并再抛出异常、内联命名空间、用户自定义数据标识。
+auto推导
+auto x = 7;
+在这里因为它的初始化">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++11语言扩展：常规特性">
+<meta name="twitter:description" content="原文：http://blog.jobbole.com/55063/
+
+本节内容：auto、decltype、基于范围的for语句、初始化列表、统一初始化语法和语义、右值引用和移动语义、Lambdas、noexcept防止抛出异常、constexpr、nullptr——一个指针空值常量、复制并再抛出异常、内联命名空间、用户自定义数据标识。
+auto推导
+auto x = 7;
+在这里因为它的初始化">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">C++11语言扩展：常规特性</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">C++11语言扩展：常规特性</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-06T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#auto"><span class="post-toc-text">auto</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#decltype"><span class="post-toc-text">decltype</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基于范围的for循环"><span class="post-toc-text">基于范围的for循环</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#初始化列表"><span class="post-toc-text">初始化列表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#统一初始化语法和语义"><span class="post-toc-text">统一初始化语法和语义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#右值引用和移动语义"><span class="post-toc-text">右值引用和移动语义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#lambdas"><span class="post-toc-text">lambdas</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#noexcept防止抛出异常"><span class="post-toc-text">noexcept防止抛出异常</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#constexpr"><span class="post-toc-text">constexpr</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#nullptr-一个指针空值常量"><span class="post-toc-text">nullptr 一个指针空值常量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#复制并再抛出异常"><span class="post-toc-text">复制并再抛出异常</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#内联命名空间"><span class="post-toc-text">内联命名空间</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#用户自定义数据标识"><span class="post-toc-text">用户自定义数据标识</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-cpp-11"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">C++11语言扩展：常规特性</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-07 00:00:00" datetime="2014-05-06T16:00:00.000Z"  itemprop="datePublished">2014-05-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>原文：<a href="http://blog.jobbole.com/55063/" target="_blank" rel="external">http://blog.jobbole.com/55063/</a></p>
+</blockquote>
+<p>本节内容：auto、decltype、基于范围的for语句、初始化列表、统一初始化语法和语义、右值引用和移动语义、Lambdas、noexcept防止抛出异常、constexpr、nullptr——一个指针空值常量、复制并再抛出异常、内联命名空间、用户自定义数据标识。</p>
+<h2 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h2><p>推导</p>
+<pre><code>auto x = 7;
+</code></pre><p>在这里因为它的初始化类型我们将得到x的int类型。一般来说，我们可以写</p>
+<pre><code>auto x = expression;
+</code></pre><p>x的类型我们将会根据初始化表达式“ expression”的类型来自动推导。</p>
+<p>当一个变量的类型很难准确的知道或者写出的时候，用atuo通过初始化表达式的类型进行推导显然是非常有用的。</p>
+<a id="more"></a>
+<p>参考：</p>
+<pre><code>template&lt;class T&gt; void printall(const vector&lt;T&gt;&amp; v)
+{
+    for (auto p = v.begin(); p!=v.end(); ++p)
+        cout &lt;&lt; *p &lt;&lt; &quot;\n&quot;;
+}
+</code></pre><p>在C++98里我们必须这样写</p>
+<pre><code>template&lt;class T&gt; void printall(const vector&lt;T&gt;&amp; v)
+{
+   for (typename vector&lt;T&gt;::const_iterator p = v.begin(); p!=v.end(); ++p)
+       cout &lt;&lt; *p &lt;&lt; &quot;\n&quot;;
+}
+</code></pre><p>当一个变量的类型取决于模板实参的时候不用auto真的很难定义，例如：</p>
+<pre><code>template&lt;class T, class U&gt; void multiply(const vector&lt;T&gt;&amp; vt, const vector&lt;U&gt;&amp; vu)
+{
+    // ...
+    auto tmp = vt[i]*vu[i];
+    // ...
+}
+</code></pre><p>从T*U的表达式，我们人类的思维是很难理清tmp的类型的，但是编译器肯定知道T和U经过了什么特殊处理。</p>
+<p>auto的特性在最早提出和应用时是有区别的：1984年初，Stroustrup在他的Cfront实现里用到了它，但是是由于C的兼容问题被迫拿来用的，这些兼容的问题已经在C++98和C++99接受了隐性int时候消失了。也就是说，现在这两种语言要求每一个变量和函数都要有一个明确的类型定义。auto旧的含义（即这是一个局部变量）现在是违法的。标准委员会的成员们在数百万行代码中仅仅只找到几百个用到auto关键字的地方，并且大多数出现在测试代码中，有的甚至就是一个bug。</p>
+<p>auto在代码中主要是作为简化工具，并不会影响标准库规范。</p>
+<p>参考：</p>
+<p><strong>参考：</strong></p>
+<ul>
+<li>the C++ draft section 7.1.6.2, 7.1.6.4, 8.3.5 (for return types)</li>
+<li>[N1984=06-0054] Jaakko Jarvi, Bjarne Stroustrup, and Gabriel Dos Reis: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n1984.pdf" target="_blank" rel="external">Deducing the type of variable from its initializer expression (revision 4)</a>.</li>
+<li>Herb Sutter: <a href="http://herbsutter.com/2013/06/07/gotw-92-solution-auto-variables-part-1/" target="_blank" rel="external">GotW #92: Auto Variables, Part 1</a></li>
+<li>Herb Sutter: <a href="http://herbsutter.com/2013/06/13/gotw-93-solution-auto-variables-part-2/" target="_blank" rel="external">GotW #93: Auto Variables, Part 2</a></li>
+<li>Herb Sutter: <a href="http://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/" target="_blank" rel="external">GotW #94: AAA Style (Almost Always Auto)</a></li>
+</ul>
+<h2 id="decltype"><a href="#decltype" class="headerlink" title="decltype"></a>decltype</h2><p>decltype(E)的类型(“声明类型”)可用名称或表达E来声明。例如：</p>
+<pre><code>void f(const vector&lt;int&gt;&amp; a, vector&lt;float&gt;&amp; b)
+  {
+      typedef decltype(a[0]*b[0]) Tmp;
+      for (int i=0; i&lt;b.size(); ++i) {
+          Tmp* p = new Tmp(a[i]*b[i]);
+          // ...
+      }
+      // ...
+  }
+</code></pre><p>这个概念已经流行在泛型编程的标签“typeof”很长一段时间,但实际使用的“领域”的实现是不完整和不兼容,所以标准版命名了decltype。</p>
+<p>注意:喜欢使用auto时,你只是需要一个变量的类型初始化。如果你需要一个类型不是一个变量，那么你需要用到decltype,例如返回类型。</p>
+<p>参考：</p>
+<ul>
+<li>the C++ draft 7.1.6.2 Simple type specifiers</li>
+<li>[Str02] Bjarne Stroustrup. Draft proposal for “typeof”. C++ reflector message c++std-ext-5364, October 2002. (original suggestion).</li>
+<li>[N1478=03-0061] Jaakko Jarvi, Bjarne Stroustrup, Douglas Gregor, and Jeremy Siek: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2003/n1478.pdf" target="_blank" rel="external">Decltype and auto</a> (original proposal).</li>
+<li>[N2343=07-0203] Jaakko Jarvi, Bjarne Stroustrup, and Gabriel Dos Reis: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2343.pdf" target="_blank" rel="external">Decltype (revision 7): proposed wording</a>.</li>
+</ul>
+<h2 id="基于范围的for循环"><a href="#基于范围的for循环" class="headerlink" title="基于范围的for循环"></a>基于范围的for循环</h2><p>声明的范围像是STL-sequence定义的begin()和end()，允许你在这个范围内循环迭代。所有标准容器可以作为一个范围来使用，比如可以是std::string,初始化器列表,一个数组,和任何你可以定义begin()和end()的，比如istream。例如：</p>
+<pre><code>void f(vector&lt;double&gt;&amp; v)
+{
+    for (auto x : v) cout &lt;&lt; x &lt;&lt; &apos;\n&apos;;
+    for (auto&amp; x : v) ++x;  // using a reference to allow us to change the value
+}
+</code></pre><p>你可以看到，V中所有的元素都从begin()开始迭代循环到了end()。另一个例子:</p>
+<pre><code>for (const auto x : { 1,2,3,5,8,13,21,34 }) cout &lt;&lt; x &lt;&lt; &apos;\n&apos;;
+</code></pre><p>begin()(和end())可以被做为x.begin()的成员或一个独立的函数被称为开始(x)。成员版本优先。</p>
+<p>参考：</p>
+<ul>
+<li>the C++ draft section 6.5.4 (note: changed not to use concepts)</li>
+<li>[N2243==07-0103] Thorsten Ottosen: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2243.html" target="_blank" rel="external">Wording for range-based for-loop (revision 2)</a>.</li>
+<li>[N3257=11-0027 ] Jonathan Wakely and Bjarne Stroustrup: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3257.pdf" target="_blank" rel="external">Range-based for statements and ADL</a> (Option 5 was chosen).</li>
+</ul>
+<h2 id="初始化列表"><a href="#初始化列表" class="headerlink" title="初始化列表"></a>初始化列表</h2><p>推导</p>
+<pre><code>vector&lt;double&gt; v = { 1, 2, 3.456, 99.99 };
+  list&lt;pair&lt;string,string&gt;&gt; languages = {
+     {&quot;Nygaard&quot;,&quot;Simula&quot;}, {&quot;Richards&quot;,&quot;BCPL&quot;}, {&quot;Ritchie&quot;,&quot;C&quot;}
+}; 
+map&lt;vector&lt;string&gt;,vector&lt;int&gt;&gt; years = {
+   { {&quot;Maurice&quot;,&quot;Vincent&quot;, &quot;Wilkes&quot;},{1913, 1945, 1951, 1967, 2000} },
+   { {&quot;Martin&quot;, &quot;Ritchards&quot;}, {1982, 2003, 2007} }, 
+   { {&quot;David&quot;, &quot;John&quot;, &quot;Wheeler&quot;}, {1927, 1947, 1951, 2004} }
+};
+</code></pre><p>初始化列表不再只针对于数组了。定义一个接受<code>{}</code>初始化列表的函数（通常是初始化函数）接受一个<code>std::initializer_list &lt;T&gt;</code>的参数类型，例如：</p>
+<pre><code>void f(initializer_list&lt;int&gt;);
+f({1,2});
+f({23,345,4567,56789});
+f({});  // the empty list
+f{1,2}; // error: function call ( ) missing
+years.insert({
+  {&quot;Bjarne&quot;,&quot;Stroustrup&quot;},
+  {1950, 1975, 1985}});
+</code></pre><p>初始化器列表可以是任意长度的,但必须同种类型的(所有元素必须的模板参数类型,T,或可转换T)。</p>
+<p>一个容器可能实现一个初始化列表构造函数如下：</p>
+<pre><code>template&lt;class E&gt; class vector {
+  public:
+      vector (std::initializer_list&lt;E&gt; s) // initializer-list constructor
+      {
+              reserve(s.size());  // get the right amount of space
+              uninitialized_copy(s.begin(), s.end(), elem);   // initialize elements (in elem[0:s.size()))
+          sz = s.size();  // set vector size
+      }
+      // ... as before ...
+  };
+</code></pre><p>直接初始化和复制初始化的区别是对初始化列表的维护，但是因为初始化列表的相关联的频率就降低了。例如std::vector有一个int类型显示构造函数和initializer_list构造函数：</p>
+<pre><code>vector&lt;double&gt; v1(7);   // ok: v1 has 7 elements
+v1 = 9;                 // error: no conversion from int to vector
+vector&lt;double&gt; v2 = 9;  // error: no conversion from int to vector
+void f(const vector&lt;double&gt;&amp;);
+f(9);                           // error: no conversion from int to vector
+vector&lt;double&gt; v1{7};           // ok: v1 has 1 element (with its value 7.0)
+v1 = {9};                       // ok v1 now has 1 element (with its value 9.0)
+vector&lt;double&gt; v2 = {9};        // ok: v2 has 1 element (with its value 9.0)
+f({9});                         // ok: f is called with the list { 9 }
+vector&lt;vector&lt;double&gt;&gt; vs = {
+   vector&lt;double&gt;(10),         // ok: explicit construction (10 elements)
+   vector&lt;double&gt;{10},         // ok explicit construction (1 element with the value 10.0)
+   10                          // error: vector&apos;s constructor is explicit
+};
+</code></pre><p>函数可以作为一个不可变的序列访问initializer_list。例如：</p>
+<pre><code>void f(initializer_list&lt;int&gt; args)
+{
+    for (auto p=args.begin(); p!=args.end(); ++p) cout &lt;&lt; *p &lt;&lt; &quot;\n&quot;;
+}
+</code></pre><p>仅具有一个std::initializer_list的单参数构造函数被称为初始化列表构造函数。</p>
+<p>标准库容器，string类型及正则表达式均具有初始化列表构造函数，以及（初始化列表）赋值函数等。一个初始化列表可被用作Range，例如，表达式Range。</p>
+<p>初始化列表是一致泛化初始化解决方案的一部分。他们还防止类型收窄。一般来说,你应该通常更喜欢使用{ }来代替()初始化,除非你想用c++98编译器来分享代码或(很少)需要使用()调用没initializer_list重载构造函数。</p>
+<p>参考：</p>
+<ul>
+<li>the C++ draft 8.5.4 List-initialization [dcl.init.list]</li>
+<li>[N1890=05-0150 ] Bjarne Stroustrup and Gabriel Dos Reis: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2005/n1890.pdf" target="_blank" rel="external">Initialization and initializers</a> (an overview of initialization-related problems with suggested solutions).</li>
+<li>[N1919=05-0179] Bjarne Stroustrup and Gabriel Dos Reis: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2005/n1919.pdf" target="_blank" rel="external">Initializer lists</a>.</li>
+<li>[N2215=07-0075] Bjarne Stroustrup and Gabriel Dos Reis: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2215.pdf" target="_blank" rel="external">Initializer lists (Rev. 3)</a>.</li>
+<li>[N2640=08-0150] Jason Merrill and Daveed Vandevoorde: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2008/n2640.pdf" target="_blank" rel="external">Initializer Lists – Alternative Mechanism and Rationale (v. 2)</a> (final proposal).</li>
+</ul>
+<h2 id="统一初始化语法和语义"><a href="#统一初始化语法和语义" class="headerlink" title="统一初始化语法和语义"></a>统一初始化语法和语义</h2><p>c++ 98提供了几种方法初始化一个对象根据其类型和初始环境。滥用时,会产生可以令人惊讶的错误和模糊的错误消息。推导：</p>
+<pre><code>string a[] = { &quot;foo&quot;, &quot; bar&quot; };          // ok: initialize array variable
+vector&lt;string&gt; v = { &quot;foo&quot;, &quot; bar&quot; };    // error: initializer list for non-aggregate vector
+void f(string a[]);
+f( { &quot;foo&quot;, &quot; bar&quot; } );                  // syntax error: block as argument
+</code></pre><p>和</p>
+<pre><code>int a = 2;              // &quot;assignment style&quot;
+int aa[] = { 2, 3 };    // assignment style with list
+complex z(1,2);         // &quot;functional style&quot; initialization
+x = Ptr(y);             // &quot;functional style&quot; for conversion/cast/construction
+</code></pre><p>和</p>
+<pre><code>int a(1);   // variable definition
+int b();    // function declaration
+int b(foo); // variable definition or function declaration
+</code></pre><p>要记得初始化的规则并选择最好的方法去初始化是比较难的。</p>
+<p>C++11的解决方法是允许所有的初始化使用初始化列表</p>
+<pre><code>X x1 = X{1,2}; 
+X x2 = {1,2};   // the = is optional
+X x3{1,2}; 
+X* p = new X{1,2}; 
+struct D : X {
+ D(int x, int y) :X{x,y} { /* ... */ };
+};
+struct S {
+ int a[3];
+ S(int x, int y, int z) :a{x,y,z} { /* ... */ }; // solution to old problem
+};
+</code></pre><p>重点是，x{a}在在执行代码中都创建了一个相同的值，所以在使用“｛｝”进行初始化合法的情况下都产生了相同的结果。例如：</p>
+<pre><code>X x{a}; 
+X* p = new X{a};
+z = X{a};         // use as cast
+f({a});           // function argument (of type X)
+return {a};       // function return value (function returning X)
+</code></pre><p>参考：</p>
+<ul>
+<li>the C++ draft section ???</li>
+<li>[N2215==07-0075 ] Bjarne Stroustrup and Gabriel Dos Reis: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2215.pdf" target="_blank" rel="external">Initializer lists (Rev. 3)</a>.</li>
+<li>[N2640==08-0150] Jason Merrill and Daveed Vandevoorde: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2008/n2640.pdf" target="_blank" rel="external">Initializer Lists — Alternative Mechanism and Rationale (v. 2)</a> (final proposal).</li>
+</ul>
+<h2 id="右值引用和移动语义"><a href="#右值引用和移动语义" class="headerlink" title="右值引用和移动语义"></a>右值引用和移动语义</h2><p>左值（用在复制操作符左边）和右值（用在复制操作符右边）的区别可以追溯到Christopher Strachey （C++遥远的祖先语言ＣＰＬ和外延语义之父）的时代。在C++中，非const引用可以绑定到左值，const引用既可以绑定到左值也可以绑定要右值。但是右值却不可以被非const绑定。这是为了防止人们改变那些被赋予新值之前就被销毁的临时变量。例如：</p>
+<pre><code>void incr(int&amp; a) { ++a; }
+int i = 0;
+incr(i);    // i becomes 1
+incr(0);    // error: 0 in not an lvalue
+</code></pre><p>如果incr（0）被允许，那么就会产生一个无法被人看到的临时变量被执行增加操作，或者更糟的0会变成1.后者听起来很傻，但实际上确实存在这样一个bug在Fortran编译器中：为值为0的内存位置分配。</p>
+<p>到目前为止还好，但考虑以下代码：</p>
+<pre><code>template&lt;class T&gt; swap(T&amp; a, T&amp; b)      // &quot;old style swap&quot;
+{
+   T tmp(a);   // now we have two copies of a
+   a = b;      // now we have two copies of b
+   b = tmp;    // now we have two copies of tmp (aka a)
+}
+</code></pre><p>如果T是一个复制元素要付出昂贵代价的类型，比如string和vector，swap将会变成一个十分昂贵的操作（对于标准库来说，我们有专门化的string和vector来处理）。注意一下这些奇怪的现象：我们并不想任何变量拷贝。我们仅仅是想移动变量a,b和tmp的值。</p>
+<p>在C++11中，我们可以定义“移动构造函数”和“移动赋值操作符”来移动，而不是复制他们的参数：</p>
+<pre><code>template&lt;class T&gt; class vector {
+    // ...
+    vector(const vector&amp;);          // copy constructor
+    vector(vector&amp;&amp;);           // move constructor
+    vector&amp; operator=(const vector&amp;);   // copy assignment
+    vector&amp; operator=(vector&amp;&amp;);        // move assignment
+};  // note: move constructor and move assignment takes non-const &amp;&amp;
+    // they can, and usually do, write to their argument
+</code></pre><p>&amp; &amp;表明“右值引用”。一个右值引用可以绑定到一个右值(而不是一个左值)：</p>
+<pre><code>X a;
+X f();
+X&amp; r1 = a;      // bind r1 to a (an lvalue)
+X&amp; r2 = f();        // error: f() is an rvalue; can&apos;t bind
+X&amp;&amp; rr1 = f();  // fine: bind rr1 to temporary
+X&amp;&amp; rr2 = a;    // error: bind a is an lvalue
+</code></pre><p>赋值这个操作的背后思想，并不是拷贝，它只是构造一个源对象的代表然后再替换。例如，string s1 = s2的移动，它不是产生s2的拷贝，而是让s1把s2中字符变为自己的同时删除自己原有的字符串（也可以放在s2中，但是它也面临着被销毁）</p>
+<p>我们如何知道是否可以简单的从源对象进行移动？我们可以告诉编译器：</p>
+<pre><code>template&lt;class T&gt; 
+void swap(T&amp; a, T&amp; b)   // &quot;perfect swap&quot; (almost)
+{
+    T tmp = move(a);    // could invalidate a
+    a = move(b);        // could invalidate b
+    b = move(tmp);      // could invalidate tmp
+}
+</code></pre><p>move(x)只是意味着你“你可以把x当作一个右值”,</p>
+<p>如果把move()称做eval()也许会更好，但是现在move()已经用了好多年了。在c++11中，move()模板（参考简介）和右值引用都可以使用。</p>
+<p>右值引用也可以用来提供完美的转发。</p>
+<p>在C++0x的标准库中，所有的容器都提供了移动构造函数和移动赋值操作符，那些插入新元素的操作，如insert()和push_back(), 也都有了可以接受右值引用的版本。最终结果是，在无用户干预时，标准容器和算法的性能都提升了，因为复制操作的减少。</p>
+<p>参考：</p>
+<ul>
+<li>N1385 N1690 N1770 N1855 N1952</li>
+<li>[N2027==06-0097] Howard Hinnant, Bjarne Stroustrup, and Bronek Kozicki: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n2027.html" target="_blank" rel="external">A brief introduction to rvalue references</a></li>
+<li>[N1377=02-0035] Howard E. Hinnant, Peter Dimov, and Dave Abrahams: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2002/n1377.htm" target="_blank" rel="external">A Proposal to Add Move Semantics Support to the C++ Language (original proposal)</a>.</li>
+<li>[N2118=06-0188] Howard Hinnant: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n2118.html" target="_blank" rel="external">A Proposal to Add an Rvalue Reference to the C++ Language Proposed Wording (Revision 3)</a> (final proposal).</li>
+</ul>
+<h2 id="lambdas"><a href="#lambdas" class="headerlink" title="lambdas"></a>lambdas</h2><p>Lambda表达式是一种描述函数对象的机制，它的主要应用是描述某些具有简单行为的函数（译注：Lambda表达式也可以称为匿名函数，具有复杂行为的函数可以采用命名函数对象，当然,简单和复杂之间的划分依赖于编程人员的选择）。例如：</p>
+<pre><code>vector&lt;int&gt; v = {50, -10, 20, -30};
+std::sort(v.begin(), v.end());  // the default sort
+// now v should be { -30, -10, 20, 50 }
+// sort by absolute value:
+std::sort(v.begin(), v.end(), [](int a, int b) { return abs(a)&lt;abs(b); });
+// now v should be { -10, 20, -30, 50 }
+</code></pre><p>参数 <a href="int a, int b">&amp;</a> { return abs(a) &lt; abs(b); }是一个”lambda”(又称为”lambda函数”或者”lambda表达式”), 它描述了这样一个函数操作：接受两个整形参数a和b，然后返回对它们的绝对值进行”&lt;”比较的结果。（译注：为了保持与代码的一致性，此处应当为”[] (int a, int b) { return abs(a) &lt; abs(b); }”，而且在这个lambda表达式内实际上未用到局部变量，所以 [&amp;] 是无必要的）</p>
+<p>一个Lambda表达式可以存取在它被调用的作用域内的局部变量。例如：</p>
+<pre><code>void f(vector&lt;Record&gt;&amp; v)
+{
+   vector&lt;int&gt; indices(v.size());
+   int count = 0;
+   generate(indices.begin(),indices.end(),[&amp;count](){ return count++; });
+   // sort indices in the order determined by the name field of the records:
+   std::sort(indices.begin(), indices.end(), [&amp;](int a, int b) { return v[a].name&lt;v[b].name; });
+   // ...
+}
+</code></pre><p>有人认为这“相当简洁”，也有人认为这是一种可能产生危险且晦涩的代码的方式。我的看法是，两者都正确。</p>
+<p>[&amp;] 是一个“捕捉列表(capture list)”，用于描述将要被lambda函数以引用传参方式使用的局部变量。如果我们仅想“捕捉”参数v，则可以写为: [&amp;v]。而如果我们想以传值方式使用参数v，则可以写为：[=v]。如果什么都不捕捉，则为：[]。将所有的变量以引用传递方式使用时采用 [&amp;], [=] 则相应地表示以传值方式使用所有变量（译注：“所有变量”即指lambda表达式在被调用处，所能见到的所有局部变量）。</p>
+<p>如果某一函数的行为既不通用也不简单，那么我建议采用命名函数对象或者函数。例如，如上示例可重写为：</p>
+<pre><code>void f(vector&lt;Record&gt;&amp; v)
+{
+   vector&lt;int&gt; indices(v.size());
+   int count = 0;
+   generate(indices.begin(),indices.end(),[&amp;](){ return ++count; });
+   struct Cmp_names {
+       const vector&lt;Record&gt;&amp; vr;
+       Cmp_names(const vector&lt;Record&gt;&amp; r) :vr(r) { }
+       bool operator()(int a, int b) const { return vr[a].name&lt;vr[b].name; }
+   };
+   // sort indices in the order determined by the name field of the records:
+   std::sort(indices.begin(), indices.end(), Cmp_names(v));
+   // ...
+}
+</code></pre><p>对于简单的函数功能，比如记录名称域的比较，采用函数对象就略显冗长，尽管它与lambda表达式生成的代码是一致的。在C++98中，这样的函数对象在被用作模板参数时必须是非本地的（译注：即你不能在函数对象中像此处的lambda表达式那样使用被调用处的局部变量），然而在C++中（译注：意指C++0x），这不再是必须的。</p>
+<p>为了描述一个lambda，你必须提供：</p>
+<ul>
+<li>它的捕捉列表：它可以使用的变量列表（除了形参之外），如果存在的话（”[&amp;]” 在上面的记录比较例子中意味着“所有的局部变量都将按照引用的方式进行传递”）。如果不需要捕捉任何变量，则使用 []。</li>
+<li>（可选的）它的所有参数及其类型（例如： (int a, int b) ）。</li>
+<li>组织成一个块的函数行为（例如：{ return v[a].name &lt; v[b].name; }）。</li>
+<li>（可选的）采用了新的后缀返回类型符号的返回类型。但典型情况下，我们仅从return语句中去推断返回类型，如果没有返回任何值，则推断为void。</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li>Standard 5.1.2 Lambda expressions</li>
+<li>[N1968=06-0038] Jeremiah Willcock, Jaakko Jarvi, Doug Gregor, Bjarne Stroustrup, and Andrew Lumsdaine: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n1968.htm" target="_blank" rel="external">Lambda expressions and closures for C++</a> (original proposal with a different syntax)</li>
+<li>[N2550=08-0060] Jaakko Jarvi, John Freeman, and Lawrence Crowl: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2008/n2550.pdf" target="_blank" rel="external">Lambda Expressions and Closures: Wording for Monomorphic Lambdas (Revision 4)</a> (final proposal).</li>
+<li>[N2859=09-0049] Daveed Vandevoorde: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2859.pdf" target="_blank" rel="external">New wording for C++0x Lambdas</a>.</li>
+</ul>
+<h2 id="noexcept防止抛出异常"><a href="#noexcept防止抛出异常" class="headerlink" title="noexcept防止抛出异常"></a>noexcept防止抛出异常</h2><p>如果一个函数不能抛出异常或者一个程序没有对函数抛出的异常进行处理，那么这个函数可以用关键字noexcept进行修饰，例如：</p>
+<pre><code>extern &quot;C&quot; double sqrt(double) noexcept;    // will never throw
+vector&lt;double&gt; my_computation(const vector&lt;double&gt;&amp; v) noexcept // I&apos;m not prepared to handle memory exhaustion
+{
+   vector&lt;double&gt; res(v.size());   // might throw
+   for(int i; i&lt;v.size(); ++i) res[i] = sqrt(v[i]);
+   return res;
+}
+</code></pre><p>如果一个被noexcept修饰的函数抛出了异常（所以异常会跳出呗noexcept修饰的函数），程序会调用std::terminate()这个函数来终止程序。在对象被明确定义的状态下不能调用terminate()；比如无法保证析构函数正常调用，不能保证栈的自动释放，也无法保证在遇到任何问题时重新启动。故意这样的使noexcept成为一种简单“粗暴”而有效的处理机制-它比旧的处理机制throw()动态抛出异常要有效的多。</p>
+<p>它可以让一个函数根据条件来实现noexcept修饰。比如，一个算法可以根据他的模板参数来决定自己是否抛出异常。</p>
+<pre><code>template&lt;class T&gt;
+void do_f(vector&lt;T&gt;&amp; v) noexcept(noexcept(f(v.at(0)))) // can throw if f(v.at(0)) can
+{
+   for(int i; i&lt;v.size(); ++i)
+       v.at(i) = f(v.at(i));
+}
+</code></pre><p>这里，第一个noexcept被用作操作符operator：如果if f(v.at(0))不能够抛出异常，noexcept(f(v.at(0)))则返回true，所以f()和at()是无法抛出异常noexcept。</p>
+<p>noexcept()操作符是一个常量表达式，并且不计算表达式的值。</p>
+<p>声明的通常形式是noexcept(expression)，并且单独的一个“noexcept”关键字实际上就是的一个noexcept(true)的简化。一个函数的所有声明都必须与noexcept声明保持 兼容。</p>
+<p>一个析构函数不应该抛出异常；通常，如果一个类的所有成员都拥有noexcept修饰的析构函数，那么这个类的析构函数就自动地隐式地noexcept声明，而与函数体内的代码没有关系。</p>
+<p>通常，将某个抛出的异常进行移动操作是一个很坏的主意，所以，在任何可能的地方都用noexcept进行声明。如果某个类的所有成员都有使用noexcept声明的析构函数，那么这个类默认生成的复制或者移动操作（类的复制构造函数，移动构造函数等）都是隐式的noexcept声明。（？）</p>
+<p>noexcept 被广泛地系统地应用在C++11的标准库中，以此来提供标准库的性能和满足标准库对于简洁性的需求。</p>
+<p>参考：</p>
+<ul>
+<li>Standard: 15.4 Exception specifications [except.spec].</li>
+<li>Standard: 5.3.7 noexcept operator [expr.unary.noexcept].</li>
+<li>[N3103==10-0093] D. Kohlbrenner, D. Svoboda, and A. Wesie: Security impact of noexcept. (Noexcept must terminate, as it does).</li>
+<li>[N3167==10-0157] David Svoboda: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2010/n3205.htm" target="_blank" rel="external">Delete operators default to noexcept</a>.</li>
+<li>[N3204==10-0194] Jens Maurer: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2010/n3204.htm" target="_blank" rel="external">Deducing “noexcept” for destructors</a>.</li>
+<li>[N3050==10-0040] D. Abrahams, R. Sharoni, and D. Gregor: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2010/n3050.html" target="_blank" rel="external">Allowing Move Constructors to Throw (Rev. 1)</a>.</li>
+</ul>
+<h2 id="constexpr"><a href="#constexpr" class="headerlink" title="constexpr"></a>constexpr</h2><p>常量表达式机制：</p>
+<ul>
+<li>提供了更多的通用的值不发生变化的表达式</li>
+<li>允许用户自定义的类型成为常量表达式</li>
+<li>提供了一种保证在编译期完成初始化的方法</li>
+</ul>
+<p>考虑下面这段代码：</p>
+<pre><code>enum Flags { good=0, fail=1, bad=2, eof=4 };
+constexpr int operator|(Flags f1, Flags f2) { return Flags(int(f1)|int(f2)); }
+void f(Flags x)
+{
+    switch (x) {
+    case bad:         /* ... */ break;
+    case eof:         /* ... */ break;
+    case bad|eof:     /* ... */ break;
+    default:          /* ... */ break;
+    }
+}
+</code></pre><p>在这里，常量表达式关键字constexpr表示这个重载的操作符“|”就应该像一个简单的表单一样，如果它的参数本身就是常量 ，那么这个操作符应该在编译时期就应该计算出它的结果来。<br>除了可以在编译时期被动地计算表达式的值之外，我们希望能够主动地要求表达式在编译时期计算其结果值，从而用作其它用途，比如对某个变量进行赋值。当我们在变量声明前加上constexpr关键字之后，可以实现这一功能，当然，它也同时会让这个变量成为常量。</p>
+<pre><code>constexpr int x1 = bad|eof; // ok
+void f(Flags f3)
+{
+   constexpr int x2 = bad|f3;  // error: can&apos;t evaluate at compile time
+   int x3 = bad|f3;        // ok
+}
+</code></pre><p>通常，我们希望编译时期计算可以保护全局或者名字空间内的对象，对名字空间内的对象，我们希望它保存在只读空间内。<br>对于那些构造函数比较简单，可以成为常量表达式（也就是可以使用constexpr进行修饰）的对象可以做到这一点(?)</p>
+<pre><code>struct Point {
+  int x,y;
+  constexpr Point(int xx, int yy) : x(xx), y(yy) { }
+};
+constexpr Point origo(0,0);
+constexpr int z = origo.x;
+constexpr Point a[] = {Point(0,0), Point(1,1), Point(2,2) };
+constexpr int x = a[1].x;   // x becomes 1
+</code></pre><ul>
+<li>const的主要功能是修饰一个对象而不是通过一个接口（即使对象很容易通过其他接口修改）。只不过声明一个对象常量为编译器提供了优化的机会。特别是，如果一个声明了一个对象常量而他的地址没有取到，编译器通常可以在编译时对他进行初始化（尽管这不是肯定的）保证这个对象在他的列表里而不是把它添加到生成代码里。</li>
+<li>constexpr的主要功能可以在编译时计算表达式的值进行了范围扩展，这是一种计算安全而且可以用在编译时期（如初始化枚举或者整体模板参数）。constexpr声明对象可以在初始化编译的时候计算出结果来。他们基本上只保存在编译器的列表，如果需要的话会释放到生成的代码里。</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li>the C++ draft 3.6.2 Initialization of non-local objects, 3.9 Types [12], 5.19 Constant expressions, 7.1.5 The constexprspecifier</li>
+<li>[N1521=03-0104] Gabriel Dos Reis: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2003/n1521.pdf" target="_blank" rel="external">Generalized Constant Expressions</a> (original proposal).</li>
+<li>[N2235=07-0095] Gabriel Dos Reis, Bjarne Stroustrup, and Jens Maurer: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2235.pdf" target="_blank" rel="external">Generalized Constant Expressions – Revision 5</a>.</li>
+</ul>
+<h2 id="nullptr-一个指针空值常量"><a href="#nullptr-一个指针空值常量" class="headerlink" title="nullptr 一个指针空值常量"></a>nullptr 一个指针空值常量</h2><p>nullptr是一个指针空值常量，不是一个整数。</p>
+<pre><code>char* p = nullptr;
+ int* q = nullptr;
+ char* p2 = 0;           // 0 still works and p==p2
+ void f(int);
+ void f(char*);
+ f(0);                   // call f(int)
+ f(nullptr);             // call f(char*)
+ void g(int);
+ g(nullptr);             // error: nullptr is not an int
+ int i = nullptr;        // error: nullptr is not an int
+</code></pre><p>参考：</p>
+<ul>
+<li>[N1488==/03-0071] Herb Sutter and Bjarne Stroustrup: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2003/n1488.pdf" target="_blank" rel="external">A name for the null pointer: nullptr</a>.</li>
+<li>[N2214 = 07-0074 ] Herb Sutter and Bjarne Stroustrup: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2431.pdf" target="_blank" rel="external">A name for the null pointer: nullptr (revision 4)</a>.</li>
+<li>ECMA-372 for a description of this feature as originally designed in <a href="http://www.ecma-international.org/publications/standards/Ecma-372.htm" target="_blank" rel="external">C++/CLI</a> before being proposed for ISO C++.</li>
+</ul>
+<h2 id="复制并再抛出异常"><a href="#复制并再抛出异常" class="headerlink" title="复制并再抛出异常"></a>复制并再抛出异常</h2><p>你如何捕获一个异常然后把它抛出到另一个线程？使用标准文档18.8.5里描述的标准库的魔力方法吧。</p>
+<p>exception_ptr current_exception(); 正在处理的异常（15.3）或者正在处理的异常的副本（拷贝）将返回一个exception_ptr 变量，如果当前没有遇到异常，返回值为一个空的exception_ptr变量。只要exception_ptr指向一个异常，那么至少在exception_ptr的生存期内，运行时能够保证被指向的异常是有效的。</p>
+<pre><code>void rethrow_exception(exception_ptr p);
+template exception_ptr copy_exception(E e); 
+</code></pre><p>它的作用如同：</p>
+<pre><code>try {
+   throw e;
+} catch(...) {
+   return current_exception();
+}
+</code></pre><p>当我们需要将异常从一个线程传递到另外一个线程时，这个方法十分有用的。</p>
+<h2 id="内联命名空间"><a href="#内联命名空间" class="headerlink" title="内联命名空间"></a>内联命名空间</h2><p>内联命名空间机制是通过一种支持版本更新的机制来支持库的演化，推导：</p>
+<pre><code>// file V99.h:
+inline namespace V99 {
+   void f(int);    // does something better than the V98 version
+   void f(double); // new feature
+   // ...
+}
+// file V98.h:
+namespace V98 {
+   void f(int);    // does something
+   // ...
+}
+// file Mine.h:
+namespace Mine {
+#include &quot;V99.h&quot;
+#include &quot;V98.h&quot;
+}
+</code></pre><p>我们这里有一个命名空间Mine包含最新版本的（V99）和前一个版本(V98),如果你想要显式应用（某个版本的函数），你可以：</p>
+<pre><code>#include &quot;Mine.h&quot;
+using namespace Mine;
+// ...
+V98::f(1);  // old version
+V99::f(1);  // new version
+f(1);       // default version
+</code></pre><p>内联的关键是使内联命名空间的声明和直接在外围命名空间声明一样。</p>
+<p>lnline是静态的及面向实现的设施，它由命名空间的设计者放置来帮助用户进行选择。对于Mine的用是不可以说“我想要的命名空间是V98而不是V99”。</p>
+<p>参照：</p>
+<p>Standard 7.3.1 Namespace definition [7]-[9].</p>
+<h2 id="用户自定义数据标识"><a href="#用户自定义数据标识" class="headerlink" title="用户自定义数据标识"></a>用户自定义数据标识</h2><p>C++提供了很多内置的数据标识符（2.14节变量）</p>
+<p>built-in types (2.14 Literals):</p>
+<pre><code>123 // int
+1.2 // double
+1.2F    // float
+&apos;a&apos; // char
+1ULL    // unsigned long long
+0xD0    // hexadecimal unsigned
+&quot;as&quot;    // string
+</code></pre><p>然而，爱C++98里并没有用户自定义的数据标识符。这就有悖于甚至冲突“用户自定义类型和内置leiixng一样得到支持”的原则。特殊情况下，人们有这样的需求：</p>
+<pre><code>&quot;Hi!&quot;s          // std::string, not ``zero-terminated array of char&apos;&apos;
+1.2i            // imaginary
+123.4567891234df    // decimal floating point (IBM)
+101010111000101b    // binary
+123s            // seconds
+123.56km        // not miles! (units)
+1234567890123456789012345678901234567890x   // extended-precision
+</code></pre><p>C++11支持“用户自定义数据标识”通过在变量名后面加一个后缀来标定所需类型，例如：</p>
+<pre><code>constexpr complex&lt;double&gt; operator &quot;&quot; i(long double d)  // imaginary literal
+{
+    return {0,d};   // complex is a literal type
+}
+std::string operator&quot;&quot;s (const char* p, size_t n)   // std::string literal
+{
+    return string(p,n); // requires free store allocation
+}
+</code></pre><p>注意constexpr的使用可以在编译时期计算。有了这个功能，我们可以这样写：</p>
+<pre><code>template&lt;class T&gt; void f(const T&amp;);
+f(&quot;Hello&quot;); // pass pointer to char*
+f(&quot;Hello&quot;s);    // pass (5-character) string object
+f(&quot;Hello\n&quot;s);  // pass (6-character) string object
+auto z = 2+1i;  // complex(2,1)
+</code></pre><p>基本（实现）方法是编译器在解析什么语句代表一个变量之后，再分析一下后缀。用户自定义数据标识机制只是简简单单的允许用户制定一个新的后缀，并决定如何对它之前的数据进行处理。要想重新定义一个内建的数据标识的意义或者它的参数、语法是不可能的。一个数据标识操作符可以使用它（前面）的数据标识传递过来的处理过的值（如果是使用新的没有定义过的后缀的值）或者没有处理过的值（作为一个字符串）。<br>要得到一个没有处理过的字符串，只要使用一个单独的const char*参数即可，例如：</p>
+<pre><code>Bignum operator&quot;&quot; x(const char* p)
+{
+  return Bignum(p);
+}
+void f(Bignum);
+f(1234567890123456789012345678901234567890x);
+</code></pre><p>这个C语言风格的字符串”1234567890123456789012345678901234567890”被传递给了操作符 operator”” x()。注意，我们并没有明确地把数字转换成字符串。</p>
+<p>有以下四种数据标识的情况，可以被用户定义后缀来使用用户自定义数据标识：</p>
+<ul>
+<li>整型标识：允许传入一个unsigned long long或者const char*参数</li>
+<li>浮点型标识：允许传入一个long double或者const char*参数</li>
+<li>字符串标识：允许传入一组(const char*,size_t)参数</li>
+<li>字符标识：允许传入一个char参数。</li>
+</ul>
+<p>注意，你为字符串标识定义的标识操作符不能只带有一个const char*参数（而没有大小）。例如：</p>
+<pre><code>string operator&quot;&quot; S(const char* p);     // warning: this will not work as expected
+&quot;one two&quot;S; // error: no applicable literal operator
+</code></pre><p>根本原因是如果我们想有一个“不同的字符串”，我们同时也想知道字符的个数。后缀可能比较短（例如，s是字符串的后缀，i是虚数的后缀，m是米的后缀，x是扩展类型的后缀），所以不同的用法很容易产生冲突，我们可以使用namespace（命名空间）来避免这些名字冲突：</p>
+<pre><code>namespace Numerics { 
+  // ...
+  class Bignum { /* ... */ }; 
+  namespace literals { 
+      operator&quot;&quot; X(char const*); 
+  } 
+} 
+using namespace Numerics::literals;
+</code></pre><p>参考：</p>
+<ul>
+<li>Standard 2.14.8 User-defined literals</li>
+<li>[N2378==07-0238] Ian McIntosh, Michael Wong, Raymond Mak, Robert Klarer, Jens Mauer, Alisdair Meredith, Bjarne Stroustrup, David Vandevoorde: <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2378.pdf" target="_blank" rel="external">User-defined Literals (aka. Extensible Literals (revision 3))</a>.</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/C/2014-05-07-cpp-11.html" target="_blank" rel="external">http://blog.inching.org/C/2014-05-07-cpp-11.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/syntax/">syntax</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/C/2014-05-07-cpp-11.html&title=《C++11语言扩展：常规特性》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/C/2014-05-07-cpp-11.html&title=《C++11语言扩展：常规特性》 — Balance&source=
+原文：http://blog.jobbole.com/55063/
+
+本节内容：auto、decltype、基于范围的for语句、初始化列表、统一初始化..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/C/2014-05-07-cpp-11.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C++11语言扩展：常规特性》 — Balance&url=http://blog.inching.org/C/2014-05-07-cpp-11.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/C/2014-05-07-cpp-11.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/C/2014-05-07-cpp-thread.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">C++ Thread</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/C/2014-05-07-cpp-memory-address.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">C语言内存地址基础</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/C/2014-05-07-cpp-11.html&title=《C++11语言扩展：常规特性》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/C/2014-05-07-cpp-11.html&title=《C++11语言扩展：常规特性》 — Balance&source=
+原文：http://blog.jobbole.com/55063/
+
+本节内容：auto、decltype、基于范围的for语句、初始化列表、统一初始化..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/C/2014-05-07-cpp-11.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C++11语言扩展：常规特性》 — Balance&url=http://blog.inching.org/C/2014-05-07-cpp-11.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/C/2014-05-07-cpp-11.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3aQW7DMAxEUd//0i6QVRaxMDOkC4j6WhWB0eh5wZAaXZe87s9SnvleT58rz1xvLBgwYGzL0L9mTVpvRYe5rwAGDBjnMNZF1i24buHOXhkMGDBg6K3bLS9lozBgwIDRVXCVdk3fogKGAQMGjGyYdAt0Rm2exWHAgLEhww0G/vPvF/MNGDBgbMK4o5WNtcrxXLgfGDBgjGboB/pu65aNrAqylEvAgAFjW0al43KP7dYvTh9TjVcPAwaMQYxK0Fj5JLvk8fh/YMCAMY6htGXuVYzeAEAp0DBgwJjN6NpEJWBQCr2dxMKAAWMoQ2/OsqtdWahgHNXBgAFjNENpziqXMLLmz6XCgAHjTEb98pZ+USNrGe2vhAEDxrYMfWRVjsAaMgozUoUBA8Zshn7QVrm8lYUE4W8FDBgwxjGUjWatXnaNw32JMGDAOIFRCRHdwFIHu7EoDBgwZjPWm3YLX7bpyjHf4ywOAwaMoYysyLql021AjYoKAwaMgxnu5noLa2kWhwEDxjjG+iuVTbhtYj1skDpcGDBgjGAoTZt72aI5u3BDAhgwYAxi3ObSh14dX7nA+uNaGAwYMMYxKvlgPUlcF2L3SRgwYMxmuMNqdiFML5fuwAwDBoxzGF0jqHugXxliH08NYcCAcTzj7SLrBgkwYMCA4R6KuYNoQ2wJAwaMYxh6GJAdnykFNLvYAQMGjBMYbjBQCQ+6ItKGCBMGDBh7MP4AWcf6CKI35msAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

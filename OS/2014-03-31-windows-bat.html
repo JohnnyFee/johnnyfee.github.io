@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Windows Bat | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="ps">
+    <meta name="description" content="概述1、.bat: 这是微软的第一个批处理文件的后缀名，在几乎所有的Windows 操作系统内都能运行。2、 .cmd: 是为Windows NT 设计的命令行脚本， 为Cmd.exe shell而设计的， 对于COMMAND.COM不具有向后兼容性。3、目前所知道的.cmd 和 .bat文件的区别是对ERRORLEVEL变量的改变：当Command Extensions （命令行扩展）处于ena">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows Bat">
+<meta property="og:url" content="http://blog.inching.org/OS/2014-03-31-windows-bat.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="概述1、.bat: 这是微软的第一个批处理文件的后缀名，在几乎所有的Windows 操作系统内都能运行。2、 .cmd: 是为Windows NT 设计的命令行脚本， 为Cmd.exe shell而设计的， 对于COMMAND.COM不具有向后兼容性。3、目前所知道的.cmd 和 .bat文件的区别是对ERRORLEVEL变量的改变：当Command Extensions （命令行扩展）处于ena">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows Bat">
+<meta name="twitter:description" content="概述1、.bat: 这是微软的第一个批处理文件的后缀名，在几乎所有的Windows 操作系统内都能运行。2、 .cmd: 是为Windows NT 设计的命令行脚本， 为Cmd.exe shell而设计的， 对于COMMAND.COM不具有向后兼容性。3、目前所知道的.cmd 和 .bat文件的区别是对ERRORLEVEL变量的改变：当Command Extensions （命令行扩展）处于ena">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Windows Bat</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Windows Bat</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-03-30T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-03-31
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/OS/">OS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#call"><span class="post-toc-text">call</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#语法"><span class="post-toc-text">语法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#范例"><span class="post-toc-text">范例</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#echo"><span class="post-toc-text">echo</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#变量"><span class="post-toc-text">变量</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#SETLOCAL-ENDLOCAL"><span class="post-toc-text">SETLOCAL/ENDLOCAL</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#延迟环境变量扩展"><span class="post-toc-text">延迟环境变量扩展</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#path"><span class="post-toc-text">path</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#set"><span class="post-toc-text">set</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#逻辑控制"><span class="post-toc-text">逻辑控制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#choice"><span class="post-toc-text">choice</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#if"><span class="post-toc-text">if</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#for"><span class="post-toc-text">for</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#goto"><span class="post-toc-text">goto</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#rem"><span class="post-toc-text">rem</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#net"><span class="post-toc-text">net</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#dir"><span class="post-toc-text">dir</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-text">参考</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-windows-bat"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Windows Bat</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-03-31 00:00:00" datetime="2014-03-30T16:00:00.000Z"  itemprop="datePublished">2014-03-31</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/OS/">OS</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>1、.bat: 这是微软的第一个批处理文件的后缀名，在几乎所有的Windows 操作系统内都能运行。<br>2、 .cmd: 是为Windows NT 设计的命令行脚本， 为Cmd.exe shell而设计的， 对于COMMAND.COM不具有向后兼容性。<br>3、目前所知道的.cmd 和 .bat文件的区别是对ERRORLEVEL变量的改变：当Command Extensions （命令行扩展）处于enabled状态时，哪怕是.cmd文件中一个成功执行的命令都可以改变ERRORLEVEL的值，而在.bat 文件中ERRORLEVEL 变量只有在遇到错误的时候才发生改变。</p>
+<h2 id="call"><a href="#call" class="headerlink" title="call"></a>call</h2><p>从一个批处理文件调用另一个批处理文件使用<code>call</code>命令。call 命令接受用作调用目标的标签。如果在脚本或批处理文件外使用 Call，它将不会在命令行起作用。 </p>
+<p>不要在 call 命令中使用管道和重定向符号。 </p>
+<p>如果启用命令扩展（即默认情况下），call 将接受 label 参数作为调用目标。正确语法如下： </p>
+<pre><code>call :label arguments 
+</code></pre><p>有关启用和禁用命令扩展的详细信息，请参阅“”中的 cmd。</p>
+<a id="more"></a>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>call [[Drive:][Path] FileName [BatchParameters]] [:label [arguments]] 
+</code></pre><p>参数 </p>
+<pre><code>[Drive:}[Path] FileName  
+</code></pre><p>指定要调用的批处理程序的位置和名称。filename 参数必须具有 .bat 或 .cmd 扩展名。</p>
+<ul>
+<li><p>BatchParameters<br>指定批处理程序所需的任何命令行信息，包括命令行选项、文件名、批处理参数（从 %0 到 %9）或变量（例如，%baud%）。  </p>
+</li>
+<li><p><code>:label</code><br>指定批处理程序要跳转到的标签。使用带有该参数的 call 命令可以创建新的批处理文件上下文，并将控制权交给指定标签后的语句。当首次遇到该批处理文件的末尾时（在跳转到标签后），控制权将交还给 CALL 语句后的语句。第二次遇到批处理文件的末尾，批脚本将被退出。对于可允许您从批处理脚本返回的 goto :eof 命令扩展，要了解关于它的说明，请参阅“”。  </p>
+</li>
+<li><p><code>arguments</code><br>对于以 :label 打头的批处理程序，指定要传送给其新实例的命令行信息，包括命令行选项、文件名、批处理参数（从 %1 到 %9）或者变量（比如 %baud%）。</p>
+</li>
+</ul>
+<h3 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h3><p>要从其他批处理程序运行 Checknew.bat 程序，请在父批处理程序中键入以下命令：  </p>
+<pre><code>call checknew  
+</code></pre><p>如果父批处理程序接受两个批处理参数并且希望它将这些参数传递给 Checknew.bat，则可以在父批处理程序中使用以下命令：  </p>
+<pre><code>call checknew %1 %2    
+</code></pre><h2 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h2><ol>
+<li>“echo” 用来在控制台上显示信息。</li>
+<li>“echo.” 用来显示一空行。（注意：echo和右下角的点之间没有空格，如果有空格就变成显示句点了。）</li>
+<li>“echo off”: 在使用了这行命令之后，其他命令都只显示命令的结果，而不显示命令本身。</li>
+<li>“echo on”: 这是默认值，表示显示所有的命令结果和命令行本身。</li>
+<li>“echo”: 当执行echo而不带任何参数的时候，会显示echo的打开或关闭的状态：“ECHO is on” 或者 “ECHO is off”。</li>
+<li>“@”:@ 符号表示不显示本行的命令本身。如果只用echo off，虽然echo off后面的命令不显示出来，只显示命令的结果，但是echo off它自己确被显示出来了，这就是使用@echo off的原因。</li>
+</ol>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><h3 id="SETLOCAL-ENDLOCAL"><a href="#SETLOCAL-ENDLOCAL" class="headerlink" title="SETLOCAL/ENDLOCAL"></a>SETLOCAL/ENDLOCAL</h3><p>SETLOCAL用来控制批处理文件中变量的可见性。就是高级语言常说的局部变量。凡是在SETLOCAL和ENDLOCAL之间的变量都是局部的，以免被其他脚本文件改变变量的值，而没有使用这个标示的都是Global visible（全局变量），很可能被其他文件所改变。下面的例子很好的说明了这一点。</p>
+<pre><code>@echo off
+setlocal
+set version=1.0
+echo the first version is %version%
+endlocal
+echo the second version is %version%
+::The follow is global variable
+set version=2.0
+echo the third version is %version%
+</code></pre><p>Output:</p>
+<pre><code>the first version is 1.0
+the second version is
+the third version is 2.0
+第二个version是全局变量，但是没有定义，所以是空值。再次执行：
+the first version is 1.0
+the second version is 2.0
+the third version is 2.0
+</code></pre><h3 id="延迟环境变量扩展"><a href="#延迟环境变量扩展" class="headerlink" title="延迟环境变量扩展"></a>延迟环境变量扩展</h3><p>申明 BAT 的变量，如%name%。在解析命令时，CMD 会找到变量名对应的值,用变量名的值替换掉这个变量名字(name)，如果变量名不存在值,就返回空值。再将这个替换好并且匹配的命令执行。这个替换值的过程,就叫做 <em>变量扩展</em>。</p>
+<p>例如：</p>
+<pre><code>set var=test
+echo %var%
+</code></pre><p>变量替换后的变为：</p>
+<pre><code>echo test
+</code></pre><p>在 BAT 中，<code>IF</code>, <code>FOR</code> 这样的命令都可以加括号，将一些命令嵌套在里面执行。这样的话对于一条可以加扩号嵌其他命令的命令,他的完整格式就是 </p>
+<pre><code>for %%i in (....)
+</code></pre><p>如果我们在括号里面嵌入一些设置变量值的命令,就会出现问题了!</p>
+<p>看例子</p>
+<pre><code>@echo off 
+for /l %%i in (1,1,5) do ( 
+        set var=%%i 
+        echo %var% 
+)
+</code></pre><p>执行后会显示5个空行的错误提示! 因为在 CMD 解析的时候，找不到 <code>%var%</code> 变量定义。如果改成：</p>
+<pre><code>@echo off 
+set var=test 
+for /l %%i in (1,1,5) do ( 
+        set var=%%i 
+        echo %var% 
+)
+</code></pre><p>则输出 5  次 test。</p>
+<p>为了解决这个问题，我们是需要引入 <em>延迟环境变量扩展</em> 的概念。使用以下方法启用 延迟环境变量扩展：</p>
+<pre><code>setloacl ENABLEDELAYEDEXPANSION
+</code></pre><p>例：</p>
+<pre><code>@echo off 
+setlocal ENABLEDELAYEDEXPANSION 
+set var=test 
+for /l %%i in (1,1,5) do ( 
+        set var=%%i 
+        echo !var! 
+)
+</code></pre><p>这样输出就正常了。</p>
+<p>另外，</p>
+<pre><code>@echo off 
+set var=test &amp; echo %test% 
+pause
+</code></pre><p>set 命令和 echo 命令放在一行，如果不启用”延迟环境变量扩展”，也会出现赋值错误。</p>
+<h3 id="path"><a href="#path" class="headerlink" title="path"></a>path</h3><ul>
+<li><code>%cd%</code> 或者  <code>!cd!</code> 获取当前运行命令所在的目录路径。</li>
+<li><code>%~dp0</code> 获取命令文件所在的目录路径。</li>
+</ul>
+<p>如：</p>
+<p>D:\test\test.bat:</p>
+<pre><code>@echo off
+echo Path &quot;cd&quot;: %cd%
+@echo off
+echo Path &quot;dp0&quot;: %~dp0
+</code></pre><p>在 C:\Users\Johnny 下运行该 bat 文件，输出为：</p>
+<pre><code>Path &quot;cd&quot;: C:\Users\Johnny
+Path &quot;dp0&quot;: d:\test\
+</code></pre><h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><ol>
+<li>SET 不带任何参数: 将显示当前用户的所有系统环境变量。(set)</li>
+<li>SET 带一个变量名: 尝试搜索并显示以这个变量名开头的环境变量。（set PROCESSOR就会显示以PROCESSOR开始的变量）</li>
+<li>SET variable=string: 给一个变量赋值。</li>
+<li><p>SET “”: 使用一对空的双引号，会显示一个不带参数的情况下没显示出来的变量。我这里就显示下面两个奇怪的变量。</p>
+<p> =C:=C:\Users\Lingli<br> =E:=E:\Powershell</p>
+<p> 使用cd %=C:%还真可以转到C:\Users\Lingli目录下。</p>
+</li>
+<li><p>SET “var=”(or SET var=): 删除一个变量。</p>
+</li>
+<li><p>SET /A variable=expression: 使用算数运算符来给变量赋值。</p>
+<p> 运算符|描述<br> —————–|————–<br> ()               |    组合<br> ! ~ -            |    一元操作符</p>
+<ul>
+<li>/ %            |    算数运算符</li>
+</ul>
+<ul>
+<li><ul>
+<li>|   算数运算符<br>&lt;&lt; &gt;&gt;            |    逻辑偏移<br>&amp;                |    位与<br>^                |    位异或<br>|                |    位或<br>= *= /= %= += -= |    赋值<br>&amp;= ^= |= &lt;&lt;= &gt;&gt;=|   </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>SET /P variable=[提示字符]:提示用户输入并把输入的值赋给variable。提示字符可以为空。有时可以使用CHOICE来代替SET /P.</p>
+<pre><code>@echo off
+setlocal
+set /p version=Please enter the QQ version:
+echo you will install QQ %version%
+endlocal
+</code></pre></li>
+<li><p>有用的环境变量。</p>
+<pre><code>%CD% - 当前路径名。
+%DATE% - 当前日期。
+%TIME% - 当前时间。
+%RANDOM% - 显示0 到32767之间的一个随机数。你看CMD也是可以获取随机数的。
+</code></pre></li>
+</ol>
+<h2 id="逻辑控制"><a href="#逻辑控制" class="headerlink" title="逻辑控制"></a>逻辑控制</h2><h3 id="choice"><a href="#choice" class="headerlink" title="choice"></a>choice</h3><pre><code>CHOICE [/C choices] [/N] [/CS] [/T timeout /D choice] [/M text]
+</code></pre><p>该命令可以提供用户一个选择列表，并使用ERRORLEVEL参数返回用户选择项的序号。第一项对于1，第二项对应 2，依次类推，如果用户按CTRL+C退出而不选择，就返回0。</p>
+<p>如：</p>
+<pre><code>@echo off
+SETLOCAL
+CHOICE /C ABC /M &quot;选择登陆用户：A - 管理员；B 域用户；C注册用户&quot;
+IF %errorlevel%==1 goto :Admin
+IF %errorlevel%==2 goto :Domain
+IF %errorlevel%==3 goto :Local
+goto Exit
+
+:Admin
+    echo 欢迎管理员
+    goto Exit
+
+:Domain
+    echo 欢迎域用户
+    goto Exit
+
+:Local
+    echo 欢迎注册用户
+    goto Exit
+
+:Exit
+endlocal
+</code></pre><h3 id="if"><a href="#if" class="headerlink" title="if"></a>if</h3><pre><code>IF EXIST filename (del filename) ELSE ( echo The file was not found.)
+</code></pre><h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3><pre><code>@echo off
+setlocal
+for %%G in (*.bat *.txt) do echo %%G
+endlocal
+</code></pre><h3 id="goto"><a href="#goto" class="headerlink" title="goto"></a>goto</h3><p>指定跳转到标签，找到标签后，程序将处理从下一行开始的命令。</p>
+<p>语法：</p>
+<pre><code>goto label （label是参数，指定所要转向的批处理程序中的行。）
+</code></pre><p>Sample：</p>
+<pre><code>if { %1 }=={ } goto noparms
+if { %2 }=={ } goto
+</code></pre><p>noparms（如果这里的if、%1、%2你不明白的话，先跳过去，后面会有详细的解释。）</p>
+<pre><code>@Rem check parameters if null show usage
+:noparms
+echo Usage: monitor.bat ServerIP PortNumber
+goto end
+</code></pre><p>标签的名字可以随便起，但是最好是有意义的字母啦，字母前加个：用来表示这个字母是标签，goto命令就是根据这个：来寻找下一步跳到到那里。最好有一些说明这样你别人看起来才会理解你的意图啊。</p>
+<h2 id="rem"><a href="#rem" class="headerlink" title="rem"></a>rem</h2><ol>
+<li>REM [comment]: 批处理文件的注释符，可以使用“::” 来代替REM。</li>
+<li>参数。<br> %0对应文件名本身，其他分别对应一个参数值，支持255个参数。</li>
+<li><p>文件名参数扩展。</p>
+<p> 当使用文件名作参数的时候，可以使用如下文件名扩展。下面的例子扩展%1，其实对所有的参数都可以进行类似的扩展。</p>
+<p> %~f1 - 扩展%1 为带路径的全名。<br> %~d1 - 只显示磁盘名称。<br> %~p1 - 只显示文件路径。<br> %~n1 - 只显示文件名，不包括后缀名，也不包括路径。<br> %~x1 - 只显示后缀名。<br> %~s1 - 变成短文件名，将包含“~”符号。<br> %~1  - 有时候文件名包含空格是，会对文件名加双引号。这个功能是去掉双引号。<br> %~a1 - 显示文件的属性。<br> %~t1 - 显示文件的修改时间。<br> %~z1 - 显示文件的大小。</p>
+<p> 上面的扩展是可以组合的:<br> %~dp1 - 扩展%1 为磁盘名称和路径名。<br> %~nx2 - 扩展%2 为文件名和文件后缀名。</p>
+</li>
+</ol>
+<p>例：</p>
+<pre><code>::Test.bat
+::Example: test.bat test.bat
+@echo off
+setlocal
+set fn=%~f1
+echo %fn%
+endlocal
+</code></pre><h2 id="net"><a href="#net" class="headerlink" title="net"></a>net</h2><p>跟踪路由：tracert www.baidu.com</p>
+<p>查出占用端口的进程：</p>
+<pre><code>netstat -aon|findstr &quot;8100&quot;
+
+结果：TCP    127.0.0.1:9050         0.0.0.0:0              LISTENING       2016     
+</code></pre><p>根据进程ID查看进程信息：</p>
+<pre><code>tasklist|findstr &quot;2016&quot;
+结果：tor.exe                     2016 Console       
+</code></pre><h2 id="dir"><a href="#dir" class="headerlink" title="dir"></a>dir</h2><p>批量列出文件</p>
+<pre><code>dir /s /b /on
+</code></pre><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://www.cnblogs.com/linglizeng/archive/2010/01/29/Bat-CMD-ChineseVerion.html" target="_blank" rel="external">BAT CMD 批处理文件脚本总结(中文) - 曾令理 - 博客园</a></li>
+</ul>
+<h3 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h3><ul>
+<li><a href="http://ss64.com/nt/" target="_blank" rel="external">An A-Z Index of the Windows CMD command line | SS64.com</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/OS/2014-03-31-windows-bat.html" target="_blank" rel="external">http://blog.inching.org/OS/2014-03-31-windows-bat.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ps/">ps</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/OS/2014-03-31-windows-bat.html&title=《Windows Bat》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/OS/2014-03-31-windows-bat.html&title=《Windows Bat》 — Balance&source=概述1、.bat: 这是微软的第一个批处理文件的后缀名，在几乎所有的Windows 操作系统内都能运行。2、 .cmd: 是为Windows NT 设计的..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/OS/2014-03-31-windows-bat.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Windows Bat》 — Balance&url=http://blog.inching.org/OS/2014-03-31-windows-bat.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/OS/2014-03-31-windows-bat.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Qt/2014-04-02-qt-qml.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Qt Qml</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-03-30-jade.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">The Jade Templating Language</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/OS/2014-03-31-windows-bat.html&title=《Windows Bat》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/OS/2014-03-31-windows-bat.html&title=《Windows Bat》 — Balance&source=概述1、.bat: 这是微软的第一个批处理文件的后缀名，在几乎所有的Windows 操作系统内都能运行。2、 .cmd: 是为Windows NT 设计的..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/OS/2014-03-31-windows-bat.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Windows Bat》 — Balance&url=http://blog.inching.org/OS/2014-03-31-windows-bat.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/OS/2014-03-31-windows-bat.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aS27DMAwFwN7/0u6miwKphUfSKRBptCpiO9Y0AMGPvr7idd2s31fv7r+75/Xz16ceXhgYGB/LuJbr7p715nL8/B4MDIxzGEkoTK4m+Pxdyd4wMDAw8s1VN7oOrxgYGBjzgJuUoOtQi4GBgVFl5A21K1h5WVv9/IFaHAMD4wMZedf9//9+y3wDAwPjoxhXcVWHlPk9vf38PIuBgbE1Iw9w1cTxHd+w/gdhYGCczEhaZr0DXnm7LUoWMTAwNmVUy8Vespgnmnla+UeGi4GBsTUjSdrWr8kb/dXQH40/MTAwtmbkD/fAeVqZJ5eFdhsGBsZ2jFFTvnqEq3WwLCplMTAwtmP0ttJr3F/jdbsTDAyMAxiTaJ2MIZNgnbfYolocAwPjAEbvCNdkeJnne1H5ioGBsRGjV9bmjF6imSesGBgYJzDWqViP/VRZ20wNMTAwtmNUw19vtJkfsOilmBgYGCcwemVkr6xNAutkIIqBgXECoxo682SumizmBzIwMDBOYOSbqLbSkmerQ81yhouBgbERY5K0Vbc+GULcvhEDA+MYRp6iPXsgY96ew8DA2JVxFddkPDl/NvodMDAwtmP0jlOsw3G1WZYPTcu9QwwMjI0YvRFjXoj2jl/k41IMDIxzGIWqN07U8tD8WC2OgYGB0dp0np/2DophYGBgVBnzJlpv2ICBgXECY3LcIb/aC9YP1+IYGBgfyOiVjtWGft6Aq2IwMDC2ZnwDxxsZBvTh5k0AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

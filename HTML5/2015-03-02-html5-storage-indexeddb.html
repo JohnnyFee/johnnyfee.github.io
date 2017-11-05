@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Html5 Storage —— IndexedDB | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="html5,storage,indexeddb">
+    <meta name="description" content="This API is available in the underlying WebView. Indexed DB offers more features than LocalStorage but fewer than WebSQL.
+IndexedDB是基于简单的平面文件（flat-file）数据库，采用了分层的键值存储（key/value persistence）和基本的索引。
+So">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Html5 Storage —— IndexedDB">
+<meta property="og:url" content="http://blog.inching.org/HTML5/2015-03-02-html5-storage-indexeddb.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="This API is available in the underlying WebView. Indexed DB offers more features than LocalStorage but fewer than WebSQL.
+IndexedDB是基于简单的平面文件（flat-file）数据库，采用了分层的键值存储（key/value persistence）和基本的索引。
+So">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Html5 Storage —— IndexedDB">
+<meta name="twitter:description" content="This API is available in the underlying WebView. Indexed DB offers more features than LocalStorage but fewer than WebSQL.
+IndexedDB是基于简单的平面文件（flat-file）数据库，采用了分层的键值存储（key/value persistence）和基本的索引。
+So">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Html5 Storage —— IndexedDB</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Html5 Storage —— IndexedDB</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-03-01T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2015-03-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/HTML5/">HTML5</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#API"><span class="post-toc-text">API</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#判断浏览器是否支持-IndexedDB"><span class="post-toc-text">判断浏览器是否支持 IndexedDB</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#打开数据库"><span class="post-toc-text">打开数据库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关闭与删除数据库"><span class="post-toc-text">关闭与删除数据库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建和更新数据库版本号"><span class="post-toc-text">创建和更新数据库版本号</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#构建数据库"><span class="post-toc-text">构建数据库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#事务"><span class="post-toc-text">事务</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加数据"><span class="post-toc-text">添加数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Updating-an-entry-in-the-database"><span class="post-toc-text">Updating an entry in the database</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#删除数据"><span class="post-toc-text">删除数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#获取数据"><span class="post-toc-text">获取数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用游标"><span class="post-toc-text">使用游标</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用索引"><span class="post-toc-text">使用索引</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#FAQ"><span class="post-toc-text">FAQ</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#How-to-delete-indexedDB-in-Chrome"><span class="post-toc-text">How to delete indexedDB in Chrome</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Ref"><span class="post-toc-text">Ref</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-html5-storage-indexeddb"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Html5 Storage —— IndexedDB</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-03-02 00:00:00" datetime="2015-03-01T16:00:00.000Z"  itemprop="datePublished">2015-03-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/HTML5/">HTML5</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>This API is available in the underlying WebView. Indexed DB offers more features than LocalStorage but fewer than WebSQL.</p>
+<p>IndexedDB是基于简单的平面文件（flat-file）数据库，采用了分层的键值存储（key/value persistence）和基本的索引。</p>
+<p>So far, we have seen that Web Storage and Web SQL Database both have major strengths as well as major weaknesses. <a href="http://www.w3.org/TR/IndexedDB/" target="_blank" rel="external">Indexed Database</a> has arisen from experiences with both of those earlier APIs, and can be seen as an attempt to combine their strengths without incurring their weaknesses.</p>
+<a id="more"></a>
+<p>An Indexed Database is a collection of “object stores” which you can just drop objects into. The stores are something like SQL tables, but in this case, there’s no constraints on the object structure and so no need to define anything upfront. So this is similar to Web Storage, with the advantage that you can have as many databases as you like, and as many stores within each database. But unlike Web Storage, there are important performance benefits: An asynchronous API, and you can create indexes on stores to improve search speed.</p>
+<p>优点：</p>
+<ol>
+<li>Good performance generally, being an asynchronous API. Database interaction won’t lock up the user interface. (Synchronous API is also available for WebWorkers.)</li>
+<li>Good search performance, since data can be indexed according to search keys.</li>
+<li>Supports versioning.</li>
+<li>Robust, since it supports a <a href="http://en.wikipedia.org/wiki/Database_transaction" target="_blank" rel="external">transactional database model</a>.</li>
+<li>Fairly easy learning curve, due to a simple data model.</li>
+<li>Decent browser support: Chrome, Firefox, mobile FF, IE10.</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>Very complex API resulting in large amounts of nested callbacks.</li>
+</ol>
+<p>See <a href="http://www.codemag.com/Article/1411041" target="_blank" rel="external">Introduction to IndexedDB: The In-Browser Database</a></p>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><ol>
+<li><a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBFactory" target="_blank" rel="external"><code>IDBFactory</code></a> 提供了对数据库的访问。这是由全局对象 <code>indexedDB</code> 实现的接口，因而也是该 API 的入口。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBCursor" target="_blank" rel="external"><code>IDBCursor</code></a> 遍历对象存储空间和索引。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBCursorWithValue" target="_blank" rel="external"><code>IDBCursorWithValue</code></a> 遍历对象存储空间和索引并返回游标的当前值。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBDatabase" target="_blank" rel="external"><code>IDBDatabase</code></a> 表示到数据库的连接。只能通过这个连接来拿到一个数据库事务。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBEnvironment" target="_blank" rel="external"><code>IDBEnvironment</code></a> 提供了到客户端数据库的访问。它由 <a href="https://developer.mozilla.org/en-US/docs/DOM/window" target="_blank" rel="external">window</a> 对象实现。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBIndex" target="_blank" rel="external"><code>IDBIndex</code></a> 提供了到索引元数据的访问。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBKeyRange" target="_blank" rel="external"><code>IDBKeyRange</code></a>` 定义键的范围。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBObjectStore" target="_blank" rel="external"><code>IDBObjectStore</code></a> 表示一个对象存储空间。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBOpenDBRequest" target="_blank" rel="external"><code>IDBOpenDBRequest</code></a> 表示一个打开数据库的请求。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBRequest" target="_blank" rel="external"><code>IDBRequest</code></a> 提供了到数据库异步请求结果和数据库的访问。这也是在你调用一个异步方法时所得到的。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBTransaction" target="_blank" rel="external"><code>IDBTransaction</code></a> 表示一个事务。你在数据库上创建一个事务，指定它的范围（例如你希望访问哪一个对象存储空间），并确定你希望的访问类型（只读或写入）。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBVersionChangeEvent" target="_blank" rel="external"><code>IDBVersionChangeEvent</code></a> 表明数据库的版本号已经改变。</li>
+</ol>
+<p>See <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/IndexedDB_API" target="_blank" rel="external">IndexedDB - Web API 接口</a></p>
+<p>IndexedDB 鼓励使用的基本模式如下所示：</p>
+<ol>
+<li>打开数据库并且开始一个事务。</li>
+<li>创建一个 object store。</li>
+<li>构建一个请求来执行一些数据库操作，像增加或提取数据等。</li>
+<li>通过监听正确类型的 DOM 事件以等待操作完成。</li>
+<li>在操作结果上进行一些操作（可以在 request 对象中找到）</li>
+</ol>
+<h2 id="判断浏览器是否支持-IndexedDB"><a href="#判断浏览器是否支持-IndexedDB" class="headerlink" title="判断浏览器是否支持 IndexedDB"></a>判断浏览器是否支持 IndexedDB</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (!<span class="built_in">window</span>.indexedDB) &#123;</div><div class="line">    <span class="built_in">window</span>.alert(<span class="string">"Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="打开数据库"><a href="#打开数据库" class="headerlink" title="打开数据库"></a>打开数据库</h2><pre><code>var request = window.indexedDB.open(&quot;MyTestDatabase&quot;);
+</code></pre><p><code>indexedDB</code> 对象只有一个单一方法，<code>open()</code>， 当这个方法被调用时，打开名为 “MyTestDatabase”的数据库。如果该数据库不存在，则会被创建；如果已经存在，则被打开。<code>open()</code> 的第二个参数为版本号，是可选的，默认版本号为 1：</p>
+<pre><code>var request = indexedDB.open(&quot;MyTestDatabase&quot;, 3);
+</code></pre><p>在IndexedDB大部分操作是请求——响应的模式。<code>open</code> 函数的结果是一个 <code>IDBOpenDatabase</code> 对象的实例。这条指令请求的响应 <code>request.result</code> 是一个 <code>IDBDatabase</code> 对象，即 <code>indexedDB</code> 对象。</p>
+<p>除了result，<code>IDBOpenDBRequest</code> 接口定义了几个重要属性</p>
+<ul>
+<li><code>onerror</code>: 请求失败的回调函数句柄</li>
+<li><code>onsuccess</code>: 请求成功的回调函数句柄</li>
+<li><code>onupgradeneeded</code>: 请求数据库版本变化句柄</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> db;</div><div class="line"><span class="keyword">var</span> request = indexedDB.open(<span class="string">"MyTestDatabase"</span>);</div><div class="line">request.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  alert(<span class="string">"Why didn't you allow my web app to use IndexedDB?!"</span>);</div><div class="line">&#125;;</div><div class="line">request.onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  db = request.result;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>在打开数据库时常见的可能出现的错误之一是 <code>VER_ERR</code>。这表明存储在磁盘上的数据库的版本高于你试图打开的版本。这是一种必须要被错误处理程序处理的一种出错情况。</p>
+<h2 id="关闭与删除数据库"><a href="#关闭与删除数据库" class="headerlink" title="关闭与删除数据库"></a>关闭与删除数据库</h2><p>关闭数据库可以直接调用数据库对象的 <code>close</code> 方法，删除数据库使用 indexedDB 对象的 <code>deleteDatabase</code> 方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">db.close();</div><div class="line">indexedDB.deleteDatabase(name);</div></pre></td></tr></table></figure>
+<h2 id="创建和更新数据库版本号"><a href="#创建和更新数据库版本号" class="headerlink" title="创建和更新数据库版本号"></a>创建和更新数据库版本号</h2><p>要更新数据库的 schema，也就是创建或者删除对象存储空间，需要实现 <code>onupgradeneeded</code> 处理程序，这个处理程序将会作为一个允许你处理对象存储空间的 <code>versionchange</code> 事务的一部分被调用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 该事件仅在较新的浏览器中被实现</span></div><div class="line">request.onupgradeneeded = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123; </div><div class="line">   <span class="comment">// 更新对象存储空间和索引 .... </span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>在数据库第一次被打开时或者当指定的版本号高于当前被持久化的数据库的版本号时，这个 versionchange 事务将被创建。</p>
+<p>版本号是一个 unsigned long long 数字，这意味着它可以是一个非常大的整数。</p>
+<p><strong>当一个 web app 在另一个标签页中被打开时的版本变更：</strong></p>
+<p>当你的 web app 在这样一种方式下改变你的数据库时碰到被要求进行版本变化，你需要考虑如果用户已经在一个标签页中打开了你的应用的旧版本的数据库，然后他又在另一个标签页中加载了你的应用的新版本，这种情况下会发生什么事情。当你带着比数据库实际版本更高的版本号调用 <code>open()</code> 时，所有其他打开的数据库必须在你开始实际对数据库进行修改之前显式通知这个请求。这里是它如何工作的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> openReq = mozIndexedDB.open(<span class="string">"MyTestDatabase"</span>, <span class="number">2</span>);</div><div class="line"></div><div class="line">openReq.onblocked = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="comment">// 如果其他标签页已经加载了这个数据库，那么</span></div><div class="line">  <span class="comment">// 在我们可以继续处理之前它需要被关闭。</span></div><div class="line">  alert(<span class="string">"Please close all other tabs with this site open!"</span>);</div><div class="line">&#125;;</div><div class="line">  </div><div class="line">openReq.onupgradeneeded = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="comment">// 所有其它数据库都已经被关掉了。Set everything up.</span></div><div class="line">  db.createObjectStore(<span class="comment">/* ... */</span>);</div><div class="line">  useDatabase(db);</div><div class="line">&#125;  </div><div class="line">  </div><div class="line">openReq.onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> db = event.target.result;</div><div class="line">  useDatabase(db);</div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">useDatabase</span>(<span class="params">db</span>) </span>&#123;</div><div class="line">  <span class="comment">// 确保添加一个如果另一个页面请求一个版本变化时来被通知的处理程序。</span></div><div class="line">  <span class="comment">// 我们必须关闭这个数据库。这就允许其他页面对数据库进行升级。</span></div><div class="line">  <span class="comment">// 如果你不这么做的话，除非用户关闭标签页否则升级就不会发生。</span></div><div class="line">  db.onversionchange = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">    db.close();</div><div class="line">    alert(<span class="string">"A new version of this page is ready. Please reload!"</span>);</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  <span class="comment">// 其他针对数据库的处理</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="构建数据库"><a href="#构建数据库" class="headerlink" title="构建数据库"></a>构建数据库</h2><p>现在来构建数据库。IndexedDB 使用对象存储空间而不是表，并且一个单独的数据库可以包含任意数量的对象存储空间。每当一个值被存储进一个对象存储空间时，它会被和一个键相关联。键的提供可以有几种不同的方法，这取决于对象存储空间是使用 <a href="https://developer.mozilla.org/en/IndexedDB#gloss_key_path" target="_blank" rel="external">key path</a> 还是 <a href="https://developer.mozilla.org/en/IndexedDB#gloss_key_generator" target="_blank" rel="external">key generator</a>。</p>
+<p>下面的表格显示了几种不同的提供键的方法。</p>
+<table>
+<thead>
+<tr>
+<th>Key Path</th>
+<th>Key Generator</th>
+<th>Description                                                                                                      </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No</td>
+<td>No</td>
+<td>这种对象存储空间可以持有任意类型的值，甚至是像数字和字符串这种基本数据类型的值。每当我们想要增加一个新值的时候，必须提供一个单独的键参数。                                            </td>
+</tr>
+<tr>
+<td>Yes</td>
+<td>No</td>
+<td>这种对象存储空间只能持有 JavaScript 对象。这些对象必须具有一个和 key path 同名的属性。                                                           </td>
+</tr>
+<tr>
+<td>No</td>
+<td>Yes</td>
+<td>这种对象存储空间可以持有任意类型的值。键会为我们自动生成，或者如果你想要使用一个特定键的话你可以提供一个单独的键参数。                                                      </td>
+</tr>
+<tr>
+<td>Yes</td>
+<td>Yes</td>
+<td>这种对象存储空间只能持有 JavaScript 对象。通常一个键被生成的同时，生成的键的值被存储在对象中的一个和 key path 同名的属性中。然而，如果这样的一个属性已经存在的话，这个属性的值被用作键而不会生成一个新的键。</td>
+</tr>
+</tbody>
+</table>
+<p>你也可以使用对象存储空间持有的对象，不是基本数据类型，在任何对象存储空间上创建索引。索引可以让你使用被存储的对象的属性的值来查找存储在对象存储空间的值，而不是用对象的键来查找。</p>
+<p>此外，索引具有对存储的数据执行简单限制的能力。通过在创建索引时设置 unique 标记，索引可以确保不会有两个具有同样索引 key path 值的对象被储存。因此，举例来说，如果你有一个用于持有一组 people 的对象存储空间，并且你想要确保不会有两个拥有同样 email 地址的 people，你可以使用一个带有 unique 标识的索引来确保这些。</p>
+<p>这听起来可能有点混乱，但下面这个简单的例子应该可以演示这些个概念：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 我们的客户数据看起来像这样。</span></div><div class="line"><span class="keyword">const</span> customerData = [</div><div class="line">  &#123; <span class="attr">ssn</span>: <span class="string">"444-44-4444"</span>, <span class="attr">name</span>: <span class="string">"Bill"</span>, <span class="attr">age</span>: <span class="number">35</span>, <span class="attr">email</span>: <span class="string">"bill@company.com"</span> &#125;,</div><div class="line">  &#123; <span class="attr">ssn</span>: <span class="string">"555-55-5555"</span>, <span class="attr">name</span>: <span class="string">"Donna"</span>, <span class="attr">age</span>: <span class="number">32</span>, <span class="attr">email</span>: <span class="string">"donna@home.org"</span> &#125;</div><div class="line">];</div><div class="line"><span class="keyword">const</span> dbName = <span class="string">"the_name"</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> request = indexedDB.open(dbName, <span class="number">2</span>);</div><div class="line"></div><div class="line">request.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="comment">// 错误处理程序在这里。</span></div><div class="line">&#125;;</div><div class="line">request.onupgradeneeded = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> db = event.target.result;</div><div class="line"></div><div class="line">  <span class="comment">// 创建一个对象存储空间来持有有关我们客户的信息。</span></div><div class="line">  <span class="comment">// 我们将使用 "ssn" 作为我们的 key path 因为它保证是唯一的。</span></div><div class="line">  <span class="keyword">var</span> objectStore = db.createObjectStore(<span class="string">"customers"</span>, &#123; <span class="attr">keyPath</span>: <span class="string">"ssn"</span> &#125;);</div><div class="line"></div><div class="line">  <span class="comment">// 创建一个索引来通过 name 搜索客户。</span></div><div class="line">  <span class="comment">// 可能会有重复的，因此我们不能使用 unique 索引。</span></div><div class="line">  objectStore.createIndex(<span class="string">"name"</span>, <span class="string">"name"</span>, &#123; <span class="attr">unique</span>: <span class="literal">false</span> &#125;);</div><div class="line"></div><div class="line">  <span class="comment">// 创建一个索引来通过 email 搜索客户。</span></div><div class="line">  <span class="comment">// 我们希望确保不会有两个客户使用相同的 email 地址，因此我们使用一个 unique 索引。</span></div><div class="line">  objectStore.createIndex(<span class="string">"email"</span>, <span class="string">"email"</span>, &#123; <span class="attr">unique</span>: <span class="literal">true</span> &#125;);</div><div class="line"></div><div class="line">  <span class="comment">// 在新创建的对象存储空间中保存值</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> customerData) &#123;</div><div class="line">    objectStore.add(customerData[i]);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>正如前面提到的，<code>onupgradeneeded</code> 是我们唯一可以修改数据库结构的地方。在这里面，我们可以创建和删除对象存储空间以及构建和删除索引。</p>
+<div>  对象存储空间仅调用 <code>createObjectStore()</code> 就可以创建。这个方法使用存储空间的名称，和一个对象参数。即便这个参数对象是可选的，它还是非常重要的，因为它可以让你定义重要的可选属性和完善你希望创建的对象存储空间的类型。在我们的示例中，我们请求了一个名为“customers” 的对象存储空间并且定义了一个 使得存储空间中每个单独的对象都是唯一的属性作为 key path。在这个示例中的属性是 “ssn”，因为社会安全号码被确保是唯一的。被存储在对象存储空间中的所有对象都必须存在“ssn”。 </div>
+
+<p>我们也请求了一个名为 “name” 的着眼于存储的对象的 <code>name</code> 属性的索引。如同 <code>createObjectStore()</code>，<code>createIndex()</code> 使用了一个完善了我们希望创建的索引类型的可选的 <code>options</code> 对象。添加一个不带 <code>name</code> 属性的对象也会成功，但是这个对象不会出现在 “name” 索引中。</p>
+<p>我们现在可以使用存储的用户对象的 <code>ssn</code> 直接从对象存储空间中把它们提取出来，或者通过使用索引来使用他们的 name 进行提取。要了解这些是如何实现的，请参见 <a href="https://developer.mozilla.org/en/IndexedDB/Using_IndexedDB#Using_an_index" target="_blank" rel="external">使用索引</a> 章节。</p>
+<p><strong>Using a key generator:</strong></p>
+<p>Setting up an <code>autoIncrement</code>flag when creating the object store would enable the key generator for that object store. By default this flag is not set.</p>
+<p>With the key generator, the key would be generated automatically as you add the value to the object store. The current number of a key generator is always set to 1 when the object store for that key generator is first created. Basically the newly auto-generated key is increased by 1 based on the previous key. The current number for a key generator never decreases, other than as a result of database operations being reverted, for example, the database transaction is aborted. Therefore deleting a record or even clearing all records from an object store never affects the object store’s key generator.</p>
+<p>We can create another object store with the key generator as below:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Open the indexedDB.</span></div><div class="line"><span class="keyword">var</span> request = indexedDB.open(dbName, <span class="number">3</span>);</div><div class="line"></div><div class="line">request.onupgradeneeded = <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> db = event.target.result;</div><div class="line"></div><div class="line">    <span class="comment">// Create another object store called "names" with the autoIncrement flag set as true.    </span></div><div class="line">    <span class="keyword">var</span> objStore = db.createObjectStore(<span class="string">"names"</span>, &#123; <span class="attr">autoIncrement</span> : <span class="literal">true</span> &#125;);</div><div class="line"></div><div class="line">    <span class="comment">// Because the "names" object store has the key generator, the key for the name value is generated automatically.</span></div><div class="line">    <span class="comment">// The added records would be like:</span></div><div class="line">    <span class="comment">// key : 1 =&gt; value : "Bill"</span></div><div class="line">    <span class="comment">// key : 2 =&gt; value : "Donna"</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> customerData) &#123;</div><div class="line">        objStore.add(customerData[i].name);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>在你可以对新数据库做任何事情之前，你需要开始一个事务。事务来自于数据库对象，而且你必须指定你想让这个事务跨越哪些对象存储空间。另外，你需要决定你是否将要对数据库进行更改或者你只是需要从它里面进行读取。虽然事务具有三种模式（只读，读写，和版本变更），在可以的情况下你最好还是使用只读事务，因为它们可以并发运行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> transaction = db.transaction([<span class="string">"customers"</span>], IDBTransaction.READ_WRITE);</div></pre></td></tr></table></figure>
+<p><code>transaction()</code> 方法接受三个参数（虽然两个是可选的）并返回一个事务对象。第一个参数是事务希望跨越的对象存储空间的列表。如果你希望事务能够跨越所有的对象存储空间你可以传入一个空数组。如果你没有为第二个参数指定任何内容，你得到的是只读事务。因为这里我们是想要写入所以我们需要传入 <code>&quot;readwrite&quot;</code> 标识。</p>
+<p>现在我们已经有了一个事务，我们需要理解它的生命周期。事务和事件循环的联系非常密切。如果你创建了一个事务但是并没有使用它就返回给事件循环，那么事务将变得无效。保持事务活跃的唯一方法就是在其上构建一个请求。当请求完成时你将会得到一个 DOM 事件，并且，假设请求成功了，你将会有另外一个机会在回调中来延长这个事务。如果你没有延长事务就返回到了事件循环，那么事务将会变得不活跃，依此类推。只要还有待处理的请求事务就会保持活跃。事务生命周期真的很简单但是可能需要一点时间你才能对它变得习惯。还有就是来几个例子也会有所帮助。如果你开始看到 <code>TRANSACTION_INACTIVE_ERR</code> 错误代码，那么你已经把某些事情搞乱了。</p>
+<p>事务可以接收三种不同类型的 DOM 事件： <code>error</code>，<code>abort</code>，以及<code>complete</code>。我们已经讨论过 <code>error</code>事件冒泡，所以一个事务要接收所有可能产生错误事件的请求所产生的错误事件。更微妙的一点是一个 error 的默认行为是终止发生错误的事务。除非你在 error 事件上通过调用 <code>preventDefault()</code> 处理了这个错误，整个事务被回滚了。这样的设计迫使你去思考和处理错误，但是如果细粒度的错误处理太过繁琐的话，你也可以总是对数据库添加一个总的错误处理程序。如果你不处理一个错误事件或者你在事务中调用 <code>abort()</code>，那么事务被回滚并且有关事物的一个 <code>abort</code> 事件被触发。否则，在所有的未处理请求都完成后，你将得到一个 <code>complete</code> 事件。如果你正在做大量的数据库操作，那么追踪事务而不是单个的请求当然可以帮助你进行决断。</p>
+<h2 id="添加数据"><a href="#添加数据" class="headerlink" title="添加数据"></a>添加数据</h2><p>现在你有了一个事务了，你将需要从它拿到一个对象存储空间。事务只能让你拿到一个你在创建事务时已经指定过的对象存储空间。然后你可以增加你需要的所有数据。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 当所有的数据都被增加到数据库时执行一些操作</span></div><div class="line">transaction.oncomplete = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  alert(<span class="string">"All done!"</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">transaction.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="comment">// 不要忘记进行错误处理！</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> objectStore = transaction.objectStore(<span class="string">"customers"</span>);</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> customerData) &#123;</div><div class="line">  <span class="keyword">var</span> request = objectStore.add(customerData[i]);</div><div class="line">  request.onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">    <span class="comment">// event.target.result == customerData[i].ssn</span></div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Updating-an-entry-in-the-database"><a href="#Updating-an-entry-in-the-database" class="headerlink" title="Updating an entry in the database"></a>Updating an entry in the database</h2><p>Now we’ve retrieved some data, updating it and inserting it back into the IndexedDB is pretty simple. Let’s update the previous example somewhat:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> objectStore = db.transaction([<span class="string">"customers"</span>], <span class="string">"readwrite"</span>).objectStore(<span class="string">"customers"</span>);</div><div class="line"><span class="keyword">var</span> request = objectStore.get(<span class="string">"444-44-4444"</span>);</div><div class="line">request.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="comment">// Handle errors!</span></div><div class="line">&#125;;</div><div class="line">request.onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="comment">// Get the old value that we want to update</span></div><div class="line">  <span class="keyword">var</span> data = request.result;</div><div class="line">  </div><div class="line">  <span class="comment">// update the value(s) in the object that you want to change</span></div><div class="line">  data.age = <span class="number">42</span>;</div><div class="line"></div><div class="line">  <span class="comment">// Put this updated object back into the database.</span></div><div class="line">  <span class="keyword">var</span> requestUpdate = objectStore.put(data);</div><div class="line">   requestUpdate.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">     <span class="comment">// Do something with the error</span></div><div class="line">   &#125;;</div><div class="line">   requestUpdate.onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">     <span class="comment">// Success - the data is updated!</span></div><div class="line">   &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>So here we’re creating an <code>objectStore</code> and requesting a customer record out of it, identified by its ssn value (<code>444-44-4444</code>). We then put the result of that request in a variable (<code>data</code>), update the <code>age</code> property of this object, then create a second request (<code>requestUpdate</code>) to put the customer record back into the <code>objectStore</code>, overwriting the previous value.</p>
+<h2 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> request = db.transaction([<span class="string">"customers"</span>], <span class="string">"readwrite"</span>)</div><div class="line">                .objectStore(<span class="string">"customers"</span>)</div><div class="line">                .delete(<span class="string">"444-44-4444"</span>);</div><div class="line">request.onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="comment">// 删除数据成功！</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a>获取数据</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> transaction = db.transaction([<span class="string">"customers"</span>]);</div><div class="line"><span class="keyword">var</span> objectStore = transaction.objectStore(<span class="string">"customers"</span>);</div><div class="line"><span class="keyword">var</span> request = objectStore.get(<span class="string">"444-44-4444"</span>);</div><div class="line">request.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="comment">// 错误处理!</span></div><div class="line">&#125;;</div><div class="line">request.onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="comment">// 对 request.result 做些操作！</span></div><div class="line">  alert(<span class="string">"Name for SSN 444-44-4444 is "</span> + request.result.name);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>对于一个“简单”的提取这里的代码有点多了。下面看我们怎么把它再缩短一点，假设你在数据库的级别上来进行的错误处理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">db.transaction(<span class="string">"customers"</span>).objectStore(<span class="string">"customers"</span>).get(<span class="string">"444-44-4444"</span>).onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  alert(<span class="string">"Name for SSN 444-44-4444 is "</span> + event.target.result.name);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这是如何工作的呢？由于只有一个对象存储空间，你可以避免传入一个在你的事务中需要的对象存储空间的列表，而只是作为一个字符串把名字传入即可。同样，你只是在从数据库读取数据，所以你不需要一个 <code>&quot;readwrite&quot;</code>事务。调用一个没有指定模式的 <code>transaction()</code>将给你一个 <code>&quot;readonly&quot;</code>事务。这里的另外一个微妙之处在于你实际上不需要保存请求对象到一个变量。因为 DOM 事件把这个请求作为它的 target，你可以使用 event 来得到 <code>result</code> 属性。</p>
+<h2 id="使用游标"><a href="#使用游标" class="headerlink" title="使用游标"></a>使用游标</h2><p>使用 <code>get()</code> 要求你知道你想要检索哪一个键。如果你想要遍历对象存储空间中的所有值，那么你可以使用游标。看起来会像下面这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> objectStore = db.transaction(<span class="string">"customers"</span>).objectStore(<span class="string">"customers"</span>);</div><div class="line"></div><div class="line">objectStore.openCursor().onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> cursor = event.target.result;</div><div class="line">  <span class="keyword">if</span> (cursor) &#123;</div><div class="line">    alert(<span class="string">"Name for SSN "</span> + cursor.key + <span class="string">" is "</span> + cursor.value.name);</div><div class="line">    cursor.continue();</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> &#123;</div><div class="line">    alert(<span class="string">"No more entries!"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><code>openCursor()</code> 函数需要几个参数。首先，你可以使用一个 key range 对象来限制被检索的项目的范围。第二，你可以指定你希望进行迭代的方向。在上面的示例中，我们在以升序迭代所有的对象。游标成功的回调有点特别。游标对象本身是请求的 <code>result</code> （上面我们使用的是简写形式，所以是 <code>event.target.result</code>）。然后实际的 key 和 value 可以根据游标对象的 <code>key</code> 和 <code>value</code> 属性被找到。如果你想要保持继续前行，那么你必须调用游标上的 <code>continue()</code> 。当你已经到达数据的末尾时（或者没有匹配 <code>openCursor()</code> 请求的条目）你仍然会得到一个成功回调，但是 <code>result</code> 属性是 <code>undefined。</code></p>
+<p>使用游标的一种常见模式是提取出在一个对象存储空间中的所有对象然后把它们添加到一个数组中，像这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> customers = [];</div><div class="line"></div><div class="line">objectStore.openCursor().onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> cursor = event.target.result;</div><div class="line">  <span class="keyword">if</span> (cursor) &#123;</div><div class="line">    customers.push(cursor.value);</div><div class="line">    cursor.continue();</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> &#123;</div><div class="line">    alert(<span class="string">"Got all customers: "</span> + customers);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Mozilla 也已经实现了 <code>getAll()</code>来处理这种情况。它不是 IndexedDB 标准的一部分，所以它未来可能会消失。我们已经把它包含在这里是因为我们觉得它比较有用。下面的代码实现的是跟上面同样的事情：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">objectStore.getAll().onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  alert(<span class="string">"Got all customers: "</span> + event.target.result);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>查找游标的 <code>value</code>属性会引起相关的性能损耗，因为对象是被延迟创建的。当使用 <code>getAll()</code> 时，Gecko 必须立即创建所有的对象。如果你仅是对检索每个键感兴趣，举个例子，使用游标比使用 <code>getAll()</code>要高效的多。如果你试图获得一个对象存储空间内所有对象的一个数组，那么，使用<code>getAll()</code>。</p>
+<h2 id="使用索引"><a href="#使用索引" class="headerlink" title="使用索引"></a>使用索引</h2><p>使用 SSN 作为键来存储客户数据是合理的，因为 SSN 唯一地标识了一个个体（对隐私来说这是否是一个好的想法是另外一个话题，不在本文的讨论范围内）。如果你想要通过姓名来查找一个客户，那么，你将需要在数据库中迭代所有的 SSN 直到你找到正确的那个。以这种方式来查找将会非常的慢，相反你可以使用索引。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> index = objectStore.index(<span class="string">"name"</span>);</div><div class="line">index.get(<span class="string">"Donna"</span>).onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  alert(<span class="string">"Donna's SSN is "</span> + event.target.result.ssn);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>“name” 游标不是唯一的，因此 <code>name</code> 被设成 <code>&quot;Donna&quot;</code> 的记录可能不止一条。在这种情况下，你总是得到键值最小的那个。</p>
+<p>如果你需要访问带有给定 <code>name</code> 的所有的记录你可以使用一个游标。你可以在索引上打开两个不同类型的游标。一个常规游标映射索引属性到对象存储空间中的对象。一个键索引映射索引属性到用来存储对象存储空间中的对象的键。不同之处被展示如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">index.openCursor().onsuccess = function(event) &#123;</div><div class="line">  var cursor = event.target.result;</div><div class="line">  if (cursor) &#123;</div><div class="line">    // cursor.key 是一个 name, 就像 &quot;Bill&quot;, 然后 cursor.value 是整个对象。</div><div class="line">    alert(&quot;Name: &quot; + cursor.key + &quot;, SSN: &quot; + cursor.value.ssn + &quot;, email: &quot; + cursor.value.email);</div><div class="line">    cursor.continue();</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">index.openKeyCursor().onsuccess = function(event) &#123;</div><div class="line">  var cursor = event.target.result;</div><div class="line">  if (cursor) &#123;</div><div class="line">    // cursor.key is 一个 name, 就像 &quot;Bill&quot;, 然后 cursor.value 是那个 SSN。</div><div class="line">    // 没有办法可以得到存储对象的其余部分。</div><div class="line">    alert(&quot;Name: &quot; + cursor.key + &quot;, &quot;SSN: &quot; + cursor.value);</div><div class="line">    cursor.continue();</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><strong>指定游标的范围和方向:</strong></p>
+<p>如果你想要限定你在游标中看到的值的范围，你可以使用一个 key range 对象然后把它作为第一个参数传给 openCursor() 或是 openKeyCursor()。你可以构造一个只允许一个单一 key 的 key range，或者一个具有下限或上限，或者一个既有上限也有下限。边界可以是闭合的（也就是说 key range 包含给定的值）或者是“开放的”（也就是说 key range 不包括给定的值）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 只匹配 "Donna"</span></div><div class="line"><span class="keyword">var</span> singleKeyRange = IDBKeyRange.only(<span class="string">"Donna"</span>);</div><div class="line"></div><div class="line"><span class="comment">// 匹配所有在 "Bill" 前面的, 包括 "Bill"</span></div><div class="line"><span class="keyword">var</span> lowerBoundKeyRange = IDBKeyRange.lowerBound(<span class="string">"Bill"</span>);</div><div class="line"></div><div class="line"><span class="comment">// 匹配所有在 “Bill” 前面的, 但是不需要包括 "Bill"</span></div><div class="line"><span class="keyword">var</span> lowerBoundOpenKeyRange = IDBKeyRange.lowerBound(<span class="string">"Bill"</span>, <span class="literal">true</span>);</div><div class="line"></div><div class="line"><span class="comment">// Match anything up to, but not including, "Donna"</span></div><div class="line"><span class="keyword">var</span> upperBoundOpenKeyRange = IDBKeyRange.upperBound(<span class="string">"Donna"</span>, <span class="literal">true</span>);</div><div class="line"></div><div class="line"><span class="comment">//Match anything between "Bill" and "Donna", but not including "Donna"</span></div><div class="line"><span class="keyword">var</span> boundKeyRange = IDBKeyRange.bound(<span class="string">"Bill"</span>, <span class="string">"Donna"</span>, <span class="literal">false</span>, <span class="literal">true</span>);</div><div class="line"></div><div class="line">index.openCursor(boundKeyRange).onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> cursor = event.target.result;</div><div class="line">  <span class="keyword">if</span> (cursor) &#123;</div><div class="line">    <span class="comment">// Do something with the matches.</span></div><div class="line">    cursor.continue();</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>有时候你可能想要以倒序而不是正序（所有游标的默认顺序）来遍历。切换方向是通过传递 <code>prev</code> 到 <code>openCursor()</code> 方法来实现的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">objectStore.openCursor(<span class="literal">null</span>, IDBCursor.prev).onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> cursor = event.target.result;</div><div class="line">  <span class="keyword">if</span> (cursor) &#123;</div><div class="line">    <span class="comment">// Do something with the entries.</span></div><div class="line">    cursor.continue();</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>因为 “name” 索引不是唯一的，那就有可能存在具有相同 <code>name</code> 的多条记录。要注意的是这种情况不可能发生在对象存储空间上，因为键必须永远是唯一的。如果你想要在游标在索引迭代过程中过滤出重复的，你可以传递 <code>nextunique</code> （或 <code>prevunique</code> 如果你正在向后寻找）作为方向参数。 当 <code>nextunique</code> 或是 <code>prevunique</code> 被使用时，被返回的那个总是键最小的记录。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">index.openKeyCursor(<span class="literal">null</span>, IDBCursor.nextunique).onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> cursor = event.target.result;</div><div class="line">  <span class="keyword">if</span> (cursor) &#123;</div><div class="line">    <span class="comment">// Do something with the entries.</span></div><div class="line">    cursor.continue();</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="https://github.com/bramski/angular-indexedDB" target="_blank" rel="external">bramski/angular-indexedDB</a> An angularjs serviceprovider to utilize indexedDB with angular.</li>
+</ul>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="How-to-delete-indexedDB-in-Chrome"><a href="#How-to-delete-indexedDB-in-Chrome" class="headerlink" title="How to delete indexedDB in Chrome"></a>How to delete indexedDB in Chrome</h3><p>See <a href="http://stackoverflow.com/questions/9384128/how-to-delete-indexeddb-in-chrome" target="_blank" rel="external">html5 - How to delete indexedDB in Chrome - Stack Overflow</a></p>
+<p>In theory, all you need to do to delete an IndexedDB in Chrome is:</p>
+<ol>
+<li>In Chrome, go to Options &gt; Under the Hood &gt; Content Settings &gt; All cookies and Site Data &gt; find the domain where you created the IndexedDB</li>
+<li>Hit either the “X” or click “Indexed Database” &gt; Remove</li>
+</ol>
+<p>In windows, the file is located here:</p>
+<p>C:\Users[USER_NAME]\AppData\Local\Google\Chrome\User Data\Default\IndexedDB</p>
+<p>On Mac, do the following:</p>
+<ol>
+<li>In Chrome, go to “Settings” (or “Preferences” under the Chrome menu) </li>
+<li>Click “show advanced settings” (at the bottom of the page)</li>
+<li>Go to “Privacy” &gt; “Content Settings” &gt; “All cookies and Site Data” &gt; find the domain where you created the IndexedDB</li>
+<li>Hit either the “X” or click “Indexed Database” &gt; Remove</li>
+</ol>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/IndexedDB_API/Using_IndexedDB" target="_blank" rel="external">使用 IndexedDB - Web API 接口</a></li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://www.html5rocks.com/en/features/storage" target="_blank" rel="external">Storage - HTML5 Rocks</a></li>
+<li><a href="http://dev.w3.org/html5/webstorage/" target="_blank" rel="external">HTML5 Web Storage</a></li>
+<li><a href="http://www.w3.org/TR/IndexedDB/" target="_blank" rel="external">Indexed Database API</a></li>
+<li><a href="http://www.ibm.com/developerworks/library/wa-indexeddb/" target="_blank" rel="external">Using the HTML5 IndexedDB API</a></li>
+<li><a href="http://dev.opera.com/articles/introduction-to-indexeddb" target="_blank" rel="external">Dev.Opera — An Introduction to IndexedDB</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/HTML5/2015-03-02-html5-storage-indexeddb.html" target="_blank" rel="external">http://blog.inching.org/HTML5/2015-03-02-html5-storage-indexeddb.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html5/">html5</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/indexeddb/">indexeddb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/storage/">storage</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/HTML5/2015-03-02-html5-storage-indexeddb.html&title=《Html5 Storage —— IndexedDB》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/HTML5/2015-03-02-html5-storage-indexeddb.html&title=《Html5 Storage —— IndexedDB》 — Balance&source=This API is available in the underlying WebView. Indexed DB offers more featu..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/HTML5/2015-03-02-html5-storage-indexeddb.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Html5 Storage —— IndexedDB》 — Balance&url=http://blog.inching.org/HTML5/2015-03-02-html5-storage-indexeddb.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/HTML5/2015-03-02-html5-storage-indexeddb.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/OS/2015-03-04-excel.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Some Skills About Excel</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Angular/2015-03-02-angular-i18n.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Angular i18n</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/HTML5/2015-03-02-html5-storage-indexeddb.html&title=《Html5 Storage —— IndexedDB》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/HTML5/2015-03-02-html5-storage-indexeddb.html&title=《Html5 Storage —— IndexedDB》 — Balance&source=This API is available in the underlying WebView. Indexed DB offers more featu..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/HTML5/2015-03-02-html5-storage-indexeddb.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Html5 Storage —— IndexedDB》 — Balance&url=http://blog.inching.org/HTML5/2015-03-02-html5-storage-indexeddb.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/HTML5/2015-03-02-html5-storage-indexeddb.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3awW7CMBAEUP7/p9srUhsy47Upql5OFYHYj0r2Mt7HI76+nq729ee7P/9eu7v5wsPDwxtM/fW02klPkPkrV6Pg4eHhneZdrajte15PYm3dXpsPHh4e3mfydtXyyfPx8PDw/isvX+LnhTgeHh7e3/Im8cHVo9sFPSm+D2YteHh4eDGvLXk/4e8j53t4eHh441P15DAsmVC+fLel9s3z8fDw8A7w8gW3bSlYCxRydtEchoeHh3eANwlw24B1Ak62qGjOeHh4eFt5yWB5U1RbTOcle/0fw8PDw9vEyz/2euprkcRatFFsEnh4eHgHePm+kW8S+ebRnmFNin48PDy8XbxkKvmWMCm428OwqHDHw8PDO8zLB17bYPKvsi27b8IIPDw8vK28SYiwq0RuR2zfiYeHh7eX1x5TTQD5ot82UV1+6Xh4eHiHeW2bVBtSzFsE6qM4PDw8vGO8PDJoMXlwkG9FSdxcn9rh4eHhlby1crZduNtyPGm9upktHh4e3jHe5HArCRoeg6uNj39pHcDDw8Pbylv7QBL+tnfnDQTRYRgeHh7emDcPWJNGqPaz25q98PDw8A7zcvba4p7vUa9f2RBG4OHh4Q14+Q/+tcA3jyfWnhxtJHh4eHjHeDk+KaOTqDf5UiZtWHh4eHineW37VBvCrm0MeZPB5RPw8PDwDvPyKGES3bZbS/IV4+Hh4b2fN48GksEmjQJraQMeHh7eXt5XebXHZpPQNg8pLp+Ph4eHd4C39uM/HywPONryfa0xCw8PD28Xbx5A7Fqg561aN01XeHh4eFt5ybKeDzNpPti7geHh4eF9Aq9tJpgcbrV3N2wMeHh4eG+sOfNid60ZK294xcPDw3sPb9dB/uTIqph0PgoeHh7eAd4kkM0bCyaYzY0CeHh4eOu8b5hMxTr+DV9mAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

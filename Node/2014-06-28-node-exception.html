@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Node Exception | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="node,exception">
+    <meta name="description" content="原文： http://www.dmfeel.com/post/52c27013dea8e17c4f000003
+篇谈谈Node.js捕获异常的一些探索。
+采用事件轮训、异步IO等机制使得Node.js能够从容应对无阻塞高并发场景，令工程师很困扰的几个理解Node.js的地方除了它的事件（回调）机制，还有一个同样头痛的是异常代码的捕获。
+try/catch之痛一般情况下，我们会将有可能出错的代码放到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node Exception">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-06-28-node-exception.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文： http://www.dmfeel.com/post/52c27013dea8e17c4f000003
+篇谈谈Node.js捕获异常的一些探索。
+采用事件轮训、异步IO等机制使得Node.js能够从容应对无阻塞高并发场景，令工程师很困扰的几个理解Node.js的地方除了它的事件（回调）机制，还有一个同样头痛的是异常代码的捕获。
+try/catch之痛一般情况下，我们会将有可能出错的代码放到">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node Exception">
+<meta name="twitter:description" content="原文： http://www.dmfeel.com/post/52c27013dea8e17c4f000003
+篇谈谈Node.js捕获异常的一些探索。
+采用事件轮训、异步IO等机制使得Node.js能够从容应对无阻塞高并发场景，令工程师很困扰的几个理解Node.js的地方除了它的事件（回调）机制，还有一个同样头痛的是异常代码的捕获。
+try/catch之痛一般情况下，我们会将有可能出错的代码放到">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Node Exception</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Node Exception</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-06-27T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-06-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#try-catch之痛"><span class="post-toc-text">try/catch之痛</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用domain模块捕捉异常"><span class="post-toc-text">使用domain模块捕捉异常</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#domain的隐式绑定"><span class="post-toc-text">domain的隐式绑定</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#domain的显式绑定"><span class="post-toc-text">domain的显式绑定</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#domain如何抛出异常"><span class="post-toc-text">domain如何抛出异常</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#更好的使用domain"><span class="post-toc-text">更好的使用domain</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#domain的缺陷"><span class="post-toc-text">domain的缺陷</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#domain实践"><span class="post-toc-text">domain实践</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-exception"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Node Exception</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-06-28 00:00:00" datetime="2014-06-27T16:00:00.000Z"  itemprop="datePublished">2014-06-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>原文： <a href="http://www.dmfeel.com/post/52c27013dea8e17c4f000003" target="_blank" rel="external">http://www.dmfeel.com/post/52c27013dea8e17c4f000003</a></p>
+<p>篇谈谈Node.js捕获异常的一些探索。</p>
+<p>采用事件轮训、异步IO等机制使得Node.js能够从容应对无阻塞高并发场景，令工程师很困扰的几个理解Node.js的地方除了它的事件（回调）机制，还有一个同样头痛的是异常代码的捕获。</p>
+<h3 id="try-catch之痛"><a href="#try-catch之痛" class="headerlink" title="try/catch之痛"></a>try/catch之痛</h3><p>一般情况下，我们会将有可能出错的代码放到try/catch块里。但是到了Node.js，由于try/catch无法捕捉异步回调里的异常，Node.js原生提供uncaughtException事件挂到process对象上，用于捕获所有未处理的异常：</p>
+<pre><code>process.on(&apos;uncaughtException&apos;, function(err) {
+    console.error(&apos;Error caught in uncaughtException event:&apos;, err);
+});
+
+try {
+    process.nextTick(function() {
+        fs.readFile(&apos;non_existent.js&apos;, function(err, str) {
+            if(err) throw err;
+            else console.log(str);
+        });
+    });
+} catch(e) {
+    console.error(&apos;Error caught by catch block:&apos;, e);
+}
+</code></pre><a id="more"></a>
+<p>执行的结果是代码进到了uncaughtException的回调里而不是catch块。</p>
+<p>uncaughtException虽然能够捕获异常，但是此时错误的上下文已经丢失，即使看到错误也不知道哪儿报的错，定位问题非常的不利。而且一旦uncaughtException事件触发，整个node进程将crash掉，如果不做一些善后处理的话会导致整个服务挂掉，这对于线上的服务来说将是非常不好的。</p>
+<h3 id="使用domain模块捕捉异常"><a href="#使用domain模块捕捉异常" class="headerlink" title="使用domain模块捕捉异常"></a>使用domain模块捕捉异常</h3><p>随Node.js v0.8版本发布了一个<a href="http://nodejs.org/api/domain.html" target="_blank" rel="external">domain</a>（域）模块，专门用于处理异步回调的异常，使用domain我们将很轻松的捕获异步异常：</p>
+<pre><code>process.on(&apos;uncaughtException&apos;, function(err) {
+    console.error(&apos;Error caught in uncaughtException event:&apos;, err);
+});
+
+var d = domain.create();
+
+d.on(&apos;error&apos;, function(err) {
+    console.error(&apos;Error caught by domain:&apos;, err);
+});
+
+d.run(function() {
+    process.nextTick(function() {
+        fs.readFile(&apos;non_existent.js&apos;, function(err, str) {
+            if(err) throw err;
+            else console.log(str);
+        });
+    });
+});
+</code></pre><p>运行上面的代码，我们会看到错误被domain捕获到，并且uncaughtException回调并不会执行，事情似乎变得稍微容易些了。</p>
+<p>但是如果研究domain模块的API很快我们会发现，domain提供了好几个方法，理解起来似乎不是那么直观（其实为啥这个模块叫“域(domain)”呢，总感觉些许别扭），这里简单解释下：</p>
+<p>首先，关于domain模块，我们看到它的稳定性是2，也就是不稳定，API可能会变更。</p>
+<p>默认情况下，domain模块是不被引入的，当domain.create()创建一个domain之后，调用enter()方法即可“激活”这个domain，具体表现为全局的进程（process）对象上会有一个domain属性指向之前创建的这个的domain实例，同时，domain模块上有个active属性也指向这个的domain实例。</p>
+<p>结合<a href="https://github.com/visionmedia/should.js" target="_blank" rel="external">should</a>断言库测试下上面说的：</p>
+<pre><code>// domain was not exists by default
+should.not.exist(process.domain);
+
+var d = domain.create();
+
+d.on(&apos;error&apos;, function(err) {
+    console.log(err);
+});
+
+d.enter(); // makes d the current domain
+
+process.domain.should.be.an.Object;
+process.domain.should.equal(domain.active);
+
+d.exit(); // makes d inactive
+
+should.not.exist(process.domain);
+</code></pre><p>执行之后发现几个断言都能pass。exit()方法的意思是退出当前“域”，将会影响到后续异步异常的捕获，后面会提到。</p>
+<p>enter和exit组合调用这样会使代码有些混乱，尤其是当多个domain混合、嵌套使用时比较难理解。</p>
+<p>这时候可以使用run()方法，run()其实就是对enter和exit以及回调的简单封装，即：run() -&gt; callback() -&gt; exit()这样，就像上面例子中的run()一样。</p>
+<p>还有两个方法，bind()和intercept()：</p>
+<p>bind:</p>
+<pre><code>fs.readFile(&apos;non_existent.js&apos;, d.bind(function(err, buf) {
+    if(err) throw err;
+    else res.end(buf.toString());
+}));
+</code></pre><p>intercept：</p>
+<pre><code>fs.readFile(&apos;non_existent.js&apos;, d.intercept(function(buf) {
+    console.log(buf);
+}));
+</code></pre><p>用法差不多，只是intercept拦截了异步回调，如果抛出异常就自己处理掉了。</p>
+<h4 id="domain的隐式绑定"><a href="#domain的隐式绑定" class="headerlink" title="domain的隐式绑定"></a>domain的隐式绑定</h4><p>domain主要会影响timers模块（包括setTimeout，setInterval，setImmediate），事件循环process.nextTick，还有就是event。</p>
+<p>实现的思路都差不多，都是通过注入domain代码到timer、nextTick、event模块中，在创建的时候检查当前有没有激活（active）的domain，有则记录下，如果是timer和nextTick，当在事件循环中执行回调的时候，把process.domain设置为之前记录的domain并把错误交给它处理。如果是event，多一步判断，先会把异常交给event自己定义的error事件处理。</p>
+<p>这里要注意，如果这个domain没有绑定error事件的话，node会直接抛出错误，即使uncaughtException绑定了也没有用：</p>
+<pre><code>var d = domain.create();
+
+process.on(&apos;uncaughtException&apos;, function(err) {
+    console.error(&apos;Error caught in uncaughtException event:&apos;, err);
+});
+
+d.run(function() {
+    process.nextTick(function() {
+        fs.readFile(&apos;non_existent.js&apos;, function(err, str) {
+            if(err) throw err;
+            else console.log(str);
+        });
+    });
+});
+</code></pre><p>在这个例子里面，使用了domain捕获异常但是没有监听domain的error事件，监听了uncaughtException，但是还是抛出了异常，个人觉得觉得这里是个bug，domain没有errorHandle应该把异常交给全局的uncaughtException，后面有例子验证这一点。</p>
+<p>还有一个小问题，同时监听了uncaughtException和domain的error事件，在node v0.8里有个bug，uncaughtException和domain都能捕获异常，0.10+已经修复。</p>
+<h4 id="domain的显式绑定"><a href="#domain的显式绑定" class="headerlink" title="domain的显式绑定"></a>domain的显式绑定</h4><p>上面没有提到的两个API是add()和remove()，add作用是把domain创建之前创建的（EventEmitter实例）对象添加到这个domain里边，然后这个对象即可使用domain捕捉异常了，remove则相反。domain对象上有个numbers队列专门用于管理add后的对象。</p>
+<p>这里可参考<a href="http://nodejs.org/api/domain.html#domain_explicit_binding" target="_blank" rel="external">官方示例</a>。</p>
+<h4 id="domain如何抛出异常"><a href="#domain如何抛出异常" class="headerlink" title="domain如何抛出异常"></a>domain如何抛出异常</h4><p>我们看<a href="https://github.com/joyent/node/blob/v0.10.4/src/node.js#L43" target="_blank" rel="external">node源码</a>有这么一行：</p>
+<pre><code>// do this good and early, since it handles errors.
+startup.processFatal();
+</code></pre><p>processFatal里边调用process._fatalException()，先判断是否存在process.domain，尝试把错误交给process.domain处理，如果不存在才交给uncaughtException处理，所以domain捕获异常的关键代码在<a href="https://github.com/joyent/node/blob/v0.10.4/src/node.js#L219" target="_blank" rel="external">node.js#L219</a>。</p>
+<p>这里尝试修改下上面的例子，在抛出异常前把process.domain设为null：</p>
+<pre><code>d.run(function() {
+    process.domain = null;
+    process.nextTick(function() {
+        fs.readFile(&apos;non_existent.js&apos;, function(err, str) {
+            if(err) throw err;
+            else console.log(str);
+        });
+    });
+});
+</code></pre><p>这下uncaughtException将捕获异常！</p>
+<p>当上面提到的异常都没被捕获，进程将直接退出<a href="https://github.com/joyent/node/blob/v0.10.4/src/node.js#L280" target="_blank" rel="external">node.js#L280</a>：</p>
+<pre><code>// if someone handled it, then great.  otherwise, die in C++ land
+// since that means that we&apos;ll exit the process, emit the &apos;exit&apos; event
+...
+process.emit(&apos;exit&apos;, 1);
+</code></pre><p>另外关于domain如何在多个不同的事件循环中传递，可以参考下<a href="http://deadhorse.me/nodejs/2013/04/13/exception_and_domain.html" target="_blank" rel="external">这篇</a>文章。</p>
+<p>值得关注的是，并不是所有在domain域下创建的事件分发器（EventEmitter）上面的异步异常都能捕获：</p>
+<pre><code>var d = domain.create();
+var msg;
+var Msg = function() {
+    events.EventEmitter.call(this);
+
+    this.on(&apos;msg&apos;, function(msg) {
+        console.log(msg);
+    });
+
+    this.send = function(msg) {
+        this.emit(&apos;msg&apos;, msg);
+    };
+
+    this.read = function(file) {
+        var root = this;
+        fs.readFile(file, function(err, buf) {
+            if(err) throw err;
+            else root.send(buf.toString());
+        });
+    };
+};
+
+require(&apos;util&apos;).inherits(Msg, events.EventEmitter);
+
+d.on(&apos;error&apos;, function(err) {
+    console.error(&apos;Error caught by domain:&apos;, err);
+});
+
+d.run(function() {
+    msg = new Msg();
+});
+
+msg.read(&apos;non_existent.js&apos;);
+</code></pre><p>这个例子中，msg对象虽然是在domain中实例化，但是msg.send里边fs.readFile在执行回调的时候，process.domain是undefined。</p>
+<p>我们稍微改造下，把readFile的回调绑定到domain上，或者把msg.send()的调用放到d.run()包裹，结果可预知，能正常捕获抛出的异常。为了验证，尝试改造下readFile：</p>
+<pre><code>fs.readFile(file, function(err, buf) {
+    process.domain = d;
+    if(err) throw err;
+    else root.send(buf.toString());
+});
+</code></pre><p>这样亦可捕获异常，不过实际中不要这样写，还是要采用domain提供的方法。</p>
+<h4 id="更好的使用domain"><a href="#更好的使用domain" class="headerlink" title="更好的使用domain"></a>更好的使用domain</h4><p>其实上，更推荐的做法是，如果在活动domain里面创建了事件分发器（EventEmitter）实例，我们应该尽可能的给它注册error事件，把错误都抛给这个EventEmitter实例处理，就像上面的例子，我们改造下，绑定error事件并把readFile的错误交给Msg实例处理：</p>
+<pre><code>this.on(&apos;error&apos;, function(err) {
+    throw err;
+});
+
+this.read = function(file) {
+    var root = this;
+    fs.readFile(file, function(err, buf) {
+        if(err) root.emit(&apos;error&apos;, err);
+        else root.send(buf.toString());
+    });
+};
+</code></pre><p>在书写Node.js代码的时候，对于事件分发器，应该养成先绑定（on()或addEventListener()）后触发（emit()）的习惯。在执行事件回调的时候，<strong>对于有可能抛异常的情况，应该把emit放到domain里去</strong>：</p>
+<pre><code>var d = domain.create();
+var e = new events.EventEmitter();
+
+d.on(&apos;error&apos;, function(err) {
+    console.error(&apos;Error caught by domain:&apos;, err);
+});
+
+e.on(&apos;data&apos;, function(err) {
+    if(err) throw err;
+});
+
+if(Math.random() &gt; 0.5) {
+    d.run(function() {
+        e.emit(&apos;data&apos;, new Error(&apos;Error in domain runtime.&apos;));
+    });
+} else {
+    e.emit(&apos;data&apos;, new Error(&apos;Error without domain.&apos;));
+}
+</code></pre><p>根据<a href="https://github.com/joyent/node/blob/v0.10.4/lib/domain.js#L187" target="_blank" rel="external">domain#L187</a>可知，run会把传进去的函数包装成另一个函数返回，并在这个返回的函数上设置domain：</p>
+<pre><code>b.domain = this;
+</code></pre><p>events模块<a href="https://github.com/joyent/node/blob/v0.10.4/lib/events.js#L85" target="_blank" rel="external">events.js#L85</a>有这么一行：</p>
+<pre><code>if (this.domain &amp;&amp; this !== process) this.domain.enter();
+</code></pre><p>当调用e.emit()的时候，如果回调函数上挂有domain，则将这个domain激活，进而可以捕获异常。</p>
+<h4 id="domain的缺陷"><a href="#domain的缺陷" class="headerlink" title="domain的缺陷"></a>domain的缺陷</h4><p>有了domain，似乎异步异常捕捉已经不再是难事。Node.js允许创建多个domain实例，并允许使用add添加多个事件分发器给domain管理，，而且domain之间可以相互嵌套，而创建domain，是有一定的性能耗损的，这样带来了一个棘手的问题是：多个domain如何合理的创建与销毁，domain的运行期应该如何维护？</p>
+<p>还有一点，domain并不能捕捉所有的异常，看<a href="https://github.com/domenic/domains-tragedy" target="_blank" rel="external">这里</a>。</p>
+<h4 id="domain实践"><a href="#domain实践" class="headerlink" title="domain实践"></a>domain实践</h4><p>关于使用domain到集群环境，推荐都看看官方的说明：<a href="http://nodejs.org/docs/latest/api/domain.html#domain_warning_don_t_ignore_errors" target="_blank" rel="external">Warning: Don’t Ignore Errors!</a>。把每一个网络请求都包在一个domain里边，捕获到异常时，不要立即退出进程，应该保证进程中其他连接正常退出之后再exit，官方推荐的是设一个定时器，过3min后退出进程，接下去做善后处理，然后应该返回应该有的错误（如500）给客户端。</p>
+<p>对于connect或者express创建的web服务，有一个<a href="https://github.com/fengmk2/domain-middleware" target="_blank" rel="external">domain-middleware</a>中间件可以直接用，它会把next包装到一个已经定制好的domain里边。</p>
+<p>在具体应用场景，应该uncaughtException事件配合domain来用。</p>
+<p>本篇完，欢迎补充指正，所有用到的例子都在<a href="https://github.com/chemdemo/chemdemo.github.io/blob/master/demos/domain_demo.js" target="_blank" rel="external">这里</a>。</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="http://nodejs.org/docs/latest/api/domain.html" target="_blank" rel="external">http://nodejs.org/docs/latest/api/domain.html</a></li>
+<li><a href="https://github.com/joyent/node" target="_blank" rel="external">https://github.com/joyent/node</a></li>
+<li><a href="http://www.slideshare.net/domenicdenicola/domains-20010482" target="_blank" rel="external">http://www.slideshare.net/domenicdenicola/domains-20010482</a></li>
+<li><a href="http://deadhorse.me/nodejs/2013/04/13/exception_and_domain.html" target="_blank" rel="external">http://deadhorse.me/nodejs/2013/04/13/exception_and_domain.html</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-06-28-node-exception.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-06-28-node-exception.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/exception/">exception</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-06-28-node-exception.html&title=《Node Exception》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-06-28-node-exception.html&title=《Node Exception》 — Balance&source=原文： http://www.dmfeel.com/post/52c27013dea8e17c4f000003
+篇谈谈Node.js捕获异常的一些探索。
+..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-06-28-node-exception.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node Exception》 — Balance&url=http://blog.inching.org/Node/2014-06-28-node-exception.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-06-28-node-exception.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Node/2014-06-28-node-stream.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Using Streams in Node.js</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/HTML5/2014-06-27-browser-kernal.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">浏览器的工作原理：新式网络浏览器幕后揭秘</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-06-28-node-exception.html&title=《Node Exception》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-06-28-node-exception.html&title=《Node Exception》 — Balance&source=原文： http://www.dmfeel.com/post/52c27013dea8e17c4f000003
+篇谈谈Node.js捕获异常的一些探索。
+..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-06-28-node-exception.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node Exception》 — Balance&url=http://blog.inching.org/Node/2014-06-28-node-exception.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-06-28-node-exception.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3aS27DMAwFwNz/0inQVTex36OcApZHq8L1R6MCrEjq9YrH+3ccX/l7/e9v34fj0z2vbwwMDIzbMvLPJIzk/pyRzA0DA+M5jOOpJK9ul+aYlM8NAwMDIwmRsxCch2YMDAyMNuDmsDbfxMDAwDhm5OWw40m3AbRNbi/IxTEwMG7IaBsD//nzF/sbGBgYN2G8Lxpt+/Pir2NgYGzNaJPPWVKaTzpvGLySUx4YGBhbMFaOcLWl/GTh8lD+8f8GBgbGdoy87LVSsp9tJY/vPwm+GBgYj2HMpj4Lmle1JTAwMPZj5Me8VlLN5J2zklzRBcXAwLgtY/34V/755NnkzuJvgoGBsQWj3YrNWgJtcK8XFwMDY2vGcBMWf/ja4xR1OxMDA2M7xixEtgnqcCplcMfAwNiJsdIsTNYmSVbX2xIYGBh7M2ZlsvYD6ylxG5oxMDB2ZeRF/JVJt4cqkm0rBgbG3oyryvF5MJ21OU8CPQYGxtaM9sjXSgq6nhifhGYMDIwHM9oyfR5YkyWo+xgYGBhbM75x8GKWvrZpMwYGxhMY62nqypW2xFb3ZjEwMG7OeJejLbHNNpR1EouBgbE1o91rtXe2hby2eIeBgfEcRh4E87J+zmhbmx/ngIGB8QBGHviS8HrV8a8i6cXAwMBYOLaVTLptFRS7VwwMjIcxZs3F5Kn8zSc9DQwMjK0Z7Wau3QjOwmuxZBgYGFszZo2BWTFu/ZhF+ywGBsbNGT+sdvAukvLrtAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

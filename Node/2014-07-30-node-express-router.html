@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Learn to Use the New Router in ExpressJS 4.0 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="node,express,router">
+    <meta name="description" content="原文：http://scotch.io/tutorials/javascript/learn-to-use-the-new-router-in-expressjs-4
+源码: https://github.com/scotch-io/express-router-experiments
+With the new ExpressJS 4.0 just being released last week">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Learn to Use the New Router in ExpressJS 4.0">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-07-30-node-express-router.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文：http://scotch.io/tutorials/javascript/learn-to-use-the-new-router-in-expressjs-4
+源码: https://github.com/scotch-io/express-router-experiments
+With the new ExpressJS 4.0 just being released last week">
+<meta property="og:image" content="http://scotch.io/wp-content/uploads/2014/04/express-router-console-log-request.png">
+<meta property="og:image" content="http://scotch.io/wp-content/uploads/2014/04/express-router-parameters.png">
+<meta property="og:image" content="http://scotch.io/wp-content/uploads/2014/04/express-router-parameter-middleware.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Learn to Use the New Router in ExpressJS 4.0">
+<meta name="twitter:description" content="原文：http://scotch.io/tutorials/javascript/learn-to-use-the-new-router-in-expressjs-4
+源码: https://github.com/scotch-io/express-router-experiments
+With the new ExpressJS 4.0 just being released last week">
+<meta name="twitter:image" content="http://scotch.io/wp-content/uploads/2014/04/express-router-console-log-request.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Learn to Use the New Router in ExpressJS 4.0</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Learn to Use the New Router in ExpressJS 4.0</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-07-29T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-07-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Overview"><span class="post-toc-text">Overview</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Our-Sample-Application"><span class="post-toc-text">Our Sample Application</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Application-Structure"><span class="post-toc-text">Application Structure</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Starting-Our-Application"><span class="post-toc-text">Starting Our Application</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Creating-Our-Server"><span class="post-toc-text">Creating Our Server</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Route-with-Parameters-hello-name"><span class="post-toc-text">Route with Parameters /hello/:name</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Route-Middleware-for-Parameters"><span class="post-toc-text">Route Middleware for Parameters</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Login-Routes-app-route"><span class="post-toc-text">Login Routes app.route</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-text">Conclusion</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-express-router"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Learn to Use the New Router in ExpressJS 4.0</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-07-30 00:00:00" datetime="2014-07-29T16:00:00.000Z"  itemprop="datePublished">2014-07-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>原文：<a href="http://scotch.io/tutorials/javascript/learn-to-use-the-new-router-in-expressjs-4" target="_blank" rel="external">http://scotch.io/tutorials/javascript/learn-to-use-the-new-router-in-expressjs-4</a></p>
+<p>源码: <a href="https://github.com/scotch-io/express-router-experiments" target="_blank" rel="external">https://github.com/scotch-io/express-router-experiments</a></p>
+<p>With the new ExpressJS 4.0 just being released last week, there are many changes that have come with it. These <a href="http://scotch.io/bar-talk/expressjs-4-0-new-features-and-upgrading-from-3-0" target="_blank" rel="external">changes</a> will affect how we build Node and MEAN stack apps in the future.</p>
+<p>Since Express has a such a large presence in our Node applications, let’s take a look at how we can use the new features in our applications, specifically the Router.</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>Express 4.0 comes with the new <code>Router</code>. Router is like a mini express application. It doesn’t bring in views or settings, but provides us with the routing APIs like <code>.use</code>, <code>.get</code>, <code>.param</code>, and <code>route</code>.</p>
+<a id="more"></a>
+<p>Let’s look at how many of us route our applications and let’s see how we can recreate that with Router.</p>
+<h2 id="Our-Sample-Application"><a href="#Our-Sample-Application" class="headerlink" title="Our Sample Application"></a>Our Sample Application</h2><p>Let’s create an application that has some routes and a few features. Let’s run through those now.</p>
+<ul>
+<li><strong>Basic Routes</strong>: Home, About</li>
+<li><strong>Route Middleware</strong> to log requests to the console</li>
+<li><strong>Route with Parameters</strong></li>
+<li><strong>Route Middleware for Parameters</strong> to validate specific parameters</li>
+<li><strong>Login routes</strong> Doing a GET and POST on /login</li>
+<li>Validates a parameter passed to a certain route</li>
+</ul>
+<h2 id="Application-Structure"><a href="#Application-Structure" class="headerlink" title="Application Structure"></a>Application Structure</h2><p>We’ll only need two files for our application.</p>
+<ul>
+<li>package.json  // set up our node packages</li>
+<li>server.js     // set up our app and build routes</li>
+</ul>
+<p>We will house our routes in the <code>server.js</code> file. In the future we’ll want to move these out into their own files to keep our application modular. We can even define different route files for different sections of our site.</p>
+<h2 id="Starting-Our-Application"><a href="#Starting-Our-Application" class="headerlink" title="Starting Our Application"></a>Starting Our Application</h2><p>Let’s start up our Node application. We will need our <code>package.json</code> file to define our dependencies.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"express-router-experiments"</span>,</div><div class="line">    <span class="attr">"main"</span>: <span class="string">"server.js"</span>,</div><div class="line">    <span class="attr">"dependencies"</span>: &#123;</div><div class="line">        <span class="attr">"express"</span>: <span class="string">"~4.0.0"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>We’ll only need one dependency, Express! Pretty sweet to see that 4.0.0 after seeing 3.x.x for so long.</p>
+<p>Go ahead and install our dependencies.</p>
+<pre><code>$ npm install
+</code></pre><p>Now we have Express. Let’s look at starting up our application and then we can handle our routing.</p>
+<h2 id="Creating-Our-Server"><a href="#Creating-Our-Server" class="headerlink" title="Creating Our Server"></a>Creating Our Server</h2><p>We will use Express to start our application server. Since we defined <code>server.js</code> as the main file in <code>package.json</code>, that is the file that Node will use. Let’s define that file now.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div></pre></td><td class="code"><pre><div class="line">// server.js</div><div class="line"></div><div class="line">// BASE SETUP</div><div class="line">// ==============================================</div><div class="line"></div><div class="line">var express = require('express');</div><div class="line">var app     = express();</div><div class="line">var port    =   process.env.PORT || 8080;</div><div class="line"></div><div class="line">// ROUTES</div><div class="line">// ==============================================</div><div class="line"></div><div class="line">// sample route with a route the way we're used to seeing it</div><div class="line">app.get('/sample', function(req, res) &#123;</div><div class="line">    res.send('this is a sample!');  </div><div class="line">&#125;);</div><div class="line"></div><div class="line">// we'll create our routes here</div><div class="line"></div><div class="line">// START THE SERVER</div><div class="line">// ==============================================</div><div class="line">app.listen(port);</div><div class="line">console.log('Magic happens on port ' + port);</div><div class="line">```    </div><div class="line"></div><div class="line">Now we can start our server. We’ve created a route using the normal `app.get` that we’ve used in our Express 3.0 applications. If we go into our browser and visit `http://localhost:8080/sample`, we will be able to see **this is a sample!**. Now we’ll move to creating routes using the Express 4.0 Router.</div><div class="line"></div><div class="line">## Express Router</div><div class="line"></div><div class="line">What exactly is the Express Router? It is a mini express application without all the bells and whistles of an express application, just the routing stuff. Let’s take a look at exactly what this means. We’ll go through each section of our site and use different features of the Router.</div><div class="line"></div><div class="line">## Basic Routes express.Router()</div><div class="line"></div><div class="line">Let’s call an instance of the Router for creating our frontend routes for our application. This will include the **Home** and **About** pages.</div><div class="line"></div><div class="line">```js</div><div class="line">// server.js</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">// we'll create our routes here</div><div class="line"></div><div class="line">// get an instance of router</div><div class="line">var router = express.Router();</div><div class="line"></div><div class="line">// home page route (http://localhost:8080)</div><div class="line">router.get('/', function(req, res) &#123;</div><div class="line">    res.send('im the home page!');  </div><div class="line">&#125;);</div><div class="line"></div><div class="line">// about page route (http://localhost:8080/about)</div><div class="line">router.get('/about', function(req, res) &#123;</div><div class="line">    res.send('im the about page!'); </div><div class="line">&#125;);</div><div class="line"></div><div class="line">// apply the routes to our application</div><div class="line">app.use('/', router);</div><div class="line"></div><div class="line">...</div><div class="line">```   </div><div class="line">    </div><div class="line"></div><div class="line">We will call an instance of the `express.Router()`, apply routes to it, and then tell our application to use those routes. We can now access the home page at &lt;http://localhost:8080&gt; and the about page at &lt;http://localhost:8080/about&gt;.</div><div class="line"></div><div class="line">Notice how we can set a default root for using these routes we just defined. If we had changed **line 21** to `app.use('/app', router)`, then our routes would be &lt;http://localhost:8080/app&gt; and &lt;http://localhost:8080/app/about&gt;.</div><div class="line"></div><div class="line">This is very powerful because we can create multiple `express.Router()`s and then apply them to our application. We could have a Router for our basic routes, authenticated routes, and even API routes.</div><div class="line"></div><div class="line">Using the Router, we are allowed to make our applications more modular and flexible than ever before by creating multiple instances of the Router and applying them accordingly. Now we’ll take a look at how we can use middleware to handle requests.</div><div class="line"></div><div class="line">## Route Middleware router.use()</div><div class="line"></div><div class="line">Route middleware in Express is a way to do something before a request is processed. This could be things like checking if a user is authenticated, logging data for analytics, or anything else we’d like to do before we actually spit out information to our user.</div><div class="line"></div><div class="line">Here is some middleware to log a message to our console every time a request is made. This will be a demonstration of how to create middleware using the Express Router.</div><div class="line"></div><div class="line">```js</div><div class="line">// server.js</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">// we'll create our routes here</div><div class="line"></div><div class="line">// get an instance of router</div><div class="line">var router = express.Router();</div><div class="line"></div><div class="line">// route middleware that will happen on every request</div><div class="line">router.use(function(req, res, next) &#123;</div><div class="line"></div><div class="line">    // log each request to the console</div><div class="line">    console.log(req.method, req.url);</div><div class="line"></div><div class="line">    // continue doing what we were doing and go to the route</div><div class="line">    next(); </div><div class="line">&#125;);</div><div class="line"></div><div class="line">// home page route (http://localhost:8080)</div><div class="line">router.get('/', function(req, res) &#123;</div><div class="line">    res.send('im the home page!');  </div><div class="line">&#125;);</div><div class="line"></div><div class="line">// about page route (http://localhost:8080/about)</div><div class="line">router.get('/about', function(req, res) &#123;</div><div class="line">    res.send('im the about page!'); </div><div class="line">&#125;);</div><div class="line"></div><div class="line">// apply the routes to our application</div><div class="line">app.use('/', router);</div><div class="line"></div><div class="line">...</div></pre></td></tr></table></figure>
+<p>We’ll use <code>router.use()</code> to define middleware. This will now be applied to all of the requests that come into our application for this instance of Router. Let’s go into our browser and go to <strong><a href="http://localhost:8080" target="_blank" rel="external">http://localhost:8080</a></strong> and we’ll see the request in our console.</p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://scotch.io/wp-content/uploads/2014/04/express-router-console-log-request.png" alt="express-router-console-log-request](http://scotch.io/wp-content/uploads/2014/04/express-router-console-log-request.png)" title="">
+                </div>
+                <div class="image-caption">express-router-console-log-request](http://scotch.io/wp-content/uploads/2014/04/express-router-console-log-request.png)</div>
+            </figure></p>
+<p><strong>The order you place your middleware and routes is very important</strong>. Everything will happen in the order that they appear. This means that if you place your middleware after a route, then the route will happen before the middleware and the request will end there. Your middleware will not run at that point.</p>
+<p>Keep in mind that you can use route middleware for many things. You can use it to check that a user is logged in in the session before letting them continue.</p>
+<h2 id="Route-with-Parameters-hello-name"><a href="#Route-with-Parameters-hello-name" class="headerlink" title="Route with Parameters /hello/:name"></a>Route with Parameters /hello/:name</h2><p>Let’s say we wanted to have a route called <code>/hello/:name</code> where we could pass in a person’s name into the URL and the application would spit out <strong>Hello <em>name</em>!</strong>. Let’s create that route now.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// server.js</span></div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line"><span class="comment">// we'll create our routes here</span></div><div class="line"></div><div class="line"><span class="comment">// get an instance of router</span></div><div class="line"><span class="keyword">var</span> router = express.Router();</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line"><span class="comment">// route with parameters (http://localhost:8080/hello/:name)</span></div><div class="line">router.get(<span class="string">'/hello/:name'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">    res.send(<span class="string">'hello '</span> + req.params.name + <span class="string">'!'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// apply the routes to our application</span></div><div class="line">app.use(<span class="string">'/'</span>, router);</div><div class="line"></div><div class="line">...</div></pre></td></tr></table></figure>
+<p>Now we can visit <code>http://localhost:8080/hello/holly</code> and see our browser spit out <strong>hello holly!</strong> Easy cheese.</p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://scotch.io/wp-content/uploads/2014/04/express-router-parameters.png" alt="express-router-parameters](http://scotch.io/wp-content/uploads/2014/04/express-router-parameters.png)" title="">
+                </div>
+                <div class="image-caption">express-router-parameters](http://scotch.io/wp-content/uploads/2014/04/express-router-parameters.png)</div>
+            </figure></p>
+<p>Now let’s say we wanted to validate this name somehow. Maybe we’d want to make sure it wasn’t a curse word. We would do that validation inside of route middleware. We’ll use a special middleware for this.</p>
+<h3 id="Route-Middleware-for-Parameters"><a href="#Route-Middleware-for-Parameters" class="headerlink" title="Route Middleware for Parameters"></a>Route Middleware for Parameters</h3><p>We will use Express’s <code>.param()</code> middleware. This creates middleware that will run for a certain route parameter. In our case, we are using <code>:name</code> in our <strong>hello</strong> route. Here’s the param middleware.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// server.js</span></div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line"><span class="comment">// we'll create our routes here</span></div><div class="line"></div><div class="line"><span class="comment">// get an instance of router</span></div><div class="line"><span class="keyword">var</span> router = express.Router();</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line"><span class="comment">// route middleware to validate :name</span></div><div class="line">router.param(<span class="string">'name'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next, name</span>) </span>&#123;</div><div class="line">    <span class="comment">// do validation on name here</span></div><div class="line">    <span class="comment">// blah blah validation</span></div><div class="line">    <span class="comment">// log something so we know its working</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'doing name validations on '</span> + name);</div><div class="line"></div><div class="line">    <span class="comment">// once validation is done save the new item in the req</span></div><div class="line">    req.name = name;</div><div class="line">    <span class="comment">// go to the next thing</span></div><div class="line">    next(); </div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// route with parameters (http://localhost:8080/hello/:name)</span></div><div class="line">router.get(<span class="string">'/hello/:name'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">    res.send(<span class="string">'hello '</span> + req.name + <span class="string">'!'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// apply the routes to our application</span></div><div class="line">app.use(<span class="string">'/'</span>, router);</div><div class="line"></div><div class="line">...</div></pre></td></tr></table></figure>
+<p>Now when we hit the <strong>/hello/:name</strong> route, our route middleware will kick in and be used. We can run validations and then we’ll pass the new variable to our <code>.get</code> route by storing it in <code>req</code>. We then access it by changing <strong>req.params.name</strong> to <strong>req.name</strong>.</p>
+<p>When we visit our browser at <a href="http://localhost:8080/hello/sally" target="_blank" rel="external">http://localhost:8080/hello/sally</a> we’ll see our request logged to the console.</p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://scotch.io/wp-content/uploads/2014/04/express-router-parameter-middleware.png" alt="express-router-parameter-middleware](http://scotch.io/wp-content/uploads/2014/04/express-router-parameter-middleware.png)" title="">
+                </div>
+                <div class="image-caption">express-router-parameter-middleware](http://scotch.io/wp-content/uploads/2014/04/express-router-parameter-middleware.png)</div>
+            </figure></p>
+<p>Route middleware for parameters can be used to validate data coming to your application. If you have created a RESTful API also, you can validate a token and make sure the user is able to access your information.</p>
+<p>The last thing we’ll look at today is how to use <code>app.route()</code> to define multiple routes.</p>
+<h3 id="Login-Routes-app-route"><a href="#Login-Routes-app-route" class="headerlink" title="Login Routes app.route"></a>Login Routes app.route</h3><p>We can define our routes right on our <code>app</code>. This is similar to using <code>app.get</code>, but we will use <code>app.route</code>. app.route is basically a shortcut to call the Express Router. Instead of calling <code>express.Router()</code>, we can call <code>app.route</code> and start applying our routes there.</p>
+<p>Using <code>app.route</code> lets us define multiple actions on a single login route. We’ll need a <code>GET</code> route to show the login form and a <code>POST</code> route to process the login form.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"></div><div class="line"><span class="comment">// ROUTES</span></div><div class="line"><span class="comment">// ==============================================</span></div><div class="line"></div><div class="line">app.route(<span class="string">'/login'</span>)</div><div class="line"></div><div class="line">    <span class="comment">// show the form (GET http://localhost:8080/login)</span></div><div class="line">    .get(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">        res.send(<span class="string">'this is the login form'</span>);</div><div class="line">    &#125;)</div><div class="line"></div><div class="line">    <span class="comment">// process the form (POST http://localhost:8080/login)</span></div><div class="line">    .post(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'processing'</span>);</div><div class="line">        res.send(<span class="string">'processing the login form!'</span>);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">...</div></pre></td></tr></table></figure>
+<p>Now we have defined our two different actions on our <code>/login</code> route. Simple and very clean.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>With the inclusion of the Express 4.0 Router, we are given more flexibility than ever before in defining our routes. To recap, we can:</p>
+<ul>
+<li>Use express.Router() multiple times to define groups of routes</li>
+<li>Apply the express.Router() to a section of our site using <code>app.use()</code></li>
+<li>Use route middleware to process requests</li>
+<li>Use route middleware to validate parameters using <code>.param()</code></li>
+<li>Use <code>app.route()</code> as a shortcut to the Router to define multiple requests on a route</li>
+</ul>
+<p>With all the ways we can define routes, I’m sure that our applications will benefit going forward. Sound off in the comments if you have any questions or suggestions.</p>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://jilles.me/express-routing-the-beginners-guide" target="_blank" rel="external">Express Routing - The Beginners Guide</a></li>
+<li><a href="http://webapplog.com/express-js-4-node-js-and-mongodb-rest-api-tutorial" target="_blank" rel="external">Express.js 4, Node.js and MongoDB REST API Tutorial</a></li>
+<li><a href="http://scotch.io/tutorials/javascript/build-a-restful-api-using-node-and-express-4" target="_blank" rel="external">Build a RESTful API Using Node and Express 4 ♥ Scotch</a></li>
+<li><a href="http://webapplog.com/url-parameters-and-routing-in-express-js/" target="_blank" rel="external">URL Parameters and Routing in Express.js</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-07-30-node-express-router.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-07-30-node-express-router.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/express/">express</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/router/">router</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-07-30-node-express-router.html&title=《Learn to Use the New Router in ExpressJS 4.0》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-07-30-node-express-router.html&title=《Learn to Use the New Router in ExpressJS 4.0》 — Balance&source=原文：http://scotch.io/tutorials/javascript/learn-to-use-the-new-router-in-expre..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-07-30-node-express-router.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Learn to Use the New Router in ExpressJS 4.0》 — Balance&url=http://blog.inching.org/Node/2014-07-30-node-express-router.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-07-30-node-express-router.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/CSS/2014-08-01-css-margin.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Css Margin</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Node/2014-07-29-node-passport.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Node Passport</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-07-30-node-express-router.html&title=《Learn to Use the New Router in ExpressJS 4.0》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-07-30-node-express-router.html&title=《Learn to Use the New Router in ExpressJS 4.0》 — Balance&source=原文：http://scotch.io/tutorials/javascript/learn-to-use-the-new-router-in-expre..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-07-30-node-express-router.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Learn to Use the New Router in ExpressJS 4.0》 — Balance&url=http://blog.inching.org/Node/2014-07-30-node-express-router.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-07-30-node-express-router.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACu0lEQVR42u3cQW4bMQwF0Nz/0g6QTRvYlj/JoesCT6vAdWb0tBDVTyFfX/G4/Yz7T/4e99+8/zkZz957/6+XDTw8PLzW1M8vO/POC5H/1lWLhYeHh/ce3rkY5Ozz98/IZNHzOePh4eF9Am9+zH2xicflBA8PD+9/4SWlImdUD+V4eHh4n8ZLjrC9Ud3o5/PBw8PD2+ZVG2Cf8PNifw8PDw9v0FXvNfWT43Xe6JqUJTw8PLwN3vlxk6tX+UWBPOpNwpHCfTE8PDy8i3jzKeaTmF/qioJgPDw8vAXepABUS0gv+KhS8fDw8LZ5va28Gr/mTawkhiiUEzw8PLw38s5bebL150+Yv+uCOoOHh4cX8HrXm/JAttffn19uwMPDw9vjJa+sYs4LlH+/F9oWshY8PDy8Fi+ZSq95n4QO18YTL+oeHh4e3qW8SUgxeUIeCuffeVAY8PDw8NZ4t+Ko/lb1GF39pLm6eHh4eEVeNRLNQ96LJzRu1+Hh4eFt8KrRbW/q1WP65PiOh4eHt8frRQwJu/p5MpO8aOHh4eFt8PL2UnVCvU28F0k8XXQ8PDy8t/Dya1JRC2oBULhGgIeHh7fAq0a0vYsCkxhi3jzDw8PD2+Dl/+GvTiJZprwIVa9n4eHh4W3wem2naiDbu4w1D4jx8PDw3s+bt/nzY3r18lZU2PDw8PAWeL0YohoT5EFGjlkMcPHw8PCOvORxyRacb/2FXHkwftU9PDw8vDXe5JjbCymSKfaO6YUagoeHh1fklbfawUG5N8U8XL6ikuDh4eHdGn/HuBoKTPDVxKBZGPDw8PDWeNWj8HbsmxeAF0uJh4eH9095vaNtNeaolqIXSDw8PLwP4E2ih+pRuxeOPMiq8fDw8BZ4+bF4EjTkTyvfHXv2Rjw8PLwF3rwBll8OqF4jyBdisb+Hh4eH92d8A1sk2k9a390VAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

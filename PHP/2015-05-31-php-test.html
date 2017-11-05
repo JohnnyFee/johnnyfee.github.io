@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>PHP Test | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tutorial,php">
+    <meta name="description" content="See 《Modern PHP》 and 《Learning PHP, MySQL &amp;amp; JavaScript, 4th Edition》.
+Let’s talk about how to install, write, and run PHPUnit tests. It takes a bit of work to get the infrastructure in place, but">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP Test">
+<meta property="og:url" content="http://blog.inching.org/PHP/2015-05-31-php-test.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See 《Modern PHP》 and 《Learning PHP, MySQL &amp;amp; JavaScript, 4th Edition》.
+Let’s talk about how to install, write, and run PHPUnit tests. It takes a bit of work to get the infrastructure in place, but">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/php-unit-test.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/php-test-covarage.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP Test">
+<meta name="twitter:description" content="See 《Modern PHP》 and 《Learning PHP, MySQL &amp;amp; JavaScript, 4th Edition》.
+Let’s talk about how to install, write, and run PHPUnit tests. It takes a bit of work to get the infrastructure in place, but">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/php-unit-test.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">PHP Test</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">PHP Test</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-05-30T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2015-05-31
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/PHP/">PHP</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Directory-Structure"><span class="post-toc-text">Directory Structure</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Install-PHPUnit"><span class="post-toc-text">Install PHPUnit</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Install-Xdebug"><span class="post-toc-text">Install Xdebug</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Configure-PHPUnit"><span class="post-toc-text">Configure PHPUnit</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#The-Whovian-Class"><span class="post-toc-text">The Whovian Class</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#The-WhovianTest-Test-Case"><span class="post-toc-text">The WhovianTest Test Case</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Test-1-construct"><span class="post-toc-text">Test 1: __construct()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Test-2-say"><span class="post-toc-text">Test 2: say()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Test-3-respondTo-in-agreement"><span class="post-toc-text">Test 3: respondTo() in agreement</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Run-Tests"><span class="post-toc-text">Run Tests</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Code-Coverage"><span class="post-toc-text">Code Coverage</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Continuous-Testing-with-Travis-CI"><span class="post-toc-text">Continuous Testing with Travis CI</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Setup"><span class="post-toc-text">Setup</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Run"><span class="post-toc-text">Run</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Further-Reading"><span class="post-toc-text">Further Reading</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-php-test"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">PHP Test</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-05-31 00:00:00" datetime="2015-05-30T16:00:00.000Z"  itemprop="datePublished">2015-05-31</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/PHP/">PHP</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="http://www.salttiger.com/modern-php/" target="_blank" rel="external">《Modern PHP》</a> and <a href="http://www.salttiger.com/learning-php-mysql-javascript-4th-edition/" target="_blank" rel="external">《Learning PHP, MySQL &amp; JavaScript, 4th Edition》</a>.</p>
+<p>Let’s talk about how to install, write, and run PHPUnit tests. It takes a bit of work to get the infrastructure in place, but it’s dead simple to write and run your PHPUnit tests afterward. Before we dig too deep into PHPUnit, let’s quickly review some vocabulary. Your PHPUnit tests are grouped into <em>test cases</em>, and your test cases are grouped into <em>test suites</em>. PHPUnit runs your test suites with a <em>test runner</em>.</p>
+<a id="more"></a>
+<p>A test case is a single PHP class that extends the <code>PHPUnit_Framework_TestCase</code> class. Each test case contains public methods whose names begin with <code>test</code>; these methods are individual tests that assert specific scenarios to be true. Each assertion can pass or fail. You want all assertions to pass.</p>
+<p>A test case class name must end with <code>Test</code>, and its filename must end with <em>Test.php</em>. A hypothetical test case class name is <code>FooTest</code>, and that class lives in a file named <em>FooTest.php</em>.</p>
+<p>A test suite is a collection of related test cases. If you are working on a single PHP component, oftentimes you’ll only ever have a single test suite. If you are testing a larger PHP application with many different subsystems or components, you may find it best to organize tests into multiple test suites. </p>
+<p>A test runner is exactly what it sounds like. It is a way for PHPUnit to run your test suites and output the result. The default PHPUnit test runner is the <em>command-line runner</em> that is invoked with the <code>phpunit</code> command in your terminal application.</p>
+<h2 id="Directory-Structure"><a href="#Directory-Structure" class="headerlink" title="Directory Structure"></a>Directory Structure</h2><p>Here’s how I prefer to organize my PHP projects. The topmost project directory has a <em>src/</em> directory where I keep my source code. It also has a <em>tests/</em> directory where I keep my tests. Here’s an example directory structure:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">src/</div><div class="line">tests/</div><div class="line">    bootstrap.php</div><div class="line">composer.json</div><div class="line">phpunit.xml</div><div class="line">.travis.yml</div></pre></td></tr></table></figure>
+<ul>
+<li><p>src/</p>
+<p>  This directory contains my PHP project’s source code (i.e., PHP classes).</p>
+</li>
+<li><p>tests/</p>
+<p>  This directory contains my PHP project’s PHPUnit tests. This directory contains a bootstrap.php file that is included by PHPUnit before the unit tests are run.</p>
+</li>
+<li><p>composer.json</p>
+<p>  This file lists my PHP project’s dependencies managed by Composer, including the PHPUnit test framework.</p>
+</li>
+<li><p>phpunit.xml</p>
+<p>  This file provides configuration details for the PHPUnit test runner.</p>
+</li>
+<li><p>.travis.yml</p>
+<p>  This file provides configuration details for the Travis CI continuous testing web service.</p>
+</li>
+</ul>
+<h2 id="Install-PHPUnit"><a href="#Install-PHPUnit" class="headerlink" title="Install PHPUnit"></a>Install PHPUnit</h2><p>First we need to install PHPUnit and the Xdebug profiler. PHPUnit runs our tests. The Xdebug profiler generates helpful code coverage information. Composer is the easiest way to install the PHPUnit test framework. Open your terminal application, navigate to your project’s topmost directory, and run this command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">composer require --dev phpunit/phpunit</div></pre></td></tr></table></figure>
+<p>This command downloads the PHPUnit test framework into your project’s <em>vendor/</em> directory, and it updates your project’s <em>composer.json</em> file so that the <code>phpunit/phpunit</code> package is listed as a project dependency. The <code>phpunit</code> binary is installed in your project’s <em>vendor/bin/</em> directory. You can add this directory to your environment path, or you can reference <code>vendor/bin/phpunit</code> whenever you invoke the PHPUnit command line test runner. The PHPUnit framework classes are autoloaded into your PHP application with your project’s other Composer-managed dependencies.</p>
+<h2 id="Install-Xdebug"><a href="#Install-Xdebug" class="headerlink" title="Install Xdebug"></a>Install Xdebug</h2><p>The Xdebug PHP extension is a bit trickier to install. If you installed PHP with your package manager, you can install Xdebug the same way.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># Ubuntu</div><div class="line">sudo apt-get install php5-xdebug</div><div class="line"></div><div class="line"># CentOS</div><div class="line">sudo yum -y --enablerepo=epel,remi,remi-php56 install php-xdebug</div></pre></td></tr></table></figure>
+<p>If you installed PHP from source, you’ll need to install the Xdebug extension with the <code>pecl</code> command:</p>
+<pre><code>pecl install xdebug
+</code></pre><p>Next, update your <em>php.ini</em> configuration file with the path to the compiled Xdebug extension.</p>
+<p>You can find your PHP extensions directory with the <code>php-config --extension-dir</code> or <code>php -i | grep extension_dir</code> commands.</p>
+<p>Append this line to your <em>php.ini</em> file using your own PHP extension path:</p>
+<pre><code>zend_extension=&quot;/PATH/TO/xdebug.so&quot;
+</code></pre><h2 id="Configure-PHPUnit"><a href="#Configure-PHPUnit" class="headerlink" title="Configure PHPUnit"></a>Configure PHPUnit</h2><p>Now let’s configure PHPUnit in our project’s <em>phpunit.xml</em> file.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">phpunit</span> <span class="attr">bootstrap</span>=<span class="string">"tests/bootstrap.php"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">testsuites</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">testsuite</span> <span class="attr">name</span>=<span class="string">"whovian"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">directory</span> <span class="attr">suffix</span>=<span class="string">"Test.php"</span>&gt;</span>tests<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">testsuite</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">testsuites</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">whitelist</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">whitelist</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">phpunit</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>PHPUnit test runner settings are attributes on the <code>&lt;phpunit&gt;</code> XML root element. The most important setting, in my opinion, is the <code>bootstrap</code> setting; it specifies the path (relative to the <em>phpunit.xml</em> file) to a PHP file that is included before the PHPUnit test runner executes our tests. We’ll autoload our application’s Composer dependencies in the <em>bootstrap.php</em> file so they are available to our PHPUnit tests. The <em>bootstrap.php</em> file also specifies the path to our test suite (i.e., a directory that contains related test cases); PHPUnit runs all PHP files in this directory whose file names end with <em>Test.php</em>. Finally, this configuration file lists the directories included in our code coverage analysis with the <code>&lt;filter&gt;</code> element. In the previous example XML, the <code>&lt;whitelist&gt;</code> element tells PHPUnit to generate code coverage only for code in the <em>src/</em> directory. </p>
+<p>The gist of this configuration file is to specify our PHPUnit settings in one location. This makes our lives easier locally because we don’t have to specify these settings each time we use the <code>phpunit</code> command-line runner. This configuration file also lets us apply the same PHPUnit settings on remote continuous testing servers like Travis CI. After you update the <em>phpunit.xml</em> configuration file, update the <em>tests/bootstrap.php</em> file with this code:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// Enable Composer autoloader</div><div class="line">require dirname(__DIR__) . &apos;/vendor/autoload.php&apos;;</div></pre></td></tr></table></figure>
+<h2 id="The-Whovian-Class"><a href="#The-Whovian-Class" class="headerlink" title="The Whovian Class"></a>The Whovian Class</h2><p>Before we write unit tests, we need something to test. Here’s a hypothetical PHP class named <code>Whovian</code> that has a pretty strong opinion about a particular BBC television show. Place this class definition into the <em>src/Whovian.php</em> file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class Whovian</div><div class="line">&#123;</div><div class="line">    /**</div><div class="line">     * @var string</div><div class="line">     */</div><div class="line">    protected $favoriteDoctor;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * Constructor</div><div class="line">     * @param  string $favoriteDoctor</div><div class="line">     */</div><div class="line">    public function __construct($favoriteDoctor)</div><div class="line">    &#123;</div><div class="line">        $this-&gt;favoriteDoctor = (string)$favoriteDoctor;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * Say</div><div class="line">     * @return string</div><div class="line">     */</div><div class="line">    public function say()</div><div class="line">    &#123;</div><div class="line">        return &apos;The best doctor is &apos; . $this-&gt;favoriteDoctor;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * Respond to</div><div class="line">     * @param  string $input</div><div class="line">     * @return string</div><div class="line">     * @throws \Exception</div><div class="line">     */</div><div class="line">    public function respondTo($input)</div><div class="line">    &#123;</div><div class="line">        $input = strtolower($input);</div><div class="line">        $myDoctor = strtolower($this-&gt;favoriteDoctor);</div><div class="line"></div><div class="line">        if (strpos($input, $myDoctor) === false) &#123;</div><div class="line">            throw new Exception(</div><div class="line">                sprintf(</div><div class="line">                    &apos;No way! %s is the best doctor ever!&apos;,</div><div class="line">                    $this-&gt;favoriteDoctor</div><div class="line">                )</div><div class="line">            );</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return &apos;I agree!&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The <code>Whovian</code> class constructor sets the instance’s favorite doctor. The <code>say()</code> method returns a string with the instance’s favorite doctor. And its <code>respondTo()</code> method receives a statement from another <code>Whovian</code> instance and responds accordingly.</p>
+<h3 id="The-WhovianTest-Test-Case"><a href="#The-WhovianTest-Test-Case" class="headerlink" title="The WhovianTest Test Case"></a>The WhovianTest Test Case</h3><p>The unit tests for our <code>Whovian</code> class live in the <em>test/WhovianTest.php</em> file. We call a group of related tests a <em>test suite</em>. In our example, all tests beneath the <em>test/</em> directory belong to the same test suite. Each class file beneath the <em>test/</em> directory is called a <em>test case</em>, and its class methods that begin with <code>test</code> (e.g., <code>testThis</code> or <code>testThat</code>) are individual tests. Each individual test uses assertions to verify a given condition. An assertion can pass or fail.</p>
+<p>Each PHPUnit test case is a class that extends the <code>PHPUnit_Framework_TestCase</code> class. Let’s declare a test case named <code>WhovianTest</code> in the <em>test/WhovianTest.php</em> file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">require dirname(__DIR__) . &apos;/src/Whovian.php&apos;;</div><div class="line"></div><div class="line">class WhovianTest extends PHPUnit_Framework_TestCase</div><div class="line">&#123;</div><div class="line">    // Individual tests go here</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Remember, unit tests verify a public interface’s expected behavior. We’ll test the three public methods in the <code>Whovian</code> class. We’ll write a unit test to ensure that the <code>__construct()</code> method argument becomes the instance’s preferred doctor. Next, we’ll write a unit test to ensure that the <code>say()</code> method’s return value mentions the instance’s preferred doctor. Finally, we’ll write two tests for the <code>respondTo()</code> method. One test ensures that the method’s return value is the string <code>&quot;I agree!&quot;</code> if the input matches its preferred doctor. The second test that ensures the method throws an exception if the input does not match its preferred doctor.</p>
+<h4 id="Test-1-construct"><a href="#Test-1-construct" class="headerlink" title="Test 1: __construct()"></a>Test 1: __construct()</h4><p>Our first test confirms that the constructor sets the Whovian instance’s favorite doctor:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public function testSetsDoctorWithConstructor()</div><div class="line">&#123;</div><div class="line">    $whovian = new Whovian(&apos;Peter Capaldi&apos;);</div><div class="line">    $this-&gt;assertAttributeEquals(&apos;Peter Capaldi&apos;, &apos;favoriteDoctor&apos;, $whovian);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>This test instantiates a new <code>Whovian</code> instance with one string argument: <code>&quot;Peter Capaldi&quot;</code>. We use the PHPUnit assertion method <code>assertAttributeEquals()</code> to assert the <code>favoriteDoctor</code> property on the <code>$whovian</code> instance equals the string <code>&quot;Peter Capaldi&quot;</code>.</p>
+<p>The PHPUnit assertion <code>assertAttributeEquals()</code> receives three arguments. The first argument is the expected value; the second argument is the property name; and the final argument is the object to inspect. What’s neat is that the <code>assertAttributeEquals()</code> method can inspect and verify protected properties using PHP’s reflection capabilities.</p>
+<p>Why do we inspect the favorite doctor value with the <code>assertAttributeEquals()</code> assertion instead of a getter method (e.g., <code>getFavoriteDoctor()</code>)? When we write a test, we test <em>only one specific method in isolation</em>. Ideally, our test does not rely on other methods. In this particular example, we test the <code>__construct()</code> method and verify that it assigns its argument value to the object’s <code>$favoriteDoctor</code> property. The <code>assertAttributeEquals()</code> assertion lets us inspect the object’s internal state without relying on a separate, untested getter method.</p>
+<h4 id="Test-2-say"><a href="#Test-2-say" class="headerlink" title="Test 2: say()"></a>Test 2: say()</h4><p>Our next test confirms that the Whovian instance’s say() method returns a string value that contains its favorite doctor’s name:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public function testSaysDoctorName()</div><div class="line">&#123;</div><div class="line">    $whovian = new Whovian(&apos;David Tennant&apos;);</div><div class="line">    $this-&gt;assertEquals(&apos;The best doctor is David Tennant&apos;, $whovian-&gt;say());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>We use the PHPUnit assertion <code>assertEquals()</code> to compare two values. The assertion’s first argument is the expected value. Its second argument is the value to inspect.</p>
+<h4 id="Test-3-respondTo-in-agreement"><a href="#Test-3-respondTo-in-agreement" class="headerlink" title="Test 3: respondTo() in agreement"></a>Test 3: respondTo() in agreement</h4><p>But what if a <code>Whovian</code> <em>disagrees</em>? Get out of the area as quickly as possible, because s#!t is going to hit the fan. Well, actually, it’ll just throw an exception. Let’s test that:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @expectedException Exception</div><div class="line"> */</div><div class="line">public function testRespondToInDisagreement()</div><div class="line">&#123;</div><div class="line">    $whovian = new Whovian(&apos;David Tennant&apos;);</div><div class="line"></div><div class="line">    $opinion = &apos;No way. Matt Smith was awesome!&apos;;</div><div class="line">    $whovian-&gt;respondTo($opinion);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>If this test throws an exception, the test passes. Otherwise, the test fails. We can test this condition with the <code>@expectedException</code> annotation.</p>
+<h2 id="Run-Tests"><a href="#Run-Tests" class="headerlink" title="Run Tests"></a>Run Tests</h2><p>After you write each test, you should run your test suite to ensure that it passes. This is really simple to do. Open your terminal application and navigate to your project’s topmost directory (the same directory as your <em>phpunit.xml</em> configuration file). We’ll use the PHPUnit binary installed with Composer. Use this command to start the PHPUnit test runner:</p>
+<pre><code>vendor/bin/phpunit -c phpunit.xml
+</code></pre><p>The <code>-c</code> option specifies the path to the PHPUnit configuration file. The terminal shows the results from the PHPUnit command-line test runner, and they look like:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/php-unit-test.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>These results tell us:</p>
+<ol>
+<li>PHPUnit read our configuration file.</li>
+<li>PHPUnit took 24 ms to complete.</li>
+<li>PHPUnit used 3.5 MB of memory.</li>
+<li>PHPUnit successfully ran five tests and five assertions.</li>
+</ol>
+<h2 id="Code-Coverage"><a href="#Code-Coverage" class="headerlink" title="Code Coverage"></a>Code Coverage</h2><p>We know our PHPUnit tests pass. However, are we sure we tested as much of our code as possible? Perhaps we forgot to test something. We can see exactly which code is tested (and untested) with PHPUnit’s code coverage report. We already specify the path(s) to our source code files in the PHPUnit configuration file. All PHP files in the whitelisted directories are included in PHPUnit’s code coverage report. We can generate code coverage each time we run the PHPUnit test runner:</p>
+<pre><code>vendor/bin/phpunit -c phpunit.xml --coverage-html coverage
+</code></pre><p>This is the same command we used earlier, except we append the new <code>--coverage-html</code> option whose value is the path to a the code coverage report directory. After you run this command, open the newly generated <em>coverage/index.html</em> file in a web browser to see the code coverage results. Ideally, you want to see 100% coverage across the board. However, 100% coverage is <em>not realistic</em> and definitely should not be a requirement. How much coverage is good is subjective and varies from project to project.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/php-test-covarage.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="Continuous-Testing-with-Travis-CI"><a href="#Continuous-Testing-with-Travis-CI" class="headerlink" title="Continuous Testing with Travis CI"></a>Continuous Testing with Travis CI</h2><p>Sometimes even the best PHP developers forget to write tests. This is why it is important to automate your tests. The best tests are like a good backup strategy—out of sight and out of mind. <em>Tests should run automatically</em>. My favorite continuous testing service is <a href="https://travis-ci.org/" target="_blank" rel="external">Travis CI</a> because it has native hooks into GitHub repositories. I can run my application tests within Travis CI every time I push code to GitHub. Travis CI runs my tests against multiple PHP versions, too.</p>
+<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>If you have not used Travis CI before, go to <a href="https://travis-ci.org" target="_blank" rel="external"><em>https://travis-ci.org</em></a> (for public repositories) or <a href="https://travis-ci.com" target="_blank" rel="external"><em>https://travis-ci.com</em></a> (for private repositories). Log in with your GitHub account. Follow the on-screen instructions to choose which repository to test with Travis CI. </p>
+<p>Next, create the <em>.travis.yml</em> Travis CI configuration file in your application’s topmost directory. Don’t forget the leading <em>.</em> character! Save, commit, and push the Travis CI configuration file to your GitHub repository. Here’s an example Travis CI configuration:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">language: php</div><div class="line">php:</div><div class="line">  - 5.4</div><div class="line">  - 5.5</div><div class="line">  - 5.6</div><div class="line">  - hhvm</div><div class="line">install:</div><div class="line">  - composer install --no-dev --quiet</div><div class="line">script: phpunit -c phpunit.xml --coverage-text</div></pre></td></tr></table></figure>
+<p>The Travis CI configuration is written in YAML format and includes these settings:</p>
+<ul>
+<li><p>language</p>
+<p>  This is the language used for our application. We set this to php. This value is case-sensitive!</p>
+</li>
+<li><p>php</p>
+<p>  Travis CI runs our application tests against these PHP versions. It is important that you test against all PHP versions supported by your application.</p>
+</li>
+<li><p>install</p>
+<p>  This is a bash command executed by Travis CI before it runs application tests. This is where you instruct Travis CI to install your project’s Composer dependencies. It is important that you use the –no-dev option to avoid installing unnecessary development dependencies.</p>
+</li>
+<li><p>script</p>
+<p>  This is the bash command executed by Travis CI to run application tests. By default, this is phpunit. You can override Travis CI’s default command with this setting. In this example, we tell Travis CI to use our custom PHPUnit configuration file and generate plain text coverage results.</p>
+</li>
+</ul>
+<h3 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h3><p>Travis CI automatically runs your application tests every time you push new commits to your GitHub repository and emails you the test results. How cool is that? There are, of course, many more Travis CI settings to further customize the Travis CI testing environment (e.g., install custom PHP extensions, use custom <code>ini</code> settings, and so on). Read more about Travis CI configuration for PHP at <a href="http://bit.ly/build-php" target="_blank" rel="external">Travis CI</a>.</p>
+<h2 id="Further-Reading"><a href="#Further-Reading" class="headerlink" title="Further Reading"></a>Further Reading</h2><p>Here are a few links to help you learn more about PHP application testing:</p>
+<ul>
+<li><a href="https://phpunit.de/" target="_blank" rel="external">https://phpunit.de/</a></li>
+<li><a href="http://www.phpspec.net/docs/introduction.html" target="_blank" rel="external">http://www.phpspec.net/docs/introduction.html</a></li>
+<li><a href="http://behat.org/" target="_blank" rel="external">http://behat.org/</a></li>
+<li><a href="https://leanpub.com/grumpy-phpunit" target="_blank" rel="external">https://leanpub.com/grumpy-phpunit</a></li>
+<li><a href="https://leanpub.com/grumpy-testing" target="_blank" rel="external">https://leanpub.com/grumpy-testing</a></li>
+<li><a href="http://www.littlehart.net/atthekeyboard/" target="_blank" rel="external">http://www.littlehart.net/atthekeyboard/</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/PHP/2015-05-31-php-test.html" target="_blank" rel="external">http://blog.inching.org/PHP/2015-05-31-php-test.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorial/">tutorial</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/PHP/2015-05-31-php-test.html&title=《PHP Test》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/PHP/2015-05-31-php-test.html&title=《PHP Test》 — Balance&source=See 《Modern PHP》 and 《Learning PHP, MySQL &amp; JavaScript, 4th Edition》.
+Let..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/PHP/2015-05-31-php-test.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《PHP Test》 — Balance&url=http://blog.inching.org/PHP/2015-05-31-php-test.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/PHP/2015-05-31-php-test.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/WordPress/2015-06-01-wordpress-tutorial.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">WordPress Tutorial</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/PHP/2015-05-30-php-exception.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">PHP Errors and Exceptions</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/PHP/2015-05-31-php-test.html&title=《PHP Test》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/PHP/2015-05-31-php-test.html&title=《PHP Test》 — Balance&source=See 《Modern PHP》 and 《Learning PHP, MySQL &amp; JavaScript, 4th Edition》.
+Let..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/PHP/2015-05-31-php-test.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《PHP Test》 — Balance&url=http://blog.inching.org/PHP/2015-05-31-php-test.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/PHP/2015-05-31-php-test.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3awY7DIAxF0f7/T2e2I7VN7rPpAnNZVVUCnCwsg/164XH9G7Xnv737/gxfJR4yZMjYlnHdjvtt3S/Mt0jWfVhRhgwZBzDIJsjmCK+21sOeZciQIePtGRQEATVdV4YMGTJq061KKGtHXxkyZJzDIBu6Tw1JOrhqfhkyZJzGWHXI/MXvn9Q3ZMiQsRXjCseqckJnDx/WkiFDxmgGD3D8OForZ6YBV4YMGacxeFJIDplpIZNfzy3LbWXIkLEVgy/AGSm7Vs78kOHKkCFjKIOXIXl4RUuWgu/Dh5YhQ8ZQRu1gSRLBtKliWUOYDBkyhjLSg2jtoi0NuMEMMmTIGM0gV/+kqYs3fqVhmh+PZciQcSajFgRrRYI0lfw6mwwZMkYz0ouwzmVZfCPYabOQIUPG5ox+ubGTPpI9oH9kyJBxGIO8TIoHnRCcFlNlyJAxm9FpoUgbNdIGiwU9IzJkyBjBqL229q0FDRkyZMgYzegnZ/x3WlpI/5EhQ8ZsBrkUq6WGtSYM9NX5pZsMGTKGMoqnYRzE00YKhJchQ8YxDP6bd23USqEklZQhQ8YJjCscnVYJHtZjqgwZMkYz+OCtDzylIwfXVUFfhgwZuzP6JYH0ii29wkPBXYYMGQcweOCrNXj153+YWYYMGTJKF/rp/wT2cCKXIUOGDJAakhQzTTTRp5EhQ8YBjHT5WuhM5yGppwwZMk5g8KNjmjKu+ij9o68MGTK2ZfwBVanRP8yRB/MAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

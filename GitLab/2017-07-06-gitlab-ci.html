@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>GitLab CI | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="gitlab">
+    <meta name="description" content="Android CI直接使用脚本编译 Android 的 CI 版本有两个版本，一个是官方推荐的版本：
+
+gitlab-ci.yml Source: gitlab-ci-android
+文章：Setting up GitLab CI for Android projects
+
+功能比较完善：
+
+build
+Unit Test
+UI Test
+
+有几个问题：
+
+It cannot target AN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitLab CI">
+<meta property="og:url" content="http://blog.inching.org/GitLab/2017-07-06-gitlab-ci.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="Android CI直接使用脚本编译 Android 的 CI 版本有两个版本，一个是官方推荐的版本：
+
+gitlab-ci.yml Source: gitlab-ci-android
+文章：Setting up GitLab CI for Android projects
+
+功能比较完善：
+
+build
+Unit Test
+UI Test
+
+有几个问题：
+
+It cannot target AN">
+<meta property="og:updated_time" content="2017-11-05T05:25:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GitLab CI">
+<meta name="twitter:description" content="Android CI直接使用脚本编译 Android 的 CI 版本有两个版本，一个是官方推荐的版本：
+
+gitlab-ci.yml Source: gitlab-ci-android
+文章：Setting up GitLab CI for Android projects
+
+功能比较完善：
+
+build
+Unit Test
+UI Test
+
+有几个问题：
+
+It cannot target AN">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">GitLab CI</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">GitLab CI</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-05T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-07-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/GitLab/">GitLab</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Android-CI"><span class="post-toc-text">Android CI</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#直接使用脚本"><span class="post-toc-text">直接使用脚本</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用-docker"><span class="post-toc-text">使用 docker</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-gitlab-ci"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">GitLab CI</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-06 00:00:00" datetime="2017-07-05T16:00:00.000Z"  itemprop="datePublished">2017-07-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/GitLab/">GitLab</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Android-CI"><a href="#Android-CI" class="headerlink" title="Android CI"></a>Android CI</h1><h2 id="直接使用脚本"><a href="#直接使用脚本" class="headerlink" title="直接使用脚本"></a>直接使用脚本</h2><p>编译 Android 的 CI 版本有两个版本，一个是官方推荐的版本：</p>
+<ul>
+<li><code>gitlab-ci.yml</code> Source: <a href="https://gitlab.com/greysonp/gitlab-ci-android" target="_blank" rel="external">gitlab-ci-android</a></li>
+<li>文章：<a href="https://about.gitlab.com/2016/11/30/setting-up-gitlab-ci-for-android-projects/" target="_blank" rel="external">Setting up GitLab CI for Android projects</a></li>
+</ul>
+<p>功能比较完善：</p>
+<ul>
+<li>build</li>
+<li>Unit Test</li>
+<li>UI Test</li>
+</ul>
+<p>有几个问题：</p>
+<ul>
+<li><p>It cannot target ANDROID_SDK_TOOLS higher than 24.4.1.</p>
+<p>  这个问题可以根据  <a href="https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1956" target="_blank" rel="external">Android SDK Build-Tools 25.0.1 and Android SDK Platform 25 license problem (#1956) · Issues · GitLab.org / gitlab-ci-multi-runner · GitLab</a> 文章中 Marcin 的回答解决。</p>
+</li>
+<li><p><code>ANDROID_BUILD_TOOLS</code> 和 <code>ANDROID_SDK_TOOLS</code> 必须和工程一致。</p>
+</li>
+<li><p>执行 <code>functionalTests</code> 时报错：</p>
+<blockquote>
+<p>$ ./android-wait-for-emulator<br>emulator: WARNING: Increasing RAM size to 1GB<br>emulator: ERROR: x86 emulation currently requires hardware acceleration!<br>Please ensure KVM is properly installed and usable.<br>CPU acceleration status: KVM is not installed on this machine (/dev/kvm is missing).<br>ERROR: Job failed: execution took longer than 1h0m0s seconds</p>
+</blockquote>
+</li>
+</ul>
+<p>See <a href="https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1956" target="_blank" rel="external">Android SDK Build-Tools 25.0.1 and Android SDK Platform 25 license problem (#1956) · Issues · GitLab.org / gitlab-ci-multi-runner · GitLab</a></p>
+<p>最终可以的版本为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">image: openjdk:8-jdk</div><div class="line"></div><div class="line">variables:</div><div class="line">  ANDROID_COMPILE_SDK: &quot;25&quot;</div><div class="line">  ANDROID_BUILD_TOOLS: &quot;25.0.3&quot;</div><div class="line">  ANDROID_SDK_TOOLS: &quot;24.4.1&quot;</div><div class="line"></div><div class="line">before_script:</div><div class="line">  - apt-get --quiet update --yes</div><div class="line">  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1</div><div class="line">  - wget --quiet --output-document=android-sdk.tgz https://dl.google.com/android/android-sdk_r$&#123;ANDROID_SDK_TOOLS&#125;-linux.tgz</div><div class="line">  - tar --extract --gzip --file=android-sdk.tgz</div><div class="line">  - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter android-$&#123;ANDROID_COMPILE_SDK&#125;</div><div class="line">  - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter platform-tools</div><div class="line">  - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter build-tools-$&#123;ANDROID_BUILD_TOOLS&#125;</div><div class="line">  - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter extra-android-m2repository</div><div class="line">  - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter extra-google-google_play_services</div><div class="line">  - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter extra-google-m2repository</div><div class="line">  - export ANDROID_HOME=$PWD/android-sdk-linux</div><div class="line">  - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/</div><div class="line">  - chmod +x ./gradlew</div><div class="line"></div><div class="line">stages:</div><div class="line">  - build</div><div class="line">  - test</div><div class="line"></div><div class="line">build:</div><div class="line">  stage: build</div><div class="line">  script:</div><div class="line">    - ./gradlew assembleDebug</div><div class="line">  artifacts:</div><div class="line">    paths:</div><div class="line">    - app/build/outputs/</div><div class="line"></div><div class="line">unitTests:</div><div class="line">  stage: test</div><div class="line">  script:</div><div class="line">    - ./gradlew test</div></pre></td></tr></table></figure>
+<p>另外一个方案也是这边文章中提到的，使用 sdkmanager 来解决：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">image: openjdk:8-jdk</div><div class="line"></div><div class="line">variables:</div><div class="line">  ANDROID_COMPILE_SDK: &quot;25&quot;</div><div class="line">  ANDROID_BUILD_TOOLS: &quot;25.0.3&quot;</div><div class="line">  ANDROID_SDK_TOOLS_REV: &quot;3859397&quot;  # &quot;26.0.1&quot;</div><div class="line">  ANDROID_CMAKE_REV: &quot;3.6.4111459&quot;</div><div class="line">  GIT_SUBMODULE_STRATEGY: recursive # Remove if you don&apos;t have to clone submodules</div><div class="line"></div><div class="line">before_script:</div><div class="line">  - mkdir $HOME/.android # For sdkmanager configs</div><div class="line">  - echo &apos;count=0&apos; &gt; $HOME/.android/repositories.cfg # Avoid warning</div><div class="line">  - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-$&#123;ANDROID_SDK_TOOLS_REV&#125;.zip</div><div class="line">  - mkdir $PWD/android-sdk-linux</div><div class="line">  - unzip -qq android-sdk.zip -d $PWD/android-sdk-linux</div><div class="line">  - export ANDROID_HOME=$PWD/android-sdk-linux</div><div class="line">  - export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle # Remove if you don&apos;t need NDK</div><div class="line">  - export PATH=$PATH:$ANDROID_HOME/platform-tools/:$ANDROID_NDK_HOME</div><div class="line">  - echo y | $ANDROID_HOME/tools/bin/sdkmanager --update </div><div class="line">  - echo y | $ANDROID_HOME/tools/bin/sdkmanager &apos;tools&apos;</div><div class="line">  - echo y | $ANDROID_HOME/tools/bin/sdkmanager &apos;platform-tools&apos;</div><div class="line">  - echo y | $ANDROID_HOME/tools/bin/sdkmanager &apos;build-tools;&apos;$ANDROID_BUILD_TOOLS</div><div class="line">  - echo y | $ANDROID_HOME/tools/bin/sdkmanager &apos;platforms;android-&apos;$ANDROID_COMPILE_SDK</div><div class="line">  - echo y | $ANDROID_HOME/tools/bin/sdkmanager &apos;extras;android;m2repository&apos;</div><div class="line">  - echo y | $ANDROID_HOME/tools/bin/sdkmanager &apos;extras;google;google_play_services&apos;</div><div class="line">  - echo y | $ANDROID_HOME/tools/bin/sdkmanager &apos;extras;google;m2repository&apos;</div><div class="line">  - echo y | $ANDROID_HOME/tools/bin/sdkmanager &apos;cmake;&apos;$ANDROID_CMAKE_REV</div><div class="line">  - echo y | $ANDROID_HOME/tools/bin/sdkmanager &apos;ndk-bundle&apos; # Remove if you don&apos;t need NDK</div><div class="line">  - chmod +x ./gradlew</div><div class="line"></div><div class="line">stages:</div><div class="line">  - build</div><div class="line"></div><div class="line">build:</div><div class="line">  stage: build</div><div class="line">  script:</div><div class="line">    - ./gradlew assembleDebug --stacktrace</div><div class="line">  artifacts:</div><div class="line">    name: &quot;$&#123;CI_PROJECT_NAME&#125;_$&#123;CI_COMMIT_REF_NAME&#125;_$&#123;CI_COMMIT_TAG&#125;_$&#123;CI_COMMIT_SHA&#125;&quot;</div><div class="line">    paths:</div><div class="line">    - app/build/outputs/</div></pre></td></tr></table></figure>
+<h2 id="使用-docker"><a href="#使用-docker" class="headerlink" title="使用 docker"></a>使用 docker</h2><p>另外有两个专门用于编译 android 的 docker:</p>
+<ul>
+<li><a href="https://github.com/jangrewe/gitlab-ci-android" target="_blank" rel="external">jangrewe/gitlab-ci-android: GitLab CI image for building Android apps</a></li>
+<li><a href="https://gitlab.com/showcheap/android-ci" target="_blank" rel="external">Sucipto / android-ci · GitLab</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-11-05T05:25:34.000Z" itemprop="dateUpdated">2017-11-05 13:25:34</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/GitLab/2017-07-06-gitlab-ci.html" target="_blank" rel="external">http://blog.inching.org/GitLab/2017-07-06-gitlab-ci.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gitlab/">gitlab</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/GitLab/2017-07-06-gitlab-ci.html&title=《GitLab CI》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/GitLab/2017-07-06-gitlab-ci.html&title=《GitLab CI》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/GitLab/2017-07-06-gitlab-ci.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《GitLab CI》 — Balance&url=http://blog.inching.org/GitLab/2017-07-06-gitlab-ci.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/GitLab/2017-07-06-gitlab-ci.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2017-10-09-android-strict-mode.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android Strict Mode</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/GitLab/2017-07-05-gitlab.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">GitLab Pages</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/GitLab/2017-07-06-gitlab-ci.html&title=《GitLab CI》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/GitLab/2017-07-06-gitlab-ci.html&title=《GitLab CI》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/GitLab/2017-07-06-gitlab-ci.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《GitLab CI》 — Balance&url=http://blog.inching.org/GitLab/2017-07-06-gitlab-ci.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/GitLab/2017-07-06-gitlab-ci.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3aMXLDMAwEwPz/006bIlLuQDszIpdVJiObWBUwQOLrK16vH2v25NVnf/4/32W4MDAwHst43a6rZ5IQrwJNYshjw8DAOIfRbv+uBHoVer4LBgYGxixRznj3JAwMDIxZwl0vKO95GBgYGG1AScGXF4IJ+CO9OAYGxgMZ+an7///9kfsNDAyMRzFe5WovL1eO24qoMDAwtmbkCS6/vMxT6qy4vPwGDAyMIxltK5s0wLPjtqhYxMDA2JrRjlYkZVx7WNZeTkTDYRgYGMcwklZ2/apgVj5iYGCcwGi3z4cn1i9Bi0E0DAyMAxhJEkzCypvk9nv+aGUxMDAOYORjYbPmdv2q8o8XhIGBsTUjT7VF+iuP5NrBi/qXBAMD4+GMmfUTbWp7VfDLmAUGBsamjLYfnE04rExE5N+JgYGxN2PWrOa82XVCndAxMDC2ZuTFX5vfii1H7W7964GBgfFAxmzMYlZ7zpJpNPCBgYGxNWM2YLE+PJEfutVtLQYGxqaMdvAreT4vEGdl6GWBiIGBcQwjL87ygjJ/Ke1IGQYGxpmM9SP+9WvR+hAQAwNjU8arXG3QbXDD0hMDA2Nrxtty9sKo2ezwbhYJBgbGcxmzkaw2dd4j29a3flsYGBhbMNrj+PsN2oGJtpTEwMDASJJsvn2boNvBCwwMDIx8g6SwS1rW9nIUAwPjHMYbxh2C4GbJ983HbRgYGA9ktK1jQs1HwWYJfXipiYGB8TzGN/m72xmnndmDAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

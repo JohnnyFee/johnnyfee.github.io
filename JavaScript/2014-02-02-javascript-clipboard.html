@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JavaScript 剪切板 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="概述为了阻止恶意脚本攻击访问者的电脑，Web应用程序均运行在沙箱环境中。该沙箱环境限制了对本地资源的访问，如文件系统、系统剪切板。这篇文章说明了限制访问剪切板的原因。幸运的是，有些方法可以间接访问系统剪切板，不幸的是，但每个方法都有瑕疵，而且至今没有非常完美的方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 剪切板">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-02-02-javascript-clipboard.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="概述为了阻止恶意脚本攻击访问者的电脑，Web应用程序均运行在沙箱环境中。该沙箱环境限制了对本地资源的访问，如文件系统、系统剪切板。这篇文章说明了限制访问剪切板的原因。幸运的是，有些方法可以间接访问系统剪切板，不幸的是，但每个方法都有瑕疵，而且至今没有非常完美的方法。">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 剪切板">
+<meta name="twitter:description" content="概述为了阻止恶意脚本攻击访问者的电脑，Web应用程序均运行在沙箱环境中。该沙箱环境限制了对本地资源的访问，如文件系统、系统剪切板。这篇文章说明了限制访问剪切板的原因。幸运的是，有些方法可以间接访问系统剪切板，不幸的是，但每个方法都有瑕疵，而且至今没有非常完美的方法。">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript 剪切板</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript 剪切板</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-02-01T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-02-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-text">概述</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-clipboard"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript 剪切板</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-02-02 00:00:00" datetime="2014-02-01T16:00:00.000Z"  itemprop="datePublished">2014-02-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>为了阻止恶意脚本攻击访问者的电脑，Web应用程序均运行在沙箱环境中。该沙箱环境限制了对本地资源的访问，如文件系统、系统剪切板。<a href="http://news.cnet.com/8301-1009_3-10021715-83.html" target="_blank" rel="external">这篇文章</a>说明了限制访问剪切板的原因。幸运的是，有些方法可以间接访问系统剪切板，不幸的是，但每个方法都有瑕疵，而且至今没有非常完美的方法。</p>
+<a id="more"></a>
+<p>##IE剪切板</p>
+<p>在IE中可以通过<code>window.clipboardData</code>来读写剪切板。如：</p>
+<pre><code>// 写入数据到剪切板
+var didSucceed = window.clipboardData.setData(&apos;Text&apos;, &apos;text to copy&apos;);
+// 从剪切板读取数据
+var clipText = window.clipboardData.getData(&apos;Text&apos;);
+</code></pre><p>首次访问clipboardData对象时，IE 7+ 会弹出“是否允许访问剪切板”提示框（在IE6-中和在本地运行脚本不会弹出该提示框）。一旦用户允许，整个session生命周期内，均不再弹出提示框。为了防止用户点击禁止访问剪切板而造成剪切板内容被清空，可以使用以下代码：</p>
+<pre><code>var clipText = window.clipboardData.getData(&apos;Text&apos;);
+if (clipText == “”) { // Could be empty, or failed
+    // Verify failure
+    if (!window.clipboardData.setData(&apos;Text&apos;, clipText))
+        clipText = null;
+}
+</code></pre><p>##一个变通的方法：使用Flash来拷贝</p>
+<p>Flash 9之前（包括IE9），通过操作DOM操作，在document中切入一个flash对象，要拷贝的文本作为参数传递给该嵌入对象，该对象便通过Flash API将要拷贝的文本拷贝到系统剪切板。这是Flash 9之前的一个安全漏洞，Flash 10已修复，<a href="http://code.google.com/p/zeroclipboard/" target="_blank" rel="external">对剪切板未经允许的访问将被拒绝</a>，而只能通过鼠标点击才能获取访问剪切板的许可。</p>
+<p><a href="https://github.com/zeroclipboard/zeroclipboard" target="_blank" rel="external">ZeroClipboard</a>使用鼠标点击的特性来访问剪切板，并同时支持Flash 9和Flash 10。实现原理为：在button元素上放置一个不可见的Flash，但用户点击时，ZeroClipboard便可将待拷贝的对象成功写入剪切板。这其实也是一个安全漏洞，谁知道什么时候又会被打补丁修复呢。</p>
+<p>网络上使用ZeroClipboard为jquery提供了一个一个插件<a href="http://steamdev.com/zclip/" target="_blank" rel="external">zClip</a>。</p>
+<p>使用ZeroClipboard来访问剪切板存在诸多缺点：</p>
+<ul>
+<li>只能通过点击就来操作剪切板，而不允许通过其他方式，如Ctrl + C，或者调用API等。</li>
+<li>要求预装Flash。尽管可以通过Flash Detection Kit来检测Flash的安装情况。</li>
+</ul>
+<p>##使用Java Applets</p>
+<p>使用Java Applets的实现思路跟使用Flash的思路一样，只不过是借助Java Applet来访问本地资源，而非Flash。Java与JavaScript的交互可以通过<a href="https://developer.mozilla.org/zh-CN/docs/LiveConnect" target="_blank" rel="external">LiveConnect</a>类库。除了IE（通过ActiveX），其他大部分的主流浏览器都支持该方法。最大的缺点是需要依赖于JVM。</p>
+<p>##使用<a href="https://developer.mozilla.org/en-US/docs/Rich-Text_Editing_in_Mozilla" target="_blank" rel="external">execCommand</a></p>
+<p>可以使用JavaScript的execCommand方法来执行如“Copy”，“Paste”的命令。使用方法一般为将待拷贝的内容放在textarea中，获取焦点、全选、调用<code>execCommand(&quot;copy&quot;)</code>方法，这个textarea始终是隐藏的。但这种方法也难易保证各浏览器都可用。如Mozilla会抛出一个安全方面的异常，Opera将不起作用。</p>
+<p>##剪切板事件</p>
+<p>IE, Webkit and FF 3+支持6中不同的剪切板事件，如onbeforecut、oncut、onbeforecopy、oncopy、onbeforepaste、onpaste，可以从事件的参数中获剪切板的内容：</p>
+<pre><code>document.body.onpaste = function(e) {
+    alert(e.clipboardData.getData(&quot;Text&quot;));
+    e.preventDefault();
+}
+</code></pre><p>但因为各浏览器对这些事件的支持各不一样，而且使用上也不大自由，使用这种方法也不大容易。</p>
+<p>##仿造DOM事件</p>
+<p>是否可以使用代码触发Ctrl+C和Ctrl+V事件，是否可以使用execCommand来仿造类似的事件来实现拷贝？这是不可实现的，因为Web的沙箱环境不允许JavaScript的仿造用户操作。</p>
+<p>##Chrome剪切板</p>
+<p>Chrome的沙箱环境不允许直接访问剪切板，建议考虑以下几种变通的方法。</p>
+<p><strong>使用弹出框：</strong></p>
+<pre><code>function copyToClipboard(text) {
+  window.prompt(&quot;Copy to clipboard: Ctrl+C, Enter&quot;, text);
+}
+</code></pre><p>这样可以避免浏览器的兼容问题，缺点是会有一个额外的弹出框，需要用户主动复制，请参考 <a href="http://stackoverflow.com/questions/400212/how-to-copy-to-the-clipboard-in-javascript" target="_blank" rel="external">How to copy to the clipboard in JavaScript?</a>。</p>
+<p><strong>使用executeCommand</strong></p>
+<p>在普通的网页中无法成功调用executeCommand,但在chrome扩展开发中可以调用该接口，前提是需要在manifest.json中添加clipboardWrite或者clipboardRead权限，并且只能在extension page(backgroud page and pop page)中调用才能生效。Demo请参考<a href="http://stackoverflow.com/questions/13899299/write-text-to-clipboard" target="_blank" rel="external">Write text to Clipboard</a>，这可能是适合于Chrome最好的解决方案。可参考剪切板历史的Chrome扩展<a href="https://github.com/Deliaz/clipboard-history/tree/master/js" target="_blank" rel="external">Deliaz / clipboard-history</a>和<a href="https://github.com/rick-li/clipboardExt" target="_blank" rel="external">rick-li / clipboardExt</a>。</p>
+<p>##结论</p>
+<p>目前为止，还没法构建完美的访问剪切板的API：</p>
+<pre><code>Clipboard = {
+    copy : function(data) {
+        //... implemention …
+    },
+     getData : function() {
+        // … implementation …
+     }
+};
+</code></pre><p>##参考</p>
+<ul>
+<li><a href="http://brooknovak.wordpress.com/2009/07/28/accessing-the-system-clipboard-with-javascript/" target="_blank" rel="external">Accessing the System Clipboard with JavaScript – A Holy Grail?</a></li>
+<li><a href="http://stackoverflow.com/questions/400212/how-to-copy-to-the-clipboard-in-javascript" target="_blank" rel="external">How to copy to the clipboard in JavaScript?</a></li>
+<li><a href="http://stackoverflow.com/questions/17527870/how-does-trello-access-the-users-clipboard" target="_blank" rel="external">How does Trello access the user’s clipboard?</a></li>
+<li><a href="http://stackoverflow.com/questions/400212/how-to-copy-to-the-clipboard-in-javascript?lq=1" target="_blank" rel="external">How to copy to the clipboard in JavaScript?</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-02-02-javascript-clipboard.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-02-02-javascript-clipboard.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-02-javascript-clipboard.html&title=《JavaScript 剪切板》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-02-javascript-clipboard.html&title=《JavaScript 剪切板》 — Balance&source=概述为了阻止恶意脚本攻击访问者的电脑，Web应用程序均运行在沙箱环境中。该沙箱环境限制了对本地资源的访问，如文件系统、系统剪切板。这篇文章说明了限制访问剪..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-02-javascript-clipboard.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 剪切板》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-02-javascript-clipboard.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-02-javascript-clipboard.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Tool/2014-02-04-markdown.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Markdown</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-01-30-javascript-getselection.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript 获取选取范围</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-02-javascript-clipboard.html&title=《JavaScript 剪切板》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-02-javascript-clipboard.html&title=《JavaScript 剪切板》 — Balance&source=概述为了阻止恶意脚本攻击访问者的电脑，Web应用程序均运行在沙箱环境中。该沙箱环境限制了对本地资源的访问，如文件系统、系统剪切板。这篇文章说明了限制访问剪..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-02-javascript-clipboard.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 剪切板》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-02-javascript-clipboard.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-02-javascript-clipboard.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3aQW7jMAwF0N7/0jPbAtN4/ieltAWeV0FsOHpaiAzJj4/4+vPpevX9v3c/P/Pq8+zu4QsPDw9vsfRXy82fyRea/NbzNj2/Bw8PD+82Lz/QE0zy/nbRSZDAw8PD+5m8HJDD2oQeDw8P7/fynssTyfvzxBoPDw/vp/HaQsNsKW1h4q21Fjw8PLyYlye1P+fzlf4eHh4e3rqrPgsSp0LO/sLDw8O7wcsP3P2yNgd9ni7j4eHhvZP3XJB9xszy29mG1sk3Hh4e3lFenhzPGmbJ+/Mn65IEHh4e3jVeUkqYNf7zFtemAVYn03h4eHjbk3mV7LapdluYeN6OYRsMDw8Pb8FrD+sc8xwqZvlwvoaX/T08PDy8Ne/UMFZyfO8T9GdAW1bGw8PD2/PyZHdT8G1HuPJwhYeHh/dOXls2bYuws4M+38r/vAcPDw/vKG/TdpotLkm7N4GkqLXg4eHhjXh5Mt02xmYl2vboP/ZfAQ8PD6/kbQYChoNQZcHiWK0FDw8Pb82bhYEkzb0XGIokHg8PD+8Cr01bk6M5GQVo39xuKx4eHt493mwIYFNUPfVMFBLw8PDw3s5riwttAGgT7rxRh4eHh3ebty8xtGnxPhhE4wh4eHh4F3htI6ropwUtq9nWtENaeHh4eDd4+QGd300wm3Q52VY8PDy827zhrNZosCAp47bNuZdvwMPDw7vMy3+yTYjbYani6G/3Gw8PD+8QrA0Ms+ZZXv7YJN9fDF3h4eHhHeJtgsepUap8TKENVHh4eHj3eLPyawuYFRfy0auXd/Hw8PCu8faDTcmhf7Gmko9b4eHh4X0Tb5+IJ0Gi3W48PDy838Jr77bF4ryfVSwODw8Pb81rCwFJ6aEd28rXUPwKHh4e3gXe8E9+WZKYNfjzTTxdw8DDw8P78u5ffl2mS6Ri010AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Angular Unit Test | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="test,angular">
+    <meta name="description" content="See 电子书 AngularJS: Up and Running
+AngularJS 采用 Jasmine 作为它的测试框架，而且 AngularJS 为 Jasmine 提供了几个有用的扩展，让测试更加简单。
+测试 AngularJS 对象和测试其他普通的 JavaScript 类没有多大区别，特殊之处在于它的 DI 系统和应用到单元测试中的方式。
+所有测试相关的扩展和模拟对象都发布在一个分离">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular Unit Test">
+<meta property="og:url" content="http://blog.inching.org/Grunt/2014-11-11-angular-unit-test.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See 电子书 AngularJS: Up and Running
+AngularJS 采用 Jasmine 作为它的测试框架，而且 AngularJS 为 Jasmine 提供了几个有用的扩展，让测试更加简单。
+测试 AngularJS 对象和测试其他普通的 JavaScript 类没有多大区别，特殊之处在于它的 DI 系统和应用到单元测试中的方式。
+所有测试相关的扩展和模拟对象都发布在一个分离">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular Unit Test">
+<meta name="twitter:description" content="See 电子书 AngularJS: Up and Running
+AngularJS 采用 Jasmine 作为它的测试框架，而且 AngularJS 为 Jasmine 提供了几个有用的扩展，让测试更加简单。
+测试 AngularJS 对象和测试其他普通的 JavaScript 类没有多大区别，特殊之处在于它的 DI 系统和应用到单元测试中的方式。
+所有测试相关的扩展和模拟对象都发布在一个分离">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Angular Unit Test</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Angular Unit Test</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-11-10T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-11-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Grunt/">Grunt</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Karma"><span class="post-toc-text">Karma</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Setup"><span class="post-toc-text">Setup</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Karma-Plugins"><span class="post-toc-text">Karma Plugins</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#运行调试"><span class="post-toc-text">运行调试</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Explaining-the-Karma-Config"><span class="post-toc-text">Explaining the Karma Config</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#运行单元测试"><span class="post-toc-text">运行单元测试</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#FAQ"><span class="post-toc-text">FAQ</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#End-to-End-Testing"><span class="post-toc-text">End-to-End Testing</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Set-Up"><span class="post-toc-text">Set Up</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Protractor-Configuration"><span class="post-toc-text">Protractor Configuration</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#An-End-to-End-Test"><span class="post-toc-text">An End-to-End Test</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Considerations"><span class="post-toc-text">Considerations</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PhantomJS"><span class="post-toc-text">PhantomJS</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单元测试服务"><span class="post-toc-text">单元测试服务</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模拟服务"><span class="post-toc-text">模拟服务</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Spies"><span class="post-toc-text">Spies</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单元测试服务器调用"><span class="post-toc-text">单元测试服务器调用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Integration-Level-Unit-Tests"><span class="post-toc-text">Integration-Level Unit Tests</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#测试控制器"><span class="post-toc-text">测试控制器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Mock-objects-and-asynchronous-code-testing"><span class="post-toc-text">Mock objects and asynchronous code testing</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#测试过滤器"><span class="post-toc-text">测试过滤器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#测试指令"><span class="post-toc-text">测试指令</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Steps-Involved-in-Testing-a-Directive"><span class="post-toc-text">Steps Involved in Testing a Directive</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tools"><span class="post-toc-text">Tools</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial-1"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-angular-unit-test"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Angular Unit Test</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-11-11 00:00:00" datetime="2014-11-10T16:00:00.000Z"  itemprop="datePublished">2014-11-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Grunt/">Grunt</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See 电子书 <a href="http://www.salttiger.com/angularjs-up-and-running/" target="_blank" rel="external">AngularJS: Up and Running</a></p>
+<p>AngularJS 采用 Jasmine 作为它的测试框架，而且 AngularJS 为 Jasmine 提供了几个有用的扩展，让测试更加简单。</p>
+<p>测试 AngularJS 对象和测试其他普通的 JavaScript 类没有多大区别，特殊之处在于它的 DI 系统和应用到单元测试中的方式。</p>
+<p>所有测试相关的扩展和模拟对象都发布在一个分离的文件 <a href="https://github.com/angular/bower-angular-mocks" target="_blank" rel="external"><code>angular-mocks.js</code> </a> 中。在 test runner 中不要忘记包含这个脚本，同时，不要在应用的发布版本中不要包含这个脚本。</p>
+<a id="more"></a>
+<h2 id="Karma"><a href="#Karma" class="headerlink" title="Karma"></a><a href="https://github.com/karma-runner/karma" target="_blank" rel="external">Karma</a></h2><p>Karma 是能够让测试以惊人的速度无痛运行的 test runner。它使用 NodeJS 和 SocketIO 加快了在多种浏览器中的执行测试的速度。</p>
+<p>Karma 作为 test runner，全权负责在我们的代码库中查找所有的单元测试、打开浏览器、在浏览器中执行这些单元测试，并且捕获结果。它不关心我们使用哪种语言或者框架来写的测试，它只管运行测试。</p>
+<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>安装 Karma CLI，以便在控制台中调用 karma 命令：</p>
+<pre><code>npm install -g karma-cli
+</code></pre><p>可以通过 <code>karma init</code> 来初始化 karma 配置，类似于 <code>npm init</code> 功能。具体配置项 See <a href="https://karma-runner.github.io/1.0/config/configuration-file.html" target="_blank" rel="external">Karma - Configuration File</a></p>
+<p>Karma 有个概念叫“插件”，这些插件允许你只选择你的工程需要的组件来用。通过这些插件，你可以选择使用哪个框架来写你的单元测试（Karma 是框架未知的），启动哪些浏览器，等等。</p>
+<p>开始之前，我们先安装 Jasmine 插件，以便我们可以使用 Jasmine 框架来写单元测试，以及 Chrome launcher 插件来自动启动 Google Chrome 浏览器。安装这两个插件的命令如下：</p>
+<pre><code>npm install karma-jasmine karma-chrome-launcher
+</code></pre><p><em>karma.conf.js</em> 的主要配置如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Karma configuration</span></div><div class="line"><span class="comment">// Generated on Tue Jun 28 2016 16:45:44 GMT+0800 (中国标准时间)</span></div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">config</span>) </span>&#123;</div><div class="line">  config.set(&#123;</div><div class="line"></div><div class="line">    <span class="comment">// base path that will be used to resolve all patterns (eg. files, exclude)</span></div><div class="line">    basePath: <span class="string">'./js'</span>,</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// frameworks to use</span></div><div class="line">    <span class="comment">// available frameworks: https://npmjs.org/browse/keyword/karma-adapter</span></div><div class="line">    frameworks: [<span class="string">'jasmine'</span>],</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// list of files / patterns to load in the browser</span></div><div class="line">    files: [</div><div class="line">        <span class="string">'*.js'</span></div><div class="line">    ],</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// list of files to exclude</span></div><div class="line">    exclude: [</div><div class="line">    ],</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// preprocess matching files before serving them to the browser</span></div><div class="line">    <span class="comment">// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor</span></div><div class="line">    preprocessors: &#123;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="attr">plugins</span>: [</div><div class="line">        <span class="comment">// Karma will require() these plugins</span></div><div class="line">        <span class="string">'karma-jasmine'</span>,</div><div class="line">        <span class="string">'karma-chrome-launcher'</span></div><div class="line">    ],</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// test results reporter to use</span></div><div class="line">    <span class="comment">// possible values: 'dots', 'progress'</span></div><div class="line">    <span class="comment">// available reporters: https://npmjs.org/browse/keyword/karma-reporter</span></div><div class="line">    reporters: [<span class="string">'progress'</span>],</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// web server port</span></div><div class="line">    port: <span class="number">9876</span>,</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// enable / disable colors in the output (reporters and logs)</span></div><div class="line">    colors: <span class="literal">true</span>,</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// level of logging</span></div><div class="line">    <span class="comment">// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG</span></div><div class="line">    logLevel: config.LOG_INFO,</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// enable / disable watching file and executing tests whenever any file changes</span></div><div class="line">    autoWatch: <span class="literal">true</span>,</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// start these browsers</span></div><div class="line">    <span class="comment">// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher</span></div><div class="line">    browsers: [<span class="string">'Chrome'</span>],</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// Continuous Integration mode</span></div><div class="line">    <span class="comment">// if true, Karma captures browsers, runs the tests and exits</span></div><div class="line">    singleRun: <span class="literal">false</span>,</div><div class="line"></div><div class="line">    <span class="comment">// Concurrency level</span></div><div class="line">    <span class="comment">// how many browser should be started simultaneous</span></div><div class="line">    concurrency: <span class="literal">Infinity</span></div><div class="line">  &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用 <a href="https://github.com/yeoman/generator-angular" target="_blank" rel="external">yeoman/generator-angular · GitHub</a> 生成的脚手架默认使用 jasmine 测试框架，如果你想使用 mocha 测试框架，需要安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">npm install karma-mocha --save-dev</div><div class="line">bower install mocha --save-dev</div><div class="line">bower install chai --save-dev</div></pre></td></tr></table></figure>
+<p><em>karma.conf.js</em> 的主要配置如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//... 其他配置同 jasmine</span></div><div class="line">frameworks: [<span class="string">'mocha'</span>, <span class="string">'chai'</span>],</div><div class="line"><span class="comment">//...</span></div></pre></td></tr></table></figure>
+<p>另外把测试用例改成 mocha 的形态。</p>
+<h3 id="Karma-Plugins"><a href="#Karma-Plugins" class="headerlink" title="Karma Plugins"></a>Karma Plugins</h3><p>See <a href="https://karma-runner.github.io/1.0/dev/plugins.html" target="_blank" rel="external">Karma - Developing Plugins</a></p>
+<p>Karma 的插件大体上可以分为以下几个类别：</p>
+<ul>
+<li><p>Browser launchers</p>
+<p>  这些插件在测试运行的时候帮助 Karma 自动启动浏览器。我们之前安装了 Chrome 浏览器的 launcher 插件，对于其他浏览器如 Firefox 和 IE 等，也是有类似的 launcher 插件的。</p>
+<ol>
+<li>example plugins: <a href="https://github.com/karma-runner/karma-chrome-launcher" target="_blank" rel="external">karma-chrome-launcher</a>, <a href="https://github.com/karma-runner/karma-sauce-launcher" target="_blank" rel="external">karma-sauce-launcher</a></li>
+<li>use naming convention is <code>karma-*-launcher</code></li>
+<li>use NPM keywords <code>karma-plugin</code>, <code>karma-launcher</code></li>
+</ol>
+</li>
+<li><p>Testing frameworks</p>
+<p>  我们也可以选择使用哪种框架来编写单元测试。因为前面我们安装了 Jasmine 插件，所以我们将使用 Jasmine 框架来编写单元测试。但是如果你更喜欢其他风格的单元测试，比如 mocha 或者 qunit，你也可以安装这些框架的插件。</p>
+<ol>
+<li>example plugins: <a href="https://github.com/karma-runner/karma-jasmine" target="_blank" rel="external">karma-jasmine</a>, <a href="https://github.com/karma-runner/karma-mocha" target="_blank" rel="external">karma-mocha</a>, <a href="https://github.com/karma-runner/karma-requirejs" target="_blank" rel="external">karma-requirejs</a></li>
+<li>use naming convention is <code>karma-*</code></li>
+<li>use NPM keywords <code>karma-plugin</code>, <code>karma-framework</code>.</li>
+</ol>
+</li>
+<li><p>Reporters</p>
+<p>  Karma 可以提供多种格式的测试结果。默认的 progress reporter 是内置的，但是如果你需要像 junit.xml 文件那样的测试结果，你可以安装一个相关的 Karma 插件。</p>
+</li>
+<li><p>Preprocessors</p>
+<p> 预处理器。</p>
+<ol>
+<li>example plugins: <a href="https://github.com/karma-runner/karma-coffee-preprocessor" target="_blank" rel="external">karma-coffee-preprocessor</a>, <a href="https://github.com/karma-runner/karma-ng-html2js-preprocessor" target="_blank" rel="external">karma-ng-html2js-preprocessor</a></li>
+<li>use naming convention is <code>karma-*-preprocessor</code></li>
+<li>user NPM keywords <code>karma-plugin</code>, <code>karma-preprocessor</code></li>
+</ol>
+</li>
+<li><p>Crazier stuff</p>
+<p>  Karma is assembled by Dependency Injection and a plugin is just an additional DI module (see <a href="https://github.com/vojtajina/node-di" target="_blank" rel="external">node-di</a> for more), that can be loaded by Karma. Therefore, it can ask for pretty much any Karma component and interact with it. There are a couple of plugins that do more interesting stuff like this, check out <a href="https://github.com/karma-runner/karma-closure" target="_blank" rel="external">karma-closure</a>, <a href="https://github.com/karma-runner/karma-intellij" target="_blank" rel="external">karma-intellij</a>, <a href="https://github.com/karma-runner/karma-dart" target="_blank" rel="external">karma-dart</a>.</p>
+</li>
+</ul>
+<p>You can find more on npm <a href="https://www.npmjs.com/browse/keyword/karma-plugin" target="_blank" rel="external">karma plugins</a></p>
+<h3 id="运行调试"><a href="#运行调试" class="headerlink" title="运行调试"></a>运行调试</h3><p>当 karma 配置完成后，可以通过以下命令运行测试用例。</p>
+<pre><code>karma start
+</code></pre><p>如果使用 Webstorm，可以右键 <em>karma.conf.js</em> -&gt; <em>Debug</em>。如果你想 focus 某一个 <code>describe</code> 或者 <code>it</code>，可以在为 <code>describe</code> 或者 <code>it</code> 前缀 <code>f</code>，如 <code>fdescribe</code>, <code>fit</code>。</p>
+<h3 id="Explaining-the-Karma-Config"><a href="#Explaining-the-Karma-Config" class="headerlink" title="Explaining the Karma Config"></a>Explaining the Karma Config</h3><p>要使用 Karma，我们需要一个配置文件来告诉 Karma 怎么去操作。下面我们将会看到这个配置文件的生成是非常容易的。这个配置文件默认的名称是 karma.conf.js，除非你告诉 Karma 使用其他名字，否则 Karma 将自动在你运行它的目录底下寻找名为 karma.conf.js 的配置文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// File: chapter3/karma.conf.js</span></div><div class="line"><span class="comment">// Karma configuration</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">config</span>) </span>&#123;</div><div class="line">    config.set(&#123;</div><div class="line">        <span class="comment">// base path that will be used to resolve files and exclude</span></div><div class="line">        basePath: <span class="string">''</span>,</div><div class="line">        <span class="comment">// testing framework to use (jasmine/mocha/qunit/...)</span></div><div class="line">        frameworks: [<span class="string">'jasmine'</span>],</div><div class="line">        <span class="comment">// list of files / patterns to load in the browser</span></div><div class="line">        files: [</div><div class="line">            <span class="string">'angular.min.js'</span>,</div><div class="line">            <span class="string">'angular-mocks.js'</span>,</div><div class="line">            <span class="string">'controller.js'</span>,</div><div class="line">            <span class="string">'simpleSpec.js'</span>,</div><div class="line">            <span class="string">'controllerSpec.js'</span></div><div class="line">        ],</div><div class="line">        <span class="comment">// list of files / patterns to exclude</span></div><div class="line">        exclude: [],</div><div class="line">        <span class="comment">// web server port</span></div><div class="line">        port: <span class="number">8080</span>,</div><div class="line">        <span class="comment">// level of logging</span></div><div class="line">        <span class="comment">// possible values: LOG_DISABLE || LOG_ERROR ||</span></div><div class="line">        <span class="comment">// LOG_WARN || LOG_INFO || LOG_DEBUG</span></div><div class="line">        logLevel: config.LOG_INFO,</div><div class="line">        <span class="comment">// enable / disable watching file and executing tests</span></div><div class="line">        <span class="comment">// whenever any file changes</span></div><div class="line">        autoWatch: <span class="literal">true</span>,</div><div class="line">        <span class="comment">// Start these browsers, currently available:</span></div><div class="line">        <span class="comment">// - Chrome</span></div><div class="line">        <span class="comment">// - ChromeCanary</span></div><div class="line">        <span class="comment">// - Firefox</span></div><div class="line">        <span class="comment">// - Opera</span></div><div class="line">        <span class="comment">// - Safari (only Mac)</span></div><div class="line">        <span class="comment">// - PhantomJS</span></div><div class="line">        <span class="comment">// - IE (only Windows)</span></div><div class="line">        browsers: [<span class="string">'Chrome'</span>],</div><div class="line">        <span class="comment">// Continuous Integration mode</span></div><div class="line">        <span class="comment">// if true, it captures browsers, runs tests, and exits</span></div><div class="line">        singleRun: <span class="literal">false</span></div><div class="line">    &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li><p>basePath</p>
+<p>  所有需要加载的测试及测试相关的文件的根路径。根路径是相对于 Karma 的配置文件的路径进行设置的。</p>
+</li>
+<li><p>frameworks</p>
+<p>  需要加载的测试框架。在我们的例子中，加载了 Jasmine（这要求已经安装了 karma-jasmine 插件）。你也可以选择 mocha，qunit，或者其他框架。</p>
+</li>
+<li><p>files</p>
+<p>  需要加载的文件列表(or file paths)，以数组的形式列出。就 AngularJS 来说，我们先加载了 AngularJS 库文件，然后加载了 AngularJS 提供的用来辅助测试的 angular-mock.js 文件，最后加载了应用程序以及单元测试。</p>
+</li>
+<li><p>exclude</p>
+<p>  需要排除的文件列表(or file paths)。这在当你对文件使用很多 glob 规则（通配符语句来包含一组文件，如 **.js），但是又想排除掉某些特定文件（如 karma.conf.js）时非常有用。</p>
+</li>
+<li><p>port</p>
+<p>  Karma 的 test runner 服务运行的端口。默认是 8080。</p>
+</li>
+<li><p>logLevel</p>
+<p>  Karma 要从浏览器捕获哪些等级的日志（如 console.log， console.info）。</p>
+</li>
+<li><p>autoWatch</p>
+<p>  这是 Karma 目前为止最为酷炫有用的功能。它让 Karma 对 <code>files</code> 配置项中包含的所有文件保持监视，一旦这些文件有任何改动，就会运行相关的单元测试。如果此项配置设为 true，你就再也不用手动去触发你的单元测试了，全部由 Karma 帮你代劳了。 </p>
+</li>
+<li><p>browsers </p>
+<p>  当 Karma 初始化启动时要打开的浏览器。大部分这些浏览器都是要安装一个相应的 karma launcher 插件的（因为我们已经安装了 chrome-launcher，所以在例子中此项配置我们可以设置 Chrome）。</p>
+</li>
+<li><p>singleRun </p>
+<p>  This is a Boolean value, and tells Karma to shut down the server after one single run of the unit tests. This should be set to  truefor continuous integration envi‐ ronments, and can be ignored otherwise.</p>
+<p>  此项配置为 Boolean 值，它让 Karma 在所有的单元测试运行完一次后关掉 server。此项配置在连续集成环境需要设置为 true，否则可以忽略。（不是很明白此项配置的作用-_-!）</p>
+<p>  你可以直接复制粘贴前面 config 文件来用，但是 Karma 有提供了一个更好的方式来创建 config 文件。运行以下命令： </p>
+<pre><code>karma init
+</code></pre><p>  这将触发一个交互界面，提示我们一些问题。通常每个问题的答案会有一系列的选项，你可以通过键盘上 Tab 键来进行选择。当我们完成所有的选项后，karma.conf.js 文件就生成好了。</p>
+</li>
+</ul>
+<h3 id="运行单元测试"><a href="#运行单元测试" class="headerlink" title="运行单元测试"></a>运行单元测试</h3><pre><code>karma start
+</code></pre><p>该命令会自动在你运行此命令的目录下寻找 karma.conf.js 文件，并获取其中的配置。为了防止你的配置文件不是以 karma.conf.js 命名，或者 karma.conf.js 在另外一个目录下，你可以将你的配置文件作为一个参数传给此命令，如下：</p>
+<pre><code>karma start my.conf.js
+</code></pre><h3 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h3><ul>
+<li><a href="http://stackoverflow.com/questions/24021031/how-to-resolve-promises-in-angularjs-jasmine-2-0-when-there-is-no-scope-to-for" target="_blank" rel="external">How to resolve promises in AngularJS, Jasmine 2.0 when there is no $scope to force a digest? - Stack Overflow</a></li>
+<li><a href="http://stackoverflow.com/questions/23131838/testing-angularjs-promises-in-jasmine-2-0" target="_blank" rel="external">javascript - Testing AngularJS promises in Jasmine 2.0 - Stack Overflow</a></li>
+</ul>
+<h3 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h3><ul>
+<li><a href="https://www.youtube.com/watch?v=6osY4HsCRm4" target="_blank" rel="external">Intro to Webstorm, Jasmine, and Karma - (for .Net developers) - YouTube</a></li>
+</ul>
+<h2 id="End-to-End-Testing"><a href="#End-to-End-Testing" class="headerlink" title="End-to-End Testing"></a>End-to-End Testing</h2><p>随着应用程序越来越庞大和复杂，靠人工测试来验证新功能的正确性、查出 bug等就会变得不现实。单元测试是查 bug 的第一防御线，但是有些时候问题是出现在组件之间的集成，无法在单元测试中查出。端到端测试就是为了找出这些问题。</p>
+<p>我们建了个端到端的 test runner <a href="https://github.com/angular/protractor" target="_blank" rel="external">Protractor</a>, 可以模拟用户的交互操作来帮助你验证你的 Angular 程序的健壮性。</p>
+<p>Protractor 是一个 AngularJS 应用程序的端到端的测试框架。它是 在真实的浏览器中为你的应用程序运行测试，像用户那样与浏览器的进行交互。</p>
+<h3 id="Set-Up"><a href="#Set-Up" class="headerlink" title="Set Up"></a>Set Up</h3><p>参见 <a href="http://angular.github.io/protractor/#/tutorial" target="_blank" rel="external">Protractor - end to end testing for AngularJS</a></p>
+<p>使用 npm 来全局安装 Protractor:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g protractor</div></pre></td></tr></table></figure>
+<p>这将安装两个命令行工具：<code>protractor</code> 和 <code>webdriver-manager</code>。可运行 <code>protractor --version</code> 来检查 Protractor 是否已经可用。</p>
+<p>The <code>webdriver-manager</code> is a helper tool to easily get an instance of a Selenium Server running. Use it to download the necessary binaries with<br><code>webdriver-manager</code> 可以很容易的获取一个正在运行的 Selenium Server 实例。使用它来下载必要的 binaries:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">webdriver-manager update</div></pre></td></tr></table></figure>
+<p>现在启动一个服务器:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">webdriver-manager start</div></pre></td></tr></table></figure>
+<p>这会启动一个 Selenium Server，并且输出一堆信息日志。你的 Protractor 测试将会发送请求到这个服务器来控制本地浏览器。你可以在 <code>http://localhost:4444/wd/hub</code> 上面看到服务器的状态信息。</p>
+<h3 id="Protractor-Configuration"><a href="#Protractor-Configuration" class="headerlink" title="Protractor Configuration"></a>Protractor Configuration</h3><p>Protractor 的配置文件是一个 JavaScript 文件，基本上包括了所有让 Protractor 可以运行端到端测试的配置元素。例如以下这些配置选项：</p>
+<ul>
+<li>服务器运行在哪里？</li>
+<li>用来运行测试的 Selenium WebDriver 在哪里？</li>
+<li>哪些测试要被排除？</li>
+<li>使用哪些浏览器来运行测试？</li>
+</ul>
+<p>等等其他许多配置选项。<br>让我们来看一个最常用的几个选项的配置例子，我们将在这个章节的测试中使用这个配置文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">exports.config = &#123;</div><div class="line">    <span class="comment">// The address of a running Selenium server</span></div><div class="line">    seleniumAddress: <span class="string">'http://localhost:4444/wd/hub'</span>,</div><div class="line">    <span class="comment">// The URL where the server we are testing is running</span></div><div class="line">    baseUrl: <span class="string">'http://localhost:8000/'</span>,</div><div class="line">    <span class="comment">// Capabilities to be passed to the WebDriver instance</span></div><div class="line">    capabilities: &#123;</div><div class="line">        <span class="string">'browserName'</span>: <span class="string">'chrome'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="comment">// Spec patterns are relative to the location of the</span></div><div class="line">    <span class="comment">// spec file. They may include glob patterns.</span></div><div class="line">    specs: [<span class="string">'*Spec*.js'</span>],</div><div class="line">    <span class="comment">// Options to be passed to Jasmine-node</span></div><div class="line">    jasmineNodeOpts: &#123;</div><div class="line">        <span class="attr">showColors</span>: <span class="literal">true</span> <span class="comment">// Use colors in the command-line report</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这个配置文件是最简单的 Protractor 配置文件。它包括以下内容：</p>
+<ul>
+<li>指定 Selenium server 运行在本地端口 4444。</li>
+<li>Specifies that the server is running at <a href="http://localhost:8000/.指定服务器运行在" target="_blank" rel="external">http://localhost:8000/.指定服务器运行在</a> <code>http://localhost:8000/</code>。(这是指哪个服务器？) </li>
+<li>指定自动启动的浏览器是 Chrome。</li>
+<li>指定包含端到端测试的 spec.js 文件。</li>
+<li>一些让 Jasmine 命令行彩色显示的选项。</li>
+</ul>
+<p>Protractor 对 Jasmine 是完全支持的，但是对于其他测试框架，比如 Mocha、Cucumber 等只提供了有限的支持，如果你使用 Mocha，你还需要包含你自己的断言库（如 Chai）才可以。</p>
+<p>在开始测试之前，我们需要做：</p>
+<ol>
+<li>启动本地 Selenium（这个我们通过 <code>webdriver-manager start</code> 完成）</li>
+<li>启动本地服务（在我们的例子中是 node server.js）</li>
+<li>启动 Protractor（protractor test/e2e/protractor.conf.js）</li>
+</ol>
+<h3 id="An-End-to-End-Test"><a href="#An-End-to-End-Test" class="headerlink" title="An End-to-End Test"></a>An End-to-End Test</h3><p>Protractor 测试使用和 Jasmine 脚手架一样的语法，所以我们使用同样的 describe 块来描述一组测试，使用独立的 it 块来描述每一个测试。除此之外，Protractor 暴露了一些编写端到端测试所需的全局变量，即： </p>
+<ul>
+<li><p><code>browser</code> 这是 WebDriver 的封装，可用来与浏览器进行直接交互。我们使用这个对象来导航到不同的页面以及页面级别的信息。 </p>
+</li>
+<li><p><code>element</code> 这个对象可帮助寻找 HTML 元素，以及与 HTML 元素进行交互。它接受一个策略参数来寻找，然后返回一个你可以通过点击和发送按键来交互的元素。</p>
+</li>
+<li><p><code>by</code> 这个对象拥有一个元素查找策略的集合。我们可以通过 id 或者 css 类来查找元素，这些都是 WebDriver 内置的策略。Protractor 在此基础上添加了一些通过 model、binding 和 repeater 来查找元素的策略，这些是 AngularJS 的在页面上寻找元素的特有方式。</p>
+</li>
+</ul>
+<p><code>element</code> 接收一个 Locator 类型的参数用来寻找元素，<code>by</code> 则会创建 Locator 类型的对象。</p>
+<p>开始之前先使用 npm 安装好依赖的包 in<br>stallfollowed by node server.js:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'Routing Test'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    it(<span class="string">'should show teams on the first page'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// Open the list of teams page</span></div><div class="line">        browser.get(<span class="string">'/'</span>);</div><div class="line">        <span class="comment">// Check whether there are 5 rows in the repeater</span></div><div class="line">        <span class="keyword">var</span> rows = element.all(</div><div class="line">            by.repeater(<span class="string">'team in teamListCtrl.teams'</span>));</div><div class="line">        expect(rows.count()).toEqual(<span class="number">5</span>);</div><div class="line">        <span class="comment">// Check the first row details</span></div><div class="line">        <span class="keyword">var</span> firstRowRank = element(</div><div class="line">            by.repeater(<span class="string">'team in teamListCtrl.teams'</span>)</div><div class="line">            .row(<span class="number">0</span>).column(<span class="string">'team.rank'</span>));</div><div class="line">        <span class="keyword">var</span> firstRowName = element(</div><div class="line">            by.repeater(<span class="string">'team in teamListCtrl.teams'</span>)</div><div class="line">            .row(<span class="number">0</span>).column(<span class="string">'team.name'</span>));</div><div class="line">        expect(firstRowRank.getText()).toEqual(<span class="string">'1'</span>);</div><div class="line">        expect(firstRowName.getText()).toEqual(<span class="string">'Spain'</span>);</div><div class="line">        <span class="comment">// Check the last row details</span></div><div class="line">        <span class="keyword">var</span> lastRowRank = element(</div><div class="line">            by.repeater(<span class="string">'team in teamListCtrl.teams'</span>)</div><div class="line">            .row(<span class="number">4</span>).column(<span class="string">'team.rank'</span>));</div><div class="line">        <span class="keyword">var</span> lastRowName = element(</div><div class="line">            by.repeater(<span class="string">'team in teamListCtrl.teams'</span>)</div><div class="line">            .row(<span class="number">4</span>).column(<span class="string">'team.name'</span>));</div><div class="line">        expect(lastRowRank.getText()).toEqual(<span class="string">'5'</span>);</div><div class="line">        expect(lastRowName.getText()).toEqual(<span class="string">'Uruguay'</span>);</div><div class="line">        <span class="comment">// Check that login link is shown and</span></div><div class="line">        <span class="comment">// logout link is hidden</span></div><div class="line">        expect(element(by.css(<span class="string">'.login-link'</span>)).isDisplayed())</div><div class="line">            .toBe(<span class="literal">true</span>);</div><div class="line">        expect(element(by.css(<span class="string">'.logout-link'</span>)).isDisplayed())</div><div class="line">            .toBe(<span class="literal">false</span>);</div><div class="line">    &#125;);</div><div class="line">    it(<span class="string">'should allow logging in'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// Navigate to the login page</span></div><div class="line">        browser.get(<span class="string">'#/login'</span>);</div><div class="line">        <span class="keyword">var</span> username = element(</div><div class="line">            by.model(<span class="string">'loginCtrl.user.username'</span>));</div><div class="line">        <span class="keyword">var</span> password = element(</div><div class="line">            by.model(<span class="string">'loginCtrl.user.password'</span>));</div><div class="line">        <span class="comment">// Type in the username and password</span></div><div class="line">        username.sendKeys(<span class="string">'admin'</span>);</div><div class="line">        password.sendKeys(<span class="string">'admin'</span>);</div><div class="line">        <span class="comment">// Click on the login button</span></div><div class="line">        element(by.css(<span class="string">'.btn.btn-success'</span>)).click();</div><div class="line">        <span class="comment">// Ensure that the user was redirected</span></div><div class="line">        expect(browser.getCurrentUrl())</div><div class="line">            .toEqual(<span class="string">'http://localhost:8000/#/'</span>);</div><div class="line">        <span class="comment">// Check that login link is hidden and</span></div><div class="line">        <span class="comment">// logout link is shown</span></div><div class="line">        expect(element(by.css(<span class="string">'.login-link'</span>)).isDisplayed())</div><div class="line">            .toBe(<span class="literal">false</span>);</div><div class="line">        expect(element(by.css(<span class="string">'.logout-link'</span>)).isDisplayed())</div><div class="line">            .toBe(<span class="literal">true</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在这个例子中我们有 2 个测试。第一个测试：</p>
+<ul>
+<li>打开 teams 应用程序的主页面。</li>
+<li>使用 repeater 来获取所有的 team，然后检查主页面上是不是有 5 个 team。</li>
+<li>获取第一个 team 的名称和名次，并且判断它们是否如预期的。</li>
+<li>获取最后一个 team 的名称和名次，并且判断它们是否如预期的。</li>
+<li>检查登录链接是否在登出链接隐藏的时候显示。<br>这样，第一个测试纯粹只是检查了渲染，以及应用程序是否正确连接上服务器，是否能够正确地获取和显示内容。</li>
+</ul>
+<p>第二个测试处理用户交互：</p>
+<ul>
+<li>打开登录页面。</li>
+<li>输入用户名和密码给相应的 model。</li>
+<li>通过 CSS 选择器点击登录按钮。</li>
+<li>通过检查重定向的页面地址来确保登录成功。</li>
+<li>检查登录链接是否在登出链接显示的时候隐藏。</li>
+</ul>
+<p>我们将会看到 Protractor 通过 Selenium 打开 Chrome 浏览器，导航到我们本地运行的应用程序主页面，按照我们已经定义好的来依次点击和运行我们的测试。最后，它将会输出测试是否运行成功，如果运行失败，则输出失败原因。</p>
+<h3 id="Considerations"><a href="#Considerations" class="headerlink" title="Considerations"></a>Considerations</h3><p>当我们在使用 AngularJS 并编写端到端测试的时候，就像那些我们应该要遵从的最佳实践一样，有几点需要牢记：</p>
+<ul>
+<li><p>ng-app 的位置：当你为 AngularJS 写一个简单的 Protractor 测试，并将它指向任何一个运行 AngularJS 应用程序的 URL 的时候，Protractor 默认是在 HTML 的 <code>body</code> 元素里面查找 <code>ng-app</code>。找到 <code>ng-app</code> 后 Protractor 就会介入发挥它的作用。但是为了防止 <code>ng-app</code> 不在 <code>body</code> 标签上而是在它的子元素上的情况，我们需要手动告诉 Protractor 如何去找到 <code>ng-app</code>。这个可以通过 Protractor 的 <code>rootElement</code> 配置项来完成，该配置项使用 CSS 选择器来寻找带有 <code>ng-app</code> 的元素。例如，当 <code>ng-app</code> 是在 <code>body</code> 标签下的以下元素里面： </p>
+<pre><code>&lt;div class=&quot;angular-app&quot; ng-app=&quot;myApp&quot;&gt;&lt;/div&gt;
+</code></pre><p>  然后我们就要像下面这样在 Protractor 的配置文件里面设置： </p>
+<pre><code>rootElement: &quot;.angular-app&quot;
+</code></pre><p>  这将会告诉 Protractor <code>ng-app</code> 是在带有 <code>angular-app</code> CSS 类的元素上。当然，如果你是在 <code>body</code> 元素上设置了 <code>ng-app</code>，就不需要这么做了。</p>
+</li>
+<li><p>Polling: 如果在你的代码里有任何轮询的逻辑来不断的获取某些信息或者每隔几秒做一些运算，那么确保你不是使用 AngularJS 提供的 <code>$timeout</code> 服务。因为 Protractor 在判断 AngularJS 是否已经完成工作的时候有一些问题。如果你需要轮询，并且为此编写端到端测试，你应该使用 <code>$interval</code>服务。Protractor 能够很好地理解并且处理 <code>$interval</code> 服务。</p>
+</li>
+<li>Manual bootstrapping: 目前 Protractor 还不支持手动 bootstrap 的 AngularJS 应用程序。所以，如果你需要为这样的应用程序编写端到端测试，你可能需要使用底层的 WebDriver（使用 browser.driver.get 取代 browser.get，等等），并且添加等待条件来确保在测试运行之前所有的东西都加载好了。你将无法利用任何 Protractor 提供的好处。</li>
+<li>Future execution: 我们在测试中写的 WebDriver 指令并不返回实际的值，而是承诺稍后将会在浏览器（甚至是多个浏览器）中执行。因此，当 <code>console.log</code>这句代码执行的时候，并不会真正的去打印内容，因为这些内容此时都还没有。</li>
+<li><p>Debugging: Protractor 内置了对 debugging 的很好支持，因为它利用了 WebDriver 的 debugging。要调试任何的测试，我们只需在希望开始调试的地方添加以下这行：</p>
+<pre><code>browser.debugger(); 
+</code></pre><p>  这可以加在测试中的任何一行代码之后。然后我们用以下命令来执行测试： </p>
+<pre><code>protractor debug path/to/conf.js
+</code></pre><p>   这将会打开 Node 调试器，让我们可以单步调试测试中的各个断点。输入“c”，然后回车，可以让 Protractor 继续运行测试。Protractor 将会在浏览器中正常运行测试，直到它碰到 debugger 语句，它将停下来，等待进一步的指示来 resume 测试。Protractor 让你可以和一个在浏览器中真实运行的应用程序进行交互和调试，将它所掌握的信息提供给你。你也可以通过点击和修改测试的状态来让它失败。当你完成调试，你可以输入“c”然后回车来继续执行测试，直到遇到下一个断点或者测试结束。</p>
+</li>
+</ul>
+<p>最后一件需要考虑的事情就是如何组织你的测试，让它们比较容易维护和复用。在我们前面写的测试中，我们使用 element 和 by 在页面中查找元素，通过点击、输入按键以及判断 UI 的状态来进行交互。但是当我们编写测试的时候，我们希望创建一个 API 能够让我们很容易地明白测试的目的。这是很有用的，因为当测试变得更容易理解了，也就让任何人都可以使用这个 API 来快速地建立起一组更大、更全面的测试。为了实现这点，我们可以使用 PageObject。让我们使用 PageObject 取代直接操作 WebDriver API 来重写 Team 列表页面的测试：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">TeamsListPage</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.open = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        browser.get(<span class="string">'/'</span>);</div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">this</span>.getTeamsListRows = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> element.all(by.repeater(<span class="string">'team in teamListCtrl.teams'</span>));</div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">this</span>.getRankForRow = <span class="function"><span class="keyword">function</span>(<span class="params">row</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> element(</div><div class="line">            by.repeater(<span class="string">'team in teamListCtrl.teams'</span>)</div><div class="line">            .row(row).column(<span class="string">'team.rank'</span>));</div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">this</span>.getNameForRow = <span class="function"><span class="keyword">function</span>(<span class="params">row</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> element(</div><div class="line">            by.repeater(<span class="string">'team in teamListCtrl.teams'</span>)</div><div class="line">            .row(row).column(<span class="string">'team.name'</span>));</div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">this</span>.isLoginLinkVisible = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> element(by.css(<span class="string">'.login-link'</span>)).isDisplayed();</div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">this</span>.isLogoutLinkVisible = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> element(by.css(<span class="string">'.logout-link'</span>)).isDisplayed();</div><div class="line">    &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">describe(<span class="string">'Routing Test With PageObjects'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    it(<span class="string">'should show teams on the first page'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> teamsListPage = <span class="keyword">new</span> TeamsListPage();</div><div class="line">        teamsListPage.open();</div><div class="line">        expect(teamsListPage.getTeamsListRows().count()).toEqual(<span class="number">5</span>);</div><div class="line">        expect(teamsListPage.getRankForRow(<span class="number">0</span>).getText())</div><div class="line">            .toEqual(<span class="string">'1'</span>);</div><div class="line">        expect(teamsListPage.getNameForRow(<span class="number">0</span>).getText())</div><div class="line">            .toEqual(<span class="string">'Spain'</span>);</div><div class="line">        expect(teamsListPage.getRankForRow(<span class="number">4</span>).getText())</div><div class="line">            .toEqual(<span class="string">'5'</span>);</div><div class="line">        expect(teamsListPage.getNameForRow(<span class="number">4</span>).getText())</div><div class="line">            .toEqual(<span class="string">'Uruguay'</span>);</div><div class="line">        <span class="comment">// Check that login link is shown and</span></div><div class="line">        <span class="comment">// logout link is hidden</span></div><div class="line">        expect(teamsListPage.isLoginLinkVisible()).toBe(<span class="literal">true</span>);</div><div class="line">        expect(teamsListPage.isLogoutLinkVisible()).toBe(<span class="literal">false</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>我们创建了一个叫做 TeamsListPage 的 JavaScript 类，这个类暴露了一些 API 来打开页面、获取所有记录、获取指定记录的名称和名次。然后在我们的测试中，我们使用一个 TeamsListPage 对象让测试比之前更容易阅读了。我们也可以对登录页面的测试做类似的改造。</p>
+<p>PageObjects encapsulate abstractions on how to access certain elements and how to interact with them in a single place, thus allowing for simple reuse as well as handling change in a single place rather than making the change in multiple places. PageObject 在如何访问元素、如何在一个单一的地方与元素进行交互上进行抽象封装，这样就允许简单的复用，在一个地方处理变化而不是在很多个地方产生变化（最后一句话可能翻译得不是很清楚。。。）</p>
+<h2 id="PhantomJS"><a href="#PhantomJS" class="headerlink" title="PhantomJS"></a>PhantomJS</h2><pre><code>set PHANTOMJS_CDNURL=https://npm.taobao.org/dist/phantomjs
+npm install phantomjs --registry=https://registry.npm.taobao.org --no-proxy
+</code></pre><h2 id="单元测试服务"><a href="#单元测试服务" class="headerlink" title="单元测试服务"></a>单元测试服务</h2><p>假设有如下服务：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'archive'</span>, [])</div><div class="line">  .factory(<span class="string">'notificationsArchive'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> archivedNotifications = [];</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">archive</span>:<span class="function"><span class="keyword">function</span> (<span class="params">notification</span>) </span>&#123;</div><div class="line">        archivedNotifications.push(notification);</div><div class="line">      &#125;,</div><div class="line">      <span class="attr">getArchived</span>:<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> archivedNotifications;</div><div class="line">      &#125;&#125;;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>相应的测试代码为:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'notifications archive tests'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> notificationsArchive;</div><div class="line">  <span class="comment">// Instantiate a new version of my module before each test</span></div><div class="line">  beforeEach(<span class="built_in">module</span>(<span class="string">'archive'</span>));</div><div class="line">  beforeEach(inject(<span class="function"><span class="keyword">function</span> (<span class="params">_notificationsArchive_</span>) </span>&#123;</div><div class="line">    notificationsArchive = _notificationsArchive_;</div><div class="line">  &#125;));</div><div class="line"></div><div class="line">  it(<span class="string">'should give access to the archived items'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> notification = &#123;<span class="attr">msg</span>: <span class="string">'Old message.'</span>&#125;;</div><div class="line">    notificationsArchive.archive(notification);</div><div class="line"></div><div class="line">    expect(notificationsArchive.getArchived())</div><div class="line">      .toContain(notification);</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>除了多了两个新的函数，<code>module</code> and <code>inject</code>，其他和 Jasmine 测试的结构类似。</p>
+<ul>
+<li><p><code>module</code> 用来初始化模块。这个方法的功能类似于 <code>ng-app</code>  指定，指示要为指定的模块创建好 <code>$injector</code>，模块中的服务应该准备好。<br>  你可以在一个测试用例中，调用多次 <code>module</code> 方法，之后，所有模块中的 service、value 和 constant 都可以通过 <code>$injector</code> 获取。</p>
+</li>
+<li><p><code>inject</code> 注入服务。</p>
+<pre><code>var notificationsArchive;
+beforeEach(inject(function (_notificationsArchive_) {
+  notificationsArchive = _notificationsArchive_;
+}));
+</code></pre><p>  我们这里使用带有头尾下划线对的服务名称来注入相应的服务。这是因为 <code>$injector</code> 会先剥去收尾的下划线对，然后使用服务名来接受注入的服务。这是很有用的小窍门，因为我们可以保存没有下划线的服务变量。</p>
+</li>
+</ul>
+<h3 id="模拟服务"><a href="#模拟服务" class="headerlink" title="模拟服务"></a>模拟服务</h3><p>我们为 AngularJS 模拟文件提供的 <code>$location</code> 和 <code>$window</code> 的模拟版本。让我们考虑以下例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'notesApp1'</span>, [])</div><div class="line">    .factory(<span class="string">'ItemService'</span>, [<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> items = [&#123;</div><div class="line">            <span class="attr">id</span>: <span class="number">1</span>,</div><div class="line">            <span class="attr">label</span>: <span class="string">'Item 0'</span></div><div class="line">        &#125;, &#123;</div><div class="line">            <span class="attr">id</span>: <span class="number">2</span>,</div><div class="line">            <span class="attr">label</span>: <span class="string">'Item 1'</span></div><div class="line">        &#125;];</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            <span class="attr">list</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">return</span> items;</div><div class="line">            &#125;,</div><div class="line">            <span class="attr">add</span>: <span class="function"><span class="keyword">function</span>(<span class="params">item</span>) </span>&#123;</div><div class="line">                items.push(item);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;])</div><div class="line">    .controller(<span class="string">'ItemCtrl'</span>, [<span class="string">'ItemService'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">ItemService</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line">        self.items = ItemService.list();</div><div class="line">    &#125;]);</div></pre></td></tr></table></figure>
+<p>我们有两种方法来覆盖 <code>ItemService</code> 的默认实现，第一种方法是使用内联的模拟服务：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'ItemCtrl with inline mock'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    beforeEach(<span class="built_in">module</span>(<span class="string">'notesApp1'</span>));</div><div class="line">    <span class="keyword">var</span> ctrl, mockService;</div><div class="line">    beforeEach(<span class="built_in">module</span>(<span class="function"><span class="keyword">function</span>(<span class="params">$provide</span>) </span>&#123;</div><div class="line">        mockService = &#123;</div><div class="line">            <span class="attr">list</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">return</span> [&#123;</div><div class="line">                    <span class="attr">id</span>: <span class="number">1</span>,</div><div class="line">                    <span class="attr">label</span>: <span class="string">'Mock'</span></div><div class="line">                &#125;];</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        $provide.value(<span class="string">'ItemService'</span>, mockService);</div><div class="line">    &#125;));</div><div class="line">    beforeEach(inject(<span class="function"><span class="keyword">function</span>(<span class="params">$controller</span>) </span>&#123;</div><div class="line">        ctrl = $controller(<span class="string">'ItemCtrl'</span>);</div><div class="line">    &#125;));</div><div class="line">    it(<span class="string">'should load mocked out items'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        expect(ctrl.items).toEqual([&#123;</div><div class="line">            <span class="attr">id</span>: <span class="number">1</span>,</div><div class="line">            <span class="attr">label</span>: <span class="string">'Mock'</span></div><div class="line">        &#125;]);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>我们这里调用 <code>module</code> 函数是，传入的不是模块名称，而是注入 <code>$provide</code> 服务的函数。这个 provider 和之前加载的模块共享命名空间，所以你可以创建我们的虚拟服务，然后通过 <code>$provide.value</code> 覆盖原来的 <code>ItemService</code> 定义。</p>
+<p>第二种覆盖服务的方式是使用全局方式，而非单元测试级别。使用全局方式还是局部方式，取决于你是否想让这个虚拟服务被其他单元测试重用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'notesApp1Mocks'</span>, [])</div><div class="line">    .factory(<span class="string">'ItemService'</span>, [<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            <span class="attr">list</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">return</span> [&#123;</div><div class="line">                    <span class="attr">id</span>: <span class="number">1</span>,</div><div class="line">                    <span class="attr">label</span>: <span class="string">'Mock'</span></div><div class="line">                &#125;];</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;]);</div></pre></td></tr></table></figure>
+<p>我们在另一个模块中编写了同名的服务，这个文件位于 test 文件夹下，并且包含在 <code>karma.conf.js</code> 文件中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'ItemCtrl With global mock'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> ctrl;</div><div class="line">    beforeEach(<span class="built_in">module</span>(<span class="string">'notesApp1'</span>));</div><div class="line">    beforeEach(<span class="built_in">module</span>(<span class="string">'notesApp1Mocks'</span>));</div><div class="line">    beforeEach(inject(<span class="function"><span class="keyword">function</span>(<span class="params">$controller</span>) </span>&#123;</div><div class="line">        ctrl = $controller(<span class="string">'ItemCtrl'</span>);</div><div class="line">    &#125;));</div><div class="line">    it(<span class="string">'should load mocked out items'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        expect(ctrl.items).toEqual([&#123;</div><div class="line">            <span class="attr">id</span>: <span class="number">1</span>,</div><div class="line">            <span class="attr">label</span>: <span class="string">'Mock'</span></div><div class="line">        &#125;]);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><code>notesApp1Mocks</code> 需要在 <code>notesApp1</code> 之后加载。</p>
+<h3 id="Spies"><a href="#Spies" class="headerlink" title="Spies"></a>Spies</h3><p>如果你不想实现整个虚拟服务，而只想知道 <code>ItemService</code> 中 <code>list</code> 方法是否被调用了，不想知道 <code>list</code> 的返回值，只是，我们可以使用 Jasmine spies。Spies 让我们钩进某否函数，并检查函数是否被调用，调用了多少次，调用差数等。</p>
+<p>以下是使用 Spies 的示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'ItemCtrl with spies'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    beforeEach(<span class="built_in">module</span>(<span class="string">'notesApp1'</span>));</div><div class="line">    <span class="keyword">var</span> ctrl, itemService;</div><div class="line">    beforeEach(inject(<span class="function"><span class="keyword">function</span>(<span class="params">$controller, ItemService</span>) </span>&#123;</div><div class="line">        spyOn(ItemService, <span class="string">'list'</span>).andCallThrough();</div><div class="line">        itemService = ItemService;</div><div class="line">        ctrl = $controller(<span class="string">'ItemCtrl'</span>);</div><div class="line">    &#125;));</div><div class="line">    it(<span class="string">'should load mocked out items'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        expect(itemService.list).toHaveBeenCalled();</div><div class="line">        expect(itemService.list.callCount).toEqual(<span class="number">1</span>);</div><div class="line">        expect(ctrl.items).toEqual([&#123;</div><div class="line">            <span class="attr">id</span>: <span class="number">1</span>,</div><div class="line">            <span class="attr">label</span>: <span class="string">'Item 0'</span></div><div class="line">        &#125;, &#123;</div><div class="line">            <span class="attr">id</span>: <span class="number">2</span>,</div><div class="line">            <span class="attr">label</span>: <span class="string">'Item 1'</span></div><div class="line">        &#125;]);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>我们通过调用 <code>andCallThrough</code> 让这个 Spy 继续调用实际的服务方法。这使 Jasmine 不仅可以检查方法是否被调用，还可以让它监视的函数运行。</p>
+<p>假如你不想让已有的方法按照正常的方式执行呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'ItemCtrl with SpyReturn'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    beforeEach(<span class="built_in">module</span>(<span class="string">'notesApp1'</span>));</div><div class="line">    <span class="keyword">var</span> ctrl, itemService;</div><div class="line">    beforeEach(inject(<span class="function"><span class="keyword">function</span>(<span class="params">$controller, ItemService</span>) </span>&#123;</div><div class="line">        spyOn(ItemService, <span class="string">'list'</span>)</div><div class="line">            .andReturn([&#123;</div><div class="line">                <span class="attr">id</span>: <span class="number">1</span>,</div><div class="line">                <span class="attr">label</span>: <span class="string">'Mock'</span></div><div class="line">            &#125;]);</div><div class="line">        itemService = ItemService;</div><div class="line">        ctrl = $controller(<span class="string">'ItemCtrl'</span>);</div><div class="line">    &#125;));</div><div class="line">    it(<span class="string">'should load mocked out items'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        expect(itemService.list).toHaveBeenCalled();</div><div class="line">        expect(itemService.list.callCount).toEqual(<span class="number">1</span>);</div><div class="line">        expect(ctrl.items).toEqual([&#123;</div><div class="line">            <span class="attr">id</span>: <span class="number">1</span>,</div><div class="line">            <span class="attr">label</span>: <span class="string">'Mock'</span></div><div class="line">        &#125;]);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>我们使用 Jasmine spy 替换了 <code>ItemService</code> 中的 <code>list</code> 方法，并且通过 <code>andReturn</code> 修改了 <code>list</code> 函数的返回值。</p>
+<h2 id="单元测试服务器调用"><a href="#单元测试服务器调用" class="headerlink" title="单元测试服务器调用"></a>单元测试服务器调用</h2><p>在 Angular 中，只要在 Karma 配置中包含了 <em>angular-mocks.js</em> 文件，AngularJS 就让调用 <code>$http</code> service 时，并不真正发生服务器调用。所有的服务器调用都可以被拦截，让我们可以在单元测试上下文中测试，所有的单元测试也会更快更稳定。</p>
+<p>让我们使用 <code>$http</code> 来编写服务器调用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'serverApp'</span>, [])</div><div class="line">    .controller(<span class="string">'MainCtrl'</span>, [<span class="string">'$http'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$http</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line">        self.items = [];</div><div class="line">        self.errorMessage = <span class="string">''</span>;</div><div class="line">        $http.get(<span class="string">'/api/note'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">            self.items = response.data;</div><div class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">errResponse</span>) </span>&#123;</div><div class="line">            self.errorMessage = errResponse.data.msg;</div><div class="line">        &#125;);</div><div class="line">    &#125;]);</div></pre></td></tr></table></figure>
+<p>测试代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'MainCtrl Server Calls'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    beforeEach(<span class="built_in">module</span>(<span class="string">'serverApp'</span>));</div><div class="line">    <span class="keyword">var</span> ctrl, mockBackend;</div><div class="line">    beforeEach(inject(<span class="function"><span class="keyword">function</span>(<span class="params">$controller, $httpBackend</span>) </span>&#123;</div><div class="line">        mockBackend = $httpBackend;</div><div class="line">        mockBackend.expectGET(<span class="string">'/api/note'</span>)</div><div class="line">            .respond([&#123;</div><div class="line">                <span class="attr">id</span>: <span class="number">1</span>,</div><div class="line">                <span class="attr">label</span>: <span class="string">'Mock'</span></div><div class="line">            &#125;]);</div><div class="line">        ctrl = $controller(<span class="string">'MainCtrl'</span>);</div><div class="line">        <span class="comment">// At this point, a server request will have been made</span></div><div class="line">    &#125;));</div><div class="line">    it(<span class="string">'should load items from server'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// Initially, before the server responds,</span></div><div class="line">        <span class="comment">// the items should be empty</span></div><div class="line">        expect(ctrl.items).toEqual([]);</div><div class="line">        <span class="comment">// Simulate a server response</span></div><div class="line">        mockBackend.flush();</div><div class="line">        expect(ctrl.items).toEqual([&#123;</div><div class="line">            <span class="attr">id</span>: <span class="number">1</span>,</div><div class="line">            <span class="attr">label</span>: <span class="string">'Mock'</span></div><div class="line">        &#125;]);</div><div class="line">    &#125;);</div><div class="line">    </div><div class="line">    afterEach(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// Ensure that all expects set on the $httpBackend</span></div><div class="line">        <span class="comment">// were actually called</span></div><div class="line">        mockBackend.verifyNoOutstandingExpectation();</div><div class="line">        <span class="comment">// Ensure that all requests to the server</span></div><div class="line">        <span class="comment">// have actually responded (using flush())</span></div><div class="line">        mockBackend.verifyNoOutstandingRequest();</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>To unit test our controller that makes XHR calls, we leverage a service called <code>$httpBack</code> end. The  <code>$httpservice</code> internally uses the  <code>$httpBackend</code> to make the actual XHR requests. The <em>angular-mocks.js</em> file provides a mock <code>$httpBackend</code> service that prevents server calls, and gives us hooks to set expectations and trigger responses.</p>
+<p>As part of <code>beforeEach</code>, we ask for the <code>$httpBackend</code> service to be injected into the test. Because our controller makes a server call as part of the loading behavior, it is important for us to set our expectations on what server calls will be made before the controller is instantiated.</p>
+<p>There are two ways to set expectations on what server calls will be made on the <code>$httpBackend</code>:</p>
+<ul>
+<li><p><code>expect</code> </p>
+<p>  The <code>expect</code> function is used when we want to control exactly how many requests will be made and to what URLs, and then control the response. The  <code>expect</code>  function has a series of functions, one for each method of HTTP, such as  <code>expectGET</code>  or <code>expectPOST</code>.</p>
+</li>
+<li><p><code>when</code></p>
+<p>  Similar to <code>expect</code>,  <code>when</code> also takes a URL and potential POST data. The syntax is also exactly the same. The difference is that the <code>when</code> does not care about the order of requests or how many times the call was made. It simply sees a request and sends a response. With the <code>expect</code>, a test can fail if the expectation was not satisfied. With <code>when</code>, even if the test never makes the call, the test will pass.</p>
+</li>
+</ul>
+<p>Request expectations(<code>expect</code>) provide a way to make assertions about requests made by the application and to define responses for those requests. The test will fail if the expected requests are not made or they are made in the wrong order.</p>
+<p>Backend definitions(<code>when</code>) allow you to define a fake backend for your application which doesn’t assert if a particular request was made or not, it just returns a trained response if a request is made. The test will pass whether or not the request gets made during testing.</p>
+<p>After we use either <code>expect</code>(like  <code>expectGET</code>) or  <code>when</code>, we can define the response for that particular server call by chaining the <code>respond</code> function on it. If <code>respond</code> is given one argument, it is treated as the server response. You can optionally give it two arguments, in which case the first argument will be the status code, and the second argument will be the body of the response (like <code>respond(404, {msg: &#39;Invalid&#39;})</code>). In our example, we respond with a list of items from the server. </p>
+<p>Now, on to our actual unit test. When the controller loads, the <code>items</code> array is initialized to an empty array. Our first expectation in the test is whether the itemsarray is empty. If we consider a server request in a real live application, a request is made first, and then the response comes back at some later point in time. The server requests are asynchronous in nature. To simulate this, AngularJS gives a <code>flush</code> method on the backend service. So by default, when a server request happens, AngularJS tracks it against the expectations and holds on to the request without returning the response. Then, when you as a developer finally call <code>flush()</code> on the <code>$httpBackend</code>, AngularJS sends back the responses for all the requests that the client has received so far.</p>
+<p><code>flush</code> allows us to test asynchronous behavior without actually writing asynchronous tests. <code>$httpBackend.flush()</code> also takes an integer argument, which can tell the mock backend how many server requests it needs to return. This is useful if we want to check that the controller makes four server calls, but does some work only after at least three of them return. In such a case, we can flush the requests one at a time (using <code>$httpBackend.flush(1)</code>), or flush three of them (<code>$httpBackend.flush(3)</code>) at once. At this point, now we can check whether the data that the server responded with has been stored in the right variable in the controller (the <code>items</code> array). As a good practice, it is recommendedthat when you write tests using the  <code>$httpBackend</code> service, you add an <code>afterEach</code> block with the two function calls in the previous code snippet:</p>
+<ul>
+<li>The first function,  <code>verifyNoOutstandingExpectations()</code>, checks whether you specified any expects on the <code>$httpBackend</code> that were not satisfied as part of your test. So if you added another expectation but the controller never made that server call, your test fails. This adds a good check to ensure that everything that you expected actually happened </li>
+<li>The second function, <code>verifyNoOutstandingRequests()</code>, is to ensure that you fully tested all the cases. As mentioned earlier, AngularJS splits all server requests into a request and a response. And we trigger the responses using the <code>flush()</code> function. <code>verifyNoOutstandingRequests</code> ensures that for each server call made, the response has also been triggered using <code>flush(</code>). If not, the test fails.</li>
+</ul>
+<h3 id="Integration-Level-Unit-Tests"><a href="#Integration-Level-Unit-Tests" class="headerlink" title="Integration-Level Unit Tests"></a>Integration-Level Unit Tests</h3><p>What if we followed the best practices, and didn’t have our  <code>$http</code> calls right in our controller? Instead, we had our <code>$http</code> calls in a <code>NoteService</code>, and our controller delegated the <code>NoteService</code> to fetch the list of notes. In such a case, we have two options: </p>
+<ul>
+<li>Option 1 is to write a focused unit test and mock out (or spy on) the  <code>NoteService</code>, and ensure that our controller delegates to the correct APIs on the <code>NoteService</code> and that the flow and arguments are correct. </li>
+<li>Option 2 is to write an integration-level unit test that only focuses on mocking out the backend (using <code>$httpBackend</code>) and checking the entire flow.</li>
+</ul>
+<p>Let’s try our hand at Option 2 with the following code snippet:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'serverApp2'</span>, [])</div><div class="line">    .controller(<span class="string">'MainCtrl'</span>, [<span class="string">'NoteService'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">NoteService</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line">        self.items = [];</div><div class="line">        self.errorMessage = <span class="string">''</span>;</div><div class="line">        NoteService.query().then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">            self.items = response.data;</div><div class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">errResponse</span>) </span>&#123;</div><div class="line">            self.errorMessage = errResponse.data.msg;</div><div class="line">        &#125;);</div><div class="line">    &#125;])</div><div class="line">    .factory(<span class="string">'NoteService'</span>, [<span class="string">'$http'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$http</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            <span class="attr">query</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">return</span> $http.get(<span class="string">'/api/note'</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;]);</div></pre></td></tr></table></figure>
+<p>This example is almost the same as the one in the previous section, except that the  <code>$http</code> call has been extracted into the  <code>NoteService</code> service. Functionally, it behaves exactly the same way. Now let’s look at how we might test this, while also getting an idea for the error condition test:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'Server App Integration'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    beforeEach(<span class="built_in">module</span>(<span class="string">'serverApp2'</span>));</div><div class="line">    <span class="keyword">var</span> ctrl, mockBackend;</div><div class="line">    beforeEach(inject(<span class="function"><span class="keyword">function</span>(<span class="params">$controller, $httpBackend</span>) </span>&#123;</div><div class="line">        mockBackend = $httpBackend;</div><div class="line">        mockBackend.expectGET(<span class="string">'/api/note'</span>)</div><div class="line">            .respond(<span class="number">404</span>, &#123;</div><div class="line">                <span class="attr">msg</span>: <span class="string">'Not Found'</span></div><div class="line">            &#125;);</div><div class="line">        ctrl = $controller(<span class="string">'MainCtrl'</span>);</div><div class="line">        <span class="comment">// At this point, a server request will have been made</span></div><div class="line">    &#125;));</div><div class="line">    it(<span class="string">'should handle error while loading items'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// Initially, before the server responds,</span></div><div class="line">        <span class="comment">// the items should be empty</span></div><div class="line">        expect(ctrl.items).toEqual([]);</div><div class="line">        <span class="comment">// Simulate a server response</span></div><div class="line">        mockBackend.flush();</div><div class="line">        <span class="comment">// No items from server, only an error</span></div><div class="line">        <span class="comment">// So items should still be empty</span></div><div class="line">        expect(ctrl.items).toEqual([]);</div><div class="line">        <span class="comment">// and check the error message</span></div><div class="line">        expect(ctrl.errorMessage).toEqual(<span class="string">'Not Found'</span>);</div><div class="line">    &#125;);</div><div class="line">    afterEach(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// Ensure that all expects set on the $httpBackend</span></div><div class="line">        <span class="comment">// were actually called</span></div><div class="line">        mockBackend.verifyNoOutstandingExpectation();</div><div class="line">        <span class="comment">// Ensure that all requests to the server</span></div><div class="line">        <span class="comment">// have actually responded (using flush())</span></div><div class="line">        mockBackend.verifyNoOutstandingRequest();</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>In this test, very little has changed even though our code has added a new service and extracted it out. For the unit test, we are only ensuring that when the controller loads, it makes a server call to <em>/api/notes</em>. We don’t care whether it is through NoteServiceor directly. This makes it much more of an integration test, where it is independent of the underlying implementation. </p>
+<p>Also, we are now changing the server to respond with a 404. Under such a condition, we expect the <code>items</code> array to still be empty, but now the <code>errorMessage</code> variable should be updated in the controller with the server’s response. We added an <code>expect</code> to make sure this happens. The <code>afterEach</code> blocks remains as it was.</p>
+<h2 id="测试控制器"><a href="#测试控制器" class="headerlink" title="测试控制器"></a>测试控制器</h2><p>A test for a controller follows similar a pattern to the one for a service. Let’s have a look at the fragment of the <code>ProjectsEditCtrl</code> controller from the sample application. This controller in question is responsible for the editing projects in the administration part of the application. Here we are going to test methods of the controller responsible for adding and removing project’s team members:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'admin-projects'</span>, [])</div><div class="line">  .controller(<span class="string">'ProjectsEditCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, project</span>) </span>&#123;</div><div class="line"></div><div class="line">    $scope.project = project;</div><div class="line"></div><div class="line">    $scope.removeTeamMember = <span class="function"><span class="keyword">function</span>(<span class="params">teamMember</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> idx = $scope.project.teamMembers.indexOf(teamMember);</div><div class="line">      <span class="keyword">if</span>(idx &gt;= <span class="number">0</span>) &#123;</div><div class="line">        $scope.project.teamMembers.splice(idx, <span class="number">1</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">//other methods of the controller</span></div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>The logic of the presented controllers is not complex and will let us to focus on the test itself:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'ProjectsEditCtrl tests'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> $scope;</div><div class="line">  beforeEach(<span class="built_in">module</span>(<span class="string">'admin-projects'</span>));</div><div class="line">  beforeEach(inject(<span class="function"><span class="keyword">function</span> (<span class="params">$rootScope</span>) </span>&#123;</div><div class="line">    $scope = $rootScope.$<span class="keyword">new</span>();</div><div class="line">  &#125;));</div><div class="line"></div><div class="line">  it(<span class="string">'should remove an existing team member'</span>, inject(<span class="function"><span class="keyword">function</span> (<span class="params">$controller</span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> teamMember = &#123;&#125;;</div><div class="line">    $controller(<span class="string">'ProjectsEditCtrl'</span>, &#123;</div><div class="line">      <span class="attr">$scope</span>: $scope,</div><div class="line">      <span class="attr">project</span>: &#123;</div><div class="line">        <span class="attr">teamMembers</span>: [teamMember]</div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="comment">//verify the initial setup</span></div><div class="line">    expect($scope.project.teamMembers).toEqual([teamMember]);</div><div class="line"></div><div class="line">    <span class="comment">//execute and verify results</span></div><div class="line">    $scope.removeTeamMember(teamMember);</div><div class="line">    expect($scope.project.teamMembers).toEqual([]);</div><div class="line">  &#125;));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>The <code>removeTeamMember</code> method that we want to test here will be defined on a <code>$scope</code> and it is the <code>ProjectsEditCtrl</code> controller that defines this method. To effectively test the <code>removeTeamMember</code> method we need to create a new scope, a new instance of the <code>ProjectsEditCtrl</code> controller and link the two together. Essentially we need to manually do the job of the <code>ng-controller</code> directive.</p>
+<p>Let’s turn our attention to the <code>beforeEach</code> section for one more moment, as there are interesting things going on in there. Firstly we are getting access to the <code>$rootScope</code> service and creating a new <code>$scope</code> instance (<code>$scope.$new()</code>). We do so to simulate what would happen in a running application, where the <code>ng-controller</code> directive would create a new scope.</p>
+<p>To create an instance of the controller we can use the <code>$controller</code> service (please notice how the <code>inject</code> function can be placed on the <code>beforeEach</code> section as well as on the <code>it</code> level).</p>
+<p>Look how easy it is to specify controller’s constructor arguments while invoking the <code>$controller</code> service. This is dependency injection at its best; we can provide both a fake scope and test data to exercise controller’s implementation in complete isolation.</p>
+<h3 id="Mock-objects-and-asynchronous-code-testing"><a href="#Mock-objects-and-asynchronous-code-testing" class="headerlink" title="Mock objects and asynchronous code testing"></a>Mock objects and asynchronous code testing</h3><p>We can see how AngularJS provides a very nice integration of its dependency injection system with the Jasmine testing framework. But the good testability story continues as AngularJS provides some excellent mock objects as well.</p>
+<p>Asynchronous programming is the bread and butter of JavaScript. Unfortunately asynchronous code tends to be hard to test. Asynchronous events are not very predictable, and can fire in any order and trigger actions after an unknown period of time. The good news is that the AngularJS team provides excellent mock objects that make testing asynchronous code really easy and what is important is that they are fast and predictable. How can this be? Let’s have a look at the example test exercising the code using the <code>$timeout</code> service. First at the code itself:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'async'</span>, [])</div><div class="line">  .factory(<span class="string">'asyncGreeter'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$timeout, $log</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">say</span>:<span class="function"><span class="keyword">function</span> (<span class="params">name, timeout</span>) </span>&#123;</div><div class="line">        $timeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          $log.info(<span class="string">"Hello, "</span> + name + <span class="string">"!"</span>);</div><div class="line">        &#125;)</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>The <code>$timeout</code> service is a replacement for the JavaScript <code>setTimeout</code> function. Using <code>$timeout</code> is preferable for the purpose of deferring actions as it is tightly integrated with the AngularJS HTML compiler and will trigger the DOM refresh after the time is up. On top of this the resulting code is easy to test.</p>
+<p>Here is the test:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'Async Greeter test'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> asyncGreeter, $timeout, $log;</div><div class="line">  beforeEach(<span class="built_in">module</span>(<span class="string">'async'</span>));</div><div class="line">  beforeEach(inject(<span class="function"><span class="keyword">function</span> (<span class="params">_asyncGreeter_, _$timeout_, _$log_</span>) </span>&#123;</div><div class="line">    asyncGreeter = _asyncGreeter_;</div><div class="line">    $timeout = _$timeout_;</div><div class="line">    $log = _$log_;</div><div class="line">  &#125;));</div><div class="line"></div><div class="line">  it(<span class="string">'should greet the async World'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    asyncGreeter.say(<span class="string">'World'</span>, <span class="number">9999999999999999999</span>);</div><div class="line">    <span class="comment">//</span></div><div class="line">    $timeout.flush();</div><div class="line">    expect($log.info.logs).toContain([<span class="string">'Hello, World!'</span>]);</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Most of this code should be easy to follow but there are two very interesting bits that require more attention. Firstly we can see a call to the <code>$timeout.flush()</code> method. This one little call on the <code>$timeout</code> mock simulates an asynchronous event being triggered. The interesting part is that we’ve got full control over when this event is going to be triggered. We don’t need to wait for the timeout to occur, nor are we on the mercy of external events. Please note that we’ve specified a very long timeout period, yet our test will execute immediately, since we don’t depend on the JavaScript’s <code>setTimeout</code>. Rather it is the <code>$timeout</code> mock that simulates the behavior of the asynchronous environment.</p>
+<p>Excellent, predictable mocks for the asynchronous services are one of the reasons why AngularJS tests can run blazing fast.</p>
+<p>On many platforms there are often fundamental, global services that are rather difficult to test. Logging and exception handling code are examples of such logic that causes testing headaches. Luckily, AngularJS has a remedy here; it provides services addressing those infrastructural concerns alongside with accompanying mock objects. You’ve probably noticed that the test example makes use of one more mock, namely, <code>$log</code>. The mock for the <code>$log</code> service will accumulate all the logging statements and store them for further assertions. Using a mock object assures that we are not invoking real platform services; especially the ones that are potentially expensive in terms of performance and could have side-effects (for example, one could imagine that the <code>$log</code> service sends logs to a server over HTTP, and it would be very bad idea to perform network calls while executing tests).</p>
+<h2 id="测试过滤器"><a href="#测试过滤器" class="headerlink" title="测试过滤器"></a>测试过滤器</h2><p>有如下过滤器：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'filtersApp'</span>, [])</div><div class="line">    .filter(<span class="string">'timeAgo'</span>, [<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> ONE_MINUTE = <span class="number">1000</span> * <span class="number">60</span>;</div><div class="line">        <span class="keyword">var</span> ONE_HOUR = ONE_MINUTE * <span class="number">60</span>;</div><div class="line">        <span class="keyword">var</span> ONE_DAY = ONE_HOUR * <span class="number">24</span>;</div><div class="line">        <span class="keyword">var</span> ONE_MONTH = ONE_DAY * <span class="number">30</span>;</div><div class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">ts, optShowSecondsMessage</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (optShowSecondsMessage !== <span class="literal">false</span>) &#123;</div><div class="line">                optShowSecondsMessage = <span class="literal">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">var</span> currentTime = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</div><div class="line">            <span class="keyword">var</span> diff = currentTime - ts;</div><div class="line">            <span class="keyword">if</span> (diff &lt; ONE_MINUTE &amp;&amp; optShowSecondsMessage) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">'seconds ago'</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (diff &lt; ONE_HOUR) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">'minutes ago'</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (diff &lt; ONE_DAY) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">'hours ago'</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (diff &lt; ONE_MONTH) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">'days ago'</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">'months ago'</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;]);</div></pre></td></tr></table></figure>
+<p>One might use the above filter as follows:</p>
+<pre><code>{%raw%}{{ myCtrl.ts | timeAgo }}{%endraw%}
+</code></pre><p>If we decided to only show messages from minutes, we might use it as follows with the optional argument set to false:</p>
+<pre><code>{%raw%}{{ myCtrl.ts | timeAgo:false }}{%endraw%}
+</code></pre><p>测试代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'timeAgo Filter'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    beforeEach(<span class="built_in">module</span>(<span class="string">'filtersApp'</span>));</div><div class="line">    <span class="keyword">var</span> filter;</div><div class="line">    beforeEach(inject(<span class="function"><span class="keyword">function</span>(<span class="params">timeAgoFilter</span>) </span>&#123;</div><div class="line">        filter = timeAgoFilter;</div><div class="line">    &#125;));</div><div class="line">    it(<span class="string">'should respond based on timestamp'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// The presence of new Date().getTime() makes it slightly</span></div><div class="line">        <span class="comment">// hard to unit test deterministicly.</span></div><div class="line">        <span class="comment">// Ideally, we would inject a dateProvider into the timeAgo</span></div><div class="line">        <span class="comment">// filter, but we are trying to keep it simple here.</span></div><div class="line">        <span class="comment">// So we will assume that our tests are fast enough to</span></div><div class="line">        <span class="comment">// execute in mere milliseconds.</span></div><div class="line">        <span class="keyword">var</span> currentTime = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</div><div class="line">        currentTime -= <span class="number">10000</span>;</div><div class="line">        expect(filter(currentTime)).toEqual(<span class="string">'seconds ago'</span>);</div><div class="line">        <span class="keyword">var</span> fewMinutesAgo = currentTime - <span class="number">1000</span> * <span class="number">60</span>;</div><div class="line">        expect(filter(fewMinutesAgo)).toEqual(<span class="string">'minutes ago'</span>);</div><div class="line">        <span class="keyword">var</span> fewHoursAgo = currentTime - <span class="number">1000</span> * <span class="number">60</span> * <span class="number">68</span>;</div><div class="line">        expect(filter(fewHoursAgo)).toEqual(<span class="string">'hours ago'</span>);</div><div class="line">        <span class="keyword">var</span> fewDaysAgo = currentTime - <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">26</span>;</div><div class="line">        expect(filter(fewDaysAgo)).toEqual(<span class="string">'days ago'</span>);</div><div class="line">        <span class="keyword">var</span> fewMonthsAgo = currentTime - <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">32</span>;</div><div class="line">        expect(filter(fewMonthsAgo)).toEqual(<span class="string">'months ago'</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>We can pass optional or other arguments to the filter as additional parameters to the filter function. In this case, we pass  <code>false</code> to tell the filter not to show the seconds message. Our test changes minutely, such that both the <code>currentTime</code> and the <code>fewMinutesAgo</code> conditions return the  “minutes ago”string as compared to “seconds ago”  and “minutes ago” previously.</p>
+<h2 id="测试指令"><a href="#测试指令" class="headerlink" title="测试指令"></a>测试指令</h2><h3 id="Steps-Involved-in-Testing-a-Directive"><a href="#Steps-Involved-in-Testing-a-Directive" class="headerlink" title="Steps Involved in Testing a Directive"></a>Steps Involved in Testing a Directive</h3><p>At its core, there are a few key steps (some of which parallel the unit tests for our controllers) that you can use as a checklist when writing unit tests for a directive:</p>
+<ol>
+<li>Get the <code>$compile</code> service injected into the unit test.</li>
+<li>Create the HTML element that will trigger the directive you have created.</li>
+<li>Create the scopeagainst which you want the directive to be tested again.</li>
+<li>Remember that there is no server in the unit test. If the directive loads a template using the <code>templateUrl</code> key, add an expectation on <code>$httpBackend</code>  for loading the <code>templateUrl</code> and designate the HTML that’s to be used instead of the template in the test.</li>
+<li>Compile the HTML element using the <code>$compile</code> service with the scope you’ve created.</li>
+<li>Write expectations on how the directive should be rendered and on the functions that are defined in the link function.</li>
+</ol>
+<p>The first five tests are going to be standard for any unit test we write for a directive. Only the last two—where we start testing the rendering and business logic encapsulated in a directive—change from one directive to another.</p>
+<p>To quickly recap what our directive definition was, let’s look at our stock directive definition:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'stockMarketApp'</span>, [])</div><div class="line">    .directive(<span class="string">'stockWidget'</span>, [<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            <span class="attr">templateUrl</span>: <span class="string">'stock.html'</span>,</div><div class="line">            <span class="attr">restrict</span>: <span class="string">'A'</span>,</div><div class="line">            <span class="attr">scope</span>: &#123;</div><div class="line">                <span class="attr">stockData</span>: <span class="string">'='</span>,</div><div class="line">                <span class="attr">stockTitle</span>: <span class="string">'@'</span>,</div><div class="line">                <span class="attr">whenSelect</span>: <span class="string">'&amp;'</span></div><div class="line">            &#125;,</div><div class="line">            <span class="attr">link</span>: <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $element, $attrs</span>) </span>&#123;</div><div class="line">                $scope.getChange = <span class="function"><span class="keyword">function</span>(<span class="params">stock</span>) </span>&#123;</div><div class="line">                    <span class="keyword">return</span> <span class="built_in">Math</span>.ceil(((stock.price - stock.previous) /</div><div class="line">                        stock.previous) * <span class="number">100</span>);</div><div class="line">                &#125;;</div><div class="line">                $scope.onSelect = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                    $scope.whenSelect(&#123;</div><div class="line">                        <span class="attr">stockName</span>: $scope.stockData.name,</div><div class="line">                        <span class="attr">stockPrice</span>: $scope.stockData.price,</div><div class="line">                        <span class="attr">stockPrevious</span>: $scope.stockData.previous</div><div class="line">                    &#125;);</div><div class="line">                &#125;;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;]);</div></pre></td></tr></table></figure>
+<p>Let’s take a look at our unit test setup:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'Stock Widget Directive Rendering'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    beforeEach(<span class="built_in">module</span>(<span class="string">'stockMarketApp'</span>));</div><div class="line">    <span class="keyword">var</span> compile, mockBackend, rootScope;</div><div class="line">    <span class="comment">// Step 1</span></div><div class="line">    beforeEach(inject(<span class="function"><span class="keyword">function</span>(<span class="params">$compile, $httpBackend, $rootScope</span>) </span>&#123;</div><div class="line">        compile = $compile;</div><div class="line">        mockBackend = $httpBackend;</div><div class="line">        rootScope = $rootScope;</div><div class="line">    &#125;));</div><div class="line">    it(<span class="string">'should render HTML based on scope correctly'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// Step 2</span></div><div class="line">        <span class="keyword">var</span> scope = rootScope.$<span class="keyword">new</span>();</div><div class="line">        scope.myStock = &#123;</div><div class="line">            <span class="attr">name</span>: <span class="string">'Best Stock'</span>,</div><div class="line">            <span class="attr">price</span>: <span class="number">100</span>,</div><div class="line">            <span class="attr">previous</span>: <span class="number">200</span></div><div class="line">        &#125;;</div><div class="line">        scope.title = <span class="string">'the best'</span>;</div><div class="line">        <span class="comment">// Step 3</span></div><div class="line">        mockBackend.expectGET(<span class="string">'stock.html'</span>).respond(</div><div class="line">            <span class="string">'&lt;div ng-bind="stockTitle"&gt;&lt;/div&gt;'</span> +</div><div class="line">            <span class="string">'&lt;div ng-bind="stockData.price"&gt;&lt;/div&gt;'</span>);</div><div class="line">        <span class="comment">// Step 4</span></div><div class="line">        <span class="keyword">var</span> element = compile(<span class="string">'&lt;div stock-widget'</span> +</div><div class="line">            <span class="string">' stock-data="myStock"'</span> +</div><div class="line">            <span class="string">' stock-title="This is &#123;&#123;title&#125;&#125;"&gt;&lt;/div&gt;'</span>)(scope);</div><div class="line">        <span class="comment">// Step 5</span></div><div class="line">        scope.$digest();</div><div class="line">        mockBackend.flush();</div><div class="line">        <span class="comment">// Step 6</span></div><div class="line">        expect(element.html()).toEqual(</div><div class="line">            <span class="string">'&lt;div ng-bind="stockTitle" class="ng-binding"&gt;'</span> +</div><div class="line">            <span class="string">'This is the best'</span> +</div><div class="line">            <span class="string">'&lt;/div&gt;'</span> +</div><div class="line">            <span class="string">'&lt;div ng-bind="stockData.price" class="ng-binding"&gt;'</span> +</div><div class="line">            <span class="string">'100'</span> +</div><div class="line">            <span class="string">'&lt;/div&gt;'</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="https://github.com/angular/protractor" target="_blank" rel="external">angular/protractor</a><ul>
+<li><a href="http://www.ng-newsletter.com/posts/practical-protractor.html" target="_blank" rel="external">Practical End-to-End Testing with Protractor | ng-newsletter</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><ul>
+<li><a href="http://slimerjs.org" target="_blank" rel="external">SlimerJS</a></li>
+<li><a href="https://www.genuitec.com/products/gapdebug/features/" target="_blank" rel="external">GapDebug Features for Mobile App Debugging - Genuitec</a></li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://www.ngnice.com/posts/dc4b032b537ae0" target="_blank" rel="external">说说NG里的单元测试 - AngularJS Nice Things</a></li>
+</ul>
+<h2 id="Tutorial-1"><a href="#Tutorial-1" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://www.bradoncode.com/tutorials/angularjs-unit-testing/" target="_blank" rel="external">AngularJS Testing - Unit Testing Tutorials</a></li>
+<li><a href="https://www.airpair.com/angularjs/posts/testing-angular-with-karma" target="_blank" rel="external">Testing Angular with Karma</a></li>
+<li><a href="http://developer.telerik.com/featured/journey-client-side-testing-javascript" target="_blank" rel="external">A Journey Through Client-Side Testing with JavaScript -Telerik Developer Network</a></li>
+<li><a href="https://www.airpair.com/angularjs/posts/unit-testing-angularjs-applications" target="_blank" rel="external">Unit testing AngularJS applications</a></li>
+<li><a href="https://www.smashingmagazine.com/2014/10/introduction-to-unit-testing-in-angularjs/" target="_blank" rel="external">An Introduction To Unit Testing In AngularJS Applications – Smashing Magazine</a></li>
+<li><a href="http://www.yearofmoo.com/2013/01/full-spectrum-testing-with-angularjs-and-karma.html#testing-services-factories" target="_blank" rel="external">Full-Spectrum Testing with AngularJS and Karma - yearofmoo.com</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Grunt/2014-11-11-angular-unit-test.html" target="_blank" rel="external">http://blog.inching.org/Grunt/2014-11-11-angular-unit-test.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Grunt/2014-11-11-angular-unit-test.html&title=《Angular Unit Test》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Grunt/2014-11-11-angular-unit-test.html&title=《Angular Unit Test》 — Balance&source=See 电子书 AngularJS: Up and Running
+AngularJS 采用 Jasmine 作为它的测试框架，而且 AngularJS ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Grunt/2014-11-11-angular-unit-test.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Unit Test》 — Balance&url=http://blog.inching.org/Grunt/2014-11-11-angular-unit-test.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Grunt/2014-11-11-angular-unit-test.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-11-12-javascript-underscore-lo-dash.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JavaScript UnderScore</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/HTML5/2014-11-07-dom-event.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">DOM 事件简介</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Grunt/2014-11-11-angular-unit-test.html&title=《Angular Unit Test》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Grunt/2014-11-11-angular-unit-test.html&title=《Angular Unit Test》 — Balance&source=See 电子书 AngularJS: Up and Running
+AngularJS 采用 Jasmine 作为它的测试框架，而且 AngularJS ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Grunt/2014-11-11-angular-unit-test.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Unit Test》 — Balance&url=http://blog.inching.org/Grunt/2014-11-11-angular-unit-test.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Grunt/2014-11-11-angular-unit-test.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtklEQVR42u3ay27cQAwEwP3/n3aAnJLDyt2c4cYBSidjHyOVDGi4Tb5e8fH1+0je/frjyD+fvPu85tGBh4eHN7r0d8fzRTx//vkz71Z7Pku9Ph4eHt4ar318J6+3tynfbIrrwcPDw/unvJNCuV35mYSHh4f3v/Cev5W8crICHh4e3k/j5eFC8kp++jbyWMxa8PDw8LoctWiA/YS/F/t7eHh4eAdd9VmLqw0y8kK5vk48PDy8BV4e0bZl8SzS3VgfDw8P7+76+c/7tnmfhxf55pH/G/7a9/Dw8PAWeEkU25bObfB6t7B+tUkzHh4eXslr68+T8Le9fYvZMx4eHt4B7+TS29K5pZ6EFHh4eHgbvFkJm3w3CYuTllj+nH+7Mh4eHt5VXl7UzkKE55K9xdcbGB4eHt4yrz1NGwS3323HC77p7+Hh4eFd5Z0MSOWhQFvpt822t78V8PDw8BZ4d5tVyfhUWyLPBhfw8PDwNnh5ZJDj21J4NvJVRMB4eHh4a7xZEdwObOURcBvmfjM6gIeHh7fAy8ewktL2pOXWjn/VJTUeHh7eAW8Wrc5IbehwMm6Fh4eHt8dr21qzjSRZ824pP+za4eHh4R3w8nZ+PmQwG+Q6PxceHh7eBm9Wtt7CtwV0Hhbj4eHh7fFmLas8UGgvtM2h8fDw8D7Py9tO+ZZwN3Q4uSl4eHh4G7y8wG0jgHbQqh3Pika18PDw8D7Ca8et2k2iLbvb7QoPDw9vjzeLIfJW1vkGMLs1eHh4eHu8W3tLG9HmY17tbZ1tLXh4eHgtr90MhpX7wYDCUTmOh4eHt8Zr2135o7wdQTiJJIqhATw8PLyP89pIYgbOB62iBhgeHh7ex3knaUf7uE+K8jpHwcPDw7vKy9tR9djTQWOs3gbw8PDwPsK7tXkkD/c21JgFH3h4eHhrvF8LfX2C6BmkhgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

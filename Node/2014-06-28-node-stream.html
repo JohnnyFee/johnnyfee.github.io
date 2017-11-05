@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Using Streams in Node.js | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="node,io">
+    <meta name="description" content="TutorialWe’ve discussed the three main alternatives when it comes to controlling execution: Sequential, Full Parallel and Parallel. Streams are an alternative way of accessing data from various source">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Streams in Node.js">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-06-28-node-stream.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="TutorialWe’ve discussed the three main alternatives when it comes to controlling execution: Sequential, Full Parallel and Parallel. Streams are an alternative way of accessing data from various source">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Using Streams in Node.js">
+<meta name="twitter:description" content="TutorialWe’ve discussed the three main alternatives when it comes to controlling execution: Sequential, Full Parallel and Parallel. Streams are an alternative way of accessing data from various source">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Using Streams in Node.js</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Using Streams in Node.js</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-06-27T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-06-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Readable-Streams"><span class="post-toc-text">Readable Streams</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Writable-Streams"><span class="post-toc-text">Writable Streams</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Piping"><span class="post-toc-text">Piping</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#A-Transform-Stream"><span class="post-toc-text">A Transform Stream</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reuse-the-Stream"><span class="post-toc-text">Reuse the Stream</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial-1"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-stream"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Using Streams in Node.js</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-06-28 00:00:00" datetime="2014-06-27T16:00:00.000Z"  itemprop="datePublished">2014-06-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><p>We’ve discussed the three main alternatives when it comes to controlling execution: Sequential, Full Parallel and Parallel. Streams are an alternative way of accessing data from various sources such as the network (TCP/UDP), files, child processes and user input. In doing I/O, Node offers us multiple options for accessing the data:</p>
+<table>
+<thead>
+<tr>
+<th>&nbsp;</th>
+<th>Synchoronous</th>
+<th>Asynchronous</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fully buffered</td>
+<td>readFileSync()</td>
+<td>readFile()</td>
+</tr>
+<tr>
+<td>Partially buffered (streaming)</td>
+<td>readSync()</td>
+<td>read(), createReadStream()</td>
+</tr>
+</tbody>
+</table>
+<p>The difference between these is how the data is exposed, and the amount of memory used to store the data.</p>
+<p>Streams are EventEmitters. If our 1 GB file would, for example, need to be processed in some way once, we could use a stream and process the data as soon as it is read. This is useful, since we do not need to hold all of the data in memory in some buffer: after processing, we no longer need to keep the data in memory for this kind of application.</p>
+<p>The Node stream interface consists of two parts: Readable streams and Writable streams. Some streams are both readable and writable.</p>
+<a id="more"></a>
+<h2 id="Readable-Streams"><a href="#Readable-Streams" class="headerlink" title="Readable Streams"></a>Readable Streams</h2><p>The following Node core objects are Readable streams:</p>
+<ul>
+<li>Files <code>fs.createReadStream(path, [options])</code>  Returns a new ReadStream object (See Readable Stream).</li>
+<li>HTTP (Server) <code>http.ServerRequest</code>    The request object passed when processing the request/response callback for HTTP servers.</li>
+<li>HTTP (Client) <code>http.ClientResponse</code>   The response object passed when processing the response from an HTTP client request.</li>
+<li>TCP <code>net.Socket</code>  Construct a new socket object.</li>
+<li>Child process   <code>child.stdout</code>    The stdout pipe for child processes launched from Node.js</li>
+<li>Child process   <code>child.stderr</code>    The stderr pipe for child processes launched from Node.js</li>
+<li>Process <code>process.stdin</code>   A Readable Stream for stdin. The stdin stream is paused by default, so one must call process.stdin.resume() to read from it.</li>
+</ul>
+<p>Readable streams emit the following events:</p>
+<ul>
+<li>Event: ‘data’   Emits either a Buffer (by default) or a string if setEncoding() was used.</li>
+<li>Event: ‘end’    Emitted when the stream has received an EOF (FIN in TCP terminology). Indicates that no more ‘data’ events will happen.</li>
+<li>Event: ‘error’  Emitted if there was an error receiving data.</li>
+</ul>
+<p>To bind a callback to an event, use stream.on(eventname, callback). For example, to read data from a file, you could do the following:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> file = fs.createReadStream(<span class="string">'./test.txt'</span>);</div><div class="line">file.on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'Error '</span>+err);</div><div class="line">  <span class="keyword">throw</span> err;</div><div class="line">&#125;);</div><div class="line">file.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'Data '</span>+data);</div><div class="line">&#125;);</div><div class="line">file.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'Finished reading all of the data'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Readable streams have the following functions:</p>
+<ul>
+<li>pause() Pauses the incoming ‘data’ events.</li>
+<li>resume()    Resumes the incoming ‘data’ events after a pause().</li>
+<li>destroy()   Closes the underlying file descriptor. Stream will not emit any more events.</li>
+</ul>
+<h2 id="Writable-Streams"><a href="#Writable-Streams" class="headerlink" title="Writable Streams"></a>Writable Streams</h2><p>The following Node core objects are Writable streams:</p>
+<ul>
+<li>Files   fs.createWriteStream(path, [options])   Returns a new WriteStream object (See Writable Stream).</li>
+<li>HTTP (Server)   http.ServerResponse </li>
+<li>HTTP (Client)   http.ClientRequest  </li>
+<li>TCP net.Socket  </li>
+<li>Child process   child.stdin </li>
+<li>Process process.stdout  A Writable Stream to stdout.</li>
+<li>Process process.stderr  A writable stream to stderr. Writes on this stream are blocking.</li>
+</ul>
+<p>Writable streams emit the following events:</p>
+<ul>
+<li>Event: ’drain’  After a write() method returned false, this event is emitted to indicate that it is safe to write again.</li>
+<li>Event: ’error’  Emitted on error with the exception exception.</li>
+</ul>
+<p>Writable streams have the following functions:</p>
+<ul>
+<li>write(string, encoding=’utf8’)  Writes string with the given encoding to the stream.</li>
+<li>end()   Terminates the stream with EOF or FIN. This call will allow queued write data to be sent before closing the stream.</li>
+<li>destroy()   Closes the underlying file descriptor. Stream will not emit any more events. Any queued write data will not be sent.</li>
+</ul>
+<p>Lets read from stdin and write to a file:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> file = fs.createWriteStream(<span class="string">'./out.txt'</span>);</div><div class="line"></div><div class="line">process.stdin.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">  file.write(data);</div><div class="line">&#125;);</div><div class="line">process.stdin.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  file.end();</div><div class="line">&#125;);</div><div class="line">process.stdin.resume(); <span class="comment">// stdin in paused by default</span></div></pre></td></tr></table></figure>
+<p>Running the code above will write everything you type in from stdin to the file out.txt, until you hit Ctrl+d (e.g. the end of file indicator in Linux).</p>
+<p>You can also pipe readable and writable streams using readableStream.pipe(destination, [options]). This causes the content from the read stream to be sent to the write stream, so the program above could have been written as:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line">process.stdin.pipe(fs.createWriteStream(<span class="string">'./out.txt'</span>));</div><div class="line">process.stdin.resume();</div></pre></td></tr></table></figure>
+<h2 id="Piping"><a href="#Piping" class="headerlink" title="Piping"></a>Piping</h2><p>We can connect a readable stream to a writable stream by using source.pipe(target). In this next example (03_pipe.js) we create two streams, one readable and another writable, and write the content of one into the other:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> source = fs.createReadStream(__filename);</div><div class="line"><span class="keyword">var</span> target = fs.createWriteStream(<span class="string">'copy.js'</span>);</div><div class="line">source.pipe(target);</div></pre></td></tr></table></figure>
+<h2 id="A-Transform-Stream"><a href="#A-Transform-Stream" class="headerlink" title="A Transform Stream"></a>A Transform Stream</h2><p>We can also create our own type of stream. For instance, we can create a stream that is both readable and writable, and that, for every UTF-8 character it receives, transforms it into the uppercase version (04_transform.js):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> source = fs.createReadStream(__filename);</div><div class="line"><span class="keyword">var</span> target = fs.createWriteStream(<span class="string">'copy.js'</span>);</div><div class="line">source.pipe(target);</div></pre></td></tr></table></figure>
+<p>Here we are using the Node native streams module (which is extensively used inside the Node core) to create our transform stream by specifying the stream._transform function, which does the actual transformation on incoming data.</p>
+<p>Now that we have this transform stream, we can pipe any readable stream into it and pipe it into any writable stream:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> source = fs.createReadStream(__filename);</div><div class="line"><span class="keyword">var</span> target = fs.createWriteStream(<span class="string">'copy.js'</span>);</div><div class="line">source.pipe(target);</div></pre></td></tr></table></figure>
+<p>Here, in this last line of code, we are taking advantage of the fact that stream.pipe returns the target stream so that we can pipe it again to the target. If you replace the pipe occurrences with arrows and remove the parenthesis, you can picture the flow of data that is happening:</p>
+<p>source -&gt; uppercase -&gt; target</p>
+<h2 id="Reuse-the-Stream"><a href="#Reuse-the-Stream" class="headerlink" title="Reuse the Stream"></a>Reuse the Stream</h2><p>Since we created an abstract stream, we can reuse it on any other stream. In this example (05_tcp_server.js) we use this uppercase transform stream to create a simple TCP service:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> source = fs.createReadStream(__filename);</div><div class="line"><span class="keyword">var</span> target = fs.createWriteStream(<span class="string">'copy.js'</span>);</div><div class="line">source.pipe(target);</div></pre></td></tr></table></figure>
+<p>Here we are creating a server which, on every connection, calls our onConnection function. This function receives the socket object. This object is a stream that is both readable (when the peer sends data) and writable (when we send data to the peer). In Node.js nomenclature, this stream is called a duplex stream.</p>
+<p>On each connection we create this transform stream, into which we pipe the socket incoming data. We then pipe the output of the uppercase transform stream back to the socket.</p>
+<p>Start this server form the command line:</p>
+<pre><code>$ node 05_tcp_server.js
+</code></pre><p>You can then connect to it using telnet or any other TCP client like nc:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ nc localhost 3000</div><div class="line">please pass me the salt</div><div class="line">PLEASE PASS ME THE SALT</div></pre></td></tr></table></figure>
+<p>By treating your incoming and outgoing data as streams, you can create your own stream implementations, tie them together using pipe, and reuse them seamlessly throughout many types of streams. Some examples of types of streams include: files, network connections, HTTP requests and responses, database connections, websockets and other existing stream implementations.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://blog.safaribooksonline.com/2013/05/01/using-streams-in-node-js/" target="_blank" rel="external">Using Streams in Node.js</a></li>
+<li><a href="http://book.mixu.net/node/ch9.html" target="_blank" rel="external">Fundamentals: Timers, EventEmitters, Streams and Buffers - Mixu’s Node book</a></li>
+</ul>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="https://github.com/substack/stream-handbook" target="_blank" rel="external">substack/stream-handbook</a> streams 使用教程.</li>
+<li><a href="https://github.com/Obvious/sculpt" target="_blank" rel="external">Obvious/sculpt</a> 数据流操作库。</li>
+<li><a href="https://github.com/sindresorhus/trash" target="_blank" rel="external">sindresorhus/trash</a> 将文件或者目录移动到回收站中。</li>
+<li><a href="https://github.com/sgmonda/stdio" target="_blank" rel="external">sgmonda/stdio</a> 标准输入输出管理模块。</li>
+<li><a href="https://github.com/mafintosh/peerflix" target="_blank" rel="external">mafintosh/peerflix</a> Streaming torrent client for node.js</li>
+</ul>
+<h2 id="Tutorial-1"><a href="#Tutorial-1" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://strongloop.com/strongblog/whats-new-io-js-beta-streams3" target="_blank" rel="external">StrongLoop</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-06-28-node-stream.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-06-28-node-stream.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/io/">io</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-06-28-node-stream.html&title=《Using Streams in Node.js》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-06-28-node-stream.html&title=《Using Streams in Node.js》 — Balance&source=TutorialWe’ve discussed the three main alternatives when it comes to controll..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-06-28-node-stream.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Using Streams in Node.js》 — Balance&url=http://blog.inching.org/Node/2014-06-28-node-stream.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-06-28-node-stream.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Node/2014-07-01-node-thread.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Node Thread</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Node/2014-06-28-node-exception.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Node Exception</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-06-28-node-stream.html&title=《Using Streams in Node.js》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-06-28-node-stream.html&title=《Using Streams in Node.js》 — Balance&source=TutorialWe’ve discussed the three main alternatives when it comes to controll..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-06-28-node-stream.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Using Streams in Node.js》 — Balance&url=http://blog.inching.org/Node/2014-06-28-node-stream.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-06-28-node-stream.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3aMXLDMAwEQP//00rrmdjyHSkVIpeVJ/aIWBUIAfD1itfxtv7/5f3v57/Pn/m6Y2FgYDyWcZyuJOjk+d8w589PYsPAwNiH0W6fbHz+/GSvJDYMDAyMsd98YydHQAwMDIxrGe3B7o7Xh4GBsQ8jKWLzNtxV4FtqcQwMjAcyZlpmd3++Zb6BgYHxKMZRrpkx51UxfIgKAwNjaUbbuG/HAOefZxIuBgbGzoy2lE0CTRJum7J/dA0xMDAWZeTXwtqg20PeWMrGwMDYh5Gk3QvGjWVBWxwNMTAwlmPMt9VmUmcSYnQYxcDAWJrR1oAzyTG/EFaHjoGBsTSjbYolG7Rl8Njg88f/DQwMjIUYMy3+9lA4fxyMqBgYGMsx7hhPjvX8po6PGBgYSzPacGcK17wozUkYGBg7MJLSNN84v2Yx32j7OsLEwMBYlJHnsbzIbL9tx5wfuoYYGBibMeaHBO3IcyaJY2BgrM2YafHnrbF8ANkOBgbfEwYGxsMZbdsrv3c2NkhIvsXAwNiH0YbeXokYu5ZRpH4MDIwNGGOF5VhYSSutTdwYGBirMo5yJYEWtzziNP3jmRgYGEsz5rN1PmjM0+75K8v3xcDAWInRJtnzLdtEmbfYMDAwMNoLW+3hsh5JxukbAwMDo02a8+XrYMmKgYGBEQ8D8hFCXmFHqRwDA2MDRlLEzgSXvLI2rWNgYOzDaM9dyYWJ/IpYe8a77PiIgYHxDMYfMurRP7Lryq8AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

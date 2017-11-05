@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="angular,grunt,yo">
+    <meta name="description" content="yeoman/generator-angular 脚手架提供了 27 个任务配置和 4 个自定义任务。这四个自定义任务分贝为:
+
+build 编译产品化的版本。
+serve 编译，让后启动一个 web 服务器。
+test 执行应用的单元测试。
+default 构建一个优化过的，产品化的应用版本。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析">
+<meta property="og:url" content="http://blog.inching.org/Grunt/2014-11-06-grunt-angular-yo.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="yeoman/generator-angular 脚手架提供了 27 个任务配置和 4 个自定义任务。这四个自定义任务分贝为:
+
+build 编译产品化的版本。
+serve 编译，让后启动一个 web 服务器。
+test 执行应用的单元测试。
+default 构建一个优化过的，产品化的应用版本。">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析">
+<meta name="twitter:description" content="yeoman/generator-angular 脚手架提供了 27 个任务配置和 4 个自定义任务。这四个自定义任务分贝为:
+
+build 编译产品化的版本。
+serve 编译，让后启动一个 web 服务器。
+test 执行应用的单元测试。
+default 构建一个优化过的，产品化的应用版本。">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-11-05T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-11-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Grunt/">Grunt</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#serve"><span class="post-toc-text">serve</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#clean-server"><span class="post-toc-text">clean:server</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#wiredep"><span class="post-toc-text">wiredep</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#concurrent-server"><span class="post-toc-text">concurrent:server</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#copy-styles"><span class="post-toc-text">copy:styles</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#autoprefixer"><span class="post-toc-text">autoprefixer</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#connect-livereload"><span class="post-toc-text">connect:livereload</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#watch"><span class="post-toc-text">watch</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#newer"><span class="post-toc-text">newer</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#build"><span class="post-toc-text">build</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#clean-dist"><span class="post-toc-text">clean:dist</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#wiredep-1"><span class="post-toc-text">wiredep</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#useminPrepare"><span class="post-toc-text">useminPrepare</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#concurrent-dist"><span class="post-toc-text">concurrent:dist</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#imagemin"><span class="post-toc-text">imagemin</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#svgmin"><span class="post-toc-text">svgmin</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#autoprefixer-1"><span class="post-toc-text">autoprefixer</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#concat"><span class="post-toc-text">concat</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ngAnnotate"><span class="post-toc-text">ngAnnotate</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#copy-dist"><span class="post-toc-text">copy:dist</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#cdnify"><span class="post-toc-text">cdnify</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#cssmin"><span class="post-toc-text">cssmin</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#uglify"><span class="post-toc-text">uglify</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#filerev"><span class="post-toc-text">filerev</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#usemin"><span class="post-toc-text">usemin</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#htmlmin"><span class="post-toc-text">htmlmin</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#compass"><span class="post-toc-text">compass</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#watch-1"><span class="post-toc-text">watch</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#wiredep-2"><span class="post-toc-text">wiredep</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#compass-1"><span class="post-toc-text">compass</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#concurrent"><span class="post-toc-text">concurrent</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-grunt-angular-yo"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-11-06 00:00:00" datetime="2014-11-05T16:00:00.000Z"  itemprop="datePublished">2014-11-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Grunt/">Grunt</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><a href="https://github.com/yeoman/generator-angular" target="_blank" rel="external">yeoman/generator-angular</a> 脚手架提供了 27 个任务配置和 4 个自定义任务。这四个自定义任务分贝为:</p>
+<ul>
+<li>build 编译产品化的版本。</li>
+<li>serve 编译，让后启动一个 web 服务器。</li>
+<li>test 执行应用的单元测试。</li>
+<li>default 构建一个优化过的，产品化的应用版本。</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">grunt</span>) </span>&#123;</div><div class="line">    grunt.registerTask(<span class="string">'serve'</span>, <span class="string">'Compile then start a connect web server'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">target</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (target === <span class="string">'dist'</span>) &#123;</div><div class="line">            <span class="keyword">return</span> grunt.task.run([<span class="string">'build'</span>, <span class="string">'connect:dist:keepalive'</span>]);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        grunt.task.run([</div><div class="line">            <span class="string">'clean:server'</span>,</div><div class="line">            <span class="string">'wiredep'</span>,</div><div class="line">            <span class="string">'concurrent:server'</span>,</div><div class="line">            <span class="string">'autoprefixer'</span>,</div><div class="line">            <span class="string">'connect:livereload'</span>,</div><div class="line">            <span class="string">'watch'</span></div><div class="line">        ]);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    grunt.registerTask(<span class="string">'test'</span>, [</div><div class="line">        <span class="string">'clean:server'</span>,</div><div class="line">        <span class="string">'concurrent:test'</span>,</div><div class="line">        <span class="string">'autoprefixer'</span>,</div><div class="line">        <span class="string">'connect:test'</span>,</div><div class="line">        <span class="string">'karma'</span></div><div class="line">    ]);</div><div class="line"></div><div class="line">    grunt.registerTask(<span class="string">'build'</span>, [</div><div class="line">        <span class="string">'clean:dist'</span>,</div><div class="line">        <span class="string">'wiredep'</span>,</div><div class="line">        <span class="string">'useminPrepare'</span>,</div><div class="line">        <span class="string">'concurrent:dist'</span>,</div><div class="line">        <span class="string">'autoprefixer'</span>,</div><div class="line">        <span class="string">'concat'</span>,</div><div class="line">        <span class="string">'ngAnnotate'</span>,</div><div class="line">        <span class="string">'copy:dist'</span>,</div><div class="line">        <span class="string">'cdnify'</span>,</div><div class="line">        <span class="string">'cssmin'</span>,</div><div class="line">        <span class="string">'uglify'</span>,</div><div class="line">        <span class="string">'filerev'</span>,</div><div class="line">        <span class="string">'usemin'</span>,</div><div class="line">        <span class="string">'htmlmin'</span></div><div class="line">    ]);</div><div class="line"></div><div class="line">    grunt.registerTask(<span class="string">'default'</span>, [</div><div class="line">        <span class="string">'newer:jshint'</span>,</div><div class="line">        <span class="string">'test'</span>,</div><div class="line">        <span class="string">'build'</span></div><div class="line">    ]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="serve"><a href="#serve" class="headerlink" title="serve"></a>serve</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">grunt.registerTask(<span class="string">'serve'</span>, <span class="string">'Compile then start a connect web server'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">target</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (target === <span class="string">'dist'</span>) &#123;</div><div class="line">            <span class="keyword">return</span> grunt.task.run([<span class="string">'build'</span>, <span class="string">'connect:dist:keepalive'</span>]);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        grunt.task.run([</div><div class="line">            <span class="string">'clean:server'</span>,</div><div class="line">            <span class="string">'wiredep'</span>,</div><div class="line">            <span class="string">'concurrent:server'</span>,</div><div class="line">            <span class="string">'autoprefixer'</span>,</div><div class="line">            <span class="string">'connect:livereload'</span>,</div><div class="line">            <span class="string">'watch'</span></div><div class="line">        ]);</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">grunt.registerTask(<span class="string">'serve'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">target</span>) </span>&#123;</div><div class="line">   <span class="keyword">if</span> (target === <span class="string">'dist'</span>) &#123;</div><div class="line">     <span class="keyword">return</span> grunt.task.run([<span class="string">'build'</span>, <span class="string">'env:all'</span>, <span class="string">'env:prod'</span>, <span class="string">'express:prod'</span>, <span class="string">'wait'</span>, <span class="string">'open'</span>, <span class="string">'express-keepalive'</span>]);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">if</span> (target === <span class="string">'debug'</span>) &#123;</div><div class="line">     <span class="keyword">return</span> grunt.task.run([</div><div class="line">       <span class="string">'clean:server'</span>,</div><div class="line">       <span class="string">'env:all'</span>,</div><div class="line">       <span class="string">'injector:less'</span>, </div><div class="line">       <span class="string">'concurrent:server'</span>,</div><div class="line">       <span class="string">'injector'</span>,</div><div class="line">       <span class="string">'wiredep'</span>,</div><div class="line">       <span class="string">'autoprefixer'</span>,</div><div class="line">       <span class="string">'concurrent:debug'</span></div><div class="line">     ]);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   grunt.task.run([</div><div class="line">     <span class="string">'clean:server'</span>,</div><div class="line">     <span class="string">'env:all'</span>,</div><div class="line">     <span class="string">'injector:less'</span>, </div><div class="line">     <span class="string">'concurrent:server'</span>,</div><div class="line">     <span class="string">'injector'</span>,</div><div class="line">     <span class="string">'wiredep'</span>,</div><div class="line">     <span class="string">'autoprefixer'</span>,</div><div class="line">     <span class="string">'express:dev'</span>,</div><div class="line">     <span class="string">'wait'</span>,</div><div class="line">     <span class="string">'open'</span>,</div><div class="line">     <span class="string">'watch'</span></div><div class="line">   ]);</div><div class="line"> &#125;);</div></pre></td></tr></table></figure>
+<p>如果 <code>serve</code> 的目标是 <code>dist</code>，那么就运行 build，并且为 build 后的版本启动 web 服务器，这个服务器是持久运行的。主要用于测试发布版本。</p>
+<p>在调试阶段，一般使用非 <code>dist</code> 目标，这个目标运行的任务为：</p>
+<ul>
+<li>clean:server, 删除 .tmp 目录。</li>
+<li>wiredep, 根据 bower 的依赖关系替换 index.html 中的占位符。</li>
+<li>concurrent:server, 将 <code>&lt;%= yeoman.app %&gt;/styles</code> 以及下级目录中的所有 css 文件以平板方式拷贝到 <code>.tmp/styles/</code>。</li>
+<li>autoprefixer, 使用 Can I Use 数据库为 CSS 添加前缀。</li>
+<li>connect:livereload, 分别把 .tmp，/bower_components，appConfig.app 作为 static 资源，并启动一个 web 服务器。</li>
+<li>watch 监听 js、css、html 等文件的变化，并运行相应的任务。</li>
+</ul>
+<h3 id="clean-server"><a href="#clean-server" class="headerlink" title="clean:server"></a>clean:server</h3><p><a href="https://github.com/gruntjs/grunt-contrib-clean" target="_blank" rel="external">gruntjs/grunt-contrib-clean</a> 用于清除文件和文件夹。</p>
+<p>clean 的任务配置为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">clean: &#123;</div><div class="line">  <span class="attr">server</span>: <span class="string">'.tmp'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>clean:server</code> 删除 <code>.tmp</code> 目录。</p>
+<h3 id="wiredep"><a href="#wiredep" class="headerlink" title="wiredep"></a>wiredep</h3><p><a href="https://github.com/stephenplusplus/grunt-wiredep" target="_blank" rel="external">stephenplusplus/grunt-wiredep</a> 插件基于 <a href="https://github.com/taptapship/wiredep" target="_blank" rel="external">taptapship/wiredep</a>。用来根据 bower.json 在指定文件的占位符中注入 JavaScript 或者 CSS 依赖。</p>
+<p><code>wiredep</code> 的配置为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">wiredep: &#123;</div><div class="line">  <span class="attr">app</span>: &#123;</div><div class="line">    <span class="attr">src</span>: [<span class="string">'&lt;%= yeoman.app %&gt;/index.html'</span>],</div><div class="line">    <span class="attr">ignorePath</span>:  <span class="regexp">/\.\.\//</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>index.html</code> 中两个占位符：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- bower:js --&gt;</span></div><div class="line"><span class="comment">&lt;!-- endbower --&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- bower:css --&gt;</span></div><div class="line"><span class="comment">&lt;!-- endbower --&gt;</span></div></pre></td></tr></table></figure>
+<p>运行 grunt:wiredep 后，这两个占位符会根据 <code>bower.json</code> 中的依赖关系正确填充，如；</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- bower:css --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"bower_components/bootstrap/dist/css/bootstrap.css"</span> /&gt;</span></div><div class="line"><span class="comment">&lt;!-- endbower --&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- bower:js --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"bower_components/jquery/dist/jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"bower_components/angular/angular.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"bower_components/angular-touch/angular-touch.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"bower_components/angular-bootstrap/ui-bootstrap-tpls.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"bower_components/angular-ui-router/release/angular-ui-router.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"bower_components/bootstrap/dist/js/bootstrap.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- endbower --&gt;</span></div></pre></td></tr></table></figure>
+<p><code>bower.json</code> 为：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"name"</span>: <span class="string">"argo"</span>,</div><div class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.0"</span>,</div><div class="line">  <span class="attr">"dependencies"</span>: &#123;</div><div class="line">    <span class="attr">"angular"</span>: <span class="string">"~1.2.0"</span>,</div><div class="line">    <span class="attr">"angular-touch"</span>: <span class="string">"~1.2.0"</span>,</div><div class="line">    <span class="attr">"angular-bootstrap"</span>: <span class="string">"~0.11.2"</span>,</div><div class="line">    <span class="attr">"angular-ui-router"</span>: <span class="string">"~0.2.11"</span>,</div><div class="line">    <span class="attr">"bootstrap"</span>: <span class="string">"~3.2.0"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">"devDependencies"</span>: &#123;</div><div class="line">    <span class="attr">"angular-mocks"</span>: <span class="string">"~1.2.0"</span>,</div><div class="line">    <span class="attr">"angular-scenario"</span>: <span class="string">"~1.2.0"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">"appPath"</span>: <span class="string">"app"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="concurrent-server"><a href="#concurrent-server" class="headerlink" title="concurrent:server"></a>concurrent:server</h3><p><a href="https://github.com/sindresorhus/grunt-concurrent" target="_blank" rel="external">sindresorhus/grunt-concurrent</a> 用于运行并行任务。对于耗时的任务（如 Coffee and Sass）或者运行<a href="https://github.com/sindresorhus/grunt-concurrent#logconcurrentoutput" target="_blank" rel="external">多个阻塞任务</a>（如 <code>nodemon</code> and <code>watch</code>） 时很有用。</p>
+<p><code>concurrent</code> 任务配置为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">concurrent: &#123;</div><div class="line">  <span class="attr">server</span>: [</div><div class="line">    <span class="string">'copy:styles'</span></div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>concurrent:server</code> 目标中，并行运行 <code>copy:styles</code>。</p>
+<h3 id="copy-styles"><a href="#copy-styles" class="headerlink" title="copy:styles"></a>copy:styles</h3><p><a href="https://github.com/gruntjs/grunt-contrib-copy" target="_blank" rel="external">gruntjs/grunt-contrib-copy</a> 用于拷贝文件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">copy: &#123;</div><div class="line">    <span class="attr">styles</span>: &#123;</div><div class="line">        <span class="attr">expand</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">cwd</span>: <span class="string">'&lt;%= yeoman.app %&gt;/styles'</span>,</div><div class="line">        <span class="attr">dest</span>: <span class="string">'.tmp/styles/'</span>,</div><div class="line">        <span class="attr">src</span>: <span class="string">'&#123;,*/&#125;*.css'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>expand: true</code> 是为了启用扩展属性，<code>cwd</code> 修改 <code>dest</code> 和 <code>src</code> 的相对路径。所以，<code>style</code> 目标的作用是，将 <code>&lt;%= yeoman.app %&gt;/styles</code> 以及下级目录中的所有 css 文件以平板方式拷贝到 <code>.tmp/styles/</code>。</p>
+<h3 id="autoprefixer"><a href="#autoprefixer" class="headerlink" title="autoprefixer"></a>autoprefixer</h3><p><a href="https://github.com/nDmitry/grunt-autoprefixer" target="_blank" rel="external">nDmitry/grunt-autoprefixer</a> 使用 <a href="caniuse.com">Can I Use</a> 数据库为 CSS 添加前缀。</p>
+<p><code>options.browsers</code> 用于指定浏览器的版本，如 ‘last 1 version’ 指定各浏览器的最后一个版本。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">autoprefixer: &#123;</div><div class="line">  <span class="attr">options</span>: &#123;</div><div class="line">    <span class="attr">browsers</span>: [<span class="string">'last 1 version'</span>]</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">dist</span>: &#123;</div><div class="line">    <span class="attr">files</span>: [&#123;</div><div class="line">      <span class="attr">expand</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">cwd</span>: <span class="string">'.tmp/styles/'</span>,</div><div class="line">      <span class="attr">src</span>: <span class="string">'&#123;,*/&#125;*.css'</span>,</div><div class="line">      <span class="attr">dest</span>: <span class="string">'.tmp/styles/'</span></div><div class="line">    &#125;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>dist</code> 目标表示为 <code>.tmp/styles/</code> 目录以及下级目录中的所有 css 文件添加前缀，然后覆盖原文件。</p>
+<h3 id="connect-livereload"><a href="#connect-livereload" class="headerlink" title="connect:livereload"></a>connect:livereload</h3><p><a href="https://github.com/gruntjs/grunt-contrib-connect" target="_blank" rel="external">gruntjs/grunt-contrib-connect</a> 用于启动一个静态 web 服务器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">connect: &#123;</div><div class="line">  options: &#123;</div><div class="line">    port: 9000,</div><div class="line">    // Change this to &apos;0.0.0.0&apos; to access the server from outside.</div><div class="line">    hostname: &apos;localhost&apos;,</div><div class="line">    livereload: 35729</div><div class="line">  &#125;,</div><div class="line">  livereload: &#123;</div><div class="line">    options: &#123;</div><div class="line">      open: true,</div><div class="line">      middleware: function (connect) &#123;</div><div class="line">        return [</div><div class="line">          connect.static(&apos;.tmp&apos;),</div><div class="line">          connect().use(</div><div class="line">            &apos;/bower_components&apos;,</div><div class="line">            connect.static(&apos;./bower_components&apos;)</div><div class="line">          ),</div><div class="line">          connect.static(appConfig.app)</div><div class="line">        ];</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p><code>options.hostname</code> 和 <code>options.port</code> 用于指定服务器的主机名和端口。<code>options.hostname</code> 默认为 <code>0.0.0.0</code>，可以设置为 ‘*’，让它可以从任何地方访问。</p>
+<p><code>options.open</code> 指定为 <code>true</code> 时表示打开默认的服务器 URL，指定为字符串时，则打开该字符串指定的地址。</p>
+<p><code>options.livereload</code> 设置为 <code>true</code> 或者端口号，表示使用 <a href="https://github.com/intesso/connect-livereload" target="_blank" rel="external">connect-livereload</a> 在你的页面中注入 live reload 脚本。这不会执行 live reloading，它试图和 <code>grunt-contrib-watch</code> 或者其他根据文件的修改触发 live reload 的服务器结合使用。</p>
+<p><code>options.keepalive</code> 设置为 <code>true</code> 表示让服务器无限期的执行，这个任务之后的其任务不再执行。默认情况下，grunt 任务执行完成，web 服务器会停止。</p>
+<p><code>options.middleware</code> 类型为 Function 或者数组，用来添加 Connect 中间件。如果是函数，该函数返回中间件数组。Default: <code>Array</code> of connect middlewares that use <code>options.base</code> for static files and directory browsing，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">connect: &#123;</div><div class="line">    <span class="attr">server</span>: &#123;</div><div class="line">      <span class="attr">options</span>: &#123;</div><div class="line">        <span class="attr">middleware</span>: [</div><div class="line">          <span class="function"><span class="keyword">function</span> <span class="title">myMiddleware</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">            res.end(<span class="string">'Hello, world!'</span>);</div><div class="line">          &#125;</div><div class="line">        ],</div><div class="line">      &#125;,</div><div class="line">    &#125;,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们的例子中，<code>connect.livereload</code> 目标中使用的是函数方式，返回 3 个使用 <a href="http://www.senchalabs.org/connect/static.html" target="_blank" rel="external">connect.static</a> 方法构建的中间件。分别把 <code>.tmp</code>，<code>/bower_components</code>，<code>appConfig.app</code> 作为 static 资源。</p>
+<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><p><a href="https://github.com/gruntjs/grunt-contrib-watch" target="_blank" rel="external">gruntjs/grunt-contrib-watch</a> 用于监视文件的变化，然后运行指定的任务。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">watch: &#123;</div><div class="line">      <span class="attr">bower</span>: &#123;</div><div class="line">        <span class="attr">files</span>: [<span class="string">'bower.json'</span>],</div><div class="line">        <span class="attr">tasks</span>: [<span class="string">'wiredep'</span>]</div><div class="line">      &#125;,</div><div class="line">      <span class="attr">js</span>: &#123;</div><div class="line">        <span class="attr">files</span>: [<span class="string">'&lt;%= yeoman.app %&gt;/scripts/&#123;,*/&#125;*.js'</span>],</div><div class="line">        <span class="attr">tasks</span>: [<span class="string">'newer:jshint:all'</span>],</div><div class="line">        <span class="attr">options</span>: &#123;</div><div class="line">          <span class="attr">livereload</span>: <span class="string">'&lt;%= connect.options.livereload %&gt;'</span></div><div class="line">        &#125;</div><div class="line">      &#125;,</div><div class="line">      <span class="attr">jsTest</span>: &#123;</div><div class="line">        <span class="attr">files</span>: [<span class="string">'test/spec/&#123;,*/&#125;*.js'</span>],</div><div class="line">        <span class="attr">tasks</span>: [<span class="string">'newer:jshint:test'</span>, <span class="string">'karma'</span>]</div><div class="line">      &#125;,</div><div class="line">      <span class="attr">styles</span>: &#123;</div><div class="line">        <span class="attr">files</span>: [<span class="string">'&lt;%= yeoman.app %&gt;/styles/&#123;,*/&#125;*.css'</span>],</div><div class="line">        <span class="attr">tasks</span>: [<span class="string">'newer:copy:styles'</span>, <span class="string">'autoprefixer'</span>]</div><div class="line">      &#125;,</div><div class="line">      <span class="attr">gruntfile</span>: &#123;</div><div class="line">        <span class="attr">files</span>: [<span class="string">'Gruntfile.js'</span>]</div><div class="line">      &#125;,</div><div class="line">      <span class="attr">livereload</span>: &#123;</div><div class="line">        <span class="attr">options</span>: &#123;</div><div class="line">          <span class="attr">livereload</span>: <span class="string">'&lt;%= connect.options.livereload %&gt;'</span></div><div class="line">        &#125;,</div><div class="line">        <span class="attr">files</span>: [</div><div class="line">          <span class="string">'&lt;%= yeoman.app %&gt;/&#123;,*/&#125;*.html'</span>,</div><div class="line">          <span class="string">'.tmp/styles/&#123;,*/&#125;*.css'</span>,</div><div class="line">          <span class="string">'&lt;%= yeoman.app %&gt;/images/&#123;,*/&#125;*.&#123;png,jpg,jpeg,gif,webp,svg&#125;'</span></div><div class="line">        ]</div><div class="line">      &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><code>options.livereload</code> 目标中通过 <code>options.livereload</code> 启用实时加载，使用的是 <code>connect</code> 任务的 <code>livereload</code> 配置。当 <code>livereload.files</code> 中指定的文件发生变化时，live reloading 服务器就会被触发。See also how to <a href="https://github.com/gruntjs/grunt-contrib-watch/blob/master/docs/watch-examples.md#enabling-live-reload-in-your-html" target="_blank" rel="external">enable livereload on your HTML</a>. 在这里，我们是通过 <code>connect.livereload</code> 目标为页面注入 live reloading 脚本。</p>
+<p>除了 <code>livereload</code> 之外，还有</p>
+<ul>
+<li><code>bower</code> 监视 <code>bower.json</code> 文件，一旦文件发生变化，运行 <code>wiredep</code> 任务。</li>
+<li><code>js</code> 监视 <code>&lt;%= yeoman.app %&gt;/scripts/{,*/}</code> 下的所有 js 文件，如果有变化，则运行 <code>newer:jshint:all</code> 任务，而且会触发 live reloading 服务器。</li>
+<li><code>jsTest</code> 监视 <code>test/spec/{,*/}</code> 下的 js 文件，如果有变化，则运行 ‘newer:jshint:test’ 和 ‘karma’ 两个任务。</li>
+<li><code>styles</code> 监视 <code>&lt;%= yeoman.app %&gt;/styles/</code> 下的文件，如果有变化，运行 ‘newer:copy:styles’ 和 ‘autoprefixer’ 两个任务。</li>
+<li><code>gruntfile</code> 监视 Gruntfile 文件，没有任务。</li>
+</ul>
+<h3 id="newer"><a href="#newer" class="headerlink" title="newer"></a>newer</h3><p><a href="https://github.com/tschaub/grunt-newer" target="_blank" rel="external">tschaub/grunt-newer</a> 配置任务只对新的文件运行任务。<code>newer</code> 任务不要求特殊的配置，你只需要在任务前加上 <code>newer:</code>。</p>
+<p>对于同时有 <code>src</code> 和 <code>dest</code> 的任务，<code>src</code> 中的文件的修改时间会和 <code>dest</code> 中修改时间比较，如果有一个多多个更新的文件，则任务会重新运行，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">grunt.initConfig(&#123;</div><div class="line"><span class="attr">uglify</span>: &#123;</div><div class="line">  <span class="attr">all</span>: &#123;</div><div class="line">    <span class="attr">files</span>: &#123;</div><div class="line">      <span class="string">'dest/app.min.js'</span>: [<span class="string">'src/**/*.js'</span>]</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">grunt.loadNpmTasks(<span class="string">'grunt-contrib-uglify'</span>);</div><div class="line">grunt.loadNpmTasks(<span class="string">'grunt-newer'</span>);</div><div class="line"></div><div class="line">grunt.registerTask(<span class="string">'minify'</span>, [<span class="string">'newer:uglify:all'</span>]);</div></pre></td></tr></table></figure>
+<p><code>minify</code> 任务只有在 <code>src/**/*.js</code> 中的一个或多个文件比 <code>dest/app.min.js</code> 更新时，<code>uglify:all</code> 任务才会运行。</p>
+<p>对于只有 <code>src</code> 没有 <code>dest</code> 的配置，<code>newer</code> 只会使用比上次成功运行的时间新的文件。如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">jshint: &#123;</div><div class="line">  <span class="attr">options</span>: &#123;</div><div class="line">    <span class="attr">jshintrc</span>: <span class="string">'.jshintrc'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">all</span>: &#123;</div><div class="line">    <span class="attr">src</span>: <span class="string">'src/**/*.js'</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">grunt.registerTask(<span class="string">'lint'</span>, [<span class="string">'newer:jshint:all'</span>]);</div></pre></td></tr></table></figure>
+<p>第一次运行 <code>grunt lint</code> 时，<code>jshint:newer:all</code> 会使用所有 src 下的文件，之后，只有你修改过的文件才会运行 <code>jshint</code>。</p>
+<p>结合 <code>watch</code> 使用时，当 <code>src</code> 中的文件变化时，会使用新的文件运行任务，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">js: &#123;</div><div class="line">    <span class="attr">files</span>: [<span class="string">'&lt;%= yeoman.app %&gt;/scripts/&#123;,*/&#125;*.js'</span>],</div><div class="line">    <span class="attr">tasks</span>: [<span class="string">'newer:jshint:all'</span>],</div><div class="line">    <span class="attr">options</span>: &#123;</div><div class="line">      <span class="attr">livereload</span>: <span class="string">'&lt;%= connect.options.livereload %&gt;'</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>当 <code>files</code> 中的文件有变化时，针对新的文件运行指定的任务，如这里的 <code>jshint:all</code>。</p>
+<h2 id="build"><a href="#build" class="headerlink" title="build"></a>build</h2><p><code>build</code> 任务由以下 14 个子任务组成。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">grunt.registerTask(<span class="string">'build'</span>, [</div><div class="line">    <span class="string">'clean:dist'</span>,</div><div class="line">    <span class="string">'wiredep'</span>,</div><div class="line">    <span class="string">'useminPrepare'</span>,</div><div class="line">    <span class="string">'concurrent:dist'</span>,</div><div class="line">    <span class="string">'autoprefixer'</span>,</div><div class="line">    <span class="string">'concat'</span>,</div><div class="line">    <span class="string">'ngAnnotate'</span>,</div><div class="line">    <span class="string">'copy:dist'</span>,</div><div class="line">    <span class="string">'cdnify'</span>,</div><div class="line">    <span class="string">'cssmin'</span>,</div><div class="line">    <span class="string">'uglify'</span>,</div><div class="line">    <span class="string">'filerev'</span>,</div><div class="line">    <span class="string">'usemin'</span>,</div><div class="line">    <span class="string">'htmlmin'</span></div><div class="line">  ]);</div></pre></td></tr></table></figure>
+<ol>
+<li>清除 <code>.tmp</code> 和 <code>&lt;%= yeoman.dist %&gt;/{,*/}*</code>，但保留 <code>&lt;%= yeoman.dist %&gt;/.git*</code> 文件或者文件夹。</li>
+<li>根据 bower 的依赖关系替换 <code>index.html</code> 中的占位符。</li>
+<li>利用<code>useminPrepare</code> 任务生成的配置合并文件，指定输出路径为 <code>&lt;%= yeoman.dist %&gt;</code>。包括 bower_components 中的 js 和 css，以及 <code>.temp/</code> 下用户自定义的 css 以及 <code>.tmp/</code> 或者 <code>app/</code> 下的 js。</li>
+<li>并行运行 <code>concurrent:dist</code> 目标中的三个子任务：<ul>
+<li>将 <code>&lt;%= yeoman.app %&gt;/styles</code> 以及下级目录中的所有 css 文件拷贝到 <code>.tmp/styles/</code>。</li>
+<li>将<code>&lt;%= yeoman.app %&gt;/images</code> 中的图片压缩到 <code>&lt;%= yeoman.dist %&gt;/images</code> 中。</li>
+<li>将 <code>&lt;%= yeoman.app %&gt;/images/{,*/}/</code> 下的所有 svg 图片压缩到 <code>&lt;%= yeoman.dist %&gt;/images</code> 中。</li>
+</ul>
+</li>
+<li><code>.tmp/styles/</code> 目录以及下级目录中的所有 css 文件添加前缀，然后覆盖原文件。</li>
+<li>使用的是 <code>useminPrepare</code> 任务生成的配置合并 css 和 js 文件。<ul>
+<li>将 <code>index.html</code> 中有 <code>wiredep</code> 插入的 css 合并为 <code>.tmp/styles/vendor.css</code> 文件中。</li>
+<li>将 <code>&lt;!-- build:css(.tmp) styles/main.css --&gt;&lt;!-- endbuild --&gt;</code> 中的 css （路径为 <code>.temp</code> 目录下）合并到 <code>.tmp/styles/main.css</code> 中。</li>
+<li>将 <code>wiredep</code> 插入的 js 文件合并到 <code>.tmp/scripts/vendor.js</code> 中。</li>
+<li>将 <code>&lt;!-- build:js({.tmp,app}) scripts/scripts.js --&gt; &lt;!-- endbuild --&gt;</code> 中的 js 文件（存在于 <code>.tmp</code> 或者 <code>app</code> 目录下）合并到 <code>.temp/scripts/scripts.js</code> 中。</li>
+</ul>
+</li>
+<li>将 <code>.tmp/concat/scripts</code> 目录下除了 <code>oldieshim.js</code> 之外的所有 js 文件加上 angular 注解后覆盖原来的文件。</li>
+<li>将 <code>&lt;%= yeoman.app %&gt;/</code> 的所有 html、图片、字体文件、.htaccess 拷贝到 <code>&lt;%= yeoman.dist %&gt;</code> 下。</li>
+<li>将 <code>&lt;%= yeoman.dist %&gt;/*.html</code> 中的本地路径修改为 CDN 路径。</li>
+<li>使用 <code>useminPrepare</code> 生成的配置最小化 CSS。压缩后置于 <code>&#39;&lt;%= yeoman.dist %&gt;&#39;/styles/</code> 中。</li>
+<li>使用 <code>useminPrepare</code> 生成的配置混淆 JavaScript。混淆后置于 <code>&#39;&lt;%= yeoman.dist %&gt;&#39;/scripts</code> 中。</li>
+<li>使用 filerev 重命名 <code>&lt;%= yeoman.dist %&gt;/</code> 下所有 js、css、图片和字体文件。</li>
+<li>将 <code>&lt;%= yeoman.dist %&gt;/{,*/}*.html</code> 和 <code>&lt;%= yeoman.dist %&gt;/styles/{,*/}*.css</code> 中的 usemin 块替换为 <code>&#39;&lt;%= yeoman.dist %&gt;&#39;,&#39;&lt;%= yeoman.dist %&gt;/images&#39;</code> 中优化后并且 revved 的版本。</li>
+<li>压缩 <code>&lt;%= yeoman.dist %&gt;</code> 下的所有 html 以及视图文件夹所有的 html，将压缩后的文件置于 <code>&lt;%= yeoman.dist %&gt;/</code> 下。</li>
+</ol>
+<h3 id="clean-dist"><a href="#clean-dist" class="headerlink" title="clean:dist"></a>clean:dist</h3><p>清除 <code>.tmp</code> 和 <code>&lt;%= yeoman.dist %&gt;/{,*/}*</code>，但保留 <code>&lt;%= yeoman.dist %&gt;/.git*</code> 文件或者文件夹。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">clean: &#123;</div><div class="line">      <span class="attr">dist</span>: &#123;</div><div class="line">        <span class="attr">files</span>: [&#123;</div><div class="line">          <span class="attr">dot</span>: <span class="literal">true</span>,</div><div class="line">          <span class="attr">src</span>: [</div><div class="line">            <span class="string">'.tmp'</span>,</div><div class="line">            <span class="string">'&lt;%= yeoman.dist %&gt;/&#123;,*/&#125;*'</span>,</div><div class="line">            <span class="string">'!&lt;%= yeoman.dist %&gt;/.git*'</span></div><div class="line">          ]</div><div class="line">        &#125;]</div><div class="line">      &#125;,</div><div class="line">      <span class="attr">server</span>: <span class="string">'.tmp'</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="wiredep-1"><a href="#wiredep-1" class="headerlink" title="wiredep"></a>wiredep</h3><p>根据 bower 的依赖关系替换 <code>index.html</code> 中的占位符。</p>
+<h3 id="useminPrepare"><a href="#useminPrepare" class="headerlink" title="useminPrepare"></a>useminPrepare</h3><p>根据 <code>&lt;%= yeoman.app %&gt;/index.html</code> 中的 usemin 块生成 JS 和 CSS 的压缩配置，并指定输出路径为 <code>&lt;%= yeoman.dist %&gt;</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">useminPrepare: &#123;</div><div class="line">  <span class="attr">html</span>: <span class="string">'&lt;%= yeoman.app %&gt;/index.html'</span>,</div><div class="line">  <span class="attr">options</span>: &#123;</div><div class="line">    <span class="attr">dest</span>: <span class="string">'&lt;%= yeoman.dist %&gt;'</span>,</div><div class="line">    <span class="attr">flow</span>: &#123;</div><div class="line">      <span class="attr">html</span>: &#123;</div><div class="line">        <span class="attr">steps</span>: &#123;</div><div class="line">          <span class="attr">js</span>: [<span class="string">'concat'</span>, <span class="string">'uglifyjs'</span>],</div><div class="line">          <span class="attr">css</span>: [<span class="string">'cssmin'</span>]</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">post</span>: &#123;&#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在使用这个任务的时候，需要主要必须在 <code>initConfig</code> 函数中传入以下配置，否则运行该任务的时候会出错：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">yeoman: &#123;</div><div class="line">    <span class="attr">app</span>: <span class="xml"><span class="tag">&lt;<span class="name">the</span> <span class="attr">app</span> <span class="attr">path</span>&gt;</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>index.html 中 usemin 块：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- build:css(.) styles/vendor.css --&gt;</span></div><div class="line">    <span class="comment">&lt;!-- bower:css --&gt;</span></div><div class="line">    <span class="comment">&lt;!-- endbower --&gt;</span></div><div class="line"><span class="comment">&lt;!-- endbuild --&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- build:css(.tmp) styles/main.css --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"styles/main.css"</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- endbuild --&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- build:js(.) scripts/vendor.js --&gt;</span></div><div class="line">    <span class="comment">&lt;!-- bower:js --&gt;</span></div><div class="line">    <span class="comment">&lt;!-- endbower --&gt;</span></div><div class="line"><span class="comment">&lt;!-- endbuild --&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- build:js(&#123;.tmp,app&#125;) scripts/scripts.js --&gt;</span></div><div class="line"><span class="comment">&lt;!-- endbuild --&gt;</span></div></pre></td></tr></table></figure>
+<p><code>useminPrepare</code> 为实现优化修改 Grunt 配置，定义 js 的优化流程为 <code>concat</code> –&gt; <code>uglifyjs</code>，css 的优化流程为 <code>cssmin</code>。优化的 html 文件为 <code>&lt;%= yeoman.app %&gt;/index.html</code>，优化后的文件路径为 <code>&lt;%= yeoman.dist %&gt;</code>。</p>
+<p>将 <code>index.html</code> 中有 <code>wiredep</code> 插入的 css 合并为 <code>.tmp/styles/vendor.css</code> 文件中。将 <code>&lt;!-- build:css(.tmp) styles/main.css --&gt;&lt;!-- endbuild --&gt;</code> 中的 css （路径为 <code>.temp</code> 目录下）合并到 <code>.tmp/styles/main.css</code> 中。压缩后放到 <code>&lt;%= yeoman.dist %&gt;/</code></p>
+<p>将 <code>wiredep</code> 插入的 js 文件合并到 <code>.tmp/scripts/vendor.js</code> 中，将进一步混淆后的文件生成到 <code>&lt;%= yeoman.dist %&gt;/scripts/vendor.js</code> 中。将 <code>&lt;!-- build:js({.tmp,app}) scripts/scripts.js --&gt; &lt;!-- endbuild --&gt;</code> 中的 js 文件（存在于 <code>.tmp</code> 或者 <code>app</code> 目录下）合并到 <code>.temp/scripts/scripts.js</code> 中，混淆后的文件生成到 <code>&lt;%= yeoman.dist %&gt;/scripts/scripts.js</code> 中。</p>
+<h3 id="concurrent-dist"><a href="#concurrent-dist" class="headerlink" title="concurrent:dist"></a>concurrent:dist</h3><p>并行运行 <code>concurrent:dist</code> 目标中的三个子任务。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">concurrent: &#123;</div><div class="line">    <span class="attr">dist</span>: [</div><div class="line">        <span class="string">'copy:styles'</span>,</div><div class="line">        <span class="string">'imagemin'</span>,</div><div class="line">        <span class="string">'svgmin'</span></div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>copy:styles 将 <code>&lt;%= yeoman.app %&gt;/styles</code> 以及下级目录中的所有 css 文件拷贝到 <code>.tmp/styles/</code>。</li>
+<li>imagemin 将 <code>&lt;%= yeoman.app %&gt;/images</code> 中的图片压缩到 <code>&lt;%= yeoman.dist %&gt;/images</code> 中。</li>
+<li>svgmin 将 <code>&lt;%= yeoman.app %&gt;/images/{,*/}/</code> 下的所有 svg 图片压缩到 <code>&lt;%= yeoman.dist %&gt;/images</code> 中。</li>
+</ul>
+<h3 id="imagemin"><a href="#imagemin" class="headerlink" title="imagemin"></a>imagemin</h3><p>使用 <a href="https://github.com/gruntjs/grunt-contrib-imagemin" target="_blank" rel="external">gruntjs/grunt-contrib-imagemin</a> 进行图片压缩。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">imagemin: &#123;</div><div class="line">    <span class="attr">dist</span>: &#123;</div><div class="line">        <span class="attr">files</span>: [</div><div class="line">            &#123;</div><div class="line">                <span class="attr">expand</span>: <span class="literal">true</span>,</div><div class="line">                <span class="attr">cwd</span>: <span class="string">'&lt;%= yeoman.app %&gt;/images'</span>,</div><div class="line">                <span class="attr">src</span>: <span class="string">'&#123;,*/&#125;*.&#123;png,jpg,jpeg,gif&#125;'</span>,</div><div class="line">                <span class="attr">dest</span>: <span class="string">'&lt;%= yeoman.dist %&gt;/images'</span></div><div class="line">            &#125;</div><div class="line">        ]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>压缩的图片存在于 <code>&lt;%= yeoman.app %&gt;/images</code> 压缩后的图片放置在 <code>&lt;%= yeoman.dist %&gt;/images</code>。所以这个任务的目的是将 <code>&lt;%= yeoman.app %&gt;/images</code> 中的图片压缩到 <code>&lt;%= yeoman.dist %&gt;/images</code> 中。</p>
+<h3 id="svgmin"><a href="#svgmin" class="headerlink" title="svgmin"></a>svgmin</h3><p><a href="https://github.com/sindresorhus/grunt-svgmin" target="_blank" rel="external">sindresorhus/grunt-svgmin</a> 用来压缩 SVG。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">svgmin: &#123;</div><div class="line">  <span class="attr">dist</span>: &#123;</div><div class="line">    <span class="attr">files</span>: [&#123;</div><div class="line">      <span class="attr">expand</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">cwd</span>: <span class="string">'&lt;%= yeoman.app %&gt;/images'</span>,</div><div class="line">      <span class="attr">src</span>: <span class="string">'&#123;,*/&#125;*.svg'</span>,</div><div class="line">      <span class="attr">dest</span>: <span class="string">'&lt;%= yeoman.dist %&gt;/images'</span></div><div class="line">    &#125;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将 <code>&lt;%= yeoman.app %&gt;/images/{,*/}/</code> 下的所有 svg 图片压缩到 <code>&lt;%= yeoman.dist %&gt;/images</code> 中。</p>
+<h3 id="autoprefixer-1"><a href="#autoprefixer-1" class="headerlink" title="autoprefixer"></a>autoprefixer</h3><p><code>dist</code> 目标表示为 <code>.tmp/styles/</code> 目录以及下级目录中的所有 css 文件添加前缀，然后覆盖原文件。</p>
+<h3 id="concat"><a href="#concat" class="headerlink" title="concat"></a>concat</h3><p><a href="https://github.com/gruntjs/grunt-contrib-concat" target="_blank" rel="external">gruntjs/grunt-contrib-concat</a> 用于拼接文件。</p>
+<p>我们这里使用的是 <code>useminPrepare</code> 任务生成的配置，合并后的文件生成到临时目录(<code>.tmp</code>)目录下。</p>
+<h3 id="ngAnnotate"><a href="#ngAnnotate" class="headerlink" title="ngAnnotate"></a>ngAnnotate</h3><p><a href="https://github.com/mzgol/grunt-ng-annotate" target="_blank" rel="external">mzgol/grunt-ng-annotate</a> 用来将 Angular 添加、删除或者重建 Angular 中的依赖注入。</p>
+<p>有如下 Angular 模块，在未标注之前：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">"MyMod"</span>).controller(<span class="string">"MyCtrl"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $timeout</span>) </span>&#123;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>标注之后：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">"MyMod"</span>).controller(<span class="string">"MyCtrl"</span>, [<span class="string">"$scope"</span>, <span class="string">"$timeout"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $timeout</span>) </span>&#123;</div><div class="line">&#125;]);</div></pre></td></tr></table></figure>
+<p>添加标注后可以安全地对代码进行压缩。</p>
+<p>我们的 <code>ngAnnotate</code> 的任务配置如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">ngAnnotate: &#123;</div><div class="line">  <span class="attr">dist</span>: &#123;</div><div class="line">    <span class="attr">files</span>: [&#123;</div><div class="line">      <span class="attr">expand</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">cwd</span>: <span class="string">'.tmp/concat/scripts'</span>,</div><div class="line">      <span class="attr">src</span>: [<span class="string">'*.js'</span>, <span class="string">'!oldieshim.js'</span>],</div><div class="line">      <span class="attr">dest</span>: <span class="string">'.tmp/concat/scripts'</span></div><div class="line">    &#125;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将 <code>.tmp/concat/scripts</code> 目录下除了 <code>oldieshim.js</code> 之外的所有 js 文件加上注解后覆盖原来的文件。</p>
+<h3 id="copy-dist"><a href="#copy-dist" class="headerlink" title="copy:dist"></a>copy:dist</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">copy: &#123;</div><div class="line">  <span class="attr">dist</span>: &#123;</div><div class="line">    <span class="attr">files</span>: [&#123;</div><div class="line">      <span class="attr">expand</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">dot</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">cwd</span>: <span class="string">'&lt;%= yeoman.app %&gt;'</span>,</div><div class="line">      <span class="attr">dest</span>: <span class="string">'&lt;%= yeoman.dist %&gt;'</span>,</div><div class="line">      <span class="attr">src</span>: [</div><div class="line">        <span class="string">'*.&#123;ico,png,txt&#125;'</span>,</div><div class="line">        <span class="string">'.htaccess'</span>,</div><div class="line">        <span class="string">'*.html'</span>,</div><div class="line">        <span class="string">'views/&#123;,*/&#125;*.html'</span>,</div><div class="line">        <span class="string">'images/&#123;,*/&#125;*.&#123;webp&#125;'</span>,</div><div class="line">        <span class="string">'fonts/*'</span></div><div class="line">      ]</div><div class="line">    &#125;, &#123;</div><div class="line">      <span class="attr">expand</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">cwd</span>: <span class="string">'.tmp/images'</span>,</div><div class="line">      <span class="attr">dest</span>: <span class="string">'&lt;%= yeoman.dist %&gt;/images'</span>,</div><div class="line">      <span class="attr">src</span>: [<span class="string">'generated/*'</span>]</div><div class="line">    &#125;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将 <code>&lt;%= yeoman.app %&gt;/</code> 的所有 html、图片、字体文件、.htaccess 拷贝到 <code>&lt;%= yeoman.dist %&gt;</code> 下。</p>
+<h3 id="cdnify"><a href="#cdnify" class="headerlink" title="cdnify"></a>cdnify</h3><p><a href="https://github.com/callumlocke/grunt-cdnify" target="_blank" rel="external">callumlocke/grunt-cdnify</a> 将指定文件中的本地路径修改为 CDN 路径，CDN 可以通过 <code>options.base</code> 配置，默认为 Google 提供的 CDN。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cdnify: &#123;</div><div class="line">  <span class="attr">dist</span>: &#123;</div><div class="line">    <span class="attr">html</span>: [<span class="string">'&lt;%= yeoman.dist %&gt;/*.html'</span>]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将 <code>&lt;%= yeoman.dist %&gt;/*.html</code> 中的本地路径修改为 CDN 路径。</p>
+<h3 id="cssmin"><a href="#cssmin" class="headerlink" title="cssmin"></a>cssmin</h3><p>使用 <code>useminPrepare</code> 生成的配置，你也可以自定义：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cssmin: &#123;</div><div class="line">    <span class="attr">dist</span>: &#123;</div><div class="line">     <span class="attr">files</span>: &#123;</div><div class="line">       <span class="string">'&lt;%= yeoman.dist %&gt;/styles/main.css'</span>: [</div><div class="line">         <span class="string">'.tmp/styles/&#123;,*/&#125;*.css'</span></div><div class="line">       ]</div><div class="line">     &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="uglify"><a href="#uglify" class="headerlink" title="uglify"></a>uglify</h3><p>使用 <code>useminPrepare</code> 生成的配置，混淆后的文件默认生成到通过 <code>useminPrepare</code> 中指定的目标目录。</p>
+<p>你也可以自定义：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">uglify: &#123;</div><div class="line">  <span class="attr">dist</span>: &#123;</div><div class="line">    <span class="attr">files</span>: &#123;</div><div class="line">      <span class="string">'&lt;%= yeoman.dist %&gt;/scripts/scripts.js'</span>: [</div><div class="line">        <span class="string">'&lt;%= yeoman.dist %&gt;/scripts/scripts.js'</span></div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="filerev"><a href="#filerev" class="headerlink" title="filerev"></a>filerev</h3><p><a href="https://github.com/yeoman/grunt-filerev" target="_blank" rel="external">yeoman/grunt-filerev</a> 通过文件内容的哈希重命名文件名。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Renames files for browser caching purposes</span></div><div class="line">filerev: &#123;</div><div class="line">  <span class="attr">dist</span>: &#123;</div><div class="line">    <span class="attr">src</span>: [</div><div class="line">      <span class="string">'&lt;%= yeoman.dist %&gt;/scripts/&#123;,*/&#125;*.js'</span>,</div><div class="line">      <span class="string">'&lt;%= yeoman.dist %&gt;/styles/&#123;,*/&#125;*.css'</span>,</div><div class="line">      <span class="string">'&lt;%= yeoman.dist %&gt;/images/&#123;,*/&#125;*.&#123;png,jpg,jpeg,gif,webp,svg&#125;'</span>,</div><div class="line">      <span class="string">'&lt;%= yeoman.dist %&gt;/styles/fonts/*'</span></div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用 filerev 重命名 <code>&lt;%= yeoman.dist %&gt;/</code> 下所有 js、css、图片和字体文件。</p>
+<h3 id="usemin"><a href="#usemin" class="headerlink" title="usemin"></a>usemin</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">usemin: &#123;</div><div class="line">  <span class="attr">html</span>: [<span class="string">'&lt;%= yeoman.dist %&gt;/&#123;,*/&#125;*.html'</span>],</div><div class="line">  <span class="attr">css</span>: [<span class="string">'&lt;%= yeoman.dist %&gt;/styles/&#123;,*/&#125;*.css'</span>],</div><div class="line">  <span class="attr">options</span>: &#123;</div><div class="line">    <span class="attr">assetsDirs</span>: [<span class="string">'&lt;%= yeoman.dist %&gt;'</span>,<span class="string">'&lt;%= yeoman.dist %&gt;/images'</span>]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>usemin</code> 使用 <code>useminPrepare</code> 阶段准备的配置优化，将 <code>&lt;%= yeoman.dist %&gt;/{,*/}*.html</code> 和 <code>&lt;%= yeoman.dist %&gt;/styles/{,*/}*.css</code> 中的 usemin 块替换为 <code>&#39;&lt;%= yeoman.dist %&gt;&#39;,&#39;&lt;%= yeoman.dist %&gt;/images&#39;</code> 中优化后并且 revved 的版本。<code>options.assetsDirs</code> 重定义了 revved 版本的查找路径。</p>
+<h3 id="htmlmin"><a href="#htmlmin" class="headerlink" title="htmlmin"></a>htmlmin</h3><p><a href="https://github.com/gruntjs/grunt-contrib-htmlmin" target="_blank" rel="external">gruntjs/grunt-contrib-htmlmin</a> 压缩 html。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">htmlmin: &#123;</div><div class="line">  <span class="attr">dist</span>: &#123;</div><div class="line">    <span class="attr">options</span>: &#123;</div><div class="line">      <span class="attr">collapseWhitespace</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">conservativeCollapse</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">collapseBooleanAttributes</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">removeCommentsFromCDATA</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">removeOptionalTags</span>: <span class="literal">true</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">files</span>: [&#123;</div><div class="line">      <span class="attr">expand</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">cwd</span>: <span class="string">'&lt;%= yeoman.dist %&gt;'</span>,</div><div class="line">      <span class="attr">src</span>: [<span class="string">'*.html'</span>, <span class="string">'views/&#123;,*/&#125;*.html'</span>],</div><div class="line">      <span class="attr">dest</span>: <span class="string">'&lt;%= yeoman.dist %&gt;'</span></div><div class="line">    &#125;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>压缩 <code>&lt;%= yeoman.dist %&gt;</code> 下的所有 html 以及视图文件夹所有的 html，将压缩后的文件置于 <code>&lt;%= yeoman.dist %&gt;/</code> 下。</p>
+<h2 id="compass"><a href="#compass" class="headerlink" title="compass"></a>compass</h2><p>如果你想使用 <a href="https://github.com/gruntjs/grunt-contrib-compass" target="_blank" rel="external">gruntjs/grunt-contrib-compass</a> 之类的预编译插件，需要做如下修改：</p>
+<h3 id="watch-1"><a href="#watch-1" class="headerlink" title="watch"></a>watch</h3><p>将其中的 <code>style</code> 目标替换为一下目标，即将</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">styles: &#123;</div><div class="line">    <span class="attr">files</span>: [<span class="string">'&lt;%= yeoman.app %&gt;/styles/&#123;,*/&#125;*.css'</span>],</div><div class="line">    <span class="attr">tasks</span>: [<span class="string">'newer:copy:styles'</span>, <span class="string">'autoprefixer'</span>]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>替换为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">compass: &#123;</div><div class="line">    <span class="attr">files</span>: [<span class="string">'&lt;%= yeoman.app %&gt;/styles/&#123;,*/&#125;*.&#123;scss,sass&#125;'</span>],</div><div class="line">    <span class="attr">tasks</span>: [<span class="string">'compass:server'</span>, <span class="string">'autoprefixer'</span>]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="wiredep-2"><a href="#wiredep-2" class="headerlink" title="wiredep"></a>wiredep</h3><p>在 wiredep 任务中添加目标 <code>sass</code> 目标：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sass: &#123;</div><div class="line">    <span class="attr">src</span>: [<span class="string">'&lt;%= yeoman.app %&gt;/styles/&#123;,*/&#125;*.&#123;scss,sass&#125;'</span>],</div><div class="line">    <span class="attr">ignorePath</span>: <span class="regexp">/(\.\.\/)&#123;1,2&#125;bower_components\//</span></div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h3 id="compass-1"><a href="#compass-1" class="headerlink" title="compass"></a>compass</h3><p>添加 cpmpass 任务配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Compiles Sass to CSS and generates necessary files if requested</span></div><div class="line">compass: &#123;</div><div class="line">  <span class="attr">options</span>: &#123;</div><div class="line">    <span class="attr">sassDir</span>: <span class="string">'&lt;%= yeoman.app %&gt;/styles'</span>,</div><div class="line">    <span class="attr">cssDir</span>: <span class="string">'.tmp/styles'</span>,</div><div class="line">    <span class="attr">generatedImagesDir</span>: <span class="string">'.tmp/images/generated'</span>,</div><div class="line">    <span class="attr">imagesDir</span>: <span class="string">'&lt;%= yeoman.app %&gt;/images'</span>,</div><div class="line">    <span class="attr">javascriptsDir</span>: <span class="string">'&lt;%= yeoman.app %&gt;/scripts'</span>,</div><div class="line">    <span class="attr">fontsDir</span>: <span class="string">'&lt;%= yeoman.app %&gt;/styles/fonts'</span>,</div><div class="line">    <span class="attr">importPath</span>: <span class="string">'./bower_components'</span>,</div><div class="line">    <span class="attr">httpImagesPath</span>: <span class="string">'/images'</span>,</div><div class="line">    <span class="attr">httpGeneratedImagesPath</span>: <span class="string">'/images/generated'</span>,</div><div class="line">    <span class="attr">httpFontsPath</span>: <span class="string">'/styles/fonts'</span>,</div><div class="line">    <span class="attr">relativeAssets</span>: <span class="literal">false</span>,</div><div class="line">    <span class="attr">assetCacheBuster</span>: <span class="literal">false</span>,</div><div class="line">    <span class="attr">raw</span>: <span class="string">'Sass::Script::Number.precision = 10\n'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">dist</span>: &#123;</div><div class="line">    <span class="attr">options</span>: &#123;</div><div class="line">      <span class="attr">generatedImagesDir</span>: <span class="string">'&lt;%= yeoman.dist %&gt;/images/generated'</span></div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">server</span>: &#123;</div><div class="line">    <span class="attr">options</span>: &#123;</div><div class="line">      <span class="attr">debugInfo</span>: <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中</p>
+<ul>
+<li><code>sassDir</code> 指的是 sass 或者 scss 文件所在的目录，不能使用通配符模式，只需要指定目录，compass 会自动递归遍历。</li>
+<li><code>cssDir</code> sass 或者 scss 生成的 css 文件的存储目录。目录结构和 scss 或者 sass 的相同。</li>
+<li>其他请参考 <a href="https://github.com/gruntjs/grunt-contrib-compass" target="_blank" rel="external">gruntjs/grunt-contrib-compass</a>。</li>
+</ul>
+<h3 id="concurrent"><a href="#concurrent" class="headerlink" title="concurrent"></a>concurrent</h3><p>将 <code>concurrent</code> 中的 <code>copy:styles</code> 目标替换为 <code>compass:server</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">concurrent: &#123;</div><div class="line">  <span class="attr">server</span>: [</div><div class="line">    <span class="string">'compass:server'</span></div><div class="line">  ],</div><div class="line">  <span class="attr">test</span>: [</div><div class="line">    <span class="string">'compass'</span></div><div class="line">  ],</div><div class="line">  <span class="attr">dist</span>: [</div><div class="line">    <span class="string">'compass:dist'</span>,</div><div class="line">    <span class="string">'imagemin'</span>,</div><div class="line">    <span class="string">'svgmin'</span></div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Grunt/2014-11-06-grunt-angular-yo.html" target="_blank" rel="external">http://blog.inching.org/Grunt/2014-11-06-grunt-angular-yo.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/grunt/">grunt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yo/">yo</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Grunt/2014-11-06-grunt-angular-yo.html&title=《使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Grunt/2014-11-06-grunt-angular-yo.html&title=《使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析》 — Balance&source=yeoman/generator-angular 脚手架提供了 27 个任务配置和 4 个自定义任务。这四个自定义任务分贝为:
+
+build 编译产品化的..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Grunt/2014-11-06-grunt-angular-yo.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析》 — Balance&url=http://blog.inching.org/Grunt/2014-11-06-grunt-angular-yo.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Grunt/2014-11-06-grunt-angular-yo.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/HTML5/2014-11-07-dom-event.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">DOM 事件简介</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Node/2014-10-28-node-full-stack.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Node Full Stack —— MEAN</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Grunt/2014-11-06-grunt-angular-yo.html&title=《使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Grunt/2014-11-06-grunt-angular-yo.html&title=《使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析》 — Balance&source=yeoman/generator-angular 脚手架提供了 27 个任务配置和 4 个自定义任务。这四个自定义任务分贝为:
+
+build 编译产品化的..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Grunt/2014-11-06-grunt-angular-yo.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析》 — Balance&url=http://blog.inching.org/Grunt/2014-11-06-grunt-angular-yo.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Grunt/2014-11-06-grunt-angular-yo.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aQZLDIAwFUd//0swBUtj9JSdTQLNyTRLgeaFBSNeFx5gM/s3P73/+/X7mF4YMGTKWZZCFBx5ko7PndF0ZMmScxphFsPslSaBMP509P+xZhgwZMkBw7LwI8isZMmTI6AfcNBynR0kZMmTIIEls7ertfq1/yMVlyJCxIIPfuv/++Sv1DRkyZCzFGOEg86RJ6WgPGTJk7M3gAa6VXpbS4HQ/MmTI2JuRXn4REt9Wpzh6pXmzDBkyFmSkQTO9AiOvhpdIpzwZMmQcwEhLkjz57ATcoJlDhgwZxzBqJ8r+9VzKeLg1lCFDxjEMstF+axdPd1ESK0OGjE0Z/MKdt2rxI2a/FWzKkyFDxkaMNFxyXi0pTVvHZMiQcQIjbY+olQ14+sqLCqjNQoYMGRsxaj8jobZDLSaxMmTI2I5Ry3p5OsoDJSlRBM0WMmTI2IjRST7TV8DTV14qkCFDxmmMtDCQFjj5pzw0y5Ah4zTGW4G1dn1WK6C27vlkyJCxIOOtZovazLVj5Qv/N2TIkLEgI20qrR0K+QsKklsZMmQcxqg1hHUCNK+1Bm0WMmTI2IIxwsHDYrotPn/cbCFDhozFGXzULtpqh7z72dKyqAwZMvZgpEe39Iq/E4L5HmTIkHECo5PE1kJnJ4l96BmRIUOGjEbBgITpdEUZMmTIIFOQw1+n2ImaMGTIkHEAIy0G8HCZIklElSFDxmmMtMWBFAl4+8X3TnoyZMjYgvEHlHs39WmlSu4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

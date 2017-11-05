@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>The Jade Templating Language | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="html,jade">
+    <meta name="description" content="本文是读 &amp;lt;&amp;lt;Express Web Application Development&amp;gt;&amp;gt; 关于 Jade 章节的笔记。
+See also Jade Template Syntax Documentation by Example.
+Quick StartJade is the recommended template engine for Express. It comes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Jade Templating Language">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-03-30-jade.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文是读 &amp;lt;&amp;lt;Express Web Application Development&amp;gt;&amp;gt; 关于 Jade 章节的笔记。
+See also Jade Template Syntax Documentation by Example.
+Quick StartJade is the recommended template engine for Express. It comes">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jade-nested.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jade-text-content.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/jade-dot.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Jade Templating Language">
+<meta name="twitter:description" content="本文是读 &amp;lt;&amp;lt;Express Web Application Development&amp;gt;&amp;gt; 关于 Jade 章节的笔记。
+See also Jade Template Syntax Documentation by Example.
+Quick StartJade is the recommended template engine for Express. It comes">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/jade-nested.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">The Jade Templating Language</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">The Jade Templating Language</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-03-29T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-03-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Quick-Start"><span class="post-toc-text">Quick Start</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Generating-HTML-tags"><span class="post-toc-text">Generating HTML tags</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Assigning-IDs"><span class="post-toc-text">Assigning IDs</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Assigning-classes"><span class="post-toc-text">Assigning classes</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Specifying-HTML-attributes"><span class="post-toc-text">Specifying HTML attributes</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mata-data"><span class="post-toc-text">mata data</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Creating-text-content"><span class="post-toc-text">Creating text content</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Filters"><span class="post-toc-text">Filters</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Declaring-the-document’s-Doctype"><span class="post-toc-text">Declaring the document’s Doctype</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Programmability-in-Jade"><span class="post-toc-text">Programmability in Jade</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Variables"><span class="post-toc-text">Variables</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Interpolation"><span class="post-toc-text">Interpolation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Control-structures"><span class="post-toc-text">Control structures</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#JavaScript-constructs"><span class="post-toc-text">JavaScript constructs</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Jade-constructs"><span class="post-toc-text">Jade constructs</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#if-else-if-and-else"><span class="post-toc-text">if, else if, and else</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#for"><span class="post-toc-text">for</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#each"><span class="post-toc-text">each</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#while"><span class="post-toc-text">while</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#unless"><span class="post-toc-text">unless</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#case"><span class="post-toc-text">case</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Modularization"><span class="post-toc-text">Modularization</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Includes"><span class="post-toc-text">Includes</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#css-and-javascript-file"><span class="post-toc-text">css and javascript file</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Template-inheritance"><span class="post-toc-text">Template inheritance</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Mixins"><span class="post-toc-text">Mixins</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Escaping"><span class="post-toc-text">Escaping</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Guide"><span class="post-toc-text">Guide</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Tools"><span class="post-toc-text">Tools</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-jade"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">The Jade Templating Language</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-03-30 00:00:00" datetime="2014-03-29T16:00:00.000Z"  itemprop="datePublished">2014-03-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文是读 &lt;&lt;<a href="http://www.salttiger.com/express-web-application-development/" target="_blank" rel="external">Express Web Application Development</a>&gt;&gt; 关于 Jade 章节的笔记。</p>
+<p>See also <a href="http://naltatis.github.io/jade-syntax-docs/#basics" target="_blank" rel="external">Jade Template Syntax Documentation by Example</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><p>Jade is the recommended template engine for Express. It comes with an intuitive language to create templates and views for Express apps.</p>
+<p>The following is the content for <code>app.js</code>. Note that we have specified that a view named indexshould be rendered for GETrequests to the home page:</p>
+<pre><code>var express = require(&apos;express&apos;);
+var http = require(&apos;http&apos;);
+var app = express();
+app.set(&apos;view engine&apos;, &apos;jade&apos;);
+app.set(&apos;views&apos;, &apos;./views&apos;);
+app.use(app.router);
+app.use(express.static(&apos;./public&apos;));
+app.locals.pretty = true;
+app.get(&apos;/&apos;, function(req, res) {
+    res.render(&apos;index&apos;, {
+        title: &apos;Learning Jade&apos;
+    });
+});
+http.createServer(app).listen(3000, function() {
+    console.log(&apos;App started&apos;);
+});
+</code></pre><a id="more"></a>
+<p>Create a file named <code>index.jade</code> in the viewsdirectory with the following content:</p>
+<pre><code>doctype html
+html(lang=&quot;en&quot;)
+    head
+        title #{title}
+        style(type=&apos;text/css&apos;).
+            #wrapper {
+                font: 14px Arial;
+                width: 300px;
+                padding: 5px;
+                border: 1px solid #ccc;
+                margin: 0 auto;
+            }
+
+            #content {
+                margin: 10px 0;
+            }
+            .highlighted {
+                background: #d0ff5e;
+            }
+
+    body
+        #wrapper
+            h1 #{title}
+            #content
+                p Jade is intuitive, Jade is logical. Jade makes HTML easy,
+</code></pre><h2 id="Generating-HTML-tags"><a href="#Generating-HTML-tags" class="headerlink" title="Generating HTML tags"></a>Generating HTML tags</h2><p>HTML tags are created by the mere mention of their names in the view file. If you would like to include any text within a tag, include it right after the tag name.</p>
+<p>In HTML, we create hierarchical DOM elements by nesting elements within other elements with the use of opening and closing tags. In Jade, we create hierarchy by the use of indentations—a tag indented below a tag is hierarchically placed under the former tag. <strong>You can use either tabs or spaces for indentation. Whichever you choose, stick to one; mixing both will cause Jade to throw an error.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Jade</th>
+<th>HTML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>html</td>
+<td><code>&lt;html&gt;&lt;/html&gt;</code></td>
+</tr>
+<tr>
+<td>div</td>
+<td><code>&lt;div&gt;&lt;/div&gt;</code></td>
+</tr>
+<tr>
+<td>div     Hello World!</td>
+<td><code>&lt;div&gt;Hello World!&lt;/div&gt;</code></td>
+</tr>
+<tr>
+<td>br</td>
+<td><code>&lt;br&gt;</code></td>
+</tr>
+<tr>
+<td>script</td>
+<td><code>&lt;script&gt;&lt;/script&gt;</code></td>
+</tr>
+<tr>
+<td>span Howdy?</td>
+<td><code>&lt;span&gt;Howdy?&lt;/span&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>It is important to note that it is your responsibility to use valid HTML tag names, Jade will just create an element—valid or not.</p>
+<p>Sometimes, the number of indentations can get too nested. In the case of tags without text, you can use Jade’s block expansion feature to define the hierarchy on one line. The block expansion uses a colon after the tag. Here are some examples to show you how block expansions work:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jade-nested.png" alt="jade-nested.png" title="">
+                </div>
+                <div class="image-caption">jade-nested.png</div>
+            </figure>
+<p>Block expansion works best when there are no text nodes within the involved tags, the only exception being the last tag.</p>
+<h3 id="Assigning-IDs"><a href="#Assigning-IDs" class="headerlink" title="Assigning IDs"></a>Assigning IDs</h3><p>An ID can be assigned to a tag by using the ID marker (#). If the ID marker is used without any tag name, the tag is assumed to be divtag.</p>
+<p>Here are some examples to help you understand how ID assignment works in Jade:</p>
+<pre><code>p#main-content --&gt; &lt;p id=&quot;main-content&quot;&gt;&lt;/p&gt;
+</code></pre><h3 id="Assigning-classes"><a href="#Assigning-classes" class="headerlink" title="Assigning classes"></a>Assigning classes</h3><p>Like the ID marker, Jade uses theCSS class selector to mark classes. A tag can be assigned a class by using the class marker (.). Multiple classes can be assigned to a tag. If the class marker is used without a tag, it is assumed to be a divtag.</p>
+<table>
+<thead>
+<tr>
+<th>Jade</th>
+<th>Description</th>
+<th>HTML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>#target.highlighted</code></td>
+<td>ID and class together</td>
+<td><code>&lt;div id=&quot;target&quot; class=&quot;highlighted&quot;&gt;ID and class together&lt;/div&gt;</code></td>
+</tr>
+<tr>
+<td><code>.highlighted#target</code></td>
+<td>Order doesn’t matter</td>
+<td><code>&lt;div id=&quot;target&quot; class=&quot;highlighted&quot;&gt;Order doesn&#39;t matter&lt;/div&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="Specifying-HTML-attributes"><a href="#Specifying-HTML-attributes" class="headerlink" title="Specifying HTML attributes"></a>Specifying HTML attributes</h3><p>The ID and class markers were used to set the idand classattributes of tags. But we can’t afford a symbol for all the possible attributes of HTML tags. This problem is addressed by the use of a generic attribute operator to assign attributes to a tag. The attribute operator consists of an opening and a closing parenthesis, with the arguments and their values enclosed within them. The following examples will give you a good idea about how attributes are created in Jade</p>
+<table>
+<thead>
+<tr>
+<th>Jade</th>
+<th>HTML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p(id=’main’, class=’highlight special’)</td>
+<td><code>&lt;p id=&quot;main&quot; class=&quot;highlight special&quot;&gt;&lt;/p&gt;</code></td>
+</tr>
+<tr>
+<td><code>#main(data-name=&#39;Lee&#39;)</code></td>
+<td><code>&lt;div id=&quot;main&quot; dataname=&quot;Dave&quot;&gt;&lt;/div&gt;</code></td>
+</tr>
+<tr>
+<td>a(href=’/main’).special#main-link</td>
+<td><code>&lt;a href=&quot;/main&quot; id=&quot;main-link&quot; class=&quot;special&quot;&gt;&lt;/a&gt;</code></td>
+</tr>
+<tr>
+<td>img(src=’/images/logo.png’)#logo.</td>
+<td><code>&lt;img src=&quot;/images/logo.png&quot; id=&quot;logo&quot;/&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>You can set the value of an attribute using a variable by referring to it without the quotes. Variables in Jade are covered a little later:</p>
+<pre><code>- user_type = &apos;regular&apos;
+div(class=user_type) Hi  
+</code></pre><p>Generate:</p>
+<pre><code>&lt;div class=&quot;regular&quot;&gt;Hi&lt;/div&gt;
+</code></pre><h3 id="mata-data"><a href="#mata-data" class="headerlink" title="mata data"></a>mata data</h3><pre><code>meta(http-equiv=&quot;content-type&quot;, content=&quot;#{contentType}; charset=UTF-8&quot;)
+</code></pre><p>Reference: <a href="http://stackoverflow.com/questions/7455205/node-js-jade-how-do-i-set-the-content-type-in-jade" target="_blank" rel="external">node.js jade - how do I set the content type in jade - Stack Overflow</a></p>
+<h2 id="Creating-text-content"><a href="#Creating-text-content" class="headerlink" title="Creating text content"></a>Creating text content</h2><p>As seen in some of the examples, adding text to a tag is just about putting it right after a tag. The preceding method works very well for single-line text, but it cannot handle multiline text. So how do we write multiline text?</p>
+<p>The preceding method works very well for single-line text, but it cannot handle multiline text. So how do we write multiline text?</p>
+<p>The bar notation uses the vertical bar character (|) to mark the contents of a text block. The text block should be indented within the containing tag.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jade-text-content.png" alt="jade-text-content.png" title="">
+                </div>
+                <div class="image-caption">jade-text-content.png</div>
+            </figure>
+<p>Text blocks can also be used seamlessly with other nested elements, as shown in the following examples:</p>
+<pre><code>p
+    | Username: 
+    span.username DiamondDave
+</code></pre><p>-&gt;</p>
+<pre><code>&lt;p&gt;Username: &lt;span class=&quot;username&quot;&gt;DiamondDave&lt;/span&gt;&lt;/p&gt;
+</code></pre><p>The bar notation works fine for a few lines of text, especially with other nested elements, but it becomes awkward when dealing with large contiguous chunks of text.</p>
+<p>The dot notation uses a suffixed dot to mark the text block to be contained within a tag. Note that there should be no space between the tag and the dot, or else it will be interpreted as a literal dot:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/jade-dot.png" alt="jade-dot.png" title="">
+                </div>
+                <div class="image-caption">jade-dot.png</div>
+            </figure>
+<p>The dot notation works best with large chunks of contiguous text.</p>
+<h2 id="Filters"><a href="#Filters" class="headerlink" title="Filters"></a>Filters</h2><p>The default text blocks in Jade work well for simple text segments, but can become problematic for large segments with lots of formatting. That’s where text-to-HTML filters such as Markdown excel.</p>
+<p>Filters are Jade’s way of supporting other text formatters within it. Jade is currently compatible with Stylus, Less, Markdown, CDATA, and CoffeeScript. Filter blocks are marked by a colon, followed by the name of the filter.</p>
+<p>Let’s find out how filters work using Markdown as an example.</p>
+<p>First, install the <code>markdown</code> Node package by executing the following command:</p>
+<pre><code>$ npm install markdown
+</code></pre><p>With the package installed, you will be able to use Markdown in your code. The following is an example of using the Markdown syntax within the Markdown filter in a Jade view:</p>
+<pre><code>#content
+    :markdown
+        #Websites
+
+        1. [Wikipedia](http://www.wikipedia.org/)
+        2. [Google](http://www.google.com/)
+        3. [Yahoo!](http://www.yahoo.com/)
+        **IMPORTANT**: Install the &apos;markdown&apos; module
+</code></pre><p>The preceding Jade code will output the following HTML code:</p>
+<pre><code>&lt;div id=&quot;content&quot;&gt;
+    &lt;h2&gt;Websites&lt;/h2&gt;
+    &lt;ol&gt;
+        &lt;li&gt;&lt;a href=&quot;http://www.wikipedia.org/&quot;&gt;Wikipedia&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;http://www.google.com/&quot;&gt;Google&lt;/a&gt;
+        &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.yahoo.com/&quot;&gt;Yahoo!&lt;/a&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+    &lt;p&gt;
+        &lt;strong&gt;IMPORTANT&lt;/strong&gt;: Install the &lt;code&gt;markdown&lt;/code&gt; module
+    &lt;/p&gt;
+&lt;/div&gt;
+</code></pre><p>Local variables in views can be accessed from filter blocks but their behavior is not optimal at the moment, so don’t rely on it.</p>
+<h2 id="Declaring-the-document’s-Doctype"><a href="#Declaring-the-document’s-Doctype" class="headerlink" title="Declaring the document’s Doctype"></a>Declaring the document’s Doctype</h2><p>The Doctype of the document is declared by using the doctypekeyword followed by an optional Doctype value. If no value is specified, it defaults to html. Alternatively, you can use !!!instead of doctype.</p>
+<table>
+<thead>
+<tr>
+<th>Jade</th>
+<th>HTML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>doctype</td>
+<td>&lt;!DOCTYPE html&gt;</td>
+</tr>
+<tr>
+<td>doctype 5</td>
+<td>&lt;!DOCTYPE html&gt;</td>
+</tr>
+<tr>
+<td>doctype default</td>
+<td>&lt;!DOCTYPE html&gt;</td>
+</tr>
+<tr>
+<td>doctype transitional</td>
+<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “<a href="http://www.w3.org/" target="_blank" rel="external">http://www.w3.org/</a> TR/xhtml1/DTD/xhtml1-transitional.dtd”&gt;</td>
+</tr>
+<tr>
+<td>doctype strict</td>
+<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Strict//EN” “<a href="http://www.w3.org/TR/" target="_blank" rel="external">http://www.w3.org/TR/</a> xhtml1/DTD/xhtml1-strict.dtd”&gt;</td>
+</tr>
+<tr>
+<td>doctype frameset</td>
+<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Frameset//EN” “<a href="http://www.w3.org/TR/" target="_blank" rel="external">http://www.w3.org/TR/</a> xhtml1/DTD/xhtml1-frameset.dtd”&gt; doctype 1.1</td>
+<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.1//EN” “<a href="http://www.w3.org/TR/xhtml11/DTD/" target="_blank" rel="external">http://www.w3.org/TR/xhtml11/DTD/</a> xhtml11.dtd”&gt;</td>
+</tr>
+<tr>
+<td>doctype basic</td>
+<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML Basic 1.1//EN” “<a href="http://www.w3.org/TR/xhtmlbasic/xhtml-basic11.dtd&quot;&gt;" target="_blank" rel="external">http://www.w3.org/TR/xhtmlbasic/xhtml-basic11.dtd&quot;&gt;</a></td>
+</tr>
+<tr>
+<td>doctype mobile</td>
+<td>&lt;!DOCTYPE html PUBLIC “-//WAPFORUM// DTD XHTML Mobile 1.2//EN” “<a href="http://www" target="_blank" rel="external">http://www</a>. openmobilealliance.org/tech/DTD/xhtmlmobile12.dtd”&gt;</td>
+</tr>
+<tr>
+<td>doctype xml</td>
+<td>&lt;?xml version=”1.0” encoding=”utf-8” ?&gt;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Programmability-in-Jade"><a href="#Programmability-in-Jade" class="headerlink" title="Programmability in Jade"></a>Programmability in Jade</h2><p>Jade is not just about static tags and contents. Especially being a templating language, it is expected of Jade to support variables, interpolation, and various programming capabilities.</p>
+<p>Jade is not just about static tags and contents. Especially being a templating language, it is expected of Jade to support variables, interpolation, and various programming capabilities.</p>
+<h3 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h3><p>Variables in a Jade file can come from the <code>app.locals</code> object, the <code>res.locals</code> object, the <code>res.render()</code> method, or can be defined right in the view file.</p>
+<p>Any variable defined in the <code>app.globals</code> object will be available to all the views of the app. Variables defined in the <code>app.res.globals</code> object will be available to the view rendering the response.</p>
+<p>Variables from <code>res.render()</code> are passed to a Jade template as the second parameter of res.render(), as key-value pairs of an object.</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    res.render(&apos;index&apos;, {title:&apos;Learning Jade&apos;});
+});
+</code></pre><p>We used the <code>title</code> variable for setting the title of the page and the main header:</p>
+<pre><code>title #{title}
+…
+h1 #{title}
+</code></pre><p>Although the most common way of creating variables in a view is to pass them through the res.render() method, we can declare variables right in the view file too. There are two ways of declaring variables in a view file: using plain JavaScript and using the Jade construct for variable declaration.</p>
+<p>Jade constructs are designer-friendly wrappers on the top of actual JavaScript constructs. They provide a less verbose and a “friendlier” interface to various programming constructs available in JavaScript.</p>
+<p>The JavaScript way of declaring a variable is to start a line with a hyphen (-), and follow with the regular JavaScript statement of variable declaration. The ending semicolon is optional:</p>
+<pre><code>- var title = &apos;Super!&apos;
+</code></pre><p>The Jade way of declaring is a lot like JavaScript, except you don’t have to start with a hyphen or use the varkeyword:</p>
+<pre><code>title = &apos;Super!&apos;
+</code></pre><p><strong>Note that, whether a variable came from the route handler or was defined in the view, it always refers to the same instance. </strong>If you are not careful, you can end up overwriting a variable passed by the router handler, in the view.</p>
+<h3 id="Interpolation"><a href="#Interpolation" class="headerlink" title="Interpolation"></a>Interpolation</h3><p>There are two main types of interpolations available in Jade: placeholders and expressions. Each of these types has an escaped and an unescaped version:</p>
+<table>
+<thead>
+<tr>
+<th>Interpolation</th>
+<th>Escaped</th>
+<th>Unescaped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Placeholder</td>
+<td>#{variable}</td>
+<td>!{variable}</td>
+</tr>
+<tr>
+<td>Expression</td>
+<td>= variable</td>
+<td>!= variable</td>
+</tr>
+</tbody>
+</table>
+<p>Escaped interpolation will escape any HTML code in the variable to display is actual characters in the rendered HTML, instead of formatting them. Unescaped interpolation will result in rendering of the HTML if the variable contains any.</p>
+<p>In placeholder interpolation, variables are rendered by enclosing them within the braces of <code>#{}</code> or <code>!{}</code>, depending on your requirement. The only exception is values of HTML attributes; they are interpreted without the evaluation enclosures:</p>
+<p>Placeholders works very well for large chunks of text with variable sections within it. </p>
+<p>Here is an example:</p>
+<pre><code>actor_type = &apos;frog&apos;
+actor_name = &apos;Croaky&apos;
+territory = &apos;pond&apos;
+territory_name = &apos;Pondy&apos;
+
+p Once upon a time there was a #{actor_type} named #{actor_name}, in 
+a #{territory} called #{territory_name}. #{actor_name} was loved by 
+everyone in #{territory_name}.
+</code></pre><p>The preceding Jade code will be rendered into the following HTML code:</p>
+<pre><code>&lt;p&gt;Once upon a time there was a frog named Croaky, in a pond called Pondy. Croaky was loved by everyone in Pondy.&lt;/p&gt;
+</code></pre><p>Expression interpolation works best for displaying the contents of a single variable. You can use either the escaped (=) or the unescaped (!=) version, depending on your requirement:</p>
+<pre><code>p!= html_message 
+
+&lt;p&gt;The &lt;b&gt;champs&lt;/b&gt; are back!&lt;/p&gt;
+</code></pre><p>Since expression interpolation uses JavaScript expressions, it is not limited to displaying just a single variable. You can use the JavaScript concatenation operator (+) to string together multiple variables into a single expression and even include simple JavaScript expressions:</p>
+<pre><code>p= &apos;&amp;copy; &apos; + new Date().getFullYear()
+&gt;
+&lt;p&gt;© 2013&lt;/p&gt;
+</code></pre><p><strong>Another important difference between placeholders and expressions is that you can use expressions without any containing tag, but if you try the same with a placeholder, you will end up creating a tag with the value of the variable</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Jade</th>
+<th>HTML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>= title</td>
+<td>Superheroes</td>
+</tr>
+<tr>
+<td><code>#{title}</code></td>
+<td><code>&lt;Superheroes&gt;&lt;/Superheroes&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="Control-structures"><a href="#Control-structures" class="headerlink" title="Control structures"></a>Control structures</h3><p>Two types of control structures are available in Jade: JavaScript constructs and Jade constructs. As a JavaScript programmer, the former will be instantly familiar to you. The latter are custom implementations of various programming constructs, the syntax of which is a lot inspired by Python.</p>
+<p>Let’s define a route and its handler to base our examples:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    res.render(&apos;index&apos;, {
+        title: &apos;Superheroes&apos;,
+        heroes: [{
+            name: &apos;Fooman&apos;,
+            role: &apos;captain&apos;,
+            skills: [&apos;dancing&apos;, &apos;invisibility&apos;]
+        }, {
+            name: &apos;Barman&apos;,
+            role: &apos;entertainer&apos;,
+            skills: [&apos;bar tending&apos;, &apos;x-ray vision&apos;]
+        }]
+    });
+});
+</code></pre><h4 id="JavaScript-constructs"><a href="#JavaScript-constructs" class="headerlink" title="JavaScript constructs"></a>JavaScript constructs</h4><p>JavaScript code works mostly as expected with some limitations and exceptions in a Jade view. The most important part is to start the line with a hyphen (-) to indicate that the following expression is in JavaScript. </p>
+<p>Here is a JavaScript forloop in a view:</p>
+<pre><code>- for (var i in heroes) {
+  div #{i}. #{heroes[i].name}
+- }
+</code></pre><p>The same can be achieved using a slight modification—by omitting the braces. However, make sure you indent your code well. The tag code should be indented within the hyphen that marked the forloop: </p>
+<pre><code>- for (var i in heroes)
+  div #{i}. #{heroes[i].name}
+</code></pre><p>Here we demonstrate another JavaScript construct—the forEach()method:</p>
+<pre><code>- heroes.forEach(function(hero, i) {
+  div= hero.name
+- })
+</code></pre><p>In the following example, we use the JavaScript whileloop to count from 10to 1:</p>
+<pre><code>pre
+    n = 10
+    - while (n &gt; 0)
+        = n + &apos;\n&apos;
+        - n--
+</code></pre><p>And this is how we define a function and call it:</p>
+<pre><code>- function greet(name)
+  p Hi #{name}!
+
+- greet(&apos;Fred&apos;)
+- greet(&apos;Ned&apos;)
+</code></pre><p>Most JavaScript constructs are valid programming constructs in a Jade view, and curly braces are optional in simple blocks.</p>
+<p>JavaScript code, especially with the leading hyphens, can start to look untidy and confusing if you use it a lot in your views. <strong>Try to avoid using JavaScript in your views; if you must, consider the neater Jade constructs.</strong></p>
+<h3 id="Jade-constructs"><a href="#Jade-constructs" class="headerlink" title="Jade constructs"></a>Jade constructs</h3><p>Jade constructs are the designer-friendly implementation on top of the underlying JavaScript constructs—you use indentation to create code blocks, and you don’t have to use hyphens, parentheses, and braces.</p>
+<p>Jade constructs are currently limited to if, else if, else, for, each, case, while, and unless. Let’s study them one by one, using some examples.</p>
+<h4 id="if-else-if-and-else"><a href="#if-else-if-and-else" class="headerlink" title="if, else if, and else"></a>if, else if, and else</h4><p>The if, else if, and else combination works just like in JavaScript, except you don’t have to use parentheses and braces. Another important thing to note is that you indent the code within a conditional to execute it under that condition:</p>
+<pre><code>if hero.role == &apos;captain&apos;
+    .msg Aye Captain!
+else if hero.role == &apos;hacker&apos; &amp;&amp; hero.name != &apos;Napman&apos;
+    .msg Who goes there?
+else
+    .msg Avast!
+</code></pre><h4 id="for"><a href="#for" class="headerlink" title="for"></a>for</h4><p>The for construct works like the JavaScript for-inloop: </p>
+<pre><code>for hero in heroes
+    div= hero.name
+</code></pre><p>In case you need to access the index:</p>
+<pre><code>for hero, i in heroes
+    div Hero No.#{i} - #{hero.name}
+</code></pre><p>You can access the properties of an object that is being iterated in a forloop, as expected:</p>
+<p>for hero in heroes<br>    if hero.role == ‘hacker’<br>        div Got the hacker!</p>
+<pre><code>    - break
+div= hero.role
+</code></pre><h4 id="each"><a href="#each" class="headerlink" title="each"></a>each</h4><p>The closest sounding construct to Jade’s eachconstruct, in JavaScript, is forEach().</p>
+<p><code>each</code> and for are aliases to each other, you can substitute for in the preceding examples with eachand will still get the same results.</p>
+<p>The reason we have two constructs that do the same thing is because of developer preference—some of us feel at home with the for iteration, while some of us prefer to use each.</p>
+<h4 id="while"><a href="#while" class="headerlink" title="while"></a>while</h4><p>The while construct is a part of JavaScript’s whileloop:</p>
+<pre><code>i = 0
+while i &lt; 5
+    div= i
+    i++
+</code></pre><h4 id="unless"><a href="#unless" class="headerlink" title="unless"></a>unless</h4><p>The unless construct is an alternative way to check for Boolean false. Here is an example showing the use of the unlessconstruct: </p>
+<pre><code>each hero in heroes
+    unless hero.role == &apos;captain&apos;
+        div #{hero.name}, report for duty!
+</code></pre><p>The preceding code does the same thing as the following:</p>
+<pre><code>each hero in heroes
+    if hero.role != &apos;captain&apos;
+        div #{hero.name}, report for duty!
+</code></pre><h4 id="case"><a href="#case" class="headerlink" title="case"></a>case</h4><p>The case construct is Jade’s less verbose and neater-looking implementation of the JavaScript switch-caseconstruct:</p>
+<pre><code>case hero.role
+    when &apos;captain&apos;
+        div Yarr!
+when &apos;hacker&apos;
+        div w00t!
+    default
+        div Avast!
+</code></pre><h3 id="Modularization"><a href="#Modularization" class="headerlink" title="Modularization"></a>Modularization</h3><h4 id="Includes"><a href="#Includes" class="headerlink" title="Includes"></a>Includes</h4><p>A Jade view file can seamlessly include other Jade files, CSS, JavaScript, and HTML files. If you have installed the markdownNode module, you can include Markdown files too.</p>
+<p>To include a file in a view, use the includedirective and pass it the path of the file to be included. It is very important to give the correct extension to the include files, because Jade uses the extension of the file to render the content accordingly.</p>
+<p><strong>A Jade view file and its included Jade files share the same scope.</strong> So variables defined in one file are available to the other.</p>
+<p>Let’s create an example to understand how includeworks. In the viewsdirectory of your app, create a new directory named includes, where we will be creating the following include files:</p>
+<ol>
+<li><p>A Jade file named <code>header.jade</code> with the following content:</p>
+<pre><code>h1 Included Header
+</code></pre></li>
+<li><p>A Markdown file named <code>content.md</code> with the following content:</p>
+<pre><code>The Main Content
+----------------
+A **Markdown** file was included and rendered in the HTML.
+</code></pre></li>
+<li><p>An HTML file named <code>footer.html</code> with the following content:</p>
+<pre><code>&lt;div id=&quot;footer&quot;&gt;Footer &amp;copy; 2013&lt;/div&gt;
+</code></pre></li>
+<li><p>A CSS file named <code>style.css</code> with the following content:</p>
+<pre><code>body {
+    padding: 10px;
+    font: 14px Arial, sans-serif;
+}
+
+a {
+    color: #0066ff;
+}
+</code></pre></li>
+<li><p>A JavaScript file named <code>script.js</code> with the following content:</p>
+<pre><code>alert(&apos;JavaScript included&apos;);
+</code></pre></li>
+<li><p>And then the view file (index.jade) that goes in the viewsdirectory, which will include the files in the includesdirectory:</p>
+<pre><code>!!! 5
+html
+    head
+        title Include Examples
+        include includes/style.css
+    body
+        include includes/header.jade
+        include includes/content.md
+        p ... and here is something original from the Jade file.
+        include includes/footer.html
+        include includes/script.js
+</code></pre></li>
+</ol>
+<p>When this view file is rendered, you will get the following HTML:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Include Examples&lt;/title&gt;
+        &lt;style&gt;body {
+        font: 14px Arial;
+        padding: 10px;
+        }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Included Header&lt;/h1&gt;
+        &lt;h2&gt;The Main Content&lt;/h2&gt;
+        &lt;p&gt;A &lt;strong&gt;Markdown&lt;/strong&gt; file was included and rendered in the
+        HTML.&lt;/p&gt;
+        &lt;p&gt;... and here is something original from the Jade file.&lt;/p&gt;
+        &lt;div id=&quot;footer&quot;&gt;Footer &amp;copy; 2013&lt;/div&gt;
+        &lt;script&gt;alert(&apos;JavaScript included&apos;);&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h4 id="css-and-javascript-file"><a href="#css-and-javascript-file" class="headerlink" title="css and javascript file"></a>css and javascript file</h4><p>To include a javascript file to webpage:</p>
+<pre><code>script(type=&apos;text/javascript&apos; src=&apos;public/vendor/jquery/jquery.min.js&apos;)
+// Or you can omit the type attribute
+script(src=&quot;/Scripts/jquery.timeago.js&quot;)
+</code></pre><p>To include a stylesheet file to webpage:</p>
+<pre><code>link(rel=&apos;stylesheet&apos;, href=&apos;/stylesheets/style.css&apos;)
+</code></pre><p>To include javascript code block in the webpage:</p>
+<pre><code>script(type=&apos;text/javascript&apos;).
+    if (foo) {
+        bar(1 + 5)
+    }
+</code></pre><p>To include stylesheet code block in the webpage:</p>
+<pre><code>style(type=&apos;text/css&apos;).
+   #wrapper {
+       font: 14px Arial;
+       width: 300px;
+       padding: 5px;
+   }
+</code></pre><h4 id="Template-inheritance"><a href="#Template-inheritance" class="headerlink" title="Template inheritance"></a>Template inheritance</h4><p>If you have multiple views with a similar structure, you will end up with the same set of includes in all your views. This approach can quickly become complicated and untidy, if the number of views and includes increases.</p>
+<p>Includes work best with small sets of sub-views, popularly called <strong>partials</strong>.</p>
+<p>An alternative to <code>includes</code> is template inheritance. In this method we create templates with blocks in them, the contents of which are then filled in by the views extending the template.</p>
+<p>Let’s find out how templates work using some examples.</p>
+<p>Create a template named <code>layout.jade</code> with the following content:</p>
+<pre><code>!!! 5
+html
+    head
+        title Learning Inheritance
+        link(rel=&apos;stylesheet&apos;, href=&apos;/stylesheets/style.css&apos;)
+    body
+        p The inherited content goes below:
+        block content
+        block footer
+</code></pre><p>We have defined two blocks named contentand footerusing the blockdirective. Views extending this template can define the contents for the blocks, if they wish too. Let’s create a view to extend the layouttemplate, with the following content:</p>
+<pre><code>extends layout
+block content
+    h2 Image Content
+    img(src=&apos;/images/01.jpg&apos;) 
+
+block footer
+    #footer Images - Copyright &amp;copy; 2013
+</code></pre><p>We used the <code>extends</code> directive to indicate that this view is extending the <code>layout. jade</code> template. In the view, we defined the contents for the contentand footer blocks that it inherited from the template.</p>
+<p>From the preceding examples, we can see that the template defines the blocks, and the views extending the template define the content of those blocks.</p>
+<p>Template inheritance is not just about replacing empty blocks. Blocks can have content of their own by default; those extending the template can then either replace it, prepend it, or append to it. Views that don’t define the content of a block will inherit the content defined in the template, and will be rendered accordingly.</p>
+<p>The default behavior of template inheritance is replacement, which was seen in the previous examples. To prepend a block, we use the block prependdirective, or just prepend. Similarly, to append a block, we use the block appenddirective, the shorter version of which is append.</p>
+<p>The replacement, prepend, append, and default inheritance behaviors are demonstrated in the following example.</p>
+<p>Here is the content of the template file, named layout-demo.jade:</p>
+<pre><code>!!! 5
+html
+    head
+        block head
+        script(src=&apos;/library.js&apos;)
+    body
+        block content
+            p Default Content
+        block footer
+            #footer The original footer
+</code></pre><p>And here is the content of the view, which extends it:</p>
+<pre><code>extend layout-demo
+prepend head
+    script(src=&apos;/one.js&apos;)
+
+append head
+    script(src=&apos;/two.js&apos;)
+
+block content
+    p Inherited Content
+</code></pre><p>Rendering the view will generate the following HTML:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;script src=&quot;/one.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;/library.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;/two.js&quot;&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;Inherited Content&lt;/p&gt;
+        &lt;div id=&quot;footer&quot;&gt;The original footer&lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>Notice how the view prepended a new scripttag <code>&lt;script src=&quot;/one.js&quot;&gt;&lt;/ script&gt;</code>, and appended a new scripttag <code>&lt;script src=&quot;/two.js&quot;&gt;&lt;/script&gt;</code>, to the original content of the headblock.</p>
+<p>Since we defined a new block for content, the original content block was overwritten by the view’s content. And because we did not define a block for the footer block, the original stayed.</p>
+<p>Includes and template inheritance are not exclusive to each other. In fact, for complex layouts, you will be able to achieve the most optimal view by using a mixture of both.</p>
+<h3 id="Mixins"><a href="#Mixins" class="headerlink" title="Mixins"></a>Mixins</h3><p>Mixins are named blocks of code that can be executed to programmatically generate HTML. They work a lot like JavaScript functions, except their syntax is a little different. </p>
+<p>Here is a simple mixin that just returns a predefined list:</p>
+<pre><code>//- Define the mixin
+mixin skills_list
+    ul
+        li Dancing
+        li Computer Hacking
+        li Nunchucks
+
+//- Call the mixin
+mixin skills_list
+</code></pre><p>The preceding Jade code will generate the following:</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;Dancing&lt;/li&gt;
+&lt;li&gt;Computer Hacking&lt;/li&gt;
+&lt;li&gt;Nunchucks&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>A less verbose method of calling a mixin is to append the mixin name with a plus (+). So, the preceding mixin can also be called using <code>+skills_list</code>. </p>
+<p>Mixins can optionally accept arguments and perform logical operations, as shown in the following example.</p>
+<p>Assume we have variable named heroesin the view, with the following value:</p>
+<pre><code>[
+    {name: &apos;Fooman&apos;, role: &apos;captain&apos;},
+    {name: &apos;Barman&apos;, role: &apos;entertainer&apos;},
+    {name: &apos;Napman&apos;, role: &apos;hacker&apos;},
+    {name: &apos;Zipman&apos;, role: &apos;collector&apos;}
+]
+</code></pre><p>Here is the Jade code defining a mixin and calling it from an eachloop:</p>
+<pre><code>mixin heroes_list(hero)
+    if hero.role == &apos;captain&apos;
+        li Captain #{hero.name}
+    else
+        li #{hero.name}
+
+ul
+    each hero in heroes
+    +heroes_list(hero)
+</code></pre><p>The preceding code will generate the following HTML:</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;Captain Fooman&lt;/li&gt;
+&lt;li&gt;Barman&lt;/li&gt;
+&lt;li&gt;Napman&lt;/li&gt;
+&lt;li&gt;Zipman&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>Mixins, like JavaScript functions, can access variables defined outside their block. In the following example, we define an array outside a mixin, but loop through the array in the mixin:</p>
+<pre><code>skills = [&apos;Dancing&apos;, &apos;Computer Hacking&apos;, &apos;Nunchucks&apos;];
+mixin skills_list
+    ul
+        each skill in skills
+        li.skill= skill
+
++skills_list
+</code></pre><h2 id="Escaping"><a href="#Escaping" class="headerlink" title="Escaping"></a>Escaping</h2><p>We have seen that HTML in variables is escaped by using escaped interpolation constructs !=or !{}. How about escaping the Jade interpolation constructs =, !=, #{}, and !{}? Jade interpolation constructs can be escaped with the combination of backslash () and the &amp;#61HTML entity:</p>
+<table>
+<thead>
+<tr>
+<th>Jade</th>
+<th>Rendered HTML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>p &amp;#61;</code> message</td>
+<td>= message</td>
+</tr>
+<tr>
+<td>p \#{message}</td>
+<td>#{message}</td>
+</tr>
+<tr>
+<td>p \!{message}</td>
+<td>!{message}</td>
+</tr>
+<tr>
+<td>p \#{message}</td>
+<td>#{message}</td>
+</tr>
+<tr>
+<td>p \!{message}</td>
+<td>!{message}</td>
+</tr>
+</tbody>
+</table>
+<p>Using the <code>&amp;#61HTML</code> entity code makes Jade render =in the browser, rather than interpret it as the Jade interpolation construct. #and !are escaped using the popular escape character, backslash <code>\</code>. If you intend to use <code>\</code> as a literal, you will need to escape it too with <code>\,</code> as shown in the preceding example.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><h3 id="Guide"><a href="#Guide" class="headerlink" title="Guide"></a>Guide</h3><ul>
+<li><a href="https://github.com/visionmedia/jade/blob/master/Readme_zh-cn.md#a6-6" target="_blank" rel="external">jade/Readme_zh-cn.md at master · visionmedia/jade</a> 中文文档。</li>
+<li><a href="http://scalate.fusesource.org/documentation/jade-syntax.html" target="_blank" rel="external">Jade Syntax</a></li>
+</ul>
+<h3 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h3><ul>
+<li><a href="http://html2jade.org/" target="_blank" rel="external">HTML2Jade - HTML to Jade Online Realtime Converter</a></li>
+<li><a href="https://github.com/donpark/html2jade" target="_blank" rel="external">donpark/html2jade</a></li>
+<li><a href="http://html2jade.aaron-powell.com/" target="_blank" rel="external">HTML 2 Jade - a converter for HTML</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-03-30-jade.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-03-30-jade.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jade/">jade</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-03-30-jade.html&title=《The Jade Templating Language》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-03-30-jade.html&title=《The Jade Templating Language》 — Balance&source=本文是读 &lt;&lt;Express Web Application Development&gt;&gt; 关于 Jade 章节的笔记。
+See a..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-03-30-jade.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《The Jade Templating Language》 — Balance&url=http://blog.inching.org/JavaScript/2014-03-30-jade.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-03-30-jade.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/OS/2014-03-31-windows-bat.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Windows Bat</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-03-30-javascript-oo-extend.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">OO 模拟那些事儿</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-03-30-jade.html&title=《The Jade Templating Language》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-03-30-jade.html&title=《The Jade Templating Language》 — Balance&source=本文是读 &lt;&lt;Express Web Application Development&gt;&gt; 关于 Jade 章节的笔记。
+See a..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-03-30-jade.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《The Jade Templating Language》 — Balance&url=http://blog.inching.org/JavaScript/2014-03-30-jade.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-03-30-jade.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3aS5LCMAwFQO5/6cwBZiBPkocqO+0VC0PcWQjr83rF6/q18j3Jt5KdCxYGBsa2jOvjeveA5FvJK8ife/MqMTAwHsBIQmH1cxJA3x09PxsGBgbGuz15mE5+ISFhYGBgVBmj4PgxZcXAwMCYJLHJz/US2q/m4hgYGBsy8qr79z//S38DAwNjK8ZVXGvLcL30+I9TYWBgHM3IA9xkhKKK6Z0HAwPjbEZeFFuWTBYbA4WnYGBgHMf4HBbLwa6YY+Zlu5vTYmBgHM3oFdeqKW7OzgN6ORBjYGAcxMhbj9ULXLI/D80YGBjPYUzGLKojFJMMNPp/wMDAOJrRuz9WwdeiFeXiGBgYxzHycDlPSns7b86GgYFxNKMXXvMS/zygF14KBgbG0Yw8tFULapPwWm2sYmBgPIExH6GotiTn4bv574GBgbEVI09ZkyGMSRkub3NiYGA8k5EXzpL43SvY5ZfRZqENAwNjW0Z1VKI3ijFpGBQCMQYGxgMYk+Ja76VUk+Gb0I+BgfEAxqohrWproTlaUe2yYmBgHMSYNDKrDYDeFTMKuBgYGAcxJuG1cGlbNN6x7FKIgYGxFWM+LlZtNyahNj96GYOBgbEto3d1y0tpq9oGNwEXAwPjAYzJta86HjFPYt9OjmBgYGBMqnqt62YhfGNgYGAselgvGY6KgBgYGA9gJEnsqrGJ8rUvAWNgYBzNmFz4eiW5SZth1MjEwMDYj/EDkHMi4JjcrF0AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

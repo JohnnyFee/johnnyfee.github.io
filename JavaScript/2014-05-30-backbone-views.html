@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Backbone Views | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,backbone,mvc">
+    <meta name="description" content="本文为读 Backbone.js Cookbook 的读书笔记。
+
+Rendering a viewDefine a new view by extending the Backbone.View object:
+1234567891011121314151617var InvoiceItemView = Backbone.View.extend(&amp;#123;    // HTML elemen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Backbone Views">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-05-30-backbone-views.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文为读 Backbone.js Cookbook 的读书笔记。
+
+Rendering a viewDefine a new view by extending the Backbone.View object:
+1234567891011121314151617var InvoiceItemView = Backbone.View.extend(&amp;#123;    // HTML elemen">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/backbone_view_table.jpg">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Backbone Views">
+<meta name="twitter:description" content="本文为读 Backbone.js Cookbook 的读书笔记。
+
+Rendering a viewDefine a new view by extending the Backbone.View object:
+1234567891011121314151617var InvoiceItemView = Backbone.View.extend(&amp;#123;    // HTML elemen">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/backbone_view_table.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Backbone Views</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Backbone Views</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-29T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Rendering-a-view"><span class="post-toc-text">Rendering a view</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Creating-a-new-HTML-element-associated-with-a-view"><span class="post-toc-text">Creating a new HTML element associated with a view</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Changing-the-view-element-dynamically"><span class="post-toc-text">Changing the view element dynamically</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Removing-a-view"><span class="post-toc-text">Removing a view</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Dealing-with-a-view-element-using-jQuery"><span class="post-toc-text">Dealing with a view element using jQuery</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Rendering-a-model-in-a-view"><span class="post-toc-text">Rendering a model in a view</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Rendering-a-collection-in-a-view"><span class="post-toc-text">Rendering a collection in a view</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Splitting-a-view-into-subviews"><span class="post-toc-text">Splitting a view into subviews</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Handling-Document-Object-Model-DOM-events-in-a-view"><span class="post-toc-text">Handling Document Object Model (DOM) events in a view</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Switching-views-using-Backbone-Router"><span class="post-toc-text">Switching views using Backbone.Router</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-backbone-views"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Backbone Views</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-30 00:00:00" datetime="2014-05-29T16:00:00.000Z"  itemprop="datePublished">2014-05-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>本文为读 <a href="http://www.salttiger.com/backbone-js-cookbook/" target="_blank" rel="external">Backbone.js Cookbook</a> 的读书笔记。</p>
+</blockquote>
+<h2 id="Rendering-a-view"><a href="#Rendering-a-view" class="headerlink" title="Rendering a view"></a>Rendering a view</h2><p>Define a new view by extending the Backbone.View object:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> InvoiceItemView = Backbone.View.extend(&#123;</div><div class="line"></div><div class="line">    <span class="comment">// HTML element name, where to render a view.</span></div><div class="line">    el: <span class="string">'body'</span>,</div><div class="line"></div><div class="line">    <span class="comment">// Initialize view object values.</span></div><div class="line">    initialize: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">this</span>.html = <span class="string">'Description: Wooden Toy House. '</span> +</div><div class="line">        <span class="string">'Price: $22. Quantity: 3.'</span></div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="comment">// Render view.</span></div><div class="line">    render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="comment">// Set html for the view element using jQuery.</span></div><div class="line">      $(<span class="keyword">this</span>.el).html(<span class="keyword">this</span>.html);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>Create an instance of the view:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> invoiceItemView = <span class="keyword">new</span> InvoiceItemView();</div></pre></td></tr></table></figure>
+<p>Call the render() method manually to output HTML code to the user:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">invoiceItemView.render();</div></pre></td></tr></table></figure>
+<p>In the <code>initialize()</code> method of the view, we generate the HTML code and save it in the html property, which we have been using lately in the render() method, where we assign this code to the HTML container defined by the el property. To do so, we invoke <code>jQuery</code> functions, such as <code>$()</code> and <code>html()</code>.</p>
+<p>When a new view instance is created, the <code>initialize()</code> method is triggered automatically. Additionally, we can pass any standard property to the view from outside of the object when creating its instance. It can be done with the help of the following code snippet:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> invoiceItemView = <span class="keyword">new</span> InvoiceItemView(&#123;</div><div class="line">  <span class="attr">el</span>: <span class="string">'body'</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>The <code>el</code> property can also be defined as a function if we want it to be calculated dynamically.</p>
+<p>When the <code>render()</code> method is called, it runs our code that then renders the view.</p>
+<h3 id="Creating-a-new-HTML-element-associated-with-a-view"><a href="#Creating-a-new-HTML-element-associated-with-a-view" class="headerlink" title="Creating a new HTML element associated with a view"></a>Creating a new HTML element associated with a view</h3><p>Sometimes, we may not want to render a view into the existing HTML element in the DOM tree; instead, we may want to create a new one and then add it to the document. Follow the given steps to create a new HTML element associated with a view.</p>
+<p>Define a view and set its elements and attributes manually by assigning values to the tagName, className, and attributes properties:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Define new view.</span></div><div class="line"><span class="keyword">var</span> InvoiceItemView2 = Backbone.View.extend(&#123;</div><div class="line">  <span class="comment">// Set tag name and its attributes.</span></div><div class="line">  tagName: <span class="string">'p'</span>,</div><div class="line">  <span class="attr">className</span>: <span class="string">'item'</span>,</div><div class="line">  <span class="attr">attributes</span>: &#123;</div><div class="line">    <span class="string">'align'</span>: <span class="string">'left'</span></div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="comment">// Initialize view object values.</span></div><div class="line">  initialize: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.html = <span class="string">'Farm Animal Set. Price: $17. Quantity: 1.'</span></div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="comment">// Render view.</span></div><div class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// Set html for the view element using jQuery.</span></div><div class="line">    $(<span class="keyword">this</span>.el).html(<span class="keyword">this</span>.html);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Create a new view instance. When doing this, Backbone will automatically assign el with an appropriate value:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Create new view instance.</span></div><div class="line"><span class="keyword">var</span> invoiceItemView2 = <span class="keyword">new</span> InvoiceItemView2();</div><div class="line"></div><div class="line">invoiceItemView2.el; <span class="comment">// &lt;p align="left" class="item"&gt;&lt;/p&gt;</span></div></pre></td></tr></table></figure>
+<p>Render this view. Our render code will create a new HTML object:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">invoiceItemView2.render();</div></pre></td></tr></table></figure>
+<p>Insert the newly created HTML object into the DOM:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'body'</span>).append(invoiceItemView2.el);</div></pre></td></tr></table></figure>
+<p>Check the result. The body of our HTML page should contain a code like the following code snippet:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">align</span>=<span class="string">"left"</span> <span class="attr">class</span>=<span class="string">"item"</span>&gt;</span></div><div class="line">        Farm Animal Set. Price: $17. Quantity: 1.</div><div class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="Changing-the-view-element-dynamically"><a href="#Changing-the-view-element-dynamically" class="headerlink" title="Changing the view element dynamically"></a>Changing the view element dynamically</h3><p>We may want to change the view element during the working of our code. This could be done with the help of a setElement() method. Both of the following are valid.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Change existing element to the new one.</span></div><div class="line">InvoiceItemView.setElement(<span class="string">'li'</span>);</div><div class="line"></div><div class="line"><span class="comment">// Change existing element to the one already exists</span></div><div class="line"><span class="comment">// in the DOM tree.</span></div><div class="line">InvoiceItemView.setElement($(<span class="string">'body div'</span>));</div></pre></td></tr></table></figure>
+<p>When calling the <code>setElement()</code> method, Backbone undelegates events assigned to a previous element, and assigns them to a new element.</p>
+<h3 id="Removing-a-view"><a href="#Removing-a-view" class="headerlink" title="Removing a view"></a>Removing a view</h3><p>When we have finished working with a view and want to remove it, we also need to remove its elements from the DOM and stop listening to events. To do this, we simply need to call the <code>remove()</code> method.</p>
+<h2 id="Dealing-with-a-view-element-using-jQuery"><a href="#Dealing-with-a-view-element-using-jQuery" class="headerlink" title="Dealing with a view element using jQuery"></a>Dealing with a view element using jQuery</h2><p><em>Backbone.js</em> relies on <em>jQuery</em> when dealing with a view.</p>
+<p>Follow the given steps to deal with a view element using jQuery.</p>
+<ol>
+<li><p>To access a view element with jQuery, use <code>$(this.el)</code>:</p>
+<pre><code>$(this.el).show();
+</code></pre></li>
+<li><p>Use <code>this.$el</code> as a shortened alias for <code>$(this.el)</code>:</p>
+<pre><code>this.$el.appendl(&apos;&lt;li&gt;An item&lt;/li&gt;&apos;);
+</code></pre></li>
+<li><p>To run a query within the scope of a view, use <code>this.$el.find()</code>:</p>
+<pre><code>this.$el.find(&apos;li&apos;).html(&apos;Hey there&apos;);
+</code></pre></li>
+<li><p>Use <code>this.$()</code> as a shortened alias for <code>this.$el.find()</code>:</p>
+<pre><code>this.$el(&apos;li&apos;).addClass(&apos;highlighted&apos;);
+</code></pre></li>
+</ol>
+<p>Backbone integrates with the jQuery library as well as with <em>Zepto.js</em> and <em>Ender.js</em>. When Backbone is loaded, it determines which library is used and assigns a reference to it in the form of the <code>Backbone.$</code> variable.</p>
+<p>There are a couple of aliases, such as <code>this.$el</code> and <code>this.$()</code>, that simplify access to the library.</p>
+<p>Zepto is a minimalist JavaScript library that is 99 percent compatible with jQuery. The design goal of Zepto was to have a small-sized library and faster execution rate, which can be achieved by supporting modern browsers only. As a result, Zepto works much faster on mobile devices.</p>
+<p>To use Zepto with Backbone, you need to perform the following steps:</p>
+<p>Download the library from <a href="http://zeptojs.com" target="_blank" rel="external">http://zeptojs.com</a> and include it in the lib folder of your project.</p>
+<p>Include Zepto in the index.html file instead of in jQuery.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"lib/zepto.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="Rendering-a-model-in-a-view"><a href="#Rendering-a-model-in-a-view" class="headerlink" title="Rendering a model in a view"></a>Rendering a model in a view</h2><p>Define a new model:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> InvoiceItemModel = Backbone.Model.extend(&#123;</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Define a view that will render this model:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> InvoiceItemView = Backbone.View.extend(&#123;</div><div class="line"></div><div class="line">    <span class="comment">// HTML element name, where to render a view.</span></div><div class="line">    el: <span class="string">'body'</span>,</div><div class="line"></div><div class="line">    <span class="comment">// Render view.</span></div><div class="line">    render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> html = <span class="string">'Description: '</span> +</div><div class="line">        <span class="keyword">this</span>.model.get(<span class="string">'description'</span>) + <span class="string">'. '</span> +</div><div class="line">        <span class="string">'Price: '</span> + <span class="keyword">this</span>.model.get(<span class="string">'price'</span>) + <span class="string">'. '</span> +</div><div class="line">        <span class="string">'Quantity: '</span> + <span class="keyword">this</span>.model.get(<span class="string">'quantity'</span>) + <span class="string">'.'</span>;</div><div class="line"></div><div class="line">      <span class="comment">// Set html for the view element using jQuery.</span></div><div class="line">      $(<span class="keyword">this</span>.el).html(html);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Create a model instance:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> invoiceItemModel = <span class="keyword">new</span> InvoiceItemModel(&#123;</div><div class="line">  <span class="attr">description</span>: <span class="string">'Farmer Figure'</span>,</div><div class="line">  <span class="attr">price</span>: <span class="number">8</span>,</div><div class="line">  <span class="attr">quantity</span>: <span class="number">1</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Create a view instance and pass the model to it as a parameter:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> invoiceItemView = <span class="keyword">new</span> InvoiceItemView(&#123;</div><div class="line">  </div><div class="line">  <span class="comment">// Pass model as a parameter to a view.</span></div><div class="line">  model: invoiceItemModel</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Render the view:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">invoiceItemView.render();</div></pre></td></tr></table></figure>
+<p>When initializing a new view object, we pass a model object to the view that is added to its property array by Backbone. In any method of this view, the assigned model can be made available by using the this.model property.</p>
+<h2 id="Rendering-a-collection-in-a-view"><a href="#Rendering-a-collection-in-a-view" class="headerlink" title="Rendering a collection in a view"></a>Rendering a collection in a view</h2><p>Define a model:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> InvoiceItemModel = Backbone.Model.extend(&#123;</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Define a collection:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> InvoiceItemCollection = Backbone.Collection.extend(&#123;</div><div class="line">    <span class="attr">model</span>: InvoiceItemModel</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Define a view:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> InvoiceItemListView = Backbone.View.extend(&#123;</div><div class="line"></div><div class="line">  <span class="comment">// HTML element name, where to render a view.</span></div><div class="line">  el: <span class="string">'body'</span>,</div><div class="line"></div><div class="line">  <span class="comment">// Render view.</span></div><div class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> html = <span class="string">''</span>;</div><div class="line">    _.each(<span class="keyword">this</span>.collection.models,<span class="function"><span class="keyword">function</span>(<span class="params">model,index,list</span>) </span>&#123;    </div><div class="line">      <span class="keyword">var</span> item_html = <span class="string">'Description: '</span> +</div><div class="line">        model.get(<span class="string">'description'</span>) + <span class="string">'. '</span> +</div><div class="line">        <span class="string">'Price: '</span> + model.get(<span class="string">'price'</span>) + <span class="string">'. '</span> +</div><div class="line">        <span class="string">'Quantity: '</span> + model.get(<span class="string">'quantity'</span>) + <span class="string">'.'</span>;</div><div class="line">      html = html + <span class="string">'&lt;li&gt;'</span> + item_html + <span class="string">'&lt;/li&gt;'</span>;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    html = <span class="string">'&lt;ul&gt;'</span> + html + <span class="string">'&lt;/ul&gt;'</span>;</div><div class="line"></div><div class="line">    <span class="comment">// Set html for the view element using jQuery.</span></div><div class="line">    $(<span class="keyword">this</span>.el).html(html);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Create a collection instance:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> invoiceItemCollection = <span class="keyword">new</span> InvoiceItemCollection([</div><div class="line">  &#123; <span class="attr">description</span>: <span class="string">'Wooden Toy House'</span>, <span class="attr">price</span>: <span class="number">22</span>, <span class="attr">quantity</span>: <span class="number">3</span> &#125;,</div><div class="line">  &#123; <span class="attr">description</span>: <span class="string">'Farm Animal Set'</span>, <span class="attr">price</span>: <span class="number">17</span>, <span class="attr">quantity</span>: <span class="number">1</span> &#125;,</div><div class="line">  &#123; <span class="attr">description</span>: <span class="string">'Farmer Figure'</span>, <span class="attr">price</span>: <span class="number">8</span>, <span class="attr">quantity</span>: <span class="number">1</span> &#125;,</div><div class="line">  &#123; <span class="attr">description</span>: <span class="string">'Toy Tractor'</span>, <span class="attr">price</span>: <span class="number">15</span>, <span class="attr">quantity</span>: <span class="number">1</span> &#125;</div><div class="line">]);</div></pre></td></tr></table></figure>
+<p>Create a view instance:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> invoiceItemListView = <span class="keyword">new</span> InvoiceItemListView(&#123;</div><div class="line"></div><div class="line">  <span class="comment">// Pass model as a parameter to a view.</span></div><div class="line">  collection: invoiceItemCollection</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Render a view:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">invoiceItemListView.render();</div></pre></td></tr></table></figure>
+<h2 id="Splitting-a-view-into-subviews"><a href="#Splitting-a-view-into-subviews" class="headerlink" title="Splitting a view into subviews"></a>Splitting a view into subviews</h2><p>Make sure you have the model and the collection definition:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> InvoiceItemModel = Backbone.Model.extend(&#123;</div><div class="line"></div><div class="line">&#125;);</div><div class="line"><span class="keyword">var</span> InvoiceItemCollection = Backbone.Collection.extend(&#123;</div><div class="line">    <span class="attr">model</span>: InvoiceItemModel</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Define a view for rendering a single model:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Define new view to render a model.</span></div><div class="line"><span class="keyword">var</span> InvoiceItemView = Backbone.View.extend(&#123;</div><div class="line"></div><div class="line">    <span class="comment">// Define element tag name.</span></div><div class="line">    tagName: <span class="string">'tr'</span>,</div><div class="line"></div><div class="line">    <span class="comment">// Render view.</span></div><div class="line">    render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">      <span class="comment">// Add cells to the table row.</span></div><div class="line">      $(<span class="keyword">this</span>.el).html(_.map([</div><div class="line">        <span class="keyword">this</span>.model.get(<span class="string">'quantity'</span>),</div><div class="line">        <span class="keyword">this</span>.model.get(<span class="string">'description'</span>),</div><div class="line">        <span class="keyword">this</span>.model.get(<span class="string">'price'</span>), <span class="keyword">this</span>.model.calculateAmount(),</div><div class="line">      ], <span class="function"><span class="keyword">function</span>(<span class="params">val, key</span>)</span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">'&lt;td&gt;'</span> + val + <span class="string">'&lt;/td&gt;'</span></div><div class="line">      &#125;));</div><div class="line"></div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Define a view for rendering a collection:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Define new view to render a collection.</span></div><div class="line"><span class="keyword">var</span> InvoiceItemListView = Backbone.View.extend(&#123;</div><div class="line"></div><div class="line"><span class="comment">// Define element tag name.</span></div><div class="line">tagName: <span class="string">'table'</span>,</div><div class="line"></div><div class="line"><span class="comment">// Define element class name.</span></div><div class="line">className: <span class="string">'invoice-item-view'</span>,</div><div class="line"></div><div class="line"><span class="comment">// Render view.</span></div><div class="line">render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">  $(<span class="keyword">this</span>.el).empty();</div><div class="line"></div><div class="line">  <span class="comment">// Append table with a table header.</span></div><div class="line">  $(<span class="keyword">this</span>.el).append($(<span class="string">'&lt;tr&gt;&lt;/tr&gt;'</span>).html(</div><div class="line">    _.map([<span class="string">'Quantity'</span>, <span class="string">'Description'</span>, <span class="string">'Price'</span>, <span class="string">'Total'</span>], </div><div class="line">      <span class="function"><span class="keyword">function</span>(<span class="params">val, key</span>)</span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">'&lt;th&gt;'</span> + val + <span class="string">'&lt;/th&gt;'</span></div><div class="line">    &#125;)</div><div class="line">  ));</div><div class="line"></div><div class="line">  <span class="comment">// Append table  with a row.</span></div><div class="line">  $(<span class="keyword">this</span>.el).append(</div><div class="line">    _.map(<span class="keyword">this</span>.collection.models, <span class="function"><span class="keyword">function</span>(<span class="params">model, key</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">new</span> InvoiceItemView(&#123;</div><div class="line">        <span class="attr">model</span>: model</div><div class="line">      &#125;).render().el;</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Define a view for rendering a whole page.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> InvoiceItemListPageView = Backbone.View.extend(&#123;</div><div class="line"></div><div class="line">    <span class="comment">// Render whole page view.</span></div><div class="line">    render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      $(<span class="keyword">this</span>.el).html(<span class="keyword">new</span> InvoiceItemListView(&#123;</div><div class="line">        <span class="attr">collection</span>: <span class="keyword">this</span>.collection</div><div class="line">      &#125;).render().el);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Create and initialize a collection instance with data.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> invoiceItemCollection = <span class="keyword">new</span> InvoiceItemCollection([</div><div class="line">  &#123; <span class="attr">description</span>: <span class="string">'Wooden Toy House'</span>, <span class="attr">price</span>: <span class="number">22</span>, <span class="attr">quantity</span>: <span class="number">3</span> &#125;,</div><div class="line">  &#123; <span class="attr">description</span>: <span class="string">'Farm Animal Set'</span>, <span class="attr">price</span>: <span class="number">17</span>, <span class="attr">quantity</span>: <span class="number">1</span> &#125;,</div><div class="line">  &#123; <span class="attr">description</span>: <span class="string">'Farmer Figure'</span>, <span class="attr">price</span>: <span class="number">8</span>, <span class="attr">quantity</span>: <span class="number">1</span> &#125;,</div><div class="line">  &#123; <span class="attr">description</span>: <span class="string">'Toy Tractor'</span>, <span class="attr">price</span>: <span class="number">15</span>, <span class="attr">quantity</span>: <span class="number">1</span> &#125;</div><div class="line">]);</div></pre></td></tr></table></figure>
+<p>Create a view instance for a whole page and render it.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> InvoiceItemListPageView(&#123;</div><div class="line">  <span class="attr">collection</span>: invoiceItemCollection,</div><div class="line">  <span class="attr">el</span>: <span class="string">'body'</span></div><div class="line">&#125;).render();</div></pre></td></tr></table></figure>
+<h2 id="Handling-Document-Object-Model-DOM-events-in-a-view"><a href="#Handling-Document-Object-Model-DOM-events-in-a-view" class="headerlink" title="Handling Document Object Model (DOM) events in a view"></a>Handling Document Object Model (DOM) events in a view</h2><p>Apply the following changes to InvoiceItemView that we created in the previous recipe.</p>
+<p>Define a view:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Define new view to render a model.</span></div><div class="line"><span class="keyword">var</span> InvoiceItemView = Backbone.View.extend(&#123;</div><div class="line"></div><div class="line">    <span class="comment">// Define tag name.</span></div><div class="line">    tagName: <span class="string">'tr'</span>,</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Introduce a rendering function when the user is viewing an item:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">renderViewMode: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"> $(<span class="keyword">this</span>.el).html(_.map([</div><div class="line">    <span class="keyword">this</span>.model.get(<span class="string">'quantity'</span>),</div><div class="line">    <span class="keyword">this</span>.model.get(<span class="string">'description'</span>),</div><div class="line">    <span class="keyword">this</span>.model.get(<span class="string">'price'</span>),</div><div class="line">    <span class="keyword">this</span>.model.calculateAmount(),</div><div class="line">    <span class="string">'&lt;button class="edit"&gt;Edit&lt;/button&gt;'</span></div><div class="line">  ], <span class="function"><span class="keyword">function</span>(<span class="params">val, key</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'&lt;td&gt;'</span> + val + <span class="string">'&lt;/td&gt;'</span></div><div class="line">  &#125;));</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>Introduce a rendering function when the user is editing an item:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">renderEditMode: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  $(<span class="keyword">this</span>.el).html(_.map([</div><div class="line">    <span class="string">'&lt;input class="quantity" value="'</span> + </div><div class="line">      <span class="keyword">this</span>.model.get(<span class="string">'quantity'</span>) + <span class="string">'"&gt;'</span>,</div><div class="line">    <span class="string">'&lt;input class="description" value="'</span> + </div><div class="line">      <span class="keyword">this</span>.model.get(<span class="string">'description'</span>) +</div><div class="line">    <span class="string">'"&gt;'</span>,</div><div class="line">    <span class="string">'&lt;input class="price" value="'</span> + </div><div class="line">      <span class="keyword">this</span>.model.get(<span class="string">'price'</span>) + <span class="string">'"&gt;'</span>,</div><div class="line">    <span class="keyword">this</span>.model.calculateAmount(),</div><div class="line">    <span class="string">'&lt;button class="save"&gt;Save&lt;/button&gt;'</span> +</div><div class="line">    <span class="string">'&lt;button class="cancel"&gt;Cancel&lt;/button&gt;'</span></div><div class="line">  ], <span class="function"><span class="keyword">function</span>(<span class="params">val, key</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'&lt;td&gt;'</span> + val + <span class="string">'&lt;/td&gt;'</span></div><div class="line">  &#125;));</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>Set a property that will contain a function name that will be called on rendering the view:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">renderCallback: <span class="string">'renderViewMode'</span>,</div><div class="line"></div><div class="line"><span class="attr">render</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>[<span class="keyword">this</span>.renderCallback]();</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>Map the DOM events to the handlers:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">events: &#123;</div><div class="line">  <span class="string">'click button.edit'</span>: <span class="string">'edit'</span>,</div><div class="line">  <span class="string">'click button.save'</span>: <span class="string">'save'</span>,</div><div class="line">  <span class="string">'click button.cancel'</span>: <span class="string">'cancel'</span>,</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>Define the event handlers:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Edit button click handler.</span></div><div class="line">edit: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.renderCallback = <span class="string">'renderEditMode'</span>;</div><div class="line"></div><div class="line">  <span class="keyword">this</span>.render();</div><div class="line">&#125;,</div><div class="line"></div><div class="line"><span class="comment">// Save button click handler.</span></div><div class="line">save: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.model.set(&#123;</div><div class="line">    <span class="attr">quantity</span>: $(<span class="keyword">this</span>.el).find(<span class="string">'input.quantity'</span>).val(),</div><div class="line">    <span class="attr">description</span>: </div><div class="line">      $(<span class="keyword">this</span>.el).find(<span class="string">'input.description'</span>).val(),</div><div class="line">    <span class="attr">price</span>: $(<span class="keyword">this</span>.el).find(<span class="string">'input.price'</span>).val(),</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  <span class="keyword">this</span>.renderCallback = <span class="string">'renderViewMode'</span>;</div><div class="line"></div><div class="line">  <span class="keyword">this</span>.render();</div><div class="line">&#125;,</div><div class="line"></div><div class="line"><span class="comment">// Cancel button click handler.</span></div><div class="line">cancel: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.renderCallback = <span class="string">'renderViewMode'</span>;</div><div class="line"></div><div class="line">  <span class="keyword">this</span>.render();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Create and initialize a collection instance with data:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> invoiceItemCollection = <span class="keyword">new</span> InvoiceItemCollection([</div><div class="line">  &#123; <span class="attr">description</span>: <span class="string">'Wooden Toy House'</span>, <span class="attr">price</span>: <span class="number">22</span>, <span class="attr">quantity</span>: <span class="number">3</span> &#125;,</div><div class="line">  &#123; <span class="attr">description</span>: <span class="string">'Farm Animal Set'</span>, <span class="attr">price</span>: <span class="number">17</span>, <span class="attr">quantity</span>: <span class="number">1</span> &#125;,</div><div class="line">  &#123; <span class="attr">description</span>: <span class="string">'Farmer Figure'</span>, <span class="attr">price</span>: <span class="number">8</span>, <span class="attr">quantity</span>: <span class="number">1</span> &#125;,</div><div class="line">  &#123; <span class="attr">description</span>: <span class="string">'Toy Tractor'</span>, <span class="attr">price</span>: <span class="number">15</span>, <span class="attr">quantity</span>: <span class="number">1</span> &#125;</div><div class="line">]);</div></pre></td></tr></table></figure>
+<p>Create a view instance for a whole page and render it:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> InvoiceItemListPageView(&#123;</div><div class="line">  <span class="attr">collection</span>: invoiceItemCollection,</div><div class="line">  <span class="attr">el</span>: <span class="string">'body'</span></div><div class="line">&#125;).render();</div></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/backbone_view_table.jpg" alt="backbone_view_table.jpg" title="">
+                </div>
+                <div class="image-caption">backbone_view_table.jpg</div>
+            </figure>
+<p>By defining the event property, we can tell Backbone how to map events to the handlers. To do so, we will use the following syntax:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">"event selector"</span>: <span class="string">"callback"</span>&#125;</div></pre></td></tr></table></figure>
+<p>Backbone.js uses jQuery’s on() function to provide declarative callbacks for DOM events within a view. If the selector value is not given, the view’s root element (this.el) is assumed.</p>
+<p><strong>Delegating and undelegating events manually</strong></p>
+<p>In some cases, we may need a view to start handling DOM events manually from a specific place in the program. This can be done by calling the <code>delegateEvents()</code> method. It accepts a hash table of event names and their callbacks. If no parameter is given, <code>this.events</code> is used.</p>
+<p>If we need a view to stop handling DOM events, we should call the <code>undelegateEvents()</code> method. This can be useful when we hide the view temporarily and need to ensure that no unexpected behavior is caused by the DOM events.</p>
+<h2 id="Switching-views-using-Backbone-Router"><a href="#Switching-views-using-Backbone-Router" class="headerlink" title="Switching views using Backbone.Router"></a>Switching views using Backbone.Router</h2><p>We are going to build a Backbone application that will dynamically render an appropriate view on the URL, as well as change and remove the view that was shown tothe user previously in order to prevent a memory leak. The views are going to be switched without a page reload, because Backbone.Router supports hash URLs and pushState.</p>
+<p>Let’s assume that we already have a model, a collection, and view objects defined. Follow the given steps to create a router that switches views.</p>
+<p>Define a router object and its routes:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Workspace = Backbone.Router.extend(&#123;</div><div class="line"></div><div class="line"><span class="comment">// Define routes</span></div><div class="line">routes: &#123;</div><div class="line">  <span class="string">''</span>: <span class="string">'invoiceList'</span>,</div><div class="line">  <span class="string">'invoice'</span>: <span class="string">'invoiceList'</span>,</div><div class="line">  <span class="string">'invoice/:id'</span>: <span class="string">'invoicePage'</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Create a new collection instance in the <code>initialize()</code> method in the router object:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">initialize: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">//  Create collection</span></div><div class="line">  <span class="keyword">this</span>.invoiceCollection = <span class="keyword">new</span> InvoiceCollection([</div><div class="line">    &#123; <span class="attr">referenceNumber</span>: <span class="number">1234</span>&#125;,</div><div class="line">    &#123; <span class="attr">referenceNumber</span>: <span class="number">2345</span>&#125;,</div><div class="line">    &#123; <span class="attr">referenceNumber</span>: <span class="number">3456</span>&#125;,</div><div class="line">    &#123; <span class="attr">referenceNumber</span>: <span class="number">4567</span>&#125;</div><div class="line">  ]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Define routing callbacks in the router object:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">invoiceList: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.changeView(<span class="keyword">new</span> InvoiceListView(&#123;</div><div class="line">    <span class="attr">collection</span>: <span class="keyword">this</span>.invoiceCollection</div><div class="line">  &#125;));</div><div class="line">&#125;,</div><div class="line"></div><div class="line"><span class="attr">invoicePage</span>: <span class="function"><span class="keyword">function</span>(<span class="params">id</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.changeView(<span class="keyword">new</span> InvoicePageView(&#123;</div><div class="line">    <span class="attr">model</span>: <span class="keyword">this</span>.invoiceCollection.get(id)</div><div class="line">  &#125;));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Define a <code>changeView()</code> method in the router object that will help us change the current view:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">changeView: <span class="function"><span class="keyword">function</span>(<span class="params">view</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.currentView) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.currentView == view) &#123;</div><div class="line">          <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">this</span>.currentView.remove();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    $(<span class="string">'body'</span>).append(view.render().el);</div><div class="line"></div><div class="line">    <span class="keyword">this</span>.currentView = view;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Create a router instance and run the Backbone.history.start() method to start our application:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Workspace();</div><div class="line">Backbone.history.start();</div></pre></td></tr></table></figure>
+<p>Many interesting things are happening in the <code>changeView()</code> method. Just for our assurance, we check if the current view is not the one to which we are going to switch and then remove. While removing a view, all the events handled by it need to be unbound, and the corresponding HTML elements removed from the DOM tree. Then, we render a new view and append its element to the body.</p>
+<p>Removing previously used views helps us to avoid memory leaks, which can happen when the application is used continuously for a very long time.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-05-30-backbone-views.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-05-30-backbone-views.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backbone/">backbone</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mvc/">mvc</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-05-30-backbone-views.html&title=《Backbone Views》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-05-30-backbone-views.html&title=《Backbone Views》 — Balance&source=
+本文为读 Backbone.js Cookbook 的读书笔记。
+
+Rendering a viewDefine a new view by exten..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-05-30-backbone-views.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Backbone Views》 — Balance&url=http://blog.inching.org/JavaScript/2014-05-30-backbone-views.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-05-30-backbone-views.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-05-31-backbone-models.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Backbone Models</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-05-29-backbone-tutorial.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Backbone Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-05-30-backbone-views.html&title=《Backbone Views》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-05-30-backbone-views.html&title=《Backbone Views》 — Balance&source=
+本文为读 Backbone.js Cookbook 的读书笔记。
+
+Rendering a viewDefine a new view by exten..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-05-30-backbone-views.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Backbone Views》 — Balance&url=http://blog.inching.org/JavaScript/2014-05-30-backbone-views.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-05-30-backbone-views.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtklEQVR42u3aQXIbMQwEQP//08k1qVjrGYCUnarek0pardg8kNCAHx/x9evxSu7/8/3n1/8+5/meAxceHh7ehaEnw301oORpycTlT8DDw8N7D2+zKCeM5LvP32o3Ejw8PLyfxsu3imdYO314eHh4/y9vNqy8lM+DDDw8PLzv4rWPzsPZNp7IN5LDWQseHh5e17Ealr/f9fpKfw8PDw9v3VXfLOKbonnWKvvkmXh4eHgXePmCmxevefE9W+HrO/Hw8PCO8mbBaH40qj1ekB+0iopvPDw8vLfwnn8m/3R2lKptmxWdPTw8PLwLvNlSnh+QysvxBByNCg8PD+8CL2G0hXIbVcxiiCLUwMPDwzvKy4vj9tjTJsDdtMdehhF4eHh4h3h53LCZgrxcPvWcYs7w8PDwFry2yTRrhs2CjFlkjIeHh3eDl+vb0KGdss3EvRw5Hh4e3gXeMyYPIPJtIIl3902vL7p8eHh4eId4yaLfYmZbRds2q1MWPDw8vKO8WfN+E63mLbS2DYaHh4d3m3cqGmgPB+T3J7/4yZPx8PDwjvI2MUG+TLdLfBtGvHyNh4eH90beLIxopyMPI47teHh4eHhrXn5QYPaTs/igjhuex4CHh4d3mfe8cLdF7eboQP5+cTICDw8P7wKvXVfb0CEPIGZhxBf/G/Dw8PAu89qjAAl4X77XFx4eHt413myxTga6P5rQTiIeHh7ed/HyQeRbyKx8X21yeHh4eEd5v8qrbZu1hwP2xfdfn+Lh4eFd4G3+0SdL+WyzaZtt+caDh4eHd4r3/vi1DYKTX4zCCDw8PLyjvLzAnR2o2pTa1/t7eHh4eG/h5bFse/8+qsDDw8P7abwW0Aa+SdhRHx3Aw8PDu8DLg4DZO7OjVG3EvIpx8fDw8M4krh+z5b5tp21K7SuBBR4eHt7n12+Qy8U6x9g54wAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

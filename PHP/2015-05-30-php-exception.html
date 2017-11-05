@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>PHP Errors and Exceptions | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tutorial,php">
+    <meta name="description" content="See 《Modern PHP》 and 《Learning PHP, MySQL &amp;amp; JavaScript, 4th Edition》.
+It’s possible to circumvent PHP errors with the @ prefix in front of a PHP function that might trigger an error (e.g., @fopen(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP Errors and Exceptions">
+<meta property="og:url" content="http://blog.inching.org/PHP/2015-05-30-php-exception.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See 《Modern PHP》 and 《Learning PHP, MySQL &amp;amp; JavaScript, 4th Edition》.
+It’s possible to circumvent PHP errors with the @ prefix in front of a PHP function that might trigger an error (e.g., @fopen(">
+<meta property="og:image" content="http://blog.inching.org/assets/2015-05-30-php-exception-338a4c05.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/php-error-develop.png">
+<meta property="og:updated_time" content="2017-05-13T03:16:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP Errors and Exceptions">
+<meta name="twitter:description" content="See 《Modern PHP》 and 《Learning PHP, MySQL &amp;amp; JavaScript, 4th Edition》.
+It’s possible to circumvent PHP errors with the @ prefix in front of a PHP function that might trigger an error (e.g., @fopen(">
+<meta name="twitter:image" content="http://blog.inching.org/assets/2015-05-30-php-exception-338a4c05.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">PHP Errors and Exceptions</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">PHP Errors and Exceptions</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-05-29T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2015-05-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/PHP/">PHP</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Exceptions"><span class="post-toc-text">Exceptions</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Throw-exceptions"><span class="post-toc-text">Throw exceptions</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Catch-exceptions"><span class="post-toc-text">Catch exceptions</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Exception-Handlers"><span class="post-toc-text">Exception Handlers</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Errors"><span class="post-toc-text">Errors</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Error-Handlers"><span class="post-toc-text">Error Handlers</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Errors-and-Exceptions-During-Development"><span class="post-toc-text">Errors and Exceptions During Development</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Production"><span class="post-toc-text">Production</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-php-exception"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">PHP Errors and Exceptions</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-05-30 00:00:00" datetime="2015-05-29T16:00:00.000Z"  itemprop="datePublished">2015-05-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/PHP/">PHP</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="http://www.salttiger.com/modern-php/" target="_blank" rel="external">《Modern PHP》</a> and <a href="http://www.salttiger.com/learning-php-mysql-javascript-4th-edition/" target="_blank" rel="external">《Learning PHP, MySQL &amp; JavaScript, 4th Edition》</a>.</p>
+<p>It’s possible to circumvent PHP errors with the <code>@</code> prefix in front of a PHP function that might trigger an error (e.g., <code>@fopen()</code>). <em>This is an antipattern</em>. I recommend you change your code to avoid these situations.</p>
+<p>Exceptions are an object-oriented evolution of PHP’s error handling system. They are instantiated, thrown, and caught. Exceptions are a more flexible device that anticipates and handles problems <em>in situ</em> without halting script execution. Exceptions are also an offensive <em>and</em> defensive device. We must anticipate exceptions thrown by third-party vendor code with <code>try {} catch {}</code> blocks. We can also act offensively by throwing an exception; this delegates exception handling to other developers when we don’t know how to handle a given situation on our own.</p>
+<a id="more"></a>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="assets/2015-05-30-php-exception-338a4c05.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="Exceptions"><a href="#Exceptions" class="headerlink" title="Exceptions"></a>Exceptions</h2><p>An exception is an object of class <code>Exception</code> that is <em>thrown</em> when you encounter an irreparable situation from which you cannot recover (e.g., a remote API is unresponsive, a database query fails, or a precondition is not satisfied). I call these <em>exceptional situations</em>. Exceptions are used offensively to delegate responsibility when a problem occurs, and they are used defensively to anticipate and mitigate potential problems.</p>
+<p>You instantiate an <code>Exception</code> object with the <code>new</code> keyword just like any other PHP object. An <code>Exception</code> object has two primary properties: a message and a numeric code. The message describes what went wrong. The numeric code is optional and can be used to provide context for a given exception. You provide the message and optional numeric code when you instantiate an <code>Exception</code> object like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$exception = new Exception(&apos;Danger, Will Robinson!&apos;, 100);</div></pre></td></tr></table></figure>
+<p>You can inspect an <code>Exception</code> object with its <code>getCode()</code> and <code>getMessage()</code> public instance methods like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$code = $exception-&gt;getCode(); // 100</div><div class="line">$message = $exception-&gt;getMessage(); // &apos;Danger...&apos;</div></pre></td></tr></table></figure>
+<h3 id="Throw-exceptions"><a href="#Throw-exceptions" class="headerlink" title="Throw exceptions"></a>Throw exceptions</h3><p>You can assign an exception to a variable upon instantiation, but exceptions are meant to be <em>thrown</em>. If you write code for other developers, you must act offensively in exceptional situations, meaning you throw exceptions when your code encounters exceptional situations or cannot otherwise operate under current conditions. PHP component and framework authors, in particular, cannot presume how to handle exceptional situations; instead, they throw an exception and delegate responsibility to the developer using their code.</p>
+<p>When an exception is thrown, code execution is immediately halted and subsequent PHP code is not run. To throw an exception, use the <code>throw</code> keyword followed by the <code>Exception</code> instance:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">throw new Exception(&apos;Something went wrong. Time for lunch!&apos;);</div></pre></td></tr></table></figure>
+<p>You can only throw an instance of class <code>Exception</code> (or a subclass of <code>Exception</code>). PHP provides these built-in <code>Exception</code> subclasses:</p>
+<ol>
+<li><a href="http://php.net/manual/class.exception.php" target="_blank" rel="external"><code>Exception</code></a></li>
+<li><a href="http://php.net/manual/class.errorexception.php" target="_blank" rel="external"><code>ErrorException</code></a></li>
+</ol>
+<p>he <a href="http://php.net/manual/book.spl.php" target="_blank" rel="external">Standard PHP Library</a> (SPL) supplements<br>PHP’s built-in exceptions with these additional <code>Exception</code> subclasses:</p>
+<ul>
+<li><a href="http://php.net/manual/class.logicexception.php" target="_blank" rel="external"><code>LogicException</code></a><ul>
+<li><a href="http://php.net/manual/class.badfunctioncallexception.php" target="_blank" rel="external"><code>BadFunctionCallException</code></a><ul>
+<li><a href="http://php.net/manual/class.badmethodcallexception.php" target="_blank" rel="external"><code>BadMethodCallException</code></a></li>
+</ul>
+</li>
+<li><a href="http://php.net/manual/class.domainexception.php" target="_blank" rel="external"><code>DomainException</code></a></li>
+<li><a href="http://php.net/manual/class.invalidargumentexception.php" target="_blank" rel="external"><code>InvalidArgumentException</code></a></li>
+<li><a href="http://php.net/manual/class.lengthexception.php" target="_blank" rel="external"><code>LengthException</code></a></li>
+<li><a href="http://php.net/manual/class.outofrangeexception.php" target="_blank" rel="external"><code>OutOfRangeException</code></a></li>
+</ul>
+</li>
+<li><a href="http://php.net/manual/class.runtimeexception.php" target="_blank" rel="external"><code>RuntimeException</code></a><ul>
+<li><a href="http://php.net/manual/class.outofboundsexception.php" target="_blank" rel="external"><code>OutOfBoundsException</code></a></li>
+<li><a href="http://php.net/manual/class.overflowexception.php" target="_blank" rel="external"><code>OverflowException</code></a></li>
+<li><a href="http://php.net/manual/class.rangeexception.php" target="_blank" rel="external"><code>RangeException</code></a></li>
+<li><a href="http://php.net/manual/class.underflowexception.php" target="_blank" rel="external"><code>UnderflowException</code></a></li>
+<li><a href="http://php.net/manual/class.unexpectedvalueexception.php" target="_blank" rel="external"><code>UnexpectedValueException</code></a></li>
+</ul>
+</li>
+</ul>
+<p>Each subclass exists for a certain situation and provides context for <em>why</em> an exception is thrown. For example, if a PHP component method expects a string argument with at least five characters but is given a string with only two characters, it can throw an <code>InvalidArgumentException</code> instance. Because PHP provides an exception <em>class</em>, you can easily extend the <code>Exception</code> class to create your own custom exception subclasses with their own custom properties and methods. Which exception subclass you use is subjective. Choose or create the exception subclass that best answers <em>why am I throwing this<br>exception?</em>, and document your choice.</p>
+<h3 id="Catch-exceptions"><a href="#Catch-exceptions" class="headerlink" title="Catch exceptions"></a>Catch exceptions</h3><p>Surround code that might throw an exception with a <code>try/catch</code> block to intercept and handle potential exceptions.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">try &#123;</div><div class="line">    $pdo = new PDO(&apos;mysql://host=wrong_host;dbname=wrong_name&apos;);</div><div class="line">&#125; catch (PDOException $e) &#123;</div><div class="line">    // Inspect the exception for logging</div><div class="line">    $code = $e-&gt;getCode();</div><div class="line">    $message = $e-&gt;getMessage();</div><div class="line"></div><div class="line">    // Display a nice message to the user</div><div class="line">    echo &apos;Something went wrong. Check back soon, please.&apos;;</div><div class="line">    exit;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>You can use multiple <code>catch</code> blocks to intercept multiple types of exceptions. This is useful if you need to act differently based on the type of exception thrown. You can also use a <code>finally</code> block to <em>always</em> run a block of code after you catch <em>any</em> exception.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">try &#123;</div><div class="line">    throw new Exception(&apos;Not a PDO exception&apos;);</div><div class="line">    $pdo = new PDO(&apos;mysql://host=wrong_host;dbname=wrong_name&apos;);</div><div class="line">&#125; catch (PDOException $e) &#123;</div><div class="line">    // Handle PDO exception</div><div class="line">    echo &quot;Caught PDO exception&quot;;</div><div class="line">&#125; catch (Exception $e) &#123;</div><div class="line">    // Handle all other exceptions</div><div class="line">    echo &quot;Caught generic exception&quot;;</div><div class="line">&#125; finally &#123;</div><div class="line">    // Always do this</div><div class="line">    echo &quot;Always do this&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Exception-Handlers"><a href="#Exception-Handlers" class="headerlink" title="Exception Handlers"></a>Exception Handlers</h3><p>An exception handler is anything that is <em>callable</em>. I prefer to use an anonymous function, but you can also use a class method. Whatever you choose, it must accept one argument of class <code>Exception</code>. You register your exception handler with the <code>set_exception_handler()</code> function like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">set_exception_handler(function (Exception $e) &#123;</div><div class="line">    // Handle and log exception</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>In some situations, you may need to replace an existing exception handler with your own exception handler. PHP etiquette suggests you restore the existing exception handler when your code is finished. You can restore a previous exception handler with the <code>restore_exception_handler()</code> function:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// Register your exception handler</div><div class="line">set_exception_handler(function (Exception $e) &#123;</div><div class="line">    // Handle and log exception</div><div class="line">&#125;);</div><div class="line"></div><div class="line">// Your code goes here...</div><div class="line"></div><div class="line">// Restore previous exception handler</div><div class="line">restore_exception_handler();</div></pre></td></tr></table></figure>
+<h2 id="Errors"><a href="#Errors" class="headerlink" title="Errors"></a>Errors</h2><p>PHP provides error-reporting functions in addition to exceptions. This confuses many PHP developers. PHP can trigger different types of errors, including fatal errors, runtime errors, compile-time errors, startup errors, and (more rarely) user-triggered errors. You’ll most often encounter PHP errors caused by syntax mistakes or uncaught exceptions.</p>
+<p>The difference between errors and exceptions is subtle. Errors are often triggered when a PHP script cannot fundamentally run as expected for whatever reason (e.g., there is a syntax mistake). It is also possible to trigger your own errors with the <code>trigger_error()</code> function and handle them with a custom error handler, but it is better to use exceptions when writing userland code. Unlike errors, PHP exceptions can be thrown and caught at any level of your PHP application. Exceptions provide more contextual information than PHP errors. And you can extend the topmost <code>Exception</code> class with your own custom exception subclasses. Exceptions and a good logger like Monolog are a far more versatile solution than PHP errors. However, modern PHP developers must anticipate and handle both PHP errors and PHP exceptions.</p>
+<p>You can instruct PHP which errors to report, and which to ignore, with the <code>error_reporting()</code> function or the <code>error_reporting</code> directive in your <em>php.ini</em> file. Both accept named <code>E_*</code> constants that determine which errors are reported and which are ignored.</p>
+<p>Learn more about PHP error reporting at <a href="http://php.net/manual/function.error-reporting.php" target="_blank" rel="external">http://php.net/manual/function.error-reporting.php</a>.</p>
+<p>PHP error reporting can be as sensitive or stoic as you tell it to be. In development, I prefer PHP to obnoxiously display and log all error messages. In production, I instruct PHP to log most error messages but not display them. Whatever you do, you should always follow these four rules:</p>
+<ul>
+<li>Always turn on error reporting.</li>
+<li>Display errors during development.</li>
+<li><em>Do not</em> display errors during production.</li>
+<li>Log errors during development and production.</li>
+</ul>
+<p>Here are my error-reporting <em>php.ini</em> settings for development:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">; Display errors</div><div class="line">display_startup_errors = On</div><div class="line">display_errors = On</div><div class="line"></div><div class="line">; Report all errors</div><div class="line">error_reporting = -1</div><div class="line"></div><div class="line">; Turn on error logging</div><div class="line">log_errors = On</div></pre></td></tr></table></figure>
+<p>Here are my error-reporting php.ini settings for production:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">; DO NOT display errors</div><div class="line">display_startup_errors = Off</div><div class="line">display_errors = Off</div><div class="line"></div><div class="line">; Report all errors EXCEPT notices</div><div class="line">error_reporting = E_ALL &amp; ~E_NOTICE</div><div class="line"></div><div class="line">; Turn on error logging</div><div class="line">log_errors = On</div></pre></td></tr></table></figure>
+<p>The main difference is that I display errors in my PHP script output during development. I do not display errors in my PHP script output in production. However, I log errors in both environments. If I have a bug in my production PHP application (and this never happens…cough), I can review my PHP log file for details.</p>
+<h3 id="Error-Handlers"><a href="#Error-Handlers" class="headerlink" title="Error Handlers"></a>Error Handlers</h3><p>Just as you can with exception handlers, you can set a global error handler to intercept and handle PHP errors with your own logic. The error handler lets you fail gracefully by cleaning up loose ends before terminating the PHP script.</p>
+<p>An error handler, like an exception handler, is anything that is callable (e.g., a function or class method). It is your responsibility to <code>die()</code> or <code>exit()</code> inside of your error handler. If you don’t manually terminate the PHP script inside your error handler, the PHP script will continue executing from where the error occurred. You register your global error handler with the <code>set_error_handler()</code>, and you pass it an argument that is callable:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">set_error_handler(function ($errno, $errstr, $errfile, $errline) &#123;</div><div class="line">    // Handle error</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Your error-handler callable receives five arguments:</p>
+<ul>
+<li>$errno The error level (maps to a PHP E_* constant).</li>
+<li>$errstr The error message.</li>
+<li>$errfile The filename in which the error occurred.</li>
+<li>$errline The file line number on which the error occurred.</li>
+<li><p>$errcontext</p>
+<p>  An array that points to the active symbol table when the error occurred. This is optional and is only useful for advanced debugging purposes. I usually ignore this argument.</p>
+</li>
+</ul>
+<p>There’s one important caveat that you absolutely must know when using a custom error handler. PHP will send <em>all</em> errors to your error handler, even those that are excluded by your current error-reporting setting. It is your responsibility to inspect each error code (the first argument) and act appropriately. You <em>can</em> instruct your error handler to only respond to a subset of error types with a second argument to the <code>set_error_handler()</code> function; this argument is a bitwise mask of <code>E_*</code> constants (e.g., <code>E_ALL | E_STRICT</code>).</p>
+<p>This is as good a time as any to segue into a common practice that I and many other PHP developers use in our PHP applications. I like to convert PHP errors into <code>ErrorException</code> objects. The <code>ErrorException</code> class is a subclass of <code>Exception</code>, and it comes built into PHP. This lets me convert PHP errors into exceptions and funnel them into my existing exception handling workflow.</p>
+<p>Not all errors can be converted into exceptions! These errors include <code>E_ERROR</code>, <code>E_PARSE</code>, <code>E_CORE_ERROR</code>, <code>E_CORE_WARNING</code>, <code>E_COMPILE_ERROR</code>, <code>E_COMPILE_WARNING</code>, and most of <code>E_STRICT</code>.</p>
+<p>Converting PHP errors is a bit tricky, and we must be careful to convert only the errors that satisfy the <code>error_reporting</code> setting in our <em>php.ini</em> file. Here’s an example error-handler function that converts PHP errors into <code>ErrorException</code> objects:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">set_error_handler(function ($errno, $errstr, $errfile, $errline) &#123;</div><div class="line">    if (!(error_reporting() &amp; $errno)) &#123;</div><div class="line">        // Error is not specified in the error_reporting</div><div class="line">        // setting, so we ignore it.</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>This error-handler function converts the appropriate PHP errors into <code>ErrorException</code> objects and throws them into our existing exception-handling system. It is considered good etiquette to restore the previous error handler (if any) after your own code is done. You can restore the previous handler with the <code>restore_error_handler()</code> function.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// Register error handler</div><div class="line">set_error_handler(function ($errno, $errstr, $errfile, $errline) &#123;</div><div class="line">    if (!(error_reporting() &amp; $errno)) &#123;</div><div class="line">        // Error is not specified in the error_reporting</div><div class="line">        // setting, so we ignore it.</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    throw new ErrorException($errstr, $errno, 0, $errfile, $errline);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">// Your code goes here...</div><div class="line"></div><div class="line">// Restore previous error handler</div><div class="line">restore_error_handler();</div></pre></td></tr></table></figure>
+<h3 id="Errors-and-Exceptions-During-Development"><a href="#Errors-and-Exceptions-During-Development" class="headerlink" title="Errors and Exceptions During Development"></a>Errors and Exceptions During Development</h3><p>We know we should display errors during development. But PHP’s default error messages are ugly and often injected into the normal PHP script output, resulting in a hard-to-read mess. Use<a href="https://github.com/filp/whoops" target="_blank" rel="external">Whoops</a> instead. Whoops is a modern PHP component that provides a well-designed, easy-to-read diagnostics page for PHP errors and exceptions. Whoops, created and maintained by <a href="https://github.com/filp" target="_blank" rel="external">Filipe Dobreira</a> and <a href="https://github.com/denis-sokolov" target="_blank" rel="external">Denis Sokolov</a>.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/php-error-develop.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>The Whoops diagnostic screen is light years better than the default PHP error and exception output.</p>
+<p>Whoops is easy to implement, too. Update your <em>composer.json</em> file as shown below, and run either <code>composer install</code> or <code>composer update</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;require&quot;: &#123;</div><div class="line">        &quot;filp/whoops&quot;: &quot;~1.0&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Next, register the Whoops error and exception handlers in your PHP application’s bootstrap file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// Use composer autoloader</div><div class="line">require &apos;path/to/vendor/autoload.php&apos;;</div><div class="line"></div><div class="line">// Setup Whoops error and exception handlers</div><div class="line">$whoops = new \Whoops\Run;</div><div class="line">$whoops-&gt;pushHandler(new \Whoops\Handler\PrettyPageHandler);</div><div class="line">$whoops-&gt;register();</div></pre></td></tr></table></figure>
+<h3 id="Production"><a href="#Production" class="headerlink" title="Production"></a>Production</h3><p>We know we should log errors in production. PHP provides the <code>error_log()</code> function to write messages to the filesystem, to <code>syslog</code>, or into an email. But there’s a better option, and it’s called<a href="https://github.com/Seldaek/monolog" target="_blank" rel="external">Monolog</a>. Monolog is a very good PHP component that specializes in one thing—logging. It’s easy to integrate into your PHP applications with Composer.</p>
+<p>First, require the <code>monolog/monolog</code> package in your <em>composer.json</em> file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;require&quot;: &#123;</div><div class="line">        &quot;monolog/monolog&quot;: &quot;~1.11&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Next, install the component with either <code>composer install</code> or <code>composer update</code>, and add the code from Example 5-43 to the top of your PHP application’s bootstrap file.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// Use Composer autoloader</div><div class="line">require &apos;path/to/vendor/autoload.php&apos;;</div><div class="line"></div><div class="line">// Import Monolog namespaces</div><div class="line">use Monolog\Logger;</div><div class="line">use Monolog\Handler\StreamHandler;</div><div class="line"></div><div class="line">// Setup Monolog logger</div><div class="line">$log = new Logger(&apos;my-app-name&apos;);</div><div class="line">$log-&gt;pushHandler(new StreamHandler(&apos;path/to/your.log&apos;, Logger::WARNING));</div></pre></td></tr></table></figure>
+<p>That’s it. You now have a Monolog logger that will write all logged messages of type <code>Logger::WARNING</code> or higher to the <em>path/to/your.log</em> file.</p>
+<p>Monolog is very extensible. You can define multiple handlers that only handle specific log levels. For example, we can push a second Monolog handler that emails an administrator for critical, alert, or emergency errors. We’ll need the SwiftMailer PHP component, so let’s add that to the <em>composer.json</em> file and run <code>composer update</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;require&quot;: &#123;</div><div class="line">        &quot;monolog/monolog&quot;: &quot;~1.11&quot;,</div><div class="line">        &quot;swiftmailer/swiftmailer&quot;: &quot;~5.3&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Next, we’ll modify our code and add a new Monolog handler that accepts a SwiftMailer instance to send email messages:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// Use Composer autoloader</div><div class="line">require &apos;vendor/autoload.php&apos;;</div><div class="line"></div><div class="line">// Import Monolog namespaces</div><div class="line">use Monolog\Logger;</div><div class="line">use Monolog\Handler\StreamHandler;</div><div class="line">use Monolog\Handler\SwiftMailerHandler;</div><div class="line"></div><div class="line">date_default_timezone_set(&apos;America/New_York&apos;);</div><div class="line"></div><div class="line">// Setup Monolog and basic handler</div><div class="line">$log = new Logger(&apos;my-app-name&apos;);</div><div class="line">$log-&gt;pushHandler(new StreamHandler(&apos;logs/production.log&apos;, Logger::WARNING));</div><div class="line"></div><div class="line">// Add SwiftMailer handler for critical errors</div><div class="line">$transport = \Swift_SmtpTransport::newInstance(&apos;smtp.example.com&apos;, 587)</div><div class="line">             -&gt;setUsername(&apos;USERNAME&apos;)</div><div class="line">             -&gt;setPassword(&apos;PASSWORD&apos;);</div><div class="line">$mailer = \Swift_Mailer::newInstance($transport);</div><div class="line">$message = \Swift_Message::newInstance()</div><div class="line">           -&gt;setSubject(&apos;Website error!&apos;)</div><div class="line">           -&gt;setFrom(array(&apos;daemon@example.com&apos; =&gt; &apos;John Doe&apos;))</div><div class="line">           -&gt;setTo(array(&apos;admin@example.com&apos;));</div><div class="line">$log-&gt;pushHandler(new SwiftMailerHandler($mailer, $message, Logger::CRITICAL));</div><div class="line"></div><div class="line">// Use logger</div><div class="line">$log-&gt;critical(&apos;The server is on fire!&apos;);</div></pre></td></tr></table></figure>
+<p>Now when a critical, alert, or emergency message is logged, Monolog emails the logged message using the SwiftMailer <code>$mailer</code> and <code>$message</code> objects. The email body is the logged message text.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-05-13T03:16:55.000Z" itemprop="dateUpdated">2017-05-13 11:16:55</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/PHP/2015-05-30-php-exception.html" target="_blank" rel="external">http://blog.inching.org/PHP/2015-05-30-php-exception.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorial/">tutorial</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/PHP/2015-05-30-php-exception.html&title=《PHP Errors and Exceptions》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/PHP/2015-05-30-php-exception.html&title=《PHP Errors and Exceptions》 — Balance&source=See 《Modern PHP》 and 《Learning PHP, MySQL &amp; JavaScript, 4th Edition》.
+It’..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/PHP/2015-05-30-php-exception.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《PHP Errors and Exceptions》 — Balance&url=http://blog.inching.org/PHP/2015-05-30-php-exception.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/PHP/2015-05-30-php-exception.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/PHP/2015-05-31-php-test.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">PHP Test</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/PHP/2015-05-29-php-database.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">PHP Database</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/PHP/2015-05-30-php-exception.html&title=《PHP Errors and Exceptions》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/PHP/2015-05-30-php-exception.html&title=《PHP Errors and Exceptions》 — Balance&source=See 《Modern PHP》 and 《Learning PHP, MySQL &amp; JavaScript, 4th Edition》.
+It’..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/PHP/2015-05-30-php-exception.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《PHP Errors and Exceptions》 — Balance&url=http://blog.inching.org/PHP/2015-05-30-php-exception.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/PHP/2015-05-30-php-exception.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNElEQVR42u3aSXKEQAwFUe5/aRzhlSNsIL8EtlFlrXrBUI+FWkNtG1775/r6+/s6uvLorvNrtieWDBkyXsvYTxffxNEz+Ycg7z2kypAhYwEGD7I8KJO3cPzF02TIkCGjFGTPSWlyKUOGDBkpgyRzaSD+g4ArQ4aMVzH6TTT0Mtwre7AWlyFDxgsZtcHA7/x+fL4hQ4aMf8/Yw1ULjv3ge7ErGTJkjGbUxpNpwflcEhlklzJkyHgto3Ocq9Ys65TKhxgZMmSMZvBN99v3pGVGtnuRGsqQIWMco1aakqMVKZWH5h+eKUOGjNGMWkIWH4MARSx/S/C/IUOGjBGMe0vTJ6aKKNzLkCFjNINshSRwpOBMQzYvjGXIkLEOozMSSJM//vnIUQwZMmTMZqSFZa3plh6qiAtpGTJkjGakjfg0NKej0PT/QYYMGesw+scmeGrYadUV5xsyZMgYwbg3yeuPNtPxgAwZMlZgpEPK2oiRB2LebkPfQ4YMGSMY6Q1pMlfbRLEWlyFDxjhGv93PD2GkYZcXtDJkyFiHUTydUQrWdw0DZMiQsQKjVkZ20sFOrhp0DWXIkDGIsYeLN8t4kseHlIdvkSFDxmhGmurVCtG0hUdGFDJkyFiN0QmCrfCHR6Tog8qQIWMBRhpka+OB1kz1/EoZMmTICDeRDkd5X/AiNZQhQ4aMcHjAa2jy5IsmoAwZMhZg8CKWl52do2ZxiStDhozRjFbpCNr6nWbcza09GTJkvI/xASHsRrzzr0g3AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

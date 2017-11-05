@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JavaScript 继承 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,oo">
+    <meta name="description" content="这篇文章是根据 《JavaScript 模式》中关于继承的章节整理完成。整理之后脉络比较清晰，便于比较各种继承方式。
+
+JavaScript 的继承的实现方式大体分为传统继承（或者称为类式继承、经典继承）和现代方式。区别为传统方式视图通过 类 的方式来实现，而现代模式则撇开类的概念。
+如果你有了 inherit 方法，可以如下使用：
+1234567891011121314// the paren">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 继承">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-08-28-javascript-oo-extend2.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="这篇文章是根据 《JavaScript 模式》中关于继承的章节整理完成。整理之后脉络比较清晰，便于比较各种继承方式。
+
+JavaScript 的继承的实现方式大体分为传统继承（或者称为类式继承、经典继承）和现代方式。区别为传统方式视图通过 类 的方式来实现，而现代模式则撇开类的概念。
+如果你有了 inherit 方法，可以如下使用：
+1234567891011121314// the paren">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 继承">
+<meta name="twitter:description" content="这篇文章是根据 《JavaScript 模式》中关于继承的章节整理完成。整理之后脉络比较清晰，便于比较各种继承方式。
+
+JavaScript 的继承的实现方式大体分为传统继承（或者称为类式继承、经典继承）和现代方式。区别为传统方式视图通过 类 的方式来实现，而现代模式则撇开类的概念。
+如果你有了 inherit 方法，可以如下使用：
+1234567891011121314// the paren">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript 继承</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript 继承</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-08-27T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-08-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类式继承模式-1-——-默认模式"><span class="post-toc-text">类式继承模式#1  —— 默认模式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类式继承模式-2-——-借用构造函数"><span class="post-toc-text">类式继承模式#2 —— 借用构造函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类式继承模式-3-——-借用并设置原型"><span class="post-toc-text">类式继承模式#3 —— 借用并设置原型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类式继承模式-4-——-共享原型"><span class="post-toc-text">类式继承模式#4 —— 共享原型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类式继承模式-5-——-临时构造函数"><span class="post-toc-text">类式继承模式#5 —— 临时构造函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类式继承语法糖-——-Klass"><span class="post-toc-text">类式继承语法糖 —— Klass</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#现代继承模式-1-——-原型继承"><span class="post-toc-text">现代继承模式#1 —— 原型继承</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#现代继承模式-2——-复制属性"><span class="post-toc-text">现代继承模式#2—— 复制属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#混入"><span class="post-toc-text">混入</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#现代继承模式-3——-借用方法"><span class="post-toc-text">现代继承模式#3—— 借用方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结论"><span class="post-toc-text">结论</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-oo-extend2"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript 继承</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-08-28 00:00:00" datetime="2014-08-27T16:00:00.000Z"  itemprop="datePublished">2014-08-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>这篇文章是根据 《JavaScript 模式》中关于继承的章节整理完成。整理之后脉络比较清晰，便于比较各种继承方式。</p>
+</blockquote>
+<p>JavaScript 的继承的实现方式大体分为传统继承（或者称为类式继承、经典继承）和现代方式。区别为传统方式视图通过 <em>类</em> 的方式来实现，而现代模式则撇开类的概念。</p>
+<p>如果你有了 <code>inherit</code> 方法，可以如下使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// the parent constructor</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name || <span class="string">'Adam'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// adding functionality to the prototype</span></div><div class="line">Parent.prototype.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// empty child constructor</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params">name</span>) </span>&#123;&#125;</div><div class="line"><span class="comment">// inheritance magic happens here</span></div><div class="line"></div><div class="line">inherit(Child, Parent);</div></pre></td></tr></table></figure>
+<p>接下来，我们要做的是尝试各种方式来实现 <code>inherit</code> 方法，以追求最佳实践。</p>
+<a id="more"></a>
+<h2 id="类式继承模式-1-——-默认模式"><a href="#类式继承模式-1-——-默认模式" class="headerlink" title="类式继承模式#1  —— 默认模式"></a>类式继承模式#1  —— 默认模式</h2><p>最常用的一种默认方法是使用 <code>Parent()</code> 构造函数创建一个对象，并且将这个对象赋值给 Child() 构造函数的原型。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">inherit</span>(<span class="params">C, P</span>) </span>&#123;</div><div class="line">    C.prototype = <span class="keyword">new</span> P();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>同时继承了两个对象的属性，即添加给 父类 this 的属性和原型属性。而对于构造函数的一般经验法则是：应该将可复用的成员添加到原型中，即只添加原型属性。</li>
+<li><p>不能给 Child 构造函数传递参数，进而将参数传递给 Parent 构造函数。如：</p>
+<pre><code>var s = new Child(&apos;Seth&apos;);
+s.say(); // &quot;Adam&quot;
+</code></pre><p> 这个不是你所期望的。如果一定要实现这样的功能，则需要在构造函数中调用 <code>inherit</code> 函数，这是非常低效的做法。</p>
+</li>
+</ol>
+<h2 id="类式继承模式-2-——-借用构造函数"><a href="#类式继承模式-2-——-借用构造函数" class="headerlink" title="类式继承模式#2 —— 借用构造函数"></a>类式继承模式#2 —— 借用构造函数</h2><p>实现方式为在子类构造函数中调用父类的构造函数，让父类的非原型的公共属性拷贝到子类中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params">a, c, b, d</span>) </span>&#123;</div><div class="line">    Parent.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用借用构造函数模式，子对象将获得继承成员的拷贝，不像经典模式一获得的仅仅是引用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 父类构造函数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Article</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.tags = [<span class="string">'js'</span>, <span class="string">'css'</span>];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> article = <span class="keyword">new</span> Article();</div><div class="line"></div><div class="line"><span class="comment">// 继承 article 对象</span></div><div class="line"><span class="comment">// via the classical pattern #1</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">BlogPost</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line">BlogPost.prototype = article;</div><div class="line"></div><div class="line"><span class="keyword">var</span> blog = <span class="keyword">new</span> BlogPost();</div><div class="line"></div><div class="line"><span class="comment">// 通过借用构造函数继承 article</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">StaticPage</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    Article.call(<span class="keyword">this</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> page = <span class="keyword">new</span> StaticPage();</div><div class="line"></div><div class="line"><span class="comment">// 测试</span></div><div class="line">alert(article.hasOwnProperty(<span class="string">'tags'</span>)); <span class="comment">// true</span></div><div class="line">alert(blog.hasOwnProperty(<span class="string">'tags'</span>)); <span class="comment">// false</span></div><div class="line">alert(page.hasOwnProperty(<span class="string">'tags'</span>)); <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<p>使用借用构造函数模式，可以实现多继承，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Cat</span>(<span class="params"></span>) </span>&#123;  </div><div class="line">    <span class="keyword">this</span>.legs = <span class="number">4</span>;  </div><div class="line">    <span class="keyword">this</span>.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </div><div class="line">        <span class="keyword">return</span> <span class="string">"meaowww"</span>;  </div><div class="line">    &#125;  </div><div class="line">&#125;  </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Bird</span>(<span class="params"></span>) </span>&#123;  </div><div class="line">    <span class="keyword">this</span>.wings = <span class="number">2</span>;  </div><div class="line">    <span class="keyword">this</span>.fly = <span class="literal">true</span>;  </div><div class="line">&#125;  </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">CatWings</span>(<span class="params"></span>) </span>&#123;  </div><div class="line">    Cat.apply(<span class="keyword">this</span>);  </div><div class="line">    Bird.apply(<span class="keyword">this</span>);  </div><div class="line">&#125;  </div><div class="line"><span class="keyword">var</span> jane = <span class="keyword">new</span> CatWings();  </div><div class="line"><span class="built_in">console</span>.dir(jane);</div></pre></td></tr></table></figure>
+<p><strong>优点：</strong></p>
+<ol>
+<li>解决了从子(child)构造函数向父(parent)构造函数传递参数的问题。</li>
+<li>子类得到的是父类成员的真实副本，不会意外覆盖父类的属性值。</li>
+<li>可以实现多继承。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>原型上的属性都不会被继承。</li>
+</ol>
+<h2 id="类式继承模式-3-——-借用并设置原型"><a href="#类式继承模式-3-——-借用并设置原型" class="headerlink" title="类式继承模式#3 —— 借用并设置原型"></a>类式继承模式#3 —— 借用并设置原型</h2><p>为了解决借用构造函数的继承模式不能继承原型属性的缺点，可以借用构造函数的基础上设置原型。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// the parent constructor</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name || <span class="string">'Adam'</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// adding functionality to the prototype</span></div><div class="line">Parent.prototype.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// child constructor</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    Parent.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">&#125;</div><div class="line">Child.prototype = <span class="keyword">new</span> Parent();</div></pre></td></tr></table></figure>
+<p>使用方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> kid = <span class="keyword">new</span> Child(<span class="string">"Patrick"</span>);</div><div class="line">kid.name; <span class="comment">// "Patrick"</span></div><div class="line">kid.say(); <span class="comment">// "Patrick"</span></div><div class="line"><span class="keyword">delete</span> kid.name;</div><div class="line">kid.say(); <span class="comment">// "Adam"</span></div></pre></td></tr></table></figure>
+<p><strong>优点：</strong></p>
+<ol>
+<li>继承了父类中的一切东西，同时能够安全的修改自身的属性，不会意外修改父类的属性。</li>
+<li>借用构造函数继承方式的其他优点。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>父类构造函数被调用两次，造成一定的性能开销。</li>
+<li>自身属性被继承两次，即普通成员中一份拷贝，原型中一次拷贝。</li>
+</ol>
+<h2 id="类式继承模式-4-——-共享原型"><a href="#类式继承模式-4-——-共享原型" class="headerlink" title="类式继承模式#4 —— 共享原型"></a>类式继承模式#4 —— 共享原型</h2><p>经验法则：复用的成员应该添加到原型(prototype)而不是 this 中。以上的集成模式都有这个缺点，为了解决这个缺点，可以子类对象的原型这是为父类对象的原型，即子类共享父类的原型。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">inherit</span>(<span class="params">C, P</span>) </span>&#123;</div><div class="line">    C.prototype = P.prototype;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>优点：</strong></p>
+<ol>
+<li>因为子类和父类共享同一个原型，子类原型链的查找简短且迅速。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>由于原型共享，如果某个子类修改了原型，则所有祖先类和其他子类对象的原型都会被改变。</li>
+</ol>
+<h2 id="类式继承模式-5-——-临时构造函数"><a href="#类式继承模式-5-——-临时构造函数" class="headerlink" title="类式继承模式#5 —— 临时构造函数"></a>类式继承模式#5 —— 临时构造函数</h2><p>这种方法也被称为代理函数或代理构造函数的继承方式，这是因为临时构造函数实际上是一个用于获得父类的原型的代理。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">inherit</span>(<span class="params">C, P</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">    F.prototype = P.prototype;</div><div class="line">    C.prototype = <span class="keyword">new</span> F();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在代码中，有一个空的函数F()，该函数充当了之类和父类之间的代理。F()的prototype属性指向父类的 prototype，子类的原型是这个空白函数的实现。</p>
+<p><strong>优点：</strong></p>
+<ol>
+<li>解决了共享原型修改子类原型造成所有对象的原型都被改变的缺点。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<p>子类对象的构造函数的指针仍然指向父类。</p>
+<p>可以通过下面的方法重置构造函数的指针：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">inherit</span>(<span class="params">C, P</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">    F.prototype = P.prototype;</div><div class="line">    C.prototype = <span class="keyword">new</span> F();</div><div class="line">    C.uber = P.prototype;</div><div class="line">    C.prototype.constructor = C;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方法在 YUI 开源库中也是使用类似的方法来实现继承。</p>
+<p>在此基础上，可以添加一个引用指向原始父类的引用，这个引用的名称为 uber：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">inherit</span>(<span class="params">C, P</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">    F.prototype = P.prototype;</div><div class="line">    C.prototype = <span class="keyword">new</span> F();</div><div class="line">    C.uber = P.prototype;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方式还有一个缺点：每次在需要继承时多需要创建一个临时构造函数，我们可以使用一个即时函数并且在闭包中存储代理函数的方式来解决这个问题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> inherit = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">C, P</span>) </span>&#123;</div><div class="line">        F.prototype = P.prototype;</div><div class="line">        C.prototype = <span class="keyword">new</span> F();</div><div class="line">        C.uber = P.prototype;</div><div class="line">        C.prototype.constructor = C;</div><div class="line">&#125;</div><div class="line">&#125;());</div></pre></td></tr></table></figure>
+<p>至此，这便是类式继承的<strong>圣杯解决方案</strong>。</p>
+<p>不用闭包而使用 <code>Object.create</code> 方案如下：</p>
+<pre><code>var inherits = function (C, P) {
+    C.prototype = Object.create(P.prototype);
+    C.prototype.constructor = C;
+};
+</code></pre><p>See <a href="http://blogs.msdn.com/b/eternalcoding/archive/2014/08/20/simple-inheritance-with-javascript.aspx" target="_blank" rel="external">Simple inheritance with JavaScript</a></p>
+<h2 id="类式继承语法糖-——-Klass"><a href="#类式继承语法糖-——-Klass" class="headerlink" title="类式继承语法糖 —— Klass"></a>类式继承语法糖 —— Klass</h2><p>许多JavaScript类库模仿类，引进了一些语法糖。这些类库的实现通常有以下共同特点：</p>
+<ol>
+<li>类的构造方法有一个命名规范，比如 <code>initialize</code>，<code>_init</code>，<code>constructor</code>， <code>__construct</code>等，在创建对象时这些方法将会被自动调用。</li>
+<li>从其它类继承。</li>
+<li>在子类中可以访问到父类。</li>
+</ol>
+<p>假设我们已经实现了这样的类库（<code>klass</code>），那么我们可以这样使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 父类</span></div><div class="line"><span class="keyword">var</span> Man = klass(<span class="literal">null</span>, &#123;</div><div class="line">    <span class="attr">__construct</span>: <span class="function"><span class="keyword">function</span> (<span class="params">what</span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">"Man's constructor"</span>);</div><div class="line">       <span class="keyword">this</span>.name = what;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">getName</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 子类</span></div><div class="line"><span class="keyword">var</span> SuperMan = klass(Man, &#123;</div><div class="line">        <span class="attr">__construct</span>: <span class="function"><span class="keyword">function</span> (<span class="params">what</span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">"SuperMan's constructor"</span>);</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">getName</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="comment">// 通过 uber 调用父类方法。</span></div><div class="line">            <span class="keyword">var</span> name = SuperMan.uber.getName.call(<span class="keyword">this</span>);</div><div class="line">            <span class="keyword">return</span> <span class="string">"I am "</span> + name;</div><div class="line">        &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>测试：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 测试父类</span></div><div class="line"><span class="keyword">var</span> first = <span class="keyword">new</span> Man(<span class="string">'Adam'</span>); <span class="comment">// logs "Man's constructor"</span></div><div class="line">first.getName(); <span class="comment">// "Adam"</span></div><div class="line"></div><div class="line"><span class="comment">// 测试子类</span></div><div class="line"><span class="keyword">var</span> clark = <span class="keyword">new</span> SuperMan(<span class="string">'Clark Kent'</span>);</div><div class="line">clark.getName(); <span class="comment">// "I am Clark Kent"</span></div><div class="line"></div><div class="line"><span class="comment">// 测试 instanceof</span></div><div class="line">clark <span class="keyword">instanceof</span> Man; <span class="comment">// true</span></div><div class="line">clark <span class="keyword">instanceof</span> SuperMan; <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<p>kclass 的实现如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> klass = <span class="function"><span class="keyword">function</span>(<span class="params">Parent, props</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> Child, F, i;</div><div class="line">    </div><div class="line">    <span class="comment">// 1. 新构造函数</span></div><div class="line">    Child = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (Child.uber &amp;&amp; Child.uber.hasOwnProperty(<span class="string">"__construct"</span>)) &#123;</div><div class="line">            Child.uber.__construct.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (Child.prototype.hasOwnProperty(<span class="string">"__construct"</span>)) &#123;</div><div class="line">            Child.prototype.__construct.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">   </div><div class="line">    <span class="comment">// 2. 继承</span></div><div class="line">    Parent = Parent || <span class="built_in">Object</span>;</div><div class="line">    F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">    F.prototype = Parent.prototype;</div><div class="line">    Child.prototype = <span class="keyword">new</span> F();</div><div class="line">    Child.uber = Parent.prototype;</div><div class="line">    Child.prototype.constructor = Child;</div><div class="line">   </div><div class="line">    <span class="comment">// 3. 添加实现方法</span></div><div class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> props) &#123;</div><div class="line">        <span class="keyword">if</span> (props.hasOwnProperty(i)) &#123;</div><div class="line">            Child.prototype[i] = props[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// return the "class"</span></div><div class="line">    <span class="keyword">return</span> Child;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>klass 的实现有三个令人关注的特点：</p>
+<ol>
+<li>创建了 Child 构造函数，并最终被返回。在该函数中，先调用父类的 <code>__construct</code> 方法，在调用父类的 <code>__construct</code> 方法。</li>
+<li>第二部分是类式继承的圣杯版本，只是多了一个新的语句，<code>Parent = Parent || Object;</code>。</li>
+<li>遍历实现方法并添加到 Child 的原型链中。</li>
+</ol>
+<h2 id="现代继承模式-1-——-原型继承"><a href="#现代继承模式-1-——-原型继承" class="headerlink" title="现代继承模式#1 —— 原型继承"></a>现代继承模式#1 —— 原型继承</h2><p>实现思路：你有一个想复用的对象，并且你想创建的第二个对象需要从第一个对象获取其功能。</p>
+<p>使用场景如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 要继承的对象</span></div><div class="line"><span class="keyword">var</span> parent = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">"Papa"</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 新对象</span></div><div class="line"><span class="keyword">var</span> child = object(parent);</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alert(child.name); <span class="comment">// "Papa"</span></div></pre></td></tr></table></figure>
+<p><code>object</code> 的定义如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">object</span>(<span class="params">o</span>) </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line">    F.prototype = o;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果 Parent 不是通过字面量的方式创建，而是通过构造函数创建的，那么子对象只继承父构造函数的原型对象。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">// 父构造函数</div><div class="line">function Person() &#123;</div><div class="line">    // an &quot;own&quot; property</div><div class="line">    this.name = &quot;Adam&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 添加到原型链的属性</div><div class="line">Person.prototype.getName = function() &#123;</div><div class="line">    return this.name;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">// 继承</div><div class="line">var kid = object(Person.prototype);</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 测试</span></div><div class="line"><span class="keyword">typeof</span> kid.getName; <span class="comment">// "function", because it was in the prototype</span></div><div class="line"><span class="keyword">typeof</span> kid.name; <span class="comment">// "undefined", because only the prototype was inherited</span></div></pre></td></tr></table></figure>
+<p>在 ECMAScript 5 中，可以使用 <code>Object.create</code> 方法代替 <code>object()</code> 的实现。如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 无额外扩展方法</span></div><div class="line"><span class="keyword">var</span> child = <span class="built_in">Object</span>.create(parent);</div><div class="line"></div><div class="line"><span class="comment">// 有扩展方法</span></div><div class="line"><span class="keyword">var</span> child = <span class="built_in">Object</span>.create(parent, &#123;</div><div class="line">    <span class="attr">age</span>: &#123;</div><div class="line">        <span class="attr">value</span>: <span class="number">2</span></div><div class="line">    &#125; </div><div class="line">&#125;);</div><div class="line">child.hasOwnProperty(<span class="string">"age"</span>); <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<p>在 YUI 3 中实现了了原型链继承的方法 <code>Y.Object()</code>。</p>
+<h2 id="现代继承模式-2——-复制属性"><a href="#现代继承模式-2——-复制属性" class="headerlink" title="现代继承模式#2—— 复制属性"></a>现代继承模式#2—— 复制属性</h2><p>通过复制属性继承不涉及任何原型，只是将一个对象的自身属性拷贝到另外一个对象。拷贝有浅拷贝和深拷贝两种实现。</p>
+<p>以下是浅拷贝的实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">extend</span>(<span class="params">parent, child</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> i;</div><div class="line">    child = child || &#123;&#125;;</div><div class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> parent) &#123;</div><div class="line">        <span class="keyword">if</span> (parent.hasOwnProperty(i)) &#123;</div><div class="line">            child[i] = parent[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> child;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这个实现中，child是可选的；如果你不传递一个已经存在的对象去扩展，那么一个新对象被创建并被返回。</p>
+<p>测试：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> dad = &#123;<span class="attr">name</span>: <span class="string">"Adam"</span>&#125;;</div><div class="line"><span class="keyword">var</span> kid = extend(dad);</div><div class="line">kid.name; <span class="comment">// "Adam"</span></div></pre></td></tr></table></figure>
+<p>使用浅拷贝时，如果改变了子类对象中类型为复杂类型（如对象<br>数组、方法）时，这会改变父对象中的相应成员。这种改变适合于方法，但不适合与属性。</p>
+<p>为了克服这个缺点，我们使用以下方法实现深度拷贝：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">extendDeep</span>(<span class="params">parent, child</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> i, toStr = <span class="built_in">Object</span>.prototype.toString,</div><div class="line">    astr = <span class="string">"[object Array]"</span>;</div><div class="line">    child = child || &#123;&#125;;</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> parent) &#123;</div><div class="line">        <span class="keyword">if</span> (parent.hasOwnProperty(i)) &#123;</div><div class="line">            <span class="comment">// 复杂对象类型</span></div><div class="line">            <span class="keyword">if</span> (<span class="keyword">typeof</span> parent[i] === <span class="string">"object"</span>) &#123;</div><div class="line">                <span class="comment">// 初始化复杂类型的对象</span></div><div class="line">                child[i] = (toStr.call(parent[i]) === astr) ? [] : &#123;&#125;;</div><div class="line">                extendDeep(parent[i], child[i]);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                child[i] = parent[i];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> child;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>FireBug 中的 <code>extend()</code> 方法使用的是浅复制的方式，YUI 3 中提供的 <code>Y.clone()</code> 可以创建深度复制的副本。</p>
+<h3 id="混入"><a href="#混入" class="headerlink" title="混入"></a>混入</h3><p>混入是基于属性复制的进一步扩展，思想是将多个对象组合成一个新对象。实现方法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">mix</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> arg, prop, child = &#123;&#125;;</div><div class="line">    <span class="keyword">for</span> (arg = <span class="number">0</span>; arg &lt; <span class="built_in">arguments</span>.length; arg += <span class="number">1</span>) &#123;</div><div class="line">        <span class="keyword">for</span> (prop <span class="keyword">in</span> <span class="built_in">arguments</span>[arg]) &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="built_in">arguments</span>[arg].hasOwnProperty(prop)) &#123;</div><div class="line">                child[prop] = <span class="built_in">arguments</span>[arg][prop];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> child;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意，该实现使用的是浅拷贝的方式。</p>
+<p>使用示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> cake = mix(&#123;</div><div class="line">    <span class="attr">eggs</span>: <span class="number">2</span>,</div><div class="line">    <span class="attr">large</span>: <span class="literal">true</span></div><div class="line">&#125;,&#123;</div><div class="line">    <span class="attr">butter</span>: <span class="number">1</span>,</div><div class="line">    <span class="attr">salted</span>: <span class="literal">true</span></div><div class="line">&#125;,&#123;</div><div class="line">    <span class="attr">flour</span>: <span class="string">"3 cups"</span></div><div class="line">&#125;,&#123;</div><div class="line">    <span class="attr">sugar</span>: <span class="string">"sure!"</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="现代继承模式-3——-借用方法"><a href="#现代继承模式-3——-借用方法" class="headerlink" title="现代继承模式#3—— 借用方法"></a>现代继承模式#3—— 借用方法</h2><p>有时候你可能只需要现有对象的一两个方法，而不关心其他方法，这是我们便可以使用借用方法模式来实现。</p>
+<p>借用方法模式是借助 <code>call()</code> 和 <code>apply()</code> 方法来改变函数的作用域的原理来实现的。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// call() example</div><div class="line">notmyobj.doStuff.call(myobj, param1, p2, p3);</div><div class="line"></div><div class="line">// apply() example</div><div class="line">notmyobj.doStuff.apply(myobj, [param1, p2, p3]);</div></pre></td></tr></table></figure>
+<p>以下例子为从数组中借用一个 slice 方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> args = [].slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>, <span class="number">3</span>);</div><div class="line">    <span class="keyword">return</span> args;</div><div class="line">&#125;</div><div class="line"><span class="comment">// example</span></div><div class="line">f(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>); <span class="comment">// returns [2,3]</span></div></pre></td></tr></table></figure>
+<p>这种方式输入起来有点长，但是你节省了创建空数组的工作。</p>
+<p>借用方法中只是临时改变函数的作用域，如果你需要在某些场合（如回调）永久改变函数的作用域，可以使用 <code>bind</code> 方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">// assigning to a variable</div><div class="line">// `this` will point to the global object</div><div class="line">var say = one.say;</div><div class="line">say(&apos;hoho&apos;); // &quot;hoho, undefined&quot;</div><div class="line"></div><div class="line">// passing as a callback</div><div class="line">var yetanother = &#123;</div><div class="line">    name: &quot;Yet another object&quot;,</div><div class="line">    method: function(callback) &#123;</div><div class="line">        return callback(&apos;Hola&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">yetanother.method(one.say); // &quot;Holla, undefined&quot;</div></pre></td></tr></table></figure>
+<p>掉用 <code>yetanother.method(one.say);</code> 输出 <code>&quot;Holla, undefined&quot;</code>。</p>
+<p>我们可以使用像下面的简单函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bind</span>(<span class="params">o, m</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> m.apply(o, [].slice.call(<span class="built_in">arguments</span>));</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们为此付出了一个额外的闭包。</p>
+<p>ECMAScript 5 已经将 <code>bind()</code> 方法添加到了  Function.prototype，使得 <code>bind()</code> 方法和 <code>call()</code>、<code>apply()</code> 方法一样简单易用。如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> twosay2 = one.say.bind(two);</div><div class="line">twosay2(<span class="string">'Bonjour'</span>); <span class="comment">// "Bonjour, another object"</span></div></pre></td></tr></table></figure>
+<p>在 ES5 之前我们使用以下方法实现 Function.prototype.bind 方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">Function</span>.prototype.bind === <span class="string">"undefined"</span>) &#123;</div><div class="line">    <span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">thisArg</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> fn = <span class="keyword">this</span>,</div><div class="line">        slice = <span class="built_in">Array</span>.prototype.slice,</div><div class="line">        args = slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> fn.apply(thisArg, args.concat(slice.call(<span class="built_in">arguments</span>)));</div><div class="line">        &#125;;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ol>
+<li>尽量 <strong>避免</strong>使用类式继承，因为 JavaScript 语句中严格来说不存在类的概念。</li>
+<li>推荐使用现代继承方式，如借用方法、绑定、复制属性、混入等。因为代码重用才是最终目的，而继承只是实现这一目标的方法之一。</li>
+<li>关于继承已经被各种 JavaScript 类库以这样或那样的方式实现了，在开发过程中，我们可能不会直接面对继承的实现。</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-08-28-javascript-oo-extend2.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-08-28-javascript-oo-extend2.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oo/">oo</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-08-28-javascript-oo-extend2.html&title=《JavaScript 继承》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-08-28-javascript-oo-extend2.html&title=《JavaScript 继承》 — Balance&source=
+这篇文章是根据 《JavaScript 模式》中关于继承的章节整理完成。整理之后脉络比较清晰，便于比较各种继承方式。
+
+JavaScript 的继承的实..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-08-28-javascript-oo-extend2.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 继承》 — Balance&url=http://blog.inching.org/JavaScript/2014-08-28-javascript-oo-extend2.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-08-28-javascript-oo-extend2.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-08-28-javascript-oo-tutorial.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JavaScript OO Tutorial</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/CSS/2014-08-25-css-polymer.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Polymer Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-08-28-javascript-oo-extend2.html&title=《JavaScript 继承》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-08-28-javascript-oo-extend2.html&title=《JavaScript 继承》 — Balance&source=
+这篇文章是根据 《JavaScript 模式》中关于继承的章节整理完成。整理之后脉络比较清晰，便于比较各种继承方式。
+
+JavaScript 的继承的实..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-08-28-javascript-oo-extend2.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 继承》 — Balance&url=http://blog.inching.org/JavaScript/2014-08-28-javascript-oo-extend2.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-08-28-javascript-oo-extend2.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACwklEQVR42u3awa7TQAwF0P7/T4PECgkl3GvPQBcnq6o0yZx50tjY/nzi68ev68/Pp755//z79blx4eHh4Y2W/nQ9Le793vfFPf0m39ZkzXh4eHi3ebNHt4f++xvbjXtfMx4eHt438JIAkAeS98DQbhkeHh7ed/Lapb8vdBNg8PDw8L6BNzv682/ywkS+EYdrLXh4eHgxb9MA+1+f/1F/Dw8PD6/sqs8KqbO3b9pdj+vEw8PDu8BLmvf7Yax2pCAZJig2Gg8PD+8obzMsVZdTY0B71+M68fDw8C7wZslxPlKQBJ52y/JRMDw8PLx7vLYKmhcI8gGC/JtNgMHDw8M7y5sVameFgzyQtCNZUWECDw8Pb8Fb/Se/THPzo3xWyChqLXh4eHgL3qyR36a2+wDTPmc1p4CHh4f3+pu2HDBrgLUp8qZc+zhThoeHh3eIlyfKx1LbMgxsWmt4eHh4N3htQ6sNIfvnbwofeHh4ePd4syN437hqj/s84f60VWQ8PDy8ktcOPCW5a9vQyu8dliHw8PDwDvHyJtaNllhbGs5baMXoFR4eHt6It7lhEzz2yXQbPPDw8PD2vE0rq31ZuxH7VB4PDw/vHi+/rS3yzorCm/LEX8at8PDw8Na8tg2W5OObUYBNW66oteDh4eEd5bXBYD8c0IaEerV4eHh4F3htMt2GkDYp3zTAih/h4eHhLXj5oT8bLGhT4c1gQVTMxcPDwzvES8oHRYQpm2Ttk4sggYeHh3eUd++Azpf+vrlJU+3xD4OHh4d3gTdb3P5xs0GBdqQADw8P7x4vCQZJSTfZjs1fIAkMw6ErPDw8vBEvP77zF28GC2ah63EyAg8PD+8LeO1gQRsYknuj5B4PDw/vv/KS0sAs1W6bZ1dSajw8PLwLxYi8SJH/6+wtq1wbDw8Pb83btKz2C81LFXkSj4eHh3eN9xPEw5xxvVqHXwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

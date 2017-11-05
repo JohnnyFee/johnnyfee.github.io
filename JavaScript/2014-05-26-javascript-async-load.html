@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Javascript 异步加载 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,loader">
+    <meta name="description" content="原文： http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html
+同步加载与异步加载的形式同步加载我们平时最常使用的就是这种同步加载形式：
+&amp;lt;script src=&amp;quot;http://yourdomain.com/script.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt; 
+同步模式，又称阻塞模式，会阻止浏览器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript 异步加载">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-05-26-javascript-async-load.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文： http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html
+同步加载与异步加载的形式同步加载我们平时最常使用的就是这种同步加载形式：
+&amp;lt;script src=&amp;quot;http://yourdomain.com/script.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt; 
+同步模式，又称阻塞模式，会阻止浏览器">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript 异步加载">
+<meta name="twitter:description" content="原文： http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html
+同步加载与异步加载的形式同步加载我们平时最常使用的就是这种同步加载形式：
+&amp;lt;script src=&amp;quot;http://yourdomain.com/script.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt; 
+同步模式，又称阻塞模式，会阻止浏览器">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Javascript 异步加载</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Javascript 异步加载</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-25T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#同步加载与异步加载的形式"><span class="post-toc-text">同步加载与异步加载的形式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#同步加载"><span class="post-toc-text">同步加载</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常见异步加载（Script-DOM-Element）"><span class="post-toc-text">常见异步加载（Script DOM Element）</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-async-load"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Javascript 异步加载</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-26 00:00:00" datetime="2014-05-25T16:00:00.000Z"  itemprop="datePublished">2014-05-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>原文： <a href="http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html" target="_blank" rel="external">http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html</a></p>
+<h2 id="同步加载与异步加载的形式"><a href="#同步加载与异步加载的形式" class="headerlink" title="同步加载与异步加载的形式"></a>同步加载与异步加载的形式</h2><h3 id="同步加载"><a href="#同步加载" class="headerlink" title="同步加载"></a>同步加载</h3><p>我们平时最常使用的就是这种同步加载形式：</p>
+<pre><code>&lt;script src=&quot;http://yourdomain.com/script.js&quot;&gt;&lt;/script&gt; 
+</code></pre><p>同步模式，又称阻塞模式，会阻止浏览器的后续处理，停止了后续的解析，因此停止了后续的文件加载（如图像）、渲染、代码执行。</p>
+<p>js 之所以要同步执行，是因为 js 中可能有输出 document 内容、修改dom、重定向等行为，所以默认同步执行才是安全的。</p>
+<p>以前的一般建议是把<code>&lt;script&gt;</code>放在页面末尾<code>&lt;/body&gt;</code>之前，这样尽可能减少这种阻塞行为，而先让页面展示出来。</p>
+<p>简单说：加载的网络 timeline 是瀑布模型，而异步加载的 timeline 是并发模型。</p>
+<a id="more"></a>
+<h3 id="常见异步加载（Script-DOM-Element）"><a href="#常见异步加载（Script-DOM-Element）" class="headerlink" title="常见异步加载（Script DOM Element）"></a>常见异步加载（Script DOM Element）</h3><pre><code>(function() {  
+     var s = document.createElement(&apos;script&apos;);  
+     s.type = &apos;text/javascript&apos;;  
+     s.async = true;  
+     s.src = &apos;http://yourdomain.com/script.js&apos;;  
+     var x = document.getElementsByTagName(&apos;script&apos;)[0];  
+     x.parentNode.insertBefore(s, x);  
+ })();
+</code></pre><p>异步加载又叫非阻塞，浏览器在下载执行 js 同时，还会继续进行后续页面的处理。</p>
+<p>这种方法是在页面中<code>&lt;script&gt;</code>标签内，用 js 创建一个 script 元素并插入到 document 中。这样就做到了非阻塞的下载 js 代码。</p>
+<p>async属性是HTML5中新增的异步支持，见后文解释，加上好（不加也不影响）。</p>
+<p>此方法被称为 Script DOM Element 法，不要求 js 同源。</p>
+<p>例如 Google Analytics 和 Google+ Badge 都使用了这种异步加载代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;  </div><div class="line">     <span class="keyword">var</span> ga = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>); ga.type = <span class="string">'text/javascript'</span>; ga.async = <span class="literal">true</span>;  </div><div class="line">     ga.src = (<span class="string">'https:'</span> == <span class="built_in">document</span>.location.protocol ? <span class="string">'https://ssl'</span> : <span class="string">'http://www'</span>) + <span class="string">'.google-analytics.com/ga.js'</span>;  </div><div class="line">     <span class="keyword">var</span> s = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'script'</span>)[<span class="number">0</span>]; s.parentNode.insertBefore(ga, s);  </div><div class="line"> &#125;)();</div><div class="line"></div><div class="line"> ( <span class="function"><span class="keyword">function</span> (<span class="params"> </span>)</span></div><div class="line"></div><div class="line">        &#123;<span class="keyword">var</span> po = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>);  </div><div class="line">    po.type = <span class="string">"text/javascript"</span>; po.async = <span class="literal">true</span>;po.src = <span class="string">"https://apis.google.com/js/plusone.js"</span>;  </div><div class="line">    <span class="keyword">var</span> s = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"script"</span>)[<span class="number">0</span>];  </div><div class="line">    s.parentNode.insertBefore(po, s);  </div><div class="line"> &#125;)();</div></pre></td></tr></table></figure>
+<p>可以进一步封装如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Add scripts to DOM by creating a script tag dynamically.</span></div><div class="line"><span class="comment">// @param &#123;String=&#125; url Url of a js file</span></div><div class="line"><span class="comment">// @param &#123;String=&#125; src Script source code to add the source directly.</span></div><div class="line"><span class="comment">// NB: At least one of the parameters must be specified.</span></div><div class="line"><span class="keyword">var</span> hookScripts = <span class="function"><span class="keyword">function</span>(<span class="params">url, src</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> s = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>);</div><div class="line">    s.type = <span class="string">"text/javascript"</span>;</div><div class="line">    s.src = url || <span class="literal">null</span>;</div><div class="line">    s.innerHTML = src || <span class="literal">null</span>;</div><div class="line">    <span class="built_in">document</span>.getElementsByTagName(<span class="string">"head"</span>)[<span class="number">0</span>].appendChild(s);</div><div class="line">&#125;;</div><div class="line"><span class="comment">// usage eg:</span></div><div class="line">hookScripts(<span class="string">'url/path/to/myscript.js'</span>);  <span class="comment">//url</span></div><div class="line">hookScripts(<span class="literal">null</span>, <span class="string">'alert("hello");'</span>);  <span class="comment">//giving the source code directly</span></div></pre></td></tr></table></figure>
+<p>We use the native DOM API instead of jQuery for this particular case because of the way <a href="http://api.jquery.com/append/#comment-67912032" target="_blank" rel="external">jQuery treats <script> tags</a>. jQuery inserts script to DOM, then evaluates the script separately and then it removes the tag from the DOM. So you won’t see the script tag, but the script will get executed.</p>
+<p>See <a href="http://www.qlambda.com/2012/01/add-script-tags-to-dom-dynamically.html">♠ qλ | kadaj’s musing ♠</a></p>
+<p>但是，<strong>这种加载方式在加载执行完之前会阻止 onload 事件的触发</strong>，而现在很多页面的代码都在 onload 时还要执行额外的渲染工作等，所以还是会阻塞部分页面的初始化处理。</p>
+<h3 id="onload-时的异步加载"><a href="#onload-时的异步加载" class="headerlink" title="onload 时的异步加载"></a>onload 时的异步加载</h3><pre><code>(function() {  
+    function async_load(){  
+     var s = document.createElement(&apos;script&apos;);  
+     s.type = &apos;text/javascript&apos;;  
+     s.async = true;  
+     s.src = &apos;http://yourdomain.com/script.js&apos;;  
+     var x = document.getElementsByTagName(&apos;script&apos;)[0];  
+     x.parentNode.insertBefore(s, x);  
+    }  
+    if (window.attachEvent)  
+     window.attachEvent(&apos;onload&apos;, async_load);  
+    else  
+     window.addEventListener(&apos;load&apos;, async_load, false);  
+})();  
+</code></pre><p>这和前面的方式差不多，但关键是它不是立即开始异步加载 js ，而是在 onload 时才开始异步加载。这样就解决了阻塞 onload 事件触发的问题。</p>
+<p>补充：<strong>DOMContentLoaded 与 OnLoad 事件</strong></p>
+<p>DOMContentLoaded : 页面(document)已经解析完成，页面中的dom元素已经可用。但是页面中引用的图片、subframe可能还没有加载完。</p>
+<p>OnLoad：页面的所有资源都加载完毕（包括图片）。浏览器的载入进度在这时才停止。</p>
+<p>这两个时间点将页面加载的timeline分成了三个阶段。</p>
+<h3 id="异步加载的其它方法"><a href="#异步加载的其它方法" class="headerlink" title="异步加载的其它方法"></a>异步加载的其它方法</h3><p>由于Javascript的<strong>动态特性</strong>，还有很多异步加载方法：</p>
+<ul>
+<li>XHR Eval</li>
+<li>XHR Injection</li>
+<li>Script in Iframe</li>
+<li>Script Defer</li>
+<li>document.write Script Tag</li>
+<li>还有一种方法是用 setTimeout 延迟0秒 与 其它方法组合。</li>
+</ul>
+<p><strong>XHR Eval</strong>：通过 ajax 获取js的内容，然后 eval 执行。</p>
+<pre><code>var xhrObj = getXHRObject();   
+xhrObj.onreadystatechange =    
+function() {    
+ if ( xhrObj.readyState != 4 ) return;   
+ eval(xhrObj.responseText);   
+};   
+xhrObj.open(&apos;GET&apos;, &apos;A.js&apos;, true);   
+xhrObj.send(&apos;&apos;);
+</code></pre><p><strong>Script in Ifram</strong>e：创建并插入一个iframe元素，让其异步执行 js 。</p>
+<pre><code>var iframe = document.createElement(&apos;iframe&apos;);   
+document.body.appendChild(iframe);   
+var doc = iframe.contentWindow.document;   
+doc.open().write(&apos;&lt;body onload=&quot;insertJS()&quot;&gt;&apos;);   
+doc.close();
+</code></pre><p><strong>GMail Mobile</strong>：页内 js 的内容被注释，所以不会执行，然后在需要的时候，获取script元素中 text 内容，去掉注释后 eval 执行。</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;   
+/*   
+var ...    
+*/   
+&lt;/script&gt;
+</code></pre><p>详见参考资料中2010年的Velocity 大会 Steve Souders 和淘宝的那两个讲义。</p>
+<h2 id="async-和-defer-属性"><a href="#async-和-defer-属性" class="headerlink" title="async 和 defer 属性"></a>async 和 defer 属性</h2><h3 id="defer-属性"><a href="#defer-属性" class="headerlink" title="defer 属性"></a>defer 属性</h3><p>defer 属性告诉浏览器要等页面载入完成之后才能执行脚本。这样，在 <code>&lt;head&gt;</code> 中通过下面的代码引入 file.js</p>
+<pre><code>&lt;script src=&quot;file.js&quot; defer&gt;&lt;/script&gt;
+</code></pre><p>可以使 file.js 和文档的下载和解析同时进行，也可以保证 file.js 在文档下载和解析完成之后执行。</p>
+<h3 id="async-属性"><a href="#async-属性" class="headerlink" title="async 属性"></a>async 属性</h3><pre><code>&lt;script src=&quot;file.js&quot; async&gt;&lt;/script&gt;
+</code></pre><p>file.js 的下载和HTML 文档的下载和解析同时进行，一旦下载完成，立即执行，不管 HTML 文档有没有解析完成。</p>
+<h3 id="Difference"><a href="#Difference" class="headerlink" title="Difference"></a>Difference</h3><p>Both async and defer scripts begin to <strong>download immediately</strong> without pausing the parser and both support an optional onload handler to address the common need to perform initialization which depends on the script. The difference between async and defer centers around when the script is executed. Each async script executes at the first opportunity after it is finished downloading and before the window’s load event. This means it’s possible (and likely) that async scripts are not executed in the order in which they occur in the page. The defer scripts, on the other hand, are guaranteed to be executed in the order they occur in the page. That execution starts after parsing is completely finished, but before the document’s DOMContentLoaded event.</p>
+<p>See also <a href="https://www.webkit.org/blog/1395/running-scripts-in-webkit/">Surfin’ Safari - Blog Archive » Running scripts in WebKit</a></p>
+<p>使用这两个属性的脚本中不能调用document.write方法。</p>
+<p>See also：<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/scripting-1.html#attr-script-async">script async</a></p>
+<h2 id="延迟加载（lazy-loading）"><a href="#延迟加载（lazy-loading）" class="headerlink" title="延迟加载（lazy loading）"></a>延迟加载（lazy loading）</h2><p>前面解决了异步加载（async loading）问题，再谈谈什么是延迟加载。</p>
+<p>延迟加载：有些 js 代码并不是页面初始化的时候就立刻需要的，而稍后的某些情况才需要的。延迟加载就是一开始并不加载这些暂时不用的js，而是在需要的时候或稍后再通过js 的控制来异步加载。</p>
+<p>也就是将 js 切分成许多模块，页面初始化时只加载需要立即执行的 js ，然后其它 js 的加载延迟到第一次需要用到的时候再加载。</p>
+<p>特别是页面有大量不同的模块组成，很多可能暂时不用或根本就没用到。</p>
+<p>就像图片的延迟加载，在图片出现在可视区域内时（在滚动条下拉）才加载显示图片。</p>
+<h2 id="script-的两阶段加载-与-延迟执行（lazy-execution）"><a href="#script-的两阶段加载-与-延迟执行（lazy-execution）" class="headerlink" title="script 的两阶段加载 与 延迟执行（lazy execution）"></a>script 的两阶段加载 与 延迟执行（lazy execution）</h2><p>JS的加载其实是由两阶段组成：下载内容（download bytes）和执行（parse and execute）。</p>
+<p><strong>浏览器在下载完 js 的内容后就会立即对其解析和执行，不管是同步加载还是异步加载。</strong></p>
+<p>前面说的异步加载，解决的只是下载阶段的问题，但代码在下载后会立即执行。</p>
+<p>而浏览器在解析执行 JS 阶段是阻塞任何操作的，这时的浏览器处于无响应状态。</p>
+<p>我 们都知道通过网络下载 script 需要明显的时间，但容易忽略了第二阶段，解析和执行也是需要时间的。script的解析和执行所花的时间比我们想象的要多，尤其是script 很多很大的时候。有些是需要立刻执行，而有些则不需要（比如只是在展示某个界面或执行某个操作时才需要）。</p>
+<p>这些script 可以延迟执行，先异步下载缓存起来，但不立即执行，而是在第一次需要的时候执行一次。</p>
+<p>利用特殊的技巧可以做到 下载 与 执行的分离 (再次感谢 javascript 的动态特性)。比如将 JS 的内容作为 Image或 object 对象加载缓存起来，所以就不会立即执行了，然后在第一次需要的时候再执行。</p>
+<p>此部分的更多解释 请查看末尾参考资料中 ControlJS 的相关链接。 </p>
+<h3 id="小技巧："><a href="#小技巧：" class="headerlink" title="小技巧："></a>小技巧：</h3><ol>
+<li><p>模拟较长的下载时间</p>
+<p> 写个后端脚本，让其 sleep 一定时间。如在 jsp 中 Thread.sleep(5000); ，这样5秒后才能收到内容。</p>
+</li>
+<li><p>模拟较长的 js 代码执行时间（因为这步一般比较快不容易观察到）</p>
+<pre><code>var t_start = Number(new Date());
+while ( t_start + 5000 &gt; Number(new Date()) ) {}
+</code></pre><p> 这个代码将使 js 执行5秒才能完成！</p>
+</li>
+</ol>
+<h2 id="script-标签使用的历史"><a href="#script-标签使用的历史" class="headerlink" title="script 标签使用的历史"></a>script 标签使用的历史</h2><ol>
+<li><p>script 放在 HEAD 中**</p>
+<pre><code>&lt;head&gt;  
+&lt;script src=&quot;…&quot;&gt;&lt;/script&gt;  
+&lt;/head&gt;  
+</code></pre><ul>
+<li>阻止了后续的下载；</li>
+<li>在IE 6-7 中 script 是顺序下载的，而不是现在的 “并行下载、顺序执行” 的方式；</li>
+<li>在下载<strong>和</strong>解析执行阶段阻止渲染（rendering）；</li>
+</ul>
+</li>
+<li><p>script 放在页面底部（2007）</p>
+<pre><code>...   
+&lt;script src=&quot;…&quot;&gt;&lt;/script&gt;   
+&lt;/body&gt;  
+</code></pre></li>
+</ol>
+<pre><code>* 不阻止其它下载；
+* 在IE 6-7 中 script 是顺序下载的；
+* 在下载和解析执行阶段阻止渲染（rendering）
+</code></pre><ol>
+<li><p>异步加载script（2009）</p>
+<pre><code>var se = document.createElement(&apos;script&apos;);   
+se.src = &apos;http://anydomain.com/A.js&apos;;   
+document.getElementsByTagName(&apos;head&apos;)[0].appendChild(se);
+</code></pre><p> 这就是本文主要说的方式。</p>
+<ul>
+<li>不阻止其它下载；</li>
+<li>在所有浏览器中，script都是并行下载；</li>
+<li>只在解析执行阶段阻止渲染（rendering）；</li>
+</ul>
+</li>
+<li><p>异步下载 + 按需执行 (2010)</p>
+<pre><code>var se = new Image();   
+se.onload = registerScript();   
+se.src = &apos;http://anydomain.com/A.js&apos;;  
+</code></pre><p> 把下载 js 与 解析执行 js 分离出来</p>
+<ul>
+<li>不阻止其它下载；</li>
+<li>在所有浏览器中，script都是并行下载；</li>
+<li>不阻止渲染（rendering）直到真正需要时；</li>
+</ul>
+</li>
+</ol>
+<h2 id="异步加载的问题"><a href="#异步加载的问题" class="headerlink" title="异步加载的问题"></a>异步加载的问题</h2><p>在异步加载的时候，无法使用 document.write 输出文档内容。</p>
+<p>在同步模式下，document.write 是在<strong>当前 script 所在的位置</strong>输 出文档的。而在异步模式下，浏览器继续处理后续页面内容，根本无法确定 document.write 应该输出到什么位置，所以异步模式下 document.write 不可行。而到了页面已经 onload 之后，再执行 document.write 将导致当前页面的内容被清空，因为它会自动触发 document.open 方法。</p>
+<p>实际上document.write的名声并不好，最好少用。</p>
+<p>替代方法：</p>
+<ol>
+<li><p>虽然异步加载不能用 document.write，但还是可以onload之后执行操作dom（创建dom或修改dom）的，这样可以实现一些自己的动态输出。比如要在页面异步创建一个浮动元素，这和它在页面中的位置就没关系了，只要创建出该dom元素添加到 document 中即可。</p>
+</li>
+<li><p>如果需要在<strong>固定位置</strong>异步生成元素的内容，那么可以在该固定位置设置一个dom元素作为目标，这样就知道位置了，异步加载之后就可以对这个元素进行修改。</p>
+</li>
+</ol>
+<h2 id="JS-模块化管理"><a href="#JS-模块化管理" class="headerlink" title="JS 模块化管理"></a>JS 模块化管理</h2><p>异步加载，需要将所有 js 内容按模块化的方式来切分组织，其中就存在依赖关系，而异步加载不保证执行顺序。</p>
+<p>另外，namespace 如何管理 等相关问题。这部分已超出本文内容，可参考：</p>
+<p><a href="http://requirejs.org/">RequireJS</a> 、 <a href="http://www.commonjs.org/">CommonJS</a> 以及 王保平(淘宝)的 <a href="http://seajs.com/">SeaJS</a> 及其<a href="http://lifesinger.wordpress.com/">博客</a> 。</p>
+<h2 id="JS最佳实践"><a href="#JS最佳实践" class="headerlink" title="JS最佳实践"></a>JS最佳实践</h2><ol>
+<li>最小化 js 文件，利用压缩工具将其最小化，同时开启http gzip压缩。工具：</li>
+<li>尽量不要放在 <head> 中，尽量放在页面底部，最好是</body>之前的位置</li>
+<li>避免使用 document.write 方法</li>
+<li>异步加载 js ，使用非阻塞方式，就是此文内容。</li>
+<li>尽量不直接在页面元素上使用 Inline Javascript，如onClick 。有利于统一维护和缓存处理。</li>
+</ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="http://friendlybit.com/js/lazy-loading-asyncronous-javascript/">Lazy Loading Asyncronous Javascript</a></li>
+<li><a href="http://www.sitepoint.com/non-blocking-async-defer/">Load Non-blocking JavaScript with HTML5 Async and Defer</a></li>
+<li>2010年 Velocity China 上的两个讲义：<ul>
+<li>Steve Souders(Google)的 <a href="http://velocity.oreilly.com.cn/2010/ppts/velocity-efws-20101208SteveSoudersEvenFaster.pdf">Even Faster Web Sites</a> (pdf)</li>
+<li>李穆(淘宝)的 <a href="http://velocity.oreilly.com.cn/2010/ppts/limufromTaobao.pdf">第三方广告代码稳定性和性能优化实战</a> (pdf)</li>
+</ul>
+</li>
+<li><a href="http://www.ibm.com/developerworks/cn/web/1308_caiys_jsload/index.html?ca=drs-">JavaScript 的性能优化：加载和执行</a></li>
+<li><a href="http://coolshell.cn/articles/9749.html">Javascript 装载和执行</a></li>
+<li><a href="http://www.growingwiththeweb.com/2014/02/async-vs-defer-attributes.html">async vs defer attributes - Growing with the Web</a></li>
+</ul>
+<h2 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h2><ul>
+<li><a href="https://www.igvita.com/2014/05/20/script-injected-async-scripts-considered-harmful">Script-injected “async scripts” considered harmful - igvita.com</a></li>
+</ul>
+<h2 id="See"><a href="#See" class="headerlink" title="See"></a>See</h2><ul>
+<li><a href="http://www.jb51.net/article/36330.htm">Javascript代码在页面加载时的执行顺序介绍<em>基础知识</em>脚本之家</a></li>
+<li><a href="https://eager.io/blog/everything-I-know-about-the-script-tag/">Everything I Know About The Script Tag - Eager Blog</a></li>
+<li><a href="http://stackoverflow.com/questions/7718935/load-scripts-asynchronously">javascript - load scripts asynchronously - Stack Overflow</a></li>
+</ul>
+</script></a></p>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-05-26-javascript-async-load.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-05-26-javascript-async-load.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/loader/">loader</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-05-26-javascript-async-load.html&title=《Javascript 异步加载》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-05-26-javascript-async-load.html&title=《Javascript 异步加载》 — Balance&source=原文： http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html
+同步加载与异步加载的形..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-05-26-javascript-async-load.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Javascript 异步加载》 — Balance&url=http://blog.inching.org/JavaScript/2014-05-26-javascript-async-load.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-05-26-javascript-async-load.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-05-27-javascript-asynchronous.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JavaScript 异步编程</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/FullStack/2014-05-23-functional-practice.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">函数式编程初探</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-05-26-javascript-async-load.html&title=《Javascript 异步加载》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-05-26-javascript-async-load.html&title=《Javascript 异步加载》 — Balance&source=原文： http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html
+同步加载与异步加载的形..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-05-26-javascript-async-load.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Javascript 异步加载》 — Balance&url=http://blog.inching.org/JavaScript/2014-05-26-javascript-async-load.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-05-26-javascript-async-load.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3aQW4bMRAEQP3/0wqQa6B19wxpO0DtSbC0KxYFkHTPvF7x9f57/fs6ebe96/14vW5ceHh4eKOhPz8uGfQ7uJ7vyqe1mAI8PDy8a7z9o5NN5fkvN7YfPDw8vJ/lzZb+hNGC8fDw8P4XXjv0ZBt4puLh4eH9Zl6y0OdDn8Uc+cH9StaCh4eHd6GK9Htef1N9Dw8PD6+squ/j2vzbN+Wuj+PEw8PDu8BLivdtA1YbOiTH9LZUFmUkeHh4eCNe/k9+sljn0XByV/5dH38APDw8vAu8/Ob24JtvPMkTZo1ZeHh4ePd4eYE/efSsgaAF10UvPDw8vAu8TcGpXcqTiWi3gYiKh4eHt+a1MWuyuO9bo44FGXh4eHi3MtJisd4ctTdtBO1zotYrPDw8vAWvjSQ28e4szthEvXh4eHhnec+H6TyGSJDFHI9ii7rpCg8PD+8Qb7YQJ3e94+tU8IGHh4f3Pbx8CT4V/iZPaA/c9b6Hh4eHV/I20WpyjG4bC5JwJDo/4+Hh4V3gtY1W7RaybwLIr4/PxMPDwzvKa4PUvLi1mZr9dODh4eHd4+UfmpFmn5+1WA3brfDw8PBK3qkZystaw1LW6GfAw8PDu8FLmgNm7FkrQDJZ9Sfx8PDwrvGeb2gLYPsmgH04goeHh3eP1wavLbsNcDcFsNdmZ8PDw8OLecmXzUpcyWF6FmQUSDw8PLzLvPYAnZe+kgmdbQlfjBAPDw/vKO/sAl0v2WXxLPk7Hh4e3m3ePpiYPS4PYdtj+oGNEg8PDy/OOfOgNol38wV91o5QFL3w8PDwrvHy5buNJ/KBboIJPDw8vN/P25S1Ns9sNxs8PDy8n+W1oWrelJC8244EDw8P7zZvFijky3ReuMqjkOKsjYeHh3eUd6pkNRvoqXtXbVt4eHh4Ke8Pl34NAeJgadcAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

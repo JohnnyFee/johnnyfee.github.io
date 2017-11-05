@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>onLoad and onDOMContentLoaded | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="html,dom">
+    <meta name="description" content="original onLoad and onDOMContentLoaded
+
+The “document is loaded” event is a nice hook for page initialization. All elements are at place and we can build interfaces on them.
+There are two main events">
+<meta property="og:type" content="article">
+<meta property="og:title" content="onLoad and onDOMContentLoaded">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-12-19-dom-load.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="original onLoad and onDOMContentLoaded
+
+The “document is loaded” event is a nice hook for page initialization. All elements are at place and we can build interfaces on them.
+There are two main events">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="onLoad and onDOMContentLoaded">
+<meta name="twitter:description" content="original onLoad and onDOMContentLoaded
+
+The “document is loaded” event is a nice hook for page initialization. All elements are at place and we can build interfaces on them.
+There are two main events">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">onLoad and onDOMContentLoaded</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">onLoad and onDOMContentLoaded</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-12-18T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-12-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Load"><span class="post-toc-text">Load</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DOMContentLoaded"><span class="post-toc-text">DOMContentLoaded</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#What-it-awaits-in-detail"><span class="post-toc-text">What it awaits, in detail</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#The-alternative-to-DOMContentLoaded"><span class="post-toc-text">The alternative to DOMContentLoaded</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Hacks-for-IE-lt-9"><span class="post-toc-text">Hacks for IE<9</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IE-lt-9-hack-for-a-document-not-inside-a-frame"><span class="post-toc-text">IE<9 hack for a document not inside a frame</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IE-lt-9-hack-in-a-frame"><span class="post-toc-text">IE<9 hack in a frame</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#The-last-resort-window-onload"><span class="post-toc-text">The last resort: window.onload</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#The-crossbrowser-DOMContentLoaded-handling-code"><span class="post-toc-text">The crossbrowser DOMContentLoaded handling code</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Multiple-handlers"><span class="post-toc-text">Multiple handlers</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-dom-load"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">onLoad and onDOMContentLoaded</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-12-19 00:00:00" datetime="2014-12-18T16:00:00.000Z"  itemprop="datePublished">2014-12-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>original <a href="http://javascript.info/tutorial/onload-ondomcontentloaded" target="_blank" rel="external">onLoad and onDOMContentLoaded</a></p>
+</blockquote>
+<p>The “document is loaded” event is a nice hook for page initialization. All elements are at place and we can build interfaces on them.</p>
+<p>There are two main events to track it: <code>load</code> and <code>DOMContentLoaded</code>.</p>
+<a id="more"></a>
+<h2 id="Load"><a href="#Load" class="headerlink" title="Load"></a>Load</h2><p>The <code>load</code> event is a general “loading complete” signal. It is supported by many elements. For example, external <code>SCRIPT</code>and  <code>IMG</code>, <code>IFRAME</code> trigger it when downloading of their content finishes.</p>
+<p>The handler <code>window.onload</code> and <code>iframe.onload</code> triggers when the page is <em>fully</em> loaded with all dependent resources including images and styles.</p>
+<p>The example with <code>IFRAME</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;iframe src=&quot;/&quot;&gt;&lt;/iframe&gt;</div><div class="line">&lt;script&gt;</div><div class="line">  document.getElementsByTagName(&apos;iframe&apos;)[0].onload = function() &#123;</div><div class="line">    alert(&apos;loaded&apos;)</div><div class="line">  &#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<p>To execute the code when the current page finishes loading, use <code>window.onload</code>.</p>
+<p>For the bage below, the <code>alert</code> shows up when it is completely loaded, including the <code>BODY</code> and all resources:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;script&gt;</div><div class="line">  onload = function() &#123;</div><div class="line">    alert(&apos;loaded&apos;)</div><div class="line">  &#125;</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">  ... page content ...</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>window.onload</code> is rarely used, because no one wants to wait until <em>all</em> resources load, especially for large pictures.</p>
+<p>Normally, we need the DOM and scripts to build interfaces. That’s exactly what <code>DOMContentLoaded</code> is for.</p>
+<h2 id="DOMContentLoaded"><a href="#DOMContentLoaded" class="headerlink" title="DOMContentLoaded"></a><code>DOMContentLoaded</code></h2><p>The <code>DOMContentLoaded</code> event triggers on <code>document</code> <em>when the page is ready</em>. It waits for the full HTML and scripts, and then triggers.</p>
+<p>All browsers except IE&lt;9 support it.  </p>
+<pre><code>document.addEventListener( &quot;DOMContentLoaded&quot;, ready, false )
+</code></pre><p>The <code>ready</code> function is a handler which usually performs interface initialization.</p>
+<p>About IE hacks - we’ll get to them later.</p>
+<div class="warn">Firefox doesn’t autofill forms before <code>DOMContentLoaded</code></div>
+
+<p>For example, you have a login/password form, and the values are remembered by Firefox.</p>
+<p>The browser will autofill them only <em>after</em> DOMContentLoaded. If it takes too long, the user may have to wait.</p>
+<h3 id="What-it-awaits-in-detail"><a href="#What-it-awaits-in-detail" class="headerlink" title="What it awaits, in detail"></a>What it awaits, in detail</h3><p>Generally, the <code>DOMContentLoaded</code> awaits only for HTML and scripts. But there are many peculiar details about that.</p>
+<p>Not taking them into account may make <code>DOMContentLoaded</code> trigger later than needed, forcing the visitors to wait. Or, it may trigger earlier and skip strictly required resouces.</p>
+<p><code>DOMContentLoaded</code> doesn’t wait for <em>any</em> script.</p>
+<p>There are ways to add a script to the document, so that <code>DOMContentLoaded</code> won’t wait for them.</p>
+<p>You may use them smartly, to make it trigger early. Or hit that feature occasionaly, and try to initialize interfaces without a script.</p>
+<p><strong><code>DOMContentLoaded</code> <u>won’t wait</u> for a script, created by <code>document.createElement</code> (called <em>dynamic</em> script) in all browsers except Opera.</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>)</div><div class="line">script.src = <span class="string">"..."</span></div><div class="line"><span class="built_in">document</span>.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>].appendChild(script)</div></pre></td></tr></table></figure>
+<p>This feature is used to add ads and counters which don’t block the page from initialization. Usually a <code>script.async = true</code> is added to make the script don’t wait for other scripts.</p>
+<p><strong><code>DOMContentLoaded</code> <u>will wait</u> for a script:</strong></p>
+<ul>
+<li>In all browsers - external scripts in HTML.</li>
+<li>In Opera - all scripts.</li>
+<li>In Safari/Chrome - scripts with <code>defer</code> attribute.</li>
+</ul>
+<p>And of course, <code>DOMContentLoaded</code> triggers after all inline scripts are executed. The browser can’t render a page without it.</p>
+<h2 id="The-alternative-to-DOMContentLoaded"><a href="#The-alternative-to-DOMContentLoaded" class="headerlink" title="The alternative to DOMContentLoaded"></a>The alternative to <code>DOMContentLoaded</code></h2><p>The most obvious way to execute JavaScript after the page load is to put it before the <code>&lt;/BODY&gt;</code>:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">... bla-bla-bla my cool interface...</div><div class="line"></div><div class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">     init()</div><div class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>That’s simple. And the simplicity rules. But the drawbacks are:</p>
+<ul>
+<li>You must put JS inside HTML. That makes integration more difficult for third-party plugins and components.</li>
+<li><p>The <code>BODY</code> is not complete, so <code>document.body.appendChild</code> appends to <em>current</em> end of <code>BODY</code>, right after the <code>SCRIPT</code>.  </p>
+<p>  IE6 can’t do such <code>body.appendChild</code> at all.</p>
+</li>
+</ul>
+<p>The real <code>document.DOMContentLoaded</code> event ensures that the DOM is ready including <code>BODY</code> and everything. It can be used in JS without modifying HTML.</p>
+<h2 id="Hacks-for-IE-lt-9"><a href="#Hacks-for-IE-lt-9" class="headerlink" title="Hacks for IE&lt;9"></a>Hacks for <code>IE&lt;9</code></h2><h3 id="IE-lt-9-hack-for-a-document-not-inside-a-frame"><a href="#IE-lt-9-hack-for-a-document-not-inside-a-frame" class="headerlink" title="IE&lt;9 hack for a document not inside a frame"></a>IE&lt;9 hack for a document not inside a frame</h3><p>For IE, there is a hack which works if a window is not inside a frame.<br>The document is being scrolled using <code>document.documentElement.doScroll</code> call. The browser throws exception <em>until</em> the DOM is complete. So basically the scoll is called every 10 ms or so until no exception is thrown. Then the DOM ready handler is activated.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">  <span class="keyword">var</span> isFrame = <span class="built_in">window</span>.frameElement != <span class="literal">null</span></div><div class="line">&#125; <span class="keyword">catch</span>(e) &#123;&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="built_in">document</span>.documentElement.doScroll &amp;&amp; !isFrame) &#123;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">tryScroll</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span> (called) <span class="keyword">return</span></div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">      <span class="built_in">document</span>.documentElement.doScroll(<span class="string">"left"</span>)</div><div class="line">      ready()</div><div class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</div><div class="line">      setTimeout(tryScroll, <span class="number">10</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  tryScroll()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The function <code>tryScroll</code> is repeatedly called until there is no exception on <code>doScroll(&quot;left&quot;)</code>.</p>
+<h3 id="IE-lt-9-hack-in-a-frame"><a href="#IE-lt-9-hack-in-a-frame" class="headerlink" title="IE&lt;9 hack in a frame"></a>IE&lt;9 hack in a frame</h3><p>For a document inside a frame or iframe, the <code>doScroll</code> trick doesn’t work, so we use a special IE event named <code>document.onreadystatechange</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">document.attachEvent(&quot;onreadystatechange&quot;, function()&#123;</div><div class="line">  if ( document.readyState === &quot;complete&quot; ) &#123;</div><div class="line">    ready()</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>The event triggers many times in the process of document loading. It is very buggy and unreliable, but <em>if</em> it triggers with <code>readyState==&quot;complete&quot;</code>, it means that the document is really complete.</p>
+<p>Unfortunately, this also requires all resources to be loaded: images, styles etc.</p>
+<h3 id="The-last-resort-window-onload"><a href="#The-last-resort-window-onload" class="headerlink" title="The last resort: window.onload"></a>The last resort: <code>window.onload</code></h3><p>There are non-IE browsers which do not support <code>DOMContentLoaded</code>, just because they are old. Still we need to support them somehow.</p>
+<p>The <code>window.onload</code> is an ancient event which triggers on full page load. So we can bind to it as well.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if (window.addEventListener)</div><div class="line">  window.addEventListener(&apos;load&apos;, ready, false)</div><div class="line">else if (window.attachEvent)</div><div class="line">  window.attachEvent(&apos;onload&apos;, ready)</div></pre></td></tr></table></figure>
+<p>Actually, the <code>onreadystatechange</code> with complete state for IE triggers just before <code>onload</code>. </p>
+<h2 id="The-crossbrowser-DOMContentLoaded-handling-code"><a href="#The-crossbrowser-DOMContentLoaded-handling-code" class="headerlink" title="The crossbrowser DOMContentLoaded handling code"></a>The crossbrowser <code>DOMContentLoaded</code> handling code</h2><p>The following code joins the methods described above into a single <code>bindReady(handler)</code> method.</p>
+<p>The <code>ready</code> handler is bound in multiple ways, but ensures that only the first trigger will work.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">function bindReady(handler)&#123;</div><div class="line"></div><div class="line">    var called = false</div><div class="line"></div><div class="line">    function ready() &#123; </div><div class="line">        if (called) return</div><div class="line">        called = true</div><div class="line">        handler()</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if ( document.addEventListener ) &#123; // native event</div><div class="line">        document.addEventListener( &quot;DOMContentLoaded&quot;, ready, false )</div><div class="line">    &#125; else if ( document.attachEvent ) &#123;  // IE</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            var isFrame = window.frameElement != null</div><div class="line">        &#125; catch(e) &#123;&#125;</div><div class="line"></div><div class="line">        // IE, the document is not inside a frame</div><div class="line">        if ( document.documentElement.doScroll &amp;&amp; !isFrame ) &#123;</div><div class="line">            function tryScroll()&#123;</div><div class="line">                if (called) return</div><div class="line">                try &#123;</div><div class="line">                    document.documentElement.doScroll(&quot;left&quot;)</div><div class="line">                    ready()</div><div class="line">                &#125; catch(e) &#123;</div><div class="line">                    setTimeout(tryScroll, 10)</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            tryScroll()</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // IE, the document is inside a frame</div><div class="line">        document.attachEvent(&quot;onreadystatechange&quot;, function()&#123;</div><div class="line">            if ( document.readyState === &quot;complete&quot; ) &#123;</div><div class="line">                ready()</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Old browsers</div><div class="line">    if (window.addEventListener)</div><div class="line">        window.addEventListener(&apos;load&apos;, ready, false)</div><div class="line">    else if (window.attachEvent)</div><div class="line">        window.attachEvent(&apos;onload&apos;, ready)</div><div class="line">    else &#123;</div><div class="line">        var fn = window.onload // very old browser, copy old onload</div><div class="line">        window.onload = function() &#123; // replace by new onload and call the old one</div><div class="line">            fn &amp;&amp; fn()</div><div class="line">            ready()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Multiple-handlers"><a href="#Multiple-handlers" class="headerlink" title="Multiple handlers"></a>Multiple handlers</h2><p>The <code>bindReady</code> allows to hook a single handler only. To attach multiple handlers, we need an external wrapper:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">var readyList = []</div><div class="line"></div><div class="line">function onReady(handler) &#123;</div><div class="line">    </div><div class="line">    function executeHandlers() &#123;</div><div class="line">        for(var i=0; i&lt;readyList.length; i++) &#123;</div><div class="line">            readyList[i]()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (!readyList.length) &#123; // set handler on first run </div><div class="line">        bindReady(executeHandlers)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    readyList.push(handler)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>An example of use:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE HTML&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Large image will load after initialization<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"bindready.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"onready.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">onReady(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;                                               </div><div class="line">  <span class="built_in">document</span>.body.appendChild(<span class="built_in">document</span>.createTextNode(<span class="string">'init 1! '</span>))</div><div class="line">&#125;)</div><div class="line"></div><div class="line">onReady(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;                                               </div><div class="line">  <span class="built_in">document</span>.body.appendChild(<span class="built_in">document</span>.createTextNode(<span class="string">'init 2! '</span>))</div><div class="line">&#125;)</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="comment">// prevent caching with random param</span></div><div class="line"><span class="built_in">document</span>.write(<span class="string">'&lt;img src="web.jpg?nocache='</span>+<span class="built_in">Math</span>.random()+<span class="string">'" width="200"&gt;'</span>)</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>You can view the live example and export all sources here: <a href="http://javascript.info/play/tutorial/browser/events/domcontentloaded/index.html" target="_blank" rel="external">tutorial/browser/events/domcontentloaded/index.html</a>.</p>
+<p>Most modern frameworks support <code>DOMContentLoaded</code> using methods described above.</p>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://www.alloyteam.com/2014/03/effect-js-css-and-img-event-of-domcontentloaded/" target="_blank" rel="external">JS、CSS以及img对DOMContentLoaded事件的影响</a></li>
+<li><a href="http://www.cnblogs.com/hh54188/archive/2013/03/01/2939426.html" target="_blank" rel="external">从onload和DOMContentLoaded谈起 - hh54188 - 博客园</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-12-19-dom-load.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-12-19-dom-load.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dom/">dom</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-12-19-dom-load.html&title=《onLoad and onDOMContentLoaded》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-12-19-dom-load.html&title=《onLoad and onDOMContentLoaded》 — Balance&source=
+original onLoad and onDOMContentLoaded
+
+The “document is loaded” event is a ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-12-19-dom-load.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《onLoad and onDOMContentLoaded》 — Balance&url=http://blog.inching.org/JavaScript/2014-12-19-dom-load.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-12-19-dom-load.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Network/2014-12-19-http-tutorial.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">HTTP Tutorial</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/IChing/2014-12-16-calendar.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">中华日历</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-12-19-dom-load.html&title=《onLoad and onDOMContentLoaded》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-12-19-dom-load.html&title=《onLoad and onDOMContentLoaded》 — Balance&source=
+original onLoad and onDOMContentLoaded
+
+The “document is loaded” event is a ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-12-19-dom-load.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《onLoad and onDOMContentLoaded》 — Balance&url=http://blog.inching.org/JavaScript/2014-12-19-dom-load.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-12-19-dom-load.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aQW7DMAwEwP7/0+61QGJ3SToBLI1OBqrYGh1YUtTPTzyOP+P6r68zz36bz7xtYGBgPJZxXI7enNf3vz5Xt+BsDgYGxj6Mswh29nz2yWRx1W9dz8fAwMCozkkWlIdsDAwMjEnArZa4eWGMgYGBMSli80VUl/jVWhwDA+OBjPzU/fvPH+lvYGBgPIpxFMe8fE0SxPKqMDAwlmbkAS6/MHGdSs7Zp9/FwMBYlHHXpYq8PVm9FhaVrBgYGEszJkEz/0w10cw3683/DQwMjEUZkyZBNQXsnZvl0RUDA2M9RjWlSxqQ82sWSWjGwMDA6JWyvYDbS0nLVTIGBsaijCTU5mXncdN4syoMDIxtGHmT8npxSfiuzvkn3GNgYCzNmFytSFLG5plf0Cq4oamJgYHxKEaSwF2/qFp2Vn9b2HsMDIxtGHe1G/NkLn/DP3dGMDAwlmMU2oRxaljdmmpbFAMDYzdGr6mZH7pVk87e0RsGBgZG9fJWfqpXnYmBgbEzo5rw9ZY+CaDXoRkDA2M3RjUE502CpNz9yNUKDAyMhRh3kXLqvCGBgYGxA+MojhuO7Fvth1Fui4GB8XBGPuZlapImFkrWHgYDA+OxjDzITloIvS0rBFwMDIwNGL3Al3/sE0Xsm4CLgYGBESd8vQRxlM9iYGBgjINsryFauA6CgYGxAaPXDJgcnxXSvgSMgYGxNCMvHavHapMidr4pGBgYSzB+AepgIuA7PJCmAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

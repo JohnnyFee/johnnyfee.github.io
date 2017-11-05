@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JavaScript Binary | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="data,javascript">
+    <meta name="description" content="原文：http://noyesno.net/page/javascript/binary
+一直一来，JavaScritp都缺少处理二进制数据的能力。唯一算是跟二进制数据有点关系的是String的charCodeAt()和fromCharCode()方法。 
+HTML5以来，JavaScript增加了新的数据类型，从而对二进制数据有了一定程度上的支持。 
+ArrayBuffer和ArrayBuffe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript Binary">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-06-16-javascript-binary.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文：http://noyesno.net/page/javascript/binary
+一直一来，JavaScritp都缺少处理二进制数据的能力。唯一算是跟二进制数据有点关系的是String的charCodeAt()和fromCharCode()方法。 
+HTML5以来，JavaScript增加了新的数据类型，从而对二进制数据有了一定程度上的支持。 
+ArrayBuffer和ArrayBuffe">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript Binary">
+<meta name="twitter:description" content="原文：http://noyesno.net/page/javascript/binary
+一直一来，JavaScritp都缺少处理二进制数据的能力。唯一算是跟二进制数据有点关系的是String的charCodeAt()和fromCharCode()方法。 
+HTML5以来，JavaScript增加了新的数据类型，从而对二进制数据有了一定程度上的支持。 
+ArrayBuffer和ArrayBuffe">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript Binary</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript Binary</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-06-15T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-06-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ArrayBuffer和ArrayBufferView"><span class="post-toc-text">ArrayBuffer和ArrayBufferView</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#本机字节序的判断"><span class="post-toc-text">本机字节序的判断</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二进制数据的传递"><span class="post-toc-text">二进制数据的传递</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#和字符串之间的转换"><span class="post-toc-text">和字符串之间的转换</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Node-Buffer"><span class="post-toc-text">Node Buffer</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#FAQ"><span class="post-toc-text">FAQ</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Uint8ClampedArray-and-Uint8Array"><span class="post-toc-text">Uint8ClampedArray and Uint8Array</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Convert-binary-NodeJS-Buffer-and-Javascript-ArrayBuffer"><span class="post-toc-text">Convert binary NodeJS Buffer and Javascript ArrayBuffer</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-binary"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript Binary</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-06-16 00:00:00" datetime="2014-06-15T16:00:00.000Z"  itemprop="datePublished">2014-06-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>原文：<a href="http://noyesno.net/page/javascript/binary" target="_blank" rel="external">http://noyesno.net/page/javascript/binary</a></p>
+<p>一直一来，JavaScritp都缺少处理二进制数据的能力。唯一算是跟二进制数据有点关系的是String的charCodeAt()和fromCharCode()方法。 </p>
+<p>HTML5以来，JavaScript增加了新的数据类型，从而对二进制数据有了一定程度上的支持。 </p>
+<h2 id="ArrayBuffer和ArrayBufferView"><a href="#ArrayBuffer和ArrayBufferView" class="headerlink" title="ArrayBuffer和ArrayBufferView"></a>ArrayBuffer和ArrayBufferView</h2><p>其中最主要的数据类型是ArrayBuffer，用来表示一串bytes。 </p>
+<p>ArrayBuffer （缓冲数组）是一种用于呈现通用、固定长度的二进制数据的类型。不能直接构造并填充 ArrayBuffer 的内容，而应该先创建一个 <a href="https://developer.mozilla.org/zh-CN/JavaScript_typed_arrays/ArrayBufferView" target="_blank" rel="external"><code>ArrayBufferView</code></a> 对象，该对象用具体的格式来呈现 ArrayBuffer 的内容，你可以使用此对象来读写 ArrayBuffer 的内容。</p>
+<p>对二进制数据的处理则交由不同的ArrayBufferView来处理，比如： </p>
+<ul>
+<li>Int8Array / Uint8Array</li>
+<li>Int16Array / Uint16Array</li>
+<li>Int32Array / Uint32Array</li>
+<li>Float32Array / Float64Array</li>
+</ul>
+<p>字节序使用本机的字节序。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> buffer = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(<span class="number">2</span>);</div><div class="line"><span class="keyword">var</span> bytes = <span class="built_in">Uint8Array</span>(buffer);</div><div class="line"><span class="keyword">var</span> value = bytes[<span class="number">1</span>];</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>另一个更底层的接口是DataView，提供了一组方法用于读取或修改ArrayBuffer </p>
+<ul>
+<li>getInt8() / getUint8() / setInt8() / setUint8()</li>
+<li>getInt16() / getUint16() / setInt16() / setUint16()</li>
+<li>getInt32() / getUint32() / setInt32() / setUint32()</li>
+<li>getFloat32() / getFloat64() / setFloat32() /setFloat64()</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> buffer = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(<span class="number">2</span>);</div><div class="line"><span class="keyword">var</span> view = <span class="keyword">new</span> <span class="built_in">DataView</span>(buffer);</div><div class="line"><span class="keyword">var</span> little_endian = <span class="literal">true</span>;</div><div class="line">view.setInt16(<span class="number">0</span>, <span class="number">256</span>, little_endian); <span class="comment">// use little endian</span></div><div class="line">view.getInt16(<span class="number">0</span>, little_endian );</div></pre></td></tr></table></figure>
+<h3 id="本机字节序的判断"><a href="#本机字节序的判断" class="headerlink" title="本机字节序的判断"></a>本机字节序的判断</h3><p>二进制世界不可避免地涉及到Big Endian和Little Endian的问题。 </p>
+<p>下面的代码可以用于判断本机的字节序。 </p>
+<pre><code>// 引自：https://developer.mozilla.org/en-US/docs/Web/API/DataView
+
+var littleEndian = (function() {
+  var buffer = new ArrayBuffer(2);
+  new DataView(buffer).setInt16(0, 256, true);
+  return new Int16Array(buffer)[0] === 256;
+})();
+</code></pre><h2 id="二进制数据的传递"><a href="#二进制数据的传递" class="headerlink" title="二进制数据的传递"></a>二进制数据的传递</h2><p>怎样把二进制数据传送给JavaScript呢？ </p>
+<p>一种方法是利用base64编码，通过window.atob函数转换为“字符串”，再逐字节赋值给ArrayBuffer： </p>
+<pre><code>function base64tobin(base64) {
+  var text = window.atob(base64);
+  var buffer = new ArrayBuffer(text.length);
+  var view = new DataView(buffer);
+  for(var i=0, n=text.length; i&lt;n; i++) view.setUint8(i,text.charCodeAt(i));
+  return buffer;
+}
+</code></pre><p>window.btoa()可以把数据编码为base64。 </p>
+<h2 id="和字符串之间的转换"><a href="#和字符串之间的转换" class="headerlink" title="和字符串之间的转换"></a>和字符串之间的转换</h2><p>二进制数据转为字符串，显然是和字符串的编码问题相关的。 </p>
+<pre><code>function bin2txt(buffer,encoding) {
+  if(encoding==&apos;ascii&apos;){
+    return String.fromCharCode.apply(null, new Uint8Array(buffer));
+  }else if(encoding==&apos;unicode&apos; || encoding==&apos;utf16&apos;){
+    return String.fromCharCode.apply(null, new Uint16Array(buffer)); // 使用本机字节序
+  }else{
+    alert(&apos;Not supported yet&apos;);
+  }
+}
+</code></pre><h2 id="Node-Buffer"><a href="#Node-Buffer" class="headerlink" title="Node Buffer"></a>Node Buffer</h2><p>Node 提供了 Buffer 机制，Browserify 也提供了浏览器版本，See <a href="https://github.com/feross/buffer" target="_blank" rel="external">feross/buffer</a>。</p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="Uint8ClampedArray-and-Uint8Array"><a href="#Uint8ClampedArray-and-Uint8Array" class="headerlink" title="Uint8ClampedArray and Uint8Array"></a>Uint8ClampedArray and Uint8Array</h3><ul>
+<li><a href="http://www.javascripture.com/Uint8ClampedArray" target="_blank" rel="external">Uint8ClampedArray JavaScript API</a></li>
+<li><a href="http://www.javascripture.com/Uint8Array" target="_blank" rel="external">Uint8Array JavaScript API</a></li>
+</ul>
+<p>If you are trying to set one element to a clamped array to any value outside of the range 0-255, it will simply default to 0 or 255 (depending on whether the value is smaller or larger). A normal Uint8Array array just takes the first 8 bit of the value.</p>
+<p><strong>Examples:</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="keyword">new</span> <span class="built_in">Uint8ClampedArray</span>([<span class="number">17</span>, <span class="number">-45.3</span>]);</div><div class="line"><span class="built_in">console</span>.log(x[<span class="number">0</span>]); <span class="comment">// 17</span></div><div class="line"><span class="built_in">console</span>.log(x[<span class="number">1</span>]); <span class="comment">// 0</span></div><div class="line"><span class="built_in">console</span>.log(x.length); <span class="comment">// 2</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> x = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>([<span class="number">17</span>, <span class="number">-45.3</span>]);</div><div class="line"><span class="built_in">console</span>.log(x[<span class="number">0</span>]); <span class="comment">// 17</span></div><div class="line"><span class="built_in">console</span>.log(x[<span class="number">1</span>]); <span class="comment">// 211</span></div><div class="line"><span class="built_in">console</span>.log(x.length); <span class="comment">// 2</span></div></pre></td></tr></table></figure>
+<h3 id="Convert-binary-NodeJS-Buffer-and-Javascript-ArrayBuffer"><a href="#Convert-binary-NodeJS-Buffer-and-Javascript-ArrayBuffer" class="headerlink" title="Convert binary NodeJS Buffer and Javascript ArrayBuffer"></a>Convert binary NodeJS Buffer and Javascript ArrayBuffer</h3><p>See <a href="http://stackoverflow.com/questions/8609289/convert-a-binary-nodejs-buffer-to-javascript-arraybuffer" target="_blank" rel="external">node.js - Convert a binary NodeJS Buffer to Javascript ArrayBuffer - Stack Overflow</a></p>
+<ol>
+<li><p>node.js has both ArrayBuffer as part of v8, but the Buffer class provides a more flexible API. In order to read or write to an ArrayBuffer, you only need to create a view and copy across.</p>
+<p> From Buffer to ArrayBuffer:</p>
+<pre><code>function toArrayBuffer(buffer) {
+    var ab = new ArrayBuffer(buffer.length);
+    var view = new Uint8Array(ab);
+    for (var i = 0; i &lt; buffer.length; ++i) {
+        view[i] = buffer[i];
+    }
+    return ab;
+}
+</code></pre><p> From ArrayBuffer to Buffer:</p>
+<pre><code>function toBuffer(ab) {
+    var buffer = new Buffer(ab.byteLength);
+    var view = new Uint8Array(ab);
+    for (var i = 0; i &lt; buffer.length; ++i) {
+        buffer[i] = view[i];
+    }
+    return buffer;
+}
+</code></pre></li>
+<li><p>“From ArrayBuffer to Buffer” could be done this way: </p>
+<p>   var buffer = new Buffer( new Uint8Array(ab) );</p>
+</li>
+<li><p>A quicker way to write it</p>
+<pre><code>var arrayBuffer = new Uint8Array(nodeBuffer).buffer;
+</code></pre><p> However, this appears to run roughly 4 times slower than the suggested toArrayBuffer function on a buffer with 1024 elements.</p>
+</li>
+<li><p>Node 0.12+ has a built-in toArrayBuffer method.</p>
+<pre><code>buffer.toArrayBuffer()
+</code></pre></li>
+</ol>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays" target="_blank" rel="external">JavaScript typed arrays - JavaScript</a></li>
+<li><a href="https://developer.mozilla.org/en-US/Add-ons/Code_snippets/StringView" target="_blank" rel="external">StringView - Mozilla</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Base64_encoding_and_decoding" target="_blank" rel="external">Base64 encoding and decoding - JavaScript</a></li>
+<li><a href="http://blog.csdn.net/hfahe/article/details/7421203" target="_blank" rel="external">遇见Javascript类型数组(Typed Array)</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-06-16-javascript-binary.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-06-16-javascript-binary.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data/">data</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-06-16-javascript-binary.html&title=《JavaScript Binary》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-06-16-javascript-binary.html&title=《JavaScript Binary》 — Balance&source=原文：http://noyesno.net/page/javascript/binary
+一直一来，JavaScritp都缺少处理二进制数据的能力。唯一算..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-06-16-javascript-binary.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript Binary》 — Balance&url=http://blog.inching.org/JavaScript/2014-06-16-javascript-binary.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-06-16-javascript-binary.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Qt/2014-06-17-qt-converter.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">QT Converter</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Node/2014-06-15-browserify.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Node Browserify</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-06-16-javascript-binary.html&title=《JavaScript Binary》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-06-16-javascript-binary.html&title=《JavaScript Binary》 — Balance&source=原文：http://noyesno.net/page/javascript/binary
+一直一来，JavaScritp都缺少处理二进制数据的能力。唯一算..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-06-16-javascript-binary.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript Binary》 — Balance&url=http://blog.inching.org/JavaScript/2014-06-16-javascript-binary.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-06-16-javascript-binary.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvElEQVR42u3aQU7DQAwFUO5/aZAQCxBq8m2P2y5eVqhpm3mDNHZtf3zE1+f3df3K79d/3/0Mrv/feX338IWHh4fXWnr1wY8WkT8r2bjr9VyvGQ8PD2+bdx0MHn34mpcsLg88SZDAw8PDezdennAn7zwbTvDw8PDek5ck2dXFnd0aPDw8vGfykmJEL3XOK6v5e1ZqLXh4eHgxb3Iov+rvxf4eHh4e3qCrnh/KeTpefb23zp/P4uHh4S3w8ubTfEFJ22wysvAwbODh4eEd5VULB9WUdzIQMNnEP3EPDw8P7yivWgiYt8qSjatu38068fDw8BZ4OSxvMlW3rNcqw8PDw3s+Lznok/JBUsiYDFE1n4KHh4e3xksS2cnBPdm+3pwAHh4e3jYvOWqTu/MN6hVEopQaDw8Pb4FXrl4UiwW9ca7rFd6UM/Dw8PDWePmBmyfKk1CRF3xvVoKHh4e3wOs1/iehopdkVxPx0VwDHh4eXlptKDSWJol4NdjMhw/w8PDw9ni9Qmp1idWJsPxZNyvBw8PDO8SbNJ+qA1jbT7mZjMDDw8M7xOvFkN6oVrX4eyxs4OHh4R3lVYsIpwaneil1uTGGh4eHt8BLrvlQVD4sNU/K8fDw8J7D65Vlk6GBXqKc/B/w8PDwXsVLWu+99/SQ+dBVFOXw8PDw1ni9HHwCTvCTlfwJDHh4eHhHecnRnx/T1XQ5+Ya8EHwzOoCHh4d3iDdJXqutqflgQbXQjIeHh7fNy9PfyS/9vBdXTbtvAgMeHh7eIV61udUbsdoYwJoEEjw8PLw5rzcOdWrsoPqscskDDw8Pb43XCwbVlLda9p2Uj/Hw8PDegZc3zJLA0wsh5VEGPDw8vDfj5Qf0JFlP7t7UqvHw8PAWeHmz/9QQVR4wegULPDw8vD1eNZ3Nj+m8FFvdoAM9PTw8PLwO7wskZA0B/BreUwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android RecyclerView – ItemDecoration and ItemAnimator | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,ui">
+    <meta name="description" content="From Android RecyclerView – ItemDecoration and ItemAnimator – TheRubberDuckDev
+In the previous post of the series I covered the basics of how RecyclerView works and how to create an Adapter. In this p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android RecyclerView – ItemDecoration and ItemAnimator">
+<meta property="og:url" content="http://blog.inching.org/Android/2017-11-01-android-recycle-view-item-decoration-animation.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="From Android RecyclerView – ItemDecoration and ItemAnimator – TheRubberDuckDev
+In the previous post of the series I covered the basics of how RecyclerView works and how to create an Adapter. In this p">
+<meta property="og:image" content="https://therubberduckdev.files.wordpress.com/2017/10/adcd5-recyclerview2bwith2bdividers.jpg">
+<meta property="og:image" content="https://therubberduckdev.files.wordpress.com/2017/10/d3698-recyclerview-default-add-animation.gif">
+<meta property="og:image" content="https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-default-remove-animation.gif?w=1100">
+<meta property="og:image" content="https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-default-change-animation.gif?w=1100">
+<meta property="og:updated_time" content="2017-11-05T05:25:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android RecyclerView – ItemDecoration and ItemAnimator">
+<meta name="twitter:description" content="From Android RecyclerView – ItemDecoration and ItemAnimator – TheRubberDuckDev
+In the previous post of the series I covered the basics of how RecyclerView works and how to create an Adapter. In this p">
+<meta name="twitter:image" content="https://therubberduckdev.files.wordpress.com/2017/10/adcd5-recyclerview2bwith2bdividers.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android RecyclerView – ItemDecoration and ItemAnimator</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android RecyclerView – ItemDecoration and ItemAnimator</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-10-31T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-11-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ItemDecorator"><span class="post-toc-text">ItemDecorator</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#onDraw"><span class="post-toc-text">onDraw</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#onDrawOver"><span class="post-toc-text">onDrawOver</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getItemOffsets"><span class="post-toc-text">getItemOffsets</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ItemAnimator"><span class="post-toc-text">ItemAnimator</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-Addition"><span class="post-toc-text">1. Addition</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-Removal"><span class="post-toc-text">2. Removal</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-Change"><span class="post-toc-text">3. Change</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-Move"><span class="post-toc-text">4. Move</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-recycle-view-item-decoration-animation"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android RecyclerView – ItemDecoration and ItemAnimator</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-01 00:00:00" datetime="2017-10-31T16:00:00.000Z"  itemprop="datePublished">2017-11-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>From <a href="https://therubberduckdev.wordpress.com/2017/10/12/android-recyclerview-itemdecoration-and-itemanimator/" target="_blank" rel="external">Android RecyclerView – ItemDecoration and ItemAnimator – TheRubberDuckDev</a></p>
+<p>In the <a href="https://therubberduckdev.wordpress.com/2017/10/09/android-recyclerview-the-basics/" target="_blank" rel="external">previous post</a> of the series I covered the basics of how RecyclerView works and how to create an Adapter. In this post we will look at how to use ItemDecoration to decorate the child views and ItemAnimator to animate them.</p>
+<h2 id="ItemDecorator"><a href="#ItemDecorator" class="headerlink" title="ItemDecorator"></a>ItemDecorator</h2><p>This class is used to decorate child views in a RecyclerView. Decorations can be anything from setting dividers between list items or offsets between them, or even setting frames for grids. You can also decorate specific child items based on their view type.</p>
+<p>This class has three methods:</p>
+<ul>
+<li>onDraw</li>
+<li>onDrawOver</li>
+<li>getItemOffsets</li>
+</ul>
+<h3 id="onDraw"><a href="#onDraw" class="headerlink" title="onDraw"></a>onDraw</h3><p>This is where you can draw any decorations for the child views. You can draw lines, rects or bitmaps. These decorations are drawn before the child views themselves are drawn. So these decorations appear behind the child views.</p>
+<p>This method takes three parameters: a <code>Canvas</code>, the <code>RecyclerView</code> itself and <code>State</code>. The decorations are drawn on the canvas. The RecyclerView instance can be used to get the child views and total count. The State instance is a class that stores information like scroll positions in RecyclerView and other data.</p>
+<h3 id="onDrawOver"><a href="#onDrawOver" class="headerlink" title="onDrawOver"></a>onDrawOver</h3><p>This method is also used to draw decorations for child views. The simple difference is decorations are drawn only after child views are drawn. So they appear over the child views. It takes same parameters as onDraw.</p>
+<h3 id="getItemOffsets"><a href="#getItemOffsets" class="headerlink" title="getItemOffsets"></a>getItemOffsets</h3><p>If you want to set offset for child views, you can use this method. It helps to add inset for child view similar to setting margin or padding.</p>
+<p>It provides four parameters: a Rect, the child view, RecyclerView and State.</p>
+<p>The Rect can be used to set necessary offset. RecyclerView gets the offset from this method and decorates child views accordingly.</p>
+<p>Here is an example code which draws divider between each views in RecyclerView</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) &#123;</div><div class="line">    int count = parent.getChildCount();</div><div class="line">    int width = parent.getWidth();</div><div class="line">    for (int i = 0; i &amp;lt; count; i++) &#123;</div><div class="line">        View child = parent.getChildAt(i);</div><div class="line">        int bottom = child.getBottom();</div><div class="line">        c.drawRect(0, bottom, width, bottom + DIVIDER_HEIGHT, paint);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>In the code, based on the child count, the line is drawn at the bottom of each child view. The divider has the width equal to screen width and height of 1px. This is how it looks like:</p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://therubberduckdev.files.wordpress.com/2017/10/adcd5-recyclerview2bwith2bdividers.jpg" alt="](https://therubberduckdev.files.wordpress.com/2017/10/adcd5-recyclerview2bwith2bdividers.jpg?w=360&h=640 " recyclerview="" with="" itemdecoration")"="" title="">
+                </div>
+                <div class="image-caption">](https://therubberduckdev.files.wordpress.com/2017/10/adcd5-recyclerview2bwith2bdividers.jpg?w=360&h=640 "RecyclerView with ItemDecoration")</div>
+            </figure></p>
+<p>Next we will look at some built-in animations available in RecyclerView.</p>
+<h2 id="ItemAnimator"><a href="#ItemAnimator" class="headerlink" title="ItemAnimator"></a>ItemAnimator</h2><p>This class provides mechanism for animating child views. It can be used to animate adding, removing, modifying and moving a child view. RecyclerView provides basic fade-in, fade-out, and translate animations. If you want custom animations you can subclass ItemAnimator.</p>
+<p>RecyclerView comes with these basic animations out-of-the-box using the <code>DefaultItemAnimator</code> class. So no need to do any extra configuration to add it.</p>
+<p>Let’s look at the basic animations and how to trigger them.</p>
+<h3 id="1-Addition"><a href="#1-Addition" class="headerlink" title="1. Addition"></a>1. Addition</h3><p>You can initiate an addition animation by adding new item to the data supplied to the adapter and notifying it for insertion. The default addition animation uses fade-in to add a new child view. This addition animation is based on predictive animation where adding a new item at a position causes other items to move to make way for it.</p>
+<p>Here is the code that initiates addition animation by adding a new <code>User</code> to an <code>ArrayList</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">User newUser = <span class="keyword">new</span> UsersData().getNewUser();</div><div class="line">adapter.addNewUser(position, newUser);</div><div class="line">adapter.notifyItemInserted(position);</div></pre></td></tr></table></figure>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://therubberduckdev.files.wordpress.com/2017/10/d3698-recyclerview-default-add-animation.gif" alt="Android RecyclerView - ItemDecoration and ItemAnimator](https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-default-add-animation.gif?w=1100)" title="">
+                </div>
+                <div class="image-caption">Android RecyclerView - ItemDecoration and ItemAnimator](https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-default-add-animation.gif?w=1100)</div>
+            </figure></p>
+<h3 id="2-Removal"><a href="#2-Removal" class="headerlink" title="2. Removal"></a>2. Removal</h3><p>To remove item, remove it from the data list and call <code>notifyItemRemoved()</code> with the position of the item that is to be removed. The default animation fades-out the view to be removed. It also causes child views around it to move and fill the empty area. Checkout the code below.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">adapter.removeUser(position);</div><div class="line">adapter.notifyItemRemoved(position);</div></pre></td></tr></table></figure>
+<p>In the code, a User is removed from the ArrayList at the given position and the adapter is notified about it.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-default-remove-animation.gif?w=1100" alt="Android RecyclerView - ItemDecoration and ItemAnimator" title="">
+                </div>
+                <div class="image-caption">Android RecyclerView - ItemDecoration and ItemAnimator</div>
+            </figure>
+<h3 id="3-Change"><a href="#3-Change" class="headerlink" title="3. Change"></a>3. Change</h3><p>When a child view’s data changes, it gets reflected in the view. The default animation is cross-fade. The view fades-out with old values and then fades-in with the new values. To display item change call adapter’s <code>notifyItemChanged()</code> method. Below is the code.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">adapter.changeUser(position);</div><div class="line">adapter.notifyItemChanged(position);</div></pre></td></tr></table></figure>
+<p>In the <code>changeUser</code> method I am changing the username and user image url at the particular position in the ArrayList.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-default-change-animation.gif?w=1100" alt="Android RecyclerView - ItemDecoration and ItemAnimator" title="">
+                </div>
+                <div class="image-caption">Android RecyclerView - ItemDecoration and ItemAnimator</div>
+            </figure>
+<h3 id="4-Move"><a href="#4-Move" class="headerlink" title="4. Move"></a>4. Move</h3><p>To move an item to another position, first change the position of the item in the data set. For example moving a <code>User</code> item from position 3 to 6. Then to reflect it in UI, use the adapter’s <code>notifyItemMoved()</code> method passing in the initial and final positions. The move animation is a translate animation.</p>
+<p>Note that when querying an item’s position while it is being animated, the value returned may be -1. This is because until the animation’s final layout pass completes, the position returned will be -1. So check the following condition when getting a view’s position.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (position != RecyclerView.NO_POSITION) &#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Checkout the DefaultItemAnimator class for more info. If you want to use custom animations subclass either DefaultItemAnimator or ItemAnimator class. Or else, use this awesome library <a href="https://github.com/wasabeef/recyclerview-animatorsCheckout" target="_blank" rel="external">https://github.com/wasabeef/recyclerview-animatorsCheckout</a> the source code <a href="https://github.com/sjthn/RecyclerViewDemo/tree/decorator-and-animator" target="_blank" rel="external">here</a>.</p>
+<p>If you have any feedback use the comments section below. In the next post we’ll see some advanced RecyclerView use-cases.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-11-05T05:25:34.000Z" itemprop="dateUpdated">2017-11-05 13:25:34</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2017-11-01-android-recycle-view-item-decoration-animation.html" target="_blank" rel="external">http://blog.inching.org/Android/2017-11-01-android-recycle-view-item-decoration-animation.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ui/">ui</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-11-01-android-recycle-view-item-decoration-animation.html&title=《Android RecyclerView – ItemDecoration and ItemAnimator》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-11-01-android-recycle-view-item-decoration-animation.html&title=《Android RecyclerView – ItemDecoration and ItemAnimator》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-11-01-android-recycle-view-item-decoration-animation.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android RecyclerView – ItemDecoration and ItemAnimator》 — Balance&url=http://blog.inching.org/Android/2017-11-01-android-recycle-view-item-decoration-animation.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-11-01-android-recycle-view-item-decoration-animation.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2017-11-01-android-recycler-view-basic.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android RecyclerView – The Basics</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2017-10-10-android-recycler-view.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android RecyclerView – The Basics</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-11-01-android-recycle-view-item-decoration-animation.html&title=《Android RecyclerView – ItemDecoration and ItemAnimator》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-11-01-android-recycle-view-item-decoration-animation.html&title=《Android RecyclerView – ItemDecoration and ItemAnimator》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-11-01-android-recycle-view-item-decoration-animation.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android RecyclerView – ItemDecoration and ItemAnimator》 — Balance&url=http://blog.inching.org/Android/2017-11-01-android-recycle-view-item-decoration-animation.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-11-01-android-recycle-view-item-decoration-animation.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADNElEQVR42u3aS27jUAwEwNz/0pltgIztblIBrOfSyhhbEksCwuHn6ys+vn8cj76dnfXz29+ff5+b/MtlBzY2NvZN2N9Pj+e/SW78HPbo+vkLSOL8zzWxsbGxj2Pn4SYJJg+lvXL++YURGxsb+4PZzwOdFQ9JETKLDRsbGxs7LxvyxtNVxUleFGFjY2N/AjtvG+2HAW1bKnncf9hLw8bGxn57dj4Vff/PfzLfxsbGxn5j9nd5bJo+7RA3bzzVCmxsbOyD2JsyIC8q2kHvbGycx4+NjY19Erv+o39R46ZtCbWv58XvsbGxsT+APUtss4WedmVnnzixsbGxz2PPEslV6S258iySh7/BxsbGPoid/OmPFhkX09XZUGHWqMLGxsb+NPbzR5Anv6RoydPbpkX14u1hY2Nj35Y9S1qzUWs+vi0m1eUjwMbGxj6JnS/EzFJUEmibqNpC6GE7CRsbG/tQdv6f/jb0vCzZjIcjFzY2NvZx7HwF56p0NStXZlcYzkOwsbGxb8huR7CzszZrN7MxQ7SphI2NjX1zdr4W0y7ftEXOrJhpz8LGxsY+lZ0npLZIyIcNReibu2BjY2MfzW4v144N2jWgpESpG1jY2NjYB7HbEDdJqx02zBLVcNiAjY2NfQQ7bx5tGkybUiQ58tIFGxsb+yR2HsrsoWzSVTIYaCPBxsbGPom9TxuzkW1LmnWEXrxnbGxs7IPYw9plNADepJ/82xdnYWNjYx/EbsNKUl2++tNmk3YYULwSbGxs7Nuyk4DaplLbltokxbxMethUwsbGxr45e3b7vNGzSXUF4NqFS2xsbOzbsvMb7IuT9r717DoxYmNjYx/Hzls8szFAe/1NwyuKGRsbG/sD2DmsbQNtiop2/FwnMGxsbOxbsWcLNHlZMjt39vjyUgcbGxv7JPasl54v4mw+t02uthGGjY2NfRI7b9bMnt/36MjvVS/rYGNjYx/K3iSGPPG0v9k/7ofxY2NjY38we7+sM1v9aQuhYiqCjY2N/cHsdgSbLwNdNSqOVnawsbGxj2DnS42zsPIFoM0yUD60wMbGxj6JnQ9625PzB5TfPW8tXbC+g42Njf3u7H/MXdmF8B420gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

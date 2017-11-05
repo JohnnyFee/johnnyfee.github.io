@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Rx Java Error Handling | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="java,rx,rxjava">
+    <meta name="description" content="Error HandlingIn RxJava, failures are just another type of notification. Every Observable&amp;lt;T&amp;gt; is a sequence of events of type T optionally followed by completion or error notification. This means">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rx Java Error Handling">
+<meta property="og:url" content="http://blog.inching.org/RxJava/2016-12-12-rx-java-error-handling.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="Error HandlingIn RxJava, failures are just another type of notification. Every Observable&amp;lt;T&amp;gt; is a sequence of events of type T optionally followed by completion or error notification. This means">
+<meta property="og:updated_time" content="2017-11-05T05:25:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Rx Java Error Handling">
+<meta name="twitter:description" content="Error HandlingIn RxJava, failures are just another type of notification. Every Observable&amp;lt;T&amp;gt; is a sequence of events of type T optionally followed by completion or error notification. This means">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Rx Java Error Handling</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Rx Java Error Handling</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-12T06:50:00.000Z" itemprop="datePublished" class="page-time">
+  2016-12-12
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Error-Handling"><span class="post-toc-text">Error Handling</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Replacing-errors-with-a-fixed-result-using-onErrorReturn"><span class="post-toc-text">Replacing errors with a fixed result using onErrorReturn()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Lazily-computing-fallback-value-using-onErrorResumeNext"><span class="post-toc-text">Lazily computing fallback value using onErrorResumeNext()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Timing-Out-When-Events-Do-Not-Occur"><span class="post-toc-text">Timing Out When Events Do Not Occur</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Retrying-After-Failures"><span class="post-toc-text">Retrying After Failures</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Retrying-by-using-delay-and-limited-attempts"><span class="post-toc-text">Retrying by using delay and limited attempts</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Monitoring-and-Debugging"><span class="post-toc-text">Monitoring and Debugging</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#doOn…-Callbacks"><span class="post-toc-text">doOn…() Callbacks</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Measuring-and-Monitoring"><span class="post-toc-text">Measuring and Monitoring</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Unchecked异常"><span class="post-toc-text">Unchecked异常</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Checked异常"><span class="post-toc-text">Checked异常</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#异常的屏蔽"><span class="post-toc-text">异常的屏蔽</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-rx-java-error-handling"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Rx Java Error Handling</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-12-12 14:50:00" datetime="2016-12-12T06:50:00.000Z"  itemprop="datePublished">2016-12-12</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Error-Handling"><a href="#Error-Handling" class="headerlink" title="Error Handling"></a>Error Handling</h2><p>In RxJava, failures are just another type of notification. Every <code>Observable&lt;T&gt;</code> is a sequence of events of type <code>T</code> optionally followed by completion or error notification. This means that errors are implicitly a part of every stream, and even though we are not required to handle them, there are plenty of operators that declaratively handle errors in a more elegant way. Also, an obtrusive <code>try</code>-<code>catch</code> around <code>Observable</code> will not capture any errors, they are only propagated through the aforementioned error notifications.</p>
+<p><code>subscribe()</code> only listening for values and not errors is often a bad sign and possibly missed errors. Even if you do not expect any exceptions to happen (which is rarely the case), at least place error logging that plugs into your logging framework:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger log = LoggerFactory.getLogger(My.class);</div><div class="line"></div><div class="line"><span class="comment">//....</span></div><div class="line">.subscribe(</div><div class="line">    System.out::println,</div><div class="line">    throwable -&gt; log.error(<span class="string">"That escalated quickly"</span>, throwable));</div></pre></td></tr></table></figure>
+<p>It is a good practice to surround a lambda expression within <code>create()</code> with a <code>try</code>-<code>catch()</code> block, just like in the previous example:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Observable.create(subscriber -&gt; &#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        subscriber.onNext(<span class="number">1</span> / <span class="number">0</span>);</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">        subscriber.onError(e);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>However, if you forget about the <code>try</code>-<code>catch</code> and let <code>create()</code> throw an exception, RxJava does its best and propagates such an exception as an <code>onError()</code> notification:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Observable.create(subscriber -&gt; subscriber.onNext(<span class="number">1</span> / <span class="number">0</span>));</div></pre></td></tr></table></figure>
+<p>The two preceding code examples are semantically equivalent. Exceptions thrown from <code>create()</code> are caught internally by RxJava and translated to error notification. Yet, it is advised to explicitly propagate exceptions via <code>subscriber.onError()</code> if possible. Even better, use <code>fromCallable()</code> ):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Observable.fromCallable(() -&gt; <span class="number">1</span> / <span class="number">0</span>);</div></pre></td></tr></table></figure>
+<p>All lambda expressions passed to higher-order functions like <code>map()</code> or <code>filter()</code> should be pure, whereas throwing an exception is an impure side effect. RxJava again does its best to handle unexpected exceptions here and the behavior is exactly what you would expect. If any operator in the pipeline throws an exception, it is translated to error notification and passed downstream.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">    .just(<span class="number">1</span>, <span class="number">0</span>)</div><div class="line">    .map(x -&gt; <span class="number">10</span> / x);</div><div class="line"></div><div class="line">Observable</div><div class="line">    .just(<span class="string">"Lorem"</span>, <span class="keyword">null</span>, <span class="string">"ipsum"</span>)</div><div class="line">    .filter(String::isEmpty);</div></pre></td></tr></table></figure>
+<p>Despite RxJava making an effort to fix broken user code, if you suspect your lambda expression to potentially throw an exception, make it explicit by using <code>flatMap()</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">    .just(<span class="number">1</span>, <span class="number">0</span>)</div><div class="line">    .flatMap(x -&gt; (x == <span class="number">0</span>) ?</div><div class="line">            Observable.error(<span class="keyword">new</span> ArithmeticException(<span class="string">"Zero :-("</span>)) :</div><div class="line">            Observable.just(<span class="number">10</span> / x)</div><div class="line">    );</div></pre></td></tr></table></figure>
+<p><code>flatMap()</code> is a very versatile operator, it does not need to manifest the next step of asynchronous computation. <code>Observable</code> is a container for values or errors, so if you want to declaratively express even very fast computation that can result in an error, wrapping it with <code>Observable</code> is a good choice, as well.</p>
+<p>This is fine: ordinary operators transform values flowing through but skip completion and error notifications, letting them flow downstream. This means that a single error from any upstream <code>Observable</code> will propagate with a cascading failure to all downstream subscribers.</p>
+<p>Again, this is fine if your business logic requires absolutely all steps to succeed. But sometimes you can safely ignore failures and replace them with fallback values or secondary sources.</p>
+<h2 id="Replacing-errors-with-a-fixed-result-using-onErrorReturn"><a href="#Replacing-errors-with-a-fixed-result-using-onErrorReturn" class="headerlink" title="Replacing errors with a fixed result using onErrorReturn()"></a>Replacing errors with a fixed result using onErrorReturn()</h2><p>The simplest error handling operator in RxJava is <code>onErrorReturn()</code>: when encountered, an error simply replaces it with a fixed value:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Income&gt; income = person</div><div class="line">    .flatMap(this::determineIncome)</div><div class="line">    .onErrorReturn(error -&gt; Income.no())</div><div class="line"></div><div class="line">//...</div><div class="line"></div><div class="line">private Observable&lt;Income&gt; determineIncome(Person person) &#123;</div><div class="line">    return Observable.error(new RuntimeException(&quot;Foo&quot;));</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Income &#123;</div><div class="line">    static Income no() &#123;</div><div class="line">        return new Income(0);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>onErrorReturn()</code> is a fluent and very pleasant to read alternative to a <code>try</code>-<code>catch</code> block that returns fixed result in the <code>catch</code> statement known from imperative style:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">return</span> determineIncome(Person person)</div><div class="line">&#125; <span class="keyword">catch</span>(Exception e) &#123;</div><div class="line">    <span class="keyword">return</span> Income.no();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Lazily-computing-fallback-value-using-onErrorResumeNext"><a href="#Lazily-computing-fallback-value-using-onErrorResumeNext" class="headerlink" title="Lazily computing fallback value using onErrorResumeNext()"></a>Lazily computing fallback value using onErrorResumeNext()</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Person&gt; person = <span class="comment">//...</span></div><div class="line">Observable&lt;Income&gt; income = person</div><div class="line">    .flatMap(<span class="keyword">this</span>::determineIncome)</div><div class="line">    .onErrorResumeNext(person.flatMap(<span class="keyword">this</span>::guessIncome));</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> Observable&lt;Income&gt; <span class="title">guessIncome</span><span class="params">(Person person)</span> </span>&#123;</div><div class="line">  <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The <code>onErrorResumeNext()</code> operator basically replaces error notification with another stream. If you subscribe to an an <code>Observable</code> guarded with <code>onErrorResumeNext()</code> in case of failure, RxJava transparently switches from main <code>Observable</code> to the fallback one, specified as an argument.</p>
+<p>Theoretically we can return a different fallback stream based on the exception message or type. The <code>onErrorResumeNext()</code> operator has an overloaded version that allows just that:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Income&gt; income = person</div><div class="line">    .flatMap(<span class="keyword">this</span>::determineIncome)</div><div class="line">    .onErrorResumeNext(th -&gt; &#123;</div><div class="line">        <span class="keyword">if</span> (th <span class="keyword">instanceof</span> NullPointerException) &#123;</div><div class="line">            <span class="keyword">return</span> Observable.error(th);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> person.flatMap(<span class="keyword">this</span>::guessIncome);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<h2 id="Timing-Out-When-Events-Do-Not-Occur"><a href="#Timing-Out-When-Events-Do-Not-Occur" class="headerlink" title="Timing Out When Events Do Not Occur"></a>Timing Out When Events Do Not Occur</h2><p><code>timeout()</code> operator that listens to the upstream <code>Observable</code>, constantly monitoring how much time elapsed since the last event or subscription. If it so happens that the silence between consecutive events is longer than a given period, the <code>timeout()</code> operator publishes an error notification that contains  <code>TimeoutException</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function">Observable&lt;Confirmation&gt; <span class="title">confirmation</span><span class="params">()</span> </span>&#123;</div><div class="line">    Observable&lt;Confirmation&gt; delayBeforeCompletion =</div><div class="line">        Observable</div><div class="line">            .&lt;Confirmation&gt;empty()</div><div class="line">            .delay(<span class="number">200</span>, MILLISECONDS);</div><div class="line">    <span class="keyword">return</span> Observable</div><div class="line">            .just(<span class="keyword">new</span> Confirmation())</div><div class="line">            .delay(<span class="number">100</span>, MILLISECONDS)</div><div class="line">            .concatWith(delayBeforeCompletion);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Now, let’s test drive the <code>timeout()</code> operator in its simplest overloaded version:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">confirmation()</div><div class="line">    .timeout(<span class="number">210</span>, MILLISECONDS)</div><div class="line">    .forEach(</div><div class="line">        System.out::println,</div><div class="line">        th -&gt; &#123;</div><div class="line">            <span class="keyword">if</span> ((th <span class="keyword">instanceof</span> TimeoutException)) &#123;</div><div class="line">                System.out.println(<span class="string">"Too long"</span>);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                th.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    );</div></pre></td></tr></table></figure>
+<p>The overloaded version of <code>timeout()</code> does just that: it accept two factories of <code>Observable</code>s, one marking the timeout of the first event, and the second one for each subsequent element. An example is worth a thousand words:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">nextSolarEclipse(LocalDate.of(<span class="number">2016</span>, SEPTEMBER, <span class="number">1</span>))</div><div class="line">    .timeout(</div><div class="line">        () -&gt; Observable.timer(<span class="number">1000</span>, TimeUnit.MILLISECONDS),</div><div class="line">        date -&gt; Observable.timer(<span class="number">100</span>, MILLISECONDS))</div></pre></td></tr></table></figure>
+<p>Here, the first <code>Observable</code> emits exactly one event after one second—this is the acceptable latency threshold for the first event. The second <code>Observable</code> is created for each event that appears on the stream and allows fine tuning of the timeout for the subsequent event.</p>
+<p>It is sometimes useful to also track the latency of each event, even if we do not timeout. The handy <code>timeInterval()</code> operator does just that: it replaces each event of type <code>T</code> with <code>TimeInterval&lt;T&gt;</code>  that encapsulates the event but also shows how much time has elapsed since the previous event (or subscription in case of first event):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable&lt;TimeInterval&lt;LocalDate&gt;&gt; intervals =</div><div class="line">        nextSolarEclipse(LocalDate.of(2016, JANUARY, 1))</div><div class="line">                .timeInterval();</div></pre></td></tr></table></figure>
+<p>Apart from <code>getValue()</code> that returns <code>LocalDate</code>, <code>TimeInterval&lt;LocalDate&gt;</code> also has <code>getIntervalInMilliseconds()</code> but it is easier to see how it looks studying the output of the preceding program after subscription. You can clearly see that it took 533 milliseconds for the first event to arrive but only around 50 milliseconds for each one subsequently:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">TimeInterval [intervalInMilliseconds=533, value=2016-03-09]</div><div class="line">TimeInterval [intervalInMilliseconds=49, value=2016-09-01]</div><div class="line">TimeInterval [intervalInMilliseconds=50, value=2017-02-26]</div><div class="line">TimeInterval [intervalInMilliseconds=50, value=2017-08-21]</div><div class="line">TimeInterval [intervalInMilliseconds=50, value=2018-02-15]</div><div class="line">TimeInterval [intervalInMilliseconds=50, value=2018-07-13]</div><div class="line">TimeInterval [intervalInMilliseconds=50, value=2018-08-11]</div><div class="line">TimeInterval [intervalInMilliseconds=50, value=2019-01-06]</div><div class="line">TimeInterval [intervalInMilliseconds=51, value=2019-07-02]</div><div class="line">TimeInterval [intervalInMilliseconds=49, value=2019-12-26]</div></pre></td></tr></table></figure>
+<p>The <code>timeout()</code> operator has yet another overloaded version that accepts the fallback <code>Observable</code> replacing the original source in case of error. It is very similar in behavior to <code>onErrorResumeNext()</code>.</p>
+<h2 id="Retrying-After-Failures"><a href="#Retrying-After-Failures" class="headerlink" title="Retrying After Failures"></a>Retrying After Failures</h2><p>The simplest version of the <code>retry()</code> operator resubscribes to a failed <code>Onservable</code> hoping that it will keep producing normal events rather than failures. For educational purposes, we will create an <code>Observable</code> that misbehaves severely:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function">Observable&lt;String&gt; <span class="title">risky</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Observable.fromCallable(() -&gt; &#123;</div><div class="line">        <span class="keyword">if</span> (Math.random() &lt; <span class="number">0.1</span>) &#123;</div><div class="line">            Thread.sleep((<span class="keyword">long</span>) (Math.random() * <span class="number">2000</span>));</div><div class="line">            <span class="keyword">return</span> <span class="string">"OK"</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Transient"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>In 90 percent of the cases, subscribing to <code>risky()</code> ends with a <code>RuntimeException</code>. If you somehow make it to the <code>&quot;OK&quot;</code> branch an artificial delay between zero and two seconds is injected. Such a risky operation will serve as a demonstration of <code>retry()</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">risky()</div><div class="line">    .timeout(<span class="number">1</span>, SECONDS)</div><div class="line">    .doOnError(th -&gt; log.warn(<span class="string">"Will retry"</span>, th))</div><div class="line">    .retry()</div><div class="line">    .subscribe(log::info);</div></pre></td></tr></table></figure>
+<p>The behavior of <code>retry()</code> is fairly straightforward: it pushes all events and completion notification downstream, but not <code>onError()</code>. The error notification is swallowed (so no exception is logged whatsoever), thus we use <code>doOnError()</code> callback. Every time <code>retry()</code> encounters a simulated <code>RuntimeException</code> or <code>TimeoutException</code>, it tries subscribing again.</p>
+<p>A word of caution here: if your <code>Observable</code> is cached or otherwise guaranteed to always return the same sequence of elements, <code>retry()</code> will not work:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">risky().cached().retry()  //BROKEN</div></pre></td></tr></table></figure>
+<p>If <code>risky()</code> emits errors once, it will continue emitting them forever, no matter how many times you resubscribe. To overcome this issue, you can delay the creation of <code>Observable</code> even further by using ) <code>defer()</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">    .defer(() -&gt; risky())</div><div class="line">    .retry()</div></pre></td></tr></table></figure>
+<p>Even if an <code>Observable</code> returned from <code>risky()</code> is cached, <code>defer()</code> calls <code>risky()</code> multiple times, possibly getting a new <code>Observable</code> each time.</p>
+<h3 id="Retrying-by-using-delay-and-limited-attempts"><a href="#Retrying-by-using-delay-and-limited-attempts" class="headerlink" title="Retrying by using delay and limited attempts"></a>Retrying by using delay and limited attempts</h3><p>Basically, parameterless <code>retry()</code> is a <code>while</code> loop with a <code>try</code> block within it, followed by an empty <code>catch</code>.</p>
+<p>First, we should limit the number of attempts, which happens to be built in:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">risky()</div><div class="line">    .timeout(<span class="number">1</span>, SECONDS)</div><div class="line">    .retry(<span class="number">10</span>)</div></pre></td></tr></table></figure>
+<p>The integer parameter to <code>retry()</code> instructs how many times to resubscribe, thus <code>retry(0)</code> is equivalent to no retry at all. If the upstream <code>Observable</code> failed for the tenth time, the last seen exception is propagated downstream.</p>
+<p>A more flexible version of <code>retry()</code> leaves you with a decision about retry, based on the attempt number and the actual exception:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">risky()</div><div class="line">    .timeout(<span class="number">1</span>, SECONDS)</div><div class="line">    .retry((attempt, e) -&gt;</div><div class="line">        attempt &lt;= <span class="number">10</span> &amp;&amp; !(e <span class="keyword">instanceof</span> TimeoutException))</div></pre></td></tr></table></figure>
+<p>This version not only limits the number of resubscription attempts to 10, but also drops retrying prematurely if the exception happens to be <code>TimeoutException</code>.</p>
+<p>If failures are transient, waiting a little bit prior to a resubscription attempt sounds like a good idea. The <code>retry()</code> operator does not provide such a possibility out of the box, but it is relatively easy to implement. A more robust version of <code>retry()</code> called <code>retryWhen()</code> takes a function receiving an <code>Observable</code> of failures. Every time an upstream fails, this <code>Observable</code> emits a <code>Throwable</code>. Our responsibility is to transform this <code>Observable</code> in such a way that it emits some arbitrary event when we want to retry (hence the name):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">risky()</div><div class="line">    .timeout(<span class="number">1</span>, SECONDS)</div><div class="line">    .retryWhen(failures -&gt; failures.delay(<span class="number">1</span>, SECONDS))</div></pre></td></tr></table></figure>
+<p>The preceding example of <code>retryWhen()</code> receives an <code>Observable</code> that emits a <code>Throwable</code> every time the upstream fails. We simply delay that event by one second so that it appears in the resulting stream one second later. This is a signal to <code>retryWhen()</code> that it should attempt retry. If we simply returned the same stream (<code>retryWhen(x -&gt; x)</code>), <code>retryWhen()</code> would behave exactly like <code>retry()</code>, resubscribing immediately when an error occurs. With <code>retryWhen()</code>, we can also easily simulate <code>retry(10)</code> (well, almost… keep reading):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.retryWhen(failures -&gt; failures.take(10))</div></pre></td></tr></table></figure>
+<p>We receive an event each time a failure occurs. The stream we return is supposed to emit an arbitrary event when we want to retry. Thus, we simply forward the first 10 failures, causing each one of them to be retried immediately.</p>
+<p>But what happens when eleventh failure occurs in a <code>failures</code> <code>Observable</code>? This is where it becomes tricky. The <code>take(10)</code> operator emits an <code>onComplete</code> event immediately following the 10th failure. Therefore, after the 10th retry, <code>retryWhen()</code> receives a completion event. This completion event is interpreted as a signal to stop retrying and complete downstream. It means that after 10 failed attempts, we simply emit nothing and complete. However, if we complete <code>Observable</code> returned inside <code>retryWhen()</code> with an error, this error will be propagated downstream.</p>
+<p>In other words, as long as we emit any event from an <code>Observable</code> inside <code>retryWhen()</code>, they are interpreted as retry requests. However, if we send a completion or error notification, retry is abandoned and this completion or error is passed downstream. Doing just <code>failures.take(10)</code> <em>will</em> retry 10 times, but in case of yet another failure, we do not propagate the last error but the successful completion, instead. Let’s have a look at it:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ATTEMPTS = <span class="number">11</span>;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">risky().retryWhen(failures -&gt; failures.zipWith(Observable.range(<span class="number">1</span>, ATTEMPTS), (err, attempt) -&gt; &#123;</div><div class="line">                    <span class="keyword">return</span> attempt &lt; ATTEMPTS ?</div><div class="line">                            Observable.timer(<span class="number">1</span>, SECONDS) :</div><div class="line">                            Observable.error(err);</div><div class="line">                &#125;).flatMap(x -&gt; x)</div><div class="line">        );</div></pre></td></tr></table></figure>
+<p>This looks quite complex, but it is also really powerful. We <code>zip</code> failures with sequence numbers from 1 to 11. We would like to perform as many as 10 retry attempts, so if the attempt sequence number is smaller than 11, we return <code>timer(1, SECONDS)</code>. The <code>retryWhen()</code> operator will capture this event and retry one second after failure. However, when the 10th retry ends with a failure, we return an <code>Observable</code> with that error, completing the retry mechanism with the last seen exception.</p>
+<p>This gives us a lot of flexibility. We can stop retrying when a certain exception appears or when too many attempts were already performed. Moreover, we can adjust the delay time between attempts! For example, the first retry can appear immediately but the delays between subsequent retries should grow exponentially:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">.retryWhen(failures -&gt; failures</div><div class="line">    .zipWith(Observable.range(<span class="number">1</span>, ATTEMPTS),</div><div class="line">         <span class="keyword">this</span>::handleRetryAttempt)</div><div class="line">    .flatMap(x -&gt; x)</div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line"><span class="function">Observable&lt;Long&gt; <span class="title">handleRetryAttempt</span><span class="params">(Throwable err, <span class="keyword">int</span> attempt)</span> </span>&#123;</div><div class="line">    <span class="keyword">switch</span> (attempt) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> Observable.just(<span class="number">42L</span>);</div><div class="line">        <span class="keyword">case</span> ATTEMPTS:</div><div class="line">            <span class="keyword">return</span> Observable.error(err);</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">long</span> expDelay = (<span class="keyword">long</span>) Math.pow(<span class="number">2</span>, attempt - <span class="number">2</span>);</div><div class="line">            <span class="keyword">return</span> Observable.timer(expDelay, SECONDS);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Monitoring-and-Debugging"><a href="#Monitoring-and-Debugging" class="headerlink" title="Monitoring and Debugging"></a>Monitoring and Debugging</h2><p>Gives you few tips on how to make monitoring and debugging easier in applications using RxJava.</p>
+<h3 id="doOn…-Callbacks"><a href="#doOn…-Callbacks" class="headerlink" title="doOn…() Callbacks"></a>doOn…() Callbacks</h3><p>Every <code>Observable</code> has a set of callback methods that you can use to peek into various events, namely:* <code>doOnCompleted()</code></p>
+<ul>
+<li><code>doOnEach()</code></li>
+<li><code>doOnError()</code></li>
+<li><code>doOnNext()</code></li>
+<li><code>doOnRequest()</code></li>
+<li><code>doOnSubscribe()</code></li>
+<li><code>doOnTerminate()</code></li>
+<li><code>doOnUnsubscribe()</code></li>
+</ul>
+<p>What they all have in common is that they are not allowed to alter the state of an <code>Observable</code> in any way and they all return the same <code>Observable</code>, which makes them an ideal place to sprinkle some logging logic.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Instant&gt; timestamps = Observable</div><div class="line">    .fromCallable(() -&gt; dbQuery())</div><div class="line">    .doOnSubscribe(() -&gt; log.info(<span class="string">"subscribe()"</span>));</div><div class="line"></div><div class="line">timestamps</div><div class="line">    .zipWith(timestamps.skip(<span class="number">1</span>), Duration::between)</div><div class="line">    .map(Object::toString)</div><div class="line">    .subscribe(log::info);</div></pre></td></tr></table></figure>
+<p><code>zipWith()</code> actually subscribes to all of the underlying streams, effectively subscribing to the same <code>timestamps</code> <code>Observable</code> twice. This is a problem that you can discover by observing <code>doOnSubscribe()</code> is being invoked twice.</p>
+<p>Speaking of <code>zip()</code>, thanks to backpressure it no longer buffers faster stream infinitely, waiting for a slower one to emit events.<br>Instead, it asks for a fixed batch of values from each <code>Observable</code>, throwing <code>MissingBackpressureException</code> if it received more:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.doOnSubscribe(() -&gt; log.info(&quot;subscribe()&quot;))</div><div class="line">.doOnRequest(c -&gt; log.info(&quot;Requested &#123;&#125;&quot;, c))</div><div class="line">.doOnNext(instant -&gt; log.info(&quot;Got: &#123;&#125;&quot;, instant));</div></pre></td></tr></table></figure>
+<p><code>doOnRequest()</code> logs <code>Requested 128</code>, the value chosen by <code>zip</code> operator.<br>Even when the source is infinite or very large, we should see at most 128 messages such as <code>Got: ...</code> afterward from a well-behaving <code>Observable</code>.</p>
+<p>You <strong>CANNOT</strong> use <code>doOnError()</code> for any error handling; it is for logging only. It does not consume the error notification, which keeps propagating downstream:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Observable&lt;String&gt; obs = Observable</div><div class="line">  .&lt;String&gt;error(<span class="keyword">new</span> RuntimeException(<span class="string">"Swallowed"</span>))</div><div class="line">  .doOnError(th -&gt; log.warn(<span class="string">"onError"</span>, th))</div><div class="line">  .onErrorReturn(th -&gt; <span class="string">"Fallback"</span>);</div></pre></td></tr></table></figure>
+<p>As clean as <code>onErrorReturn()</code> looks, it is very easy to swallow exceptions with it. It does provide the exception that we want to replace with a fallback value, but logging it is our responsibility. To keep functions small and composable, logging the error first in <code>doOnError()</code> and then handling the exception in the following line silently is a little bit more robust. Forgetting to log the exception is rarely a good idea and must be a careful decision, not an oversight.</p>
+<p><code>doOnEach()</code>: This is invoked for each <code>Notification</code>, namely <code>onNext()</code>, <code>onCompleted()</code>, and <code>onError()</code>. It can accept either a lambda invoked for each <code>Notofication</code> or an  <code>Observer</code>.</p>
+<p><code>doOnTerminate()</code>: This is invoked when either <code>onCompleted()</code> or <code>onError()</code> occurs. It is impossible to distinguish between them, so it might be better to use <code>doOnCompleted()</code> and <code>doOnError()</code> independently.</p>
+<h3 id="Measuring-and-Monitoring"><a href="#Measuring-and-Monitoring" class="headerlink" title="Measuring and Monitoring"></a>Measuring and Monitoring</h3><p>TODO</p>
+<p>From <a href="http://www.jianshu.com/p/916b72778145" target="_blank" rel="external">RxJava中的错误处理 - 简书</a></p>
+<p>在RxJava中我们可以很方便地处理异常，只要加上<code>onError</code>即可。</p>
+<p>不过，如果异常发生在操作符内部，比如<code>flatMap</code>，那我们怎么把这个异常传递给<code>onError</code>呢。</p>
+<blockquote>
+<p>Checked异常和Unchecked异常</p>
+<ul>
+<li>Checked异常必须被显式地捕获或者传递，而unchecked异常则可以不必捕获或抛出。</li>
+<li>Checked异常继承java.lang.Exception类。Unchecked异常继承自java.lang.RuntimeException类。</li>
+</ul>
+</blockquote>
+<h2 id="Unchecked异常"><a href="#Unchecked异常" class="headerlink" title="Unchecked异常"></a>Unchecked异常</h2><p>一般情况下，unchecked异常会自动传递给<code>onError</code>。例如以下代码可以打印出“Error!”。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="string">"Hello!"</span>)</div><div class="line">          .map(input -&gt; &#123;<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException();&#125;)</div><div class="line">          .subscribe(</div><div class="line">              System.out::println,</div><div class="line">              error -&gt; System.out.println(<span class="string">"Error!"</span>)</div><div class="line">          );</div></pre></td></tr></table></figure>
+<p>也有例外的情况，那就是… 那些非常严重的错误，以致于RxJava都不能继续运行了。比如<code>StackOverflowError</code>，这些异常被认为是致命的，对它们来说，调用<code>onError</code>毫无意义，并没什么用。你可以用<a href="http://reactivex.io/RxJava/javadoc/rx/exceptions/Exceptions.html#throwIfFatal(java.lang.Throwable" target="_blank" rel="external"><code>Exceptions.throwIfFatal</code></a>)来过滤掉这些致命的异常并重新抛出，不发射关于它们的通知。</p>
+<h2 id="Checked异常"><a href="#Checked异常" class="headerlink" title="Checked异常"></a>Checked异常</h2><p>尽管RxJava有自己的异常处理机制，不过Checked异常还是必须由你的代码来处理，也就是说，还是要自己加<code>try-catch</code>。</p>
+<p>假设我们用到这样方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">String <span class="title">transform</span><span class="params">(String input)</span> <span class="keyword">throws</span> IOException</span>;</div></pre></td></tr></table></figure>
+<p>我们可以把Checked异常转换为Unchecked异常，像这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="string">"Hello!"</span>)</div><div class="line">    .map(input -&gt; &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">return</span> transform(input);</div><div class="line">        &#125; <span class="keyword">catch</span> (Throwable t) &#123;</div><div class="line">            <span class="keyword">throw</span> Exceptions.propagate(t);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p><code>Exceptions.propagate()</code>只是简单地做了这样一件事：如果异常是Checked异常，那就把它包装成Unchecked异常。</p>
+<p>而对于像<code>flatMap</code>这样返回Observable对象的操作，可以直接返回<code>Observable.error()</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="string">"Hello!"</span>)</div><div class="line">    .flatMap(input -&gt; &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">return</span> Observable.just(transform(input));</div><div class="line">        &#125; <span class="keyword">catch</span> (Throwable t) &#123;</div><div class="line">            <span class="keyword">return</span> Observable.error(t);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<h2 id="异常的屏蔽"><a href="#异常的屏蔽" class="headerlink" title="异常的屏蔽"></a>异常的屏蔽</h2><p>很多RxJava初学者都犯了一个错误，过度地使用<code>onError</code>，其实<code>onError</code>应该在数据无法继续处理下去时才使用。例如，在使用<a href="https://github.com/square/retrofit" target="_blank" rel="external">Retrofit 1</a>的时候，响应的状态码为非200的结果调用<code>onError</code>，这样，我们在处理非200的响应结果时就会变得十分麻烦。这个问题在Retrofit 2已经解决了，现在可以通过<code>Observable&lt;Response&lt;Type&gt;&gt;</code>和<code>Observable&lt;Result&lt;Type&gt;&gt;</code>，来处理<code>onNext</code>中的非200的结果返回。</p>
+<p>也就是说，通常，你可以在发生错误的时候给<code>onNext</code>一个错误的标识，然后直接在<code>onNext</code>中处理问题，而不是跳过代码进入<code>onError</code>，这样还是可以不中断你的数据流，继续运行你的代码。</p>
+<p>如何屏蔽异常而不把异常抛给<code>onError</code>，以下有两种选择：</p>
+<ul>
+<li><code>onErrorReturn()</code>，在遇到错误时发射一个特定的数据</li>
+<li><code>onErrorResumeNext()</code>，在遇到错误时发射一个数据序列</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="string">"Request data..."</span>)</div><div class="line">    .map(<span class="keyword">this</span>::dangerousOperation)</div><div class="line">    .onErrorReturn(error -&gt; <span class="string">"Empty result"</span>);</div></pre></td></tr></table></figure>
+<p>当dangerousOperation产生异常时，不会触发<code>onError</code>，而是返回字符串”Empty result”。</p>
+<p>当上游的<code>Observable</code>观察到异常通知(<code>onError</code>)时，通过<code>onErrorReturn</code>或<code>onErrorResumeNext</code>来把<code>onError</code>转换成与下游序列有所区分的数据。</p>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://www.introtorx.com/Content/v1.0.10621.0/11_AdvancedErrorHandling.html" target="_blank" rel="external">Intro to Rx - Advanced error handling</a></li>
+<li><a href="https://xgrommx.github.io/rx-book/content/getting_started_with_rxjs/creating_and_querying_observable_sequences/error_handling.html" target="_blank" rel="external">Error Handling With Observable Sequences</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-11-05T05:25:34.000Z" itemprop="dateUpdated">2017-11-05 13:25:34</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/RxJava/2016-12-12-rx-java-error-handling.html" target="_blank" rel="external">http://blog.inching.org/RxJava/2016-12-12-rx-java-error-handling.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rx/">rx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rxjava/">rxjava</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2016-12-12-rx-java-error-handling.html&title=《Rx Java Error Handling》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2016-12-12-rx-java-error-handling.html&title=《Rx Java Error Handling》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2016-12-12-rx-java-error-handling.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Rx Java Error Handling》 — Balance&url=http://blog.inching.org/RxJava/2016-12-12-rx-java-error-handling.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2016-12-12-rx-java-error-handling.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/RxJava/2016-12-13-rx-java-backpressure.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">RxJava Backpressure</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Angular/Angular2/2016-12-08-angular2-component.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Angular2 Component</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2016-12-12-rx-java-error-handling.html&title=《Rx Java Error Handling》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2016-12-12-rx-java-error-handling.html&title=《Rx Java Error Handling》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2016-12-12-rx-java-error-handling.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Rx Java Error Handling》 — Balance&url=http://blog.inching.org/RxJava/2016-12-12-rx-java-error-handling.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2016-12-12-rx-java-error-handling.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqklEQVR42u3aQW7jMBAEwPz/07vXBQLL3TNkYixKJ8OWJZYO5KiHX1/x8efF8XzOv99///z86/N1Dh94eHh4h4b+fLPnQbQPIr9XPmY8PDy827xXM2py6dlCsnm4yZjx8PDwPp/XFsHJYoCHh4f3f/CSf80m+vxh4eHh4X0CLxnQJgJuQ438OseyFjw8PLyYNxvi736+0t/Dw8PDW3fVk4I4n9D3kW49Wjw8PLwLvHzCbdv5s0Ahj3GLceLh4eFd4+1b+Jvpvo0t8nPw8PDwbvDa9/o8kJ0FuPlDPBDg4uHh4R3lbTZX5dN9frXkURZIPDw8vBFv1qrP8ftid3UdPDw8vMu8TburLXOTq+VLyJv+Hh4eHt4FXlvUtiXvhrQqu/Hw8PCu8fI/rFr4ZVTRLgN4eHh4P8NrX/iLcjYOW/PiexYT4+Hh4d3gtQFu+wjaaHgGK0JePDw8vAUv31nQxhB5ad7uaEh49cYJPDw8vJKXgNspvm2Gzc5/8y88PDy8C7z9NJ0Pq67rR5uuoi4fHh4e3oL3HATMotvZOXlUUYwZDw8P7wJvBttkxvXg4oXk5a94eHh4R3ntJJ5P60mpnX/fBs1vGmB4eHh4a96NhlaxBarNTmbFNB4eHt4h3mZws2h1tpxsAg48PDy827y8NTXbyLXfXlA33vDw8PB+kNeW123brB1Juy0MDw8P7zbv7BardirfLE5vzsTDw8M7ytu/9udx8GaTwWy5wsPDw7vBmy0Gm6ViFtrmD2h44OHh4ZW8/aXbLQJtGJE8xGFhjYeHh7fgtQXuPni9soJ9vyYeHh7ex/Dyb3JMfseiXYeHh4f3Abz8xnlhnY8hD3Px8PDwbvPyptdsys4XgzZ0iBYGPDw8vKO89vU+B7TNsM0Sciy9wMPDw3s6/gLPBbtgnreB+gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>QT Webkit——JavaScript Buffer | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,qt,buffer">
+    <meta name="description" content="Buffer在浏览器端，在使用类似 toots/buffer-browserify 的类库或者使用 ArrayBuffer - Web API 接口时，我们要考虑如何数据传递给 QT 和 QT 用什么类型来接收。
+我们以toots/buffer-browserify 为例，讨论以下几种方法将二进制数据传递给 QT HexString、JSON、Base64、Array 的实现和性能。
+QT 返回">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QT Webkit——JavaScript Buffer">
+<meta property="og:url" content="http://blog.inching.org/Qt/2014-06-19-qt-webkit-buffer.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="Buffer在浏览器端，在使用类似 toots/buffer-browserify 的类库或者使用 ArrayBuffer - Web API 接口时，我们要考虑如何数据传递给 QT 和 QT 用什么类型来接收。
+我们以toots/buffer-browserify 为例，讨论以下几种方法将二进制数据传递给 QT HexString、JSON、Base64、Array 的实现和性能。
+QT 返回">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QT Webkit——JavaScript Buffer">
+<meta name="twitter:description" content="Buffer在浏览器端，在使用类似 toots/buffer-browserify 的类库或者使用 ArrayBuffer - Web API 接口时，我们要考虑如何数据传递给 QT 和 QT 用什么类型来接收。
+我们以toots/buffer-browserify 为例，讨论以下几种方法将二进制数据传递给 QT HexString、JSON、Base64、Array 的实现和性能。
+QT 返回">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">QT Webkit——JavaScript Buffer</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">QT Webkit——JavaScript Buffer</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-06-18T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-06-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Qt/">Qt</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Buffer"><span class="post-toc-text">Buffer</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现"><span class="post-toc-text">实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Array"><span class="post-toc-text">Array</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Json"><span class="post-toc-text">Json</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Base64"><span class="post-toc-text">Base64</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HexString"><span class="post-toc-text">HexString</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#性能测试"><span class="post-toc-text">性能测试</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#测试方法"><span class="post-toc-text">测试方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#测试结果"><span class="post-toc-text">测试结果</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#结论"><span class="post-toc-text">结论</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-qt-webkit-buffer"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">QT Webkit——JavaScript Buffer</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-06-19 00:00:00" datetime="2014-06-18T16:00:00.000Z"  itemprop="datePublished">2014-06-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Qt/">Qt</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h2><p>在浏览器端，在使用类似 <a href="https://github.com/toots/buffer-browserify" target="_blank" rel="external">toots/buffer-browserify</a> 的类库或者使用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/ArrayBuffer" target="_blank" rel="external">ArrayBuffer - Web API 接口</a>时，我们要考虑如何数据传递给 QT 和 QT 用什么类型来接收。</p>
+<p>我们以<a href="https://github.com/toots/buffer-browserify" target="_blank" rel="external">toots/buffer-browserify</a> 为例，讨论以下几种方法将二进制数据传递给 QT HexString、JSON、Base64、Array 的实现和性能。</p>
+<p>QT 返回 QByteArray 时，JavaScript 端接收到的类型为 <code>Uint8ClampedArray</code>，我们可以很轻松地将这个对象转化为 <code>Buffer</code>。</p>
+<a id="more"></a>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>在以下代码中 <code>bufferTestNative</code> 为 QT 注册给 Webkit 的一个本地对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 数组定义</span></div><div class="line"><span class="keyword">var</span> array = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(<span class="number">1024</span>);</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</div><div class="line">    array[i] = i;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// buffer定义</span></div><div class="line"><span class="keyword">var</span> buffer = <span class="keyword">new</span> Buffer(array);</div></pre></td></tr></table></figure>
+<h3 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h3><p>在浏览器上通过 <code>Uint8ClampedArray</code> 或者 <code>Uint8Array</code> 类型将数据传递给 QT，在 QT 端使用 <code>QByteArray</code> 来接收数据，这是非常纯粹的方式。</p>
+<p>注意：如果你的浏览器使用的不是 <code>Uint8ClampedArray</code>、<code>Uint8Array</code> 着两种类型，而是普通的 Array，则在 QT 端通过 <code>QByteArray</code> 类型接收到的数据是错误的。所以，当在浏览器端传递的是普通的 Array 对象时，在QT端需要使用 <code>QVariantList</code> 来接收 <code>double</code> 类型的列表。</p>
+<p>JavaScript:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bufferTestNative.fromArray(array);</div></pre></td></tr></table></figure>
+<p>QT:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">QByteArray BufferTest::fromArray(QByteArray data)&#123;</div><div class="line">    <span class="keyword">return</span> data;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Json"><a href="#Json" class="headerlink" title="Json"></a>Json</h3><p>浏览器端，通过 <code>Buffer.toJSON</code> 方法转化为一个可 JSON 化的对象，该对象有两个字段，分别为 <code>type</code> 和 <code>data</code>，其中 <code>data</code> 为普通的 Array 对象。所以，在 QT 端应用 <code>QVariantMap</code> 类型来接收该对象。然后取其中的 <code>data</code> 字段，<code>data</code> 为 <code>double</code> 类型的数组，我们需要额外的循环将其转化为 <code>QByteArray</code> 对象。</p>
+<p>理论上说，我们可以修改 JavaScript 的 Buffer 模块的 <code>toJson()</code> 方法， 把 <code>data</code> 修改为 <code>Uint8ClampedArray</code> 或者 <code>Uint8Array</code> 类型，暂未实践。</p>
+<p>JavaScript:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bufferTestNative.fromArray(buffer.toJSON());</div></pre></td></tr></table></figure>
+<p>QT:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">QByteArray BufferTest::fromJson(QVariantMap json)&#123;</div><div class="line">    QVariant data = json.value(<span class="string">"data"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> buffer = data.toList();</div><div class="line"></div><div class="line">    <span class="comment">// conver to ByteArray</span></div><div class="line">    QByteArray ba;</div><div class="line">    <span class="keyword">int</span> length = buffer.length();</div><div class="line">    ba.resize(length);</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;length;i++)&#123;</div><div class="line">        ba[i] = (<span class="keyword">char</span>)buffer.at(i).toInt();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    qDebug() &lt;&lt; ba.length() &lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> ba;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h3><p>JavaScript:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bufferTestNative.fromBase64(buffer.toString(<span class="string">'base64'</span>));</div></pre></td></tr></table></figure>
+<p>QT:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">QByteArray BufferTest::fromBase64(QString base64)&#123;</div><div class="line">    QByteArray ba = QByteArray::fromBase64(base64.toLocal8Bit());</div><div class="line">    return ba;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="HexString"><a href="#HexString" class="headerlink" title="HexString"></a>HexString</h3><p>JavaScript:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bufferTestNative.fromHexString(buffer.toString(&apos;hex&apos;));</div></pre></td></tr></table></figure>
+<p>QT:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">QByteArray BufferTest::fromHexString(QString hexString)&#123;</div><div class="line">    QByteArray ba = QByteArray::fromHex(hexString.toLocal8Bit());</div><div class="line">    return ba;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h2><h3 id="测试方法"><a href="#测试方法" class="headerlink" title="测试方法"></a>测试方法</h3><p>我们用以下方法来分别测试每种方式的性能，分别运行 N 次，每次将 1k 的数据传给 QT，记录 N 次运行的时间消耗。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> batch = <span class="function"><span class="keyword">function</span> (<span class="params">tagName</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> <span class="keyword">from</span> = moment();</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = TESTTIMES; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">        <span class="keyword">if</span> (tagName === <span class="string">'fromArray'</span>) &#123;</div><div class="line">            bufferTestNative.fromArray(array);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (tagName === <span class="string">'fromBase64'</span>) &#123;</div><div class="line">            bufferTestNative.fromBase64(buffer.toString(<span class="string">'base64'</span>));</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (tagName === <span class="string">'fromHexString'</span>) &#123;</div><div class="line">            bufferTestNative.fromHexString(buffer.toString(<span class="string">'hex'</span>));</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (tagName === <span class="string">'fromJson'</span>) &#123;</div><div class="line">            bufferTestNative.fromJson(buffer.toJSON());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> to = moment();</div><div class="line">    <span class="keyword">var</span> duration = to.diff(<span class="keyword">from</span>);</div><div class="line">    <span class="built_in">console</span>.log(tagName + <span class="string">' took '</span> + duration + <span class="string">'ms'</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>其中，时间差计算使用的是 <a href="https://github.com/moment/moment" target="_blank" rel="external">moment/moment</a>。</p>
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><p>N 次运行的时间消耗，单位为 ms。</p>
+<table>
+<thead>
+<tr>
+<th>运行次数/测试项</th>
+<th>Array</th>
+<th>JSON</th>
+<th>Base64</th>
+<th>HexString</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000</td>
+<td>68</td>
+<td>3286</td>
+<td>510</td>
+<td>1058</td>
+</tr>
+<tr>
+<td>2000</td>
+<td>114</td>
+<td>5930</td>
+<td>1246</td>
+<td>2767</td>
+</tr>
+<tr>
+<td>5000</td>
+<td>217</td>
+<td>11367</td>
+<td>3133</td>
+<td>5857</td>
+</tr>
+</tbody>
+</table>
+<p>加上将接收到的数据转化为 Buffer，单位为 ms。</p>
+<pre><code>new Buffer(bufferTestNative.fromArray(array));
+</code></pre><table>
+<thead>
+<tr>
+<th>运行次数/测试项</th>
+<th>Array</th>
+<th>JSON</th>
+<th>Base64</th>
+<th>HexString</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000</td>
+<td>140</td>
+<td>3416</td>
+<td>841</td>
+<td>1635</td>
+</tr>
+<tr>
+<td>2000</td>
+<td>206</td>
+<td>5502</td>
+<td>1391</td>
+<td>2454</td>
+</tr>
+<tr>
+<td>4000</td>
+<td>443</td>
+<td>12996</td>
+<td>2907</td>
+<td>6108</td>
+</tr>
+</tbody>
+</table>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><ul>
+<li>和 QT 交互时，尽可能使用 <code>Uint8ClampedArray</code> 或者 <code>Uint8Array</code> 数组传递。</li>
+<li>JavaScript 的 Buffer 构造函数返回的是 Uint8Array 对象，因此可以直接使用 new Buffer() 创建的对象传递给 QT。</li>
+<li>将 <code>Uint8ClampedArray</code> 或者 <code>Uint8Array</code> 封装成 Buffer 有一定的时间消耗。</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Qt/2014-06-19-qt-webkit-buffer.html" target="_blank" rel="external">http://blog.inching.org/Qt/2014-06-19-qt-webkit-buffer.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/buffer/">buffer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/qt/">qt</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Qt/2014-06-19-qt-webkit-buffer.html&title=《QT Webkit——JavaScript Buffer》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Qt/2014-06-19-qt-webkit-buffer.html&title=《QT Webkit——JavaScript Buffer》 — Balance&source=Buffer在浏览器端，在使用类似 toots/buffer-browserify 的类库或者使用 ArrayBuffer - Web API 接口时，我..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Qt/2014-06-19-qt-webkit-buffer.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《QT Webkit——JavaScript Buffer》 — Balance&url=http://blog.inching.org/Qt/2014-06-19-qt-webkit-buffer.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Qt/2014-06-19-qt-webkit-buffer.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2014-06-23-android-thread.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android Thread</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Qt/2014-06-17-qt-converter.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">QT Converter</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Qt/2014-06-19-qt-webkit-buffer.html&title=《QT Webkit——JavaScript Buffer》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Qt/2014-06-19-qt-webkit-buffer.html&title=《QT Webkit——JavaScript Buffer》 — Balance&source=Buffer在浏览器端，在使用类似 toots/buffer-browserify 的类库或者使用 ArrayBuffer - Web API 接口时，我..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Qt/2014-06-19-qt-webkit-buffer.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《QT Webkit——JavaScript Buffer》 — Balance&url=http://blog.inching.org/Qt/2014-06-19-qt-webkit-buffer.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Qt/2014-06-19-qt-webkit-buffer.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3awXKkMAwE0Pz/T5NrDgvbLTOpYJ5PUxkG8zgokqWvr3gdP9bZ339+e5ys63ueXXnbwsDAeCzjuFzJljPMyh3+QcXAwHgB4yyCnX1OAuV/No73ur4eAwMDo7118qtrGAYGBsa9AXfGywM3BgYGRltMtrz2eC6/JwYGxtsY+an773/+SH8DAwPjUYyjXCsla/KChk+FgYGxNSMPcHlClieFKwEXAwPjbYz80vygLSk425GO2ybaMDAwHshoH26l0TgbOIuaoBgYGFszrh80L2jz9kB+qNe2RTEwMHZlrB/cJ7y2BG2boBgYGLsyko1noXZWSecvKPoZBgbGRoykfJ3F8jzRnLUtTzuxGBgYGzHyo7TZo88SwTw9xcDAeAOjHd5qy9q7+ozDKhwDA2MLRrJNwmsP1GaA4ZwIBgbGFow2Ebz3jKsdwihamBgYGBsxPpHMtUnnbeEeAwNjO0YeXlfCcd4YaNPK2x4XAwPjDzPag7a2VZkXzMlrGiaFGBgYL2DcNbzVtkLr4IuBgfECxkqilg9b5MG0bg9gYGC8gNGGv/bR8+SyTSgxMDD2ZhzlagcmZoE4L5UxMDDewFgZF5sNh7X91fVDPQwMjD0YK6lbQpod5w2n2zAwMLZmtIGvTQfb5LINxxgYGBjtlp9mR51VDAyM1zOuy9q8iG3Hwj6SGmJgYDyEcdfIxaxJkITU22pxDAyMBzKWSscyWUzC9OzfAAYGxqaMbyuXapgQ66AIAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

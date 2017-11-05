@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Java Reflection | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="java,reflection">
+    <meta name="description" content="From Java基础与提高干货系列——Java反射机制 - 简书
+Java反射机制定义Java反射机制是指在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。用一句话总结就是反射可以实现在运行时可以知道任意一个类的属性和方法。
+反射机制的优点与缺点为什么要用反">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Reflection">
+<meta property="og:url" content="http://blog.inching.org/Java/2016-10-16-java-reflection.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="From Java基础与提高干货系列——Java反射机制 - 简书
+Java反射机制定义Java反射机制是指在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。用一句话总结就是反射可以实现在运行时可以知道任意一个类的属性和方法。
+反射机制的优点与缺点为什么要用反">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1637925-9ce9f69f8b7c26e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Reflection">
+<meta name="twitter:description" content="From Java基础与提高干货系列——Java反射机制 - 简书
+Java反射机制定义Java反射机制是指在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。用一句话总结就是反射可以实现在运行时可以知道任意一个类的属性和方法。
+反射机制的优点与缺点为什么要用反">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1637925-9ce9f69f8b7c26e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Java Reflection</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Java Reflection</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-10-15T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-10-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java反射机制定义"><span class="post-toc-text">Java反射机制定义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#反射机制的优点与缺点"><span class="post-toc-text">反射机制的优点与缺点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#理解Class类和类类型"><span class="post-toc-text">理解Class类和类类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java反射相关操作"><span class="post-toc-text">Java反射相关操作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#获取成员方法信息"><span class="post-toc-text">获取成员方法信息</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#获取成员变量信息"><span class="post-toc-text">获取成员变量信息</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#获取构造函数"><span class="post-toc-text">获取构造函数</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#通过反射了解集合泛型的本质"><span class="post-toc-text">通过反射了解集合泛型的本质</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-text">参考</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#整理的思维导图"><span class="post-toc-text">整理的思维导图</span></a>
+        </nav>
+    </aside>
+    
+<article id="post-java-reflection"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Java Reflection</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-10-16 00:00:00" datetime="2016-10-15T16:00:00.000Z"  itemprop="datePublished">2016-10-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>From <a href="http://www.jianshu.com/p/1a60d55a94cd" target="_blank" rel="external">Java基础与提高干货系列——Java反射机制 - 简书</a></p>
+<h2 id="Java反射机制定义"><a href="#Java反射机制定义" class="headerlink" title="Java反射机制定义"></a>Java反射机制定义</h2><p>Java反射机制是指在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。<br>用一句话总结就是反射可以实现在运行时可以知道任意一个类的属性和方法。</p>
+<h2 id="反射机制的优点与缺点"><a href="#反射机制的优点与缺点" class="headerlink" title="反射机制的优点与缺点"></a>反射机制的优点与缺点</h2><p>为什么要用反射机制？直接创建对象不就可以了吗，这就涉及到了动态与静态的概念</p>
+<ul>
+<li>静态编译：在编译时确定类型，绑定对象,即通过。</li>
+<li><p>动态编译：运行时确定类型，绑定对象。动态编译最大限度发挥了java的灵活性，体现了多态的应用，有以降低类之间的藕合性。</p>
+</li>
+<li><p>优点</p>
+<p>  可以实现动态创建对象和编译，体现出很大的灵活性，特别是在J2EE的开发中它的灵活性就表现的十分明显。比如，一个大型的软件，不可能一次就把把它设计的很完美，当这个程序编译后，发布了，当发现需要更新某些功能时，我们不可能要用户把以前的卸载，再重新安装新的版本，假如这样的话，这个软件肯定是没有多少人用的。采用静态的话，需要把整个程序重新编译一次才可以实现功能的更新，而采用反射机制的话，它就可以不用卸载，只需要在运行时才动态的创建和编译，就可以实现该功能。</p>
+</li>
+<li><p>缺点</p>
+<p>  对性能有影响。使用反射基本上是一种解释操作，我们可以告诉JVM，我们希望做什么并且它满足我们的要求。这类操作总是慢于只直接执行相同的操作。</p>
+</li>
+</ul>
+<h2 id="理解Class类和类类型"><a href="#理解Class类和类类型" class="headerlink" title="理解Class类和类类型"></a>理解Class类和类类型</h2><p>想要了解反射首先理解一下Class类，它是反射实现的基础。<br>类是java.lang.Class类的实例对象，而Class是所有类的类（There is a class named Class）<br>对于普通的对象，我们一般都会这样创建和表示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Code code1 = <span class="keyword">new</span> Code();</div></pre></td></tr></table></figure>
+<p>上面说了，所有的类都是Class的对象，那么如何表示呢，可不可以通过如下方式呢：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class c = <span class="keyword">new</span> Class();</div></pre></td></tr></table></figure>
+<p>但是我们查看Class的源码时，是这样写的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span>  <span class="title">Class</span><span class="params">(ClassLoader loader)</span> </span>&#123;</div><div class="line">    classLoader = loader;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到构造器是私有的，只有JVM可以创建Class的对象，因此不可以像普通类一样new一个Class对象，虽然我们不能new一个Class对象，但是却可以通过已有的类得到一个Class对象，共有三种方式，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Class c1 = Code.class;</div><div class="line">这说明任何一个类都有一个隐含的静态成员变量<span class="class"><span class="keyword">class</span>，这种方式是通过获取类的静态成员变量<span class="title">class</span>得到的</span></div><div class="line"><span class="title">Class</span> <span class="title">c2</span> = code1.getClass();</div><div class="line">code1是Code的一个对象，这种方式是通过一个类的对象的getClass()方法获得的</div><div class="line">Class c3 = Class.forName(<span class="string">"com.trigl.reflect.Code"</span>);</div><div class="line">这种方法是Class类调用forName方法，通过一个类的全量限定名获得</div></pre></td></tr></table></figure>
+<p>这里，c1、c2、c3都是Class的对象，他们是完全一样的，而且有个学名，叫做Code的类类型（class type）。<br>这里就让人奇怪了，前面不是说Code是Class的对象吗，而c1、c2、c3也是Class的对象，那么Code和c1、c2、c3不就一样了吗？为什么还叫Code什么类类型？这里不要纠结于它们是否相同，只要理解类类型是干什么的就好了，顾名思义，类类型就是类的类型，也就是描述一个类是什么，都有哪些东西，所以我们可以通过类类型知道一个类的属性和方法，并且可以调用一个类的属性和方法，这就是反射的基础。</p>
+<p>举个简单例子代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectDemo</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</div><div class="line">        <span class="comment">//第一种：Class c1 = Code.class;</span></div><div class="line">        Class class1=ReflectDemo.class;</div><div class="line">        System.out.println(class1.getName());</div><div class="line"></div><div class="line">        <span class="comment">//第二种：Class c2 = code1.getClass();</span></div><div class="line">        ReflectDemo demo2= <span class="keyword">new</span> ReflectDemo();</div><div class="line">        Class c2 = demo2.getClass();</div><div class="line">        System.out.println(c2.getName());</div><div class="line"></div><div class="line">        <span class="comment">//第三种：Class c3 = Class.forName("com.trigl.reflect.Code");</span></div><div class="line">        Class class3 = Class.forName(<span class="string">"com.tengj.reflect.ReflectDemo"</span>);</div><div class="line">        System.out.println(class3.getName());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">com.tengj.reflect.ReflectDemo</div><div class="line">com.tengj.reflect.ReflectDemo</div><div class="line">com.tengj.reflect.ReflectDemo</div></pre></td></tr></table></figure>
+<h2 id="Java反射相关操作"><a href="#Java反射相关操作" class="headerlink" title="Java反射相关操作"></a>Java反射相关操作</h2><p>前面我们知道了怎么获取Class，那么我们可以通过这个Class干什么呢？<br>总结如下：</p>
+<ul>
+<li>获取成员方法Method</li>
+<li>获取成员变量Field</li>
+<li>获取构造函数Constructor</li>
+</ul>
+<p>对于public域（包括超类成员）：</p>
+<ul>
+<li>getFields</li>
+<li>getMethods</li>
+<li>getConstructors</li>
+</ul>
+<p>对于其它域（包括私有和受保护的成员，不包括超类成员）：</p>
+<ul>
+<li>gettDeclaredFields</li>
+<li>gettDeclaredMethods</li>
+<li>gettDeclaredConstructors</li>
+</ul>
+<p>下面来具体介绍</p>
+<h3 id="获取成员方法信息"><a href="#获取成员方法信息" class="headerlink" title="获取成员方法信息"></a>获取成员方法信息</h3><p>单独获取某一个方法是通过Class类的以下方法获得的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Method <span class="title">getDeclaredMethod</span><span class="params">(String name, Class&lt;?&gt;... parameterTypes)</span> <span class="comment">// 得到该类所有的方法，不包括父类的</span></span></div><div class="line"><span class="keyword">public</span> Method <span class="title">getMethod</span><span class="params">(String name, Class&lt;?&gt;... parameterTypes)</span> <span class="comment">// 得到该类所有的public方法，包括父类的</span></div></pre></td></tr></table></figure>
+<p>两个参数分别是方法名和方法参数类的类类型列表。<br>例如类A有如下一个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">(String name,<span class="keyword">int</span> age)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"我叫"</span>+name+<span class="string">",今年"</span>+age+<span class="string">"岁"</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>现在知道A有一个对象a，那么就可以通过：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Class c = Class.forName(<span class="string">"com.tengj.reflect.Person"</span>);  <span class="comment">//先生成class</span></div><div class="line">Object o = c.newInstance();                           <span class="comment">//newInstance可以初始化一个实例</span></div><div class="line">Method method = c.getMethod(<span class="string">"fun"</span>, String.class, <span class="keyword">int</span>.class);<span class="comment">//获取方法</span></div><div class="line">method.invoke(o, <span class="string">"tengj"</span>, <span class="number">10</span>);                              <span class="comment">//通过invoke调用该方法，参数第一个为实例对象，后面为具体参数值</span></div></pre></td></tr></table></figure>
+<p>完整代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</div><div class="line">    <span class="keyword">private</span> String msg=<span class="string">"hello wrold"</span>;</div><div class="line"> <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> age;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Person</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">  System.out.println(name);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"fun"</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">(String name,<span class="keyword">int</span> age)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"我叫"</span>+name+<span class="string">",今年"</span>+age+<span class="string">"岁"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectDemo</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Class c = Class.forName(<span class="string">"com.tengj.reflect.Person"</span>);</div><div class="line">            Object o = c.newInstance();</div><div class="line">            Method method = c.getMethod(<span class="string">"fun"</span>, String.class, <span class="keyword">int</span>.class);</div><div class="line">            method.invoke(o, <span class="string">"tengj"</span>, <span class="number">10</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">我叫tengj,今年<span class="number">10</span>岁</div></pre></td></tr></table></figure>
+<p>怎样，是不是感觉很厉害，我们只要知道这个类的路径全称就能玩弄它于鼓掌之间。</p>
+<p>有时候我们想获取类中所有成员方法的信息，要怎么办。可以通过以下几步来实现：<br>1.获取所有方法的数组：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="type">Class</span> <span class="built_in">c</span> = <span class="type">Class</span>.forName(<span class="string">"com.tengj.reflect.Person"</span>);</div><div class="line"><span class="type">Method</span>[] methods = <span class="built_in">c</span>.getDeclaredMethods(); <span class="comment">// 得到该类所有的方法，不包括父类的</span></div><div class="line">或者：</div><div class="line"><span class="type">Method</span>[] methods = <span class="built_in">c</span>.getMethods();<span class="comment">// 得到该类所有的public方法，包括父类的</span></div></pre></td></tr></table></figure>
+<p>2.然后循环这个数组就得到每个方法了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (Method method : methods)</div></pre></td></tr></table></figure>
+<p>完整代码如下：<br>person类跟上面一样，这里以及后面就不贴出来了，只贴关键代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectDemo</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Class c = Class.forName(<span class="string">"com.tengj.reflect.Person"</span>);</div><div class="line">            Method[] methods = c.getDeclaredMethods();</div><div class="line">            <span class="keyword">for</span>(Method m:methods)&#123;</div><div class="line">                String  methodName= m.getName();</div><div class="line">                System.out.println(methodName);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">getName</div><div class="line"><span class="built_in">set</span>Name</div><div class="line"><span class="built_in">set</span>Age</div><div class="line">fun</div><div class="line">fun</div><div class="line">getAge</div></pre></td></tr></table></figure>
+<p>这里如果把c.getDeclaredMethods();改成c.getMethods();执行结果如下，多了很多方法，以为把Object里面的方法也打印出来了，因为Object是所有类的父类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">getName</div><div class="line">setName</div><div class="line">getAge</div><div class="line">setAge</div><div class="line">fun</div><div class="line">fun</div><div class="line">wait</div><div class="line">wait</div><div class="line">wait</div><div class="line">equals</div><div class="line">toString</div><div class="line">hashCode</div><div class="line">getClass</div><div class="line">notify</div><div class="line">notifyAll</div></pre></td></tr></table></figure>
+<h3 id="获取成员变量信息"><a href="#获取成员变量信息" class="headerlink" title="获取成员变量信息"></a>获取成员变量信息</h3><p>想一想成员变量中都包括什么：成员变量类型+成员变量名<br>类的成员变量也是一个对象，它是<code>java.lang.reflect.Field</code>的一个对象，所以我们通过<code>java.lang.reflect.Field</code>里面封装的方法来获取这些信息。</p>
+<p>单独获取某个成员变量，通过Class类的以下方法实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Field <span class="title">getDeclaredField</span><span class="params">(String name)</span> <span class="comment">// 获得该类自身声明的所有变量，不包括其父类的变量</span></span></div><div class="line"><span class="keyword">public</span> Field <span class="title">getField</span><span class="params">(String name)</span> <span class="comment">// 获得该类自所有的public成员变量，包括其父类变量</span></div></pre></td></tr></table></figure>
+<p>参数是成员变量的名字。<br>例如一个类A有如下成员变量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> n;</div></pre></td></tr></table></figure>
+<p>如果A有一个对象a，那么就可以这样得到其成员变量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Class c = a.getClass();</div><div class="line">Field field = c.getDeclaredField(<span class="string">"n"</span>);</div></pre></td></tr></table></figure>
+<p>完整代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectDemo</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Class c = Class.forName(<span class="string">"com.tengj.reflect.Person"</span>);</div><div class="line">            <span class="comment">//获取成员变量</span></div><div class="line">            Field field = c.getDeclaredField(<span class="string">"msg"</span>); <span class="comment">//因为msg变量是private的，所以不能用getField方法</span></div><div class="line">            Object o = c.newInstance();</div><div class="line">            field.setAccessible(<span class="keyword">true</span>);<span class="comment">//设置是否允许访问，因为该变量是private的，所以要手动设置允许访问，如果msg是public的就不需要这行了。</span></div><div class="line">            Object msg = field.get(o);</div><div class="line">            System.out.println(msg);</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hello wrold</div></pre></td></tr></table></figure>
+<p>同样，如果想要获取所有成员变量的信息，可以通过以下几步<br>1.获取所有成员变量的数组：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Field[] fields = c.getDeclaredFields();</div></pre></td></tr></table></figure>
+<p>2.遍历变量数组，获得某个成员变量field</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">for (<span class="name">Field</span> field : fields)</div></pre></td></tr></table></figure>
+<p>完整代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectDemo</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Class c = Class.forName(<span class="string">"com.tengj.reflect.Person"</span>);</div><div class="line">            Field[] fields = c.getDeclaredFields();</div><div class="line">            <span class="keyword">for</span>(Field field :fields)&#123;</div><div class="line">                System.out.println(field.getName());</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">name</div><div class="line">age</div><div class="line">msg</div></pre></td></tr></table></figure>
+<h3 id="获取构造函数"><a href="#获取构造函数" class="headerlink" title="获取构造函数"></a>获取构造函数</h3><p>最后再想一想构造函数中都包括什么：构造函数参数<br>同上，类的成构造函数也是一个对象，它是<code>java.lang.reflect.Constructor</code>的一个对象，所以我们通过<code>java.lang.reflect.Constructor</code>里面封装的方法来获取这些信息。</p>
+<p>单独获取某个构造函数,通过Class类的以下方法实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Constructor&lt;T&gt; <span class="title">getDeclaredConstructor</span><span class="params">(Class&lt;?&gt;... parameterTypes)</span> <span class="comment">//  获得该类所有的构造器，不包括其父类的构造器</span></span></div><div class="line"><span class="keyword">public</span> Constructor&lt;T&gt; <span class="title">getConstructor</span><span class="params">(Class&lt;?&gt;... parameterTypes)</span> <span class="comment">// 获得该类所以public构造器，包括父类</span></div></pre></td></tr></table></figure>
+<p>这个参数为构造函数参数类的类类型列表。<br>例如类A有如下一个构造函数：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">A</span>(<span class="params">String a, <span class="keyword">int</span> b</span>) </span>&#123;</div><div class="line">    <span class="comment">// code body</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么就可以通过：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Constructor constructor = a.getDeclaredConstructor(String.<span class="keyword">class</span>, <span class="keyword">int</span>.<span class="keyword">class</span>);</div></pre></td></tr></table></figure>
+<p>来获取这个构造函数。</p>
+<p>完整代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectDemo</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Class c = Class.forName(<span class="string">"com.tengj.reflect.Person"</span>);</div><div class="line">            <span class="comment">//获取构造函数</span></div><div class="line">            Constructor constructor = c.getDeclaredConstructor(String.class);</div><div class="line">            constructor.setAccessible(<span class="keyword">true</span>);<span class="comment">//设置是否允许访问，因为该构造器是private的，所以要手动设置允许访问，如果构造器是public的就不需要这行了。</span></div><div class="line">            constructor.newInstance(<span class="string">"tengj"</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tengj</div></pre></td></tr></table></figure>
+<p>注意：Class的newInstance方法，只能创建只包含无参数的构造函数的类，如果某类只有带参数的构造函数，那么就要使用另外一种方式：fromClass.getDeclaredConstructor(String.class).newInstance(“tengj”);</p>
+<p>获取所有的构造函数，可以通过以下步骤实现：<br>1.获取该类的所有构造函数，放在一个数组中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Constructor[] constructors = c.getDeclaredConstructors();</div></pre></td></tr></table></figure>
+<p>2.遍历构造函数数组，获得某个构造函数constructor:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (Constructor constructor : constructors)</div></pre></td></tr></table></figure>
+<p>完整代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectDemo</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">            Constructor[] constructors = c.getDeclaredConstructors();</div><div class="line">            <span class="keyword">for</span>(Constructor constructor:constructors)&#123;</div><div class="line">                System.out.println(constructor);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> com.tengj.reflect.Person()</div><div class="line"><span class="keyword">public</span> com.tengj.reflect.Person(java.lang.String)</div></pre></td></tr></table></figure>
+<h2 id="通过反射了解集合泛型的本质"><a href="#通过反射了解集合泛型的本质" class="headerlink" title="通过反射了解集合泛型的本质"></a>通过反射了解集合泛型的本质</h2><p>首先下结论：</p>
+<blockquote>
+<p>Java中集合的泛型，是防止错误输入的，只在编译阶段有效，绕过编译到了运行期就无效了。</p>
+</blockquote>
+<p>下面通过一个实例来验证：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 集合泛型的本质</div><div class="line"> * <span class="doctag">@description</span></div><div class="line"> * <span class="doctag">@author</span> Trigl</div><div class="line"> * <span class="doctag">@date</span> 2016年4月2日上午2:54:11</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericEssence</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        List list1 = <span class="keyword">new</span> ArrayList(); <span class="comment">// 没有泛型</span></div><div class="line">        List&lt;String&gt; list2 = <span class="keyword">new</span> ArrayList&lt;String&gt;(); <span class="comment">// 有泛型</span></div><div class="line"></div><div class="line">        <span class="comment">/*</span></div><div class="line">         * 1.首先观察正常添加元素方式，在编译器检查泛型，</div><div class="line">         * 这个时候如果list2添加int类型会报错</div><div class="line">         */</div><div class="line">        list2.add(<span class="string">"hello"</span>);</div><div class="line"><span class="comment">//      list2.add(20); // 报错！list2有泛型限制，只能添加String，添加int报错</span></div><div class="line">        System.out.println(<span class="string">"list2的长度是："</span> + list2.size()); <span class="comment">// 此时list2长度为1</span></div><div class="line"></div><div class="line">        <span class="comment">/*</span></div><div class="line">         * 2.然后通过反射添加元素方式，在运行期动态加载类，首先得到list1和list2</div><div class="line">         * 的类类型相同，然后再通过方法反射绕过编译器来调用add方法，看能否插入int</div><div class="line">         * 型的元素</div><div class="line">         */</div><div class="line">        Class c1 = list1.getClass();</div><div class="line">        Class c2 = list2.getClass();</div><div class="line">        System.out.println(c1 == c2); <span class="comment">// 结果：true，说明类类型完全相同</span></div><div class="line"></div><div class="line">        <span class="comment">// 验证：我们可以通过方法的反射来给list2添加元素，这样可以绕过编译检查</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Method m = c2.getMethod(<span class="string">"add"</span>, Object.class); <span class="comment">// 通过方法反射得到add方法</span></div><div class="line">            m.invoke(list2, <span class="number">20</span>); <span class="comment">// 给list2添加一个int型的，上面显示在编译器是会报错的</span></div><div class="line">            System.out.println(<span class="string">"list2的长度是："</span> + list2.size()); <span class="comment">// 结果：2，说明list2长度增加了，并没有泛型检查</span></div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/*</span></div><div class="line">         * 综上可以看出，在编译器的时候，泛型会限制集合内元素类型保持一致，但是编译器结束进入</div><div class="line">         * 运行期以后，泛型就不再起作用了，即使是不同类型的元素也可以插入集合。</div><div class="line">         */</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">list2的长度是：<span class="number">1</span></div><div class="line"><span class="keyword">true</span></div><div class="line">list2的长度是：<span class="number">2</span></div></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>到此，Java反射机制入门的差不多了，我是复习SpringMVC里面IOC/DI的时候，底层原理是通过Java反射来实现的，希望这篇笔记也对你有用。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.cnblogs.com/hxsyl/archive/2013/03/23/2977593.html" target="_blank" rel="external">Java反射机制深入详解</a><br><a href="http://blog.csdn.net/trigl/article/details/51042403" target="_blank" rel="external">Java反射入门</a><br><a href="http://www.cnblogs.com/jqyp/archive/2012/03/29/2423112.html" target="_blank" rel="external">Java反射机制</a><br><a href="http://www.cnblogs.com/rollenholt/archive/2011/09/02/2163758.html" target="_blank" rel="external">java反射详解</a><br><a href="http://www.cnblogs.com/gulvzhe/archive/2012/01/27/2330001.html" target="_blank" rel="external">Java 反射机制浅析</a><br><a href="http://uule.iteye.com/blog/1423512" target="_blank" rel="external">反射机制的理解及其用途</a></p>
+<h1 id="整理的思维导图"><a href="#整理的思维导图" class="headerlink" title="整理的思维导图"></a>整理的思维导图</h1><p>个人整理的Java反射机制的思维导图,导出的图片无法查看备注的一些信息，所以需要源文件的童鞋可以关注我个人主页上的公众号，回复<strong>反射机制</strong>即可获取源文件。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/1637925-9ce9f69f8b7c26e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Java/2016-10-16-java-reflection.html" target="_blank" rel="external">http://blog.inching.org/Java/2016-10-16-java-reflection.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reflection/">reflection</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Java/2016-10-16-java-reflection.html&title=《Java Reflection》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Java/2016-10-16-java-reflection.html&title=《Java Reflection》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Java/2016-10-16-java-reflection.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java Reflection》 — Balance&url=http://blog.inching.org/Java/2016-10-16-java-reflection.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Java/2016-10-16-java-reflection.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2016-10-20-android-keysotre.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android KeyStore</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Java/2016-10-16-java-xml-xsteam.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Java XML XStream</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Java/2016-10-16-java-reflection.html&title=《Java Reflection》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Java/2016-10-16-java-reflection.html&title=《Java Reflection》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Java/2016-10-16-java-reflection.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java Reflection》 — Balance&url=http://blog.inching.org/Java/2016-10-16-java-reflection.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Java/2016-10-16-java-reflection.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aQW7DMAwF0dz/0i7QVYHC8nxSLWBqtAocR9bzgqFEfj54XN/j95Wf4+5bMsPdlc1DhgwZr2Vcy7FexHo28pT1KyNrkyFDxjmM2nRpAE2XSNYmQ4YMGet7+oDac2XIkCGDBMc+g2yJZciQISNN0dIkj4TRfvooQ4aMExhpYeA/P/9hfUOGDBkvYVzh4Af9/H4eXm9/K0OGjNGMXeXJtFWCp5V8WytDhoypDN76sPfon5BI64YMGTJOYNQO5dPUkKSMfPsanBrKkCFjBKMWZDuNGrVjNZQaypAhYyijVhiosWtb5X6AliFDxtsZ6fFZGl77R2yIJEOGjNGMNI3jV9LmrfSVPWxlZciQMYjBUzpeQti1RDKDDBkyTmakW9n+K0jLBjJkyJBBtpHr+2skfgX1jMiQIWME4+GLsKBIwmUtKUSzyZAh40gGnzpNK9MWNPQsGTJkDGXUAmInpeuUHG5fjQwZMkYzeDMEv6cTQNPCQBDXZciQ8VpG7We1xq9OQfThfhkyZBzAIAGRlAp2LTT+A5AhQ8ZoBgpnOBHkv60dt6HcVoYMGeMYVzjimgPYrJKQ/XBsJ0OGjNEMPjoL5e0atRKCDBkyTmCkqVvaYEFeAQm4QVuYDBkyhjL+rqgZR3fcWIb+E2TIkHEYY+/R/96ChAwZMmSkm1iS9nEq2iTLkCHjAAbZxKYP6ITpuFwqQ4aM0Yz+BrJzAMdnriWaMmTIeDnjC5UZ0T+VIcNXAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

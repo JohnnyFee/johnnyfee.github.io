@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Angular Filter | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tutorial,angular">
+    <meta name="description" content="过滤器（filter）正如其名，作用就是接收一个输入，通过某个规则进行处理，然后返回处理后的结果。主要用在数据的格式化上，例如获取一个数组中的子集，对数组中的元素进行排序等。ng内置了一些过滤器，它们是：currency(货币)、date(日期)、filter(子串匹配)、json(格式化json对象)、limitTo(限制个数)、lowercase(小写)、uppercase(大写)、numbe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular Filter">
+<meta property="og:url" content="http://blog.inching.org/Angular/2014-09-26-angular-filter.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="过滤器（filter）正如其名，作用就是接收一个输入，通过某个规则进行处理，然后返回处理后的结果。主要用在数据的格式化上，例如获取一个数组中的子集，对数组中的元素进行排序等。ng内置了一些过滤器，它们是：currency(货币)、date(日期)、filter(子串匹配)、json(格式化json对象)、limitTo(限制个数)、lowercase(小写)、uppercase(大写)、numbe">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/angular-filter.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/angular-fileter-sort.jpg">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular Filter">
+<meta name="twitter:description" content="过滤器（filter）正如其名，作用就是接收一个输入，通过某个规则进行处理，然后返回处理后的结果。主要用在数据的格式化上，例如获取一个数组中的子集，对数组中的元素进行排序等。ng内置了一些过滤器，它们是：currency(货币)、date(日期)、filter(子串匹配)、json(格式化json对象)、limitTo(限制个数)、lowercase(小写)、uppercase(大写)、numbe">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/angular-filter.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Angular Filter</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Angular Filter</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-09-25T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-09-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#filter的两种使用方法"><span class="post-toc-text">filter的两种使用方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#在模板中使用filter"><span class="post-toc-text">在模板中使用filter</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#在-JavaScript-中使用-filter"><span class="post-toc-text">在 JavaScript 中使用 filter</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#When-filters-are-executed"><span class="post-toc-text">When filters are executed</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ng的内置过滤器"><span class="post-toc-text">ng的内置过滤器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Formatting-filters"><span class="post-toc-text">Formatting filters</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#currency-货币处理"><span class="post-toc-text">currency (货币处理)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#date-日期格式化"><span class="post-toc-text">date (日期格式化)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#json-格式化json对象"><span class="post-toc-text">json(格式化json对象)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#lowercase-小写-uppercase-大写"><span class="post-toc-text">lowercase(小写)/uppercase(大写)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#number-格式化数字"><span class="post-toc-text">number(格式化数字)</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Array-transforming-filters"><span class="post-toc-text">Array-transforming filters</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#filter-匹配子串"><span class="post-toc-text">filter(匹配子串)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#orderBy-排序"><span class="post-toc-text">orderBy(排序)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#limitTo-限制数组长度或字符串长度"><span class="post-toc-text">limitTo(限制数组长度或字符串长度)</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#filter-过滤器"><span class="post-toc-text">filter 过滤器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#计算过滤结果"><span class="post-toc-text">计算过滤结果</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用-orderBy-过滤器排序"><span class="post-toc-text">使用 orderBy 过滤器排序</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自定义过滤器"><span class="post-toc-text">自定义过滤器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Stateful-filters"><span class="post-toc-text">Stateful filters</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分页的例子"><span class="post-toc-text">分页的例子</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Filters-dos-and-don’ts"><span class="post-toc-text">Filters dos and don’ts</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#过滤器和-DOM-操作"><span class="post-toc-text">过滤器和 DOM 操作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#过滤器中耗时的数据转换"><span class="post-toc-text">过滤器中耗时的数据转换</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#不稳定的过滤器"><span class="post-toc-text">不稳定的过滤器</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-angular-filter"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Angular Filter</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-09-26 00:00:00" datetime="2014-09-25T16:00:00.000Z"  itemprop="datePublished">2014-09-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>过滤器（filter）正如其名，作用就是接收一个输入，通过某个规则进行处理，然后返回处理后的结果。主要用在数据的格式化上，例如获取一个数组中的子集，对数组中的元素进行排序等。ng内置了一些过滤器，它们是：currency(货币)、date(日期)、filter(子串匹配)、json(格式化json对象)、limitTo(限制个数)、lowercase(小写)、uppercase(大写)、number(数字)、orderBy(排序)。总共九种。除此之外还可以自定义过滤器，这个就强大了，可以满足任何要求的数据处理。</p>
+<p>过滤器的内容非常简单，只要明白了内置的如何使用，自己如何定义一个filter就OK了~今天系统的学习了下，下面做个介绍。</p>
+<a id="more"></a>
+<h2 id="filter的两种使用方法"><a href="#filter的两种使用方法" class="headerlink" title="filter的两种使用方法"></a>filter的两种使用方法</h2><h3 id="在模板中使用filter"><a href="#在模板中使用filter" class="headerlink" title="在模板中使用filter"></a>在模板中使用filter</h3><p>我们可以直接在 <code>{{ }}</code> 中使用filter，跟在表达式后面用 | 分割，语法如下：</p>
+<pre><code>{%raw%}{{ expression | filter }}{%endraw%}
+</code></pre><p>也可以多个filter连用，上一个filter的输出将作为下一个filter的输入（怪不得这货长的跟管道一个样。。）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;%raw%&#125;</div><div class="line">&#123;&#123; expression | filter1 | filter2 | ... &#125;&#125;</div><div class="line">// 如</div><div class="line">&#123;&#123;12.9 | currency | number:0 &#125;&#125; </div><div class="line">&#123;%endraw%&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>displays: $13</p>
+</blockquote>
+<p>filter可以接收参数，参数用 : 进行分割，如下：</p>
+<pre><code>{%raw%}{{ expression | filter:argument1:argument2:... }}{%endraw%}
+</code></pre><p>除了对 <code>{{}}</code> 中的数据进行格式化，我们还可以在指令中使用filter，例如先对数组array进行过滤处理，然后再循环输出：</p>
+<pre><code>&lt;span ng-repeat=&quot;a in array | filter &quot;&gt;
+</code></pre><p>Using a filter in a view template will reevaluate the filter on every digest, which can be costly if the array is big.</p>
+<h3 id="在-JavaScript-中使用-filter"><a href="#在-JavaScript-中使用-filter" class="headerlink" title="在 JavaScript 中使用 filter"></a>在 JavaScript 中使用 filter</h3><p>过滤器除了在模板中调用，还可以在 JavaScript 中调用，如 controllers, services, other filters 等。这样，我们就可以结合已存在的过滤器来提供新的功能。</p>
+<p>过来周期可以注入到被 AngularJS DI 系统管理的任何对象，我们有两种方式来表示过滤器的依赖：</p>
+<ul>
+<li><code>$filter</code> 服务</li>
+<li><code>Filter</code> 后缀的过滤器名</li>
+</ul>
+<p><code>$filter</code> 服务是一个根据名字获取过滤器的查询函数。以下是一个类似 <code>limitTo</code> 的例子，当字符串的长度超过指定的长度时，超过的部分会被截取，并添加 “…” 后缀：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'trimFilter'</span>, [])</div><div class="line">  .filter(<span class="string">'trim'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$filter</span>)</span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> limitToFilter =  $filter(<span class="string">'limitTo'</span>);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">input, limit</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (input.length &gt; limit) &#123;</div><div class="line">        <span class="keyword">return</span> limitToFilter(input, limit<span class="number">-3</span>) + <span class="string">'...'</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> input;</div><div class="line">    &#125;;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>其中，通过 <code>$filter(&#39;limitTo&#39;)</code> 就可以得到一个 <code>limitTo</code> 过滤器实例。</p>
+<p>我们还可以通过一种更快而且易读的方式来得到 <code>limitTo</code> 服务：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">.filter(<span class="string">'trim'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">limitToFilter</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">input, limit</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (input.length &gt; limit) &#123;</div><div class="line">        <span class="keyword">return</span> limitToFilter(input, limit<span class="number">-3</span>) + <span class="string">'...'</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> input;</div><div class="line">    &#125;;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>其中，我们使用 <code>limitToFilter</code> 来获取过滤器，这种方式的命名规则为  <code>[filter name]Filter</code>，<code>[filter name]</code> 为过滤器名字。</p>
+<p>使用 <code>Filter</code> 后缀的方式更简单自然，使用 <code>$filter</code> 服务的唯一场合是当我们想得到多个过滤器实例或者想根据变量来获取过滤器实例时，如 <code>$filter(filterName)</code>。</p>
+<p>The example below therefore calls the filter directly in the controller. By this, the controller is able to call the filter only when needed (e.g. when the data is loaded from the backend or the filter expression is changed). </p>
+<iframe style="width: 100%; height: 600px" src="https://embed.plnkr.co/hele35wyuR23dJboirs5/" frameborder="0" allowfullscren="allowfullscren"></iframe>
+
+<h2 id="When-filters-are-executed"><a href="#When-filters-are-executed" class="headerlink" title="When filters are executed"></a>When filters are executed</h2><p>In templates, filters are only executed when their inputs have changed. This is more performant than executing a filter on each <a href="https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest" target="_blank" rel="external"><code>$digest</code></a> as is the case with <a href="https://docs.angularjs.org/guide/expression" target="_blank" rel="external">expressions</a>. There are two exceptions to this rule:</p>
+<ol>
+<li>In general, this applies only to filters that take <a href="https://developer.mozilla.org/docs/Glossary/Primitive" target="_blank" rel="external">primitive values</a> as inputs. Filters that receive <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Objects" target="_blank" rel="external">Objects</a> as input are executed on each <code>$digest</code>, as it would be too costly to track if the inputs have changed.</li>
+<li>Filters that are marked as <code>$stateful</code> are also executed on each $digest. See <a href="https://docs.angularjs.org/guide/filter#stateful-filters" target="_blank" rel="external">Stateful filters</a> for more information. Note that no Angular core filters are $stateful.</li>
+</ol>
+<h2 id="ng的内置过滤器"><a href="#ng的内置过滤器" class="headerlink" title="ng的内置过滤器"></a>ng的内置过滤器</h2><p>ng内置了九种过滤器，使用方法都非常简单，看文档即懂。不过为了以后不去翻它的文档，我在这里还是做一个详细的记录。</p>
+<h3 id="Formatting-filters"><a href="#Formatting-filters" class="headerlink" title="Formatting filters"></a>Formatting filters</h3><h4 id="currency-货币处理"><a href="#currency-货币处理" class="headerlink" title="currency (货币处理)"></a>currency (货币处理)</h4><p>使用currency可以将数字格式化为货币，默认是美元符号，你可以自己传入所需的符号，例如我传入人民币：</p>
+<pre><code>{%raw%}{{num | currency : '￥'}}{%endraw%}
+</code></pre><h4 id="date-日期格式化"><a href="#date-日期格式化" class="headerlink" title="date (日期格式化)"></a>date (日期格式化)</h4><p>原生的js对日期的格式化能力有限，ng提供的date过滤器基本可以满足一般的格式化要求。Model can contain dates expressed as Date objects or as Strings (in this case Strings will be parsed to a Date object before formatting). 用法如下：</p>
+<pre><code>{%raw%}{{date | date : 'yyyy-MM-dd hh:mm:ss EEEE'}}{%endraw%}
+</code></pre><p>参数用来指定所要的格式，y M d h m s E 分别表示 年 月 日 时 分 秒 星期，你可以自由组合它们。也可以使用不同的个数来限制格式化的位数。另外参数也可以使用特定的描述性字符串，例如“shortTime”将会把时间格式为12:05 pm这样的。ng提供了八种描述性的字符串，个人觉得这些有点多余，我完全可以根据自己的意愿组合出想要的格式，不愿意去记这么多单词~</p>
+<h4 id="json-格式化json对象"><a href="#json-格式化json对象" class="headerlink" title="json(格式化json对象)"></a>json(格式化json对象)</h4><p>json过滤器可以把一个js对象格式化为json字符串，没有参数。这东西有什么用呢，我一般也不会在页面上输出一个json串啊，官网说它可以用来进行调试，嗯，是个不错的选择。或者，也可以用在js中使用，作用就和我们熟悉的JSON.stringify()一样。用法超级简单：</p>
+<pre><code>{%raw%}{{ jsonTest | json}}{%endraw%}
+</code></pre><p>This filter is mostly useful for debugging purposes as it can assure “pretty-print” for JavaScript objects. Typical usage looks like follows: <code>{{someObject | json}}</code>. It is mostly used for debugging purposes.</p>
+<h4 id="lowercase-小写-uppercase-大写"><a href="#lowercase-小写-uppercase-大写" class="headerlink" title="lowercase(小写)/uppercase(大写)"></a>lowercase(小写)/uppercase(大写)</h4><p>把数据转化为全部小写。太简单了，不多解释。同样是很鸡肋的一个filter，没有参数，只能把整个字符串变为小写，不能指定字母。怎么用我都懒得写了。</p>
+<h4 id="number-格式化数字"><a href="#number-格式化数字" class="headerlink" title="number(格式化数字)"></a>number(格式化数字)</h4><p>number过滤器可以为一个数字加上千位分割，像这样，123,456,789。同时接收一个参数，可以指定float类型保留几位小数：</p>
+<pre><code>{%raw%}{{ num | number : 2 }}{%endraw%}
+</code></pre><h3 id="Array-transforming-filters"><a href="#Array-transforming-filters" class="headerlink" title="Array-transforming filters"></a>Array-transforming filters</h3><h4 id="filter-匹配子串"><a href="#filter-匹配子串" class="headerlink" title="filter(匹配子串)"></a>filter(匹配子串)</h4><p>这是一个多功能的过滤工具，它很灵活能够支持多个选项以从集合中精确选择元素。</p>
+<p>这个名叫filter的filter（不得不说这名字起的，真让人容易混淆——！）用来处理一个数组，然后可以过滤出含有某个子串的元素，作为一个子数组来返回。可以是字符串数组，也可以是对象数组。如果是对象数组，可以匹配属性的值。它接收一个参数，用来定义子串的匹配规则。下面举个例子说明一下参数的用法，我用现在特别火的几个孩子定义了一个数组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$scope.childrenArray = [</div><div class="line">    &#123;<span class="attr">name</span>:<span class="string">'kimi'</span>,<span class="attr">age</span>:<span class="number">3</span>&#125;,</div><div class="line">    &#123;<span class="attr">name</span>:<span class="string">'cindy'</span>,<span class="attr">age</span>:<span class="number">4</span>&#125;,</div><div class="line">    &#123;<span class="attr">name</span>:<span class="string">'anglar'</span>,<span class="attr">age</span>:<span class="number">4</span>&#125;,</div><div class="line">    &#123;<span class="attr">name</span>:<span class="string">'shitou'</span>,<span class="attr">age</span>:<span class="number">6</span>&#125;,</div><div class="line">    &#123;<span class="attr">name</span>:<span class="string">'tiantian'</span>,<span class="attr">age</span>:<span class="number">5</span>&#125;</div><div class="line">];</div><div class="line"></div><div class="line">$scope.func = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">return</span> e.age&gt;<span class="number">4</span>;&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+
+> {{ childrenArray | filter : 'a' }} //匹配属性值中含有a的
+> 
+> {{ childrenArray | filter : 4 }}  //匹配属性值中含有4的
+> 
+> {{ childrenArray | filter : {name : 'i'} }} //参数是对象，匹配name属性中含有i的
+> 
+> {{childrenArray | filter : func }}  //参数是函数，指定返回age>4的
+> 
+</blockquote>
+<h4 id="orderBy-排序"><a href="#orderBy-排序" class="headerlink" title="orderBy(排序)"></a>orderBy(排序)</h4><p>orderBy过滤器可以将一个数组中的元素进行排序，接收一个参数来指定排序规则，参数可以是一个字符串，表示以该属性名称进行排序。可以是一个函数，定义排序属性。还可以是一个数组，表示依次按数组中的属性值进行排序（若按第一项比较的值相等，再按第二项比较），还是拿上面的孩子数组举例：</p>
+<pre><code>{%raw%}
+    <div>{{ childrenArray | orderBy : 'age' }}</div>      //按age属性值进行排序，若是-age，则倒序
+    <div>{{ childrenArray | orderBy : orderFunc }}</div>   //按照函数的返回值进行排序
+    <div>{{ childrenArray | orderBy : ['age','name'] }}</div>  //如果age相同，按照name进行排序
+    {%endraw%}
+</code></pre><p>内置的过滤器介绍完了，写的我都快睡着了。。。正如你所看到的，ng内置的过滤器也并不是万能的，事实上好多都比较鸡肋。更个性化的需求就需要我们来定义自己的过滤器了，下面来看看如何自定义过滤器。</p>
+<h4 id="limitTo-限制数组长度或字符串长度"><a href="#limitTo-限制数组长度或字符串长度" class="headerlink" title="limitTo(限制数组长度或字符串长度)"></a>limitTo(限制数组长度或字符串长度)</h4><p>limitTo 过滤器用来截取数组或字符串，接收一个参数用来指定截取的长度，如果参数是负值，则从数组尾部开始截取。个人觉得这个filter有点鸡肋，首先只能从数组或字符串的开头/尾部进行截取，其次，js原生的函数就可以代替它了，看看怎么用吧：</p>
+<pre><code>{%raw%}{{ childrenArray | limitTo : 2 }}{%endraw%}  //将会显示数组中的前两项
+</code></pre><p>列出来的过滤器只能用于数组（<code>limitTo</code> 是个例外，他能处理字符串）。当这类过滤器应用到对象而不是数组时，无效果，只是简单地返回原对象。</p>
+<p>数组相关的过滤器经常和 <code>ng-repeat</code> 指令来显示果过滤结果。</p>
+<h2 id="filter-过滤器"><a href="#filter-过滤器" class="headerlink" title="filter 过滤器"></a>filter 过滤器</h2><p>AngularJS 有一个名为 filter 的过滤器。filter 过滤器是个过功能的过滤函数，可以用于选择数组的子集。有很多参数格式可以用于这些过滤器以便驱动元素选择过程。最简单的例子，我们可以通过一个子字符串，集合中的所有元素都将被检查是否包含指定的子字符串。</p>
+<p>下面是一个基于查询条件过滤的产品订单的例子。有一个用户输入查询条件的输入框，查询结果是只包含提供的子字符串的元素，如图：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/angular-filter.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>假设我们的数据模型包含以下属性：<code>name</code>, <code>desc</code>, <code>priority</code>, <code>estimation</code> and <code>done</code>，下面是 UI 模板：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&#123;%raw%&#125;</div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"well"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">  Search for:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ng-model</span>=<span class="string">"criteria"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"table table-bordered"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">thead</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">th</span>&gt;</span>Name<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">th</span>&gt;</span>Description<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">    ...</div><div class="line">  <span class="tag">&lt;/<span class="name">thead</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tr</span> <span class="attr">ng-repeat</span>=<span class="string">"backlogItem in backlog | filter:criteria"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;backlogItem.name&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;backlogItem.desc&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">      ...</div><div class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line">&#123;%endraw%&#125;</div></pre></td></tr></table></figure>
+<p>正如你所见，基于用户输入来添加过滤器异常简单，我们只需要把输入框的值作为阐述传给过滤器。匹配条件也可以使用 <code>!</code> 操作符否定。</p>
+<p>如果你想更精确地控制匹配条件，我们可以为过滤器提供一个对象作为参数，集合中的项会匹配对象中的所有属性，也就是所这些属性使用的是 AND 逻辑操作符。下例中，我们只匹配 name 属性且只包含还没有完成的项：</p>
+<pre><code>{%raw%}ng-repeat="item in backlog | filter:{name: criteria, done: false}"{%endraw%}
+</code></pre><p>另外，AngularJS 提供了一个名为 <code>$</code> 的 catch-all 属性，它可以将 AND 和 OR 逻辑操作符结合使用。假如我们要搜索源对象中所有属性都和字符串匹配，并且没有完成的项，这样的表达式为：</p>
+<pre><code>{%raw%}ng-repeat="item in backlog | filter:{$: criteria, done: false}"{%endraw%}
+</code></pre><p>当对象不足以表达过滤条件时，我们可以为过滤器提供函数（也就是所谓的“断言”）。这样的函数在源集合的每次迭代的时候都会被调用，过滤结果为所有让过滤函数返回 <code>true</code>的项。 </p>
+<p>以下例子返回所有已经完成并且 estimation 超过 20的项：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$scope.doneAndBigEffort = <span class="function"><span class="keyword">function</span> (<span class="params">backlogItem</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> backlogItem.done &amp;&amp; backlogItem.estimation &gt; <span class="number">20</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>And use:</p>
+<pre><code>{%raw%}ng-repeat="item in backlog | filter:doneAndBigEffort"{%endraw%}
+</code></pre><h3 id="计算过滤结果"><a href="#计算过滤结果" class="headerlink" title="计算过滤结果"></a>计算过滤结果</h3><p>我们有时候需要显示过滤集合的项数，我们可能在 repeater 和 计算表达式中同时使用 filter 来达到这一目标，如：</p>
+<pre><code>{%raw%}<tr ng-repeat="item in backlog | filter:{$: criteria, done: false}">{%endraw%}
+</tr></code></pre><p>总结行:</p>
+<pre><code>{%raw%}Total: {{(backlog | filter:{$: criteria, done: false}).length}}{%endraw%}
+</code></pre><p>这有几个明显的缺点，不仅代码冗余，而且 filter 在两个地方都要运行。</p>
+<p>我们可以通过为过滤后的数组创建一个临时变量来避免这样的缺点：</p>
+<pre><code>{%raw%}ng-repeat="item in filteredBacklog = (backlog | filter:{$: criteria, done: false})"{%endraw%}
+</code></pre><p>然后，计算过滤结果就归结为显示数组的长度：</p>
+<pre><code>Total: {%raw%}{{filteredBacklog.length}}{%endraw%}
+</code></pre><p>这种方法不是很直观，过滤逻辑只能放在一个地方。</p>
+<p>另一中方法是把过滤的逻辑移到控制器中，让后只把过滤结果暴露出来。这种方法还有一个好处，就是便于测试。</p>
+<h3 id="使用-orderBy-过滤器排序"><a href="#使用-orderBy-过滤器排序" class="headerlink" title="使用 orderBy 过滤器排序"></a>使用 orderBy 过滤器排序</h3><p>扁平的数据可以用来自由排序，通常通过点击以下某一列的表头，再点一下则反方向排序。我们接下来实现这个例子。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/angular-fileter-sort.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>用来排序的 HTML 部分：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;%raw%&#125;</div><div class="line"><span class="tag">&lt;<span class="name">thead</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">th</span> <span class="attr">ng-click</span>=<span class="string">"sort('name')"</span>&gt;</span>Name<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">th</span> <span class="attr">ng-click</span>=<span class="string">"sort('desc')"</span>&gt;</span>Description<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">   . . .</div><div class="line"><span class="tag">&lt;/<span class="name">thead</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">tbody</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span> <span class="attr">ng-repeat</span>=<span class="string">"item in filteredBacklog = (backlog | </span></span></div><div class="line">    filter:criteria | orderBy:sortField:reverse)"&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;item.name&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;item.desc&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    ... </div><div class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></div><div class="line">&#123;%endraw%&#125;</div></pre></td></tr></table></figure>
+<p><code>orderBy</code> 带有两个参数：</p>
+<ul>
+<li><code>sortField</code>: 用于排序断言的属性名</li>
+<li>sort order (<code>reverse</code>): 排序方向</li>
+</ul>
+<p>通过单元格的点击事件触发的 <code>sort</code> 函数负责选择排序属性和切换排序方向：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$scope.sortField = <span class="literal">undefined</span>;</div><div class="line">$scope.reverse = <span class="literal">false</span>;</div><div class="line"></div><div class="line">$scope.sort = <span class="function"><span class="keyword">function</span> (<span class="params">fieldName</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> ($scope.sortField === fieldName) &#123;</div><div class="line">    $scope.reverse = !$scope.reverse;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    $scope.sortField = fieldName;</div><div class="line">    $scope.reverse = <span class="literal">false</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>AngularJS 可以结合过滤器和排序来创建交互式表格。<code>orderBy</code> 过滤器应该置于 <code>filter</code> 过滤器之后，这是出于性能的考虑，因为相对过滤，排序更耗时，所以最好让排序算法运行在尽可能少的数据集合上。</p>
+<p>我们需要添加图标以指示排序的域以及排列的顺序，为此我们会用到 <code>ng-class</code>。下例为 name 列的例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">th</span> <span class="attr">ng-click</span>=<span class="string">"sort('name')"</span>&gt;</span>Name</div><div class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">ng-class</span>=<span class="string">"&#123;'icon-chevron-up': isSortUp('name'), 'icon-chevron-down': isSortDown('name')&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">th</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>The <code>isSortUp</code> and <code>isSortDown</code> functions are very simple and look like:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$scope.isSortUp = <span class="function"><span class="keyword">function</span> (<span class="params">fieldName</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> $scope.sortField === fieldName &amp;&amp; !$scope.reverse;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">$scope.isSortDown = <span class="function"><span class="keyword">function</span> (<span class="params">fieldName</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> $scope.sortField === fieldName &amp;&amp; $scope.reverse;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="自定义过滤器"><a href="#自定义过滤器" class="headerlink" title="自定义过滤器"></a>自定义过滤器</h2><p>Writing your own filter is very easy: just register a new filter factory function with your module. Internally, this uses the <a href="https://docs.angularjs.org/api/ng/provider/$filterProvider" target="_blank" rel="external"><code>filterProvider</code></a>. This factory function should return a new filter function which takes the input value as the first argument. Any filter arguments are passed in as additional arguments to the filter function.</p>
+<p>The filter function should be a <a href="http://en.wikipedia.org/wiki/Pure_function" target="_blank" rel="external">pure function</a>, which means that it should be stateless and idempotent, and not rely for example on other Angular services. Angular relies on this contract and will by default execute a filter only when the inputs to the function change. <a href="https://docs.angularjs.org/guide/filter#stateful-filters" target="_blank" rel="external">Stateful filters</a> are possible, but less performant.</p>
+<p><strong>Note:</strong> Filter names must be valid angular <a href="https://docs.angularjs.org/guide/expression" target="_blank" rel="external"><code>Expressions</code></a> identifiers, such as <code>uppercase</code> or <code>orderBy</code>. Names with special characters, such as hyphens and dots, are not allowed.  If you wish to namespace your filters, then you can use capitalization (<code>myappSubsectionFilterx</code>) or underscores (<code>myapp_subsection_filterx</code>).</p>
+<p>The following sample filter reverses a text string. In addition, it conditionally makes the text upper-case.</p>
+<p>The following sample filter reverses a text string. In addition, it conditionally makes the text upper-case.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"MyController"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">ng-model</span>=<span class="string">"greeting"</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">  No filter: &#123;&#123;greeting&#125;&#125;<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">  Reverse: &#123;&#123;greeting|reverse&#125;&#125;<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">  Reverse + uppercase: &#123;&#123;greeting|reverse:true&#125;&#125;<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">  Reverse, filtered in controller: &#123;&#123;filteredGreeting&#125;&#125;<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">angular.module(<span class="string">'myReverseFilterApp'</span>, [])</div><div class="line">.filter(<span class="string">'reverse'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">input, uppercase</span>) </span>&#123;</div><div class="line">    input = input || <span class="string">''</span>;</div><div class="line">    <span class="keyword">var</span> out = <span class="string">""</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; input.length; i++) &#123;</div><div class="line">      out = input.charAt(i) + out;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// conditional based on optional argument</span></div><div class="line">    <span class="keyword">if</span> (uppercase) &#123;</div><div class="line">      out = out.toUpperCase();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> out;</div><div class="line">  &#125;;</div><div class="line">&#125;)</div><div class="line">.controller(<span class="string">'MyController'</span>, [<span class="string">'$scope'</span>, <span class="string">'reverseFilter'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, reverseFilter</span>) </span>&#123;</div><div class="line">  $scope.greeting = <span class="string">'hello'</span>;</div><div class="line">  $scope.filteredGreeting = reverseFilter($scope.greeting);</div><div class="line">&#125;]);</div></pre></td></tr></table></figure>
+<p>除了使用内置的过滤器，我们也可以自定义过滤器。以下一个让单词首字母大写的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> homeModule = angular.module(<span class="string">'HomeModule'</span>, []);</div><div class="line">homeModule.filter(<span class="string">'titleCase'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> titleCaseFilter = <span class="function"><span class="keyword">function</span>(<span class="params">input</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> words = input.split(<span class="string">' '</span>);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; words.length; i++) &#123;</div><div class="line">      words[i] = words[i].charAt(<span class="number">0</span>).toUpperCase() + words[i].slice(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> words.join(<span class="string">' '</span>);</div><div class="line">  &#125;;</div><div class="line">  <span class="keyword">return</span> titleCaseFilter;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在模板中使用:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;% raw %&#125;</div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">ng-app</span>=<span class="string">'HomeModule'</span> <span class="attr">ng-controller</span>=<span class="string">"HomeController"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123;pageHeading | titleCase&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line">&#123;% endraw %&#125;</div></pre></td></tr></table></figure>
+<p><code>pageHeading</code> 为控制器中的模型变量：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">HomeController</span>(<span class="params">$scope</span>) </span>&#123;</div><div class="line">  $scope.pageHeading = <span class="string">'behold the majesty of your page title'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Stateful-filters"><a href="#Stateful-filters" class="headerlink" title="Stateful filters"></a>Stateful filters</h3><p>It is strongly discouraged to write filters that are stateful, because the execution of those can’t be optimized by Angular, which often leads to performance issues. Many stateful filters can be converted into stateless filters just by exposing the hidden state as a model and turning it into an argument for the filter.</p>
+<p>If you however do need to write a stateful filter, you have to mark the filter as <code>$stateful</code>, which means that it will be executed one or more times during the each <code>$digest</code> cycle.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"MyController"</span>&gt;</span></div><div class="line">  Input: <span class="tag">&lt;<span class="name">input</span> <span class="attr">ng-model</span>=<span class="string">"greeting"</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">  Decoration: <span class="tag">&lt;<span class="name">input</span> <span class="attr">ng-model</span>=<span class="string">"decoration.symbol"</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">  No filter: &#123;&#123;greeting&#125;&#125;<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">  Decorated: &#123;&#123;greeting | decorate&#125;&#125;<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'myStatefulFilterApp'</span>, [])</div><div class="line">.filter(<span class="string">'decorate'</span>, [<span class="string">'decoration'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">decoration</span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">decorateFilter</span>(<span class="params">input</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> decoration.symbol + input + decoration.symbol;</div><div class="line">  &#125;</div><div class="line">  decorateFilter.$stateful = <span class="literal">true</span>;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> decorateFilter;</div><div class="line">&#125;])</div><div class="line">.controller(<span class="string">'MyController'</span>, [<span class="string">'$scope'</span>, <span class="string">'decoration'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, decoration</span>) </span>&#123;</div><div class="line">  $scope.greeting = <span class="string">'hello'</span>;</div><div class="line">  $scope.decoration = decoration;</div><div class="line">&#125;])</div><div class="line">.value(<span class="string">'decoration'</span>, &#123;<span class="attr">symbol</span>: <span class="string">'*'</span>&#125;);</div></pre></td></tr></table></figure>
+<h3 id="分页的例子"><a href="#分页的例子" class="headerlink" title="分页的例子"></a>分页的例子</h3><p>我们将创建一个名为 <code>pagination</code> 的过滤器用来分页，以下是使用分页过滤器的例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;%raw%&#125;</div><div class="line"><span class="tag">&lt;<span class="name">tr</span> <span class="attr">ng-repeat</span>=<span class="string">"item in filteredBacklog = (backlog | </span></span></div><div class="line">  pagination:pageNo:pageSize"&gt;</div><div class="line">  <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;item.name&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">  . . .</div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">&#123;%endraw%&#125;</div></pre></td></tr></table></figure>
+<p><code>pagination</code> 过滤器需要携带两个参数：当前页索引和页大小。</p>
+<p>以下是简单的实现（忽略了错误处理）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'arrayFilters'</span>, [])</div><div class="line"></div><div class="line">  .filter(<span class="string">'pagination'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">inputArray, selectedPage, pageSize</span>) </span>&#123;</div><div class="line">           <span class="keyword">var</span> start = selectedPage*pageSize;</div><div class="line">           <span class="keyword">return</span> inputArray.slice(start, start + pageSize);</div><div class="line">         &#125;;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>想其他的 provider 一样，过滤器需要在一个 module 实例上注册。需要为 <code>filter</code> 指定一个过滤器名和一个工厂方法，这个工厂方法必须返回实际的过滤器函数。</p>
+<p><code>pagination</code> 过滤函数的第一个参数是要过滤的内容，接下来的参数为过滤函数的选项。</p>
+<p>过滤器易于单元测试，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'pagination filter'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> paginationFilter;</div><div class="line"></div><div class="line">  beforeEach(<span class="built_in">module</span>(<span class="string">'arrayFilters'</span>));</div><div class="line">  beforeEach(inject(<span class="function"><span class="keyword">function</span> (<span class="params">_paginationFilter_</span>) </span>&#123;</div><div class="line">    paginationFilter = _paginationFilter_;</div><div class="line">  &#125;));</div><div class="line"></div><div class="line">  it(<span class="string">'should return a slice of the input array'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> input = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>];</div><div class="line"></div><div class="line">    expect(paginationFilter(input, <span class="number">0</span>, <span class="number">2</span>)).toEqual([<span class="number">1</span>, <span class="number">2</span>]);</div><div class="line">    expect(paginationFilter(input, <span class="number">2</span>, <span class="number">2</span>)).toEqual([<span class="number">5</span>, <span class="number">6</span>]);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  it(<span class="string">'should return empty array for out-of bounds'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> input = [<span class="number">1</span>, <span class="number">2</span>];</div><div class="line">   </div><div class="line">    expect(paginationFilter(input, <span class="number">2</span>, <span class="number">2</span>)).toEqual([]);</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="Filters-dos-and-don’ts"><a href="#Filters-dos-and-don’ts" class="headerlink" title="Filters dos and don’ts"></a>Filters dos and don’ts</h2><p>过滤器在模板中为格式化和数据转换提供了简洁便利的语法。但如果使用不当可能引起错误，以下讲述了过滤器适合和不适合的使用场景。</p>
+<h3 id="过滤器和-DOM-操作"><a href="#过滤器和-DOM-操作" class="headerlink" title="过滤器和 DOM 操作"></a>过滤器和 DOM 操作</h3><p>你有时可能试图在过滤器函数中返回 HTML 标签，实际上，AngularJS 包含了一个这么做的的过滤器（在分离的 <code>ngSanitize</code> 模块中）。</p>
+<p>实际上，过滤器输出 HTMl 不是最佳实践，最主要的原因是为了显示过滤器输出的 HTML，我们需要 <code>ngBindUnsafeHtml</code> 或者 <code>ngBindHtml</code> 这样的绑定插件。这不仅让绑定语法便得更复杂（相对 <code></code>），也让网页更容易受到 HTML 注入攻击。</p>
+<p>我们看下 <code>highlight</code> 过滤器：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'highlight'</span>, [])</div><div class="line"></div><div class="line">  .filter(<span class="string">'highlight'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">input, search</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (search) &#123;</div><div class="line">        <span class="keyword">return</span> input.replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(search, <span class="string">'gi'</span>),</div><div class="line">           <span class="string">'&lt;strong&gt;$&amp;&lt;/strong&gt;'</span>);</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> input;</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>这个过滤器包含硬编码的 HTML 标签，结果是，我们不能使用插值指令，而需要像这样写模板：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;%raw%&#125;</div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">ng-model</span>=<span class="string">"search"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">ng-bind-html</span>=<span class="string">"phrase | highlight:search"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">&#123;%endraw%&#125;</div></pre></td></tr></table></figure>
+<p>过滤器输出的 HTML 标签中不能包含任何 AngularJS 指令，因为这些指令不会执行。</p>
+<h3 id="过滤器中耗时的数据转换"><a href="#过滤器中耗时的数据转换" class="headerlink" title="过滤器中耗时的数据转换"></a>过滤器中耗时的数据转换</h3><p>在模板中使用过滤器时，过滤器变成了 AngularJS 表达式的一部分，表达式会被频繁执行。实际上，这样的过滤器函数在每个 digest 周期中被调用多次。我们可以通过下面的例子验证：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'filtersPerf'</span>, [])</div><div class="line">  .filter(<span class="string">'logUppercase'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">uppercaseFilter</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">input</span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'Calling uppercase on: '</span>+input);</div><div class="line">      <span class="keyword">return</span> uppercaseFilter(input);</div><div class="line">    &#125;;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>在标签上这样使用：</p>
+<pre><code>{%raw%}<input ng-model="name"> {{name | logUppercase}}{%endraw%}
+</code></pre><p>每敲一个键盘，至少输出一次 log（经常两次）。正因为过滤器不仅执行一次，所以过滤器要尽可能高效执行的。过滤器执行多次是因为 Angular 的脏检查在工作。</p>
+<h3 id="不稳定的过滤器"><a href="#不稳定的过滤器" class="headerlink" title="不稳定的过滤器"></a>不稳定的过滤器</h3><p>过滤器会被调用多次，当输入没有发生变化时，过滤器放回的结果应该是一样的。如果过滤器没有这个特点就很容易失控。让我们编写一个恶意的随机数过滤器，这个过滤器从一个数组中随机选择一个元素：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'filtersStability'</span>, [])</div><div class="line"></div><div class="line">  .filter(<span class="string">'random'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">inputArray</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> idx =  <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * inputArray.length);</div><div class="line">      <span class="keyword">return</span> inputArray[idx];</div><div class="line">    &#125;;</div><div class="line">  &#125;)</div></pre></td></tr></table></figure>
+<p>这个随删出售过滤器可以这样使用：</p>
+<pre><code>{%raw%}{{items | random}}{%endraw%}
+</code></pre><p>这在界面上回看了一个随机数，这看上去是正确的。但查看控制台是，我们可以发现有错误输出：</p>
+<pre><code>Uncaught Error: 10 $digest() iterations reached. Aborting!
+</code></pre><p>错误的意思是，每次计算会产生不同的值。AngularJS 观察模型的变化，然后计算表达式，期望这是一个稳定的过程。</p>
+<p>像这样的场景，解决办法是在模板显示前，在控制器中计算随机数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">.controller(<span class="string">'RandomCtrl'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</div><div class="line"></div><div class="line">  $scope.items = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1000</span>);</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;$scope.items.length; i++) &#123;</div><div class="line">    $scope.items[i] = i;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">$scope.randomValue = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * $scope.items.length);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://www.cnblogs.com/lvdabao/p/3475426.html" target="_blank" rel="external">走进AngularJs(七) 过滤器（filter） - 吕大豹 - 博客园</a></li>
+<li><a href="https://docs.angularjs.org/api/ng/filter" target="_blank" rel="external">AngularJS: API: filter components in ng</a></li>
+<li><a href="http://scotch.io/tutorials/javascript/all-about-the-built-in-angularjs-filters" target="_blank" rel="external">All About the Built-In AngularJS Filters ♥ Scotch</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Angular/2014-09-26-angular-filter.html" target="_blank" rel="external">http://blog.inching.org/Angular/2014-09-26-angular-filter.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorial/">tutorial</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2014-09-26-angular-filter.html&title=《Angular Filter》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2014-09-26-angular-filter.html&title=《Angular Filter》 — Balance&source=过滤器（filter）正如其名，作用就是接收一个输入，通过某个规则进行处理，然后返回处理后的结果。主要用在数据的格式化上，例如获取一个数组中的子集，对数组..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2014-09-26-angular-filter.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Filter》 — Balance&url=http://blog.inching.org/Angular/2014-09-26-angular-filter.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2014-09-26-angular-filter.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Angular/2014-10-10-angular-ui-router.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Angular UI Router</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Angular/2014-09-24-angular-directive.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Angular Directive</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2014-09-26-angular-filter.html&title=《Angular Filter》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2014-09-26-angular-filter.html&title=《Angular Filter》 — Balance&source=过滤器（filter）正如其名，作用就是接收一个输入，通过某个规则进行处理，然后返回处理后的结果。主要用在数据的格式化上，例如获取一个数组中的子集，对数组..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2014-09-26-angular-filter.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Filter》 — Balance&url=http://blog.inching.org/Angular/2014-09-26-angular-filter.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2014-09-26-angular-filter.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3aS24bMRAFQN3/0gqQlQFHk/e65SDiFFeGJHOmuGj0h49HvJ6/19e/v37y/Zffv331Sb7zGxYGBsbHMp6X6/ol2h2SF213xsDAuA+j3S4Jr9fHke9//W4YGBgY+SOTtC9PLjEwMDA2ATd50dmhYGBgYFwz8hK0baLtGW+uxTEwMD6QMRsM/Ju/f3y+gYGB8d8znuXaBMS2eVe8FQYGxtGMZDyZJ4KbgjZPSV/ujIGBcShjFhbb5v7mwllUsmJgYNyA0aaAbasu582GoxgYGHdgtEle/pjNsKFoxmFgYBzNyP95VsrmKWC+WzGPxcDAOIiRN7/aF5pFxTZhxcDAuAOjDantJbC26Za03lbdRAwMjA9ktNcd8mRuv0MxMMDAwDiUsUm89kG5DdwYGBgYs+Dbtsby8rg4LAwMjKMZbbBLPnnbFYo84GJgYNyGkV+/aH+ZH8pmnICBgXE2Iy9Z87K2/WVbTr/cHwMD41DGJmnbN9feHGoxMDCOY0QTztHj8zCaBNm/PBcDA+MGjLZZNkv7ZgeBgYGBkSdzszI1H2EmT4+qcAwMjOMYs4sU+VWJfBiZJ6B/+BYDA+NoRr7y7ZJg2g5HN4NPDAyMMxib1G0ToGcHNEwQMTAwjmBsGl6z8eejXBgYGBht2TlDtlcrivCNgYGBERelyWWOfORZXArBwMC4ASMPcy2vPZrZkWFgYJzNmBWQ+cByXx63LTwMDIyDGL8AIbcZBi3stw4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

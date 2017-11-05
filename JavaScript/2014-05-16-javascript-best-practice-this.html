@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JavaScript 核心之this | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="本文由 伯乐在线 - kmokidd 翻译自 2ality。
+在JavaScript中，this的概念比较复杂。除了在面向对象编程中，this还是随处可用的。这篇文章介绍了this的工作原理，它会造成什么样的问题以及this的相关例子。 要根据this所在的位置来理解它，情况大概可以分为3种：
+
+在函数中：this通常是一个隐含的参数。
+在函数外（顶级作用域中）：在浏览器中this指的是全局对象；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 核心之this">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-05-16-javascript-best-practice-this.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文由 伯乐在线 - kmokidd 翻译自 2ality。
+在JavaScript中，this的概念比较复杂。除了在面向对象编程中，this还是随处可用的。这篇文章介绍了this的工作原理，它会造成什么样的问题以及this的相关例子。 要根据this所在的位置来理解它，情况大概可以分为3种：
+
+在函数中：this通常是一个隐含的参数。
+在函数外（顶级作用域中）：在浏览器中this指的是全局对象；">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 核心之this">
+<meta name="twitter:description" content="本文由 伯乐在线 - kmokidd 翻译自 2ality。
+在JavaScript中，this的概念比较复杂。除了在面向对象编程中，this还是随处可用的。这篇文章介绍了this的工作原理，它会造成什么样的问题以及this的相关例子。 要根据this所在的位置来理解它，情况大概可以分为3种：
+
+在函数中：this通常是一个隐含的参数。
+在函数外（顶级作用域中）：在浏览器中this指的是全局对象；">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript 核心之this</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript 核心之this</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-15T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-在函数中的-this"><span class="post-toc-text">1. 在函数中的 this</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-1-在实函数中的-this"><span class="post-toc-text">1.1 在实函数中的 this</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-构造器中的this"><span class="post-toc-text">1.2 构造器中的this</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-方法中的this"><span class="post-toc-text">1.3 方法中的this</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-作用域中的this"><span class="post-toc-text">2. 作用域中的this</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-eval-中的this"><span class="post-toc-text">3. eval() 中的this</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-与this有关的陷阱"><span class="post-toc-text">4. 与this有关的陷阱</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-1-忘记使用new"><span class="post-toc-text">4.1 忘记使用new</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-3-隐藏this"><span class="post-toc-text">4.3 隐藏this</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-最佳实践"><span class="post-toc-text">5. 最佳实践</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-best-practice-this"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript 核心之this</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-16 00:00:00" datetime="2014-05-15T16:00:00.000Z"  itemprop="datePublished">2014-05-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文由 <a href="http://blog.jobbole.com/" target="_blank" rel="external">伯乐在线</a> - <a href="http://blog.jobbole.com/author/kmokidd/" target="_blank" rel="external">kmokidd</a> 翻译自 <a href="http://www.2ality.com/2014/05/this.html" target="_blank" rel="external">2ality</a>。</p>
+<p>在JavaScript中，<code>this</code>的概念比较复杂。除了在面向对象编程中，<code>this</code>还是随处可用的。这篇文章介绍了<code>this</code>的工作原理，它会造成什么样的问题以及<code>this</code>的相关例子。 要根据<code>this</code>所在的位置来理解它，情况大概可以分为3种：</p>
+<ol>
+<li><strong>在函数中：</strong><code>this</code>通常是一个隐含的参数。</li>
+<li><strong>在函数外（顶级作用域中）</strong>：在浏览器中<code>this</code>指的是全局对象；在Node.js中指的是模块(module)的导出(exports)。</li>
+<li><strong>传递到eval()中的字符串</strong>：如果<code>eval()</code>是被直接调用的，<code>this</code>指的是当前对象；如果<code>eval()</code>是被间接调用的，<code>this</code>就是指全局对象。</li>
+</ol>
+<p>对这几个分类，我们做了相应的测试：</p>
+<h2 id="1-在函数中的-this"><a href="#1-在函数中的-this" class="headerlink" title="1. 在函数中的 this"></a>1. 在函数中的 <code>this</code></h2><p>函数基本可以代表JS中所有可被调用的结构，所以这是也最常见的使用<code>this</code>的场景，而函数又能被子分为下列三种角色：</p>
+<ul>
+<li>实函数</li>
+<li>构造器</li>
+<li>方法</li>
+</ul>
+<a id="more"></a>
+<h3 id="1-1-在实函数中的-this"><a href="#1-1-在实函数中的-this" class="headerlink" title="1.1 在实函数中的 this"></a>1.1 在实函数中的 <code>this</code></h3><p>在实函数中，<code>this</code>的值是取决于它所处的上下文的<a href="http://speakingjs.com/es5/ch07.html#strict_mode" target="_blank" rel="external">模式</a>。</p>
+<ul>
+<li>Sloppy模式：<code>this</code>指的是全局对象（在浏览器中就是 <code>window</code>）。 </li>
+</ul>
+<pre><code>function sloppyFunc() {
+    console.log(this === window); // true
+}
+sloppyFunc();
+</code></pre><ul>
+<li><p>Strict模式：<code>this</code> 的值是 <code>undefined</code>。</p>
+<pre><code>function strictFunc() {
+    &apos;use strict&apos;;
+    console.log(this === undefined); // true
+}
+strictFunc();
+</code></pre></li>
+</ul>
+<pre><code>`this`是函数的隐含参数，所以它的值总是相同的。不过你是可以通过使用call()或者apply()的方法显示地定义好`this`的值的。
+
+    function func(arg1, arg2) {
+        console.log(this); // 1
+        console.log(arg1); // 2
+        console.log(arg2); // 3
+    }
+    func.call(1, 2, 3); // (this, arg1, arg2)
+    func.apply(1, [2, 3]); // (this, arrayWithArgs)
+</code></pre><h3 id="1-2-构造器中的this"><a href="#1-2-构造器中的this" class="headerlink" title="1.2 构造器中的this"></a>1.2 构造器中的<code>this</code></h3><p>你可以通过<code>new</code>将一个函数当做一个构造器来使用。<code>new</code>操作创建了一个新的对象，并将这个对象通过<code>this</code>传入构造器中。</p>
+<pre><code>var savedThis;
+function Constr() {
+    savedThis = this;
+}
+var inst = new Constr();
+console.log(savedThis === inst); // true
+</code></pre><p>JS中<code>new</code>操作的实现原理大概如下面的代码所示（更准确的实现请看<a href="http://speakingjs.com/es5/ch17.html#_the`new`operator_implemented_in_javascript" target="_blank" rel="external">这里</a>，这个实现也比较复杂一些）：</p>
+<pre><code>function newOperator(Constr, arrayWithArgs) {
+    var thisValue = Object.create(Constr.prototype);
+    Constr.apply(thisValue, arrayWithArgs);
+    return thisValue;
+}
+</code></pre><h3 id="1-3-方法中的this"><a href="#1-3-方法中的this" class="headerlink" title="1.3 方法中的this"></a>1.3 方法中的<code>this</code></h3><p>在方法中<code>this</code>的用法更倾向于传统的面向对象语言：<code>this</code>指向的接收方，也就是包含有这个方法的对象。</p>
+<pre><code>var obj = {
+    method: function () {
+        console.log(this === obj); // true
+    }
+}
+obj.method();
+</code></pre><h2 id="2-作用域中的this"><a href="#2-作用域中的this" class="headerlink" title="2. 作用域中的this"></a>2. 作用域中的<code>this</code></h2><p>在浏览器中，作用域就是全局作用域，<code>this</code>指的就是这个全局对象（就像<code>window</code>）：</p>
+<pre><code>&lt;script&gt;
+    console.log(this === window); // true
+&lt;/script&gt;
+</code></pre><p>在Node.js中，你通常都是在module中执行函数的。因此，顶级作用域是个很特别的模块作用域（module scope）：</p>
+<pre><code>// `global` (not `window`) refers to global object:
+console.log(Math === global.Math); // true
+
+// `this` doesn’t refer to the global object:
+console.log(this !== global); // true
+// `this` refers to a module’s exports:
+console.log(this === module.exports); // true
+</code></pre><h2 id="3-eval-中的this"><a href="#3-eval-中的this" class="headerlink" title="3. eval() 中的this"></a>3. <code>eval()</code> 中的<code>this</code></h2><p>eval()可以被直接（通过调用这个函数名’eval’）或者间接（通过别的方式调用，比如call()）地调用。要了解更多细节，请看<a href="http://speakingjs.com/es5/ch23.html#_indirect_eval_evaluates_in_global_scope" target="_blank" rel="external">这里</a>。</p>
+<pre><code>// Real functions
+function sloppyFunc() {
+    console.log(eval(&apos;this&apos;) === window); // true
+}
+sloppyFunc();
+
+function strictFunc() {
+    &apos;use strict&apos;;
+    console.log(eval(&apos;this&apos;) === undefined); // true
+}
+strictFunc();
+
+// Constructors
+var savedThis;
+function Constr() {
+    savedThis = eval(&apos;this&apos;);
+}
+var inst = new Constr();
+console.log(savedThis === inst); // true
+
+// Methods
+var obj = {
+    method: function () {
+        console.log(eval(&apos;this&apos;) === obj); // true
+    }
+}
+obj.method();
+</code></pre><h2 id="4-与this有关的陷阱"><a href="#4-与this有关的陷阱" class="headerlink" title="4. 与this有关的陷阱"></a>4. 与<code>this</code>有关的陷阱</h2><p>你要小心下面将介绍的3个和<code>this</code>有关的陷阱。要注意，在下面的例子中，使用<a href="http://speakingjs.com/es5/ch07.html#strict_mode" target="_blank" rel="external">Strict模式(strict mode)</a>都能提高代码的安全性。由于在实函数中，<code>this</code>的值是<em>undefined</em>，当出现问题的时候，你会得到警告。  </p>
+<h3 id="4-1-忘记使用new"><a href="#4-1-忘记使用new" class="headerlink" title="4.1 忘记使用new"></a>4.1 忘记使用<code>new</code></h3><p>如果你不是使用new来调用构造器，那其实你就是在使用一个实函数。因此<code>this</code>就不会是你预期的值。在Sloppy模式中，<code>this</code>指向的就是<code>window</code>而你将会创建全局变量：</p>
+<pre><code>function Point(x, y) {
+    this.x = x;
+    this.y = y;
+}
+var p = Point(7, 5); // we forgot new!
+console.log(p === undefined); // true
+
+// Global variables have been created:
+console.log(x); // 7
+console.log(y); // 5
+</code></pre><p>不过如果使用的是strict模式，那你还是会得到警告（this===undefined）：</p>
+<pre><code>function Point(x, y) {
+    &apos;use strict&apos;;
+    this.x = x;
+    this.y = y;
+}
+var p = Point(7, 5);
+// TypeError: Cannot set property &apos;x&apos; of undefined
+</code></pre><p>###　4.2 不恰当地使用方法  </p>
+<p>如果你直接取得一个方法的值（不是调用它），你就是把这个方法当做函数在用。当你要将一个方法当做一个参数传入一个函数或者一个调用方法中，你很可能会这么做。<em>setTimeout()</em>和注册事件句柄（event handlers）就是这种情况。我将会使用<em>callIt()</em>方法来模拟这个场景：</p>
+<pre><code>/** Similar to setTimeout() and setImmediate() */
+function callIt(func) {
+    func();
+}
+</code></pre><p>如果你是在Sloppy模式下将一个方法当做函数来调用，<em>this</em>指向的就是全局对象，所以之后创建的都会是全局的变量。</p>
+<pre><code>var counter = {
+    count: 0,
+    // Sloppy-mode method
+    inc: function () {
+        this.count++;
+    }
+}
+callIt(counter.inc);
+
+// Didn’t work:
+console.log(counter.count); // 0
+
+// Instead, a global variable has been created
+// (NaN is result of applying ++ to undefined):
+console.log(count);  // NaN
+</code></pre><p>如果你是在Strict模式下这么做的话，<code>this</code>是undefined的，你还是得不到想要的结果，不过至少你会得到一句警告：</p>
+<pre><code>var counter = {
+    count: 0,
+    // Strict-mode method
+    inc: function () {
+        &apos;use strict&apos;;
+        this.count++;
+    }
+}
+callIt(counter.inc);
+
+// TypeError: Cannot read property &apos;count&apos; of undefined
+console.log(counter.count);
+</code></pre><p>要想得到预期的结果，可以使用　<code>bind()</code>：</p>
+<pre><code>var counter = {
+    count: 0,
+    inc: function () {
+        this.count++;
+    }
+}
+callIt(counter.inc.bind(counter));
+// It worked!
+console.log(counter.count); // 1
+</code></pre><p><em>bind()</em>又创建了一个总是能将<code>this</code>的值设置为<em>counter</em>的函数。</p>
+<h3 id="4-3-隐藏this"><a href="#4-3-隐藏this" class="headerlink" title="4.3 隐藏this"></a>4.3 隐藏<code>this</code></h3><p>当你在方法中使用函数的时候，常常会忽略了函数是有自己的<code>this</code>的。这个<code>this</code>又有别于方法，因此你不能把这两个<code>this</code>混在一起使用。具体的请看下面这段代码：</p>
+<pre><code>var obj = {
+    name: &apos;Jane&apos;,
+    friends: [ &apos;Tarzan&apos;, &apos;Cheeta&apos; ],
+    loop: function () {
+        &apos;use strict&apos;;
+        this.friends.forEach(
+            function (friend) {
+                console.log(this.name+&apos; knows &apos;+friend);
+            }
+        );
+    }
+};
+obj.loop();
+// TypeError: Cannot read property &apos;name&apos; of undefined
+</code></pre><p>上面的例子里函数中的<em>this.name</em>不能使用，因为函数的<code>this</code>的值是<em>undefined</em>，这和方法<em>loop()</em>中的<code>this</code>不一样。下面提供了三种思路来解决这个问题：</p>
+<ul>
+<li><p><strong>that=this</strong>，将<code>this</code>赋值到一个变量上，这样就把<code>this</code>显性地表现出来了（除了<em>that</em>，<em>self</em>也是个很常见的用于存放<code>this</code>的变量名），之后就使用那个变量： </p>
+<pre><code>loop: function () {
+    &apos;use strict&apos;;
+    var that = this;
+    this.friends.forEach(function (friend) {
+        console.log(that.name+&apos; knows &apos;+friend);
+    });
+}
+</code></pre></li>
+<li><p><em>bind()</em>。使用<em>bind()</em>来创建一个函数，这个函数的<code>this</code>总是存有你想要传递的值（下面这个例子中，方法的<code>this</code>）： </p>
+<pre><code>loop: function () {
+    &apos;use strict&apos;;
+    this.friends.forEach(function (friend) {
+        console.log(this.name+&apos; knows &apos;+friend);
+    }.bind(this));
+}
+</code></pre></li>
+<li><p>用forEach的第二个参数。forEach的第二个参数会被传入回调函数中，作为回调函数的<code>this</code>来使用。 </p>
+<pre><code>loop: function () {
+    &apos;use strict&apos;;
+    this.friends.forEach(function (friend) {
+        console.log(this.name+&apos; knows &apos;+friend);
+    }, this);
+}
+</code></pre></li>
+</ul>
+<h2 id="5-最佳实践"><a href="#5-最佳实践" class="headerlink" title="5. 最佳实践"></a>5. 最佳实践</h2><p>理论上，我认为实函数并没有属于自己的<code>this</code>，而上述的解决方案也是按照这个思想的。ECMAScript 6是用<a href="http://www.2ality.com/2012/04/arrow-functions.html" target="_blank" rel="external">箭头函数(arrow function)</a>来实现这个效果的，箭头函数就是没有自己的<code>this</code>的函数。在这样的函数中你可以随便使用<code>this</code>，也不用担心有没有隐式的存在。</p>
+<pre><code>loop: function () {
+    &apos;use strict&apos;;
+    // The parameter of forEach() is an arrow function
+    this.friends.forEach(friend =&gt; {
+        // `this` is loop’s `this`
+        console.log(this.name+&apos; knows &apos;+friend);
+    });
+}
+</code></pre><p>我不喜欢有些API把<code>this</code>当做实函数的一个附加参数：</p>
+<pre><code>beforeEach(function () {  
+    this.addMatchers({  
+        toBeInRange: function (start, end) {  
+            ...
+        }  
+    });  
+});
+</code></pre><p>把一个隐性参数写成显性地样子传入，代码会显得更好理解，而且这样和箭头函数的要求也很一致：</p>
+<pre><code>beforeEach(api =&gt; {
+    api.addMatchers({
+        toBeInRange(start, end) {
+            ...
+        }
+    });
+});
+</code></pre><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://www.2ality.com/2014/05/this.html" target="_blank" rel="external">JavaScript’s “this”: how it works, where it can trip you up</a></li>
+<li><a href="http://www.sitepoint.com/demystifying-javascript-variable-scope-hoisting" target="_blank" rel="external">Demystifying JavaScript Variable Scope and Hoisting</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-05-16-javascript-best-practice-this.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-05-16-javascript-best-practice-this.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-05-16-javascript-best-practice-this.html&title=《JavaScript 核心之this》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-05-16-javascript-best-practice-this.html&title=《JavaScript 核心之this》 — Balance&source=本文由 伯乐在线 - kmokidd 翻译自 2ality。
+在JavaScript中，this的概念比较复杂。除了在面向对象编程中，this还是随处可用..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-05-16-javascript-best-practice-this.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 核心之this》 — Balance&url=http://blog.inching.org/JavaScript/2014-05-16-javascript-best-practice-this.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-05-16-javascript-best-practice-this.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-05-22-javascript-library.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JavaScript Library</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Database/2014-05-14-database-mongo-auth.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MongoDb 权限</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-05-16-javascript-best-practice-this.html&title=《JavaScript 核心之this》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-05-16-javascript-best-practice-this.html&title=《JavaScript 核心之this》 — Balance&source=本文由 伯乐在线 - kmokidd 翻译自 2ality。
+在JavaScript中，this的概念比较复杂。除了在面向对象编程中，this还是随处可用..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-05-16-javascript-best-practice-this.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 核心之this》 — Balance&url=http://blog.inching.org/JavaScript/2014-05-16-javascript-best-practice-this.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-05-16-javascript-best-practice-this.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtUlEQVR42u3awU7rQAwF0P7/T4P0VixIcm2PW/R0skJpCT5ZzJjreb3i6+vfdf/zzzs/r+TT6v3DFx4eHl6r9KvripHcT4rLP71nXz4HDw8Pb42XbwZXZc1f09XTknou7+Ph4eF9lJc0yvlyf/9NPDw8vP+Dd//9s5FErwY8PDy8d/KSVjgpuhpSVNv0xawFDw8PL+adGoC98+cPzPfw8PDwguX11FaRt7/3sHKdeHh4eAu8pIjqttErN68kH6rh4eHhbfDymLX6zu4X/fnGEL1uPDw8vAVe/su9WDZpvqsHDpKjYM0S8fDw8GJeMnzKYfl4bAIuD73w8PDwDvGqsWzSEM+Ly5v4h7+Fh4eHt8brLdmnZveTpz0EGXh4eHgLvF4TXA0C5k12/nIfshY8PDy8o7ze6Kt3aCDveKtRbzOSwMPDwytGt2dH+5OoNx+bRc/Bw8PDW+D1QoRqFFvdkKojuvLEDw8PD2/A60WrkyLyDaM3GLsMcPHw8PAO8XrHoarjseqxrbytj7YiPDw8vKO8U8cCqgP+swcUHlpqPDw8vAXepIWtttr5q6m+sl/u4OHh4a3xXq1r0kD3tpzqAA8PDw9vm/cVXEks2xtWVcPcCImHh4e3xjuQBBdfUL61jKINPDw8vAXeZJmeDMl6AW5+dAAPDw9vm1eNAKpt9KgtHocjeHh4eBu8/NhTbxhWXcR7jfhDmIuHh4f3Rl75n//4KEB575pM6vDw8PAWYL0B2PwoQBJb9L6Jh4eHt8Hr/asfxaaDJjs/fHBsU8HDw8Mr8jYOWlUx+ad5WIyHh4e3zcuX8mqQcazQyQAMDw8P76O86rZR5d1vV8nz8fDw8P4Ob9JYV4OMU38RDw8Pb49XXYjzowNJWQlgNNzCw8PDO8rrDcB6xw6qS3+14W7i8fDw8FLeN5usK/A+dS5QAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

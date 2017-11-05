@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>node.js的循环依赖 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="node,module">
+    <meta name="description" content="原文： http://cnodejs.org/topic/4f16442ccae1f4aa27001045
+循环依赖，简单点来说就是a文件中require b文件，然后b文件中又反过来require a文件。这个问题我们平时可能并不大注意到，但如果处理不好可能会引起一些让人摸不清的问题。在node中，是如何处理循环依赖的问题的呢？  
+写个简单的例子来试验一下看吧。  
+定义两个文件：  
+a.j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node.js的循环依赖">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-06-27-node-module-circle-dependency.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文： http://cnodejs.org/topic/4f16442ccae1f4aa27001045
+循环依赖，简单点来说就是a文件中require b文件，然后b文件中又反过来require a文件。这个问题我们平时可能并不大注意到，但如果处理不好可能会引起一些让人摸不清的问题。在node中，是如何处理循环依赖的问题的呢？  
+写个简单的例子来试验一下看吧。  
+定义两个文件：  
+a.j">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node.js的循环依赖">
+<meta name="twitter:description" content="原文： http://cnodejs.org/topic/4f16442ccae1f4aa27001045
+循环依赖，简单点来说就是a文件中require b文件，然后b文件中又反过来require a文件。这个问题我们平时可能并不大注意到，但如果处理不好可能会引起一些让人摸不清的问题。在node中，是如何处理循环依赖的问题的呢？  
+写个简单的例子来试验一下看吧。  
+定义两个文件：  
+a.j">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">node.js的循环依赖</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">node.js的循环依赖</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-06-26T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-06-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-node-module-circle-dependency"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">node.js的循环依赖</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-06-27 00:00:00" datetime="2014-06-26T16:00:00.000Z"  itemprop="datePublished">2014-06-27</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>原文： <a href="http://cnodejs.org/topic/4f16442ccae1f4aa27001045" target="_blank" rel="external">http://cnodejs.org/topic/4f16442ccae1f4aa27001045</a></p>
+<p>循环依赖，简单点来说就是a文件中require b文件，然后b文件中又反过来require a文件。这个问题我们平时可能并不大注意到，但如果处理不好可能会引起一些让人摸不清的问题。在node中，是如何处理循环依赖的问题的呢？  </p>
+<p>写个简单的例子来试验一下看吧。  </p>
+<p>定义两个文件：  </p>
+<p>a.js</p>
+<pre><code>var b = require(&apos;./b&apos;);  
+console.log(&apos;a.js get b:&apos; + b.b);  
+module.exports.a = 1;
+</code></pre><p>b.js  </p>
+<pre><code>var a = require(&apos;./a&apos;);  
+console.log(&apos;b.js get a:&apos; + a.a);  
+module.exports.b = 2;
+</code></pre><a id="more"></a>  
+<p>执行  </p>
+<pre><code>node a.js  
+</code></pre><p>输出的结果是</p>
+<pre><code>b.js get a:undefined  
+a.js get b:2  
+</code></pre><p>从打印的轨迹上来看，代码执行的流程大致如下：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">a.js:                               b.js:  </div><div class="line"><span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b'</span>);  </div><div class="line"></div><div class="line">                                    <span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a'</span>); <span class="comment">// a = &#123;&#125;  </span></div><div class="line">                                    <span class="built_in">console</span>.log(<span class="string">'b.js get a:'</span> + a.a);  </div><div class="line">                                    <span class="built_in">module</span>.exports.b = <span class="number">2</span>;  </div><div class="line"></div><div class="line"><span class="comment">// b = &#123;b: 2&#125;  </span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'a.js get b:'</span> + b.b);  </div><div class="line"><span class="built_in">module</span>.exports.a = <span class="number">1</span>;</div></pre></td></tr></table></figure>
+<p>node的加载过程，可以在lib/module.js文件中找到。与这个过程相关的代码主要集中在Module._load方法里。可以看到，node会为每个新加载的文件创建一个Module对象（假设为a），这个就是我们在a.js代码中看到的module了。在创建a之后，node会先将a放到cache中，然后再对它进行加载操作。也就是说，如果在加载a的过程中，有其他的代码（假设为b）require a.js的话，那么b可以从cache中直接取到a的module，从而不会引起重复加载的死循环。但带来的代价就是在load过程中，b看到的是不完整的a，也就是为什么前面打印undefined的原因。  </p>
+<p>Module的构造函数  </p>
+<pre><code>function Module(id, parent) {  
+  this.id = id;  
+  this.exports = {};  
+  this.parent = parent;  
+  this.filename = null;  
+  this.loaded = false;  
+  this.exited = false;  
+  this.children = [];  
+}
+</code></pre><p>Module._load方法  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">Module._load = <span class="function"><span class="keyword">function</span>(<span class="params">request, parent, isMain</span>) </span>&#123;  </div><div class="line">    <span class="comment">//...  </span></div><div class="line">    <span class="keyword">var</span> <span class="built_in">module</span> = <span class="keyword">new</span> Module(id, parent);  </div><div class="line">    <span class="comment">//...  </span></div><div class="line">    Module._cache[filename] = <span class="built_in">module</span>;  </div><div class="line">    <span class="keyword">try</span> &#123;  </div><div class="line">        <span class="built_in">module</span>.load(filename);  </div><div class="line">    &#125; <span class="keyword">catch</span> (err) &#123;  </div><div class="line">        <span class="keyword">delete</span> Module._cache[filename];  </div><div class="line">        <span class="keyword">throw</span> err;  </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="built_in">module</span>.exports;  </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这个看似简单粗暴的处理手法，但实际上是node作者权衡各方面因素的结果。我们敬爱的npm作者issacs强调说了，这不是bug，而且近期内不会做什么改变。当然，issacs也给出了一些规避这个陷阱的建议（<a href="https://github.com/joyent/node/issues/1418" target="_blank" rel="external">https://github.com/joyent/node/issues/1418</a>）。我总结了一下，主要有两点：一个是在造成循环依赖的require之前把需要的东西exports出去;另一个是不要在load过程中操作未完成的模块。  </p>
+<p>所以上面的例子的一种处理方法就是把各自的exports语句放到require语句前面，然后再运行，可以看到打印了正确的值。  </p>
+<p>从前面的分析来看，循环依赖的陷阱出现的条件比较苛刻：一个是循环依赖，另一个是在load期间调用未加载完成的对象。所以大家平常不怎么会遇到。但我之前就曾华丽丽的邂逅了这个陷阱，在这里拿出来当一下反面教材。。。  </p>
+<p>场景简化后大致如下：我有一堆service，每一个service负责消费某一类消息，并且可能会产生新的消息给其他service消费。从消息传递上来看，并没有产生循环依赖。但我为了解耦，定义了一个消息中心center的角色出来进行消息分发。center主要是维护一个type -&gt; service的map来路由消息，这样center就得把所有的service加载进来，于是产生了center-&gt;service的依赖。另一面，每个service又需要通过center来分发它们新产生的消息，于是又出现了service-&gt;center的依赖，循环依赖就这么出来了。刚好在service加载的过程中，又调用了center的一个方法，就发生了undefined的错误。  </p>
+<p>这个问题查清楚原因以后，解决起来并不困难。  </p>
+<p>一种方法就是按前面的方法，在代码层面上规避循环依赖的陷阱;  </p>
+<p>另外也可以在设计的层面上彻底避免循环依赖的出现。我的场景之所以出现循环依赖，是因为center和service都需要知道对方的存在，即 center &lt;- -&gt; service。如果采用依赖注入的方式，则可以切断这种直接依赖，类似于center &lt;- container -&gt; service。即加入一个container角色，把center和service都先加载进来，然后再用IOC的方法把依赖关系建立好。这样center和service都无须知道对方具体的文件所在了，也就不会循环的require对方了。  </p>
+<ul>
+<li><a href="https://github.com/joyent/node/issues/1490" target="_blank" rel="external">https://github.com/joyent/node/issues/1490</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-06-27-node-module-circle-dependency.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-06-27-node-module-circle-dependency.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/module/">module</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-06-27-node-module-circle-dependency.html&title=《node.js的循环依赖》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-06-27-node-module-circle-dependency.html&title=《node.js的循环依赖》 — Balance&source=原文： http://cnodejs.org/topic/4f16442ccae1f4aa27001045
+循环依赖，简单点来说就是a文件中require..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-06-27-node-module-circle-dependency.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node.js的循环依赖》 — Balance&url=http://blog.inching.org/Node/2014-06-27-node-module-circle-dependency.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-06-27-node-module-circle-dependency.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/HTML5/2014-06-27-browser-kernal.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">浏览器的工作原理：新式网络浏览器幕后揭秘</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2014-06-27-android-tutorial.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-06-27-node-module-circle-dependency.html&title=《node.js的循环依赖》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-06-27-node-module-circle-dependency.html&title=《node.js的循环依赖》 — Balance&source=原文： http://cnodejs.org/topic/4f16442ccae1f4aa27001045
+循环依赖，简单点来说就是a文件中require..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-06-27-node-module-circle-dependency.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node.js的循环依赖》 — Balance&url=http://blog.inching.org/Node/2014-06-27-node-module-circle-dependency.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-06-27-node-module-circle-dependency.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAAC0UlEQVR42u3aS27jMBAEUN//0hkgqwEcSdUfJl48rQx/aD4aUNPVfL3i6+v7en/m/+e/3q6rd76Pef/ZqzmsXXh4eHitqV9d90PfP5+Plox/vxxXi4iHh4d3jpcPfY+5R84x5eXGw8PD+1NefotPttF5acmXGw8PD+/TeMmnki1171vw8PDwPo2XxAfVbW4hMhhEw2tZCx4eHl5t5EID7BMeH+zv4eHh4Q266sltN98u57Fvtd11OU88PDy8A7xkir2mV3VD3Is5ooKBh4eHd4C3uxdNGle9cDZflMLviYeHh9fiJTfWeURbHbN6HOEhpcbDw8Nb4vVuysnNOl+yaput8MPg4eHhHeBVB51EvdXNcX404WEh8PDw8FZ51cNM+RGr6oa4l74+vIqHh4d3jFeNXyeFYd6ES9pjUd3Aw8PDG/B6k5tswXtb+VEMgYeHh7fEy4foHQhopiPFpYniYzw8PLxVXvIFeWGYNMzuly95/HCAAA8PD2/Mqzb7JyUkb//nZeDhAAQeHh7eYV4vzK3GFnkhyYvQw9EBPDw8vF/n9eLU+URfxethS42Hh4e3xOuFDvnkqhOdH9vCw8PD+03e5JjUPalaAHoHsC4/hYeHh7fKy5tYeUNr3vLPDygUTkPg4eHhLfF6QW3+al4wtkrOQ93Dw8PDW+L1gtetWCEPMvJWWfS/AQ8PD2+JVw1z81ghn1AvCok21nh4eHhLvHlkUB2tGlXk0UPU38PDw8Nb4vUeT4LXcu0qHkHAw8PDO8HrNbGqwUQvaKiWqx/Gx8PDwzvA61WSPNitfk215EyWGw8PD2/Cy2/K+QGC/ChAfkNvjoOHh4d3jDdpelXLQ3WBRlt2PDw8vI/kzXew86JyOSs8PDy8P+VVi0H18EG1eVYII/Dw8PAO8PLm0+4hg63DXq88w8DDw8Mb83p/9fOpV3txvSh5ub+Hh4eH9/P7/wHJNgMnPMT4dAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

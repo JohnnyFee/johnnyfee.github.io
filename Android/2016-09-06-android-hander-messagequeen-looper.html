@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android Handler, Message, MessageQueue, Looper | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android">
+    <meta name="description" content="From Understanding Android/Java Processes and Threads Related Concepts (Handlers, Runnables, Loopers, MessageQueue, HandlerThread) – Code Theory
+In this article we’ll try to briefly go through the var">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Handler, Message, MessageQueue, Looper">
+<meta property="og:url" content="http://blog.inching.org/Android/2016-09-06-android-hander-messagequeen-looper.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="From Understanding Android/Java Processes and Threads Related Concepts (Handlers, Runnables, Loopers, MessageQueue, HandlerThread) – Code Theory
+In this article we’ll try to briefly go through the var">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Handler, Message, MessageQueue, Looper">
+<meta name="twitter:description" content="From Understanding Android/Java Processes and Threads Related Concepts (Handlers, Runnables, Loopers, MessageQueue, HandlerThread) – Code Theory
+In this article we’ll try to briefly go through the var">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android Handler, Message, MessageQueue, Looper</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android Handler, Message, MessageQueue, Looper</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-09-05T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-09-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Process"><span class="post-toc-text">Process</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Thread"><span class="post-toc-text">Thread</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Looper-and-MessageQueue"><span class="post-toc-text">Looper and MessageQueue</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#UI-Thread-Looper"><span class="post-toc-text">UI Thread Looper</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MessageQueue-IdleHandler"><span class="post-toc-text">MessageQueue.IdleHandler</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Terminating-Unused-Thread-with-IdleHandler"><span class="post-toc-text">Terminating Unused Thread with IdleHandler</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Runnable"><span class="post-toc-text">Runnable</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Message"><span class="post-toc-text">Message</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Handlers"><span class="post-toc-text">Handlers</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Remove-Messages-from-the-MessageQueue"><span class="post-toc-text">Remove Messages from the MessageQueue</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Observing-Dump-or-Track-the-MessageQueue"><span class="post-toc-text">Observing (Dump or Track) the MessageQueue</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HandlerThread"><span class="post-toc-text">HandlerThread</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Additional-Helpful-Resources"><span class="post-toc-text">Additional Helpful Resources</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#FQA"><span class="post-toc-text">FQA</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#What-is-the-relationship-between-Looper-Handler-and-MessageQueue-in-Android"><span class="post-toc-text">What is the relationship between Looper, Handler and MessageQueue in Android?</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-hander-messagequeen-looper"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android Handler, Message, MessageQueue, Looper</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-09-06 00:00:00" datetime="2016-09-05T16:00:00.000Z"  itemprop="datePublished">2016-09-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>From <a href="http://codetheory.in/android-handlers-runnables-loopers-messagequeue-handlerthread/" target="_blank" rel="external">Understanding Android/Java Processes and Threads Related Concepts (Handlers, Runnables, Loopers, MessageQueue, HandlerThread) – Code Theory</a></p>
+<p>In this article we’ll try to briefly go through the various sort of low level concepts in Android that are really important to understand IMHO. Once you have a good grasp on these, a lot of things that are actually built atop these concepts become much easier to understand and code. We’ll go through processes, threads, loopers, message queues, messages, handlers, runnables, etc. I’ll also point to various external resources that you should definitely go through for a much better understanding.</p>
+<h2 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h2><p>When an Android application starts for the first time, the Android system starts a new Linux <a href="http://en.wikipedia.org/wiki/Process_(computing" target="_blank" rel="external">process</a>) for the application with a single <a href="http://en.wikipedia.org/wiki/Thread_(computing" target="_blank" rel="external">thread of execution</a>) (also known as the main thread or UI thread). By default all the components of an application runs in the same thread (“main” thread) of that process.</p>
+<p>By default every Android application will run in its own process and will be assigned its own unique User ID that can be set by the <a href="http://developer.android.com/guide/topics/manifest/manifest-element.html#uid" target="_blank" rel="external"><code>sharedUserId</code></a> manifest attribute. Two applications could share the same user ID (if they’re also signed by the same certificate) in which case they can read each others data even when running in separate processes. You can always go to <code>$ adb shell</code> and execute <code>$ ps</code> to view a list of processes on your Android device or emulator connected to your computer.</p>
+<p>Each process has its own memory space and communicate with each other through various Inter Process Communication (IPC) mechanisms like pipes and sockets not only on the same systems, but also different systems.</p>
+<p>Helpful Resources:</p>
+<ul>
+<li><a href="http://developer.android.com/guide/components/processes-and-threads.html" target="_blank" rel="external">http://developer.android.com/guide/components/processes-and-threads.html</a></li>
+</ul>
+<h2 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h2><p><a href="http://en.wikipedia.org/wiki/Thread_(computing" target="_blank" rel="external">Threads</a>) are the smallest sequence of programmed instructions that can be managed independently by operating system (<a href="http://en.wikipedia.org/wiki/Scheduling_(computing" target="_blank" rel="external">schedulers</a>)). They are units of computation that run simultaneously within a process (Linux process in Android). They usually reside in a process and share resources such as memory (but have independent call stacks). Threads running in the same process can communicate with each other via shared objects or message passing. Creating threads require fewer resources and they’re also sometimes referred to as lightweight processes.</p>
+<p>Concurrent Programming (Concurrency) is basically when processes and threads execute simultaneously in multiple processors (CPU) or multiple cores on a system (computers, mobiles, etc.).</p>
+<p>In Android, when an application is launched, the system creates a thread of execution called “main”. This main thread (also called the UI thread) is responsible for drawing the user interface including dispatching events to appropriate user interface widgets, toolkits and other components. It is the thread responsible for what the user gets the see on the screen and interacts with.</p>
+<p>All the components (Activity, Service, BroadcastReceiver, Content Providers) instantiated in the same process/application are not created in a separate thread but the main thread only. So for example:</p>
+<ul>
+<li>Start of an Activity</li>
+<li>Execution of a Service</li>
+<li>Receival of BroadcastReceiver (onReceive())</li>
+<li>Querying a content provider</li>
+<li>Responding to system callbacks for user events like <a href="http://developer.android.com/reference/android/view/View.OnTouchListener.html" target="_blank" rel="external"><code>onTouchListener</code></a>, <a href="http://developer.android.com/reference/android/view/KeyEvent.Callback.html#onKeyDown(int, android.view.KeyEvent" target="_blank" rel="external"><code>onKeyDown</code></a></li>
+</ul>
+<p>All these and more, all are processed on the main thread. This is why long running operations like network access, database queries, complicated calculations, accessing big files or any task that could possibly take more than 5 seconds should not be executed on the main thread which’ll cause it to block leading to no events getting dispatched, including drawing events. The user will also be presented with the <a href="http://developer.android.com/training/articles/perf-anr.html" target="_blank" rel="external">Application Not Responding (ANR)</a> dialog leading to an unresponsive laggy application. This could lead to users uninstalling your app and submitting low ratings and negative feedbacks on the play store.</p>
+<p>Hence, all sorts of intensive operations should be done in Background/Worker threads. It is recommended to user Services (has no user interface like an Activity) for long-running background operations by spawning a separate worker thread in it.</p>
+<p>More Helpful Resources:</p>
+<ul>
+<li><a href="http://developer.android.com/guide/components/processes-and-threads.html" target="_blank" rel="external">http://developer.android.com/guide/components/processes-and-threads.html</a></li>
+<li><a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/procthread.html" target="_blank" rel="external">https://docs.oracle.com/javase/tutorial/essential/concurrency/procthread.html</a></li>
+<li><a href="http://stackoverflow.com/questions/200469" target="_blank" rel="external">http://stackoverflow.com/questions/200469</a></li>
+<li><a href="http://stackoverflow.com/questions/1762418" target="_blank" rel="external">http://stackoverflow.com/questions/1762418</a></li>
+<li><a href="http://stackoverflow.com/q/11566780" target="_blank" rel="external">http://stackoverflow.com/q/11566780</a></li>
+<li><a href="http://stackoverflow.com/questions/11909248" target="_blank" rel="external">http://stackoverflow.com/questions/11909248</a></li>
+<li><a href="http://stackoverflow.com/questions/3318750" target="_blank" rel="external">http://stackoverflow.com/questions/3318750</a></li>
+<li><a href="http://www.uml-diagrams.org/examples/java-6-thread-state-machine-diagram-example.html" target="_blank" rel="external">http://www.uml-diagrams.org/examples/java-6-thread-state-machine-diagram-example.html</a></li>
+</ul>
+<h2 id="Looper-and-MessageQueue"><a href="#Looper-and-MessageQueue" class="headerlink" title="Looper and MessageQueue"></a>Looper and MessageQueue</h2><p>Android maintains a <a href="http://developer.android.com/reference/android/os/MessageQueue.html" target="_blank" rel="external">MessageQueue</a> (message loop) on the main thread which basically contains a list of <a href="http://developer.android.com/reference/android/os/Message.html" target="_blank" rel="external">Messages</a> or <a href="http://developer.android.com/reference/java/lang/Runnable.html" target="_blank" rel="external">Runnables</a> (set of executable code) that the <a href="http://developer.android.com/reference/android/os/Looper.html" target="_blank" rel="external">Looper</a> dispatches to appropriate Handlers.</p>
+<p>Messages are not added to the MessageQueue directly in Android, but through the <a href="http://developer.android.com/reference/android/os/Handler.html" target="_blank" rel="external">Handler</a> objects from any thread (but the same process) associated with the Looper. So the Looper sort of polls (also referred to as a “tick”) for the next message in the queue and as soon as a message is encountered, it is passed to its respective handler. You might want to go through the <a href="http://developer.android.com/reference/android/os/Looper.html#loop(" target="_blank" rel="external"><code>Looper.loop()</code></a>) <a href="http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.3_r1/android/os/Looper.java#Looper.loop%28%29" target="_blank" rel="external">source code</a> where you’ll notice an infinite for loop being run checking for the next message. If I’m not mistaken every message has a reference to the next message too.</p>
+<p>So basically a <a href="http://developer.android.com/reference/android/os/Looper.html" target="_blank" rel="external">Looper</a> contains a synchronized MessageQueue that’s used to process Messages placed on the queue. It implements a Thread-specific event loop that waits for and dispatches Messages to handlers. By default, a thread does not have a message loop associated with it, hence doesn’t have a Looper either. To create a Looper for a thread and dedicate that thread to process messages serially from a message loop, you can use the <a href="http://developer.android.com/reference/android/os/Looper.html" target="_blank" rel="external">Looper class</a>.</p>
+<p>This is how you make a thread capable of having a Looper:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LooperThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> Handler mHandler;</div><div class="line"> </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// Initialize the current thread as a Looper</span></div><div class="line">        <span class="comment">// (this thread can have a MessageQueue now)</span></div><div class="line">        Looper.prepare();</div><div class="line"> </div><div class="line">        mHandler = <span class="keyword">new</span> Handler() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">                <span class="comment">// process incoming messages here</span></div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line"> </div><div class="line">        <span class="comment">// Run the message queue in this thread</span></div><div class="line">        Looper.loop();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Next, starting the thread is as simple as doing this:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Let's say from MainActivity.onCreate()</span></div><div class="line"> </div><div class="line">LooperThread looperThread = <span class="keyword">new</span> LooperThread();</div><div class="line">looperThread.start();</div></pre></td></tr></table></figure>
+<p>Since you’ve a reference to the Handler object inside the Looper, you can send Messages or post Runnables. We’ll discuss how to do this later.</p>
+<p><code>Looper.loop()</code> is a blocking method ensuring that the <code>run()</code> method blocks and is not finished.</p>
+<p>A thread can have only one associated Looper and hence a single message queue. So if multiple threads tries to send messages to a particular Looper thread then all of them will be processed sequentially. Trying to setting up another Looper will throw a runtime error with a message like this <code>java.lang.RuntimeException: Only one Looper may be created per thread</code>.</p>
+<p>There are 2 methods to terminate a Looper:</p>
+<ul>
+<li><a href="http://developer.android.com/reference/android/os/Looper.html#quit(" target="_blank" rel="external"><code>Looper.quit()</code></a>) – Terminates the Looper without processing any more messages in the MessageQueue. Any attempt to post messages to the queue will fail once the Looper is asked to quit. For example, the <code>Handler.sendMessage()</code> or <code>Handler.post()</code> dispatching methods will return <code>false</code>.</li>
+<li><a href="http://developer.android.com/reference/android/os/Looper.html#quitSafely(" target="_blank" rel="external"><code>Looper.quitSafely()</code></a>) – Similar to the previous version but makes sure that the pending messages that are due to be delivered are handled. Messages with due times in the future won’t be delivered before the Looper quits though.</li>
+</ul>
+<p>Terminating the Looper lets the thread resume running the method that had invoked the call to <code>Looper.loop()</code>. The old Looper or even a new Looper cannot be started anymore. So the thread can no longer enqueue and handle messages. <code>Looper.prepare()</code> called again should throw a <code>RuntimeException</code> whereas <code>Looper.loop()</code> called again will block but no messages will be dispatched from the queue.</p>
+<p>In the previous code sample where we created a Looper thread, you shouldn’t forget to terminate the Looper when its purpose is fulfilled. Termination could be for instance done in the Activity’s <code>onDestroy()</code> method. The Activity that kicks off the thread.</p>
+<h3 id="UI-Thread-Looper"><a href="#UI-Thread-Looper" class="headerlink" title="UI Thread Looper"></a>UI Thread Looper</h3><p>The UI thread is the only thread that is associated with a Looper by default before the application components are initialized. There are a few differences (or maybe specialities that it has) between it and other application thread Loopers:</p>
+<ul>
+<li>It cannot be terminated with <code>Looper.quit()</code>. A <code>RuntimeException</code> is thrown if that is tried.</li>
+<li>It is accessible from everywhere through the <code>Looper.getMainLooper()</code> method.</li>
+<li>It is associated with the UI thread via <code>Looper.prepareMainLooper()</code> and can be done only once per application. Trying to call this in some other Thread to attach the main looper will throw an exception.</li>
+</ul>
+<h3 id="MessageQueue-IdleHandler"><a href="#MessageQueue-IdleHandler" class="headerlink" title="MessageQueue.IdleHandler"></a>MessageQueue.IdleHandler</h3><p>Pending Messages are sorted based on timestamps in the MessageQueue. The one with the lowest value and less than the current time is the first one to be dispatched. The dispatcher waits (blocking the Looper thread) until the current time has passed the lowest timestamp value from the queue. If there’s a new message with the lowest timestamp then the list is rearranged for proper sorting so that this recent message can be dispatched first.</p>
+<p>If there’s no message to process then that means the consumer thread has some idle time that it can use to execute some task rather than just waiting. Infact this way your idle slots can be filled with execution of short non-critical tasks. Make sure you don’t perform any long running operations that might delay the dispatch of pending Messages. So in these idle slots the <a href="http://developer.android.com/reference/android/os/MessageQueue.IdleHandler.html#queueIdle(" target="_blank" rel="external"><code>queueIdle()</code></a>) method on all the registered <a href="http://developer.android.com/reference/android/os/MessageQueue.IdleHandler.html" target="_blank" rel="external"><code>MessageQueue.IdleHandler</code></a> interfaces are called. Let’s see an example:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Get the MessageQueue object associated with the current thread</span></div><div class="line">MessageQueue mq = Looper.myQueue();</div><div class="line"> </div><div class="line"><span class="comment">// Create an IdleHandler</span></div><div class="line">MessageQueue.IdleHandler idleHandler = <span class="keyword">new</span> MessageQueue.IdleHandler() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">queueIdle</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// ... Do some jazz</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line"><span class="comment">// Register the IdleHandler</span></div><div class="line">mq.addIdleHandler(idleHandler);</div><div class="line"> </div><div class="line"><span class="comment">// Unregister an IdleHandler (if you want to)</span></div><div class="line">mq.removeIdleHandler(idleHandler);</div></pre></td></tr></table></figure>
+<p>So <code>queueIdle()</code> will be called when the message queue has run out of messages and has to wait for more. If you return <code>true</code> from the method then your handler will be active and keep on getting called for further successive idle time slots. If <code>false</code> is returned then it becomes inactive and gets removed (same as calling <a href="http://developer.android.com/reference/android/os/MessageQueue.html#removeIdleHandler(android.os.MessageQueue.IdleHandler" target="_blank" rel="external"><code>removeIdleHandler()</code></a>)).</p>
+<h4 id="Terminating-Unused-Thread-with-IdleHandler"><a href="#Terminating-Unused-Thread-with-IdleHandler" class="headerlink" title="Terminating Unused Thread with IdleHandler"></a>Terminating Unused Thread with IdleHandler</h4><p>In the <code>queueIdle()</code> callback, you can somehow get the Looper and <code>quit()</code> it causing the associated Thread to terminate if you want to. This way if you’re sure that your producer thread inserts Messages without any delay and the consumer thread is never idle until the last message dispatched then you can terminate the thread causing it to free up resources/memory. Remember idle slots can occur before the first message, between messages and after the last message. So if you terminate betwen messages then that could be a problem. Be careful!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Various ways to quit</span></div><div class="line">Looper.getLooper().quit(); <span class="comment">// Cannot do this on main thread</span></div><div class="line"><span class="comment">// or</span></div><div class="line">mHandler.getLooper().quit(); <span class="comment">// from a Handler</span></div></pre></td></tr></table></figure>
+<p>Quitting from a Looper makes it return from <code>Looper.loop()</code>. Assuming you don’t have any code following that in the <code>run()</code> method of the Thread, the thread should definitely quit (but it really depends upon the implementation).</p>
+<p>Helpful Resources:</p>
+<ul>
+<li><a href="http://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/" target="_blank" rel="external">http://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/</a> (with regards to JS but useful and conceptually similar)</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/EventLoop" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/EventLoop</a> (with regards to JS but useful and conceptually similar)</li>
+<li><a href="https://www.youtube.com/watch?v=A0PAhoHzlsQ&amp;list=PLonJJ3BVjZW6hmkEaYIvLLm5IEGM0kpwU&amp;index=4" target="_blank" rel="external">https://www.youtube.com/watch?v=A0PAhoHzlsQ&amp;list=PLonJJ3BVjZW6hmkEaYIvLLm5IEGM0kpwU&amp;index=4</a> (Very simple Illustrations-based explanation of Looper, MessageQueue, Messages and Threads)</li>
+</ul>
+<h2 id="Runnable"><a href="#Runnable" class="headerlink" title="Runnable"></a>Runnable</h2><p>A <a href="http://developer.android.com/reference/java/lang/Runnable.html" target="_blank" rel="external">Runnable</a> object represents a piece of code or a command that can be executed. Generally it is used to execute some command in a different <a href="http://developer.android.com/reference/java/lang/Thread.html" target="_blank" rel="external">Thread</a>. This is how a Runnable object would look like:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Runnable r = <span class="keyword">new</span> Runnable() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// Block of code to execute</span></div><div class="line">        System.out.println(<span class="string">"Runnable run() method executed."</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Now if you want to execute this in a separate Thread, then here’s how we can do it:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Thread t = <span class="keyword">new</span> Thread(r);</div><div class="line">t.start();</div></pre></td></tr></table></figure>
+<p>Similarly we could just use the Thread class:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Thread t = <span class="keyword">new</span> Thread() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// Block of code to execute</span></div><div class="line">        System.out.println(<span class="string">"Thread run() method executed."</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">t.start();</div></pre></td></tr></table></figure>
+<p>Here’s an interesting <a href="http://stackoverflow.com/q/541487" target="_blank" rel="external">SO thread</a> that talks about both the versions where in one we use the Runnable interface and in the other one the Thread class. It’s worth reading.</p>
+<p>If we wanted to execute the Runnable piece in the UI thread then we could have used the <a href="http://developer.android.com/reference/android/app/Activity.html#runOnUiThread(java.lang.Runnable" target="_blank" rel="external"><code>Activity.runOnUiThread()</code></a>) method. In that case if the current thread <strong>is</strong> the UI thread then the runnable will be executed <em>immediately</em> else it’ll be put on to the MessageQueue of the UI thread. Another way to do this same thing is like this:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Handler(Looper.getMainLooper()).post(runnable);</div></pre></td></tr></table></figure>
+<p><strong>Note:</strong> The <a href="http://developer.android.com/reference/android/view/View.html" target="_blank" rel="external"><code>View</code></a> class has a <a href="http://developer.android.com/reference/android/view/View.html#post(java.lang.Runnable" target="_blank" rel="external"><code>post()</code></a>) method too, which lets you add a Runnable to the UI thread’s MessageQueue. Hence, the runnable will be run on the user interface thread. You can read this SO thread to understand the difference between <code>Activity.runOnUiThread()</code> and <code>View.post()</code>.</p>
+<p>There’s a general notion that Runnables mean they’ll be executed in a different thread which is not through unless you explicitly wrap it in the Thread class or maybe use it in conjunction with a <a href="http://developer.android.com/reference/android/os/Handler.html" target="_blank" rel="external">Handler</a>.</p>
+<h2 id="Message"><a href="#Message" class="headerlink" title="Message"></a>Message</h2><p>A <a href="http://developer.android.com/reference/android/os/Message.html" target="_blank" rel="external">Message</a> object basically defines a message that you can send to a <a href="http://developer.android.com/reference/android/os/Handler.html" target="_blank" rel="external">Handler</a> which in turn puts it in the MessageQueue so that later the Looper can dispatch it to its respective handler. We’ll discuss how to send and receive Messages using Handlers in the next section. Using Handlers of UI thread in another thread we can pass on Messages from the worker thread to the UI Handler which will place it in the MessageQueue for later dispatching. This helps with inter-thread communication.</p>
+<p>So generally creating a Message is done via either <a href="http://developer.android.com/reference/android/os/Message.html#obtain(" target="_blank" rel="external"><code>Message.obtain()</code></a>) or <a href="http://developer.android.com/reference/android/os/Handler.html#obtainMessage(" target="_blank" rel="external"><code>Handler.obtainMessage()</code></a>). There are various versions of both the methods that accepts various arguments. Once called, these static methods will return a Message object from a global pool of recycled objects (better performance).</p>
+<p>Let’s see an example of creating a Message:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Message msg = Message.obtain();</div><div class="line"> </div><div class="line"><span class="comment">// Read the documentation on the properties used below</span></div><div class="line"><span class="comment">// http://developer.android.com/reference/android/os/Message.html</span></div><div class="line"> </div><div class="line">msg.arg1 = <span class="number">100</span>;</div><div class="line">msg.arg2 = <span class="number">200</span>;</div><div class="line"> </div><div class="line">msg.obj = <span class="string">"String"</span>;</div><div class="line"> </div><div class="line">Bundle bundle = <span class="keyword">new</span> Bundle();</div><div class="line">bundle.putString(<span class="string">"foo"</span>, <span class="string">"bar"</span>);</div><div class="line">msg.setData(bundle);</div><div class="line"> </div><div class="line"><span class="comment">// At a later stage</span></div><div class="line"><span class="comment">// handler.sendMessage(msg);</span></div></pre></td></tr></table></figure>
+<h2 id="Handlers"><a href="#Handlers" class="headerlink" title="Handlers"></a>Handlers</h2><p>A <a href="http://developer.android.com/reference/android/os/Handler.html" target="_blank" rel="external">Handler</a> defines a set of methods using which we can post/send (as well as remove) and process <a href="http://developer.android.com/reference/android/os/Message.html" target="_blank" rel="external">Message</a> (data message) and <a href="http://developer.android.com/reference/java/lang/Runnable.html" target="_blank" rel="external">Runnable</a> (task message) objects in the MessageQueue associated with the Thread-specific Looper. Each Handler instance is actually bound to the thread (and hence the message queue associated with the thread) in which it is created. It delivers Message and Runnable objects to that associated MessageQueue and executes them as they get dispatched by the Looper.</p>
+<p>A Handler has to be bound to a Looper else they cannot function. A Looper is strictly required for it to couple with/connect to a queue to insert messages and receive messages from the Looper. When creating a Handler object you’ve to pass the Looper object as the first argument to the constructor explicitly. If not then it binds to the Looper of the current thread. If you try to be implicit and the thread doesn’t have a Looper then a <code>RuntimeException</code> will be thrown.</p>
+<p>Note: Multiple Handlers doesn’t ensure concurrent execution as the Messages/Runnables will be posted in the queue from which they’re processed sequentially.</p>
+<p>Let’s see how to enqueue Messages to the MessageQueue associated with the Handler and later when it’s dequeued the Handler itself will receive and handle/process it:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">Handler mHandler;</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line"> </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        Message msg = Message.obtain();</div><div class="line">        msg.obj = <span class="string">"My message!"</span>;</div><div class="line"> </div><div class="line">        mHandler.sendMessage(msg);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    setContentView(R.layout.activity_main);</div><div class="line"> </div><div class="line">    mHandler = <span class="keyword">new</span> Handler() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">            System.out.println(msg.obj);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"> </div><div class="line">    Thread t = <span class="keyword">new</span> Thread(<span class="keyword">new</span> MyThread());</div><div class="line">    t.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The Handler was created in the UI thread, hence it’s associated with it and its MessageQueue. In a Runnable that is executed in a completely different Thread, a Message is created using <code>sendMessage()</code> and passed on to the Handler’s MessageQueue which is the one associated with the UI thread. Once the event loop iterating the queue gets to that Message, it passed it on to the <code>handleMessage()</code> method which executes in the main thread’s context. This behaviour of <code>handleMessage()</code> running in the UI thread’s context means you won’t have to use <code>runOnUiThread()</code> if you’ve to do some really important operation like modifying the UI by manipulating the Views in the layout. This way you’ve also seen how Handlers can be used to communicate between Threads.</p>
+<p>There’s this version of <a href="http://developer.android.com/reference/android/os/Message.html#obtain(android.os.Handler, java.lang.Runnable" target="_blank" rel="external">Message.obtain(Handler h, Runnable callback)</a>) that accepts the Handler object and a Runnable callback. Apparently when you do a <code>msg.sendToTarget()</code> or <code>handler.sendMessage(msg)</code>, they won’t be sent to <code>Handler.receiveMessage()</code> but just the Runnable callback will get executed (but without the Message object). It is actually somewhat similar to doing this <code>handler.post(runnable)</code>.</p>
+<p>Once the <a href="http://developer.android.com/reference/android/os/Message.html" target="_blank" rel="external">Message</a> is processed, its state is cleared and the instance is returned to the message pool by the runtime (VM) so that it can be recycled later.</p>
+<p>Let’s also see how we can enqueue a Runnable to the MessageQueue using Handlers:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Runnable r = <span class="keyword">new</span> Runnable() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"My Runnable"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">Handler handler = <span class="keyword">new</span> Handler();</div><div class="line">handler.post(r);</div></pre></td></tr></table></figure>
+<p>Pretty simple! The Handler posts the Runnable in the MessageQueue and once the Looper gets to it, the Runnable is executed. You should go through all the methods available in the Handler <a href="http://developer.android.com/reference/android/os/Handler.html" target="_blank" rel="external">documentation</a>. For example there’s <code>postDelayed()</code> and <code>sendMessageDelayed()</code> using which you can schedule the processing of Runnable and Message objects to a later time.</p>
+<p>The <a href="http://developer.android.com/reference/android/os/Handler.html#dispatchMessage(android.os.Message" target="_blank" rel="external"><code>dispatchMessage()</code></a>) method of the Handler class is used to dispatch messages to the appropriate consumer thread by the Looper. If you try to directly call the method then the message will be processed immediately on the calling thread and not the consumer thread (that might be UI thread in your case). Here’s a <a href="http://stackoverflow.com/q/10227219" target="_blank" rel="external">SO thread</a> that has some relevant information.</p>
+<p>A very important thing to remember is that only Message objects are allowed in the MessageQueue. Hence Runnables sent through the <a href="http://developer.android.com/reference/android/os/Handler.html#post(java.lang.Runnable" target="_blank" rel="external"><code>post*</code></a>) methods and <code>what</code> integers sent through <a href="http://developer.android.com/reference/android/os/Handler.html#sendEmptyMessage(int" target="_blank" rel="external"><code>sendEmptyMessage*</code></a>) are wrapped into Message objects.</p>
+<h3 id="Remove-Messages-from-the-MessageQueue"><a href="#Remove-Messages-from-the-MessageQueue" class="headerlink" title="Remove Messages from the MessageQueue"></a>Remove Messages from the MessageQueue</h3><p>Once you’ve enqueued messages, it is possible to remove those from the queue that have not been dequeued by the Looper, i.e., the pending ones. The Handler class gives us various methods to do so.</p>
+<p>If you want to remove the Runnables that you posted, then we have:</p>
+<ul>
+<li><a href="http://developer.android.com/reference/android/os/Handler.html#removeCallbacks(java.lang.Runnable" target="_blank" rel="external"><code>removeCallbacks(Runnable r)</code></a>)</li>
+<li><a href="http://developer.android.com/reference/android/os/Handler.html#removeCallbacks(java.lang.Runnable, java.lang.Object" target="_blank" rel="external"><code>removeCallbacks(Runnable r, Object token)</code></a>)</li>
+</ul>
+<p>For removing messages from the queue, we have:</p>
+<ul>
+<li><a href="http://developer.android.com/reference/android/os/Handler.html#removeMessages(int" target="_blank" rel="external"><code>removeMessages(int what)</code></a>)</li>
+<li><a href="http://developer.android.com/reference/android/os/Handler.html#removeMessages(int, java.lang.Object" target="_blank" rel="external"><code>removeMessages(int what, Object object)</code></a>)</li>
+</ul>
+<p>Oh and if you want to remove both Runnables (tasks) and Messages (data) from the message queue, then we have this:</p>
+<ul>
+<li><a href="http://developer.android.com/reference/android/os/Handler.html#removeCallbacksAndMessages(java.lang.Object" target="_blank" rel="external"><code>removeCallbacksAndMessages(Object token)</code></a>)</li>
+</ul>
+<p>If you pass <code>null</code> to <code>removeCallbacksAndMessages()</code>, then that’ll remove all the callbacks and messages.</p>
+<p>Let’s quickly see an example of how removal is done:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">Object token = <span class="keyword">new</span> Object();</div><div class="line"> </div><div class="line">Handler handler = <span class="keyword">new</span> Handler() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">        <span class="comment">// Do something with the msg</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line"><span class="comment">// Add a Message</span></div><div class="line">Message msg = handler.obtainMessage(<span class="number">0</span>, token);</div><div class="line">handler.sendMessage(msg);</div><div class="line"> </div><div class="line"><span class="comment">// Add a Runnable</span></div><div class="line">handler.postAtTime(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// Do some task</span></div><div class="line">    &#125;</div><div class="line">&#125;, token, SystemClock.uptimeMillis());</div><div class="line"> </div><div class="line"> </div><div class="line"><span class="comment">// and the removal!</span></div><div class="line">handler.removeCallbacksAndMessages(token);</div></pre></td></tr></table></figure>
+<p>Remember only pending messages can/will be removed. I don’t think there’s a neat way (API) to find out whether a message has been dispatched and called without some hacks.</p>
+<p>Note: A Handler cannot remove messages that were inserted by another Handler in the queue.</p>
+<h3 id="Observing-Dump-or-Track-the-MessageQueue"><a href="#Observing-Dump-or-Track-the-MessageQueue" class="headerlink" title="Observing (Dump or Track) the MessageQueue"></a>Observing (Dump or Track) the MessageQueue</h3><p>It is possible to either dump the entire list of pending messages from the MessageQueue or observe the messages as they get dispatched.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mHandler.dump(new LogPrinter(Log.DEBUG, TAG), &quot;&quot;);</div></pre></td></tr></table></figure>
+<p>Using the <a href="http://developer.android.com/reference/android/os/Handler.html#dump(android.util.Printer, java.lang.String" target="_blank" rel="external"><code>Handler.dump()</code></a>) instance method you can print a snapshot of all the pending messages.</p>
+<p>Similarly you can trace the dispatching of messages by the Looper associated with the message queue of the calling thread like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Looper.myLooper().setMessageLogging(new LogPrinter(Log.DEBUG, TAG));</div></pre></td></tr></table></figure>
+<p>Using the <a href="http://developer.android.com/reference/android/os/Looper.html#setMessageLogging(android.util.Printer" target="_blank" rel="external"><code>setMessageLogging()</code></a>) on your Looper object you can print information at the beginning and end of each message dispatch identifying the Handler and message contents.</p>
+<h2 id="HandlerThread"><a href="#HandlerThread" class="headerlink" title="HandlerThread"></a>HandlerThread</h2><p><a href="http://developer.android.com/reference/android/os/HandlerThread.html" target="_blank" rel="external"><code>HandlerThread</code></a> is a handy class for starting a new thread that has a Looper (hence an associated MessageQueue) attached so that one doesn’t have to go through creating a Thread and calling <code>Looper.prepare()</code>, <code>Looper.loop()</code>, etc. in that. You generally need a thread attached with a Looper when you want sequential execution of tasks without race conditions and keep a thread alive even after a particular task is completed so that it can be reused so that you don’t have to create new thread instances. Also starting the same thread object again raises <code>IllegalThreadStateException</code> with a <code>Thread already started</code> message.</p>
+<p>Once a <code>HandlerThread</code> is started, it sets up queuing through a Looper and MessageQueue and waits for incoming messages to process:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">HandlerThread handlerThread = new HandlerThread(&quot;HandlerThread&quot;);</div><div class="line">handlerThread.start();</div><div class="line"> </div><div class="line">// Create a handler attached to the HandlerThread&apos;s Looper</div><div class="line">mHandler = new Handler(handlerThread.getLooper()) &#123;</div><div class="line">    @Override</div><div class="line">    public void handleMessage(Message msg) &#123;</div><div class="line">        // Process messages here</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">// Now send messages using mHandler.sendMessage()</div></pre></td></tr></table></figure>
+<p>There’s only one associated MessageQueue on the thread, hence execution is guaranteed to be sequential and therefore thread-safe. Behind the scenes, HandlerThread guarantees no race condition between the Looper creation and sending messages by making <code>handlerThread.getLooper()</code> a blocking call until the it is ready to receive messages. This is an important reason why <code>HandlerThread</code> should be used over manual setup with <code>Looper.prepare()</code>, <code>Looper.loop()</code>, <code>Looper.quit()</code>, etc.</p>
+<p>The <a href="http://developer.android.com/reference/android/os/HandlerThread.html#onLooperPrepared(" target="_blank" rel="external"><code>HandlerThread.onLooperPrepared()</code></a>) method can be used to execute some sort of setup before the Looper loops, like creating a <code>Handler</code> that will be associated with the <code>HandlerThread</code>. This method is invoked on the background thread when the Looper is prepared (after the <code>Looper.prepare()</code> call).</p>
+<p>If you want to prevent access to the <code>Handler</code> that is used to pass a data message or a task to a <code>HandlerThread</code> and ensure that the Looper is also not accessible, then you can create a separate class with a private <code>Handler</code> and public methods that actually does the job of passing messages or tasks. Something like this:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyHandlerThread</span> <span class="keyword">extends</span> <span class="title">HandlerThread</span> </span>&#123;</div><div class="line"> </div><div class="line">    <span class="keyword">private</span> Handler mHandler;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyHandlerThread</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(<span class="string">"MyHandlerThread"</span>, Process.THREAD_PRIORITY_BACKGROUND);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onLooperPrepared</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onLooperPrepared();</div><div class="line"> </div><div class="line">        mHandler = <span class="keyword">new</span> Handler(getLooper()) &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">                <span class="keyword">switch</span> (msg.what) &#123;</div><div class="line">                    <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">                        <span class="comment">// Handle message</span></div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    <span class="keyword">case</span> <span class="number">2</span>:</div><div class="line">                        <span class="comment">// Handle message</span></div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">taskOne</span><span class="params">()</span> </span>&#123;</div><div class="line">        mHandler.sendEmptyMessage(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">taskTwo</span><span class="params">()</span> </span>&#123;</div><div class="line">        mHandler.sendEmptyMessage(<span class="number">2</span>);</div><div class="line">    &#125;</div><div class="line">     </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Pretty straightforward code. Although one important line of code to notice is this – <code>super(&quot;MyHandlerThread&quot;, Process.THREAD_PRIORITY_BACKGROUND);</code>. This <code>HandlerThread</code> <a href="http://developer.android.com/reference/android/os/HandlerThread.html#HandlerThread%28java.lang.String,%20int%29" target="_blank" rel="external">constructor</a> takes a:</p>
+<ul>
+<li><code>name</code> argument required for debugging purposes so that the thread can be found easily in logs.</li>
+<li><code>priority</code> argument specified via <code>Process.setThreadPriority()</code> with values supplied from <a href="http://developer.android.com/reference/android/os/Process.html" target="_blank" rel="external"><code>Process</code></a>. The default priority is <a href="http://developer.android.com/reference/android/os/Process.html#THREAD_PRIORITY_DEFAULT" target="_blank" rel="external"><code>Process.THREAD_PRIORITY_DEFAULT</code></a> (same as that of the UI thread) but can be lowered down to <a href="http://developer.android.com/reference/android/os/Process.html#THREAD_PRIORITY_BACKGROUND" target="_blank" rel="external"><code>Process.THREAD_PRIORITY_BACKGROUND</code></a> (less important tasks).</li>
+</ul>
+<p>You can go through the HandlerThread source code <a href="http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.0_r1/android/os/HandlerThread.java" target="_blank" rel="external">here</a>.</p>
+<p>Note: It’s a good idea to quit the HandlerThread when you don’t need it anymore.</p>
+<h2 id="Additional-Helpful-Resources"><a href="#Additional-Helpful-Resources" class="headerlink" title="Additional Helpful Resources"></a>Additional Helpful Resources</h2><ul>
+<li><a href="https://www.youtube.com/playlist?list=PLonJJ3BVjZW6hmkEaYIvLLm5IEGM0kpwU" target="_blank" rel="external">Slidenerd Presentations on Processes and Threads on Youtube</a></li>
+<li><a href="https://www.coursera.org/course/posa" target="_blank" rel="external">Pattern-Oriented Software Architectures: Programming Mobile Services for Android Handheld Systems (Coursera Course)</a></li>
+<li><a href="http://www.amazon.com/Efficient-Android-Threading-Asynchronous-Applications/dp/1449364136" target="_blank" rel="external">Efficient Android Threading Book</a></li>
+<li><a href="http://docs.oracle.com/javase/tutorial/essential/concurrency/index.html" target="_blank" rel="external">Java Concurrency</a></li>
+</ul>
+<h2 id="FQA"><a href="#FQA" class="headerlink" title="FQA"></a>FQA</h2><h3 id="What-is-the-relationship-between-Looper-Handler-and-MessageQueue-in-Android"><a href="#What-is-the-relationship-between-Looper-Handler-and-MessageQueue-in-Android" class="headerlink" title="What is the relationship between Looper, Handler and MessageQueue in Android?"></a>What is the relationship between Looper, Handler and MessageQueue in Android?</h3><p>A <a href="http://developer.android.com/reference/android/os/Looper.html" target="_blank" rel="external"><code>Looper</code></a> is a message handling loop: it reads and processes items from a <a href="http://developer.android.com/reference/android/os/MessageQueue.html" target="_blank" rel="external"><code>MessageQueue</code></a>. The <code>Looper</code> class is usually used in conjunction with a <a href="http://developer.android.com/reference/android/os/HandlerThread.html" target="_blank" rel="external"><code>HandlerThread</code></a> (a subclass of <code>Thread</code>).</p>
+<p>A <a href="http://developer.android.com/reference/android/os/Handler.html" target="_blank" rel="external"><code>Handler</code></a> is a utility class that facilitates interacting with a <code>Looper</code>—mainly by posting messages and <code>Runnable</code> objects to the thread’s <code>MessageQueue</code>. When a <code>Handler</code> is created, it is bound to a specific <code>Looper</code> (and associated thread and message queue).</p>
+<p>In typical usage, you create and start a <code>HandlerThread</code>, then create a <code>Handler</code> object (or objects) by which other threads can interact with the <code>HandlerThread</code> instance. The <code>Handler</code> must be created while running on the <code>HandlerThread</code>, although once created there is no restriction on what threads can use the <code>Handler</code>‘s scheduling methods (<code>post(Runnable)</code>, etc.)</p>
+<p>The main thread (a.k.a. UI thread) in an Android application is set up as a looper thread before your application is created.</p>
+<p>Aside from the class docs, there’s a nice discussion of all of this <a href="http://mindtherobot.com/blog/159/android-guts-intro-to-loopers-and-handlers/" target="_blank" rel="external">here</a>.</p>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="https://developer.android.com/reference/android/os/Looper.html" target="_blank" rel="external">Looper</a></li>
+<li><a href="https://developer.android.com/training/multiple-threads/communicate-ui.html#MoveValues" target="_blank" rel="external">Communicating with the UI Thread</a></li>
+<li><a href="https://blog.nikitaog.me/2014/10/11/android-looper-handler-handlerthread-i/" target="_blank" rel="external">Android: Looper, Handler, HandlerThread. Part I.</a></li>
+<li><a href="http://www.jianshu.com/p/36a978b6cacc" target="_blank" rel="external">深入了解Looper、Handler、Message之间关系 - 简书</a></li>
+<li><a href="http://www.cnblogs.com/codingmyworld/archive/2011/09/12/2174255.html" target="_blank" rel="external">android的消息处理机制（图+源码分析）——Looper,Handler,Message - CodingMyWorld</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2016-09-06-android-hander-messagequeen-looper.html" target="_blank" rel="external">http://blog.inching.org/Android/2016-09-06-android-hander-messagequeen-looper.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2016-09-06-android-hander-messagequeen-looper.html&title=《Android Handler, Message, MessageQueue, Looper》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2016-09-06-android-hander-messagequeen-looper.html&title=《Android Handler, Message, MessageQueue, Looper》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2016-09-06-android-hander-messagequeen-looper.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Handler, Message, MessageQueue, Looper》 — Balance&url=http://blog.inching.org/Android/2016-09-06-android-hander-messagequeen-looper.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2016-09-06-android-hander-messagequeen-looper.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2016-09-06-android-intent.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android Intent</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2016-09-06-android-appcompatactivity.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">AppCompatActivity</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2016-09-06-android-hander-messagequeen-looper.html&title=《Android Handler, Message, MessageQueue, Looper》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2016-09-06-android-hander-messagequeen-looper.html&title=《Android Handler, Message, MessageQueue, Looper》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2016-09-06-android-hander-messagequeen-looper.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Handler, Message, MessageQueue, Looper》 — Balance&url=http://blog.inching.org/Android/2016-09-06-android-hander-messagequeen-looper.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2016-09-06-android-hander-messagequeen-looper.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvElEQVR42u3aQW5jIRAE0Nz/0p5tJE/4VTREjvT+yopsw8MSkOr++oqf17fn+1/e35N89qdPvb9ej3jswcPDwxtM/f1ZD7ZG5ouyHn39zetP4eHh4d3jtVv2qeNkPd1kPg8WPDw8vA/jtRffdsnWBxUeHh7eX+ElQUO+BO0lHg8PD+9zeEkYcepanEQSyXIfzlrw8PDwYl4eK3zO6yv1PTw8PLxxVX0eqs6bDF6DBw8PD+8GL99wzxaokm/I27Ye3omHh4d3gTffmvMAN28s2GsFe/jB8PDw8A7xknJUO/U8fk0OnlE8gYeHh3eZ1xal9iY9bywo5omHh4d3jZeXlyYF+70tvvifYJJk4OHh4Q3aCPYK9qeuxe0RUi83Hh4e3pjXRg/JMJNINwGPkmk8PDy8AW89ob0N/dRlPRm9jiHw8PDwLvDagfeu0fmxsT5IHkbBw8PDu8bLy2B7UWwe0e5d63+cIR4eHt4F3l6R6VU+bRjRhsVR3IyHh4d3iJe3UuVX4XZd2xpdEUng4eHhXeDtNTBNQoTJEuRhRPEb4uHh4W3xkonOj4d2rPbI2SyG4eHh4ZW8PVJ7gW7bs9pw5CGMwMPDw7vAy7fm9sBoS1x7MDw8PLzf5OVBagtum7Qmi/iwHHh4eHi/yEsC0zbwbUPhA1kLHh4e3jXe3oTyclR+VOTX5ah0h4eHh3eNlwcTp67FReE/jpIfzj08PDy8a7xJG9Ze68B8DkWVDw8PD2/Am2z6bTTQNiIkB9XDwuHh4eFd4LUb7qQcdfaoGMUTeHh4eGNe3jrQNjwlk54cNtEi4uHh4V3jtYWxPPbdi2uPPXh4eHgfyZtcf/NPbbZ/4eHh4X0Arx0guRbnMUfesoCHh4d3m5dciPOJtgvRBhZFTIyHh4d3gbf3H307ifwynQccFwMLPDw8vP8//wBzoe4Dq6mvLQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>How To Install and Update WordPress with Version Control on CentOS 7 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="wordpress,centos,update,upgrade">
+    <meta name="description" content="IntroductionThere are many ways to install the WordPress content management system. This tutorial introduces two methods for installing WordPress from a public repository: SVN or Git.
+While you can in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How To Install and Update WordPress with Version Control on CentOS 7">
+<meta property="og:url" content="http://blog.inching.org/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="IntroductionThere are many ways to install the WordPress content management system. This tutorial introduces two methods for installing WordPress from a public repository: SVN or Git.
+While you can in">
+<meta property="og:updated_time" content="2017-05-19T15:09:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How To Install and Update WordPress with Version Control on CentOS 7">
+<meta name="twitter:description" content="IntroductionThere are many ways to install the WordPress content management system. This tutorial introduces two methods for installing WordPress from a public repository: SVN or Git.
+While you can in">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">How To Install and Update WordPress with Version Control on CentOS 7</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">How To Install and Update WordPress with Version Control on CentOS 7</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-05-18T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-05-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/WordPress/">WordPress</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Introduction"><span class="post-toc-text">Introduction</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Git-Step-One-—-Install-LAMP"><span class="post-toc-text">Git Step One — Install LAMP</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Git-Step-Two-—-Install-Git"><span class="post-toc-text">Git Step Two — Install Git</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Git-Step-Three-—-Clone-WordPress"><span class="post-toc-text">Git Step Three — Clone WordPress</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Git-Step-Four-—-Configure-WordPress"><span class="post-toc-text">Git Step Four — Configure WordPress</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Git-Step-Five-—-Secure-the-git-Directory"><span class="post-toc-text">Git Step Five — Secure the .git Directory</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Git-Step-Six-—-Upgrade-or-Roll-Back"><span class="post-toc-text">Git Step Six — Upgrade or Roll Back</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-text">Conclusion</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-how-to-install-and-update-wordpress-with-version-control-on-centos-7"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">How To Install and Update WordPress with Version Control on CentOS 7</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-05-19 00:00:00" datetime="2017-05-18T16:00:00.000Z"  itemprop="datePublished">2017-05-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/WordPress/">WordPress</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>There are many ways to install the WordPress content management system. This tutorial introduces two methods for installing WordPress from a public repository: SVN or Git.</p>
+<p>While you can install WordPress in a few different ways, e.g. using a one-click image, downloading a zip file, or using the built-in FTP service – using a repository has some unique benefits.</p>
+<ul>
+<li>Quick upgrades and downgrades to different versions of WordPress</li>
+<li>More secure protocols for transferring the files</li>
+<li>Faster updates since only the changed files are transferred</li>
+</ul>
+<p>What happens if you update WordPress to the latest version and your site goes down? With SVN or Git, you can easily roll back the file changes with one command. This is impossible with the FTP updater.</p>
+<h3 id="Git-Step-One-—-Install-LAMP"><a href="#Git-Step-One-—-Install-LAMP" class="headerlink" title="Git Step One — Install LAMP"></a>Git Step One — Install LAMP</h3><p>Follow this tutorial to install Apache, MySQL, and PHP on your server:</p>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-centos-7" target="_blank" rel="external">How To Install Linux, Apache, MySQL, PHP (LAMP) stack On CentOS 7</a></p>
+<p>You can stop after <strong>Step Three — Install PHP</strong>.</p>
+<h3 id="Git-Step-Two-—-Install-Git"><a href="#Git-Step-Two-—-Install-Git" class="headerlink" title="Git Step Two — Install Git"></a>Git Step Two — Install Git</h3><p>Install Git with the following command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install git</div></pre></td></tr></table></figure>
+<p>You’ll need to answer yes to accept the download. Now let’s test it.  Enter the following command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git</div></pre></td></tr></table></figure>
+<p>You should see the following message:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">usage: git ...</div></pre></td></tr></table></figure>
+<h3 id="Git-Step-Three-—-Clone-WordPress"><a href="#Git-Step-Three-—-Clone-WordPress" class="headerlink" title="Git Step Three — Clone WordPress"></a>Git Step Three — Clone WordPress</h3><p>First, figure out which version of WordPress you want to install. The best place for this is to visit the <a href="http://www.wordpress.org/" target="_blank" rel="external">official WordPress website</a>.</p>
+<p>At the time of writing, this is WordPress 4.0, so that’s what we’ll use in the examples.</p>
+<p>Decide where you want to install WordPress. In this example we’ll use the default Apache document root, /var/www/html. If you want to set up a <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-centos-7" target="_blank" rel="external">virtual host</a>, you can do that instead.</p>
+<p>Clone the latest version of WordPress from the GitHub repository:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone git://github.com/WordPress/WordPress /var/www/html/</div></pre></td></tr></table></figure>
+<p>The general form of the command is as follows:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone git://github.com/WordPress/WordPress [INSTALL IN THIS DIRECTORY]/</div></pre></td></tr></table></figure>
+<p>You’ll see some messages such as Cloning in… along with, but not limited to, Receiving objects: and Receiving deltas: with some information. You now have a complete working development copy of WordPress, including past production runs.</p>
+<p>However, we want the latest production (stable) version. First move to the WordPress directory on your server:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /var/www/html/</div></pre></td></tr></table></figure>
+<p>Check out WordPress 4.0, or the latest stable version, with the following command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout 4.0</div></pre></td></tr></table></figure>
+<p>The general form of the command is as follows:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout [VERSION]</div></pre></td></tr></table></figure>
+<p>Git will display some information along with something like <code>HEAD is now at 8422210... Tag 4.0,</code> which indicates the file versions were successfully changed; in this case to 4.0.</p>
+<p>Congratulations! You’ve just installed WordPress using Git. </p>
+<p>Now we need to set up the database and configure WordPress.</p>
+<h3 id="Git-Step-Four-—-Configure-WordPress"><a href="#Git-Step-Four-—-Configure-WordPress" class="headerlink" title="Git Step Four — Configure WordPress"></a>Git Step Four — Configure WordPress</h3><p>Follow the instructions in this <a href="https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-on-centos-7" target="_blank" rel="external">WordPress installation tutorial</a>, but <strong>without</strong> the wget, tar, and rsync commands.</p>
+<p>You do need to set up the database, change the wp-config.php details, and run the chown command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown -R apache:apache /var/www/html/*</div></pre></td></tr></table></figure>
+<p>At this point WordPress is ready to use! Visit your IP address or domain in your browser, and set your website and login details as prompted. You can add themes, plugins, and content as you like.</p>
+<h3 id="Git-Step-Five-—-Secure-the-git-Directory"><a href="#Git-Step-Five-—-Secure-the-git-Directory" class="headerlink" title="Git Step Five — Secure the .git Directory"></a>Git Step Five — Secure the .git Directory</h3><p>Git uses a special directory called <code>.git</code> that contain important information. You should block web access to this directory for security’s sake.</p>
+<p>If you want to see what it looks like now, visit <a href="http://example.com/.git/" target="_blank" rel="external">http://example.com/.git/</a> in your browser, using your own domain name. It should list the files in the directory, which is a security issue.</p>
+<p>First, open your Apache configuration file for editing:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nano /etc/httpd/conf/httpd.conf</div></pre></td></tr></table></figure>
+<p>Locate the AllowOverride line in the <directory "="" var="" www="" html"=""> section. It should be the third AllowOverride line in the default configuration file. Update the setting from <strong>None</strong> to <strong>ALL</strong>. This will allow your .htaccess file to become active.</directory></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">&lt;Directory &quot;/var/www/html&quot;&gt;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">    Options Indexes FollowSymLinks</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">    AllowOverride ALL</div><div class="line"></div><div class="line">    #</div><div class="line">    # Controls who can get stuff from this server.</div><div class="line">    #</div><div class="line">    Require all granted</div><div class="line">&lt;/Directory&gt;</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>Now create a new .htaccess file in the /var/www/html/.git/.htaccess directory:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nano /var/www/html/.git/.htaccess</div></pre></td></tr></table></figure>
+<p>Add the following contents to the file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">order deny, allow</div><div class="line">deny from all</div></pre></td></tr></table></figure>
+<p>Restart Apache:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service httpd restart</div></pre></td></tr></table></figure>
+<p>Now you, or anyone trying to snoop on your server, will get an Internal Server Error if they visit <a href="http://example.com/.git/" target="_blank" rel="external">http://example.com/.git/</a>.</p>
+<h3 id="Git-Step-Six-—-Upgrade-or-Roll-Back"><a href="#Git-Step-Six-—-Upgrade-or-Roll-Back" class="headerlink" title="Git Step Six — Upgrade or Roll Back"></a>Git Step Six — Upgrade or Roll Back</h3><p>Now it’s time to upgrade WordPress. You’ll want to keep up with security patches, bug fixes, and new features. So let’s discuss how to upgrade with Git.</p>
+<p>It’s always a good idea to <a href="https://www.digitalocean.com/community/tutorials/how-to-choose-an-effective-backup-strategy-for-your-vps" target="_blank" rel="external">make a backup</a>.</p>
+<p>Connect to your server with SSH, and move to your WordPress installation directory:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /var/www/html/</div></pre></td></tr></table></figure>
+<p>Fetch the latest files from the third-party WordPress repository:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git fetch -p git://github.com/WordPress/WordPress</div></pre></td></tr></table></figure>
+<p>The -p switch tells Git to remove any old versions that are no longer in the repository. This helps keep your files in sync with the remote server.</p>
+<p>Execute this command to check out a new version:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout [VERSION]</div></pre></td></tr></table></figure>
+<p><strong>[VERSION]</strong> is a placeholder for the actual number of the release. If the new version to be installed was 4.0.1, the command would be:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout 4.0.1</div></pre></td></tr></table></figure>
+<p>This is also the method for downgrading, too. If you want to return to version 3.9.2; you would do that with this command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout 3.9.2</div></pre></td></tr></table></figure>
+<p>To see all the available options, check the <strong>branch</strong> dropdown and the <strong>Tags</strong> tab on the <a href="https://github.com/WordPress/WordPress" target="_blank" rel="external">repository page</a>.</p>
+<p>That’s it! With Git, your custom settings, like your wp-config.php file and your themes and plugins, should stay the same. However, if you’ve modified any of the core files, you may run into problems; hence the need for a backup.</p>
+<p>Once you have the files, you need to let WordPress make the changes it needs in the database.</p>
+<p>Visit <a href="http://example.com/wp-admin/" target="_blank" rel="external">http://example.com/wp-admin/</a>.</p>
+<p>Click the <strong>Update WordPress Database</strong> button.</p>
+<p>That’s it! You should now be on your desired version of WordPress. If your site isn’t working after the change, simply check out the version you had before.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>If you made it to the end of this tutorial you should have a basic understanding of setting up WordPress using the SVN and/or Git system(s). It is important to note that this method will back up the core WordPress system, but your custom themes and plugins will require a different approach.</p>
+<p>Now that you have learned how to manage WordPress with version control, you’ll probably never want to go back. This is so much faster, easier, and safer. You don’t need to store any FTP information in your WordPress installation. Also, you can easily and quickly revert back to previous versions if the need arises, something that the FTP method makes more difficult.</p>
+<p>This guide is not a replacement for a good <a href="https://www.digitalocean.com/community/tutorials/how-to-choose-an-effective-backup-strategy-for-your-vps" target="_blank" rel="external">backup system</a>, so make sure you have good backups, too.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-05-19T15:09:02.000Z" itemprop="dateUpdated">2017-05-19 23:09:02</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html" target="_blank" rel="external">http://blog.inching.org/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/update/">update</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/upgrade/">upgrade</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wordpress/">wordpress</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html&title=《How To Install and Update WordPress with Version Control on CentOS 7》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html&title=《How To Install and Update WordPress with Version Control on CentOS 7》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《How To Install and Update WordPress with Version Control on CentOS 7》 — Balance&url=http://blog.inching.org/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/GitLab/2017-05-26-gitlab-pages.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">GitLab Pages</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Redis/2017-05-06-how-to-configure-a-redis-server-on-centos7.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">How to install redis server on CentOS 7 / RHEL 7</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html&title=《How To Install and Update WordPress with Version Control on CentOS 7》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html&title=《How To Install and Update WordPress with Version Control on CentOS 7》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《How To Install and Update WordPress with Version Control on CentOS 7》 — Balance&url=http://blog.inching.org/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/WordPress/2017-05-19-how-to-install-and-update-wordpress-with-version-control-on-centos-7.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD9ElEQVR42u3aQW4bQQwEQP3/08rVQOJVNznjJEDpFNjr1U4pAMUmX6/49f7yaq98f/P6+tvn+/x+zXc/Se584IUDBw4cOOIDPD/0M0ry6Ml9kr9tr0zOiAMHDhw4znIkb5CX1ee7bUpji94+FQ4cOHDg+HmO5zebIc5K8vN74cCBAweO/4XjXsM2K8D7Lwo4cODAgeMGRz4cmo2U9oFjG19ez0px4MCBA0dX74p27t//95X9Dhw4cODAMSpjs/I5K375R5IPtIrT4cCBAweONcdsjaBt7Z7DxNnqQ0tfrEfgwIEDB44FR7u+lhwyGRrN7jMLNJ8R688BBw4cOHAElTT/g+SQsxYrKZ9t/Jf/9sP3Dhw4cODAEXPkxawlyJcYZosFyZO0CxM4cODAgeMeR1v8kiCvveZUq1k0eDhw4MCBY82RN1T5UsKp5YacdTPowoEDBw4cZzk2w559s5cgtuhtMvqhhcOBAwcOHCXHbEUgeeO8hdu0ke2VxeAKBw4cOHBc4JjFeZulh3aR4r1+vfJPDAcOHDhwBBx5uNYuB8weaxbt7Slx4MCBA8cpjrZA5k3ULATch4NtW/hhFocDBw4cOI5ytEHhBigZgOUcs+YQBw4cOHCc4kgiv3Z01Ja6fWTZxpfR/wscOHDgwFFytGHfvmTOfj57wpYJBw4cOHDsOWarCW3MNxsIzQZR7f2L8o8DBw4cOGKOWSGsO8VRIT/Fl4SVOHDgwIFjz5EfNTl8uwZxL4IclmEcOHDgwHEm3Holh8lbuIuP+HhlGzt+eBccOHDgwDHiaJucoi8MhlLJeGk2jkpy0A/fO3DgwIEDxwWOdtXgRmFOJmab+LIotDhw4MCBI75yNqpJSmlbLJMr21JdL2TgwIEDB45DHJuwLynVm3WHNiKcoeDAgQMHjnscbfOzL7ezJYk8TMyDQhw4cODAseFo5ZKj5oOfdq0hR8yDxXqfAgcOHDhwBBztaCcfVuXFe9b+tYOxDzQ4cODAgWPNkd/6RkFt333WquWNJQ4cOHDg2HO0cV5C0B4j/6uzg6g/PAkOHDhw4DjEsc/KZoOoTXSYjKbyd8GBAwcOHKc4ZsduUfK1ieQwww41jx1x4MCBA8eC412+To2s2rFTGw7mjV8UDuLAgQMHjsUcf7N8MIv82jvkB8iDzhoFBw4cOHA8ciTFtR1HtQOqWbN3pdDiwIEDB45DHJtCmDdXbTiYLzoc68Jw4MCBA8ePc8ziuRvRXv51oehiceDAgQPHX+Vol+1mi26bXLNtSnHgwIEDxymOJBycNWztUsLswMkzRE+IAwcOHDjWHJvlgHa8NCvS+SHzGHE2PMOBAwcOHI8cvwCjeqS3SDMpKQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JavaScript Unit Test Sinonjs | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="sinonjs/sinon: Test spies, stubs and mocks for JavaScript.
+Sinonjs事实上Sinonjs提供了三种测试桩：Spies, Stubs, Mocks。以及一些虚拟环境：Timers、JSONP、XHR等。本文着重介绍如何利用Spies和Stubs的使用。
+文档：
+
+http://sinonjs.org/docs/
+
+安装：
+1npm in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript Unit Test Sinonjs">
+<meta property="og:url" content="http://blog.inching.org/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="sinonjs/sinon: Test spies, stubs and mocks for JavaScript.
+Sinonjs事实上Sinonjs提供了三种测试桩：Spies, Stubs, Mocks。以及一些虚拟环境：Timers、JSONP、XHR等。本文着重介绍如何利用Spies和Stubs的使用。
+文档：
+
+http://sinonjs.org/docs/
+
+安装：
+1npm in">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript Unit Test Sinonjs">
+<meta name="twitter:description" content="sinonjs/sinon: Test spies, stubs and mocks for JavaScript.
+Sinonjs事实上Sinonjs提供了三种测试桩：Spies, Stubs, Mocks。以及一些虚拟环境：Timers、JSONP、XHR等。本文着重介绍如何利用Spies和Stubs的使用。
+文档：
+
+http://sinonjs.org/docs/
+
+安装：
+1npm in">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript Unit Test Sinonjs</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript Unit Test Sinonjs</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-11-23T14:25:00.000Z" itemprop="datePublished" class="page-time">
+  2016-11-23
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Sinonjs"><span class="post-toc-text">Sinonjs</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Spies"><span class="post-toc-text">Spies</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#When-to-Use-Spies"><span class="post-toc-text">When to Use Spies</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建Spy"><span class="post-toc-text">创建Spy</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#监视方法被执行的次数"><span class="post-toc-text">监视方法被执行的次数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#监视方法是否按照指定的参数执行"><span class="post-toc-text">监视方法是否按照指定的参数执行</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#获取被监视方法每次的调用"><span class="post-toc-text">获取被监视方法每次的调用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#监视方法执行的顺序"><span class="post-toc-text">监视方法执行的顺序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#监视方法是否按照指定的对象执行"><span class="post-toc-text">监视方法是否按照指定的对象执行</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#监视方法是否用-new-操作符执行"><span class="post-toc-text">监视方法是否用 new 操作符执行</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#监视方法拋异常"><span class="post-toc-text">监视方法拋异常</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#监视方法的返回值"><span class="post-toc-text">监视方法的返回值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#监视相关的值"><span class="post-toc-text">监视相关的值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#其他"><span class="post-toc-text">其他</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Stubs"><span class="post-toc-text">Stubs</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#When-to-Use-Stubs"><span class="post-toc-text">When to Use Stubs</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建-Stub"><span class="post-toc-text">创建 Stub</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#获取某次调用"><span class="post-toc-text">获取某次调用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#返回指定的值"><span class="post-toc-text">返回指定的值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#拋异常"><span class="post-toc-text">拋异常</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#调用回调函数"><span class="post-toc-text">调用回调函数</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Mock"><span class="post-toc-text">Mock</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#When-to-Use-Mocks"><span class="post-toc-text">When to Use Mocks</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Expectations"><span class="post-toc-text">Expectations</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Sandboxes"><span class="post-toc-text">Sandboxes</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Matchers"><span class="post-toc-text">Matchers</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Best-Practices-and-Tips"><span class="post-toc-text">Best Practices and Tips</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Use-sinon-test-Whenever-Possible"><span class="post-toc-text">Use sinon.test Whenever Possible</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Async-Tests-with-sinon-test"><span class="post-toc-text">Async Tests with sinon.test</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Create-Shared-Stubs-in-beforeEach"><span class="post-toc-text">Create Shared Stubs in beforeEach</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Checking-the-Order-of-Function-Calls-or-Values-Being-Set"><span class="post-toc-text">Checking the Order of Function Calls or Values Being Set</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-text">Conclusion</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-unit-test-sinonjs"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript Unit Test Sinonjs</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-11-23 22:25:00" datetime="2016-11-23T14:25:00.000Z"  itemprop="datePublished">2016-11-23</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><a href="https://github.com/sinonjs/sinon" target="_blank" rel="external">sinonjs/sinon: Test spies, stubs and mocks for JavaScript.</a></p>
+<h2 id="Sinonjs"><a href="#Sinonjs" class="headerlink" title="Sinonjs"></a>Sinonjs</h2><p>事实上<a href="http://sinonjs.org/docs/#stubs" target="_blank" rel="external">Sinonjs</a>提供了三种测试桩：Spies, Stubs, Mocks。<br>以及一些虚拟环境：Timers、JSONP、XHR等。<br>本文着重介绍如何利用Spies和Stubs的使用。</p>
+<p>文档：</p>
+<ul>
+<li><a href="http://sinonjs.org/docs/" target="_blank" rel="external">http://sinonjs.org/docs/</a></li>
+</ul>
+<p>安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save-dev sinon</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="Spies"><a href="#Spies" class="headerlink" title="Spies"></a>Spies</h2><p>Spy 是Sinonjs提供的特殊函数，它会记录被调用时的参数、<code>this</code>，调用次数，<br>以及返回值、异常等等。用来测试一个函数是否被正确地调用。</p>
+<blockquote>
+<p>A test spy is a function that records arguments, return value, the value of this and exception thrown (if any) for all its calls. A test spy can be an anonymous function or it can wrap an existing function.</p>
+</blockquote>
+<p>Spy共有三种构建方式：</p>
+<ul>
+<li>匿名函数：<code>var spy = sinon.spy();</code></li>
+<li>包装一个既有函数：<code>var spy = sinon.spy(myFunc);</code></li>
+<li>替代一个对象方法：<code>var spy = sinon.spy(object, &quot;method&quot;);</code></li>
+</ul>
+<p>现在我们测试<code>PubSub</code>能否正确地调用监听函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">it(&apos;should be called correctly&apos;, function () &#123;</div><div class="line">    var spy = sinon.spy();</div><div class="line">    PubSub.subscribe(&apos;message&apos;, spy);</div><div class="line">    PubSub.publishSync(&apos;message&apos;, &apos;start&apos;);</div><div class="line">    PubSub.publishSync(&apos;message&apos;, &apos;stop&apos;);</div><div class="line">    expect(spy.calledTwice).to.equal(true);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>现将<code>spy</code>作为监听函数注册到<code>&#39;message&#39;</code>事件上，然后发布两条事件。<br>我们希望<code>spy</code>被<code>PubSub</code>调用了两次。</p>
+</blockquote>
+<p>Sinonjs提供的API远不仅仅这些，比如还可以测试被调用时参数是否正确：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">expect(spy.calledWith(&apos;message&apos;, &apos;start&apos;)).to.equal(true);</div><div class="line">expect(spy.calledWith(&apos;message&apos;, &apos;stop&apos;)).to.equal(true);</div></pre></td></tr></table></figure>
+<p>Sinonjs Spies 文档：<a href="http://sinonjs.org/docs/#spies" target="_blank" rel="external">http://sinonjs.org/docs/#spies</a></p>
+<h3 id="When-to-Use-Spies"><a href="#When-to-Use-Spies" class="headerlink" title="When to Use Spies"></a>When to Use Spies</h3><p>As the name might suggest, spies are used to get information about function<br>calls. For example, a spy can tell us how many times a function was called, what<br>arguments each call had, what values were returned, what errors were thrown,<br>etc.</p>
+<p>As such, a spy is a good choice whenever the goal of a test is to verify<br>something happened. Combined with Sinon’s assertions, we can check many<br>different results by using a simple spy.</p>
+<p>The most common scenarios with spies involve…</p>
+<ul>
+<li>Checking how many times a function was called</li>
+<li>Checking what arguments were passed to a function</li>
+</ul>
+<p><strong>We can check how many times a function was called</strong> using<br><code>sinon.assert.callCount</code>, <code>sinon.assert.calledOnce</code>, <code>sinon.assert.notCalled</code>,<br>and similar. For example, here’s how to verify the save function was being<br>called:</p>
+<pre>
+it('should call save once', function() {
+  var save = sinon.spy(Database, 'save');
+
+  setupNewUser({ name: 'test' }, function() { });
+
+  save.restore();
+  sinon.assert.calledOnce(save);
+});
+</pre>
+
+<p><strong>We can check what arguments were passed to a function</strong> using<br><code>sinon.assert.calledWith</code>, or by accessing the call directly using<br><code>spy.lastCall</code> or <code>spy.getCall()</code>. For example, if we wanted to verify the<br>aforementioned save function receives the correct parameters, we would use the<br>following spec:</p>
+<pre>
+it('should pass object with correct values to save', function() {
+  var save = sinon.spy(Database, 'save');
+  var info = { name: 'test' };
+  var expectedUser = {
+    name: info.name,
+    nameLowercase: info.name.toLowerCase()
+  };
+
+  setupNewUser(info, function() { });
+
+  save.restore();
+  sinon.assert.calledWith(save, expectedUser);
+});
+</pre>
+
+<p>These are not the only things you can check with spies though — Sinon provides<br><a href="http://sinonjs.org/docs/#assertions" target="_blank" rel="external">many other assertions</a> you can use to<br>check a variety of different things. The same assertions can also be used with<br>stubs.</p>
+<p>If you spy on a function, the function’s behavior is not affected. If you want<br>to change how a function behaves, you need a stub.</p>
+<h3 id="创建Spy"><a href="#创建Spy" class="headerlink" title="创建Spy"></a>创建Spy</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var spy = sinon.spy()：创建一个默认的 spy。</div><div class="line">var spy = sinon.spy(myFunc)：为一个指定的方法创建 spy。</div><div class="line">var spy = sinon.spy(object, &quot;method&quot;)：为一个对象的方法创建 spy。</div></pre></td></tr></table></figure>
+<h3 id="监视方法被执行的次数"><a href="#监视方法被执行的次数" class="headerlink" title="监视方法被执行的次数"></a>监视方法被执行的次数</h3><ul>
+<li>spy.callCount：被监视方法执行的次数。</li>
+<li>spy.called：被监视方法至少执行过一次。</li>
+<li>spy.calledOnce：被监视方法只执行一次。</li>
+<li>spy.calledTwice：被监视方法只执行二次。</li>
+<li>spy.calledThrice：被监视方法只执行三次。</li>
+</ul>
+<h3 id="监视方法是否按照指定的参数执行"><a href="#监视方法是否按照指定的参数执行" class="headerlink" title="监视方法是否按照指定的参数执行"></a>监视方法是否按照指定的参数执行</h3><ul>
+<li>spy.withArgs(arg1[, arg2, …])：</li>
+<li>spy.calledWith(arg1, arg2, …)：被监视方法至少一次按照指定的参数执行。注意：使用此 spy 的时候，Sinon 只检查被监视方法执行的时候参数是否有包含spy中指定的所有参数，如果被监视方法在执行的时候参数不仅包含spy中指定的所有参数，还有其他参数，测试也是会通过的。</li>
+<li>spy.alwaysCalledWith(arg1, arg2, …)：被监视方法每次都是按照指定的参数执行。注意点同上。</li>
+<li>spy.calledWithExactly(arg1, arg2, …)：被监视方法至少一次严格按照指定的参数执行，不包含其他参数。</li>
+<li>spy.alwaysCalledWithExactly(arg1, arg2, …)：被监视方法每次都是严格按照指定的参数执行，不包含其他参数。</li>
+<li>spy.calledWithMatch(arg1, arg2, …)：被监视方法至少一次按照匹配的参数执行。效果类似于：spy.calledWith(sinon.match(arg1), sinon.match(arg2), …)。</li>
+<li>spy.alwaysCalledWithMatch(arg1, arg2, …)：被监视方法每次都按照匹配的参数执行。效果类似于：spy.alwaysCalledWith(sinon.match(arg1), sinon.match(arg2), …)。</li>
+<li>spy.neverCalledWith(arg1, arg2, …)：被监视方法从未按照指定的参数执行。</li>
+<li>spy.neverCalledWithMatch(arg1, arg2, …)：被监视方法从未按照匹配的参数执行。</li>
+</ul>
+<h3 id="获取被监视方法每次的调用"><a href="#获取被监视方法每次的调用" class="headerlink" title="获取被监视方法每次的调用"></a>获取被监视方法每次的调用</h3><ul>
+<li>spy.firstCall：获取被监视方法第一次的调用。</li>
+<li>spy.secondCall：获取被监视方法第二次的调用。</li>
+<li>spy.thirdCall：获取被监视方法第三次的调用。</li>
+<li>spy.lastCall：获取被监视方法最后一次的调用。</li>
+<li>var spyCall = spy.getCall(n)：获取被监视方法第 n 次的调用。</li>
+</ul>
+<p>获取具体的某次调用以后，可针对该次调用进行以下检查测试：</p>
+<ul>
+<li>spyCall.calledOn(obj)：该次调用 this 指向 obj。</li>
+<li>spyCall.calledWith(arg1, arg2, …)：该次调用按照指定的参数执行。注意点同spy.calledWith(arg1, arg2, …)。</li>
+<li>spyCall.calledWithExactly(arg1, arg2, …)：该次调用严格按照指定的参数执行。</li>
+<li>spyCall.calledWithMatch(arg1, arg2, …)：该次调用按照匹配的参数执行。</li>
+<li>spyCall.notCalledWith(arg1, arg2, …)：该次调用不按照指定的参数执行。</li>
+<li>spyCall.notCalledWithMatch(arg1, arg2, …)：该次调用不按照匹配的参数执行。</li>
+<li>spyCall.threw()：该次调用有抛出异常。</li>
+<li>spyCall.threw(TypeError”)：该次调用抛出指定类型的异常。</li>
+<li>spyCall.threw(obj)：该次调用抛出 obj 异常。</li>
+<li>spyCall.thisValue：该次调用的 this 对象。</li>
+<li>spyCall.args：该次调用的参数列表。</li>
+<li>spyCall.exception：该次调用抛出的异常。</li>
+<li>spyCall.returnValue：该次调用的返回值。</li>
+</ul>
+<h3 id="监视方法执行的顺序"><a href="#监视方法执行的顺序" class="headerlink" title="监视方法执行的顺序"></a>监视方法执行的顺序</h3><ul>
+<li>spy.calledBefore(anotherSpy)：在指定的另一个监视方法之前执行。</li>
+<li>spy.calledAfter(anotherSpy)：在指定的另一个监视方法之后执行。</li>
+</ul>
+<h3 id="监视方法是否按照指定的对象执行"><a href="#监视方法是否按照指定的对象执行" class="headerlink" title="监视方法是否按照指定的对象执行"></a>监视方法是否按照指定的对象执行</h3><ul>
+<li>spy.calledOn(obj)：被监视方法至少一次在执行的时候，this 指向 obj。</li>
+<li>spy.alwaysCalledOn(obj)：被监视方法每次执行的时候，this 都指向 obj。</li>
+</ul>
+<h3 id="监视方法是否用-new-操作符执行"><a href="#监视方法是否用-new-操作符执行" class="headerlink" title="监视方法是否用 new 操作符执行"></a>监视方法是否用 new 操作符执行</h3><pre><code>spy.calledWithNew()
+</code></pre><h3 id="监视方法拋异常"><a href="#监视方法拋异常" class="headerlink" title="监视方法拋异常"></a>监视方法拋异常</h3><ul>
+<li>spy.threw()：被监视方法至少一次抛出异常。</li>
+<li>spy.threw(“TypeError”)：被监视方法至少一次抛出执行类型的异常。</li>
+<li>spy.threw(obj)：被监视方法至少一次抛出 obj 异常。</li>
+<li>spy.alwaysThrew()：被监视方法每次执行都抛出异常。</li>
+<li>spy.alwaysThrew(“TypeError”)：被监视方法每次都抛出指定类型的异常。</li>
+<li>spy.alwaysThrew(obj)：被监视方法每次都抛出 obj 异常。</li>
+</ul>
+<h3 id="监视方法的返回值"><a href="#监视方法的返回值" class="headerlink" title="监视方法的返回值"></a>监视方法的返回值</h3><ul>
+<li>spy.returned(obj)：被监视方法至少一次返回 obj。</li>
+<li>spy.alwaysReturned(obj)：被监视方法每次执行都返回 obj。</li>
+</ul>
+<h3 id="监视相关的值"><a href="#监视相关的值" class="headerlink" title="监视相关的值"></a>监视相关的值</h3><ul>
+<li>spy.thisValues：被监视方法每次调用的 this 对象列表。例如 spy.thisValues[0] 是被监视方法第一次调用的 this 对象。</li>
+<li>spy.args：被监视方法每次调用的参数列表。例如 spy.args[0] 是被监视方法第一次调用的参数列表。</li>
+<li>spy.exceptions：被监视方法每次调用抛出的异常对象列表。例如 spy.exceptions[0] 是被监视方法第一次调用抛出的异常。如果某次调用没有抛出异常，则该次调用的异常在 exceptions 中的值为 undefined，即 spy.exceptions[n] === undefined。</li>
+<li>spy.returnValues：被监视方法每次调用的返回值列表。例如 spy.returnValues[0] 是被监视方法第一次调用的返回值。如果某次调用没有返回值，则该次调用的返回值在 exceptions 中的值为 undefined，即 spy.returnValues[n] === undefined。</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li>spy.reset()：重置某个 spy 的状态。</li>
+<li>spy.printf(“format string”, [arg1, arg2, …])：返回格式化后的字符串。</li>
+<li>%n: spy 的名称 (默认为”spy”)</li>
+<li>%c: spy 被调用的次数，既 (“once”, “twice”, 等等。)</li>
+<li>%C: 一个表示 spy 的调用的列表，每个调用都以一个新行和四个空格为前缀。</li>
+<li>%t: 用逗号分隔的 spy 被调用时的 this 对象列表。</li>
+<li>%i: 传递给 printf 的第 i 个要格式化的值。</li>
+</ul>
+<p>%*: 逗号分隔的传递给 printf 的（未格式化的字符串）参数列表。</p>
+<h2 id="Stubs"><a href="#Stubs" class="headerlink" title="Stubs"></a>Stubs</h2><p>Stub（测试桩）是有着预定义好的行为的函数，用来强制软件按照某个路径去执行。<br>在软件工程中，Stub一般用于给定模块的边界条件。</p>
+<p>Stub 提供了一些行为操作，当用 Stub 来包装一个方法时，原始方法将不会被执行，取而代之的是按照 Stub 指定的行为来执行。</p>
+<blockquote>
+<p>Test stubs are functions (spies) with pre-programmed behavior. They support the full test spy API in addition to methods which can be used to alter the stub’s behavior.</p>
+</blockquote>
+<p>Stub（测试桩）有4种构建方式：</p>
+<ul>
+<li>匿名Stub：<code>var stub = sinon.stub();</code></li>
+<li>替换对象属性：<code>var stub = sinon.stub(object, &quot;method&quot;);</code></li>
+<li>使用预定义函数替换对象属性：<code>var stub = sinon.stub(object, &quot;method&quot;, func);</code></li>
+<li>替换对象的所有方法：<code>var stub = sinon.stub(obj);</code></li>
+</ul>
+<p>例如我们实现了一个<code>Calculator</code>，现在我们要测试<code>Calculator.multiply</code>。<br>它会调用<code>Calculator.plus</code>来实现，所以开始测试前我们需要一个可正确运行的<br><code>Calculator.plus</code>，这便是测试桩。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">it(&apos;should calculate multiply&apos;, function () &#123;</div><div class="line">    var plus = sinon.stub(Calculator, &apos;plus&apos;, function(a, b)&#123;</div><div class="line">        return a + b;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    var res = Calculator.multiply(123, 3);</div><div class="line"></div><div class="line">    expect(res).to.equal(369);</div><div class="line">    expect(plus.calledThrice).to.equal(true);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>如果Stub（测试桩）具有确定的返回值，可以使用<code>yields</code>语法。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sinon.stub(jQuery, &apos;ajax&apos;).yieldsTo(&apos;success&apos;, 1, 2);</div><div class="line">jQuery.ajax(&#123;</div><div class="line">    url: &apos;http://harttle.com&apos;,</div><div class="line">    success: function(arg1, arg2)&#123;</div><div class="line">        assert(arg1 === 1);</div><div class="line">        assert(arg2 === 2);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">jQuery.ajax.restore();</div></pre></td></tr></table></figure>
+<p>Sinonjs Stubs 文档：<a href="http://sinonjs.org/docs/#stubs" target="_blank" rel="external">http://sinonjs.org/docs/#stubs</a></p>
+<h3 id="When-to-Use-Stubs"><a href="#When-to-Use-Stubs" class="headerlink" title="When to Use Stubs"></a>When to Use Stubs</h3><p>Stubs are like spies, except in that they replace the target function. They can<br>also contain custom behavior, such as returning values or throwing exceptions.<br>They can even automatically call any callback functions provided as parameters.</p>
+<p>Stubs have a few common uses:</p>
+<ul>
+<li>You can use them to replace problematic pieces of code</li>
+<li>You can use them to trigger code paths that wouldn’t otherwise trigger - such<br>  as error handling</li>
+<li>You can use them to help test asynchronous code more easily</li>
+</ul>
+<p><strong>Stubs can be used to replace problematic code</strong>, i.e. the code that makes<br>writing tests difficult. This is often caused by something external - a network<br>connection, a database, or some other non-JavaScript system. The problem with<br>these is that they often require manual setup. For example, we would need to<br>fill a database with test data before running our tests, which makes running<br>and writing them more complicated.</p>
+<p>If we <em>stub out</em> a problematic piece of code instead, we can avoid these issues<br>entirely. Our earlier example uses <code>Database.save</code> which could prove to be a<br>problem if we don’t set up the database before running our tests. Therefore, it<br>might be a good idea to use a stub on it, instead of a spy.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">it(<span class="string">'should pass object with correct values to save'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> save = sinon.stub(Database, <span class="string">'save'</span>);</div><div class="line">  <span class="keyword">var</span> info = &#123; <span class="attr">name</span>: <span class="string">'test'</span> &#125;;</div><div class="line">  <span class="keyword">var</span> expectedUser = &#123;</div><div class="line">    <span class="attr">name</span>: info.name,</div><div class="line">    <span class="attr">nameLowercase</span>: info.name.toLowerCase()</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  setupNewUser(info, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; &#125;);</div><div class="line"></div><div class="line">  save.restore();</div><div class="line">  sinon.assert.calledWith(save, expectedUser);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>By replacing the database-related function with a stub, we no longer need an<br>actual database for our test. A similar approach can be used in nearly any<br>situation involving code that is otherwise hard to test.</p>
+<p><strong>Stubs can also be used to trigger different code paths</strong>. If the code we’re<br>testing calls another function, we sometimes need to test how it would behave<br>under unusual conditions — most commonly if there’s an error. We can make use of<br>a stub to trigger an error from the code:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">it(<span class="string">'should pass the error into the callback if save fails'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> expectedError = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'oops'</span>);</div><div class="line">  <span class="keyword">var</span> save = sinon.stub(Database, <span class="string">'save'</span>);</div><div class="line">  save.throws(expectedError);</div><div class="line">  <span class="keyword">var</span> callback = sinon.spy();</div><div class="line"></div><div class="line">  setupNewUser(&#123; <span class="attr">name</span>: <span class="string">'foo'</span> &#125;, callback);</div><div class="line"></div><div class="line">  save.restore();</div><div class="line">  sinon.assert.calledWith(callback, expectedError);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><strong>Thirdly, stubs can be used to simplify testing asynchronous code</strong>. If we<br>stub out an asynchronous function, we can force it to call a callback right<br>away, making the test synchronous and removing the need of asynchronous test<br>handling.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">it(<span class="string">'should pass the database result into the callback'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">var</span> expectedResult = &#123; <span class="attr">success</span>: <span class="literal">true</span> &#125;;</div><div class="line">  <span class="keyword">var</span> save = sinon.stub(Database, <span class="string">'save'</span>);</div><div class="line">  save.yields(<span class="literal">null</span>, expectedResult);</div><div class="line">  <span class="keyword">var</span> callback = sinon.spy();</div><div class="line"></div><div class="line">  setupNewUser(&#123; <span class="attr">name</span>: <span class="string">'foo'</span> &#125;, callback);</div><div class="line"></div><div class="line">  save.restore();</div><div class="line">  sinon.assert.calledWith(callback, <span class="literal">null</span>, expectedResult);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Stubs are highly configurable, and can do<br><a href="http://sinonjs.org/docs/#stubs" target="_blank" rel="external">a lot more</a> than this, but most follow these basic ideas.</p>
+<h3 id="创建-Stub"><a href="#创建-Stub" class="headerlink" title="创建 Stub"></a>创建 Stub</h3><ul>
+<li>var stub = sinon.stub()：创建一个 Sinon 默认行为的 stub。</li>
+<li>var stub = sinon.stub(object, “method”)：为一个对象的方法创建一个 Sinon 默认行为的 stub。</li>
+<li>var stub = sinon.stub(object, “method”, func)：为一个对象的方法创建一个指定行为的 stub。</li>
+<li>var stub = sinon.stub(obj)：为一个对象创建一个 stub。此种方式不推荐使用，因为针对单个方法的测试目标会更明确些，更能定位到问题的所在。</li>
+</ul>
+<h3 id="获取某次调用"><a href="#获取某次调用" class="headerlink" title="获取某次调用"></a>获取某次调用</h3><ul>
+<li>stub.onFirstCall()：获取第一次调用。</li>
+<li>stub.onSecondCall()：获取第二次调用。</li>
+<li>stub.onThirdCall()：获取第三次调用。</li>
+</ul>
+<h3 id="返回指定的值"><a href="#返回指定的值" class="headerlink" title="返回指定的值"></a>返回指定的值</h3><ul>
+<li>stub.returns(obj)：返回 obj。</li>
+<li>stub.returnsArg(index)：返回指定 index 的参数。例如 stub.returnsArg(0) 将第一个参数作为返回值返回。</li>
+<li>stub.returnsThis()：返回 this 对象。</li>
+</ul>
+<h3 id="拋异常"><a href="#拋异常" class="headerlink" title="拋异常"></a>拋异常</h3><ul>
+<li>stub.throws()：抛出一个 Error 类型的异常。</li>
+<li>stub.throws(“TypeError”)：抛出一个执行类型的异常。</li>
+<li>stub.throws(obj)：抛出 obj 对象异常。</li>
+</ul>
+<h3 id="调用回调函数"><a href="#调用回调函数" class="headerlink" title="调用回调函数"></a>调用回调函数</h3><ul>
+<li>stub.callsArg(index)：将索引号为 index 的参数作为回调函数进行调用。</li>
+<li>stub.callsArgOn(index, context)：将索引号为 index 的参数作为回调函数进行调用，context 作为回调函数运行时的 this 对象。</li>
+<li>stub.callsArgWith(index, arg1, arg2, …)：将索引号为 index 的参数作为回调函数，并使用指定的参数来执行回调。</li>
+<li>stub.callsArgOnWith(index, context, arg1, arg2, …)：将索引号为 index 的参数作为回调函数，context 作为回调函数运行时的 this 对象，并使用指定的参数来执行回调。</li>
+<li>stub.yields([arg1, arg2, …])：使用指定的参数来执行被监视方法的第一个回调函数。与 callsArg 的区别在于：当被监视方法的参数中有多个回调函数时，可以用 callArg 来执行指定参数索引的回调函数，而 yields 始终只是执行第一个回调函数。</li>
+<li>stub.yieldsOn(context, [arg1, arg2, …])：使用指定的参数来执行被监视方法的第一个回调函数，context 作为回调函数运行时的 this 对象，并使用指定的参数来执行回调。</li>
+<li>stub.yieldsTo(property, [arg1, arg2, …])：当被监视方法的参数是一个对象时，将该对象的指定属性作为函数，使用指定的参数进行调用。</li>
+<li>stub.yieldsToOn(property, context, [arg1, arg2, …])：当被监视方法的参数是一个对象时，将该对象的指定属性作为函数，使用指定的参数进行调用，context 作为函数运行时的 this 对象。</li>
+<li><p>异步的 stub 类似对应的同步 stub，区别在于回调函数的调用被推迟了（没有立即执行，而是通过一个短暂的 timeout 在另一个线程中执行）。</p>
+<ul>
+<li>stub.callsArgAsync(index)</li>
+<li>stub.callsArgOnAsync(index, context)</li>
+<li>stub.callsArgWithAsync(index, arg1, arg2, …)</li>
+<li>stub.callsArgOnWithAsync(index, context, arg1, arg2, …)</li>
+<li>stub.yieldsAsync([arg1, arg2, …])</li>
+<li>stub.yieldsOnAsync(context, [arg1, arg2, …])</li>
+<li>stub.yieldsToAsync(property, [arg1, arg2, …])</li>
+<li>stub.yieldsToOnAsync(property, context, [arg1, arg2, …])</li>
+</ul>
+</li>
+<li><p>以下四个有些不明白与 stub.yields 和 stub.callsArg 有什么区别：</p>
+<ul>
+<li>spy.yield([arg1, arg2, …])</li>
+<li>spy.yieldTo(callback, [arg1, arg2, …])</li>
+<li>spy.callArg(argNum)</li>
+<li>spy.callArgWith(argNum, [arg1, arg2, …])</li>
+</ul>
+</li>
+</ul>
+<h2 id="Mock"><a href="#Mock" class="headerlink" title="Mock"></a>Mock</h2><h3 id="When-to-Use-Mocks"><a href="#When-to-Use-Mocks" class="headerlink" title="When to Use Mocks"></a>When to Use Mocks</h3><p>You should take care when using mocks - it’s easy to overlook spies and stubs<br>when mocks can do everything they can, but mocks also easily make your tests<br>overly specific, which leads to brittle tests that break easily. A brittle test<br>is a test that easily breaks unintentionally when changing your code.</p>
+<p>Mocks should be used primarily when you would use a stub, but need to verify<br>multiple more specific behaviors on it.</p>
+<p>For example, here’s how we could verify a more specific database saving scenario<br>using a mock:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">it(<span class="string">'should pass object with correct values to save only once'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> info = &#123; <span class="attr">name</span>: <span class="string">'test'</span> &#125;;</div><div class="line">  <span class="keyword">var</span> expectedUser = &#123;</div><div class="line">    <span class="attr">name</span>: info.name,</div><div class="line">    <span class="attr">nameLowercase</span>: info.name.toLowerCase()</div><div class="line">  &#125;;</div><div class="line">  <span class="keyword">var</span> database = sinon.mock(Database);</div><div class="line">  database.expects(<span class="string">'save'</span>).once().withArgs(expectedUser);</div><div class="line"></div><div class="line">  setupNewUser(info, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; &#125;);</div><div class="line"></div><div class="line">  database.verify();</div><div class="line">  database.restore();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Note that, with a mock, we define our expectations up front. Normally, the<br>expectations would come last in the form of an assert function call. With a<br>mock, we define it directly on the mocked function, and then only call <code>verify</code><br>in the end.</p>
+<p>In this test, we’re using <code>once</code> and <code>withArgs</code> to define a mock which checks<br>both the number of calls <em>and</em> the arguments given. If we use a stub, checking<br>multiple conditions require multiple assertions, which can be a code smell.</p>
+<p>Because of this convenience in declaring multiple conditions for the mock, it’s<br>easy to go overboard. We can easily make the conditions for the mock more<br>specific than is needed, which can make the test harder to understand and easy<br>to break. This is also one of the reasons to avoid multiple assertions, so keep<br>this in mind when using mocks.</p>
+<h3 id="Expectations"><a href="#Expectations" class="headerlink" title="Expectations"></a>Expectations</h3><ul>
+<li>var expectation = sinon.expectation.create([methodName])</li>
+<li>var expectation = sinon.mock()</li>
+<li>expectation.atLeast(number)</li>
+<li>expectation.atMost(number)</li>
+<li>expectation.never()</li>
+<li>expectation.once()</li>
+<li>expectation.twice()</li>
+<li>expectation.thrice()</li>
+<li>expectation.exactly(number)</li>
+<li>expectation.withArgs(arg1, arg2, …)</li>
+<li>expectation.withExactArgs(arg1, arg2, …)</li>
+<li>expectation.on(obj)：期望以 obj 为 this 对象来执行方法。</li>
+<li>expectation.verify()：检查此期望是否通过。</li>
+</ul>
+<h3 id="Sandboxes"><a href="#Sandboxes" class="headerlink" title="Sandboxes"></a>Sandboxes</h3><p>Sandboxes simplify working with fakes that need to be restored and/or verified. If you’re using fake timers, fake XHR, or you are stubbing/spying on globally accessible properties you should use a sandbox to ease cleanup. By default the spy, stub and mock properties of the sandbox is bound to whatever object the function is run on, so if you don’t want to manually restore(), you have to use this.spy() instead of sinon.spy() (and stub, mock).</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="string">"test using sinon.test sandbox"</span>: sinon.test(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> myAPI = &#123; <span class="attr">method</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125; &#125;;</div><div class="line">    <span class="keyword">this</span>.mock(myAPI).expects(<span class="string">"method"</span>).once();</div><div class="line"></div><div class="line">    PubSub.subscribe(<span class="string">"message"</span>, myAPI.method);</div><div class="line">    PubSub.publishSync(<span class="string">"message"</span>, <span class="literal">undefined</span>);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<ol>
+<li><a href="http://sinonjs.org/docs/#sinon-sandbox" target="_blank" rel="external">sinon.sandbox</a></li>
+<li><a href="http://sinonjs.org/docs/#sinon-test" target="_blank" rel="external">sinon.test</a></li>
+<li><a href="http://sinonjs.org/docs/#sinon-testCase" target="_blank" rel="external">sinon.testCase</a></li>
+</ol>
+<h2 id="Matchers"><a href="#Matchers" class="headerlink" title="Matchers"></a>Matchers</h2><p>Matchers用于辅助<code>spy.calledWith</code>，<code>spy.returned</code>等断言，用来进一步指定期望的值，<br>比如正则匹配、类型检查等。</p>
+<blockquote>
+<p>Matchers can be passed as arguments to spy.calledWith, spy.returned and the corresponding sinon.assert functions as well as spy.withArgs. Matchers allow to be either more fuzzy or more specific about the expected value.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var book = &#123;</div><div class="line">    pages: 42,</div><div class="line">    author: &quot;harttle&quot;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var spy = sinon.spy();</div><div class="line">spy(book);</div><div class="line"></div><div class="line">expect(spy.calledWith(sinon.match(&#123; author: &quot;harttle&quot; &#125;))).to.equal(true);</div><div class="line">expect(spy.calledWith(sinon.match.has(&quot;pages&quot;, 42))).to.equal(true);</div></pre></td></tr></table></figure>
+<p>上述断言有更方便的写法：<code>spy.calledWithMatch(arg1, arg2, ...);</code>，<br>相当于：<code>spy.calledWith(sinon.match(arg1), sinon.match(arg2), ...)</code>。</p>
+<p>Sinonjs Matchers 文档：<a href="http://sinonjs.org/docs/#matchers" target="_blank" rel="external">http://sinonjs.org/docs/#matchers</a></p>
+<h2 id="Best-Practices-and-Tips"><a href="#Best-Practices-and-Tips" class="headerlink" title="Best Practices and Tips"></a>Best Practices and Tips</h2><p>Follow these best practices to avoid common problems with spies, stubs and<br>mocks.</p>
+<h3 id="Use-sinon-test-Whenever-Possible"><a href="#Use-sinon-test-Whenever-Possible" class="headerlink" title="Use sinon.test Whenever Possible"></a>Use sinon.test Whenever Possible</h3><p>When you use spies, stubs or mocks, wrap your test function in <code>sinon.test</code>.<br>This allows you to use Sinon’s automatic clean-up functionality. Without it, if<br>your test fails before your test-doubles are cleaned up, it can cause a<br><em>cascading failure</em> - more test failures resulting from the initial failure.<br>Cascading failures can easily mask the real source of the problem, so we want to<br>avoid them where possible.</p>
+<p>Using <code>sinon.test</code> eliminates this case of cascading failures. Here’s one of the<br>tests we wrote earlier:</p>
+<pre>
+it('should call save once', function() {
+  var save = sinon.spy(Database, 'save');
+
+  setupNewUser({ name: 'test' }, function() { });
+
+  save.restore();
+  sinon.assert.calledOnce(save);
+});
+</pre>
+
+<p>If <code>setupNewUser</code> threw an exception in this test, that would mean the spy would<br>never get cleaned up, which would wreak havoc in any following tests.</p>
+<p>We can avoid this by using <code>sinon.test</code> as follows:</p>
+<pre>
+it('should call save once', sinon.test(function() {
+  var save = this.spy(Database, 'save');
+
+  setupNewUser({ name: 'test' }, function() { });
+
+  sinon.assert.calledOnce(save);
+}));
+</pre>
+
+<p>Note the three differences: in the first line, we wrap the test function with<br><code>sinon.test</code>. In the second line, we use <code>this.spy</code> instead of <code>sinon.spy</code>. And<br>lastly, we removed the <code>save.restore</code> call, as it’s now being cleaned up<br>automatically.</p>
+<p>You can make use of this mechanism with all three test doubles:</p>
+<ul>
+<li><code>sinon.spy</code> becomes <code>this.spy</code></li>
+<li><code>sinon.stub</code> becomes <code>this.stub</code></li>
+<li><code>sinon.mock</code> becomes <code>this.mock</code></li>
+</ul>
+<h3 id="Async-Tests-with-sinon-test"><a href="#Async-Tests-with-sinon-test" class="headerlink" title="Async Tests with sinon.test"></a>Async Tests with sinon.test</h3><p>You may need to disable fake timers for async tests when using <code>sinon.test</code>.<br>This is a potential source of confusion when using Mocha’s asynchronous tests<br>together with <code>sinon.test</code>.</p>
+<p>To make a test asynchronous with Mocha, you can add an extra parameter into the<br>test function:</p>
+<pre>
+it('should do something async', function(done) {
+</pre>
+
+<p>This can break when combined with <code>sinon.test</code>:</p>
+<pre>
+it('should do something async', sinon.test(function(done) {
+</pre>
+
+<p>Combining these can cause the test to fail for no apparent reason, displaying a<br>message about the test timing out. This is caused by Sinon’s fake timers which<br>are enabled by default for tests wrapped with <code>sinon.test</code>, so you’ll need to<br>disable them.</p>
+<p>This can be fixed by changing <code>sinon.config</code> somewhere in your test code or in<br>a configuration file loaded with your tests:</p>
+<pre>
+sinon.config = {
+  useFakeTimers: false
+};
+</pre>
+
+<p><code>sinon.config</code> controls the default behavior of some functions like<br><code>sinon.test</code>. It also has some <a href="http://sinonjs.org/docs/#sinon-config" target="_blank" rel="external">other available options</a>.</p>
+<h3 id="Create-Shared-Stubs-in-beforeEach"><a href="#Create-Shared-Stubs-in-beforeEach" class="headerlink" title="Create Shared Stubs in beforeEach"></a>Create Shared Stubs in beforeEach</h3><p>If you need to replace a certain function with a stub in all of your tests,<br>consider stubbing it out in a <code>beforeEach</code> hook. For example, all of our tests<br>were using a test-double for <code>Database.save</code>, so we could do the following:</p>
+<pre>
+describe('Something', function() {
+  var save;
+  beforeEach(function() {
+    save = sinon.stub(Database, 'save');
+  });
+
+  afterEach(function() {
+    save.restore();
+  });
+
+  it('should do something', function() {
+    //you can use the stub in tests by accessing the variable
+    save.yields('something');
+  });
+});
+</pre>
+
+<p>Make sure to also add an <code>afterEach</code> and clean up the stub. Without it, the stub<br>may be left in place and it may cause problems in other tests.</p>
+<h3 id="Checking-the-Order-of-Function-Calls-or-Values-Being-Set"><a href="#Checking-the-Order-of-Function-Calls-or-Values-Being-Set" class="headerlink" title="Checking the Order of Function Calls or Values Being Set"></a>Checking the Order of Function Calls or Values Being Set</h3><p>If you need to check that certain functions are called in order, you can use<br>spies or stubs together with <code>sinon.assert.callOrder</code>:</p>
+<pre>
+var a = sinon.spy();
+var b = sinon.spy();
+
+a();
+b();
+
+sinon.assert.callOrder(a, b);
+</pre>
+
+<p>If you need to check that a certain value is set before a function is called,<br>you can use the third parameter of <code>stub</code> to insert an assertion into the stub:</p>
+<pre>
+varobject={ };
+var expectedValue = 'something';
+var func = sinon.stub(example, 'func', function() {
+  assert.equal(object.value, expectedValue);
+});
+
+doSomethingWithObject(object);
+
+sinon.assert.calledOnce(func);
+</pre>
+
+<p>The assertion within the stub ensures the value is set correctly before the<br>stubbed function is called. Remember to also include a <code>sinon.assert.calledOnce</code><br>check to ensure the stub gets called. Without it, your test will not fail when<br>the stub is not called.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Sinon is a powerful tool, and, by following the practices laid out in this<br>tutorial, you can avoid the most common problems developers run into when using<br>it. The most important thing to remember is to make use of <code>sinon.test</code> —<br>otherwise, cascading failures can be a big source of frustration.</p>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://harttle.com/2016/07/27/sinon-stub.html" target="_blank" rel="external">利用 Sinonjs 构建测试桩：Spies and Stubs - Harttle Land</a></li>
+<li><a href="https://semaphoreci.com/community/tutorials/best-practices-for-spies-stubs-and-mocks-in-sinon-js" target="_blank" rel="external">Best Practices for Spies, Stubs and Mocks in Sinon.js - Semaphore</a></li>
+</ul>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="https://github.com/domenic/sinon-chai" target="_blank" rel="external">domenic/sinon-chai: Extends Chai with assertions for the Sinon.JS mocking framework.</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html" target="_blank" rel="external">http://blog.inching.org/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html&title=《JavaScript Unit Test Sinonjs》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html&title=《JavaScript Unit Test Sinonjs》 — Balance&source=sinonjs/sinon: Test spies, stubs and mocks for JavaScript.
+Sinonjs事实上Sinonjs提..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript Unit Test Sinonjs》 — Balance&url=http://blog.inching.org/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2016-11-26-android-serializable.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android Serializable</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Gradle/2016-11-14-gradle-android-build.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">配置 Gradle 构建</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html&title=《JavaScript Unit Test Sinonjs》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html&title=《JavaScript Unit Test Sinonjs》 — Balance&source=sinonjs/sinon: Test spies, stubs and mocks for JavaScript.
+Sinonjs事实上Sinonjs提..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript Unit Test Sinonjs》 — Balance&url=http://blog.inching.org/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/uncategorized/2016-11-23-javascript-unit-test-sinonjs.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtklEQVR42u3awW7rMAwEwP7/T+dd+1DE3SWlIofRqXBiS6MCpkLy6yser2/j+5Xn7/z8NJnl3ZXkCcOBh4eHt1j6z/HMS6Z/vut5Dcns7+7Cw8PDu81LlpWEinyz9rwo/ODh4eF9DG/zhATQHujx8PDwPp/3Go38wP1MwsPDw/sEXvvo5CW+2ZTZRuDh4eH9DS+vIn3O31fqe3h4eHjrqvrmaLtJJZwaeHh4eDd4+yW2h9r2m7O2LTw8PLy/4R14BceFsQTwnM4oDt94eHh4R3k3shqzwNCmiaMwg4eHh3eBlweGvFkqX2jSLtDOW9f38PDw8EreJl3blurzw3EySzQvHh4e3gVeftg925iVLLQNBr9sFh4eHt4hXn5D/rJu70rmza+8PVLj4eHhHeK1zQH5C71NRrSpjbYUh4eHh3ePt/ld35b2ZwncYekODw8P7zKvfQXnxf5k3jZsREELDw8P7yivLYDli8gbEWaNVnUaAg8PD+8QL0+PtsmCfetVGwzqlAQeHh7empekU/NgsEnvzhq2VhlrPDw8vJiX35ynTdtgkAeh+tCPh4eHd5TXtlvty1d5umGWDn77f8PDw8M7xGsXHRXpZwmC+AA97KrCw8PDO8o71tgUF65mAWN26MfDw8O7wZsVovIEwSxpO9v01cEaDw8PL54rb35qi/ebVoDZ4bv4j+Hh4eEd4t34Ld+mLfKiVxRO8PDw8K7x2tdxEjxmTQP7lEcfPfDw8PBS3qscbclq05Y6e+Z/n+Lh4eFd4G2CweygnJfEZkW4WVIDDw8Pr+XN2q3yK/mmtNtR51rw8PDwjvLyA27bWDALA8cGHh4e3kfyNumAWSGt2Bo8PDy8j+TtE6yb0PLLVuLh4eFd451Nuc5SDDm12D48PDy8C7zZL/rNkTpfyqYZCw8PD+8C7x+rQu4DSYf6oQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

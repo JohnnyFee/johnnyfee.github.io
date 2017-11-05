@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Angular Directive | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tutorial,angular">
+    <meta name="description" content="本文为读 AngularJS 和  Mastering Web Application Development with AngularJS 的读书笔记。
+Directives指令继承 HTML 语法，是一种为自定义元素和属性与 DOM 变换和行为关联的方式。你可以使用指令来创建可复用的 UI 组件，配置应用和其他所有你想在 UI 模板中做的事情。
+你可以使用 Angular 内置的指令，也可以自">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular Directive">
+<meta property="og:url" content="http://blog.inching.org/Angular/2014-09-24-angular-directive.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文为读 AngularJS 和  Mastering Web Application Development with AngularJS 的读书笔记。
+Directives指令继承 HTML 语法，是一种为自定义元素和属性与 DOM 变换和行为关联的方式。你可以使用指令来创建可复用的 UI 组件，配置应用和其他所有你想在 UI 模板中做的事情。
+你可以使用 Angular 内置的指令，也可以自">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/angular-directive-alert.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/angular-directive-controller.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/angular-directive-datepicker.jpg">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular Directive">
+<meta name="twitter:description" content="本文为读 AngularJS 和  Mastering Web Application Development with AngularJS 的读书笔记。
+Directives指令继承 HTML 语法，是一种为自定义元素和属性与 DOM 变换和行为关联的方式。你可以使用指令来创建可复用的 UI 组件，配置应用和其他所有你想在 UI 模板中做的事情。
+你可以使用 Angular 内置的指令，也可以自">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/angular-directive-alert.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Angular Directive</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Angular Directive</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-09-23T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-09-24
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Directives"><span class="post-toc-text">Directives</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义指令"><span class="post-toc-text">定义指令</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#restrict"><span class="post-toc-text">restrict</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#template-templateUrl"><span class="post-toc-text">template/templateUrl</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#replace"><span class="post-toc-text">replace</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#属性列表"><span class="post-toc-text">属性列表</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#生命周期"><span class="post-toc-text">生命周期</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Compile"><span class="post-toc-text">Compile</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Link"><span class="post-toc-text">Link</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Pre-vs-Post-Linking-Functions"><span class="post-toc-text">Pre vs Post Linking Functions</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Transclusion"><span class="post-toc-text">Transclusion</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#transclude"><span class="post-toc-text">transclude</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ng-transclude"><span class="post-toc-text">ng-transclude</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#transclusion-函数"><span class="post-toc-text">transclusion 函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#使用-compile-服务创建-transclude-函数"><span class="post-toc-text">使用 $compile 服务创建 transclude 函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#在指令中访问-transclusion-函数"><span class="post-toc-text">在指令中访问 transclusion 函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#使用-transclusion-创建-if-指令"><span class="post-toc-text">使用 transclusion 创建 if 指令</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#指令控制器"><span class="post-toc-text">指令控制器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定义指令控制器"><span class="post-toc-text">定义指令控制器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#指令控制器和-link-函数的不同"><span class="post-toc-text">指令控制器和  link 函数的不同</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#依赖注入"><span class="post-toc-text">依赖注入</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#编译过程"><span class="post-toc-text">编译过程</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#访问其他控制器"><span class="post-toc-text">访问其他控制器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#require"><span class="post-toc-text">require</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#扩展指令"><span class="post-toc-text">扩展指令</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Global-Configurations"><span class="post-toc-text">Global Configurations</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Require-Directives"><span class="post-toc-text">Require Directives</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Stacking-Directives"><span class="post-toc-text">Stacking Directives</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Templating"><span class="post-toc-text">Templating</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Unit-Test"><span class="post-toc-text">Unit Test</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Demo"><span class="post-toc-text">Demo</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Notepad"><span class="post-toc-text">Notepad</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#butterbar-amp-focus"><span class="post-toc-text">butterbar & focus</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Clock"><span class="post-toc-text">Clock</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Wrapping-the-jQueryUI-datepicker-directive"><span class="post-toc-text">Wrapping the jQueryUI datepicker directive</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Writing-tests-for-directives-that-wrap-libraries"><span class="post-toc-text">Writing tests for directives that wrap libraries</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Implementing-the-jQuery-datepicker-directive"><span class="post-toc-text">Implementing the jQuery datepicker directive</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Creating-a-custom-validation-directive"><span class="post-toc-text">Creating a custom validation directive</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-angular-directive"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Angular Directive</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-09-24 00:00:00" datetime="2014-09-23T16:00:00.000Z"  itemprop="datePublished">2014-09-24</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文为读 <a href="http://www.salttiger.com/angularjs/" target="_blank" rel="external">AngularJS</a> 和  <a href="http://www.salttiger.com/mastering-web-application-development-angularjs/" target="_blank" rel="external">Mastering Web Application Development with AngularJS</a> 的读书笔记。</p>
+<h2 id="Directives"><a href="#Directives" class="headerlink" title="Directives"></a>Directives</h2><p>指令继承 HTML 语法，是一种为自定义元素和属性与 DOM 变换和行为关联的方式。你可以使用指令来创建可复用的 UI 组件，配置应用和其他所有你想在 UI 模板中做的事情。</p>
+<p>你可以使用 Angular 内置的指令，也可以自定义指令。处理浏览器事件和修改 DOM 时，当内置指令在方面无法满足时，你可以自定义指令。</p>
+<p>相对 JQuery 实现控件的方式，Directives 更具语义性，从 HTML 便可知控件的含义。</p>
+<a id="more"></a>
+<h2 id="定义指令"><a href="#定义指令" class="headerlink" title="定义指令"></a>定义指令</h2><p>我们使用 module 对象的 <code>directive()</code> 方法定义指令：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'myapp'</span>, []);</div><div class="line">  </div><div class="line">app.directive(<span class="string">'helloWorld'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">restrict</span>: <span class="string">'AE'</span>,</div><div class="line">      <span class="attr">replace</span>: <span class="string">'true'</span>,</div><div class="line">      <span class="attr">template</span>: <span class="string">'&lt;h3&gt;Hello World!!&lt;/h3&gt;'</span></div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在上面的代码中，<code>app.directive()</code> 方法在模块中注册了一个新的指令。这个方法的第一个参数是这个指令的名字。第二个参数是一个返回指令定义对象的函数。如果你的指令依赖于其他的对象或者服务，比如 <code>$rootScope</code>, <code>$http</code>, 或者 <code>$compile</code>，他们可以在这里注入。</p>
+<p><strong>使用方法：</strong></p>
+<ul>
+<li>以一个元素使用，如<code>&lt;hello-world/&gt;</code> 或者 <code>&lt;hello:world/&gt;</code>。</li>
+<li>以一个属性使用，如 <code>&lt;div hello-world&gt;&lt;/div&gt;</code> 或者 <code>&lt;div hello:world/&gt;</code>。</li>
+<li><p>如果你想要符合 HTML5 的规范，你可以在元素前面添加 <code>x-</code> 或者 <code>data-</code>的前缀，如 <code>&lt;div data-hello-world&gt;&lt;/div&gt;</code> 或者 <code>&lt;div x-hello-world&gt;&lt;/div&gt;</code>。</p>
+<p>  在匹配指令的时候，Angular会在元素或者属性的名字中剔除 <code>x-</code> 或者 <code>data-</code> 前缀。 然后将 <code>–</code> 或者 <code>:</code> 连接的字符串转换成驼峰(camelCase)表现形式，然后再与注册过的指令进行匹配。这跟HTML对标签和属性不区分大小写有关。</p>
+</li>
+</ul>
+<h3 id="restrict"><a href="#restrict" class="headerlink" title="restrict"></a><code>restrict</code></h3><p>这个属性用来指定指令在 HTML 中的使用方法。一个 Angular 指令有以下的四种表现形式：</p>
+<table>
+<thead>
+<tr>
+<th>指令形式</th>
+<th><code>restrict</code> 属性值</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新的HTML元素</td>
+<td>‘E’</td>
+<td><code>&lt;data-picker&gt;&lt;/data-picker&gt;</code></td>
+</tr>
+<tr>
+<td>元素的属性</td>
+<td>‘A’</td>
+<td><code>&lt;input type=&quot;text&quot; data-picker/&gt;</code></td>
+</tr>
+<tr>
+<td>CSS 类</td>
+<td>‘C’</td>
+<td><code>&lt;input type=&quot;text&quot; class=&quot;data-picker&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td>注释</td>
+<td>‘M’</td>
+<td><code>&lt;!- directive:data-picker –&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="template-templateUrl"><a href="#template-templateUrl" class="headerlink" title="template/templateUrl"></a><code>template</code>/<code>templateUrl</code></h3><p>指定模板或者模板文件。<code>template</code> 用于 templete 内容比较少的情况，更多的情况下你可能会见到 <code>templateUrl</code>。所以，理想情况下，你应该将模板放到一个特定的 HTML 文件中，然后将 templateUrl 属性指向它。</p>
+<h3 id="replace"><a href="#replace" class="headerlink" title="replace"></a><code>replace</code></h3><p><code>replace</code> 为 <code>true</code> 表示 compiler 将用 <code>template</code> 指定的模板内容替换原指令元素，原指令中的所有属性都将被拷贝到模板元素中。<code>replace</code> 为 <code>false</code> 时，表示 template 内容作为指令的子元素添加到指令元素中。<code>replace</code> 默认为 <code>false</code>。</p>
+<p>在上例中，我们将 <code>replace</code> 设置成 <code>true</code>，在指令被编译之后，生成的模板内容替换掉了 <code>&lt;hello-world&gt;&lt;/hello-world&gt;</code>，最终的输出是 <code>&lt;h3&gt;Hello World!!&lt;/h3&gt;</code>。如果你将 replace 设置成 <code>false</code>，那么生成的的内容为 <code>&lt;hello-world&gt;&lt;h3&gt;Hello World!!&lt;/h3&gt;&lt;/hello-world&gt;</code>。</p>
+<h3 id="属性列表"><a href="#属性列表" class="headerlink" title="属性列表"></a>属性列表</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>The name of the directive.</td>
+</tr>
+<tr>
+<td><code>restrict</code></td>
+<td>In what kind of mark-up this directive can appear.</td>
+</tr>
+<tr>
+<td><code>priority</code></td>
+<td>Hint to the compiler of the order that directives should be executed.  </td>
+</tr>
+<tr>
+<td><code>terminal</code></td>
+<td>Whether the compiler should continue compiling directives below this.                                                             </td>
+</tr>
+<tr>
+<td><code>link</code></td>
+<td>The link function that will link the directive to the scope.</td>
+</tr>
+<tr>
+<td><code>template</code></td>
+<td>A string that will be used to generate mark-up for this directive.</td>
+</tr>
+<tr>
+<td><code>templateUrl</code></td>
+<td>A URL where the template for this directive may be found.</td>
+</tr>
+<tr>
+<td><code>replace</code></td>
+<td>Whether to replace this directive’s element with what is in the template.</td>
+</tr>
+<tr>
+<td><code>transclude</code></td>
+<td>Whether to provide the contents of this directive’s element for use in the template and compile function.</td>
+</tr>
+<tr>
+<td><code>scope</code></td>
+<td>Whether to create a new child scope or isolated scope for this directive.                </td>
+</tr>
+<tr>
+<td><code>controller</code></td>
+<td>A function that will act as a directive controller for this directive.                                                         </td>
+</tr>
+<tr>
+<td><code>require</code></td>
+<td>Requires a directive controller from another directive to be injected into this directive’s link function.</td>
+</tr>
+<tr>
+<td><code>compile</code></td>
+<td>The compile function that can manipulate the source DOM and will create the link function and is only used if a link has not been provided above.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>当应用启动时，Angular 开始使用 <code>$compile</code> 服务遍历 DOM 元素，试图使用注册过的指令列表来匹配每个元素、属性、注释、CSS 类，一旦匹配成功，AngularJS 调用相应指令的 compile 函数，这个 compile 函数返回一个 link 函数，被添加到稍后执行的 link 函数列表中。作用域在编译阶段还没有准备好，在编译阶段还不能使用作用域中数据。</p>
+<p>一旦所有的指令编译完成便进入链接阶段。在这个阶段，作用域已准备就绪，所有收集的 link 函数将被一一执行。指令创造出来的模板会在正确的 scope 下被解析和处理，然后返回具有事件响应的真实的 DOM 节点。</p>
+<p>link 函数几乎可以做所以的事情，除了一些高级用法如访问 <code>transclusion</code> 函数。</p>
+<h3 id="Compile"><a href="#Compile" class="headerlink" title="Compile"></a>Compile</h3><p><code>compile</code> 函数在 <code>link</code> 函数被执行之前用来做一些 DOM 改造。它接收下面的参数：</p>
+<ul>
+<li><code>element</code> – 指令所在的元素</li>
+<li><code>attributes</code> – 元素上赋予的参数的标准化列表</li>
+</ul>
+<p>要注意的是 compile 函数不能访问 scope，并且必须返回一个 link 函数。只能在链接函数中使用 DOM，因为在编译函数中可能移除或复制元素。如果没有设置 compile 函数，你可以正常地配置 link 函数，有了compile，就不能有 link，link 函数由 compile 函数返回。</p>
+<p>编译阶段主要用于优化。以 ng-repeat 为例，compile 函数用来复制模板，只执行一次，但是 在 repeater 每次迭代的时候，link 函数都会被调用。</p>
+<p>compile 函数可以写成如下的形式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">myApp.directive(<span class="string">'directiveName'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="comment">// 注入函数</span></div><div class="line">  <span class="comment">// 每个 app 最多运行一遍。这对启动和全局配置的时候有用。</span></div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">compile</span>: <span class="function"><span class="keyword">function</span>(<span class="params">$templateElement, $templateAttributes</span>) </span>&#123;</div><div class="line"></div><div class="line">      <span class="comment">// 编译函数</span></div><div class="line">      <span class="comment">// 1. 每个 jq 实例（在未被渲染的模板中）只运行一次。</span></div><div class="line">      <span class="comment">// 2. 你可以检查 DOM 和变量或者表达式的信息，但是你还不能计算出它们的值。</span></div><div class="line">      <span class="comment">// 3. Angular 缓存了模板，现在可以修改模板，如添加子元素或者添加兄弟元素。</span></div><div class="line"></div><div class="line">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $linkElement, $linkAttributes</span>) </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">// 链接函数</span></div><div class="line">        <span class="comment">// 1. 每个已经渲染的实例只执行一次。</span></div><div class="line">        <span class="comment">// 2. ng-repeat 的行创建的时候，每行运行一次。</span></div><div class="line">        <span class="comment">// 3. 执行的时候，ng-if 或者 ng-switch 可能会受影响。</span></div><div class="line">        <span class="comment">// 4. 作用域可以使用，因为控制器逻辑已经执行完成。</span></div><div class="line">        <span class="comment">// 5. 所有变量和表达式的值已经确定。</span></div><div class="line">        <span class="comment">// 6. Angular 正在显示缓存的模板。这时添加模板已经太晚，如果是必须这样做，你需要手动编译。</span></div><div class="line">      &#125;;</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>如下面的例子，我们定义一个 button 指令，当 button 的类型为 submit 时，自动添加 <code>btn-primary</code> 类，根据 size 属性，添加改变大小的 CSS 类。我们这个例子是基于 Bootstrap 的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">myModule.directive(<span class="string">'button'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">restrict</span>: <span class="string">'E'</span>,</div><div class="line">    <span class="attr">compile</span>: <span class="function"><span class="keyword">function</span>(<span class="params">element, attributes</span>) </span>&#123;</div><div class="line">      element.addClass(<span class="string">'btn'</span>);</div><div class="line">      <span class="keyword">if</span> (attributes.type === <span class="string">'submit'</span> ) &#123;</div><div class="line">        element.addClass(<span class="string">'btn-primary'</span>);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> (attributes.size ) &#123;</div><div class="line">        element.addClass(<span class="string">'btn-'</span> + attributes.size);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>我们可以这样使用：</p>
+<pre><code>&lt;button type=&quot;submit&quot; size=&quot;large&quot;&gt;Submit&lt;/button&gt;
+</code></pre><p>如果没用 Angular，我们的代码可能是这样的：</p>
+<pre><code>&lt;button type=&quot;submit&quot;
+    class=&quot;btn btn-primary btn-large&quot;&gt;Click Me!&lt;/button&gt;
+</code></pre><p>如果你有不依赖作用域数据的复杂功能，那么这些应该出现在编译函数中，以便这些代码只运行一次。假如我们把上例中改用 link 函数实现，那么当 button 出现在 <code>ng-repeat</code> 循环中时，<code>addClass()</code> 函数在每次迭代中都将会被调用。而用 compile 函数来实现，<code>addClass()</code> 只会被调用一次，button 只是被 <code>ng-repeat</code> 简单的复制。</p>
+<p>在处理比较复杂的 DOM 操作时，这样的优化是比较可观的，特别是当你要迭代一个大集合的时候。</p>
+<h3 id="Link"><a href="#Link" class="headerlink" title="Link"></a>Link</h3><p>指令的 link 函数主要用来为 DOM 元素添加事件监听、监视模型属性变化、以及更新 DOM。我们可以在 link 函数中访问指令的 scope。</p>
+<p>大多数的情况下，你只需要使用 link 函数。这是因为大部分的指令只需要考虑注册事件监听、监视模型、以及更新 DOM 等，这些都可以在 link 函数中完成。 </p>
+<p>link 函数有三个参数：</p>
+<ul>
+<li><code>$scope</code> 指令的 scope。在我们的例子中，指令的 scope 就是父 controller 的 scope。</li>
+<li><code>$elem</code> 用 jQLite(jQuery的子集)包装的 DOM 元素。如果你在引入 AngularJS 之前引入了 jQuery，那么这个元素就是 jQuery 元素，而不是 jQLite 元素。由于这个元素已经被 jQuery/jQLite 包装了，所以我们就在进行 DOM 操作的时候就不需要再使用 <code>$()</code> 来进行包装。<code>$element === angular.element() === jQuery() === $()</code>。</li>
+<li><p><code>$attr</code> 包含了指令所在元素的属性对象。举个例子，你给一个 HTML 元素添加了一些属性：<code>&lt;hello-world some-attribute=&quot;&quot;&gt;&lt;/hello-world&gt;</code>，那么可以在 link 函数中通过 <code>$attrs.someAttribute</code> 来使用它。</p>
+<p>  如果你也有一个包含 <code>{{ }}</code> 的属性，这个属性需要计算，并且可能改变多次。你可以使用 <code>$attributes.$observe(&#39;myOtherAttribute&#39;, function(newValue))</code> 来监听属性的改变，而不是 <code>$scope.$watch()</code>。<code>$observe</code> 第一个参数为属性名，回调函数只有一个参数 <code>newValue</code>，表示经过计算的新值。和 <code>$watch</code> 的区别为当表达式的值改变时，<code>$observe</code> 仅且仅被触发一次，而 <code>$watch</code> 可能被触发多次。</p>
+</li>
+</ul>
+<p>让我们来改变一下我们的 <code>helloWorld</code> 指令，当用户在一个输入框中输入一种颜色的名称时，Hello World 文字的背景色自动发生变化。同时，当用户在 Hello World 文字上点击时，背景色变回白色。 </p>
+<p>相应的HTML标记如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">ng-controller</span>=<span class="string">"MainCtrl"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ng-model</span>=<span class="string">"color"</span> <span class="attr">placeholder</span>=<span class="string">"Enter a color"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">hello-world</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>修改后的 helloWorld 指令如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">app.directive(<span class="string">'helloWorld'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">restrict</span>: <span class="string">'AE'</span>,</div><div class="line">    <span class="attr">replace</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">template</span>: <span class="string">'&lt;p style="background-color:&#123;&#123;color&#125;&#125;"&gt;Hello World'</span>,</div><div class="line">    <span class="attr">link</span>: <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $elem, $attrs</span>) </span>&#123;</div><div class="line">      $elem.bind(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        $elem.css(<span class="string">'background-color'</span>, <span class="string">'white'</span>);</div><div class="line">        $scope.$apply(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">          scope.color = <span class="string">"white"</span>;</div><div class="line">        &#125;);</div><div class="line">      &#125;);</div><div class="line">      $elem.bind(<span class="string">'mouseover'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        $elem.css(<span class="string">'cursor'</span>, <span class="string">'pointer'</span>);</div><div class="line">      &#125;);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在上面的指令代码片段中，我们添加了两个事件，<code>click</code> 和 <code>mouseover</code>。<code>click</code> 处理函数用来重置 <code>&lt;p&gt;</code> 的背景色，而 <code>mouseover</code> 处理函数改变鼠标为 pointer。在模板中有一个表达式 <code></code>，当父 scope 中的 color 发生变化时，它用来改变 Hello World 文字的背景色。</p>
+<h4 id="Pre-vs-Post-Linking-Functions"><a href="#Pre-vs-Post-Linking-Functions" class="headerlink" title="Pre vs Post Linking Functions"></a>Pre vs Post Linking Functions</h4><p>凡是你使用 link 函数的地方，你都可以使用一个 pre 和 post 属性组成的对象，这两个属性分别表示前处理链接链接函数和后处理链接链接函数。默然情况下，链接函数指的是后处理链接函数，See <a href="https://github.com/angular/angular.js/issues/2592" target="_blank" rel="external">Oddly enough</a>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">link: <span class="function"><span class="keyword">function</span> <span class="title">LinkingFunction</span>(<span class="params">$scope, $element, $attributes</span>) </span>&#123; ... &#125;</div><div class="line"><span class="comment">//...</span></div><div class="line">link: &#123;</div><div class="line">  <span class="attr">pre</span>: <span class="function"><span class="keyword">function</span> <span class="title">PreLinkingFunction</span>(<span class="params">$scope, $element, $attributes</span>) </span>&#123; ... &#125;,</div><div class="line">  <span class="attr">post</span>: <span class="function"><span class="keyword">function</span> <span class="title">PostLinkingFunction</span>(<span class="params">$scope, $element, $attributes</span>) </span>&#123; ... &#125;,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>前处理链接函数先在父元素上触发，然后在子元素上触发，后处理链接函数相反，先在子元素上触发，然后在父元素上触发。See a demo: <a href="http://plnkr.co/edit/qrDMJBlnwdNlfBqEEXL2?p=preview" target="_blank" rel="external">http://plnkr.co/edit/qrDMJBlnwdNlfBqEEXL2?p=preview</a>。</p>
+<p>Pre-linking 和 post-linking 都是被 compiler 执行的。Pre-linking 是在所有子元素被链接之前执行，而 post-ling 是在所有子元素链接之后。只有在 post-link 函数中做 DOM 变换才是安全的。</p>
+<p>See <a href="https://github.com/angular/angular.js/wiki/Understanding-Directives" target="_blank" rel="external">Understanding Directives · angular/angular.js Wiki</a>。</p>
+<h2 id="Transclusion"><a href="#Transclusion" class="headerlink" title="Transclusion"></a>Transclusion</h2><p>当你想用模板内容替换指令内容，但又想用指令内容时，Transclusion 就能派上用场了。在模板中使用 <code>ng-transclude</code> 指明插入的位置，作为原元素内容的占位符。</p>
+<p>我们通过一个 <code>alert</code> 元素指令来说明，<code>alert</code> 指令的效果如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/angular-directive-alert.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><code>alert</code> 元素包含要显示在 alert 中的消息，这需要把消息移动到指令的模板中。<code>alert</code> 列表可以使用 <code>ng-repeat</code> 来显示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">alert</span> <span class="attr">type</span>=<span class="string">"alert.type"</span> <span class="attr">close</span>=<span class="string">"closeAlert($index)"</span></span></div><div class="line">       <span class="attr">ng-repeat</span>=<span class="string">"alert in alerts"</span>&gt;</div><div class="line">  &#123;&#123;alert.msg&#125;&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">alert</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>当用户关闭 alert 时，<code>close</code> 函数被调用。实现该指令的代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">myModule.directive(<span class="string">'alert'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">restrict</span>:<span class="string">'E'</span>,</div><div class="line">    <span class="attr">replace</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">transclude</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">template</span>:</div><div class="line">      <span class="string">'&lt;div class="alert alert-&#123;&#123;type&#125;&#125;"&gt;'</span> +</div><div class="line">        <span class="string">'&lt;button type="button" class="close"'</span> +</div><div class="line">                <span class="string">'ng-click="close()"&gt;&amp;times;'</span> +</div><div class="line">        <span class="string">'&lt;/button&gt;'</span> +</div><div class="line">        <span class="string">'&lt;div ng-transclude&gt;&lt;/div&gt;'</span> +</div><div class="line">      <span class="string">'&lt;/div&gt;'</span>,</div><div class="line">    <span class="attr">scope</span>: &#123; <span class="attr">type</span>:<span class="string">'='</span>, <span class="attr">close</span>:<span class="string">'&amp;'</span> &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这里我们使用隔离作用域来保证内外作用域的组件不会互相污染。这意味着指令模板中的表达式无法访问父作用域。</p>
+<h3 id="transclude"><a href="#transclude" class="headerlink" title="transclude"></a><code>transclude</code></h3><p><code>transclude</code> 属性的可选值为 <code>true</code> 和 <code>&#39;element&#39;</code>。</p>
+<ul>
+<li>使用 <code>transclude: true</code> 意味着指令元素的子元素会被移动内嵌到模板中。</li>
+<li>使用 <code>transclude: &#39;element&#39;</code> 意味着这个元素会被移动内嵌到模板中，包括元素的所有未被编译的属性指令。在这种情况下，只有当 <code>repalce</code> 属性为 <code>true</code> 时才有意义，</li>
+</ul>
+<h3 id="ng-transclude"><a href="#ng-transclude" class="headerlink" title="ng-transclude"></a><code>ng-transclude</code></h3><p><code>ng-transclude</code> 指定需要移动的指令内容在模板中的占位符。</p>
+<h3 id="transclusion-函数"><a href="#transclusion-函数" class="headerlink" title="transclusion 函数"></a>transclusion 函数</h3><p>当一个指令要求移动内嵌时，AnguarJS 将从 DOM 中提取内嵌内容并编译。以下是 <code>transclude: true</code> 时大致做的事情：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> elementsToTransclude = directiveElement.contents();</div><div class="line">directiveElement.html(<span class="string">''</span>);</div><div class="line"><span class="keyword">var</span> transcludeFunction = $compile(elementsToTransclude);</div></pre></td></tr></table></figure>
+<p>The first line gets the contents of the element containing the directive that requested the transclusion. The second line clears this element. The third line compiles the transcluded contents to produce the <strong>transclusion</strong> function, which will be passed back to the directive, for it to use.</p>
+<h4 id="使用-compile-服务创建-transclude-函数"><a href="#使用-compile-服务创建-transclude-函数" class="headerlink" title="使用 $compile 服务创建 transclude 函数"></a>使用 $compile 服务创建 transclude 函数</h4><p><code>$compile</code> 函数的返回结果为一个链接函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> linkingFn = $compile(</div><div class="line">  <span class="string">'&lt;div some-directive&gt;Some &#123;&#123;"interpola-ted"&#125;&#125; values&lt;/div&gt;'</span>);</div></pre></td></tr></table></figure>
+<p>为 <code>linkingFn</code> 函数传入 scope，是编译后的 DOM 元素指定的 scope 绑定：</p>
+<pre><code>var compiledElement = linkingFn(someScope);
+</code></pre><p>Transclusion 函数只是 link 函数的特殊例子。</p>
+<p>如果你为链接函数传入回调函数，该回调函数的参数是原始元素的拷贝，而非原始函数本身。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> clone = linkingFn(scope, <span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">clone</span>) </span>&#123;</div><div class="line">  element.append(clone);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这在想拷贝原始元素的场合非常有用，在 <code>ng-repeat</code> 就是这么干的。</p>
+<h4 id="在指令中访问-transclusion-函数"><a href="#在指令中访问-transclusion-函数" class="headerlink" title="在指令中访问 transclusion 函数"></a>在指令中访问 transclusion 函数</h4><p>你可以在两个地方获得 transclusion 函数：compile 函数和指令的 controller：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">myModule.directive(<span class="string">'myDirective'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">transclude</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">compile</span>: <span class="function"><span class="keyword">function</span>(<span class="params">element, attrs, transcludeFn</span>) </span>&#123; ... &#125;;</div><div class="line">    controller: <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $transclude</span>) </span>&#123; ... &#125;,</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><strong>在编译函数中获取 transclusion 函数:</strong></p>
+<p>compile 函数的第三个参数为 transclusion 函数。在编译阶段，作用域式不可用的，所以 transclusion 函数没用绑定到任何作用域。</p>
+<p>作用域在链接阶段是可用的，所以链接函数才是调用 transclusion 函数的地方。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">compile: <span class="function"><span class="keyword">function</span>(<span class="params">element, attrs, transcludeFn</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">postLink</span>(<span class="params">scope, element, attrs, controller</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> newScope = scope.$parent.$<span class="keyword">new</span>();</div><div class="line">    element.find(<span class="string">'p'</span>).first().append(transcludeFn(newScope));</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们把移动内嵌的元素追加到指令元素内的 <code>&lt;p&gt;</code> 元素中。这里，我们创建了一个新的作用域，该作用域是指令作用域的兄弟，也就是指令作用域的 <code>$parent</code> 的一个子作用域。</p>
+<p>这在指令有一个隔离作用域时特别需要，因为传入 link 函数的作用域是隔离作用域，并不继承于父作用域，而 transcluded 元素的作用域需要继承与作用域。</p>
+<p><strong>在指令的 controller 中获取 transclusion 函数：</strong></p>
+<p>我们在指令的 controller 中通过 <code>$transclude</code> 访问 transclusion 函数。在这种情况下，<code>$transclude</code> 是一个提前绑定到继承与父作用域的子作用域的函数，所以你无需提供作用域。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">controller: <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $element, $transclude</span>) </span>&#123;</div><div class="line">  $element.find(<span class="string">'p'</span>).first().append($transclude());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="使用-transclusion-创建-if-指令"><a href="#使用-transclusion-创建-if-指令" class="headerlink" title="使用 transclusion 创建 if 指令"></a>使用 transclusion 创建 if 指令</h4><p>让我们看一个简单的例子，来显示调用 transclusion 函数，而不依赖 <code>ng-transclude</code> 指令。尽管 AngularJS 提供了 <code>ng-show</code> and <code>ng-switch</code> 指令，但 <code>ng-show</code> 不会从 DOM 中移除元素，而 <code>ng-switch</code> 对于简单场景用起来又显得有点啰嗦。</p>
+<p>如果我们让元素不需要的时候，将它从 DOM 中移除，我们可以创建 <code>if</code> 指令，它用起来类似于 <code>ng-show</code>：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">ng-init</span>=<span class="string">"model= &#123;show: true, count: 0&#125;"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-click</span>=<span class="string">"model.show = !model.show"</span>&gt;</span></div><div class="line">    Toggle Div</div><div class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">if</span>=<span class="string">"model.show"</span> <span class="attr">ng-init</span>=<span class="string">"model.count=model.count+1"</span>&gt;</span></div><div class="line">    Shown &#123;&#123;model.count&#125;&#125; times</div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>每次点击按钮的时候，<code>model.show</code> 在 <code>true</code> and <code>false</code> 之间切换。我们使用 <code>model.count</code> 统计移除和插入的总次数。</p>
+<p>在测试用例中，我们测试 DOM 元素是否真的被添加和删除：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">it(<span class="string">'creates or removes the element as the if condition changes'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    element = $compile(</div><div class="line">      <span class="string">'&lt;div&gt;&lt;div if="someVar"&gt;&lt;/div&gt;&lt;/div&gt;'</span>)(scope);</div><div class="line">  scope.$apply(<span class="string">'someVar = true'</span>);</div><div class="line">  expect(element.children().length).toBe(<span class="number">1</span>);</div><div class="line">  scope.$apply(<span class="string">'someVar = false'</span>);</div><div class="line">  expect(element.children().length).toBe(<span class="number">0</span>);</div><div class="line">  scope.$apply(<span class="string">'someVar = true'</span>);</div><div class="line">  expect(element.children().length).toBe(<span class="number">1</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>注意我们需要将 <code>if</code> 指令包含在 div 中，因为我们的指定会使用 <code>jqLite.after()</code> 将元素插入到 DOM 中，这要求这个元素有父元素。</p>
+<p>这个指令的具体实现为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">myModule.directive(&apos;if&apos;, function () &#123;</div><div class="line">  return &#123;</div><div class="line">    transclude: &apos;element&apos;,</div><div class="line">    priority: 500,</div><div class="line">    compile: function (element, attr, transclude) &#123;</div><div class="line">      return function postLink(scope, element, attr) &#123;</div><div class="line">        var childElement, childScope;</div><div class="line"></div><div class="line">        scope.$watch(attr[&apos;if&apos;], function (newValue) &#123;</div><div class="line">          if (childElement) &#123;</div><div class="line">            childElement.remove();</div><div class="line">            childScope.$destroy();</div><div class="line">            childElement = undefined;</div><div class="line">            childScope = undefined;</div><div class="line">          &#125;</div><div class="line">          if (newValue) &#123;</div><div class="line">            childScope = scope.$new();</div><div class="line">            childElement = transclude(childScope, function(clone)&#123;</div><div class="line">              element.after(clone);</div><div class="line">            &#125;);</div><div class="line">          &#125;</div><div class="line">        &#125;);</div><div class="line">    ...</div></pre></td></tr></table></figure>
+<p>指定 transcludes 整个元素  (<code>transclude: &#39;element&#39;</code>)。我们提供 compile 函数，这允许我们访问 transclusion 函数。我们在 compile 函数返回 link 函数中，<code>$watch</code> 该 <code>if</code> 属性表达式。 </p>
+<p>我们使用 <code>$watch</code> 而非 <code>$observe</code>，因为 <code>if</code> 属性包含的是表达式而不是插值字符串。</p>
+<p>表达式改变的时候，我们会相应地处理子元素。这可以保证不会造成内存泄露。如果为 <code>true</code>，我们创建一个子作用域，然后使用这个作用域在 <strong>transclusion</strong> 函数中拷贝一份 transcluded 元素。我们把这些元素插入到包含指定的元素后。</p>
+<p><strong>在指令中使用 priority 属性：</strong></p>
+<p>当在同一个 DOM 元素上定义了多个指令的时候，有时需要指定指定应用的顺序。<code>priority</code> 用于在调用编译函数前对指令排序。<code>priority</code> 值大的先编译。Pre-link 函数也是按照 <code>priority</code> 的顺序执行，但 post-link 按照相反的顺序执行。相同优先级的指令顺序是未定义的。<code>priority</code> 的默认值为 0。你可以参考这个例子 <a href="http://jsfiddle.net/codef0rmer/7REAr/" target="_blank" rel="external">HG2D - Priority in Directive - JSFiddle</a>。</p>
+<p>我们 <code>if</code> 指令的优先级为 <code>500</code>， 比 <code>ng-repeat</code> 的优先级低。这意味着，如果你把它放在 <code>ng-repeat</code> 相同的元素上，<code>if</code> 表达式会引用 <code>ng-repeat</code> 每次迭代产生的作用域。</p>
+<p>在这个指令中，transclusion 让我们获取指令的内容，并且绑定到正确的作用域，然后插入到 DOM 中。</p>
+<h2 id="指令控制器"><a href="#指令控制器" class="headerlink" title="指令控制器"></a>指令控制器</h2><p>我们见过不少使用 <code>ng-controller</code> 实例化的 controller，这些 controller 不应该直接操作 DOM，而只是用来处理当前作用域的。</p>
+<p>指令控制器是 controller 的一种特殊形式，这样的控制器由指令定义，指令在 DOM 中每出现一次指令控制器实例化一次。</p>
+<h3 id="定义指令控制器"><a href="#定义指令控制器" class="headerlink" title="定义指令控制器"></a>定义指令控制器</h3><p>我们通过指令定义对象中的 <code>controller</code> 属性来定义指令控制器。<code>controller</code> 属性值可以是一个定义在 module 中的控制器：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">myModule.directive(<span class="string">'myDirective'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">controller</span>: <span class="string">'MyDirectiveController'</span></div><div class="line">  &#125;;</div><div class="line">&#125;);</div><div class="line">myModule.controller(<span class="string">'MyDirectiveController'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;</div><div class="line">  ...</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>也可是用来实例化控制器的构造函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">myModule.directive(<span class="string">'myDirective'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">controller</span>: <span class="function"><span class="keyword">function</span>(<span class="params">$scope, ...</span>) </span>&#123; ... &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>如果指令 controller 定义在 module 中，好处是方便测试，坏处是对整个应用可见。使用内联的方式定义，好处是使控制器成为指令的私有控制器，坏处是不利于测试。</p>
+<p>指令控制器的依赖注入和其他控制器一样，如所有的控制器可以注入 <code>$scope</code>、<code>$timeout</code>、<code>$rootScope</code> 等。指令控制器还可以注入一下几个特殊服务：</p>
+<ul>
+<li><code>$element</code>: 这是对指令的 DOM 元素的引用，使用 jQLite/jQuery 包装。</li>
+<li><code>$attrs</code>: 这里指令 DOM 元素中的属性列表。</li>
+<li><code>$transclude</code>: This is a <strong>transclusion</strong> function that is already bound to the correct scope. This function is described in the <strong>transclusion</strong> functions.</li>
+</ul>
+<h3 id="指令控制器和-link-函数的不同"><a href="#指令控制器和-link-函数的不同" class="headerlink" title="指令控制器和  link 函数的不同"></a>指令控制器和  link 函数的不同</h3><p>指令控制器和 link 函数在功能上有很多重叠的地方。在使用  link 函数的地方我们经常也可以使用控制器。</p>
+<p>directive controllers 和 link functions 的不同之处主要体现在以下两个方面。</p>
+<h4 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h4><p>指令控制器必须使用依赖注入来指定所需要的服务，如 <code>$scope</code>, <code>$element</code>, and <code>$attrs</code>。link 函数传入的总是这四个参数， <code>scope</code>, <code>element</code>, <code>attrs</code>, and <code>controller</code>，它使用的不是依赖注入，所以参数名可以任意。</p>
+<h4 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h4><p>指令控制器在编译过程的不同时间调用。加入有以下 DOM 结构和指令：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/angular-directive-controller.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>指令控制器和 link 函数按以下顺序被调用：</p>
+<ul>
+<li>parent (controller)</li>
+<li>[parent (pre-link)<ul>
+<li>child 1 (controller)</li>
+<li>child 1 (pre-link)<ul>
+<li>child 1 a (controller)</li>
+<li>child 1 a (pre-link)</li>
+<li>child 1 a (post-link)</li>
+<li>child 1 b (controller)</li>
+<li>child 1 b (pre-link)</li>
+<li>child 1 b (post-link)</li>
+</ul>
+</li>
+<li>child 1 (post-link)</li>
+</ul>
+</li>
+<li>parent (post-link)</li>
+</ul>
+<p>如果一个元素包含多个指令，那么对于这个元素来说：</p>
+<ul>
+<li>如果需要，创建作用域</li>
+<li>实例化每个指令的指令控制器</li>
+<li>每个指令的 pre-link 函数被调用</li>
+<li>链接每个子元素</li>
+<li>每个指令的 post-link 函数被调用</li>
+</ul>
+<p>这意味着当一个指令控制器被实例化的时候，指令元素和它的子元素还没有完全被链接。但是当 link 函数(pre 或者 post)被调用的时候，元素所有的指令控制器已经实例化了。这是指令控制器可以被传到链接函数的原因。</p>
+<p>post-link 函数是在当前元素极其子元素编译和链接完成后被调用。这意味着这个阶段 DOM 的任何修改都不会被 AngularJS 编译器意识到。这在把第三方库（如 JQeury 插件）关联到元素的时候非常有用，因为这个过程可能在修改 DOM 的时候造成 Angular 编译器混乱。</p>
+<p><a href="http://inching.org/2014/09/23/angular-scope" target="_blank" rel="external">Angular Scope</a> 中的 pagination demo 是用 link 函数实现的，我们可以把它改成 directive controller 的版本：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">myModule.directive('pagination', function() &#123;</div><div class="line">  return &#123;</div><div class="line">    restrict: 'E',</div><div class="line">    scope: &#123; numPages: '=', currentPage: '=', onSelectPage: '&amp;' &#125;,</div><div class="line">    templateUrl: 'template/pagination.html',</div><div class="line">    replace: true,</div><div class="line">    controller: ['$scope, '$element', '$attrs',</div><div class="line">                   function($scope, $element, $attrs) &#123;</div><div class="line">      $scope.$watch('numPages', function(value) &#123;</div><div class="line">        $scope.pages = [];</div><div class="line">        for(var i=1;i&lt;=value;i++) &#123;</div><div class="line">           $scope.pages.push(i);</div><div class="line">        &#125;</div><div class="line">        if($scope.currentPage &gt; value ) &#123;</div><div class="line">          $scope.selectPage(value);</div><div class="line">        &#125;</div><div class="line">      &#125;);</div><div class="line">      $scope.noPrevious = function() &#123;</div><div class="line">        return $scope.currentPage === 1;</div><div class="line">      &#125;;</div><div class="line">      ...</div><div class="line">    &#125;]</div><div class="line">...</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="访问其他控制器"><a href="#访问其他控制器" class="headerlink" title="访问其他控制器"></a>访问其他控制器</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">app.directive(<span class="string">'outerDirective'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">scope</span>: &#123;&#125;,</div><div class="line">    <span class="attr">restrict</span>: <span class="string">'AE'</span>,</div><div class="line">    <span class="attr">controller</span>: <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $compile, $http</span>) </span>&#123;</div><div class="line">      <span class="comment">// $scope is the appropriate scope for the directive</span></div><div class="line">      <span class="keyword">this</span>.addChild = <span class="function"><span class="keyword">function</span>(<span class="params">nestedDirective</span>) </span>&#123; <span class="comment">// this refers to the controller</span></div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'Got the message from nested directive:'</span> + nestedDirective.message);</div><div class="line">      &#125;;</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这个代码为指令添加了一个名叫 outerDirective 的controller。当另一个指令想要交互时，它需要声明它需要引用(require)你的指令的 controller 实例。可以通过如下的方式实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">app.directive(<span class="string">'innerDirective'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">scope</span>: &#123;&#125;,</div><div class="line">    <span class="attr">restrict</span>: <span class="string">'AE'</span>,</div><div class="line">    <span class="attr">require</span>: <span class="string">'^outerDirective'</span>,</div><div class="line">    <span class="attr">link</span>: <span class="function"><span class="keyword">function</span>(<span class="params">scope, elem, attrs, controllerInstance</span>) </span>&#123;</div><div class="line">      <span class="comment">//the fourth argument is the controller instance you require</span></div><div class="line">      scope.message = <span class="string">"Hi, Parent directive"</span>;</div><div class="line">      controllerInstance.addChild(scope);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>相应的HTML代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">outer-directive</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">inner-directive</span>&gt;</span><span class="tag">&lt;/<span class="name">inner-directive</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">outer-directive</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>require: ‘^outerDirective’ 告诉Angular在元素以及它的父元素中搜索controller。这样被找到的 controller 实例会作为第四个参数被传入到 link 函数中。在我们的例子中，我们将嵌入的指令的scope发送给父亲指令。</p>
+<h4 id="require"><a href="#require" class="headerlink" title="require"></a><code>require</code></h4><p><code>require</code> 让其他指令的控制器关联到 compile/linking 函数。默认情况下，你必须在当前元素指令 require 的指令，你才可以在 compile/link 函数中使用 require 指令的控制器。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">color-picker</span> <span class="attr">ng-model</span>=<span class="string">"project.color"</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">app.directive(<span class="string">'colorPicker'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">require</span>: <span class="string">'ngModel'</span>,</div><div class="line">    <span class="attr">link</span>: <span class="function"><span class="keyword">function</span>(<span class="params">scope, element, attrs, ngModel</span>) </span>&#123;</div><div class="line">      element.colorPicker(&#123;</div><div class="line">        <span class="comment">// initialize the color to the color on the scope</span></div><div class="line">        pickerDefault: scope.color,</div><div class="line">        <span class="comment">// update the ngModel whenever we pick a new color</span></div><div class="line">        onColorChange: <span class="function"><span class="keyword">function</span>(<span class="params">id, newValue</span>) </span>&#123;</div><div class="line">          scope.$apply(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            ngModel.$setViewValue(newValue);</div><div class="line">          &#125;);</div><div class="line">        &#125;</div><div class="line">      &#125;);</div><div class="line"></div><div class="line">      <span class="comment">// update the color picker whenever the value on the scope changes</span></div><div class="line">      ngModel.$render = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        element.val(ngModel.$modelValue);</div><div class="line">        element.change();                </div><div class="line">      &#125;;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>如果当前元素没有包含 require 的指令，那么 compiler 会抛出错误。你可以通过在 require 的指令前加 <code>?</code> 让 require 的指令变得可选，如 <code>require: &#39;?ngModel&#39;</code>。如果 require 的指令没有提供，那么指令控制器的第四个参数将为 <code>null</code>。如果 require 多个指令，则指令控制器的四个参数为数组，require 对应的数组元素为 <code>null</code>。</p>
+<p>如果你 require 的指令可以出现在当前元素的祖先元素上，你可以在 require 的指令名前加 <code>^</code>，如 <code>require: &#39;^ngModel&#39;</code>。编译器将从当前元素开始向父元素查找，直到找到第一个匹配的指令控制器。</p>
+<p>你可以结合使用祖先前缀和可选前缀，如 <code>require: &#39;^?form&#39;</code>。</p>
+<p>当你想 require 多个指令的时候，可以把 <code>require</code> 属性设置成一个数组，link 函数的第四个参数为相应指令控制器的数组，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">app.directive(<span class="string">'myDirective'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span>&#123;</div><div class="line">    <span class="attr">restrict</span>: <span class="string">"A"</span>,</div><div class="line">    <span class="attr">require</span>:[<span class="string">'^parentDirective'</span>, <span class="string">'^ngModel'</span>], </div><div class="line">    <span class="attr">link</span>: <span class="function"><span class="keyword">function</span> (<span class="params">$scope, $element, $attrs, controllersArr</span>) </span>&#123;</div><div class="line"></div><div class="line">      <span class="comment">// parentDirective controller</span></div><div class="line">      controllersArr[<span class="number">0</span>].someMethodCall(); </div><div class="line"></div><div class="line">      <span class="comment">// ngModel controller         </span></div><div class="line">      controllersArr[<span class="number">1</span>].$setViewValue(); </div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Here is an example of it in action:<br><a href="https://github.com/angular/angular.js/blob/master/src/ng/directive/input.js#L1206" target="_blank" rel="external">Example</a></p>
+<h2 id="扩展指令"><a href="#扩展指令" class="headerlink" title="扩展指令"></a>扩展指令</h2><p>假如你想使用第三方指令，但又不想修改它，我们一下这些方法来达到这个目标。</p>
+<h3 id="Global-Configurations"><a href="#Global-Configurations" class="headerlink" title="Global Configurations"></a>Global Configurations</h3><p>一些好的指令（AngularUI）可以做一些全局配置，这要你就不需要在每个实例中传入你的配置项了。</p>
+<h3 id="Require-Directives"><a href="#Require-Directives" class="headerlink" title="Require Directives"></a>Require Directives</h3><p>你可以通过在指令中 require 第三方指令，这样你就可以使用第三方指令的 Controller 了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// &lt;div a b&gt;&lt;/div&gt;</span></div><div class="line">ui.directive(<span class="string">'a'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">controller</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">      <span class="keyword">this</span>.data = &#123;&#125;</div><div class="line">      <span class="keyword">this</span>.changeData = <span class="function"><span class="keyword">function</span>(<span class="params"> ... </span>) </span>&#123; ... &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">link</span>: ($scope, $element, $attributes, controller) &#123;</div><div class="line">      controller.data = &#123; ... &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line">myApp.directive(<span class="string">'b'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">require</span>: <span class="string">'a'</span>,</div><div class="line">    <span class="attr">link</span>: ($scope, $element, $attributes, aController) &#123;</div><div class="line">      aController.changeData()</div><div class="line">      aController.data = &#123; ... &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="Stacking-Directives"><a href="#Stacking-Directives" class="headerlink" title="Stacking Directives"></a>Stacking Directives</h3><p>你可以创建一个和第三方指令名称相同的指令。两个指令都将运行，你可以通过 <code>priority</code> 属性来控制指令的执行循序。如果第三方指令没有设置 <code>priority</code> 属性，可能需要 PR。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// &lt;div a&gt;&lt;/div&gt;</span></div><div class="line">ui.directive(<span class="string">'a'</span>, &#123;</div><div class="line">    <span class="attr">priority</span>: <span class="number">1</span>,</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;);</div><div class="line">myApp.directive(<span class="string">'a'</span>, &#123;</div><div class="line">    <span class="attr">priority</span>: <span class="number">0</span>,</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="Templating"><a href="#Templating" class="headerlink" title="Templating"></a>Templating</h3><p>You can leverage <code>&lt;ng-include&gt;</code> or simply create a directive that generates the HTML with the primary directive attached.</p>
+<p>你可是使用 <code>&lt;ng-include&gt;</code> 或者简单创建生成第三方指令的模板。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// &lt;div b&gt;&lt;/div&gt;</span></div><div class="line">ui.directive(<span class="string">'a'</span>, ... )</div><div class="line">myApp.directive(<span class="string">'b'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">template</span>: <span class="string">'&lt;div a="someOptions"&gt;&lt;/div&gt;'</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="Unit-Test"><a href="#Unit-Test" class="headerlink" title="Unit Test"></a>Unit Test</h2><p>Directives have low level access to the DOM and can be complex. This makes them prone to errors and hard to debug. Therefore, more than the other areas of your application, it is important that directives have a comprehensive range of tests.</p>
+<p>Writing unit tests for directives can seem daunting at first but AngularJS provides some nice features to make it as painless as possible and you will reap the benefits when your directives are reliable and maintainable.</p>
+<p>The general strategy when testing directives is as follows:</p>
+<ul>
+<li>Load the module containing the directive</li>
+<li>Compile  a string of mark-up containing the directive to get linking function</li>
+<li>Run the linking function to link it to the <code>$rootScope</code></li>
+<li>Check that the element has the properties that you expect</li>
+</ul>
+<p>Here is a common skeleton unit test for a directive:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'myDir directive'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> element, scope;</div><div class="line"></div><div class="line">  beforeEach(<span class="built_in">module</span>(<span class="string">'myDirModule'</span>));</div><div class="line"></div><div class="line">  beforeEach(inject(<span class="function"><span class="keyword">function</span> (<span class="params">$compile, $rootScope</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> linkingFn = $compile(<span class="string">'&lt;my-dir&gt;&lt;/my-dir&gt;'</span>);</div><div class="line">    scope = $rootScope;</div><div class="line">    element = linkingFn(scope);</div><div class="line">  &#125;));</div><div class="line"></div><div class="line">  it(<span class="string">'has some properties'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    expect(element.someMethod()).toBe(XXX);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  it(<span class="string">'does something to the scope'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    expect(scope.someField).toBe(XXX);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  ...</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Load the module that contains the directive into the test, then create an element containing this directive, using the <code>$compile</code> and <code>$rootScope</code> functions. Keep a reference of <code>element</code> and <code>$scope</code> so that it is available in all the tests later.</p>
+<p>Depending upon the kind of tests you are writing you may want to compile a different element in each <code>it</code> clause. In this case you should keep a reference to the <code>$compile</code> function too.</p>
+<p>Finally, test whether the directive performs as expected by interacting with it through jQuery/jqLite functions and through modifying scope.</p>
+<p>In cases where your directive is using <code>$watch</code>, <code>$observe</code>, or <code>$q</code>, you will need to trigger a <code>$digest</code> before checking your expectations. For example:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">it(<span class="string">"updates the scope via a $watch"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  scope.someField = <span class="string">'something'</span>;</div><div class="line">  scope.$digest();</div><div class="line">  expect(scope.someOtherField).toBe(<span class="string">'something'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>In the rest of this chapter we will introduce our custom directives through their unit tests, in keeping with the concept of Test Driven Development (TDD).</p>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><h3 id="Notepad"><a href="#Notepad" class="headerlink" title="Notepad"></a>Notepad</h3><p>See <a href="http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-c/" target="_blank" rel="external">AngularJS 指令（Directives）实践指南（三） / Owen Chen</a></p>
+<h3 id="butterbar-amp-focus"><a href="#butterbar-amp-focus" class="headerlink" title="butterbar &amp; focus"></a>butterbar &amp; focus</h3><ul>
+<li>butterbar 这个指令用来实现一个自动显示/隐藏的 loading。当路由发成变化，并且在页面加载的时候显示，当加载完成时隐藏。</li>
+<li>focus 这个指令用来保证指定的 input 输入框（或者元素）有焦点。</li>
+</ul>
+<p>Let’s look at the code:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// app/scripts/directives/directives.js</span></div><div class="line"><span class="keyword">var</span> directives = angular.module(<span class="string">'guthub.directives'</span>, []);</div><div class="line"></div><div class="line">directives.directive(<span class="string">'butterbar'</span>, [<span class="string">'$rootScope'</span>,</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">$rootScope</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">link</span>: <span class="function"><span class="keyword">function</span>(<span class="params">scope, element, attrs</span>) </span>&#123;</div><div class="line">      element.addClass(<span class="string">'hide'</span>);</div><div class="line"></div><div class="line">      $rootScope.$on(<span class="string">'$routeChangeStart'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        element.removeClass(<span class="string">'hide'</span>);</div><div class="line">      &#125;);</div><div class="line"></div><div class="line">      $rootScope.$on(<span class="string">'$routeChangeSuccess'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        element.addClass(<span class="string">'hide'</span>);</div><div class="line">      &#125;);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;]);</div><div class="line"></div><div class="line">directives.directive(<span class="string">'focus'</span>,</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">link</span>: <span class="function"><span class="keyword">function</span>(<span class="params">scope, element, attrs</span>) </span>&#123;</div><div class="line">      element[<span class="number">0</span>].focus();</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>先隐藏 loading 元素，让后在 root scope 上添加两个监听器。一旦路由改变的时候，便显示元素，一旦路由完场，便隐藏元素。</p>
+<p>我们可以这样使用 <code>butterbar</code> 指令:</p>
+<pre><code>&lt;div butterbar&gt;My loading text...&lt;/div&gt;
+</code></pre><h3 id="Clock"><a href="#Clock" class="headerlink" title="Clock"></a>Clock</h3><p>这是 AngularJS 官方的一个例子，用来显示当前的事件，每隔一秒在 DOM 上更新事件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// script.js</span></div><div class="line">angular.module(<span class="string">'docsTimeDirective'</span>, [])</div><div class="line">  .controller(<span class="string">'Controller'</span>, [<span class="string">'$scope'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;</div><div class="line">    $scope.format = <span class="string">'M/d/yy h:mm:ss a'</span>;</div><div class="line">  &#125;])</div><div class="line">  .directive(<span class="string">'myCurrentTime'</span>, [<span class="string">'$interval'</span>, <span class="string">'dateFilter'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$interval, dateFilter</span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">link</span>(<span class="params">scope, element, attrs</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> format,</div><div class="line">          timeoutId;</div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">function</span> <span class="title">updateTime</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        element.text(dateFilter(<span class="keyword">new</span> <span class="built_in">Date</span>(), format));</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      scope.$watch(attrs.myCurrentTime, <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">        format = value;</div><div class="line">        updateTime();</div><div class="line">      &#125;);</div><div class="line"></div><div class="line">      element.on(<span class="string">'$destroy'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        $interval.cancel(timeoutId);</div><div class="line">      &#125;);</div><div class="line"></div><div class="line">      <span class="comment">// start the UI update process; save the timeoutId for canceling</span></div><div class="line">      timeoutId = $interval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        updateTime(); <span class="comment">// update DOM</span></div><div class="line">      &#125;, <span class="number">1000</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">link</span>: link</div><div class="line">    &#125;;</div><div class="line">  &#125;]);</div></pre></td></tr></table></figure>
+<p>在 link 函数中，每隔一秒或者一旦事件格式发成改变，我们将在更新 DOM 上的事件。我们使用 <code>$interval</code> 服务定义调用一个处理函数。如果指令被删除，我们也应该移除 <code>$interval</code>，以避免内存泄露。</p>
+<p>我们在此注册了一个事件 <code>element.on(&#39;$destroy&#39;, ...)</code>，这个事件是被谁触发的？当使用 Angular 编译器编译后的 DOM 节点被删除时，它会触发一个 <code>$destroy</code> 事件。同样，AngularJS 作用域被删除时，它会广播一个 <code>$destroy</code> 事件。</p>
+<p>通过监听这个事件，你可以移除可能引发内存泄露的事件监听器。当作用域和元素移除的时候，注册到他们的监听器会自动删除。但是，如果注册在服务上或者 DOM 元素节点上的监听器不会被删除，你必须自己清除他们，否则就有可能引起内存泄露。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"Controller"</span>&gt;</span></div><div class="line">  Date format: <span class="tag">&lt;<span class="name">input</span> <span class="attr">ng-model</span>=<span class="string">"format"</span>&gt;</span> <span class="tag">&lt;<span class="name">hr</span>/&gt;</span></div><div class="line">  Current time is: <span class="tag">&lt;<span class="name">span</span> <span class="attr">my-current-time</span>=<span class="string">"format"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>Best Practice:</strong> Directives should clean up after themselves. You can use <code>element.on(&#39;$destroy&#39;, ...)</code> or <code>scope.$on(&#39;$destroy&#39;, ...)</code> to run a clean-up function when the directive is removed.</p>
+<h3 id="Wrapping-the-jQueryUI-datepicker-directive"><a href="#Wrapping-the-jQueryUI-datepicker-directive" class="headerlink" title="Wrapping the jQueryUI datepicker directive"></a>Wrapping the jQueryUI datepicker directive</h3><p>Sometimes there is a third party widget that is complex enough and it is not worth writing a pure AngularJS version of it in the short term. You can accelerate your development by wrapping such as widget in an AngularJS directive but you have to be careful about how the two libraries would interact.</p>
+<p>Here we will look at making a <code>datepicker</code> input directive that wraps the jQueryUI <code>datepicker</code> widget. The widget exposes the following API that we will use to integrate into AngularJS, where element is the jQuery wrapper around the element on which the widget is to be attached.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>element.datepicker(options)</code></td>
+<td>Create a new widget using the given options and attach it to the element.</td>
+</tr>
+<tr>
+<td><code>element.datepicker(&quot;setDate&quot;, date)</code></td>
+<td>Set the date on the widget.                                              </td>
+</tr>
+<tr>
+<td><code>element.datepicker(&quot;getDate&quot;)</code></td>
+<td>Get the date on the widget.                                              </td>
+</tr>
+<tr>
+<td><code>element.datepicker(&quot;destroy&quot;)</code></td>
+<td>Destroy and remove the widget from the element.                          </td>
+</tr>
+</tbody>
+</table>
+<p>We want to be informed when the user selects a new date with the picker. The <code>options</code> that we pass to create a new widget can provide an <code>onSelect</code> callback that will be called when the user selects a date:</p>
+<pre><code>element.datepicker({onSelect: function(value, picker) { ... });
+</code></pre><p>To keep things simple, we will specify that the <code>datepicker</code> directive can only be linked to a JavaScript Date object in the model.</p>
+<p>The general pattern for wrapping JQuery input widgets is similar, again, to building a validation directive. You require <code>ngModel</code> and place functions on the <code>$parsers</code> and <code>$formatters</code> pipeline to transform the values between the model and the view.</p>
+<p>Also, we need to put data into the widget when the model changes and get data into the model when the widget changes. We override <code>ngModel.$render()</code> to update the widget. This function is called after all the <code>$formatters</code> have been executed successfully. To get the data out, we use the <code>onSelect</code> callback to call <code>ngModel.$setViewValue()</code>, which updates the view value and triggers the <code>$parsers</code> pipeline.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/angular-directive-datepicker.jpg" alt="angular-directive-datepicker.jpg" title="">
+                </div>
+                <div class="image-caption">angular-directive-datepicker.jpg</div>
+            </figure>
+<h4 id="Writing-tests-for-directives-that-wrap-libraries"><a href="#Writing-tests-for-directives-that-wrap-libraries" class="headerlink" title="Writing tests for directives that wrap libraries"></a>Writing tests for directives that wrap libraries</h4><p>In a pure unit test we would create a mock jQueryUI <code>datepicker</code> widget that exposes the same interface. In this case we are going to take a more pragmatic approach and use a real <code>datepicker</code> widget in the tests.</p>
+<p>The advantage of this is that we do not have to rely on the widget’s interface being documented accurately. By calling the actual methods and checking that the user interface is updated correctly, we can be very sure that our directive is working. The disadvantages are that the DOM manipulation in the widget can slow down the test runs and there must be a way to interact with the widget to ensure that it is behaving correctly.</p>
+<p>In this case, the jQueryUI <code>datepicker</code> widget exposes another function that allows us to simulate a user selecting a date:</p>
+<pre><code>$.datepicker._selectDate(element);
+</code></pre><p>We create a helper function <code>selectDate()</code>, which we will use to simulate date selection on the widget:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> selectDate = <span class="function"><span class="keyword">function</span>(<span class="params">element, date</span>) </span>&#123;</div><div class="line">  element.datepicker(<span class="string">'setDate'</span>, date);</div><div class="line">  $.datepicker._selectDate(element);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>The tests themselves make use of the widget’s API and this helper function. For example:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'simple use on input element'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> aDate, element;</div><div class="line">  beforeEach(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    aDate = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">2010</span>, <span class="number">12</span>, <span class="number">1</span>);</div><div class="line">    element = $compile(</div><div class="line">      <span class="string">"&lt;input date-picker ng-model='x'/&gt;"</span>)($rootScope);</div><div class="line">  &#125;);</div><div class="line">  it(<span class="string">'should get the date from the model'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    $rootScope.x = aDate;</div><div class="line">    $rootScope.$digest();</div><div class="line">    expect(element.datepicker(<span class="string">'getDate'</span>)).toEqual(aDate);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  it(<span class="string">'should put the date in the model'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    $rootScope.$digest();</div><div class="line">    selectDate(element, aDate);</div><div class="line">    expect($rootScope.x).toEqual(aDate);</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Here, we check that model changes get forwarded to the widget and widget changes get passed back to the model. Notice that we do not call $digest() after selectDate(), since it is the directive’s job to ensure that the digest occurs after a user interaction.</p>
+<p>There are more tests for all different scenarios for this directive. They can be found in the sample code.</p>
+<h4 id="Implementing-the-jQuery-datepicker-directive"><a href="#Implementing-the-jQuery-datepicker-directive" class="headerlink" title="Implementing the jQuery datepicker directive"></a>Implementing the jQuery datepicker directive</h4><p>The directive implementation is again making use of the functionality provided by the <code>ngModelController</code>. In particular, we add a function to the <code>$formatters</code> pipeline that ensures that the model is a <code>Date</code> object, we add our <code>onSelect</code> callback to the <code>options</code>, and we override the <code>$render</code> function to update the widget when the model changes.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">myModule.directive(<span class="string">'datePicker'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">require</span>:<span class="string">'ngModel'</span>,</div><div class="line">    <span class="attr">link</span>:<span class="function"><span class="keyword">function</span> (<span class="params">scope, element, attrs, ngModelCtrl</span>) </span>&#123;</div><div class="line">      ngModelCtrl.$formatters.push(<span class="function"><span class="keyword">function</span>(<span class="params">date</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> ( angular.isDefined(date) &amp;&amp;</div><div class="line">             date !== <span class="literal">null</span> &amp;&amp;</div><div class="line">             !angular.isDate(date) ) &#123;</div><div class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'ng-Model value must be a Date object'</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> date;</div><div class="line">      &#125;);</div><div class="line"></div><div class="line">      <span class="keyword">var</span> updateModel = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        scope.$apply(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">          <span class="keyword">var</span> date = element.datepicker(<span class="string">"getDate"</span>);</div><div class="line">          element.datepicker(<span class="string">"setDate"</span>, element.val());</div><div class="line">          ngModelCtrl.$setViewValue(date);</div><div class="line">        &#125;);</div><div class="line">      &#125;;</div><div class="line">      <span class="keyword">var</span> onSelectHandler = <span class="function"><span class="keyword">function</span>(<span class="params">userHandler</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> ( userHandler ) &#123;</div><div class="line">          <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">value, picker</span>) </span>&#123;</div><div class="line">            updateModel();</div><div class="line">            <span class="keyword">return</span> userHandler(value, picker);</div><div class="line">          &#125;;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">          <span class="keyword">return</span> updateModel;</div><div class="line">        &#125;</div><div class="line">      &#125;;</div></pre></td></tr></table></figure>
+<p>The <code>onSelect()</code> handler calls our <code>updateModel()</code> function, which passes the new date value into the <code>$parsers</code> pipeline via <code>$setViewValue()</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> setUpDatePicker = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> options = scope.$<span class="built_in">eval</span>(attrs.datePicker) || &#123;&#125;;</div><div class="line">    options.onSelect = onSelectHandler(options.onSelect);</div><div class="line">    element.bind(<span class="string">'change'</span>, updateModel);</div><div class="line">    element.datepicker(<span class="string">'destroy'</span>);</div><div class="line">    element.datepicker(options);</div><div class="line">    ngModelCtrl.$render();</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  ngModelCtrl.$render = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    element.datepicker(<span class="string">"setDate"</span>, ngModelCtrl.$viewValue);</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  scope.$watch(attrs.datePicker, setUpDatePicker, <span class="literal">true</span>);</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="Creating-a-custom-validation-directive"><a href="#Creating-a-custom-validation-directive" class="headerlink" title="Creating a custom validation directive"></a>Creating a custom validation directive</h3><p>We need to check that the password and confirm password field are identical. We will create a custom validation directive that we can apply to an input element that checks whether the model of the input element matches another model value. In use, it will look like this:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"passwordForm"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">ng-model</span>=<span class="string">"user.password"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"confirmPassword"</span> <span class="attr">ng-model</span>=<span class="string">"confirmPassword"</span> <span class="attr">validate-equals</span>=<span class="string">"user.password"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>This custom model validator directive must integrate with <code>ngModelController</code> to provide a consistent validation experience for the user.</p>
+<p>We can expose the <code>ngModelController</code> on the scope by providing a name for the <code>form</code> and a name for the <code>input</code> element. This allows us to access model validity in the controller. Our validation directive will set the <code>confirmPassword</code> input to valid if its model value is the same as the <code>user.password</code> model.</p>
+<p>Validation directives require access to the <code>ngModelController</code>, which is the directive controller for the <code>ng-model</code> directive. We specify this in our directive definition using the <code>require</code> field. This field takes a string or an array of strings. Each string must be the canonical name of the directive whose controller we require.</p>
+<p>When the required directive is found, its directive controller is injected into the linking function as the fourth parameter. For example:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>: <span class="string">'ngModel'</span>,</div><div class="line"><span class="attr">link</span>: <span class="function"><span class="keyword">function</span>(<span class="params">scope, element, attrs, ngModelController</span>) </span>&#123; … &#125;</div></pre></td></tr></table></figure>
+<p>The pattern for testing validation directives is to compile a form containing an input that uses <code>ng-model</code> and our validation directive. For example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"testForm"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"testInput"</span></span></div><div class="line">         <span class="attr">ng-model</span>=<span class="string">"model.value"</span></div><div class="line">         <span class="attr">validate-equals</span>=<span class="string">"model.compareTo"</span>&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>This directive is an attribute on the input element. The value of the attribute is an expression that must evaluate to the value on the model. The directive will compare this value with the input’s value.</p>
+<p>We specify the model bound to this input using the <code>ng-model</code> directive. This will create <code>ngModelController</code>, which will be exposed on the scope as <code>$scope.testForm.testInput</code> and the model value itself will be exposed on the scope as <code>$scope.value</code>.</p>
+<p>We then make changes to the input value and the model value and check the <code>ngModelController</code> for changes to <code>$valid</code> and <code>$error</code>.</p>
+<p>Now we have our tests in place, so we can implement the functionality of the directive:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">myModule.directive(<span class="string">'validateEquals'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">require</span>: <span class="string">'ngModel'</span>,</div><div class="line">    <span class="attr">link</span>: <span class="function"><span class="keyword">function</span>(<span class="params">scope, elm, attrs, ngModelCtrl</span>) </span>&#123;</div><div class="line">      <span class="function"><span class="keyword">function</span> <span class="title">validateEqual</span>(<span class="params">myValue</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> valid = (myValue === scope.$<span class="built_in">eval</span>(attrs.validateEquals));</div><div class="line">        ngModelCtrl.$setValidity(<span class="string">'equal'</span>, valid);</div><div class="line">        <span class="keyword">return</span> valid ? myValue : <span class="literal">undefined</span>;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      ngModelCtrl.$parsers.push(validateEqual);</div><div class="line">      ngModelCtrl.$formatters.push(validateEqual);</div><div class="line"></div><div class="line">      scope.$watch(attrs.validateEquals, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        ngModelCtrl.$setViewValue(ngModelCtrl.$viewValue);</div><div class="line">      &#125;);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>We create a function called <code>validateEqual(value)</code>, which compares the passed in value with the value of the expression. We push this into the <code>$parsers</code> and <code>$formatters</code> pipelines, so that the validation function gets called each time either the model or the view changes.</p>
+<p>In this directive we also have to take into account the model we are comparing against changing. We do this by setting up a watch on the expression, which we retrieve from the <code>attrs</code> parameter of the linking function. When it does change, we artificially trigger the <code>$parsers</code> pipeline to run by calling <code>$setViewValue()</code>. This ensures that all potential <code>$parsers</code> are run in case any of them modify the model value before it gets to our validator.</p>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="https://github.com/voronianski/ngActivityIndicator/" target="_blank" rel="external">voronianski/ngActivityIndicator</a> Angular provider for preloader animations<br><a href="http://labs.voronianski.com/ngActivityIndicator.js" target="_blank" rel="external">http://labs.voronianski.com/ngActivityIndicator.js</a>.</li>
+<li><a href="http://josebalius.github.io/ngReactGrid" target="_blank" rel="external">ngReactGrid by josebalius</a> ngReactGrid is an Angular directive that can be used to render an enhanced HTML table or grid of data very fast using React as the rendering engine. It is based on ng-grid and jQuery DataTables. It uses HTML tables and supports fixed column headers by default.</li>
+<li><a href="https://github.com/AlexDisler/ng-special-offer" target="_blank" rel="external">AlexDisler/ng-special-offer</a> Prompt users to rate your cordova app in the app store.</li>
+<li><a href="https://github.com/mgonto/angular-wizard" target="_blank" rel="external">mgonto/angular-wizard</a> 向导。</li>
+<li><a href="https://github.com/jirikavi/AngularJS-Toaster" target="_blank" rel="external">jirikavi/AngularJS-Toaster</a></li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://www.sitepoint.com/practical-guide-angularjs-directives/" target="_blank" rel="external">A Practical Guide to AngularJS Directives - SitePoint</a> / 翻译 <a href="http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide/" target="_blank" rel="external">AngularJS 指令（Directives）实践指南（一） / Owen Chen</a></li>
+<li><a href="http://www.sitepoint.com/practical-guide-angularjs-directives-part-two/" target="_blank" rel="external">A Practical Guide to AngularJS Directives (Part Two) - SitePoint</a> / 翻译 <a href="http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-b/" target="_blank" rel="external">AngularJS 指令（Directives）实践指南（二） / Owen Chen</a></li>
+<li><a href="https://docs.angularjs.org/guide/directive" target="_blank" rel="external">AngularJS: Developer Guide: Directives</a></li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://owenchen.duapp.com/index.php/angularjs-directives-directives-a-practical-guide-c/" target="_blank" rel="external">AngularJS 指令（Directives）实践指南（三） / Owen Chen</a></li>
+<li><a href="http://onehungrymind.com/angularjs-directives-basics/" target="_blank" rel="external">AngularJS Directives – Basics – One Hungry Mind</a></li>
+<li><a href="http://onehungrymind.com/angularjs-sticky-notes-pt-2-isolated-scope/" target="_blank" rel="external">AngularJS Sticky Notes Pt 2 – Isolated Scope – One Hungry Mind</a></li>
+<li><a href="http://www.scottlogic.com/blog/2014/11/25/ionic-sorter.html" target="_blank" rel="external">HTML5 Mobile - Long-press to re-order scrollable lists</a></li>
+<li><a href="https://www.sitepoint.com/practical-guide-angularjs-directives/" target="_blank" rel="external">A Practical Guide to AngularJS Directives - SitePoint</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Angular/2014-09-24-angular-directive.html" target="_blank" rel="external">http://blog.inching.org/Angular/2014-09-24-angular-directive.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorial/">tutorial</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2014-09-24-angular-directive.html&title=《Angular Directive》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2014-09-24-angular-directive.html&title=《Angular Directive》 — Balance&source=本文为读 AngularJS 和  Mastering Web Application Development with AngularJS 的读书笔记。..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2014-09-24-angular-directive.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Directive》 — Balance&url=http://blog.inching.org/Angular/2014-09-24-angular-directive.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2014-09-24-angular-directive.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Angular/2014-09-26-angular-filter.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Angular Filter</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Angular/2014-09-23-angular-scope.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Angular Scope</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2014-09-24-angular-directive.html&title=《Angular Directive》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2014-09-24-angular-directive.html&title=《Angular Directive》 — Balance&source=本文为读 AngularJS 和  Mastering Web Application Development with AngularJS 的读书笔记。..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2014-09-24-angular-directive.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Directive》 — Balance&url=http://blog.inching.org/Angular/2014-09-24-angular-directive.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2014-09-24-angular-directive.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACoUlEQVR42u3aQXLjMAwEwPz/09kHZO3MEITKqWqdUrElsXkg6AG/vuLr+8X18zuv7s2/09574cLDw8O7NPSfj35FSj59P+h2+vK78PDw8PZ4kwX9/ZKdLOjvp/LVf6J34eHh4X0AL/87ZyfTh4eHh/fXecmnyQY9uUahBh4eHt4aL3/0JPBtw45HsxY8PDy8mJcP+nP+Xunv4eHh4Y276vkiPnnCZKv9y7vw8PDwFnhtg2oSOkxqV75dxsPDw3uGl7eakuNQz+xs6/Hg4eHhXeXl0W3edpo3sa7FE3h4eHjLvLPX5EcNzgrP2cEsPDw8vD1eTp03qybHEfJNPB4eHt4272xre6uotNvx+ugVHh4e3lXevAC05STBJGWgSKbx8PDwHuFNDku1zf5JOYlSFjw8PLyrvDwMbantoPNic9gSw8PDw7vEa1tK+bY4jzPaSckPbOHh4eFt8PIGWNtdygd61gw7uxcPDw/vLu9suX//6Hyy2kU/6uzh4eHhLfPaIGAS2s7LTxtt4OHh4d3i5cvuGb59QttU+6Vc4eHh4S3z7gYEyaDbd+VvKc5B4OHh4Q14+VD2jh1Mglo8PDy8J3k5pj16NTk6kMcWL7fmeHh4eAu8Nkq4Fd3mpSgPLIouHx4eHt6Yly/ie/PaTlax6cfDw8Nb5k221/nT2olLShceHh7e87z8R34+xKR45J+eHc/Cw8PDu8v7Lq95sJscLDib3P+MBw8PD2+Bd/az/2wRb8vJ2RvPygkeHh5ey2sffRbsJgt3MoY8BMHDw8Pb5k02u8n324m7duHh4eF9JC9ZytsY92w8K4UBDw8Pb8ybrMAt7EKBwcPDw1vjtUHA+wKQt6PylttZIIKHh4e3wWt/0c9jhUlMvBJe4OHh4aVv+QdWTw0BeaJxRwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Backbone Collections | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,backbone,mvc">
+    <meta name="description" content="本文为读 Backbone.js Cookbook 的读书笔记。
+
+Collection is an object used for organizing models into an ordered set. There are specific methods to sort, filter, and iterate through a collection.
+Creating a coll">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Backbone Collections">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-06-01-backbone-collections.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文为读 Backbone.js Cookbook 的读书笔记。
+
+Collection is an object used for organizing models into an ordered set. There are specific methods to sort, filter, and iterate through a collection.
+Creating a coll">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/backbone-collection-snippet.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Backbone Collections">
+<meta name="twitter:description" content="本文为读 Backbone.js Cookbook 的读书笔记。
+
+Collection is an object used for organizing models into an ordered set. There are specific methods to sort, filter, and iterate through a collection.
+Creating a coll">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/backbone-collection-snippet.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Backbone Collections</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Backbone Collections</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-31T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-06-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Creating-a-collection-of-models"><span class="post-toc-text">Creating a collection of models</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Getting-a-model-from-a-collection-by-its-index"><span class="post-toc-text">Getting a model from a collection by its index</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Adding-a-model-to-a-collection"><span class="post-toc-text">Adding a model to a collection</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Removing-a-model-from-a-collection"><span class="post-toc-text">Removing a model from a collection</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Working-with-a-collection-as-a-stack-or-as-a-queue"><span class="post-toc-text">Working with a collection as a stack or as a queue</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Sorting-a-collection"><span class="post-toc-text">Sorting a collection</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Filtering-models-in-a-collection"><span class="post-toc-text">Filtering models in a collection</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Iterating-through-a-collection"><span class="post-toc-text">Iterating through a collection</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Chaining-a-collection"><span class="post-toc-text">Chaining a collection</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Running-No-SQL-queries-on-a-collection"><span class="post-toc-text">Running No SQL queries on a collection</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Using-standard-operators"><span class="post-toc-text">Using standard operators</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Combining-queries"><span class="post-toc-text">Combining queries</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Multiple-queries-on-the-same-key"><span class="post-toc-text">Multiple queries on the same key</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Sorting-query-results"><span class="post-toc-text">Sorting query results</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Paging-query-results"><span class="post-toc-text">Paging query results</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Caching-results"><span class="post-toc-text">Caching results</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Storing-models-of-various-types-in-the-same-collection"><span class="post-toc-text">Storing models of various types in the same collection</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Implementing-a-one-to-many-relationship"><span class="post-toc-text">Implementing a one-to-many relationship</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-backbone-collections"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Backbone Collections</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-06-01 00:00:00" datetime="2014-05-31T16:00:00.000Z"  itemprop="datePublished">2014-06-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>本文为读 <a href="http://www.salttiger.com/backbone-js-cookbook/" target="_blank" rel="external">Backbone.js Cookbook</a> 的读书笔记。</p>
+</blockquote>
+<p>Collection is an object used for organizing models into an ordered set. There are specific methods to sort, filter, and iterate through a collection.</p>
+<h2 id="Creating-a-collection-of-models"><a href="#Creating-a-collection-of-models" class="headerlink" title="Creating a collection of models"></a>Creating a collection of models</h2><p>Extend the Backbone.Collection object and pass the model’s object name as an option.</p>
+<pre><code>var InvoiceItemCollection = Backbone.Collection.extend
+({
+  model: InvoiceItemModel
+});
+</code></pre><a id="more"></a>
+<p>Initialize a new collection instance and pass the initial array of models.</p>
+<pre><code>var invoiceItemCollection = new InvoiceItemCollection([
+  {description: &apos;Wooden Toy House&apos;, price: 22, quantity: 3},
+  {description: &apos;Farm Animal Set&apos;, price: 17, quantity: 1},
+  {description: &apos;Farmer Figure&apos;, price: 8, quantity: 1},
+  {description: &apos;Toy Tractor&apos;, price: 15, quantity: 1}
+]);
+</code></pre><p>Backbone.Collection knows which model object to use when creating new instances, because we specified it in the model property. Internally, models are stored in the models array.</p>
+<p>We can also initialize a collection with the existing models. Here is how it is done.</p>
+<pre><code>invoiceItemModel1 = new InvoiceItemModel({
+    description: &apos;Wooden Toy House&apos;,
+    price: 22,
+    quantity: 3
+  });
+invoiceItemModel2 = new InvoiceItemModel({
+    description: &apos;Farm Animal Set&apos;,
+    price: 17,
+    quantity: 1
+  });
+
+var invoiceItemCollection2 = new InvoiceItemCollection
+  ([
+    invoiceItemModel1,
+    invoiceItemModel2
+  ]);
+</code></pre><h2 id="Getting-a-model-from-a-collection-by-its-index"><a href="#Getting-a-model-from-a-collection-by-its-index" class="headerlink" title="Getting a model from a collection by its index"></a>Getting a model from a collection by its index</h2><p>Use the <code>at()</code> method to get a model from a collection at the specific index.</p>
+<pre><code>var model = invoiceItemCollection.at(2);
+model.get(&apos;description&apos;); // Farmer Figure
+</code></pre><p><strong>Be careful when sorting a collection</strong></p>
+<p>When performing a collection, sorting it can update the model indexes, so the at() method with the same parameter can get different models before and after sorting.</p>
+<p><strong>Getting an index of a collection model</strong></p>
+<p>To get an index of a model stored in a collection, use the indexOf() method inherited from Underscore.js.</p>
+<pre><code>invoiceItemCollection.indexOf(model); // 2
+</code></pre><p><strong>Getting an independent copy of a model</strong></p>
+<p>The model object that is retrieved from a collection is the same object stored there, so if we modify this object, one object in the collection gets updated.</p>
+<pre><code>model.set(&apos;description&apos;, &apos;Superman Figure&apos;);
+invoiceItemCollection.at(2).get(&apos;description&apos;);
+// Superman Figure
+</code></pre><p>If we need to get an independent copy of the model object, we can use the clone() method of a returned model. Changing the attributes of the cloned model does not affect the attributes of the original model.</p>
+<pre><code>var anotherModel = invoiceItemCollection.at(2).clone();
+anotherModel.set(&apos;description&apos;, &apos;Another Figure&apos;);
+invoiceItemCollection.at(2).get(&apos;description&apos;);
+// Superman Figure
+</code></pre><p><strong>Getting the length of a collection</strong></p>
+<p>There is a way to get the length of a collection. It is done with the help of the length() method. The following example gets a collection length and then obtains the last model from the collection:</p>
+<pre><code>var length = invoiceItemCollection.length; //4
+model = invoiceItemCollection.at(length-1);
+model.get(&apos;description&apos;); // Toy Tractor
+</code></pre><p><strong>Getting a model from a collection by its ID</strong></p>
+<p>When getting a model by its ID, Backbone.Collection searches for the model in the _byId array, which stores models mapped to their IDs. Such an implementation guarantees the best performance, because there is no need to loop through all the models in a collection.</p>
+<ol>
+<li><p>To get a model from a collection by its identifier, use the get() method.</p>
+<pre><code>model = invoiceItemCollection2.get(&apos;4ryurtz3m5gn9udi&apos;);
+</code></pre></li>
+<li><p>To get a model from a collection by its client identifier, you can again use the get() method.</p>
+<p> model = invoiceItemCollection.get(‘c4’);<br> model.get(‘description’); // Toy Tractor</p>
+</li>
+</ol>
+<h2 id="Adding-a-model-to-a-collection"><a href="#Adding-a-model-to-a-collection" class="headerlink" title="Adding a model to a collection"></a>Adding a model to a collection</h2><p>Call the add() method to add a new model to the end of a collection.</p>
+<pre><code>invoiceItemCollection.add({
+    description: &apos;Toy Track&apos;,
+    price: 10,
+    quantity: 1
+  });
+</code></pre><p>The code in the add() method prevents duplicates from being added to the collection. A unique model is inserted into the models array and is mapped to its ID in the _byId array. Also, a reference to the collection is created in the model object in the collection property.</p>
+<p>By default, a new model is added to the end of the collection. But in case sorting is enabled, or insertion index is specified, the model can be inserted at a different position.</p>
+<p>When adding a new model to a collection, the add event is being triggered.</p>
+<p><strong>Adding a model at a specific position</strong></p>
+<p>To add a model at a specific position, we need to pass {at: index} as an option.</p>
+<pre><code>invoiceItemCollection.add(
+    {description: &apos;Fisherman Hut&apos;, price: 15, quantity: 1},
+    {at: 0}
+  );
+invoiceItemCollection.at(0).get(&apos;description&apos;);
+// Fisherman Hut
+</code></pre><p><strong>Adding multiple models</strong></p>
+<p>We can also add multiple models at the same time.</p>
+<pre><code>invoiceItemCollection.add([
+    {description: &apos;Powerboat&apos;, price: 12, quantity: 1},
+    {description: &apos;Jet Ski&apos;, price: 12, quantity: 1}
+  ]);
+</code></pre><p><strong>Adding existing models</strong></p>
+<p>We can also use existing model objects as the arguments for the add() method. We can pass a single object as well as an array of existing objects.</p>
+<h2 id="Removing-a-model-from-a-collection"><a href="#Removing-a-model-from-a-collection" class="headerlink" title="Removing a model from a collection"></a>Removing a model from a collection</h2><p>Call the remove() method to remove a model from a collection.</p>
+<pre><code>invoiceItemCollection.remove([&apos;c0&apos;, &apos;c1&apos;, &apos;c2&apos;, &apos;c3&apos;]);
+</code></pre><p>Here we can pass the model’s id, cid, or even the model object as a parameter. We can either pass a single value or an array of values.</p>
+<p>When calling the remove() method, a model is removed from the models array, and any references between them are removed as well. Thus, the model object itself is not destroyed, and we can still work with it if the need arises.</p>
+<p>Sometimes, we may need to delete all the existing models from a collection and add some others. There is a useful reset() method, which does both these jobs simultaneously. Here is how it works.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/backbone-collection-snippet.png" alt="backbone-collection-snippet.png" title="">
+                </div>
+                <div class="image-caption">backbone-collection-snippet.png</div>
+            </figure>
+<h2 id="Working-with-a-collection-as-a-stack-or-as-a-queue"><a href="#Working-with-a-collection-as-a-stack-or-as-a-queue" class="headerlink" title="Working with a collection as a stack or as a queue"></a>Working with a collection as a stack or as a queue</h2><ol>
+<li><p>Call the push() method to add a model to the end of a collection.</p>
+<pre><code>invoiceItemCollection.push(model);
+</code></pre></li>
+<li><p>Call the pop() method to remove and return the last model from a collection.</p>
+<pre><code>model = invoiceItemCollection.pop();
+</code></pre></li>
+<li><p>Call the unshift() method to add a model at the beginning of a collection.</p>
+<pre><code>invoiceItemCollection.unshift(model);
+</code></pre></li>
+<li><p>Call the shift() method to remove and return the first model from a collection.</p>
+<pre><code>model = invoiceItemCollection.shift();
+</code></pre></li>
+</ol>
+<h2 id="Sorting-a-collection"><a href="#Sorting-a-collection" class="headerlink" title="Sorting a collection"></a>Sorting a collection</h2><p>Assign the comparator callback to the comparator property of a collection to maintain the correct order.</p>
+<pre><code>invoiceItemCollection.comparator = function(model){
+    return model.get(&quot;price&quot;);
+};
+</code></pre><p>The comparator callback accepts a single parameter, which is a model object. It should return a value according to which the collection is sorted.<br>Optionally, call the sort() method to force sorting.</p>
+<pre><code>invoiceItemCollection.sort();
+</code></pre><p>Check the result.</p>
+<pre><code>invoiceItemCollection.pluck(&quot;price&quot;); // [8, 15, 17, 22]
+</code></pre><p>When the comparator callback is defined, Backbone uses it to insert a new model in the models array so that it is inserted in the correct order.</p>
+<p>If you assign a new comparator callback to a collection with existing models, you need to trigger sorting manually by calling the sort() method.</p>
+<p>You also need to call the sort() method if the model in the collection gets updated. This can be done automatically if you bind sorting on the model’s change event.</p>
+<p><strong>Comparing a pair of models in the comparator</strong></p>
+<p>Another way to implement a comparator is to evaluate a pair of models passed as parameters and return one of the following values:</p>
+<ul>
+<li>-1 (or any negative value), if the first model should come before the second</li>
+<li>0, if they are of the same rank</li>
+<li>1 (or any positive value), if the first model should come after the second</li>
+</ul>
+<p>The following example demonstrates sorting by the length of the description attribute:</p>
+<pre><code>invoiceItemCollection.comparator = function(m1, m1){
+    return m1.get(&quot;description&quot;).length -
+    m2.get(&quot;description&quot;).length;
+  };
+invoiceItemCollection.sort();
+invoiceItemCollection.pluck(&quot;description&quot;);
+// [&quot;Toy Tractor&quot;, &quot;Farmer Figure&quot;, &quot;Farm Animal Set&quot;,
+// &quot;Wooden Toy 
+</code></pre><h2 id="Filtering-models-in-a-collection"><a href="#Filtering-models-in-a-collection" class="headerlink" title="Filtering models in a collection"></a>Filtering models in a collection</h2><p>To filter models in a collection, use the where() method. It accepts a search criteria and returns an array of found models.</p>
+<pre><code>var result = invoiceItemCollection.where({quantity: 1});
+// Result is just an array of models, so let&apos;s create
+// new collection.
+var resultCollection = new InvoiceItemCollection(result);
+resultCollection.pluck(&apos;quantity&apos;); // [1, 1, 1]
+</code></pre><p>It is also possible to pass multiple criteria together.</p>
+<pre><code>invoiceItemCollection.where({quantity: 1, price: 10});
+</code></pre><h2 id="Iterating-through-a-collection"><a href="#Iterating-through-a-collection" class="headerlink" title="Iterating through a collection"></a>Iterating through a collection</h2><p>The easiest way to iterate through a collection is to use the each() method provided by Underscore.js.</p>
+<pre><code>var  descriptions_txt = &apos;&apos;;
+invoiceItemCollection.each(function(model, index, list){
+    descriptions_txt += descriptions_txt ? &apos;, &apos; : &apos;&apos;; 
+    descriptions_txt += model.get(&apos;description&apos;);
+  });
+descriptions_txt; // Wooden Toy House, Farm Animal Set
+</code></pre><p>In the each() method, we pass an iterator function, which is executed for each model. It accepts the following parameters:</p>
+<ul>
+<li><strong>model</strong> : The model that is being iterated</li>
+<li><strong>index</strong> : This is the model index</li>
+<li><strong>list</strong> : This is the whole model array</li>
+</ul>
+<p><strong>Checking every model to match a specific condition</strong></p>
+<p>To check every model in a collection that fulfills a specific criteria, use the every() method. It accepts a callback parameter which should return a Boolean value if the condition is fulfilled.</p>
+<pre><code>var multiple = invoiceItemCollection.every(function(model){
+    return model.get(&apos;quantity&apos;) &gt; 1;
+  });
+
+multiple; // false
+</code></pre><p><strong>Checking any model to match a specific condition</strong></p>
+<p>To check any model in a collection that fulfills a specific criteria, use the some() method. It accepts a callback parameter which should return a Boolean value if the condition is fulfilled.</p>
+<pre><code>var multiple = invoiceItemCollection.some(function(model){
+    return model.get(&apos;quantity&apos;) &gt; 1;
+});
+multiple; // true
+</code></pre><p><strong>Getting the attribute from each model in a collection</strong></p>
+<p>In the previous examples, we used the pluck() method, which returns an array of values for the specified attribute from each model in a collection. Let’s see how it works.</p>
+<pre><code>var descriptions = invoiceItemCollection.pluck(&quot;description&quot;);
+descriptions; // [&quot;Wooden Toy House&quot;, &quot;Farm Animal Set&quot;]
+</code></pre><p><strong>Performing specific calculations to each model in a collection</strong></p>
+<p>To perform specific calculations to each model in a collection, use the map() method. It takes callback as a parameter, executes it for each model in a collection, and returns an array of results.</p>
+<pre><code>var amounts = invoiceItemCollection.map(function(model){
+    return model.get(&apos;quantity&apos;) * model.get(&apos;price&apos;);
+  });
+amounts; // [66, 77]
+</code></pre><p><strong>Boiling down models in a collection into a single value</strong></p>
+<p>Models in a collection can be boiled down to a single value using the reduce() method. Here is how it works.</p>
+<pre><code>var count = invoiceItemCollection.reduce(function(memo,model)
+  {
+    return memo + model.get(&apos;quantity&apos;);
+  }, 0);
+count; // 4
+</code></pre><h2 id="Chaining-a-collection"><a href="#Chaining-a-collection" class="headerlink" title="Chaining a collection"></a>Chaining a collection</h2><p>If you want to perform several Underscore methods in a row, a good way of doing it is by chaining one method to the other method.</p>
+<p>Let’s consider a simple MapReduce example, which calculates the total amount.</p>
+<pre><code>var amounts = invoiceItemCollection.map(function(model){
+    return model.get(&apos;quantity&apos;) * model.get(&apos;price&apos;);
+  });
+// [66, 77]
+var total_amount = _.reduce(amounts, function(memo, val){
+    return memo + val;
+  }, 0);
+total_amount; // 83
+</code></pre><p>Here, amounts is a JavaScript array, and it does not provide the reduce() method that we can call. To solve this problem, we are calling the reduce() method provided by Underscore.js, which takes an array as the first parameter.</p>
+<p>With chaining, it is possible to call one method right after another using the dot syntax. Here is an example.</p>
+<pre><code>var amount = invoiceItemCollection.chain()
+.map(function(model)
+  {
+    return model.get(&apos;quantity&apos;) * model.get(&apos;price&apos;);
+  })
+.reduce(function(memo, val)
+  {
+    return memo + val;
+  })
+.value(); // 83
+</code></pre><p>The <code>chain()</code> method wraps a value into an object, which provides different methods that can be executed, which return their result as a wrapped value. To unwrap a result, use the value() method.</p>
+<h2 id="Running-No-SQL-queries-on-a-collection"><a href="#Running-No-SQL-queries-on-a-collection" class="headerlink" title="Running No SQL queries on a collection"></a>Running No SQL queries on a collection</h2><p>There are more advanced ways of searching the models in a collection, which can be done with the help of a Backbone extension named Backbone Query. It allows running No SQL (such as MongoDB) queries for searching, sorting, and paging the models in a collection.</p>
+<p>You can download the Backbone Query extension from its GitHub page by going to <a href="https://github.com/davidgtonge/backbone_query" target="_blank" rel="external">https://github.com/davidgtonge/backbone_query</a>. To include this extension into your project, save the backbone-query.js file into the lib folder and include the reference to it in index.html.</p>
+<ol>
+<li><p>To allow a No SQL query to be executed, extend a collection from the Backbone.QueryCollection object instead of a Backbone.Collection one.</p>
+<pre><code>var BuyerCollection = Backbone.QueryCollection.extend({
+    model: BuyerModel
+});
+</code></pre></li>
+<li><p>Run the query with the query() method.</p>
+<pre><code>var result = buyerCollection.query({ firstName: &apos;John&apos; });
+Optionally, run the pluck attribute from the resulting array.
+var resultCollection = new BuyerCollection(result);
+resultCollection.pluck(&apos;firstName&apos;); // [&quot;John&quot;, &quot;John&quot;]
+</code></pre></li>
+</ol>
+<p>Backbone.QueryCollection extends Backbone.Collection and provides the new query() method, which parses the base query into subqueries recursively and uses the reduce() method of Underscore.js to run queries of the same group sequentially.</p>
+<p>Backbone Query is written initially in CoffeeScript and compiled into JavaScript later. So, if you are interested in understanding its source code, see backbone-query.coffee. It looks quite similar though.</p>
+<h3 id="Using-standard-operators"><a href="#Using-standard-operators" class="headerlink" title="Using standard operators"></a>Using standard operators</h3><p>The following operators are common and applied to the attributes of the models stored in a collection.</p>
+<ul>
+<li><p>$equal</p>
+<p>  This performs a strict equality test using ===.</p>
+<pre><code>buyerCollection.query({ firstName: {$equal: &apos;John&apos;} });
+</code></pre><p>  If no operator is provided, and the query value is neither a regex nor an array, then $equal is assumed.</p>
+<pre><code>buyerCollection.query({ firstName: &apos;John&apos; });
+</code></pre></li>
+<li><p>$ne</p>
+<p>  This means not equal, which is the opposite of $equal, and returns all the models that are not equal to the query value.</p>
+<pre><code>buyerCollection.query({ firstName: {$ne: &apos;John&apos;} });
+</code></pre></li>
+<li><p>$in</p>
+<p>  An array of possible values can be supplied using $in; a model will be returned if any of the supplied values is matched.</p>
+<pre><code>buyerCollection.query({ firstName: {$in: [&apos;John&apos;, &apos;Joe&apos;,&apos;Patrick&apos;]} });
+</code></pre></li>
+<li><p>$nin</p>
+<p>  This means not in, which is the opposite of $in, and a model will be returned if none of the supplied values is matched.</p>
+<pre><code>buyerCollection.query({ firstName: {$nin: [&apos;Samuel&apos;, &apos;Victor&apos;]} });
+</code></pre></li>
+<li><p>$exists or $has</p>
+<p>  This checks for the existence of an attribute, and can be supplied as either true or false.</p>
+<pre><code>buyerCollection.query({ middleName: {$exists: true} });
+buyerCollection.query({ middleName: {$has: false} });
+</code></pre></li>
+</ul>
+<h3 id="Combining-queries"><a href="#Combining-queries" class="headerlink" title="Combining queries"></a>Combining queries</h3><p>Multiple queries can be combined together. There are the $and, $or, $nor, and $not operators, which we are going to learn shortly.</p>
+<ul>
+<li><p>$and</p>
+<p>  This is a logical AND operator. The following query selects all the buyers named John and who live in Alexandria:</p>
+<pre><code>buyerCollection.query({ $and: {firstName: &apos;John&apos;, city: &apos;Alexandria&apos;}});
+</code></pre><p>  The $and operator is used as a glue if no combining operator is supplied.</p>
+<pre><code>buyerCollection.query({ firstName: &apos;John&apos;, city: &apos;Alexandria&apos; });
+</code></pre></li>
+<li><p>$or</p>
+<p>  This is a logical OR operator. The following query selects all the buyers named John or whether the buyers live in Alexandria:</p>
+<pre><code>buyerCollection.query({ $or: {firstName: &apos;John&apos;, city: &apos;Alexandria&apos;}});
+</code></pre></li>
+<li><p>$nor</p>
+</li>
+</ul>
+<p>This is the opposite of $or. The following query selects all the buyers with a name other than John or if they do not live in Alexandria:</p>
+<pre><code>buyerCollection.query({ $nor: {firstName: &apos;John&apos;, city: &apos;Alexandria&apos;}});
+</code></pre><ul>
+<li><p>$not</p>
+<p>  This is the opposite of $and. The following query selects all buyers except anyone whose name is John and who lives in Alexandria:</p>
+<pre><code>buyerCollection.query({ $not: {firstName: &apos;John&apos;, city: &apos;Alexandria&apos;}});
+</code></pre></li>
+</ul>
+<h3 id="Multiple-queries-on-the-same-key"><a href="#Multiple-queries-on-the-same-key" class="headerlink" title="Multiple queries on the same key"></a>Multiple queries on the same key</h3><p>If we need to perform multiple queries on the same key, then we can supply the query as an array. The following query returns all the clients with the name John or Joe:</p>
+<pre><code>buyerCollection.query({
+    $or:[
+      { firstName: &apos;John&apos; },
+      { firstName: &apos;Joe&apos; }
+    ]
+  });
+</code></pre><h3 id="Sorting-query-results"><a href="#Sorting-query-results" class="headerlink" title="Sorting query results"></a>Sorting query results</h3><p>To sort results by a property, we need to pass it with the sortBy key in a second argument. We can also specify the order by passing the asc or desc value with the sort key. By default, asc is assumed as the value. The following code shows how sorting is done:</p>
+<pre><code>result = buyerCollection.query(
+    { firstName: {$like: &apos;John&apos;} },
+    { sortBy: &apos;lastName&apos;, order: &apos;desc&apos; }
+  );
+resultCollection = new BuyerCollection(result);
+resultCollection.pluck(&apos;lastName&apos;); // [&quot;Smith&quot;, &quot;Doe&quot;]
+</code></pre><h3 id="Paging-query-results"><a href="#Paging-query-results" class="headerlink" title="Paging query results"></a>Paging query results</h3><p>There is a way to split a big result array on several pages and return a specified one. Let’s see how it is done.</p>
+<pre><code>buyerCollection.query({firstName: &apos;John&apos;}, {limit:10, offset:1, page:2});
+</code></pre><p>We can specify the following properties in the second parameter:</p>
+<ul>
+<li>limit: It limits the resulting array size to a given number. The first N elements are returned. It is a required property.</li>
+<li>page: It returns a specified resulting page. The page size is set by the limit property. It is an optional property.</li>
+<li>offset: It skips the first N result items. It is an optional property.</li>
+</ul>
+<h3 id="Caching-results"><a href="#Caching-results" class="headerlink" title="Caching results"></a>Caching results</h3><p>For performance reasons, we may want to cache our results. This can greatly decrease the query execution time, especially if using paging, because unpaged results are saved in the cache and a user can quickly navigate through its pages.</p>
+<p>To enable caching, simply use the cache property in the second parameter.</p>
+<pre><code>buyerCollection.query({firstName: &apos;John&apos;}, {limit:10, page:2, cache: true});
+</code></pre><p><strong>Tips</strong></p>
+<p>Caching is not set by default, because there is no automatic way to flush the cache, so when caching is enabled and the collection is being updated, the cache becomes outdated.</p>
+<p>You should be aware of this problem, and manually perform cache flushing every time the collections or models in it are updated. This can be done by calling the reset_query_cache() method.</p>
+<p>We can bind the collection’s change event to the reset_query_cache() method, and thus, provide automatic cache flushing when the collection gets updated.</p>
+<pre><code>var BuyerCollection = Backbone.QueryCollection.extend({
+    initialize: function(){
+      this.bind(&apos;change&apos;, this.reset_query_cache, this);
+    }
+  });
+</code></pre><h2 id="Storing-models-of-various-types-in-the-same-collection"><a href="#Storing-models-of-various-types-in-the-same-collection" class="headerlink" title="Storing models of various types in the same collection"></a>Storing models of various types in the same collection</h2><p>When building complex Backbone applications, you may need to work with models of different types, which should be processed in a similar way, so you may want them to be stored in the same collection. Fortunately, there is a <code>Backbone.Chosen</code> extension that allow us to do so.</p>
+<p>You can find and download Backbone.Chosen from the following page: <a href="https://github.com/asciidisco/Backbone.Chosen" target="_blank" rel="external">https://github.com/asciidisco/Backbone.Chosen</a>. To include Backbone.Chosen into your project, save the backbone.chosen.js file into the lib folder and include the reference to it in index.html.</p>
+<p>Let’s say we have two different model classes, namely IndividualContactModel and OrganizationContactModel, and we want to organize them into a single collection. We can do this by performing the following steps:</p>
+<ol>
+<li><p>Define models.</p>
+<pre><code>var IndividualContactModel = Backbone.Model.extend
+  ({
+    name: function() {
+      return this.get(&apos;firstName&apos;) + &apos; &apos; + this.get(&apos;lastName&apos;);
+    }
+  });
+
+var OrganizationContactModel = Backbone.Model.extend
+  ({
+    name: function() {
+      return this.get(&apos;businessName&apos;) + &apos;, &apos;
+      + this.get(&apos;businessType&apos;);
+    }
+  });
+</code></pre><p> As we can see, these models have different attributes, but share a common name() method.</p>
+</li>
+<li><p>Define collection with a chosen attribute.</p>
+<pre><code>var ContactCollection = Backbone.Collection.extend({
+    model: {
+      // Pass chosen properties.
+      chosen: {
+          // Attribute that should contain model type.
+          attr: &apos;type&apos;,
+
+          // Default model class.
+          defaults: IndividualContactModel,
+
+          // Mapping attribute values to model classes.
+          map: {
+            individual: IndividualContactModel,
+            organization: OrganizationContactModel
+          }
+        }
+      }
+});
+</code></pre></li>
+<li><p>Create a collection instance and specify the mapping attribute in the incoming JSON.</p>
+<pre><code>var contactCollection = new ContactCollection([
+    {
+      firstName: &apos;John&apos;,
+      lastName: &apos;Smith&apos;,
+      type: &apos;individual&apos;
+    },
+    {
+      businessName: &apos;North American Veeblefetzer&apos;,
+      businessType: &apos;LLC&apos;,
+      type: &apos;organization&apos;
+    }
+]);
+</code></pre></li>
+<li><p>Check the result. The newly added models to the collection should be the instance of the correct model class.</p>
+<pre><code>contactCollection.at(0) instanceof IndividualContactModel;
+//true
+
+contactCollection.at(0).name(); // John Smith
+
+contactCollection.at(1) instanceof OrganizationContactModel;
+//true
+
+contactCollection.at(1).name();
+// North American Veeblefetzer, LLC
+</code></pre></li>
+</ol>
+<p><strong>Mapping deeply nested attributes</strong></p>
+<p>Backbone.Chosen also supports nested attributes. You can specify the value for the attr property with a dot syntax, for example, options.type, if your incoming JSON looks like the following code:</p>
+<pre><code>var contactCollection = new ContactCollection([
+    {
+      firstName: &apos;John&apos;,
+      lastName: &apos;Smith&apos;,
+      options: {type: &apos;individual&apos;}
+    },
+    {
+      businessName: &apos;North American Veeblefetzer&apos;,
+      businessType: &apos;LLC&apos;,
+      options: {type: &apos;organization&apos;}
+    }
+]);
+</code></pre><p><strong>Use a function to map the models</strong></p>
+<p>Sometimes, we may need to use more complex calculations to map the models. This can be done with the help of the mapping function. Here is how it is done.</p>
+<pre><code>// Set up a collection
+var ContactCollection = Backbone.Collection.extend({
+  model: {
+    chosen: function (rawData) {
+      if (rawData.spice === &apos;salt&apos;) {
+        return SaltyModel;
+        }
+      if (rawData.spice === &apos;sugar&apos;) {
+        return SweetyModel;
+        }
+      return BoringModel;
+      }
+    }
+});
+</code></pre><h2 id="Implementing-a-one-to-many-relationship"><a href="#Implementing-a-one-to-many-relationship" class="headerlink" title="Implementing a one-to-many relationship"></a>Implementing a one-to-many relationship</h2><p>A one-to-many relationship can be used if the association between a single model and a collection of models of another type takes place. In our invoice application, the relationship between InvoiceModel and InvoiceItemModel is one such relationship. InvoiceItem Model can be multiple and thus is stored in InvoiceItemCollection.</p>
+<p>You can download the Backbone-relational extension from its GitHub page at <a href="https://github.com/PaulUithol/Backbone-relational" target="_blank" rel="external">https://github.com/PaulUithol/Backbone-relational</a>. To include Backbone.Relational into your project, save the backbone-relational.js file into the lib folder and include the reference to it in index.html.</p>
+<p>Implementation of a one-to-many relationship is similar to an implementation of a one-to-one relationship, except that we need to use Backbone.HasMany as a type and specify collectionType, because multiple models should be stored in the collection. We can do this by performing the following steps:</p>
+<ol>
+<li><p>Extend the new model object from Backbone.RelationalModel.</p>
+<pre><code>var InvoiceItemModel = Backbone.RelationalModel.extend
+  ({
+  });
+</code></pre></li>
+<li><p>Define the collection for this model type.</p>
+<pre><code>var InvoiceItemCollection = Backbone.Collection.extend
+  ({
+    model: InvoiceItemModel
+  });
+</code></pre></li>
+<li><p>Extend another model object from Backbone.RelationalModel and pass the relations property with a relationship definition.</p>
+<pre><code>var InvoiceModel = Backbone.RelationalModel.extend({
+    // Define one-to-many relationship.
+    relations: [{
+      // Relationship type
+      type: Backbone.HasMany,
+
+      // Relationship key in BuyerModel.
+      key: &apos;items&apos;,
+      // Related model.
+      relatedModel: InvoiceItemModel,
+
+      // Collection to store related models.
+      collectionType: InvoiceItemCollection,
+
+      // Define reverse relationship.
+      reverseRelation: {
+        key: &apos;invoice&apos;
+      }
+    }]
+});
+</code></pre></li>
+<li><p>To initialize models with a one-to-many relationship, pass the invoice items’ data in a single JSON when creating a new InvoiceModel object instance.</p>
+<pre><code>var invoiceModel = new InvoiceModel({
+    referenceNumber: &apos;12345&apos;,
+    date: &apos;2012-09-01&apos;,
+    items: [
+      { description:&apos;Wooden Toy House&apos;, price:22, quantity:3 },
+      { description:&apos;Farm Animal Set&apos;, price:17, quantity:1 }
+    ]
+});
+
+invoiceModel.get(&apos;items&apos;).at(0).get(&apos;description&apos;);
+// Wooden Toy House
+
+invoiceModel.get(&apos;items&apos;).at(0).get(&apos;invoice&apos;).get(&apos;referenceNumber&apos;); // 12345
+</code></pre></li>
+<li><p>Add new records into this relation with the help of the add() method when accessing the related collection using the items attribute.</p>
+<pre><code>// Add new model to a collection
+invoiceModel.get(&apos;items&apos;).add
+  ({
+    description: &apos;Powerboat&apos;,
+    price: 12,
+    quantity: 1
+});
+
+invoiceModel.get(&apos;items&apos;).at(2).get(&apos;invoice&apos;) == invoiceModel;
+// true
+</code></pre><p> Or we can also create an instance of invoiceItemModel and set the invoice attribute with an instance of invoiceModel; thus, a new relation in both the directions will be created.</p>
+<pre><code>// Add new model
+invoiceItemModel = new InvoiceItemModel
+  ({
+    description: &apos;Jet Ski&apos;,
+    price: 12,
+    quantity: 1,
+    invoice: invoiceModel
+  });
+
+invoiceModel.get(&apos;items&apos;).at(3).get(&apos;description&apos;);
+// Jet Ski
+</code></pre></li>
+</ol>
+<p>Each Backbone.RelationalModel registers itself with Backbone.Store upon creation, and is removed from Store when destroyed. When creating or updating an attribute that is a key in a relation, the removed related objects are notified of their removal, and new related objects are looked up in Store.</p>
+<p><strong>Implementing a many-to-many relationship</strong></p>
+<p>There is no way to create a many-to-many relationship between two models out of the box, but it can be easily done with the help of a pair of one-to-many relationships between those models and a new intermediate model.</p>
+<p><strong>Exporting related models to JSON</strong></p>
+<p>When exporting a model to JSON, it does include related models. This is how we can export InvoiceModel to JSON.</p>
+<pre><code>JSON.stringify(invoiceModel.toJSON());
+</code></pre><p>And here is a result of such an export.</p>
+<pre><code>{
+  &quot;referenceNumber&quot;:&quot;12345&quot;,
+  &quot;date&quot;:&quot;2012-09-01&quot;,
+  &quot;items&quot;:[
+    {
+      &quot;description&quot;:&quot;Wooden Toy House&quot;,&quot;price&quot;:22,&quot;quantity&quot;:3
+    },
+    {&quot;description&quot;:&quot;Farm Animal Set&quot;,&quot;price&quot;:17,&quot;quantity&quot;:1},
+    {&quot;description&quot;:&quot;Powerboat&quot;,&quot;price&quot;:12,&quot;quantity&quot;:1},
+    {&quot;description&quot;:&quot;Jet Ski&quot;,&quot;price&quot;:12,&quot;quantity&quot;:1}
+  ]
+}
+</code></pre><p>This is how we can export the InvoiceItemModel model.</p>
+<p>JSON.stringify(invoiceModel.get(‘items’).at(0).toJSON())<br>And the result is the following code snippet:</p>
+<pre><code>{
+  &quot;description&quot;:&quot;Wooden Toy House&quot;,
+  &quot;price&quot;:22,
+  &quot;quantity&quot;:3,
+  &quot;invoice&quot;:{includeInJSON
+    &quot;referenceNumber&quot;:&quot;12345&quot;,
+    &quot;date&quot;:&quot;2012-09-01&quot;,
+    &quot;items&quot;:[
+      null,
+      {
+        &quot;description&quot;:&quot;Farm Animal Set&quot;,&quot;price&quot;:17,
+        &quot;quantity&quot;:1
+      },
+      {&quot;description&quot;:&quot;Powerboat&quot;,&quot;price&quot;:12,&quot;quantity&quot;:1},
+      {&quot;description&quot;:&quot;Jet Ski&quot;,&quot;price&quot;:12,&quot;quantity&quot;:1}
+    ]
+  }
+}
+</code></pre><p>As we can see, the toJSON() method also exports reversed relationships, but we can control the attributes of the related models that need to be exported by specifying an array of such attributes in the includeInJSON property for direct and reverse relationships.</p>
+<pre><code>var InvoiceModel = Backbone.RelationalModel.extend({
+    relations: [{
+      type: Backbone.HasMany,
+      key: &apos;items&apos;,
+      relatedModel: InvoiceItemModel,
+      collectionType: InvoiceItemCollection,
+
+      // Restrict related models properties when exporting
+      // to JSON.
+      includeInJSON: [&apos;description&apos;, &apos;price&apos;, &apos;quantity&apos;], 
+
+      reverseRelation: {
+        key: &apos;invoice&apos;,
+
+        // Restrict related models properties when exporting
+        // to JSON for reversed relations.
+        includeInJSON: [&apos;referenceNumber&apos;, &apos;items&apos;],
+      }
+    }]
+});
+</code></pre>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-06-01-backbone-collections.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-06-01-backbone-collections.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backbone/">backbone</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mvc/">mvc</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-06-01-backbone-collections.html&title=《Backbone Collections》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-06-01-backbone-collections.html&title=《Backbone Collections》 — Balance&source=
+本文为读 Backbone.js Cookbook 的读书笔记。
+
+Collection is an object used for organizin..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-06-01-backbone-collections.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Backbone Collections》 — Balance&url=http://blog.inching.org/JavaScript/2014-06-01-backbone-collections.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-06-01-backbone-collections.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-06-02-backbone-events.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Backbone Events</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-05-31-backbone-models.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Backbone Models</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-06-01-backbone-collections.html&title=《Backbone Collections》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-06-01-backbone-collections.html&title=《Backbone Collections》 — Balance&source=
+本文为读 Backbone.js Cookbook 的读书笔记。
+
+Collection is an object used for organizin..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-06-01-backbone-collections.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Backbone Collections》 — Balance&url=http://blog.inching.org/JavaScript/2014-06-01-backbone-collections.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-06-01-backbone-collections.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtElEQVR42u3aQXLcMAwEQP//05urk4qkAUB411XNk8uSKLYOJHfAr6+4vb61+6tX7fudV33mVw83PDw8vMHQ74eVXM0HWu0t6eE/nwAPDw9vjXc1o17dkz91P6HfDzofz+X/8fDw8D6Al1CrsHw/jIeHh/fbecm0Xo0w8m06Hh4e3nt5efyadHoqmMg33weyFjw8PLyYl1eRPufvlfoeHh4e3riq3iv/T5ac19GGh4eHt8GbxKnVjfJkos+3y3h4eHg/w+vtSHub8slA84+Fh4eHt8ebDDSPWe+n7OpHzHvGw8PD2+NVo4FJ0at6GKtXSMPDw8Pb4/UOM+VTfG/oSbhQWNLw8PDw1njzQlS+m+3FFr2wGA8PD2+Pl5eRkhfMDxlMlqWH7AQPDw9vzOsNurpprsYfSQ+FmAMPDw/vKC/5qd/bHFcPAeSfshBq4OHh4R3lVYPUU2X+atms91Hw8PDwNniFMDQunuVPTULecgyBh4eHd5RXLTttPJssQtUyGB4eHt4GL08skkFUl5P5YvDQMx4eHt4Cb/JAXiSrHsyqLgnNrBoPDw9vwDt1CGASWFSn/mNLAh4eHl6RV4Xlx60moW11EWqudXh4eHhjXh5A5EHDaI8fLyTNkxF4eHh4LV6vo14Im4PnV/Hw8PC2eXnkmk/ieXms98kKDQ8PD2+Zd//KahGrF2dUD3g9jBMPDw/vR3hJ2DpfYHqlsgMLAx4eHt6A9yq2fNnIF5V8e52Xwf5KqfHw8PCO8ua/6Kt/50HGpGB2LLDAw8PDC6rqp16TfKykiJWX38oFMDw8PLwxrzqIaqiRR8MrBTA8PDy8t/KSQKEXSfTufNiy4+Hh4X0kLy9r5Zv4fMP9MAY8PDy8NV41COgdYN04NPDwFjw8PLwF3uQXfe/OHuANgQUeHh7ev+0PkgY/pIAeYvwAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

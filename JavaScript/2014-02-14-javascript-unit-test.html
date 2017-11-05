@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JavaScript 单元测试 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="随着单元测试的普及，尤其是敏捷开发的推动，涌现了许多优秀的JavaScript单元测试框架，如QUnit、Jasmine等。
+Tutorial
+Testing your frontend JavaScript code using mocha, chai, and sinon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 单元测试">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-02-14-javascript-unit-test.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="随着单元测试的普及，尤其是敏捷开发的推动，涌现了许多优秀的JavaScript单元测试框架，如QUnit、Jasmine等。
+Tutorial
+Testing your frontend JavaScript code using mocha, chai, and sinon">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 单元测试">
+<meta name="twitter:description" content="随着单元测试的普及，尤其是敏捷开发的推动，涌现了许多优秀的JavaScript单元测试框架，如QUnit、Jasmine等。
+Tutorial
+Testing your frontend JavaScript code using mocha, chai, and sinon">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript 单元测试</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript 单元测试</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-02-13T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-02-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Framework"><span class="post-toc-text">Framework</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#E2E"><span class="post-toc-text">E2E</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Util"><span class="post-toc-text">Util</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#QUnit"><span class="post-toc-text">QUnit</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优点"><span class="post-toc-text">优点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#缺点"><span class="post-toc-text">缺点</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Demo"><span class="post-toc-text">Demo</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Jasmine框架"><span class="post-toc-text">Jasmine框架</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优点-1"><span class="post-toc-text">优点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#缺点-1"><span class="post-toc-text">缺点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Demo-1"><span class="post-toc-text">Demo</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JsTestDriver"><span class="post-toc-text">JsTestDriver</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优点-2"><span class="post-toc-text">优点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#缺点-2"><span class="post-toc-text">缺点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#测试步骤"><span class="post-toc-text">测试步骤</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#FAQ"><span class="post-toc-text">FAQ</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial-1"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-unit-test"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript 单元测试</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-02-14 00:00:00" datetime="2014-02-13T16:00:00.000Z"  itemprop="datePublished">2014-02-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>随着单元测试的普及，尤其是敏捷开发的推动，涌现了许多优秀的JavaScript单元测试框架，如QUnit、Jasmine等。</p>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="https://nicolas.perriault.net/code/2013/testing-frontend-javascript-code-using-mocha-chai-and-sinon/" target="_blank" rel="external">Testing your frontend JavaScript code using mocha, chai, and sinon</a></li>
+</ul>
+<a id="more"></a>
+<h2 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h2><ul>
+<li><a href="http://mochajs.org/" target="_blank" rel="external">Mocha - the fun, simple, flexible JavaScript test framework</a> Mocha is a feature-rich JavaScript test framework running on node.js and the browser, making asynchronous testing simple and fun.</li>
+<li><a href="http://chaijs.com/" target="_blank" rel="external">Home - Chai</a> Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.</li>
+<li><a href="https://github.com/marmelab/gremlins.js" target="_blank" rel="external">marmelab/gremlins.js</a> Monkey testing library for web apps and Node.js.</li>
+<li><a href="http://theintern.io/" target="_blank" rel="external">Intern: A next-generation JavaScript testing stack</a></li>
+<li><a href="http://facebook.github.io/jest/index.html" target="_blank" rel="external">Jest</a></li>
+<li><a href="http://nightwatchjs.org/" target="_blank" rel="external">Nightwatch.js</a> Browser automated testing done easy. Write efficient and straightforward Javascript End-to-End tests in Node.js which run against a Selenium server.</li>
+<li><a href="http://visionmedia.github.io/mocha/" target="_blank" rel="external">Mocha - the fun, simple, flexible JavaScript test framework</a></li>
+<li><a href="https://github.com/pivotal/jasmine" target="_blank" rel="external">pivotal/jasmine</a> DOM-less simple JavaScript testing framework <a href="http://jasmine.github.io/" target="_blank" rel="external">http://jasmine.github.io/</a>.</li>
+<li><a href="https://github.com/yahoo/preceptor" target="_blank" rel="external">yahoo/preceptor</a></li>
+<li><a href="https://github.com/krasimir/atomus" target="_blank" rel="external">krasimir/atomus</a> A small utility library for running client-side tests in Node.js environment.</li>
+<li><a href="https://github.com/scottburch/sparrow" target="_blank" rel="external">scottburch/sparrow</a> Sparrow is designed to solve the problem of async testing inherent in website testing by making async testing easier.</li>
+</ul>
+<h3 id="E2E"><a href="#E2E" class="headerlink" title="E2E"></a>E2E</h3><ul>
+<li><a href="http://nightwatchjs.org/guide" target="_blank" rel="external">Nightwatch.js - Developer Guide</a></li>
+<li><a href="https://github.com/ariya/phantomjs" target="_blank" rel="external">ariya/phantomjs</a><ul>
+<li><a href="https://github.com/johntitus/node-horseman" target="_blank" rel="external">johntitus/node-horseman</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="Util"><a href="#Util" class="headerlink" title="Util"></a>Util</h3><ul>
+<li><a href="https://github.com/basicallydan/interfake" target="_blank" rel="external">basicallydan/interfake · GitHub</a> 快速创建虚拟 API。</li>
+</ul>
+<h2 id="QUnit"><a href="#QUnit" class="headerlink" title="QUnit"></a>QUnit</h2><p>QUnit是jQuery团队开发的JavaScript单元测试工具，功能强大且使用简单。目前所有的JQuery代码都使用QUnit进行测试，原生的JavaScript也可以使用QUnit。QUnit所有的API可以分为三类：Setup，Assertions，Asynchronous Testing。</p>
+<ul>
+<li><a href="http://qunitjs.com/" target="_blank" rel="external">QUnit</a></li>
+<li><a href="http://qunitjs.com/intro/" target="_blank" rel="external">Introduction to Unit Testing | QUnit</a></li>
+<li><a href="http://api.qunitjs.com/" target="_blank" rel="external">QUnit API Documentation</a></li>
+<li><a href="http://qunitjs.com/cookbook/" target="_blank" rel="external">Cookbook | QUnit</a></li>
+</ul>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>有漂亮的外观和完整的测试功能（包括异步测试）；</li>
+<li>非常简单，容易上手，目前公开的API只有19个；</li>
+<li>不需要依赖其它任何软件包或框架，只要能运行JS的地方就可以，QUnit本身只有一个JS文件和CSS文件，当然如果需要可以和jQuery等其它框架集成；</li>
+<li>不仅支持在浏览器中测试，还支持在Rhino和node.js等后端测试。</li>
+</ul>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>对自动化支持不好，很难和Ant、Maven或自动构建等工具集成，主要用在浏览器中进行测试。</p>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>以下Demo用于异步测试：</p>
+<pre><code>test( &quot;a test&quot;, function() {
+    stop();
+    var result = null;
+    $.ajax(
+        url,
+        {},
+        function(data){
+            result = data;
+        }
+    );
+    setTimeout(function() {
+        equals(result, &quot;success&quot; );
+        start();
+    }, 150 );
+});
+</code></pre><h2 id="Jasmine框架"><a href="#Jasmine框架" class="headerlink" title="Jasmine框架"></a>Jasmine框架</h2><p>Jasmine是一个有名的JavaScript单元测试框架，它是独立的<strong>行为驱动</strong>开发框架，语法清晰易懂。</p>
+<ul>
+<li>源码：<a href="https://github.com/pivotal/jasmine" target="_blank" rel="external">pivotal/jasmine</a></li>
+<li>文档：<a href="http://jasmine.github.io/2.0/introduction.html" target="_blank" rel="external">introduction.js</a></li>
+</ul>
+<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>它是基于行为驱动开发实现的测试框架，它的语法非常贴近自然语言，简单明了，容易理 解。</li>
+<li>能很方便的和Ant、Maven等进行集成进行自动化测试，也可以方便和Jekins等持续集成工- 具进行集成，可以生成测试结果的XMl文档。</li>
+<li>它有丰富的API，同时用户也支持用户扩展它的API，这一点很少有其它框架能够做到。</li>
+<li>使用方便简单，只需要引入两个js文件即可</li>
+<li>不仅支持在浏览器中测试，还支持在Rhino和node.js等后端测试。</li>
+<li>对于Ruby语言有特别的支持，能够非常方便的集成到Ruby项目中去</li>
+</ul>
+<h3 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h3><p>在浏览器中的测试界面不如QUnit美观、详细。</p>
+<h3 id="Demo-1"><a href="#Demo-1" class="headerlink" title="Demo"></a>Demo</h3><pre><code>describe(&quot;测试add()函数&quot;, function() {
+    it(&quot;1 + 1 = 2&quot;, function(){
+        expect(add(1, 1)).toBe(2);
+    });
+});
+</code></pre><h2 id="JsTestDriver"><a href="#JsTestDriver" class="headerlink" title="JsTestDriver"></a>JsTestDriver</h2><p>JsTestDriver是一个JavaScript单元测试工具，易于与持续构建系统相集成并能够在多个浏览器上运行测试轻松实现TDD风格的开发。当在项目中配置好JsTestDriver以后，如同junit测试java文件一般，JsTestDriver可以直接通过运行js文件来进行单元测试。JsTestDriver框架本身就是JAVA的jar包，需要在本地运行并监听一个端口。</p>
+<h3 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>可以一次测试多个浏览器，使用方法是在启动服务时可以将多个浏览器的路径作为参数传- 进去。可以在多台机器上的浏览器中运行，包括移动设备。</li>
+<li>测试运行得很快，因为不需要将结果添加到DOM中呈现出来，它们能够同时在任意多的浏览- 器中运行，未修改的文件浏览器会从缓存提取。</li>
+<li>不需要HTML配件文件，仅仅只需提供一个或多个脚本和测试脚本，测试运行器运行时会创- 建一个空文件。</li>
+<li>能很方便的和Ant、Maven等进行集成进行自动化测试，也可以方便和Jekins等持续集成工- 具进行集成，可以生成测试结果的XML文档。</li>
+<li>有Eclipse和IntelliJ插件，可以很方便的在这两个IDE中进行测试，和JUnit很像。</li>
+<li>支持其它测试框架，可以测试其它测试框架写的测试代码，比如有对应的插件可以将QUnit- 和Jasmine测试代码转换成JsTestDriver的测试代码。</li>
+</ul>
+<h3 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h3><p>不能在浏览器中测试，只能通过自动化工具或控制台运行。生成的结果不够直观。<br>安装使用稍微有点麻烦，依赖于JAVA环境。</p>
+<h3 id="测试步骤"><a href="#测试步骤" class="headerlink" title="测试步骤"></a>测试步骤</h3><ul>
+<li>cmd 进入目录</li>
+<li>运行命令”java –jar JsTestDriver.jar –port 9876”</li>
+<li>打开页面<a href="http://localhost:9876，点击“捕获浏览器”。" target="_blank" rel="external">http://localhost:9876，点击“捕获浏览器”。</a></li>
+<li>新打开一个终端，运行命令”java –jar JsTestDriver.jar –tests - all”，运行所有测试用例</li>
+<li>也可以单独运行某一个用例，如运行命令” java –jar JsTestDriver.jar –tests addTest.testA”</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html" target="_blank" rel="external">javascript单元测试 - 溤淋 - 博客园</a></li>
+</ul>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><ul>
+<li><a href="http://thejsguy.com/2015/01/12/jasmine-vs-mocha-chai-and-sinon.html" target="_blank" rel="external">Jasmine vs. Mocha, Chai, and Sinon - The JS Guy</a></li>
+</ul>
+<h2 id="Tutorial-1"><a href="#Tutorial-1" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="https://github.com/christian-bromann/awesome-selenium" target="_blank" rel="external">christian-bromann/awesome-selenium</a></li>
+<li><a href="http://stackoverflow.com/questions/300855/javascript-unit-test-tools-for-tdd/680713#680713" target="_blank" rel="external">JavaScript unit test tools for TDD - Stack Overflow</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-02-14-javascript-unit-test.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-02-14-javascript-unit-test.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-14-javascript-unit-test.html&title=《JavaScript 单元测试》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-14-javascript-unit-test.html&title=《JavaScript 单元测试》 — Balance&source=随着单元测试的普及，尤其是敏捷开发的推动，涌现了许多优秀的JavaScript单元测试框架，如QUnit、Jasmine等。
+Tutorial
+Testi..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-14-javascript-unit-test.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 单元测试》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-14-javascript-unit-test.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-14-javascript-unit-test.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Chrome/2014-02-14-chrome.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Chrome</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2014-02-12-android-ui-tutorial.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android UI Tips</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-14-javascript-unit-test.html&title=《JavaScript 单元测试》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-14-javascript-unit-test.html&title=《JavaScript 单元测试》 — Balance&source=随着单元测试的普及，尤其是敏捷开发的推动，涌现了许多优秀的JavaScript单元测试框架，如QUnit、Jasmine等。
+Tutorial
+Testi..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-14-javascript-unit-test.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 单元测试》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-14-javascript-unit-test.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-14-javascript-unit-test.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvElEQVR42u3aQY7jMAwEwPz/07vXBWad6SalIIfyaZA4Y5UPFt3k6xUff/453n/y89vknPbbwwceHh7eYunvl5Wcky80udbPdebrwcPDw7vNe3qiPp3T3oj3z+33/zNZz+PneHh4eF/ASx7iSRGcl8h5eY2Hh4f3nbz2sf7+t3lhjYeHh/dtvFnQkHzSBhOz4vtA1oKHh4cX8/Ki9nv+vtLfw8PDw1t31ZNQ9Ubb7NSBh4eHd4OXP3DbuHZWmuebU7FOPDw8vAu82Qt/GwFszm+DDDw8PLx7vPwxnQ9g5Z+0Z646e3h4eHhHeXnzPh+ESjaYdtuobx8eHh7eBd5+uGq/xHwwqw0m8PDw8G7wZo2rtvW1CW0PhBF4eHh413iz1/5NEbzJDZJQAw8PD+8G73Bsugh8Z4yoqYaHh4d3lHdqWOqT7bHihuLh4eF9kLeJa2cP+lMbyePQFR4eHt4h3mYzaFtfpwatkhj3td/r8PDw8NLr1hfe/7Yto/MmHB4eHt4N3iZuSLaT9ka0t+CX/4yHh4f3QV7ymE4iifyc/QDB49AVHh4e3lFe/tidbSGz4LUdVoiGrvDw8PCO8k4VvrMmVhtqzPB4eHh4p3h5oDDbDNoieN8S+88bAx4eHt5RXhuY1v20MvbdhBFRYY2Hh4d3iLcJI/KmfruFzBpgw+4ZHh4e3oi32QDaNtWsnZZsJI8NMDw8PLwLvPaFvy2d2wGFOnXO9z08PDy8NSw/8gW10XAezibF92NKjYeHh7fmbZ6xecmbN7SGA6mb+Qg8PDy8Ea+NX9sGWF6sb677+C0eHh7eNV4bRmwufCVTeb8x4OHh4X0Nr40GZkMJ7Xrw8PDwvpPXNsbaVlmy/UTFPR4eHt41XlL4tjFEO7aVr6G4Ch4eHt4F3vAlPx4ImJXa+SjAsfEsPDw8vN+v+Bdfw+4D7+gmpgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

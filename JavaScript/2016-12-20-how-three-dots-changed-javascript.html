@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>How three dots changed JavaScript | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="From How three dots changed JavaScript: spread operator and rest parameter
+Off topicI recently released my first open source JavaScript library: https://vocajs.com. Feel free to check it out, install,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How three dots changed JavaScript">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2016-12-20-how-three-dots-changed-javascript.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="From How three dots changed JavaScript: spread operator and rest parameter
+Off topicI recently released my first open source JavaScript library: https://vocajs.com. Feel free to check it out, install,">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How three dots changed JavaScript">
+<meta name="twitter:description" content="From How three dots changed JavaScript: spread operator and rest parameter
+Off topicI recently released my first open source JavaScript library: https://vocajs.com. Feel free to check it out, install,">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">How three dots changed JavaScript</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">How three dots changed JavaScript</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-20T15:25:00.000Z" itemprop="datePublished" class="page-time">
+  2016-12-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-Three-dots"><span class="post-toc-text">1. Three dots</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-Improved-parameters-access"><span class="post-toc-text">2. Improved parameters access</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1-Rest-parameter"><span class="post-toc-text">2.1  Rest parameter</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2-Selective-rest-parameter"><span class="post-toc-text">2.2 Selective rest parameter</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-3-Arrow-function-case"><span class="post-toc-text">2.3 Arrow function case</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-Improved-function-call"><span class="post-toc-text">3. Improved function call</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-Improved-array-manipulation"><span class="post-toc-text">4. Improved array manipulation</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-1-Array-construction"><span class="post-toc-text">4.1 Array construction</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-2-Array-destructure"><span class="post-toc-text">4.2 Array destructure</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-Spread-operator-and-iteration-protocols"><span class="post-toc-text">5. Spread operator and iteration protocols</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-Finale"><span class="post-toc-text">6. Finale</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-how-three-dots-changed-javascript"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">How three dots changed JavaScript</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-12-20 23:25:00" datetime="2016-12-20T15:25:00.000Z"  itemprop="datePublished">2016-12-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>From <a href="https://rainsoft.io/how-three-dots-changed-javascript/" target="_blank" rel="external">How three dots changed JavaScript: spread operator and rest parameter</a></p>
+<p><em>Off topic</em><br>I recently released my first open source JavaScript library: <a href="https://vocajs.com/" target="_blank" rel="external">https://vocajs.com</a>. Feel free to check it out, install, use, and <a href="https://github.com/panzerdp/voca" target="_blank" rel="external">star</a> if you like it.<br>Shortly, Voca library offers helpful functions to make string manipulations comfortable: <em>change case, trim, pad, slugify, latinise, sprintf’y, truncate, escape</em> and <a href="https://vocajs.com/" target="_blank" rel="external">much more</a>.<br><em>Off topic end</em></p>
+<p>When accessing arguments values in a function call, I always felt uncomfortable with <code>arguments</code> object. Its hardcoded name makes difficult to access <code>arguments</code> of an outer function in an inner one (which defines its own <code>arguments</code>).<br>Even worse JavaScript provides it as an array-like object. It is not possible to use array methods like <code>.map()</code> or <code>.forEach()</code> directly on it.</p>
+<p>To access <code>arguments</code> from the enclosing function, you have to use workarounds by storing it into a separated variable. And to walk through this array-like object, you have to use <em>duck typing</em> and make indirect invocations. See the following example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function outerFunction() &#123;</div><div class="line">   // store arguments into a separated variable</div><div class="line">   var argsOuter = arguments;</div><div class="line">   function innerFunction() &#123;</div><div class="line">      // args is an array-like object</div><div class="line">      var even = Array.prototype.map.call(argsOuter, function(item) &#123;</div><div class="line">         // do something with argsOuter</div><div class="line">      &#125;);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Another situation is the function invocation that accepts a dynamic number of arguments. Filling the arguments from an array is unpleasant.</p>
+<p>For instance <code>.push(item1, ..., itemN)</code> inserts elements into an array one by one: you have to enumerate each element as an argument. This is not always convenient: often an entire array of elements needs to be pushed into an existing array, without creating a new instance.<br>In ES5 it’s solved with <code>.apply()</code>: an unfriendly and verbose approach. Let’s  take a look:</p>
+<p><a href="http://jsbin.com/qokari/1/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var fruits = [&apos;banana&apos;];</div><div class="line">var moreFruits = [&apos;apple&apos;, &apos;orange&apos;];</div><div class="line">Array.prototype.push.apply(fruits, moreFruits);</div><div class="line">console.log(fruits); // =&gt; [&apos;banana&apos;, &apos;apple&apos;, &apos;orange&apos;]</div></pre></td></tr></table></figure>
+<p>Fortunately the JavaScript world is changing. The three dots operator <code>...</code> fixes many of these situations. The operator is introduced by ECMAScript 6 and in my opinion is a noticeable improvement.<br>This article walks through <code>...</code> operator use cases and shows how to solve similar problems.</p>
+<h3 id="1-Three-dots"><a href="#1-Three-dots" class="headerlink" title="1. Three dots"></a>1. Three dots</h3><p><strong>The rest operator</strong> is used to get the arguments list passed to function on invocation and in array destructure. A case when <em>the operator gathers the rest remained after the operation</em>.</p>
+<p><a href="http://jsbin.com/gujukih/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function countArguments(...args) &#123;</div><div class="line">   return args.length;</div><div class="line">&#125;</div><div class="line">// get the number of arguments</div><div class="line">countArguments(&apos;welcome&apos;, &apos;to&apos;, &apos;Earth&apos;); // =&gt; 3</div><div class="line">// destructure an array</div><div class="line">let otherSeasons, autumn;</div><div class="line">[autumn, ...otherSeasons] = cold;</div><div class="line">otherSeasons      // =&gt; [&apos;winter&apos;]</div></pre></td></tr></table></figure>
+<p><strong>The spread operator</strong> is used for array construction and destructuring, and to fill function arguments from an array on invocation. A case when <em>the operator spreads the array (or iterable object) elements</em>.</p>
+<p><a href="http://jsbin.com/becugu/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">let cold = [&apos;autumn&apos;, &apos;winter&apos;];</div><div class="line">let warm = [&apos;spring&apos;, &apos;summer&apos;];</div><div class="line">// construct an array</div><div class="line">[...cold, ...warm] // =&gt; [&apos;autumn&apos;, &apos;winter&apos;, &apos;spring&apos;, &apos;summer&apos;]</div><div class="line">// function arguments from an array</div><div class="line">cold.push(...warm);</div><div class="line">cold              // =&gt; [&apos;autumn&apos;, &apos;winter&apos;, &apos;spring&apos;, &apos;summer&apos;]</div></pre></td></tr></table></figure>
+<h3 id="2-Improved-parameters-access"><a href="#2-Improved-parameters-access" class="headerlink" title="2. Improved parameters access"></a>2. Improved parameters access</h3><h4 id="2-1-Rest-parameter"><a href="#2-1-Rest-parameter" class="headerlink" title="2.1  Rest parameter"></a>2.1  Rest parameter</h4><p>As presented in the introduction, dealing with <code>arguments</code> object in a function body becomes troublesome in complex scenarios.</p>
+<p>For example a JavaScript inner function <code>filterNumbers()</code> wants to access <code>arguments</code> from its outer function <code>sumOnlyNumbers()</code>:</p>
+<p><a href="http://jsbin.com/kumudo/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function sumOnlyNumbers() &#123;</div><div class="line">  var args = arguments;</div><div class="line">  var numbers = filterNumbers();</div><div class="line">  return numbers.reduce((sum, element) =&gt; sum + element);</div><div class="line">  function filterNumbers() &#123;</div><div class="line">     return Array.prototype.filter.call(args,</div><div class="line">       element =&gt; typeof element === &apos;number&apos;</div><div class="line">     );</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">sumOnlyNumbers(1, &apos;Hello&apos;, 5, false); // =&gt; 6</div></pre></td></tr></table></figure>
+<p>In order to access <code>arguments</code> of <code>sumOnlyNumbers()</code> inside <code>filterNumbers()</code> you have to create a temporary variable <code>args</code>. It happens because <code>filterNumbers()</code> defines its own <code>arguments</code> object that overwrites the external one.<br>The approach works, but it’s too verbose. <code>var args = arguments</code> can be omitted and <code>Array.prototype.filter.call(args)</code> can be transformed to <code>args.filter()</code> using a rest parameter. Let’s optimize this part.</p>
+<p>The rest operator solves this elegantly. It allows to define a <strong>rest parameter</strong> <code>...args</code> in a function declaration:</p>
+<p><a href="http://jsbin.com/wiroya/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function sumOnlyNumbers(...args) &#123;</div><div class="line">  var numbers = filterNumbers();</div><div class="line">  return numbers.reduce((sum, element) =&gt; sum + element);</div><div class="line">  function filterNumbers() &#123;</div><div class="line">     return args.filter(element =&gt; typeof element === &apos;number&apos;);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">sumOnlyNumbers(1, &apos;Hello&apos;, 5, false); // =&gt; 6</div></pre></td></tr></table></figure>
+<p>The function declaration <code>function sumOnlyNumbers(...args)</code> indicates that <code>args</code> receives the invocation arguments in an array. Because the names conflict is solved, <code>args</code> can be used inside <code>filterNumbers()</code>.<br>Also forget about array-like objects: <strong><code>args</code> is an array</strong>, which is a nice bonus. As result <code>filterNumbers()</code> can get rid of <code>Array.prototype.filter.call()</code> and make a filter method call directly  <code>args.filter()</code>.</p>
+<p>Notice that rest parameter should be last one in the function parameters list.</p>
+<h4 id="2-2-Selective-rest-parameter"><a href="#2-2-Selective-rest-parameter" class="headerlink" title="2.2 Selective rest parameter"></a>2.2 Selective rest parameter</h4><p>If not all values should be included in the rest parameter, you could define those  as comma separated parameters at the beginning. Explicitly defined parameters are not included in the rest parameter.<br>Let’s see an example:</p>
+<p><a href="http://jsbin.com/yapiluh/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function filter(type, ...items) &#123;</div><div class="line">  return items.filter(item =&gt; typeof item === type);</div><div class="line">&#125;</div><div class="line">filter(&apos;boolean&apos;, true, 0, false);        // =&gt; [true, false]</div><div class="line">filter(&apos;number&apos;, false, 4, &apos;Welcome&apos;, 7); // =&gt; [4, 7]</div></pre></td></tr></table></figure>
+<p><code>arguments</code> object doesn’t have this selective property and always includes all the values.</p>
+<h4 id="2-3-Arrow-function-case"><a href="#2-3-Arrow-function-case" class="headerlink" title="2.3 Arrow function case"></a>2.3 Arrow function case</h4><p><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions" target="_blank" rel="external">An arrow function</a> does not define <code>arguments</code> object in its body, but accesses the one from the enclosing scope.<br>If you want to get all the arguments, use a rest parameter.<br>Let’s try this in an example:</p>
+<p><a href="http://jsbin.com/jesecom/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(function() &#123;</div><div class="line">  let outerArguments = arguments;</div><div class="line">  const concat = (...items) =&gt; &#123;</div><div class="line">    console.log(arguments === outerArguments); // =&gt; true</div><div class="line">    return items.reduce((result, item) =&gt; result + item, &apos;&apos;);</div><div class="line">  &#125;;</div><div class="line">  concat(1, 5, &apos;nine&apos;); // =&gt; &apos;15nine&apos;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<p><code>items</code> rest parameter contains all function call arguments in an array. Also <code>arguments</code> object is taken from the enclosing scope and equals to <code>outerArguments</code> variable, so it has no valuable meaning.</p>
+<h3 id="3-Improved-function-call"><a href="#3-Improved-function-call" class="headerlink" title="3. Improved function call"></a>3. Improved function call</h3><p>In the article introduction, the second problem asks a better way to fill the invocation arguments from an array.<br>ES5 provides <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply" target="_blank" rel="external"><code>.apply()</code></a> method on the function object to solve this. Unfortunately  this technique has 3 problems:</p>
+<ul>
+<li>It’s necessary to indicate manually the context of the function invocation</li>
+<li>Is not possible to use in a constructor invocation</li>
+<li>A shorter solution is more preferable</li>
+</ul>
+<p>Let’s see an example of <code>.apply()</code> usage:</p>
+<p><a href="http://jsbin.com/lokage/4/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let countries = [&apos;Moldova&apos;, &apos;Ukraine&apos;];</div><div class="line">let otherCountries = [&apos;USA&apos;, &apos;Japan&apos;];</div><div class="line">countries.push.apply(countries, otherCountries);</div><div class="line">console.log(countries); // =&gt; [&apos;Moldova&apos;, &apos;Ukraine&apos;, &apos;USA&apos;, &apos;Japan&apos;]</div></pre></td></tr></table></figure>
+<p>As mentioned, it seems irrelevant to indicate in <code>.apply()</code> second time the context <code>countries</code>. The property accessor <code>countries.push</code> is enough to determine the method invocation on an object.<br>And the entire invocation looks verbose.</p>
+<p><strong>The spread operator</strong>  fills the function invocation arguments with values from an array (or more strictly from an iterable object, see <a href="https://rainsoft.io/how-three-dots-changed-javascript/#5spreadoperatoranditerationprotocols" target="_blank" rel="external">5.</a>).<br>Let’s improve the above sample with a spread operator:</p>
+<p><a href="http://jsbin.com/xakavuv/3/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let countries = [&apos;Moldova&apos;, &apos;Ukraine&apos;];</div><div class="line">let otherCountries = [&apos;USA&apos;, &apos;Japan&apos;];</div><div class="line">countries.push(...otherCountries);</div><div class="line">console.log(countries); // =&gt; [&apos;Moldova&apos;, &apos;Ukraine&apos;, &apos;USA&apos;, &apos;Japan&apos;]</div></pre></td></tr></table></figure>
+<p>As seen, spread operator is cleaner and straightforward solution. The only additional characters are 3 dots (<code>...</code>).</p>
+<p>Spread operator configures the constructor invocation arguments from an array, which is <a href="http://stackoverflow.com/questions/1606797/use-of-apply-with-new-operator-is-this-possible" target="_blank" rel="external">not possible directly</a> when using <code>.apply()</code>. Let’s see an example:</p>
+<p><a href="http://jsbin.com/zihunih/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class King &#123;</div><div class="line">   constructor(name, country) &#123;</div><div class="line">     this.name = name;</div><div class="line">     this.country = country;</div><div class="line">   &#125;</div><div class="line">   getDescription() &#123;</div><div class="line">     return `$&#123;this.name&#125; leads $&#123;this.country&#125;`;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">var details = [&apos;Alexander the Great&apos;, &apos;Greece&apos;];</div><div class="line">var Alexander = new King(...details);</div><div class="line">Alexander.getDescription(); // =&gt; &apos;Alexander the Great leads Greece&apos;</div></pre></td></tr></table></figure>
+<p>Moreover you can combine multiple spread operators and regular arguments in the same invocation. The following example is removing from an array existing elements, then adds other array and an element:</p>
+<p><a href="http://jsbin.com/cihopo/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var numbers = [1, 2];</div><div class="line">var evenNumbers = [4, 8];</div><div class="line">const zero = 0;</div><div class="line">numbers.splice(0, 2, ...evenNumbers, zero);</div><div class="line">console.log(numbers); // =&gt; [4, 8, 0]</div></pre></td></tr></table></figure>
+<h3 id="4-Improved-array-manipulation"><a href="#4-Improved-array-manipulation" class="headerlink" title="4. Improved array manipulation"></a>4. Improved array manipulation</h3><h4 id="4-1-Array-construction"><a href="#4-1-Array-construction" class="headerlink" title="4.1 Array construction"></a>4.1 Array construction</h4><p>The array literal <code>[item1, item2, .., itemN]</code> does not provide functionality other than enumerating the initial array elements.</p>
+<p>The spread operator improves array literals by allowing to insert on the fly another arrays (or any other <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Iteration_protocols#Iterable_examples" target="_blank" rel="external">iterables</a>) into the initialized instance.<br>This improvement makes easier to accomplish common tasks described below.</p>
+<p><strong>Create</strong> an array with initial elements <strong>from another array</strong>:</p>
+<p><a href="http://jsbin.com/decuyad/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var initial = [0, 1];</div><div class="line">var numbers1 = [...initial, 5, 7];</div><div class="line">console.log(numbers1); // =&gt; [0, 1, 5, 7]</div><div class="line">let numbers2 = [4, 8, ...initial];</div><div class="line">console.log(numbers2); // =&gt; [4, 8, 0, 1]</div></pre></td></tr></table></figure>
+<p><code>number1</code> and <code>number2</code> arrays are created using an array literal and in the meantime initialized with items from <code>initial</code>.</p>
+<p><strong>Concatenate</strong> 2 or more arrays:</p>
+<p><a href="http://jsbin.com/kiqame/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var odds = [1, 5, 7];</div><div class="line">var evens = [4, 6, 8];</div><div class="line">var all = [...odds, ...evens];</div><div class="line">console.log(all); // =&gt; [1, 5, 7, 4, 6, 8]</div></pre></td></tr></table></figure>
+<p><code>all</code> array is created from concatentation of <code>odds</code> and <code>evens</code> arrays.</p>
+<p><strong>Clone</strong> an array instance:</p>
+<p><a href="http://jsbin.com/jifazev/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var words = [&apos;Hi&apos;, &apos;Hello&apos;, &apos;Good day&apos;];</div><div class="line">var otherWords = [...words];</div><div class="line">console.log(otherWords);           // =&gt; [&apos;Hi&apos;, &apos;Hello&apos;, &apos;Good day&apos;]</div><div class="line">console.log(otherWords === words); // =&gt; false</div></pre></td></tr></table></figure>
+<p><code>otherWords</code> is a clone version of <code>words</code> array. Notice that cloning happens only on array itself, but not on the contained elements (i.e. it’s not a deep clone).</p>
+<h4 id="4-2-Array-destructure"><a href="#4-2-Array-destructure" class="headerlink" title="4.2 Array destructure"></a>4.2 Array destructure</h4><p><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" target="_blank" rel="external">Destructuring assignments</a>, available in ECMAScript 6, are powerful expressions to extract data from arrays and objects.</p>
+<p>As a part of the destructuring, the rest operator extracts parts of an array. The extraction result is always an array.</p>
+<p>In term of syntax, the rest operator should be the last one in a destructuring assignment: <code>[extractItem1, ...extractedArray] = destructuredArray</code>.</p>
+<p>Let’s see some applications:</p>
+<p><a href="http://jsbin.com/voyesel/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var seasons = [&apos;winter&apos;, &apos;spring&apos;, &apos;summer&apos;, &apos;autumn&apos;];</div><div class="line">var coldSeason, otherSeasons;</div><div class="line">[coldSeason, ...otherSeasons] = seasons;</div><div class="line">console.log(coldSeason);   // =&gt; &apos;winter&apos;</div><div class="line">console.log(otherSeasons); // =&gt; [&apos;spring&apos;, &apos;summer&apos;, &apos;autumn&apos;]</div></pre></td></tr></table></figure>
+<p><code>[coldSeason, ...otherSeasons]</code> extracts the first item <code>&#39;winter&#39;</code> into <code>coldSeason</code> variable and the rest of elements into <code>otherSeasons</code> array.</p>
+<h3 id="5-Spread-operator-and-iteration-protocols"><a href="#5-Spread-operator-and-iteration-protocols" class="headerlink" title="5. Spread operator and iteration protocols"></a>5. Spread operator and iteration protocols</h3><p>The spread operator is using the <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Iteration_protocols" target="_blank" rel="external">iteration protocols</a> to navigate over elements and collect the results. This makes the spread operator even more valuable, because any object can define how the operator will extract data.</p>
+<p>An object is iterable when it conforms to <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Iteration_protocols#iterable" target="_blank" rel="external">iterable protocol</a>.<br>Iterable protocol requires the object to contain a special property. The property name should be <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator" target="_blank" rel="external"><code>Symbol.iterator</code></a> and value as a function that returns an iterator object.<br>The iterator object should conform to <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Iteration_protocols#iterator" target="_blank" rel="external">iterator protocol</a>. It needs to provide a property <code>next</code>, which value is a function that returns an object with properties <code>done</code> (a boolean to indicate the end of iteration) and <code>value</code> (the iteration result).<br>It seems though to understand the iteration protocols from verbal description, but the code behind those is quite simple.</p>
+<p>The object or primitive <strong>must</strong> be iterable in order that spread operator to extract data from it.</p>
+<p>Many native primitive types and objects are iterable: strings, arrays, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" target="_blank" rel="external">typed arrays</a>, <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Set" target="_blank" rel="external">sets</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" target="_blank" rel="external">maps</a>. So they work by default with the spread operator.<br>For instance, let’s see how a string conforms to iteration protocols:</p>
+<p><a href="http://jsbin.com/pifiya/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var str = &apos;hi&apos;;</div><div class="line">var iterator = str[Symbol.iterator]();</div><div class="line">iterator.toString(); // =&gt; &apos;[object String Iterator]&apos;</div><div class="line">iterator.next();     // =&gt; &#123; value: &apos;h&apos;, done: false &#125;</div><div class="line">iterator.next();     // =&gt; &#123; value: &apos;i&apos;, done: false &#125;</div><div class="line">iterator.next();     // =&gt; &#123; value: undefined, done: true &#125;</div><div class="line">[...str];            // =&gt; [&apos;h&apos;, &apos;i&apos;]</div></pre></td></tr></table></figure>
+<p>I like the spread operator for its ability to use object’s custom iteration implementation. You can control how spread operator consumes  your object - an effective coding technique.</p>
+<p>The following sample makes an array-like object conformed to iteration protocols, then transforms it to an array using spread operator:</p>
+<p><a href="http://jsbin.com/vebulu/2/edit?js,console" target="_blank" rel="external">Try in JS Bin</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">function iterator() &#123;</div><div class="line">  var index = 0;</div><div class="line">  return &#123;</div><div class="line">    next: () =&gt; (&#123; // Conform to Iterator protocol</div><div class="line">      done : index &gt;= this.length,</div><div class="line">      value: this[index++]</div><div class="line">    &#125;)</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line">var arrayLike = &#123;</div><div class="line">  0: &apos;Cat&apos;,</div><div class="line">  1: &apos;Bird&apos;,</div><div class="line">  length: 2</div><div class="line">&#125;;</div><div class="line">arrayLike[Symbol.iterator] = iterator; //Conform to Iterable Protocol</div><div class="line">var array = [...arrayLike];</div><div class="line">console.log(array); // =&gt; [&apos;Cat&apos;, &apos;Bird&apos;]</div></pre></td></tr></table></figure>
+<p><code>arrayLike[Symbol.iterator]</code> creates a property on the object that contains an iteration function <code>iterator()</code>, making the object conformed to <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Iteration_protocols#iterable" target="_blank" rel="external">iterable protocol</a>. <code>iterator()</code> returns an object (conformed to <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Iteration_protocols#iterator" target="_blank" rel="external">iteration protocol</a>) with <code>next</code> property as a function that returns the control object <code>{done: &lt;boolean&gt;, value: &lt;item&gt;}</code>.<br>Since <code>arrayLike</code> is now iterable, the spread operator is used to extract its elements into an array: <code>[...arrayLike]</code>.</p>
+<h3 id="6-Finale"><a href="#6-Finale" class="headerlink" title="6. Finale"></a>6. Finale</h3><p>Three dots operator adds a bunch of great features to JavaScript.</p>
+<p>The rest parameter makes a lot easier to collect the arguments. It’s a reasonable replacement for the hardcoded array-like object <code>arguments</code>. If the situation permits to choose between rest parameter and <code>arguments</code>, use the first one.</p>
+<p><code>.apply()</code> method is not convenient for its verbose syntax. The spread operator is a good alternative when invocation arguments should be taken from an array.</p>
+<p>The spread operator improves the array literals. You can initialise, concatenate and clone arrays a lot simpler.<br>You can extract parts of an array using the destructuring assignments. And in combination with iterator protocols, it is possible to use the operator in a more configurable manner.</p>
+<p>I hope from now on the spread operator will appear more often in your code!</p>
+<p><strong>P.S. Check out popular posts on Rainsoft:</strong><br><a href="http://rainsoft.io/gentle-explanation-of-this-in-javascript/" target="_blank" rel="external">Gentle explanation of ‘this’ keyword in JavaScript</a><br><a href="http://rainsoft.io/when-not-to-use-arrow-functions-in-javascript/" target="_blank" rel="external">When ‘not’ to use arrow functions</a><br><a href="http://rainsoft.io/the-legend-of-javascript-equality-operator/" target="_blank" rel="external">The legend of JavaScript equality operator</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2016-12-20-how-three-dots-changed-javascript.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2016-12-20-how-three-dots-changed-javascript.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2016-12-20-how-three-dots-changed-javascript.html&title=《How three dots changed JavaScript》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2016-12-20-how-three-dots-changed-javascript.html&title=《How three dots changed JavaScript》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2016-12-20-how-three-dots-changed-javascript.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《How three dots changed JavaScript》 — Balance&url=http://blog.inching.org/JavaScript/2016-12-20-how-three-dots-changed-javascript.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2016-12-20-how-three-dots-changed-javascript.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Angular/Angular2/2016-12-30-angular2-style-class.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Angular2 Style Class</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/uncategorized/2016-12-16-crypto.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Crypto</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2016-12-20-how-three-dots-changed-javascript.html&title=《How three dots changed JavaScript》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2016-12-20-how-three-dots-changed-javascript.html&title=《How three dots changed JavaScript》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2016-12-20-how-three-dots-changed-javascript.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《How three dots changed JavaScript》 — Balance&url=http://blog.inching.org/JavaScript/2016-12-20-how-three-dots-changed-javascript.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2016-12-20-how-three-dots-changed-javascript.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3aQW7jQAwEwPz/07tAbovESjepUbxA6WQojsSaw5Dm8OMjvv58Xl/vfL2f/O+rJ7x6y/Vzbrjw8PDwRqG/uhLeK+r+zvXnJAY8PDy8c7zrDT0Bn9iZ27fj4eHhvRtvtlm3z7xeGjw8PLz/i5e3HpJtPS/E2+XAw8PDe4aXlLzRj/94W0+ec0M8eHh4eAd47QHYO3w+eL6Hh4eHt2iw5hv3rOTdH7b9EC0eHh7eAV5+nJ8XuPv007aMf0gbeHh4eLfy8oZCfn/TeN0MEHzzGQ8PD+8A73r/zMvlvMCdjRcksB9Kajw8PLybeJviNQlxc/TVtiG+iRYPDw/vQV4LzjsAs8OtvF2yqtbx8PDwSl6+rd/bgLh+46YFjIeHh3eC1waapId8+CAvu2fjCHh4eHgnePtmRL7dz8rxtnWLh4eHd5rXziYl4baN2hPdAzw8PLxneLMf+flIQduq2Dy5mA7Dw8PDG/Hydmr+17bJO0sedfrBw8PDW/PyMaa7GhNtobwZbsDDw8M7wWuPrJJE0gbans7VYwd4eHh4t/ISzGw4oB0dmCWhOu/h4eHh3cqbtVbbzkdSFieLEhXleHh4eMd4mzK3TRt56LOiHA8PD+8ZXh56PoCVb+ttQsLDw8N7T17bSmiL6bz52yaMYm3w8PDwFrx9Gd22LTZHYsVy4OHh4R3g5eXppjjeUDcJBg8PD+8ELy9q83K8beYmb8m/88+T8fDw8B7hbVoMydUW7vmgQJQY8PDw8Na8fVhtqZ20g5Omw13LjYeHhzfjJckg36Dz4vjcQuDh4eE9w5slgzyIGaxti7z83YCHh4f3S7yc1IY4O0iLno+Hh4f3NrxZwX1X0HnzFw8PD+8cL9nc2+/kyzQ77sLDw8P7LV5b7G6+Pxu6miUJPDw8vAO8vzKRK/AR4hVwAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

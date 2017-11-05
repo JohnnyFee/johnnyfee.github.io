@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>理解JavaScript中的Function.prototype.bind | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="本文由 伯乐在线 - 陈 鑫伟 翻译自 Smashing Magazine。原文链接：http://blog.jobbole.com/58032/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解JavaScript中的Function.prototype.bind">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-02-25-javascript-function-bind.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文由 伯乐在线 - 陈 鑫伟 翻译自 Smashing Magazine。原文链接：http://blog.jobbole.com/58032/">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解JavaScript中的Function.prototype.bind">
+<meta name="twitter:description" content="本文由 伯乐在线 - 陈 鑫伟 翻译自 Smashing Magazine。原文链接：http://blog.jobbole.com/58032/">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">理解JavaScript中的Function.prototype.bind</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">理解JavaScript中的Function.prototype.bind</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-02-24T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-02-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#我们真正需要解决的问题是什么？"><span class="post-toc-text">我们真正需要解决的问题是什么？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#我们刚才做了什么？"><span class="post-toc-text">我们刚才做了什么？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#浏览器支持"><span class="post-toc-text">浏览器支持</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#适用的模式"><span class="post-toc-text">适用的模式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CLICK-HANDLERS（点击处理函数）"><span class="post-toc-text">CLICK HANDLERS（点击处理函数）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#SETTIMEOUT"><span class="post-toc-text">SETTIMEOUT</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#梳理基于-QUERYSELECTORALL的事件绑定"><span class="post-toc-text">梳理基于 QUERYSELECTORALL的事件绑定</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#结论"><span class="post-toc-text">结论</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-function-bind"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">理解JavaScript中的Function.prototype.bind</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-02-25 00:00:00" datetime="2014-02-24T16:00:00.000Z"  itemprop="datePublished">2014-02-25</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>本文由 <a href="http://blog.jobbole.com/" target="_blank" rel="external">伯乐在线</a> - <a href="http://blog.jobbole.com/author/owenchen/" target="_blank" rel="external">陈 鑫伟</a> 翻译自 <a href="http://coding.smashingmagazine.com/2014/01/23/understanding-javascript-function-prototype-bind/" target="_blank" rel="external">Smashing Magazine</a>。<br>原文链接：<a href="http://blog.jobbole.com/58032/" target="_blank" rel="external">http://blog.jobbole.com/58032/</a></p>
+</blockquote>
+<a id="more"></a>
+<p>函数绑定(Function binding)很有可能是你在开始使用JavaScript时最少关注的一点，但是当你意识到你需要一个解决方案来解决如何在另一个函数中保持this上下文的时候，你真正需要的其实就是 Function.prototype.bind()，只是你有可能仍然没有意识到这点。</p>
+<p>第一次遇到这个问题的时候，你可能倾向于将this设置到一个变量上，这样你可以在改变了上下文之后继续引用到它。很多人选择使用 <code>self</code>, <code>this</code> 或者 <code>context</code> 作为变量名称(也有人使用 that)。这些方式都是有用的，当然也没有什么问题。但是其实有更好、更专用的方式。</p>
+<blockquote>
+<p><a href="https://twitter.com/jaffathecake/status/304163675810439168" target="_blank" rel="external">Jack Archibald 关于缓存 this 的微博</a>(twitter)：</p>
+<p>Jake Archibald: “我会为了作用域做任何事情，但是我不会使用 that = this”</p>
+<p>我对这个问题更清晰的认识是在我看到<a href="https://twitter.com/sindresorhus/status/304917599484010496" target="_blank" rel="external">Sindre Sorhus更清楚的描述</a>之后：</p>
+<p>Sindre Sorhus：“在jQuery中使用$this，但是对于纯JS我不会，我会使用.bind()”</p>
+</blockquote>
+<p>而我在一开始的几个月里却忽略了这个明智的建议。</p>
+<h2 id="我们真正需要解决的问题是什么？"><a href="#我们真正需要解决的问题是什么？" class="headerlink" title="我们真正需要解决的问题是什么？"></a>我们真正需要解决的问题是什么？</h2><p>在下面的例子代码中，我们可以名正言顺地将上下文缓存到一个变量中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myObj = &#123;</div><div class="line">    <span class="attr">specialFunction</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</div><div class="line">    <span class="attr">anotherSpecialFunction</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</div><div class="line">    <span class="attr">getAsyncData</span>: <span class="function"><span class="keyword">function</span> (<span class="params">cb</span>) </span>&#123;cb();&#125;,</div><div class="line">    <span class="attr">render</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> that = <span class="keyword">this</span>;</div><div class="line">        <span class="keyword">this</span>.getAsyncData(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            that.specialFunction();</div><div class="line">            that.anotherSpecialFunction();</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">myObj.render();</div></pre></td></tr></table></figure>
+<p>myObj.render();如果我们简单地使用 this.specialFunction() 来调用方法的话，会收到下面的错误：</p>
+<blockquote>
+<p>Uncaught TypeError:Object[object global] has no method’specialFunction’</p>
+</blockquote>
+<p>我们需要为回调函数的执行保持对 myObj 对象上下文的引用。 调用 that.specialFunction()让我们能够维持作用域上下文并且正确执行我们的函数。 然而使用 Function.prototype.bind() 可以有更加简洁干净的方式：</p>
+<pre><code>render:function() {
+    this.getAsyncData(function() {
+    this.specialFunction();
+    this.anotherSpecialFunction();
+    }.bind(this));
+}
+</code></pre><h2 id="我们刚才做了什么？"><a href="#我们刚才做了什么？" class="headerlink" title="我们刚才做了什么？"></a>我们刚才做了什么？</h2><p>.bind()创建了一个函数，当这个函数在被调用的时候，它的 this 关键词会被设置成被传入的值（这里指调用bind()时传入的参数）。因此，我们传入想要的上下文，this(其实就是 myObj)，到.bind()函数中。然后，当回调函数被执行的时候， this 便指向 myObj 对象。</p>
+<p>如果有兴趣想知道 Function.prototype.bind() 内部长什么样以及是如何工作的，这里有个非常简单的例子：</p>
+<pre><code>Function.prototype.bind =function(scope) {
+    varfn =this;
+    returnfunction() {
+        returnfn.apply(scope);
+    };
+}
+</code></pre><p>还有一个非常简单的用例：</p>
+<pre><code>var foo = {
+    x: 3
+}
+
+var bar = function(){
+    console.log(this.x);
+}
+
+bar(); // undefined
+var boundFunc = bar.bind(foo);
+boundFunc(); // 3
+</code></pre><p>我们创建了一个新的函数，当它被执行的时候，它的 this 会被设置成 foo —— 而不是像我们调用 bar() 时的全局作用域。</p>
+<h2 id="浏览器支持"><a href="#浏览器支持" class="headerlink" title="浏览器支持"></a>浏览器支持</h2><table>
+<thead>
+<tr>
+<th>Browser</th>
+<th>Version support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chrome</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>(Gecko) 4.0 (2)</td>
+</tr>
+<tr>
+<td>Internet Explorer</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Opera</td>
+<td>11.60</td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>5.1.4</td>
+</tr>
+</tbody>
+</table>
+<p>正如你看到的，很不幸，Function.prototype.bind 在IE8及以下的版本中不被支持，所以如果你没有一个备用方案的话，可能在运行时会出现问题。</p>
+<p>幸运的是，Mozilla Developer Network（很棒的资源库），为没有自身实现 .bind() 方法的浏览器<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind" target="_blank" rel="external">提供了一个绝对可靠的替代方案</a>：</p>
+<pre><code>if (!Function.prototype.bind) {
+  Function.prototype.bind = function (oThis) {
+    if (typeof this !== &quot;function&quot;) {
+      // closest thing possible to the ECMAScript 5 internal IsCallable function
+      throw new TypeError(&quot;Function.prototype.bind - what is trying to be bound is not callable&quot;);
+    }
+
+    var aArgs = Array.prototype.slice.call(arguments, 1), 
+        fToBind = this, 
+        fNOP = function () {},
+        fBound = function () {
+          return fToBind.apply(this instanceof fNOP &amp;amp;&amp;amp; oThis
+                                 ? this
+                                 : oThis,
+                               aArgs.concat(Array.prototype.slice.call(arguments)));
+        };
+
+    fNOP.prototype = this.prototype;
+    fBound.prototype = new fNOP();
+
+    return fBound;
+  };
+}
+</code></pre><h2 id="适用的模式"><a href="#适用的模式" class="headerlink" title="适用的模式"></a>适用的模式</h2><p>在学习技术点的时候，我发现有用的不仅仅在于彻底学习和理解概念，更在于看看在手头的工作中有没有适用它的地方，或者比较接近它的的东西。我希望，下面的某些例子能够适用于你的代码或者解决你正在面对的问题。</p>
+<h3 id="CLICK-HANDLERS（点击处理函数）"><a href="#CLICK-HANDLERS（点击处理函数）" class="headerlink" title="CLICK HANDLERS（点击处理函数）"></a>CLICK HANDLERS（点击处理函数）</h3><p>一个用途是记录点击事件（或者在点击之后执行一个操作），这可能需要我们在一个对象中存入一些信息，比如：</p>
+<pre><code>var logger = {
+    x: 0,       
+    updateCount: function(){
+        this.x++;
+        console.log(this.x);
+    }
+}
+</code></pre><p>我们可能会以下面的方式来指定点击处理函数，随后调用 logger 对象中的 updateCount() 方法。</p>
+<pre><code>document.querySelector(&apos;button&apos;).addEventListener(&apos;click&apos;, function(){
+    logger.updateCount();
+});
+</code></pre><p>但是我们必须要创建一个多余的匿名函数，来确保 updateCount()函数中的 this 关键字有正确的值。</p>
+<p>我们可以使用如下更干净的方式：</p>
+<pre><code>document.querySelector(&apos;button&apos;).addEventListener(&apos;click&apos;, 
+    logger.updateCount.bind(logger));
+</code></pre><p>我们巧妙地使用了方便的 .bind() 函数来创建一个新的函数，而将它的作用域绑定为 logger 对象。</p>
+<h3 id="SETTIMEOUT"><a href="#SETTIMEOUT" class="headerlink" title="SETTIMEOUT"></a>SETTIMEOUT</h3><p>如果你使用过模板引擎（比如Handlebars）或者尤其使用过某些<code>MV*</code>框架（从我的经验我只能谈论Backbone.js），那么你也许知道下面讨论的关于在渲染模板之后立即访问新的DOM节点时会遇到的问题。</p>
+<p>假设我们想要实例化一个jQuery插件：</p>
+<pre><code>var myView = {
+    template: &apos;/* 一个包含 &lt;select /&gt; 的模板字符串*/&apos;,
+    $el: $(&apos;#content&apos;),
+    afterRender: function () {
+        this.$el.find(&apos;select&apos;).myPlugin();
+    },
+    render: function () {
+        this.$el.html(this.template());
+        this.afterRender();
+    }
+}
+
+myView.render();
+</code></pre><p>myView.render();你或许发现它能正常工作——但并不是每次都行，因为里面存在着问题。这是一个竞争的问题：只有先到达的才能获胜。有时候是渲染先到，而有时候是插件的实例化先到。【译者注：如果渲染过程还没有完成（DOM Node还没有被添加到DOM树上），那么find(‘select’)将无法找到相应的节点来执行实例化。】</p>
+<p>现在，或许并不被很多人知晓，我们可以使用基于 setTimeout() 的 <a href="http://benhowdle.im/2013/01/29/settimeout/" target="_blank" rel="external">slight hack</a>来解决问题。</p>
+<p>我们稍微改写一下我们的代码，就在DOM节点加载后再安全的实例化我们的jQuery插件：</p>
+<pre><code>afterRender: function () {
+    this.$el.find(&apos;select&apos;).myPlugin();
+},
+
+render: function () {
+    this.$el.html(this.template());
+    setTimeout(this.afterRender, 0);        
+}
+</code></pre><p>然而，我们获得的是 函数 .afterRender() 不能找到 的错误信息。</p>
+<p>我们接下来要做的，就是将.bind()使用到我们的代码中：</p>
+<pre><code>afterRender: function () {
+    this.$el.find(&apos;select&apos;).myPlugin();
+},
+
+render: function () {
+    this.$el.html(this.template());
+    setTimeout(this.afterRender.bind(this), 0);        
+}
+</code></pre><p>现在，我们的 afterRender() 函数就能够在正确的上下文环境中执行了。</p>
+<h3 id="梳理基于-QUERYSELECTORALL的事件绑定"><a href="#梳理基于-QUERYSELECTORALL的事件绑定" class="headerlink" title="梳理基于 QUERYSELECTORALL的事件绑定"></a>梳理基于 QUERYSELECTORALL的事件绑定</h3><p>如今的DOM API引入了很多非常有用的方法，比如 querySelector, querySelectorAll 和 classList接口，这些方法给DOM API带来了非常显著的进步。</p>
+<p>然而，迄今为止并没有一个真正的原生的为 NodeList 添加事件的方法。于是我们最终从 Array.prototype中剽窃了 forEach 方法来完成遍历，例如：</p>
+<pre><code>Array.prototype.forEach.call(document.querySelectorAll(&apos;.klasses&apos;), function(el){
+    el.addEventListener(&apos;click&apos;, someFunction);
+});
+</code></pre><p>仍然，我们可以做的更好，通过使用我们的好朋友 .bind()。</p>
+<pre><code>var unboundForEach = Array.prototype.forEach,
+    forEach = Function.prototype.call.bind(unboundForEach);
+
+forEach(document.querySelectorAll(&apos;.klasses&apos;), function (el) {
+    el.addEventListener(&apos;click&apos;, someFunction);
+});
+</code></pre><p>现在，我们拥有了一个简洁的遍历DOM节点的函数。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>正如你所看到的，.bind() 函数可以巧妙地运用于很多不同的用途，同时可以精简现有的代码。但愿这篇概述的内容，能够在你想在代码中使用.bind()（如果需要的话）时派上用场，并且帮助你更好地驾驭改变this值所带来的好处。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-02-25-javascript-function-bind.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-02-25-javascript-function-bind.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-25-javascript-function-bind.html&title=《理解JavaScript中的Function.prototype.bind》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-25-javascript-function-bind.html&title=《理解JavaScript中的Function.prototype.bind》 — Balance&source=
+本文由 伯乐在线 - 陈 鑫伟 翻译自 Smashing Magazine。原文链接：http://blog.jobbole.com/58032/
+" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-25-javascript-function-bind.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《理解JavaScript中的Function.prototype.bind》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-25-javascript-function-bind.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-25-javascript-function-bind.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Node/2014-02-25-node-npm.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Node NPM</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-02-21-javascript-use-strict.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Javascript 严格模式详解</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-25-javascript-function-bind.html&title=《理解JavaScript中的Function.prototype.bind》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-25-javascript-function-bind.html&title=《理解JavaScript中的Function.prototype.bind》 — Balance&source=
+本文由 伯乐在线 - 陈 鑫伟 翻译自 Smashing Magazine。原文链接：http://blog.jobbole.com/58032/
+" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-25-javascript-function-bind.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《理解JavaScript中的Function.prototype.bind》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-25-javascript-function-bind.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-25-javascript-function-bind.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtElEQVR42u3aW47DIAwF0Nn/pmcWkKa5trHakU6+qjyAQyWwbH5+4uv3cl2fXn+/f3ptrdrysQsPDw9vPPS7jid33t+ft3w39Xh4eHh7vLsVNXknX9zf95JMSj5mPDw8vO/h5QNKYt18CvDw8PD+L++uy3zpT8LiD+97eHh4eAGv2vTZp8nWsp5rwcPDw4t5k/D3U79X6nt4eHh446p6Xr6atJYkHXoXHh4e3gYvX3CrCYLq1OS9l9/Ew8PDW+P1Svj5oCcTlG8bL0aIh4eHt8Crpl/veNXguJeQbZbi8PDw8NZ4+VCqxbPetpGMMELi4eHhHeL1ykujWQwOYyWLfjRaPDw8vAVe9UhT3kGewqi2MEpG4OHh4Y15eQm/V6ZKBpf0WE0lP8wfHh4e3phX3RLy0DxP71Y3pPKZMjw8PLxDvKSwlDRd3WYm3zZTKnh4eHiHePOkw9nBJSWxJBB/se/h4eHhLfCSzvL06zz4zr96CKPx8PDwjvLyFGr1zV4ZrHc8q/wf4uHh4Q14Sboh3wCqx7Z6x7wKQTweHh7eAq9agqoegcoX+rz3JCjHw8PD2+NVG8qL+tWgvHcn2hLw8PDwFni9xXoS5ubpiWqSolBbw8PDw2vxeinXasDdm6xJQa5Z68PDw8Mb8HJk3lmvwJY/fegLDw8P7yjvLKyXiu0dSkiKZ3h4eHh7vLyIVU3mvp+yXiK48Mfg4eHhLfN6WdB8oU945aW/VwbDw8PDa/F6G0CyJeQBel7oyoNvPDw8vD3eZD/JJ6KXyEi2n/IBAjw8PLxDvPlAe5OVp0JG2wYeHh7eGq86iF6YO0835BOHh4eH9z28KqCXus3LYA994eHh4X0Zr/dO9SBC71s8PDy8bV41ETDH5F9VC294eHh427xe4nWexu0d9jpW08PDw8Pr8P4A2ARzqICP1bMAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

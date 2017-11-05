@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Rx Java Concept | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="java,rx,rxjava">
+    <meta name="description" content="RxDesigning an API with Rx in mind doesn’t influence the entire architecture, because we can always fall back to BlockingObservable and Java collections. But it’s better to have wide range of possibil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rx Java Concept">
+<meta property="og:url" content="http://blog.inching.org/RxJava/2017-01-01-10-rx-java-observable-observer.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="RxDesigning an API with Rx in mind doesn’t influence the entire architecture, because we can always fall back to BlockingObservable and Java collections. But it’s better to have wide range of possibil">
+<meta property="og:updated_time" content="2017-11-05T05:25:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Rx Java Concept">
+<meta name="twitter:description" content="RxDesigning an API with Rx in mind doesn’t influence the entire architecture, because we can always fall back to BlockingObservable and Java collections. But it’s better to have wide range of possibil">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Rx Java Concept</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Rx Java Concept</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-31T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-01-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Rx"><span class="post-toc-text">Rx</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Observable-vs-Observer-vs-Subscription"><span class="post-toc-text">Observable vs Observer vs Subscription</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Observable"><span class="post-toc-text">Observable</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Hot-and-Cold-Observables"><span class="post-toc-text">Hot and Cold Observables</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Creating-Observables"><span class="post-toc-text">Creating Observables</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Create-Oberservable-with-Observable-create"><span class="post-toc-text">Create Oberservable with Observable.create()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#From-Callback-API-to-Observable-Stream"><span class="post-toc-text">From Callback API to Observable Stream</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Observable-defer"><span class="post-toc-text">Observable.defer</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ConnectableObservable"><span class="post-toc-text">ConnectableObservable</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Single-Subscription-with-publish-refCount"><span class="post-toc-text">Single Subscription with publish().refCount()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ConnectableObservable-Lifecycle"><span class="post-toc-text">ConnectableObservable Lifecycle</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Subscribing-Observable"><span class="post-toc-text">Subscribing Observable</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Subscribing-to-notifications-from-Observable"><span class="post-toc-text">Subscribing to notifications from Observable</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Subscribing-to-notifications-by-using-Observer"><span class="post-toc-text">Subscribing to notifications by using Observer</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Unsubscribing-from-Observable"><span class="post-toc-text">Unsubscribing from Observable</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Managing-multiple-subscribers"><span class="post-toc-text">Managing multiple subscribers</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Subscriber-isUnsubscribed"><span class="post-toc-text">Subscriber.isUnsubscribed</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Subject"><span class="post-toc-text">Subject</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Timing-timer-and-interval"><span class="post-toc-text">Timing: timer() and interval()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Observable-versus-Single"><span class="post-toc-text">Observable versus Single</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Creating-and-Consuming-Single"><span class="post-toc-text">Creating and Consuming Single</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Combining-Responses-Using-zip-merge-and-concat"><span class="post-toc-text">Combining Responses Using zip, merge, and concat</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-10-rx-java-observable-observer"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Rx Java Concept</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-01-01 00:00:00" datetime="2016-12-31T16:00:00.000Z"  itemprop="datePublished">2017-01-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Rx"><a href="#Rx" class="headerlink" title="Rx"></a>Rx</h2><p>Designing an API with Rx in mind doesn’t influence the entire architecture, because we can always fall back to <code>BlockingObservable</code> and Java collections. But it’s better to have wide range of possibilities that we can further trim down if necessary.</p>
+<h2 id="Observable-vs-Observer-vs-Subscription"><a href="#Observable-vs-Observer-vs-Subscription" class="headerlink" title="Observable vs Observer vs Subscription"></a>Observable vs Observer vs Subscription</h2><p>The Observable represents the stream of data and can be sub-scribed to by an Observer:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">interface Observable&lt;T&gt; &#123;</div><div class="line">    Subscription subscribe(Observer s)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Upon subscription, the <code>Observer</code> can have three types of events pushed to it:</p>
+<ul>
+<li>Data via the <code>onNext()</code> function</li>
+<li>Errors (exceptions or throwables) via the <code>onError()</code> function</li>
+<li>Stream completion via the <code>onCompleted()</code> function</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">interface Observer&lt;T&gt; &#123;</div><div class="line">    void onNext(T t)</div><div class="line">    void onError(Throwable t)</div><div class="line">    void onCompleted()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The <code>onNext()</code> method might never be called or might be called once, many, or infinite times. The <code>onError()</code> and <code>onCompleted()</code> are terminal events, meaning that only one of them can be called and only once. When a terminal event is called, the <code>Observable</code> stream is finished and no further events can be sent over it. Terminal events might never occur if the stream is infinite and does not fail.</p>
+<p>As will be shown in Flow Control and Backpressure, there is an additional type of signature to permit interactive pull:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">interface Producer &#123;</div><div class="line">   void request(long n)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>This is used with a more advanced <code>Observer</code> called  <code>Subscriber</code> (with more details given in Controlling Listeners by Using Subscription and Subscriber<t>:</t></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">interface Subscriber&lt;T&gt; implements Observer&lt;T&gt;, Subscription &#123;</div><div class="line">    void onNext(T t)</div><div class="line">    void onError(Throwable t)</div><div class="line">    void onCompleted()</div><div class="line">    ...</div><div class="line">    void unsubscribe()</div><div class="line">    void setProducer(Producer p)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The <code>unsubcribe</code> function as part of the <code>Subscription</code>  interface is used to allow a subscriber to unsubscribe from an <code>Observable</code> stream. The <code>setProducer</code> function and <code>Producer</code>  types are used to form a bidirectional communication channel between the producer and consumer used for flow control.</p>
+<h2 id="Observable"><a href="#Observable" class="headerlink" title="Observable"></a>Observable</h2><p><code>rx.Observable&lt;T&gt;</code>  represent a flowing sequence of values. It is <em>the</em> abstraction that you will use all of the time. Because these values often appear over a wide time range, we tend to think about an <code>Observable</code> as a stream of events.</p>
+<p>Indeed, <code>Observable&lt;T&gt;</code> can actually produce three types of events:</p>
+<ul>
+<li>Values of type <code>T</code>, as declared by <code>Observable</code></li>
+<li>Completion event</li>
+<li>Error event</li>
+</ul>
+<p>The specification of reactive extensions clearly states that every <code>Observable</code> can emit an arbitrary number of values optionally followed by completion or error (but not both). Strictly speaking <em>Rx Design Guidelines</em> define this rule as follows: <code>OnNext* (OnCompleted | OnError)?</code>—where <code>OnNext</code> represents a new event.</p>
+<h3 id="Hot-and-Cold-Observables"><a href="#Hot-and-Cold-Observables" class="headerlink" title="Hot and Cold Observables"></a>Hot and Cold Observables</h3><p>A cold <code>Observable</code> is entirely lazy and never begins to emit events until<br>someone is actually interested.</p>
+<p>An hot <code>Observable</code> might already be emitting events no matter how many <code>Subscriber</code>s they have. <code>Observable</code> pushes events downstream, even if no one listens and events are possibly missed. Examples of such <code>Observable</code>s include mouse movements, keyboard inputs, or button clicks.</p>
+<p>How to ensure that every subscriber received all events:</p>
+<p>One such technique already sneaked into this chapter: the <code>cache()</code> operator. Technically, it can buffer all events from a hot <code>Observable</code> and allow subsequent subscribers to receive the same sequence of events. However, because it consumes theoretically an unlimited amount of memory, be careful with caching hot <code>Observable</code>s.</p>
+<h3 id="Creating-Observables"><a href="#Creating-Observables" class="headerlink" title="Creating Observables"></a>Creating Observables</h3><p>Unless you work with an external API that already exposes <code>Observable</code>s, you first must learn where <code>Observable</code>s come from and how you can create a stream and handle subscriptions.</p>
+<p>First, there are several factory methods that create fixed constant <code>Observable</code>s. These are useful if you want to use RxJava consistently across an entire codebase or when values to be emitted are cheap to produce and known in advance:</p>
+<ul>
+<li><p><code>Observable.just(value)</code></p>
+<p> Creates an <code>Observable</code> instance that emits exactly one <code>value</code> to all future subscribers and completes afterward. Overloaded versions of the <code>just()</code> operator can take anything from two to nine values to be emitted. </p>
+</li>
+<li><p><code>Observable.from(values)</code></p>
+<p>  Similar to <code>just()</code> but accepts <code>Iterable&lt;T&gt;</code> or <code>T[]</code>, thus creating <code>Observable&lt;T&gt;</code> with as many values emitted as elements in <code>values</code> collection. Another overloaded version accepts a <code>Future&lt;T&gt;</code>, emitting an event when the underlying <code>Future</code> completes. </p>
+</li>
+<li><p><code>Observable.range(from, n)</code></p>
+<p>  Produces <code>n</code> integer numbers starting from <code>from</code>. For example, <code>range(5, 3)</code> will emit <code>5</code>, <code>6</code>, and <code>7</code> and then complete normally. Each subscriber will receive the same set of numbers. <code>Observable.empty()</code></p>
+<p>  Completes immediately after subscription, without emitting any values.</p>
+</li>
+<li><p><code>Observable.never()</code></p>
+<p>  Such <code>Observable</code> never emits any notifications, neither values nor completion or error. This stream is useful for testing purposes.</p>
+</li>
+<li><p><code>Observable.error()</code></p>
+<p>  Emits an <code>onError()</code> notification immediately to every subscriber. No other values are emitted and according to contract <code>onCompleted()</code> cannot occur as well.</p>
+</li>
+<li><p><code>Observable.empty()</code></p>
+</li>
+</ul>
+<p>All the <code>empty()</code>, <code>never()</code>, and <code>error()</code> factories don’t seem terribly useful; however, they are quite handy when composing with genuine <code>Observable</code>s.</p>
+<p>All the factory methods by default operate on the client thread. Have a look at the following code sample:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">(Object msg)</span> </span>&#123;</div><div class="line">    System.out.println(</div><div class="line">          Thread.currentThread().getName() +</div><div class="line">          <span class="string">": "</span> + msg);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">log(<span class="string">"Before"</span>);</div><div class="line">Observable</div><div class="line">    .range(<span class="number">5</span>, <span class="number">3</span>)</div><div class="line">    .subscribe(i -&gt; &#123;</div><div class="line">        log(i);</div><div class="line">    &#125;);</div><div class="line">log(<span class="string">"After"</span>);</div></pre></td></tr></table></figure>
+<p>What we are interested in is the thread that executed each log statement:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">main: Before</div><div class="line">main: 5</div><div class="line">main: 6</div><div class="line">main: 7</div><div class="line">main: After</div></pre></td></tr></table></figure>
+<p>Unfortunately, for better or worse, <code>null</code>  is a valid event value in RxJava; that is, <code>Observable.just(&quot;A&quot;, null, &quot;B&quot;)</code> is as good as any other stream. You need to take that into account when designing custom operators as well as when applying operators. However, passing <code>null</code> is generally considered nonidiomatic, and you should use wrapper value types, instead.</p>
+<h4 id="Create-Oberservable-with-Observable-create"><a href="#Create-Oberservable-with-Observable-create" class="headerlink" title="Create Oberservable with Observable.create()"></a>Create Oberservable with Observable.create()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Integer&gt; ints = Observable</div><div class="line">    .create(new Observable.OnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">        @Override</div><div class="line">        public void call(Subscriber&lt;? super Integer&gt; subscriber) &#123;</div><div class="line">            log(&quot;Create&quot;);</div><div class="line">            subscriber.onNext(5);</div><div class="line">            subscriber.onNext(6);</div><div class="line">            subscriber.onNext(7);</div><div class="line">            subscriber.onCompleted();</div><div class="line">            log(&quot;Completed&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p><code>Observable.create()</code> is so versatile that in fact you can mimic all<br>of the previously discovered factory methods on top of it. For example,<br><code>Observable.just(x)</code>, emits a single value <code>x</code> and immediately<br>completes afterward, might look like this:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> &lt;T&gt; <span class="function">Observable&lt;T&gt; <span class="title">just</span><span class="params">(T x)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Observable.create(subscriber -&gt; &#123;</div><div class="line">            subscriber.onNext(x);</div><div class="line">            subscriber.onCompleted();</div><div class="line">        &#125;</div><div class="line">    );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>As an exercise, try to implement <code>never()</code>, <code>empty()</code>, or even <code>range()</code> by using only <code>create()</code>.</p>
+<h4 id="From-Callback-API-to-Observable-Stream"><a href="#From-Callback-API-to-Observable-Stream" class="headerlink" title="From Callback API to Observable Stream"></a>From Callback API to Observable Stream</h4><p>We will use the open source <a href="http://twitter4j.org/" target="_blank" rel="external">Twitter4J</a>  library that can push a subset of new tweets using a callback-based API:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> twitter4j.Status;</div><div class="line"><span class="keyword">import</span> twitter4j.StatusDeletionNotice;</div><div class="line"><span class="keyword">import</span> twitter4j.StatusListener;</div><div class="line"><span class="keyword">import</span> twitter4j.TwitterStream;</div><div class="line"><span class="keyword">import</span> twitter4j.TwitterStreamFactory;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">consume</span><span class="params">(</span></span></div><div class="line">            Consumer&lt;Status&gt; onStatus,</div><div class="line">            Consumer&lt;Exception&gt; onException) &#123;</div><div class="line">    TwitterStream twitterStream = <span class="keyword">new</span> TwitterStreamFactory().getInstance();</div><div class="line">    twitterStream.addListener(<span class="keyword">new</span> StatusListener() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStatus</span><span class="params">(Status status)</span> </span>&#123;</div><div class="line">            onStatus.accept(status);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onException</span><span class="params">(Exception ex)</span> </span>&#123;</div><div class="line">            onException.accept(ex);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//other callbacks</span></div><div class="line">    &#125;);</div><div class="line">    twitterStream.sample();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Calling <code>twitterStream.sample()</code> starts a background thread that logs in to Twitter and awaits new messages. Every time a tweet appears, the <code>onStatus</code> callback is executed.Execution can jump between threads, therefore we can no longer rely on throwing exceptions. Instead the <code>onException()</code> notification is used.</p>
+<p>Use it as:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">consume(</div><div class="line">    status -&gt; log.info(<span class="string">"Status: &#123;&#125;"</span>, status),</div><div class="line">    ex     -&gt; log.error(<span class="string">"Error callback"</span>, ex)</div><div class="line">);</div></pre></td></tr></table></figure>
+<p>What if we want to count the number of tweets per second? Or consume just the first five? And what if we would like to have multiple listeners? In these situations, each of these situations opens a new HTTP connection. Last but not least, this API does not allow unsubscribing when we are done, risking resource leak.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function">Observable&lt;Status&gt; <span class="title">observe</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Observable.create(subscriber -&gt; &#123;</div><div class="line">        TwitterStream twitterStream =</div><div class="line">            <span class="keyword">new</span> TwitterStreamFactory().getInstance();</div><div class="line">        twitterStream.addListener(<span class="keyword">new</span> StatusListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStatus</span><span class="params">(Status status)</span> </span>&#123;</div><div class="line">                <span class="keyword">if</span> (subscriber.isUnsubscribed()) &#123;</div><div class="line">                    twitterStream.shutdown();</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    subscriber.onNext(status);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onException</span><span class="params">(Exception ex)</span> </span>&#123;</div><div class="line">                <span class="keyword">if</span> (subscriber.isUnsubscribed()) &#123;</div><div class="line">                    twitterStream.shutdown();</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    subscriber.onError(ex);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">//other callbacks</span></div><div class="line">        &#125;);</div><div class="line">        subscriber.add(Subscriptions.create(twitterStream::shutdown));</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>When someone subscribes only to receive a small fraction of the stream, our <code>Observable</code> will make sure to clean up the resources.</p>
+<p>We know a second technique to implement clean-up that does not require waiting for an upstream event. The moment a subscriber unsubscribes, we call <code>shutdown()</code> immediately, rather than waiting for the next tweet to come just to trigger clean-up behavior (last line):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">twitterStream.addListener(<span class="keyword">new</span> StatusListener() &#123;</div><div class="line">    <span class="comment">//callbacks...</span></div><div class="line">&#125;);</div><div class="line">twitterStream.sample();</div><div class="line"></div><div class="line">subscriber.add(Subscriptions.create(twitterStream::shutdown));</div></pre></td></tr></table></figure>
+<p>The subscription is very similar:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">observe().subscribe(</div><div class="line">        status -&gt; log.info(<span class="string">"Status: &#123;&#125;"</span>, status),</div><div class="line">        ex -&gt; log.error(<span class="string">"Error callback"</span>, ex)</div><div class="line">);</div></pre></td></tr></table></figure>
+<p>However, keep in mind that the implementation still opens a new network connection for each <code>Subscriber</code>.</p>
+<p>This <code>Observable</code> blurs the difference between hot and cold streams. On one hand, it represents external events that appear without our control (hot behavior). On the other hand, events will not begin flowing (no underlying HTTP connection) to our system until we actually <code>subscribe()</code>.</p>
+<p>Manually keeping track of all subscribers and shutting down the connection to the external system only when all subscribers leave is a Sisyphean task that we will implement anyway, just to appreciate idiomatic solutions later on. The idea is to keep track of all subscribers in some sort of <code>Set&lt;Subscriber&lt;Status&gt;&gt;</code> and start/shut down the external system connection when it becomes empty/nonempty:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//DON'T DO THIS, very brittle and error prone</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LazyTwitterObservable</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Set&lt;Subscriber&lt;? <span class="keyword">super</span> Status&gt;&gt; subscribers =</div><div class="line">    <span class="keyword">new</span> CopyOnWriteArraySet&lt;&gt;();</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">final</span> TwitterStream twitterStream;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">LazyTwitterObservable</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>.twitterStream = <span class="keyword">new</span> TwitterStreamFactory().getInstance();</div><div class="line">    <span class="keyword">this</span>.twitterStream.addListener(<span class="keyword">new</span> StatusListener() &#123;</div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStatus</span><span class="params">(Status status)</span> </span>&#123;</div><div class="line">        subscribers.forEach(s -&gt; s.onNext(status));</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onException</span><span class="params">(Exception ex)</span> </span>&#123;</div><div class="line">        subscribers.forEach(s -&gt; s.onError(ex));</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="comment">//other callbacks</span></div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Observable&lt;Status&gt; observable = Observable.create(</div><div class="line">      subscriber -&gt; &#123;</div><div class="line">        register(subscriber);</div><div class="line">        subscriber.add(Subscriptions.create(() -&gt;</div><div class="line">            <span class="keyword">this</span>.deregister(subscriber)));</div><div class="line">      &#125;);</div><div class="line"></div><div class="line">  <span class="function">Observable&lt;Status&gt; <span class="title">observe</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> observable;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">register</span><span class="params">(Subscriber&lt;? <span class="keyword">super</span> Status&gt; subscriber)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (subscribers.isEmpty()) &#123;</div><div class="line">      subscribers.add(subscriber);</div><div class="line">      twitterStream.sample();</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      subscribers.add(subscriber);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">deregister</span><span class="params">(Subscriber&lt;? <span class="keyword">super</span> Status&gt; subscriber)</span> </span>&#123;</div><div class="line">    subscribers.remove(subscriber);</div><div class="line">    <span class="keyword">if</span> (subscribers.isEmpty()) &#123;</div><div class="line">      twitterStream.shutdown();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The <code>subscribers</code> set thread-safely stores a collection of currently subscribed <code>Observer</code>s. Every time a new <code>Subscriber</code> appears, we add it to a set and connect to the underlying source of events lazily. Conversely, when the last <code>Subscriber</code> disappears, we shut down the upstream source. The key here is to always have exactly one connection to the upstream system rather than one connection per subscriber. This works and is quite robust, however, the implementation seems too low-level and error-prone. Access to the <code>subscribers</code> set must be <code>synchronized</code>, but the collection itself must also support safe iteration. Calling <code>register()</code> <em>must</em> appear before adding the <code>deregister()</code> callback; otherwise, the latter can be called before we register. There must be a better way to implement such a common scenario of multiplexing a single upstream source to multiple <code>Observer</code>s—luckily, there are at least two such mechanisms. RxJava is all about reducing such dangerous boilerplate and abstracting away concurrency.</p>
+<h3 id="Observable-defer"><a href="#Observable-defer" class="headerlink" title="Observable.defer"></a>Observable.defer</h3><p>The underlying <code>Observable</code> is eager, so we want to postpone its creation. <code>defer()</code> will wait until the last possible moment to actually create <code>Observable</code>; that is, until someone actually subscribes to it.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public Observable&lt;Person&gt; listPeople() &#123;</div><div class="line">    return Observable.defer(() -&gt;</div><div class="line">        Observable.from(query(&quot;SELECT * FROM PEOPLE&quot;)));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="ConnectableObservable"><a href="#ConnectableObservable" class="headerlink" title="ConnectableObservable"></a>ConnectableObservable</h3><p><code>ConnectableObservable</code>  is an interesting way of coordinating multiple <code>Subscriber</code>s and sharing a single underlying subscription.<code>ConnectableObservable</code> is a type of <code>Observable</code> that ensures there exists at most one <code>Subscriber</code> at all times, but in reality there can be many of them sharing the same underlying resource.</p>
+<p>Remember our first attempt at creating a single, lazy connection to an underlying resource with <code>LazyTwitterObservable</code>? We had to manually keep track of all <code>subscribers</code> and connect/disconnect as soon as the first subscriber appeared or the last one left.</p>
+<p>See </p>
+<ul>
+<li><a href="https://github.com/ReactiveX/RxJava/wiki/Connectable-Observable-Operators" target="_blank" rel="external">Connectable Observable Operators · ReactiveX/RxJava Wiki</a></li>
+<li><a href="http://www.introtorx.com/Content/v1.0.10621.0/14_HotAndColdObservables.html#PublishAndConnect" target="_blank" rel="external">Intro to Rx - Hot and Cold observables</a></li>
+</ul>
+<h4 id="Single-Subscription-with-publish-refCount"><a href="#Single-Subscription-with-publish-refCount" class="headerlink" title="Single Subscription with publish().refCount()"></a>Single Subscription with publish().refCount()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Status&gt; observable = Observable.create(subscriber -&gt; &#123;</div><div class="line">    System.out.println(<span class="string">"Establishing connection"</span>);</div><div class="line">    TwitterStream twitterStream = <span class="keyword">new</span> TwitterStreamFactory().getInstance();</div><div class="line">    <span class="comment">//...</span></div><div class="line">    subscriber.add(Subscriptions.create(() -&gt; &#123;</div><div class="line">        System.out.println(<span class="string">"Disconnecting"</span>);</div><div class="line">        twitterStream.shutdown();</div><div class="line">    &#125;));</div><div class="line">    twitterStream.sample();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>When we try to use this <code>Observable</code>, each <code>Subscriber</code> establishes a new<br>connection, like so:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Subscription sub1 = observable.subscribe();</div><div class="line">System.out.println(<span class="string">"Subscribed 1"</span>);</div><div class="line">Subscription sub2 = observable.subscribe();</div><div class="line">System.out.println(<span class="string">"Subscribed 2"</span>);</div><div class="line">sub1.unsubscribe();</div><div class="line">System.out.println(<span class="string">"Unsubscribed 1"</span>);</div><div class="line">sub2.unsubscribe();</div><div class="line">System.out.println(<span class="string">"Unsubscribed 2"</span>);</div></pre></td></tr></table></figure>
+<p>Here is the output:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Establishing connection</div><div class="line">Subscribed 1</div><div class="line">Establishing connection</div><div class="line">Subscribed 2</div><div class="line">Disconnecting</div><div class="line">Unsubscribed 1</div><div class="line">Disconnecting</div><div class="line">Unsubscribed 2</div></pre></td></tr></table></figure>
+<p>This time, to simplify, we use a parameterless <code>subscribe()</code> method that triggers subscription but drops all events and notifications. </p>
+<p>The most scalable and simplest solution: the <code>publish().refCount()</code> pair:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">lazy = observable.publish().refCount();</div><div class="line"><span class="comment">//...</span></div><div class="line">System.out.println(<span class="string">"Before subscribers"</span>);</div><div class="line">Subscription sub1 = lazy.subscribe();</div><div class="line">System.out.println(<span class="string">"Subscribed 1"</span>);</div><div class="line">Subscription sub2 = lazy.subscribe();</div><div class="line">System.out.println(<span class="string">"Subscribed 2"</span>);</div><div class="line">sub1.unsubscribe();</div><div class="line">System.out.println(<span class="string">"Unsubscribed 1"</span>);</div><div class="line">sub2.unsubscribe();</div><div class="line">System.out.println(<span class="string">"Unsubscribed 2"</span>);</div></pre></td></tr></table></figure>
+<p>The output is much like what we expect:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Before subscribers</div><div class="line">Establishing connection</div><div class="line">Subscribed 1</div><div class="line">Subscribed 2</div><div class="line">Unsubscribed 1</div><div class="line">Disconnecting</div><div class="line">Unsubscribed 2</div></pre></td></tr></table></figure>
+<p><code>refCount()</code> does is basically count how many active <code>Subscriber</code>s we have at the moment, much like reference counting in historic garbage-collection algorithms. When this number goes from zero to one, it subscribes to the upstream <code>Observable</code>. Every number above one is ignored and the same upstream <code>Subscriber</code> is simply shared between all downstream <code>Subscriber</code>s. However, when the very last downstream <code>Subscriber</code> unsubscribes, the counter drops from one to zero and <code>refCount()</code> knows it must unsubscribe right away.</p>
+<p>The connection is not established until we actually get the first <code>Subscriber</code>. But, more important, the second <code>Subscriber</code> does not initiate a new connection, it does not even touch the original <code>Observable</code>. The <code>publish().refCount()</code> tandem wrapped the underlying <code>Observable</code> and intercepted all subscriptions.</p>
+<p>Thankfully, <code>refCount()</code> does precisely what we implemented manually with <code>LazyTwitterObservable</code>. You can use the <code>publish().refCount()</code> duet to allow sharing of a single <code>Subscriber</code> while remaining lazy. This pair of operators is used very frequently and therefore has an alias named <code>share()</code>.</p>
+<p>Keep in mind that if unsubscription is shortly followed by subscription, <code>share()</code> still performs reconnection, as if there were no caching at all.</p>
+<h4 id="ConnectableObservable-Lifecycle"><a href="#ConnectableObservable-Lifecycle" class="headerlink" title="ConnectableObservable Lifecycle"></a>ConnectableObservable Lifecycle</h4><p>Another useful use case of the <code>publish()</code> operator is forcing subscription in the absence of any <code>Subscriber</code>.</p>
+<p>We can call <code>Observable.publish()</code> on any <code>Observable</code> and get<br><code>ConnectableObservable</code> in return. </p>
+<p>Anyone who subscribes to <code>ConnectableObservable</code> is placed in a set of <code>Subscriber</code>s. As long as <code>connect()</code> is not called, these <code>Subscriber</code>s are put on hold, they never directly subscribe to upstream <code>Observable</code>. However, when <code>connect()</code> is called, a dedicated mediating <code>Subscriber</code> subscribes to upstream <code>Observable</code> (<code>tweets</code>), no matter how many downstream subscribers appeared before—even if there were none. But if there were some <code>Subscriber</code>s of <code>ConnectableObservable</code> put on hold, they will all receive the same sequence of notifications.</p>
+<p>This mechanism has multiple advantages. Imagine that you have an <code>Observable</code> in your application in which multiple <code>Subscriber</code>s are interested. On startup, several components (e.g., Spring beans or EJBs) subscribe to that <code>Observable</code> and begin listening. Without <code>ConnectableObservable</code>, it is very likely that hot <code>Observable</code> will begin emitting events that will be consumed by the first <code>Subscriber</code>, but <code>Subscriber</code>s started later will miss out on the early events. This can be a problem if you want to be absolutely sure that all <code>Subscriber</code>s receive a consistent view of the world. All of them will receive events in the same order, unfortunately <code>Subscriber</code> appearing late will lose early notifications.</p>
+<p>The solution to this problem is to <code>publish()</code> such an <code>Observable</code> first and make it possible for all of the components in your system to <code>subscribe()</code>; for example, during application startup. When you are 100% sure that all <code>Subscriber</code>s that need to receive the same sequence of events (including initial event) had a chance to <code>subscribe()</code>, connect such <code>ConnectableObservable</code> with <code>connect()</code>. This will create a single <code>Subscriber</code> in upstream <code>Observable</code> and begin pushing events to all downstream <code>Subscriber</code>s. The following example uses <a href="http://projects.spring.io/spring-framework/" target="_blank" rel="external">Spring framework</a>, but as a matter of fact it is framework agnostic:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.context.ApplicationListener;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</div><div class="line"><span class="keyword">import</span> org.springframework.context.event.ContextRefreshedEvent;</div><div class="line"><span class="keyword">import</span> rx.Observable;</div><div class="line"><span class="keyword">import</span> rx.observables.ConnectableObservable;</div><div class="line"></div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Config</span> <span class="keyword">implements</span> <span class="title">ApplicationListener</span>&lt;<span class="title">ContextRefreshedEvent</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ConnectableObservable&lt;Status&gt; observable =</div><div class="line">        Observable.&lt;Status&gt;create(subscriber -&gt; &#123;</div><div class="line">            log.info(<span class="string">"Starting"</span>);</div><div class="line">            <span class="comment">//...</span></div><div class="line">        &#125;).publish();</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Observable&lt;Status&gt; <span class="title">observable</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> observable;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onApplicationEvent</span><span class="params">(ContextRefreshedEvent event)</span> </span>&#123;</div><div class="line">        log.info(<span class="string">"Connecting"</span>);</div><div class="line">        observable.connect();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Foo</span><span class="params">(Observable&lt;Status&gt; tweets)</span> </span>&#123;</div><div class="line">        tweets.subscribe(status -&gt; &#123;</div><div class="line">            log.info(status.getText());</div><div class="line">        &#125;);</div><div class="line">        log.info(<span class="string">"Subscribed"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Bar</span><span class="params">(Observable&lt;Status&gt; tweets)</span> </span>&#123;</div><div class="line">        tweets.subscribe(status -&gt; &#123;</div><div class="line">            log.info(status.getText());</div><div class="line">        &#125;);</div><div class="line">        log.info(<span class="string">"Subscribed"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Our simple application first eagerly creates an <code>Observable</code> (<code>ConnectableObservable</code> subclass underneath). <code>Observable</code>s are lazy by design, so it is fine to create them even statically. This <code>Observable</code> is <code>publish()</code>-ed so that all subsequent <code>Subscriber</code>s are put on hold and do not receive any notifications until we do <code>connect()</code>. Later, two <code>@Component</code>s  are found that require this <code>Observable</code>. Dependency injection framework provides our <code>ConnectableObservable</code> and allows everyone to subscribe. However, the events, even in case of hot <code>Observable</code> will not arrive until full application startup. When all of the components are instantiated and wired together, a <code>ContextRefreshedEvent</code>  sent from the framework can be consumed. At this point, we can guarantee that all components had a chance to request a given <code>Observable</code> and <code>subscribe()</code> to it. When the application is about to start, we call <code>connect()</code>. This subscribes to the underlying <code>Observable</code> exactly once and forwards the exact same sequence of events to every component. The trimmed-down logging output might look as follows (the component names are in square brackets):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[Foo   ] Subscribed</div><div class="line">[Bar   ] Subscribed</div><div class="line">[Config] Connecting</div><div class="line">[Config] Starting</div><div class="line">[Foo   ] Msg 1</div><div class="line">[Bar   ] Msg 1</div><div class="line">[Foo   ] Msg 2</div><div class="line">[Bar   ] Msg 2</div></pre></td></tr></table></figure>
+<h3 id="Subscribing-Observable"><a href="#Subscribing-Observable" class="headerlink" title="Subscribing Observable"></a>Subscribing Observable</h3><h4 id="Subscribing-to-notifications-from-Observable"><a href="#Subscribing-to-notifications-from-Observable" class="headerlink" title="Subscribing to notifications from Observable"></a>Subscribing to notifications from Observable</h4><p>An instance of <code>Observable</code> does not emit any events until someone is actually interested in receiving them. To begin watching an <code>Observable</code>, you use the <code>subscribe()</code> family of methods:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Tweet&gt; tweets = <span class="comment">//...</span></div><div class="line"></div><div class="line">tweets.subscribe((Tweet tweet) -&gt;</div><div class="line">    System.out.println(tweet));</div></pre></td></tr></table></figure>
+<p><code>Observable</code> does not throw exceptions. Instead, exceptions are just another type of notification (event) that <code>Observable</code> can propagate. Therefore, you do not use the <code>try</code>-<code>catch</code> block around <code>subscribe()</code> to catch exceptions produced along the way. Instead, you provide a separate callback:</p>
+<p>There are multiple overloaded versions of <code>subscribe()</code> that are more specific.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tweets.subscribe(</div><div class="line">        (Tweet tweet) -&gt; &#123; System.out.println(tweet); &#125;,</div><div class="line">        (Throwable t) -&gt; &#123; t.printStackTrace(); &#125;</div><div class="line">);</div></pre></td></tr></table></figure>
+<p>The second argument to <code>subscribe()</code> is optional. It notifies about exceptions that can potentially occur while producing items. It is guaranteed that no other <code>Tweet</code> will appear after the exception.</p>
+<p>The third optional callback allows us to listen for stream completion:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">tweets.subscribe(</div><div class="line">        (Tweet tweet) -&gt; &#123; System.out.println(tweet); &#125;,</div><div class="line">        (Throwable t) -&gt; &#123; t.printStackTrace(); &#125;,</div><div class="line">        () -&gt; &#123;this.noMore();&#125;</div><div class="line">);</div></pre></td></tr></table></figure>
+<p>As a side note, often you can use Java 8 method references instead of<br>lambdas to improve readability, as illustrated here:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tweets.subscribe(</div><div class="line">    System.out::println,</div><div class="line">    Throwable::printStackTrace,</div><div class="line">    this::noMore);</div></pre></td></tr></table></figure>
+<h4 id="Subscribing-to-notifications-by-using-Observer"><a href="#Subscribing-to-notifications-by-using-Observer" class="headerlink" title="Subscribing to notifications by using Observer"></a>Subscribing to notifications by using Observer<t></t></h4><p>It turns out that providing all three arguments to <code>subscribe()</code> is quite useful, thus it would be helpful to have a simple wrapper holding all three callbacks. This is what <code>Observer&lt;T&gt;</code>  was designed for. <code>Observer&lt;T&gt;</code> is a container for all three callbacks, receiving all possible notifications from <code>Observable&lt;T&gt;</code>. Here is how you can register an <code>Observer&lt;T&gt;</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">Observer&lt;Tweet&gt; observer = <span class="keyword">new</span> Observer&lt;Tweet&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(Tweet tweet)</span> </span>&#123;</div><div class="line">        System.out.println(tweet);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">()</span> </span>&#123;</div><div class="line">        noMore();</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line">tweets.subscribe(observer);</div></pre></td></tr></table></figure>
+<p>As a matter of fact <code>Observer&lt;T&gt;</code> is the core abstraction for listening in RxJava. Yet if you want even greater control, <code>Subscriber</code> (<code>Observer</code>s abstract implementation) is even more powerful.</p>
+<h4 id="Unsubscribing-from-Observable"><a href="#Unsubscribing-from-Observable" class="headerlink" title="Unsubscribing from Observable"></a>Unsubscribing from Observable</h4><p>There are two means to support that: <code>Subscription</code>  and  <code>Subscriber</code> to <code>unsubscribe</code> to cancel a subscription.</p>
+<p><code>Subscription</code> is a handle that allows client code to cancel a subscription by using the <code>unsubscribe()</code> method. Additionally, you can query the status of a subscription by using <code>isUnsubscribed()</code>. It is important to unsubscribe from <code>Observable&lt;T&gt;</code> as soon as you no longer want to receive more events; this avoids memory leaks and unnecessary load on the system.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Subscription subscription =</div><div class="line">        tweets.subscribe(System.out::println);</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">subscription.unsubscribe();</div></pre></td></tr></table></figure>
+<p>We know that we can use <code>Subscription</code> to control subscription outside of the <code>Observer</code> or callback. <code>Subscriber&lt;T&gt;</code>, on the other hand, implements both <code>Observer&lt;T&gt;</code> and <code>Subscription</code>. Thus, it can be used both to consume notifications (events, completions, or errors) and control subscription.</p>
+<p>The code example that follows subscribes to all events, but the subscriber itself decides to give up receiving notifications under certain criteria. Normally, this can be done by using the built-in <code>takeUntil()</code> operator, but for the time being we can unsubscribe manually:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Subscriber&lt;Tweet&gt; subscriber = <span class="keyword">new</span> Subscriber&lt;Tweet&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(Tweet tweet)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (tweet.getText().contains(<span class="string">"Java"</span>)) &#123;</div><div class="line">            unsubscribe();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line">tweets.subscribe(subscriber);</div></pre></td></tr></table></figure>
+<h4 id="Managing-multiple-subscribers"><a href="#Managing-multiple-subscribers" class="headerlink" title="Managing multiple subscribers"></a>Managing multiple subscribers</h4><p>Every time <code>subscribe()</code> is called, our subscription handler inside<br><code>create()</code> is invoked. </p>
+<p>For example, <code>Observable.just(42)</code> should emit <code>42</code> to every subscriber, not just the first one. On the other hand, if you put a database query or heavyweight computation inside <code>create()</code>, it might be beneficial to share a single invocation among all subscribers.</p>
+<p>Consider the following code sample that subscribes to the same Observable twice:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Integer&gt; ints =</div><div class="line">        Observable.create(subscriber -&gt; &#123;</div><div class="line">                    log(<span class="string">"Create"</span>);</div><div class="line">                    subscriber.onNext(<span class="number">42</span>);</div><div class="line">                    subscriber.onCompleted();</div><div class="line">                &#125;</div><div class="line">        );</div><div class="line">log(<span class="string">"Starting"</span>);</div><div class="line">ints.subscribe(i -&gt; log(<span class="string">"Element A: "</span> + i));</div><div class="line">ints.subscribe(i -&gt; log(<span class="string">"Element B: "</span> + i));</div><div class="line">log(<span class="string">"Exit"</span>);</div></pre></td></tr></table></figure>
+<p>The out put is:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">main: Starting</div><div class="line">main: Create</div><div class="line">main: Element A: 42</div><div class="line">main: Create</div><div class="line">main: Element B: 42</div><div class="line">main: Exit</div></pre></td></tr></table></figure>
+<p>If you would like to avoid calling <code>create()</code> for each subscriber and simply reuse events that were already computed, there exists a handy <code>cache()</code> operator:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Integer&gt; ints =</div><div class="line">    Observable.&lt;Integer&gt;create(subscriber -&gt; &#123;</div><div class="line">                <span class="comment">//...</span></div><div class="line">            &#125;</div><div class="line">    )</div><div class="line">    .cache();</div></pre></td></tr></table></figure>
+<p>With caching, the output for two <code>Subscriber</code>s is quite different:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">main: Starting</div><div class="line">main: Create</div><div class="line">main: Element A: 42</div><div class="line">main: Element B: 42</div><div class="line">main: Exit</div></pre></td></tr></table></figure>
+<p>When the first subscriber appears, <code>cache()</code> delegates subscription to the underlying <code>Observable</code> and forwards all notifications (events, completions, or errors) downstream. However, at the same time, it keeps a copy of all notifications internally. When a subsequent subscriber wants to receive pushed notifications, <code>cache()</code> no longer delegates to the underlying <code>Observable</code> but instead feeds cached values.</p>
+<p>Of course, you must keep in mind that <code>cache()</code> plus infinite stream is the recipe for a disaster, also known as <code>OutOfMemoryError</code>. </p>
+<h4 id="Subscriber-isUnsubscribed"><a href="#Subscriber-isUnsubscribed" class="headerlink" title="Subscriber.isUnsubscribed"></a>Subscriber.isUnsubscribed</h4><p>It is advised to check the <code>isUnsubscribed()</code> flag as often as possible to avoid sending events after a subscriber no longer wants to receive new events. </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Observable&lt;BigInteger&gt; naturalNumbers = Observable.create(</div><div class="line">    subscriber -&gt; &#123;</div><div class="line">        Runnable r = () -&gt; &#123;</div><div class="line">            BigInteger i = ZERO;</div><div class="line">            <span class="keyword">while</span> (!subscriber.isUnsubscribed()) &#123;</div><div class="line">                subscriber.onNext(i);</div><div class="line">                i = i.add(ONE);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">new</span> Thread(r).start();</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>Rather than have a blocking loop running directly in the client thread, we spawn a custom thread and emit events directly from there. </p>
+<p><strong>Please note that you should not use explicit threads inside<br><code>create()</code>. Concurrency and custom schedulers that allow you to write concurrent code without really interacting with threads yourself.</strong></p>
+<p>Even if someone poorly implemented the <code>Observable</code>, we can easily fix it by applying the <code>serialize()</code> operator, such as <code>loadAll(...).serialize()</code>. This operator ensures that events are serialized and sequenced. It also enforces that no more events are sent after completion or error.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function">Observable&lt;Data&gt; <span class="title">loadAll</span><span class="params">(Collection&lt;Integer&gt; ids)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Observable.create(subscriber -&gt; &#123;</div><div class="line">        ExecutorService pool = Executors.newFixedThreadPool(<span class="number">10</span>);</div><div class="line">        AtomicInteger countDown = <span class="keyword">new</span> AtomicInteger(ids.size());</div><div class="line">        <span class="comment">//DANGER, violates Rx contract. Don't do this!</span></div><div class="line">        ids.forEach(id -&gt; pool.submit(() -&gt; &#123;</div><div class="line">            <span class="keyword">final</span> Data data = load(id);</div><div class="line">            subscriber.onNext(data);</div><div class="line">            <span class="keyword">if</span> (countDown.decrementAndGet() == <span class="number">0</span>) &#123;</div><div class="line">                pool.shutdownNow();</div><div class="line">                subscriber.onCompleted();</div><div class="line">            &#125;</div><div class="line">        &#125;));</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Subject"><a href="#Subject" class="headerlink" title="Subject"></a>Subject</h2><ul>
+<li><a href="http://www.jianshu.com/p/1257c8ba7c0c" target="_blank" rel="external">RxJava 第二篇 - Subject使用及示例 - 简书</a></li>
+</ul>
+<p>The <code>Subject</code> class is quite interesting because it extends <code>Observable</code> and implements <code>Observer</code>  at the same time. What that means is that you can treat it as <code>Observable</code> on the client side (subscribing to upstream events) and as <code>Observer</code> on the provider side (pushing events downstream on demand by calling <code>onNext()</code> on it). </p>
+<p>Typically, what you do is keep a reference to <code>Subject</code> internally so that you can push events from any source you like but externally expose this <code>Subject</code> as <code>Observable</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TwitterSubject</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> PublishSubject&lt;Status&gt; subject = PublishSubject.create();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TwitterSubject</span><span class="params">()</span> </span>&#123;</div><div class="line">        TwitterStream twitterStream = <span class="keyword">new</span> TwitterStreamFactory().getInstance();</div><div class="line">        twitterStream.addListener(<span class="keyword">new</span> StatusListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStatus</span><span class="params">(Status status)</span> </span>&#123;</div><div class="line">                subject.onNext(status);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onException</span><span class="params">(Exception ex)</span> </span>&#123;</div><div class="line">                subject.onError(ex);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">//other callbacks</span></div><div class="line">        &#125;);</div><div class="line">        twitterStream.sample();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Observable&lt;Status&gt; <span class="title">observe</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> subject;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Subject</code> is a useful tool for creating <code>Observable</code> instances when <code>Observable.create(...)</code> seems too complex to manage.</p>
+<p><code>Subject</code>s are useful, but there are many subtleties you must understand. For example, after calling <code>subject.onError()</code>, the <code>Subject</code> silently drops subsequent <code>onError</code> notifications, effectively swallowing them.</p>
+<p><code>PublishSubject</code> is one of the flavors (subclasses) of <code>Subject</code>. Other types of <code>Subject</code>s include the following:</p>
+<ul>
+<li><p><code>AsyncSubject</code></p>
+<p>  Remembers last emitted value and pushes it to subscribers when <code>onComplete()</code> is called. As long as <code>AsyncSubject</code> has not completed, events except the last one are discarded. </p>
+</li>
+<li><p><code>BehaviorSubject</code></p>
+<p>  Pushes all events emitted after subscription happened, just like <code>PublishSubject</code>. However, first it emits the most recent event that occurred just before subscription. This allows <code>Subscriber</code> to be immediately notified about the state of the stream. For example, <code>Subject</code> may represent the current temperature broadcasted every minute. When a client subscribes, he will receive the last seen temperature immediately rather than waiting several seconds for the next event. But the same <code>Subscriber</code> is not interested in historical temperatures, only the last one. If no events have yet been emitted, a special default event is pushed first (if provided).</p>
+</li>
+<li><p><code>ReplaySubject</code></p>
+<p>  The most interesting type of <code>Subject</code> that caches events pushed through the entire history. If someone subscribes, first he receives a batch of missed (cached) events and only later events in real-time. By default, all events since the creation of this <code>Subject</code> are cached. This can be become dangerous if the stream is infinite or very long. In that case, there are overloaded versions of <code>ReplaySubject</code> that keep only the following:</p>
+<pre><code>+ Configurable number of events in memory (`createWithSize()`)
++ Configurable time window of most recent events (`createWithTime()`)
++ Or even constraint both size and time (whichever limit is reached first) with `createWithTimeAndSize()`
+</code></pre></li>
+</ul>
+<p><code>Subject</code>s should be treated with caution: often there are more idiomatic ways of sharing subscriptions and caching events—for example, “ConnectableObservable”. For the time being, prefer relatively low-level <code>Observable.create()</code> or even better, consider standard factory methods like <code>from()</code> and <code>just()</code>.</p>
+<p>One more thing to keep in mind is concurrency. By default calling <code>onNext()</code> on a <code>Subject</code> is directly propagated to all <code>Observer</code>’s <code>onNext()</code> callback methods. It is not a surprise that these methods share the same name. In a way, calling <code>onNext()</code> on <code>Subject</code> indirectly invokes <code>onNext()</code> on each and every <code>Subscriber</code>. But you need to keep in mind that according to <em>Rx Design Guidelines</em> all calls to <code>onNext()</code> on <code>Observer</code> must be serialized (i.e., sequential), thus two threads cannot call <code>onNext()</code> at the same time. However, depending on the way you stimulate <code>Subject</code>, you can easily break this rule—e.g., calling <code>Subject.onNext()</code> from multiple threads from a thread pool. Luckily, if you are worried that this might be the case, simply call <code>.toSerialized()</code> on a <code>Subject</code>, which is quite similar to calling <code>Observable.serialize()</code>. This operator makes sure downstream events occur in the correct order.</p>
+<h2 id="Timing-timer-and-interval"><a href="#Timing-timer-and-interval" class="headerlink" title="Timing: timer() and interval()"></a>Timing: timer() and interval()</h2><p><code>timer()</code> and <code>interval()</code> use threads underneath.<br>The former simply creates an <code>Observable</code> that emits a <code>long</code> value of zero after a specified delay and then completes:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">   .timer(<span class="number">1</span>, TimeUnit.SECONDS)</div><div class="line">   .subscribe((Long zero) -&gt; log(zero));</div></pre></td></tr></table></figure>
+<p>The fixed value of <code>0</code> (in variable <code>zero</code>) is just a convention without any specific meaning. It is basically an asynchronous equivalent of <code>Thread.sleep()</code>. Rather than blocking the current thread, we create an <code>Observable</code> and <code>subscribe()</code> to it.</p>
+<p><code>interval()</code> generates a sequence of <code>long</code> numbers, beginning with zero, with a fixed delay between each one of them:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">    .interval(<span class="number">1_000_000</span> / <span class="number">60</span>, MICROSECONDS)</div><div class="line">    .subscribe((Long i) -&gt; log(i));</div></pre></td></tr></table></figure>
+<p><code>interval()</code> is sometimes used to control animations or processes that need to run with certain frequency.</p>
+<h2 id="Observable-versus-Single"><a href="#Observable-versus-Single" class="headerlink" title="Observable versus Single"></a>Observable versus Single</h2><p><code>Single&lt;T&gt;</code> is basically a container for a future value of type <code>T</code> or <code>Exception</code>. <code>Single</code> is typically used for APIs known to return a single value (duh!) asynchronously and with high probability of failure.</p>
+<h3 id="Creating-and-Consuming-Single"><a href="#Creating-and-Consuming-Single" class="headerlink" title="Creating and Consuming Single"></a>Creating and Consuming Single</h3><p>There are few ways to create a <code>Single</code>, beginning with the constant <code>just()</code> and <code>error()</code> operators:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> rx.Single;</div><div class="line"></div><div class="line"></div><div class="line">Single&lt;String&gt; single = Single.just(<span class="string">"Hello, world!"</span>);</div><div class="line">single.subscribe(System.out::println);</div><div class="line"></div><div class="line">Single&lt;Instant&gt; error =</div><div class="line">        Single.error(<span class="keyword">new</span> RuntimeException(<span class="string">"Opps!"</span>));</div><div class="line">error</div><div class="line">    .observeOn(Schedulers.io())</div><div class="line">    .subscribe(</div><div class="line">            System.out::println,</div><div class="line">            Throwable::printStackTrace</div><div class="line">    );</div></pre></td></tr></table></figure>
+<p>The <code>subscribe()</code> method takes two arguments rather than three. There is simply no point in having an <code>onComplete()</code> callback.</p>
+<p>We will use <a href="http://bit.ly/UbSPq1" target="_blank" rel="external">async-http-client</a> that happens to use Netty underneath, as well. After making an HTTP request we can provide a callback implementation that will be invoked asynchronously whenever a response or error comes back. This fits very nicely into how <code>Single</code> is created:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> com.ning.http.client.AsyncCompletionHandler;</div><div class="line"><span class="keyword">import</span> com.ning.http.client.AsyncHttpClient;</div><div class="line"><span class="keyword">import</span> com.ning.http.client.Response;</div><div class="line"></div><div class="line"></div><div class="line">AsyncHttpClient asyncHttpClient = <span class="keyword">new</span> AsyncHttpClient();</div><div class="line"></div><div class="line"><span class="function">Single&lt;Response&gt; <span class="title">fetch</span><span class="params">(String address)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Single.create(subscriber -&gt;</div><div class="line">            asyncHttpClient</div><div class="line">                    .prepareGet(address)</div><div class="line">                    .execute(handler(subscriber)));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">AsyncCompletionHandler <span class="title">handler</span><span class="params">(SingleSubscriber&lt;? <span class="keyword">super</span> Response&gt; subscriber)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> AsyncCompletionHandler() &#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> Response <span class="title">onCompleted</span><span class="params">(Response response)</span> </span>&#123;</div><div class="line">            subscriber.onSuccess(response);</div><div class="line">            <span class="keyword">return</span> response;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onThrowable</span><span class="params">(Throwable t)</span> </span>&#123;</div><div class="line">            subscriber.onError(t);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Single.create()</code> looks similar to <code>Observable.create()</code> but it has some important constraints; you must call either <code>onSuccess()</code> once or <code>onError()</code> once. Technically, it is also possible to have a <code>Single</code> that never completes, but multiple <code>onSuccess()</code> invocations are not allowed. Speaking of <code>Single.create()</code> you can also try <code>Single.fromCallable()</code> that accepts <code>Callable&lt;T&gt;</code> and returns <code>Single&lt;T&gt;</code>. As simple as that.</p>
+<p>You can use <code>Single</code> in similar fashion to <code>Observable</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">Single&lt;String&gt; example =</div><div class="line">    fetch(<span class="string">"http://www.example.com"</span>)</div><div class="line">        .flatMap(<span class="keyword">this</span>::body);</div><div class="line"></div><div class="line">String b = example.toBlocking().value();</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line"><span class="function">Single&lt;String&gt; <span class="title">body</span><span class="params">(Response response)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Single.create(subscriber -&gt; &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            subscriber.onSuccess(response.getResponseBody());</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            subscriber.onError(e);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//Same functionality as body():</span></div><div class="line"><span class="function">Single&lt;String&gt; <span class="title">body2</span><span class="params">(Response response)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Single.fromCallable(() -&gt;</div><div class="line">        response.getResponseBody());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Unfortunately, <code>Response.getResponseBody()</code> throws an <code>IOException</code>, so we cannot simply say: <code>map(Response::getResponseBody)</code>. By wrapping the potentially dangerous <code>getResponseBody()</code> method with <code>Single&lt;String&gt;</code>, we make sure potential failure is encapsulated and clearly expressed in type system. </p>
+<p>Just like <code>BlockingObservable</code>, <code>Single</code> has its very own <code>BlockingSingle</code> created with <code>Single.toBlocking()</code>. Analogously, creating <code>BlockingSingle&lt;T&gt;</code> does not yet block. However, calling <code>value()</code> on it blocks until value of type <code>T</code> (the <code>String</code> containing the response body in our example) is available. In case of exception, it will be rethrown from <code>value()</code> method.</p>
+<h3 id="Combining-Responses-Using-zip-merge-and-concat"><a href="#Combining-Responses-Using-zip-merge-and-concat" class="headerlink" title="Combining Responses Using zip, merge, and concat"></a>Combining Responses Using zip, merge, and concat</h3><p>Suppose that you are rendering an article to be displayed on your website.<br>Three independent operations need to be made to fulfill the request: reading the article content from the database, asking a social media website for a number of likes collected so far, and updating the read count metric.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.jdbc.core.JdbcTemplate;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line"><span class="function">Single&lt;String&gt; <span class="title">content</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Single.fromCallable(() -&gt; jdbcTemplate</div><div class="line">        .queryForObject(</div><div class="line">            <span class="string">"SELECT content FROM articles WHERE id = ?"</span>,</div><div class="line">            String.class, id))</div><div class="line">        .subscribeOn(Schedulers.io());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">Single&lt;Integer&gt; <span class="title">likes</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">    <span class="comment">//asynchronous HTTP request to social media website</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">Single&lt;Void&gt; <span class="title">updateReadCount</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//only side effect, no return value in Single</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Combining these three operations with <code>zip</code> is quite straightforward:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Single&lt;Document&gt; doc = Single.zip(</div><div class="line">        content(<span class="number">123</span>),</div><div class="line">        likes(<span class="number">123</span>),</div><div class="line">        updateReadCount(),</div><div class="line">        (con, lks, vod) -&gt; buildHtml(con, lks)</div><div class="line">);</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line"><span class="function">Document <span class="title">buildHtml</span><span class="params">(String content, <span class="keyword">int</span> likes)</span> </span>&#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-11-05T05:25:34.000Z" itemprop="dateUpdated">2017-11-05 13:25:34</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/RxJava/2017-01-01-10-rx-java-observable-observer.html" target="_blank" rel="external">http://blog.inching.org/RxJava/2017-01-01-10-rx-java-observable-observer.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rx/">rx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rxjava/">rxjava</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2017-01-01-10-rx-java-observable-observer.html&title=《Rx Java Concept》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2017-01-01-10-rx-java-observable-observer.html&title=《Rx Java Concept》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2017-01-01-10-rx-java-observable-observer.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Rx Java Concept》 — Balance&url=http://blog.inching.org/RxJava/2017-01-01-10-rx-java-observable-observer.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2017-01-01-10-rx-java-observable-observer.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2017-01-10-android-layout.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android Layout</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/RxJava/2017-01-01-13-rx-java-operator-transformer.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Rx Operators and Transformations</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2017-01-01-10-rx-java-observable-observer.html&title=《Rx Java Concept》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2017-01-01-10-rx-java-observable-observer.html&title=《Rx Java Concept》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2017-01-01-10-rx-java-observable-observer.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Rx Java Concept》 — Balance&url=http://blog.inching.org/RxJava/2017-01-01-10-rx-java-observable-observer.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2017-01-01-10-rx-java-observable-observer.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACt0lEQVR42u3awW7bMBAE0P7/T6fXAK3lmV0yNYrHU5DYEp8CkKtZ/voVj69v49Xv/xzfP/N85VefzK+zGnh4eHiLqT9PMf/rq4eSXDO/zvO38PDw8G7z8iW73R6eb392s8HDw8P7fN6min9e+p8Lejw8PLz/iZdsAPvNAA8PD+8TeO2lk+I4CTKSjaENMvDw8PBu82bl77/9+Up/Dw8PD2/dVU8W3Ly51YYO+4GHh4d3g5cvuO0hgLzlnxTlm3ni4eHh3eMlMcGsqZ9HrvmjKWIRPDw8vKO8vE2VRKj5JjGbdP15PDw8vAu8drHOjwhsyuh2IykaYHh4eHhHeUmrqY10N1OfbWB1Bw8PDw+v5O2DhpaXTG4TCg/7e3h4eHgxr/jQOg7YtP/zsPhl4oKHh4d3jZc3ovKlfHZUKy/u3/xL8PDw8I7yinx3lgrH+JxRFOh4eHh4F3htwDpb6DfhbL5tvLkvHh4e3iFevsTPSupZDLFv1NX7Hh4eHt6I1x6BSorstqnWRrpFGIGHh4d3lHf2zT0f+RWS4vsv/zA8PDy8y7zZEjxbstuNYRVG4OHh4R3lJe/vs+p0P6HZplXHE3h4eHhr3uwL+UKfl8tt+V6X+Hh4eHgjXt7KmrWskpbY2cT1TYyLh4eHt+Y9f2F2pCDB5PfNw4g398LDw8M7yjtVOrcbzL7sjt4Y8PDw8K7xkts/A+oyd/048PDw8D6BNyuCW1Iyxc2hriJxwcPDwyt5X+Voo9UWPyvT8fDw8H6Sd+oYwaYZlpTUsweEh4eHd4+32QxOFdNtA2yYUuPh4eEd5c0K3DaKzcvizXiTteDh4eH9OO/UcdViipv4GA8PD+9jePl0k0eTt8TqbQYPDw/vGi8PAtqmVxLO5tOtG2N4eHh4F3jt6/2mhT87jnDqMBYeHh7emvcbTf/FOqTb/H8AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Javascript 严格模式详解 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="原文：Javascript 严格模式详解 - 阮一峰的网络日志">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript 严格模式详解">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-02-21-javascript-use-strict.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文：Javascript 严格模式详解 - 阮一峰的网络日志">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/bg2013011401.jpg">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript 严格模式详解">
+<meta name="twitter:description" content="原文：Javascript 严格模式详解 - 阮一峰的网络日志">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/bg2013011401.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Javascript 严格模式详解</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Javascript 严格模式详解</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-02-20T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-02-21
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-javascript-use-strict"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Javascript 严格模式详解</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-02-21 00:00:00" datetime="2014-02-20T16:00:00.000Z"  itemprop="datePublished">2014-02-21</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>原文：<a href="http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html" target="_blank" rel="external">Javascript 严格模式详解 - 阮一峰的网络日志</a></p>
+<a id="more"></a>
+<p>##一、概述</p>
+<p>除了正常运行模式，ECMAscript 5添加了第二种运行模式：<a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Functions_and_function_scope/Strict_mode" target="_blank" rel="external">“严格模式”</a>（strict mode）。顾名思义，这种模式使得Javascript在更严格的条件下运行。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/bg2013011401.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>设立”严格模式”的目的，主要有以下几个：</p>
+<ul>
+<li>消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;</li>
+<li>消除代码运行的一些不安全之处，保证代码运行的安全；</li>
+<li>提高编译器效率，增加运行速度；</li>
+<li>为未来新版本的Javascript做好铺垫。<br>“严格模式”体现了Javascript更合理、更安全、更严谨的发展方向，包括IE 10在内的主流浏览器，都已经<a href="http://kangax.github.com/es5-compat-table" target="_blank" rel="external">支持</a>它，许多大项目已经开始全面拥抱它。</li>
+</ul>
+<p>另一方面，同样的代码，在”严格模式”中，可能会有不一样的运行结果；一些在”正常模式”下可以运行的语句，在”严格模式”下将不能运行。掌握这些内容，有助于更细致深入地理解Javascript，让你变成一个更好的程序员。</p>
+<p>本文将对”严格模式”做详细介绍。</p>
+<p>##二、进入标志</p>
+<p>进入”严格模式”的标志，是下面这行语句：</p>
+<pre><code>&quot;use strict&quot;;
+</code></pre><p>老版本的浏览器会把它当作一行普通字符串，加以忽略。</p>
+<p>##三、如何调用</p>
+<p>“严格模式”有两种调用方法，适用于不同的场合。</p>
+<p>###3.1 针对整个脚本文件</p>
+<p>将”use strict”放在脚本文件的第一行，则整个脚本都将以”严格模式”运行。如果这行语句不在第一行，则无效，整个脚本以”正常模式”运行。如果不同模式的代码文件合并成一个文件，这一点需要特别注意。</p>
+<p>(严格地说，只要前面不是产生实际运行结果的语句，”use strict”可以不在第一行，比如直接跟在一个空的分号后面。)</p>
+<pre><code>&lt;script&gt;  
+&quot;use strict&quot;;  
+console.log(&quot;这是严格模式。&quot;);  
+&lt;/script&gt;
+
+&lt;script&gt;  
+console.log(&quot;这是正常模式。&quot;);  
+&lt;/script&gt;
+</code></pre><p>上面的代码表示，一个网页中依次有两段Javascript代码。前一个script标签是严格模式，后一个不是。</p>
+<p>###3.2 针对单个函数</p>
+<p>将”use strict”放在函数体的第一行，则整个函数以”严格模式”运行。</p>
+<pre><code>function strict(){  
+    &quot;use strict&quot;;  
+    return &quot;这是严格模式。&quot;;  
+}
+
+function notStrict() {  
+    return &quot;这是正常模式。&quot;;  
+}
+</code></pre><p>###3.3 脚本文件的变通写法</p>
+<p>因为第一种调用方法不利于文件合并，所以更好的做法是，借用第二种方法，将整个脚本文件放在一个立即执行的匿名函数之中。</p>
+<pre><code>(function (){  
+    &quot;use strict&quot;;
+     // some code here  
+})();
+</code></pre><p>##四、语法和行为改变</p>
+<p>严格模式对Javascript的语法和行为，都做了一些改变。</p>
+<p>###4.1 全局变量显式声明</p>
+<p>在正常模式中，如果一个变量没有声明就赋值，默认是全局变量。严格模式禁止这种用法，全局变量必须显式声明。</p>
+<pre><code>&quot;use strict&quot;;
+v = 1; // 报错，v未声明
+for(i = 0; i &lt; 2; i++) { // 报错，i未声明  
+}
+</code></pre><p>因此，严格模式下，变量都必须先用var命令声明，然后再使用。</p>
+<p>###4.2 静态绑定</p>
+<p>Javascript语言的一个特点，就是允许”动态绑定”，即某些属性和方法到底属于哪一个对象，不是在编译时确定的，而是在运行时（runtime）确定的。</p>
+<p>严格模式对动态绑定做了一些限制。某些情况下，只允许静态绑定。也就是说，属性和方法到底归属哪个对象，在编译阶段就确定。这样做有利于编译效率的提高，也使得代码更容易阅读，更少出现意外。</p>
+<p>具体来说，涉及以下几个方面。</p>
+<p><strong>（1）禁止使用with语句</strong></p>
+<p>因为with语句无法在编译时就确定，属性到底归属哪个对象。</p>
+<pre><code>&quot;use strict&quot;;
+var v = 1;
+with (o){ // 语法错误   
+     v = 2;  
+}
+</code></pre><p><strong>（2）创设eval作用域</strong></p>
+<p>正常模式下，Javascript语言有两种变量作用域（scope）：全局作用域和函数作用域。严格模式创设了第三种作用域：eval作用域。</p>
+<p>正常模式下，eval语句的作用域，取决于它处于全局作用域，还是处于函数作用域。严格模式下，eval语句本身就是一个作用域，不再能够生成全局变量了，它所生成的变量只能用于eval内部。</p>
+<pre><code>&quot;use strict&quot;;
+var x = 2;
+console.info(eval(&quot;var x = 5; x&quot;)); // 5
+console.info(x); // 2
+</code></pre><p>###4.3 增强的安全措施</p>
+<p><strong>（1）禁止this关键字指向全局对象</strong></p>
+<pre><code>function f(){  
+ return !this;  
+}   
+// 返回false，因为&quot;this&quot;指向全局对象，&quot;!this&quot;就是false
+
+function f(){   
+    &quot;use strict&quot;;  
+    return !this;  
+}   
+// 返回true，因为严格模式下，this的值为undefined，所以&quot;!this&quot;为true。
+</code></pre><p>因此，使用构造函数时，如果忘了加new，this不再指向全局对象，而是报错。</p>
+<pre><code>function f(){ 
+    &quot;use strict&quot;;
+    this.a = 1;
+};
+f();// 报错，this未定义
+</code></pre><p><strong>（2）禁止在函数内部遍历调用栈</strong></p>
+<pre><code>function f1(){
+    &quot;use strict&quot;;
+    f1.caller; // 报错
+    f1.arguments; // 报错
+}
+f1();
+</code></pre><p>###4.4 禁止删除变量</p>
+<p>严格模式下无法删除变量。只有configurable设置为true的对象属性，才能被删除。</p>
+<pre><code>&quot;use strict&quot;;
+var x;
+delete x; // 语法错误
+var o = Object.create(null, &apos;x&apos;, {  
+    value: 1,  
+    configurable: true  
+});
+delete o.x; // 删除成功
+</code></pre><p>###4.5 显式报错</p>
+<p>正常模式下，对一个对象的只读属性进行赋值，不会报错，只会默默地失败。严格模式下，将报错。</p>
+<pre><code>&quot;use strict&quot;;  
+var o = {};
+Object.defineProperty(o, &quot;v&quot;, { value: 1, writable: false });
+o.v = 2; // 报错
+</code></pre><p>严格模式下，对一个使用getter方法读取的属性进行赋值，会报错。</p>
+<pre><code>&quot;use strict&quot;;  
+var o = {  
+    get v() { return 1; } 
+};
+o.v = 2; // 报错
+</code></pre><p>严格模式下，对禁止扩展的对象添加新属性，会报错。</p>
+<pre><code>&quot;use strict&quot;;
+var o = {};
+Object.preventExtensions(o);
+o.v = 1; // 报错
+</code></pre><p>严格模式下，删除一个不可删除的属性，会报错。</p>
+<pre><code>&quot;use strict&quot;;
+delete Object.prototype; // 报错
+</code></pre><p>###4.6 重名错误</p>
+<p>严格模式新增了一些语法错误。</p>
+<p><strong>（1）对象不能有重名的属性</strong></p>
+<p>正常模式下，如果对象有多个重名属性，最后赋值的那个属性会覆盖前面的值。严格模式下，这属于语法错误。</p>
+<pre><code>&quot;use strict&quot;;
+
+var o = {  
+    p: 1,  
+    p: 2  
+}; // 语法错误
+</code></pre><p><strong>（2）函数不能有重名的参数</strong></p>
+<p>正常模式下，如果函数有多个重名的参数，可以用arguments[i]读取。严格模式下，这属于语法错误。</p>
+<pre><code>&quot;use strict&quot;;
+    function f(a, a, b) { // 语法错误 
+    return ; 
+}
+</code></pre><p>###4.7 禁止八进制表示法</p>
+<p>正常模式下，整数的第一位如果是0，表示这是八进制数，比如0100等于十进制的64。严格模式禁止这种表示法，整数第一位为0，将报错。</p>
+<pre><code>&quot;use strict&quot;;
+var n = 0100; // 语法错误
+</code></pre><p>###4.8 arguments对象的限制</p>
+<p>arguments是函数的参数对象，严格模式对它的使用做了限制。</p>
+<p><strong>（1）不允许对arguments赋值</strong></p>
+<pre><code>&quot;use strict&quot;;
+arguments++; // 语法错误
+var obj = { set p(arguments) { } }; // 语法错误
+try { } catch (arguments) { } // 语法错误
+function arguments() { } // 语法错误
+var f = new Function(&quot;arguments&quot;, &quot;&apos;use strict&apos;; return 17;&quot;); // 语法错误
+</code></pre><p><strong>（2）arguments不再追踪参数的变化</strong></p>
+<pre><code>function f(a) {
+    a = 2;
+    return [a, arguments[0]];
+}
+f(1); // 正常模式为[2,2]
+
+function f(a) {
+    &quot;use strict&quot;; 
+    a = 2;
+    return [a, arguments[0]];
+}
+
+f(1); // 严格模式为[2,1]
+</code></pre><p><strong>（3）禁止使用arguments.callee</strong></p>
+<p>这意味着，你无法在匿名函数内部调用自身了。</p>
+<pre><code>&quot;use strict&quot;;
+var f = function() { return arguments.callee; };
+f(); // 报错
+</code></pre><p>###4.9 函数必须声明在顶层</p>
+<p>将来Javascript的新版本会引入”块级作用域”。为了与新版本接轨，严格模式只允许在全局作用域或函数作用域的顶层声明函数。也就是说，不允许在非函数的代码块内声明函数。</p>
+<pre><code>&quot;use strict&quot;;
+if (true) {
+function f() { } // 语法错误
+}
+
+for (var i = 0; i &lt; 5; i++) {
+function f2() { } // 语法错误
+}
+</code></pre><p>###4.10 保留字</p>
+<p>为了向将来Javascript的新版本过渡，严格模式新增了一些保留字：implements, interface, let, package, private, protected, public, static, yield。</p>
+<p>使用这些词作为变量名将会报错。</p>
+<pre><code>function package(protected) { // 语法错误
+&quot;use strict&quot;;
+var implements; // 语法错误
+
+}
+</code></pre><p>此外，ECMAscript第五版本身还规定了另一些保留字（class, enum, export, extends, import, super），以及各大浏览器自行增加的const保留字，也是不能作为变量名的。</p>
+<p>##五、参考链接</p>
+<ul>
+<li>MDN, <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Functions_and_function_scope/Strict_mode" target="_blank" rel="external">Strict mode</a>  </li>
+<li>Dr. Axel Rauschmayer，<a href="http://www.2ality.com/2011/01/javascripts-strict-mode-summary.html" target="_blank" rel="external">JavaScript’s strict mode: a summary</a>  </li>
+<li>Douglas Crockford, <a href="http://java-script.limewebs.com/strictMode/test_hosted.html" target="_blank" rel="external">Strict Mode Is Coming To Town</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-02-21-javascript-use-strict.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-02-21-javascript-use-strict.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-21-javascript-use-strict.html&title=《Javascript 严格模式详解》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-21-javascript-use-strict.html&title=《Javascript 严格模式详解》 — Balance&source=原文：Javascript 严格模式详解 - 阮一峰的网络日志" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-21-javascript-use-strict.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Javascript 严格模式详解》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-21-javascript-use-strict.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-21-javascript-use-strict.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-02-25-javascript-function-bind.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">理解JavaScript中的Function.prototype.bind</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Qt/2014-02-20-qt-cordova.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Qt Cordova</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-21-javascript-use-strict.html&title=《Javascript 严格模式详解》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-21-javascript-use-strict.html&title=《Javascript 严格模式详解》 — Balance&source=原文：Javascript 严格模式详解 - 阮一峰的网络日志" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-21-javascript-use-strict.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Javascript 严格模式详解》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-21-javascript-use-strict.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-21-javascript-use-strict.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3ay2oDMQwF0Pz/T6fQVaFkciVZySzOrEIeto8Llivp8Yif5+/z9/X/Jx/h1ZjX4yezNB88PDy81tKvh3s1dLKI69Gul35gC/Dw8PDWeL2h89M4CRL5jMma8fDw8O7AS578fnu9WQkYDw8P7/686tKTMJAHADw8PLy78ZJkRH6g99IcebJ4JdeCh4eHt1BFus/r9foeHh4eXquqXi2JVaefB4k368TDw8Nb4OUFrUkvU+/95JoebSseHh7eUV5v+mrhatJSMGlEwMPDw9vgVf/hT0g9cHVrklQvHh4e3h4vL19Vc6STBoLJhuLh4eF9l5dfdk8d5b3EcTMw4OHh4bV4vWTE51uj8sDzpgCGh4eHN+DlzQF5grXXUpCw83EKe4+Hh4dX5CUf95IOp8LMPNWLh4eHd5bXK2VVr9STNq9JaQ0PDw9vm1cNAPkI+fh52IjKdXh4eHhrvPxAn8Dyq/OkMPYm14KHh4d3iJcX46uHdTUFnF/6o2s6Hh4e3gIvL3RNSmKTJoADjQV4eHh4R3kJppwCKF7B5yHk5Tt4eHh4a7zrpMCENP9+NSFS+Pvg4eHh9e/Aj/kQpxqzkhmTBAoeHh7eHq96ZFfLY9UUcLJZhW/i4eHhLfCqF+he+f9AE0ArOYKHh4e3x+sd5dVCV57AnRTAjkUqPDw8vMtfJQncpClqfsTPGwuipis8PDy8BV51udVSVrJZkyfqKcPDw8Nr8Z7Fp1raz0nVeaNGBzw8PLwF3mRxk7CRJ2EnLQV4eHh4e7z8UE5+db3ofInHSm54eHh4a7xeiraXeD17WY+aBvDw8PC+yqumEiaBoZeYwMPDw7sPL2+fypur8oatZCV4eHh4n+TND+Lep71ZmndtPDw8vEO8agFsclhPQkty4W7i8fDw8FLeDzaAIhYOT0AzAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

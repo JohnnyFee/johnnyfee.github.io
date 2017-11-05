@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>CSS 动画简介 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="css,animation">
+    <meta name="description" content="原文：http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html
+CSS Transition1.1 基本用法在CSS 3引入Transition（过渡）这个概念之前，CSS是没有时间轴的。也就是说，所有的状态变化，都是即时完成。
+12345678img&amp;#123;    height:15px;    widt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS 动画简介">
+<meta property="og:url" content="http://blog.inching.org/CSS/2014-08-10-css-animation.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文：http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html
+CSS Transition1.1 基本用法在CSS 3引入Transition（过渡）这个概念之前，CSS是没有时间轴的。也就是说，所有的状态变化，都是即时完成。
+12345678img&amp;#123;    height:15px;    widt">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/bg2014021401.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS 动画简介">
+<meta name="twitter:description" content="原文：http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html
+CSS Transition1.1 基本用法在CSS 3引入Transition（过渡）这个概念之前，CSS是没有时间轴的。也就是说，所有的状态变化，都是即时完成。
+12345678img&amp;#123;    height:15px;    widt">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/bg2014021401.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">CSS 动画简介</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">CSS 动画简介</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-08-09T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-08-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/CSS/">CSS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CSS-Transition"><span class="post-toc-text">CSS Transition</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-1-基本用法"><span class="post-toc-text">1.1 基本用法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-transition-delay"><span class="post-toc-text">1.2 transition-delay</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-transition-timing-function"><span class="post-toc-text">1.3 transition-timing-function</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-4-transition的各项属性"><span class="post-toc-text">1.4 transition的各项属性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-5-transition的使用注意"><span class="post-toc-text">1.5 transition的使用注意</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-6-transition的局限"><span class="post-toc-text">1.6 transition的局限</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CSS-Animation"><span class="post-toc-text">CSS Animation</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-1-基本用法"><span class="post-toc-text">2.1 基本用法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-animation的各项属性"><span class="post-toc-text">2.2 animation的各项属性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-3-animation-fill-mode"><span class="post-toc-text">2.3 animation-fill-mode</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-4-animation-direction"><span class="post-toc-text">2.4 animation-direction</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-5-keyframes的写法"><span class="post-toc-text">2.5 keyframes的写法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-6-animation-play-state"><span class="post-toc-text">2.6 animation-play-state</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-7-浏览器前缀"><span class="post-toc-text">2.7 浏览器前缀</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tools"><span class="post-toc-text">Tools</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-css-animation"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">CSS 动画简介</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-08-10 00:00:00" datetime="2014-08-09T16:00:00.000Z"  itemprop="datePublished">2014-08-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/CSS/">CSS</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>原文：<a href="http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html</a></p>
+<h2 id="CSS-Transition"><a href="#CSS-Transition" class="headerlink" title="CSS Transition"></a>CSS Transition</h2><h3 id="1-1-基本用法"><a href="#1-1-基本用法" class="headerlink" title="1.1 基本用法"></a>1.1 基本用法</h3><p>在CSS 3引入Transition（过渡）这个概念之前，CSS是没有时间轴的。也就是说，所有的状态变化，都是即时完成。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">img</span>&#123;</div><div class="line">    <span class="attribute">height</span>:<span class="number">15px</span>;</div><div class="line">    <span class="attribute">width</span>:<span class="number">15px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-tag">img</span><span class="selector-pseudo">:hover</span>&#123;</div><div class="line">    <span class="attribute">height</span>: <span class="number">450px</span>;</div><div class="line">    <span class="attribute">width</span>: <span class="number">450px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>transition的作用在于，指定状态变化所需要的时间。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">img</span>&#123;</div><div class="line">    <span class="attribute">transition</span>: <span class="number">1s</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们还可以指定transition适用的属性，比如只适用于height。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">img&#123;</div><div class="line">    transition: 1s height;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样一来，只有height的变化需要1秒实现，其他变化（主要是width）依然瞬间实现，效果如下。</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="hGvkL" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/JohnnyFee/pen/hGvkL/" target="_blank" rel="external">hGvkL</a> by Johnny Fee (<a href="http://codepen.io/JohnnyFee" target="_blank" rel="external">@JohnnyFee</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+
+<h3 id="1-2-transition-delay"><a href="#1-2-transition-delay" class="headerlink" title="1.2 transition-delay"></a>1.2 transition-delay</h3><p>在同一行transition语句中，可以分别指定多个属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">img&#123;</div><div class="line">    transition: 1s height, 1s width;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们希望，让height先发生变化，等结束以后，再让width发生变化。实现这一点很容易，就是为width指定一个delay参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">img&#123;</div><div class="line">    transition: 1s height, 1s 1s width;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面代码指定，width在1秒之后，再开始变化，也就是延迟（delay）1秒，效果如下。</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="wroqK" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/JohnnyFee/pen/wroqK/" target="_blank" rel="external">wroqK</a> by Johnny Fee (<a href="http://codepen.io/JohnnyFee" target="_blank" rel="external">@JohnnyFee</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<p>delay的真正意义在于，它指定了动画发生的顺序，使得多个不同的transition可以连在一起，形成复杂效果。</p>
+<h3 id="1-3-transition-timing-function"><a href="#1-3-transition-timing-function" class="headerlink" title="1.3 transition-timing-function"></a>1.3 transition-timing-function</h3><p>transition的状态变化速度（又称timing function），默认不是匀速的，而是逐渐放慢，这叫做ease。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">img&#123;</div><div class="line">    transition: 1s ease;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>除了ease以外，其他模式还包括</p>
+<ol>
+<li>ease： 快入慢出。入的速度没有 ease-out 快。</li>
+<li>linear：匀速</li>
+<li>ease-in：慢入快出</li>
+<li>ease-out：快入慢出</li>
+<li>ease-in-out：慢入慢出。</li>
+<li>cubic-bezier 函数：自定义速度模式</li>
+</ol>
+<p>See Also <a href="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/" target="_blank" rel="external">Understanding CSS Timing Functions</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">img&#123;</div><div class="line">    transition: 1s height cubic-bezier(.83,.97,.05,1.44);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的代码会产生一个最后阶段放大过度、然后回缩的效果。</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="fvtEe" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/JohnnyFee/pen/fvtEe/" target="_blank" rel="external">fvtEe</a> by Johnny Fee (<a href="http://codepen.io/JohnnyFee" target="_blank" rel="external">@JohnnyFee</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<h3 id="1-4-transition的各项属性"><a href="#1-4-transition的各项属性" class="headerlink" title="1.4 transition的各项属性"></a>1.4 transition的各项属性</h3><p>transition的完整写法如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">img&#123;</div><div class="line">    transition: 1s 1s height ease;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这其实是一个简写形式，可以单独定义成各个属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">img&#123;</div><div class="line">    transition-property: height;</div><div class="line">    transition-duration: 1s;</div><div class="line">    transition-delay: 1s;</div><div class="line">    transition-timing-function: ease;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="1-5-transition的使用注意"><a href="#1-5-transition的使用注意" class="headerlink" title="1.5 transition的使用注意"></a>1.5 transition的使用注意</h3><ol>
+<li><p>目前，各大浏览器（包括IE 10）都已经支持无前缀的 <code>transition</code>，所以 <code>transition</code> 已经可以很安全地不加浏览器前缀。</p>
+</li>
+<li><p>不是所有的CSS属性都支持 <code>transition</code>，完整的列表查看<a href="http://oli.jp/2010/css-animatable-properties/" target="_blank" rel="external">这里</a>，以及具体的<a href="http://leaverou.github.io/animatable/" target="_blank" rel="external">效果</a>。</p>
+</li>
+<li><p><code>transition</code> 需要明确知道，开始状态和结束状态的具体数值，才能计算出中间状态。比如，<code>height</code> 从 <code>0px</code> 变化到 <code>100px</code>，<code>transition</code> 可以算出中间状态。但是，<code>transition</code> 没法算出 0px 到 <code>auto</code> 的中间状态，也就是说，如果开始或结束的设置是 <code>height: auto</code>，那么就不会产生动画效果。类似的情况还有，<code>display: none</code> 到 <code>block</code>，<code>background: url(foo.jpg)</code> 到 <code>url(bar.jpg)</code> 等等。</p>
+</li>
+</ol>
+<h3 id="1-6-transition的局限"><a href="#1-6-transition的局限" class="headerlink" title="1.6 transition的局限"></a>1.6 transition的局限</h3><p>transition的优点在于简单易用，但是它有几个很大的局限。</p>
+<ol>
+<li>transition需要事件触发，所以没法在网页加载时自动发生。</li>
+<li>transition是一次性的，不能重复发生，除非一再触发。</li>
+<li>transition只能定义开始状态和结束状态，不能定义中间状态，也就是说只有两个状态。</li>
+<li>一条transition规则，只能定义一个属性的变化，不能涉及多个属性。</li>
+</ol>
+<p><strong>CSS Animation就是为了解决这些问题而提出的。</strong></p>
+<h2 id="CSS-Animation"><a href="#CSS-Animation" class="headerlink" title="CSS Animation"></a>CSS Animation</h2><h3 id="2-1-基本用法"><a href="#2-1-基本用法" class="headerlink" title="2.1 基本用法"></a>2.1 基本用法</h3><p>首先，CSS Animation需要指定动画一个周期持续的时间，以及动画效果的名称。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">div:hover &#123;</div><div class="line">  animation: 1s rainbow;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面代码表示，当鼠标悬停在div元素上时，会产生名为rainbow的动画效果，持续时间为1秒。为此，我们还需要用keyframes关键字，定义rainbow效果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@keyframes rainbow &#123;</div><div class="line">  0% &#123; background: #c00; &#125;</div><div class="line">  50% &#123; background: orange; &#125;</div><div class="line">  100% &#123; background: yellowgreen; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面代码表示，rainbow效果一共有三个状态，分别为起始（0%）、中点（50%）和结束（100%）。如果有需要，完全可以插入更多状态。效果如下。</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="zuHsw" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/JohnnyFee/pen/zuHsw/" target="_blank" rel="external">zuHsw</a> by Johnny Fee (<a href="http://codepen.io/JohnnyFee" target="_blank" rel="external">@JohnnyFee</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<p>默认情况下，动画只播放一次。加入 <code>infinite</code> 关键字，可以让动画无限次播放。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">div:hover &#123;</div><div class="line">  animation: 1s rainbow infinite;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>也可以指定动画具体播放的次数，比如3次。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">div:hover &#123;</div><div class="line">  animation: 1s rainbow 3;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里还有一个<a href="http://lea.verou.me/css-4d/#heart-demo" target="_blank" rel="external">心脏跳动</a>的例子，可供参考。</p>
+<h3 id="2-2-animation的各项属性"><a href="#2-2-animation的各项属性" class="headerlink" title="2.2 animation的各项属性"></a>2.2 animation的各项属性</h3><p>同transition一样，animation也是一个简写形式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">div:hover &#123;</div><div class="line">  animation: 1s 1s rainbow linear 3 forwards normal;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Just space-separate all the individual values. The order doesn’t matter except when using both duration and delay, they need to be in that order. In the example below 1s = duration, 2s = delay, 3 = iterations.</p>
+<p>这是一个简写形式，可以分解成各个单独的属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">div:hover &#123;</div><div class="line">  animation-name: rainbow;</div><div class="line">  animation-duration: 1s;</div><div class="line">  animation-timing-function: linear;</div><div class="line">  animation-delay: 1s;</div><div class="line">  animation-fill-mode:forwards;</div><div class="line">  animation-direction: normal;</div><div class="line">  animation-iteration-count: 3;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>可选值</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>timing-function</td>
+<td><li>ease </li><li>ease-out </li><li>ease-in </li><li>ease-in-out </li><li>linear </li><li>cubic-bezier(x1, y1, x2, y2)</li></td>
+<td>设置动画速度， 即通过建立加速度曲线，设置动画在关键帧之间是如何变化。</td>
+</tr>
+<tr>
+<td>duration &amp; delay</td>
+<td>Xs or Xms</td>
+<td>设置延时，即从元素加载完成之后到动画序列开始执行的这段时间。</td>
+</tr>
+<tr>
+<td>duration-count</td>
+<td>X</td>
+</tr>
+<tr>
+<td>fill-mode</td>
+<td><li>forwards </li><li>backwards </li><li>both </li><li>none</li></td>
+<td>指定动画执行前后如何为目标元素应用样式。</td>
+</tr>
+<tr>
+<td>direction</td>
+<td><li>normal </li><li>alternate</li></td>
+<td>设置动画在每次运行完后是反向运行还是重新回到开始位置重复运行。</td>
+</tr>
+<tr>
+<td>iteration-count</td>
+<td>X</td>
+<td>设置动画重复次数， 可以指定 infinite 无限次重复动画</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-3-animation-fill-mode"><a href="#2-3-animation-fill-mode" class="headerlink" title="2.3 animation-fill-mode"></a>2.3 animation-fill-mode</h3><p>动画结束以后，会立即从结束状态跳回到起始状态。如果想让动画保持在结束状态，需要使用animation-fill-mode属性。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">  <span class="attribute">animation</span>: <span class="number">1s</span> rainbow forwards;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>forwards表示让动画停留在结束状态，效果如下。</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="eghDp" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/JohnnyFee/pen/eghDp/" target="_blank" rel="external">eghDp</a> by Johnny Fee (<a href="http://codepen.io/JohnnyFee" target="_blank" rel="external">@JohnnyFee</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<p>animation-fill-mode 可以使用下列值。</p>
+<ul>
+<li>none：默认值，回到动画没开始时的状态。</li>
+<li>forwards：让动画停留在结束状态</li>
+<li>backwards：让动画回到第一帧的状态。</li>
+<li>both: 根据animation-direction（见后）轮流应用forwards和backwards规则。</li>
+</ul>
+<h3 id="2-4-animation-direction"><a href="#2-4-animation-direction" class="headerlink" title="2.4 animation-direction"></a>2.4 animation-direction</h3><p>动画循环播放时，每次都是从结束状态跳回到起始状态，再开始播放。animation-direction属性，可以改变这种行为。</p>
+<p>下面看一个例子，来说明如何使用animation-direction。假定有一个动画是这样定义的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@keyframes rainbow &#123;</div><div class="line">  0% &#123; background-color: yellow; &#125;</div><div class="line">  100% &#123; background: blue; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>默认情况是，<code>animation-direction</code> 等于normal。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">div:hover &#123;</div><div class="line">  animation: 1s rainbow 3 normal;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>此外，还可以等于取 <code>alternate</code>、<code>reverse</code>、<code>alternate-reverse</code> 等值。它们的含义见下图（假定动画连续播放三次）。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/bg2014021401.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p data-height="268" data-theme-id="0" data-slug-hash="nyzpt" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/JohnnyFee/pen/nyzpt/" target="_blank" rel="external">nyzpt</a> by Johnny Fee (<a href="http://codepen.io/JohnnyFee" target="_blank" rel="external">@JohnnyFee</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<p>简单说，<code>animation-direction</code> 指定了动画播放的方向，最常用的值是 <code>normal</code> 和 <code>reverse</code>。浏览器对其他值的支持情况不佳，应该慎用。</p>
+<h3 id="2-5-keyframes的写法"><a href="#2-5-keyframes的写法" class="headerlink" title="2.5 keyframes的写法"></a>2.5 keyframes的写法</h3><p>keyframes关键字用来定义动画的各个状态，它的写法相当自由。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@keyframes rainbow &#123;</div><div class="line">  0% &#123; background: #c00 &#125;</div><div class="line">  50% &#123; background: orange &#125;</div><div class="line">  100% &#123; background: yellowgreen &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>0%可以用from代表，100%可以用to代表，因此上面的代码等同于下面的形式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@keyframes rainbow &#123;</div><div class="line">  from &#123; background: #c00 &#125;</div><div class="line">  50% &#123; background: orange &#125;</div><div class="line">  to &#123; background: yellowgreen &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果省略某个状态，浏览器会自动推算中间状态，所以下面都是合法的写法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@keyframes rainbow &#123;</div><div class="line">  50% &#123; background: orange &#125;</div><div class="line">  to &#123; background: yellowgreen &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@keyframes rainbow &#123;</div><div class="line">  to &#123; background: yellowgreen &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>甚至，可以把多个状态写在一行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@keyframes pound &#123;</div><div class="line">  from，to &#123; transform: none; &#125;</div><div class="line">  50% &#123; transform: scale(1.2); &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>另外一点需要注意的是，浏览器从一个状态向另一个状态过渡，是平滑过渡。steps函数可以实现分步过渡。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">div:hover &#123;</div><div class="line">  animation: 1s rainbow infinite steps(10);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里有一个非常神奇的<a href="http://dabblet.com/gist/1745856" target="_blank" rel="external">例子</a>，可以看到steps函数的用处。</p>
+<h3 id="2-6-animation-play-state"><a href="#2-6-animation-play-state" class="headerlink" title="2.6 animation-play-state"></a>2.6 animation-play-state</h3><p>有时，动画播放过程中，会突然停止。这时，默认行为是跳回到动画的开始状态。</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="GkBdf" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/JohnnyFee/pen/GkBdf/" target="_blank" rel="external">GkBdf</a> by Johnny Fee (<a href="http://codepen.io/JohnnyFee" target="_blank" rel="external">@JohnnyFee</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<p>上面动画中，如果鼠标移走，色块立刻回到动画开始状态。</p>
+<p>如果想让动画保持突然终止时的状态，就要使用animation-play-state属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">div &#123;</div><div class="line">    animation: spin 1s linear infinite;</div><div class="line">    animation-play-state: paused;</div><div class="line">&#125;</div><div class="line"></div><div class="line">div:hover &#123;</div><div class="line">  animation-play-state: running;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的代码指定，没有鼠标没有悬停时，动画状态是暂停；一旦悬停，动画状态改为继续播放。效果如下。</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="Creut" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/JohnnyFee/pen/Creut/" target="_blank" rel="external">Creut</a> by Johnny Fee (<a href="http://codepen.io/JohnnyFee" target="_blank" rel="external">@JohnnyFee</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<h3 id="2-7-浏览器前缀"><a href="#2-7-浏览器前缀" class="headerlink" title="2.7 浏览器前缀"></a>2.7 浏览器前缀</h3><p>目前，IE 10和Firefox（&gt;= 16）支持没有前缀的animation，而chrome不支持，所以必须使用webkit前缀。</p>
+<p>也就是说，实际运用中，代码必须写成下面的样子。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">  <span class="attribute">-webkit-animation</span>: <span class="number">1s</span> rainbow;</div><div class="line">  <span class="attribute">animation</span>: <span class="number">1s</span> rainbow;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> rainbow &#123;</div><div class="line">  0% &#123; <span class="attribute">background</span>: <span class="number">#c00</span>; &#125;</div><div class="line">  50% &#123; <span class="attribute">background</span>: orange; &#125;</div><div class="line">  100% &#123; <span class="attribute">background</span>: yellowgreen; &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@<span class="keyword">keyframes</span> rainbow &#123;</div><div class="line">  0% &#123; <span class="attribute">background</span>: <span class="number">#c00</span>; &#125;</div><div class="line">  50% &#123; <span class="attribute">background</span>: orange; &#125;</div><div class="line">  100% &#123; <span class="attribute">background</span>: yellowgreen; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="https://github.com/daneden/animate.css" target="_blank" rel="external">daneden/animate.css: A cross-browser library of CSS animations. As easy to use as an easy thing.</a></li>
+<li><a href="https://github.com/h5bp/Effeckt.css" target="_blank" rel="external">h5bp/Effeckt.css</a> A Performant Transitions and Animations Library: <a href="http://h5bp.github.io/Effeckt.css" target="_blank" rel="external">http://h5bp.github.io/Effeckt.css</a></li>
+<li><a href="http://www.justinaguilar.com/animations/index.html#" target="_blank" rel="external">CSS3 Animation Cheat Sheet - Justin Aguilar</a></li>
+<li><a href="https://github.com/visionmedia/move.js" target="_blank" rel="external">visionmedia/move.js</a> CSS3 backed JavaScript animation framework <a href="http://visionmedia.github.com/move.js/" target="_blank" rel="external">http://visionmedia.github.com/move.js/</a>.</li>
+</ul>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><ul>
+<li><a href="http://cubic-bezier.com/" target="_blank" rel="external">cubic-bezier</a></li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://www.vanseodesign.com/css/animation/" target="_blank" rel="external">Animation With CSS: It’s Easier Than You Think - Vanseo Design</a></li>
+<li><a href="http://www.vanseodesign.com/css/transforms/" target="_blank" rel="external">CSS3 Transforms: Adding 2D and 3D Effects To Web Pages - Vanseo Design</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Using_CSS_animations" target="_blank" rel="external">Using CSS animations - Web 开发者指南</a></li>
+<li><a href="http://css-tricks.com/almanac/properties/a/animation/" target="_blank" rel="external">animation</a></li>
+<li><a href="http://css-tricks.com/starting-css-animations-mid-way" target="_blank" rel="external">Starting CSS Animations Mid-Way</a></li>
+<li><a href="http://robots.thoughtbot.com/css-animation-for-beginners" target="_blank" rel="external">CSS Animation for Beginners</a></li>
+</ul>
+<script async src="//codepen.io/assets/embed/ei.js"></script>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/CSS/2014-08-10-css-animation.html" target="_blank" rel="external">http://blog.inching.org/CSS/2014-08-10-css-animation.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/animation/">animation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/CSS/2014-08-10-css-animation.html&title=《CSS 动画简介》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/CSS/2014-08-10-css-animation.html&title=《CSS 动画简介》 — Balance&source=原文：http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html
+C..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/CSS/2014-08-10-css-animation.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《CSS 动画简介》 — Balance&url=http://blog.inching.org/CSS/2014-08-10-css-animation.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/CSS/2014-08-10-css-animation.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/CSS/2014-08-10-css-gradient.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">How To Work With Linear, Radial, And Repeating CSS Gradients</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/CSS/2014-08-10-css-normalize.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">CSS Normalize</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/CSS/2014-08-10-css-animation.html&title=《CSS 动画简介》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/CSS/2014-08-10-css-animation.html&title=《CSS 动画简介》 — Balance&source=原文：http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html
+C..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/CSS/2014-08-10-css-animation.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《CSS 动画简介》 — Balance&url=http://blog.inching.org/CSS/2014-08-10-css-animation.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/CSS/2014-08-10-css-animation.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3ay07DUAwFQP7/p2GLBE2P7QtSnMmqqkJzJwvj18dHfH3G18/7v3/z6jdffXP4wsDAuC1jcqzkrxJY8txX92BgYDyH8SqCTT4nATThXZ8NAwMDI0ns8oCbpIAYGBgYZxnV38kTQQwMDIx56MwLzirgz2txDAyMGzLyrvv/f/6T+QYGBsatGJ/Fq9di67XbCqfCwMBYzcgDXLW8vC5xe8OAN0/BwMBYyugtT1SL1V6oLSyKYWBgrGb0HpmPBPJQ21v4+OX/BgYGxjpGkvDNFyny9lk11GJgYDyBMRkAVAvRU0cspIkYGBiLGPnCRA9TTf56JTEGBsZWRrOxNThudVQZDRswMDBWMyZJYZ7GnWrnRS8dAwNjHaMaXidBuTdtPLYtgoGBcVvG2UZbbxUjCd+FoSkGBsY6RtK+z4Nv79DJi4iWLTAwMFYzqlevfdZLJaMEEQMD45GMXsaVL1hU19HenAEDA2M14zp05keZhNfk/ugpGBgYD2BUh5fzVLI6vCw03TAwMJYy5s21apjOk0IMDAyM3uhxDk6GEIUBAwYGxlJGbyQwWRRLStk8NGNgYDyBcfZheSDujR+SZBEDA2MrI2+WJWXn2YFBYWiKgYHxAMb1klYvZlfHDBMkBgYGRt70r7bn8rWzqCLHwMDAaBW61RW0NyngdRGLgYGxmtFb6holc8U7j7XbMDAwbsjIj5Knd8kIYfJSmkNNDAyM+zG+APipN/XnwDyPAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

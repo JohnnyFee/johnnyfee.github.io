@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>函数式编程初探 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="fullstack,functional">
+    <meta name="description" content="原文： http://www.ruanyifeng.com/blog/2012/04/functional_programming.html
+诞生50多年之后，函数式编程（functional programming）开始获得越来越多的关注。
+不仅最古老的函数式语言Lisp重获青春，而且新的函数式语言层出不穷，比如Erlang、clojure、Scala、F#等等。目前最当红的Python、Rub">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数式编程初探">
+<meta property="og:url" content="http://blog.inching.org/FullStack/2014-05-23-functional-practice.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文： http://www.ruanyifeng.com/blog/2012/04/functional_programming.html
+诞生50多年之后，函数式编程（functional programming）开始获得越来越多的关注。
+不仅最古老的函数式语言Lisp重获青春，而且新的函数式语言层出不穷，比如Erlang、clojure、Scala、F#等等。目前最当红的Python、Rub">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/bg2012040601.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="函数式编程初探">
+<meta name="twitter:description" content="原文： http://www.ruanyifeng.com/blog/2012/04/functional_programming.html
+诞生50多年之后，函数式编程（functional programming）开始获得越来越多的关注。
+不仅最古老的函数式语言Lisp重获青春，而且新的函数式语言层出不穷，比如Erlang、clojure、Scala、F#等等。目前最当红的Python、Rub">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/bg2012040601.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">函数式编程初探</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">函数式编程初探</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-22T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/FullStack/">FullStack</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一、定义"><span class="post-toc-text">一、定义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二、特点"><span class="post-toc-text">二、特点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-函数是”第一等公民”"><span class="post-toc-text">1. 函数是”第一等公民”</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-只用”表达式”，不用”语句”"><span class="post-toc-text">2. 只用”表达式”，不用”语句”</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-没有”副作用”"><span class="post-toc-text">3. 没有”副作用”</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-不修改状态"><span class="post-toc-text">4. 不修改状态</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-引用透明"><span class="post-toc-text">5. 引用透明</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#三、意义"><span class="post-toc-text">三、意义</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-代码简洁，开发快速"><span class="post-toc-text">1. 代码简洁，开发快速</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-接近自然语言，易于理解"><span class="post-toc-text">2. 接近自然语言，易于理解</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-更方便的代码管理"><span class="post-toc-text">3. 更方便的代码管理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-易于”并发编程”"><span class="post-toc-text">4. 易于”并发编程”</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-代码的热升级"><span class="post-toc-text">5. 代码的热升级*</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-functional-practice"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">函数式编程初探</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-23 00:00:00" datetime="2014-05-22T16:00:00.000Z"  itemprop="datePublished">2014-05-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/FullStack/">FullStack</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>原文： <a href="http://www.ruanyifeng.com/blog/2012/04/functional_programming.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2012/04/functional_programming.html</a></p>
+<p>诞生50多年之后，<a href="http://en.wikipedia.org/wiki/Functional_programming" target="_blank" rel="external">函数式编程</a>（functional programming）开始获得越来越多的关注。</p>
+<p>不仅最古老的函数式语言Lisp重获青春，而且新的函数式语言层出不穷，比如Erlang、clojure、Scala、F#等等。目前最当红的Python、Ruby、Javascript，对函数式编程的支持都很强，就连老牌的面向对象的Java、面向过程的PHP，都忙不迭地加入对匿名函数的支持。越来越多的迹象表明，函数式编程已经不再是学术界的最爱，开始大踏步地在业界投入实用。</p>
+<p>也许继”面向对象编程”之后，”函数式编程”会成为下一个编程的主流范式（paradigm）。未来的程序员恐怕或多或少都必须懂一点。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/bg2012040601.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>但是，”函数式编程”看上去比较难，缺乏通俗的入门教程，各种介绍文章都充斥着数学符号和专用术语，让人读了如坠云雾。就连最基本的问题”什么是函数式编程”，网上都搜不到易懂的回答。</p>
+<p>下面是我的”函数式编程”学习笔记，分享出来，与大家一起探讨。内容不涉及数学（我也不懂<a href="http://en.wikipedia.org/wiki/Lambda_calculus" target="_blank" rel="external">Lambda Calculus</a>），也不涉及高级特性（比如<a href="http://en.wikipedia.org/wiki/Lazy_evaluation" target="_blank" rel="external">lazy evaluation</a>和<a href="http://en.wikipedia.org/wiki/Currying" target="_blank" rel="external">currying</a>），只求尽量简单通俗地整理和表达，我现在所理解的”函数式编程”以及它的意义。</p>
+<p>我主要参考了Slava Akhmechet的<em><a href="http://www.defmacro.org/ramblings/fp.html" target="_blank" rel="external">“Functional Programming For The Rest of Us”</a></em>。</p>
+<a id="more"></a>
+<h2 id="一、定义"><a href="#一、定义" class="headerlink" title="一、定义"></a>一、定义</h2><p>简单说，”函数式编程”是一种<a href="http://en.wikipedia.org/wiki/Programming_paradigm" target="_blank" rel="external">“编程范式”</a>（programming paradigm），也就是如何编写程序的方法论。</p>
+<p>它属于<a href="http://en.wikipedia.org/wiki/Structured_programming" target="_blank" rel="external">“结构化编程”</a>的一种，主要思想是把运算过程尽量写成一系列嵌套的函数调用。举例来说，现在有这样一个数学表达式：</p>
+<pre><code>(1 + 2) * 3 - 4
+</code></pre><p>传统的过程式编程，可能这样写：</p>
+<pre><code>var a = 1 + 2;
+var b = a * 3;
+var c = b - 4;
+</code></pre><p>函数式编程要求使用函数，我们可以把运算过程<a href="http://lostechies.com/derickbailey/2012/01/24/some-thoughts-on-functional-javascript/" target="_blank" rel="external">定义</a>为不同的函数，然后写成下面这样：</p>
+<pre><code>var result = subtract(multiply(add(1,2), 3), 4);
+</code></pre><p>这就是函数式编程。</p>
+<h2 id="二、特点"><a href="#二、特点" class="headerlink" title="二、特点"></a>二、特点</h2><p>函数式编程具有五个鲜明的特点。</p>
+<h3 id="1-函数是”第一等公民”"><a href="#1-函数是”第一等公民”" class="headerlink" title="1. 函数是”第一等公民”"></a>1. 函数是”第一等公民”</h3><p>所谓<a href="http://en.wikipedia.org/wiki/First-class_function" target="_blank" rel="external">“第一等公民”</a>（first class），指的是函数与其他数据类型一样，处于平等地位，可以赋值给其他变量，也可以作为参数，传入另一个函数，或者作为别的函数的返回值。</p>
+<p>举例来说，下面代码中的print变量就是一个函数，可以作为另一个函数的参数。</p>
+<pre><code>var print = function(i){ console.log(i);};
+[1,2,3].forEach(print);
+</code></pre><h3 id="2-只用”表达式”，不用”语句”"><a href="#2-只用”表达式”，不用”语句”" class="headerlink" title="2. 只用”表达式”，不用”语句”"></a>2. 只用”表达式”，不用”语句”</h3><p>“表达式”（expression）是一个单纯的运算过程，总是有返回值；”语句”（statement）是执行某种操作，没有返回值。函数式编程要求，只使用表达式，不使用语句。也就是说，每一步都是单纯的运算，而且都有返回值。</p>
+<p>原因是函数式编程的开发动机，一开始就是为了处理运算（computation），不考虑系统的读写（I/O）。”语句”属于对系统的读写操作，所以就被排斥在外。</p>
+<p>当然，实际应用中，不做I/O是不可能的。因此，编程过程中，函数式编程只要求把I/O限制到最小，不要有不必要的读写行为，保持计算过程的单纯性。</p>
+<h3 id="3-没有”副作用”"><a href="#3-没有”副作用”" class="headerlink" title="3. 没有”副作用”"></a>3. 没有”副作用”</h3><p>所谓<a href="http://en.wikipedia.org/wiki/Side_effect_(computer_science" target="_blank" rel="external">“副作用”</a>)（side effect），指的是函数内部与外部互动（最典型的情况，就是修改全局变量的值），产生运算以外的其他结果。</p>
+<p>函数式编程强调没有”副作用”，意味着函数要保持独立，所有功能就是返回一个新的值，没有其他行为，尤其是不得修改外部变量的值。</p>
+<h3 id="4-不修改状态"><a href="#4-不修改状态" class="headerlink" title="4. 不修改状态"></a>4. 不修改状态</h3><p>上一点已经提到，函数式编程只是返回新的值，不修改系统变量。因此，不修改变量，也是它的一个重要特点。</p>
+<p>在其他类型的语言中，变量往往用来保存”状态”（state）。不修改变量，意味着状态不能保存在变量中。函数式编程使用参数保存状态，最好的例子就是递归。下面的代码是一个将字符串逆序排列的函数，它演示了不同的参数如何决定了运算所处的”状态”。</p>
+<pre><code>function reverse(string) {
+    if(string.length == 0) {
+        return string;
+    } else {
+        return reverse(string.substring(1, string.length)) + string.substring(0, 1);
+    }
+}
+</code></pre><p>由于使用了递归，函数式语言的运行速度比较慢，这是它长期不能在业界推广的主要原因。</p>
+<h3 id="5-引用透明"><a href="#5-引用透明" class="headerlink" title="5. 引用透明"></a>5. 引用透明</h3><p>引用透明（Referential transparency），指的是函数的运行不依赖于外部变量或”状态”，只依赖于输入的参数，任何时候只要参数相同，引用函数所得到的返回值总是相同的。</p>
+<p>有了前面的第三点和第四点，这点是很显然的。其他类型的语言，函数的返回值往往与系统状态有关，不同的状态之下，返回值是不一样的。这就叫”引用不透明”，很不利于观察和理解程序的行为。</p>
+<h2 id="三、意义"><a href="#三、意义" class="headerlink" title="三、意义"></a>三、意义</h2><p>函数式编程到底有什么好处，为什么会变得越来越流行？</p>
+<h3 id="1-代码简洁，开发快速"><a href="#1-代码简洁，开发快速" class="headerlink" title="1. 代码简洁，开发快速"></a>1. 代码简洁，开发快速</h3><p>函数式编程大量使用函数，减少了代码的重复，因此程序比较短，开发速度较快。</p>
+<p>Paul Graham在<a href="http://www.ruanyifeng.com/docs/pg/" target="_blank" rel="external">《黑客与画家》</a>一书中<a href="http://www.ruanyifeng.com/blog/2010/10/why_lisp_is_superior.html" target="_blank" rel="external">写道</a>：同样功能的程序，极端情况下，Lisp代码的长度可能是C代码的二十分之一。</p>
+<p>如果程序员每天所写的代码行数基本相同，这就意味着，”C语言需要一年时间完成开发某个功能，Lisp语言只需要不到三星期。反过来说，如果某个新功能，Lisp语言完成开发需要三个月，C语言需要写五年。”当然，这样的对比故意夸大了差异，但是”在一个高度竞争的市场中，即使开发速度只相差两三倍，也足以使得你永远处在落后的位置。”</p>
+<h3 id="2-接近自然语言，易于理解"><a href="#2-接近自然语言，易于理解" class="headerlink" title="2. 接近自然语言，易于理解"></a>2. 接近自然语言，易于理解</h3><p>函数式编程的自由度很高，可以写出很接近自然语言的代码。</p>
+<p>前文曾经将表达式(1 + 2) * 3 - 4，写成函数式语言：</p>
+<pre><code>subtract(multiply(add(1,2), 3), 4)
+</code></pre><p>对它进行变形，不难得到另一种写法：</p>
+<pre><code>add(1,2).multiply(3).subtract(4)
+</code></pre><p>这基本就是自然语言的表达了。再看下面的代码，大家应该一眼就能明白它的意思吧：</p>
+<pre><code>merge([1,2],[3,4]).sort().search(&quot;2&quot;)
+</code></pre><p>因此，函数式编程的代码更容易理解。</p>
+<h3 id="3-更方便的代码管理"><a href="#3-更方便的代码管理" class="headerlink" title="3. 更方便的代码管理"></a>3. 更方便的代码管理</h3><p>函数式编程不依赖、也不会改变外界的状态，只要给定输入参数，返回的结果必定相同。因此，每一个函数都可以被看做独立单元，很有利于进行单元测试（unit testing）和除错（debugging），以及模块化组合。</p>
+<h3 id="4-易于”并发编程”"><a href="#4-易于”并发编程”" class="headerlink" title="4. 易于”并发编程”"></a>4. 易于”并发编程”</h3><p>函数式编程不需要考虑”死锁”（deadlock），因为它不修改变量，所以根本不存在”锁”线程的问题。不必担心一个线程的数据，被另一个线程修改，所以可以很放心地把工作分摊到多个线程，部署”并发编程”（concurrency）。</p>
+<p>请看下面的代码：</p>
+<pre><code>var s1 = Op1();
+var s2 = Op2();
+var s3 = concat(s1, s2);
+</code></pre><p>由于s1和s2互不干扰，不会修改变量，谁先执行是无所谓的，所以可以放心地增加线程，把它们分配在两个线程上完成。其他类型的语言就做不到这一点，因为s1可能会修改系统状态，而s2可能会用到这些状态，所以必须保证s2在s1之后运行，自然也就不能部署到其他线程上了。</p>
+<p>多核CPU是将来的潮流，所以函数式编程的这个特性非常重要。</p>
+<h3 id="5-代码的热升级"><a href="#5-代码的热升级" class="headerlink" title="5. 代码的热升级*"></a>5. 代码的热升级*</h3><p>函数式编程没有副作用，只要保证接口不变，内部实现是外部无关的。所以，可以在运行状态下直接升级代码，不需要重启，也不需要停机。<a href="http://en.wikipedia.org/wiki/Erlang_(programming_language" target="_blank" rel="external">Erlang</a>)语言早就证明了这一点，它是瑞典爱立信公司为了管理电话系统而开发的，电话系统的升级当然是不能停机的。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/FullStack/2014-05-23-functional-practice.html" target="_blank" rel="external">http://blog.inching.org/FullStack/2014-05-23-functional-practice.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fullstack/">fullstack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/functional/">functional</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/FullStack/2014-05-23-functional-practice.html&title=《函数式编程初探》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/FullStack/2014-05-23-functional-practice.html&title=《函数式编程初探》 — Balance&source=原文： http://www.ruanyifeng.com/blog/2012/04/functional_programming.html
+诞生50多年..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/FullStack/2014-05-23-functional-practice.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《函数式编程初探》 — Balance&url=http://blog.inching.org/FullStack/2014-05-23-functional-practice.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/FullStack/2014-05-23-functional-practice.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-05-26-javascript-async-load.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Javascript 异步加载</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Node/2014-05-22-node-module.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Export This: Interface Design Patterns for Node.js Modules</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/FullStack/2014-05-23-functional-practice.html&title=《函数式编程初探》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/FullStack/2014-05-23-functional-practice.html&title=《函数式编程初探》 — Balance&source=原文： http://www.ruanyifeng.com/blog/2012/04/functional_programming.html
+诞生50多年..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/FullStack/2014-05-23-functional-practice.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《函数式编程初探》 — Balance&url=http://blog.inching.org/FullStack/2014-05-23-functional-practice.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/FullStack/2014-05-23-functional-practice.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtklEQVR42u3aMW7DMAwF0Nz/0inQqUCb+JMUUw9Pk9Gksp4GiSH5eMTj+T1+Pv/8y+/vJLP9nufVzNX5ywMPDw+vtfRXI1lQ8vre0vP1vJwfDw8Pb42XXwbvL4Yc3Ls28jXj4eHh3YHXi1p710xvPXh4eHj35OXJiCjkDQJuPDw8vHvykqM8f042orpl67kWPDw8vJjXK4D97/N6fQ8PDw9vnESYFL2qjQi9y+CP1eLh4eEt8OZJ1WpInackqiFy4RcDHh4e3oCXNwQkB31S7jqLv7iQ8PDw8BZ4k8LSJOWahNfVAtvF9YCHh4d3iJckBaqF/0mjVX7oJ6E8Hh4e3gYvP5rLkw4qcmdbtfDw8PDO8pLX91IM1Y3rsS8+xcPDw1vj5aWmyferl0cvoXyRpcbDw8M7yssX1Esu5MhqiP9yZjw8PLxlXvW4r25QFATnGZQ8gYuHh4e3wOtdEqeaAKr/VZgTDw8Pb4E36dXqtQXkz731XPSU4eHh4Y15vfamXoI1SrwOgvKLnjI8PDy8o7w8GdFLxU76oHpFMjw8PLw93rzY/36659vRawiYFO3w8PDw5rxJo0Bhz46Wyh7BwMPDw/skr3ccnz3cq5hCbI6Hh4d3iFdNPVSXmBfYqmF9oekKDw8P7xCverr2wuIkYZFfYL2WLDw8PLxTvOrBne/NxlGeNy7g4eHhfYY3TxCcSshOthsPDw9vm9dL+E7K/8l2VBd3OJ+Nh4eH9/aNz+JIju8cMEnvRm1heHh4eAu8+eF7NqWbM5KtxMPDw9vjJZdB78f/qcsgD7v/+BQPDw9vjZcc+tUF9VK6p4pteHh4eHfg5UupXgaTjbsI/fHw8PBuwMuzGoXAN0hM9JoJ8PDw8PZ4vQasSeBbfXvzesDDw8Nb4PUapE41B1STHfMmLTw8PLwB7wsw1FS5ZkyKhAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

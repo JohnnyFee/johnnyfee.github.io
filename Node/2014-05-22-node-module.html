@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Export This: Interface Design Patterns for Node.js Modules | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="node,module">
+    <meta name="description" content="原文： http://bites.goodeggs.com/posts/export-this
+When you require a module in Node, what are you getting back? When you write a module, what options do you have for designing its interface?
+When I was">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Export This: Interface Design Patterns for Node.js Modules">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-05-22-node-module.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文： http://bites.goodeggs.com/posts/export-this
+When you require a module in Node, what are you getting back? When you write a module, what options do you have for designing its interface?
+When I was">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/20131010224155750.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/20131010230949562.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/20131010231244734.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Export This: Interface Design Patterns for Node.js Modules">
+<meta name="twitter:description" content="原文： http://bites.goodeggs.com/posts/export-this
+When you require a module in Node, what are you getting back? When you write a module, what options do you have for designing its interface?
+When I was">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/20131010224155750.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Export This: Interface Design Patterns for Node.js Modules</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Export This: Interface Design Patterns for Node.js Modules</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-21T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#require-exports-and-module-exports"><span class="post-toc-text">require, exports and module.exports</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#module-exports-vs-exports"><span class="post-toc-text">module.exports vs exports</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#exports的缓存"><span class="post-toc-text">exports的缓存</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Exports-a-Namespace"><span class="post-toc-text">Exports a Namespace</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Exports-a-Function"><span class="post-toc-text">Exports a Function</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Exports-a-Higher-Order-Function"><span class="post-toc-text">Exports a Higher Order Function</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Exports-a-Constructor"><span class="post-toc-text">Exports a Constructor</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Exports-a-Singleton"><span class="post-toc-text">Exports a Singleton</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Extends-a-Global-Object"><span class="post-toc-text">Extends a Global Object</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Applies-a-Monkey-Patch"><span class="post-toc-text">Applies a Monkey Patch</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Export-Away"><span class="post-toc-text">Export Away!</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-module"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Export This: Interface Design Patterns for Node.js Modules</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-22 00:00:00" datetime="2014-05-21T16:00:00.000Z"  itemprop="datePublished">2014-05-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>原文： <a href="http://bites.goodeggs.com/posts/export-this" target="_blank" rel="external">http://bites.goodeggs.com/posts/export-this</a></p>
+<p>When you require a module in Node, what are you getting back? When you write a module, what options do you have for designing its interface?</p>
+<p>When I was first learning to work in Node I found the sheer number of ways to do things to be a bit overwhelming. JavaScript is extremely flexible and the community of developers contributing to open source seem to have different styles for implementing the same thing.</p>
+<p>On my journey with Node I’ve been keeping an eye out the Good Way to do things and adopting them for use in my own work and in our work at Good Eggs.</p>
+<p>In this post I’ll share my observations of the Node module system and the ways in which you can use it to encapsulate and share code. My goal is to identify and illustrate useful patterns for module interface design and to help you understand when and how to use them in your own work.</p>
+<a id="more"></a>
+<p>I discuss seven patterns below, many of which can be used in combination. They are:</p>
+<ul>
+<li><a href="#Exports_a_Namespace">Exports a Namespace</a></li>
+<li><a href="#Exports_a_Function">Exports a Function</a></li>
+<li><a href="#Exports_a_Higher_Order_Function">Exports a Higher Order Function</a></li>
+<li><a href="#Exports_a_Constructor">Exports a Constructor</a></li>
+<li><a href="#Exports_a_Singleton">Exports a Singleton</a></li>
+<li><a href="#Extends_a_Global_Object">Extends a Global Object</a></li>
+<li><a href="#Applies_a_Monkey_Patch">Applies a Monkey Patch</a></li>
+</ul>
+<h2 id="require-exports-and-module-exports"><a href="#require-exports-and-module-exports" class="headerlink" title="require, exports and module.exports"></a>require, exports and module.exports</h2><p>First some fundamentals.</p>
+<p>In Node requiring a file is requiring the module it defines. All modules have a reference to an implicit module object whose property module.exports is what is returned when you call require. A reference to module.exports is also available as exports.</p>
+<p>It’s as if there were an implicit line at the beginning of each module that reads:</p>
+<pre><code>var exports = module.exports = {};
+</code></pre><p>If you want to export a function, you have to assign it to module.exports. Assigning a function to exports would just reassign the exports reference but module.exports would still point at the original empty object.</p>
+<p>So we can define a module function.js that exports a function:</p>
+<pre><code>module.exports = function () {
+  return {name: &apos;Jane&apos;};
+};
+</code></pre><p>and require it with:</p>
+<pre><code>var func = require(&apos;./function&apos;);
+</code></pre><p>An important behavior of require is that it caches the value of module.exports and returns that same value for all future calls to require. It caches based on the absolute file path of the required file. So if you want your module to be able to return different values, you should have it export a function that can then be invoked to return a new value.</p>
+<p>To demonstrate with the Node REPL:</p>
+<pre><code>$ node
+&gt; f1 = require(&apos;/Users/alon/Projects/export_this/function&apos;);
+[Function]
+&gt; f2 = require(&apos;./function&apos;); // Same location
+[Function]
+&gt; f1 === f2
+true
+&gt; f1() === f2()
+false
+</code></pre><p>You can see that require is returning the same function instance but that the objects returned by that function are different instances for each call.</p>
+<p>For more detail on Node’s module system <a href="http://nodejs.org/api/modules.html" target="_blank" rel="external">the core docs</a> provide good detail and are worth a read.</p>
+<p>And now on to the interface patterns.</p>
+<h3 id="module-exports-vs-exports"><a href="#module-exports-vs-exports" class="headerlink" title="module.exports vs exports"></a>module.exports vs exports</h3><p>如果想不借助global，在不同模块之间共享代码，就需要用到exports属性。令人有些迷惑的是，在node.js里，还有另外一个属性，是module.exports。一般情况下，这2个属性的作用是一致的，但是如果对exports或者module.exports赋值的话，又会呈现出令人奇怪的结果</p>
+<p>网上关于这个话题的讨论很多，流传最广的是这个帖子：<a href="http://www.hacksparrow.com/node-js-exports-vs-module-exports.html" target="_blank" rel="external">exports vs module.exports</a>，但是这篇帖子里有些说法明显是错误的，却没有人指出来。下面说一下我的理解</p>
+<p>首先，exports和module.exports都是某个对象的引用（reference），初始情况下，它们指向同一个object，如果不修改module.exports的引用的话，这个object稍后会被导出</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/20131010224155750.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>所以不管用exports还是module.exports，给这个object添加属性或函数，都是完全等效的</p>
+<pre><code>exports.name = &quot;Tony&quot;;
+module.exports.age = 33;
+
+var b = require(&quot;./b&quot;);
+console.log(b);// {name:&quot;Tony&quot;, age:33}
+</code></pre><p>所以如果只是给对象添加属性，不改变exports和module.exports的引用目标的话，是完全没有问题的 但是有时候，希望导出的是一个构造函数，那么一般会这么写：</p>
+<pre><code>module.exports = function (name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+exports.sex = &quot;male&quot;;
+
+var Person = require(&quot;./b&quot;);
+var person = new Person(&quot;Tony&quot;, 33);
+console.log(person);// {name:&quot;Tony&quot;, age:33}
+console.log(Person.sex);// undefined
+</code></pre><p>这个sex属性是不会导出的，因为引用关系已经改变： </p>
+<p><img src="http://johnnyimages.qiniudn.com/20131010230949562.png" alt=""></p>
+<p>而node导出的， 永远是module.exports指向的对象， 在这里就是function。所以exports指向的那个object，现在已经不会被导出了，为其增加的属性当然也就没用了</p>
+<p>如果希望把sex属性也导出，就需要这样写：</p>
+<pre><code>exports = module.exports = function (name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+exports.sex = &quot;male&quot;;
+</code></pre><p>事实上，查看很多module的源代码，会发现就是这么写的，这时的引用关系： </p>
+<p><img src="http://johnnyimages.qiniudn.com/20131010231244734.png" alt=""></p>
+<p>所以我感觉exports根本是多余的，最终只会导出一个object，却设计了2个引用，很多时候反而会造成迷惑。exports的唯一好处就是可以少敲几个字，还不如只保留module.exports就好了</p>
+<h3 id="exports的缓存"><a href="#exports的缓存" class="headerlink" title="exports的缓存"></a>exports的缓存</h3><p>执行require之后，目标模块的代码会被完整地执行一次，然后module.exports对象被返回</p>
+<p>需要注意的是，这个过程只会发生一次，后面重复的require，只会拿到 同一个对象</p>
+<pre><code>exports.name = &quot;Tony&quot;;
+exports.age = 33;
+
+var b1 = require(&quot;./b&quot;);
+var b2 = require(&quot;./b&quot;);
+console.log(b1 === b2); // true
+
+console.log(b2.age);// 33
+b1.age++;
+console.log(b2.age);// 34
+
+var b3=require(&quot;./b&quot;);
+console.log(b3.age);// 34
+</code></pre><h2 id="Exports-a-Namespace"><a href="#Exports-a-Namespace" class="headerlink" title="Exports a Namespace"></a>Exports a Namespace</h2><p>A simple and common pattern is to export an object with a number of properties, primarily but not limited to functions. This allows the code requiring the module to pull in a collection of related functionality under a single namespace.</p>
+<p>When you require a module that exports a namespace, you’ll usually either assign the entire namespace to a variable and use its members through that reference, or assign members directly to local variables:</p>
+<pre><code>var fs = require(&apos;fs&apos;),
+    readFile = fs.readFile,
+    ReadStream = fs.ReadStream;
+
+readFile(&apos;./file.txt&apos;, function(err, data) {
+  console.log(&quot;readFile contents: &apos;%s&apos;&quot;, data);
+});
+
+new ReadStream(&apos;./file.txt&apos;).on(&apos;data&apos;, function(data) {
+  console.log(&quot;ReadStream contents: &apos;%s&apos;&quot;, data);
+});
+</code></pre><p>Here’s what the <a href="https://github.com/joyent/node/blob/e5346932bcbc523489c9418b82fde31cb666ee99/lib/fs.js#L33" target="_blank" rel="external">fs core module</a> is doing:</p>
+<pre><code>var fs = exports;
+</code></pre><p>It first assigns the local variable fs to the implicit exports object and then assigns function references to properties of fs. Because fs references exports and exports is the object you get when you call require(‘fs’) anything assigned to fs will be available on the object you get from require.</p>
+<pre><code>fs.readFile = function(path, options, callback_) {
+  // ...
+};
+</code></pre><p>Anything is fair game. It then exports a constructor:</p>
+<pre><code>fs.ReadStream = ReadStream;
+
+function ReadStream(path, options) {
+  // ...
+}
+ReadStream.prototype.open = function() {
+  // ...
+}
+</code></pre><p>When exporting a namespace, you can assign properties to exports as the fs module does above, or assign a new object to module.exports.</p>
+<pre><code>module.exports = {
+  version: &apos;1.0&apos;,
+
+  doSomething: function() {
+    //...
+  }
+}
+</code></pre><p>A common use of exporting a namespace is to export the root of another module so that one require statement gives the caller access to a number of other modules. At Good Eggs, we implement each of our domain models in a separate module that exports the model constructor (see <a href="http://bites.goodeggs.com/posts/export-this/#constructor" target="_blank" rel="external">Exports a Constructor</a> below) and then have an index file in the directory where the models live that exports all of the models. This allows us to pull in our models under a models namespace.</p>
+<pre><code>var models = require(&apos;./models&apos;),
+    User = models.User,
+    Product = models.Product;
+</code></pre><p>For CoffeeScript users, <a href="http://coffeescript.org/#destructuring" target="_blank" rel="external">destructuring assignment</a> make this even cleaner.</p>
+<pre><code>{User, Product} = require &apos;./models&apos;
+</code></pre><p>index.js might look like:</p>
+<pre><code>exports.User = require(&apos;./user&apos;);
+exports.Person = require(&apos;./person&apos;);
+</code></pre><p>In reality, we use a small library that requires all sibling files and exports their modules with CamelCase names so the index.js file in our models directory actually reads:</p>
+<pre><code>module.exports = require(&apos;../lib/require_siblings&apos;)(__filename);
+</code></pre><h2 id="Exports-a-Function"><a href="#Exports-a-Function" class="headerlink" title="Exports a Function"></a>Exports a Function</h2><p>Another pattern is to export a function as the interface to a module. A common use of this pattern is to export a factory function that returns an object when invoked. We see this when using <a href="http://expressjs.com/" target="_blank" rel="external">Express.js</a>:</p>
+<pre><code>var express = require(&apos;express&apos;);
+var app = express();
+
+app.get(&apos;/hello&apos;, function (req, res) {
+  res.send &quot;Hi there! We&apos;re using Express v&quot; + express.version;
+});
+</code></pre><p>The function exported by Express is used to create a new Express application. In your own use of this pattern, your factory function may take arguments used to configure or initialize the object returned.</p>
+<p>To export a function, you must assign your function to module.exports. <a href="https://github.com/visionmedia/express/blob/2e68ddbae9cec2d0b22f48f35ef4da964f51949e/lib/express.js#L18" target="_blank" rel="external">Express does</a>:</p>
+<pre><code>exports = module.exports = createApplication;
+
+...
+
+function createApplication () {
+  ...
+}
+</code></pre><p>It’s assigning the createApplication function to module.exports and then to the implicit exports variable. Now exports is the function that the module exports.</p>
+<p>Express also uses this exported function as a namespace:</p>
+<pre><code>exports.version = &apos;3.1.1&apos;;
+</code></pre><p>Note that there’s nothing to stop us from using the exported function as a namespace that can expose references to other functions, constructors or objects serving as namespaces themselves.</p>
+<p>When exporting a function, it is good practice to name the function so that it will show up in stack traces. Note the stack trace differences in these two examples:</p>
+<pre><code>// bomb1.js
+module.exports = function () {
+  throw new Error(&apos;boom&apos;);
+};
+
+// bomb2.js
+module.exports = function bomb() {
+  throw new Error(&apos;boom&apos;);
+};
+
+$ node
+&gt; bomb = require(&apos;./bomb1&apos;);
+[Function]
+&gt; bomb()
+Error: boom
+    at module.exports (/Users/alon/Projects/export_this/bomb1.js:2:9)
+    at repl:1:2
+    ...
+&gt; bomb = require(&apos;./bomb2&apos;);
+[Function: bomb]
+&gt; bomb()
+Error: boom
+    at bomb (/Users/alon/Projects/export_this/bomb2.js:2:9)
+    at repl:1:2
+    ...
+</code></pre><p>There are a couple specific cases of exporting a function that are worth calling out as distinct patterns.</p>
+<h2 id="Exports-a-Higher-Order-Function"><a href="#Exports-a-Higher-Order-Function" class="headerlink" title="Exports a Higher Order Function"></a>Exports a Higher Order Function</h2><p>A higher-order function, or functor, is a function that takes one or more functions as an input and/or outputs a function. We’re talking about the latter case - a function that returns a function.</p>
+<p>Exporting a higher order function is a useful pattern when you want to return a function from your module but need to take input that controls the behavior of that function.</p>
+<p><a href="http://www.senchalabs.org/connect/" target="_blank" rel="external">Connect middleware</a> provide a lot of pluggable functionality for Express and other web frameworks. A middleware is a function that takes three arguments - (req, res, next). The convention in connect middleware is to export a function that when called returns the middleware function. This allows the exported function to take arguments that can be used to configure the middleware and are available through closure scope to the middleware when it is handling a request.</p>
+<p>For example, here’s the connect <a href="http://www.senchalabs.org/connect/query.html" target="_blank" rel="external">query middleware</a> used internally by Express to parse query string parameters into a an object available as req.query.</p>
+<pre><code>var connect = require(&apos;connect&apos;),
+    query = require(&apos;connect/lib/middleware/query&apos;);
+
+var app = connect();
+app.use(query({maxKeys: 100}));
+</code></pre><p>The query source looks like:</p>
+<pre><code>var qs = require(&apos;qs&apos;)
+  , parse = require(&apos;../utils&apos;).parseUrl;
+
+module.exports = function query(options){
+  return function query(req, res, next){
+    if (!req.query) {
+      req.query = ~req.url.indexOf(&apos;?&apos;)
+        ? qs.parse(parse(req).query, options)
+        : {};
+    }
+
+    next();
+  };
+};
+</code></pre><p>For every request handled by the query middleware, the options argument available through closure scope is passed along to Node’s core qs (query string) module.</p>
+<p>This is a common and very flexible pattern for module design and one you are likely to find very useful in your own work.</p>
+<h2 id="Exports-a-Constructor"><a href="#Exports-a-Constructor" class="headerlink" title="Exports a Constructor"></a>Exports a Constructor</h2><p>We define classes in JavaScript with constructor functions and create instances of classes with the new keyword.</p>
+<pre><code>function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.greet = function() {
+  return &quot;Hi, I&apos;m Jane.&quot;;
+};
+
+var person = new Person(&apos;Jane&apos;);
+console.log(person.greet()); // prints: Hi, I&apos;m Jane
+</code></pre><p>For this pattern implement a class-per-file and export the constructor to make your project organization clear and to make it easy for other developers to find the implementation of a class. At Good Eggs, we implement classes in files with underscore_names and assign them to CamelCase names.</p>
+<pre><code>var Person = require(&apos;./person&apos;);
+
+var person = new Person(&apos;Jane&apos;);
+</code></pre><p>The implementation might look like:</p>
+<pre><code>function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.greet = function() {
+  return &quot;Hi, I&apos;m &quot; + this.name;
+};
+
+module.exports = Person;
+</code></pre><h2 id="Exports-a-Singleton"><a href="#Exports-a-Singleton" class="headerlink" title="Exports a Singleton"></a>Exports a Singleton</h2><p>Export a <a href="http://en.wikipedia.org/wiki/Singleton_pattern" target="_blank" rel="external">singleton</a> when you want all users of your module to share the state and behavior of a single class instance.</p>
+<p><a href="http://mongoosejs.com/" target="_blank" rel="external">Mongoose</a> is an object-document mapping library used to create rich domain models persisted in MongoDB.</p>
+<pre><code>var mongoose = require(&apos;mongoose&apos;);
+mongoose.connect(&apos;mongodb://localhost/test&apos;);
+
+var Cat = mongoose.model(&apos;Cat&apos;, { name: String });
+
+var kitty = new Cat({ name: &apos;Zildjian&apos; });
+kitty.save(function (err) {
+  if (err) // ...
+  console.log(&apos;meow&apos;);
+});
+</code></pre><p>What is that mongoose object we get back when we require Mongoose? Internally, the mongoose module is doing:</p>
+<pre><code>function Mongoose() {
+  //...
+}
+
+module.exports = exports = new Mongoose();
+</code></pre><p>Because require caches the value assigned to module.exports, all calls to require(‘mongoose’) will return this same instance ensuring that it is a singleton in our application. Mongoose uses an object-oriented design to encapsulate and decouple functionality, maintain state and support readability and comprehension, but creates a simple interface to users by creating and exporting an instance of the Mongoose class.</p>
+<p>It also uses this singleton instance as a namespace to make other constructors available if needed by the user, including the Mongoose constructor itself. You might use the Mongoose constructor to create additional instances of mongoose connecting to additional MongoDB databases.</p>
+<p>Internally, Mongoose does:</p>
+<pre><code>Mongoose.prototype.Mongoose = Mongoose;
+</code></pre><p>So that you can do:</p>
+<pre><code>var mongoose = require(&apos;mongoose&apos;),
+    Mongoose = mongoose.Mongoose;
+
+var myMongoose = new Mongoose();
+myMongoose.connect(&apos;mongodb://localhost/test&apos;);
+</code></pre><h2 id="Extends-a-Global-Object"><a href="#Extends-a-Global-Object" class="headerlink" title="Extends a Global Object"></a>Extends a Global Object</h2><p>A required module can do more than just export a value. It can also modify global objects or objects returned when requiring other modules. It can define new global objects. It can just do this or do this in addition to exporting something useful.</p>
+<p>Use this pattern when you need to extend or alter the behavior of global objects to provide the behavior delivered by your module. While certainly controversial and to be used judiciously (especially in open source work), this pattern can also be indispensable.</p>
+<p><a href="https://github.com/visionmedia/should.js" target="_blank" rel="external">Should.js</a> is an assertion library designed to be used in unit testing:</p>
+<pre><code>require(&apos;should&apos;);
+
+var user = {
+    name: &apos;Jane&apos;
+};
+
+user.name.should.equal(&apos;Jane&apos;);
+</code></pre><p>Should.js <a href="https://github.com/visionmedia/should.js/blob/68000f47d01408cacb80441a1d9bf10ba423e54c/lib/should.js#L107-L113" target="_blank" rel="external">extends Object with a non-enumerable property should</a> to provide a clean syntax for writing unit test asserts. Internally, should.js does:</p>
+<pre><code>var should = function(obj) {
+  return new Assertion(util.isWrapperType(obj) ? obj.valueOf(): obj);
+};
+
+//...
+
+exports = module.exports = should;
+
+//...
+
+Object.defineProperty(Object.prototype, &apos;should&apos;, {
+  set: function(){},
+  get: function(){
+    return should(this);
+  },
+  configurable: true
+});
+</code></pre><p>Note that while Should.js exports the should function its primary use is through the should function it has added to Object.</p>
+<h2 id="Applies-a-Monkey-Patch"><a href="#Applies-a-Monkey-Patch" class="headerlink" title="Applies a Monkey Patch"></a>Applies a Monkey Patch</h2><p>By <a href="http://en.wikipedia.org/wiki/Monkey_patch" target="_blank" rel="external">monkey patch</a> I’m referring to “the dynamic modifications of a class or module at runtime, motivated by the intent to patch existing third-party code as a workaround to a bug or feature which does not act as desired.”</p>
+<p>Implement a module to patch an existing module when it doesn’t provide an interface to customizing its behavior in the way you need. This pattern is a variant of the previous. Instead of modifying a global object, we are relying on the caching behavior of Node’s module system to patch the same instance of a module that other code gets when it requires that module.</p>
+<p>By default Mongoose names MongoDB collections by lowercasing and pluralizing the model name. For a model named CreditCardAccountEntry we’d end up with a collection named creditcardaccountentries. I prefer credit_card_account_entries and I want this behavior universally.</p>
+<p>Here’s the source for a module that patches mongoose.model when the module is required:</p>
+<pre><code>var Mongoose = require(&apos;mongoose&apos;).Mongoose;
+var _ = require(&apos;underscore&apos;);
+
+var model = Mongoose.prototype.model;
+var modelWithUnderScoreCollectionName = function(name, schema, collection, skipInit) {
+  collection = collection || _(name).chain().underscore().pluralize().value();
+  model.call(this, name, schema, collection, skipInit);
+};
+Mongoose.prototype.model = modelWithUnderScoreCollectionName;
+</code></pre><p>When this module is required for the first time, it requires mongoose, redefines Mongoose.prototype.model and delegates back to the original implementation of model. Now all instances of Mongoose will have this new behavior. Note that it does not modify exports so the value returned to require will be the default empty exports object.</p>
+<p>As a side note, if you do choose to monkey patch existing code, use a chaining technique similar to my example above. Add your behavior then delegate back to the original implementation. While not foolproof, it is the safest way to patch third party code allowing you to take advantage of future updates to the library and minimizing conflict with other patches that may be applied.</p>
+<h2 id="Export-Away"><a href="#Export-Away" class="headerlink" title="Export Away!"></a>Export Away!</h2><p>The Node module system provides a simple mechanism for encapsulating functionality and creating clear interfaces to your code. I hope the seven patterns here are a useful breakdown of different strategies available to you.</p>
+<p>I haven’t been exhaustive and there are certainly other options available but I have attempted to describe the most common and useful. Have I missed anything that should be included here?</p>
+<p><em>Thanks to the incredibly prolific Node developer community for all the open source work from which I have done most of my learning. I encourage you to read the code of the libraries you are using and to find the great developers out there with clear, consistent and readable styles that can inspire your own. Special shout out to <a href="https://github.com/visionmedia" target="_blank" rel="external">TJ Holowaychuk</a> whose work on Express.js, Connect and Should.js are referenced above.</em></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://blog.csdn.net/kyfxbl/article/details/12587385" target="_blank" rel="external">node.js的global variable，和module.exports</a></li>
+<li><a href="http://fredkschott.com/post/2014/06/require-and-the-module-system" target="_blank" rel="external">Node.js Handbook - How <code>require()</code> Actually Works</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-05-22-node-module.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-05-22-node-module.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/module/">module</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-05-22-node-module.html&title=《Export This: Interface Design Patterns for Node.js Modules》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-05-22-node-module.html&title=《Export This: Interface Design Patterns for Node.js Modules》 — Balance&source=原文： http://bites.goodeggs.com/posts/export-this
+When you require a module in ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-05-22-node-module.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Export This: Interface Design Patterns for Node.js Modules》 — Balance&url=http://blog.inching.org/Node/2014-05-22-node-module.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-05-22-node-module.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/FullStack/2014-05-23-functional-practice.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">函数式编程初探</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-05-22-javascript-tutorial-route.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-05-22-node-module.html&title=《Export This: Interface Design Patterns for Node.js Modules》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-05-22-node-module.html&title=《Export This: Interface Design Patterns for Node.js Modules》 — Balance&source=原文： http://bites.goodeggs.com/posts/export-this
+When you require a module in ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-05-22-node-module.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Export This: Interface Design Patterns for Node.js Modules》 — Balance&url=http://blog.inching.org/Node/2014-05-22-node-module.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-05-22-node-module.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3aO27FMAwFUe9/004bILAyl7QKU6MqCAxbRwWf+LkuvG6wnp7//R/yzN8nX1syZMj4LINsrvOBNeZpD3xvMmTIOIfBP5+CCX79rfXzMmTIkNEJlOu39b8rQ4YMGTwF5Re7dRIrQ4YMGWsG2VAnTU2T1Y25uAwZMj7I6JTMdv+9pb8hQ4aMTzHucBFe2k6420uGDBmzGWnhPm0DkNZCLeDKkCHjZEbajORtTrIVHrL/qRrKkCFjEKMzQkHCMXkzP4LH/ciQIWM0g1/UXh6MwBc+HqxlyJAxlVFrEKZhunY0wSiGDBkyRjNqiWU/4Ka8uMEpQ4aMQQw+YlVrHvBSWtr4fPzdkCFDxjhG7fK3u0mwLtgFVBkyZIxgpMnqjiYBOZTWtIgMGTI+zkgDJS/MkQPi8yBB/i1DhoxxjLfSRZKO1hqlwcyIDBkyRjPScMxHIjrxMGimypAhYzSDBLULrLfaBgT/eK2UIUPGaAYpwZO0Nj0I3rVIQ7wMGTLmMfoB991Et1iYkyFDxjEMsrnaSAQvqBXLczJkyDiA0U8s0/JcGtDRsIUMGTLGMe5wpRe+2rbid8qQIWM0oxbmUjA/FJ5UF0O2DBkyPstIy/07RjHSIC5DhowzGTzwkcjNQ3DnKilDhgwZ+0bE1kdTTFllyJAhA49HkCIauVzGbVQZMmQcwCBJbGdz5MjSMpwMGTLOYaT3Lv7JdEQspcqQIeMAxg9EugPx74y7AQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

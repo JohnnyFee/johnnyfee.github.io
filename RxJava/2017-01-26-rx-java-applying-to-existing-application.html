@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Applying Reactive Programming to Existing Applications | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="java,rx,rxjava">
+    <meta name="description" content="From Collections to ObservablesThe following class represents a trivial repository abstracting us from a database:
+1234567891011class PersonDao &amp;#123;    List&amp;lt;Person&amp;gt; listPeople() &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Applying Reactive Programming to Existing Applications">
+<meta property="og:url" content="http://blog.inching.org/RxJava/2017-01-26-rx-java-applying-to-existing-application.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="From Collections to ObservablesThe following class represents a trivial repository abstracting us from a database:
+1234567891011class PersonDao &amp;#123;    List&amp;lt;Person&amp;gt; listPeople() &amp;#123;">
+<meta property="og:image" content="http://blog.inching.org/../uploads/rprx_04in01.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Applying Reactive Programming to Existing Applications">
+<meta name="twitter:description" content="From Collections to ObservablesThe following class represents a trivial repository abstracting us from a database:
+1234567891011class PersonDao &amp;#123;    List&amp;lt;Person&amp;gt; listPeople() &amp;#123;">
+<meta name="twitter:image" content="http://blog.inching.org/../uploads/rprx_04in01.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Applying Reactive Programming to Existing Applications</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Applying Reactive Programming to Existing Applications</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-01-25T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-01-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#From-Collections-to-Observables"><span class="post-toc-text">From Collections to Observables</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#BlockingObservable-Exiting-the-Reactive-World"><span class="post-toc-text">BlockingObservable: Exiting the Reactive World</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Composing-Observables"><span class="post-toc-text">Composing Observables</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Replacing-Callbacks-with-Streams"><span class="post-toc-text">Replacing Callbacks with Streams</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-rx-java-applying-to-existing-application"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Applying Reactive Programming to Existing Applications</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-01-26 00:00:00" datetime="2017-01-25T16:00:00.000Z"  itemprop="datePublished">2017-01-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="From-Collections-to-Observables"><a href="#From-Collections-to-Observables" class="headerlink" title="From Collections to Observables"></a>From Collections to Observables</h2><p>The following class represents a trivial repository abstracting us from a database:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PersonDao</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function">List&lt;Person&gt; <span class="title">listPeople</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> query(<span class="string">"SELECT * FROM PEOPLE"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> List&lt;Person&gt; <span class="title">query</span><span class="params">(String sql)</span> </span>&#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Change it to Observable:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Person&gt; listPeople() &#123;</div><div class="line">    final List&lt;Person&gt; people = query(&quot;SELECT * FROM PEOPLE&quot;);</div><div class="line">    return Observable.from(people);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="BlockingObservable-Exiting-the-Reactive-World"><a href="#BlockingObservable-Exiting-the-Reactive-World" class="headerlink" title="BlockingObservable: Exiting the Reactive World"></a>BlockingObservable: Exiting the Reactive World</h2><p>We want to transform <code>Observable&lt;Person&gt;</code> back into <code>List&lt;Person&gt;</code> to limit the scope of refactoring:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Person&gt; peopleStream = personDao.listPeople();</div><div class="line">Observable&lt;List&lt;Person&gt;&gt; peopleList = peopleStream.toList();</div><div class="line">BlockingObservable&lt;List&lt;Person&gt;&gt; peopleBlocking = peopleList.toBlocking();</div><div class="line">List&lt;Person&gt; people = peopleBlocking.single();</div></pre></td></tr></table></figure>
+<p><code>peopleList.toList()</code> will buffer all <code>Person</code> events and keep them in memory until the <code>onCompleted()</code> event is received.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/rprx_04in01.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><code>toList()</code> is asynchronous; it doesn’t wait for all events to arrive but instead lazily buffers all values.</p>
+<p><code>BlockingObservable</code> is a good idea only when you must provide a blocking, static view of your otherwise asynchronous <code>Observable</code>. Whereas <code>Observable.from(List&lt;T&gt;)</code> converts normal pull-based collection into <code>Observable</code>, <code>toBlocking()</code> does something quite the opposite.</p>
+<p><code>single()</code> drops observables altogether and extracts one, and only one, item we expect to receive from <code>BlockingObservable&lt;T&gt;</code>. This means <code>single()</code> will block waiting for <code>onCompleted()</code> callback. </p>
+<p>This time with all operators chained:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">List&lt;Person&gt; people = personDao</div><div class="line">    .listPeople()</div><div class="line">    .toList()</div><div class="line">    .toBlocking()</div><div class="line">    .single();</div></pre></td></tr></table></figure>
+<h2 id="Composing-Observables"><a href="#Composing-Observables" class="headerlink" title="Composing Observables"></a>Composing Observables</h2><p>We can actually simulate reading an entire database starting from given page:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> rx.Observable.defer;</div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> rx.Observable.from;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function">Observable&lt;Person&gt; <span class="title">allPeople</span><span class="params">(<span class="keyword">int</span> initialPage)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> defer(() -&gt; from(listPeople(initialPage)))</div><div class="line">            .concatWith(defer(() -&gt;</div><div class="line">                    allPeople(initialPage + <span class="number">1</span>)));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">List&lt;Person&gt; <span class="title">listPeople</span><span class="params">(<span class="keyword">int</span> page)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> query(</div><div class="line">            <span class="string">"SELECT * FROM PEOPLE ORDER BY id LIMIT ? OFFSET ?"</span>,</div><div class="line">            PAGE_SIZE,</div><div class="line">            page * PAGE_SIZE</div><div class="line">    );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>This code snippet lazily loads the initial page of database records,<br>for example 10 items. If no one subscribes, even this first query is not<br>invoked. If there is a subscriber that only consumes a few initial elements (e.g., <code>allPeople(0).take(3)</code>), RxJava will unsubscribe automatically from our stream and no more queries are executed.</p>
+<p><code>allPeople(initialPage)</code> calls <code>allPeople(initialPage + 1)</code> without any stop condition. This is a recipe for <code>StackOverflowError</code> in most languages, but not here. Again, calling <code>allPeople()</code> is always lazy, therefore the moment you stop listening (unsubscribe), this recursion is over. </p>
+<p><strong>Lazy paging and concatenation</strong></p>
+<p>There are more ways to implement lazy paging with RxJava. If you think about it, the simplest way of loading paged data is to load everything and then take whatever we need. It sounds silly, but thanks to laziness it is feasible. First we generate all possible page numbers and then we request loading each and every page individually:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Observable&lt;List&lt;Person&gt;&gt; allPages = Observable</div><div class="line">            .range(<span class="number">0</span>, Integer.MAX_VALUE)</div><div class="line">            .map(<span class="keyword">this</span>::listPeople)</div><div class="line">            .takeWhile(list -&gt; !list.isEmpty());</div></pre></td></tr></table></figure>
+<p>if we find an empty page it means all further pages are empty, as well. Therefore, we use <code>takeWhile()</code> rather than <code>filter()</code>. To flatten <code>allPages</code> to <code>Observable&lt;Person&gt;</code> we can use <code>concatMap()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Person&gt; people = allPages.concatMap(Observable::from);</div></pre></td></tr></table></figure>
+<p><code>concatMap()</code> requires a transformation from <code>List&lt;Person&gt;</code> to <code>Observable&lt;Person&gt;</code>, executed for each page. Alternatively we can try <code>concatMapIterable()</code>, which does the same thing, but the transformation should return an <code>Iterable&lt;Person&gt;</code> for each upstream value (happening to be <code>Iterable&lt;Person&gt;</code> already):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Person&gt; people = allPages.concatMapIterable(page -&gt; page);</div></pre></td></tr></table></figure>
+<p>No matter which approach you choose, all transformations on <code>Person</code> object are lazy. As long as you limit the number of records you want to process (for example with <code>people.take(15)</code>), the <code>Observable&lt;Person&gt;</code> will invoke <code>listPeople()</code> as late as possible.</p>
+<p><strong>Observable.ignoreElements()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">List&lt;Ticket&gt; failures = Observable.from(tickets)</div><div class="line">    .flatMap(ticket -&gt;</div><div class="line">        rxSendEmail(ticket)</div><div class="line">            .flatMap(response -&gt; Observable.&lt;Ticket&gt;empty())</div><div class="line">            .doOnError(e -&gt; log.warn(<span class="string">"Failed to send &#123;&#125;"</span>, ticket, e))</div><div class="line">            .onErrorReturn(err -&gt; ticket))</div><div class="line">    .toList()</div><div class="line">    .toBlocking()</div><div class="line">    .single();</div></pre></td></tr></table></figure>
+<p>It is easy to see that inner <code>flatMap()</code> in our example ignores <code>response</code> and returns an empty stream. In such cases, <code>flatMap()</code> is an overkill; the <code>ignoreElements()</code> operator is far more efficient. <code>ignoreElements()</code> simply ignores all emitted values and forwards <code>onCompleted()</code> or <code>onError()</code> notifications. Because we are ignoring the actual response and just deal with errors, <code>ignoreElements()</code> works great here.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">        .from(tickets)</div><div class="line">        .flatMap(ticket -&gt;</div><div class="line">                rxSendEmail(ticket)</div><div class="line">                        .ignoreElements()</div><div class="line">                        .doOnError(e -&gt; log.warn(<span class="string">"Failed to send &#123;&#125;"</span>, ticket, e))</div><div class="line">                        .onErrorReturn(err -&gt; ticket)</div><div class="line">                        .subscribeOn(Schedulers.io()))</div></pre></td></tr></table></figure>
+<h2 id="Replacing-Callbacks-with-Streams"><a href="#Replacing-Callbacks-with-Streams" class="headerlink" title="Replacing Callbacks with Streams"></a>Replacing Callbacks with Streams</h2>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/RxJava/2017-01-26-rx-java-applying-to-existing-application.html" target="_blank" rel="external">http://blog.inching.org/RxJava/2017-01-26-rx-java-applying-to-existing-application.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rx/">rx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rxjava/">rxjava</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2017-01-26-rx-java-applying-to-existing-application.html&title=《Applying Reactive Programming to Existing Applications》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2017-01-26-rx-java-applying-to-existing-application.html&title=《Applying Reactive Programming to Existing Applications》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2017-01-26-rx-java-applying-to-existing-application.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Applying Reactive Programming to Existing Applications》 — Balance&url=http://blog.inching.org/RxJava/2017-01-26-rx-java-applying-to-existing-application.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2017-01-26-rx-java-applying-to-existing-application.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/RxJava/2017-01-26-rx-java-custom-operator.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">RxJava Custom Operator</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2017-01-12-android-view-viewstub.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android ViewStub</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2017-01-26-rx-java-applying-to-existing-application.html&title=《Applying Reactive Programming to Existing Applications》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2017-01-26-rx-java-applying-to-existing-application.html&title=《Applying Reactive Programming to Existing Applications》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2017-01-26-rx-java-applying-to-existing-application.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Applying Reactive Programming to Existing Applications》 — Balance&url=http://blog.inching.org/RxJava/2017-01-26-rx-java-applying-to-existing-application.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2017-01-26-rx-java-applying-to-existing-application.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADOElEQVR42u3aQXLiUAwE0Nz/0sxmFjOVAN2SUwWf51UqwcbPXihq6esrPm7fjsef/Bod/577/bvuXXnzjdjY2NhnsG8Pj8c3kRz3rpA/0MePIL8rbGxs7LPZSTl5fFZS3tqrJQ9oWOSwsbGxP5jdfvGsNOYPCxsbGxt7xs4Tm32oNHsB2NjY2J/GTspMOzxoy14SKuXXuSxLw8bGxn559qy0vObPvzLfxsbGxn5h9q08No9mVqKuPffvFbCxsbEPYs9CojbWSdZ9NmHTMOTCxsbGPoi9ud1NnJRff98y1dtD2NjY2G/CbgcAeWlpRwKzIto+vv86MGxsbOyD2LOwZvaZzZpO8hCL3gsbGxv7CHZeijYNRrsoee0ST92WYGNjY78hexb3z0YIm+KUD32jVgcbGxv7CHZ7c/lZecOQlLq2BD7BY2NjYx/E3izlbAKpfCR81YrPk4YEGxsb+23Z+b/47QD4qqXJ2Zt8UiaxsbGxD2K3rcV+sSZvQvIRxWyvEhsbG/tsdvuA8mHtVQOAWRT1ZEiAjY2N/bbsNoLfx0lt5JQ3LcWOEjY2NvZB7LYYtOWhfQNtiZoVV2xsbOyT2EkRqufGQVHMY6O2LRke2NjY2G/InsE2wdBqNLu+5x9WdrCxsbGPZl81MMhXOXPwJqjCxsbGPomdFKE8js/BswWgGf7uK8HGxsY+gt2ekLQZRQnJm4egsOXDD2xsbOxT2e0qTFtO2oK0CZKe3Ak2Njb2cex2vSYvXbNrtuPk5KFgY2NjfwJ79q9/Mh6YjYE313xSkrGxsbEPYs9WZNrPtNHSbDF0NqjGxsbGPoOdNw9FYdi0CgFyNngY7ithY2Njvwm7bR7awfBmKWcTPN39KzY2Nvah7FmQ1A4JNus4bdNy9zfY2NjYR7Bv5dFGUdfm820zg42Njf0J7FkwNAuYNvHQrLi218fGxsZ+X3ZStNoyMyts144QolAJGxsb+yD2JkhKxqubKCp/DUXjgY2Njf3B7LakzaYWbdRVrxxhY2NjY49uZTYGzu8qeYjY2NjYp7LblqCIb8pjNkL4xSwNGxsb++XZ7WJNO5SdhVNJ0zKLt7CxsbEPYv8BXGFy3sW7VCMAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

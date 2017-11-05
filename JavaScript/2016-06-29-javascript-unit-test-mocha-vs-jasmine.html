@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JavaScript Unit Test, Mocha vs Jasmine | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,unit test,jasmine,mocha">
+    <meta name="description" content="See Jasmine vs. Mocha
+In this blog post I want to highlight the similarities and the differences between Jasmine and Mocha. In this comparison I will focus on the latest versions of both libraries. As">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript Unit Test, Mocha vs Jasmine">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See Jasmine vs. Mocha
+In this blog post I want to highlight the similarities and the differences between Jasmine and Mocha. In this comparison I will focus on the latest versions of both libraries. As">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript Unit Test, Mocha vs Jasmine">
+<meta name="twitter:description" content="See Jasmine vs. Mocha
+In this blog post I want to highlight the similarities and the differences between Jasmine and Mocha. In this comparison I will focus on the latest versions of both libraries. As">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript Unit Test, Mocha vs Jasmine</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript Unit Test, Mocha vs Jasmine</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-06-28T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-06-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Similarities-Jasmine-and-Mocha"><span class="post-toc-text">Similarities Jasmine and Mocha</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Differences-Jasmine-and-Mocha"><span class="post-toc-text">Differences Jasmine and Mocha</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Assertions"><span class="post-toc-text">Assertions</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Mocking"><span class="post-toc-text">Mocking</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Zooming-in-on-the-asynchronous-tests"><span class="post-toc-text">Zooming in on the asynchronous tests</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Wrapup"><span class="post-toc-text">Wrapup</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-unit-test-mocha-vs-jasmine"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript Unit Test, Mocha vs Jasmine</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-06-29 00:00:00" datetime="2016-06-28T16:00:00.000Z"  itemprop="datePublished">2016-06-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="https://marcofranssen.nl/jasmine-vs-mocha/" target="_blank" rel="external">Jasmine vs. Mocha</a></p>
+<p>In this blog post I want to highlight the similarities and the differences between <a href="https://jasmine.github.io/2.4/introduction.html" target="_blank" rel="external">Jasmine</a> and <a href="https://mochajs.org/#getting-started" target="_blank" rel="external">Mocha</a>. In this comparison I will focus on the latest versions of both libraries. As of this writing <code>Jasmine 2.4</code> and <code>Mocha 2.3</code>.</p>
+<p>When comparing both libraries at <a href="https://npmcompare.com/compare/jasmine,mocha" target="_blank" rel="external">NPMCompare</a> you notice that Mocha is the more popular framework today. Mocha has more frequent updates, more downloads and more forks on Github. Although both frameworks are pretty popular and do have a lot of similarities. Lets go have a look at some more details of both libraries.</p>
+<a id="more"></a>
+<h2 id="Similarities-Jasmine-and-Mocha"><a href="#Similarities-Jasmine-and-Mocha" class="headerlink" title="Similarities Jasmine and Mocha"></a>Similarities Jasmine and Mocha</h2><p>Both libraries have a similar API regarding the structure of your tests. They both allow you to write your tests using a <code>describe</code> block. They also both have the same approach for asynchronous testing using a callback method (done). In the next code example you can see the similarities between both the frameworks.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'User'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    describe(<span class="string">'When getting the users details'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        it(<span class="string">'should contain the full name'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">            <span class="comment">// assertions go here</span></div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><em>Please note that the asynchronous behavior is only the same as of Jasmine 2.x. In Jasmine 1.x you had to use methods like waitsFor to write a test that required asynchronous behavior.</em></p>
+<p>Both libraries are also supported in the popular test runner <a href="https://karma-runner.github.io/0.13/index.html" target="_blank" rel="external">Karma</a>. Karma can run your tests against different browsers like, Chrome, Firefox, PhantomJS etc. It can watch you tests and source files for changes and automatically run your tests against the browsers you configured in the config file. This gives you continuous feedback while developing your code.</p>
+<h2 id="Differences-Jasmine-and-Mocha"><a href="#Differences-Jasmine-and-Mocha" class="headerlink" title="Differences Jasmine and Mocha"></a>Differences Jasmine and Mocha</h2><h3 id="Assertions"><a href="#Assertions" class="headerlink" title="Assertions"></a>Assertions</h3><p>The differences of both libraries start where you are doing your assertions. Mocha does not come with a built in assertion library. There are several assertions libraries available for Mocha:</p>
+<ul>
+<li>Chai</li>
+<li>should.js</li>
+<li>expect.js</li>
+<li>better-assert</li>
+</ul>
+<p>It seems many developers choose Chai as an assertion library for Mocha. So where you can use Jasmine as is to write your tests, you will have to load another assertion library with Mocha. Lets have a closer look at <code>Chai</code> as I have some hands-on experience with this assertion library. Chai comes with three assertion styles, the <code>should</code>, <code>expect</code> and <code>assert</code> style. The expect style is similar to Jasmine and is therefore the easiest to migrate from Mocha to Jasmine or the other way around.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Jasmine</span></div><div class="line">expect(calculator.multiply(<span class="number">3</span>, <span class="number">4</span>)).toEqual(<span class="number">12</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Chai</span></div><div class="line">expect(calculator.multiply(<span class="number">3</span>, <span class="number">4</span>)).to.equal(<span class="number">12</span>);</div></pre></td></tr></table></figure>
+<h3 id="Mocking"><a href="#Mocking" class="headerlink" title="Mocking"></a>Mocking</h3><p>Mocking in JavaScript comes in the form of spies. A spy is a function that replaces a function from your code where you want to control its behavior in a test. You could for example record on how such a function is used in your test to do some assertions based on usage. Some more concrete examples are:</p>
+<ul>
+<li>Count how many times a spy has been called</li>
+<li>Specify a return value to have your code follow a specific path</li>
+<li>Throw an error to test the exception flow</li>
+<li>Inspect the arguments a spy has been called with</li>
+<li>Have the spy call the original function, this is not by default. (This enables you to count for example the calls to the method and still execute the original logic)</li>
+</ul>
+<p>Also for mocking Mocha does not come with built in mocking. If you want to use mocking/spies with Mocha you need to use another library called <code>Sinon</code>. Sinon is a very powerful library which is equivalent to Jasmine spies with some additional features. In Jasmine you can create a spy like this:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// existing methods</span></div><div class="line"><span class="keyword">var</span> blogPostSaveSpy = spyOn(BlogPost.prototype, <span class="string">'save'</span>);</div><div class="line"><span class="comment">// non existing method spy</span></div><div class="line"><span class="keyword">var</span> spy = jasmine.createSpy();</div></pre></td></tr></table></figure>
+<p>Sinon has three different approaches to apply mocking. Spies, stubs and mocks, each of them have some subtle differences. For example a spy in Jasmine will not call though on the method being spied, where in Sinon this is default behavior. A small example:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Jasmine</span></div><div class="line">spyOn(blogpost, <span class="string">'publish'</span>).andCallTrough();</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sinon.spy(blogpost, <span class="string">'publish'</span>);</div></pre></td></tr></table></figure>
+<p>A sinon stub has equal behavior to the default behavior of a Jasmine spy. Example:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Jasmine</span></div><div class="line">spyOn(blogpost, <span class="string">'publish'</span>).andReturns(<span class="number">200</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Sinon</span></div><div class="line">sinon.stub(blogpost, <span class="string">'publish'</span>).returns(<span class="number">200</span>);</div></pre></td></tr></table></figure>
+<p>In many situations Jasmine spies will cover all you need with regards to mocking. In case you need a little bit more features you can however also use Sinon with Jasmine.</p>
+<h2 id="Zooming-in-on-the-asynchronous-tests"><a href="#Zooming-in-on-the-asynchronous-tests" class="headerlink" title="Zooming in on the asynchronous tests"></a>Zooming in on the asynchronous tests</h2><p>Asynchronous tests will be useful for all you code that does Ajax calls or in case of Node.js goes to the database or file system. In those cases you need to inform both Jasmine or Mocha that your code finished executing. Two examples of asynchronous code is code with callbacks or Promises. In the following code example I will show you how to use both approaches in an asynchronous test. Imagine the <code>Blogpost.getById</code> method returns a promise which resolves with a user object. The following example code uses <code>Bluebird</code> for the promises to have some syntactic sugar like the catch and finally methods.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'When loading a blog post from database'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </div><div class="line">    it(<span class="string">'should return an instance of Blogpost'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;  </div><div class="line">        BlogPost.getById(<span class="number">1</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">post</span>) </span>&#123;  </div><div class="line">            expect(post <span class="keyword">instanceof</span> Blogpost).toBe(<span class="literal">true</span>);  </div><div class="line">        &#125;).finally(done);  </div><div class="line">    &#125;);  </div><div class="line"></div><div class="line">    it(<span class="string">'should return the user with id 1'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;  </div><div class="line">        BlogPost.getById(<span class="number">1</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">post</span>) </span>&#123;  </div><div class="line">            expect(post.id).toEqual(<span class="number">1</span>);  </div><div class="line">        &#125;).finally(done);  </div><div class="line">    &#125;);  </div><div class="line"></div><div class="line">    it(<span class="string">'should fail with a 401 for non-existing posts'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;  </div><div class="line">        BlogPost.getById(<span class="number">2</span>).catch(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;  </div><div class="line">            expect(err.status).toEqual(<span class="number">401</span>);  </div><div class="line">        &#125;).finally(done);  </div><div class="line">    &#125;);  </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><em>Notice that we use the finally statement to call the done function. By doing this we are sure the done method is always invoked, even if the test fails (basically caused by not going into the <code>then</code> or the <code>catch</code>).</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'When loading a blog post from database'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </div><div class="line">    it(<span class="string">'should return an instance of Blogpost'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;  </div><div class="line">        BlogPost.getById(<span class="number">1</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, post</span>) </span>&#123;  </div><div class="line">            expect(post <span class="keyword">instanceof</span> Blogpost).toBe(<span class="literal">true</span>);  </div><div class="line">            done();  </div><div class="line">        &#125;);  </div><div class="line">    &#125;);  </div><div class="line"></div><div class="line">    it(<span class="string">'should return the user with id 1'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;  </div><div class="line">        BlogPost.getById(<span class="number">1</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, post</span>) </span>&#123;  </div><div class="line">            expect(post.id).toEqual(<span class="number">1</span>);  </div><div class="line">            done();  </div><div class="line">        &#125;);  </div><div class="line">    &#125;);  </div><div class="line"></div><div class="line">    it(<span class="string">'should fail with a 401 for non-existing posts'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;  </div><div class="line">        BlogPost.getById(<span class="number">2</span>).catch(<span class="function"><span class="keyword">function</span> (<span class="params">err, post</span>) </span>&#123;  </div><div class="line">            expect(err.status).toEqual(<span class="number">401</span>);  </div><div class="line">            done();  </div><div class="line">        &#125;);  </div><div class="line">    &#125;);  </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><em>Note we are invoking the done method after we did our assertion, to tell Jasmine/Mocha the asynchronous code finished. Also note we have been using Jasmine in this example (you can see that based on the assertions). Obviously you could have achieved the same using Mocha, as the way of doing asynchronous testing is exactly the same for both frameworks.</em></p>
+<p>Please ref <a href="https://marcofranssen.nl/using-mocha-chai-sinon-to-test-node-js/" target="_blank" rel="external">Using Mocha Chai Sinon to test Node.js</a> to see an event example.</p>
+<h2 id="Wrapup"><a href="#Wrapup" class="headerlink" title="Wrapup"></a>Wrapup</h2><p>Overall I think you have a little more flexibility when using Mocha, since you can pick your own assertion library and your own mocking library. This however also comes with a price of a slightly more complex setup and some additional dependencies. Overall I think it depends on each project or your personal preference which of these libraries you want to use. When using Jasmine this does not exclude you from using Sinon. You can still benefit for example from its fake server. Both frameworks are perfectly able to do the job. As of Jasmine 2.x, I think Jasmine is back in the race with Mocha.</p>
+<p>Also consider reading one of my previous blog posts:</p>
+<ul>
+<li><a href="https://marcofranssen.nl/using-mocha-chai-sinon-to-test-node-js" target="_blank" rel="external">Using Mocha Chai Sinon to test Node.js</a></li>
+</ul>
+<p>In this blog post I have some more detailed examples on how to use Mocha with Chai assertions and Sinon Mocks. Thanks for reading this blog post. I hope it was useful for you. Please leave me a comment in case you have questions or remarks.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jasmine/">jasmine</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocha/">mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unit-test/">unit test</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html&title=《JavaScript Unit Test, Mocha vs Jasmine》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html&title=《JavaScript Unit Test, Mocha vs Jasmine》 — Balance&source=See Jasmine vs. Mocha
+In this blog post I want to highlight the similarities ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript Unit Test, Mocha vs Jasmine》 — Balance&url=http://blog.inching.org/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Cordova/2016-07-04-android-cordova-ssl.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android Corodova Webiew SSL HTTPS</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Angular/Angular2/2016-06-29-angular2-tutorial.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Angular2 Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html&title=《JavaScript Unit Test, Mocha vs Jasmine》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html&title=《JavaScript Unit Test, Mocha vs Jasmine》 — Balance&source=See Jasmine vs. Mocha
+In this blog post I want to highlight the similarities ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript Unit Test, Mocha vs Jasmine》 — Balance&url=http://blog.inching.org/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2016-06-29-javascript-unit-test-mocha-vs-jasmine.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADIklEQVR42u3awW7bQAwE0Pz/T6fXAoHsGa7dWszTyTBkad8GKEvOfn3F1/df18/vH3++es7s/qvr6x0XNjY29k3YyeN+fk6WfnXP4zsfk9q1XW4NNjY29jr21b/wLSkvV20xOy+c2NjY2Nh5EZqVq5Ptw8bGxsZO2I+HSnnJyZ/weGyEjY2Njd0OlZJxT966zOKH/zBLw8bGxv54dlt+PvnzW/JtbGxs7A9mf5fX4+L078/GDBXY2NjYi9izZbWtRbGUcmw0WxU2Njb2JnYSmubxavLbvEdovy/iZGxsbOxF7PcFqydx76yw5UUUGxsbezd7dljnPBjOG5i8gNVBAjY2NvZt2e2C2pLTtgptoJtvBzY2NvZWdlKWTiLhV+UY59FCXbGxsbGxP559EgDkXc6sCTlvTi6fjI2Njb2I3R6CyXknI6dZkNyGytjY2Nhb2Xkb0LYWbYuSD7Pyz9jY2Ni72cmL27HRSYuSh83Jr56MlrCxsbFvy25bi9m4pwhc2zQjKMNPkm1sbGzspez2oEx7mKYdZiV1uPgeGxsb+xewXxvltu3KbAuKTcHGxsZexJ6N9dtfnW9iG2YkQTU2Njb2DnZ75GU2oH/fAaC8XcHGxsbezU5i3eS/+DlpVvxOtgwbGxt7K/tl0WlZruqBftkstVEHNjY29t3Z7RHGWZHLB0yzwlYfAMLGxsb+BezZkZq2nUhahfwPk7wLGxsbeys7Bz8pDOWyzuPktmRiY2Nj72PnmFkQ225ovpJZYICNjY29j90Gq7MDPe1A6nxo9WT92NjY2IvYJ83DyT2zUncSXWBjY2NvZc/GQ22T0Battoy1AylsbGzsfewZeBbW5u1Ne0An2QJsbGzsTewXdDDxoH8WM7cxcPQubGxs7EXs2ZmWZMTTHs05bzZOnomNjY19d/Ysdj0JCdrjNScHdy7fhY2Njb2OfR4MzA73PN6C/J66/cDGxsbGjgtY/pakRM0apDemItjY2Ng3ZLfxbTuQelWZfFJ6sbGxsdexZ8ciXxUnzOKHYenCxsbGXsduRzPtGOh8PDR7WlKAsbGxsW/O/gMwzSFMT/cehAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

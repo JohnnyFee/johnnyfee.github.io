@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Nginx location 匹配规则 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="centos,nginx">
+    <meta name="description" content="See
+
+location 匹配规则 · OpenResty最佳实践
+nginx配置location总结及rewrite规则写法
+
+语法规则
+location [=|~|~*|^~] /uri/ { … }
+
+
+
+
+模式
+含义                                              
+
+
+
+
+location = /uri
+= 表示精确匹配，只有完全匹配上才能生效">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx location 匹配规则">
+<meta property="og:url" content="http://blog.inching.org/Nginx/2017-05-01-php-nginx-location.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See
+
+location 匹配规则 · OpenResty最佳实践
+nginx配置location总结及rewrite规则写法
+
+语法规则
+location [=|~|~*|^~] /uri/ { … }
+
+
+
+
+模式
+含义                                              
+
+
+
+
+location = /uri
+= 表示精确匹配，只有完全匹配上才能生效">
+<meta property="og:updated_time" content="2017-05-13T03:16:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx location 匹配规则">
+<meta name="twitter:description" content="See
+
+location 匹配规则 · OpenResty最佳实践
+nginx配置location总结及rewrite规则写法
+
+语法规则
+location [=|~|~*|^~] /uri/ { … }
+
+
+
+
+模式
+含义                                              
+
+
+
+
+location = /uri
+= 表示精确匹配，只有完全匹配上才能生效">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Nginx location 匹配规则</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Nginx location 匹配规则</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-30T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-05-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Nginx/">Nginx</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#语法规则"><span class="post-toc-text">语法规则</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#rewrite-语法"><span class="post-toc-text">rewrite 语法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#redirect-语法"><span class="post-toc-text">redirect 语法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#防盗链"><span class="post-toc-text">防盗链</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#根据文件类型设置过期时间"><span class="post-toc-text">根据文件类型设置过期时间</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#禁止访问某个目录"><span class="post-toc-text">禁止访问某个目录</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-php-nginx-location"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Nginx location 匹配规则</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-05-01 00:00:00" datetime="2017-04-30T16:00:00.000Z"  itemprop="datePublished">2017-05-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Nginx/">Nginx</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See</p>
+<ul>
+<li><a href="https://moonbingbing.gitbooks.io/openresty-best-practices/ngx/nginx_local_pcre.html" target="_blank" rel="external">location 匹配规则 · OpenResty最佳实践</a></li>
+<li><a href="http://seanlook.com/2015/05/17/nginx-location-rewrite/" target="_blank" rel="external">nginx配置location总结及rewrite规则写法</a></li>
+</ul>
+<h2 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h2><blockquote>
+<p>location [=|~|~*|^~] /uri/ { … }</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>含义                                              </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>location = /uri</td>
+<td>= 表示精确匹配，只有完全匹配上才能生效                            </td>
+</tr>
+<tr>
+<td>location ^~ /uri</td>
+<td>^~ 开头对URL路径进行前缀匹配，并且在正则之前。                      </td>
+</tr>
+<tr>
+<td>location ~ pattern</td>
+<td>开头表示区分大小写的正则匹配                                  </td>
+</tr>
+<tr>
+<td>location ~* pattern</td>
+<td>开头表示不区分大小写的正则匹配                                 </td>
+</tr>
+<tr>
+<td>location /uri</td>
+<td>不带任何修饰符，也表示前缀匹配，但是在正则匹配之后                       </td>
+</tr>
+<tr>
+<td>location /</td>
+<td>通用匹配，任何未匹配到其它location的请求都会匹配到，相当于switch中的default</td>
+</tr>
+</tbody>
+</table>
+<p>前缀匹配时，Nginx 不对 url 做编码，因此请求为 <code>/static/20%/aa</code>，可以被规则 <code>^~ /static/ /aa</code> 匹配到（注意是空格）</p>
+<p>多个 location 配置的情况下匹配顺序为（参考资料而来，还未实际验证，试试就知道了，不必拘泥，仅供参考）:</p>
+<ul>
+<li>首先精确匹配 <code>=</code></li>
+<li>其次前缀匹配 <code>^~</code></li>
+<li>其次是按文件中顺序的正则匹配</li>
+<li>然后匹配不带任何修饰的前缀匹配。</li>
+<li>最后是交给 <code>/</code> 通用匹配</li>
+<li>当有匹配成功时候，停止匹配，按当前匹配规则处理请求</li>
+</ul>
+<p><em>注意：前缀匹配，如果有包含关系时，按最大匹配原则进行匹配。比如在前缀匹配：<code>location /dir01</code> 与 <code>location /dir01/dir02</code>，如有请求 <code>http://localhost/dir01/dir02/file</code> 将最终匹配到 <code>location /dir01/dir02</code></em></p>
+<p>例子，有如下匹配规则：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">location</span> = / &#123;</div><div class="line">   <span class="attribute">echo</span> <span class="string">"规则A"</span>;</div><div class="line">&#125;</div><div class="line"><span class="attribute">location</span> = /login &#123;</div><div class="line">   <span class="attribute">echo</span> <span class="string">"规则B"</span>;</div><div class="line">&#125;</div><div class="line"><span class="attribute">location</span><span class="regexp"> ^~</span> /static/ &#123;</div><div class="line">   <span class="attribute">echo</span> <span class="string">"规则C"</span>;</div><div class="line">&#125;</div><div class="line"><span class="attribute">location</span><span class="regexp"> ^~</span> /static/files &#123;</div><div class="line">    <span class="attribute">echo</span> <span class="string">"规则X"</span>;</div><div class="line">&#125;</div><div class="line"><span class="attribute">location</span> <span class="regexp">~ \.(gif|jpg|png|js|css)$</span> &#123;</div><div class="line">   <span class="attribute">echo</span> <span class="string">"规则D"</span>;</div><div class="line">&#125;</div><div class="line"><span class="attribute">location</span> <span class="regexp">~* \.png$</span> &#123;</div><div class="line">   <span class="attribute">echo</span> <span class="string">"规则E"</span>;</div><div class="line">&#125;</div><div class="line"><span class="attribute">location</span> /img &#123;</div><div class="line">    <span class="attribute">echo</span> <span class="string">"规则Y"</span>;</div><div class="line">&#125;</div><div class="line"><span class="attribute">location</span> / &#123;</div><div class="line">   <span class="attribute">echo</span> <span class="string">"规则F"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么产生的效果如下：</p>
+<ul>
+<li>访问根目录 <code>/</code>，比如 <code>http://localhost/</code> 将匹配 <code>规则A</code></li>
+<li>访问 <code>http://localhost/login</code> 将匹配 <code>规则B</code>，<code>http://localhost/register</code> 则匹配 <code>规则F</code></li>
+<li>访问 <code>http://localhost/static/a.html</code> 将匹配 <code>规则C</code></li>
+<li>访问 <code>http://localhost/static/files/a.exe</code> 将匹配 <code>规则X</code>，虽然 <code>规则C</code> 也能匹配到，但因为最大匹配原则，最终选中了 <code>规则X</code>。你可以测试下，去掉规则 X ，则当前 URL 会匹配上 <code>规则C</code>。</li>
+<li>访问 <code>http://localhost/a.gif</code>, <code>http://localhost/b.jpg</code> 将匹配 <code>规则D</code> 和 <code>规则 E</code> ，但是 <code>规则 D</code> 顺序优先，<code>规则 E</code> 不起作用，而 <code>http://localhost/static/c.png</code> 则优先匹配到 <code>规则 C</code></li>
+<li>访问 <code>http://localhost/a.PNG</code> 则匹配 <code>规则 E</code> ，而不会匹配 <code>规则 D</code> ，因为 <code>规则 E</code> 不区分大小写。</li>
+<li>访问 <code>http://localhost/img/a.gif</code> 会匹配上 <code>规则D</code>,虽然 <code>规则Y</code> 也可以匹配上，但是因为正则匹配优先，而忽略了 <code>规则Y</code>。</li>
+<li>访问 <code>http://localhost/img/a.tiff</code> 会匹配上 <code>规则Y</code>。</li>
+</ul>
+<p>访问 <code>http://localhost/category/id/1111</code> 则最终匹配到规则 F ，因为以上规则都不匹配，这个时候应该是 Nginx 转发请求给后端应用服务器，比如 FastCGI（php），tomcat（jsp），Nginx 作为反向代理服务器存在。</p>
+<p>所以实际使用中，笔者觉得至少有三个匹配规则定义，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"># 直接匹配网站根，通过域名访问网站首页比较频繁，使用这个会加速处理，官网如是说。</div><div class="line"># 这里是直接转发给后端应用服务器了，也可以是一个静态首页</div><div class="line"># 第一个必选规则</div><div class="line">location = / &#123;</div><div class="line">    proxy_pass http://tomcat:8080/index</div><div class="line">&#125;</div><div class="line"></div><div class="line"># 第二个必选规则是处理静态文件请求，这是 nginx 作为 http 服务器的强项</div><div class="line"># 有两种配置模式，目录匹配或后缀匹配，任选其一或搭配使用</div><div class="line">location ^~ /static/ &#123;</div><div class="line">    root /webroot/static/;</div><div class="line">&#125;</div><div class="line">location ~* \.(gif|jpg|jpeg|png|css|js|ico)$ &#123;</div><div class="line">    root /webroot/res/;</div><div class="line">&#125;</div><div class="line"></div><div class="line"># 第三个规则就是通用规则，用来转发动态请求到后端应用服务器</div><div class="line"># 非静态文件请求就默认是动态请求，自己根据实际把握</div><div class="line"># 毕竟目前的一些框架的流行，带.php、.jsp后缀的情况很少了</div><div class="line">location / &#123;</div><div class="line">    proxy_pass http://tomcat:8080/</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="rewrite-语法"><a href="#rewrite-语法" class="headerlink" title="rewrite 语法"></a>rewrite 语法</h2><ul>
+<li>last          – 基本上都用这个 Flag</li>
+<li>break         – 中止 Rewirte，不再继续匹配</li>
+<li>redirect      – 返回临时重定向的 HTTP 状态 302</li>
+<li>permanent     – 返回永久重定向的 HTTP 状态 301</li>
+</ul>
+<p>1、下面是可以用来判断的表达式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-f 和 !-f 用来判断是否存在文件</div><div class="line">-d 和 !-d 用来判断是否存在目录</div><div class="line">-e 和 !-e 用来判断是否存在文件或目录</div><div class="line">-x 和 !-x 用来判断文件是否可执行</div></pre></td></tr></table></figure>
+<p>2、下面是可以用作判断的全局变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">例：http://localhost:88/test1/test2/test.php?k=v</div><div class="line">$host：localhost</div><div class="line">$server_port：88</div><div class="line">$request_uri：/test1/test2/test.php?k=v</div><div class="line">$document_uri：/test1/test2/test.php</div><div class="line">$document_root：D:\nginx/html</div><div class="line">$request_filename：D:\nginx/html/test1/test2/test.php</div></pre></td></tr></table></figure>
+<h2 id="redirect-语法"><a href="#redirect-语法" class="headerlink" title="redirect 语法"></a>redirect 语法</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="section">server</span> &#123;</div><div class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</div><div class="line">    <span class="attribute">server_name</span> start.igrow.cn;</div><div class="line">    <span class="attribute">index</span> index.html index.php;</div><div class="line">    <span class="attribute">root</span> html;</div><div class="line">    <span class="attribute">if</span> (<span class="variable">$http_host</span> !<span class="regexp">~ "^star\.igrow\.cn$")</span> &#123;</div><div class="line">        <span class="attribute">rewrite</span><span class="regexp"> ^(.*)</span> http://star.igrow.cn<span class="variable">$1</span> <span class="literal">redirect</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="防盗链"><a href="#防盗链" class="headerlink" title="防盗链"></a>防盗链</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">location</span> <span class="regexp">~* \.(gif|jpg|swf)$</span> &#123;</div><div class="line">    <span class="attribute">valid_referers</span> <span class="literal">none</span> <span class="literal">blocked</span> start.igrow.cn sta.igrow.cn;</div><div class="line">    <span class="attribute">if</span> (<span class="variable">$invalid_referer</span>) &#123;</div><div class="line">       <span class="attribute">rewrite</span><span class="regexp"> ^/</span> http://<span class="variable">$host</span>/logo.png;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="根据文件类型设置过期时间"><a href="#根据文件类型设置过期时间" class="headerlink" title="根据文件类型设置过期时间"></a>根据文件类型设置过期时间</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">location ~* \.(js|css|jpg|jpeg|gif|png|swf)$ &#123;</div><div class="line">    if (-f $request_filename) &#123;</div><div class="line">        expires 1h;</div><div class="line">        break;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="禁止访问某个目录"><a href="#禁止访问某个目录" class="headerlink" title="禁止访问某个目录"></a>禁止访问某个目录</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">location</span> <span class="regexp">~* \.(txt|doc)<span class="variable">$&#123;</span></span></div><div class="line">    root /data/www/wwwroot/linuxtone/test;</div><div class="line">    deny all;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一些可用的全局变量，可以参考<a href="https://moonbingbing.gitbooks.io/openresty-best-practices/openresty/inline_var.html" target="_blank" rel="external">获取 Nginx 内置绑定变量</a>章节。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-05-13T03:16:55.000Z" itemprop="dateUpdated">2017-05-13 11:16:55</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Nginx/2017-05-01-php-nginx-location.html" target="_blank" rel="external">http://blog.inching.org/Nginx/2017-05-01-php-nginx-location.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Nginx/2017-05-01-php-nginx-location.html&title=《Nginx location 匹配规则》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Nginx/2017-05-01-php-nginx-location.html&title=《Nginx location 匹配规则》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Nginx/2017-05-01-php-nginx-location.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Nginx location 匹配规则》 — Balance&url=http://blog.inching.org/Nginx/2017-05-01-php-nginx-location.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Nginx/2017-05-01-php-nginx-location.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/PHP/2017-05-01-php-nginx-centos7-phpMyAdmin.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Linux/2017-05-01-linux-find-out-what-is-using-tcp-port.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Linux: Find Out What Is Using TCP Port 80</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Nginx/2017-05-01-php-nginx-location.html&title=《Nginx location 匹配规则》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Nginx/2017-05-01-php-nginx-location.html&title=《Nginx location 匹配规则》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Nginx/2017-05-01-php-nginx-location.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Nginx location 匹配规则》 — Balance&url=http://blog.inching.org/Nginx/2017-05-01-php-nginx-location.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Nginx/2017-05-01-php-nginx-location.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtklEQVR42u3aS27DMAwFwNz/0i3QbRP18aM0i/EqKBxbowAiS/LxiK+vnyu/5/fn/Pr9rXwNzQsPDw+vtfTkZeeln598vn/y3lffxcPDw7vNSw76HHM+0M/PSTYxWTMeHh7eJ/CqaXTvmb0tw8PDw/tMXp7yJuEkCQ+T7cbDw8O7zasWVZPXVJPm6rYu11rw8PDwYt7kUP6vzxf7e3h4eHiDrno1Ie4NB/RS8+gteHh4eBd458flowCTQYFe6bYwkoWHh4e3yqse373tmNw52T48PDy8G7xqY6mXLt8ofOThBA8PD+8GLz/KkwLEpLmVv73ZeMPDw8Mb86r/3u9226oBKUnNH9VfBg8PD6/F65Vlt9LohZGppIyLh4eHd40X5d2tJlavlZWAXz4NDw8P7wIvbzhttbISdnVTCgVcPDw8vCVerwyRN/snRdveb/Wkv4eHh4f3Rl71QO8FlflwVTni4eHh4Q14u2WIfKRgXm4ol33x8PDwVnmTkmtv2mv+uVD8xcPDw3sLLzmO8wGC5O+9QFKuUuPh4eGt8vLGVfXOraO/+hw8PDy8e7xqANhKlyeJ8mg+Ag8PD2/Mq4aB3dGrwuBpccvw8PDwdnmTZn+1fTUJOb32GB4eHt57eNVWfTXJzlPz6tTDH/UVPDw8vGu8PI3OW2WT4YNeg20U9/Dw8PCCGkKvcbU1WjovfzQLuHh4eHgtXrUQcOZNDvetYsSTuIeHh4d3jZdc1QO9Gnh65YwoMODh4eEt8UZF0tacQrVYPEnu8fDw8O7xeuNQvbJCdQsWUnY8PDy8a7zJIqoNsyRp3hrqwsPDw/tfXlI8rYaNyZaVR6/w8PDwPozXa/P3Wl/lAQI8PDy8C7zkyM5bYudQkQ8T5A25l2/Ew8PDu8DrNcDypfcCw6Q8sdDfw8PDw3t+fQPxNUrftU/twQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

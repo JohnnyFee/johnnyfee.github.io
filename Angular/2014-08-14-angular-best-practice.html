@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Angular Best Practice | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tutorial,angular">
+    <meta name="description" content="原文：http://www.infoq.com/cn/news/2013/02/angular-web-app
+
+1. 不要先设计页面，然后再使用DOM操作来改变它的展现在jQuery中，你通常会设计一个页面，然后再给它动态效果。这是因为jQuery的设计就是为了扩充DOM并在这个简单的前提下疯狂的生长的。
+但是在AngularJS里，必须从头开始就在头脑中思考架构。必须从你想要完成的功能开始，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular Best Practice">
+<meta property="og:url" content="http://blog.inching.org/Angular/2014-08-14-angular-best-practice.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文：http://www.infoq.com/cn/news/2013/02/angular-web-app
+
+1. 不要先设计页面，然后再使用DOM操作来改变它的展现在jQuery中，你通常会设计一个页面，然后再给它动态效果。这是因为jQuery的设计就是为了扩充DOM并在这个简单的前提下疯狂的生长的。
+但是在AngularJS里，必须从头开始就在头脑中思考架构。必须从你想要完成的功能开始，">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular Best Practice">
+<meta name="twitter:description" content="原文：http://www.infoq.com/cn/news/2013/02/angular-web-app
+
+1. 不要先设计页面，然后再使用DOM操作来改变它的展现在jQuery中，你通常会设计一个页面，然后再给它动态效果。这是因为jQuery的设计就是为了扩充DOM并在这个简单的前提下疯狂的生长的。
+但是在AngularJS里，必须从头开始就在头脑中思考架构。必须从你想要完成的功能开始，">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Angular Best Practice</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Angular Best Practice</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-08-13T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-08-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-不要先设计页面，然后再使用DOM操作来改变它的展现"><span class="post-toc-text">1. 不要先设计页面，然后再使用DOM操作来改变它的展现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-不要用AngularJS来加强jQuery"><span class="post-toc-text">2. 不要用AngularJS来加强jQuery</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-总是以架构的角度思考"><span class="post-toc-text">3. 总是以架构的角度思考</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据绑定"><span class="post-toc-text">数据绑定</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#清晰的模型（Model）层"><span class="post-toc-text">清晰的模型（Model）层</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关注点分离"><span class="post-toc-text">关注点分离</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#依赖注入"><span class="post-toc-text">依赖注入</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-总是-——-测试驱动开发"><span class="post-toc-text">4. 总是 —— 测试驱动开发</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-概念上，Directives并不是打包的jQuery"><span class="post-toc-text">5. 概念上，Directives并不是打包的jQuery</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Style-Guide"><span class="post-toc-text">Style Guide</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Best-Practice"><span class="post-toc-text">Best Practice</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-angular-best-practice"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Angular Best Practice</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-08-14 00:00:00" datetime="2014-08-13T16:00:00.000Z"  itemprop="datePublished">2014-08-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>原文：<a href="http://www.infoq.com/cn/news/2013/02/angular-web-app" target="_blank" rel="external">http://www.infoq.com/cn/news/2013/02/angular-web-app</a></p>
+</blockquote>
+<h2 id="1-不要先设计页面，然后再使用DOM操作来改变它的展现"><a href="#1-不要先设计页面，然后再使用DOM操作来改变它的展现" class="headerlink" title="1. 不要先设计页面，然后再使用DOM操作来改变它的展现"></a>1. 不要先设计页面，然后再使用DOM操作来改变它的展现</h2><p>在jQuery中，你通常会设计一个页面，然后再给它动态效果。这是因为jQuery的设计就是为了扩充DOM并在这个简单的前提下疯狂的生长的。</p>
+<p>但是在AngularJS里，必须从头开始就在头脑中思考架构。必须从你想要完成的功能开始，然后设计应用程序，最后来设计视图，而非“我有这么一个DOM片段，我想让他可以实现XXX效果”。</p>
+<h2 id="2-不要用AngularJS来加强jQuery"><a href="#2-不要用AngularJS来加强jQuery" class="headerlink" title="2. 不要用AngularJS来加强jQuery"></a>2. 不要用AngularJS来加强jQuery</h2><p>类似的，不要以这样的思维开始：用jQuery来做X，Y和Z，然后只需要把AngularJS的models和controllers加在这上面。这在刚开始的时候显得非常诱人，这也是为什么我总是建议AngularJS的新手完全不使用jQuery，至少不要在习惯使用“Angular Way”开发之前这么做。</p>
+<a id="more"></a>
+<p>我在邮件列表里看到很多开发者使用150或200行代码的jQuery插件创造出这些复杂的解决方案，然后使用一堆callback函数以及$apply把它粘合到AngularJS里，看起来复杂难懂；但是他们最终还是把它搞定了！问题是在大多数情况下这些jQuery插件可以使用很少的AngularJS代码重写，而且所有的一切都很简单直接容易理解。</p>
+<p>这里的底线是：当你选择解决方案时，首先“think in AngularJS”；如果想不出一个解决方案，去社区求助；如果还是没有简单的解决方案，再考虑使用jQuery。但是不要让jQuery成为你的拐杖，导致你永远无法真正掌握AngularJS。</p>
+<h2 id="3-总是以架构的角度思考"><a href="#3-总是以架构的角度思考" class="headerlink" title="3. 总是以架构的角度思考"></a>3. 总是以架构的角度思考</h2><p>首先要知道Single-page应用是应用，不是网页。所以我们除了像一个客户端开发者般思考外，还需要像一个服务器端开发者一样思考。我们必须考虑如何把我们的应用分割成独立的，可扩展且可测试的组件。</p>
+<p>那么如何做到呢？如何“think in AngularJS”？这里有一些基本原则，对比jQuery。</p>
+<p><strong>视图是“Official Record”</strong></p>
+<p>在jQuery里，我们编程改变视图。我们会将一个下拉菜单定义为一个ul ：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"main-menu"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"active"</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#/home"</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#/menu1"</span>&gt;</span>Menu 1<span class="tag">&lt;/<span class="name">a</span>&gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#/sm1"</span>&gt;</span>Submenu 1<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span> </div><div class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#/sm2"</span>&gt;</span>Submenu 2<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#/sm3"</span>&gt;</span>Submenu 3<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#/home"</span>&gt;</span>Menu 2<span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>在jQuery里，我们会在应用逻辑里这样启用这个下拉菜单：</p>
+<pre><code>$(&apos;.main-menu&apos;).dropdownMenu();
+</code></pre><p>当我们只关注视图，这里不会立即明显的体现出任何（业务）功能。对于小型应用，这没什么不妥。但是在规模较大的应用中，事情就会变得难以理解且难以维护。</p>
+<p>而在AngularJS里，视图是基于视图的功能。ul声明就会像这样：</p>
+<pre><code>&lt;ul class=&quot;main-menu&quot; dropdown-menu&gt; ... &lt;/ul&gt;
+</code></pre><p>这两种方式做了同样的东西，但是在AngularJS的版本里任何人看到这个模版都可以知道将会发生什么事。不论何时一个新成员加入开发团队，他看到这个就会知道有一个叫做dropdownMenu的directive作用在这个标签上；他不需要靠直觉去猜测代码的功能或者去看任何代码。视图本身告诉我们会发生什么事。清晰多了。</p>
+<p>首次接触AngularJS的开发者通常会问这样一个问题：如何找到所有的某类元素然后给它们加上一个directive。但当我们告诉他：别这么做时，他总会显得非常的惊愕。而不这么做的原因是这是一种半jQuery半AngularJS的方式，这么做不好。这里的问题在于开发者尝试在 AngularJS的环境里“do jQuery”。这么做总会有一些问题。视图是official record（译者注：作者可能想表达视图是一等公民）。在一个directive外，绝不要改变DOM。所有的directive都应用在试图上，意图非常清晰。</p>
+<p>记住：不要设计，然后写标签。你需要架构，然后设计。</p>
+<h3 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h3><p>这是到现在为止最酷的AngularJS特性。这个特性使得前面提到的很多DOM操作都显得不再需要。AngularJS会自动更新视图，所以你自己不用这么做！在jQuery里，我们响应事件然后更新内容，就像这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123; </div><div class="line">    <span class="attr">url</span>: <span class="string">'/myEndpoint.json'</span>, </div><div class="line">    <span class="attr">success</span>: <span class="function"><span class="keyword">function</span> (<span class="params"> data, status </span>) </span>&#123; </div><div class="line">        $(<span class="string">'ul#log'</span>).append(<span class="string">'&lt;li&gt;Data Received!&lt;/li&gt;'</span>); </div><div class="line">    &#125; </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>对应的视图:</p>
+<pre><code>&lt;ul class=&quot;messages&quot; id=&quot;log&quot;&gt; &lt;/ul&gt;
+</code></pre><p>除了要考虑多个方面，我们也会遇到前面视图中的问题。但是更重要的是，需要手动引用并更新一个DOM节点。如果我们想要删除一个log条目，也需要针对DOM编码。那么如何脱离DOM来测试这个逻辑？如果想要改变展现形式怎么办？</p>
+<p>这有一点凌乱琐碎。但是在AngularJS里，可以这样来实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$http(<span class="string">'/myEndpoint.json'</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</div><div class="line">    $scope.log.push(&#123;</div><div class="line">        <span class="attr">msg</span>: <span class="string">'Data Received!'</span></div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>视图看起来是这个样子的：</p>
+<pre><code>&lt;ul class=&quot;messages&quot;&gt; &lt;li ng-repeat=&quot;entry in log&quot;&gt;&lt;/li&gt; &lt;/ul&gt;
+</code></pre><p>但是其实还可以这样来做：</p>
+<pre><code>&lt;div class=&quot;messages&quot;&gt; &lt;div class=&quot;alert&quot; ng-repeat=&quot;entry in log&quot;&gt;  &lt;/div&gt; &lt;/div&gt;
+</code></pre><p>现在如果我们想使用Bootstrap的alert boxes，而不是一个无序列表，根本不需要改变任何的controller代码！更重要的是，不论log在何处或如何被更新，视图便会随之更新。自动的。巧妙！</p>
+<p>尽管我没有在这里展示，数据绑定其实是双向的。所以这些log信息在视图里也可以是可编辑的。只需要这么做：</p>
+<pre><code>&lt;input ng-model=&quot;entry.msg&quot; /&gt;
+</code></pre><p>简单快乐。</p>
+<h3 id="清晰的模型（Model）层"><a href="#清晰的模型（Model）层" class="headerlink" title="清晰的模型（Model）层"></a>清晰的模型（Model）层</h3><p>在jQuery里，DOM在一定程度上扮演了模型的角色。但在AngularJS中，我们有一个独立的模型层可以灵活的管理。完全与视图独立。这有助于上述的数据绑定，维护了关注点的分离（独立的考虑视图和模型），并且引入了更好的可测性。后面还会提到这点。</p>
+<h3 id="关注点分离"><a href="#关注点分离" class="headerlink" title="关注点分离"></a>关注点分离</h3><p>上面所有的内容都与这个愿景相关：保持你的关注点分离。视图负责展现将要发生的事情；模型表现数据；有一个service层来实现可复用的任务；在 directive里面进行DOM操作和扩展；使用controller来把上面的东西粘合起来。这在其他的答案里也有叙述，我在这里只增加关于可测试性的内容，在后面的一个段落里详述。</p>
+<h3 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h3><p>依赖注入帮我们实现了关注点分离。如果你来自一个服务器语言（java或php），可能对这个概念已经非常熟悉，但是如果你是一个来自jQuery的客户端开发者，这个概念可能看起来有点傻而多余。但其实不是的。。。</p>
+<p>大体来讲，DI意味着可以非常自由的声明组件，然后在另一个组件里，只需要请求一个该组件的实例，就可以得到它。不需要知道（关心）加载顺序，或者文件位置，或类似的事情。这种强大可能不会立刻显现，但是我只提供一个（常见。。）的例子：测试。</p>
+<p>就说在你的应用里，我们需要一个服务通过REST API来实现服务器端存储，并且根据不同的应用状态，也有可能使用（客户端）本地存储。当我们运行controller的测试时，不希望必须和服务器交互 —— 毕竟是在测试controller逻辑。我们可以只添加一个与本来使用的service同名的mock service，injector会确保controller自动得到假的那个service —— controller不会也不需要知道有什么不同。</p>
+<p>说起测试……</p>
+<h2 id="4-总是-——-测试驱动开发"><a href="#4-总是-——-测试驱动开发" class="headerlink" title="4. 总是 —— 测试驱动开发"></a>4. 总是 —— 测试驱动开发</h2><p>这其实是关于架构的第3节。但是它太重要了，所以我把它单独拿出来作为一个顶级段落。</p>
+<p>在所有那些你见过，用过或写过的jQuery插件中，有多少是有测试集的？不多，因为jQuery经不起测试的考验。但是AngularJS可以。</p>
+<p>在jQuery中，唯一的测试方式通常是独立地创建附带sample/demo页面的组件，然后我们的测试在这个页面上做DOM操作。所以我们必须独立的开发一个组件，然后集成到应用里。多不方便！在使用jQuery开发时，太多的时间，我们挑选迭代而非测试驱动开发。谁又能责怪我们呢？</p>
+<p>但是因为有了关注点分离，我们可以在AngularJS中迭代地做测试驱动开发！例如，想要一个超级简单的directive来展现我们的当前路径。可以在视图里声明：</p>
+<pre><code>&lt;a href=&quot;/hello&quot; when-active&gt;Hello&lt;/a&gt;
+</code></pre><p>OK，现在可以写一个测试：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">it(<span class="string">'should add "active" when the route changes'</span>, inject(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> elm = $compile(<span class="string">'&lt;a href="/hello" when-active&gt;Hello&lt;/a&gt;'</span>)($scope);</div><div class="line">    $location.path(<span class="string">'/not-matching'</span>);</div><div class="line">    expect(elm.hasClass(<span class="string">'active'</span>)).toBeFalsey();</div><div class="line">    $location.path(<span class="string">'/hello'</span>);</div><div class="line">    expect(elm.hasClass(<span class="string">'active'</span>)).toBeTruthy();</div><div class="line">&#125;));</div></pre></td></tr></table></figure>
+<p>执行这个测试来确认它是失败的。然后我们可以开始写这个directive了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">.directive(<span class="string">'whenActive'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$location</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">scope</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">link</span>: <span class="function"><span class="keyword">function</span> (<span class="params">scope, element, attrs</span>) </span>&#123;</div><div class="line">            scope.$on(<span class="string">'$routeChangeSuccess'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span> ($location.path() == element.attr(<span class="string">'href'</span>)) &#123;</div><div class="line">                    element.addClass(<span class="string">'active'</span>);</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    element.removeClass(<span class="string">'active'</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>测试现在通过了，然后我们的menu按照请求的方式执行。开发过程既是迭代的也是测试驱动的。太酷了。</p>
+<h2 id="5-概念上，Directives并不是打包的jQuery"><a href="#5-概念上，Directives并不是打包的jQuery" class="headerlink" title="5. 概念上，Directives并不是打包的jQuery"></a>5. 概念上，Directives并不是打包的jQuery</h2><p>你经常会听到“只在directive里做DOM操作”。这是必需的。请给它应有的尊重！</p>
+<p>但让我们再深入一点……</p>
+<p>一些directive仅仅装饰了视图中已经存在的东西（想想ngClass）并且因此有时候仅仅直接做完DOM操作然后就完事了。但是如果一个 directive像一个“widget”并且有一个模版，那么它也要做到关注点分离。也就是说，模版本身也应该很大程度上与其link和 controller实现保持独立。</p>
+<p>AngularJS拥有一整套工具使这个过程非常简单;有了ngClass我们可以动态地更新class；ngBind使得我们可以做双向数据绑定。ngShow和ngHide可编程地展示和隐藏一个元素；以及更多地 —— 包括那些我们自己写的。换句话说，我们可以做到任何DOM操作能实现的特性。DOM操作越少，directive就越容易测试，也越容易给它们添加样式，在未来也越容易拥抱变化，并且更加的可复用和发布。</p>
+<p>我见过很多AngularJS新手，把一堆jQuery扔到directive里。换句话说，他们认为“因为不能在controller里做DOM操作，就把那些代码弄到directive里好了”。虽然这么做确实好一些，但是依然是错误的。</p>
+<p>回想一下我们在第3节里写的那个logger。即使要把它放在一个directive里，我们依然希望用“Angular Way”来做。它依然没有任何DOM操作！有很多时候DOM操作是必要的，但其实比你想的要少得多！在应用里的任何地方做DOM操作之前，问问你自己是不是真的需要这么做。有可能有更好的方式。</p>
+<p>这里有一个示例，展示出了我见过最多的一种模式。我们想做一个可以toggle的按钮。（注意：这个例子有一点牵强、啰嗦，这是为了表达出使用同样方式处理问题的更复杂的情况。）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">.directive(<span class="string">'myDirective'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">template</span>: <span class="string">'&lt;a class="btn"&gt;Toggle me!&lt;/a&gt;'</span>,</div><div class="line">        <span class="attr">link</span>: <span class="function"><span class="keyword">function</span> (<span class="params">scope, element, attrs</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> on = <span class="literal">false</span>;</div><div class="line">            $(element).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span> (on) &#123;</div><div class="line">                    $(element).removeClass(<span class="string">'active'</span>);</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    $(element).addClass(<span class="string">'active'</span>);</div><div class="line">                &#125;</div><div class="line">                on = !on;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这里有一些错误的地方。首先，jQeury根本没必要出现。我们在这里做的事情都根本用不着jQuery！其次，即使已经将jQuery用在了页面上，也没有理由用在这里。第三，即使假设这个directive依赖jQuery来工作，jqLite(angular.element)在加载后总会使用jQuery！所以我们没必要使用$ —— 用angular.element就够了。第四，和第三条紧密关联，jqLite元素不需要被$封装 —— 传到link里的元素本来就会是一个jQuery元素！第五，我们在前面段落中说过，为什么要把模版的东西混到逻辑里？</p>
+<p>这个directive可以（即使是更复杂的情况下！）写得更简单：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">.directive(<span class="string">'myDirective'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">scope</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">template</span>: <span class="string">'&lt;a class="btn" ng-class="&#123;active: on&#125;" ng-click="toggle()"&gt;Toggle me!&lt;/a&gt;'</span>,</div><div class="line">        <span class="attr">link</span>: <span class="function"><span class="keyword">function</span> (<span class="params">scope, element, attrs</span>) </span>&#123;</div><div class="line">            scope.on = <span class="literal">false</span>;</div><div class="line">            scope.toggle = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                scope.on = !$scope.on;</div><div class="line">            &#125;;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>再一次地，模版就在模版里，当有样式需求时，你（或你的用户）可以轻松的换掉它，不用去碰逻辑。重用性 —— boom！</p>
+<p>当然还有其他的好处，像测试 —— 很简单！不论模版中有什么，directive的内部API从来不会被碰到，所以重构也很容易。可以不碰directive就做到任意改变模版。不论你怎么改，测试总是通过的。</p>
+<p>所以如果directive不仅仅是一组类似jQuery的函数，那他们是什么？Directive实际是HTML的扩展。如果HTML没有做你需要它做的事情，你就写一个directive来实现，然后就像使用HTML一样使用它。</p>
+<p>换句话说，如果AngularJS库没有做的一些事情，想想开发团队会如何完成它来配合ngClick，ngClass等。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不要用jQuery。连include也不要。它会让你停滞不前。如果遇到一个你认为已经知道如何使用jQuery来解决的问题，在使用$之前，试试想想如何在AngularJS的限制下解决它。如果你不知道，问！20次中的19次，最好的方式不需要jQuery。如果尝试使用jQuery会增加你的工作量。</p>
+<hr>
+<p>这是我目前最长的Stack Overflow回答。事实上，这个答案太长了，我都要填一个Captcha了。但是就如我常说的：能说多时候说的少其实就是懒。</p>
+<p>希望这个答案对你有用。</p>
+<p><strong>原文英文地址：</strong> <a href="http://stackoverflow.com/questions/14994391/how-do-i-think-in-angularjs-if-i-have-a-jquery-background" target="_blank" rel="external">http://stackoverflow.com/questions/14994391/how-do-i-think-in-angularjs-if-i-have-a-jquery-background</a></p>
+<h2 id="Style-Guide"><a href="#Style-Guide" class="headerlink" title="Style Guide"></a>Style Guide</h2><ul>
+<li><a href="https://github.com/johnpapa/angularjs-styleguide" target="_blank" rel="external">johnpapa/angularjs-styleguide</a></li>
+<li><a href="https://github.com/mgechev/angularjs-style-guide#services" target="_blank" rel="external">mgechev/angularjs-style-guide</a></li>
+<li><a href="http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html" target="_blank" rel="external">Google’s AngularJS Style Guide</a></li>
+<li><a href="https://github.com/mgechev/angularjs-style-guide/blob/master/README-zh-cn.md" target="_blank" rel="external">angularjs style guide</a></li>
+</ul>
+<h2 id="Best-Practice"><a href="#Best-Practice" class="headerlink" title="Best Practice"></a>Best Practice</h2><ul>
+<li><a href="https://github.com/turingou/Angular-Best-Practices" target="_blank" rel="external">turingou/Angular-Best-Practices</a> 由支付宝前端开发工程师 @莫登（新浪微博@郭宇）维护，部分案例包括Angular在 支付宝某些系统上的使用经验。</li>
+<li><a href="http://blog.csdn.net/offbye/article/details/38490821" target="_blank" rel="external">AngularJS移动开发中的坑汇总</a></li>
+<li><a href="http://www.lovelucy.info/angularjs-best-practices.html" target="_blank" rel="external">AngularJS 最佳实践 – 尘埃落定</a></li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md" target="_blank" rel="external">angular-styleguide</a></li>
+<li><a href="https://github.com/angular/angular.js/wiki/Best-Practices" target="_blank" rel="external">Best Practices · angular/angular.js Wiki</a></li>
+<li><a href="http://www.airpair.com/angularjs/posts/top-10-mistakes-angularjs-developers-make" target="_blank" rel="external">10 Top Mistakes Angular.js Developers Make</a></li>
+<li><a href="http://www.cnblogs.com/whitewolf/archive/2013/03/24/2979344.html" target="_blank" rel="external">Angularjs开发一些经验总结 - 破狼 - 博客园</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Angular/2014-08-14-angular-best-practice.html" target="_blank" rel="external">http://blog.inching.org/Angular/2014-08-14-angular-best-practice.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorial/">tutorial</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2014-08-14-angular-best-practice.html&title=《Angular Best Practice》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2014-08-14-angular-best-practice.html&title=《Angular Best Practice》 — Balance&source=
+原文：http://www.infoq.com/cn/news/2013/02/angular-web-app
+
+1. 不要先设计页面，然后再使用DOM..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2014-08-14-angular-best-practice.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Best Practice》 — Balance&url=http://blog.inching.org/Angular/2014-08-14-angular-best-practice.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2014-08-14-angular-best-practice.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Network/2014-08-14-tcp.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Tcp</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/CSS/2014-08-14-css-demo-tai-ji.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">如何使用 CSS 绘制太极图</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2014-08-14-angular-best-practice.html&title=《Angular Best Practice》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2014-08-14-angular-best-practice.html&title=《Angular Best Practice》 — Balance&source=
+原文：http://www.infoq.com/cn/news/2013/02/angular-web-app
+
+1. 不要先设计页面，然后再使用DOM..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2014-08-14-angular-best-practice.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Best Practice》 — Balance&url=http://blog.inching.org/Angular/2014-08-14-angular-best-practice.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2014-08-14-angular-best-practice.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACwElEQVR42u3aQW4bMRAEQP3/0wkQ5BAgkdQ9Q1oOUHsS1jbF4oGke+bxiJ8fv56/3/z5/seTpx3t9ZiPGw8eHh7eaOqvJ/fsK2dLkE89Zz8dBw8PD+8a7/X2vdmsn42TA5Jxnr7Hw8PD+yjvNSY5KtpjBg8PD+9/5yWM5FKexBntHPDw8PC+npeEEcmE2rg2jxiuZy14eHh4Ma8tgH2Hzxfre3h4eHiLqnq++Sbv80t2ck2PZoiHh4d3gZdHtDNMEhy0TQn5+Hh4eHhfw2v/OG+WmpXQ2vasf4yDh4eHd5TXxq/t5p4fHm34Gy0QHh4e3mVeXnbKFyIZvzjB9tkzHh4e3uWiV740eetV20Aw+0Y8PDy827xkK08i1Pan7dY/vKzj4eHhHeW1haW2HaotgyWAA/8x4OHh4S14eUNAO6EkbG2bD/IwFw8PD+8eL48DNpHB5n0eCuPh4eF9ipcMOgsL2uBjHxDj4eHh3eDl23TbcDALhZPfXF218fDw8A7x2gJ/2zTQbuvtm6h1AA8PD+8Qb3apTTbrNgJuy2bRmHh4eHjXeLMLa170SiKMWWHszQh4eHh4X8jbX7JzzL6J4c2VGg8PD+8abwbOC1TJVTsfIVoyPDw8vAu89mp7oHg/CizysPhNVo2Hh4d3lNceFbN2qHYhTgUWeHh4eLd5RZFp0Vw17AvLMXh4eHjXeHkBbNaMNRsnL7w9ZiuBh4eHd4h3tjSVL1neYlUfbHh4eHhHeZuteR/sthfx/Kj4/RkPDw/vAm9znszihrwJ4HWp7PChgoeHh1fy2sMgb37KGwj2LQVveiLw8PDwLvDa1qg2jNiMtind4eHh4X0HXt4EkIcOm8PgzVGEh4eH91FeEtFuMo/ZN+Lh4eF9ite2Ou2bomaHx3DN8PDw8I7yNv/qb0pfeZNrHnAMFwIPDw8v5f0EoA27YG+ixfUAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

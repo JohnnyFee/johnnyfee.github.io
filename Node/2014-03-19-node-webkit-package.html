@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>使用 Node-Webkit 打包 Web 应用 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="webkit,node">
+    <meta name="description" content="本教程仅针对Windows，其他平台请直接参考rogerwang/node-webkit。
+下载下载 node-webkit-v0.9.2-win-ia32 。这个版本为当前最新，请到官网关注最新版本。
+我们把内容解压缩到node-webkit/文件夹中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Node-Webkit 打包 Web 应用">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-03-19-node-webkit-package.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本教程仅针对Windows，其他平台请直接参考rogerwang/node-webkit。
+下载下载 node-webkit-v0.9.2-win-ia32 。这个版本为当前最新，请到官网关注最新版本。
+我们把内容解压缩到node-webkit/文件夹中。">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/enigma-virtual-box.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/resource-hacker.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Node-Webkit 打包 Web 应用">
+<meta name="twitter:description" content="本教程仅针对Windows，其他平台请直接参考rogerwang/node-webkit。
+下载下载 node-webkit-v0.9.2-win-ia32 。这个版本为当前最新，请到官网关注最新版本。
+我们把内容解压缩到node-webkit/文件夹中。">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/enigma-virtual-box.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">使用 Node-Webkit 打包 Web 应用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">使用 Node-Webkit 打包 Web 应用</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-03-18T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-03-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下载"><span class="post-toc-text">下载</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建-package-json"><span class="post-toc-text">创建 package.json</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#运行"><span class="post-toc-text">运行</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#压缩-App"><span class="post-toc-text">压缩 App</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#不压缩-App"><span class="post-toc-text">不压缩 App</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#打包"><span class="post-toc-text">打包</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#单一可执行文件"><span class="post-toc-text">单一可执行文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#修改可执行文件图标"><span class="post-toc-text">修改可执行文件图标</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-webkit-package"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">使用 Node-Webkit 打包 Web 应用</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-03-19 00:00:00" datetime="2014-03-18T16:00:00.000Z"  itemprop="datePublished">2014-03-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本教程仅针对Windows，其他平台请直接参考<a href="https://github.com/rogerwang/node-webkit" target="_blank" rel="external">rogerwang/node-webkit</a>。</p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>下载 <a href="http://dl.node-webkit.org/v0.9.2/node-webkit-v0.9.2-win-ia32.zip" target="_blank" rel="external">node-webkit-v0.9.2-win-ia32</a> 。这个版本为当前最新，请到<a href="https://github.com/rogerwang/node-webkit" target="_blank" rel="external">官网</a>关注最新版本。</p>
+<p>我们把内容解压缩到<code>node-webkit/</code>文件夹中。</p>
+<a id="more"></a>
+<h2 id="创建-package-json"><a href="#创建-package-json" class="headerlink" title="创建 package.json"></a>创建 <code>package.json</code></h2><pre><code>{
+  &quot;name&quot;: &quot;nw-demo&quot;,
+  &quot;main&quot;: &quot;index.html&quot;
+}
+</code></pre><p>其他常用配置请参考：<a href="https://github.com/rogerwang/node-webkit/wiki/Manifest-format" target="_blank" rel="external">Manifest format · rogerwang/node-webkit Wiki</a></p>
+<p>常用的配置如：</p>
+<pre><code>{
+  &quot;main&quot;: &quot;index.html&quot;,
+  &quot;name&quot;: &quot;nw-demo&quot;,
+  &quot;description&quot;: &quot;demo app of node-webkit&quot;,
+  &quot;version&quot;: &quot;0.1.0&quot;,
+  &quot;keywords&quot;: [ &quot;demo&quot;, &quot;node-webkit&quot; ],
+  &quot;window&quot;: {
+    &quot;title&quot;: &quot;node-webkit demo&quot;,
+    &quot;icon&quot;: &quot;link.png&quot;,
+    &quot;toolbar&quot;: true,
+    &quot;frame&quot;: false,
+    &quot;width&quot;: 800,
+    &quot;height&quot;: 500,
+    &quot;position&quot;: &quot;mouse&quot;,
+    &quot;min_width&quot;: 400,
+    &quot;min_height&quot;: 200,
+    &quot;max_width&quot;: 800,
+    &quot;max_height&quot;: 600
+  }
+}
+</code></pre><p>其中icon要求的格式为PNG或者JPG。</p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>可以使用两种方案运行，一种是将网页内容（和index.html平行的内容）+package.json打包，然后拷贝到<code>node-webkit/</code>文件夹中；另一种是将<code>node-webkit/</code>内容拷贝到网页所在的文件夹中。</p>
+<h3 id="压缩-App"><a href="#压缩-App" class="headerlink" title="压缩 App"></a>压缩 App</h3><p>将你的网页内容（主页是index.html）和上述的<code>package.json</code>压缩为zip，如<code>app.zip</code>，将<code>app.zip</code>改名为<code>app.nw</code>。</p>
+<p>完成上述步骤可以通过压缩软件，也可以通过命令：</p>
+<pre><code>zip app.nw index.html package.json
+</code></pre><p>注意，不要压缩<code>index.html</code>所在的目录，而是该目录下的内容。最终<code>app.nw</code>的结构如下：</p>
+<pre><code>app.nw
+|-- package.json
+|-- ...
+`-- index.html
+</code></pre><p>将 <code>app.nw</code> 拷贝到<code>node-webkit/</code>下，<code>node-webkit/</code>目前的文件结构如下：</p>
+<ul>
+<li>app.exe</li>
+<li>app.nw</li>
+<li>ffmpegsumo.dll</li>
+<li>icudt.dll</li>
+<li>libEGL.dll</li>
+<li>libGLESv2.dll</li>
+<li>nw.exe</li>
+<li>nw.pak</li>
+<li>nwsnapshot.exe</li>
+</ul>
+<p>运行请执行以下命令：</p>
+<pre><code>nw.exe app.nw
+</code></pre><p>可以通过以下命令将<code>app.nw</code>合并到<code>nw.exe</code>中：</p>
+<pre><code>copy /b nw.exe+app.nw app.exe 
+</code></pre><p>有两个工具可以同时执行压缩和合并，分别为：</p>
+<ul>
+<li><a href="https://github.com/geo8bit/nodebob" target="_blank" rel="external">nodebob</a> 使用Windows Bat脚本写的工具，只适用于Windows，并且只能打包为Windows的可执行程序。</li>
+<li><a href="https://github.com/mllrsohn/grunt-node-webkit-builder" target="_blank" rel="external">grunt-node-webkit-builder</a> 使用Grunt工具，可以构建Linux、Windows、Mac平台的可执行程序。</li>
+</ul>
+<p>两者最终生成的目录结构为：</p>
+<ul>
+<li>ffmpegsumo.dll</li>
+<li>icudt.dll</li>
+<li>libEGL.dll</li>
+<li>libGLESv2.dll</li>
+<li>nw.exe</li>
+<li>nw.pak</li>
+</ul>
+<p>其中nw.exe为可执行程序（包含nw文件），其他为依赖项，依赖项的作用分别为：</p>
+<ul>
+<li><strong>nw.pak</strong> contains important javascript lib files. Required.</li>
+<li><strong>icudt.dll</strong> a important network library. Required.</li>
+<li><strong>ffmpegsumo.dll</strong>  media library, if you want to use <code>&lt;video&gt;</code> and <code>&lt;audio&gt;</code> tag, or other media related features, you should ship it.</li>
+<li><strong>libEGL.dll</strong> used for WebGL. Recomended.</li>
+<li><strong>libGLESv2.dll</strong> used for GPU acceleration Recomended.</li>
+<li><strong>D3DCompiler_43.dll d3dx9_43.dll</strong>  if you want to make sure WebGL works on more hardware. These 2 files are from DirectX redistributable. </li>
+</ul>
+<p>注意：采用合并的方式需要为每个平台提供单独的可执行程序，否则可以提供nw压缩包，在不同的note-webkit中运行。</p>
+<p>参考：<a href="https://github.com/rogerwang/node-webkit/wiki/How-to-package-and-distribute-your-apps" target="_blank" rel="external">How to package and distribute your apps · rogerwang/node-webkit Wiki</a></p>
+<h3 id="不压缩-App"><a href="#不压缩-App" class="headerlink" title="不压缩 App"></a>不压缩 App</h3><p>将<code>package.json</code>拷贝到跟<code>index.html</code>平行的目录，然后将下载的<code>node-webkit</code>离线包中的文件拷贝到和<code>package.json</code>平行的目录。最终的文件结构：</p>
+<ul>
+<li>index.html</li>
+<li>… Other website content</li>
+<li>ffmpegsumo.dll</li>
+<li>icon.png</li>
+<li>icudt.dll</li>
+<li>libEGL.dll</li>
+<li>libGLESv2.dll</li>
+<li>nw.exe</li>
+<li>nw.pak</li>
+<li>package.json</li>
+</ul>
+<p>单击<code>nw.exe</code>即可运行。</p>
+<h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><h3 id="单一可执行文件"><a href="#单一可执行文件" class="headerlink" title="单一可执行文件"></a>单一可执行文件</h3><p>接下来我们可以将所有文件打包成一个可执行程序，使用的工具为：<a href="http://enigmaprotector.com/en/aboutvb.html" target="_blank" rel="external">Enigma Virtual Box</a>。</p>
+<p>使用方法：</p>
+<ul>
+<li><a href="http://enigmaprotector.com/assets/files/enigmavb.exe" target="_blank" rel="external">下载</a></li>
+<li>安装并打开。</li>
+<li>对于中文用户可以在<code>Language</code>菜单中选择<code>Chinese</code></li>
+<li>在<code>请选择待封包的主程</code>中浏览和选择主程序，如nw.exe。</li>
+<li>拖拽（或者单击<code>Add</code>按钮）所有依赖项，包括<code>*.dll</code>和nw.pak到<code>File</code>选项卡的空白处。</li>
+<li>选择选择<code>文件选项</code>，选择<code>压缩文件</code>来压缩。尽管这样可以在一定程度上较小压缩包的大小，但不建议这么做，因为或拖慢最终可执行程序的速度。</li>
+<li><p>点击<code>执行封包</code>。</p>
+<p>  <img src="http://johnnyimages.qiniudn.com/enigma-virtual-box.png" alt="Enigma Virtual Box"></p>
+</li>
+</ul>
+<p>也可以使用命令：</p>
+<p>  enigmavbconsole project.evb</p>
+<p>其中project.evb为工程文件，我们可以在GUI工具中配置好后保存为工程文件。</p>
+<h3 id="修改可执行文件图标"><a href="#修改可执行文件图标" class="headerlink" title="修改可执行文件图标"></a>修改可执行文件图标</h3><p>参考：<a href="https://github.com/rogerwang/node-webkit/wiki/Icons" target="_blank" rel="external">Icons · rogerwang/node-webkit Wiki</a></p>
+<p>默认情况下，可执行文件的图标为nw.exe的图标，如果我们需要自定义，需要使用 <code>resource editor</code>。官方推荐的为 <a href="http://www.angusj.com/resourcehacker/" target="_blank" rel="external">Resource Hacker</a>。</p>
+<p>使用教程为：</p>
+<p>参考 <a href="http://www.techtalkz.com/tips-n-tricks/3866-how-change-default-icon-exe-using-resource-editor-resource-hacker.html" target="_blank" rel="external">How to Change the Default Icon of an Exe using Resource Editor / Resource Hacker? - TIPS ‘n’ TRICKS</a></p>
+<ol>
+<li>Get a Resource Editor. I strongly recomend <a href="http://www.angusj.com/resourcehacker/" target="_blank" rel="external">Resource Hacker</a>. </li>
+<li>Open your Executable app in it. </li>
+<li><p>You can see the resources in the exe there. In the Left Pane Choose Icons&gt; Icon No&gt;Right Click&gt; Replace.</p>
+<p> <img src="http://johnnyimages.qiniudn.com/resource-hacker.png" alt="Resource Hacker"></p>
+</li>
+<li><p>Browse any other Executable or icon file.</p>
+</li>
+<li>Repeat Steps 3 &amp; 4 for all other icons remaining.</li>
+<li>Save exe &amp; Enjoy!</li>
+</ol>
+<p>接下来，你就可以将你的程序发布给你的客户了，步骤有点儿繁琐，最终的可执行文件有一定的大小。除了打包成一个可执行文件和修改图标，其他均可以使用批处理文件完成。</p>
+<p>同样可以使用命令行工具：</p>
+<p>  ResHacker.exe -addoverwrite Project.exe, Project1.exe, “html5_logo.ico”, ICONGROUP, IDR_MAINFRAME, 1033</p>
+<p>参考：<a href="http://stackoverflow.com/questions/5165594/using-resource-hacker-for-changing-the-icon-after-the-build" target="_blank" rel="external">delphi - Using Resource Hacker for changing the icon after the build - Stack Overflow</a></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/How-to-run-apps" target="_blank" rel="external">How to run apps · rogerwang/node-webkit Wiki</a></li>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/How-to-package-and-distribute-your-apps" target="_blank" rel="external">How to package and distribute your apps · rogerwang/node-webkit Wiki</a></li>
+<li><a href="http://flippinawesome.org/2014/02/10/build-desktop-apps-with-javascript-and-node-webkit/" target="_blank" rel="external">Build Desktop Apps with JavaScript and Node WebKit</a></li>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Application-auto-building-scripts-for-Linux-Windows-and-OSX" target="_blank" rel="external">Application auto building scripts for Linux Windows and OSX · rogerwang/node-webkit Wiki</a></li>
+<li><a href="http://blog.whattoc.com/2013/12/16/node-webkit01/" target="_blank" rel="external">你所不知道的Node-webkit</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-03-19-node-webkit-package.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-03-19-node-webkit-package.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webkit/">webkit</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-03-19-node-webkit-package.html&title=《使用 Node-Webkit 打包 Web 应用》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-03-19-node-webkit-package.html&title=《使用 Node-Webkit 打包 Web 应用》 — Balance&source=本教程仅针对Windows，其他平台请直接参考rogerwang/node-webkit。
+下载下载 node-webkit-v0.9.2-win-ia3..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-03-19-node-webkit-package.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用 Node-Webkit 打包 Web 应用》 — Balance&url=http://blog.inching.org/Node/2014-03-19-node-webkit-package.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-03-19-node-webkit-package.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Qt/2014-03-19-qt-signal-slot.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">QT 的信号与槽机制介绍</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/OS/2014-03-19-pc-tool.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">PC Tools</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-03-19-node-webkit-package.html&title=《使用 Node-Webkit 打包 Web 应用》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-03-19-node-webkit-package.html&title=《使用 Node-Webkit 打包 Web 应用》 — Balance&source=本教程仅针对Windows，其他平台请直接参考rogerwang/node-webkit。
+下载下载 node-webkit-v0.9.2-win-ia3..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-03-19-node-webkit-package.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用 Node-Webkit 打包 Web 应用》 — Balance&url=http://blog.inching.org/Node/2014-03-19-node-webkit-package.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-03-19-node-webkit-package.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrklEQVR42u3aQXLjMAwEQP//095rDmvvDEA63qrWKQdFUjNVJDLA4xFfzx9XfufP+5/x9eqNyduHFx4eHt7i0/cvawH5UuaLhYeHh/cZ3qvX5I+efcTmye+/GQ8PD+/beO1W/r7gbgt6PDw8vP+XNyugzz4BDw8P77d4px6dM5Iy+qNZCx4eHl7My4va7/n5Sn8PDw8Pb91VnzXD3m/T7z9xM3Dwl/fi4eHhXeDlG24epJ5qa71f0GI4DA8PD+8Cb0NqG2ObploeQODh4eHd4+VtpE0Iu/n0NmGoO3t4eHh4o97QHnOqFJ4NddV/Qzw8PLwFLw9q87ihDW3bO4vfxcPDw7vAywvchJ0fD23pvIon8PDw8I7yinZRDGiHDGYLF5XdeHh4eBd4eXl99hjYhMLtnXh4eHg3eBtAG63mLbdZLIKHh4d3m7cZmWrj2vwwyKPhfywiHh4e3gXeZguezSnkwcem8fbYnzB4eHh4o956HiXMwoj2XcN2Gh4eHt413mZMKppQaIelRuNcL7t8eHh4eId47aY/2/rbZWqHrl4eD3h4eHgXeG1hvW9xtSVyGxavIgk8PDy8kreJEvJwNj822resIl08PDy88snJ5t7ec2qBDoQaeHh4eNd4+2GCfLzgRjzxMozAw8PD+yCv3YjzZWqDhlWZjoeHh3eNVzSTyrK7jRJmbbA6jMDDw8O7wMsPibYZ1rbc2kMCDw8P7x7vWV55gJtHt/kWnx9X9UwZHh4e3qSjVPzD327lG9jZYwMPDw/vFK89DDZ3nhoyKBpveHh4eNd4bdNrFq0ePq/ySAIPDw/vV3mzknp2/LTL/TKlxsPDw/sC3qaYTo6WtpRvWn54eHh4Z3h5EDAbAmibW++pRWMMDw8P7wKv/fd+FrPmh8GBUQA8PDy8W7w/ktVBBd+LGI0AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

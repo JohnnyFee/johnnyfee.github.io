@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>函数（Functions） | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,core,kernal">
+    <meta name="description" content="译文： goddyzhao • 函数（Functions）
+原文： ECMA-262 » ECMA-262-3 in detail. Chapter 5. Functions.
+
+概要本文将给大家介绍ECMAScript中的一般对象之一——函数。我们将着重介绍不同类型的函数以及不同类型的函数是如何影响上下文的变量对象以及函数的作用域链的。我们还会解释经常会问到的问题，诸如：“不同方式创建出来的函">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数（Functions）">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="译文： goddyzhao • 函数（Functions）
+原文： ECMA-262 » ECMA-262-3 in detail. Chapter 5. Functions.
+
+概要本文将给大家介绍ECMAScript中的一般对象之一——函数。我们将着重介绍不同类型的函数以及不同类型的函数是如何影响上下文的变量对象以及函数的作用域链的。我们还会解释经常会问到的问题，诸如：“不同方式创建出来的函">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="函数（Functions）">
+<meta name="twitter:description" content="译文： goddyzhao • 函数（Functions）
+原文： ECMA-262 » ECMA-262-3 in detail. Chapter 5. Functions.
+
+概要本文将给大家介绍ECMAScript中的一般对象之一——函数。我们将着重介绍不同类型的函数以及不同类型的函数是如何影响上下文的变量对象以及函数的作用域链的。我们还会解释经常会问到的问题，诸如：“不同方式创建出来的函">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">函数（Functions）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">函数（Functions）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-03-05T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-03-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/ES5-Core/">ES5 Core</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概要"><span class="post-toc-text">概要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#函数类型"><span class="post-toc-text">函数类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#函数声明（Function-Declaration）"><span class="post-toc-text">函数声明（Function Declaration）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#函数表达式"><span class="post-toc-text">函数表达式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#“有关括号”的问题"><span class="post-toc-text">“有关括号”的问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现扩展：-函数语句"><span class="post-toc-text">实现扩展： 函数语句</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#有名字的函数表达式的特性（NFE）"><span class="post-toc-text">有名字的函数表达式的特性（NFE）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#NFE和SpiderMonkey"><span class="post-toc-text">NFE和SpiderMonkey</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#NFE和JScript"><span class="post-toc-text">NFE和JScript</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#通过Function构造器创建的函数"><span class="post-toc-text">通过Function构造器创建的函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#函数创建的算法"><span class="post-toc-text">函数创建的算法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-es3-core-closures"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">函数（Functions）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-03-06 00:00:00" datetime="2014-03-05T16:00:00.000Z"  itemprop="datePublished">2014-03-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/ES5-Core/">ES5 Core</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>译文： <a href="http://goddyzhao.tumblr.com/post/11273713920/functions" target="_blank" rel="external">goddyzhao • 函数（Functions）</a></p>
+<p>原文： <a href="http://dmitrysoshnikov.com/ecmascript/chapter-5-functions/" target="_blank" rel="external">ECMA-262 » ECMA-262-3 in detail. Chapter 5. Functions.</a></p>
+</blockquote>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>本文将给大家介绍ECMAScript中的一般对象之一——函数。我们将着重介绍不同类型的函数以及不同类型的函数是如何影响上下文的变量对象以及函数的作用域链的。<br>我们还会解释经常会问到的问题，诸如：“不同方式创建出来的函数会不一样吗？（如果会，那么到底有什么不一样呢？）”：</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var foo = function () &#123;</div><div class="line">  ...</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>上述方式创建的函数和如下方式创建的有什么不同？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如下代码中，为啥一个函数要用括号包起来呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(function () &#123;</div><div class="line">  ...</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<p>由于本文和此前几篇文章都是有关联的，因此，要想完全搞懂这部分内容，建议先去阅读<a href="http://goddyzhao.tumblr.com/post/11141710441/variable-object" target="_blank" rel="external">第二章-变量对象</a><br>以及<a href="http://goddyzhao.tumblr.com/post/11259644092/scope-chain" target="_blank" rel="external">第四章-作用域链</a>。</p>
+<p>下面，来我们先来介绍下函数类型。</p>
+<h2 id="函数类型"><a href="#函数类型" class="headerlink" title="函数类型"></a>函数类型</h2><p>ECMAScript中包含三类函数，每一类都有各自的特性。</p>
+<h2 id="函数声明（Function-Declaration）"><a href="#函数声明（Function-Declaration）" class="headerlink" title="函数声明（Function Declaration）"></a>函数声明（Function Declaration）</h2><blockquote>
+<p>函数声明（简称FD）是指这样的函数<br>*  有函数名<br>*  代码位置在：要么在程序级别或者直接在另外一个函数的函数体（FunctionBody）中<br>*  在进入上下文时创建出来的<br>*  会影响变量对象<br>*  是以如下形式声明的</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function exampleFunc() &#123;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这类函数的主要特性是：只有它们可以影响变量对象（存储在上下文的VO中）。此特性同时也引出了非常重要的一点（变量对象的天生特性导致的） —— 它们在执行代码阶段就已经存在了（因为FD在进入上下文阶段就收集到了VO中）。</p>
+<p>下面是例子（从代码位置上来看，函数调用在声明之前）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">foo();</div><div class="line"></div><div class="line">function foo() &#123;</div><div class="line">  alert(&apos;foo&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从定义中还提到了非常重要的一点 —— 函数声明在代码中的位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// 函数声明可以直接在程序级别的全局上下文中</div><div class="line">function globalFD() &#123;</div><div class="line">  // 或者直接在另外一个函数的函数体中</div><div class="line">  function innerFD() &#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>除了上述提到了两个位置，其他位置均不能出现函数声明 —— 比方说，在表达式的位置或者是代码块中进行函数声明都是不可以的。</p>
+<p>介绍完了函数声明，接下来介绍<em>函数表达式</em>（<em>function expression</em>）。</p>
+<h2 id="函数表达式"><a href="#函数表达式" class="headerlink" title="函数表达式"></a>函数表达式</h2><hr>
+<blockquote>
+<p>函数表达式（简称：FE）是指这样的函数：<br>*  代码位置必须要在表达式的位置<br>*  名字可有可无<br>*  不会影响变量对象<br>*  在<em>执行代码</em>阶段创建出来</p>
+</blockquote>
+<p>这类函数的主要特性是：它们的代码总是在表达式的位置。最简单的表达式的例子就是赋值表达式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var foo = function () &#123;</div><div class="line">  ...</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>上述例子中将一个匿名FE赋值给了变量“foo”，之后该函数就可以通过“foo”来访问了—— foo()。</p>
+<p>正如定义中提到的，FE也可以有名字：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var foo = function _foo() &#123;</div><div class="line">  ...</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这里要注意的是，在FE的外部可以通过变量“foo”——foo()来访问，而在函数内部（比如递归调用），还可以用“_foo”（译者注：但在外部是无法使用“_foo”的）。</p>
+<p>当FE有名字的时候，它很难和FD作区分。不过，如果仔细看这两者的定义的话，要区分它们还是很容易的： FE总是在表达式的位置。<br>如下例子展示的各类ECMAScript表达式都属于FE：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 在括号中(grouping operator)只可能是表达式</div><div class="line">(function foo() &#123;&#125;);</div><div class="line"></div><div class="line">// 在数组初始化中 —— 同样也只能是表达式</div><div class="line">[function bar() &#123;&#125;];</div><div class="line"></div><div class="line">// 逗号操作符也只能跟表达式</div><div class="line">1, function baz() &#123;&#125;;</div></pre></td></tr></table></figure>
+<p>定义中还提到FE是在执行代码阶段创建的，并且不是存储在变量对象上的。如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// 不论是在定义前还是定义后，FE都是无法访问的</div><div class="line">// (因为它是在代码执行阶段创建出来的),</div><div class="line"></div><div class="line">alert(foo); // &quot;foo&quot; is not defined</div><div class="line"></div><div class="line">(function foo() &#123;&#125;);</div><div class="line"></div><div class="line">// 后面也没用，因为它根本就不在VO中</div><div class="line"></div><div class="line">alert(foo);  // &quot;foo&quot; is not defined</div></pre></td></tr></table></figure>
+<p>问题来了，FE要来干嘛？其实答案是很明显的 —— 在表达式中使用，从而避免对变量对象造成“污染”。最简单的例子就是将函数作为参数传递给另外一个函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function foo(callback) &#123;</div><div class="line">  callback();</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo(function bar() &#123;</div><div class="line">  alert(&apos;foo.bar&apos;);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">foo(function baz() &#123;</div><div class="line">  alert(&apos;foo.baz&apos;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上述例子中，部分变量存储了对FE的引用，这样函数就会保留在内存中并在之后，可以通过变量来访问（因为变量是可以影响VO的）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var foo = function () &#123;</div><div class="line">  alert(&apos;foo&apos;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">foo();</div></pre></td></tr></table></figure>
+<p>如下例子是通过创建一个封装的作用域来对外部上下文隐藏辅助数据（例子中我们使用FE使得函数创建后就立马执行）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">var foo = &#123;&#125;;</div><div class="line"></div><div class="line">(function initialize() &#123;</div><div class="line"></div><div class="line">  var x = 10;</div><div class="line"></div><div class="line">  foo.bar = function () &#123;</div><div class="line">    alert(x);</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">&#125;)();</div><div class="line"></div><div class="line">foo.bar(); // 10;</div><div class="line"></div><div class="line">alert(x); // &quot;x&quot; is not defined</div></pre></td></tr></table></figure>
+<p>我们看到函数“foo.bar”（通过其[[Scope]]属性）获得了对函数“initialize”内部变量“x”的访问。<br>而同样的“x”在外部就无法访问到。很多库都使用这种策略来创建“私有”数据以及隐藏辅助数据。通常，这样的情况下FE的名字都会省略掉：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(function () &#123;</div><div class="line"></div><div class="line">  // 初始化作用域</div><div class="line"></div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<p>还有一个FE的例子是：在执行代码阶段在条件语句中创建FE,这种方式也不会影响VO：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var foo = 10;</div><div class="line"></div><div class="line">var bar = (foo % 2 == 0</div><div class="line">  ? function () &#123; alert(0); &#125;</div><div class="line">  : function () &#123; alert(1); &#125;</div><div class="line">);</div><div class="line"></div><div class="line">bar(); // 0</div></pre></td></tr></table></figure>
+<h2 id="“有关括号”的问题"><a href="#“有关括号”的问题" class="headerlink" title="“有关括号”的问题"></a>“有关括号”的问题</h2><p>让我们回到本文之初，来回答下此前提到的问题 —— “为什么在函数创建之后立即进行函数调用时，需要用括号将其包起来？”。<br>要回答此问题，需要先介绍下关于表达式语句的限制。</p>
+<p>标准中提到，表达式语句（<em>ExpressionStatement</em>）不能以左大括号<strong>{</strong>开始 —— 因为这样一来就和代码块冲突了，<br>也不能以<strong>function</strong>关键字开始，因为这样一来又和函数声明冲突了。比方说，以如下所示的方式来定义一个立马要执行的函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function () &#123;</div><div class="line">  ...</div><div class="line">&#125;();</div><div class="line"></div><div class="line">// or with a name</div><div class="line"></div><div class="line">function foo() &#123;</div><div class="line">  ...</div><div class="line">&#125;();</div></pre></td></tr></table></figure>
+<p>对于这两种情况，解释器都会抛出错误，只是原因不同。</p>
+<p>如果我们是在全局代码（程序级别）中这样定义函数，解释器会以函数声明来处理，因为它看到了是以<strong>function</strong>开始的。<br>在第一个例子中，会抛出<strong>语法错误</strong>，原因是既然是个函数声明，则缺少函数名了（一个函数声明其名字是必须的）。</p>
+<p>而在第二个例子中，看上去已经有了名字了（foo），应该会正确执行。然而，这里还是会抛出<strong>语法错误</strong> —— 组操作符内部缺少表达式。<br>这里要注意的是，这个例子中，函数声明后面的<strong>()</strong>会被当组操作符来处理，而非函数调用的<strong>()</strong>。因此，如果我们有如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// &quot;foo&quot; 是函数声明</div><div class="line">// 并且是在进入上下文的时候创建的</div><div class="line"></div><div class="line">alert(foo); // function</div><div class="line"></div><div class="line">function foo(x) &#123;</div><div class="line">  alert(x);</div><div class="line">&#125;(1); // 这里只是组操作符，并非调用!</div><div class="line"></div><div class="line">foo(10); // 这里就是调用了, 10</div></pre></td></tr></table></figure>
+<p>上述代码其实就是如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">// function declaration</div><div class="line">function foo(x) &#123;</div><div class="line">  alert(x);</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 含表达式的组操作符</div><div class="line">(1);</div><div class="line"></div><div class="line">// 另外一个组操作符</div><div class="line">// 包含一个函数表达式</div><div class="line">(function () &#123;&#125;);</div><div class="line"></div><div class="line">// 这里面也是表达式</div><div class="line">(&quot;foo&quot;);</div><div class="line"></div><div class="line">// etc</div></pre></td></tr></table></figure>
+<p>当这样的定义出现在语句位置时，也会发生冲突并产生语法错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">if (true) function foo() &#123;alert(1)&#125;</div></pre></td></tr></table></figure>
+<p>上述结构根据标准规定是不合法的。（表达式是不能以<strong>function</strong>关键字开始的），然而，正如我们在后面要看到的，没有一种实现对其抛出错误，<br>它们各自按照自己的方式在处理。</p>
+<p>讲了这么多，那究竟要怎么写才能达到创建一个函数后立马就进行调用的目的呢？<br>答案是很明显的。它必须要是个函数表达式，而不能是函数声明。而创建表达式最简单的方式就是使用上述提到的组操作符。因为在组操作符中只可能是表达式。<br>这样一来解释器也不会纠结了，会果断将其以FE的方式来处理。这样的函数将在执行阶段创建出来，然后立马执行，随后被移除（如果有没有对其的引用的话）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(function foo(x) &#123;</div><div class="line">  alert(x);</div><div class="line">&#125;)(1); // 好了，这样就是函数调用了，而不再是组操作符了，1</div></pre></td></tr></table></figure>
+<p>要注意的是，在下面的例子中，函数调用，其括号就不再是必须的了，因为函数本来就在表达式的位置了，解释器自然会以FE来处理，并且会在执行代码阶段创建该函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var foo = &#123;</div><div class="line"></div><div class="line">  bar: function (x) &#123;</div><div class="line">    return x % 2 != 0 ? &apos;yes&apos; : &apos;no&apos;;</div><div class="line">  &#125;(1)</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">alert(foo.bar); // &apos;yes&apos;</div></pre></td></tr></table></figure>
+<p>因此，对“括号有关”问题的完整的回答则如下所示：</p>
+<blockquote>
+<p>如果要在函数创建后立马进行函数调用，并且函数不在表达式的位置时，括号就是必须的 —— 这样情况下，其实是手动的将其转换成了FE。<br>而当解释器直接将其以FE的方式处理的时候，说明FE本身就在函数表达式的位置 —— 这个时候括号就不是必须的了。</p>
+</blockquote>
+<p>另外，除了使用括号的方式将函数转换成为FE之外，还有其他的方式，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">1, function () &#123;</div><div class="line">  alert(&apos;anonymous function is called&apos;);</div><div class="line">&#125;();</div><div class="line"></div><div class="line">// 或者这样</div><div class="line">!function () &#123;</div><div class="line">  alert(&apos;ECMAScript&apos;);</div><div class="line">&#125;();</div><div class="line"></div><div class="line">// 当然，还有其他很多方式</div><div class="line"></div><div class="line">...</div></pre></td></tr></table></figure>
+<p>不过，括号是最通用也是最优雅的方式。</p>
+<p>顺便提下，组操作符既可以包含没有调用括号的函数，又可以包含有调用括号的函数，这两者都是合法的FE：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(function () &#123;&#125;)();</div><div class="line">(function () &#123;&#125;());</div></pre></td></tr></table></figure>
+<h2 id="实现扩展：-函数语句"><a href="#实现扩展：-函数语句" class="headerlink" title="实现扩展： 函数语句"></a>实现扩展： 函数语句</h2><p>看如下代码，符合标准的解释器都无法解释这样的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">if (true) &#123;</div><div class="line"></div><div class="line">  function foo() &#123;</div><div class="line">    alert(0);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125; else &#123;</div><div class="line"></div><div class="line">  function foo() &#123;</div><div class="line">    alert(1);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">foo(); // 1 还是 0 ? 在不同引擎中测试</div></pre></td></tr></table></figure>
+<p>这里有必要提下：根据标准，上述代码结构是不合法的，因为，此前我们就介绍过，函数声明是不能出现在代码块中的（这里if和else就包含代码块）。<br>此前提到的，函数声明只能出现在两个位置： 程序级别或者另外一个函数的函数体中。</p>
+<p>为什么这种结构是错误的呢？因为在代码块中只允许<em>语句</em>。函数要想在这个位置出现的唯一可能就是要成为<em>表达式语句</em>。<br>但是，根据定义表达式语句又不能以左大括号开始（这样会与代码块冲突）也不能以<strong>function</strong>关键字开始（这样又会和FD冲突）。</p>
+<p>然而，在错误处理部分，标准允许实现对程序语法进行扩展。而上述例子就是其中一种扩展。目前，所有的实现中都不会对上述情况抛出错误，都会以各自的方式进行处理。</p>
+<p>因此根据标准，上述if-else中应当需要FE。然而，绝大多数实现中都在进入上下文的时候在这里简单地创建了FD，并且使用了最后一次的声明。<br>最后“foo”函数显示了1，尽管理论上else中的代码根本不会被执行到。</p>
+<p>而SpiderMonkey（TraceMonkey也是）实现中，会将上述情况以两种方式来处理： 一方面它不会将这样的函数以函数声明来处理（也就意味着函数会在执行代码阶段才会创建出来），<br>然而，另外一方面，它们又不属于真正的函数表达式，因为在没有括号的情况是不能作函数调用的（同样会有解析错误——和FD冲突），它们还是存储在变量对象中。</p>
+<p>我认为SpiderMonkey单独引入了自己的中间函数类型——（FE+FD），这样的做法是正确的。这样的函数会根据时间和对应的条件正确创建出来，不像FE。<br>和FD有点类似，可以在外部对其进行访问。SpiderMonkey将这种语法扩展命名为函数语句（<em>Function Statement</em>）（简称FS）；这部分理论在MDC中有<a href="http://t.umblr.com/redirect?z=https%3A%2F%2Fdeveloper.mozilla.org%2FEn%2FCore_JavaScript_1.5_Reference%3AFunctions%23Conditionally_defining_a_function&amp;t=MThjNzkzY2I4MzUwYjdiNDNmNGU5YWNkZWFiYTQ5YjhkYjNiNmNlMCxtbk1RY0x3WQ%3D%3D" target="_blank" rel="external">具体的介绍</a>。<br>JavaScript的发明者 Brendan Eich也<a href="http://t.umblr.com/redirect?z=https%3A%2F%2Fmail.mozilla.org%2Fpipermail%2Fes-discuss%2F2008-February%2F005314.html&amp;t=MzU5YTRhYmNiNTRkYzNhNDg0OWI4NDhlNTZjNWY2NzAyNTNlOTNiMSxtbk1RY0x3WQ%3D%3D" target="_blank" rel="external">提到过</a>这类函数类型。</p>
+<h2 id="有名字的函数表达式的特性（NFE）"><a href="#有名字的函数表达式的特性（NFE）" class="headerlink" title="有名字的函数表达式的特性（NFE）"></a>有名字的函数表达式的特性（NFE）</h2><p>当FE有名字之后（named function expression，简称：NFE），就产生了一个重要的特性。<br>正如在定义中提到的，函数表达式是不会影响上下文的变量对象的（这就意味着不论是在定义前还是在定义后，都是不可能通过名字来进行调用的）。<br>然而，FE可以通过自己的名字进行递归调用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">(function foo(bar) &#123;</div><div class="line"></div><div class="line">  if (bar) &#123;</div><div class="line">    return;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  foo(true); // &quot;foo&quot; name is available</div><div class="line"></div><div class="line">&#125;)();</div><div class="line"></div><div class="line">// but from the outside, correctly, is not</div><div class="line"></div><div class="line">foo(); // &quot;foo&quot; is not defined</div></pre></td></tr></table></figure>
+<p>这里“foo”这个名字究竟保存在哪里呢？在foo的活跃对象中吗？非也，因为在foo函数中根本就没有定义任何“foo”。<br>那么是在上层上下文的变量对象中吗？也不是，因为根据定义——FE是不会影响VO的——正如我们在外层对其调用的结果所看到的那样。<br>那么，它究竟保存在哪里了呢？</p>
+<p>不卖关子了，马上来揭晓。当解释器在执行代码阶段看到了有名字的FE之后，它会在创建FE之前，创建一个辅助型的特殊对象，并把它添加到当前的作用域链中。<br>然后，再创建FE，在这个时候（根据第四章-作用域链描述的），函数拥有了[[Scope]]属性 —— 创建函数所在上下文的作用域链（这个时候，在[[Scope]]就有了那个特殊对象）。<br>之后，特殊对象中唯一的属性 —— FE的名字添加到了该对象中；其值就是对FE的引用。在最后，当前上下文退出的时候，就会把该特殊对象移除。<br>用伪代码来描述此算法就如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">specialObject = &#123;&#125;;</div><div class="line"></div><div class="line">Scope = specialObject + Scope;</div><div class="line"></div><div class="line">foo = FunctionExpression;</div><div class="line">foo.[[Scope]] = Scope;</div><div class="line">specialObject.foo = foo; // &#123;DontDelete&#125;, &#123;ReadOnly&#125;</div><div class="line"></div><div class="line">delete Scope[0]; // 从作用域链的最前面移除specialObject</div></pre></td></tr></table></figure>
+<p>这就是为什么在函数外是无法通过名字访问到该函数的（因为它并不在上层作用域中存在），而在函数内部却可以访问到。</p>
+<p>而这里要注意的一点是： 在某些实现中，比如Rhino，FE的名字并不是保存在特殊对象中的，而是保存在FE的活跃对象中。<br>再比如微软的实现 —— JScript，则完全破坏了FE的规则，直接将该名字保存在上层作用域的变量对象中了，这样在外部也可以访问到。</p>
+<h2 id="NFE和SpiderMonkey"><a href="#NFE和SpiderMonkey" class="headerlink" title="NFE和SpiderMonkey"></a>NFE和SpiderMonkey</h2><p>说到实现，部分版本的SpiderMonkey有一个与上述提到的特殊对象相关的特性，这个特性也可以看作是个bug（既然所有的实现都是严格遵循标准的，那么这个就是标准的问题了）。<br>此特性和标识符处理相关： 作用域链的分析是二维的，在标识符查询的时候，还要考虑作用域链中每个对象的原型链。</p>
+<p>当在<em>Object.prototype</em>对象上定义一个属性，并将该属性值指向一个“根本不存在”的变量时，就能够体现该特性。<br>比如，如下例子中的变量“x”，在查询过程中，通过作用域链，一直到全局对象也是找不到“x”的。<br>然而，在SpiderMonkey中，全局对象继承自<em>Object.prototype</em>，于是，对应的值就在该对象中找到了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Object.prototype.x = 10;</div><div class="line"></div><div class="line">(function () &#123;</div><div class="line">  alert(x); // 10</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<p>活跃对象是没有原型一说的。可以通过内部函数还证明。<br>如果在定义一个局部变量“x”并声明一个内部函数（FD或者匿名的FE），然后，在内部函数中引用变量“x”，这个时候该变量会在上层函数上下文中查询到（理应如此），而不是在<em>Object.prototype</em>中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">Object.prototype.x = 10;</div><div class="line"></div><div class="line">function foo() &#123;</div><div class="line"></div><div class="line">  var x = 20;</div><div class="line"></div><div class="line">  // function declaration </div><div class="line"></div><div class="line">  function bar() &#123;</div><div class="line">    alert(x);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  bar(); // 20, from AO(foo)</div><div class="line"></div><div class="line">  // the same with anonymous FE</div><div class="line"></div><div class="line">  (function () &#123;</div><div class="line">    alert(x); // 20, also from AO(foo)</div><div class="line">  &#125;)();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">foo();</div></pre></td></tr></table></figure>
+<p>在有些实现中，存在这样的异常：它们会在活跃对象设置原型。比方说，在<em>Blackberry</em>的实现中，上述例子中变量“x”值就会变成10。<br>因为，“x”从<em>Object.prototype</em>中就找到了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AO(bar FD or anonymous FE) -&gt; no -&gt;</div><div class="line">AO(bar FD or anonymous FE).[[Prototype]] -&gt; yes - 10</div></pre></td></tr></table></figure>
+<p>当出现有名字的FE的特殊对象的时候，在SpiderMonkey中也是有同样的异常。该特殊对象是常见对象 —— “和通过new Object()表达式产生的一样”。<br>相应地，它也应当继承自<em>Object.prototype</em>，上述描述只针对SpiderMonkey（1.7版本）。其他的实现（包括新的TraceMonkey）是不会给这个特殊对象设置原型的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line"></div><div class="line">  var x = 10;</div><div class="line"></div><div class="line">  (function bar() &#123;</div><div class="line"></div><div class="line">    alert(x); // 20, but not 10, as don&apos;t reach AO(foo)</div><div class="line"></div><div class="line">    // &quot;x&quot; is resolved by the chain:</div><div class="line">    // AO(bar) - no -&gt; __specialObject(bar) -&gt; no</div><div class="line">    // __specialObject(bar).[[Prototype]] - yes: 20</div><div class="line"></div><div class="line">  &#125;)();</div><div class="line">&#125;</div><div class="line"></div><div class="line">Object.prototype.x = 20;</div><div class="line"></div><div class="line">foo();</div></pre></td></tr></table></figure>
+<h2 id="NFE和JScript"><a href="#NFE和JScript" class="headerlink" title="NFE和JScript"></a>NFE和JScript</h2><p>微软的实现——JScript，是IE的JS引擎（截至本文撰写时最新是JScript5.8——IE8），该引擎与NFE相关的bug有很多。每个bug基本上都和ECMA-262-3rd标准是完全违背的。<br>有些甚至会引发严重的错误。</p>
+<p>第一，针对上述这样的情况，JScript完全破坏了FE的规则：不应当将函数名字保存在变量对象中的。<br>另外，FE的名字应当保存在特殊对象中，并且只有在函数自身内部才可以访问（其他地方均不可以）。而JScript却将其直接保存在上层上下文的变量对象中。<br>并且，JScript居然还将FE以FD的方式处理，在进入上下文的时候就将其创建出来，并在定义之前就可以访问到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// FE 保存在变量对象中</div><div class="line">// 和FD一样，在定义前就可以通过名字访问到</div><div class="line">testNFE();</div><div class="line"></div><div class="line">(function testNFE() &#123;</div><div class="line">  alert(&apos;testNFE&apos;);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">// 同样的，在定义之后也可以通过名字访问到</div><div class="line">testNFE();</div></pre></td></tr></table></figure>
+<p>正如大家所见，完全破坏了FE的规则。</p>
+<p>第二，在声明同时，将NFE赋值给一个变量的时候，JScript会创建两个不同的函数对象。<br>这种行为感觉完全不符合逻辑（特别是考虑到在NFE外层，其名字根本是无法访问到的）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">var foo = function bar() &#123;</div><div class="line">  alert(&apos;foo&apos;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">alert(typeof bar); // &quot;function&quot;, NFE 有在VO中了 – 这里就错了</div><div class="line"></div><div class="line">// 然后，还有更有趣的</div><div class="line">alert(foo === bar); // false!</div><div class="line"></div><div class="line">foo.x = 10;</div><div class="line">alert(bar.x); // undefined</div><div class="line"></div><div class="line">// 然而，两个函数完全做的是同样的事情</div><div class="line"></div><div class="line">foo(); // &quot;foo&quot;</div><div class="line">bar(); // &quot;foo&quot;</div></pre></td></tr></table></figure>
+<p>然而，要注意的是： 当将NFE和赋值给变量这两件事情分开的话（比如，通过组操作符），在定义好后，再进行变量赋值，这样，两个对象就相同了，返回true：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(function bar() &#123;&#125;);</div><div class="line"></div><div class="line">var foo = bar;</div><div class="line"></div><div class="line">alert(foo === bar); // true</div><div class="line"></div><div class="line">foo.x = 10;</div><div class="line">alert(bar.x); // 10</div></pre></td></tr></table></figure>
+<p>这个时候就好解释了。实施上，一开始的确创建了两个对象，不过之后就只剩下一个了。这里将NFE以FD的方式来处理，然后，当进入上下文的时候，FD bar就创建出来了。<br>在这之后，到了执行代码阶段，又创建出了第二个对象 —— FE bar，该对象不会进行保存。相应的，由于没有变量对其进行引用，随后FE bar对象就被移除了。<br>因此，这里就只剩下一个对象——FD bar对象，对该对象的引用就赋值给了foo变量。</p>
+<p>第三，通过<em>arguments.callee</em>对一个函数进行间接引用，它引用的是和激活函数名一致的对象（事实上是——函数，因为有两个对象）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var foo = function bar() &#123;</div><div class="line"></div><div class="line">  alert([</div><div class="line">    arguments.callee === foo,</div><div class="line">    arguments.callee === bar</div><div class="line">  ]);</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">foo(); // [true, false]</div><div class="line">bar(); // [false, true]</div></pre></td></tr></table></figure>
+<p>第四，JScript会将NFE以FD来处理，但当遇到条件语句又不遵循此规则了。比如说，和FD那样，NFE会在进入上下文的时候就创建出来，这样最后一次定义的就会被使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var foo = function bar() &#123;</div><div class="line">  alert(1);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">if (false) &#123;</div><div class="line"></div><div class="line">  foo = function bar() &#123;</div><div class="line">    alert(2);</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">&#125;</div><div class="line">bar(); // 2</div><div class="line">foo(); // 1</div></pre></td></tr></table></figure>
+<p>上述行为从逻辑上也是可以解释通的： 当进入上下文的时候，最后一次定义的FD bar被创建出来（有alert(2)的函数），<br>之后到了执行代码阶段又一个新的函数 —— FE bar被创建出来，对其引用赋值给了变量foo。因此（if代码块中由于判断条件是false，因此其代码块中的代码永远不会被执行到）foo函数的调用会打印出1。<br>尽管“逻辑上”是对的，但是这个仍然算是IE的bug。因为它明显就破坏了实现的规则，所以我这里用了引号“逻辑上”。</p>
+<p>第五个JScript中NFE的bug和通过给一个未受限的标识符赋值（也就是说，没有var关键字）来创建全局对象的属性相关。<br>由于这里NFE会以FD的方式来处理，并相应地会保存在变量对象上，赋值给未受限的标识符（不是给变量而是给全局对象的一般属性），<br>当函数名和标识符名字相同的时候，该属性就不会是全局的了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(function () &#123;</div><div class="line"></div><div class="line">  // 没有var，就不是局部变量，而是全局对象的属性</div><div class="line"></div><div class="line">  foo = function foo() &#123;&#125;;</div><div class="line"></div><div class="line">&#125;)();</div><div class="line"></div><div class="line">// 然而，在匿名函数的外层，foo又是不可访问的</div><div class="line"></div><div class="line">alert(typeof foo); // undefined</div></pre></td></tr></table></figure>
+<p>这里从“逻辑上”又是可以解释通的： 进入上下文时，函数声明在匿名函数本地上下文的活跃对象中。<br>当进入执行代码阶段的时候，因为foo这个名字已经在AO中存在了（本地），相应地，赋值操作也只是简单的对AO中的foo进行更新而已。<br>并没有在全局对象上创建新的属性。</p>
+<h2 id="通过Function构造器创建的函数"><a href="#通过Function构造器创建的函数" class="headerlink" title="通过Function构造器创建的函数"></a>通过Function构造器创建的函数</h2><hr>
+<p>这类函数有别于FD和FE，有自己的专属特性： 它们的[[Scope]]属性中只包含全局对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var x = 10;</div><div class="line"></div><div class="line">function foo() &#123;</div><div class="line"></div><div class="line">  var x = 20;</div><div class="line">  var y = 30;</div><div class="line"></div><div class="line">  var bar = new Function(&apos;alert(x); alert(y);&apos;);</div><div class="line"></div><div class="line">  bar(); // 10, &quot;y&quot; is not defined</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们看到<em>bar</em>函数的[[Scope]]属性并未包含foo上下文的AO —— 变量“y”是无法访问的，并且变量“x”是来自全局上下文。<br>顺便提下，这里要注意的是，Function构造器可以通过<em>new</em>关键字和省略<em>new</em>关键字两种用法。上述例子中，这两种用法都是一样的。</p>
+<p>此类函数其他特性则和<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Fbclary.com%2F2004%2F11%2F07%2F%23a-13.1.1&amp;t=OTIxZjlkZmIyNTU0NDM2ZTM1NjhlNmY4NzcxNTIyZDIxNDRhZjA2ZCxtbk1RY0x3WQ%3D%3D" target="_blank" rel="external">同类语法产生式</a>以及<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Fbclary.com%2F2004%2F11%2F07%2F%23a-13.1.2&amp;t=YTViMjE3OTg0ZWNjOWViZDRhNmYxMGQ2MjEwODczZjY5ZGZiMTdlZCxtbk1RY0x3WQ%3D%3D" target="_blank" rel="external">联合对象</a>有关。<br>该机制在标准中建议在作优化的时候采用（当然，具体的实现者也完全有权利不使用这类优化）。比方说，有100元素的数组，在循环数组过程中会给数组每个元素赋值（函数），<br>这个时候，实现的时候就可以采用联合对象的机制了。这样，最终所有的数组元素都会引用同一个函数（只有一个函数）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var a = [];</div><div class="line"></div><div class="line">for (var k = 0; k &lt; 100; k++) &#123;</div><div class="line">  a[k] = function () &#123;&#125;; // 这里就可以使用联合对象</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是，通过Function构造器创建的函数就无法使用联合对象了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var a = [];</div><div class="line"></div><div class="line">for (var k = 0; k $lt; 100; k++) &#123;</div><div class="line">  a[k] = Function(&apos;&apos;); // 只能是100个不同的函数</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下面是另外一个和联合对象相关的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line"></div><div class="line">  function bar(z) &#123;</div><div class="line">    return z * z;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  return bar;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var x = foo();</div><div class="line">var y = foo();</div></pre></td></tr></table></figure>
+<p>上述例子，在实现过程中同样可以使用联合对象。来使得x和y引用同一个对象，因为函数（包括它们内部的[[Scope]]属性）物理上是不可分辨的。<br>因此，通过Function构造器创建的函数总是会占用更多内存资源。</p>
+<h2 id="函数创建的算法"><a href="#函数创建的算法" class="headerlink" title="函数创建的算法"></a>函数创建的算法</h2><p>如下所示使用伪代码表示的函数创建的算法（不包含联合对象的步骤）。有助于理解ECMAScript中的函数对象。此算法对所有函数类型都是一样的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">F = new NativeObject();</div><div class="line"></div><div class="line">// 属性 [[Class]] is &quot;Function&quot;</div><div class="line">F.[[Class]] = &quot;Function&quot;</div><div class="line"></div><div class="line">// 函数对象的原型</div><div class="line">F.[[Prototype]] = Function.prototype</div><div class="line"></div><div class="line">// 对函数自身引用</div><div class="line">// [[Call]] 在函数调用时F()激活</div><div class="line">// 同时创建一个新的执行上下文</div><div class="line">F.[[Call]] = &lt;reference to function&gt;</div><div class="line"></div><div class="line">// 内置的构造器</div><div class="line">// [[Construct]] 会在使用“new”关键字的时候激活</div><div class="line">// 事实上，它会为新对象申请内存</div><div class="line">// 然后调用 F.[[Call]]来初始化创建的对象，将this值设置为新创建的对象</div><div class="line">F.[[Construct]] = internalConstructor</div><div class="line"></div><div class="line">// 当前上下文（创建函数F的上下文）的作用域名链</div><div class="line">F.[[Scope]] = activeContext.Scope</div><div class="line">// 如果是通过new Function(...)来创建的，则</div><div class="line">F.[[Scope]] = globalContext.Scope</div><div class="line"></div><div class="line">// 形参的个数</div><div class="line">F.length = countParameters</div><div class="line"></div><div class="line">// 通过F创建出来的对象的原型</div><div class="line">__objectPrototype = new Object();</div><div class="line">__objectPrototype.constructor = F // &#123;DontEnum&#125;, 在遍历中不能枚举</div><div class="line">F.prototype = __objectPrototype</div><div class="line"></div><div class="line">return F</div></pre></td></tr></table></figure>
+<p>要注意的是，F.[[Prototype]]是函数（构造器）的原型，而F.prototype是通过该函数创建出来的对象的原型（因为通常对这两个概念都会混淆，在有些文章中会将<em>F.prototype</em>叫做“构造器的原型”，这是错误的）。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文介绍了很多关于函数的内容；不过在后面的关于对象和原型的文章中，还会提到函数作为构造器是如何工作的。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/core/">core</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kernal/">kernal</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html&title=《函数（Functions）》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html&title=《函数（Functions）》 — Balance&source=
+译文： goddyzhao • 函数（Functions）
+原文： ECMA-262 » ECMA-262-3 in detail. Chapter 5..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《函数（Functions）》 — Balance&url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/uncategorized/2014-03-06-javascript-es3-core-function.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/ES5-Core/2014-03-05-javascript-es3-core-scope-chain.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">作用域链（Scope Chain）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html&title=《函数（Functions）》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html&title=《函数（Functions）》 — Balance&source=
+译文： goddyzhao • 函数（Functions）
+原文： ECMA-262 » ECMA-262-3 in detail. Chapter 5..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《函数（Functions）》 — Balance&url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-06-javascript-es3-core-closures.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADJklEQVR42u3aQW7jQAwEwPz/015gTwssonSTCmCNS6fAUjJT40OHpL6+4uv198o/+f/uv59fX9dPfnf36zcubGxs7Iew800kvOvfTfawP+5rCzY2Nvap7OvQut76LGaST5LDzYMTGxsbG3v2ZLvp67DMwxUbGxsbe7/1pPVzHW+bI8DGxsb+NPamHd/iZ0XO7Dhu6KVhY2Njvz27HfS+88+/ON/GxsbGfkv2a3G14ZEPA9oYq3eOjY2NfRA7af3fFWxtObEZKkfHio2NjX0QO2mst42hfDDQ7iFfpeioYWNjYz+WXYxFF12rWcy0R1AMFbCxsbGPZs/CKYmi60/aaNzsFhsbG/tU9r1lQ/vkZqhQF0LY2NjYB7FnZUNeSOR3kyi9qxzCxsbGPom9Gb4mh5IXMJshRBuB2NjY2CexW97s5ZvNbyWkfKj8Q4xhY2NjH8FuK5gkbDZFRR5p+es72NjY2CexZ4VB23xP2PlwIm8/YWNjY38Cux0DzJo+s6FC/nzecopmFNjY2NgPZM/KgNmgd4NpayxsbGzsT2C3r+Pkd28oFW4dNmNjY2Ofyv6NsqG92mZTEnvF0WNjY2MfwZ69ZJNsPWlOzba+jzpsbGzsU9nt/+r50cwaRrMvIHoeGxsb+yD2vsGUMPIwa0M0WfeHKTc2Njb2w9nJ6DS5m7SW6m8j/mLaNhM2Njb2Gex8022ctLzZIa4GA9jY2NhHsPcBkwwM2oCcDRuirMbGxsY+jr0f0L7iK4+32cs6xc6xsbGxD2InZUa7WD7KzQ9lnz7ReAAbGxv7sezNknmM3TtUnsVnXXthY2NjP4o9e11ys3x+HJu/UAwJsLGxsR/Obhv6+TC4PfvN3RuCChsbG/tR7Fd57eMtLy1mLw9F62JjY2MfxJ7F2z4m24BsW1T7FzqxsbGxn8XejGxnMbMPp9mh3DapxsbGxn5Ldl5mbAa0baNqH6XY2NjY2O2/+7ORQxt+edx+uxY2Njb2R7Lzg2gLjNnfz+Pzh5d1sLGxsY9gJ5vIl0yOr113sytsbGzss9lta2bTbMqnzb8xWljNt7GxsbHfkf0HOU1FKBJ9tD8AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

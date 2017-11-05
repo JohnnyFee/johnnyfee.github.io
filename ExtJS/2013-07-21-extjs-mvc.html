@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>ExtJS MVC | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="extjs,package">
+    <meta name="description" content="MVC架构
+MVC Architecture
+
+概念Model：定义模型的域、数据、持久化View：视图组件Controller：逻辑代码，包括显示组件、初始化模型、以及业务逻辑。
+Data Package
+                
+                    
+                    
+                
+                Data">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ExtJS MVC">
+<meta property="og:url" content="http://blog.inching.org/ExtJS/2013-07-21-extjs-mvc.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="MVC架构
+MVC Architecture
+
+概念Model：定义模型的域、数据、持久化View：视图组件Controller：逻辑代码，包括显示组件、初始化模型、以及业务逻辑。
+Data Package
+                
+                    
+                    
+                
+                Data">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/data-package.png">
+<meta property="og:image" content="http://docs.sencha.com/extjs/4.2.1/guides/application_architecture/folderStructure.png">
+<meta property="og:image" content="http://docs.sencha.com/extjs/4.2.1/guides/data/model.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ExtJS MVC">
+<meta name="twitter:description" content="MVC架构
+MVC Architecture
+
+概念Model：定义模型的域、数据、持久化View：视图组件Controller：逻辑代码，包括显示组件、初始化模型、以及业务逻辑。
+Data Package
+                
+                    
+                    
+                
+                Data">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/data-package.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">ExtJS MVC</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">ExtJS MVC</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2013-07-20T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2013-07-21
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/ExtJS/">ExtJS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVC架构"><span class="post-toc-text">MVC架构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#概念"><span class="post-toc-text">概念</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Data-Package"><span class="post-toc-text">Data Package</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#工程文件结构"><span class="post-toc-text">工程文件结构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#配置"><span class="post-toc-text">配置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#应用入口"><span class="post-toc-text">应用入口</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Controller"><span class="post-toc-text">Controller</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#control"><span class="post-toc-text">control</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ref"><span class="post-toc-text">ref</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#多个Controller之间的协作"><span class="post-toc-text">多个Controller之间的协作</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Views"><span class="post-toc-text">Views</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定义Views"><span class="post-toc-text">定义Views</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Model"><span class="post-toc-text">Model</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Model定义"><span class="post-toc-text">Model定义:</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Models-and-Stores"><span class="post-toc-text">Models and Stores</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关系"><span class="post-toc-text">关系</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#例子中用到的Model"><span class="post-toc-text">例子中用到的Model</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#多对一"><span class="post-toc-text">多对一</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一对多"><span class="post-toc-text">一对多</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一对一"><span class="post-toc-text">一对一</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#验证"><span class="post-toc-text">验证</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Model和后台交互"><span class="post-toc-text">Model和后台交互</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Store"><span class="post-toc-text">Store</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#内联数据"><span class="post-toc-text">内联数据</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#使用内联Model定义Store"><span class="post-toc-text">使用内联Model定义Store</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#使用Model类定义Store"><span class="post-toc-text">使用Model类定义Store</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Registering-with-StoreManager"><span class="post-toc-text">Registering with StoreManager</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#和服务器交互"><span class="post-toc-text">和服务器交互</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#分组和排序"><span class="post-toc-text">分组和排序</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#在Controller中引用Store"><span class="post-toc-text">在Controller中引用Store</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Proxy"><span class="post-toc-text">Proxy</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#AjaxProxy"><span class="post-toc-text">AjaxProxy</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-extjs-mvc"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">ExtJS MVC</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2013-07-21 00:00:00" datetime="2013-07-20T16:00:00.000Z"  itemprop="datePublished">2013-07-21</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/ExtJS/">ExtJS</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="MVC架构"><a href="#MVC架构" class="headerlink" title="MVC架构"></a>MVC架构</h2><ul>
+<li><a href="http://docs.sencha.com/extjs/4.2.1/#!/guide/application_architecture" target="_blank" rel="external">MVC Architecture</a></li>
+</ul>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>Model：定义模型的域、数据、持久化<br>View：视图组件<br>Controller：逻辑代码，包括显示组件、初始化模型、以及业务逻辑。</p>
+<h3 id="Data-Package"><a href="#Data-Package" class="headerlink" title="Data Package"></a>Data Package</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/data-package.png" alt="Data Package In ExtJS4" title="">
+                </div>
+                <div class="image-caption">Data Package In ExtJS4</div>
+            </figure>
+<a id="more"></a>    
+<h3 id="工程文件结构"><a href="#工程文件结构" class="headerlink" title="工程文件结构"></a>工程文件结构</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://docs.sencha.com/extjs/4.2.1/guides/application_architecture/folderStructure.png" alt="文件结构" title="">
+                </div>
+                <div class="image-caption">文件结构</div>
+            </figure>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>Application中stores，views，models，controllers配置，相关文件会被加载，并且初始化store和controllers实例(并且调用controller的init方法，以完成事件的绑定等操作)。之后便可以使用getXXXStore和getXXXController()返回相应的实例；调用models和views相关的get方法，则只返回class。Store和Controller如果不被创建新实例，则它们为单实例。</p>
+<p>Controler中这四个属性的配置和Application的用法完全一致。可以使用Controller模版方法onLaunch完成文件加载完后的初始化工作，如加载数据。</p>
+<h3 id="应用入口"><a href="#应用入口" class="headerlink" title="应用入口"></a>应用入口</h3><pre><code>Ext.application({
+    requires: [&apos;Ext.container.Viewport&apos;],
+
+    // This automatically sets up a global variable AM for us, and registers the namespace to Ext.Loader, 
+    // with the corresponding path of &apos;app&apos; set via the appFolder config option. 
+    // All Ext JS 4 applications should only use a single global variable, with all of the application&apos;s classes nested inside it
+    name: &apos;AM&apos;, 
+
+    // 源码类相对路径(相对工程根目录)
+    appFolder: &apos;app&apos;, 
+
+    // 函数入口， which is run automatically when everything is loaded
+    launch: function() {
+        Ext.create(&apos;Ext.container.Viewport&apos;, {
+            layout: &apos;fit&apos;,
+            items: [
+                {
+                    xtype: &apos;panel&apos;,
+                    title: &apos;Users&apos;,
+                    html : &apos;List of users will go here&apos;
+                }
+            ]
+        });
+    }
+});
+</code></pre><h2 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h2><p>Controllers are the glue that binds an application together.</p>
+<h3 id="control"><a href="#control" class="headerlink" title="control"></a>control</h3><p>使用模版方法init完成Controller的初始化工作，主要包括事件绑定。使用control方法完成事件的绑定：</p>
+<p>app/controller/Users.js:</p>
+<pre><code>Ext.define(&apos;AM.controller.Users&apos;, {
+    extend: &apos;Ext.app.Controller&apos;,
+
+    init: function() {
+        // 定义监听器
+        this.control({
+            &apos;viewport &gt; panel&apos;: {
+                render: this.onPanelRendered
+            }
+        });
+    },
+
+    onPanelRendered: function() {
+        console.log(&apos;The panel was rendered&apos;);
+    }
+});
+</code></pre><p>app.js:</p>
+<pre><code>Ext.application({
+    ...
+
+    controllers: [
+        &apos;Users&apos;
+    ],
+
+    ...
+});    
+</code></pre><p>When we load our application by visiting index.html inside a browser, the Users controller is automatically loaded (because we specified it in the Application definition above), and <strong>its init function is called just before the Application’s launch function</strong>.</p>
+<h3 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h3><p>ref属性会自动产生get方法，如果实例不存在，则返回null。</p>
+<pre><code>refs: [
+        {
+            ref: &apos;list&apos;,
+            selector: &apos;grid&apos;
+        }
+    ]
+</code></pre><h3 id="多个Controller之间的协作"><a href="#多个Controller之间的协作" class="headerlink" title="多个Controller之间的协作"></a>多个Controller之间的协作</h3><p>为了避免多个Controller同时监听一个view中的相同组建，可以只在一个Controller中监听改组建，然后产生一个application级别的事件，this.application.fireEvent(‘stationstart’, selection[0]);其他controller都可以监听这个事件。</p>
+<p>在Controller中，可以使用this.application获取Application实例。</p>
+<p>在运行时创建Controller时，调用方法this.getController(‘AnotherController’);获取Controller实例，并且调用其init方法。    </p>
+<h2 id="Views"><a href="#Views" class="headerlink" title="Views"></a>Views</h2><h3 id="定义Views"><a href="#定义Views" class="headerlink" title="定义Views"></a>定义Views</h3><p>app/view/user/List.js:</p>
+<pre><code>Ext.define(&apos;AM.view.user.List&apos; ,{
+    extend: &apos;Ext.grid.Panel&apos;,
+    // 定义别名，可以通过xtype引用。
+    alias: &apos;widget.userlist&apos;,
+
+    title: &apos;All Users&apos;,
+
+    initComponent: function() {
+        // 创建内联Store
+        this.store = {
+            fields: [&apos;name&apos;, &apos;email&apos;],
+            data  : [
+                {name: &apos;Ed&apos;,    email: &apos;ed@sencha.com&apos;},
+                {name: &apos;Tommy&apos;, email: &apos;tommy@sencha.com&apos;}
+            ]
+        };
+
+        this.columns = [
+            {header: &apos;Name&apos;,  dataIndex: &apos;name&apos;,  flex: 1},
+            {header: &apos;Email&apos;, dataIndex: &apos;email&apos;, flex: 1}
+        ];
+
+        this.callParent(arguments);
+    }
+});
+
+Ext.define(&apos;AM.controller.Users&apos;, {
+    extend: &apos;Ext.app.Controller&apos;,
+
+    views: [
+        &apos;user.List&apos;
+    ],
+
+    init: ...
+
+    onPanelRendered: ...
+});
+</code></pre><p>AM.controller.Users:</p>
+<pre><code>Ext.define(&apos;AM.controller.Users&apos;, {
+    extend: &apos;Ext.app.Controller&apos;,
+
+    views: [
+        &apos;user.List&apos;
+    ],
+
+    init: function() {
+        this.control({
+            &apos;userlist&apos;: {
+                itemdblclick: this.editUser
+            }
+        });
+    },
+
+    editUser: function(grid, record) {
+        console.log(&apos;Double clicked on &apos; + record.get(&apos;name&apos;));
+    }
+});    
+</code></pre><p>app.js:</p>
+<pre><code>Ext.application({
+    ...
+
+    launch: function() {
+        Ext.create(&apos;Ext.container.Viewport&apos;, {
+            layout: &apos;fit&apos;,
+            items: {
+                xtype: &apos;userlist&apos;
+            }
+        });
+    }
+});
+</code></pre><h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><h3 id="Model定义"><a href="#Model定义" class="headerlink" title="Model定义:"></a>Model定义:</h3><pre><code>Ext.define(&apos;Panda.model.Station&apos;, {
+extend: &apos;Ext.data.Model&apos;,
+fields: [&apos;id&apos;, &apos;name&apos;, &apos;played_date&apos;],
+
+proxy: {
+        type: &apos;ajax&apos;,
+        url: &apos;data/stations.json&apos;,
+        reader: {
+            type: &apos;json&apos;,
+            root: &apos;results&apos;
+        }
+    }
+});
+</code></pre><p>可以设置其idProperty属性来设置store中数据的唯一性，idgen用来控制id产生的机制，这在实例化新的Model的时候可以用上。</p>
+<h3 id="Models-and-Stores"><a href="#Models-and-Stores" class="headerlink" title="Models and Stores"></a>Models and Stores</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://docs.sencha.com/extjs/4.2.1/guides/data/model.png" alt="Models and Stores" title="">
+                </div>
+                <div class="image-caption">Models and Stores</div>
+            </figure>
+<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><p>Examples:</p>
+<ul>
+<li><a href="http://docs.sencha.com/extjs/4.2.1/guides/data/examples/associations_validations/index.html" target="_blank" rel="external">Associations and Validations</a></li>
+<li><a href="http://docs.sencha.com/extjs/4.2.1/guides/data/examples/lazy_associations/index.html" target="_blank" rel="external">Lazy Associations</a></li>
+</ul>
+<p>可以通过hasMany、hasOne、belongTo来表达。框架会根据关系类型生成相应的get和set方法。</p>
+<ul>
+<li>primaryKey 主键，默认为id。</li>
+<li>foreignKey 外键，默认为关联的Model的名字的小些+_id，如user_id。</li>
+</ul>
+<p>定制主键和外键</p>
+<pre><code>Ext.define(&apos;Product&apos;, {
+    fields: [...],
+
+    associations: [
+        { type: &apos;belongsTo&apos;, model: &apos;Category&apos;, primaryKey: &apos;unique_id&apos;, foreignKey: &apos;cat_id&apos; }
+    ]
+});
+</code></pre><p>Model的关联的对象可以直接被加载，也可以懒加载（由后台决定）。如果是懒加载，则需要调用相应的load方法来加载关联对象，如:</p>
+<pre><code>// Loads User with ID 1 User&apos;s Proxy
+User.load(1, {
+    success: function(user) {
+        console.log(&quot;User: &quot; + user.get(&apos;name&apos;));
+
+        // Loads posts for user 1 using Post&apos;s Proxy
+        user.posts().load({
+            callback: function(posts, operation) {
+                Ext.each(posts, function(post) {
+                    console.log(&quot;Comments for post: &quot; + post.get(&apos;title&apos;));
+
+                    post.comments().each(function(comment) {
+                        console.log(comment.get(&apos;message&apos;));
+                    });
+                });
+            }
+        });
+    }
+});
+</code></pre><h4 id="例子中用到的Model"><a href="#例子中用到的Model" class="headerlink" title="例子中用到的Model"></a>例子中用到的Model</h4><p>User:</p>
+<pre><code>Ext.define(&apos;User&apos;, {
+    extend: &apos;Ext.data.Model&apos;,
+    fields: [
+        {name: &apos;id&apos;,   type: &apos;int&apos;},
+        {name: &apos;name&apos;, type: &apos;string&apos;}
+    ],
+    // we can use the hasMany shortcut on the model to create a hasMany association
+    hasMany: {model: &apos;Product&apos;, name: &apos;products&apos;}
+});
+</code></pre><p>Product:</p>
+<pre><code>Ext.define(&apos;Product&apos;, {
+    extend: &apos;Ext.data.Model&apos;,
+    fields: [
+        {name: &apos;id&apos;,      type: &apos;int&apos;},
+        {name: &apos;user_id&apos;, type: &apos;int&apos;},
+        {name: &apos;name&apos;,    type: &apos;string&apos;}
+    ]，
+
+    associations: [
+        { type: &apos;belongsTo&apos;, model: &apos;Category&apos;, primaryKey: &apos;unique_id&apos;, foreignKey: &apos;cat_id&apos; }
+    ]
+});
+</code></pre><p>Category:</p>
+<pre><code>Ext.define(&apos;Category&apos;, {
+    extend: &apos;Ext.data.Model&apos;,
+    fields: [
+        { name: &apos;id&apos;,   type: &apos;int&apos; },
+        { name: &apos;name&apos;, type: &apos;string&apos; }
+    ]
+});    
+</code></pre><h4 id="多对一"><a href="#多对一" class="headerlink" title="多对一"></a>多对一</h4><ul>
+<li><a href="http://docs.sencha.com/extjs/4.2.1/#!/api/Ext.data.association.BelongsTo" target="_blank" rel="external">Ext.data.association.BelongsTo</a></li>
+</ul>
+<p>当数据加载上来后，数据会被缓存，第二次调用不会再与后台交互。可以设置reload来控制是否每次调用都与后台交互；setCategory()，可以传入category_id的值或者Category实例。关系的primaryKey默认为id，一般为Model中定义的idProperty。</p>
+<ul>
+<li><p>产生的Getter方法</p>
+<p>  product.getCategory(function(category, operation) {</p>
+<pre><code>// do something with the category object
+alert(category.get(&apos;id&apos;)); // alerts 20
+</code></pre><p>  }, this);</p>
+</li>
+</ul>
+<p>也可以传入配置对象：</p>
+<pre><code>product.getCategory({
+    reload: true, // force a reload if the owner model is already cached
+    callback: function(category, operation) {}, // a function that will always be called
+    success : function(category, operation) {}, // a function that will only be called if the load succeeded
+    failure : function(category, operation) {}, // a function that will only be called if the load did not succeed
+    scope   : this // optionally pass in a scope object to execute the callbacks in
+});
+</code></pre><p>This uses the Category’s configured proxy to load the Category asynchronously, calling the provided callback when it has loaded.</p>
+<p>Once the getter has been called on the model, it will be cached if the getter is called a second time. To force the model to reload, specify <code>reload: true</code> in the options object.</p>
+<ul>
+<li><p>产生的Setter 方法<br>如果只传入一个参数，则作为外键处理</p>
+<p>  // this call…<br>  product.setCategory(10);</p>
+<p>  // is equivalent to this call:<br>  product.set(‘category_id’, 10);    </p>
+</li>
+</ul>
+<p>也可以传入一个对象，被解析为关联对象</p>
+<pre><code>product.setCategory(10, function(product, operation) {
+    // the product has been saved
+    alert(product.get(&apos;category_id&apos;)); //now alerts 10
+});
+
+//alternative syntax:
+product.setCategory(10, {
+    callback: function(product, operation), // a function that will always be called
+    success : function(product, operation), // a function that will only be called if the load succeeded
+    failure : function(product, operation), // a function that will only be called if the load did not succeed
+    scope   : this //optionally pass in a scope object to execute the callbacks in
+})    
+</code></pre><h4 id="一对多"><a href="#一对多" class="headerlink" title="一对多"></a>一对多</h4><ul>
+<li><p><a href="http://docs.sencha.com/extjs/4.2.1/#!/api/Ext.data.association.HasMany" target="_blank" rel="external">Ext.data.association.HasMany</a></p>
+<p>  //first, we load up a User with id of 1<br>  var user = Ext.create(‘User’, {id: 1, name: ‘Ed’});</p>
+<p>  //the user.products function was created automatically by the association and returns a Store<br>  //the created store is automatically scoped to the set of Products for the User with id of 1<br>  var products = user.products();</p>
+<p>  //we still have all of the usual Store functions, for example it’s easy to add a Product for this User<br>  products.add({</p>
+<pre><code>name: &apos;Another Product&apos;
+</code></pre><p>  });</p>
+<p>  //saves the changes to the store - this automatically sets the new Product’s user_id to 1 before saving<br>  products.sync();</p>
+</li>
+</ul>
+<p>生成的get方法为category.products()，加载products时，默认按id来过滤，也可以自定义过滤属性：    </p>
+<pre><code>var store = Ext.create(&apos;Ext.data.Store&apos;, {
+    model: &apos;Tweet&apos;,
+    filters: [
+        {
+            property: &apos;query&apos;,
+            value   : &apos;Sencha Touch&apos;
+        }
+    ]
+});    
+</code></pre><p>枚举</p>
+<pre><code>// Loads User with ID 1 and related posts and comments using User&apos;s Proxy
+User.load(1, {
+    success: function(user) {
+        console.log(&quot;User: &quot; + user.get(&apos;name&apos;));
+
+        user.posts().each(function(post) {
+            console.log(&quot;Comments for post: &quot; + post.get(&apos;title&apos;));
+
+            post.comments().each(function(comment) {
+                console.log(comment.get(&apos;message&apos;));
+            });
+        });
+    }
+});    
+</code></pre><h4 id="一对一"><a href="#一对一" class="headerlink" title="一对一"></a>一对一</h4><ul>
+<li><a href="http://docs.sencha.com/extjs/4.2.1/#!/api/Ext.data.association.HasOne" target="_blank" rel="external">Ext.data.association.HasOne</a></li>
+</ul>
+<p>生成的get和set方法如多对一中描述。</p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><ul>
+<li><p><a href="http://docs.sencha.com/extjs/4.2.1/#!/guide/data" target="_blank" rel="external">Data Package</a></p>
+<p>  Ext.define(‘User’, {</p>
+<pre><code>extend: &apos;Ext.data.Model&apos;,
+fields: ...,
+
+validations: [
+    {type: &apos;presence&apos;, name: &apos;name&apos;},
+    {type: &apos;length&apos;,   name: &apos;name&apos;, min: 5},
+    {type: &apos;format&apos;,   name: &apos;age&apos;, matcher: /\d+/},
+    {type: &apos;inclusion&apos;, name: &apos;gender&apos;, list: [&apos;male&apos;, &apos;female&apos;]},
+    {type: &apos;exclusion&apos;, name: &apos;name&apos;, list: [&apos;admin&apos;]}
+],
+
+proxy: ...
+</code></pre><p>  });</p>
+</li>
+</ul>
+<p>常用的验证规则:</p>
+<ul>
+<li>presence simply ensures that the field has a value. Zero counts as a valid value but empty strings do not.</li>
+<li>length ensures that a string is between a min and max length. Both constraints are optional.</li>
+<li>format ensures that a string matches a regular expression format. In the example above we ensure that the age field consists only of numbers.</li>
+<li>inclusion ensures that a value is within a specific set of values (e.g. ensuring gender is either male or female).</li>
+<li>exclusion ensures that a value is not one of the specific set of values (e.g. blacklisting usernames like ‘admin’).</li>
+</ul>
+<p>验证:</p>
+<pre><code>// run some validation on the new user we just created
+var errors = newUser.validate();
+
+console.log(&apos;Is User valid?&apos;, errors.isValid()); //returns &apos;false&apos; as there were validation errors
+console.log(&apos;All Errors:&apos;, errors.items); //returns the array of all errors found on this model instance
+
+console.log(&apos;Age Errors:&apos;, errors.getByField(&apos;age&apos;)); //returns the errors for the age field    
+</code></pre><h3 id="Model和后台交互"><a href="#Model和后台交互" class="headerlink" title="Model和后台交互"></a>Model和后台交互</h3><pre><code>// Gives us a reference to the User class
+var User = Ext.ModelMgr.getModel(&apos;User&apos;);
+var ed = Ext.create(&apos;User&apos;, {
+    name: &apos;Ed Spencer&apos;,
+    age : 25
+});
+// We can save Ed directly without having to add him to a Store first because we
+// configured a RestProxy this will automatically send a POST request to the url /users
+ed.save({
+    success: function(ed) {
+        console.log(&quot;Saved Ed! His ID is &quot;+ ed.getId());
+    }
+});
+// Load User 1 and do something with it (performs a GET request to /users/1)
+User.load(1, {
+    success: function(user) {
+        console.log(&quot;Loaded user 1: &quot; + user.get(&apos;name&apos;));
+    }
+});
+</code></pre><p><a href="http://docs.sencha.com/extjs/4.2.1/guides/data/examples/model_with_proxy/index.html" target="_blank" rel="external">Example of a Model that uses a Proxy directly</a></p>
+<h2 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h2><h4 id="内联数据"><a href="#内联数据" class="headerlink" title="内联数据"></a>内联数据</h4><p>测试时使用本地数据可以使用data属性，当data为对象数据时，可以不设置reader属性，也就是说不需要proxy。如果数据需要处理，如数据嵌套在users中，则需要使用memery proxy中的reader属性来格式数据。如</p>
+<pre><code>//note how we set the &apos;root&apos; in the reader to match the data structure above
+var store = Ext.create(&apos;Ext.data.Store&apos;, {
+    autoLoad: true,
+    model: &apos;User&apos;,
+    data : data,
+    proxy: {
+        type: &apos;memory&apos;,
+        reader: {
+            type: &apos;json&apos;,
+            root: &apos;users&apos;
+        }
+    }
+});
+</code></pre><h4 id="使用内联Model定义Store"><a href="#使用内联Model定义Store" class="headerlink" title="使用内联Model定义Store"></a>使用内联Model定义Store</h4><pre><code>Ext.define(&apos;AM.store.Users&apos;, {
+    extend: &apos;Ext.data.Store&apos;,
+    fields: [&apos;name&apos;, &apos;email&apos;],
+    data: [
+        {name: &apos;Ed&apos;,    email: &apos;ed@sencha.com&apos;},
+        {name: &apos;Tommy&apos;, email: &apos;tommy@sencha.com&apos;}
+    ]
+});
+</code></pre><h4 id="使用Model类定义Store"><a href="#使用Model类定义Store" class="headerlink" title="使用Model类定义Store"></a>使用Model类定义Store</h4><p>AM.model.User:</p>
+<pre><code>Ext.define(&apos;AM.model.User&apos;, {
+    extend: &apos;Ext.data.Model&apos;,
+    fields: [&apos;name&apos;, &apos;email&apos;]
+});    
+</code></pre><p>AM.store.Users:</p>
+<pre><code>Ext.define(&apos;AM.store.Users&apos;, {
+    extend: &apos;Ext.data.Store&apos;,
+    model: &apos;AM.model.User&apos;,
+
+    data: [
+        {name: &apos;Ed&apos;,    email: &apos;ed@sencha.com&apos;},
+        {name: &apos;Tommy&apos;, email: &apos;tommy@sencha.com&apos;}
+    ]
+});
+</code></pre><h4 id="Registering-with-StoreManager"><a href="#Registering-with-StoreManager" class="headerlink" title="Registering with StoreManager"></a>Registering with StoreManager</h4><p>Any Store that is instantiated with a storeId will automatically be registered with the <a href="http://docs.sencha.com/extjs/4.2.1/#!/api/Ext.data.StoreManager" target="_blank" rel="external">StoreManager</a>. This makes it easy to reuse the same store in multiple views:    </p>
+<pre><code>//this store can be used several times
+Ext.create(&apos;Ext.data.Store&apos;, {
+    model: &apos;User&apos;,
+    storeId: &apos;usersStore&apos;
+});
+
+new Ext.List({
+    store: &apos;usersStore&apos;,
+    //other config goes here
+});
+
+new Ext.view.View({
+    store: &apos;usersStore&apos;,
+});   
+</code></pre><h4 id="和服务器交互"><a href="#和服务器交互" class="headerlink" title="和服务器交互"></a>和服务器交互</h4><pre><code>Ext.define(&apos;AM.store.Users&apos;, {
+    extend: &apos;Ext.data.Store&apos;,
+    model: &apos;AM.model.User&apos;,
+    autoLoad: true,
+
+    proxy: {
+        type: &apos;ajax&apos;,
+        url: &apos;data/users.json&apos;,
+        reader: {
+            type: &apos;json&apos;,
+            root: &apos;users&apos;,
+            successProperty: &apos;success&apos;
+        }
+    }
+});    
+</code></pre><p>其中proxy.url表示所有的操作（CRUD）都使用该地址，如果需要配置不同的操作使用不同的url，可以使用Proxy.api属性:</p>
+<pre><code>api: {
+        read: &apos;data/users.json&apos;,
+        update: &apos;data/updateUsers.json&apos;
+    }
+</code></pre><p>动态加载</p>
+<pre><code>store.load({
+    params: {
+        group: 3,
+        type: &apos;user&apos;
+    },
+    callback: function(records, operation, success) {
+        // do something after the load finishes
+    },
+    scope: this
+});        
+</code></pre><h4 id="分组和排序"><a href="#分组和排序" class="headerlink" title="分组和排序"></a>分组和排序</h4><p>例子</p>
+<ul>
+<li><a href="http://docs.sencha.com/extjs/4.2.1/guides/data/examples/sorting_grouping_filtering_store/index.html" target="_blank" rel="external">Sorting Grouping Filtering</a></li>
+</ul>
+<p>可以使用分组和排序静态配置sorters和filters，也可以调用filte和sort方法动态分组和排序。</p>
+<ul>
+<li><p>静态配置</p>
+<p>  Ext.create(‘Ext.data.Store’, {</p>
+<pre><code>model: &apos;User&apos;,
+
+sorters: [&apos;name&apos;, &apos;id&apos;],
+filters: {
+    property: &apos;name&apos;,
+    value   : &apos;Ed&apos;
+},
+groupField: &apos;age&apos;,
+groupDir: &apos;DESC&apos;
+</code></pre><p>  });</p>
+</li>
+<li><p>动态分组和排序<br>Calling filter adds another filter to the Store and automatically filters the dataset (<strong>calling filter with no arguments simply re-applies all existing filters</strong>). <strong>Note that by default sortOnFilter is set to true, which means that your sorters are automatically reapplied if using local sorting</strong>.</p>
+<p>  store.filter(‘eyeColor’, ‘Brown’);<br>  store.sort(‘height’, ‘ASC’);</p>
+</li>
+<li><p>远程分组和排序</p>
+<p>  remoteSort : true<br>  remoteFilter : true    </p>
+</li>
+</ul>
+<h4 id="在Controller中引用Store"><a href="#在Controller中引用Store" class="headerlink" title="在Controller中引用Store"></a>在Controller中引用Store</h4><p>AM.controller.Users:</p>
+<pre><code>Ext.define(&apos;AM.controller.Users&apos;, {
+    extend: &apos;Ext.app.Controller&apos;,
+    stores: [&apos;Users&apos;],
+    models: [&apos;User&apos;],
+    ...
+});
+</code></pre><p>By including the stores that our Users controller cares about in its definition they are automatically loaded onto the page and <strong>given a storeId</strong>, which makes them really easy to reference in our views (by simply configuring store: ‘Users’ in this case).</p>
+<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h2><p>here are two main types of Proxy - Client and Server. The Client proxies save their data locally and include the following subclasses:</p>
+<ul>
+<li>LocalStorageProxy - saves its data to localStorage if the browser supports it</li>
+<li>SessionStorageProxy - saves its data to sessionStorage if the browsers supports it</li>
+<li>MemoryProxy - holds data in memory only, any data is lost when the page is refreshed</li>
+</ul>
+<p>The Server proxies save their data by sending requests to some remote server. These proxies include:</p>
+<ul>
+<li>Ajax - sends requests to a server on the same domain</li>
+<li>JsonP - uses JSON-P to send requests to a server on a different domain</li>
+<li>Rest - uses RESTful HTTP methods (GET/PUT/POST/DELETE) to communicate with server</li>
+<li>Direct - uses Ext.direct.Manager to send requests</li>
+</ul>
+<h3 id="AjaxProxy"><a href="#AjaxProxy" class="headerlink" title="AjaxProxy"></a>AjaxProxy</h3><p>可以使用ationMethods来定义请求方法，默认读取使用GET，写使用POST。AjaxProxy不能跨域访问，如果需要跨域访问，需要使用JsonPProxy。与后台交互时，默认会使用proxy的api属性定义的请求路径，如果该路径未找到，则用url指定的路径。可以定义通过sorters和filters定义排序器和过滤器，并且设置传递给后台的参数名和参数格式，例子参看AjaxProxy文档。</p>
+<p>Proxy可以定义在Model中，也可以定义在Store中，如：</p>
+<pre><code>Ext.define(&apos;User&apos;, {
+    extend: &apos;Ext.data.Model&apos;,
+    fields: [&apos;id&apos;, &apos;name&apos;, &apos;age&apos;, &apos;gender&apos;],
+    proxy: {
+        type: &apos;rest&apos;,
+        url : &apos;data/users&apos;,
+        reader: {
+            type: &apos;json&apos;,
+            root: &apos;users&apos;
+        }
+    }
+});
+</code></pre><p>Proxy定义在Model中有如下好处：</p>
+<p>首先，不同的Store都可以使用Model中配置的Proxy，而不需要重新配置。其次，Model可以脱离Store，直接和后台发生数据交互。当store中proxy和其Model的proxy不一样时，可以重定义Store的proxy，以覆盖Model中定义的proxy。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:16.000Z" itemprop="dateUpdated">2017-04-21 20:57:16</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/ExtJS/2013-07-21-extjs-mvc.html" target="_blank" rel="external">http://blog.inching.org/ExtJS/2013-07-21-extjs-mvc.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/extjs/">extjs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/package/">package</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/ExtJS/2013-07-21-extjs-mvc.html&title=《ExtJS MVC》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/ExtJS/2013-07-21-extjs-mvc.html&title=《ExtJS MVC》 — Balance&source=MVC架构
+MVC Architecture
+
+概念Model：定义模型的域、数据、持久化View：视图组件Controller：逻辑代码，包括显示组件、..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/ExtJS/2013-07-21-extjs-mvc.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ExtJS MVC》 — Balance&url=http://blog.inching.org/ExtJS/2013-07-21-extjs-mvc.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/ExtJS/2013-07-21-extjs-mvc.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/ExtJS/2013-07-22-extjs-quickstart.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">ExtJS 快速入门</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/ExtJS/2013-07-20-extjs-class-system.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">ExtJS Class System</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/ExtJS/2013-07-21-extjs-mvc.html&title=《ExtJS MVC》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/ExtJS/2013-07-21-extjs-mvc.html&title=《ExtJS MVC》 — Balance&source=MVC架构
+MVC Architecture
+
+概念Model：定义模型的域、数据、持久化View：视图组件Controller：逻辑代码，包括显示组件、..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/ExtJS/2013-07-21-extjs-mvc.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ExtJS MVC》 — Balance&url=http://blog.inching.org/ExtJS/2013-07-21-extjs-mvc.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/ExtJS/2013-07-21-extjs-mvc.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aQW7DMAwEwPz/0+21RWt1SToFLI1PgZFYHh02osTXK74+vlw/7+RX/szXOy4MDIzHMpKBr+5cPWH9/N6461EwMDBOYFwl2Po7eRxXf5u/GwYGBkYSr+u4vBplMn0YGBgY1cBNqsvk/noiMDAwMPLorBaueUFbDXcMDIxzGNXQ/M/PbznfwMDAeBRjcgA5oc6PQr89BwMDY2tGHnC9JeMaOQlcDAyM0xjJYO9bgeZxfMNDMTAwHsvIf1wF9BZ5+ZbcL/8bGBgYmzKqB5nrEJyXwdV2NAwMjBMYkwKy1wSWR23h6BQDA2NTxqRhIt84y0MzCfHCvGJgYGzEyIefbLRNitg/Yh0DA+MARhK7+SKvWvRWGzV+mWgMDIwjGb1miHyzrAqLqnAMDIytGfkW2F1NGJOIH3WIYGBgPJDR2yC7a+FYPfiMekYwMDC2YyRf6rVN9Dbp8gnFwMA4jZEvzvL7vWVlL5oxMDD2ZuTNXvOGiclYhffBwMDYlDFZ8OW1chLZ1Y22y1MODAyMYxjVVonq0UJeMEcTjYGBcQCj2jaRl7XVTf/qlhwGBsbejF7YTVrHqqVs9EwMDIytGb2SNd/QT14u/2eYNIVgYGA8nVFduuWbYr2IbAY6BgbGAYzewWQvHOdF7GXgYmBgYAyWg/lOfjXWMTAwMCbl6F3sqHUDAwPjAEavYaLahFFt+FhPKwYGxjmMaotDdfgkducrPQwMjE0Zn8oqslDb6eAKAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

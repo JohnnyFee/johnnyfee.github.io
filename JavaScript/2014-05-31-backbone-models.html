@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Backbone Models | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,backbone,mvc">
+    <meta name="description" content="本文为读 Backbone.js Cookbook 的读书笔记。
+
+In Backbone.js, a model is defined by extending its instance from the Backbone.Model object. In this recipe, we are going to learn how to work with models in Backbon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Backbone Models">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-05-31-backbone-models.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文为读 Backbone.js Cookbook 的读书笔记。
+
+In Backbone.js, a model is defined by extending its instance from the Backbone.Model object. In this recipe, we are going to learn how to work with models in Backbon">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/backbone-validate-html.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com//backbone_restore.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/backbone_workflow.jpg">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Backbone Models">
+<meta name="twitter:description" content="本文为读 Backbone.js Cookbook 的读书笔记。
+
+In Backbone.js, a model is defined by extending its instance from the Backbone.Model object. In this recipe, we are going to learn how to work with models in Backbon">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/backbone-validate-html.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Backbone Models</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Backbone Models</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-30T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-31
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Creating-a-Model"><span class="post-toc-text">Creating a Model</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Operating-with-model-attributes"><span class="post-toc-text">Operating with model attributes</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Operating-with-the-model-identifier"><span class="post-toc-text">Operating with the model identifier</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Validating-model-attributes"><span class="post-toc-text">Validating model attributes</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Using-advanced-validation-in-a-model"><span class="post-toc-text">Using advanced validation in a model</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Validating-an-HTML-form"><span class="post-toc-text">Validating an HTML form</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Working-with-nested-attributes-in-a-model"><span class="post-toc-text">Working with nested attributes in a model</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Working-with-a-nested-array-of-attributes"><span class="post-toc-text">Working with a nested array of attributes</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Binding-callbacks-to-an-events"><span class="post-toc-text">Binding callbacks to an events</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Overriding-getters-and-setters"><span class="post-toc-text">Overriding getters and setters</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Overriding-getter-and-setter-of-an-existing-attribute"><span class="post-toc-text">Overriding getter and setter of an existing attribute</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Handling-mutators-events"><span class="post-toc-text">Handling mutators events</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Creating-undo-points-to-store-restore-a-model’s-state"><span class="post-toc-text">Creating undo points to store/restore a model’s state</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Restoring-from-the-first-state-in-the-stack"><span class="post-toc-text">Restoring from the first state in the stack</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Ignoring-attributes-from-being-restored"><span class="post-toc-text">Ignoring attributes from being restored</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Working-with-collections"><span class="post-toc-text">Working with collections</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Implementing-workflow-for-a-model"><span class="post-toc-text">Implementing workflow for a model</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Binding-callbacks-to-transition-events"><span class="post-toc-text">Binding callbacks to transition events</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Implementing-a-one-to-one-relationship"><span class="post-toc-text">Implementing a one-to-one relationship</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-backbone-models"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Backbone Models</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-31 00:00:00" datetime="2014-05-30T16:00:00.000Z"  itemprop="datePublished">2014-05-31</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>本文为读 <a href="http://www.salttiger.com/backbone-js-cookbook/" target="_blank" rel="external">Backbone.js Cookbook</a> 的读书笔记。</p>
+</blockquote>
+<p>In Backbone.js, a model is defined by extending its instance from the Backbone.Model object. In this recipe, we are going to learn how to work with models in Backbone.js.</p>
+<h2 id="Creating-a-Model"><a href="#Creating-a-Model" class="headerlink" title="Creating a Model"></a>Creating a Model</h2><p>Perform the following steps to define a new model object and create its instance:</p>
+<p>Define a model by extending Backbone.Model.</p>
+<pre><code>var InvoiceItemModel = Backbone.Model.extend({
+
+});
+</code></pre><a id="more"></a>
+<p>There is no need to define a data structure inside the model object, because Backbone allows it to be defined dynamically when the model is initialized.</p>
+<p>Create a Backbone.Model instance and initialize it with attribute values.</p>
+<pre><code>var invoiceItemModel = new InvoiceItemModel({
+    date: &apos;2013-04-24&apos;,
+    description: &apos;Wooden Toy House&apos;,
+    price: 22,
+    quantity: 3
+});
+</code></pre><p>Perform the following steps to define a new model object and create its instance:</p>
+<p><strong>Cloning a model</strong></p>
+<p>When you assign a model to another variable, it makes one model reflect changes in another model. If you need an independent copy of a model, use the <code>clone()</code> method.</p>
+<p>newModel = invoiceItemModel.clone();</p>
+<p><strong>Setting default attribute values</strong></p>
+<p>Sometimes, you may want your model to have attributes that are initialized with default values when a new model instance is created, so you don’t need to set them manually. Here is how default attributes are defined:</p>
+<pre><code>var InvoiceItemModel = Backbone.Model.extend({
+// Define default attributes.
+defaults: {
+  date: &apos;&apos;,
+  description: &apos;&apos;,
+  price: 0,
+  quantity: 1
+},
+});
+</code></pre><p>The following example shows that the quantity and date attributes are initialized by default:</p>
+<pre><code>var invoiceItemModel2 = new InvoiceItemModel({
+    description: &apos;Farm Animal Set&apos;,
+    price: 17
+});
+invoiceItemModel2.get(&apos;date&apos;) != undefined; // true
+invoiceItemModel2.get(&apos;quantity&apos;); // 1
+</code></pre><p><strong>Setting default attribute values with a multiline expression</strong></p>
+<p>If you want to set default values with a multiline expression you can wrap it into a function and call it when setting default attributes in defaults.</p>
+<pre><code>// Create new model object
+var InvoiceItemModel = Backbone.Model.extend({
+
+// Set default attributes.
+  defaults: {
+    description: &apos;&apos;,
+    price: 0,
+    quantity: 1,
+
+// Use function for multiline expression.
+    date: function() {
+      var date = new Date();
+
+    // Return attribute value.
+      return date.toISOString();
+    }
+  }
+});
+</code></pre><p>There is also a way to do the same in the initialize() method, which is called right after the model object is created and initialized with values.</p>
+<pre><code>// Crate new model
+var InvoiceItemModel = Backbone.Model.extend({
+
+// Set default values.
+defaults: {
+  description: &apos;&apos;,
+  price: 0,
+  quantity: 1,
+},
+
+// Set default values in initialize method.
+// Following method is run after the object is created.
+initialize: function() {
+
+  // Check that attribute is not initialized yet.
+    if (!this.has(&apos;date&apos;)) {
+      var date = new Date();
+
+    // Set attribute value.
+      this.set(&apos;date&apos;, date.toISOString());
+    }
+  }
+}
+</code></pre><p><strong>Tip</strong></p>
+<p>If the default attributes are defined, then they can override the attributes defined in the initialize() method, and so we need to remove such attributes from the default values, otherwise they are initialized as defaults instead.</p>
+<h2 id="Operating-with-model-attributes"><a href="#Operating-with-model-attributes" class="headerlink" title="Operating with model attributes"></a>Operating with model attributes</h2><p>Attributes are where a model stores all its data. Unlike model properties, which are used for storing internal object information, attributes cannot be accessed via the . operator. There are special methods to work with them, which we are going to learn in this recipe.</p>
+<p>Attributes are stored in the attributes property. It is better not to access attributes directly and to use methods we have learned previously; otherwise, it can break the event triggering mechanism or integration with other Backbone extensions.</p>
+<p>When a new module is initialized, values from the defaults property are assigned to the attributes one.</p>
+<p>The main methods to work with model attributes are get(), set(), unset(),and clear().</p>
+<ol>
+<li><p>Use the get() method to get an attribute value.</p>
+<pre><code>var quantity = invoiceItemModel.get(&apos;quantity&apos;);
+</code></pre><p> If the attribute is not found, undefined is returned.</p>
+</li>
+<li><p>Use the set() method to update/create a single attribute value.</p>
+<pre><code>invoiceItemModel.set(&apos;quantity&apos;, 5);
+</code></pre><p> To update multiple attributes use key-value format.</p>
+<pre><code>invoiceItemModel.set({
+  quantity: 5,
+  price: 10
+});
+</code></pre><p> When setting an attribute if it does not exist, one is created. The set() method returns a reference with the value true to the model, if validation does not fail; otherwise returns the value false. We will learn more about validation in the recipe, Validating model attributes.</p>
+</li>
+<li><p>Use the unset() method to delete an attribute from a model.</p>
+<pre><code>invoiceItemModel.unset(&apos;quantity&apos;);
+</code></pre></li>
+<li><p>Use the clear() method to delete all attributes from a model.</p>
+<p> invoiceItemModel.clear();</p>
+</li>
+</ol>
+<p><strong>Checking if a model has an attribute</strong></p>
+<p>To check if a model has an attribute, use the has() method. It returns true if the attribute exists, otherwise false.</p>
+<pre><code>if (!invoiceItemModel.has(&apos;quantity&apos;)) {
+  console.log(&apos;Quantity attribute does not exists!&apos;)
+}
+</code></pre><p><strong>Getting HTML escaped attribute value</strong></p>
+<p>If you are going to display user-entered text, which you assume is in plain text format, you should worry about security issues. The best way to prevent vulnerability which may lead to possible XSS attacks is to use the escape() method before outputting any user entered text. This disallows the browser to parse any HTML code by escaping HTML characters. Let’s figure out how it works:</p>
+<pre><code>var hacker = new Backbone.Model({
+    name: &quot;&lt;script&gt;alert(&apos;xss&apos;)&lt;/script&gt;&quot;
+});
+var escaped_name = hacker.escape(&apos;name&apos;);
+// &amp;lt;script&amp;gt;alert(&apos;xss&apos;)&amp;lt;/script&amp;gt;
+</code></pre><h2 id="Operating-with-the-model-identifier"><a href="#Operating-with-the-model-identifier" class="headerlink" title="Operating with the model identifier"></a>Operating with the model identifier</h2><p>Each model has a unique identifier property ID, which allows distinguishing one model from another. When developing a Backbone application it is often required to operate with an identifier.</p>
+<p>The id property provides direct access to an attribute where the identifier is stored. By default it is id; however, you can override it by setting idAttribute when extending a model.</p>
+<pre><code>var Meal = Backbone.Model.extend({
+    idAttribute: &quot;_id&quot;
+});
+</code></pre><p>When a new model is created, the identifier is empty unless it is manually assigned.</p>
+<p>The following steps explains how to set and get the id property:</p>
+<p>Setting and getting the id property is really easy.</p>
+<pre><code>invoiceItemModel.id = Math.random().toString(36).substr(2);
+</code></pre><p>Getting the id property looks as follows:</p>
+<pre><code>var id = invoiceItemModel.id;
+</code></pre><h2 id="Validating-model-attributes"><a href="#Validating-model-attributes" class="headerlink" title="Validating model attributes"></a>Validating model attributes</h2><p>To prevent unexpected behavior, we often need to validate model attributes.</p>
+<p>Perform the following steps to set up an attribute validation:</p>
+<ol>
+<li><p>Validation can be done by defining the validate() method.</p>
+<pre><code>var InvoiceItemModel = Backbone.Model.extend({
+    // Define validation criteria.
+    validate: function(attrs) {
+      if (attrs.quantity &lt;= 0) {
+        return &quot;quantity can&apos;t be negative or equal to zero&quot;;
+      }
+    }
+});
+</code></pre><p> The attrs parameter contains the attribute values that were changed. The validate() method will return an error message if they do not validate.</p>
+</li>
+<li><p>Attribute validation is triggered on the save() method. It can also trigger on the set() method if you pass {validate: true} as the last parameter.</p>
+<pre><code>var invoiceItemModel = new InvoiceItemModel({
+    description: &apos;Wooden Toy House&apos;,
+    price: 10
+});
+
+// Set value that is not valid.
+invoiceItemModel.set(&apos;quantity&apos;, -1, {validate: true});
+</code></pre></li>
+</ol>
+<p><strong>Tip</strong></p>
+<p>When validating a model you can still access old attribute values with the help of this.get() or this.attributes.</p>
+<p>validate is called before save(), and accepts the updated model attributes, which are passed from save(). If validate() returns an error string, save() will not continue, and the model attributes will not be modified. Failed validation triggers the invalid event. If you want validation to be triggered in the set() method, pass {validate: true} as the last parameter.</p>
+<p><strong>Handling validation errors</strong></p>
+<p>If a model does not validate, we often need to continue running an application and provide a custom code for handling events. Let’s check out how it is done.</p>
+<pre><code>invoiceItemModel.on(&quot;invalid&quot;, function(model, error) {
+    console.log(error);
+});
+</code></pre><p>Such an error handler should be bound before the validation event is triggered.</p>
+<p>There is also another way of handling events, which allows us to pass an error handling function as an option to the set(), fetch(), save(), or destroy() methods.</p>
+<pre><code>var invoiceItemModel2 = new InvoiceItemModel({
+    description: &apos;Animal Farm&apos;,
+    price: 17
+});
+
+invoiceItemModel2.set({quantity: 0}, {
+  invalid: function(model, error) {
+    console.log(error);
+  },
+  validate: true
+});
+</code></pre><p><strong>Triggering validation manually</strong></p>
+<p>Though validation is performed every time a model is updated or saved to the storage, sometimes you may want to check manually if the model validates. Let’s figure out how to do it.</p>
+<pre><code>var invoiceItemModel3 = new InvoiceItemModel({
+    description: &apos;Wooden Toy House&apos;,
+    price: 10,
+    quantity: -5
+});
+invoiceItemModel3.isValid(); // false
+</code></pre><p><code>isValid()</code> returns true or false, but does not trigger the invalid event.</p>
+<h2 id="Using-advanced-validation-in-a-model"><a href="#Using-advanced-validation-in-a-model" class="headerlink" title="Using advanced validation in a model"></a>Using advanced validation in a model</h2><p>By default, Backbone provides a simple way for validating model attributes using the validate() method, which allows to create your own validating function, but this can take more developer’s time compared to the usage of existing solutions.</p>
+<p>Why don’t you save time with another Backbone extension named <code>Backbone.Validation</code>, which provides lots of features and allows to reuse existing validators. It is available to download from the GitHub page <a href="https://github.com/thedersen/backbone.validation" target="_blank" rel="external">https://github.com/thedersen/backbone.validation</a>.</p>
+<p>To include this extension into your project, save the backbone-validation.js file in the lib folder and include a reference to it in index.html.</p>
+<ol>
+<li><p>Extend Backbone.object() with Backbone.Validation.mixin.</p>
+<pre><code>_.extend(Backbone.Model.prototype, Backbone.Validation.mixin);
+</code></pre><p> There is more information about mixins in the Using mixins with Backbone objects recipe in Chapter 8, Special Techniques.</p>
+</li>
+<li><p>Define the validation criteria in the validation property.</p>
+<p> var BuyerModel = Backbone.Model.extend({</p>
+<pre><code>// Defining a validation criteria.
+validation: {
+  name: {
+    required: true
+  },
+  email: {
+    pattern: &apos;email&apos;
+  }
+}
+</code></pre><p> });</p>
+</li>
+</ol>
+<p>The Backbone.Validation extension overrides the validate() method of Backbone.Model, so we can still call the validate() and isValid() methods as usual, and validation is performed automatically when a model is updated. Let’s check this out.</p>
+<pre><code>var buyerModel = new BuyerModel();
+
+// Set attribute values which do not validate.
+buyerModel.set({
+  email: &apos;http://example.com&apos;
+}, {validate: true});
+
+// Check if model is valid.
+buyerModel.isValid(); // false
+buyerModel.get(&apos;email&apos;); // undefined
+</code></pre><p><strong>Using built-in validators</strong></p>
+<p>In the previous example, we reused existing validators, such as required and pattern. They are named built-in validators. In this recipe, we are going to learn how to use all of them.</p>
+<ul>
+<li><p>required: It validates if the attribute is required or not. It can be equal to true or false.</p>
+<pre><code>var BuyerModel = Backbone.Model.extend({
+    validation: {
+      name: {
+        required: true
+      },
+    }
+});
+</code></pre></li>
+<li><p>acceptance: It validates if something has to be accepted, for example, terms of use. It checks whether the attribute value is true or false. It works with boolean attributes.</p>
+<pre><code>var UserRegistrationModel = Backbone.Model.extend({
+    validation: {
+      terms: {
+        acceptance: true
+      },
+    }
+});
+</code></pre></li>
+<li><p>min: It validates that the attribute value has to be a number and equal to or greater than the min value specified.</p>
+<pre><code>var BuyerModel = Backbone.Model.extend({
+    validation: {
+      age: {
+        min: 18
+      },
+    }
+});
+</code></pre></li>
+<li><p>max: It validates that the attribute value has to be a number and equal to or less than the max value specified.</p>
+<pre><code>var EventRegistrationModel = Backbone.Model.extend({
+    validation: {
+      guests: {
+        max: 2
+      },
+    }
+});
+</code></pre></li>
+<li><p>range: It validates that the attribute value has to be a number and equal to or between the two numbers specified.</p>
+<pre><code>var ChildTicketModel = Backbone.Model.extend({
+    validation: {
+      age: {
+        range: [2, 12]
+      },
+    }
+});
+</code></pre></li>
+<li><p>length: It validates that the attribute value has to be a string with length equal to the length value specified.</p>
+<pre><code>var AddressModel = Backbone.Model.extend({
+validation: {
+  zip: {
+    length: 5
+  },
+}
+});
+</code></pre></li>
+<li><p>minLength: It validates that the attribute value has to be a string with length equal to or greater than the min length value specified.</p>
+<pre><code>var UserModel = Backbone.Model.extend({
+    validation: {
+      password: {
+        minLength: 8
+      },
+    }
+});
+</code></pre></li>
+<li><p>maxLength: It validates that the attribute value has to be a string with length equal to or less than the max length value specified.</p>
+<pre><code>var UserModel = Backbone.Model.extend({
+    validation: {
+      password: {
+        maxLength: 8
+      },
+    }
+});
+</code></pre></li>
+<li><p>rangeLength: It validates that the attribute value has to be a string and equal to or between the two numbers specified.</p>
+<pre><code>var BuyerModel = Backbone.Model.extend({
+    validation: {
+      phoneNumber: {
+        rangeLength: [10, 12]
+      },
+    }
+});
+</code></pre></li>
+<li><p>oneOf: It validates that the attribute value has to be equal to one of the elements in the specified array. It uses case-sensitive matching.</p>
+<pre><code>var BuyerModel = Backbone.Model.extend({
+    validation: {
+      type: {
+        oneOf: [&apos;&apos;person&apos;&apos;, &apos;&apos;organization&apos;&apos;]
+      },
+    }
+});
+</code></pre></li>
+<li><p>equalTo: It validates that the attribute value has to be equal to the value of the attribute with the name specified.</p>
+<pre><code>var UserModel = Backbone.Model.extend({
+    validation: {
+      password: {
+        required: true
+      },
+      passwordRepeat: {
+        equalTo: &apos;password&apos;
+      }
+    }
+});
+</code></pre></li>
+<li><p>pattern: It validates that the attribute value has to match the pattern specified. It can be a regular expression or the name of one of the built-in patterns.</p>
+<pre><code>var BuyerModel = Backbone.Model.extend({
+  validation: {
+    email: {
+      pattern: &apos;email&apos;
+    }
+  }
+});
+</code></pre><p>  Pattern can accept one of the following attribute values:</p>
+<ul>
+<li>number: matches any decimal number</li>
+<li>digits: matches any digit sequence</li>
+<li>email: matches a valid email address</li>
+<li><p>url: matches any valid URL</p>
+<p>You can also specify any regular expression instead.</p>
+<p>  var BuyerModel = Backbone.Model.extend({</p>
+<pre><code>validation: {
+  phoneNumber: {
+    pattern: /^(\+\d)*\s*(\(\d{3}\)\s*)*\d{3}(-{0,1}|\s{0,1})\d{2}(-{0,1}|\s{0,1})\d{2}$/
+  }
+}
+</code></pre><p>  });</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Validating-an-HTML-form"><a href="#Validating-an-HTML-form" class="headerlink" title="Validating an HTML form"></a>Validating an HTML form</h2><p>Most of the web applications use HTML forms for data input, and Backbone is not an exception. An application should let the user know about any validation errors. Implementation of such functionality could fall on the developers’ shoulders, but not in Backbone!</p>
+<p>Fortunately, <a href="https://github.com/thedersen/backbone.validation" target="_blank" rel="external">Backbone.Validation</a> provides integration with a view and works well with HTML forms.</p>
+<p>To allow form validation, we need to bind a view to a Backbone.Validation object in the initialize() method of the view.</p>
+<pre><code>Backbone.Validation.bind(this);
+</code></pre><p>Backbone.Validation assumes that your model is stored in this.model and you have implemented getting data from the form elements and updating model values with it.</p>
+<p>If a user enters information that does not validate, then Backbone.Validation adds the invalid class to an appropriate form element and sets the data-error attribute with an error message.</p>
+<p>The following screenshot illustrates how Backbone.Validation validates wrong data entered into the HTML form:</p>
+<pre><code>(function($){
+
+  // Define new model.
+  var BuyerModel = Backbone.Model.extend({
+    defaults: {
+      name: &apos;&apos;,
+      age: &apos;&apos;
+    },
+
+    // Define validation criteria.
+    validation: {
+      name: {
+        required: true
+      },
+      age: {
+        min: 18
+      }
+    }
+  });
+
+  var BuyerModelFormView = Backbone.View.extend({
+
+    // Bind Backbone.Validation to a view.
+    initialize: function(){
+      Backbone.Validation.bind(this);
+    },
+
+    // Define a template.
+    template: _.template(&apos;\
+      &lt;form&gt;\
+        Enter name:\
+        &lt;input name=&quot;name&quot; type=&quot;text&quot; value=&quot;&lt;%= name %&gt;&quot;&gt;&lt;br&gt;\
+        Enter age:\
+        &lt;input name=&quot;age&quot; type=&quot;text&quot; value=&quot;&lt;%= age %&gt;&quot;&gt;&lt;br&gt;\
+        &lt;input type=&quot;button&quot; name=&quot;save&quot; value=&quot;Save&quot;&gt;\
+      &lt;/form&gt;\
+    &apos;),
+
+    // Render view.
+    render: function(){
+      // Render template with model values.
+      var html = this.template(this.model.toJSON());
+
+      // Update html.
+      $(this.el).html(html);
+    },
+
+    // Bind save callback click event.
+    events: {
+      &apos;click [name~=&quot;save&quot;]&apos;: &apos;save&apos;
+    },
+
+    // Save callback.
+    save: function(){
+
+      // Update model attributes.
+      this.model.set({
+        name: $(&apos;[name~=&quot;name&quot;]&apos;).val(),
+        age: $(&apos;[name~=&quot;age&quot;]&apos;).val()
+      });
+    }
+  });
+
+
+  $(document).ready(function () {
+     // Create new model instance.
+     var buyerModel = new BuyerModel();
+
+     // Create new view instance.
+     var buyerModelFormView = new BuyerModelFormView({
+       model: buyerModel,
+       el: &apos;body&apos;
+     });
+
+     // Render view.
+     buyerModelFormView.render();
+  });
+})(jQuery);
+</code></pre><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/backbone-validate-html.jpg" alt="backbone-validate-html.jpg" title="">
+                </div>
+                <div class="image-caption">backbone-validate-html.jpg</div>
+            </figure>
+<h2 id="Working-with-nested-attributes-in-a-model"><a href="#Working-with-nested-attributes-in-a-model" class="headerlink" title="Working with nested attributes in a model"></a>Working with nested attributes in a model</h2><p>Sometimes nested attributes are required to operate with complex hierarchical structures stored in the model. This is typically done by using JavaScript objects as nested attributes; however, it is not a Backbone way. Fortunately, there is the Backbone-Nested extension, which provides various improvements when working with nested attributes.</p>
+<p>You can download the Backbone-Nested extension from the GitHub page <a href="https://github.com/afeld/backbone-nested" target="_blank" rel="external">https://github.com/afeld/backbone-nested</a>. To include this extension into your project, save the backbone-nested.js file into the lib folder and include a reference to it in index.html.</p>
+<p>The Backbone-Nested extension provides a new model object Backbone.NestedModel based on Backbone.Model. It overrides existing methods, such as get(), set(), has(), toJSON, and so on. It also provides new add() and remove() methods.</p>
+<p>Perform the following steps to use nested attributes in a model:</p>
+<ol>
+<li><p>Use Backnone.NestedModel as the base object when extending a new model.</p>
+<pre><code>var BuyerModel = Backbone.NestedModel.extend({
+
+});
+</code></pre></li>
+<li><p>Set the nested attribute value with the help of dot syntax provided by the Backbone-Nested extension.</p>
+<pre><code>buyerModel.set({
+  &apos;name.title&apos;: &apos;Mr&apos;,
+  &apos;name.generation&apos;: &apos;II&apos;
+});
+</code></pre><p> You can still use object syntax, which is typical to JavaScript, to set multiple values.</p>
+<pre><code>buyerModel.set({
+  name: {
+    first: &apos;John&apos;,
+    last: &apos;Smith&apos;,
+    middle: {
+      initial: &apos;P&apos;,
+      full: &apos;Peter&apos;
+    }
+  }
+});
+</code></pre></li>
+<li><p>Get the attribute value with the dot syntax.</p>
+<pre><code>buyerModel.get(&apos;name.middle.full&apos;); // Peter
+buyerModel.get(&apos;name.middle&apos;);
+// { full: &apos;Peter&apos;, initial: &apos;P }
+buyerModel.get(&apos;name.title&apos;); // Mr
+</code></pre></li>
+</ol>
+<h3 id="Working-with-a-nested-array-of-attributes"><a href="#Working-with-a-nested-array-of-attributes" class="headerlink" title="Working with a nested array of attributes"></a>Working with a nested array of attributes</h3><p>Of course, there is a way of working with a bit more complex structures, such as nested array of attributes. You can set it using the object syntax as well.</p>
+<pre><code>buyerModel.set({
+  &apos;addresses&apos;: [
+    {city: &apos;Brooklyn&apos;, state: &apos;NY&apos;},
+    {city: &apos;Oak Park&apos;, state: &apos;IL&apos;}
+  ]
+});
+</code></pre><p>Or you can set attributes in the nested array with a dot and bracket syntax, as shown in following example:</p>
+<pre><code>buyerModel.set({
+  &apos;addresses[1].state&apos;: &apos;MI&apos;
+});
+</code></pre><p>And the same syntax is used for getting attributes from the nested array.</p>
+<pre><code>buyerModel.get(&apos;addresses[0].state&apos;); // NY
+buyerModel.get(&apos;addresses[1].state&apos;); // MI
+</code></pre><p>Adding/removing elements to/from a nested array<br>Backbone-Nested provides additional methods to work with nested arrays. The add method adds a new element to a nested array. Here is how it works.</p>
+<pre><code>buyerModel.add(&apos;addresses&apos;, {
+  city: &apos;Seattle&apos;,
+  state: &apos;WA&apos;
+});
+
+buyerModel.get(&apos;addresses[2]&apos;);
+// { city: &apos;Seattle&apos;, state: &apos;WA&apos; }
+</code></pre><p>The remove() method removes desired elements from a nested array. Let’s see how it is done.</p>
+<pre><code>buyerModel.remove(&apos;addresses[1]&apos;);
+
+buyerModel.get(&apos;addresses&apos;).length; // 2
+</code></pre><h3 id="Binding-callbacks-to-an-events"><a href="#Binding-callbacks-to-an-events" class="headerlink" title="Binding callbacks to an events"></a>Binding callbacks to an events</h3><p>When binding a callback to an event, you can use the same dot and bracket syntax as described previously. Let’s check out the following example of binding a callback to an event:</p>
+<pre><code>buyerModel.bind(&apos;change:addresses[0].city&apos;, function(model, value){
+  console.log(value);
+});
+
+buyerModel.set(&apos;addresses[0].city&apos;, &apos;Chicago&apos;);
+</code></pre><p>Moreover, Backbone-Nested provides additional add:<em> and remove:</em> events for handling array update events.</p>
+<h2 id="Overriding-getters-and-setters"><a href="#Overriding-getters-and-setters" class="headerlink" title="Overriding getters and setters"></a>Overriding getters and setters</h2><p>Sometimes it isrequired to override getters or setters in your application. There can be different reasons to do so:</p>
+<ul>
+<li>An attribute is stored in a different format rather than a format for input or output</li>
+<li>You have a virtual attribute that is not stored in the model, but depends on other attributes</li>
+<li>Prevent illegal values to be assigned to an attribute</li>
+</ul>
+<p>The Backbone.Mutators extension overrides the get() and set() methods of Bakcbone.Model. New methods try to call overridden getters and setters. If not, run the original get() or set() methods.</p>
+<p>It also overrides the <code>toJSON()</code> method and replaces attributes which have overridden getter.</p>
+<p>By default, Backbone does not allow users to override getters or setters, but there is an extension named Backbone.Mutators, which allows you to do so.</p>
+<p>There is a link to download Backbone.Mutators from the <strong>GitHub</strong> page <a href="https://github.com/asciidisco/Backbone.Mutators" target="_blank" rel="external">https://github.com/asciidisco/Backbone.Mutators</a>.</p>
+<p>To include this extension into your project, save the backbone.mutators.js file into the lib folder and include a reference to it in index.html.</p>
+<p>We can specify a getter or setter for a virtual attribute that does not exist. This can be helpful in some cases, for example, if a virtual attribute depends on other attributes.</p>
+<p>Introduce a new virtual attribute by overriding getter for it.</p>
+<pre><code>var BuyerModel = Backbone.Model.extend({
+    // Use mutators
+    mutators: {
+    // Introduce virtual attribute.
+      fullName: {
+        get: function () {
+          return this.firstName + &apos; &apos; + this.lastName;
+        }
+      }
+    }
+});
+</code></pre><p>In the model object, we defined a new mutators attribute, which provides our model with a getter for the new virtual attribute named fullName. This attribute is not assumed to be stored in the model, because it contains values of existing attributes firstName and lastName. Now, let’s see how we can use an overridden getter.</p>
+<pre><code>var buyerModel = new BuyerModel();
+buyerModel.set({
+    firstName: &apos;John&apos;,
+    lastName: &apos;Smith&apos;
+});
+
+buyerModel.get(&apos;fullName&apos;); // John Smith
+buyerModel.get(&apos;firstName&apos;); // John
+buyerModel.get(&apos;lastName&apos;); // Smith
+</code></pre><p>Override setter, so the virtual attribute is not actually saved in the model, but other attributes are updated instead.</p>
+<pre><code>var BuyerModel = Backbone.Model.extend({
+    // Use mutators
+    mutators: {
+
+      // Introduce virtual attribute.
+      fullName: {
+        set: function (key, value, options, set) {
+          var names = value.split(&apos; &apos;);
+          this.set(&apos;firstName&apos;, names[0], options);
+          this.set(&apos;lastName&apos;, names[1], options);
+        }
+      }
+    }
+});
+</code></pre><p>In the setter for the fullName attribute, we split a value into an array and then assign the firstName and lastName attributes with its parts. Here is an example which demonstrates how it can be used:</p>
+<pre><code>var buyerModel2 = new BuyerModel()
+buyerModel2.set(&apos;fullName&apos;, &apos;Joe Bloggs&apos;);
+
+buyerModel2.get(&apos;fullName&apos;); // Joe Bloggs
+buyerModel2.get(&apos;firstName&apos;); // Joe
+buyerModel2.get(&apos;lastName&apos;); // Bloggs
+</code></pre><p><strong>Initialize attributes using the set() method</strong></p>
+<p>If you use setter mutator for an attribute, the only way to trigger it is to call the set() method. Setter mutator won’t work if you assign attributes when creating a new model, because in this case the change event is not triggered. Otherwise, you need to trigger the change event for a specific property.</p>
+<h3 id="Overriding-getter-and-setter-of-an-existing-attribute"><a href="#Overriding-getter-and-setter-of-an-existing-attribute" class="headerlink" title="Overriding getter and setter of an existing attribute"></a>Overriding getter and setter of an existing attribute</h3><p>Overriding setter of an existing attribute may be done if you need the attribute to be stored in a different format rather than the one in which it is outputted or inputted. You can override getter and setter for this attribute and solve this problem. Let’s see how to use Backbone.Mutators for existing attributes:</p>
+<pre><code>var BuyerModel = Backbone.Model.extend({
+    // Use mutators.
+    mutators: {
+
+      // Override existing attribute.
+      vip: {
+        get: function() {
+          return this.vip === true ? &apos;VIP&apos; : &apos;Regular&apos;;
+        },
+        set: function (key, value, options, set) {
+          set(key, value === &apos;VIP&apos;, options);
+        }
+      }
+    }
+});
+</code></pre><p>In this model, there is the vip attribute, which is boolean. We want this attribute to be represented as a string to the user, so we are going to override getter and setter for it.</p>
+<p>The usage syntax stays the same as for a regular attribute.</p>
+<pre><code>var buyerModel3 = new BuyerModel();
+buyerModel2.set({
+  fullName: &apos;Mister X&apos;,
+  vip: &apos;VIP&apos;
+});
+
+buyerModel2.get(&apos;vip&apos;); // VIP
+buyerModel2.attributes.vip; // true
+</code></pre><p><strong>Tip</strong></p>
+<p>Mutators aim to override setters or getters, but they do not modify attribute values itself. You can always get the original attributes by accessing the attributes property of a model.</p>
+<h3 id="Handling-mutators-events"><a href="#Handling-mutators-events" class="headerlink" title="Handling mutators events"></a>Handling mutators events</h3><p>You can bind callback to the mutators:set:* event. Here is how it is done:</p>
+<pre><code>buyerModel3.on(&apos;mutators:set:fullName&apos;,
+  function (a, b, c, d) {
+    console.log(&apos;mutators:set:fullName is triggered&apos;);
+});
+
+buyerModel3.set({
+  fullName: &apos;Mister Y&apos;
+});
+</code></pre><h2 id="Creating-undo-points-to-store-restore-a-model’s-state"><a href="#Creating-undo-points-to-store-restore-a-model’s-state" class="headerlink" title="Creating undo points to store/restore a model’s state"></a>Creating undo points to store/restore a model’s state</h2><p>Sometimes, you may need to manage the states of a model in your application. This can be useful in one of the following cases:</p>
+<ul>
+<li>Your application requires an undo/redo feature</li>
+<li>You want to implement transactions</li>
+<li>Your application emulates some process</li>
+<li>You want to change a model temporarily and then restore it</li>
+</ul>
+<p>Typically for all ofthe previous cases developers often use the Memento pattern. There is an implementation of this pattern in Backbone, which is available in the Backbone.Memento extension. This extension allows developers to store or restore a model’s state and provides a stack for operating with multiple states.</p>
+<p>You can download the Backbone.Memento extension from the GitHub page <a href="https://github.com/derickbailey/backbone.memento" target="_blank" rel="external">https://github.com/derickbailey/backbone.memento</a>. To include this extension into your project, save the backbone.memento.js file into the lib folder and include a reference to it in index.html.</p>
+<p><strong>Note</strong></p>
+<p>Including a Backbone extension into your project is described in the Extending application with plugins recipe in Chapter 1, Understanding Backbone in detail.</p>
+<p>Perform the following steps to operate model states:</p>
+<ol>
+<li><p>Extend a model with the Backbone.Memento extension in the initialize() method.</p>
+<pre><code>var InvoiceItemModel = Backbone.Model.extend({
+    // Extend model instance with memento instance.
+    initialize: function() {
+      _.extend(this, new Backbone.Memento(this));
+    }
+});
+</code></pre></li>
+<li><p>Create the model instance and initialize it with values.</p>
+<pre><code>var invoiceItemModel = new InvoiceItemModel();
+invoiceItemModel.set(&apos;price&apos;, 10);
+</code></pre></li>
+<li><p>Use the store() method to save a state.</p>
+<pre><code>invoiceItemModel.store();
+</code></pre></li>
+<li><p>Update the model with temporary values.</p>
+<pre><code>invoiceItemModel.set(&apos;price&apos;, 20);
+</code></pre></li>
+<li><p>Use the restore() method to retrieve a previously saved state.</p>
+<pre><code>invoiceItemModel.restore();
+</code></pre></li>
+<li><p>Retrieve model values of the saved state.</p>
+<pre><code>invoiceItemModel.get(&apos;price&apos;); // 10
+</code></pre></li>
+</ol>
+<p>Memento uses the <strong>LIFO</strong> ( <strong>last in, first out</strong> ) data structure, also known as stack, for storing model states. So it is possible to save model states multiple times, and then restore them in a backward direction. The following diagram shows how it works:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com//backbone_restore.jpg" alt="How it works..." title="">
+                </div>
+                <div class="image-caption">How it works...</div>
+            </figure>
+<p>Each time you call the store() method, the state is saved on top of the stack. Each time you call the restore() method, thestate that was saved last is restored and deleted from the top of the stack.</p>
+<h3 id="Restoring-from-the-first-state-in-the-stack"><a href="#Restoring-from-the-first-state-in-the-stack" class="headerlink" title="Restoring from the first state in the stack"></a>Restoring from the first state in the stack</h3><p>Sometimes,it is required to reset a model to the state in which it was first saved in the stack, no matter how many states were saved after. This can be done using the restart() method.</p>
+<pre><code>invoiceItemModel3.restart();
+</code></pre><h3 id="Ignoring-attributes-from-being-restored"><a href="#Ignoring-attributes-from-being-restored" class="headerlink" title="Ignoring attributes from being restored"></a>Ignoring attributes from being restored</h3><p>There is an interesting feature in Backbone.Memento, which allows you to ignore some model attributes from being saved or restored. It is very useful if a model contains some technical properties, which is not intended to be used as part of the state. When extending a model in the initialize() method, pass the properties to be ignored in the ignore option.</p>
+<pre><code>var AnotherInvoiceItemModel = Backbone.Model.extend({ 
+    // Extend model instance with memento instance. 
+    // Ignore restoring of description attribute. 
+    initialize: function() { 
+        _.extend(this, new Backbone.Memento( this, {
+            ignore: [&quot;description&quot;]
+        })); 
+    }
+});
+</code></pre><h3 id="Working-with-collections"><a href="#Working-with-collections" class="headerlink" title="Working with collections"></a>Working with collections</h3><p>The Memento extension also allows to extend a collection with Memento functionality. It provides the same methods when working with collections store(), restore(), and restart().</p>
+<h2 id="Implementing-workflow-for-a-model"><a href="#Implementing-workflow-for-a-model" class="headerlink" title="Implementing workflow for a model"></a>Implementing workflow for a model</h2><p>If you are implementing a business logic, which assumes that a model can be in different states and there are special rules applied to a state change, you should use the workflow.js extension, which is very helpful for building such kind of functionality.</p>
+<p>You can download the workflow.js extension from the GitHub page <a href="https://github.com/kendagriff/workflow.js" target="_blank" rel="external">https://github.com/kendagriff/workflow.js</a>. To include this extension into your project, save the workflow.js file into the lib folder and include a reference to it in index.html.</p>
+<p>Let’s create a workflow for InvoiceModel, because it has a status attribute, which represents the model state and is well suited for a workflow example.</p>
+<ol>
+<li><p>Draw a graph of the states and possible transitions.</p>
+<p> <img src="http://johnnyimages.qiniudn.com/backbone_workflow.jpg" alt="How to do it..."></p>
+<p> Available states are draft, issued, paid, and canceled. There are also a few transitions available that allow one state to be changed into another. If there is no appropriate transition, then such a change is not possible.</p>
+</li>
+<li><p>Define workflow in code.</p>
+<pre><code>var InvoiceModel = Backbone.Model.extend({
+
+    // Define workflow states.
+    workflow: {
+
+      // Define initial state.
+      initial: &apos;draft&apos;,
+
+      // Define state transitions.
+      events: [
+        { name: &apos;issue&apos;, from: &apos;draft&apos;, to: &apos;issued&apos; },
+        { name: &apos;payout&apos;, from: &apos;issued&apos;, to: &apos;paid&apos; },
+        { name: &apos;cancel&apos;, from: &apos;draft&apos;, to: &apos;canceled&apos; },
+        { name: &apos;cancel&apos;, from: &apos;issued&apos;, to: &apos;canceled&apos; },
+      ]
+    },
+
+    initialize: function() {
+      // Extend model instance with workflow instance.
+      // Set attribute name which contains status.
+      _.extend(this,
+        new Backbone.Workflow(this, {attrName: &apos;status&apos;})
+      );
+    }
+});
+</code></pre><p> As we can see, there is a new workflow property which describes our workflow. Transitions are defined in an array, which is assigned to the events property.</p>
+<p> Each element of the transitions array should contain the name of the transition, from state, and to state. Initial state of the model should be defined in the initial property.</p>
+<p> In the previous example, in the initialize() method, we extend our model object with an instance of the Backbone.Workflow object and pass the state attribute name (attrName) as an option, which contains ‘status’ instead of the default value ‘workflow_state’.</p>
+</li>
+<li><p>Trigger workflow transition by calling the triggerEvent() method.</p>
+<pre><code>var invoiceModel = new InvoiceModel();
+invoiceModel.get(&apos;status&apos;); // draft
+
+invoiceModel.triggerEvent(&apos;issue&apos;);
+invoiceModel.get(&apos;status&apos;); // issued
+
+invoiceModel.triggerEvent(&apos;payout&apos;);
+invoiceModel.get(&apos;status&apos;) // paid
+</code></pre><p> As we can see in the preceding code, triggerEvent() accepts a single parameter, which is the transition name. In case if an inappropriate transition is triggered, then an exception is thrown.</p>
+</li>
+</ol>
+<p>There is also another extension named <a href="https://github.com/iVariable/Backbone.actAs.Mementoable" target="_blank" rel="external">Backbone.actAs.Mementoable</a>, which implements the Memento pattern in a more accurate way, because it uses separate objects for storing states. It is more flexible, but does not provide stack out of the box and cannot ignore specific attributes from being saved/restored.</p>
+<h3 id="Binding-callbacks-to-transition-events"><a href="#Binding-callbacks-to-transition-events" class="headerlink" title="Binding callbacks to transition events"></a>Binding callbacks to transition events</h3><p>Sometimes, you may want to execute a code when a specific transition is triggered. In this case, you need to bind a callback function to a transition event. This callback is executed if an event is being triggered.</p>
+<p>Workflow.js provides two types of events transition:from:<em> and transition:to:</em>. The first one is triggered when a workflow loses a specific state, and the second one is triggered when a workflow reaches a specific state. Let’s define event bindings for our model.</p>
+<pre><code>var InvoiceModel = Backbone.Model.extend({
+
+    // Define workflow states.
+    // [workflow definition goes here]
+
+    initialize: function() {
+      // Extend model instance with workflow instance.
+      // Set attribute name which contains status.
+      _.extend(this,
+        new Backbone.Workflow(this, {attrName: &apos;status&apos;})
+      );
+
+      // Bind reaction on event when status changes from
+      // draft to any.
+      this.bind(&apos;transition:from:draft&apos;, function() {
+        this.set(&apos;createdDate&apos;, new Date().toISOString());
+      });
+
+      // Bind reaction on event when status changes
+      // from any to paid.
+      this.bind(&apos;transition:to:paid, function() {
+        this.set(&apos;payoutDate&apos;, new Date().toISOString());
+      });
+    }
+});
+</code></pre><p>In the preceding example, we bind a couple of callbacks, which update date attributes when appropriate events are triggered.</p>
+<p>The next code snippet is an example which demonstrates what happens when workflow events are triggered.</p>
+<pre><code>var invoiceModel = new InvoiceModel();
+invoiceModel.get(&apos;status&apos;); // draft
+
+invoiceModel.triggerEvent(&apos;issue&apos;);
+invoiceModel.get(&apos;status&apos;); // issued
+invoiceModel.get(&apos;createdDate&apos;);
+// 2012-05-01T12:00:10.234Z
+
+invoiceModel.triggerEvent(&apos;payout&apos;);
+invoiceModel.get(&apos;status&apos;) // paid
+invoiceModel.get(&apos;payoutDate&apos;);
+// 2012-05-01T12:00:10.238Z
+</code></pre><p><strong>Always use the triggerEvent() method when changing state</strong></p>
+<p>Event callback is executed if an event is triggered by the triggerEvent() method only. That is why an event callback is not executed when an object is initialized or if you use the set() method to update the workflow state.</p>
+<h2 id="Implementing-a-one-to-one-relationship"><a href="#Implementing-a-one-to-one-relationship" class="headerlink" title="Implementing a one-to-one relationship"></a>Implementing a one-to-one relationship</h2><p>Mostly in any application, we may need to have models that are related to each other. For example, a blog post model can have a relationship with a model of its author or have a connection to a comment model.</p>
+<p>We may also need to access comments quickly when dealing with a blog post, or list all blog posts of a specific author. Moreover, we may want to export blog posts with author info and comments in a single JSON format.</p>
+<p>In a Backbone app, this can be implemented with the help of the Backbone-relational extension.</p>
+<p>You can download the Backbone-relational extension from the GitHub page <a href="https://github.com/PaulUithol/Backbone-relational" target="_blank" rel="external">https://github.com/PaulUithol/Backbone-relational</a>. To include Backbone-relational into your project, save the backbone-relational.js file into the lib folder and include a reference to it in index.html.</p>
+<p>In this case, we need to store buyer credentials somewhere. It can be a new UserModel associated with an existing BuyerModel. We know that for each user there is a single buyer and vice versa, so we are dealing with a one-to-one relationship. Let’s implement one such one-to-one relationship.</p>
+<p>Each Backbone.RelationalModel registers itself with Backbone.Store upon creation (and is removed from the Store when destroyed). When creating or updating an attribute that is a key in a relation, removed related objects are notified of their removal, and new related objects are looked up in the Store.</p>
+<ol>
+<li><p>Extend models from Backbone.RelationalModel and pass the relations property with a relationship definition.</p>
+<pre><code>// Define new model object.
+var UserModel = Backbone.RelationalModel.extend({
+
+});
+
+// Define new model object.
+var BuyerModel = Backbone.RelationalModel.extend({
+
+// Define one-to-one relationship.
+relations: [
+  {
+     // Relationship type
+     type: Backbone.HasOne,
+
+     // Relationship key in BuyerModel.
+     key: &apos;user&apos;,
+
+     // Related model.
+     relatedModel: UserModel,
+
+     // Define reverse relationship.
+     reverseRelation: {
+       type: Backbone.HasOne,
+       key: &apos;buyer&apos;
+     }
+  }
+]
+});
+</code></pre><p> As we see from the previous example, the relations property takes an array, so multiple relationships are possible.</p>
+</li>
+<li><p>Initialize a one-to-one relationship by referencing the UserModel instance in the BuyerModel instance or vice versa.</p>
+<pre><code>var userModel1 = new UserModel({
+  login: &apos;jsmith&apos;,
+  email: &apos;jsmith@example.com&apos;
+});
+
+var buyerModel1 = new BuyerModel({
+  firstName: &apos;John&apos;,
+  lastName: &apos;Smith&apos;,
+  user: userModel1
+});
+</code></pre><p> There is also a way to do the same by passing a single input JSON when creating both BuyerModel and UserModel.</p>
+<pre><code>var buyerModel = new BuyerModel({
+  firstName: &apos;John&apos;,
+  lastName: &apos;Smith&apos;,
+  user: {
+    login: &apos;jsmith&apos;,
+    email: &apos;jsmith@example.com&apos;
+  }
+});
+</code></pre></li>
+<li><p>If a reversed relation is defined, pass a BuyerModel array when initializing UserModel.</p>
+<pre><code>var userModel = new UserModel({
+  login: &apos;jsmith&apos;,
+  email: &apos;jsmith@example.com&apos;,
+  buyer: {
+    firstName: &apos;John&apos;,
+    lastName: &apos;Smith&apos;
+  }
+});
+</code></pre></li>
+<li><p>Optionally, access the related model with the help of the get() method.</p>
+<pre><code>buyerModel1.get(&apos;user&apos;).get(&apos;email&apos;);
+// jsmith@example.com
+userModel1.get(&apos;buyer&apos;).get(&apos;lastName&apos;); // Smith
+</code></pre></li>
+</ol>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://javascriptplayground.com/blog/2014/03/command-line-backbone-yeoman/" target="_blank" rel="external">Embracing Command Line Tooling with Backbone Applications</a></li>
+<li><a href="http://geeks.bizzabo.com/7-battle-tested-backbonejs-rules-for-amazing-web-apps" target="_blank" rel="external">7 Battle tested Backbone.js rules for amazing web apps</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-05-31-backbone-models.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-05-31-backbone-models.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backbone/">backbone</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mvc/">mvc</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-05-31-backbone-models.html&title=《Backbone Models》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-05-31-backbone-models.html&title=《Backbone Models》 — Balance&source=
+本文为读 Backbone.js Cookbook 的读书笔记。
+
+In Backbone.js, a model is defined by exte..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-05-31-backbone-models.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Backbone Models》 — Balance&url=http://blog.inching.org/JavaScript/2014-05-31-backbone-models.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-05-31-backbone-models.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-06-01-backbone-collections.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Backbone Collections</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-05-30-backbone-views.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Backbone Views</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-05-31-backbone-models.html&title=《Backbone Models》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-05-31-backbone-models.html&title=《Backbone Models》 — Balance&source=
+本文为读 Backbone.js Cookbook 的读书笔记。
+
+In Backbone.js, a model is defined by exte..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-05-31-backbone-models.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Backbone Models》 — Balance&url=http://blog.inching.org/JavaScript/2014-05-31-backbone-models.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-05-31-backbone-models.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuklEQVR42u3aMXLDMAwEwPz/006dSSQdAMLjzKyqFLLIZUEiR3x9xc/r13P1TvLb++f3r+6/f+DBw8PDG089H+z+/fuluVqsyeh/LAEeHh7eGu9+o+9t0NXt/n6iyRzw8PDwPpm3N8V8mfDw8PD+Cy8fMgFU4wk8PDy8z+Gd+vQkkshj4pWsBQ8PDy/m5UXt5/y9cr+Hh4eHN75V7x0S95NItv78AHiYLR4eHt4CrxcZ9A6PZLEmo1++iYeHh7fAu9/We81V1WNj0npVKL7x8PDwxrw8DJ2Qel/old3lfBoPDw+vxbt/6dRRkYcU+db/MH88PDy8t/CqcerkmmoSLkSj4OHh4S3wenHA5L5+clWWLPrll/Hw8PAWeJM2rFPBax6FJKPj4eHhbfOS2DQJWPNDolq45wdPdO7h4eHhtXi5vhccVJulemHE5czx8PDwFnjV7Tu/HptcmOXFdDQrPDw8vAVeXhz3AtbeldskBGnmKHh4eHgBL/+3v7cEk6aEvMi+/BUeHh7eMi+PJ/IoNgmFzzZd/XgfDw8Pb4HXK6CTN/NGqMnCFbJqPDw8vEO8SdGcX2IlR0516y8cCXh4eHhHefPr/0mTQS+orbLx8PDwzvKqRfCkwO0dDNWLtMuSGg8PD+8QrxoN9AZOIolTYcRDYY2Hh4d3iJc3DeSHwaSF6/CDh4eHt8arIs9OPW8peMUPHh4e3nt4vVaqXlw7iY8LI+Lh4eEdHfFVfJK4NokV8kOldw32kFLj4eHhDXi9/+h75W++HAl41B+Bh4eHN+ZNDoNk5fIrtLysL7cL4OHh4S3wkjaCaincax1Yv9/Dw8PDezsvDxTy7X6yiA8xBB4eHt7H8PKCeNI/m3//WEmNh4eHF/OqQUDeqlW9DKteYj0g8fDw8BZ4vf/o8wNgPpWVkAIPDw+vw/sG6qF9gimpTmMAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

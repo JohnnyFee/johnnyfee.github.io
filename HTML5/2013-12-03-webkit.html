@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>WebKit 发展史 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="webkit">
+    <meta name="description" content="概述WebKit是一个排版引擎，主要设计是用来让网页浏览器绘制网页。WebKit的WebCore及JavaScriptCore元件使用GNU宽通用公共许可证开源，而其他的WebKit元件则采用BSD许可证开源。
+WebKit的程式码源自1998年所开发的 KDE 的HTML排版引擎KHTML及KDE的JavaScript引擎KJS的程式码。接下来，KHTML及KJS透过连接器函式库（adapter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebKit 发展史">
+<meta property="og:url" content="http://blog.inching.org/HTML5/2013-12-03-webkit.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="概述WebKit是一个排版引擎，主要设计是用来让网页浏览器绘制网页。WebKit的WebCore及JavaScriptCore元件使用GNU宽通用公共许可证开源，而其他的WebKit元件则采用BSD许可证开源。
+WebKit的程式码源自1998年所开发的 KDE 的HTML排版引擎KHTML及KDE的JavaScript引擎KJS的程式码。接下来，KHTML及KJS透过连接器函式库（adapter">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/webkit.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/webkit-graphicscontext.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/webkit-framework.png">
+<meta property="og:updated_time" content="2014-07-16T14:12:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebKit 发展史">
+<meta name="twitter:description" content="概述WebKit是一个排版引擎，主要设计是用来让网页浏览器绘制网页。WebKit的WebCore及JavaScriptCore元件使用GNU宽通用公共许可证开源，而其他的WebKit元件则采用BSD许可证开源。
+WebKit的程式码源自1998年所开发的 KDE 的HTML排版引擎KHTML及KDE的JavaScript引擎KJS的程式码。接下来，KHTML及KJS透过连接器函式库（adapter">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/webkit.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">WebKit 发展史</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">WebKit 发展史</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2013-12-02T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2013-12-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/HTML5/">HTML5</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#移植"><span class="post-toc-text">移植</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#架构"><span class="post-toc-text">架构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#通信"><span class="post-toc-text">通信</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原理"><span class="post-toc-text">原理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#浏览器内核"><span class="post-toc-text">浏览器内核</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Chrome"><span class="post-toc-text">Chrome</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Chromium-And-Chrome"><span class="post-toc-text">Chromium And Chrome</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Blink"><span class="post-toc-text">Blink</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#V8"><span class="post-toc-text">V8</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Chromium-和-WebKit-的比较"><span class="post-toc-text">Chromium 和 WebKit 的比较</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#性能测试"><span class="post-toc-text">性能测试</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Books"><span class="post-toc-text">Books</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-text">参考</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-webkit"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">WebKit 发展史</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2013-12-03 00:00:00" datetime="2013-12-02T16:00:00.000Z"  itemprop="datePublished">2013-12-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/HTML5/">HTML5</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>WebKit是一个排版引擎，主要设计是用来让网页浏览器绘制网页。WebKit的WebCore及JavaScriptCore元件使用GNU宽通用公共许可证开源，而其他的WebKit元件则采用BSD许可证开源。</p>
+<p>WebKit的程式码源自1998年所开发的 <em>KDE</em> 的HTML排版引擎KHTML及KDE的JavaScript引擎KJS的程式码。接下来，KHTML及KJS透过连接器函式库（adapter library）的帮忙被移植到 OS X，并重新命名为WebCore及JavaScriptCore。</p>
+<p><em>KDE</em> 是一个国际性的自由软件社区，开发运行在Linux、BSD、Solaris、Microsoft Windows 与 Mac OS X[1] 等平台上的一系列跨平台应用程序。它最著名的产品是 Plasma 桌面，是许多Linux 发布版的默认桌面环境。KDE 这个名字是来自于现有的 Common Desktop Environment (CDE) 的文字游戏，其用于 Unix 系统。<strong>KDE 软件是基于 Qt 框架开发的</strong>，具备了可于多数的Unix及其他类Unix系统下运行的能力， 此外还包括有Mac平台上的OS X系统和微软的Windows系统。</p>
+<a id="more"></a>
+<p>WebKit2 发布于2010年4月8日，WebKit2的目标是将元件抽象化，并提供更干净的网页渲染，它会利用从周围的界面或是应用程式的殻，建立一个环境使网页的内容（JavaScript、HTML、排版等等）将会在另外一个程序（Process)运行，比起WebKit，这个抽象化的做法打算令WebKit2可重复使用一个更简单的程序。因为WebKit2对比起WebKit有 一个不相容的API ，所以导致他的名字被改变为WebKit2。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/webkit.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="移植"><a href="#移植" class="headerlink" title="移植"></a>移植</h2><p>WebKit 定义了一系列的接口，在不同的平台有不同的实现。如 <a href="http://developer.apple.com/library/ios/#documentation/CoreGraphics/Reference/CoreGraphics_Framework/_index.html" target="_blank" rel="external">CoreGraphics</a> 是Mac port的实现，而 Mac Chrome 用的是<a href="http://www.chromium.org/developers/design-documents/graphics-and-skia" target="_blank" rel="external">Skia</a>，Google创建并维护着它的Chromium port。Chromium也驱动了<a href="http://browser.yandex.ru/" target="_blank" rel="external">Yandex Browser</a>、 <a href="http://se.360.cn/" target="_blank" rel="external">360 Browser</a>、<a href="http://ie.sogou.com/" target="_blank" rel="external">Sogou Browser</a>，很快，还会有Opera。<br>更多请参考官方的 <a href="[WebKit](http://trac.webkit.org/wiki#WebKitPorts">WebKit Ports List</a>)。</p>
+<p>下面是WebKit的5个port；尽管它们共享了WebCore的大部分，但考虑一下它们的stack有哪些不同。</p>
+<table>
+<thead>
+<tr>
+<th>&nbsp;</th>
+<th>Chrome (OS X)</th>
+<th>Safari (OS X)</th>
+<th>QtWebKit</th>
+<th>Android Browser</th>
+<th>Chrome for iOS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rendering</td>
+<td>Skia</td>
+<td>CoreGraphics</td>
+<td>QtGui</td>
+<td>Android stack/Skia</td>
+<td>CoreGraphics</td>
+</tr>
+<tr>
+<td>Networking</td>
+<td>Chromium network stack</td>
+<td>CFNetwork</td>
+<td>QtNetwork</td>
+<td>Fork of Chromium’s network stack</td>
+<td>Chromium stack</td>
+</tr>
+<tr>
+<td>Fonts</td>
+<td>CoreText via Skia</td>
+<td>CoreText</td>
+<td>Qt internals</td>
+<td>Android stack</td>
+<td>CoreText</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>V8</td>
+<td>JavaScriptCore</td>
+<td>JSC (V8 is used elsewhere in Qt)</td>
+<td>V8</td>
+<td>JavaScriptCore (without JITting) *</td>
+</tr>
+</tbody>
+</table>
+<p>关于 iOS Chrome 的补充：你可能知道它使用 UIWebView。由于UIWebView的能力限制，它只能使用移动版Safari的渲染层，JavaScriptCore（而不是V8）和单进程模式。然而，大量的 Chromium 代码还是起到了调节作用 ，比如网络层、同步、书签架构、地址栏、度量工具和崩溃报告。（同时，由于JavaScript很少成为移动端的瓶颈，缺少JIT编译器只有很小的影响。）</p>
+<p>Here is a simplified diagram that shows <a href="http://ariya.ofilabs.com/2011/06/your-webkit-port-is-special-just-like-every-other-port.html" target="_blank" rel="external">the mapping</a>:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/webkit-graphicscontext.png" alt="webkit-graphicscontext.png" title="">
+                </div>
+                <div class="image-caption">webkit-graphicscontext.png</div>
+            </figure>
+<p><a href="http://trac.webkit.org/browser/trunk/Source/WebCore/platform/graphics/GraphicsContext.h" target="_blank" rel="external">GraphicsContext</a> is the interface. All other code inside WebKit will not “speak” directly to e.g. CoreGraphics on Mac. In the above rounded button example, it will call GraphicsContext’s fillRoundedRect() function.</p>
+<p><strong>Live on the edge:</strong></p>
+<p>参考: <a href="http://www.paulirish.com/2012/chrome-canary-for-developers/" target="_blank" rel="external">Chrome Canary for Developers - Paul Irish</a></p>
+<ul>
+<li>Canary For Chrome</li>
+<li><a href="http://nightly.mozilla.org/" target="_blank" rel="external">Mozilla Nightly</a><a href="http://mozilla.- github.com/process-releases/draft/development_specifics/#versioning-firefox" target="_blank" rel="external">updates daily</a></li>
+<li><a href="http://www.opera.com/browser/next/" target="_blank" rel="external">Opera Next</a> updates often and you can track progress at the <a href="http://my.opera.com/desktopteam/blog/" target="_blank" rel="external">Opera Desktop blog</a>.</li>
+<li><p><a href="http://nightly.webkit.org/" target="_blank" rel="external">WebKit Nightly</a> is basically Safari nightly (it’s their video, GPU, etc stack, but without other Safari browser features)<br>Internet Explorer gives you platform previews, but since running the time-bombed VMs can be a pain, I run them in <a href="http://www.browserstack.com/start" target="_blank" rel="external">BrowserStack</a>.</p>
+<p>  它是WebKit的 <a href="http://trac.webkit.org/browser/trunk/Source/WebKit/mac" target="_blank" rel="external">mac port</a> ，和Safari运行的二进制文件一样（尽管会替换一些底层库）。因为苹果在项目中起主导地位，所以它的表现和功能与Safari的总是那么一致。在很多情况下，当其它port可能会试验新功能的时候，Apple却显得相对保守。不管怎样，如果你想我用中学一样的类比，想想这个好了：WebKit Nightly对于 Safari 就像 Chromium 对于 Chrome。</p>
+</li>
+</ul>
+<p><strong>What’s shared in all WebKit browsers？</strong></p>
+<ol>
+<li>“ WebKit在使用相同的方式解析 HTML。” 是的，实际上，Chrome是唯一支持多线程 HTML 解析的port。</li>
+<li>“一旦解析完成，会构建成相同的 DOM 树。” NO，实际上Shadow DOM只有在 Chromium Port 才被开启，所以DOM的构造也是不同的。自定义元素也是如此。</li>
+<li>“ WebKit为每个人创建了 <code>window</code> 对象和 <code>document</code> 对象。” True，尽管它暴露出的属性和构造函数可以通过<a href="https://trac.webkit.org/wiki/FeatureFlags" target="_blank" rel="external">feature flags</a>来控制。</li>
+<li>“CSS解析都是相同的。将CSS解析为对象模型是个相当标准的过程。” 是的，尽管 Chrome 只支持 <code>-webkit-</code> 前缀，而Apple和其他的ports支持遗留的 <code>-khtml-</code> 和 <code>-apple-</code> 前缀。</li>
+<li>“布局定位？这些是基本生计问题啊。” 尽管 Sub-pixel layout(亚像素布局) 和 saturated layout（饱和布局） 算法是WebKit的一部分，不过各个port的实现效果还是有很多不同。</li>
+</ol>
+<p>就像Flickr和GitHub通过flag标识来实现自己的功能一样，WebKit也有相同处理。这允许各个port自行决定是否启用<a href="https://trac.webkit.org/wiki/FeatureFlags" target="_blank" rel="external">WebKit编译特性标签</a>的各种功能。通过<a href="http://peter.sh/experiments/chromium-command-line-switches/3" target="_blank" rel="external">命令行开关</a>，或者通过<a href="http://blogs.adobe.com/cantrell/archives/2012/07/all-about-chrome-flags.html" target="_blank" rel="external">about:flags</a>还可以控制是否通过运行时标识来展示功能特性。</p>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><ul>
+<li><a href="http://trac.webkit.org/wiki/WebKit2" target="_blank" rel="external">WebKit2</a> 中文 <a href="http://elastos.org/elorg_files/misc/tongji-ssec/webkit2%E7%AE%80%E4%BB%8B.pdf" target="_blank" rel="external">webkit2简介.pdf</a></li>
+</ul>
+<p>现代浏览器的组件：</p>
+<ul>
+<li>HTML、XML、CSS、JavsScript解析器</li>
+<li>Layout</li>
+<li>文字和图形渲染</li>
+<li>图像解码</li>
+<li>GPU交互</li>
+<li>网络访问</li>
+<li>硬件加速</li>
+</ul>
+<p>对许多开发者来说，WebKit就像一个黑盒。我们把HTML、CSS、JS和其他一大堆东西丢进去，然后WebKit魔法般的以某种方式把一个看起来不错的网页展现给我们。但事实上，Paul的同事Ilya Grigorik说：</p>
+<blockquote>
+<p>WebKit才不是个黑盒。它是个白盒。并且，它是个打开的白盒。</p>
+</blockquote>
+<p>Webkit 大体分为以下三大部分：</p>
+<ul>
+<li>WebCore 是一个由WebKit专案所开发的布局(Layout)、渲染(Rendering)及HTML和SVG的DOM函式库。</li>
+<li>JavaScriptCore 是一个在WebKit中提供JavaScript引擎的框架，而且在OS X作为其他内容的脚本引擎。</li>
+<li>Drosera 是一个JavaScript调试工具，目前已经被Web Inspector取代了。</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/webkit-framework.png" alt="webkit-framework.png" title="">
+                </div>
+                <div class="image-caption">webkit-framework.png</div>
+            </figure>
+<p>WebKit中的许多组件都是可以更换的（图中标灰色的部分）。</p>
+<p>举个例子来说，Webkit的JavaScript引擎，JavaScriptCore，是WebKit的默认组件。（它最初是当WebKit从KHTML分支时从KJS演变来的）。同时，Chromium port用V8引擎做了替换，还使用了独特的DOM绑定来映射上面的组件。</p>
+<h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><p>JavaScript通过IDL机制实现和内核（C/C++）之间通信，可以参考<a href="http://blog.csdn.net/cutesource/article/details/8862287" target="_blank" rel="external">这篇文章</a>。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p><a href="https://docs.google.com/presentation/d/1ZRIQbUKw9Tf077odCh66OrrwRIVNLvI_nhLm2Gi__F0/embed?start=false#slide=id.g30f0fc55_0_40" target="_blank" rel="external">How WebKit Works - Google幻灯片</a></p>
+<h2 id="浏览器内核"><a href="#浏览器内核" class="headerlink" title="浏览器内核"></a>浏览器内核</h2><p>主流的浏览器及其内核的对应关系如下：</p>
+<table>
+<thead>
+<tr>
+<th>浏览器</th>
+<th>内核          </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft IE</td>
+<td>Trident</td>
+</tr>
+<tr>
+<td>Mozilla Firefox</td>
+<td>Gecko</td>
+</tr>
+<tr>
+<td>Google Chrome</td>
+<td>Chromium，Blink产生之前(v27)使用WebView。</td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>WebKit2</td>
+</tr>
+<tr>
+<td>Opera</td>
+<td>(Presto –&gt; WebKit –&gt; Chromium)</td>
+</tr>
+<tr>
+<td>搜狗高速浏览器</td>
+<td>其最新的2.0正式版开始采用Trident/WebKit双引擎。</td>
+</tr>
+<tr>
+<td>QQ浏览器6</td>
+<td>采用Trident/WebKit双引擎。</td>
+</tr>
+<tr>
+<td>傲游浏览器</td>
+<td>MxWebKit1.1.3.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Chrome"><a href="#Chrome" class="headerlink" title="Chrome"></a>Chrome</h2><h3 id="Chromium-And-Chrome"><a href="#Chromium-And-Chrome" class="headerlink" title="Chromium And Chrome"></a>Chromium And Chrome</h3><p>Chromium 是一个由 Google 主导开发的网页浏览器，以 BSD 许可证等多重自由版权发布并开放源代码。Chromium 的开发可能早自2006年即开始，2008年12月11日发布1.0版本，设计思想基于简单、高速、稳定、安全等理念，在架构上使用了苹果发展出来的 WebKit 排版引擎（自28版起改为由WebKit所分支的 Blink 排版引擎）、Safari 的部份源代码与 Firefox 的成果，并采用 Google 独家开发出的 V8 引擎以提升解译 JavaScript 的效率，而且设计了“沙盒”、“黑名单”、“无痕浏览”等功能来实现稳定与安全的网页浏览环境。</p>
+<p>Chromium是Google为发展自家的浏览器Google Chrome而打开的项目，所以Chromium相当于Google Chrome的工程版或称实验版（尽管Google Chrome自身也有β版阶段），新功能会率先在Chromium上实现，待验证后才会应用在Google Chrome上，故Google Chrome的功能会相对落后但较稳定。</p>
+<p>—— <a href="http://zh.wikipedia.org/wiki/Chromium" target="_blank" rel="external">Chromium - 维基百科，自由的百科全书</a></p>
+<h3 id="Blink"><a href="#Blink" class="headerlink" title="Blink"></a>Blink</h3><p>Blink是一个由Google和Opera Software开发的浏览器排版引擎，Google计划将这个渲染引擎作为Chromium计划的一部分，并且在2013年4月的时候公布了这一消息。<strong>这一渲染引擎是开源引擎WebKit中WebCore组件的一个分支</strong>，并且在Chrome（28及往后版本）、Opera（15及往后版本）和Yandex浏览器中使用 。</p>
+<p>—— <a href="http://zh.wikipedia.org/wiki/Blink" target="_blank" rel="external">Blink - 维基百科，自由的百科全书</a></p>
+<h3 id="V8"><a href="#V8" class="headerlink" title="V8"></a>V8</h3><p><strong>V8是一个由美国 Google 开发的开源JavaScript引擎</strong>，用于Google Chrome中。Lars Bak是这个项目的组长。</p>
+<p>V8在运行之前将JavaScript编译成了机器码，而非字节码或是解释执行 它，以此提升性能。更进一步，使用了如内联缓存（inline caching）等方法来提高性能。有了这些功能，JavaScript程序与V8引擎的速度媲美二进制编译。</p>
+<p>—— <a href="http://zh.wikipedia.org/wiki/V8_(JavaScript%E5%BC%95%E6%93%8E" target="_blank" rel="external">V8 (JavaScript引擎) - 维基百科，自由的百科全书</a>)</p>
+<h3 id="Chromium-和-WebKit-的比较"><a href="#Chromium-和-WebKit-的比较" class="headerlink" title="Chromium 和 WebKit 的比较"></a>Chromium 和 WebKit 的比较</h3><p>参考：<a href="http://blog.qt.digia.com/cn/2013/09/25/introducing-the-qt-webengine/" target="_blank" rel="external">Qt将引入Qt WebEngine | Qt Chinese blog</a></p>
+<p>以下是Qt团队通过对两者调研后得出的结论：</p>
+<ul>
+<li>Chromium关注于跨平台建设，其浏览器能够运行在所有主流桌面平台和Android上；与此同时，WebKit则不那么专注。我们自己的项目则必须支持所有的OS平台。</li>
+<li>Chromium中对很多事情都提供了支持，在WebKit下同样支持这些东西则需要耗费大量精力。例如，我们可以简单地重用平台/OS的适配代码。多媒体以及如WebRTC这样的新HTML5特性，都是直接可用的，无需特别的Qt代码。</li>
+<li>使用Chromium可以简化OS集成工作，这使得我们可以有更多精力关注于更高层面，提供一个可以无缝集成于Qt之中并且简单而强大的API。</li>
+<li>我们注意到Chromium的开发处于代码质量的严格控制之中。这简化了我们的测试工作，有利于提供更稳定和高质量的Web引擎。</li>
+<li>比起WebKit，Chromium允许我们构建更好更高效的组件和Qt Quick scene graph。</li>
+</ul>
+<p>所以，“我们将在Chromium基础之上建立未来的Web引擎——Qt WebEngine。”——Qt研发团队。</p>
+<h2 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h2><ul>
+<li><a href="http://dromaeo.com/" target="_blank" rel="external">http://dromaeo.com/</a><ul>
+<li><a href="https://wiki.mozilla.org/Dromaeo" target="_blank" rel="external">wiki</a></li>
+</ul>
+</li>
+<li><a href="https://www.webkit.org/perf/sunspider/sunspider.html" target="_blank" rel="external">SunSpider 1.0.2 JavaScript Benchmark</a></li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="https://trac.webkit.org/wiki" target="_blank" rel="external">WebKit</a></li>
+</ul>
+<h2 id="Books"><a href="#Books" class="headerlink" title="Books"></a>Books</h2><ul>
+<li><a href="http://www.salttiger.com/the-browser-hackers-handbook/" target="_blank" rel="external">The Browser Hacker’s Handbook</a></li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://blog.csdn.net/milado_nju/article/category/1060499" target="_blank" rel="external">Yongsheng关于WebKit的系列文章</a></li>
+<li><a href="http://blog.csdn.net/doon/article/details/9253453" target="_blank" rel="external">Blink: Chromium的新渲染引擎</a></li>
+<li><a href="http://zh.wikipedia.org/wiki/WebKit" target="_blank" rel="external">WebKit - 维基百科，自由的百科全书</a></li>
+<li><a href="http://www.paulirish.com/2013/webkit-for-developers/" target="_blank" rel="external">WebKit for Developers - Paul Irish</a><ul>
+<li><a href="http://www.infoq.com/cn/articles/webkit-for-developers" target="_blank" rel="external">开发者需要了解的WebKit</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2014-07-16T14:12:11.000Z" itemprop="dateUpdated">2014-07-16 22:12:11</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/HTML5/2013-12-03-webkit.html" target="_blank" rel="external">http://blog.inching.org/HTML5/2013-12-03-webkit.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webkit/">webkit</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/HTML5/2013-12-03-webkit.html&title=《WebKit 发展史》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/HTML5/2013-12-03-webkit.html&title=《WebKit 发展史》 — Balance&source=概述WebKit是一个排版引擎，主要设计是用来让网页浏览器绘制网页。WebKit的WebCore及JavaScriptCore元件使用GNU宽通用公共许可..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/HTML5/2013-12-03-webkit.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《WebKit 发展史》 — Balance&url=http://blog.inching.org/HTML5/2013-12-03-webkit.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/HTML5/2013-12-03-webkit.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/C/2013-12-04-mfc-activex.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">MFC ActiveX</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2013-10-24-android-webview-websocket.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android WebView WebSocket</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/HTML5/2013-12-03-webkit.html&title=《WebKit 发展史》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/HTML5/2013-12-03-webkit.html&title=《WebKit 发展史》 — Balance&source=概述WebKit是一个排版引擎，主要设计是用来让网页浏览器绘制网页。WebKit的WebCore及JavaScriptCore元件使用GNU宽通用公共许可..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/HTML5/2013-12-03-webkit.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《WebKit 发展史》 — Balance&url=http://blog.inching.org/HTML5/2013-12-03-webkit.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/HTML5/2013-12-03-webkit.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aS47DIBAFwNz/0p7tSCPj1w0ZyVCsoigxlBet/vD5xOv6s35/P//Lu28WLwwMjNcyruEaH663y8y+t2fAwMA4gHG38d3nu8fNIMefH3bBwMDAGCZw40Dc+z0GBgbGPGN8xGo6mDwNAwMDI9kgD4gzbbuv1+IYGBgvZKwqMr/x+SvzDQwMjFcxruLqtd6SQebUqTAwMLZm5AGulziOQ/ZMwMXAwDiHsSqMVp+QDwyikhUDA+MYRq8dlvxr5pto5ICBgbE1IwmgMwVqIWgGCehDpMXAwDiAEV1oKI4Yq8ll9fVhYGCcwGi24OMtewG3/AQMDIwjGfm4sfq0XrB+KKcxMDAOYFQbYflQoReUy7tgYGBszUga/b32fW942ZtLYmBg7M2YD4K91QNUrrphYGDsxsgPV23Gzbyy5p0RDAyM7RhJaz4pKf8z+GJgYGCUL2O12m3VEUJ1aIqBgbEfI0m/eilaPvIcPy3aEQMD4wBGHmTzMWfevMuL4dvXhIGBcRijGl6rTbQkmFYvgmBgYJzAyJO2akpXbfo323MYGBibMq7i6g0yVyWLUY8QAwNjO0a1XMxDcx64qwVzXnhjYGDsxOhdyeoF1nwgWj4DBgbGAYy1F7aqgGoRG7XbMDAwMIo5Zi+tzK9uYGBgYOTttuoIoTciXRBwMTAwXsjoDQOSkrWXLJaTTgwMjK0Z84ld9QpXcoi1pS8GBsZrGT8GlNE/C7BOlQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

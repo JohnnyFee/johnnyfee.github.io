@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>express4.x新特性以及如何从3.x升级到4.x | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="node,express">
+    <meta name="description" content="原文：ExpressJS 4.0: New Features and Upgrading from 3.0 ♥ Scotch翻译: express4.x新特性以及如何从3.x升级到4.x
+
+距离我写expressx2.x升级3.x已经过去一年多的时间了，这期间express发展很迅速，已经是nodejs社区事实上的web框架之王。最近express发布了4.0.0-rc3，其中又有了一些改变，下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="express4.x新特性以及如何从3.x升级到4.x">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-06-23-express4-from-express3.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文：ExpressJS 4.0: New Features and Upgrading from 3.0 ♥ Scotch翻译: express4.x新特性以及如何从3.x升级到4.x
+
+距离我写expressx2.x升级3.x已经过去一年多的时间了，这期间express发展很迅速，已经是nodejs社区事实上的web框架之王。最近express发布了4.0.0-rc3，其中又有了一些改变，下">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="express4.x新特性以及如何从3.x升级到4.x">
+<meta name="twitter:description" content="原文：ExpressJS 4.0: New Features and Upgrading from 3.0 ♥ Scotch翻译: express4.x新特性以及如何从3.x升级到4.x
+
+距离我写expressx2.x升级3.x已经过去一年多的时间了，这期间express发展很迅速，已经是nodejs社区事实上的web框架之王。最近express发布了4.0.0-rc3，其中又有了一些改变，下">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">express4.x新特性以及如何从3.x升级到4.x</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">express4.x新特性以及如何从3.x升级到4.x</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-06-22T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-06-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#移除内置中间件"><span class="post-toc-text">移除内置中间件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#强化的路由功能"><span class="post-toc-text">强化的路由功能</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Router-对象"><span class="post-toc-text">Router 对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#删除app-configure方法"><span class="post-toc-text">删除app.configure方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#删除express-createServer"><span class="post-toc-text">删除express.createServer()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#删除res-charset"><span class="post-toc-text">删除res.charset</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#req-accepted改为req-accepts"><span class="post-toc-text">req.accepted改为req.accepts</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#req-params的改变"><span class="post-toc-text">req.params的改变</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#res-locals"><span class="post-toc-text">res.locals</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#req-is"><span class="post-toc-text">req.is</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-express4-from-express3"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">express4.x新特性以及如何从3.x升级到4.x</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-06-23 00:00:00" datetime="2014-06-22T16:00:00.000Z"  itemprop="datePublished">2014-06-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>原文：<a href="http://scotch.io/bar-talk/expressjs-4-0-new-features-and-upgrading-from-3-0" target="_blank" rel="external">ExpressJS 4.0: New Features and Upgrading from 3.0 ♥ Scotch</a><br>翻译: <a href="http://jser.me/2014/03/18/express4.x%E6%96%B0%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E4%BB%8E3.x%E5%8D%87%E7%BA%A7%E5%88%B04.x.html" target="_blank" rel="external">express4.x新特性以及如何从3.x升级到4.x</a></p>
+</blockquote>
+<p>距离我写<a href="http://jser.me/2012/12/10/Express2.X%E8%BF%81%E7%A7%BB%E8%87%B33.X%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.html" target="_blank" rel="external">expressx2.x升级3.x</a>已经过去一年多的时间了，这期间express发展很迅速，已经是nodejs社区事实上的web框架之王。最近express发布了<a href="https://github.com/visionmedia/express/blob/master/package.json#L4" target="_blank" rel="external">4.0.0-rc3</a>，其中又有了一些改变，下面我们来看看有哪些改变，以及如何从3.x升级到4.x。</p>
+<a id="more"></a>
+<h2 id="移除内置中间件"><a href="#移除内置中间件" class="headerlink" title="移除内置中间件"></a>移除内置中间件</h2><p>4.x版本不再依赖Connect，之前内置的所有中间件除了<code>static</code>都被分离为单独的模块了，也就是如果你的3.x的代码是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">app.configure(function() &#123;</div><div class="line">    app.use(express.static(__dirname + &apos;/public&apos;));</div><div class="line">    app.use(express.logger(&apos;dev&apos;));</div><div class="line">    app.use(express.bodyParser());</div><div class="line">    app.use(express.methodOverride());</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在4.x各个模块需要单独安装，然后<code>require</code>，可以使用<code>npm install --save xxxx</code>，这样可以自动把模块保存到你的<code>package.json</code>里，4.x的代码示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var app = express();</div><div class="line">var express  = require(&apos;express&apos;);</div><div class="line">var morgan = require(&apos;morgan&apos;); //logger模块的这个新名字真是神奇</div><div class="line">var bodyParser = require(&apos;body-parser&apos;);</div><div class="line">var methodOverride = require(&apos;method-override&apos;);</div><div class="line"></div><div class="line">app.use(express.static(__dirname + &apos;/public&apos;));</div><div class="line">app.use(morgan(&apos;dev&apos;));</div><div class="line">app.use(bodyParser());</div><div class="line">app.use(methodOverride());</div></pre></td></tr></table></figure>
+<p>下面是3.x的内置模块和4.x模块的对照表，你可以发现，模块名有点混乱，有的是把驼峰改成了连字符，有的是反过来的，有的前缀express，有的是没有，真不知道怎么命名的，这个应该好好跟grunt或者gulp学习一下。</p>
+<table>
+<thead>
+<tr>
+<th>3.x</th>
+<th>4.x                                                            </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bodyParser</td>
+<td><a href="https://github.com/expressjs/body-parser" target="_blank" rel="external">body-parser</a>        </td>
+</tr>
+<tr>
+<td>compress</td>
+<td><a href="https://github.com/expressjs/compression" target="_blank" rel="external">compression</a>        </td>
+</tr>
+<tr>
+<td>cookieSession</td>
+<td><a href="https://github.com/expressjs/cookie-session" target="_blank" rel="external">cookie-session</a>  </td>
+</tr>
+<tr>
+<td>logger</td>
+<td><a href="https://github.com/expressjs/morgan" target="_blank" rel="external">morgan</a>                  </td>
+</tr>
+<tr>
+<td>cookieParser</td>
+<td><a href="https://github.com/expressjs/cookie-parser" target="_blank" rel="external">cookie-parser</a>    </td>
+</tr>
+<tr>
+<td>session</td>
+<td><a href="https://github.com/expressjs/session" target="_blank" rel="external">express-session</a>        </td>
+</tr>
+<tr>
+<td>favicon</td>
+<td><a href="https://github.com/expressjs/favicon" target="_blank" rel="external">serve-favicon</a>          </td>
+</tr>
+<tr>
+<td>response-time</td>
+<td><a href="https://github.com/expressjs/response-time" target="_blank" rel="external">response-time</a>    </td>
+</tr>
+<tr>
+<td>error-handler</td>
+<td><a href="https://github.com/expressjs/errorhandler" target="_blank" rel="external">errorhandler</a>      </td>
+</tr>
+<tr>
+<td>method-override</td>
+<td><a href="https://github.com/expressjs/method-override" target="_blank" rel="external">method-override</a></td>
+</tr>
+<tr>
+<td>timeout</td>
+<td><a href="https://github.com/expressjs/connect-timeout" target="_blank" rel="external">connect-timeout</a></td>
+</tr>
+<tr>
+<td>vhost</td>
+<td><a href="https://github.com/expressjs/vhost" target="_blank" rel="external">vhost</a>                    </td>
+</tr>
+<tr>
+<td>csrf</td>
+<td><a href="https://github.com/expressjs/csurf" target="_blank" rel="external">csurf</a>                    </td>
+</tr>
+<tr>
+<td>directory</td>
+<td><a href="https://github.com/expressjs/serve-index" target="_blank" rel="external">serve-index</a>        </td>
+</tr>
+<tr>
+<td>static</td>
+<td><a href="https://github.com/expressjs/serve-static" target="_blank" rel="external">serve-static</a>      </td>
+</tr>
+</tbody>
+</table>
+<h2 id="强化的路由功能"><a href="#强化的路由功能" class="headerlink" title="强化的路由功能"></a>强化的路由功能</h2><p>4.x提供了一个更棒的<code>Router</code>对象和<code>route</code>接口，可以更方便的把路由分解成单独的文件</p>
+<p>不要再手动执行<code>app.use(app.routers)</code>, app.use和app[get|post]混用的时候，将会按照它们调用的顺序执行</p>
+<p>例如有一个3.x的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">app.use(cookieParser());</div><div class="line">app.use(bodyParser());</div><div class="line">app.use(app.router); // 这行要干掉</div><div class="line"></div><div class="line">// 在路由之后执行</div><div class="line">app.use(function(req, res, next);</div><div class="line">// 错误处理的中间件</div><div class="line">app.use(function(err, req, res, next) &#123;&#125;);</div><div class="line"></div><div class="line">//正常的路由挂载</div><div class="line">app.get(&apos;/&apos; ...);</div><div class="line">app.post(...);</div></pre></td></tr></table></figure>
+<p>换成了4.x的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">app.use(cookieParser());</div><div class="line">app.use(bodyParser());</div><div class="line"></div><div class="line"><span class="comment">//正常的路由挂载, 这里和app.use混用的时候</span></div><div class="line"><span class="comment">//如果需要中间件调用之前处理就必须use之前挂载</span></div><div class="line">app.get(<span class="string">'/'</span> ...);</div><div class="line">app.post(...);</div><div class="line"></div><div class="line"><span class="comment">// 错误处理的中间件</span></div><div class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err, req, res, next</span>) </span>&#123;&#125;);</div></pre></td></tr></table></figure>
+<p>4.x更方便的路由, app.route方法会返回一个Route实例，它可以继续使用所有的HTTP方法，并且它还有一个<code>all</code>方法，可以在所有的HTTP方法上生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">app.route(&apos;/users&apos;)</div><div class="line">  .get(function(req, res, next) &#123;&#125;)</div><div class="line">  .post(function(req, res, next) &#123;&#125;)</div></pre></td></tr></table></figure>
+<h2 id="Router-对象"><a href="#Router-对象" class="headerlink" title="Router 对象"></a>Router 对象</h2><p>这是4.x里新增加的一个对象，它有点像迷你版的<code>app</code>对象，它没有<code>views</code>和<code>setting</code>，但是包含所有的路由接口，比如<br><code>.use</code>, <code>.route</code>, <code>.param</code>, <code>.get</code>。</p>
+<p>它可以帮助我们更好组织代码，假如项目里有个<code>routes/people.js</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var people = express.Router();</div><div class="line">people.use(function(req, res, next) &#123;</div><div class="line">&#125;);</div><div class="line">people.get(&apos;/&apos;, function(req, res, next) &#123;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>可以把它挂在 <code>/people</code>下，所有的<code>/people/*</code>处理都会由<code>people.js</code>里的<code>Router</code>来处理了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">app.use(&apos;/people&apos;, require(&apos;./routes/people&apos;).people);</div></pre></td></tr></table></figure>
+<p>更多关于<code>Router</code>的内容可以看<a href="http://expressjs.jser.us/4x_zh-cn/api.html#router" target="_blank" rel="external">文档</a></p>
+<h2 id="删除app-configure方法"><a href="#删除app-configure方法" class="headerlink" title="删除app.configure方法"></a>删除app.configure方法</h2><p>这个方法使用还是比较多的，如果你用来判断环境的代码，比如3.x下的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">app.configure(&apos;development&apos;, function() &#123;</div><div class="line">   // configure stuff here</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在4.x下，这个方法完全没有了，你需要换成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var env = process.env.NODE_ENV || &apos;development&apos;;</div><div class="line">if (&apos;development&apos; == env) &#123;</div><div class="line">   // configure stuff here</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="删除express-createServer"><a href="#删除express-createServer" class="headerlink" title="删除express.createServer()"></a>删除express.createServer()</h2><p>这个在3.x的时代就已经废弃了，直接使用 <code>express()</code>就行了</p>
+<h2 id="删除res-charset"><a href="#删除res-charset" class="headerlink" title="删除res.charset"></a>删除res.charset</h2><p>使用<code>res.set(&#39;content-type&#39;)</code>或者<code>res.type()</code>来设置默认的charset，使用<code>res.setHeader</code>时不会再默认加charset了</p>
+<h2 id="req-accepted改为req-accepts"><a href="#req-accepted改为req-accepts" class="headerlink" title="req.accepted改为req.accepts"></a>req.accepted改为req.accepts</h2><p>有几个相关的方法都改名了</p>
+<ul>
+<li><code>req.accepts()</code></li>
+<li><code>req.acceptsEncodings()</code></li>
+<li><code>req.acceptsCharsets()</code></li>
+<li><code>req.acceptsLanguages()</code>  </li>
+</ul>
+<h2 id="req-params的改变"><a href="#req-params的改变" class="headerlink" title="req.params的改变"></a>req.params的改变</h2><p>这个属性现在是一个对象，不再是一个数组</p>
+<h2 id="res-locals"><a href="#res-locals" class="headerlink" title="res.locals"></a>res.locals</h2><p>不再是一个方法，现在它就是一个纯对象。</p>
+<h2 id="req-is"><a href="#req-is" class="headerlink" title="req.is"></a>req.is</h2><p>去掉了，可以使用<a href="https://github.com/expressjs/type-is" target="_blank" rel="external">type-is</a>模块</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总的来说，改动还是挺大的，如果你想升级，最好留有足够的时间来把你的代码调整为4.x的。</p>
+<p>如果发现这篇文章里有什么错误，欢迎留言反馈。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://blog.tompawlak.org/new-features-node-express-4" target="_blank" rel="external">Tom’s Blog</a></li>
+</ul>
+<ul>
+<li><a href="https://github.com/visionmedia/express/wiki/Migrating-from-3.x-to-4.x" target="_blank" rel="external">Migrating from 3.x to 4.x</a></li>
+<li><a href="https://github.com/strongloop/express/wiki/Migrating-from-3.x-to-4.x" target="_blank" rel="external">Migrating from 3.x to 4.x · strongloop/express Wiki</a></li>
+<li><a href="https://github.com/visionmedia/express/wiki/New-features-in-4.x" target="_blank" rel="external">New features in 4.x</a></li>
+<li><a href="https://github.com/strongloop/express/wiki/New-features-in-4.x" target="_blank" rel="external">New features in 4.x · strongloop/express Wiki</a></li>
+<li><a href="http://webapplog.com/express-js-4-node-js-and-mongodb-rest-api-tutorial/" target="_blank" rel="external">Express.js 4, Node.js and MongoDB REST API Tutorial</a></li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="https://blog.nraboy.com/2015/01/session-management-expressjs-web-application" target="_blank" rel="external">Session Management In Your ExpressJS Web Application</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-06-23-express4-from-express3.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-06-23-express4-from-express3.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/express/">express</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-06-23-express4-from-express3.html&title=《express4.x新特性以及如何从3.x升级到4.x》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-06-23-express4-from-express3.html&title=《express4.x新特性以及如何从3.x升级到4.x》 — Balance&source=
+原文：ExpressJS 4.0: New Features and Upgrading from 3.0 ♥ Scotch翻译: express4.x..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-06-23-express4-from-express3.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《express4.x新特性以及如何从3.x升级到4.x》 — Balance&url=http://blog.inching.org/Node/2014-06-23-express4-from-express3.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-06-23-express4-from-express3.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-06-27-javascript-best-practice.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JavaScript Best Practice</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Node/2014-06-23-node-webkit-tutorial.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Node Webkit Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-06-23-express4-from-express3.html&title=《express4.x新特性以及如何从3.x升级到4.x》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-06-23-express4-from-express3.html&title=《express4.x新特性以及如何从3.x升级到4.x》 — Balance&source=
+原文：ExpressJS 4.0: New Features and Upgrading from 3.0 ♥ Scotch翻译: express4.x..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-06-23-express4-from-express3.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《express4.x新特性以及如何从3.x升级到4.x》 — Balance&url=http://blog.inching.org/Node/2014-06-23-express4-from-express3.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-06-23-express4-from-express3.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtElEQVR42u3a0W6DMAwF0P7/T3fSXjfaaztmlXZ4QqhADpOS7NqPR3w8v4/X13+e53ddPScZw4EDDw8PrzX0q+PqN1evzO/NP1/yzMvn4+Hh4a3xqtP3a9JkKk8+ZeEz4eHh4f0pL3nN60m8PK0H48HDw8P7fF6yJCQTfb7hxsPDw/tMXhJGVB+dDLq6nCxmLXh4eHidXeujOin/1flifQ8PDw9vUFWvFq6qi0fvvDBaPDw8vAVetS1gMg/nW+3eFrnwHwMeHh7egNd7TW/BqP6yGvj+8ofBw8PDW+C9jl8nZapeS0FyPd924+Hh4d3Dq76sh0neWN24Xz4BDw8Pb4GXlOqTwlivnNYDlN+Oh4eHd4iXb16TYCIpfeUhRTXefVPfw8PDwzvEmxfAqsFEFRMFtXkZDA8PD2+Bly8GvcCiurRMinB4eHh4e7xqu0B14q5ugudlNjw8PLxt3vz1z+A4W1QrfHo8PDy8o7xkO5tvo6ttVXnEkC88b1JqPDw8vDEv2f7msCRg7TUx9EIQPDw8vD3eRrmrt5nutSMkz8fDw8Pb4PXKY9UmgF5DwDxixsPDwzvFqw49DwvyyCCPQvKlCw8PD2+PN4pHW59j0kRVReLh4eFt8PIHnY0GJrzCFTw8PLwFXj59J8vDvHyVF96arQN4eHh4Y16vTWpSgurFuFUYHh4e3p28anSbDyVfDCYNAb+seHh4eHhHedWodKNZ6liPAx4eHt4tvGfxyAtj+dCrLVmFu/Dw8PAWeJP1JB/uqfapXsiLh4eHt8GrLgbJlN27N99wFwIUPDw8vDVeLzKYLAZ5I0K+aEWdEXh4eHg38qrgXiNCdRv9ZrOOh4eH9zG8alA7CWRH1/Hw8PDWeGfDiLxn4Wz4e1PWgoeH9+95p25IQoTeYnC4moeHh4fX530BkRfuA/cyS1wAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

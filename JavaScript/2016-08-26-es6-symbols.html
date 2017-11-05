@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Symbols in ECMAScript 6 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="es6,symbles">
+    <meta name="description" content="See Symbols in ECMAScript 6
+Symbols are a new primitive type in ECMAScript 6 [1]. This blog post explains how they work.
+A new primitive typeECMAScript 6 introduces a new primitive type: symbols. They">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Symbols in ECMAScript 6">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2016-08-26-es6-symbols.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See Symbols in ECMAScript 6
+Symbols are a new primitive type in ECMAScript 6 [1]. This blog post explains how they work.
+A new primitive typeECMAScript 6 introduces a new primitive type: symbols. They">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Symbols in ECMAScript 6">
+<meta name="twitter:description" content="See Symbols in ECMAScript 6
+Symbols are a new primitive type in ECMAScript 6 [1]. This blog post explains how they work.
+A new primitive typeECMAScript 6 introduces a new primitive type: symbols. They">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Symbols in ECMAScript 6</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Symbols in ECMAScript 6</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-08-25T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-08-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#A-new-primitive-type"><span class="post-toc-text">A new primitive type</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Symbols-as-property-keys"><span class="post-toc-text">Symbols as property keys</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Enumerating-own-property-keys"><span class="post-toc-text">Enumerating own property keys</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Using-symbols-to-represent-concepts"><span class="post-toc-text">Using symbols to represent concepts</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Symbols-as-keys-of-properties"><span class="post-toc-text">Symbols as keys of properties</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Symbols-as-keys-of-internal-properties"><span class="post-toc-text">Symbols as keys of internal properties</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Symbols-as-keys-of-meta-level-properties"><span class="post-toc-text">Symbols as keys of meta-level properties</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Crossing-realms-with-symbols"><span class="post-toc-text">Crossing realms with symbols</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Safety-checks"><span class="post-toc-text">Safety checks</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Invoking-Symbol-as-a-constructor"><span class="post-toc-text">Invoking Symbol as a constructor</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Coercing-a-symbol-to-string"><span class="post-toc-text">Coercing a symbol to string</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Frequently-asked-questions"><span class="post-toc-text">Frequently asked questions</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Are-symbols-primitives-or-objects"><span class="post-toc-text">Are symbols primitives or objects?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Aren’t-strings-enough"><span class="post-toc-text">Aren’t strings enough?</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#The-symbol-API"><span class="post-toc-text">The symbol API</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#The-function-Symbol"><span class="post-toc-text">The function Symbol</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Public-symbols"><span class="post-toc-text">Public symbols</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Global-symbol-registry"><span class="post-toc-text">Global symbol registry</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Further-reading"><span class="post-toc-text">Further reading</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-es6-symbols"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Symbols in ECMAScript 6</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-08-26 00:00:00" datetime="2016-08-25T16:00:00.000Z"  itemprop="datePublished">2016-08-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="http://www.2ality.com/2014/12/es6-symbols.html" target="_blank" rel="external">Symbols in ECMAScript 6</a></p>
+<p>Symbols are a new primitive type in ECMAScript 6 <a href="http://www.2ality.com/2014/12/es6-symbols.html#[1]" target="_blank" rel="external">[1]</a>. This blog post explains how they work.</p>
+<h2 id="A-new-primitive-type"><a href="#A-new-primitive-type" class="headerlink" title="A new primitive type"></a>A new primitive type</h2><p>ECMAScript 6 introduces a new primitive type: symbols. They are tokens that serve as unique IDs. You create symbols via the factory function <code>Symbol()</code> (which is loosely similar to <code>String</code> returning strings if called as a function):</p>
+<a id="more"></a>
+<pre><code>let symbol1 = Symbol();
+</code></pre><p><code>Symbol()</code> has an optional string-valued parameter that lets you give the newly created symbol a description:</p>
+<pre><code>&gt; let symbol2 = Symbol(&apos;symbol2&apos;);
+&gt; String(symbol2)
+**&apos;Symbol(symbol2)&apos;**
+</code></pre><p>Every symbol returned by <code>Symbol()</code> is unique, every symbol has its own identity:</p>
+<pre><code>&gt; symbol1 === symbol2
+**false**
+</code></pre><p>You can see that symbols are primitive if you apply the <code>typeof</code> operator to one of them – it will return a new symbol-specific result:</p>
+<pre><code>&gt; typeof symbol1
+**&apos;symbol&apos;**
+</code></pre><p><strong>Aside:</strong> Two quick ideas of mine. If a symbol has no description, JavaScript engines could use the name of the variable (or property) that a symbol is assigned to. Minifiers could also help, by turning the original name of a variable into a parameter for <code>Symbol</code>.</p>
+<h3 id="Symbols-as-property-keys"><a href="#Symbols-as-property-keys" class="headerlink" title="Symbols as property keys"></a>Symbols as property keys</h3><p>Symbols can be used as property keys:</p>
+<pre><code>const MY_KEY = Symbol();
+let obj = {};
+
+obj[MY_KEY] = 123;
+console.log(obj[MY_KEY]); // 123
+</code></pre><p>Classes and object literals have a feature called <em>computed property keys</em> <a href="http://www.2ality.com/2014/12/es6-symbols.html#[2]" target="_blank" rel="external">[2]</a>: You can specify the key of a property via an expression, by putting it in square brackets. In the following object literal, we use a computed property key to make the value of <code>MY_KEY</code> the key of a property.</p>
+<pre><code>const MY_KEY = Symbol();
+let obj = {
+    [MY_KEY]: 123
+};
+</code></pre><p>A method definition can also have a computed key:</p>
+<pre><code>const FOO = Symbol();
+let obj = {
+    [FOO]() {
+        return &apos;bar&apos;;
+    }
+};
+console.log(obj[FOO]()); // bar
+</code></pre><h3 id="Enumerating-own-property-keys"><a href="#Enumerating-own-property-keys" class="headerlink" title="Enumerating own property keys"></a>Enumerating own property keys</h3><p>Given that there is now a new kind of value that can become the key of a property, the following terminology is used for ECMAScript 6:</p>
+<ul>
+<li><em>Property keys</em> are either strings or symbols.</li>
+<li><em>Property names</em> are strings.</li>
+</ul>
+<p>Let’s examine the API for enumerating own property keys by first creating an object.</p>
+<pre><code>let obj = {
+    [Symbol(&apos;my_key&apos;)]: 1,
+    enum: 2,
+    nonEnum: 3
+};
+Object.defineProperty(obj,
+    &apos;nonEnum&apos;, { enumerable: false });
+</code></pre><p><code>Object.getOwnPropertyNames()</code> ignores symbol-valued property keys:</p>
+<pre><code>&gt; Object.getOwnPropertyNames(obj)
+**[&apos;enum&apos;, &apos;nonEnum&apos;]**
+</code></pre><p><code>Object.getOwnPropertySymbols()</code> ignores string-valued property keys:</p>
+<pre><code>&gt; Object.getOwnPropertySymbols(obj)
+**[Symbol(my_key)]**
+</code></pre><p><code>Reflect.ownKeys()</code> considers all kinds of keys:</p>
+<pre><code>&gt; Reflect.ownKeys(obj)
+**[Symbol(my_key), &apos;enum&apos;, &apos;nonEnum&apos;]**
+</code></pre><p>The name of <code>Object.keys()</code> doesn’t really work, anymore: it only considers enumerable property keys that are strings.</p>
+<pre><code>&gt; Object.keys(obj)
+**[&apos;enum&apos;]**
+</code></pre><h2 id="Using-symbols-to-represent-concepts"><a href="#Using-symbols-to-represent-concepts" class="headerlink" title="Using symbols to represent concepts"></a>Using symbols to represent concepts</h2><p>In ECMAScript 5, one often represents concepts (think enum constants) via strings. For example:</p>
+<pre><code>var COLOR_RED    = &apos;RED&apos;;
+var COLOR_ORANGE = &apos;ORANGE&apos;;
+var COLOR_YELLOW = &apos;YELLOW&apos;;
+var COLOR_GREEN  = &apos;GREEN&apos;;
+var COLOR_BLUE   = &apos;BLUE&apos;;
+var COLOR_VIOLET = &apos;VIOLET&apos;;
+</code></pre><p>However, strings are not as unique as we’d like them to be. To see why, let’s look at the following function.</p>
+<pre><code>function getComplement(color) {
+    switch (color) {
+        case COLOR_RED:
+            return COLOR_GREEN;
+        case COLOR_ORANGE:
+            return COLOR_BLUE;
+        case COLOR_YELLOW:
+            return COLOR_VIOLET;
+        case COLOR_GREEN:
+            return COLOR_RED;
+        case COLOR_BLUE:
+            return COLOR_ORANGE;
+        case COLOR_VIOLET:
+            return COLOR_YELLOW;
+        default:
+            throw new Exception(&apos;Unknown color: &apos;+color);
+    }
+}
+</code></pre><p>It is noteworthy that you can use arbitrary expressions as <code>switch</code> cases, you are not limited in any way. For example:</p>
+<pre><code>function isThree(x) {
+    switch (x) {
+        case 1 + 1 + 1:
+            return true;
+        default:
+            return false;
+    }
+}
+</code></pre><p>We use the flexibility that <code>switch</code> offers us and refer to the colors via our constants (<code>COLOR_RED</code> etc.) instead of hard-coding them (<code>&#39;RED&#39;</code> etc.).</p>
+<p>Interestingly, even though we do so, there can still be mix-ups. For example, someone may define a constant for a mood:</p>
+<pre><code>var MOOD_BLUE = &apos;BLUE&apos;;
+</code></pre><p>Now the value of <code>BLUE</code> is not unique anymore and <code>MOOD_BLUE</code> can be mistaken for it. If you use it as a parameter for <code>getComplement()</code>, it returns <code>&#39;ORANGE&#39;</code> where it should throw an exception.</p>
+<p>Let’s use symbols to fix this example. Now we can also use the ECMAScript 6 feature <code>const</code>, which lets us declare actual constants (you can’t change what value is bound to a constant, but the value itself may be mutable).</p>
+<pre><code>const COLOR_RED    = Symbol();
+const COLOR_ORANGE = Symbol();
+const COLOR_YELLOW = Symbol();
+const COLOR_GREEN  = Symbol();
+const COLOR_BLUE   = Symbol();
+const COLOR_VIOLET = Symbol();
+</code></pre><p>Each value returned by <code>Symbol</code> is unique, which is why no other value can be mistaken for <code>BLUE</code>now. Intriguingly, the code of <code>getComplement()</code> doesn’t change at all if we use symbols instead of strings, which shows how similar they are.</p>
+<h2 id="Symbols-as-keys-of-properties"><a href="#Symbols-as-keys-of-properties" class="headerlink" title="Symbols as keys of properties"></a>Symbols as keys of properties</h2><p>Being able to create properties whose keys never clash with other keys is useful in two situations:</p>
+<ul>
+<li>If several parties contribute internal properties to the same object, via mixins.</li>
+<li>To keep meta-level properties from clashing with base-level properties.</li>
+</ul>
+<h3 id="Symbols-as-keys-of-internal-properties"><a href="#Symbols-as-keys-of-internal-properties" class="headerlink" title="Symbols as keys of internal properties"></a>Symbols as keys of internal properties</h3><p>Mixins are object fragments (sets of methods) that you can compose to augment the functionality of an object or a prototype. If their methods have symbols as keys, they can’t clash with other methods (of other mixins or of the object that they are added to), anymore.</p>
+<p>Public methods are seen by clients of the object a mixin is added to. For usability’s sake, you probably want those methods to have string keys. Internal methods are only known to the mixin or only needed to communicate with it. They profit from having symbols as keys.</p>
+<p>Symbols do not offer real privacy, because it is easy to find out the symbol-valued property keys of an object. But the guarantee that a property key can’t ever clash with any other property key is often enough. If you truly want to prevent the outside from accessing private data, you need to use WeakMaps or closures. For example:</p>
+<pre><code>// One WeakMap per private property
+const PASSWORD = new WeakMap();
+class Login {
+    constructor(name, password) {
+        this.name = name;
+        PASSWORD.set(this, password);
+    }
+    hasPassword(pw) {
+        return PASSWORD.get(this) === pw;
+    }
+}
+</code></pre><p>The instances of <code>Login</code> are keys in the WeakMap <code>PASSWORD</code>. The WeakMap does not prevent the instances from being garbage-collected. Entries whose keys are objects that don’t exist anymore are removed from WeakMaps.</p>
+<p>The same code looks as follows if you use a symbol key for the internal property.</p>
+<pre><code>const PASSWORD = Symbol();
+class Login {
+    constructor(name, password) {
+        this.name = name;
+        this[PASSWORD] = password;
+    }
+    hasPassword(pw) {
+        return this[PASSWORD] === pw;
+    }
+}
+</code></pre><h3 id="Symbols-as-keys-of-meta-level-properties"><a href="#Symbols-as-keys-of-meta-level-properties" class="headerlink" title="Symbols as keys of meta-level properties"></a>Symbols as keys of meta-level properties</h3><p>Symbols having unique identities makes them ideal as keys of public properties that exist on a different level than “normal” property keys, because meta-level keys and normal keys must not clash. One example of meta-level properties are methods that objects can implement to customize how they are treated by a library. Using symbol keys protect the library from mistaking normal methods as customization methods.</p>
+<p><em>Iterability</em> <a href="http://www.2ality.com/2014/12/es6-symbols.html#[3]" target="_blank" rel="external">[3]</a> in ECMAScript 6 is one such customization. An object is <em>iterable</em> if it has a method whose key is the symbol (stored in) <code>Symbol.iterator</code>. In the following code, <code>obj</code> is iterable.</p>
+<pre><code>let obj = {
+    data: [ &apos;hello&apos;, &apos;world&apos; ],
+    [Symbol.iterator]() {
+        const self = this;
+        let index = 0;
+        return {
+            next() {
+                if (index &lt; self.data.length) {
+                    return {
+                        value: self.data[index++]
+                    };
+                } else {
+                    return { done: true };
+                }
+            }
+        };
+    }
+};
+</code></pre><p>The iterability of <code>obj</code> enables you to use the <code>for-of</code> loop and similar JavaScript features:</p>
+<pre><code>for (let x of obj) {
+    console.log(x);
+}
+</code></pre><h2 id="Crossing-realms-with-symbols"><a href="#Crossing-realms-with-symbols" class="headerlink" title="Crossing realms with symbols"></a>Crossing realms with symbols</h2><p>A <em>code realm</em> (short: realm) is a context in which pieces of code exist. It includes global variables, loaded modules and more. Even though code exists “inside” exactly one realm, it may have access to code in other realms. For example, each frame in a browser has its own realm. And execution can jump from one frame to another, as the following HTML demonstrates.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript">            </span></div><div class="line">            <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">arr</span>) </span>&#123;</div><div class="line">                <span class="keyword">var</span> iframe = frames[<span class="number">0</span>];</div><div class="line">                <span class="comment">// This code and the iframe’s code exist in</span></div><div class="line">                <span class="comment">// different realms. Therefore, global variables</span></div><div class="line">                <span class="comment">// such as Array are different:</span></div><div class="line">                <span class="built_in">console</span>.log(<span class="built_in">Array</span> === iframe.Array); <span class="comment">// false</span></div><div class="line">                <span class="built_in">console</span>.log(arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">// false</span></div><div class="line">                <span class="built_in">console</span>.log(arr <span class="keyword">instanceof</span> iframe.Array); <span class="comment">// true</span></div><div class="line"></div><div class="line">                <span class="comment">// But: symbols are the same</span></div><div class="line">                <span class="built_in">console</span>.log(<span class="built_in">Symbol</span>.iterator ===</div><div class="line">                            iframe.Symbol.iterator); <span class="comment">// true</span></div><div class="line">            &#125;</div><div class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">srcdoc</span>=<span class="string">"&lt;script&gt;window.parent.test([])&lt;/script&gt;"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>The problem is that each realm has its own local copy of <code>Array</code> and, because objects have individual identities, those local copies are considered different, even though they are essentially the same object. Similarly, libraries and user code a loaded once per realm and each realm has a different version of the same object.</p>
+<p>In contrast, members of the primitive types boolean, number and string don’t have individual identities and multiple copies of the same value are not a problem: The copies are compared “by value” (by looking at the content, not at the identity) and are considered equal.</p>
+<p>Symbols have individual identities and thus don’t travel across realms as smoothly as other primitive values. That is a problem for symbols such as <code>Symbol.iterator</code> that should work across realms: If an object is iterable in one realm, it should be iterable in others, too. If a cross-realm symbol is provided by the JavaScript engine, the engine can make sure that the same value is used in each realm. For libraries, however, we need extra support, which comes in the form of the <em>global symbol registry</em>: This registry is global to all realms and maps strings to symbols. For each symbol, libraries need to come up with a string that is as unique as possible. To create the symbol, they don’t use <code>Symbol()</code>, they ask the registry for the symbol that the string is mapped to. If the registry already has an entry for the string, the associated symbol is returned. Otherwise, entry and symbol are created first.</p>
+<p>You ask the registry for a symbol via <code>Symbol.for()</code> and retrieve the string associated with a symbol (its <em>key</em>) via <code>Symbol.keyFor()</code>:</p>
+<pre><code>&gt; let sym = Symbol.for(&apos;Hello everybody!&apos;);
+&gt; Symbol.keyFor(sym)
+**&apos;Hello everybody!&apos;**
+</code></pre><p>As expected, cross-realm symbols, such as <code>Symbol.iterator</code>, that are provided by the JavaScript engine are not in the registry:</p>
+<pre><code>&gt; Symbol.keyFor(Symbol.iterator)
+**undefined**
+</code></pre><h2 id="Safety-checks"><a href="#Safety-checks" class="headerlink" title="Safety checks"></a>Safety checks</h2><p>JavaScript warns you about two mistakes by throwing exceptions: Invoking <code>Symbol</code> as a constructor and coercing symbols to string.</p>
+<h3 id="Invoking-Symbol-as-a-constructor"><a href="#Invoking-Symbol-as-a-constructor" class="headerlink" title="Invoking Symbol as a constructor"></a>Invoking Symbol as a constructor</h3><p>While all other primitive values have literals, you need to create symbols by function-calling <code>Symbol</code>. Thus, it is relatively easy to accidentally invoke <code>Symbol</code> as a constructor. That produces instances of <code>Symbol</code> and is not very useful. Therefore, an exception is thrown when you try to do that:</p>
+<pre><code>&gt; new Symbol()
+**TypeError: Symbol is not a constructor**
+</code></pre><p>There is still a way to create wrapper objects, instances of <code>Symbol</code>: <code>Object</code>, called as a function, converts all values to objects, including symbols.</p>
+<pre><code>&gt; let sym = Symbol();
+&gt; typeof sym
+**&apos;symbol&apos;**
+****
+&gt; let wrapper = Object(sym);
+&gt; typeof wrapper
+**&apos;object&apos;**
+&gt; wrapper instanceof Symbol
+**true**
+</code></pre><h3 id="Coercing-a-symbol-to-string"><a href="#Coercing-a-symbol-to-string" class="headerlink" title="Coercing a symbol to string"></a>Coercing a symbol to string</h3><p>Given that both strings and symbols can be property keys, you want to protect people from accidentally converting a symbol to a string. For example, like this:</p>
+<pre><code>let propertyKey = &apos;__&apos; + anotherPropertyKey;
+</code></pre><p>ECMAScript 6 throws an exception if one uses <em>implicit</em> conversion to string (handled internally via the <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring" target="_blank" rel="external">ToString operation</a>):</p>
+<pre><code>&gt; var sym = Symbol(&apos;My symbol&apos;);
+&gt; &apos;&apos; + sym
+**TypeError: Cannot convert a Symbol value to a string**
+</code></pre><p>However, you can still explicitly convert symbols to strings:</p>
+<pre><code>&gt; String(sym)
+**&apos;Symbol(My symbol)&apos;**
+&gt; sym.toString()
+**&apos;Symbol(My symbol)&apos;**
+</code></pre><h2 id="Frequently-asked-questions"><a href="#Frequently-asked-questions" class="headerlink" title="Frequently asked questions"></a>Frequently asked questions</h2><h3 id="Are-symbols-primitives-or-objects"><a href="#Are-symbols-primitives-or-objects" class="headerlink" title="Are symbols primitives or objects?"></a>Are symbols primitives or objects?</h3><p>In some ways, symbols are like primitive values, in other ways, they are like objects:</p>
+<ul>
+<li>Symbols are like strings (primitive values) w.r.t. what they are used for: as representations of concepts and as property keys.</li>
+<li>Symbols are like objects in that each symbol has its own identity.</li>
+</ul>
+<p>The latter point can be illustrated by using objects as colors instead of symbols:</p>
+<pre><code>const COLOR_RED = Object.freeze({});
+···
+</code></pre><p>Optionally, you can make objects-as-symbols more minimal by freezing <code>Object.create(null)</code> instead of <code>{}</code>. Note that, in contrast to strings, objects can’t become property keys.</p>
+<p>What are symbols then – primitive values or objects? In the end, they were turned into primitives, for two reasons.</p>
+<p>First, symbols are more like strings than like objects: They are a fundamental value of the language, they are immutable and they can be used as property keys. Symbols having unique identities doesn’t necessarily contradict them being like strings: UUID algorithms produce strings that are quasi-unique.</p>
+<p>Second, symbols are most often used as property keys, so it makes sense to optimize the JavaScript specification and the implementations for that use case. Then many abilities of objects are unnecessary:</p>
+<ul>
+<li>Objects can become prototypes of other objects.</li>
+<li>Wrapping an object with a proxy doesn’t change what it can be used for.</li>
+<li>Objects can be introspected: via <code>instanceof</code>, <code>Object.keys()</code>, etc.</li>
+</ul>
+<p>Them not having these abilities makes life easier for the specification and the implementations. There are also reports from the V8 team that when handling property keys, it is simpler to treat a primitive type differently than objects.</p>
+<h3 id="Aren’t-strings-enough"><a href="#Aren’t-strings-enough" class="headerlink" title="Aren’t strings enough?"></a>Aren’t strings enough?</h3><p>In contrast to strings, symbols are unique and prevent name clashes. That is nice to have for tokens such as colors, but it is essential for supporting meta-level methods such as the one whose key is <code>Symbol.iterator</code>. Python uses the special name <code>__iter__</code> to avoid clashes. You can reserve double underscore names for programming language mechanisms, but what is a library to do? With symbols, we have an extensibility mechanism that works for everyone. As you can see later, in the section on public symbols, JavaScript itself already makes ample use of this mechanism.</p>
+<p>There is one hypothetical alternative to symbols when it comes to clash-free property keys: use a naming convention. For example, strings with URLs (e.g. <code>&#39;http://example.com/iterator&#39;</code>). But that would introduce a second category of property keys (versus “normal” property names that are usually valid identifiers and don’t contain colons, slashes, dots, etc.), which is basically what symbols are, anyway. Then it is more elegant to explicitly turn those keys into a different kind of value.</p>
+<h2 id="The-symbol-API"><a href="#The-symbol-API" class="headerlink" title="The symbol API"></a>The symbol API</h2><p>This section gives an overview of the ECMAScript 6 API for symbols.</p>
+<h3 id="The-function-Symbol"><a href="#The-function-Symbol" class="headerlink" title="The function Symbol"></a>The function <code>Symbol</code></h3><ul>
+<li><code>Symbol(description?)</code> → <code>symbol</code><br>  Creates a new symbol. The optional parameter <code>description</code> allows you to give the symbol a description, which is useful for debugging.</li>
+</ul>
+<p><code>Symbol</code> is not intended to be used as a constructor – an exception is thrown if you invoke it via <code>new</code>.</p>
+<h3 id="Public-symbols"><a href="#Public-symbols" class="headerlink" title="Public symbols"></a>Public symbols</h3><p><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-well-known-symbols" target="_blank" rel="external">Several public symbols</a> can be accessed via properties of <code>Symbol</code>. They are all used as property keys and enable you to customize how JavaScript handles an object.</p>
+<p>Customizing basic language operations:</p>
+<ul>
+<li><p><code>Symbol.hasInstance</code> (method)<br>  Lets an object <code>O</code> customize the behavior of <code>x instanceof O</code>.</p>
+</li>
+<li><p><code>Symbol.toPrimitive</code> (method)<br>  Lets an object customize how it is converted to a primitive value. This is the first step whenever something is coerced to a primitive type (via operators etc.).</p>
+</li>
+<li><p><code>Symbol.toStringTag</code> (string)<br>  Called by <code>Object.prototype.toString</code> to compute the default string description of an object <code>obj</code>: ‘[object ‘+obj[Symbol.toStringTag]+’]’.</p>
+</li>
+</ul>
+<p><strong>Iteration <a href="http://www.2ality.com/2014/12/es6-symbols.html#[3]" target="_blank" rel="external">[3]</a>:</strong></p>
+<ul>
+<li><code>Symbol.iterator</code> (method)<br>  Makes an object iterable. Returns an iterator.</li>
+</ul>
+<p><strong>Regular expressions:</strong> Four string methods are simply forwarded to their regular expression parameters. The methods that they are forwarded to have the following keys.</p>
+<ul>
+<li><code>Symbol.match</code> is used by <code>String.prototype.match</code>.</li>
+<li><code>Symbol.replace</code> is used by <code>String.prototype.replace</code>.</li>
+<li><code>Symbol.search</code> is used by <code>String.prototype.search</code>.</li>
+<li><code>Symbol.split</code> is used by <code>String.prototype.split</code>.</li>
+</ul>
+<p><strong>Miscellaneous:</strong></p>
+<ul>
+<li><p><code>Symbol.unscopables</code> (Object)<br>  Lets an object hide some properties from the <code>with</code> statement.</p>
+</li>
+<li><p><code>Symbol.species</code> (method)<br>  Helps with cloning typed arrays and instances of <code>RegExp</code>, <code>ArrayBuffer</code> and <code>Promise</code>.</p>
+</li>
+<li><p><code>Symbol.isConcatSpreadable</code> (boolean)<br>  Indicates whether <code>Array.prototype.concat</code> should concatenate the elements of an object or the object as an element.</p>
+</li>
+</ul>
+<h3 id="Global-symbol-registry"><a href="#Global-symbol-registry" class="headerlink" title="Global symbol registry"></a>Global symbol registry</h3><p>If you want a symbol to be the same in all realms, you need to create it via the global symbol registry. The following method lets you do that:</p>
+<ul>
+<li><code>Symbol.for(str)</code> → <code>symbol</code><br>  Returns the symbol whose key is the string <code>str</code> in the registry. If <code>str</code> isn’t in the registry yet, a new symbol is created and filed in the registry under the key <code>str</code>.</li>
+</ul>
+<p>Another method lets you make the reverse look up and found out under which key a string is stored in the registry. This is may be useful for serializing symbols.</p>
+<ul>
+<li><code>Symbol.keyFor(sym)</code> → <code>string</code><br>  returns the string that is associated with the symbol <code>sym</code> in the registry. If <code>sym</code> isn’t in the registry, this method returns <code>undefined</code>.</li>
+</ul>
+<h2 id="Further-reading"><a href="#Further-reading" class="headerlink" title="Further reading"></a>Further reading</h2><ol>
+<li><a href="http://www.2ality.com/2014/08/es6-today.html" target="_blank" rel="external">Using ECMAScript 6 today</a></li>
+<li><a href="http://www.2ality.com/2014/12/es6-oop.html" target="_blank" rel="external">ECMAScript 6: new OOP features besides classes</a></li>
+<li><a href="http://www.2ality.com/2013/06/iterators-generators.html" target="_blank" rel="external">Iterators and generators in ECMAScript 6</a></li>
+<li><a href="https://www.keithcirkel.co.uk/metaprogramming-in-es6-symbols/" target="_blank" rel="external">Metaprogramming in ES6: Symbols and why they’re awesome</a></li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2016-08-26-es6-symbols.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2016-08-26-es6-symbols.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/symbles/">symbles</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2016-08-26-es6-symbols.html&title=《Symbols in ECMAScript 6》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2016-08-26-es6-symbols.html&title=《Symbols in ECMAScript 6》 — Balance&source=See Symbols in ECMAScript 6
+Symbols are a new primitive type in ECMAScript 6 ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2016-08-26-es6-symbols.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Symbols in ECMAScript 6》 — Balance&url=http://blog.inching.org/JavaScript/2016-08-26-es6-symbols.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2016-08-26-es6-symbols.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/FullStack/2016-08-29-fullstack-tech-stack.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">当你想学一门技术时</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2016-08-26-gulp-buffer-stream.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Getting gulpy - Advanced tips for using gulp.js</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2016-08-26-es6-symbols.html&title=《Symbols in ECMAScript 6》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2016-08-26-es6-symbols.html&title=《Symbols in ECMAScript 6》 — Balance&source=See Symbols in ECMAScript 6
+Symbols are a new primitive type in ECMAScript 6 ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2016-08-26-es6-symbols.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Symbols in ECMAScript 6》 — Balance&url=http://blog.inching.org/JavaScript/2016-08-26-es6-symbols.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2016-08-26-es6-symbols.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aQZJbIQwFQN//0p4DpGCeEEkKaFauX/5GzUJGiM8nHt/pGH3zz+ejX56/u21gYGAcy0hCHD3JA53/QjLvfPkwMDBeYCSpsBNWgpzP+0vMGBgYGPEWsL8QGBgYGLsSbnVbmaTa//C/gYGBcRSjE0o1Te9dJgwMjBcY+an7v//8V/obGBgYRzG+xVHergVNynl5HEWFgYFxNSNPcP3bHDlmMR4MDIyrGfnRf37BonoJI3/yqU6GgYFxOCNPfHtJybuFGTEwMK5mrKXFzuWJKrIaFQYGxn2M5KgrCSi/qJon2fnyYWBgvMPIE+gaKdky5rzWqR4GBsaxjDxFdpJjcpRWbljOa3EMDIzrGPlWrx9oviiFFgIGBsYDjLyV2D9oS8rdMhUDA+NJRvUmQ7XsrDYmC0UsBgbGpYxqkq1e6lo7pCuAMTAwHmD0i89qDlzLnMPvY2BgPMOoBtcpd9cK4yEPAwPjakZ/U1iYJliUViLGwMB4gNEpNTvTV5sEwyXGwMB4gJE3HddK38WLFMFfAgYGxpuMznZwLax8DN/CwMC4lPEtjr1FbIJc3BRiYGBcxKimuc4lsGSBCiXrGgYDA+NYRp5kCyVlYwu4mHAxMDAeYFSP43ddvOhsJYf9DQwMjOcZyRFYNWVv2M9iYGBgFFub1cO1PJVvTrgYGBhHMarNgE7Ls3+oh4GB8RqjdVMj2CDmFzKSEFuNTAwMjPMYPw4xIuAfyxc8AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

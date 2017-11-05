@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Node Webkit Tutorial | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="webkit,node">
+    <meta name="description" content="基于 node.js 和 chromium 的应用程序实时运行环境，可运行通过HTML5、CSS3、Javascript来编写的本地应用程序。node.js和webkit的结合体，webkit提供DOM操作，node.js提供本地化操作；且将二者的context完全整合，可在HTML代码中直接使用node.js的API。
+在开发本地应用的时候，WebKit（现在是Blink）负责HTML5 UI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node Webkit Tutorial">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-06-23-node-webkit-tutorial.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="基于 node.js 和 chromium 的应用程序实时运行环境，可运行通过HTML5、CSS3、Javascript来编写的本地应用程序。node.js和webkit的结合体，webkit提供DOM操作，node.js提供本地化操作；且将二者的context完全整合，可在HTML代码中直接使用node.js的API。
+在开发本地应用的时候，WebKit（现在是Blink）负责HTML5 UI">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/node-webkit-thread.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node Webkit Tutorial">
+<meta name="twitter:description" content="基于 node.js 和 chromium 的应用程序实时运行环境，可运行通过HTML5、CSS3、Javascript来编写的本地应用程序。node.js和webkit的结合体，webkit提供DOM操作，node.js提供本地化操作；且将二者的context完全整合，可在HTML代码中直接使用node.js的API。
+在开发本地应用的时候，WebKit（现在是Blink）负责HTML5 UI">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/node-webkit-thread.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Node Webkit Tutorial</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Node Webkit Tutorial</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-06-22T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-06-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Quick-Start"><span class="post-toc-text">Quick Start</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Integrates-Node-js"><span class="post-toc-text">Integrates Node.js</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#node-main"><span class="post-toc-text">node-main</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JavaScript-contexts"><span class="post-toc-text">JavaScript contexts</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Thread"><span class="post-toc-text">Thread</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Native-UI"><span class="post-toc-text">Native UI</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Window"><span class="post-toc-text">Window</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Menu"><span class="post-toc-text">Menu</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Security"><span class="post-toc-text">Security</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Notification"><span class="post-toc-text">Notification</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Debug"><span class="post-toc-text">Debug</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#example"><span class="post-toc-text">example</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-webkit-tutorial"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Node Webkit Tutorial</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-06-23 00:00:00" datetime="2014-06-22T16:00:00.000Z"  itemprop="datePublished">2014-06-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>基于 node.js 和 chromium 的应用程序实时运行环境，可运行通过HTML5、CSS3、Javascript来编写的本地应用程序。node.js和webkit的结合体，webkit提供DOM操作，node.js提供本地化操作；且将二者的context完全整合，可在HTML代码中直接使用node.js的API。</p>
+<p>在开发本地应用的时候，WebKit（现在是Blink）负责HTML5 UI 相关的部分，而Node.js负责本地的API接口，比如文件系统，网络，设备等。</p>
+<p>See <a href="https://github.com/nwjs" target="_blank" rel="external">nwjs</a></p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><p>脚手架生成器 <a href="https://github.com/Dica-Developer/generator-node-webkit" target="_blank" rel="external">Dica-Developer/generator-node-webkit</a>。</p>
+<p><strong>File Structure:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">App </div><div class="line">|-- package.json</div><div class="line">|-- index.html</div><div class="line">|-- js/ </div><div class="line">| `-- … </div><div class="line">|-- css/ </div><div class="line">| `-- … </div><div class="line">|-- resources/ </div><div class="line">| `-- … </div><div class="line">`-- node_modules/ </div><div class="line"> `-- …</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><strong>package.json:</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123; </div><div class="line"> <span class="attr">"dname"</span>: <span class="string">"nw-demo"</span>, </div><div class="line"> <span class="attr">"window"</span> : &#123; </div><div class="line"> <span class="attr">"width"</span>: <span class="number">800</span>, </div><div class="line"> <span class="attr">"height"</span>: <span class="number">600</span>, </div><div class="line"> <span class="attr">"toolbar"</span> : <span class="literal">false</span> </div><div class="line"> &#125;, </div><div class="line"> <span class="attr">"main"</span> : <span class="string">"index.html"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>“name” specifies app’s configuration directory’s name. On Linux app data will be stored in <code>~/.config/nw-demo</code>, on Mac OS X it is <code>~/Library/ Application Support</code>.</li>
+<li>“main” specifies initial page showed to user</li>
+</ul>
+<p>Reference to <a href="https://github.com/rogerwang/node-webkit/wiki/Manifest-format" target="_blank" rel="external">Manifest format</a> — the format of package.json.</p>
+<p>Write the app, <strong>index.html</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;&lt;head&gt;&lt;title&gt;Show Root Files&lt;/title&gt;&lt;/head&gt; </div><div class="line">&lt;body&gt;</div><div class="line">&lt;script&gt; </div><div class="line">    var generate = require(&apos;jade&apos;).compile([ </div><div class="line">     &apos;- each file in files&apos;, </div><div class="line">     &apos; .file #&#123;file&#125;&apos;, </div><div class="line">    ].join(&apos;\n&apos;)); </div><div class="line">    </div><div class="line">    require(&apos;fs&apos;).readdir(&apos;/&apos;, function(err, files) &#123; </div><div class="line">     if (err) </div><div class="line">        document.write(err); </div><div class="line">     else </div><div class="line">        document.write(generate(&#123; </div><div class="line">         &apos;files&apos;: files </div><div class="line">         &#125;); </div><div class="line">    &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><strong>Package and run it:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Compress app to a zip archive </div><div class="line">$ zip -r app.zip /path/to/your/app/* </div><div class="line"># Then you can run it with nw</div><div class="line">$ nw ./app.zip</div></pre></td></tr></table></figure>
+<p>Make a standalone package if you don’t want an extra install of node-webkit on user’s computer.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># On Linux </div><div class="line">$ cat /path/to/nw ./app.zip &gt; app</div><div class="line"># On Windows </div><div class="line">$ copy /b nw.exe+app.nw app.exe</div></pre></td></tr></table></figure>
+<h2 id="Integrates-Node-js"><a href="#Integrates-Node-js" class="headerlink" title="Integrates Node.js"></a>Integrates Node.js</h2><p>See:</p>
+<ul>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Using-Node-modules" target="_blank" rel="external">Using Node modules · rogerwang/node-webkit Wiki</a></li>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Changes-related-to-node" target="_blank" rel="external">Changes related to node · rogerwang/node-webkit Wiki</a></li>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Shell" target="_blank" rel="external">Shell · rogerwang/node-webkit Wiki</a></li>
+</ul>
+<p>Node-Webkit的最大特点是集成了Node.js，可以直接调用该平台上的各种库。因为二者之间的函数调用和对象的互相访问都是直接的，所以性能较好。</p>
+<p>It integrates node.js functions into WebKit.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>App<span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"> </span></div><div class="line">        <span class="keyword">var</span> fs = <span class="built_in">require</span>(‘fs’); </div><div class="line">            fs.readdir(…, <span class="function"><span class="keyword">function</span>(<span class="params">…</span>) </span>&#123; </div><div class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> files) &#123; </div><div class="line">                    <span class="built_in">document</span>.write(files[i]); </div><div class="line">                &#125; </div><div class="line">        &#125;); </div><div class="line"></div><div class="line">        <span class="keyword">var</span> os = <span class="built_in">require</span>(<span class="string">'os'</span>);</div><div class="line">        <span class="built_in">document</span>.write(<span class="string">'Our computer is: '</span>, os.platform());</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="node-main"><a href="#node-main" class="headerlink" title="node-main"></a>node-main</h3><p>See also <a href="https://github.com/rogerwang/node-webkit/wiki/node-main" target="_blank" rel="external">Node main · rogerwang/node-webkit Wiki</a></p>
+<p>The script will be running in Node’s context which won’t be destructed across page navigation in Webkit. So it can be used to write some ‘background’ or ‘daemon’ like code.</p>
+<h2 id="JavaScript-contexts"><a href="#JavaScript-contexts" class="headerlink" title="JavaScript contexts"></a>JavaScript contexts</h2><p>See:</p>
+<ul>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Differences-of-JavaScript-contexts" target="_blank" rel="external">Differences of JavaScript contexts · rogerwang/node-webkit Wiki</a></li>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Transfer-objects-between-window-and-node" target="_blank" rel="external">Transfer objects between window and node · rogerwang/node-webkit Wiki</a></li>
+</ul>
+<p>Different windows of a node-webkit-based application have different JavaScript contexts, i.e. each window has its own global object and its own set of global constructors (such as Array or Object).</p>
+<p>Node modules in node-webkit run in their own shared Node context. (Shared by default; however, you may explicitly add <code>&#39;new-instance&#39;: true</code> to the options of <a href="https://github.com/rogerwang/node-webkit/wiki/Window#openurl-options" target="_blank" rel="external">Window.open</a> if you need your new window to have a separate Node.js context.)</p>
+<h2 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h2><p>node-webkit is based on Chromium and node.js. </p>
+<p><strong>Merge node.js and Chromium’s message loop:</strong></p>
+<p><em>Chromium</em> uses MessagePump* family to support its internal message loop. <em>node.js</em> uses libuv for message loop. <em>node-webkit</em> implements MessagePumpForUv to use<br>libuv for Chromium’s message loop.</p>
+<p><strong>Insert node.js symbols into WebKit:</strong></p>
+<p>WebKit initializes javascript context only on demand. node is initialized before entering message loop. Node’s symbols is transferred into WebKit’s context immediately after DOM is installed.</p>
+<p>Node-Webkit 项目的核心思想就是在DOM中跑的代码能够直接调用Node.js中运行的代码，所以核心的部分是把二者跑在同一个线程中。需要把Chromium进程的事件循环和Node.js的事件循环合并在一起，并且把二者的V8 JS引擎环境（Context）合并起来。</p>
+<p>Currently <code>child_process.fork</code> <a href="https://github.com/rogerwang/node-webkit/issues/213" target="_blank" rel="external">is broken</a> in node-webkit.</p>
+<p>node.js functions live in the renderer thread:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/node-webkit-thread.png" alt="node-webkit-thread.png" title="">
+                </div>
+                <div class="image-caption">node-webkit-thread.png</div>
+            </figure>
+<h2 id="Native-UI"><a href="#Native-UI" class="headerlink" title="Native UI"></a>Native UI</h2><p>See <a href="https://github.com/rogerwang/node-webkit/wiki/Native-UI-API-Manual" target="_blank" rel="external">Native UI API Manual · rogerwang/node-webkit Wiki</a></p>
+<h3 id="Window"><a href="#Window" class="headerlink" title="Window"></a>Window</h3><p>See:</p>
+<ul>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Window" target="_blank" rel="external">Window · rogerwang/node-webkit Wiki</a></li>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Play-with-window" target="_blank" rel="external">Play with window · rogerwang/node-webkit Wiki</a></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Load native UI library</span></div><div class="line"><span class="keyword">var</span> gui = <span class="built_in">require</span>(<span class="string">'nw.gui'</span>); <span class="comment">//or global.window.nwDispatcher.requireNwGui() (see https://github.com/rogerwang/node-webkit/issues/707)</span></div><div class="line"></div><div class="line"><span class="comment">// Get the current window</span></div><div class="line"><span class="keyword">var</span> win = gui.Window.get();</div><div class="line"></div><div class="line"><span class="comment">// Listen to the minimize event</span></div><div class="line">win.on(<span class="string">'minimize'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'Window is minimized'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// Minimize the window</span></div><div class="line">win.minimize();</div><div class="line"></div><div class="line"><span class="comment">// Unlisten the minimize event</span></div><div class="line">win.removeAllListeners(<span class="string">'minimize'</span>);</div><div class="line"></div><div class="line"><span class="comment">// Create a new window and get it</span></div><div class="line"><span class="keyword">var</span> new_win = gui.Window.get(</div><div class="line">  <span class="built_in">window</span>.open(<span class="string">'https://github.com'</span>)</div><div class="line">);</div><div class="line"></div><div class="line"><span class="comment">// And listen to new window's focus event</span></div><div class="line">new_win.on(<span class="string">'focus'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'New window is focused'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="Menu"><a href="#Menu" class="headerlink" title="Menu"></a>Menu</h3><p>See:</p>
+<ul>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Menu" target="_blank" rel="external">Menu · rogerwang/node-webkit Wiki</a></li>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Getting-Started-with-node-webkit" target="_blank" rel="external">Getting Started with node webkit · rogerwang/node-webkit Wiki</a></li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span> Menu <span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="comment">// Load native UI library</span></div><div class="line"><span class="keyword">var</span> gui = <span class="built_in">require</span>(<span class="string">'nw.gui'</span>);</div><div class="line"></div><div class="line"><span class="comment">// Create an empty menu</span></div><div class="line"><span class="keyword">var</span> menu = <span class="keyword">new</span> gui.Menu();</div><div class="line"></div><div class="line"><span class="comment">// Add some items with label</span></div><div class="line">menu.append(<span class="keyword">new</span> gui.MenuItem(&#123; <span class="attr">label</span>: <span class="string">'Item A'</span> &#125;));</div><div class="line">menu.append(<span class="keyword">new</span> gui.MenuItem(&#123; <span class="attr">label</span>: <span class="string">'Item B'</span> &#125;));</div><div class="line">menu.append(<span class="keyword">new</span> gui.MenuItem(&#123; <span class="attr">type</span>: <span class="string">'separator'</span> &#125;));</div><div class="line">menu.append(<span class="keyword">new</span> gui.MenuItem(&#123; <span class="attr">label</span>: <span class="string">'Item C'</span> &#125;));</div><div class="line"></div><div class="line"><span class="comment">// Remove one item</span></div><div class="line">menu.removeAt(<span class="number">1</span>);</div><div class="line"></div><div class="line"><span class="comment">// Iterate menu's items</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; menu.items.length; ++i) &#123;</div><div class="line">  <span class="built_in">console</span>.log(menu.items[i]);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Add a item and bind a callback to item</span></div><div class="line">menu.append(<span class="keyword">new</span> gui.MenuItem(&#123;</div><div class="line"><span class="attr">label</span>: <span class="string">'Click Me'</span>,</div><div class="line"><span class="attr">click</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// Create element in html body</span></div><div class="line">  <span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</div><div class="line">  element.appendChild(<span class="built_in">document</span>.createTextNode(<span class="string">'Clicked OK'</span>));</div><div class="line">  <span class="built_in">document</span>.body.appendChild(element);</div><div class="line">&#125;</div><div class="line">&#125;));</div><div class="line"></div><div class="line"><span class="comment">// Popup as context menu</span></div><div class="line"><span class="built_in">document</span>.body.addEventListener(<span class="string">'contextmenu'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">ev</span>) </span>&#123; </div><div class="line">  ev.preventDefault();</div><div class="line">  <span class="comment">// Popup at place you click</span></div><div class="line">  menu.popup(ev.x, ev.y);</div><div class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;, <span class="literal">false</span>);</div><div class="line"></div><div class="line"><span class="comment">// Get the current window</span></div><div class="line"><span class="keyword">var</span> win = gui.Window.get();</div><div class="line"></div><div class="line"><span class="comment">// Create a menubar for window menu</span></div><div class="line"><span class="keyword">var</span> menubar = <span class="keyword">new</span> gui.Menu(&#123; <span class="attr">type</span>: <span class="string">'menubar'</span> &#125;);</div><div class="line"></div><div class="line"><span class="comment">// Create a menuitem</span></div><div class="line"><span class="keyword">var</span> sub1 = <span class="keyword">new</span> gui.Menu();</div><div class="line"></div><div class="line"></div><div class="line">sub1.append(<span class="keyword">new</span> gui.MenuItem(&#123;</div><div class="line"><span class="attr">label</span>: <span class="string">'Test1'</span>,</div><div class="line"><span class="attr">click</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</div><div class="line">  element.appendChild(<span class="built_in">document</span>.createTextNode(<span class="string">'Test 1'</span>));</div><div class="line">  <span class="built_in">document</span>.body.appendChild(element);</div><div class="line">&#125;</div><div class="line">&#125;));</div><div class="line"></div><div class="line"><span class="comment">// You can have submenu!</span></div><div class="line">menubar.append(<span class="keyword">new</span> gui.MenuItem(&#123; <span class="attr">label</span>: <span class="string">'Sub1'</span>, <span class="attr">submenu</span>: sub1&#125;));</div><div class="line"></div><div class="line"><span class="comment">//assign the menubar to window menu</span></div><div class="line">win.menu = menubar;</div><div class="line"></div><div class="line"><span class="comment">// add a click event to an existing menuItem</span></div><div class="line">menu.items[<span class="number">0</span>].click = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"CLICK"</span>); </div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span>  </div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="Security"><a href="#Security" class="headerlink" title="Security"></a>Security</h2><p>See <a href="https://github.com/rogerwang/node-webkit/wiki/Security" target="_blank" rel="external">Security · rogerwang/node-webkit Wiki</a></p>
+<p>node-webkit adds Node.js support and enhancement in DOM for trusted code and content. For untrusted code and content, it should remain in a normal frame or iframe, which is the same as the one in browser. So there are 2 kinds of frames in node-webkit: Node frame and normal frame.</p>
+<h2 id="Notification"><a href="#Notification" class="headerlink" title="Notification"></a>Notification</h2><p>See <a href="https://github.com/pbojinov/nodeifications" target="_blank" rel="external">pbojinov/nodeifications</a> Simple cross platform desktop notifications for node-webkit.</p>
+<h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><p>See:</p>
+<ul>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Debugging-with-devtools" target="_blank" rel="external">Debugging with devtools · rogerwang/node-webkit Wiki</a></li>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Debugging-with-Sublime-Text-2-and-3" target="_blank" rel="external">Debugging with Sublime Text 2 and 3</a></li>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/The-nw-protocol" target="_blank" rel="external">The nw protocol</a></li>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki/Crash-dump" target="_blank" rel="external">Crash dump</a></li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><p>See:</p>
+<ul>
+<li><a href="https://github.com/rogerwang/node-webkit/wiki" target="_blank" rel="external">Home · rogerwang/node-webkit Wiki</a></li>
+<li><a href="https://speakerdeck.com/u/zcbenz/p/node-webkit-app-runtime-based-on-chromium-and-node-dot-js" target="_blank" rel="external">Introduction to node-webkit (slides)</a></li>
+<li><a href="http://www.csdn.net/article/2014-01-08/2818066-Node-Webkit" target="_blank" rel="external">【开源专访】Node-Webkit作者王文睿：桌面应用的全新开发方式-CSDN.NET</a></li>
+<li><a href="http://yedingding.com/2014/07/28/node-webkit-intro.html" target="_blank" rel="external">开始 node-webkit 前，你应该知道的</a></li>
+</ul>
+<h3 id="example"><a href="#example" class="headerlink" title="example"></a>example</h3><ul>
+<li><a href="https://github.com/zcbenz/nw-sample-apps" target="_blank" rel="external">zcbenz/nw-sample-apps</a></li>
+<li><a href="https://github.com/nwjs/nw.js/wiki/List-of-apps-and-companies-using-nw.js" target="_blank" rel="external">List of apps and companies using node webkit · rogerwang/node-webkit Wiki</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-06-23-node-webkit-tutorial.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-06-23-node-webkit-tutorial.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webkit/">webkit</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-06-23-node-webkit-tutorial.html&title=《Node Webkit Tutorial》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-06-23-node-webkit-tutorial.html&title=《Node Webkit Tutorial》 — Balance&source=基于 node.js 和 chromium 的应用程序实时运行环境，可运行通过HTML5、CSS3、Javascript来编写的本地应用程序。node.j..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-06-23-node-webkit-tutorial.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node Webkit Tutorial》 — Balance&url=http://blog.inching.org/Node/2014-06-23-node-webkit-tutorial.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-06-23-node-webkit-tutorial.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Node/2014-06-23-express4-from-express3.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">express4.x新特性以及如何从3.x升级到4.x</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2014-06-23-android-thread.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Thread</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-06-23-node-webkit-tutorial.html&title=《Node Webkit Tutorial》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-06-23-node-webkit-tutorial.html&title=《Node Webkit Tutorial》 — Balance&source=基于 node.js 和 chromium 的应用程序实时运行环境，可运行通过HTML5、CSS3、Javascript来编写的本地应用程序。node.j..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-06-23-node-webkit-tutorial.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node Webkit Tutorial》 — Balance&url=http://blog.inching.org/Node/2014-06-23-node-webkit-tutorial.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-06-23-node-webkit-tutorial.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsElEQVR42u3aS27jMBAFQN//0hlgVgECSa8/tL0orQwHIVkKQHYe+/WKn5//z+/Pf7/5+9Pf31+NdjVC8ltrDx4eHl5r6VfPFeke0wPn7GTNeHh4eKd5+WGQb/rVrfx+/ObhgYeHh/dRXm+a+2PmfrTJvHh4eHjfzEsK8WpR3jty8PDw8N7JSxaaxwf5or8oa8HDw8OLeb0LsM9+Pn6/h4eHh9e6Va8WynkBPflcmBcPDw/vAK8aqt4Xwb2Gg3w/7xXleHh4eCd41Sv8JDxNkL2mhN568PDw8LZ41X/1k2I3j33n5fjDUYSHh4d3jFcdaD5x/mp6Rw4eHh7eOV71SEhK3mo717zILtzd4eHh4S3xekVwNSyohrzVVxx1luHh4eEt8XobcR71TiKP3jh4eHh453i9xqmk/O21cE3GfIhx8fDw8DZHe+WXWL3goFoEL7dY4eHh4R3m5eC8UWAycg57GAEPDw9viTcpo/PoIX/T1YD4Yf14eHh4x3jVcKGKqV7z56HDQ8sCHh4e3lt41RI5iV+rIUIeT0QpNR4eHt4qbx5G3B8VhU282LZVfa14eHh4W7x5uVwNGvJCOQ+FL/8keHh4eAd4k6v9vH1q7ewqNhbg4eHhneD1rva3yu78t5pUPDw8vAO83bCgV3zn7Va9YwwPDw9vlzdfSrVtK5lr8uLw8PDwvoGXDzcvpidXcXh4eHjv4fW27KSkzkfoxRDVGfHw8PC2eD/FJyl2q0vPeeVZ8PDw8A7w8qdadueAycvqNWbh4eHhzXnJYTAJZycHRvL9Q7mPh4eHd4w3jwzmkW7vBHuIUfDw8PA+ysuvr+6XmJTgW3Ph4eHhfSevusX3ANUmMDw8PLzTvLwsnlyS5QVxPktUUuPh4eGt8noXYNWtfKuBYOE2Dw8PD6/P+wezNWnOgKCJUQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

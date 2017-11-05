@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android State Storage &amp; Revovery | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android">
+    <meta name="description" content="From Android中Activity执行restart过程中涉及到的四种数据存储恢复的方法
+我们知道，当Configuration Change发生的时候（比如横竖屏切换等），会导致Activity重启，即先destroy，然后会restart，一般情况下restart的时间比较短，为了保证一致的用户体验，我们应该在Activity重启前将一些数据存储下来，然后在restart的时候重新根据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android State Storage & Revovery">
+<meta property="og:url" content="http://blog.inching.org/Android/2016-09-06-android-state-storage.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="From Android中Activity执行restart过程中涉及到的四种数据存储恢复的方法
+我们知道，当Configuration Change发生的时候（比如横竖屏切换等），会导致Activity重启，即先destroy，然后会restart，一般情况下restart的时间比较短，为了保证一致的用户体验，我们应该在Activity重启前将一些数据存储下来，然后在restart的时候重新根据">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android State Storage & Revovery">
+<meta name="twitter:description" content="From Android中Activity执行restart过程中涉及到的四种数据存储恢复的方法
+我们知道，当Configuration Change发生的时候（比如横竖屏切换等），会导致Activity重启，即先destroy，然后会restart，一般情况下restart的时间比较短，为了保证一致的用户体验，我们应该在Activity重启前将一些数据存储下来，然后在restart的时候重新根据">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android State Storage &amp; Revovery</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android State Storage &amp; Revovery</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-09-05T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-09-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#onSaveInstanceState"><span class="post-toc-text">onSaveInstanceState</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#利用Fragment存储大量数据"><span class="post-toc-text">利用Fragment存储大量数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#考虑使用Loader缓存数据"><span class="post-toc-text">考虑使用Loader缓存数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用静态变量存储数据"><span class="post-toc-text">使用静态变量存储数据</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-state-storage"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android State Storage & Revovery</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-09-06 00:00:00" datetime="2016-09-05T16:00:00.000Z"  itemprop="datePublished">2016-09-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>From <a href="http://blog.csdn.net/iispring/article/details/49681699" target="_blank" rel="external">Android中Activity执行restart过程中涉及到的四种数据存储恢复的方法</a></p>
+<p>我们知道，当Configuration Change发生的时候（比如横竖屏切换等），会导致Activity重启，即先destroy，然后会restart，一般情况下restart的时间比较短，为了保证一致的用户体验，我们应该在Activity重启前将一些数据存储下来，然后在restart的时候重新根据这些数据更新UI。当然你可能想将这些数据写到物理文件或数据库中，但是这样有缺点，因为IO操作时耗时操作，会影响restart的过程，甚至导致ANR程序无响应，本文将介绍几种将数据缓存在内存中以便restart时进行恢复的方法。</p>
+<a id="more"></a>
+<h2 id="onSaveInstanceState"><a href="#onSaveInstanceState" class="headerlink" title="onSaveInstanceState"></a>onSaveInstanceState</h2><p><code>Activity</code> 具有onSaveInstanceState回调方法，如果onSaveInstanceState方法被调用了，那么该回调方法一定是在onStop之前被调用的，但是不能保证是在onPause之前还是之后被调用。一般在此处将UI持久化的一些信息存入到Bundle中，然后在Activity重新创建执行onCreate(Bundle)或onRestoreInstanceState(Bundle)的时候再根据Bundle恢复。Activity.onSaveInstanceState的默认实现是遍历层级结构中的所有<strong>含有id属性</strong>的View，然后依次调用View.onSaveInstanceState()方法。onSaveInstanceState是android.view.View的方法，所以所有继承自View的widget都有该方法。View.onSaveInstanceState()会存储View自身的一些信息，比如存储当前选择的哪个item等。</p>
+<p>由于Activity.onSaveInstanceState方法只会遍历Activity中含有id属性的View对其UI信息进行存储，所以我们我们在编码时最好给View都添加id属性，这样可以使其在上述方法执行的时候调用View的onSaveInstanceState方法，从而存储该View的UI信息。</p>
+<p>如果要重写onSaveInstanceState方法，首先要调用super.onSaveInstanceState(bundle)。重写的时候不应该在此处存储持久化的数据（比如要向SQLite数据中写入持久数据），应该在该方法中只存储一些与UI相关的瞬时变量，比如有时候某些成员变量也存储着一些和UI相关的信息，这时候就可以在onSaveInstanceState中存储下来。<br>Bundle不是为存储大量数据（比如bitmap）而设计的，并且Bundle中的数据必须经过序列化与反序列化， 因此在onSaveInstanceState不应该存储大量数据。</p>
+<p>onSaveInstanceState是在Activity将要被killed并且预测过段时间会重新create这样条件下才会被调用。也就是说onSaveInstanceState之所以被调用是为了Activity在销毁后进行重新生成进行restore的，如果Android Framework认为不满足需要进行onSaveInstanceState的条件，那么就不会调用该方法，具体来说：</p>
+<ol>
+<li><p>如果用户显式地通过back键退出了程序，那么不会调用onSaveInstanceState方法。</p>
+</li>
+<li><p>如果开始打开了Activity A，然后打开了Activity B，对A进行了部分遮罩，这时候会触发A的onPause方法，但是Framework可能会避免调用A的onSaveInstanceState方法（如果在B的生命周期内A没有被kill掉）。</p>
+</li>
+</ol>
+<h2 id="利用Fragment存储大量数据"><a href="#利用Fragment存储大量数据" class="headerlink" title="利用Fragment存储大量数据"></a>利用Fragment存储大量数据</h2><p>由于onSaveInstanceState不适合存储大量的数据，所以如果在Activity销毁重建恢复数据的时候就不能使用该onSaveInstanceState毁掉函数存取大量数据了。</p>
+<p>由于configuration change导致Activity销毁的时候，Activity中标记为保留的Fragment不会销毁，所以可以利用该特性实现存取数据，具体方法如下：</p>
+<ol>
+<li><p>扩展Fragment类，并定义好相应字段存取数据，对外暴露出设置数据和获取数据的方法，比如setData和getData</p>
+</li>
+<li><p>在Fragment的onCreate方法中调用方法setRetainInstance(true)，标记该Fragment为保留的</p>
+</li>
+<li><p>将该Fragment加入到Activity中</p>
+</li>
+<li><p>在Activity的onDestroy方法中将activity的中需要保存的数据调用Fragment中上述定义的setData方法，将其保存在Fragment中</p>
+</li>
+<li><p>在Activity销毁重新生成执行onCreate的时候，重新从Fragmet中调用getData获取之前保存的数据</p>
+</li>
+<li><p>最后需要注意内存泄露的发生</p>
+</li>
+</ol>
+<h2 id="考虑使用Loader缓存数据"><a href="#考虑使用Loader缓存数据" class="headerlink" title="考虑使用Loader缓存数据"></a>考虑使用Loader缓存数据</h2><p>Android中可以用Loader和LoaderManager异步获取数据，且Loader机制有个很好的特性：可以在Activity执行restart的过程中继续持有数据，也就是说，如果Loader一开始就已经加载了数据，那么在Activity进行了restart之后，Activity会从Loader中立即获取到之前缓存的数据，而无需再次用LoaderManager加载数据，这样就能实现restart之后数据恢复的功能。</p>
+<p>如果对Loader机制不了解，可以参见以下两篇博文：<br><a href="http://blog.csdn.net/iispring/article/details/48834767" target="_blank" rel="external">Android中Loader及LoaderManager的使用（附源码下载）</a><br><a href="http://blog.csdn.net/iispring/article/details/48958117" target="_blank" rel="external">深入源码解析Android中Loader、AsyncTaskLoader、CursorLoader、LoaderManager</a></p>
+<h2 id="使用静态变量存储数据"><a href="#使用静态变量存储数据" class="headerlink" title="使用静态变量存储数据"></a>使用静态变量存储数据</h2><p>我们知道Java中如果一个类的成员变量是static的，那么该static成员变量的生命周期就与该类的生命周期相同，具体来说：当Java虚拟机加载该类的时候，就会给该类的static成员变量分配内存空间；当Java虚拟机卸载该类的时候，该类的static成员变量的内存才会被回收。Android也具有该特性，假设我们的Activity中有一个static的成员变量，在Activity进行restart的过程中，Java虚拟机没有卸载掉该Activity，因为在后面的restart的过程中会用到，所以在restart过程中，该Activity的static的成员变量的内存没有被回收，这样我们就可以在restart之前往该Activity的static成员变量中写入值，在restart之后从Activity的static成员变量中读取值，这样就跨restart过程持有了数据。使用该特性也要注意，在非restart导致的destroy的时候，我们需要将Activity的static成员变量赋值为null，防止内存泄露。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2016-09-06-android-state-storage.html" target="_blank" rel="external">http://blog.inching.org/Android/2016-09-06-android-state-storage.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2016-09-06-android-state-storage.html&title=《Android State Storage & Revovery》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2016-09-06-android-state-storage.html&title=《Android State Storage & Revovery》 — Balance&source=From Android中Activity执行restart过程中涉及到的四种数据存储恢复的方法
+我们知道，当Configuration Change发生..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2016-09-06-android-state-storage.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android State Storage & Revovery》 — Balance&url=http://blog.inching.org/Android/2016-09-06-android-state-storage.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2016-09-06-android-state-storage.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2016-09-06-android-service.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android Service</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/FullStack/2016-09-05-mvc-mvvm-mvp.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MVC，MVP 和 MVVM</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2016-09-06-android-state-storage.html&title=《Android State Storage & Revovery》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2016-09-06-android-state-storage.html&title=《Android State Storage & Revovery》 — Balance&source=From Android中Activity执行restart过程中涉及到的四种数据存储恢复的方法
+我们知道，当Configuration Change发生..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2016-09-06-android-state-storage.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android State Storage & Revovery》 — Balance&url=http://blog.inching.org/Android/2016-09-06-android-state-storage.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2016-09-06-android-state-storage.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACt0lEQVR42u3aQY7iQAwFUO5/6R6pVzOigf/LccNILysUSCUPpLKxfbvFx9f3cX/m7+P+/OTaR1fdNg48PDy8o0d/dOQ3fn7to9eP1myvfbgOHh4e3hovWTrZ9PPwcBY22tXw8PDw3subfOY5I0ma8fDw8P5fXpLaJu/miTUeHh7eZ/KuKiicJdNtOXil1oKHh4cX89oG2Ce8Xuzv4eHh4Q266m0z7Pm2fhYS8mDww1V4eHh4C7yN5lZegMh38jYK3Np+Gh4eHl7Ma0urc3AbJIpf6X5NPDw8vAVeW3SY3D4v1CafPHxCPDw8vEt5SXhob5yfbxnJk+Ph4eFt8CaJb5TCtilvkKAX6TUeHh7em3hnjah2/bMi74t38fDw8JZ5k7Ls7weV6Mnx8PDwFnhJspskuPmWnSTZZwNYeHh4eL/Dy0ejJg2w+S+QhJwfzuDh4eEt8PKi6gWlgeDdvKhRJO54eHh4a7xJUeBsgKB99MORBTw8PLwFXr7p582ws3GBqzB4eHh427yzQsNZCyoJP5Ov7EXcw8PDwxvz8lGqPGy0zbM2eBTBCQ8PD+9XeGdDV2dDAHm59rD9hoeHh7fAy//Yt+MFSWt/r6iBh4eHt8ebJLg5oE21J0NX/5zHw8PDW+DlKXKbXudn8pGFuhiBh4eHt8BrS7dJADgrVbS8qGCBh4eHt8ybR5jJmFQbQqL74uHh4S3wJiNTeWF3ni63BZEituDh4eGVvK/ymG/feWjJBwiiuIeHh4d3Ea8tBLSb+GSjz9PoeZkDDw8Pr+XlW/ak9dWunH+tdbaOh4eHdxHvrFmVl2XbLyhnvPgMHh4e3lt5edLcFjLaIJGfwcPDw/t8XhJa8q0/Dx4P18TDw8Nb4+Ulg5w0CQZnTbILyrh4eHh4cebZ/uHPS7Hz/HZesMDDw8O7iPcHJTlzqJX4lqwAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Angular Scope | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tutorial,angular">
+    <meta name="description" content="作用域Angular 中作用域的继承使用的是原型继承，也就在说子作用域的 prototype 会指向父作用域。在子作用域中查找属性时，先查找子作用域中的属性，如果未找到，在去父作用域中查找，以此类推，直到找到跟作用域 $rootScope。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular Scope">
+<meta property="og:url" content="http://blog.inching.org/Angular/2014-09-23-angular-scope.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="作用域Angular 中作用域的继承使用的是原型继承，也就在说子作用域的 prototype 会指向父作用域。在子作用域中查找属性时，先查找子作用域中的属性，如果未找到，在去父作用域中查找，以此类推，直到找到跟作用域 $rootScope。">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/scope.jpg">
+<meta property="og:image" content="https://camo.githubusercontent.com/f1c9d54bd5b13d1e479b41ca6062b4b9fecc8fe2/687474703a2f2f692e737461636b2e696d6775722e636f6d2f376c3864672e706e67">
+<meta property="og:image" content="https://camo.githubusercontent.com/5a6ff2644b1b7a15621c2a20928abfce0a2018bb/687474703a2f2f692e696d6775722e636f6d2f6f764a6547706f2e706e67">
+<meta property="og:image" content="https://camo.githubusercontent.com/40767f9e9cc824e5c9ef178e385c9daa40ade6ba/687474703a2f2f692e737461636b2e696d6775722e636f6d2f6b6438706a2e706e67">
+<meta property="og:image" content="https://camo.githubusercontent.com/3254baf91afdd969e6f167eeeb59950a0399a8f1/687474703a2f2f692e737461636b2e696d6775722e636f6d2f6e4c6f69572e706e67">
+<meta property="og:image" content="https://camo.githubusercontent.com/881318ad2d70364cf61d50faf536a7ce08f39777/687474703a2f2f692e737461636b2e696d6775722e636f6d2f51536a544a2e706e67">
+<meta property="og:image" content="https://camo.githubusercontent.com/34d8b831f665a8ff15f134bcc83a8a7e96822421/687474703a2f2f692e737461636b2e696d6775722e636f6d2f666b5748412e706e67">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular Scope">
+<meta name="twitter:description" content="作用域Angular 中作用域的继承使用的是原型继承，也就在说子作用域的 prototype 会指向父作用域。在子作用域中查找属性时，先查找子作用域中的属性，如果未找到，在去父作用域中查找，以此类推，直到找到跟作用域 $rootScope。">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/scope.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Angular Scope</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Angular Scope</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-09-22T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-09-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#作用域"><span class="post-toc-text">作用域</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原型继承"><span class="post-toc-text">原型继承</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ng-include"><span class="post-toc-text">ng-include</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ng-repeat"><span class="post-toc-text">ng-repeat</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ng-switch-amp-ng-view"><span class="post-toc-text">ng-switch & ng-view</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#controller"><span class="post-toc-text">controller</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#directive"><span class="post-toc-text">directive</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#隔离作用域"><span class="post-toc-text">隔离作用域</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#插值"><span class="post-toc-text">插值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据绑定"><span class="post-toc-text">数据绑定</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#表达式"><span class="post-toc-text">表达式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#pagination-demo"><span class="post-toc-text">pagination demo</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#作用域和事件系统"><span class="post-toc-text">作用域和事件系统</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#作用域的生命周期"><span class="post-toc-text">作用域的生命周期</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-angular-scope"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Angular Scope</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-09-23 00:00:00" datetime="2014-09-22T16:00:00.000Z"  itemprop="datePublished">2014-09-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><p>Angular 中作用域的继承使用的是原型继承，也就在说子作用域的 prototype 会指向父作用域。在子作用域中查找属性时，先查找子作用域中的属性，如果未找到，在去父作用域中查找，以此类推，直到找到跟作用域 $rootScope。</p>
+<a id="more"></a>
+<p>Angular 中，总共有四种作用域：</p>
+<ol>
+<li><p>普通的原型继承作用域。创建一个原型继承于父作用域的作用域。</p>
+<ul>
+<li>ng-include</li>
+<li>ng-switch</li>
+<li>ng-controller</li>
+<li>directive with <code>scope: true</code></li>
+</ul>
+</li>
+<li><p>通过拷贝/复制的原型继承作用域。ng-repeat 的每个迭代都会创建一个子作用域，并且每个作用域总是得到一个新的属性，这个新的属性名为循环变量名。 </p>
+<ul>
+<li>ng-repeat</li>
+</ul>
+</li>
+<li><p>隔离作用域。不继承父作用域，但可以通过 ‘=’, ‘@’, and ‘&amp;’ 访问父作用域的属性。</p>
+<ul>
+<li>directive with <code>scope: {...}</code></li>
+</ul>
+</li>
+<li><p>transcluded 作用域。这个作用域也会原型继承与父作用域，可以和隔离作用域共存，是隔离作用域的兄弟。</p>
+<ul>
+<li>directive with <code>transclude: true</code> </li>
+</ul>
+</li>
+</ol>
+<p>以下情况都会创建新的作用域，并且继承于父作用域：</p>
+<ul>
+<li>ng-repeat</li>
+<li>ng-include</li>
+<li>ng-switch</li>
+<li>ng-view</li>
+<li>ng-controller</li>
+<li>directive with <code>scope: true</code></li>
+<li>directive with <code>transclude: true</code>.</li>
+</ul>
+<p>隔离作用域(isolate scope)也会创建新的作用域，但不会从父作用域中继承：</p>
+<ul>
+<li>directive with scope: { … }</li>
+</ul>
+<p>其他情况不会自动创建作用域，即 <code>scope: false</code>。</p>
+<h3 id="原型继承"><a href="#原型继承" class="headerlink" title="原型继承"></a>原型继承</h3><p>作用域继承通常比较简单，你甚至经常不需要知道它的存在。</p>
+<p>除非你使用双向绑定到父作用域的一个基本类型(e.g., number, string, boolean) 的值时，并不会像我们期望的那样运行。实际上，子作用域得到的是自己的属性，这会隐藏父作用域中的同名属性。 这个问题是有由 JavaScript 的原型继承导致的，跟 AngularJS 没有什么关系。</p>
+<p>新的 Angular 开发者可能不会意识到 repeat, ng-switch, ng-view and ng-include 对会创建新的作用域，所以使用的时候，这类问题时有发生。</p>
+<h2 id="ng-include"><a href="#ng-include" class="headerlink" title="ng-include"></a>ng-include</h2><p>假设我们有一个 Controller:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$scope.myPrimitive = <span class="number">50</span>;</div><div class="line">$scope.myObject    = &#123;<span class="attr">aNumber</span>: <span class="number">11</span>&#125;;</div></pre></td></tr></table></figure>
+<p>HTML:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 模板 tpl1.html --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/ng-template"</span> <span class="attr">id</span>=<span class="string">"/tpl1.html"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">ng-model</span>=<span class="string">"myPrimitive"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 使用 tmpl1 模板 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-include</span> <span class="attr">src</span>=<span class="string">"'/tpl1.html'"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 模板 tpl2.html --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/ng-template"</span> <span class="attr">id</span>=<span class="string">"/tpl2.html"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">ng-model</span>=<span class="string">"myObject.aNumber"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 使用 tpl2.html 模板--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-include</span> <span class="attr">src</span>=<span class="string">"'/tpl2.html'"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>每一个 ng-include 生成一个子作用域，该子作用域都通过原型继承于父作用域：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/scope.jpg" alt="ng-include" title="">
+                </div>
+                <div class="image-caption">ng-include</div>
+            </figure>
+<p>第一个文本框的数据模型为 myPrimitive，为基本类型的数据。如果 在以第一个文本框中敲入数据 (如 “77”) 将导致 ChildScope1 得到一个新的作用域属性（myPrimitive），这将覆盖父作用域中的同名属性。这可能不是你所期望的。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://camo.githubusercontent.com/f1c9d54bd5b13d1e479b41ca6062b4b9fecc8fe2/687474703a2f2f692e737461636b2e696d6775722e636f6d2f376c3864672e706e67" alt="ng-include primitive" title="">
+                </div>
+                <div class="image-caption">ng-include primitive</div>
+            </figure>
+<p>第二个文本框的数据模型为 <code>myObject.aNumber</code>，是复杂对象的属性。如果我们在这个文本框中敲入内容不会导致子作用域添加新的属性。因为当 ngModel 查找属性时，可以在父作用域中找到。</p>
+<p>修改父作用域上面的值会 影响到子作用域，反之，修改子作用域只会影响子作用域的值，不会影响父作用域上面的值。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://camo.githubusercontent.com/5a6ff2644b1b7a15621c2a20928abfce0a2018bb/687474703a2f2f692e696d6775722e636f6d2f6f764a6547706f2e706e67" alt="ng-include object" title="">
+                </div>
+                <div class="image-caption">ng-include object</div>
+            </figure>
+<p>如果我们想让第一个文本框也达到同样的效果，我们可以使用 <code>$parent</code> 来重写，让它绑定父作用域的相应属性，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;input ng-model=&quot;$parent.myPrimitive&quot;&gt;</div></pre></td></tr></table></figure>
+<p>这样也不会产生新的属性，而是查找带父作用域中的属性。当然，父作用域是什么总是不可预知的，我们一般不适用这种方式，一般会把简单属性改成复杂属性，也就是基本类型的数据放到一个 Object 类型的对象中。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://camo.githubusercontent.com/40767f9e9cc824e5c9ef178e385c9daa40ade6ba/687474703a2f2f692e737461636b2e696d6775722e636f6d2f6b6438706a2e706e67" alt="ng-include $parent" title="">
+                </div>
+                <div class="image-caption">ng-include $parent</div>
+            </figure>
+<p>For scenarios where form elements are not involved, another solution is to define a function on the parent scope to modify the primitive. Then ensure the child always calls this function, which will be available to the child scope due to prototypal inheritance. E.g.,</p>
+<p>另外一种方式可以使用方法来修改属性，在子作用于中通过方法来访问基本类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// in the parent scope</div><div class="line">$scope.setMyPrimitive = function(value) &#123;</div><div class="line">    $scope.myPrimitive = value;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Here is a <a href="http://jsfiddle.net/mrajcok/jNxyE/" target="_blank" rel="external">sample fiddle</a> that uses this “parent function” approach.  (This was part of a <a href="http://stackoverflow.com/a/14104318/215945" target="_blank" rel="external">Stack Overflow post</a>.)</p>
+<p>See also:</p>
+<ul>
+<li><a href="http://stackoverflow.com/a/13782671/215945" target="_blank" rel="external">http://stackoverflow.com/a/13782671/215945</a></li>
+<li><a href="https://github.com/angular/angular.js/issues/1267" target="_blank" rel="external">https://github.com/angular/angular.js/issues/1267</a>.</li>
+</ul>
+<h2 id="ng-repeat"><a href="#ng-repeat" class="headerlink" title="ng-repeat"></a>ng-repeat</h2><p>Ng-repeat works a little differently. Suppose we have in our controller:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$scope.myArrayOfPrimitives = [ <span class="number">11</span>, <span class="number">22</span> ];</div><div class="line">$scope.myArrayOfObjects    = [&#123;<span class="attr">num</span>: <span class="number">101</span>&#125;, &#123;<span class="attr">num</span>: <span class="number">202</span>&#125;]</div></pre></td></tr></table></figure>
+<p>And in our HTML:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span><span class="tag">&lt;<span class="name">li</span> <span class="attr">ng-repeat</span>=<span class="string">"num in myArrayOfPrimitives"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">input</span> <span class="attr">ng-model</span>=<span class="string">"num"</span>&gt;</span><span class="tag">&lt;/<span class="name">input</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span><span class="tag">&lt;<span class="name">li</span> <span class="attr">ng-repeat</span>=<span class="string">"obj in myArrayOfObjects"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">input</span> <span class="attr">ng-model</span>=<span class="string">"obj.num"</span>&gt;</span><span class="tag">&lt;/<span class="name">input</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>ng-repeat 为每一项创建一个新的作用域，该作用域继承于父作用域，除此之外，它还将 item 的值赋值给这个子作用域的新属性（这个新的属性名为循环变量名，如这里的 <code>obj</code>）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">childScope = scope.$<span class="keyword">new</span>(); <span class="comment">// child scope prototypically inherits from parent scope ...     </span></div><div class="line">childScope[valueIdent] = value; <span class="comment">// creates a new childScope property</span></div></pre></td></tr></table></figure>
+<p>如果 item 是基本类型（如 myArrayOfPrimitives 中的值），复制给子作用域的新属性的其实是这个基本类型的拷贝。所以修改 item 值并不会影响父作用域中的数组（<code>myArrayOfPrimitives</code>）。ng-repeat 为每个子作用域添加一个和 <code>myArrayOfPrimitives</code> 无关的 <code>num</code> 属性。在 Angular 1.0.3+，在文本框中输入值不会影响子作用域中的 <code>num</code> 值，See Artem’s explanation as to why on <a href="http://stackoverflow.com/a/13723990/215945" target="_blank" rel="external">StackOverflow</a>。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://camo.githubusercontent.com/3254baf91afdd969e6f167eeeb59950a0399a8f1/687474703a2f2f692e737461636b2e696d6775722e636f6d2f6e4c6f69572e706e67" alt="ng-repeat primitive" title="">
+                </div>
+                <div class="image-caption">ng-repeat primitive</div>
+            </figure>
+<p>如果 item 不是基本类型，而是一个对象，那么赋值给子作用域的是这个对象的引用，而非拷贝。改变子作用域中该属性的中，将对父作用域中的数组产生影响，如：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://camo.githubusercontent.com/881318ad2d70364cf61d50faf536a7ce08f39777/687474703a2f2f692e737461636b2e696d6775722e636f6d2f51536a544a2e706e67" alt="ng-repeat object" title="">
+                </div>
+                <div class="image-caption">ng-repeat object</div>
+            </figure>
+<p>See also： </p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/13714884/difficulty-with-ng-model-ng-repeat-and-inputs" target="_blank" rel="external">Difficulty with ng-model, ng-repeat, and inputs</a> </li>
+<li><a href="http://stackoverflow.com/a/13782671/215945" target="_blank" rel="external">ng-repeat and databinding</a></li>
+</ul>
+<h2 id="ng-switch-amp-ng-view"><a href="#ng-switch-amp-ng-view" class="headerlink" title="ng-switch &amp; ng-view"></a>ng-switch &amp; ng-view</h2><p>类似于 ng-include。</p>
+<h2 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h2><p>子 controller 也会原型继承父 controller 的作用域，来生成一个新的作用域。但子 Controller 本身不是一个好的实践，如果你想要共享数据，可以考虑使用 Servcie。</p>
+<h2 id="directive"><a href="#directive" class="headerlink" title="directive"></a>directive</h2><p>定义指令值，我们可以使用以下三种方式的作用域：</p>
+<ol>
+<li><p>默认 (<code>scope: false</code>) 这是默认情况。指令不会创建新的作用域，使用的是父作用域。这可能会污染父作用域，不利于创建可复用的组件。</p>
+<p> 如：</p>
+<pre><code>app.directive(&apos;helloWorld&apos;, function() {
+  return {
+    scope: false,
+    restrict: &apos;AE&apos;,
+    replace: true,
+    template: &apos;&lt;h3&gt;Hello World!!&lt;/h3&gt;&apos;
+  };
+});
+</code></pre></li>
+<li><p><code>scope：true</code> 这会为指令创建一个新的scope，并且原型继承自父scope。如果多于一个指令（在同样的 DOM 元素中）要求新的作用域时，只有一个新的作用域会被创建。因为是原型继承，所以和父作用域的基本类型双向绑定时，也会有 ng-include 一样的问题。</p>
+<p> 如：</p>
+<pre><code>app.directive(&apos;helloWorld&apos;, function() {
+  return {
+    scope: true,
+    restrict: &apos;AE&apos;,
+    replace: true,
+    template: &apos;&lt;h3&gt;Hello World!!&lt;/h3&gt;&apos;
+  };
+});
+</code></pre></li>
+<li><p><code>scope:{...}</code> – 使用这种方式，指令会创建一个隔离作用域，没有原型继承。对于创建可复用的组件，这可能是最好的选择，这可以防止对父作用域的意外读写。</p>
+<pre><code>app.directive(&apos;helloWorld&apos;, function() {
+  return {
+    scope: {},  // use a new isolated scope
+    restrict: &apos;AE&apos;,
+    replace: true,
+    template: &apos;&lt;h3&gt;Hello World!!&lt;/h3&gt;&apos;
+  };
+});
+</code></pre><p> 隔离作用域的 <code>__proto__</code> 引用的是  <a href="http://docs.angularjs.org/api/ng.%24rootScope.Scope" target="_blank" rel="external">Scope</a> 对象（如下图，图中橘色的 ‘Object’ 应该修正为 ‘Scope’）。隔离作用局的 <code>$parent</code> 属性引用父作用域，既能它是隔离作用局而且没有从父作用域原型继承。</p>
+<p> 假如指令为： </p>
+</li>
+</ol>
+<pre><code>    &lt;my-directive interpolated=&quot;{{parentProp1}}&quot; twowayBinding=&quot;parentProp2&quot;&gt;
+
+指令的作用域为：
+
+    scope: { 
+        interpolatedProp: &apos;@interpolated&apos;, 
+        twowayBindingProp: &apos;=twowayBinding&apos; 
+    }
+
+并且，在指令的 link 函数中，有以下代码：
+
+    scope.someIsolateProp = &quot;I&apos;m isolated&quot;
+
+那么形成的作用域的图为：
+
+ ![isolate scope](https://camo.githubusercontent.com/c2e294392bfdcb48a6afcc328acb81d1ce4e9f18/687474703a2f2f692e737461636b2e696d6775722e636f6d2f4d557853342e706e67)  
+
+ 当 parentProp1 被修改为 11 时， `scope.interpolatedProp` 是 undefined，`scope.twowayBindingProp` 的值为 `Mark`，因为它使用的 `=`，进行双向绑定。
+
+ 最后应该注意的是，在 link 函数中可以使用 `attrs.$observe(&apos;attr_name&apos;, function(value) { ... })` 来监视隔离作用域中使用 `@` 的属性变化。举个例子，假如在 link 函数中有如下语句：
+
+    attrs.$observe(&apos;interpolated&apos;, function(value) { ... })
+
+See also [AngularJS Sticky Notes Pt 2 – Isolated Scope – One Hungry Mind](http://onehungrymind.com/angularjs-sticky-notes-pt-2-isolated-scope/)。
+</code></pre><ol>
+<li><p><code>transclude: true</code> 指令将创建一个 “transcluded” 子作用域，该作用域也原型继承于父作用域。所以如果嵌入的内容（用来替换ng-transclude 的东西）需要和父作用域中的基本类型的属性建立双向绑定，可以使用　<code>$parent</code>，或者把模型修改父对象。这和 ng-include 中的情况一样。</p>
+<p> 如果某个指令同时拥有隔离作用域和 transcluded 作用域，他们为兄弟关系，他们的 <code>$parent</code> 指向共同的父作用域。隔离作用域的 <code>$$nextSibling</code> 引用的是 transcluded 作用域。</p>
+<p> See <a href="http://stackoverflow.com/a/14484903/215945" target="_blank" rel="external">AngularJS two way binding not working in directive with transcluded scope</a></p>
+<p> For the picture below, assume the same directive as above with this addition: <code>transclude: true</code></p>
+<p> <img src="https://camo.githubusercontent.com/34d8b831f665a8ff15f134bcc83a8a7e96822421/687474703a2f2f692e737461636b2e696d6775722e636f6d2f666b5748412e706e67" alt="transcluded scope"></p>
+<p> 使用 transclusion 后，你也可以通过 link 函数的第 5 个参数来修改嵌入内容的默认作用域；</p>
+<pre><code>app.directive(&apos;person&apos;, function() {
+  return {
+    restrict: &apos;EA&apos;,
+    scope: {
+      header: &apos;=&apos;
+    },
+    transclude:true,
+    link: function(scope, element, attrs, ctrl, transclude) {
+      scope.person = {
+        name: &apos;Directive Joe&apos;,
+        profession: &apos;Scope guy&apos;
+      };
+
+      scope.header = &apos;Directive\&apos;s header&apos;;
+
+      // scope.$parent。这是默认情况。
+      // 如果改成 scope，则嵌入内容的作用域的指令的隔离作用域。
+      transclude(scope.$parent, function(clone, scope) {
+        element.append(clone);
+      });
+    }
+  };
+});
+</code></pre><p> See <a href="http://angular-tips.com/blog/2014/03/transclusion-and-scopes/" target="_blank" rel="external">Transclusion and scopes - Angular Tips</a></p>
+</li>
+</ol>
+<p>默认情况下，指令不会创建一个新的scope，而是沿用父scope。但是在很多情况下，这并不是我们想要的。如果你的指令重度地使用父scope的属性，甚至创建新的时，会污染父scope。让所有的指令都使用同一个父scope不会是一个好主意，因为任何人都可能修改这个scope中的属性。因此，下面的这个原则也许可以帮助你为你的指令选择正确的scope。</p>
+<h2 id="隔离作用域"><a href="#隔离作用域" class="headerlink" title="隔离作用域"></a>隔离作用域</h2><p>在使用隔离作用域之后，如果要访问父作用域，需要显式地在父作用域和子作用域之间建立映射。有三种指定映射关系的方法，使用 <code>=</code> 进行数据绑定，使用 <code>@</code> 进行插值，使用 <code>&amp;</code> 绑定到父作用域的表达式。这几种方法都会在子作用域中创建新的属性，这些属性来源于父作用域。</p>
+<p>假设我们有以下指令，当用户在一个输入框中输入一种颜色的名称时，Hello World 文字的背景色自动发生变化。同时，当用户在 Hello World 文字上点击时，背景色变回白色。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">app.controller(<span class="string">'MainCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>)</span>&#123;</div><div class="line">    </div><div class="line">&#125;).directive(<span class="string">'helloWorld'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">scope</span>: &#123;&#125;,</div><div class="line">    <span class="attr">restrict</span>: <span class="string">'AE'</span>,</div><div class="line">    <span class="attr">replace</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">template</span>: <span class="string">'&lt;p style="background-color:&#123;&#123;color&#125;&#125;"&gt;Hello World&lt;/p&gt;'</span>,</div><div class="line">    <span class="attr">link</span>: <span class="function"><span class="keyword">function</span>(<span class="params">scope, elem, attrs</span>) </span>&#123;</div><div class="line">      elem.bind(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        elem.css(<span class="string">'background-color'</span>,<span class="string">'white'</span>);</div><div class="line">        scope.$apply(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">          scope.color = <span class="string">"white"</span>;</div><div class="line">        &#125;);</div><div class="line">      &#125;);</div><div class="line">      elem.bind(<span class="string">'mouseover'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        elem.css(<span class="string">'cursor'</span>, <span class="string">'pointer'</span>);</div><div class="line">      &#125;);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>使用这个指令的HTML标签如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">ng-controller</span>=<span class="string">"MainCtrl"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ng-model</span>=<span class="string">"color"</span> <span class="attr">placeholder</span>=<span class="string">"Enter a color"</span>/&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">hello-world</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>上面的代码现在是不能工作的。因为 input 中的 ng-model 绑定的是 Controller 的作用域，而 hello-world 指令模板中使用的是隔离作用域，所以指令模板内的 color 中始终是 undefined。</p>
+<h3 id="插值"><a href="#插值" class="headerlink" title="插值"></a>插值</h3><p><code>@</code> 用来实现插值（interpolate），也即单向绑定。 </p>
+<p>The <code>@</code> symbol indicates that AngularJS should interpolate the value of the specified attribute and update the isolated scope property when it changes. Interpolation is used with <code>{{}}</code> curly braces to generate a string using values from the parent scope.</p>
+<p>A common mistake is to expect an interpolated object to be the object itself. Interpolation always returns a string. So if you have an object, say user has a field called <code>userName</code>, then the interpolation of <code></code> will convert the <code>user</code> object to a string and you will not be able to access the <code>userName</code> property on the string.</p>
+<p>This attribute interpolation is equivalent to manually <code>$observe</code> the attribute:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">attrs.$observe(<span class="string">'attribute1'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">  isolatedScope.isolated1 = value;</div><div class="line">&#125;);</div><div class="line">attrs.$$observers[<span class="string">'attribute1'</span>].$$scope = parentScope;</div></pre></td></tr></table></figure>
+<p>在下面的指令定义中，我们通过 <code>color: &#39;@colorAttr&#39;</code> 将属性 color 以指令属性 colorAttr 暴露出去。在使用指令时，通过 <code>color-attr=&quot;&quot;</code> 和父作用域的 color 属性单向绑定。当表达式 <code>&quot;&quot;</code> 的值发生改变时，隔离作用域的 color 属性跟着变化，指令模板中的值也发生变化。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">app.directive(<span class="string">'helloWorld'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">scope</span>: &#123;</div><div class="line">      <span class="attr">color</span>: <span class="string">'@colorAttr'</span></div><div class="line">    &#125;,</div><div class="line">    ....</div><div class="line">    <span class="comment">// the rest of the configurations</span></div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>更新后的HTML标记代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;body ng-controller=<span class="string">"MainCtrl"</span>&gt;</div><div class="line">  <span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ng-model</span>=<span class="string">"color"</span> <span class="attr">placeholder</span>=<span class="string">"Enter a color"</span>/&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">hello-world</span> <span class="attr">color-attr</span>=<span class="string">"&#123;&#123;color&#125;&#125;"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>我们也称这种方式为单项绑定，是因为在这种方式下，父作用域的属性发生变化，子作用域的值会随之发生变化，而子作用域的值发生变化，并不会影响父作用域的值。</p>
+<p>当隔离scope属性和指令元素参数的名字一样是，你可以更简单的方式设置scope绑定：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">app.directive(<span class="string">'helloWorld'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">scope</span>: &#123;</div><div class="line">      <span class="attr">color</span>: <span class="string">'@'</span></div><div class="line">    &#125;,</div><div class="line">    ....</div><div class="line">    <span class="comment">// the rest of the configurations</span></div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>相应使用指令的HTML代码如下：</p>
+<pre><code>&lt;hello-world color=&quot;{{color}}&quot;/&gt;
+</code></pre><h3 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h3><p>The <code>=</code> symbol indicates that AngularJS should keep the expression in the specified attribute and the value on the isolated scope in sync with each other. This is a two-way data binding that allows objects and values to be mapped directly between the inside and outside of the widget.</p>
+<p>Since this interface supports two way data binding, the expression given in the attribute should be assignable (that is, refers to a field on the scope or an object) and not an arbitrary computed expression.</p>
+<p>This binding is a bit like setting up two <code>$watch</code> functions:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> parentGet = $parse(attrs[<span class="string">'attribute2'</span>]);</div><div class="line"><span class="keyword">var</span> parentSet = parentGet.assign;</div><div class="line">parentScope.$watch(parentGet, <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">  isolatedScope.isolated2 = value;</div><div class="line">&#125;);</div><div class="line">isolatedScope.$watch(<span class="string">'isolated2'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">  parentSet(parentScope, value);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>让我们将指令的定义改变成下面的样子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">app.directive(<span class="string">'helloWorld'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">scope</span>: &#123;</div><div class="line">      <span class="attr">color</span>: <span class="string">'=color'</span> <span class="comment">// 当 = 后的值和属性名相等时，可以省略 = 后边的值。</span></div><div class="line">    &#125;,</div><div class="line">    ....</div><div class="line">    <span class="comment">// the rest of the configurations</span></div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>相应的HTML修改如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">ng-controller</span>=<span class="string">"MainCtrl"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ng-model</span>=<span class="string">"color"</span> <span class="attr">placeholder</span>=<span class="string">"Enter a color"</span>/&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">hello-world</span> <span class="attr">color</span>=<span class="string">"color"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>与 @ 不同，这种方式让你能够给属性指定一个真实的 scope 数据模型，而不是简单的字符串。这样你就可以传递简单的字符串、数组、甚至复杂的对象给隔离scope。同时，还支持双向的绑定。每当父scope属性变化时，相对应的隔离scope中的属性也跟着改变，反之亦然。</p>
+<p>如果父作用域中用于双向绑定的属性不存在，则会抛出 <code>NON_ASSIGNABLE_MODEL_EXPRESSION</code> 异常，你可以使用 <code>=?</code> 或者 <code>=?attr</code> 避免抛出异常。</p>
+<h3 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h3><p>The <code>&amp;</code> symbol indicates that the expression provided in the attribute on the element will be made available on the scope as a function that, when called, will execute the expression. This is useful for creating callbacks from the widget.</p>
+<p>This binding is equivalent to <code>$parse</code> the expression in the attribute and exposing the parsed expression function on the isolated scope:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">parentGet = $parse(attrs[<span class="string">'attribute3'</span>]);</div><div class="line">scope.isolated3 = <span class="function"><span class="keyword">function</span>(<span class="params">locals</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> parentGet(parentScope, locals);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>指令可以使用 <code>&amp;</code> 来触发父作用域的表达式，<code>&amp;</code> 后边可以是任意合法的表达式。我们通常用 <code>&amp;</code> 来为指令绑定事件的回调。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- index.html --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"Controller"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-dialog</span> <span class="attr">ng-hide</span>=<span class="string">"dialogIsHidden"</span> <span class="attr">on-close</span>=<span class="string">"hideDialog()"</span>&gt;</span></div><div class="line">    Check out the contents, &#123;&#123;name&#125;&#125;!</div><div class="line">  <span class="tag">&lt;/<span class="name">my-dialog</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// script.js</span></div><div class="line">angular.module(<span class="string">'docsIsoFnBindExample'</span>, [])</div><div class="line">  .controller(<span class="string">'Controller'</span>, [<span class="string">'$scope'</span>, <span class="string">'$timeout'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $timeout</span>) </span>&#123;</div><div class="line">    $scope.name = <span class="string">'Tobias'</span>;</div><div class="line">    $scope.hideDialog = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      $scope.dialogIsHidden = <span class="literal">true</span>;</div><div class="line">      $timeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        $scope.dialogIsHidden = <span class="literal">false</span>;</div><div class="line">      &#125;, <span class="number">2000</span>);</div><div class="line">    &#125;;</div><div class="line">  &#125;])</div><div class="line">  .directive(<span class="string">'myDialog'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">restrict</span>: <span class="string">'E'</span>,</div><div class="line">      <span class="attr">transclude</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">scope</span>: &#123;</div><div class="line">        <span class="string">'close'</span>: <span class="string">'&amp;onClose'</span></div><div class="line">      &#125;,</div><div class="line">      <span class="attr">templateUrl</span>: <span class="string">'my-dialog-close.html'</span></div><div class="line">    &#125;;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- my-dialog-close.html --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"alert"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span> <span class="attr">class</span>=<span class="string">"close"</span> <span class="attr">ng-click</span>=<span class="string">"close()"</span>&gt;</span>&amp;times;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-transclude</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Best Practice:</strong> use &amp;attr in the scope option when you want your directive to expose an API for binding to behaviors.</p>
+</blockquote>
+<h3 id="pagination-demo"><a href="#pagination-demo" class="headerlink" title="pagination demo"></a>pagination demo</h3><p>The following is the pagination directive definition object:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">myModule.directive(<span class="string">'pagination'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"><span class="keyword">return</span> &#123;</div><div class="line">  <span class="attr">restrict</span>: <span class="string">'E'</span>,</div><div class="line">  <span class="attr">scope</span>: &#123;</div><div class="line">    <span class="attr">numPages</span>: <span class="string">'='</span>,</div><div class="line">    <span class="attr">currentPage</span>: <span class="string">'='</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">template</span>: ...,</div><div class="line">  <span class="attr">replace</span>: <span class="literal">true</span>,</div></pre></td></tr></table></figure>
+<p>The directive is restricted to appear as an element. It creates an isolated scope with <code>numPages</code> and <code>currentPage</code> data, which is bound to attributes <code>num-pages</code> and <code>current-page</code>, respectively. The directive element will be replaced with the template shown earlier:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">link: <span class="function"><span class="keyword">function</span>(<span class="params">scope</span>) </span>&#123;</div><div class="line">    scope.$watch(<span class="string">'numPages'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">      scope.pages = [];</div><div class="line">      <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;=value;i++) &#123; scope.pages.push(i); &#125;</div><div class="line">      <span class="keyword">if</span> ( scope.currentPage &gt; value ) &#123;</div><div class="line">        scope.selectPage(value);</div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    scope.isActive = <span class="function"><span class="keyword">function</span>(<span class="params">page</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> scope.currentPage === page;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    scope.selectPage = <span class="function"><span class="keyword">function</span>(<span class="params">page</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> ( ! scope.isActive(page) ) &#123;</div><div class="line">        scope.currentPage = page;</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    scope.selectNext = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> ( !scope.noNext() ) &#123;</div><div class="line">        scope.selectPage(scope.currentPage+<span class="number">1</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The link function sets up a <code>$watch</code> property to create the pages array based on the value of <code>numPages</code>. It adds the various helper functions to the isolated scope that will be used in the directive’s template.</p>
+<p>It would be useful to provide a function or an expression that is evaluated when the page changes. We can do this by specifying a new attribute on the directive and mapping it to the isolated scope using <code>&amp;</code>.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">pagination</span></span></div><div class="line">  <span class="attr">num-pages</span>=<span class="string">"tasks.pageCount"</span></div><div class="line">  <span class="attr">current-page</span>=<span class="string">"tasks.currentPage"</span></div><div class="line">  <span class="attr">on-select-page</span>=<span class="string">"selectPage(page)"</span>&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">pagination</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>What we are saying here is that whenever the selected page changes, the directive should call the <code>selectPage(page)</code> function passing it to the new page number as a parameter. Here is a test of this feature:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">it(<span class="string">'executes the onSelectPage expression when the current page changes'</span>, inject(<span class="function"><span class="keyword">function</span>(<span class="params">$compile, $rootScope</span>) </span>&#123;</div><div class="line">    $rootScope.selectPageHandler =</div><div class="line">      jasmine.createSpy(<span class="string">'selectPageHandler'</span>);</div><div class="line">    element = $compile(</div><div class="line">      <span class="string">'&lt;pagination num-pages="numPages" '</span> +</div><div class="line">                 <span class="string">' current-page="currentPage" '</span> +</div><div class="line">                 <span class="string">' on-select-page="selectPageHandler(page)"&gt;'</span> +</div><div class="line">      <span class="string">'&lt;/pagination&gt;'</span>)($rootScope);</div><div class="line">    $rootScope.$digest();</div><div class="line">    <span class="keyword">var</span> page2 = element.find(<span class="string">'li'</span>).eq(<span class="number">2</span>).find(<span class="string">'a'</span>).eq(<span class="number">0</span>);</div><div class="line">    page2.click();</div><div class="line">    $rootScope.$digest();</div><div class="line">    expect($rootScope.selectPageHandler).toHaveBeenCalledWith(<span class="number">2</span>);</div></pre></td></tr></table></figure>
+<p>We create a spy to handle the call-back and then the <code>it</code> function gets called when we click on a new page.</p>
+<p>To implement this we add an extra field to our isolate scope definition:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">scope: &#123;</div><div class="line">  ...,</div><div class="line">  <span class="attr">onSelectPage</span>: <span class="string">'&amp;'</span></div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>Now an <code>onSelectPage()</code> function will be available on the isolated scope. When called, it will execute the expression passed to the <code>on-select-page</code> attribute. We now change the <code>selectPage()</code> function on the isolated scope to call <code>onSelectPage()</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">scope.selectPage = <span class="function"><span class="keyword">function</span>(<span class="params">page</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (!scope.isActive(page) ) &#123;</div><div class="line">    scope.currentPage = page;</div><div class="line">    scope.onSelectPage(&#123; <span class="attr">page</span>: page &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Note that we pass the page variable to the expression in a map of variables. These variables are provided to the bound expression when it is executed, as though they were on the scope.</p>
+<h2 id="作用域和事件系统"><a href="#作用域和事件系统" class="headerlink" title="作用域和事件系统"></a>作用域和事件系统</h2><p>层级关系中的作用域可以使用 <code>event bus</code>（一种事件系统）。AngularJS可以在作用域层级中传播具名的装备齐全的事件。事件可以从任何一个作用域中发出，然后向上（$emit）和向下（$broadcast）四处传播。  </p>
+<p>AngularJS核心服务和指令使用这种事件巴士来发出一些应用程序状态变化的重要事件。比如，我们可以监听 <code>$locationChangeSuccess</code> 事件（由 <code>$rootScope</code> 实例发出），然后在任何 location（浏览器中就是URL）变化的时候都会得到通知，如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$scope.$on(<span class="string">'$locationChangeSuccess'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event, newUrl, oldUrl</span>)</span>&#123; </div><div class="line">    <span class="comment">//react on the location change here</span></div><div class="line">    <span class="comment">//for example, update breadcrumbs based on the newUrl</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>每一个作用域对象都会有这个 <code>$on</code> 方法，可以用来注册一个作用域事件的侦听器。这个函数所扮演的侦听器在被调用时会有一个 <code>event</code> 对象作为第一个参数。后面的参数会根据事件类型的不同与事件本身的配备一一对应。</p>
+<p>类似于 DOM 事件，我们可以调用 <code>event</code> 对象的 <code>preventDefault()</code> 和 <code>stopPropagation()</code> 方法。<code>stopPropagation()</code> 方法将会阻止事件沿着作用域层级继续冒泡，并且只在事件向上层传播的时候（$emit）才有效。</p>
+<blockquote>
+<p>尽管 AngularJS 的事件系统是模仿了 DOM 的，但两个事件传播系统是完全独立的，没有任何共同之处。</p>
+</blockquote>
+<p>虽然在作用域层级中传播事件对一些问题来说是一种非常优雅方案（特别是对全局的，异步的状态变化来说），但还是要适度使用。通常情况下，可以依靠双向数据绑定来得到一个比较干净的方案。在整个 AngularJS 框架中，一共只发出（$emit）了三个事件（<code>$includeContentRequested</code>,<code>$includeContentLoaded</code>,<code>$viewContentLoaded</code>）和七个广播（$broadcast）（<code>$locationChangeStart</code>, <code>$locationChangeSuccess</code>, <code>$routeUpdate</code>, <code>$routeChangeStart</code>, <code>$routeChangeSuccess</code>, <code>$routeChangeError</code>, <code>$destroy</code>）。正如你所看到的，作用域事件使用的非常少，我们应该在发送自定义的事件之前认真的评估一下其他的可选方案（多数会是双向数据绑定）。</p>
+<blockquote>
+<p>千万不要在 AngularJS 中模仿 DOM 的基于事件的编程方式。大多数情况下，你的应用会有更好的架构方式，你也可以在双向数据绑定这条路上深入探索。</p>
+</blockquote>
+<h2 id="作用域的生命周期"><a href="#作用域的生命周期" class="headerlink" title="作用域的生命周期"></a>作用域的生命周期</h2><p>作用域需要提供相互隔离的命名空间，避免变量的命名冲突。作用域们都很小，而且被以层级的方式组织起来，对内存使用的管理来说很有帮助。当其中一个作用域不再需要 ，它就可以被销毁了，结果就是，这个作用域所暴露出来的模型和方法就符合的垃圾回收的标准。</p>
+<p>新的作用域通常是被可创建作用域的指令所生成和销毁的。不过也可以使用 <code>$new()</code> 和 <code>$destroy()</code> 方法来手动的创建和销毁作用域。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://github.com/angular/angular.js/wiki/Understanding-Scopes" target="_blank" rel="external">Understanding Scopes · angular/angular.js Wiki</a></li>
+<li><a href="http://segmentfault.com/blog/chao2/1190000000361245" target="_blank" rel="external">【译】《精通使用AngularJS开发Web App》（三）—深入scope，继承结构，事件系统和生命周期</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Angular/2014-09-23-angular-scope.html" target="_blank" rel="external">http://blog.inching.org/Angular/2014-09-23-angular-scope.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorial/">tutorial</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2014-09-23-angular-scope.html&title=《Angular Scope》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2014-09-23-angular-scope.html&title=《Angular Scope》 — Balance&source=作用域Angular 中作用域的继承使用的是原型继承，也就在说子作用域的 prototype 会指向父作用域。在子作用域中查找属性时，先查找子作用域中的属..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2014-09-23-angular-scope.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Scope》 — Balance&url=http://blog.inching.org/Angular/2014-09-23-angular-scope.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2014-09-23-angular-scope.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Angular/2014-09-24-angular-directive.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Angular Directive</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Angular/2014-09-23-angular-template.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Angular Template Loading</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2014-09-23-angular-scope.html&title=《Angular Scope》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2014-09-23-angular-scope.html&title=《Angular Scope》 — Balance&source=作用域Angular 中作用域的继承使用的是原型继承，也就在说子作用域的 prototype 会指向父作用域。在子作用域中查找属性时，先查找子作用域中的属..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2014-09-23-angular-scope.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Scope》 — Balance&url=http://blog.inching.org/Angular/2014-09-23-angular-scope.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2014-09-23-angular-scope.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3aUXKjMBAE0Nz/0s4BXFDdA3YZ6fGV2rCIx0dnRqO/v/h6vV3vv32/8+hf2jtvuzAwMB7LeJ1e7T1HvCPw+WdK1sXAwNiHcZRg7T1JsCaxm6+LgYGBkYRjG8cJDAMDA+MuRtLotlGLgYGBcaWJTYrC882yn+jFMTAwHsjId92///NH5hsYGBiPYsza0fP/m5Rx+cgzeisMDIylGXnAtQVZ/nKzwMXAwNiNcR6L+UOTLbx2CFq3rBgYGIsy2i222TKzwC2GExgYGJsxrhdt14O7bYwxMDBWZbRL5k1p8gmSQxjRkQ4MDIwtGe1inygfi8jGwMDYjJEDrgR0PqpMeBgYGGsz8leZLZOUem05GG23YWBgLMS4fpyrHVjmxWJRkmJgYGzASHbXZ4dQ288xPLqBgYGxNKONwqTIaz9W3qYWW3gYGBgLMdrAnXXJdx1mve3vBgYGxqMYyQu1hWDy/GStaBiAgYGxGWMWu7Pjqm2JWX84DAyM5Rh3FXN5TLfxGo0uMDAwtmHMjmS123OzgURxLAwDA2NpRhuvyWZZfrBsFvEYGBhrM17llTeu1+O4eCYGBsbSjE9MBvMkbAerXx1wYmBg/BijDdkkIvMvN2ti6wIRAwNjCUYefLMBQPv8evyJgYGBMYrLvHC8oU3FwMDAiBdIisj8/qQYxcDA2IfRNqKzJjZpaPPjHRgYGPsw2rpr9irtdl5bSmJgYCzK+AcI17wqYH8hHwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

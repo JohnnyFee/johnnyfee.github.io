@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>GIT 乱码解决方案汇总 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="git">
+    <meta name="description" content="See git乱码解决方案汇总
+
+2012-11-04更新：官方的“终极”解决方案：msysGit1.7.10开始使用UTF-8编码保存文件名。
+2011-10-24更新： 从一篇链接到本篇文章的文章(我对这篇文章提出的与windows患者的相处之道深感赞同)找到了一个“终极”解决方案，但我没有测试。
+
+我一直是在cygwin下使用git，辅以TortoiseGit。使用上没什么问题，但今天在处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GIT 乱码解决方案汇总">
+<meta property="og:url" content="http://blog.inching.org/Git/2015-03-29-git-encoding.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See git乱码解决方案汇总
+
+2012-11-04更新：官方的“终极”解决方案：msysGit1.7.10开始使用UTF-8编码保存文件名。
+2011-10-24更新： 从一篇链接到本篇文章的文章(我对这篇文章提出的与windows患者的相处之道深感赞同)找到了一个“终极”解决方案，但我没有测试。
+
+我一直是在cygwin下使用git，辅以TortoiseGit。使用上没什么问题，但今天在处理">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GIT 乱码解决方案汇总">
+<meta name="twitter:description" content="See git乱码解决方案汇总
+
+2012-11-04更新：官方的“终极”解决方案：msysGit1.7.10开始使用UTF-8编码保存文件名。
+2011-10-24更新： 从一篇链接到本篇文章的文章(我对这篇文章提出的与windows患者的相处之道深感赞同)找到了一个“终极”解决方案，但我没有测试。
+
+我一直是在cygwin下使用git，辅以TortoiseGit。使用上没什么问题，但今天在处理">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">GIT 乱码解决方案汇总</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">GIT 乱码解决方案汇总</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-03-28T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2015-03-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Git/">Git</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#情况重现"><span class="post-toc-text">情况重现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#乱码原因"><span class="post-toc-text">乱码原因</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#官方终极解决方案"><span class="post-toc-text">官方终极解决方案</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#乱码情景对号入座和解决方案"><span class="post-toc-text">乱码情景对号入座和解决方案</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#乱码情景1"><span class="post-toc-text">乱码情景1</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#乱码情景2"><span class="post-toc-text">乱码情景2</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#乱码情景3"><span class="post-toc-text">乱码情景3</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#终极解决方案"><span class="post-toc-text">终极解决方案</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#又一个“终极”解决方案（来自）（msysGit1-7-10之后，不再推荐此方案）"><span class="post-toc-text">又一个“终极”解决方案（来自）（msysGit1.7.10之后，不再推荐此方案）</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-git-encoding"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">GIT 乱码解决方案汇总</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-03-29 00:00:00" datetime="2015-03-28T16:00:00.000Z"  itemprop="datePublished">2015-03-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Git/">Git</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="http://zengrong.net/post/1249.htm" target="_blank" rel="external">git乱码解决方案汇总</a></p>
+<ul>
+<li><span style="color:red;">2012-11-04更新：</span>官方的“终极”解决方案：msysGit1.7.10开始使用UTF-8编码保存文件名。</li>
+<li><span style="color:red;">2011-10-24更新：</span> 从<a href="http://giftdotyoung.blogspot.com/2011/03/blog-post_31.html" title="宽容那些与我们不同的人" target="_blank" rel="external">一篇链接到本篇文章的文章(我对这篇文章提出的与windows患者的相处之道深感赞同)</a>找到了一个“终极”解决方案，但我没有测试。</li>
+</ul>
+<p>我一直是在cygwin下使用git，辅以TortoiseGit。使用上没什么问题，但今天在处理一个有中文文件名的项目时却出现文件名乱码的问题。</p>
+<h2 id="情况重现"><a href="#情况重现" class="headerlink" title="情况重现"></a>情况重现</h2><ul>
+<li>在一个使用cygwin的bash提交的git项目中，已经完成了所有的提交，但使用TortoiseGit查看的时候，却发现仍有文件没有提交，甚至是有文件还处于未暂存的状态。于是使用TortoiseGit提交；</li>
+<li>再次用cygwin下的git status查看，这次又发现了未提交的情况。再次用git commit命令行提交；</li>
+<li>回到TortoiseGit下查看，问题又出现了！此时准备返回两次提交前的版本，却因为文件名乱码的问题，无法返回了！</li>
+</ul>
+<h2 id="乱码原因"><a href="#乱码原因" class="headerlink" title="乱码原因"></a>乱码原因</h2><p>搜索一番，发现git文件名、log乱码，是普遍问题，这其中有编码的原因，也有跨平台的原因。主要原因是Windows 系统中的Git对中文文件名采用不同的编码保存所致。</p>
+<p>Windows系统中使用的msysGit，采用的是系统编码来保存文件名；而Cygwin中的Git默认采用UTF-8编码来保存文件名。如果两个软件同时对一个版本库进行操作，且都认为对方是使用自己使用的编码来保存文件，就会导致文件名编码混乱，无法识别。</p>
+<p>这就导致，如果一直使用TortoiseGit（实际调用MsysGit）提交，那么中文文件名没问题；一直使用cygwin提交，中文文件名也没问题。 <strong>但一定不能交叉使用。</strong></p>
+<p>分别设置 <strong>LANG、LC_CTYPE、LC_ALL</strong> 参数为同样的编码，问题依旧。</p>
+<p>cygwin官方网站提到了非拉丁语文件名的问题，也许研究后能解决该吧： <a href="http://www.cygwin.com/cygwin-ug-net/setup-locale.html" target="_blank" rel="external">Chapter 2. Setting Up Cygwin</a></p>
+<p>这里还有一篇讲解Linux系统编码文章：<a href="http://jmut.bokee.com/6874378.html" target="_blank" rel="external">locale的设定及其LANG、LC_ALL、LANGUAGE环境变量的区别</a> 。</p>
+<h2 id="官方终极解决方案"><a href="#官方终极解决方案" class="headerlink" title="官方终极解决方案"></a>官方终极解决方案</h2><p>这个问题的官方终极解决方案，就是更新到msysGit1.7.10或更新版本。这个版本之后，msysGit和Git for Windows已经采用了UTF-8编码来保存文件名，不会再出现乱码的情况。安装和使用可参考这篇文章：<a href="http://zengrong.net/post/1722.htm" target="_blank" rel="external">使用Git、Git GUI和TortoiseGit</a></p>
+<p>不幸的是，对于使用老版本msysGit提交的版本库，升级到msysGit1.7.10或者更高会出现编码问题。</p>
+<p>有两篇文章介绍了这个问题的解决办法：</p>
+<ul>
+<li><a href="http://jiichen.blogspot.tw/2012/04/msysgit-1710.html" target="_blank" rel="external">升級到 msysgit 1.7.10 的檔名亂碼處理方式（需要翻墙）</a></li>
+<li><a href="http://blog.syntevo.net/2012/04/24/1335271500000.html" target="_blank" rel="external">upgrading to msysGit 1.7.10 (or higher)</a></li>
+</ul>
+<p><span style="font-size:12pt;color:red;">下面的文章，是历史遗留，可以不看。若希望知其所以然，则不妨观之。</span></p>
+<h2 id="乱码情景对号入座和解决方案"><a href="#乱码情景对号入座和解决方案" class="headerlink" title="乱码情景对号入座和解决方案"></a>乱码情景对号入座和解决方案</h2><h3 id="乱码情景1"><a href="#乱码情景1" class="headerlink" title="乱码情景1"></a>乱码情景1</h3><p>在cygwin中，使用git add添加要提交的文件的时候，如果文件名是中文，会显示形如 <code>274\232\350\256\256\346\200\273\347\273\223.png</code> 的乱码。</p>
+<p><strong>解决方案：</strong></p>
+<p>在bash提示符下输入：</p>
+<pre><code>git config --global core.quotepath false
+</code></pre><p>core.quotepath设为false的话，就不会对0x80以上的字符进行quote。中文显示正常。</p>
+<h3 id="乱码情景2"><a href="#乱码情景2" class="headerlink" title="乱码情景2"></a>乱码情景2</h3><p>在MsysGit中，使用git log显示提交的中文log乱码。</p>
+<p><strong>解决方案：</strong></p>
+<p>设置git gui的界面编码</p>
+<pre><code>git config --global gui.encoding utf-8
+</code></pre><p>设置 commit log 提交时使用 utf-8 编码，可避免服务器上乱码，同时与linux上的提交保持一致！</p>
+<pre><code>git config --global i18n.commitencoding utf-8
+</code></pre><p>使得在 $ git log 时将 utf-8 编码转换成 gbk 编码，解决Msys bash中git log 乱码。</p>
+<pre><code>git config --global i18n.logoutputencoding gbk
+</code></pre><p>使得 git log 可以正常显示中文（配合i18n.logoutputencoding = gbk)，在 <code>/etc/profile</code> 中添加：</p>
+<pre><code>export LESSCHARSET=utf-8
+</code></pre><h3 id="乱码情景3"><a href="#乱码情景3" class="headerlink" title="乱码情景3"></a>乱码情景3</h3><p>在MsysGit自带的bash中，使用ls命令查看中文文件名乱码。cygwin没有这个问题。</p>
+<p><strong>解决方案：</strong></p>
+<p>使用 <code>ls --show-control-chars</code> 命令来强制使用控制台字符编码显示文件名，即可查看中文文件名。</p>
+<p>为了方便使用，可以编辑 <code>/etc/git-completion.bash</code> ，新增一行 <code>alias ls=&quot;ls --show-control-chars&quot;</code></p>
+<h2 id="终极解决方案"><a href="#终极解决方案" class="headerlink" title="终极解决方案"></a>终极解决方案</h2><p>终极的解决方案是通过修改git和TortoiseGit源码实现，有网友这么做了：<a href="http://www.cnblogs.com/tinyfish/archive/2010/12/17/1909463.html" target="_blank" rel="external">让Windows下Git和TortoiseGit支持中文文件名/UTF-8</a> ，也可以直接访问这个开源的Google项目：<a href="http://code.google.com/p/utf8-git-on-windows" target="_blank" rel="external">utf8-git-on-windows</a> 。</p>
+<p>如果不抗拒命令行的话，直接用Cygwin来提交Git库。因为Cygwin其实是一个在Windows平台上的模拟器，它完全模拟GNU/Linux的方式运行，所以Cygwin中的Git是采用UTF-8编码来保存中文的。</p>
+<h2 id="又一个“终极”解决方案（来自）（msysGit1-7-10之后，不再推荐此方案）"><a href="#又一个“终极”解决方案（来自）（msysGit1-7-10之后，不再推荐此方案）" class="headerlink" title="又一个“终极”解决方案（来自）（msysGit1.7.10之后，不再推荐此方案）"></a><del>又一个“终极”解决方案（<a href="http://giftdotyoung.blogspot.com/2011/03/blog-post_31.html" target="_blank" rel="external">来自</a>）</del>（msysGit1.7.10之后，不再推荐此方案）</h2><p>在操作git时，把区域设置修改为 中文GBK。这之后就可以进行git相关操作了。</p>
+<p><strong>在终端中跟windows保持一致</strong></p>
+<pre lang="bash">
+export LC_ALL=zh_CN.GBK; export LANG=zh_CN.GBK
+terminal -> set charactor encoding -> gbk
+</pre>
+
+<p><strong>切换回linux默认</strong></p>
+<pre lang="bash">
+export LC_ALL=en_US.utf8; export LANG=en_US.utf8
+terminal -> set charactor encoding -> unicode(utf-8)
+</pre>
+
+<p><strong>改变文件名的编码</strong></p>
+<p>如果已经造成乱码的恶果，还可以在utf8和gbk之间切换文件名。真的修改，而不是像上面那样修改显示的（解码的）效果。</p>
+<pre><code>convmv -f utf8 -t gbk
+</code></pre><p>例外：convmv在fat32的U盘上运行无效，估计是fat32不允许非法编码。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Git/2015-03-29-git-encoding.html" target="_blank" rel="external">http://blog.inching.org/Git/2015-03-29-git-encoding.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Git/2015-03-29-git-encoding.html&title=《GIT 乱码解决方案汇总》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Git/2015-03-29-git-encoding.html&title=《GIT 乱码解决方案汇总》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Git/2015-03-29-git-encoding.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《GIT 乱码解决方案汇总》 — Balance&url=http://blog.inching.org/Git/2015-03-29-git-encoding.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Git/2015-03-29-git-encoding.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Git/2015-03-29-git-migrate.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">GIT 数据迁移</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Norm/2015-03-29-semantization.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Semantization</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Git/2015-03-29-git-encoding.html&title=《GIT 乱码解决方案汇总》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Git/2015-03-29-git-encoding.html&title=《GIT 乱码解决方案汇总》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Git/2015-03-29-git-encoding.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《GIT 乱码解决方案汇总》 — Balance&url=http://blog.inching.org/Git/2015-03-29-git-encoding.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Git/2015-03-29-git-encoding.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3aS5KDMAxFUfa/aXqaieE+CboK+XrUlaaMTwaKPj4OvM7Ldf387yfkmdWeDywZMmR8lkGOmDII5nr/+L0yZMjYgLE6BHkl/2+HenNmGTJkyAiPQnbrvFeGDBkyUgYpSmtFrAwZMmSkRWy/WcYTyhdrcRkyZHyQwbvu///3K/MNGTJkfIpxhovv0AnB8alkyJAxmtEvUGsNstow4KbBJ0OGjA0Y6TUIftDOwCAoWWXIkDGUsWqi8SElSSL7qecNWIYMGaMZJC3jsH77rFYAy5AhYzYjPUqaRAbhklynINcsZMiQMZSRlqDpdYfrIE54N2+UIUPGNow3xgC8lVYrdJe1uAwZMsYxSEAkCV+/HE1bbzJkyNiBQfKrZ0eetdHmA2miDBkyPs54bIgYhk4S7oNxhQwZMoYySGHJC05yXP6lBM/LkCFjGwZpx/PQXBsk8Ksey3abDBkyRjPS9hYPu7W2HW8FypAhYzaDBLs0XJKxAT9ovLMMGTKGMtIX14YKpDzmY4ll002GDBkbMHhSWEsfecqYNuNkyJCxG4NcoegndjzQoy9FhgwZQxlnuNLSl6d6fIx6pDFbhgwZH2fwxcNrOhLgZWqn9JUhQ8bXGbyMrI0b0xZeOuaUIUPGPoxO4CNFb2fYGZSyMmTIkJGOFcH+PKzHt0VkyJAhA48QeBncGTbIkCFjBwa/7sBbbGm7jQ8hZMiQsRuDl479gNtpw6U/AzJkyBjB+ANKiUupTKn/EAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

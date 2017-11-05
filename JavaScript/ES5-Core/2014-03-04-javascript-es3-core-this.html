@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>this | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,core,kernal">
+    <meta name="description" content="译文： goddyzhao • this
+原文： ECMA-262 » ECMA-262-3 in detail. Chapter 3. This.
+
+概要本文将进一步讨论与执行上下文密切相关的概念——this关键字。
+事实证明，this这块的内容非常的复杂，它在不同执行上下文的情况下其值都会不同，并且会相应的引发一些问题。
+很多程序员一看到this关键字，就会把它和面向对象的编程方式联系在一起">
+<meta property="og:type" content="article">
+<meta property="og:title" content="this">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="译文： goddyzhao • this
+原文： ECMA-262 » ECMA-262-3 in detail. Chapter 3. This.
+
+概要本文将进一步讨论与执行上下文密切相关的概念——this关键字。
+事实证明，this这块的内容非常的复杂，它在不同执行上下文的情况下其值都会不同，并且会相应的引发一些问题。
+很多程序员一看到this关键字，就会把它和面向对象的编程方式联系在一起">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="this">
+<meta name="twitter:description" content="译文： goddyzhao • this
+原文： ECMA-262 » ECMA-262-3 in detail. Chapter 3. This.
+
+概要本文将进一步讨论与执行上下文密切相关的概念——this关键字。
+事实证明，this这块的内容非常的复杂，它在不同执行上下文的情况下其值都会不同，并且会相应的引发一些问题。
+很多程序员一看到this关键字，就会把它和面向对象的编程方式联系在一起">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">this</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">this</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-03-03T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-03-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/ES5-Core/">ES5 Core</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概要"><span class="post-toc-text">概要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义"><span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#全局代码中This的值"><span class="post-toc-text">全局代码中This的值</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#函数代码中This的值"><span class="post-toc-text">函数代码中This的值</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引用类型"><span class="post-toc-text">引用类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#函数调用以及非引用类型"><span class="post-toc-text">函数调用以及非引用类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引用类型以及null（this的值）"><span class="post-toc-text">引用类型以及null（this的值）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#但函数作为构造器被调用时this的值"><span class="post-toc-text">但函数作为构造器被调用时this的值</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#手动设置函数调用时this的值"><span class="post-toc-text">手动设置函数调用时this的值</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-es3-core-this"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">this</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-03-04 00:00:00" datetime="2014-03-03T16:00:00.000Z"  itemprop="datePublished">2014-03-04</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/ES5-Core/">ES5 Core</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>译文： <a href="http://goddyzhao.tumblr.com/post/11218727474/this" target="_blank" rel="external">goddyzhao • this</a></p>
+<p>原文： <a href="http://dmitrysoshnikov.com/ecmascript/chapter-3-this/" target="_blank" rel="external">ECMA-262 » ECMA-262-3 in detail. Chapter 3. This.</a></p>
+</blockquote>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>本文将进一步讨论与<a href="http://goddyzhao.tumblr.com/post/10020230352/execution-context" target="_blank" rel="external">执行上下文</a>密切相关的概念——<em>this</em>关键字。</p>
+<p>事实证明，<em>this</em>这块的内容非常的复杂，它在不同执行上下文的情况下其值都会不同，并且会相应的引发一些问题。</p>
+<p>很多程序员一看到<em>this</em>关键字，就会把它和面向对象的编程方式联系在一起，它指向利用构造器新创建出来的对象。在ECMAScript中，也支持this，然而，<br>正如大家所熟知的，this不仅仅只用来表示创建出来的对象。</p>
+<p>接下来给大家揭开在ECMAScript中this神秘的面纱。</p>
+<a id="more"></a>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p><em>This</em>是执行上下文的一个属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">activeExecutionContext = &#123;</div><div class="line">  VO: &#123;...&#125;,</div><div class="line">  this: thisValue</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这里的VO就是前一章介绍的<a href="http://goddyzhao.tumblr.com/post/11141710441/variable-object" target="_blank" rel="external">变量对象</a>。</p>
+<p><em>This</em>与上下文的可执行代码类型有关，其值在<em>进入上下文阶段</em>就确定了，并且在<em>执行代码阶段</em>是不能改变的。</p>
+<p>下面就来详细对其作个介绍。</p>
+<h2 id="全局代码中This的值"><a href="#全局代码中This的值" class="headerlink" title="全局代码中This的值"></a>全局代码中This的值</h2><p>这种情况下，一切都变得非常简单，<em>this</em>的值总是<em>全局对象</em>本身;因此，可以间接地获取引用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">// 显式定义全局对象的属性</div><div class="line">this.a = 10; // global.a = 10</div><div class="line">alert(a); // 10</div><div class="line"></div><div class="line">// 通过赋值给不受限的标识符来进行隐式定义</div><div class="line">b = 20;</div><div class="line">alert(this.b); // 20</div><div class="line"></div><div class="line">// 通过变量声明来进行隐式定义</div><div class="line">// 因为全局上下文中的变量对象就是全局对象本身</div><div class="line">var c = 30;</div><div class="line">alert(this.c); // 30</div></pre></td></tr></table></figure>
+<h2 id="函数代码中This的值"><a href="#函数代码中This的值" class="headerlink" title="函数代码中This的值"></a>函数代码中This的值</h2><p>当<em>this</em>在函数代码中的时候，事情就变得有趣多了。这种情况下是最复杂的，并且会引发很多的问题。</p>
+<p>函数代码中this值的第一个特性（同时也是最主要的特性）就是：它并非静态的绑定在函数上。</p>
+<p>正如此前提到的，this的值是在进入上下文的阶段确定的，并且在函数代码中的话，其值每次都会大不相同。</p>
+<p>然而，一旦进入执行代码阶段，其值就不能改变了。比方说，要想给this赋一个新的值是不可能的，因为this根本就不是变量（相反的，在Python语言中，它显示定义的<em>self</em>对象是可以在运行时随意更改的）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">var foo = &#123;x: 10&#125;;</div><div class="line"></div><div class="line">var bar = &#123;</div><div class="line">  x: 20,</div><div class="line">  test: function () &#123;</div><div class="line"></div><div class="line">    alert(this === bar); // true</div><div class="line">    alert(this.x); // 20</div><div class="line"></div><div class="line">    this = foo; // error, 不能更改this的值</div><div class="line"></div><div class="line">    alert(this.x); // 如果没有错误，则其值为10而不是20</div><div class="line"></div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">// 在进入上下文的时候，this的值就确定了是“bar”对象</div><div class="line">// 至于为什么，会在后面作详细介绍</div><div class="line"></div><div class="line">bar.test(); // true, 20</div><div class="line"></div><div class="line">foo.test = bar.test;</div><div class="line"></div><div class="line">// 但是，这个时候，this的值又会变成“foo”</div><div class="line">// 纵然我们调用的是同一个函数</div><div class="line"></div><div class="line">foo.test(); // false, 10</div></pre></td></tr></table></figure>
+<p>因此，在函数代码中影响this值的因素是有很多的。</p>
+<p>首先，在一般的函数调用中，this的值是由激活上下文代码的调用者决定的，比如说，调用函数的外层上下文。this的值是由调用表达式的形式决定的。</p>
+<p>理解并谨记这一点是非常必要的，有利于在任何上下文中都能准确的确定this的值。</p>
+<p>影响调用上下文中的this的值的只有可能是调用表达式的形式，也就是调用函数的方式。<br>（一些关于JavaScript的文章和书籍中指出的“<em>this</em>的值取决于函数的定义方式，如果是全局函数，则this的值就会设置为全局对象，如果是某个对象的方法，则this的值就会设置为该对象”——这纯属扯淡，根本就是在误人子弟）。<br>正如此前大家看到的，纵然是全局函数，this的值也会随着函数调用方式的不同而不同：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">  alert(this);</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo(); // global</div><div class="line"></div><div class="line">alert(foo === foo.prototype.constructor); // true</div><div class="line"></div><div class="line">// 然而，同样的函数，以另外一种调用方式的话，this的值就不同了</div><div class="line"></div><div class="line">foo.prototype.constructor(); // foo.prototype</div></pre></td></tr></table></figure>
+<p>调用一个对象的某个方法的时候，this的值也有可能不是该对象的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">var foo = &#123;</div><div class="line">  bar: function () &#123;</div><div class="line">    alert(this);</div><div class="line">    alert(this === foo);</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">foo.bar(); // foo, true</div><div class="line"></div><div class="line">var exampleFunc = foo.bar;</div><div class="line"></div><div class="line">alert(exampleFunc === foo.bar); // true</div><div class="line"></div><div class="line">// 同样地，相同的函数以不同的调用方式，this的值也就不同了</div><div class="line"></div><div class="line">exampleFunc(); // global, false</div></pre></td></tr></table></figure>
+<p>那么，究竟调用表达式的方式是如何影响this的值的呢？为了完全搞明白这其中的奥妙，首先，这里有必要先介绍一种内部类型——引用类型（the <em>Reference</em> type）。</p>
+<h2 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h2><p>引用类型的值可以用伪代码表示为一个拥有两个属性的对象——<em>base</em>属性（属性所属的对象）以及该base对象中的<em>propertyName</em>属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var valueOfReferenceType = &#123;</div><div class="line">  base: ,</div><div class="line">  propertyName: </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>引用类型的值只有可能是以下两种情况：</p>
+<ol>
+<li>当处理一个标识符的时候</li>
+<li>或者进行属性访问的时候</li>
+</ol>
+<p>关于标识符的处理会在第四章——所用域链中作介绍，这里我们只要注意的是，此算法总返回一个引用类型的值（这对this的值是至关重要的）。</p>
+<p>标识符其实就是变量名，函数名，函数参数名以及全局对象的未受限的属性。如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var foo = 10;</div><div class="line">function bar() &#123;&#125;</div></pre></td></tr></table></figure>
+<p>中间过程中，对应的引用类型的值如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var fooReference = &#123;</div><div class="line">  base: global,</div><div class="line">  propertyName: &apos;foo&apos;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var barReference = &#123;</div><div class="line">  base: global,</div><div class="line">  propertyName: &apos;bar&apos;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>要从引用类型的值中获取一个对象实际的值需要<em>GetValue</em>方法，该方法用伪代码可以描述成如下形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function GetValue(value) &#123;</div><div class="line"></div><div class="line">  if (Type(value) != Reference) &#123;</div><div class="line">    return value;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  var base = GetBase(value);</div><div class="line"></div><div class="line">  if (base === null) &#123;</div><div class="line">    throw new ReferenceError;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  return base.[[Get]](GetPropertyName(value));</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述代码中的<em>[[Get]]</em>方法返回了对象属性实际的值，包括从原型链中继承的属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">GetValue(fooReference); // 10</div><div class="line">GetValue(barReference); // function object &quot;bar&quot;</div></pre></td></tr></table></figure>
+<p>对于属性访问来说，有两种方式： <em>点符号</em>（这时属性名是正确的标识符并且提前已经知道了）或者<em>中括号符号</em>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">foo.bar();</div><div class="line">foo[&apos;bar&apos;]();</div></pre></td></tr></table></figure>
+<p>中间过程中，得到如下的引用类型的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var fooBarReference = &#123;</div><div class="line">  base: foo,</div><div class="line">  propertyName: &apos;bar&apos;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">GetValue(fooBarReference); // function object &quot;bar&quot;</div></pre></td></tr></table></figure>
+<p>问题又来了，引用类型的值又是如何影响函数上下文中this的值的呢？——非常重要。这也是本文的重点。总的来说，决定函数上下文中this的值的规则如下所示：</p>
+<blockquote>
+<p>函数上下文中this的值是函数调用者提供并且由当前调用表达式的形式而定的。<br>如果在调用括号()的左边，有引用类型的值，那么this的值就会设置为该引用类型值的base对象。<br>所有其他情况下（非引用类型），this的值总是<em>null</em>。然而，由于null对于this来说没有任何意义，因此会隐式转换为全局对象。</p>
+</blockquote>
+<p>如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">  return this;</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo(); // global</div></pre></td></tr></table></figure>
+<p>上述代码中，调用括号的左侧是引用类型的值（因为<em>foo</em>是标识符）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var fooReference = &#123;</div><div class="line">  base: global,</div><div class="line">  propertyName: &apos;foo&apos;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>相应的，this的值会设置为引用类型值的base对象，这里就是全局对象。</p>
+<p>属性访问也是类似的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var foo = &#123;</div><div class="line">  bar: function () &#123;</div><div class="line">    return this;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">foo.bar(); // foo</div></pre></td></tr></table></figure>
+<p>同样的，也是引用类型的值，它的base对象是foo对象，激活bar函数的时候，this的值就设置为foo对象了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var fooBarReference = &#123;</div><div class="line">  base: foo,</div><div class="line">  propertyName: &apos;bar&apos;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>然而，同样的函数以不同的激活方式的话，this的值就完全不同了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var test = foo.bar;</div><div class="line">test(); // global</div></pre></td></tr></table></figure>
+<p>因为test也是标识符，这样就产生了另外的引用类型的值，其中base对象（全局对象）就是this的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var testReference = &#123;</div><div class="line">  base: global,</div><div class="line">  propertyName: &apos;test&apos;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>至此，我们就可以精确的解释，为什么同样的函数，以不同的调用方式激活，this的值也会不同了——答案就是处理过程中，是不同的引用类型的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">  alert(this);</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo(); // global, 因为</div><div class="line"></div><div class="line">var fooReference = &#123;</div><div class="line">  base: global,</div><div class="line">  propertyName: &apos;foo&apos;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">alert(foo === foo.prototype.constructor); // true</div><div class="line"></div><div class="line">// 另一种调用方式</div><div class="line"></div><div class="line">foo.prototype.constructor(); // foo.prototype, 因为</div><div class="line"></div><div class="line">var fooPrototypeConstructorReference = &#123;</div><div class="line">  base: foo.prototype,</div><div class="line">  propertyName: &apos;constructor&apos;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>如下是另外一种（典型的）利用调用表达式来动态决定this值的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">  alert(this.bar);</div><div class="line">&#125;</div><div class="line"></div><div class="line">var x = &#123;bar: 10&#125;;</div><div class="line">var y = &#123;bar: 20&#125;;</div><div class="line"></div><div class="line">x.test = foo;</div><div class="line">y.test = foo;</div><div class="line"></div><div class="line">x.test(); // 10</div><div class="line">y.test(); // 20</div></pre></td></tr></table></figure>
+<h2 id="函数调用以及非引用类型"><a href="#函数调用以及非引用类型" class="headerlink" title="函数调用以及非引用类型"></a>函数调用以及非引用类型</h2><p>正如此前提到过的，当调用括号左侧为非引用类型的时候，this的值会设置为null，并最终变成全局对象。</p>
+<p>我们来考虑下如下表达式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(function () &#123;</div><div class="line">  alert(this); // null =&gt; global</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<p>上述例子中，有函数对象，但非引用类型对象（因为它不既不是标识符也不属于属性访问），因此，this的值最终设置为全局对象。</p>
+<p>如下是更为复杂的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var foo = &#123;</div><div class="line">  bar: function () &#123;</div><div class="line">    alert(this);</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">foo.bar(); // Reference, OK =&gt; foo</div><div class="line">(foo.bar)(); // Reference, OK =&gt; foo</div><div class="line"></div><div class="line">(foo.bar = foo.bar)(); // global?</div><div class="line">(false || foo.bar)(); // global?</div><div class="line">(foo.bar, foo.bar)(); // global?</div></pre></td></tr></table></figure>
+<p>看了上述代码，你可能又有疑问了：为什么明明是属性访问，但是最终this的值不是base对象而是全局对象呢？</p>
+<p>这里主要疑问在最后三个表达式，这三个表达式添加了特定的操作之后，调用括号左侧就不再是引用类型的值了。</p>
+<p>第一种情况——非常明确，是引用类型，最终this的值设置为base对象，foo。</p>
+<p>第二种情况有一个组操作符（<em>grouping operator</em>），该操作符不会触发调用获取引用类型实际值的方法，比如：<em>GetValue</em>方法。<br>相应的，处理组操作符中间过程中——获得的仍然是一个引用类型的值，这也就解释了为什么this的值设置成了base对象，<em>foo</em>。</p>
+<p>第三种情况是一个<em>赋值操作符</em>（<em>assignment operator</em>）,与组操作符不同的是，它会触发调用GetValue方法（参见<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Fbclary.com%2F2004%2F11%2F07%2F%23a-11.13.1&amp;t=NGVjYjRhNjMzYTg5MDEzM2M3N2VlMDk0OGU0YjNjNGU0N2EzOTY4MSxPY2xSZnZ6VA%3D%3D" target="_blank" rel="external">11.13.1</a>中的第三步）。<br>最后返回的时候就是一个函数对象了（而不是引用类型的值了），这就意味着this的值会设置为null，最终会变成全局对象。</p>
+<p>第四和第五种情况也是类似的——逗号操作符和OR逻辑表达式都会触发调用GetValue方法，于是相应地就会丢失原先的引用类型值，变成了函数类型，this的值就变成了全局对象了。</p>
+<h2 id="引用类型以及null（this的值）"><a href="#引用类型以及null（this的值）" class="headerlink" title="引用类型以及null（this的值）"></a>引用类型以及null（this的值）</h2><p>有这么一种情况下，当调用表达式左侧是引用类型的值，但是this的值却是null，最终变为全局对象。<br>发生这种情况的条件是当引用类型值的base对象恰好为<strong>活跃对象</strong>。</p>
+<p>当内部子函数在父函数中被调用的时候就会发生这种情况。正如<a href="http://goddyzhao.tumblr.com/post/11141710441/variable-object" target="_blank" rel="external">第二章</a>介绍的，<br>局部变量，内部函数以及函数的形参都会存储在指定函数的<em>活跃对象</em>中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">  function bar() &#123;</div><div class="line">    alert(this); // global</div><div class="line">  &#125;</div><div class="line">  bar(); // 和AO.bar()是一样的</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>活跃对象总是会返回this值为——null（用伪代码来表示，AO.bar()就相当于null.bar()）。然后，如此前描述的，this的值最终会由null变为全局对象。</p>
+<p>当函数调用包含在<em>with</em>语句的代码块中，并且<em>with</em>对象包含一个函数属性的时候，就会出现例外的情况。<em>with</em>语句会将该对象添加到作用域链的最前面，在活跃对象的之前。<br>相应地，在引用类型的值（标识符或者属性访问）的情况下，base对象就不再是活跃对象了，而是with语句的对象。另外，值得一提的是，它不仅仅只针对内部函数，全局函数也是如此，<br>原因就是with对象掩盖了作用域链中更高层的对象（全局对象或者活跃对象）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">var x = 10;</div><div class="line"></div><div class="line">with (&#123;</div><div class="line"></div><div class="line">  foo: function () &#123;</div><div class="line">    alert(this.x);</div><div class="line">  &#125;,</div><div class="line">  x: 20</div><div class="line"></div><div class="line">&#125;) &#123;</div><div class="line"></div><div class="line">  foo(); // 20</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">// because</div><div class="line"></div><div class="line">var  fooReference = &#123;</div><div class="line">  base: __withObject,</div><div class="line">  propertyName: &apos;foo&apos;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>当调用的函数恰好是<em>catch</em>从句的参数时，情况也是类似的：在这种情况下，<em>catch</em>对象也会添加到作用域链的最前面，在活跃对象和全局对象之前。<br>然而，这个行为在ECMA-262-3中被指出是个bug，并且已经在ECMA-262-5中修正了；因此，在这种情况下，this的值应该设置为全局对象，而不是catch对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">try &#123;</div><div class="line">  throw function () &#123;</div><div class="line">    alert(this);</div><div class="line">  &#125;;</div><div class="line">&#125; catch (e) &#123;</div><div class="line">  e(); // __catchObject - in ES3, global - fixed in ES5</div><div class="line">&#125;</div><div class="line"></div><div class="line">// on idea</div><div class="line"></div><div class="line">var eReference = &#123;</div><div class="line">  base: __catchObject,</div><div class="line">  propertyName: &apos;e&apos;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">// 然而，既然这是个bug</div><div class="line">// 那就应该强制设置为全局对象</div><div class="line">// null =&gt; global</div><div class="line"></div><div class="line">var eReference = &#123;</div><div class="line">  base: global,</div><div class="line">  propertyName: &apos;e&apos;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>同样的情况还会在递归调用一个非匿名函数的时候发生（函数相关的内容会在第五章作相应的介绍）。在第一次函数调用的时候，base对象是外层的活跃对象（或者全局对象），<br>在接下来的递归调用的时候——base对象应当是一个存储了可选的函数表达式名字的特殊对象，然而，事实却是，在这种情况下，this的值永远都是全局对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(function foo(bar) &#123;</div><div class="line"></div><div class="line">  alert(this);</div><div class="line"></div><div class="line">  !bar &amp;&amp; foo(1); // &quot;should&quot; be special object, but always (correct) global</div><div class="line"></div><div class="line">&#125;)(); // global</div></pre></td></tr></table></figure>
+<h2 id="但函数作为构造器被调用时this的值"><a href="#但函数作为构造器被调用时this的值" class="headerlink" title="但函数作为构造器被调用时this的值"></a>但函数作为构造器被调用时this的值</h2><p>这里要介绍的是函数上下文中关于this值的另外一种情况——当函数作为构造器被调用的时候：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function A() &#123;</div><div class="line">  alert(this); // newly created object, below - &quot;a&quot; object</div><div class="line">  this.x = 10;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var a = new A();</div><div class="line">alert(a.x); // 10</div></pre></td></tr></table></figure>
+<p>在这种情况下，<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Fbclary.com%2F2004%2F11%2F07%2F%23a-11.2.2&amp;t=ZjUwNTRlOWEwZTc5MGQ1ZTEwNjljYTNhZGU4NGMxYmFlNTcwZDk1MyxPY2xSZnZ6VA%3D%3D" target="_blank" rel="external">new</a>操作符会调用“A”函数的内部<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Fbclary.com%2F2004%2F11%2F07%2F%23a-13.2.2&amp;t=OWVjOGIwODQxNjgwMjhiOWZlMjA0YTkzYjcyNGYzMDc0NjliZWY1ZixPY2xSZnZ6VA%3D%3D" target="_blank" rel="external">[[Construct]]</a>。<br>在对象创建之后，会调用内部的<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Fbclary.com%2F2004%2F11%2F07%2F%23a-13.2.1&amp;t=YWZiZmMyYzA2YjQ5NmQ2NjJkN2MyZmI2ZDZjN2FmZTA2ZTJmNTg0OCxPY2xSZnZ6VA%3D%3D" target="_blank" rel="external">[[Call]]</a>函数，然后所有“A”函数中this的值会设置为新创建的对象。</p>
+<h2 id="手动设置函数调用时this的值"><a href="#手动设置函数调用时this的值" class="headerlink" title="手动设置函数调用时this的值"></a>手动设置函数调用时this的值</h2><p><em>Function.prototype</em>上定义了两个方法（因此，它们对所有函数而言都是可访问的），允许手动指定函数调用时this的值。这两个方法是：<em>.apply</em>和<em>.call</em>；<br>它们都接受第一个参数作为调用上下文中this的值。而它们的不同点其实无关紧要：对于<em>.apply</em>来说，第二个参数接受数组类型（或者是类数组的对象，比如<em>arguments</em>）,<br>而<em>.call</em>方法接受任意多的参数。这两个方法只有第一个参数是必要的——this的值。</p>
+<p>如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var b = 10;</div><div class="line"></div><div class="line">function a(c) &#123;</div><div class="line">  alert(this.b);</div><div class="line">  alert(c);</div><div class="line">&#125;</div><div class="line"></div><div class="line">a(20); // this === global, this.b == 10, c == 20</div><div class="line"></div><div class="line">a.call(&#123;b: 20&#125;, 30); // this === &#123;b: 20&#125;, this.b == 20, c == 30</div><div class="line">a.apply(&#123;b: 30&#125;, [40]) // this === &#123;b: 30&#125;, this.b == 30, c == 40</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文我们讨论了ECMAScript中<em>this</em>关键字的特性（相对C++或者Java而言，真的可以说是特性）。洗完此文对大家理解this关键字在ECMAScript中的工作原理有所帮助。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/core/">core</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kernal/">kernal</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html&title=《this》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html&title=《this》 — Balance&source=
+译文： goddyzhao • this
+原文： ECMA-262 » ECMA-262-3 in detail. Chapter 3. This.
+
+..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《this》 — Balance&url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-03-05-javascript-jasmine.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Jasmine—— JavaScript 单元测试框架</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">变量对象（Variable object）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html&title=《this》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html&title=《this》 — Balance&source=
+译文： goddyzhao • this
+原文： ECMA-262 » ECMA-262-3 in detail. Chapter 3. This.
+
+..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《this》 — Balance&url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACs0lEQVR42u3a0W7cMAwEwPz/T7dAn1I05+ySUpICo6fDxWdrFECUSb69xePXn9F+/34kv33/zb+/fXWfAwMPDw9vNPVX43kq7SOfSc/I5+9fzgcPDw/vGu95Ki04eXBytzZI4OHh4f003jNjf8/kVIyHh4f3f/HaBEF+IN4sDR4eHt538ZJkRH6w3vwqCT9Xci14eHh4Ma9Nv/6Ezxfre3h4eHiLqvrZTfk5PCRJ23q2eHh4eBd4+QG3bReYxaj2KB+FDTw8PLwLvHbznR3EZ9fnhbdPqHh4eHhHee3Lf9tSsGk7yNu8XoYuPDw8vAu8dms+FU7ya3IMHh4e3m1em7rdFMnylMd+0Yu1x8PDwyt5SazIb/TMaEtc+xQwHh4e3m1eW+jKqe3dWmqRa8HDw8P7El6ekJ0VrpIQ0i4fHh4e3j1eApulXGcBZvN5+H/Dw8PDO8prA0BbsmoXt83Q4uHh4d3gtZv+rCshmfQ+VVFU+fDw8PAWvLYdKp/iLInQhqtP/oqHh4d3gTc7CreJ11NJ3mNvD3h4eHgL3mwrb6c4a8aahaW/rsHDw8O7wJsdYduSf54+2AeVVRkMDw8PL7hz3m51atJFL9j+iXh4eHhfwsvHZlvfF8+S9AQeHh7e1/BmW3OSJz6VvEiSznh4eHjfxds/clZgm11ZvDHg4eHhLXj7g++N9oLDnRF4eHh4R3ltq9PseP083o6ODzoj8PDw8C7zkqnMlqNIIiyO3Z8EBjw8PLw1b1buykv47XTb4/vheIKHh4cX8/JgkExrU1rL0w1FoMLDw8O7xsuDwQbZdkbld/jkvQEPDw/vm3ibjTs/rJ/qmMLDw8P7Obw2YdG2EcwW5VhgwMPDw4t5s6LXJqjkT1w1fuHh4eFd4M0KYHlqIG8saBsRLtb38PDw8D4evwGNJQ0Blt+rBwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

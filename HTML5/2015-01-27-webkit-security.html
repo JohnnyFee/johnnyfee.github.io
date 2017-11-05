@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>WebKit Security | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="WebKit">
+    <meta name="description" content="WebView 安全策略默认情况下，WebView 只能访问本地资源：
+1WebSettings.setAllowFileAccessFromFileURLs(true)
+如果要实现跨域访问，需要：
+1WebSettings.setAllowUniversalAccessFromFileURLs(true)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebKit Security">
+<meta property="og:url" content="http://blog.inching.org/HTML5/2015-01-27-webkit-security.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="WebView 安全策略默认情况下，WebView 只能访问本地资源：
+1WebSettings.setAllowFileAccessFromFileURLs(true)
+如果要实现跨域访问，需要：
+1WebSettings.setAllowUniversalAccessFromFileURLs(true)">
+<meta property="og:updated_time" content="2017-11-05T05:25:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebKit Security">
+<meta name="twitter:description" content="WebView 安全策略默认情况下，WebView 只能访问本地资源：
+1WebSettings.setAllowFileAccessFromFileURLs(true)
+如果要实现跨域访问，需要：
+1WebSettings.setAllowUniversalAccessFromFileURLs(true)">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">WebKit Security</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">WebKit Security</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-01-26T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2015-01-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/HTML5/">HTML5</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#WebView-安全策略"><span class="post-toc-text">WebView 安全策略</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#WebSettings-setAllowFileAccess"><span class="post-toc-text">WebSettings.setAllowFileAccess</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#WebSettings-setAllowFileAccessFromFileURLs"><span class="post-toc-text">WebSettings.setAllowFileAccessFromFileURLs</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#WebSettings-setAllowUniversalAccessFromFileURLs"><span class="post-toc-text">WebSettings.setAllowUniversalAccessFromFileURLs</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#JavascriptInterface（CVE-2012-6636）"><span class="post-toc-text">@JavascriptInterface（CVE-2012-6636）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CVE-2014-1939"><span class="post-toc-text">CVE-2014-1939</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CVE-2014-7224"><span class="post-toc-text">CVE-2014-7224</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#WebSetting-setSavePassword"><span class="post-toc-text">WebSetting.setSavePassword</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#白名单策略"><span class="post-toc-text">白名单策略</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Navigation-Whitelist"><span class="post-toc-text">Navigation Whitelist</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Intent-Whitelist"><span class="post-toc-text">Intent Whitelist</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Network-Request-Whitelist"><span class="post-toc-text">Network Request Whitelist</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Content-Security-Policy"><span class="post-toc-text">Content Security Policy</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基于内容安全策略-CSP"><span class="post-toc-text">基于内容安全策略 CSP</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#背景"><span class="post-toc-text">背景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内容安全策略"><span class="post-toc-text">内容安全策略</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#禁止执行内联代码"><span class="post-toc-text">禁止执行内联代码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#禁止-eval-等函数执行字符串类型的脚本"><span class="post-toc-text">禁止 eval 等函数执行字符串类型的脚本</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#禁用-Flash"><span class="post-toc-text">禁用 Flash</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#禁止-JavaScript-访问-Cookie"><span class="post-toc-text">禁止 JavaScript 访问 Cookie</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#所有的在线网页和数据都是通过-SSL"><span class="post-toc-text">所有的在线网页和数据都是通过 SSL</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如何应用"><span class="post-toc-text">如何应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#应用安全策略"><span class="post-toc-text">应用安全策略</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Javascript-不允许直接内存操作"><span class="post-toc-text">Javascript 不允许直接内存操作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#动态数据只能使用-JSON-和-XML-格式"><span class="post-toc-text">动态数据只能使用 JSON 和 XML 格式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#只能访问有限的本地-API"><span class="post-toc-text">只能访问有限的本地  API</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#输入检查"><span class="post-toc-text">输入检查</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多应用隔离"><span class="post-toc-text">多应用隔离</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#其他"><span class="post-toc-text">其他</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#开发者"><span class="post-toc-text">开发者</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#执行输入验证"><span class="post-toc-text">执行输入验证</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用-WebView"><span class="post-toc-text">使用 WebView</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#处理凭据"><span class="post-toc-text">处理凭据</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#More"><span class="post-toc-text">More</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-webkit-security"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">WebKit Security</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-01-27 00:00:00" datetime="2015-01-26T16:00:00.000Z"  itemprop="datePublished">2015-01-27</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/HTML5/">HTML5</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="WebView-安全策略"><a href="#WebView-安全策略" class="headerlink" title="WebView 安全策略"></a>WebView 安全策略</h2><p>默认情况下，WebView 只能访问本地资源：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WebSettings.setAllowFileAccessFromFileURLs(true)</div></pre></td></tr></table></figure>
+<p>如果要实现跨域访问，需要：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WebSettings.setAllowUniversalAccessFromFileURLs(true)</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>一旦 <code>setAllowUniversalAccessFromFileURLs</code> 设置为 true，<code>setAllowFileAccessFromFileURLs</code> 设置将被忽略。</p>
+<p>See:</p>
+<ul>
+<li><a href="https://developer.android.com/reference/android/webkit/WebSettings.html#setAllowFileAccess(boolean" target="_blank" rel="external">WebSettings</a>)</li>
+<li><a href="http://stackoverflow.com/questions/14825943/setallowuniversalaccessfromfileurls" target="_blank" rel="external">android - setAllowUniversalAccessFromFileURLs? - Stack Overflow</a></li>
+</ul>
+<p>注：如有必要，请做实验验证。</p>
+<h3 id="WebSettings-setAllowFileAccess"><a href="#WebSettings-setAllowFileAccess" class="headerlink" title="WebSettings.setAllowFileAccess"></a>WebSettings.setAllowFileAccess</h3><p>Android中默认 <code>mWebView.setAllowFileAccess(true)</code>，在 File 域下，能够执行任意的JavaScript 代码，同源策略跨域访问能够对私有目录文件进行访问等。APP对嵌入的 WebView 未对 <code>file:///</code> 形式的 URL 做限制，会导致隐私信息泄露。如针对 IM 类软件会导致聊天信息、联系人等等重要信息泄露，针对浏览器类软件，则更多的是cookie信息泄露。</p>
+<h3 id="WebSettings-setAllowFileAccessFromFileURLs"><a href="#WebSettings-setAllowFileAccessFromFileURLs" class="headerlink" title="WebSettings.setAllowFileAccessFromFileURLs"></a>WebSettings.setAllowFileAccessFromFileURLs</h3><p>在JELLY_BEAN以前的版本默认是setAllowFileAccessFromFileURLs(true),允许通过file域url中的Javascript读取其他本地文件，在 <code>JELLY_BEAN</code> 及以后的版本中默认已被是禁止。</p>
+<h3 id="WebSettings-setAllowUniversalAccessFromFileURLs"><a href="#WebSettings-setAllowUniversalAccessFromFileURLs" class="headerlink" title="WebSettings.setAllowUniversalAccessFromFileURLs"></a>WebSettings.setAllowUniversalAccessFromFileURLs</h3><p>在JELLY_BEAN以前的版本默认是 <code>setAllowUniversalAccessFromFileURLs(true)</code>,允许通过file域url中的Javascript访问其他的源，包括其他的本地文件和http,https源的数据。在JELLY_BEAN及以后的版本中默认已被禁止。</p>
+<h3 id="JavascriptInterface（CVE-2012-6636）"><a href="#JavascriptInterface（CVE-2012-6636）" class="headerlink" title="@JavascriptInterface（CVE-2012-6636）"></a>@JavascriptInterface（CVE-2012-6636）</h3><p>Android API Level &gt;= <a href="https://developer.android.com/reference/android/os/Build.VERSION_CODES.html#JELLY_BEAN_MR1" target="_blank" rel="external">JELLY_BEAN_MR1(18)</a>，暴露的 API 必须用 <code>@JavascriptInterface</code> 注解。可以避免 <em>CVE-2012-6636</em> 攻击。</p>
+<p><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6636" target="_blank" rel="external">CVE - CVE-2012-6636</a></p>
+<p>The Android API before 17 does not properly restrict the<br>WebView.addJavascriptInterface method, which allows remote attackers<br>to execute arbitrary methods of Java objects by using the Java<br>Reflection API within crafted JavaScript code that is loaded into the<br>WebView component in an application targeted to API level 16 or<br>earlier, a related issue to CVE-2013-4710.</p>
+<h3 id="CVE-2014-1939"><a href="#CVE-2014-1939" class="headerlink" title="CVE-2014-1939"></a>CVE-2014-1939</h3><p>在 2014 年二月，安全研究员 Joshua J. Drak 发现并公布了一个在 Android WebView中可以被利用的Javascript bridge <code>searchBoxJavaBridge</code>， 在 <strong>Android4.0 ~ Android4.3.1</strong> 版本中，当BrowserFrame初始化的时候，会创建一个 <code>android.webkit.SearchBoxImpl</code> 实例，并将此实例使用 <code>searchBoxJavaBridge_</code> 这个名字添加为 JavaScript Object，而攻击者可以利用这个实例执行远程代码。而此漏洞的根源是 CVE-2012-6636 这个漏洞。</p>
+<p>对了避免改漏洞，可以调用以下接口删除改对象：</p>
+<pre>
+removeJavascriptInterface("searchBoxJavaBridge_")
+</pre>
+
+<h3 id="CVE-2014-7224"><a href="#CVE-2014-7224" class="headerlink" title="CVE-2014-7224"></a>CVE-2014-7224</h3><p>在2014年，研究人员Daoyuan Wu和Rocky Chang发现，当系统辅助功能服务被开启时，在 <strong><code>Android4.4</code></strong> 以下的系统中，由系统提供的WebView组件都默认导出”accessibility” 和”accessibilityTraversal”这两个接口，代码位于“android/webkit/AccessibilityInjector.java”，这两个接口同样存在远程任意代码执行的威胁。</p>
+<p><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7224" target="_blank" rel="external">CVE - CVE-2014-7224</a></p>
+<p>对了避免改漏洞，可以调用以下接口这两个对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">removeJavascriptInterface(&quot;accessibility&quot;)；</div><div class="line">removeJavascriptInterface(&quot;accessibilityTraversal&quot;)</div></pre></td></tr></table></figure>
+<h3 id="WebSetting-setSavePassword"><a href="#WebSetting-setSavePassword" class="headerlink" title="WebSetting.setSavePassword"></a>WebSetting.setSavePassword</h3><p><code>WebSettings.setSavePassword(true)</code> This method was deprecated in API level 18.<br>Saving passwords in WebView will not be supported in future versions.</p>
+<p>Sets whether the WebView should save passwords. The default is true.</p>
+<p>WebView默认开启密码保存功能 <em>mWebView.setSavePassword(true)</em>，如果该功能未关闭，在用户输入密码时，会弹出提示框，询问用户是否保存密码，如果选择”是”，密码会被明文保到 <em>/data/data/com.package.name/databases/webview.db</em></p>
+<h2 id="白名单策略"><a href="#白名单策略" class="headerlink" title="白名单策略"></a>白名单策略</h2><ul>
+<li><p>Read and understand the <a href="https://cordova.apache.org/docs/en/latest/guide/appdev/whitelist/index.html" target="_blank" rel="external">Whitelist Guide</a></p>
+</li>
+<li><p>Domain whitelisting does not work on Android API 10 and below, and WP8 for iframes and XMLHttpRequest. This means an attacker can load any domain in an iframe and any script on that page within the iframe can directly access Cordova JavaScript objects and the corresponding native Java objects. You should take this into consideration when building applications for these platforms. In practice this means making sure you target an Android API higher than 10, and that if possible you do not use an iframe to load external content - use the inAppBrowser plugin or other third-party plugins.</p>
+</li>
+</ul>
+<p>See <a href="https://cordova.apache.org/docs/en/latest/guide/appdev/whitelist/index.html" target="_blank" rel="external">Whitelist Guide - Apache Cordova</a></p>
+<p>See also <a href="http://stackoverflow.com/questions/4780899/intercept-and-override-http-requests-from-webview" target="_blank" rel="external">android - Intercept and override HTTP-requests from WebView - Stack Overflow</a></p>
+<p>注：Whitelist 通过三种方式来指定白名单。</p>
+<h3 id="Navigation-Whitelist"><a href="#Navigation-Whitelist" class="headerlink" title="Navigation Whitelist"></a>Navigation Whitelist</h3><p>指定导航白名单，允许通过 WebView 直接打开。默认只能导航到 <code>file://</code> URLs，需要在 <code>&lt;allow-navigation&gt;</code> tags to your <code>config.xml</code>:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- Allow links to example.com --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"http://example.com/*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Wildcards are allowed for the protocol, as a prefix</span></div><div class="line">     to the host, or as a suffix to the path --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"*://*.example.com/*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- A wildcard can be used to whitelist the entire network,</span></div><div class="line">     over HTTP and HTTPS.</div><div class="line">     *NOT RECOMMENDED* --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- The above is equivalent to these three declarations --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"http://*/*"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"https://*/*"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"data:*"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>如，  在 <code>config.xml</code> 修改 content 地址 <code>&lt;content src=&quot;http://www.baidu.com&quot; /&gt;</code>，默认情况下，会使用默认浏览器打开该链接，将该链接加入到白名单:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"http://www.baidu.com/*"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"https://www.baidu.com/*"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>则可以在 WebView 中打开指定链接了。</p>
+<h3 id="Intent-Whitelist"><a href="#Intent-Whitelist" class="headerlink" title="Intent Whitelist"></a>Intent Whitelist</h3><p>Controls which URLs the app is allowed to ask the system to open.<br>By default, no external URLs are allowed.</p>
+<p>On Android, this equates to sending an intent of type BROWSEABLE.</p>
+<p>This whitelist does not apply to plugins, only hyperlinks and calls to <code>window.open()</code>.</p>
+<p>In <code>config.xml</code>, add <code>&lt;allow-intent&gt;</code> tags, like this:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- Allow links to web pages to open in a browser --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"http://*/*"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"https://*/*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allow links to example.com to open in a browser --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"http://example.com/*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Wildcards are allowed for the protocol, as a prefix</span></div><div class="line">     to the host, or as a suffix to the path --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"*://*.example.com/*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allow SMS links to open messaging app --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"sms:*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allow tel: links to open the dialer --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"tel:*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allow geo: links to open maps --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"geo:*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allow all unrecognized URLs to open installed apps</span></div><div class="line">     *NOT RECOMMENDED* --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"*"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>注：当某个资源不在导航白名单中，而在 Intent 白名单中，则会调用系统程序打开自定资源，如调用浏览器打开链接。如果资源出现在导航白名单中，则优先使用 WebView 打开。</p>
+<h3 id="Network-Request-Whitelist"><a href="#Network-Request-Whitelist" class="headerlink" title="Network Request Whitelist"></a>Network Request Whitelist</h3><p>Controls which network requests (images, XHRs, etc) are allowed to be made (via cordova native hooks).</p>
+<p>Note: We suggest you use a Content Security Policy (see below), which is more secure.  This whitelist is mostly historical for webviews which do not support CSP.</p>
+<p>In <code>config.xml</code>, add <code>&lt;access&gt;</code> tags, like this:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- Allow images, xhrs, etc. to google.com --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">access</span> <span class="attr">origin</span>=<span class="string">"http://google.com"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">access</span> <span class="attr">origin</span>=<span class="string">"https://google.com"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Access to the subdomain maps.google.com --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">access</span> <span class="attr">origin</span>=<span class="string">"http://maps.google.com"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Access to all the subdomains on google.com --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">access</span> <span class="attr">origin</span>=<span class="string">"http://*.google.com"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Enable requests to content: URLs --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">access</span> <span class="attr">origin</span>=<span class="string">"content:///*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Don't block any requests --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">access</span> <span class="attr">origin</span>=<span class="string">"*"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>Without any <code>&lt;access&gt;</code> tags, only requests to <code>file://</code> URLs are allowed. However, the default Cordova application includes <code>&lt;access origin=&quot;*&quot;&gt;</code> by default.</p>
+<p>Note: Whitelist cannot block network redirects from a whitelisted remote website (i.e. http or https) to a non-whitelisted website. Use CSP rules to mitigate redirects to non-whitelisted websites for webviews that support CSP.</p>
+<p>Quirk: Android also allows requests to <a href="https://ssl.gstatic.com/accessibility/javascript/android/" target="_blank" rel="external">https://ssl.gstatic.com/accessibility/javascript/android/</a> by default, since this is required for TalkBack to function properly.</p>
+<h3 id="Content-Security-Policy"><a href="#Content-Security-Policy" class="headerlink" title="Content Security Policy"></a>Content Security Policy</h3><p>Controls which network requests (images, XHRs, etc) are allowed to be made (via webview directly).</p>
+<p>On Android and iOS, the network request whitelist (see above) is not able to filter all types of requests (e.g. <code>&lt;video&gt;</code> &amp; WebSockets are not blocked). So, in addition to the whitelist, you should use a <a href="http://content-security-policy.com/" target="_blank" rel="external">Content Security Policy</a> <code>&lt;meta&gt;</code> tag on all of your pages.</p>
+<p>On Android, support for CSP within the system webview starts with KitKat (but is available on all versions using Crosswalk WebView).</p>
+<p>Here are some example CSP declarations for your <code>.html</code> pages:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- Good default declaration:</span></div><div class="line">    * gap: is required only on iOS (when using UIWebView) and is needed for JS-&gt;native communication</div><div class="line">    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly</div><div class="line">    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:</div><div class="line">        * Enable inline JS: add 'unsafe-inline' to default-src</div><div class="line">        * Enable eval(): add 'unsafe-eval' to default-src</div><div class="line">--&gt;</div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Security-Policy"</span> <span class="attr">content</span>=<span class="string">"default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allow everything but only from the same origin and foo.com --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Security-Policy"</span> <span class="attr">content</span>=<span class="string">"default-src 'self' foo.com"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- This policy allows everything (eg CSS, AJAX, object, frame, media, etc) except that</span></div><div class="line">    * CSS only from the same origin and inline styles,</div><div class="line">    * scripts only from the same origin and inline styles, and eval()</div><div class="line">--&gt;</div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Security-Policy"</span> <span class="attr">content</span>=<span class="string">"default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allows XHRs only over HTTPS on the same domain. --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Security-Policy"</span> <span class="attr">content</span>=<span class="string">"default-src 'self' https:"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allow iframe to https://cordova.apache.org/ --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Security-Policy"</span> <span class="attr">content</span>=<span class="string">"default-src 'self'; frame-src 'self' https://cordova.apache.org"</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="基于内容安全策略-CSP"><a href="#基于内容安全策略-CSP" class="headerlink" title="基于内容安全策略 CSP"></a>基于内容安全策略 CSP</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>万维网的安全策略植根于<a href="http://en.wikipedia.org/wiki/Same_origin_policy" target="_blank" rel="external">同源策略</a>。每个来源都与网络的其它部分分隔开，为开发人员构建了一个安全的沙箱。理论上这是完美的，但是现在攻击者已经找到了聪明的方式来破坏这个系统，这种方法称为 <a href="http://en.wikipedia.org/wiki/Cross-site_scripting" target="_blank" rel="external">XSS跨站脚本攻击</a> ，通过虚假内容和诱骗点击来绕过同源策略。这是一个很大的问题，如果攻击者成功注入代码，有相当多的用户数据会被泄漏。</p>
+<p>2007 年，Mozilla 项目组的 Gervase Markham 和 WEB 安全界大牛 Robert Hansen 两人共同提出 <em>内容安全策略</em>（ContentSecurity Policy，CSP），这是一个全新的、有效的安全防御策略来减轻这种风险。</p>
+<!-- more -->
+<h3 id="内容安全策略"><a href="#内容安全策略" class="headerlink" title="内容安全策略"></a>内容安全策略</h3><p>内容安全策略（Content Security Policy，简称CSP）是一种以可信白名单作机制，来限制网站中是否可以包含某来源内容。目前，各大主流浏览器均已支持 CSP。</p>
+<ul>
+<li>只能加载指定白名单的资源，如脚本、样式、图片、视频、音频、Flash以及其插件的来源，以及连接的类型（例如XHR、WebSockets和EventSource）、网络字体、frame 的来源。</li>
+<li>禁止执行内联代码（<code>&lt;script&gt;</code>块内容，内联事件，内联样式）。</li>
+<li>禁止执行 <code>eval()</code>, <code>newFunction()</code> , <code>setTimeout([string], ...)</code> 和 <code>setInterval([string], ...)</code> 。</li>
+</ul>
+<p>See <a href="http://security.zdnet.com.cn/security_zone/2014/0418/3017798.shtml" target="_blank" rel="external">浏览器安全策略说之内容安全策略 CSP-网络安全-安全频道-至顶网</a></p>
+<p>只能加载指定白名单的资源，如脚本、样式、图片、视频、音频、网络连接（例如 XHR、WebSockets）、网络字体、frame 的来源，不允许加载白名单之外的资源。防止攻击者利用未知的文件类型进行攻击。</p>
+<h3 id="禁止执行内联代码"><a href="#禁止执行内联代码" class="headerlink" title="禁止执行内联代码"></a>禁止执行内联代码</h3><p>禁止执行内联代码（<code>&lt;script&gt;</code> 块内容，内联事件，内联样式）。防止攻击者在内联代码中注入脚本，避免跨站点脚本(XSS)攻击。</p>
+<h3 id="禁止-eval-等函数执行字符串类型的脚本"><a href="#禁止-eval-等函数执行字符串类型的脚本" class="headerlink" title="禁止 eval 等函数执行字符串类型的脚本"></a>禁止 eval 等函数执行字符串类型的脚本</h3><p>禁止执行 <code>eval()</code>, <code>new Function()</code> , <code>setTimeout([string], ...)</code> 和 <code>setInterval([string], ...)</code>。防止攻击者执行输入框或者地址栏中的 JavaScript 代码字符串发起的攻击。</p>
+<h3 id="禁用-Flash"><a href="#禁用-Flash" class="headerlink" title="禁用 Flash"></a>禁用 Flash</h3><p>防止攻击者借助 Flash 和 ActionScript 发起多种形式的跨站点脚本(Flash XSS)、跨站点请求伪造(Flash CSRF)、点击劫持(ClickJacking)等攻击。</p>
+<h3 id="禁止-JavaScript-访问-Cookie"><a href="#禁止-JavaScript-访问-Cookie" class="headerlink" title="禁止 JavaScript 访问 Cookie"></a>禁止 JavaScript 访问 Cookie</h3><p>禁用 Cookie 可以防止攻击者通过 Cookie 绕过服务器的身份验证，进行跨站点请求伪造 (CSRF) 攻击。</p>
+<h3 id="所有的在线网页和数据都是通过-SSL"><a href="#所有的在线网页和数据都是通过-SSL" class="headerlink" title="所有的在线网页和数据都是通过 SSL"></a>所有的在线网页和数据都是通过 SSL</h3><p>目前的 POS 业务是采用本地 HTML + JavaScript 的方式。未来的 POS 业务可能放在服务器上，采用 B/S 以及 RESTful 架构。终端只允许访问 HTTPS 资源，通过预装受信任的证书，只能访问经过认证的网络资源。避免钓鱼、中间人、CSRF 攻击。</p>
+<h3 id="如何应用"><a href="#如何应用" class="headerlink" title="如何应用"></a>如何应用</h3><p>CSP可以由两种方式指定：HTTP Header 和HTML。HTTP是在HTTP由增加 Header 来指定，而HTML级别则由Meta标签指定。CSP有两类：Content-Security-Policy 和 Content-Security-Policy-Report-Only。（大小写无关）</p>
+<h2 id="应用安全策略"><a href="#应用安全策略" class="headerlink" title="应用安全策略"></a>应用安全策略</h2><h3 id="Javascript-不允许直接内存操作"><a href="#Javascript-不允许直接内存操作" class="headerlink" title="Javascript 不允许直接内存操作"></a>Javascript 不允许直接内存操作</h3><p>所有应用程序均采用 JavaScript 语言开发。此 JavaScript 运行在浏览器沙箱内，不支持类似 C 语言的 *p 内存指针操作。避免缓冲区溢出攻击。</p>
+<h3 id="动态数据只能使用-JSON-和-XML-格式"><a href="#动态数据只能使用-JSON-和-XML-格式" class="headerlink" title="动态数据只能使用 JSON 和 XML 格式"></a>动态数据只能使用 JSON 和 XML 格式</h3><p>为了防止攻击这在模板等形式的数据中注入 JavaScript，约定动态数据只能使用 JSON 和 XML 格式，否则将不被受理。</p>
+<h3 id="只能访问有限的本地-API"><a href="#只能访问有限的本地-API" class="headerlink" title="只能访问有限的本地  API"></a>只能访问有限的本地  API</h3><p>联迪公司对 POS 的外部设备定义了一套安全的 JavaScript API。开发者只能通过这套 API 访问必要的外部设备（不可直接访问文件系统、进程等敏感对象）。</p>
+<h3 id="输入检查"><a href="#输入检查" class="headerlink" title="输入检查"></a>输入检查</h3><p>应用程序通过对 JavaScript 的输入检查，过滤或者转义一些特殊字符，如 <code>&lt;</code>、<code>&gt;</code>、<code>&lt;script&gt;</code>、<code>javascript</code> 等，防止攻击者通过特殊字符发起的跨站点脚本 (XSS) 等攻击。</p>
+<h2 id="多应用隔离"><a href="#多应用隔离" class="headerlink" title="多应用隔离"></a>多应用隔离</h2><p>每个应用程序都以独立的用户身份运行，基于 Linux 系统的多用户机制，一个应用程序无法访问其他应用程序的私有数据。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>代码签名</li>
+<li>只允许 https，预装证书（避免钓鱼、中间人攻击）</li>
+<li>只能访问有限本地 API</li>
+<li>Javascript 不允许直接内存操作，避免缓冲区溢出攻击</li>
+</ul>
+<h2 id="开发者"><a href="#开发者" class="headerlink" title="开发者"></a>开发者</h2><h3 id="执行输入验证"><a href="#执行输入验证" class="headerlink" title="执行输入验证"></a>执行输入验证</h3><p>See <a href="https://developer.android.com/training/articles/security-tips.html?hl=zh-cn#InputValidation" target="_blank" rel="external">安全要点</a></p>
+<p>无论应用是在哪种平台上运行，输入验证功能不完善都是影响应用的最常见安全问题。Android 为此提供了平台级对策，可降低应用出现输入验证问题的可能性。如果可行，请尽量使用这些功能。另请注意，选择类型安全的语言通常也有助于降低出现输入验证问题的可能性。</p>
+<p>如果使用原生代码，那么系统从文件读取、通过网络接收或从 IPC 接收的任何数据都有可能会引发安全问题。最常见的问题包括<a href="http://en.wikipedia.org/wiki/Buffer_overflow" target="_blank" rel="external">缓冲区溢出</a>、<a href="http://en.wikipedia.org/wiki/Double_free#Use_after_free" target="_blank" rel="external">释放后重用</a>和<a href="http://en.wikipedia.org/wiki/Off-by-one_error" target="_blank" rel="external">差一错误</a>。Android 为此提供了多项技术，例如 </p>
+<p><acronym>ASLR</acronym> 和 </p>
+<p><acronym>DEP</acronym> ，可以降低这些错误被利用的可能性，但无法解决根本问题。因此，请谨慎管理指针和缓冲区，预防这些漏洞造成破坏。</p>
+<p>使用基于字符串的动态语言（如 JavaScript 和 SQL）也可能因为转义字符和<a href="http://en.wikipedia.org/wiki/Code_injection" target="_blank" rel="external">脚本注入</a>而出现输入验证问题。</p>
+<p>如果使用提交到 SQL 数据库或内容提供程序的查询中的数据，也可能出现 SQL 注入问题。最好的预防措施是使用参数化查询（请参阅上文<a href="https://developer.android.com/training/articles/security-tips.html?hl=zh-cn#ContentProviders" target="_blank" rel="external">内容提供程序</a>部分的相关内容）。将权限限制为只读或只写，也可以降低 SQL 注入引发破坏的可能性。</p>
+<p>如果您无法使用上述安全功能，我们强烈建议您使用结构合理的数据格式，并验证数据是否符合预期的格式。虽然将字符列入黑名单或替换字符是一种有效的策略，但这些技术在实际操作中很容易出错，因此应尽量避免使用。</p>
+<h2 id="使用-WebView"><a href="#使用-WebView" class="headerlink" title="使用 WebView"></a>使用 WebView</h2><hr>
+<p>由于 <code>[WebView](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn)</code> 使用的网络内容可能包含 HTML 和 JavaScript，当的使用可能引入常见的网络安全问题，例如<a href="http://en.wikipedia.org/wiki/Cross_site_scripting" target="_blank" rel="external">跨站脚本攻击</a>（JavaScript 注入）。Android 内置了多种机制，可将 <code>[WebView](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn)</code> 的功能限制为您应用所需的最低功能，以缩小这些潜在问题的影响范围。</p>
+<p>如果您的应用不直接使用 <code>[WebView](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn)</code> 中的 JavaScript，请<em>勿</em>调用 <code>[setJavaScriptEnabled()](https://developer.android.com/reference/android/webkit/WebSettings.html?hl=zh-cn#setJavaScriptEnabled(boolean))</code>。部分示例代码会使用这种方法，不过您可能需要在实际应用时根据具体情况进行调整。因此，如果不需要使用这种调用方法，请将其移除。默认情况下，<code>[WebView](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn)</code> 不会执行 JavaScript，因此不可能出现跨站脚本攻击这样的安全问题。</p>
+<p><code>[addJavaScriptInterface()](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn#addJavascriptInterface(java.lang.Object, java.lang.String))</code> 允许 JavaScript 调用正常情况下是为 Android 应用预留的操作，因此在使用时请格外小心。如果要使用，请仅将 <code>[addJavaScriptInterface()](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn#addJavascriptInterface(java.lang.Object, java.lang.String))</code> 用于所有输入内容都可信的网页。如果您接受不受信任的输入内容，那么不受信任的 JavaScript 可能会调用您应用中的 Android 方法。一般情况下，我们建议您仅将 <code>[addJavaScriptInterface()](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn#addJavascriptInterface(java.lang.Object, java.lang.String))</code> 用于应用 APK 内含的 JavaScript。</p>
+<p>如果您的应用通过 <code>[WebView](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn)</code> 访问敏感数据，您可能需要使用 <code>[clearCache()](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn#clearCache(boolean))</code> 方法来删除本地存储的所有文件。您也可以使用服务器端标头（例如 <code>no-cache</code>）来指示应用不应缓存特定内容。</p>
+<p>在 Android 4.4（API 级别 19）之前平台上运行的设备使用的 <code>[webkit](https://developer.android.com/reference/android/webkit/package-summary.html?hl=zh-cn)</code> 版本存在多个安全问题。如果您的应用在这些设备上运行，解决方法是确认 <code>[WebView](https://developer.android.com/reference/android/webkit/WebView.html?hl=zh-cn)</code> 对象只显示值得信任的内容。还应使用可更新的安全 <code>[Provider](https://developer.android.com/reference/java/security/Provider.html?hl=zh-cn)</code> 对象确保您的应用在 SSL 中不会暴露给潜在的漏洞，如<a href="https://developer.android.com/training/articles/security-gms-provider.html?hl=zh-cn" target="_blank" rel="external">更新您的安全提供程序以防范 SSL 攻击</a>中所述。如果您的应用必须从开放网络渲染内容，请考虑提供您自己的渲染程序，以便使用最新的安全补丁程序保持其处于最新状态。</p>
+<h3 id="处理凭据"><a href="#处理凭据" class="headerlink" title="处理凭据"></a>处理凭据</h3><p>一般情况下，我们建议您尽量降低要求用户凭据的频率；这样会让钓鱼攻击显得比较可疑，从而能够降低其成功率。作为替代方法，您可以使用授权令牌并根据需要刷新。</p>
+<p>请尽量避免将用户名和密码存储在设备上。您可以使用用户提供的用户名和密码进行初始身份验证，然后使用针对特定服务的短时效授权令牌。</p>
+<p>可供多个应用访问的服务应使用 <code>[AccountManager](https://developer.android.com/reference/android/accounts/AccountManager.html?hl=zh-cn)</code> 进行访问。如果可行，请使用 <code>[AccountManager](https://developer.android.com/reference/android/accounts/AccountManager.html?hl=zh-cn)</code> 类来调用基于云的服务；此外，请勿将密码存储在设备上。</p>
+<p>使用 <code>[AccountManager](https://developer.android.com/reference/android/accounts/AccountManager.html?hl=zh-cn)</code> 检索 <code>[Account](https://developer.android.com/reference/android/accounts/Account.html?hl=zh-cn)</code> 后，请先确认 <code>[CREATOR](https://developer.android.com/reference/android/accounts/Account.html?hl=zh-cn#CREATOR)</code> 再传送凭据，以免无意中将凭据传送给错误的应用。</p>
+<p>如果凭据仅供您创建的应用使用，那么您可以使用 <code>[checkSignature()](https://developer.android.com/reference/android/content/pm/PackageManager.html?hl=zh-cn#checkSignatures(int, int))</code> 验证访问 <code>[AccountManager](https://developer.android.com/reference/android/accounts/AccountManager.html?hl=zh-cn)</code> 的应用。另外，如果只有一个应用使用该凭据，那么您可以使用 <code>[KeyStore](https://developer.android.com/reference/java/security/KeyStore.html?hl=zh-cn)</code> 存储凭据。</p>
+<h2 id="More"><a href="#More" class="headerlink" title="More"></a>More</h2><ul>
+<li><a href="https://android-developers.googleblog.com/2017/06/whats-new-in-webview-security.html" target="_blank" rel="external">Android Developers Blog: What’s new in WebView security</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-11-05T05:25:34.000Z" itemprop="dateUpdated">2017-11-05 13:25:34</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/HTML5/2015-01-27-webkit-security.html" target="_blank" rel="external">http://blog.inching.org/HTML5/2015-01-27-webkit-security.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebKit/">WebKit</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/HTML5/2015-01-27-webkit-security.html&title=《WebKit Security》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/HTML5/2015-01-27-webkit-security.html&title=《WebKit Security》 — Balance&source=WebView 安全策略默认情况下，WebView 只能访问本地资源：
+1WebSettings.setAllowFileAccessFromFileUR..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/HTML5/2015-01-27-webkit-security.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《WebKit Security》 — Balance&url=http://blog.inching.org/HTML5/2015-01-27-webkit-security.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/HTML5/2015-01-27-webkit-security.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Database/2015-02-02-database-sqlite.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Sqlite 数据库</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2015-01-12-javascript-pattern.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript 模式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/HTML5/2015-01-27-webkit-security.html&title=《WebKit Security》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/HTML5/2015-01-27-webkit-security.html&title=《WebKit Security》 — Balance&source=WebView 安全策略默认情况下，WebView 只能访问本地资源：
+1WebSettings.setAllowFileAccessFromFileUR..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/HTML5/2015-01-27-webkit-security.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《WebKit Security》 — Balance&url=http://blog.inching.org/HTML5/2015-01-27-webkit-security.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/HTML5/2015-01-27-webkit-security.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3aS27kMAwFwNz/0pltgEk774n2wlJpZfTHcnlBUCS/vuL1/WP9/OT6l/+v5J6f7nzDwsDAeC0j2bj9/Hqvyb4f98LAwDiAkWyZXH8KrC0vfzYMDAyM5HGvw+WnXdp9MTAwMNZud9dxd+2/GBgYpzGSw2RLujfdvO0sjoGB8ULGc9vPrx/pb2BgYLyK8V2u6+PoWop5fbfoqTAwMLZmtIX7pPSfjFbMU08MDIxzGGuNycW3NSi3/bEjBgbGMYw8yXui9L/WEP0l4GJgYGzKSMLiZAyiHW/NgzsGBsYJjHl7YJJQtmE9+RYDA2NXRlF8jwv99UG0DOKLjUwMDIwXMtqo3LYE2sNqOwQWncUxMDC2YMwDbl6kayNkXW7DwMA4gDEpbK2NfM3/i4GBcQJjkqitvYI1QF0FxMDA2IKR//SRQLk0lvHH68PAwNiUsXbruihWDnO0z4aBgXEOY3J9HdHvSjeLoywGBsZ2jLzc3zYP5mMZRW6LgYFxAKMdlcjHufKXkoTvX/bFwMA4gBEdFPPwtxSa22QRAwPjTMZd6eBaK3TUo8TAwNiUMRmwyHlrbdGCioGBsTUjX5NDZp5Ktg2JGoaBgfFaxiTIzqlrI2h1goiBgbEFow187b+SQDxBYmBgYERNxDK8JgW7qF6IgYGBEdxibURjknTeHHAxMDBewkgOsfNGQhu+CzAGBsbWjHbEoS3GJdQnMj0MDIwtGP8AgsrbGeNTGOcAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

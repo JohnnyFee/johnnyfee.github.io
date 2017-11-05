@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android 混淆从入门到精通 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="From: Android混淆从入门到精通 - 简书
+简介作为Android开发者，如果你不想开源你的应用，那么在应用发布前，就需要对代码进行混淆处理，从而让我们代码即使被反编译，也难以阅读。混淆概念虽然容易，但很多初学者也只是网上搜一些成型的混淆规则粘贴进自己项目，并没有对混淆有个深入的理解。本篇文章的目的就是让一个初学者在看完后，能在不进行任何帮助的情况下，独立写出适合自己代码的混淆规则。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 混淆从入门到精通">
+<meta property="og:url" content="http://blog.inching.org/Android/2016-11-05-android-util-deploy-proguard.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="From: Android混淆从入门到精通 - 简书
+简介作为Android开发者，如果你不想开源你的应用，那么在应用发布前，就需要对代码进行混淆处理，从而让我们代码即使被反编译，也难以阅读。混淆概念虽然容易，但很多初学者也只是网上搜一些成型的混淆规则粘贴进自己项目，并没有对混淆有个深入的理解。本篇文章的目的就是让一个初学者在看完后，能在不进行任何帮助的情况下，独立写出适合自己代码的混淆规则。">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 混淆从入门到精通">
+<meta name="twitter:description" content="From: Android混淆从入门到精通 - 简书
+简介作为Android开发者，如果你不想开源你的应用，那么在应用发布前，就需要对代码进行混淆处理，从而让我们代码即使被反编译，也难以阅读。混淆概念虽然容易，但很多初学者也只是网上搜一些成型的混淆规则粘贴进自己项目，并没有对混淆有个深入的理解。本篇文章的目的就是让一个初学者在看完后，能在不进行任何帮助的情况下，独立写出适合自己代码的混淆规则。">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android 混淆从入门到精通</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android 混淆从入门到精通</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-11-05T13:25:00.000Z" itemprop="datePublished" class="page-time">
+  2016-11-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简介"><span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#说在前面"><span class="post-toc-text">说在前面</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ProGuard作用"><span class="post-toc-text">ProGuard作用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本规则"><span class="post-toc-text">基本规则</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意事项"><span class="post-toc-text">注意事项</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#写在最后"><span class="post-toc-text">写在最后</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-util-deploy-proguard"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android 混淆从入门到精通</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-11-05 21:25:00" datetime="2016-11-05T13:25:00.000Z"  itemprop="datePublished">2016-11-05</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>From: <a href="http://www.jianshu.com/p/7436a1a32891" target="_blank" rel="external">Android混淆从入门到精通 - 简书</a></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>作为Android开发者，如果你不想开源你的应用，那么在应用发布前，就需要对代码进行混淆处理，从而让我们代码即使被反编译，也难以阅读。混淆概念虽然容易，但很多初学者也只是网上搜一些成型的混淆规则粘贴进自己项目，并没有对混淆有个深入的理解。本篇文章的目的就是让一个初学者在看完后，能在不进行任何帮助的情况下，独立写出适合自己代码的混淆规则。</p>
+<a id="more"></a>
+<h2 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h2><p>这里我们直接用<code>Android Studio</code>来说明如何进行混淆，<code>Android Studio</code>自身集成Java语言的ProGuard作为压缩，优化和混淆工具，配合Gradle构建工具使用很简单，只需要在工程应用目录的gradle文件中设置minifyEnabled为true即可。然后我们就可以到<code>proguard-rules.pro</code>文件中加入我们的混淆规则了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    ...</div><div class="line">    buildTypes &#123;</div><div class="line">        release &#123;</div><div class="line">            minifyEnabled <span class="literal">true</span></div><div class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上示例代码表示对release版本就行混淆处理。下面我们先来简介下ProGuard的三大作用，并简要说明下它们常用的命令。</p>
+<h2 id="ProGuard作用"><a href="#ProGuard作用" class="headerlink" title="ProGuard作用"></a>ProGuard作用</h2><p><strong>压缩</strong>（Shrinking）：默认开启，用以减小应用体积，移除未被使用的类和成员，并且会在<strong>优化</strong>动作执行之后再次执行（因为优化后可能会再次暴露一些未被使用的类和成员）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-dontshrink 关闭压缩</div></pre></td></tr></table></figure>
+<p><strong>优化</strong>（Optimization）：默认开启，在字节码级别执行优化，让应用运行的更快。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-dontoptimize  关闭优化</div><div class="line">-optimizationpasses n 表示proguard对代码进行迭代优化的次数，Android一般为<span class="number">5</span></div></pre></td></tr></table></figure>
+<p><strong>混淆</strong>（Obfuscation）：默认开启，增大反编译难度，类和类成员会被随机命名，除非用keep保护。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-dontobfuscate 关闭混淆</div></pre></td></tr></table></figure>
+<p>混淆后默认会在工程目录<code>app/build/outputs/mapping/release</code>下生成一个<code>mapping.txt</code>文件，这就是混淆规则，我们可以根据这个文件把混淆后的代码反推回源本的代码，所以这个文件很重要，注意保护好。原则上，代码混淆后越乱越无规律越好，但有些地方我们是要避免混淆的，否则程序运行就会出错，所以就有了下面我们要教大家的，如何让自己的部分代码避免混淆从而防止出错。</p>
+<h2 id="基本规则"><a href="#基本规则" class="headerlink" title="基本规则"></a>基本规则</h2><p>先看如下两个比较常用的命令，很多童鞋可能会比较迷惑以下两者的区别。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-keep <span class="class"><span class="keyword">class</span> <span class="title">cn</span>.<span class="title">hadcn</span>.<span class="title">test</span>.**</span></div><div class="line">-keep <span class="class"><span class="keyword">class</span> <span class="title">cn</span>.<span class="title">hadcn</span>.<span class="title">test</span>.*</span></div></pre></td></tr></table></figure>
+<p>一颗星表示只是保持该包下的类名，而子包下的类名还是会被混淆；两颗星表示把本包和所含子包下的类名都保持；用以上方法保持类后，你会发现类名虽然未混淆，但里面的具体方法和变量命名还是变了，这时如果既想保持类名，又想保持里面的内容不被混淆，我们就需要以下方法了</p>
+<p><code>-keep class cn.hadcn.test.* {*;}</code></p>
+<p>在此基础上，我们也可以使用Java的基本规则来保护特定类不被混淆，比如我们可以用<code>extend</code>，<code>implement</code>等这些Java规则。如下例子就避免所有继承Activity的类被混淆</p>
+<p><code>-keep public class * extends android.app.Activity</code></p>
+<p>如果我们要保留一个类中的内部类不被混淆则需要用<code>$</code>符号，如下例子表示保持ScriptFragment内部类JavaScriptInterface中的所有public内容不被混淆。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-keepclassmembers <span class="class"><span class="keyword">class</span> <span class="title">cc</span>.<span class="title">ninty</span>.<span class="title">chat</span>.<span class="title">ui</span>.<span class="title">fragment</span>.<span class="title">ScriptFragment</span>$<span class="title">JavaScriptInterface</span> </span>&#123;</div><div class="line">   <span class="keyword">public</span> *;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再者，如果一个类中你不希望保持全部内容不被混淆，而只是希望保护类下的特定内容，就可以使用</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="keyword">init</span>&gt;;     <span class="comment">//匹配所有构造器</span></div><div class="line">&lt;fields&gt;;   <span class="comment">//匹配所有域</span></div><div class="line">&lt;methods&gt;;  <span class="comment">//匹配所有方法方法</span></div></pre></td></tr></table></figure>
+<p>你还可以在<code>&lt;fields&gt;</code>或<code>&lt;methods&gt;</code>前面加上<code>private</code> 、<code>public</code>、<code>native</code>等来进一步指定不被混淆的内容，如</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-keep <span class="class"><span class="keyword">class</span> <span class="title">cn</span>.<span class="title">hadcn</span>.<span class="title">test</span>.<span class="title">One</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> &lt;methods&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>表示<code>One</code>类下的所有<code>public</code>方法都不会被混淆，当然你还可以加入参数，比如以下表示用JSONObject作为入参的构造函数不会被混淆</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-keep <span class="class"><span class="keyword">class</span> <span class="title">cn</span>.<span class="title">hadcn</span>.<span class="title">test</span>.<span class="title">One</span> </span>&#123;</div><div class="line">   <span class="keyword">public</span> &lt;init&gt;(org.json.JSONObject);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有时候你是不是还想着，我不需要保持类名，我只需要把该类下的特定方法保持不被混淆就好，那你就不能用keep方法了，keep方法会保持类名，而需要用<code>keepclassmembers</code> ，如此类名就不会被保持，为了便于对这些规则进行理解，官网给出了以下表格</p>
+<table>
+<thead>
+<tr>
+<th>保留</th>
+<th>防止被移除或者被重命名</th>
+<th>防止被重命名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类和类成员</td>
+<td>-keep</td>
+<td>-keepnames</td>
+</tr>
+<tr>
+<td>仅类成员</td>
+<td>-keepclassmembers</td>
+<td>-keepclassmembernames</td>
+</tr>
+<tr>
+<td>如果拥有某成员，保留类和类成员</td>
+<td>-keepclasseswithmembers</td>
+<td>-keepclasseswithmembernames</td>
+</tr>
+</tbody>
+</table>
+<p>移除是指在<strong>压缩(Shrinking)</strong>时是否会被删除。以上内容时混淆规则中需要重点掌握的，了解后，基本所有的混淆规则文件你应该都能看懂了。再配合以下几点注意事项，</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>1，jni方法不可混淆，因为这个方法需要和native方法保持一致；</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-keepclasseswithmembernames <span class="class"><span class="keyword">class</span> * </span>&#123; <span class="comment"># 保持native方法不被混淆</span></div><div class="line">    native &lt;methods&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2，反射用到的类不混淆(否则反射可能出现问题)；</p>
+<p>3，AndroidMainfest中的类不混淆，所以四大组件和Application的子类和Framework层下所有的类<strong>默认</strong>不会进行混淆。自定义的View<strong>默认</strong>也不会被混淆；所以像网上贴的很多排除自定义View，或四大组件被混淆的规则在Android Studio中是无需加入的；</p>
+<p>4，与服务端交互时，使用GSON、fastjson等框架解析服务端数据时，所写的JSON对象类不混淆，否则无法将JSON解析成对应的对象；</p>
+<p>5，使用第三方开源库或者引用其他第三方的SDK包时，如果有特别要求，也需要在混淆文件中加入对应的混淆规则；</p>
+<p>6，有用到WebView的JS调用也需要保证写的接口方法不混淆，原因和第一条一样；</p>
+<p>7，Parcelable的子类和Creator静态成员变量不混淆，否则会产生Android.os.BadParcelableException异常；</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-keep <span class="class"><span class="keyword">class</span> * <span class="keyword">implements</span> <span class="title">Android</span>.<span class="title">os</span>.<span class="title">Parcelable</span> </span>&#123; <span class="comment"># 保持Parcelable不被混淆</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Android.os.Parcelable$Creator *;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>8，使用enum类型时需要注意避免以下两个方法混淆，因为enum类的特殊性，以下两个方法会被反射调用，见第二条规则。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-keepclassmembers <span class="keyword">enum</span> * &#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> **[] values();</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ** <span class="title">valueOf</span><span class="params">(java.lang.String)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>发布一款应用除了设<code>minifyEnabled</code>为<code>ture</code>，你也应该设置<code>zipAlignEnabled</code>为<code>true</code>，像<code>Google Play</code>强制要求开发者上传的应用必须是经过zipAlign的，zipAlign可以让安装包中的资源按4字节对齐，这样可以减少应用在运行时的内存消耗。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2016-11-05-android-util-deploy-proguard.html" target="_blank" rel="external">http://blog.inching.org/Android/2016-11-05-android-util-deploy-proguard.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2016-11-05-android-util-deploy-proguard.html&title=《Android 混淆从入门到精通》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2016-11-05-android-util-deploy-proguard.html&title=《Android 混淆从入门到精通》 — Balance&source=From: Android混淆从入门到精通 - 简书
+简介作为Android开发者，如果你不想开源你的应用，那么在应用发布前，就需要对代码进行混淆处理，从..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2016-11-05-android-util-deploy-proguard.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android 混淆从入门到精通》 — Balance&url=http://blog.inching.org/Android/2016-11-05-android-util-deploy-proguard.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2016-11-05-android-util-deploy-proguard.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2016-11-05-android-ui-statusbar-color.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android Status Color</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Data/2016-11-03-encoding-javascript-unicode.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">What every JavaScript developer should know about Unicode</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2016-11-05-android-util-deploy-proguard.html&title=《Android 混淆从入门到精通》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2016-11-05-android-util-deploy-proguard.html&title=《Android 混淆从入门到精通》 — Balance&source=From: Android混淆从入门到精通 - 简书
+简介作为Android开发者，如果你不想开源你的应用，那么在应用发布前，就需要对代码进行混淆处理，从..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2016-11-05-android-util-deploy-proguard.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android 混淆从入门到精通》 — Balance&url=http://blog.inching.org/Android/2016-11-05-android-util-deploy-proguard.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2016-11-05-android-util-deploy-proguard.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqElEQVR42u3ay1LDMAwFUP7/p2HNMDFXD5cyc7Ji0iboeGGrkj4+4uszvp6eerrz8/tPd56eWrjw8PDwVkM/B1oN6/zmZLGqT+Hh4eHd45236fOrtzb3Ki85WvDw8PDejXcOMcl1q2w8PDy8/8g7b+Ln+9XkOE/i8fDw8F7Py1+db9/VdPmPay14eHh4MS/vIr3P31f6e3h4eHirAwHV5DhfrEk8v0SLh4eHd4E3T5erg1a99Le6cHh4eHh/xeuNQ/XKE/kxU/0OHh4e3j3eZFhqMoKQlHFH5Qk8PDy8VV7e8q+mv/O21qSEgYeHh/ca3qQo0GtTTb5ZOPHw8PDwLvDywuvk097g6fnYKPf38PDw8Ma8KDEdlHTPsF7a3Twq8PDw8FZ5Z/ekSFEdFMjHCwqDCHh4eHgXeL0rT5fzwax5+WMNiYeHh3d8T/Ijf2sT7zXPqsn9L0NXeHh4eKu86mY9Ke9OmmF5tHh4eHg3ePmgQHUJkpQ3SbiTw6NcksDDw8Nr8arjU3lJt3eobBUjvk1G4OHh4a3y8qJA/s+qm3t17CCJDQ8PD+82r5ciz8cIdhv/0WQEHh4e3phXHSfdGjjo3UmWDw8PD+81vLwRlRRn89ZXbzyrUBrGw8PDu8DLXzQZzMqPit44QhQPHh4e3iovf7hcD47LEOV0OV4+PDw8vNu8HN97djJ2UE3Z8fDw8G7z5iWGyShVr6kWHSR4eHh4q7zP4pUHnSfNyeJWyx94eHh493jVrTZpRFWbVb1jZlSewMPDwxvztl69FXSvfPwYFR4eHt41XjXZrba+Ji230YWHh4f3lrxegaDKy8vNeHh4eO/GSzb3/NNesaMw+IWHh4d3jVcdjZqMHeQxTBJ0PDw8vHu86i/6Xhus1+AfBY2Hh4e3z/sCgkAW28HpR4wAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

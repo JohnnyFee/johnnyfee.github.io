@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>WordPress Users, Roles, and Capabilities | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tutorial,wordpress">
+    <meta name="description" content="Getting User DataIn this section, we’ll go over how to instantiate a WordPress user object in code and how to get basic user information, like login and email address, and user metadata out of that ob">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WordPress Users, Roles, and Capabilities">
+<meta property="og:url" content="http://blog.inching.org/WordPress/2015-06-07-wordpress-members.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="Getting User DataIn this section, we’ll go over how to instantiate a WordPress user object in code and how to get basic user information, like login and email address, and user metadata out of that ob">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WordPress Users, Roles, and Capabilities">
+<meta name="twitter:description" content="Getting User DataIn this section, we’ll go over how to instantiate a WordPress user object in code and how to get basic user information, like login and email address, and user metadata out of that ob">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">WordPress Users, Roles, and Capabilities</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">WordPress Users, Roles, and Capabilities</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-06-06T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2015-06-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/WordPress/">WordPress</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Getting-User-Data"><span class="post-toc-text">Getting User Data</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Add-Update-and-Delete-Users"><span class="post-toc-text">Add, Update, and Delete Users</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Hooks-and-Filters"><span class="post-toc-text">Hooks and Filters</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Roles-and-Capabilities"><span class="post-toc-text">Roles and Capabilities</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Checking-a-User’s-Role-and-Capabilities"><span class="post-toc-text">Checking a User’s Role and Capabilities</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Creating-Custom-Roles-and-Capabilities"><span class="post-toc-text">Creating Custom Roles and Capabilities</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Extending-the-WP-User-Class"><span class="post-toc-text">Extending the WP_User Class</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Adding-Registration-and-Profile-Fields"><span class="post-toc-text">Adding Registration and Profile Fields</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Add-our-field-to-the-registration-page"><span class="post-toc-text">Add our field to the registration page</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Update-our-user’s-age-after-registering"><span class="post-toc-text">Update our user’s age after registering</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Add-the-age-field-to-the-user-profile-page"><span class="post-toc-text">Add the age field to the user profile page.</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Update-our-field-when-updating-a-profile"><span class="post-toc-text">Update our field when updating a profile:</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Customizing-the-Users-Table-in-the-Dashboard"><span class="post-toc-text">Customizing the Users Table in the Dashboard</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Plugins"><span class="post-toc-text">Plugins</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Theme-My-Login"><span class="post-toc-text">Theme My Login</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Hide-Admin-Bar-from-Non-Admins"><span class="post-toc-text">Hide Admin Bar from Non-Admins</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Paid-Memberships-Pro"><span class="post-toc-text">Paid Memberships Pro</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#PMPro-Register-Helper"><span class="post-toc-text">PMPro Register Helper</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Members"><span class="post-toc-text">Members</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-wordpress-members"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">WordPress Users, Roles, and Capabilities</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-06-07 00:00:00" datetime="2015-06-06T16:00:00.000Z"  itemprop="datePublished">2015-06-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/WordPress/">WordPress</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Getting-User-Data"><a href="#Getting-User-Data" class="headerlink" title="Getting User Data"></a>Getting User Data</h2><p>In this section, we’ll go over how to instantiate a WordPress user object in code and how to get basic user information, like login and email address, and user metadata out of that object.</p>
+<p>The workhorse for managing WordPress users in code is the <code>WP_User</code> class. Just like anything else in WordPress and PHP, there are a few different ways to get a WP_User object to work with. Here are some of the most popular methods:</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">// get the WP_User object WordPress creates for the currently logged-in user</div><div class="line">global $current_user;</div><div class="line"></div><div class="line">// get the currently logged-in user with the wp_get_current_user() function</div><div class="line">$user = wp_get_current_user();</div><div class="line"></div><div class="line">// set some variables</div><div class="line">$user_id = 1;</div><div class="line">$username = &apos;jason&apos;;</div><div class="line">$email = &apos;jason@strangerstudios.com&apos;;</div><div class="line"></div><div class="line">// get a user by ID</div><div class="line">$user = wp_getuserdata( $user_id );</div><div class="line"></div><div class="line">// get a user by another field</div><div class="line">$user1 = wp_get_user_by( &apos;login&apos;, $username );</div><div class="line">$user2 = wp_get_user_by( &apos;email&apos;, $email );</div><div class="line"></div><div class="line">// use the WP_User constructor directly</div><div class="line">$user = new WP_User( $user_id );</div><div class="line"></div><div class="line">//use the WP_User constructor with a username</div><div class="line">$user = new WP_User( $username );</div></pre></td></tr></table></figure>
+<p>Once you have a WP_User object, you can get any piece of user data you want:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// get the currently logged-in user</div><div class="line">$user = wp_get_current_user();</div><div class="line"></div><div class="line">// echo the user&apos;s display_name</div><div class="line">echo $user-&gt;display_name;</div><div class="line"></div><div class="line">// use user&apos;s email address to send an email</div><div class="line">wp_mail( $user-&gt;user_email, &apos;Email Subject&apos;, &apos;Email Body&apos; );</div><div class="line"></div><div class="line">// get any user meta value</div><div class="line">echo &apos;Department: &apos; . $user-&gt;department;</div></pre></td></tr></table></figure>
+<p>Data stored in the <code>wp_users</code> table (<code>user_login</code>, <code>user_nicename</code>, <code>user_email</code>, <code>user_url</code>, <code>user_registered</code>, <code>user_status</code>, and <code>display_name</code>) can be accessed using the arrow operator, for example, <code>$user-&gt;display_name</code>.</p>
+<p>Any value in the <code>wp_usermeta</code> table can also be accessed by using the arrow operator, for example, <code>$user-&gt;meta_key</code>, or by using the <code>get_user_meta()</code> function. These two lines of code produce the same result:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$full_name = trim( $user-&gt;first_name . &apos; &apos; . $user-&gt;last_name );</div><div class="line">$full_name = trim( get_user_meta( $user-&gt;ID, &apos;first_name&apos; ) .</div><div class="line">    &apos; &apos; . get_user_meta( $user-&gt;ID, &apos;last_name&apos; ) );</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>It’s useful to understand the trick WordPress is using to allow you to access user meta on demand as if each meta field was a property of the WP_User class. The WP_User class is using overloaded properties or the <code>__get()</code> “magic method.”</p>
+<p>With magic methods, any property of the WP_User object that you try to get that isn’t an actual property of the object will be passed to the <code>_get()</code> method of the class.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function __get( $key ) &#123;</div><div class="line">if ( isset( $this-&gt;data-&gt;$key ) ) &#123;</div><div class="line">        $value = $this-&gt;data-&gt;$key;</div><div class="line">        &#125; else &#123;</div><div class="line">                $value = get_user_meta( $this-&gt;ID, $key, true );</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return $value;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Let’s analyze this. The method first checks if a value exists in the <code>$data</code> property of the WP_User object. If so, that value is used. If not, the method uses the <code>get_user_meta()</code> function to see if any meta value exists using the key passed in.</p>
+<p>Because we’re loading meta values on demand this way, there is less memory overhead when instantiating a new WP_User object. On the other hand, because meta values aren’t available until you specifically ask for them, you can’t dump all metadata on a user using code like <code>print_r( $user )</code> or <code>print_r( $user-&gt;data )</code>.</p>
+<p>To loop through all the metadata for a user, use the <code>get_user_meta()</code> function with no <code>$key</code> parameter passed in:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// dump all metadata for a user</div><div class="line">$user_meta = get_user_meta( $user_id );</div><div class="line">foreach( $user_meta as $key =&gt; $value )</div><div class="line">    echo $key . &apos;: &apos; . $value . &apos;&lt;br /&gt;&apos;;</div></pre></td></tr></table></figure>
+<p>Knowing how WordPress uses the <code>__get()</code> function is interesting, but also important so you avoid a couple of the limitations of the <code>__get()</code> magic method.</p>
+<p>The <code>__get()</code> and <code>__set()</code> methods are not called when assignments are chained together. For example, the code <code>$year = $user-&gt;graduation_year = &#39;2012&#39;</code> would produce inconsistent results.</p>
+<p>Similarly <code>__get()</code> is not called when coded within an <code>empty()</code> or <code>isset()</code> function call. So <code>if(empty($user-&gt;graduation_year))</code> will also be false, even if there exists some user meta with the key <code>graduation_year</code>.</p>
+<p>The solution to these two issues is to get a little more verbose with your code:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// Split assignments into multiple lines when using magic methods.</div><div class="line">$user-&gt;graduation_year = &apos;2012&apos;;</div><div class="line">$year = &apos;2012&apos;;</div><div class="line"></div><div class="line">//To test if a meta value is empty, set a local variable first.</div><div class="line">$year = $user-&gt;graduation_year;</div><div class="line">if ( empty( $year ) )</div><div class="line">    $year = &apos;2012&apos;;</div></pre></td></tr></table></figure>
+<h2 id="Add-Update-and-Delete-Users"><a href="#Add-Update-and-Delete-Users" class="headerlink" title="Add, Update, and Delete Users"></a>Add, Update, and Delete Users</h2><p>We touched on some basic functions for adding, updating, and deleting users in <a href="ch02.html" title="Chapter 2. WordPress Basics">Chapter 2</a>, but since working with user data is such an important part of any web application, we will do a brief overview with some additional examples and different use case scenarios here.</p>
+<p>Occasionally, you will need to add users through code instead of using the WordPress dashboard. In our SchoolPress app, we might want to allow teachers to enter a list of email addresses and generate a user for each email entered.</p>
+<p>Or maybe you want to customize the registration process. The built-in WordPress registration form is difficult to customize. It’s often easier to build your own form and use WordPress functions to add the user yourself on the backend.<sup>[</sup>17]</p>
+<p>As you should already know, the function for adding a user to WordPress is <code>wp_insert_user()</code>, which takes an array of user data and inserts it into the <code>wp_users</code> and <code>wp_usermeta</code> tables:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">// insert user from values we&apos;ve gathered</div><div class="line">$user_id = wp_insert_user( array(</div><div class="line">        &apos;user_login&apos; =&gt; $username,</div><div class="line">        &apos;user_pass&apos; =&gt; $password,</div><div class="line">        &apos;user_email&apos; =&gt; $email,</div><div class="line">        &apos;first_name&apos; =&gt; $firstname,</div><div class="line">        &apos;last_name&apos; =&gt; $lastname</div><div class="line">    )</div><div class="line">);</div><div class="line"></div><div class="line">// check if username or email has already been used</div><div class="line">if ( is_wp_error( $user_id ) )&#123;</div><div class="line">    echo $return-&gt;get_error_message();</div><div class="line">&#125; else &#123;</div><div class="line">    // continue on with whatever you want to do with the new $user_id</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The following code will automatically log someone in after adding that person’s user. The <code>wp_signon()</code> function authenticates the user and sets up the secure cookies to log the user in:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// okay, log them in to WP</div><div class="line">$creds = array();</div><div class="line">$creds[&apos;user_login&apos;] = $username;</div><div class="line">$creds[&apos;user_password&apos;] = $password;</div><div class="line">$creds[&apos;remember&apos;] = true;</div><div class="line">$user = wp_signon( $creds, false );</div></pre></td></tr></table></figure>
+<p>Updating users is as easy as adding them with the <code>wp_update_user()</code> function. You pass in an array of user data and metadata. As long as there is an ID key in the array with a valid user ID as the value, WordPress will set any specified user values:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// this will update a user&apos;s email and leave other values alone</div><div class="line">$userdata = array( &apos;ID&apos; =&gt; 1, &apos;user_email&apos; =&gt; &apos;jason@strangerstudios.com&apos; );</div><div class="line">wp_update_user( $userdata );</div><div class="line"></div><div class="line">// this function is also perfect for updating multiple user meta fields at once</div><div class="line">wp_update_user( array(</div><div class="line">    &apos;ID&apos; =&gt; 1,</div><div class="line">    &apos;company&apos; =&gt; &apos;Stranger Studios&apos;,</div><div class="line">    &apos;title&apos; =&gt; &apos;CEO&apos;,</div><div class="line">    &apos;personality&apos; =&gt; &apos;crescent fresh&apos;</div><div class="line">));</div></pre></td></tr></table></figure>
+<p>A user’s <code>user_login</code> cannot be updated through <code>wp_update_user</code>. Also, if a user’s <code>user_pass</code> is updated, the user will be logged out. You can use the preceding auto-login code above to log the user back in using the new password.</p>
+<p>You can also update one user meta value at a time using the <code>update_user_meta($user_id, $meta_key, $meta_value, $prev_value)</code> function.</p>
+<p>The following code segments illustrate some more features:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">// arrays will get serialized</div><div class="line">$children = array( &apos;Isaac&apos;, &apos;Marin&apos;);</div><div class="line">update_user_meta( $user_id, &apos;children&apos;, $children );</div><div class="line"></div><div class="line">// you can also store array by storing multiple values with the same key</div><div class="line">update_user_meta( $user_id, &apos;children&apos;, &apos;Isaac&apos; );</div><div class="line">update_user_meta( $user_id, &apos;children&apos;, &apos;Marin&apos; );</div><div class="line"></div><div class="line">// when storing multiple values, specify the $prev_value parameter</div><div class="line">// to select which one changes</div><div class="line">update_user_meta( $user_id, &apos;children&apos;, &apos;Isaac Ford&apos;, &apos;Isaac&apos; );</div><div class="line">update_user_meta( $user_id, &apos;children&apos;, &apos;Marin Josephine&apos;, &apos;Marin&apos; );</div><div class="line"></div><div class="line">//delete all user meta by key</div><div class="line">delete_user_meta( $user_id, &apos;children&apos; );</div><div class="line"></div><div class="line">//delete just one row when there are multiple values for one key</div><div class="line">delete_user_meta( $user_id, &apos;children&apos;, &apos;Isaac Ford&apos; );</div></pre></td></tr></table></figure>
+<p>Note that in the code, I show two different ways to store arrays in user meta. This is similar to storing options via <code>update_option()</code> or post meta via <code>update_post_meta()</code>. The first method (one serialized value per key) keeps row count down on the <code>wp_usermeta</code> table, which can make queries by <code>meta_key</code> faster. The second method (multiple values per key) allows you to query by <code>meta_value</code>. For example, storing child names as separate user meta entries lets you do queries like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// get the IDs of all users with children named Isaac</div><div class="line">$parents_of_isaac = $wpdb-&gt;get_col( &quot;SELECT user_id</div><div class="line">        FROM $wpdb-&gt;usermeta</div><div class="line">        WHERE meta_key = &apos;children&apos;</div><div class="line">        AND meta_value = &apos;Isaac&apos;&quot; );</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>While it’s possible to query the <code>wp_usermeta</code> and <code>wp_postmeta</code> tables by <code>meta_value</code>, be careful about query times. The <code>meta_value</code> column is not indexed, and so queries against large datasets may be slow. Many-to-one relationships like this can also be stored in custom taxonomies, which can show better performance.</p>
+<p>Deleting a user, while dangerous, is incredibly easy to do in code:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//this file contains wp_delete_user and is not always loaded, so let&apos;s make sure</div><div class="line">require_once( ABSPATH . &apos;/wp-admin/includes/user.php&apos; );</div><div class="line"></div><div class="line">//delete the user</div><div class="line">wp_delete_user( $user_id );</div><div class="line"></div><div class="line">//or delete a user and reassign their posts to user with ID #1</div><div class="line">wp_delete_user( $user_id, 1 );</div></pre></td></tr></table></figure>
+<p>For network site setups, you will need to use the <code>wpmu_delete_user()</code> function to delete the user from the entire network. Otherwise <code>wp_delete_user()</code> just deletes the user from the current blog. You can use the <code>is_multisite()</code> function to detect which function should be used:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// I want to make sure we really delete the user.</div><div class="line">if ( is_multisite() )</div><div class="line">    wp_delete_user( $user_id );</div><div class="line">else</div><div class="line">    wpmu_delete_user( $user_id );</div></pre></td></tr></table></figure>
+<h2 id="Hooks-and-Filters"><a href="#Hooks-and-Filters" class="headerlink" title="Hooks and Filters"></a>Hooks and Filters</h2><p>Perhaps more common than adding and updating user data yourself are scenarios where you want to do some other bit code when new users are added or deleted. For example, you may want to create and link a new CPT post to a user when she registers. Or maybe you want to clean up connections and data stored in custom tables when a user is deleted. This can be done through some user-related hooks and filters.</p>
+<p>The hook to run code after a user is registered is <code>user_register</code>. The hook passes in the user ID of the newly created user:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//create a new &quot;course&quot; CPT when a teacher registers</div><div class="line">function sp_user_register( $user_id )&#123;</div><div class="line">    // check if the new user is a teacher (see chapter 15 for details)</div><div class="line">    if ( pmpro_hasMembershipLevel( &apos;teacher&apos;, $user_id ) ) &#123;</div><div class="line">        // add a new &quot;course&quot; CPT with this user as author</div><div class="line">        wp_insert_post( array(</div><div class="line">            &apos;post_title&apos; =&gt; &apos;My First Course&apos;,</div><div class="line">            &apos;post_content&apos; =&gt; &apos;This is a sample course...&apos;,</div><div class="line">            &apos;post_author&apos; =&gt; $user_id,</div><div class="line">            &apos;post_status&apos; =&gt; &apos;draft&apos;,</div><div class="line">            &apos;post_type&apos; =&gt; &apos;course&apos;</div><div class="line"></div><div class="line">        ) );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">add_action( &apos;user_register&apos;, &apos;sp_user_register&apos; );</div></pre></td></tr></table></figure>
+<p>The hook to run code just <em>before</em> deleting a user is <code>delete_user</code>. A similar hook <code>deleted_user</code> (note the past tense) runs just <em>after</em> a user has been deleted.</p>
+<p>These hooks are mostly interchangeable, but there are a couple things to note:</p>
+<ul>
+<li>If you hook on <code>delete_user</code> early enough, you might be able to abort the user delete.</li>
+<li>If you hook on <code>deleted_user</code>, some user data and connections may already be gone and unavailable:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// send an email when a user is being deleted</div><div class="line">function sp_delete_user( $user_id )&#123;</div><div class="line">    $user = get_userdata( $user_id );</div><div class="line">    wp_mail( $user-&gt;user_email,</div><div class="line">        &quot;You&apos;ve been deleted.&quot;,</div><div class="line">        &apos;Your account at SchoolPress has been deleted.&apos;</div><div class="line">    );</div><div class="line">&#125;</div><div class="line">// want to be able to get user_email so hook in early</div><div class="line">add_action( &apos;delete_user&apos;, &apos;sp_delete_user&apos; );</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h2 id="Roles-and-Capabilities"><a href="#Roles-and-Capabilities" class="headerlink" title="Roles and Capabilities"></a>Roles and Capabilities</h2><p>Roles and capabilities are how WordPress controls what users have access to view and do on your site. Each user may have one role, and each role will have one or many capabilities. Each capability will determine if a user can or can’t view a certain type of content or perform a certain action.</p>
+<p>There are five default roles in every WordPress install: Admin, Editor, Author, Contributor, and Subscriber. If you are running a network site, you’ll have a sixth role, Super Admin, which has admin access to all sites on the network.</p>
+<p>A full list of capabilities and how they map to the default WordPress roles can be found on the <a href="http://bit.ly/roles-caps" target="_blank" rel="external">WordPress Codex Roles and Capabilities page</a>.</p>
+<p>In a little bit, we’ll go over how to create new roles outside of the WordPress defaults. However, for most apps it makes sense to stick to the default roles: have your app administrators use the Admin role and have all of your users/customers use the Subscriber role.</p>
+<p>If your app users will be creating content, consider making them Authors (can create and publish posts) or Contributors (can create, but not publish posts). If your app has moderators, consider making them Editors.</p>
+<p>Using the default roles is a good idea because certain plugins will expect your users to have one of these roles. If your admins are really users with an office manager role, you may have a bit of extra work to get a third-party plugin to work with those users. The opposite is sometimes true as well. You might have to hide functionality made available to your users based on the roles they have, especially if you are using roles outside of Admin (access to everything) and Subscribers (can just view stuff).</p>
+<h3 id="Checking-a-User’s-Role-and-Capabilities"><a href="#Checking-a-User’s-Role-and-Capabilities" class="headerlink" title="Checking a User’s Role and Capabilities"></a>Checking a User’s Role and Capabilities</h3><p>Sometimes you’ll need to check if a user is able to do something before you let her do it. You do this with the <code>current_user_can()</code> function. This function takes one parameter, which is a string value for the <code>$capability</code> to check. The following code illustrates the usage of this function:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">if ( current_user_can( &apos;manage_options&apos; ) ) &#123;</div><div class="line">    // has the manage options capability, typically an admin</div><div class="line">&#125;</div><div class="line"></div><div class="line">if ( current_user_can( &apos;edit_user&apos;, $user_id ) ) &#123;</div><div class="line">    // can edit the user with ID = $user_id.</div><div class="line">    // typically either the user himself or an admin</div><div class="line">&#125;</div><div class="line"></div><div class="line">if ( current_user_can( &apos;edit_post&apos;, $post_id ) ) &#123;</div><div class="line">    // can edit the post with ID = $post_id.</div><div class="line">    // typically the author of the post or an admin or editor</div><div class="line">&#125;</div><div class="line"></div><div class="line">if ( current_user_can( &apos;subscriber&apos; ) ) &#123;</div><div class="line">    // one way to check if the current user is a subscriber</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>You can also use the function <code>user_can()</code> to check if someone other than the current user has a capability. Pass in the <code>$user_id</code> of the user you want to check, the capability, and any other arguments needed:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">    Output comments for the current post,</div><div class="line">    highlighting anyone who has capabilities to edit it.</div><div class="line">*/</div><div class="line">global $post;   // current post we are looking at</div><div class="line"></div><div class="line">$comments = get_comments( &apos;post_id=&apos; . $post-&gt;ID );</div><div class="line">foreach( $comments as $comment )&#123;</div><div class="line">    // default CSS classes for all comments</div><div class="line">    $classes = &apos;comment&apos;;</div><div class="line"></div><div class="line">    // add can-edit CSS class to authors</div><div class="line">    if ( user_can( $comment-&gt;user_id, &apos;edit_post&apos;, $post-&gt;ID ) )</div><div class="line">        $classes .= &apos; can-edit&apos;;</div><div class="line">?&gt;</div><div class="line">&lt;div id=&quot;comment-&lt;?php echo $comment-&gt;comment_ID;?&gt;&quot;</div><div class="line">    class=&quot;&lt;?php echo $classes;?&gt;&quot;&gt;</div><div class="line">    Comment by &lt;?php echo $comment-&gt;comment_author;?&gt;:</div><div class="line">    &lt;?php echo wpautop( $comment-&gt;comment_content );?&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;?php</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>While it is possible to check for a user’s role using <code>current_user_can()</code>, it is better practice to test a user’s capabilities instead of her role. This will allow your code to continue to work even if users are given different roles or roles are assigned different capabilities. For example, checking for <code>manage_options</code> will work how you intend whether the user is an Admin or a custom role with the <code>manage_options</code> capability added.</p>
+<p>Testing a user’s role should be limited to cases where you really need to know her role instead of her capability. If you find yourself checking for someone’s role before performing certain actions, you should take it as a hint that you need to add a new capability.</p>
+<p>The following is a function to upgrade any Subscriber whose ID is passed in to the Author role. To be extra sure, we check the roles array of the user object instead of using the <code>user_can()</code> function. We use the <code>set_role()</code> method of the user class to set the new role:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function upgradeSubscriberToAuthor( $user_id ) &#123;</div><div class="line">    $user = new WP_User( $user_id );</div><div class="line">    if ( in_array( &apos;subscriber&apos;, $user-&gt;roles ) )</div><div class="line">            $user-&gt;set_role( &apos;author&apos; );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Creating-Custom-Roles-and-Capabilities"><a href="#Creating-Custom-Roles-and-Capabilities" class="headerlink" title="Creating Custom Roles and Capabilities"></a>Creating Custom Roles and Capabilities</h3><p>As we said earlier, it’s a good idea to stick with the default WordPress roles if possible. However, if you have different classes of users and need to restrict what they are doing in new ways, adding custom roles and capabilities is the way to do it.</p>
+<p>In our SchoolPress app, teachers are just Authors and students are just Subscribers. However, we do need a custom role for office managers who can manage users but cannot edit content, themes, options, plugins, or the general WordPress settings. We can setup the Office Manager role like so:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">function sp_roles_and_caps() &#123;</div><div class="line">    // Office Manager Role</div><div class="line">    remove_role(&apos;office&apos;);      // in case we updated the caps below</div><div class="line">    add_role( &apos;office&apos;, &apos;Office Manager&apos;, array(</div><div class="line">        &apos;read&apos; =&gt; true,</div><div class="line">        &apos;create_users&apos; =&gt; true,</div><div class="line">        &apos;delete_users&apos; =&gt; true,</div><div class="line">        &apos;edit_users&apos; =&gt; true,</div><div class="line">        &apos;list_users&apos; =&gt; true,</div><div class="line">        &apos;promote_users&apos; =&gt; true,</div><div class="line">        &apos;remove_users&apos; =&gt; true,</div><div class="line">          &apos;office_report&apos; =&gt; true // new cap for our custom report</div><div class="line">    ));</div><div class="line">&#125;</div><div class="line">// run this function on plugin activation</div><div class="line">register_activation_hook( __FILE__, &apos;sp_roles_and_caps&apos; );</div></pre></td></tr></table></figure>
+<p>When the <code>add_role()</code> function is run, it updates the <code>wp_user_roles</code> option in the <code>wp_options</code> table, where WordPress looks to get information on roles and capabilities. So you only want to run this function once upon activation instead of every time at runtime. That’s why we register this function using <code>register_activation_hook()</code>.</p>
+<p>We also run <code>remove_role(&#39;office&#39;)</code> at the start there, which is useful if you want to delete a role completely, but is also useful to clear out the “office” role before adding it again in case you edited the capabilities or other settings for the role. Without the <code>remove_role()</code> line, the <code>add_role()</code> line will not run since the role already exists.</p>
+<p>The <code>add_role()</code> function takes three parameters: a role name, a display name, and an array of capabilities. Use the reference in the Codex to find the names of the default capabilities or look them up in the <em>/wp-admin/includes/schema.php</em> file of your WordPress install.</p>
+<p>Adding new capabilities is as simple as including a new capability name in the <code>add_role()</code> call or using the <code>add_cap()</code> method on an existing role. Here is an example showing how to get an instance of the role class and add a capability to it:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// give admins our office_report cap to let them view that report</div><div class="line">$role = get_role( &apos;administrator&apos; );</div><div class="line">$role-&gt;add_cap( &apos;office_report&apos; );</div></pre></td></tr></table></figure>
+<p>Again, this code only needs to run once, which will save it in the database. Put code like this inside of a function registered via <code>register_activation_hook()</code> just like the last example.</p>
+<p>You can also use the <code>remove_cap()</code> method of the role class, which is useful if you want to remove some functionality from the default roles. For example, the following code will remove the <code>edit_pages</code> capabilities from Editors so they can edit any blog post, but no pages (post of type “page”):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// don&apos;t let editors edit pages</div><div class="line">$role = get_role( &apos;editor&apos; );</div><div class="line">$role-&gt;remove_cap( &apos;edit_pages&apos; );</div></pre></td></tr></table></figure>
+<p>You can do some powerful things by adding and editing roles and capabilities. Defining what users have access to view and do is an important part of building an app. Different roles can be built for different membership levels or upgrades associated with your product. </p>
+<h2 id="Extending-the-WP-User-Class"><a href="#Extending-the-WP-User-Class" class="headerlink" title="Extending the WP_User Class"></a>Extending the WP_User Class</h2><p>We can extend the WP_User class to create useful classes that will help us organize our code related to different types of users.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// Student is a class that extends WP_User</div><div class="line">$student = new Student();</div><div class="line">foreach( $student-&gt;getAssignments() as $assignment ) &#123;</div><div class="line">        // assignment here is an instance of a class that extends WP_Post</div><div class="line">    $assignment-&gt;print();</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>And here is how that code would look in a less object-oriented way:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$student = wp_get_current_user(); // return WP_User object for current user</div><div class="line">foreach( sp_getAssignmentsByUser( $student-&gt;ID ) as $assignment ) &#123;</div><div class="line">    sp_printAssignment( $assignment-&gt;ID );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Both blocks of code are functionally equivalent, but the first example is easier to read and work with. Perhaps more importantly, having all of your student-related functions coded as methods on the Student class will help keep things organized.</p>
+<p>Here are the initialization and <code>getAssignments()</code> method for the Student class:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">WP_User</span> </span>&#123;</div><div class="line">    <span class="comment">// no constructor so WP_User's constructor is used</span></div><div class="line"></div><div class="line">    <span class="comment">// method to get assignments for this Student</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getAssignments</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// get assignments via get_posts if we haven't yet</span></div><div class="line">        <span class="keyword">if</span> ( ! <span class="keyword">isset</span>( <span class="keyword">$this</span>-&gt;data-&gt;assignments ) )</div><div class="line">            <span class="keyword">$this</span>-&gt;data-&gt;assignments = get_posts( <span class="keyword">array</span>(</div><div class="line">                <span class="string">'post_type'</span> =&gt; <span class="string">'assignment'</span>,<span class="comment">// assignments</span></div><div class="line">                <span class="string">'numberposts'</span> =&gt; <span class="number">-1</span>,        <span class="comment">// all posts</span></div><div class="line">                <span class="string">'author'</span> =&gt; <span class="keyword">$this</span>-&gt;ID       <span class="comment">// user ID for this Student</span></div><div class="line">            ));</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;data-&gt;assignments;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// magic method to detect $student-&gt;assignments</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__get</span><span class="params">( $key )</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> ( $key == <span class="string">'assignments'</span> )</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;getAssignments();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            <span class="comment">// fallback to default WP_User magic method</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">parent</span>::__get( $key );</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>Above we define the Student class to extend the WP_User class by just adding <code>extends WP_User</code> to the class definition.</p>
+<p>We don’t write our own constructor function because we want to use the same one as the WP_User class. Namely, we want to be able to write <code>$student = new Student($user_ID);</code> to get a Student/User by ID.</p>
+<p>The <code>getAssignments()</code> method uses the <code>get_posts()</code> function to get all posts of type “assignment” that are authored by the user associated with this Student. We store the array of assignment posts in the <code>$data</code> property, which is defined in the WP_User class and stores all of the base user data and metadata. This allows us to use code like <code>$student-&gt;assignments</code> to get the assignments later.</p>
+<p>Normally if <code>$student-&gt;assignments</code> is a defined property of $student, the value of that property will be returned. But if there is no “assignments” property, PHP will send “assignments” as the <code>$key</code> parameter to your <code>__get</code> method. Here we check that <code>$key == &quot;assignments&quot;</code> and then return the value of the <code>getAssignments()</code> method defined later. If <code>$key</code> is something other than <code>&quot;assignments”</code> we pass it to the <code>__get()</code> method of the parent WP_User class, which checks for the value in the <code>$data</code> property of the class instance or failing that sends the key to the <code>get_user_meta()</code> function.</p>
+<p>At first blush, all this does is allow you to type <code>$student-&gt;assignments</code> instead of <code>$student-&gt;getAssignments()</code>, which I suppose is true. However, coding things this way allows us to cache the assignments in the <code>$data</code> property of the object so we don’t have to query for it again if it’s accessed more than once. It will also make your code more consistent with other WordPress code: If you want the student’s email, it’s <code>$student-&gt;user_email</code>; if you want student’s first_name, it’s <code>$student-&gt;first_name</code>; if you want the student’s assignments, it’s <code>$student-&gt;assignments</code>. The person using the code doesn’t have to know that one of them is stored in the <code>wp_users</code> table, one is stored in <code>wp_usermeta</code>, and one is the result of a post query.</p>
+<h2 id="Adding-Registration-and-Profile-Fields"><a href="#Adding-Registration-and-Profile-Fields" class="headerlink" title="Adding Registration and Profile Fields"></a>Adding Registration and Profile Fields</h2><p>It’s very common to need to add additional profile fields for users in your app. In the previous section, we discussed how to use the <code>wp_update_user()</code> and <code>update_user_meta()</code> functions to manage those values. In this section, we’ll go over how to add editable fields for our user meta to the registration and profile pages.</p>
+<p>In our SchoolPress app, we need to capture some data about our users. For students, we want to capture their graduation year, major, minor, and advisor’s name. For teachers, we want to capture their department and office location. For both types of users, we want to capture their gender, age, and phone number.</p>
+<p>There are a few different plugins out there that will help you do this more quickly.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">ps_registration_fields</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="comment">// store fields in an array</span></div><div class="line">    $fields = <span class="keyword">array</span>();</div><div class="line"></div><div class="line">    <span class="comment">// fields for all users</span></div><div class="line">    $fields[] = <span class="keyword">new</span> PMProRH_Field(</div><div class="line">        <span class="string">'gender'</span>,</div><div class="line">        <span class="string">'select'</span>,</div><div class="line">        <span class="keyword">array</span>(</div><div class="line">            <span class="string">'options'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">                <span class="string">''</span> =&gt; <span class="string">'Choose One'</span>,</div><div class="line">                <span class="string">'male'</span> =&gt; <span class="string">'Male'</span>,</div><div class="line">                <span class="string">'female'</span> =&gt; <span class="string">'Female'</span></div><div class="line">            ),</div><div class="line">            <span class="string">'profile'</span> =&gt; <span class="keyword">true</span>,</div><div class="line">            <span class="string">'required'</span> =&gt; <span class="keyword">true</span></div><div class="line">        )</div><div class="line">    );</div><div class="line">    $fields[] = <span class="keyword">new</span> PMProRH_Field(</div><div class="line">        <span class="string">'age'</span>,</div><div class="line">        <span class="string">'text'</span>,</div><div class="line">        <span class="keyword">array</span>(</div><div class="line">            <span class="string">'size'</span> =&gt; <span class="number">10</span>,</div><div class="line">            <span class="string">'profile'</span> =&gt; <span class="keyword">true</span>,</div><div class="line">            <span class="string">'required'</span> =&gt; <span class="keyword">true</span></div><div class="line">        )</div><div class="line">    );</div><div class="line">    $fields[] = <span class="keyword">new</span> PMProRH_Field(</div><div class="line">        <span class="string">'phone'</span>,</div><div class="line">        <span class="string">'text'</span>,</div><div class="line">        <span class="keyword">array</span>(</div><div class="line">            <span class="string">'size'</span> =&gt; <span class="number">20</span>,</div><div class="line">            <span class="string">'label'</span> =&gt; <span class="string">'Phone Number'</span>,</div><div class="line">            <span class="string">'profile'</span> =&gt; <span class="keyword">true</span>,</div><div class="line">            <span class="string">'required'</span> =&gt; <span class="keyword">true</span></div><div class="line">        )</div><div class="line">    );</div><div class="line"></div><div class="line">    <span class="comment">// fields for teachers</span></div><div class="line">    $fields[] = <span class="keyword">new</span> PMProRH_Field(</div><div class="line">        <span class="string">'department'</span>,</div><div class="line">        <span class="string">'text'</span>,</div><div class="line">        <span class="keyword">array</span>(</div><div class="line">            <span class="string">'size'</span> =&gt; <span class="number">40</span>,</div><div class="line">            <span class="string">'profile'</span> =&gt; <span class="keyword">true</span>,</div><div class="line">            <span class="string">'required'</span> =&gt; <span class="keyword">true</span></div><div class="line">        )</div><div class="line">    );</div><div class="line">    $fields[] = <span class="keyword">new</span> PMProRH_Field(</div><div class="line">        <span class="string">'office'</span>,</div><div class="line">        <span class="string">'text'</span>,</div><div class="line">        <span class="keyword">array</span>(</div><div class="line">            <span class="string">'size'</span> =&gt; <span class="number">40</span>,</div><div class="line">            <span class="string">'profile'</span> =&gt; <span class="keyword">true</span>,</div><div class="line">            <span class="string">'required'</span> =&gt; <span class="keyword">true</span></div><div class="line">        )</div><div class="line">    );</div><div class="line"></div><div class="line">    <span class="comment">// fields for students</span></div><div class="line">    $fields[] = <span class="keyword">new</span> PMProRH_Field(</div><div class="line">        <span class="string">'graduation_year'</span>,</div><div class="line">        <span class="string">'text'</span>,</div><div class="line">        <span class="keyword">array</span>(</div><div class="line">            <span class="string">'label'</span> =&gt; <span class="string">'Expected Graduation year'</span>,</div><div class="line">            <span class="string">'size'</span> =&gt; <span class="number">10</span>,</div><div class="line">            <span class="string">'profile'</span> =&gt; <span class="keyword">true</span>,</div><div class="line">            <span class="string">'required'</span> =&gt; <span class="keyword">true</span></div><div class="line">        )</div><div class="line">    );</div><div class="line">    $fields[] = <span class="keyword">new</span> PMProRH_Field(</div><div class="line">        <span class="string">'major'</span>,</div><div class="line">        <span class="string">'text'</span>,</div><div class="line">        <span class="keyword">array</span>( <span class="string">'size'</span> =&gt; <span class="number">40</span>, <span class="string">'profile'</span> =&gt; <span class="keyword">true</span>, <span class="string">'required'</span> =&gt; <span class="keyword">true</span> )</div><div class="line">    );</div><div class="line">    $fields[] = <span class="keyword">new</span> PMProRH_Field(</div><div class="line">        <span class="string">'minor'</span>,</div><div class="line">        <span class="string">'text'</span>,</div><div class="line">        <span class="keyword">array</span>( <span class="string">'size'</span> =&gt; <span class="number">40</span>, <span class="string">'profile'</span> =&gt; <span class="keyword">true</span> )</div><div class="line">    );</div><div class="line"></div><div class="line">    <span class="comment">// add fields to the registration page</span></div><div class="line">    <span class="keyword">foreach</span>( $fields <span class="keyword">as</span> $field )</div><div class="line">        pmprorh_add_registration_field( <span class="string">'after_password'</span>, $field );</div><div class="line">&#125;</div><div class="line">add_action( <span class="string">'init'</span>, <span class="string">'ps_registration_fields'</span> );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>Full instructions on how to use PMPro Register Helper and the syntax for defining fields can be found in the plugin’s readme file. Instead of covering that here, let’s go through adding one field to the register and profile pages by hand using the same hooks and filters PMPro Register Helper uses.</p>
+<h3 id="Add-our-field-to-the-registration-page"><a href="#Add-our-field-to-the-registration-page" class="headerlink" title="Add our field to the registration page"></a>Add our field to the registration page</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">function sp_register_form()&#123;</div><div class="line">    // get the age value passed into the form</div><div class="line">    if ( ! empty( $_REQUEST['age'] ) )</div><div class="line">        $age = intval( $_REQUEST['age'] );</div><div class="line">    else</div><div class="line">        $age = '';</div><div class="line"></div><div class="line">    // show input</div><div class="line">    $age = esc_attr( $age );?&gt;</div><div class="line">    &lt;p&gt;</div><div class="line">    &lt;label for="age"&gt;Age&lt;br /&gt;</div><div class="line">    &lt;input type="text" name="age" id="age" class="input"</div><div class="line">        value="&lt;?php echo $age ?&gt;" /&gt;</div><div class="line">    &lt;/label&gt;</div><div class="line">    &lt;/p&gt;</div><div class="line">    &lt;?php</div><div class="line">&#125;</div><div class="line">add_action( 'register_form', 'sp_register_form');</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>We check <code>if ( ! empty( $_REQUEST[&#39;age&#39;] ) )</code> to avoid a PHP warning when users first visit the registration page and there isn’t any form data in $_REQUEST yet.</p>
+<h3 id="Update-our-user’s-age-after-registering"><a href="#Update-our-user’s-age-after-registering" class="headerlink" title="Update our user’s age after registering"></a>Update our user’s age after registering</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function sp_register_user( $user_id )&#123;</div><div class="line">    // get the age value passed into the form</div><div class="line">    $age = intval( $_REQUEST[&apos;age&apos;] );</div><div class="line"></div><div class="line">    // update user meta</div><div class="line">    update_user_meta( $user_id, &apos;age&apos;, $age );</div><div class="line">&#125;</div><div class="line">add_action( &apos;register_user&apos;, &apos;sp_register_user&apos; );</div></pre></td></tr></table></figure>
+<h3 id="Add-the-age-field-to-the-user-profile-page"><a href="#Add-the-age-field-to-the-user-profile-page" class="headerlink" title="Add the age field to the user profile page."></a>Add the age field to the user profile page.</h3><p>We need to hook into both show_user_profile and edit_user_profile to show our custom field both when users are viewing their own profile and when admins are editing other users’ profiles:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">function sp_user_profile( $user )&#123;</div><div class="line">    // show input</div><div class="line">    $age = esc_attr( $user-&gt;age );?&gt;</div><div class="line">    &lt;table class=&quot;form-table&quot;&gt;</div><div class="line">    &lt;tbody&gt;</div><div class="line">    &lt;tr&gt;</div><div class="line">                &lt;th&gt;&lt;label for=&quot;age&quot;&gt;Age&lt;/label&gt;&lt;/th&gt;</div><div class="line">                &lt;td&gt;</div><div class="line">                &lt;input type=&quot;text&quot; name=&quot;age&quot; id=&quot;age&quot; class=&quot;input&quot;</div><div class="line">            value=&quot;&lt;?php echo $age; ?&gt;&quot;/&gt;</div><div class="line">                &lt;/td&gt;</div><div class="line">        &lt;/tr&gt;</div><div class="line">    &lt;/tbody&gt;</div><div class="line">    &lt;/table&gt;</div><div class="line">    &lt;?php</div><div class="line">&#125;</div><div class="line">//user&apos;s own profile</div><div class="line">add_action( &apos;show_user_profile&apos;, &apos;sp_user_profile&apos; );</div><div class="line">//admins editing user profiles</div><div class="line">add_action( &apos;edit_user_profile&apos;, &apos;sp_user_profile&apos; );</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>Note how the default WordPress registration page HTML uses <code>&lt;p&gt;</code> tags to separate fields, while the default profile HTML in the dashboard uses table rows.</p>
+<h3 id="Update-our-field-when-updating-a-profile"><a href="#Update-our-field-when-updating-a-profile" class="headerlink" title="Update our field when updating a profile:"></a>Update our field when updating a profile:</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sp_profile_update</span><span class="params">( $user_id )</span></span>&#123;</div><div class="line">    <span class="comment">//make sure the current user can edit this user</span></div><div class="line">    <span class="keyword">if</span> ( ! current_user_can( <span class="string">'edit_user'</span>, $user_id ) )</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">// check if value has been posted</span></div><div class="line">    <span class="keyword">if</span> ( <span class="keyword">isset</span>( $_POST[<span class="string">'age'</span>] ) )&#123;</div><div class="line">        <span class="comment">// update user meta</span></div><div class="line">        update_user_meta( $user_id, <span class="string">'age'</span>, intval( $_POST[<span class="string">'age'</span>] ) );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">// user's own profile</span></div><div class="line">add_action( <span class="string">'personal_options_update'</span>, <span class="string">'sp_profile_update'</span> );</div><div class="line"><span class="comment">// admins editing</span></div><div class="line">add_action( <span class="string">'edit_user_profile_update'</span>, <span class="string">'sp_profile_update'</span> );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>Again, we’re hooking into two separate hooks. One for when users are viewing their own profile, and one for when admins are editing other users’ profiles.</p>
+<p>So that’s how you add a field to the registration and profile pages. Just iterate through that for each field you want to add (or piggyback on plugins like PMPro Register Helper to do it for you), and you’re good to go.</p>
+<h2 id="Customizing-the-Users-Table-in-the-Dashboard"><a href="#Customizing-the-Users-Table-in-the-Dashboard" class="headerlink" title="Customizing the Users Table in the Dashboard"></a>Customizing the Users Table in the Dashboard</h2><p>With all of this extra metadata for our users, it is sometimes necessary to extend the basic users list table in the WordPress dashboard.</p>
+<p>You can create your own admin page, with custom queries, and a report that mimics the style of the dashboard list tables (that’s what we did for the “Members List” in Paid Memberships Pro). Or you can use hooks and filters provided by WordPress to add columns and filters to the standard user list, which is what we will cover here.</p>
+<p>To do this, we use the <code>manage_users_columns</code> and <code>manage_users_custom_column</code> filters. Let’s add our age field to the user’s list:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// add our column to the table</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sp_manage_users_columns</span><span class="params">( $columns )</span></span>&#123;</div><div class="line">    $columns[<span class="string">'age'</span>] = <span class="string">'Age'</span>;</div><div class="line">    <span class="keyword">return</span> $columns;</div><div class="line">&#125;</div><div class="line">add_filter( <span class="string">'manage_users_columns'</span>, <span class="string">'sp_manage_users_columns'</span> );</div><div class="line"></div><div class="line"><span class="comment">// tell WordPress how to populate the column</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sp_manage_users_custom_column</span><span class="params">( $value, $column_name, $user_id )</span></span>&#123;</div><div class="line">    $user = get_userdata( $user_id );</div><div class="line">    <span class="keyword">if</span> ( $column_name == <span class="string">'age'</span> )</div><div class="line">        $value = $user-&gt;age;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> $value;</div><div class="line">&#125;</div><div class="line">add_filter( <span class="string">'manage_users_custom_column'</span>,</div><div class="line">    <span class="string">'sp_manage_users_custom_column'</span>, <span class="number">10</span>, <span class="number">3</span>);</div></pre></td></tr></table></figure>
+<p>The <code>manage_users_columns</code> filter passes in an array containing all of the default WordPress columns (and any added by other plugins). You can add columns, remove them (using <code>unset( $columns[&#39;column_name&#39; ])</code>), and reorder them. The keys in the <code>$columns</code> array are unique strings to identify them. The values in the <code>$columns</code> array are the headings for each column.</p>
+<p>The <code>manage_users_custom_column</code> filter is applied to each column in the <code>manage_users_columns</code> array that isn’t a default WordPress column (i.e., any custom column you add). In the <code>sp_manage_users_custom_column()</code> callback, you can do any calculations needed to get the values for each custom column. Typically the function contains a large if/then/else block or a switch statement checking the value of <code>$column_name</code> and returning the correct value for each column.</p>
+<p>If you use the preceding code, you will get an <code>Age</code> column added to your users page, but by default you won’t be able to click on it to sort the users list by age like you can with some of the default users list columns. Here’s the code for that:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// make the column sortable</div><div class="line">function sp_manage_users_sortable_columns( $columns )&#123;</div><div class="line">    $columns[&apos;age&apos;] = &apos;Age&apos;;</div><div class="line">        return $columns;</div><div class="line">&#125;</div><div class="line">add_filter( &apos;manage_users_sortable_columns&apos;,</div><div class="line">    &apos;sp_manage_users_sortable_columns&apos; );</div><div class="line"></div><div class="line">// update user_query if sorting by Age</div><div class="line">function sp_pre_user_query( $user_query )&#123;</div><div class="line">    global $wpdb, $current_screen;</div><div class="line"></div><div class="line">    // make sure we are viewing the users list in the dashboard</div><div class="line">    if ( $current_screen-&gt;id != &apos;users&apos; )</div><div class="line">        return;</div><div class="line"></div><div class="line">    // order by age</div><div class="line">    if ( $user_query-&gt;query_vars[&apos;orderby&apos;] == &apos;Age&apos; )&#123;</div><div class="line">        $user_search-&gt;query_from .= &quot; INNER JOIN $wpdb-&gt;usermeta m1</div><div class="line">            ON $wpdb-&gt;users u1</div><div class="line">            AND (u1.ID = m1.user_id)</div><div class="line">            AND (m1.meta_key = &apos;age&apos;)&quot;;</div><div class="line">        $user_search-&gt;query_orderby = &quot; ORDER BY m1.meta_value</div><div class="line">            &quot; . $user_query-&gt;query_vars[&apos;order&apos;];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">add_action( &apos;pre_user_query&apos;, &apos;sp_pre_user_query&apos; );</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>Above we define <code>Age</code> as a sortable column with the <code>manage_users_sortable_columns</code> filter. We use the <code>pre_user_query</code> filter to detect the <code>&amp;sortby=Age</code> parameter on the users list page and update the <code>$user_query</code> object to join on the <code>wp_usermeta</code> table and order by age. Notice how we use the <code>$current_screen</code> global, which is set in the admin, to make sure we are on the users list page before editing the query.</p>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p>Now that you’ve seen how to customize various aspects of the WordPress user management system, let’s go over a few user-related plugins that will make your life building web apps a little easier.</p>
+<h3 id="Theme-My-Login"><a href="#Theme-My-Login" class="headerlink" title="Theme My Login"></a>Theme My Login</h3><p>Your members don’t have to know that your site is built on WordPress. Part of that is using a login form that is integrated seamlessly with your site design rather than the default WordPress login. The <a href="http://bit.ly/theme-login" target="_blank" rel="external">Theme My Login</a> plugin does this perfectly. Traffic to <em>wp-login.php</em> is redirected to a login page that looks like the rest of your site instead of the WordPress backend.</p>
+<p>Theme My Login also has useful modules for theming user profiles, hiding the dashboard from non-admins, and controlling where users are redirected on login and logout.</p>
+<h3 id="Hide-Admin-Bar-from-Non-Admins"><a href="#Hide-Admin-Bar-from-Non-Admins" class="headerlink" title="Hide Admin Bar from Non-Admins"></a>Hide Admin Bar from Non-Admins</h3><p><a href="http://bit.ly/hide-bar" target="_blank" rel="external">This plugin</a> does exactly what the title states. Only administrators will see the WordPress admin bar when browsing the frontend of your site. The plugin is just a few lines of code and can be edited to your needs, for example, to let editors and authors view the admin bar.</p>
+<h3 id="Paid-Memberships-Pro"><a href="#Paid-Memberships-Pro" class="headerlink" title="Paid Memberships Pro"></a>Paid Memberships Pro</h3><p><a href="http://bit.ly/paid-pro" target="_blank" rel="external">Paid Memberships Pro</a> is brought to you by Stanger Studios and allows you to monetize the content on your site by creating a membership community. This is ideal for any business or blogger looking to lock down some or all of the content or collect fees for services provided. This plugin easily integrates with payment gateways such as Stripe, Paypal, and Authorize.net. Settings for recurring or one-time payments are included. Paid Memberships Pro allows for the creation of different membership levels within your site.</p>
+<h3 id="PMPro-Register-Helper"><a href="#PMPro-Register-Helper" class="headerlink" title="PMPro Register Helper"></a>PMPro Register Helper</h3><p>The <a href="http://bit.ly/pmp-reg-help" target="_blank" rel="external">Register Helper plugin</a> was initially programmed to work with Paid Memberships Pro, but can be used without it as well. This plugin simplifies the process of adding extra fields to the registration and profile fields. Instead of a set of three hooks and functions for each field, fields can be added in a couple lines of code like:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$text = new PMProRH_Field(</div><div class="line">        &apos;company&apos;,</div><div class="line">        &apos;text&apos;,</div><div class="line">        array(</div><div class="line">                &apos;size&apos; =&gt; 40,</div><div class="line">                &apos;class&apos; =&gt; &apos;company&apos;,</div><div class="line">                &apos;profile&apos; =&gt; true,</div><div class="line">                &apos;required&apos; =&gt; true</div><div class="line">        )</div><div class="line">);</div><div class="line">pmprorh_add_registration_field( &apos;after_billing_fields&apos;, $text );</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>The Register Helper plugin also has shortcodes to insert signup forms into your pages and sidebars and modules to act as starting points for your own registration, profile, and members directory pages.</p>
+<h3 id="Members"><a href="#Members" class="headerlink" title="Members"></a>Members</h3><p>The <a href="http://bit.ly/members-wp" target="_blank" rel="external">Members plugin</a> extends the control that you have over user roles and capabilities in your site. It enables you to edit as well as create and delete user roles and capabilities.  This plugin also allows you to set permissions for different user roles to determine which roles have the ability to add, edit, and/or delete various pieces of content.</p>
+<p>You could always write your own code to add roles and capabilities, but Members adds a nice GUI on top of that functionality that is often useful.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/WordPress/2015-06-07-wordpress-members.html" target="_blank" rel="external">http://blog.inching.org/WordPress/2015-06-07-wordpress-members.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorial/">tutorial</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wordpress/">wordpress</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/WordPress/2015-06-07-wordpress-members.html&title=《WordPress Users, Roles, and Capabilities》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/WordPress/2015-06-07-wordpress-members.html&title=《WordPress Users, Roles, and Capabilities》 — Balance&source=Getting User DataIn this section, we’ll go over how to instantiate a WordPres..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/WordPress/2015-06-07-wordpress-members.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《WordPress Users, Roles, and Capabilities》 — Balance&url=http://blog.inching.org/WordPress/2015-06-07-wordpress-members.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/WordPress/2015-06-07-wordpress-members.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/WordPress/2015-06-08-wordpress-shortcodes.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">WordPress ShortCodes</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/WordPress/2015-06-05-wordpress-posts.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">WordPress Custom Post Types, Post Metadata, and Taxonomies</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/WordPress/2015-06-07-wordpress-members.html&title=《WordPress Users, Roles, and Capabilities》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/WordPress/2015-06-07-wordpress-members.html&title=《WordPress Users, Roles, and Capabilities》 — Balance&source=Getting User DataIn this section, we’ll go over how to instantiate a WordPres..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/WordPress/2015-06-07-wordpress-members.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《WordPress Users, Roles, and Capabilities》 — Balance&url=http://blog.inching.org/WordPress/2015-06-07-wordpress-members.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/WordPress/2015-06-07-wordpress-members.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACwklEQVR42u3aQY4bMQwEwP3/pxMgpwCO7W5S8m6AmpPh8WhUOogyya+v+Pr15/r78+M3j79//P7xbjLa6+8PXHh4eHijqSevfHY3YSfgZFnzOePh4eHd5uXBIH9NspXnyzQMHnh4eHjfytsvQR5mksCAh4eH97/w8qm/Zid3N8uNh4eHd5vXplbzbf3Zs8loH8214OHh4c3zA1+bIPGZz9fre3h4eHijqnq+Wc+aAPIxh7PFw8PDu8DLj7P7TqdTLVnJG6Op4OHh4Y14bUI2n8Ss3ap945s/AHh4eHgXeG0MmRWo8paCWdNVvkB4eHh4e15bmspXKG8gyOeQH7jx8PDwbvPasn1Lao+8eTKiiG94eHh4h3h5C1S0EceJhlmDVJ4afprMxcPDw1vzWsBss54FmGNZajw8PLyjvHz7bjGb8tis0erp0uDh4eFd4G3+xbdT3I9W1PHw8PDwLvBmQ++DSp0vKdsa/vGPAQ8PD+8QbzN0vvW3oWLWiPBm/nh4eHgXeG0Sdla+agtdbQvXm3fh4eHhrXn5A8lherbFt4ndYiHw8PDwLvA2ydxZsT9J+LZNV1fKYHh4eHgvee32OlutWdlsdpTHw8PDu8dry1SbIJEndusMCh4eHt4HebOSfx4A2oXLm1CLGeLh4eFd4CVD7JsG2sDTJoLf3MXDw8M7xGtLTQk7x8xIxdvx8PDwPsLL2wjaY/Emag3TJXh4eHgXeLNWqpbUNiUUfQ3BmHh4eHhnefUhtUy57ktcr0d48xQeHh7eBd5sw02OxbN2rk2StzhY4+Hh4a15s0LXLP2aL0EeGN4cyvHw8PCu8drExCaFsS+J5QdxPDw8vO/lndrET7VhRUlkPDw8vB/Aa8tjeRVuvxCrIzUeHh5eyWuLXscyxIv0RHGkxsPDwzvKO1UAy3+TpDZmjQvDCw8PDy/l/QbCh7tgrTEPJQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

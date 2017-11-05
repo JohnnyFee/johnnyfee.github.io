@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Backbone Events | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,backbone,mvc">
+    <meta name="description" content="本文为读 Backbone.js Cookbook 的读书笔记。
+
+Managing eventsBackboneprovides a unified way for triggering and handling events in otherBackbone objects, such as Model, Collection, View, and Router. This becomes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Backbone Events">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-06-02-backbone-events.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文为读 Backbone.js Cookbook 的读书笔记。
+
+Managing eventsBackboneprovides a unified way for triggering and handling events in otherBackbone objects, such as Model, Collection, View, and Router. This becomes">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/backbone-event-view1.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/backbone-event-view2.jpg">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Backbone Events">
+<meta name="twitter:description" content="本文为读 Backbone.js Cookbook 的读书笔记。
+
+Managing eventsBackboneprovides a unified way for triggering and handling events in otherBackbone objects, such as Model, Collection, View, and Router. This becomes">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/backbone-event-view1.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Backbone Events</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Backbone Events</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-06-01T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-06-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Managing-events"><span class="post-toc-text">Managing events</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Unbinding-callback-from-the-event"><span class="post-toc-text">Unbinding callback from the event</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Listening-to-events-on-other-objects"><span class="post-toc-text">Listening to events on other objects</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Handling-events-of-Backbone-objects"><span class="post-toc-text">Handling events of Backbone objects</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Avoiding-event-triggering-when-working-with-Backbone-objects"><span class="post-toc-text">Avoiding event triggering when working with Backbone objects</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Using-built-in-events"><span class="post-toc-text">Using built-in events</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Binding-a-model-to-a-view"><span class="post-toc-text">Binding a model to a view</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Binding-a-collection-to-a-view"><span class="post-toc-text">Binding a collection to a view</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Bidirectional-binding-with-Backbone-stickit"><span class="post-toc-text">Bidirectional binding with Backbone.stickit</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Overriding-model-getters-and-setters"><span class="post-toc-text">Overriding model getters and setters</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Overriding-view-element-updates"><span class="post-toc-text">Overriding view element updates</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Listening-to-a-specific-HTML-event"><span class="post-toc-text">Listening to a specific HTML event</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-backbone-events"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Backbone Events</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-06-02 00:00:00" datetime="2014-06-01T16:00:00.000Z"  itemprop="datePublished">2014-06-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>本文为读 <a href="http://www.salttiger.com/backbone-js-cookbook/" target="_blank" rel="external">Backbone.js Cookbook</a> 的读书笔记。</p>
+</blockquote>
+<h2 id="Managing-events"><a href="#Managing-events" class="headerlink" title="Managing events"></a>Managing events</h2><p>Backboneprovides a unified way for triggering and handling events in otherBackbone objects, such as Model, Collection, View, and Router. This becomes possible due to the Backbone.Events object, which provides this functionality and thus can be mixed to any object, including your own.</p>
+<p>Perform the following steps to handle object events.</p>
+<a id="more"></a>
+<ol>
+<li><p>Define a new object.</p>
+<pre><code>object1 = {};
+</code></pre></li>
+<li><p>Mix Backbone.Events to your object.</p>
+<pre><code>_.extend(object1, Backbone.Events);
+</code></pre></li>
+<li><p>Define a callback function.</p>
+<pre><code>var hello = function(msg) {
+  alert(&quot;Hello&quot;+ msg);     
+}
+</code></pre></li>
+<li><p>Bind the callback using the on() method.</p>
+<pre><code>object1.on(&quot;handshake&quot;, hello);
+</code></pre><p> Alternatively, you can use the once() method to fire the callback once before it is unbound.</p>
+<pre><code>object1.once(&quot;handshake&quot;, hello);
+</code></pre></li>
+<li><p>Trigger an event by calling the trigger() method.</p>
+<pre><code>object1.trigger(&quot;handshake&quot;, &quot;world!&quot;);
+</code></pre></li>
+</ol>
+<h3 id="Unbinding-callback-from-the-event"><a href="#Unbinding-callback-from-the-event" class="headerlink" title="Unbinding callback from the event"></a>Unbinding callback from the event</h3><p>To unbind callbacksfrom the event, we need to use the off() method. The following line of code will unbind a specific callback we set previously.</p>
+<pre><code>object1.off(&quot;handshake&quot;, hello);
+</code></pre><p>To unbind all callbacks from the event, skip the second parameter.</p>
+<pre><code>object1.off(&quot;handshake&quot;);
+</code></pre><p>To unbind a specific callback from all events, skip the first parameter.</p>
+<pre><code>object1.off(null, hello);
+</code></pre><p>To unbind all callbacks from all events, skip both parameters.</p>
+<pre><code>object1.off();
+</code></pre><h3 id="Listening-to-events-on-other-objects"><a href="#Listening-to-events-on-other-objects" class="headerlink" title="Listening to events on other objects"></a>Listening to events on other objects</h3><p>To listen toevents on other objects, we can use thelistenTo() method.</p>
+<pre><code>object2.listenTo(object1, &apos;handshake&apos;, object2.hello);
+</code></pre><p>It works similar to the on() method, but its advantage is that it allows us to keep a track of the events, and they can be removed all at once later on.</p>
+<pre><code>object2.stopListening(object1);
+</code></pre><p>To stop listening to all objects, run the stopListening() method without parameters.</p>
+<pre><code>object2.stopListening();
+</code></pre><h2 id="Handling-events-of-Backbone-objects"><a href="#Handling-events-of-Backbone-objects" class="headerlink" title="Handling events of Backbone objects"></a>Handling events of Backbone objects</h2><p>All Backbone objects implement <code>Backbone.Events</code>, and some of them provide built-in events, to which your objects can listen.</p>
+<p>For example, a <code>change</code> event is fired when a model is changed. Especially for this event, there are several methods in <code>Backbone.Model</code> that can be used in the <code>change</code> event callback. In this recipe, we are going to learn how to use them.</p>
+<p>Perform the following steps to handle model events.</p>
+<ol>
+<li><p>Create a new model instance.</p>
+<p>   var model = new Backbone.Model({</p>
+<pre><code>firstName: &apos;John&apos;,
+lastName: &apos;Doe&apos;,
+age: 20,
+</code></pre><p>   });</p>
+</li>
+<li><p>Bind the callback to the change event.</p>
+<p>   model.on(‘change’, function(model) {</p>
+<p>   }</p>
+</li>
+<li><p>Use the hasChanged() method in the event callback to check if the specific attribute has been changed since the last change event.</p>
+<pre><code>model.hasChanged(&quot;age&quot;); // true
+model.hasChanged(&quot;firstName&quot;); // false
+</code></pre></li>
+<li><p>Use the changedAttributes() method in the event callback to obtain changed attributes’ hash.</p>
+<pre><code>model.changedAttributes(); // Object {age: 21}
+</code></pre></li>
+<li><p>Use the previous() method in the event callback to get the value of the previous attribute.</p>
+<pre><code>model.previous(&apos;age&apos;); // 20
+</code></pre></li>
+<li><p>Use the previousAttributes() method in the event callback to get the hash of the previous attributes.</p>
+<pre><code>model.previousAttributes();
+  // Object {firstName: &quot;John&quot;, lastName: &quot;Doe&quot;, age: 20}
+</code></pre></li>
+<li><p>Change a model attribute to trigger the change event.</p>
+<pre><code>model.set(&apos;age&apos;, 21);
+</code></pre></li>
+</ol>
+<h3 id="Avoiding-event-triggering-when-working-with-Backbone-objects"><a href="#Avoiding-event-triggering-when-working-with-Backbone-objects" class="headerlink" title="Avoiding event triggering when working with Backbone objects"></a>Avoiding event triggering when working with Backbone objects</h3><p>There is a way to avoid event triggering when working with Backbone events. This can be helpful if you want to update object properties without making event callbacks know about this fact.</p>
+<p>For example, you can pass {silent: true} when updating model values.</p>
+<pre><code>model.set(&apos;age&apos;, 22, {silent: true});
+</code></pre><p>The following line of code is also valid:</p>
+<pre><code>model.set({ age: 25 }, {silent: true});
+</code></pre><h3 id="Using-built-in-events"><a href="#Using-built-in-events" class="headerlink" title="Using built-in events"></a>Using built-in events</h3><p>The following eventsare used with model objects:</p>
+<ul>
+<li><strong>change</strong> (model, options): Itisfired when a model’s attributes have changed</li>
+<li><strong>change:[attribute]</strong> (model, value, options): It isfired whena specific attribute has been updated</li>
+<li><strong>destroy</strong> (model, collection, options): It isfiredwhen a model is destroyed</li>
+<li><strong>invalid</strong> (model, error, options): Itis fired when amodel’s validation fails on the client</li>
+<li><strong>error</strong> (model, xhr, options): It isfired when a model’s savecall fails on the server</li>
+<li><strong>sync</strong> (model, resp, options): It isfired when a model hasbeen successfully synced with the server</li>
+</ul>
+<p>The following events are used with collections:</p>
+<ul>
+<li><strong>add</strong> (model, collection, options): It isfired when a model isadded to a collection</li>
+<li><strong>remove</strong> (model, collection, options): Itis firedwhen a model is removed from a collection</li>
+<li><strong>reset</strong> (collection, options): It isfired when the entirecontent of the collection has been replaced</li>
+<li><strong>sort</strong> (collection, options): Itis fired when the collectionhas been re-sorted</li>
+<li><strong>sync</strong> (collection, resp, options): Itis fired when a collectionhas been successfully synced with the server</li>
+</ul>
+<p>The following events are used with the router object:</p>
+<ul>
+<li><strong>route:[name]</strong> (params): Itis firedbythe router when aspecific route is matched</li>
+<li><strong>route</strong> (router, route, params): It is fired by history (or router) when any route has been matched</li>
+</ul>
+<p>The following events are triggered when storage operations are performed:</p>
+<ul>
+<li><strong>route:[name]</strong> (params): It is fired by the router when a specific route is matched</li>
+<li><strong>route</strong> (router, route, params): It is fired by history (or router) when any route has been matched</li>
+</ul>
+<p>To handleany triggered event, use the special event <code>all</code>.</p>
+<h2 id="Binding-a-model-to-a-view"><a href="#Binding-a-model-to-a-view" class="headerlink" title="Binding a model to a view"></a>Binding a model to a view</h2><p>The view which we are going to implement will be rendered as shown in the following screenshot:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/backbone-event-view1.jpg" alt="Binding a model to a view" title="">
+                </div>
+                <div class="image-caption">Binding a model to a view</div>
+            </figure>
+<p>In the browser console, we can modify the model values, thus the change event is triggered and the view is re-rendered.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/backbone-event-view2.jpg" alt="Binding a model to a view" title="">
+                </div>
+                <div class="image-caption">Binding a model to a view</div>
+            </figure>
+<p>Perform the following steps to bind a model to a view.</p>
+<ol>
+<li><p>Define a new model.</p>
+<pre><code>var InvoiceItemModel = Backbone.Model.extend({
+
+});
+</code></pre></li>
+<li><p>Define a view that renders this model.</p>
+<pre><code>var InvoiceItemView = Backbone.View.extend({
+
+// HTML element name, where to render a view.
+el: &apos;body&apos;,
+
+// Render view.
+render: function() {
+  var html = &apos;Description: &apos; + 
+    this.model.get(&apos;description&apos;) + &apos;. &apos; +
+    &apos;Price: &apos; + this.model.get(&apos;price&apos;) + &apos;. &apos; +
+    &apos;Quantity: &apos; + this.model.get(&apos;quantity&apos;) + &apos;.&apos;;
+  // Set html for the view element using jQuery.
+  $(this.el).html(html);
+}
+});
+</code></pre></li>
+<li><p>Bind the model to InvoiceItemView in the initialize() method.</p>
+<pre><code>initialize: function() {
+  this.listenTo(this.model, &apos;change&apos;, this.render, this);
+}
+</code></pre></li>
+<li><p>Create the model instance.</p>
+<pre><code>var invoiceItemModel = new InvoiceItemModel({
+  description: &apos;Farmer Figure&apos;,
+  price: 8,
+  quantity: 1
+});
+</code></pre></li>
+<li><p>Create a view instance and pass model to it as a parameter.</p>
+<pre><code>var invoiceItemView = new InvoiceItemView({
+
+  // Pass model as a parameter to a view.
+  model: invoiceItemModel
+});
+</code></pre></li>
+<li><p>Render the view.</p>
+<pre><code>invoiceItemView.render();
+</code></pre></li>
+</ol>
+<p>To check how binding works, export the model to be a global variable, so we can update model values in a browser console.</p>
+<pre><code>window.invoiceItemModel = invoiceItemModel;
+</code></pre><h2 id="Binding-a-collection-to-a-view"><a href="#Binding-a-collection-to-a-view" class="headerlink" title="Binding a collection to a view"></a>Binding a collection to a view</h2><p>Perform the following steps to bind a collection to a view.</p>
+<p>Make sure you have the model and collection definitions.</p>
+<pre><code>var InvoiceItemModel = Backbone.Model.extend({
+
+});
+
+var InvoiceItemCollection = Backbone.Collection.extend({
+model: InvoiceItemModel
+});
+</code></pre><p>Define a view for rendering a single model.</p>
+<pre><code>// Define new view to render a model.
+var InvoiceItemView = Backbone.View.extend({
+
+  // Define element tag name.
+  tagName: &apos;tr&apos;,
+
+  // Render view.
+  render: function() {
+
+    // Add cells to the table row.
+    $(this.el).html(_.map([
+      this.model.get(&apos;quantity&apos;),
+      this.model.get(&apos;description&apos;),
+      this.model.get(&apos;price&apos;), this.model.calculateAmount(),
+    ], function(val, key){
+      return &apos;&lt;td&gt;&apos; + val + &apos;&lt;/td&gt;&apos;
+    }));
+
+    return this;
+  }
+});
+</code></pre><p>In the initialize() method of the InvoiceItemView object, bind callback to handle the destroy event of the model.</p>
+<pre><code>initialize: function() {
+  this.listenTo(this.model, &apos;destroy&apos;, this.destroy, this);
+}
+</code></pre><p>Add the destroy() method, which removes the view bound to a model.</p>
+<pre><code>destroy: function() {
+  this.remove();
+}
+</code></pre><p>Define a view for rendering a collection.</p>
+<pre><code>// Define new view to render a collection.
+var InvoiceItemListView = Backbone.View.extend({
+
+// Define element tag name.
+tagName: &apos;table&apos;,
+
+// Define element class name.
+className: &apos;invoice-item-view&apos;,
+
+// Render view.
+render: function() {
+
+  $(this.el).empty();
+
+  // Append table with a table header.
+  $(this.el).append($(&apos;&lt;tr&gt;&lt;/tr&gt;&apos;).html(
+    _.map([&apos;Quantity&apos;, &apos;Description&apos;, &apos;Price&apos;, &apos;Total&apos;], 
+      function(val, key){
+        return &apos;&lt;th&gt;&apos; + val + &apos;&lt;/th&gt;&apos;
+      }
+    )
+  ));
+
+  // Append table  with a row.
+  _.each(this.collection.models, function(model, key) {
+    this.append(model);
+  }, this);
+
+  return this;
+},
+
+// Add invoice item row to the table.
+append: function(model) {
+  $(this.el).append(
+    new InvoiceItemView({ model: model }).render().el
+  );
+}
+});
+</code></pre><p>Here we used the append() method, which adds InvoiceItemView into the output table. We will use this method later on.</p>
+<p>In the initialize() method of the InvoiceItemListView object, bind the callback to handle the add event of the collection.</p>
+<pre><code>initialize: function() {
+  this.listenTo(
+    this.collection, &apos;add&apos;, this.append, this
+  );
+},
+</code></pre><p>Here we have called the same append() method.</p>
+<ol>
+<li><p>Define the view with Add and Remove controls.</p>
+<pre><code>var InvoiceItemListControlsView = Backbone.View.extend({
+  render: function() {
+    var html = 
+      &apos;&lt;br&gt;&lt;input id=&quot;add&quot; type=&quot;button&quot;&apos; value=&quot;Add&quot; id&gt;&apos; +
+      &apos; &lt;input id=&quot;remove&quot; type=&quot;button&quot; value=&quot;Remove&quot;&gt;&apos;;
+
+    $(this.el).html(html);
+
+    return this;
+  },
+
+  // Handle HTML events.
+  events: {
+    &apos;click #add&apos;: &apos;addNewInvoiceItem&apos;,
+    &apos;click #remove&apos;: &apos;removeInvoiceItem&apos;,
+  },
+
+  // Add button handler.
+  addNewInvoiceItem: function() {
+    var description = prompt(&apos;Enter item description&apos;, &apos;&apos;);
+    var price = prompt(&apos;Enter item price&apos;, &apos;0&apos;);
+    var quantity = prompt(&apos;Enter item quantity&apos;, &apos;1&apos;);
+
+    this.collection.add([{
+      description: description,
+      price: price,
+      quantity: quantity
+    }]);
+  },
+
+  // Remove button handler.
+  removeInvoiceItem: function() {
+    var position =
+      prompt(&apos;Enter position of item to remove&apos;, &apos;&apos;);
+
+    model = this.collection.at(position);
+    model.destroy();
+  }
+}); 
+</code></pre></li>
+<li><p>Define a view for rendering a whole page.</p>
+<pre><code>var InvoiceItemListPageView = Backbone.View.extend({
+
+// Render whole page view.
+render: function() {
+  $(this.el).html(new InvoiceItemListView({
+    collection: this.collection
+  }).render().el);
+
+  $(this.el).append(new InvoiceItemListControlsView({
+    collection: this.collection
+  }).render().el);
+}
+});
+</code></pre></li>
+<li><p>Create and initialize the collection instance with data.</p>
+<pre><code>var invoiceItemCollection = new InvoiceItemCollection([
+  { description: &apos;Wooden Toy House&apos;, price: 22, quantity: 3 },
+  { description: &apos;Farm Animal Set&apos;, price: 17, quantity: 1 }
+]);
+</code></pre></li>
+<li><p>Create the whole page view instance and render it.</p>
+<pre><code>new InvoiceItemListPageView({
+  collection: invoiceItemCollection,
+  el: &apos;body&apos;
+}).render();
+</code></pre></li>
+</ol>
+<p>When a new model is added to the collection, the <code>add</code> event is fired, and the model is rendered as a table row and appended to the table.</p>
+<p>When a model is destroyed, the <code>destroy</code> event is fired, and a view corresponding to this model is removed, also a view element is removed from a DOM tree.</p>
+<h2 id="Bidirectional-binding-with-Backbone-stickit"><a href="#Bidirectional-binding-with-Backbone-stickit" class="headerlink" title="Bidirectional binding with Backbone.stickit"></a>Bidirectional binding with Backbone.stickit</h2><p>In Backbone.js, we can bind a model to a view out of the box, but it is not easy to make binding in reverse direction without the need to parse values of HTML elements.</p>
+<p>In this recipe, we will speak about the Backbone.stickit extension, which allows developers to implement bidirectional binding of the model properties and view elements in a simple and native Backbone.js way.</p>
+<p>Among many similar extensions, <code>Backbone.stickit</code> stands out by its perfect documentation, simplicity, and the great advantage that it gives to application developers. It was written in New York Times not so long time ago, and its popularity is being growing day-by-day. It is definitely one of the coolest extensions for Backbone.js.</p>
+<p>You can download the <code>Backbone.stickit</code> extension from the GitHub page <a href="https://github.com/nytimes/backbone.stickit" target="_blank" rel="external">https://github.com/nytimes/backbone.stickit</a>. To include this extension into your project, save the backbone.stickit.js file into the lib folder of your project and include the reference to this file in <code>index.html</code>.</p>
+<p>Perform the following steps to perform a bidirectional binding.</p>
+<ol>
+<li><p>Make sure you have a model defined.</p>
+<pre><code>var InvoiceItemModel = Backbone.Model.extend({
+
+});
+</code></pre></li>
+<li><p>Define the form view.</p>
+<pre><code>var InvoiceItemFormView = Backbone.View.extend({
+
+// Define class name of view element.
+className: &apos;invoice-item-form-view&apos;,
+});
+</code></pre></li>
+<li><p>Add the bindings hash to the view.</p>
+<pre><code>bindings: {
+  &apos;#description&apos;: &apos;description&apos;,
+  &apos;#price&apos;: &apos;price&apos;,
+  &apos;#quantity&apos;: &apos;quantity&apos;
+}
+</code></pre><p> Here we used short binding definition, which acts as an alias for the detailed definition shown in the next snippet.</p>
+<pre><code>bindings: {
+  &apos;#description&apos;: { observe: &apos;description&apos; },
+  &apos;#price&apos;: { observe: &apos;price&apos; },
+  &apos;#quantity&apos;: { observe: &apos;quantity&apos; }
+}
+</code></pre></li>
+<li><p>Add the render() method to the view and call this.stickit() after rendering.</p>
+<pre><code>render: function() {
+  var html = &apos;&lt;label&gt;Description:&lt;/label&gt;&apos; + 
+    &apos;&lt;input type=&quot;text&quot; id=&quot;description&quot;&gt;&lt;/input&gt;&lt;br&gt;&apos; +
+    &apos;&lt;label&gt;Price:&lt;/label&gt;&apos; +
+    &apos;&lt;input type=&quot;text&quot; id=&quot;price&quot;&gt;&lt;/input&gt;&lt;br&gt;&apos; +
+    &apos;&lt;label&gt;Quantity:&lt;/label&gt;&apos; +
+    &apos;&lt;input type=&quot;text&quot; id=&quot;quantity&quot;&gt;&lt;/input&gt;&lt;br&gt;&apos;;
+
+  // Set html for the view element using jQuery.
+  $(this.el).html(html);
+
+  // Here binding occurs.
+  this.stickit();
+
+  return this;
+}
+</code></pre></li>
+<li><p>Define the other view in a similar way.</p>
+<pre><code>var InvoiceItemView = Backbone.View.extend({
+
+// Define class name of view element.
+className: &apos;invoice-item-view&apos;,
+
+// Bind HTML elements to the view model.
+bindings: {
+  &apos;#description&apos;: &apos;description&apos;,
+  &apos;#price&apos;: &apos;price&apos;,
+  &apos;#quantity&apos;: &apos;quantity&apos;
+},
+
+// Render view.
+render: function() {
+  var html = &apos;Description:&apos; +
+    &apos;&lt;span id=&quot;description&quot;&gt;&lt;/span&gt;, &apos; +
+    &apos;Price:  &lt;span id=&quot;price&quot;&gt;&lt;/span&gt;, &apos; +
+    &apos;Quantity:  &lt;span id=&quot;quantity&quot;&gt;&lt;/span&gt;.&apos;;
+
+  // Set html for the view element using jQuery.
+  $(this.el).html(html);
+
+  // Here binding occurs.
+  this.stickit();
+
+  return this;
+},
+});
+</code></pre></li>
+<li><p>Create a new model instance.</p>
+<pre><code>var invoiceItemModel = new InvoiceItemModel({
+  description: &apos;Farmer Figure&apos;,
+  price: 8,
+  quantity: 1
+});
+</code></pre></li>
+<li><p>Append both views to the HTML body.</p>
+<pre><code>$(&apos;body&apos;).append(new InvoiceItemView({
+  model: invoiceItemModel
+}).render().el);
+$(&apos;body&apos;).append(new InvoiceItemFormView({
+  model: invoiceItemModel
+}).render().el);
+</code></pre></li>
+</ol>
+<p>Whenever the <code>stickit()</code> method is called, the stickit extension initializes <code>innerHTML</code> of the HTML elements, which we have defined in the bindings hash. Because of such initialization, Stickit lets us to keep our templates clean, and we don’t need to pass model values into the <code>html</code> variable manually when rendering the view.</p>
+<p>For the <code>InvoiceItemView</code> view, one-way binding is configured (model to view), so every time model properties get changed, the corresponding HTML elements are updated.</p>
+<p>For the <code>InvoiceItemFormView</code> view, Stickit sets up two-way binding (model to view and then, view to model), connecting and reflecting changes in the view elements with changes in bound model attributes.</p>
+<p>This section describes advanced usageof the Backbone.stickit extension: overriding model getters and setters, overriding view element updates, and listening to a specific HTML event.</p>
+<h3 id="Overriding-model-getters-and-setters"><a href="#Overriding-model-getters-and-setters" class="headerlink" title="Overriding model getters and setters"></a>Overriding model getters and setters</h3><p>Whengetting or settingproperties of a model bound to our view, we can override the getting or setting behavior by specifying the onGet and onSet callbacks.</p>
+<pre><code> bindings: {
+  &apos;#price&apos;: {
+    observe: &apos;price&apos;,
+    onGet: &apos;priceGetter&apos;,
+    onGet: &apos;priceSetter&apos;
+  }
+},
+priceGetter: function(val, options) { 
+  return &apos;$ &apos; + val; 
+},
+priceSetter: function(val, options) { 
+  return Number(val.replace(/[^0-9\.]+/g, &apos;&apos;));
+}
+</code></pre><h3 id="Overriding-view-element-updates"><a href="#Overriding-view-element-updates" class="headerlink" title="Overriding view element updates"></a>Overriding view element updates</h3><p>Thereare different ways inwhich we can override and customize view element updates. We can specify an update callback, which is triggered when an HTML element gets updated or we can specify afterUpdate callback, which will be executed afterwards.</p>
+<pre><code>bindings: {
+  &apos;#price&apos;: {
+    observe: &apos;price&apos;,
+    update: function($el, val, model, options) { 
+      $el.val(val);
+    }
+    afterUpdate: &apos;highlight&apos;,
+  },
+  },
+  highlight: function($el, val, options) { 
+    $el.animate({ backgroundColor: &quot;#ff9999&quot; }, &quot;fast&quot;)
+      .animate({ backgroundColor: &quot;#ffffff&quot; }, &quot;fast&quot;);
+  } 
+}
+</code></pre><p>There is another way in which we can override value update for the view element by specifying updateMethod. By default it uses the text method, but we can change its value to html. If the html method is used, and we want to escape model values before assigning it to an HTML element, we can set the escape option to true.</p>
+<pre><code>bindings: {
+  &apos;#price&apos;: {
+    observe: &apos;price&apos;,
+    updateMethod: &apos;html&apos;,
+    escape: true
+  }
+}
+</code></pre><h3 id="Listening-to-a-specific-HTML-event"><a href="#Listening-to-a-specific-HTML-event" class="headerlink" title="Listening to a specific HTML event"></a>Listening to a specific HTML event</h3><p>By default,for a textbox,textarea and other content-editable HTML elements, the Backbone.stickit extension listens to the following events, keyup, change, cut, and paste. For other elements, the Backbone.stickit extension listens to the change event.</p>
+<p>However, there is a way to override this setting by specifying the events array.</p>
+<pre><code>bindings: {
+  &apos;#price&apos;: {
+    observe: &apos;price&apos;,
+    events: [&apos;blur&apos;],
+  },
+}
+</code></pre><p>In this case,view-to-modelbinding will occur on the blur event of the #price textbox.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://javascriptplayground.com/blog/2014/03/command-line-backbone-yeoman/" target="_blank" rel="external">Embracing Command Line Tooling with Backbone Applications</a></li>
+<li><a href="http://geeks.bizzabo.com/7-battle-tested-backbonejs-rules-for-amazing-web-apps" target="_blank" rel="external">7 Battle tested Backbone.js rules for amazing web apps</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-06-02-backbone-events.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-06-02-backbone-events.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backbone/">backbone</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mvc/">mvc</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-06-02-backbone-events.html&title=《Backbone Events》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-06-02-backbone-events.html&title=《Backbone Events》 — Balance&source=
+本文为读 Backbone.js Cookbook 的读书笔记。
+
+Managing eventsBackboneprovides a unified ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-06-02-backbone-events.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Backbone Events》 — Balance&url=http://blog.inching.org/JavaScript/2014-06-02-backbone-events.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-06-02-backbone-events.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Cordova/2014-06-04-cordova-android-webview.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Cordova Android WebViews</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-06-01-backbone-collections.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Backbone Collections</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-06-02-backbone-events.html&title=《Backbone Events》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-06-02-backbone-events.html&title=《Backbone Events》 — Balance&source=
+本文为读 Backbone.js Cookbook 的读书笔记。
+
+Managing eventsBackboneprovides a unified ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-06-02-backbone-events.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Backbone Events》 — Balance&url=http://blog.inching.org/JavaScript/2014-06-02-backbone-events.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-06-02-backbone-events.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqklEQVR42u3aQW4jMQwEwPz/07vAnhYwMukmJceHmpORGLLKB1Fu8usrfv78e/5//fp899/XFZ7/kqx2+MHDw8MbbT3Z9PMmki1+9/78a833jIeHh3ebd3bp54/cfGK+Ah4eHt4n8PJFn9+Zb7QtJ3h4eHifxnumJpfpZOXZO/Hw8PDez8uvyBtke9XOr+wHshY8PDy8mDdrgP3u6+v9PTw8PLxRV71tjCWxxT7CKHaIh4eHd4HXbqgdHci/lATZBsF4eHh493jJz/5ZWNAe8Un7LY8w8PDw8G7w8mGpTSiwHzsYBsF4eHh413jtQTzDnBo1KHaIh4eHd43XRq7tZXcWVbS/DFYBLh4eHl7Mm229vRyfGo1qwws8PDy8G7y26ZUc3PuBgHbgIAoj8PDw8A7xckZ0eR21r9ovqA2F8fDw8G7wNj/7Z8NVeQE4EDTj4eHhvYW3HyzIA9z2uK/BeHh4eNd4ybE+uxbnjf/2q4lKER4eHt5R3gyTN6L2MW7ex/uh4uHh4eFd4LWX182IQEsaDhbg4eHhXeDlH7Yfn9oPHwxLER4eHt5RXn70n9r0pgwk8XGd/uLh4eGVvP2i9QU3boZtxhrw8PDw7vFmQwOzFv6m2AxDEDw8PLwLvJyUH9B5W6u9Xs/GufDw8PDu8drjvr1Y57DZOEJUePDw8PAO8fKjdhYZzJpqSRlILHh4eHj3eLPLbgI7tdrwwcPDwzvKmx3Ns60kR3kSHBcRMx4eHt4F3qZ4tIx9INsGFnh4eHj3eG30sIluNxNhwwYYHh4e3jVeWwzODgQkEW1euoq7PB4eHt5beHmDqi02Sass+TseHh7e5/BmyCQZiIYARld2PDw8vHu8zXY35aQdyTo8QICHh4e3HsCatbWKUHU0NNAWKjw8PLxrvL/PHVS5UG66AQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>gitolite + cygwin + windows xp | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="git">
+    <meta name="description" content="See MACARONICS: gitolite + cygwin + windows xp
+使用 gitolite 具有更進階的資料夾管理功能，意思是我可以針對各別資料夾去指定誰擁有寫入或者讀取的權限。使用者仍然可以做 pull / push 等動作，但若是違背權限的規則，pull / push 的動作就會被 server reject。此外，gitolite的使用者權限是以 ssh key 來">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gitolite + cygwin + windows xp">
+<meta property="og:url" content="http://blog.inching.org/Git/2015-03-29-git-server-setup.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See MACARONICS: gitolite + cygwin + windows xp
+使用 gitolite 具有更進階的資料夾管理功能，意思是我可以針對各別資料夾去指定誰擁有寫入或者讀取的權限。使用者仍然可以做 pull / push 等動作，但若是違背權限的規則，pull / push 的動作就會被 server reject。此外，gitolite的使用者權限是以 ssh key 來">
+<meta property="og:image" content="http://1.bp.blogspot.com/-SsWc_SarKB4/UEtSx0GTPrI/AAAAAAAAD2w/-_zTpxTeiz0/s1600/gitolite0.PNG">
+<meta property="og:image" content="http://1.bp.blogspot.com/-WkC3khicc0w/UEtSy0RXWQI/AAAAAAAAD20/L3NCPPDazgk/s1600/gitolite1.PNG">
+<meta property="og:image" content="http://2.bp.blogspot.com/-AEU0KCtq_5E/UEtS6xoKIsI/AAAAAAAAD4Q/MyX4W-syFkw/s1600/gitolite2.PNG">
+<meta property="og:image" content="http://3.bp.blogspot.com/-WdW3JnZ1tTk/UEtTCYi-zsI/AAAAAAAAD5k/pcmT-5f1JKY/s1600/gitolite3.PNG">
+<meta property="og:image" content="http://4.bp.blogspot.com/-qNs6XxA73BA/UEtTCyOV8cI/AAAAAAAAD5w/eWJW8VdS8qA/s1600/gitolite4.PNG">
+<meta property="og:image" content="http://2.bp.blogspot.com/-HOhKRwmF7LA/UEtTD5e-syI/AAAAAAAAD50/hcyLeXety94/s1600/gitolite5.PNG">
+<meta property="og:image" content="http://3.bp.blogspot.com/-C8ZLxfBXeQA/UEtTE_H3u9I/AAAAAAAAD58/csl95rDXTm4/s1600/gitolite6.PNG">
+<meta property="og:image" content="http://3.bp.blogspot.com/-Kd3EL1imrBo/UEtTFmP5tWI/AAAAAAAAD6E/jCthK8HHBAw/s1600/gitolite7.PNG">
+<meta property="og:image" content="http://1.bp.blogspot.com/-keODYJVmCcE/UEtTHfPNkDI/AAAAAAAAD6U/Y95H2fEgQAU/s1600/gitolite9.PNG">
+<meta property="og:image" content="http://3.bp.blogspot.com/-uDJiKQYM8Cg/UEtSzfU0sLI/AAAAAAAAD3A/Jx3imP6t6xg/s1600/gitolite10.PNG">
+<meta property="og:image" content="http://1.bp.blogspot.com/-FlSV0CMhVHk/UEtS0ZTgd5I/AAAAAAAAD3E/QagnbCa26KQ/s1600/gitolite11.PNG">
+<meta property="og:image" content="http://3.bp.blogspot.com/-p4m2tm5ILws/UEtS3LuXmZI/AAAAAAAAD3g/lRtZXZw1tY4/s1600/gitolite14.PNG">
+<meta property="og:image" content="http://4.bp.blogspot.com/-T8-QUCiv708/UEtS3xz8ltI/AAAAAAAAD3o/77wwnbYRzek/s1600/gitolite15.PNG">
+<meta property="og:image" content="http://2.bp.blogspot.com/-3G40owXHkjM/UEtS47Sb0GI/AAAAAAAAD34/fGFqkMxLGaA/s1600/gitolite17.PNG">
+<meta property="og:image" content="http://4.bp.blogspot.com/-rpA58Q1e-Fw/UEtS4bs0owI/AAAAAAAAD3w/vamTiv4uJRg/s1600/gitolite16.PNG">
+<meta property="og:image" content="http://3.bp.blogspot.com/-Uwrj_hKlhEs/UEtS5ayb28I/AAAAAAAAD4A/CHItbJAJL1s/s1600/gitolite18.PNG">
+<meta property="og:image" content="http://3.bp.blogspot.com/-bfzI-cba8iI/UEtS6InCh0I/AAAAAAAAD4I/VoWi8ep85OM/s1600/gitolite19.PNG">
+<meta property="og:image" content="http://4.bp.blogspot.com/-gfqI3b77VIY/UEtS7RLQvYI/AAAAAAAAD4Y/e0p2zXRmvkU/s1600/gitolite20.PNG">
+<meta property="og:image" content="http://2.bp.blogspot.com/-yoXMFfSGlgA/UEtS8b6q5cI/AAAAAAAAD4g/c1iZtFOvJWw/s1600/gitolite21.PNG">
+<meta property="og:image" content="http://2.bp.blogspot.com/-z2UX_WobA9w/UEtS8zKNdQI/AAAAAAAAD4o/9IadmH7PHko/s1600/gitolite22.PNG">
+<meta property="og:image" content="http://3.bp.blogspot.com/-oWl9OQtqlaE/UEtS9r-cYKI/AAAAAAAAD4w/vmyaIzjlwoQ/s1600/gitolite23.PNG">
+<meta property="og:image" content="http://2.bp.blogspot.com/-nabN7yozaRM/UEtS-BuMfOI/AAAAAAAAD44/b99Ac4aB92E/s1600/gitolite24.PNG">
+<meta property="og:image" content="http://2.bp.blogspot.com/-Sm3X2CLcR2g/UEtS-9-hOVI/AAAAAAAAD5A/HzHduvnN0Tk/s1600/gitolite25.PNG">
+<meta property="og:image" content="http://3.bp.blogspot.com/-VOD8ZhnHw2s/UEtS_RKBxjI/AAAAAAAAD5I/lhGp6Hn641Y/s1600/gitolite26.PNG">
+<meta property="og:image" content="http://3.bp.blogspot.com/-YbJHnLs5Ky4/UEtS_-NpGvI/AAAAAAAAD5Q/6-IZwpOg7c0/s1600/gitolite27.PNG">
+<meta property="og:image" content="http://4.bp.blogspot.com/-JTFmZsPF78s/UEtTAtJiQYI/AAAAAAAAD5Y/FnT-onWH5p8/s1600/gitolite28.PNG">
+<meta property="og:image" content="http://3.bp.blogspot.com/-D9Jh5HZPluI/UEtTBZiUKcI/AAAAAAAAD5c/G1BSh5osnnY/s1600/gitolite29.PNG">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gitolite + cygwin + windows xp">
+<meta name="twitter:description" content="See MACARONICS: gitolite + cygwin + windows xp
+使用 gitolite 具有更進階的資料夾管理功能，意思是我可以針對各別資料夾去指定誰擁有寫入或者讀取的權限。使用者仍然可以做 pull / push 等動作，但若是違背權限的規則，pull / push 的動作就會被 server reject。此外，gitolite的使用者權限是以 ssh key 來">
+<meta name="twitter:image" content="http://1.bp.blogspot.com/-SsWc_SarKB4/UEtSx0GTPrI/AAAAAAAAD2w/-_zTpxTeiz0/s1600/gitolite0.PNG">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">gitolite + cygwin + windows xp</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">gitolite + cygwin + windows xp</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-03-28T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2015-03-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Git/">Git</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-git-server-setup"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">gitolite + cygwin + windows xp</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-03-29 00:00:00" datetime="2015-03-28T16:00:00.000Z"  itemprop="datePublished">2015-03-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Git/">Git</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="http://phardera.blogspot.com/2012/09/gitolite-cygwin-windows-xp.html" target="_blank" rel="external">MACARONICS: gitolite + cygwin + windows xp</a></p>
+<p>使用 gitolite 具有更進階的資料夾管理功能，意思是我可以針對各別資料夾去指定誰擁有寫入或者讀取的權限。使用者仍然可以做 pull / push 等動作，但若是違背權限的規則，pull / push 的動作就會被 server reject。此外，gitolite的使用者權限是以 ssh key 來分辨，因此 Server 的系統只需要建立一個使用者帳號即可 (此例使用的帳號名稱是 git )  </p>
+<p>這篇記錄在 windows 上架設 gitolite 的步驟：  </p>
+<p><strong><u>安裝 cygwin (Server Side)</u></strong>  </p>
+<p>1) 在 xp 上安裝 cygwin (<a href="http://cygwin.com/setup.exe" target="_blank" rel="external">http://cygwin.com/setup.exe</a>)  </p>
+<p>2) 選擇 Install from Internet  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://1.bp.blogspot.com/-SsWc_SarKB4/UEtSx0GTPrI/AAAAAAAAD2w/-_zTpxTeiz0/s1600/gitolite0.PNG" alt="](http://1.bp.blogspot.com/-SsWc_SarKB4/UEtSx0GTPrI/AAAAAAAAD2w/-_zTpxTeiz0/s320/gitolite0.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://1.bp.blogspot.com/-SsWc_SarKB4/UEtSx0GTPrI/AAAAAAAAD2w/-_zTpxTeiz0/s320/gitolite0.PNG)</div>
+            </figure></p>
+<p>3) 路徑及選項使用預設值  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://1.bp.blogspot.com/-WkC3khicc0w/UEtSy0RXWQI/AAAAAAAAD20/L3NCPPDazgk/s1600/gitolite1.PNG" alt="](http://1.bp.blogspot.com/-WkC3khicc0w/UEtSy0RXWQI/AAAAAAAAD20/L3NCPPDazgk/s320/gitolite1.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://1.bp.blogspot.com/-WkC3khicc0w/UEtSy0RXWQI/AAAAAAAAD20/L3NCPPDazgk/s320/gitolite1.PNG)</div>
+            </figure></p>
+<p>4) LocalPackage 暫存路徑使用預設值  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://2.bp.blogspot.com/-AEU0KCtq_5E/UEtS6xoKIsI/AAAAAAAAD4Q/MyX4W-syFkw/s1600/gitolite2.PNG" alt="](http://2.bp.blogspot.com/-AEU0KCtq_5E/UEtS6xoKIsI/AAAAAAAAD4Q/MyX4W-syFkw/s320/gitolite2.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://2.bp.blogspot.com/-AEU0KCtq_5E/UEtS6xoKIsI/AAAAAAAAD4Q/MyX4W-syFkw/s320/gitolite2.PNG)</div>
+            </figure></p>
+<p>5) 預設直接連線  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://3.bp.blogspot.com/-WdW3JnZ1tTk/UEtTCYi-zsI/AAAAAAAAD5k/pcmT-5f1JKY/s1600/gitolite3.PNG" alt="](http://3.bp.blogspot.com/-WdW3JnZ1tTk/UEtTCYi-zsI/AAAAAAAAD5k/pcmT-5f1JKY/s320/gitolite3.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://3.bp.blogspot.com/-WdW3JnZ1tTk/UEtTCYi-zsI/AAAAAAAAD5k/pcmT-5f1JKY/s320/gitolite3.PNG)</div>
+            </figure></p>
+<p>6) 隨意選擇一個下載來源網址吧  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://4.bp.blogspot.com/-qNs6XxA73BA/UEtTCyOV8cI/AAAAAAAAD5w/eWJW8VdS8qA/s1600/gitolite4.PNG" alt="](http://4.bp.blogspot.com/-qNs6XxA73BA/UEtTCyOV8cI/AAAAAAAAD5w/eWJW8VdS8qA/s320/gitolite4.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://4.bp.blogspot.com/-qNs6XxA73BA/UEtTCyOV8cI/AAAAAAAAD5w/eWJW8VdS8qA/s320/gitolite4.PNG)</div>
+            </figure></p>
+<p>7) 出現警告訊息，如果之前有裝過舊版 cygwin，至 <a href="http://cygwin.com/" target="_blank" rel="external">http://cygwin.com/</a> 參閱此次安裝可能會影響到舊版的哪些內容，如果是第一次安裝就直接按確定繼續吧  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://2.bp.blogspot.com/-HOhKRwmF7LA/UEtTD5e-syI/AAAAAAAAD50/hcyLeXety94/s1600/gitolite5.PNG" alt="](http://2.bp.blogspot.com/-HOhKRwmF7LA/UEtTD5e-syI/AAAAAAAAD50/hcyLeXety94/s320/gitolite5.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://2.bp.blogspot.com/-HOhKRwmF7LA/UEtTD5e-syI/AAAAAAAAD50/hcyLeXety94/s320/gitolite5.PNG)</div>
+            </figure></p>
+<p>8) 出現 Select Packages 畫面，選擇加入一些常用 package (bin) 列出如下：  </p>
+<p>a) Utils :: util-linux (2.21-1)  </p>
+<p>b) Utils :: screen (4.0.3-7)  </p>
+<p>c) Devel :: git (1.7.9-1)  </p>
+<p>d) Editors :: nano (2.25-1)  </p>
+<p>e) Net :: openssh (6.0p1-2)  </p>
+<p>圖片為勾選 Editor 底下之 nano 的 Bin Package  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://3.bp.blogspot.com/-C8ZLxfBXeQA/UEtTE_H3u9I/AAAAAAAAD58/csl95rDXTm4/s1600/gitolite6.PNG" alt="](http://3.bp.blogspot.com/-C8ZLxfBXeQA/UEtTE_H3u9I/AAAAAAAAD58/csl95rDXTm4/s320/gitolite6.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://3.bp.blogspot.com/-C8ZLxfBXeQA/UEtTE_H3u9I/AAAAAAAAD58/csl95rDXTm4/s320/gitolite6.PNG)</div>
+            </figure></p>
+<p>8) 安裝必要相關套件  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://3.bp.blogspot.com/-Kd3EL1imrBo/UEtTFmP5tWI/AAAAAAAAD6E/jCthK8HHBAw/s1600/gitolite7.PNG" alt="](http://3.bp.blogspot.com/-Kd3EL1imrBo/UEtTFmP5tWI/AAAAAAAAD6E/jCthK8HHBAw/s320/gitolite7.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://3.bp.blogspot.com/-Kd3EL1imrBo/UEtTFmP5tWI/AAAAAAAAD6E/jCthK8HHBAw/s320/gitolite7.PNG)</div>
+            </figure></p>
+<p>9) 等待安裝完成  </p>
+<p>10) 完成  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://1.bp.blogspot.com/-keODYJVmCcE/UEtTHfPNkDI/AAAAAAAAD6U/Y95H2fEgQAU/s1600/gitolite9.PNG" alt="](http://1.bp.blogspot.com/-keODYJVmCcE/UEtTHfPNkDI/AAAAAAAAD6U/Y95H2fEgQAU/s320/gitolite9.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://1.bp.blogspot.com/-keODYJVmCcE/UEtTHfPNkDI/AAAAAAAAD6U/Y95H2fEgQAU/s320/gitolite9.PNG)</div>
+            </figure><br><strong><u>設定環境 sshd (Server Side)</u></strong>  </p>
+<p>1) 開啟桌面上的 Cygwin Terminal 捷徑  </p>
+<p>2) 設定 sshd：輸入 ssh-host-config  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://3.bp.blogspot.com/-uDJiKQYM8Cg/UEtSzfU0sLI/AAAAAAAAD3A/Jx3imP6t6xg/s1600/gitolite10.PNG" alt="](http://3.bp.blogspot.com/-uDJiKQYM8Cg/UEtSzfU0sLI/AAAAAAAAD3A/Jx3imP6t6xg/s320/gitolite10.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://3.bp.blogspot.com/-uDJiKQYM8Cg/UEtSzfU0sLI/AAAAAAAAD3A/Jx3imP6t6xg/s320/gitolite10.PNG)</div>
+            </figure></p>
+<p>3) 出現 Should privilege separation be used 輸入 yes  </p>
+<p>4) 出現 new local account ‘sshd’ ? 輸入 yes  </p>
+<p>5) 出現 Do you want to install sshd as a service ? 輸入 yes  </p>
+<p>6) 出現 Enter the value of CYGWIN for the daemon : [] 直接按 Enter  </p>
+<p>7) 設定完成  </p>
+<p>設定 git 使用者帳號 (Server Side)  </p>
+<p>1) 在控制台 —&gt; 使用者帳戶 —&gt; 建立新的帳戶  </p>
+<p>2) 名稱輸入 git  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://1.bp.blogspot.com/-FlSV0CMhVHk/UEtS0ZTgd5I/AAAAAAAAD3E/QagnbCa26KQ/s1600/gitolite11.PNG" alt="](http://1.bp.blogspot.com/-FlSV0CMhVHk/UEtS0ZTgd5I/AAAAAAAAD3E/QagnbCa26KQ/s320/gitolite11.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://1.bp.blogspot.com/-FlSV0CMhVHk/UEtS0ZTgd5I/AAAAAAAAD3E/QagnbCa26KQ/s320/gitolite11.PNG)</div>
+            </figure></p>
+<p>3) 確定  </p>
+<p>4) 為 git 帳號設定密碼 ( ps. 吴波 指出 : “把git用户加入Administrators管理员组” ，可以解決在 Windows 2012 Server 環境下，ssh 無法 login 的問題 ! )  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://3.bp.blogspot.com/-p4m2tm5ILws/UEtS3LuXmZI/AAAAAAAAD3g/lRtZXZw1tY4/s1600/gitolite14.PNG" alt="](http://3.bp.blogspot.com/-p4m2tm5ILws/UEtS3LuXmZI/AAAAAAAAD3g/lRtZXZw1tY4/s320/gitolite14.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://3.bp.blogspot.com/-p4m2tm5ILws/UEtS3LuXmZI/AAAAAAAAD3g/lRtZXZw1tY4/s320/gitolite14.PNG)</div>
+            </figure></p>
+<p>5) 在 cygwin terminal 裡輸入 mkpasswd -l -u git &gt;&gt; /etc/passwd  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://4.bp.blogspot.com/-T8-QUCiv708/UEtS3xz8ltI/AAAAAAAAD3o/77wwnbYRzek/s1600/gitolite15.PNG" alt="](http://4.bp.blogspot.com/-T8-QUCiv708/UEtS3xz8ltI/AAAAAAAAD3o/77wwnbYRzek/s320/gitolite15.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://4.bp.blogspot.com/-T8-QUCiv708/UEtS3xz8ltI/AAAAAAAAD3o/77wwnbYRzek/s320/gitolite15.PNG)</div>
+            </figure></p>
+<p>6) 輸入 sc start sshd 啟動 ssh server  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://2.bp.blogspot.com/-3G40owXHkjM/UEtS47Sb0GI/AAAAAAAAD34/fGFqkMxLGaA/s1600/gitolite17.PNG" alt="](http://2.bp.blogspot.com/-3G40owXHkjM/UEtS47Sb0GI/AAAAAAAAD34/fGFqkMxLGaA/s320/gitolite17.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://2.bp.blogspot.com/-3G40owXHkjM/UEtS47Sb0GI/AAAAAAAAD34/fGFqkMxLGaA/s320/gitolite17.PNG)</div>
+            </figure></p>
+<p>7) 可以輸入 ipconfig 取得電腦的 ip 位址，後續設定會用到  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://4.bp.blogspot.com/-rpA58Q1e-Fw/UEtS4bs0owI/AAAAAAAAD3w/vamTiv4uJRg/s1600/gitolite16.PNG" alt="](http://4.bp.blogspot.com/-rpA58Q1e-Fw/UEtS4bs0owI/AAAAAAAAD3w/vamTiv4uJRg/s320/gitolite16.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://4.bp.blogspot.com/-rpA58Q1e-Fw/UEtS4bs0owI/AAAAAAAAD3w/vamTiv4uJRg/s320/gitolite16.PNG)</div>
+            </figure><br><strong><u>安裝 gitolite (在 Client 端以 ssh 連線到 Server 來做設定)</u></strong>  </p>
+<p>1) 在 Client 端電腦 (通常是管理者的電腦，也可在 Server 端電腦上操作) 以 ssh 方式連至 Server，若 client 端是 windows 系統則可以使用 putty (<a href="http://chiark.greenend.org.uk/~sgtatham/putty/download.html" target="_blank" rel="external">http://chiark.greenend.org.uk/~sgtatham/putty/download.html</a>) 來連線  </p>
+<p>2) 下載 putty.exe 執行畫面 (此例的 Server ip 是 192.168.11.7 所以在 Host Name 處輸入 192.168.11.7，Connection type 選擇 SSH)  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://3.bp.blogspot.com/-Uwrj_hKlhEs/UEtS5ayb28I/AAAAAAAAD4A/CHItbJAJL1s/s1600/gitolite18.PNG" alt="](http://3.bp.blogspot.com/-Uwrj_hKlhEs/UEtS5ayb28I/AAAAAAAAD4A/CHItbJAJL1s/s320/gitolite18.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://3.bp.blogspot.com/-Uwrj_hKlhEs/UEtS5ayb28I/AAAAAAAAD4A/CHItbJAJL1s/s320/gitolite18.PNG)</div>
+            </figure></p>
+<p>3) 按下 Open 之後出現警告視窗，按是，則下次不再顯示此訊息  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://3.bp.blogspot.com/-bfzI-cba8iI/UEtS6InCh0I/AAAAAAAAD4I/VoWi8ep85OM/s1600/gitolite19.PNG" alt="](http://3.bp.blogspot.com/-bfzI-cba8iI/UEtS6InCh0I/AAAAAAAAD4I/VoWi8ep85OM/s320/gitolite19.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://3.bp.blogspot.com/-bfzI-cba8iI/UEtS6InCh0I/AAAAAAAAD4I/VoWi8ep85OM/s320/gitolite19.PNG)</div>
+            </figure></p>
+<p>4) 提示 login as : 時輸入 git (使用者名稱)  </p>
+<p>5) 提示 git@192.168.11.7’s password : 時輸入剛剛在 Server 端設定的密碼  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://4.bp.blogspot.com/-gfqI3b77VIY/UEtS7RLQvYI/AAAAAAAAD4Y/e0p2zXRmvkU/s1600/gitolite20.PNG" alt="](http://4.bp.blogspot.com/-gfqI3b77VIY/UEtS7RLQvYI/AAAAAAAAD4Y/e0p2zXRmvkU/s320/gitolite20.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://4.bp.blogspot.com/-gfqI3b77VIY/UEtS7RLQvYI/AAAAAAAAD4Y/e0p2zXRmvkU/s320/gitolite20.PNG)</div>
+            </figure></p>
+<p>6) 剛登入所在路徑應該為 /home/git (可輸入 pwd 來確定)  </p>
+<p>7) 輸入 git clone git://github.com/sitaramc/gitolite.git (若無法成功可改輸入 git clone <a href="https://github.com/sitaramc/gitolite.git" target="_blank" rel="external">https://github.com/sitaramc/gitolite.git</a> 試看看)  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://2.bp.blogspot.com/-yoXMFfSGlgA/UEtS8b6q5cI/AAAAAAAAD4g/c1iZtFOvJWw/s1600/gitolite21.PNG" alt="](http://2.bp.blogspot.com/-yoXMFfSGlgA/UEtS8b6q5cI/AAAAAAAAD4g/c1iZtFOvJWw/s320/gitolite21.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://2.bp.blogspot.com/-yoXMFfSGlgA/UEtS8b6q5cI/AAAAAAAAD4g/c1iZtFOvJWw/s320/gitolite21.PNG)</div>
+            </figure><br>8) 確定 /home/git/.ssh/authorized_keys 檔案不存在或者內容空白 (輸入 cat /home/git/.ssh/authorized_keys 來測試)  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://2.bp.blogspot.com/-z2UX_WobA9w/UEtS8zKNdQI/AAAAAAAAD4o/9IadmH7PHko/s1600/gitolite22.PNG" alt="](http://2.bp.blogspot.com/-z2UX_WobA9w/UEtS8zKNdQI/AAAAAAAAD4o/9IadmH7PHko/s320/gitolite22.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://2.bp.blogspot.com/-z2UX_WobA9w/UEtS8zKNdQI/AAAAAAAAD4o/9IadmH7PHko/s320/gitolite22.PNG)</div>
+            </figure></p>
+<p><strong><u>設定 gitolite 管理者權限</u></strong>  </p>
+<p>gitolite 本身也使用 git 機制來管理權限，但只有第一個使用者 (管理者) 的設定比較麻煩，此例子是假設 Server 和管理者並非使用同一台電腦的狀態下做設定，換句話說管理者在自已的電腦上透過 ssh 來遠端連線到 Server 做設定  </p>
+<p>1) 安裝 git (<a href="http://git-scm.com" target="_blank" rel="external">http://git-scm.com</a>) 此篇文章使用的是 1.7.11 版，安裝步驟可參考此篇文章  </p>
+<p>2) 在桌面上按滑鼠右鍵選擇 Git Bash  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://3.bp.blogspot.com/-oWl9OQtqlaE/UEtS9r-cYKI/AAAAAAAAD4w/vmyaIzjlwoQ/s1600/gitolite23.PNG" alt="](http://3.bp.blogspot.com/-oWl9OQtqlaE/UEtS9r-cYKI/AAAAAAAAD4w/vmyaIzjlwoQ/s1600/gitolite23.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://3.bp.blogspot.com/-oWl9OQtqlaE/UEtS9r-cYKI/AAAAAAAAD4w/vmyaIzjlwoQ/s1600/gitolite23.PNG)</div>
+            </figure></p>
+<p>3) 輸入 ssh-keygen (出現所有提示皆按 Enter)  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://2.bp.blogspot.com/-nabN7yozaRM/UEtS-BuMfOI/AAAAAAAAD44/b99Ac4aB92E/s1600/gitolite24.PNG" alt="](http://2.bp.blogspot.com/-nabN7yozaRM/UEtS-BuMfOI/AAAAAAAAD44/b99Ac4aB92E/s320/gitolite24.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://2.bp.blogspot.com/-nabN7yozaRM/UEtS-BuMfOI/AAAAAAAAD44/b99Ac4aB92E/s320/gitolite24.PNG)</div>
+            </figure></p>
+<p>4) 將產生的 public ssh key 傳送至 Server，輸入 cd ~/.ssh 然後輸入 scp id_rsa.pub git@192.168.11.7:git.pub，其中 id_rsa.pub 為產生的 public key，git 為先前設定好的使用者帳號，192.168.11.7 為 Server IP，git.pub 為最後擺在 Server 上的檔案名稱  </p>
+<p>5) 提示出現密碼則輸入先前為 git 帳號設定的密碼  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://2.bp.blogspot.com/-Sm3X2CLcR2g/UEtS-9-hOVI/AAAAAAAAD5A/HzHduvnN0Tk/s1600/gitolite25.PNG" alt="](http://2.bp.blogspot.com/-Sm3X2CLcR2g/UEtS-9-hOVI/AAAAAAAAD5A/HzHduvnN0Tk/s320/gitolite25.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://2.bp.blogspot.com/-Sm3X2CLcR2g/UEtS-9-hOVI/AAAAAAAAD5A/HzHduvnN0Tk/s320/gitolite25.PNG)</div>
+            </figure></p>
+<p>6) 輸入 ssh git@192.168.11.7 登入至 Server  </p>
+<p>7) 輸入 mkdir -p $HOME/bin  </p>
+<p>8) 輸入 ./gitolite/install -to $HOME/bin  </p>
+<p>9) 輸入 $HOME/bin/gitolite setup -pk ./git.pub  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://3.bp.blogspot.com/-VOD8ZhnHw2s/UEtS_RKBxjI/AAAAAAAAD5I/lhGp6Hn641Y/s1600/gitolite26.PNG" alt="](http://3.bp.blogspot.com/-VOD8ZhnHw2s/UEtS_RKBxjI/AAAAAAAAD5I/lhGp6Hn641Y/s320/gitolite26.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://3.bp.blogspot.com/-VOD8ZhnHw2s/UEtS_RKBxjI/AAAAAAAAD5I/lhGp6Hn641Y/s320/gitolite26.PNG)</div>
+            </figure></p>
+<p>10) 輸入 exit 離開 ssh  </p>
+<p>11) 輸入 cd ~ (回到 home 目錄)  </p>
+<p>12) 輸入 git clone git@192.168.11.7:gitolite-admin ( 此時應可直接完成 clone，若被提示問密碼則代表先前的設定有誤)  </p>
+<p>13) 完成  </p>
+<p><strong><u>新增 git repo (例如現在要新開一個 repo 名叫 newrepo)</u></strong>  </p>
+<p>1) 將 &nbsp;gitolite-admin clone 下來之後，打開 gitolite-admin/conf/gitolite.conf 檔案  </p>
+<p>2) 在底下新增  </p>
+<p>repo newrepo  </p>
+<p>&nbsp; &nbsp; RW+ = @all  </p>
+<p>意思是增加 repo 名叫 newrepo, 且所有 user 有有權利讀寫  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://3.bp.blogspot.com/-YbJHnLs5Ky4/UEtS_-NpGvI/AAAAAAAAD5Q/6-IZwpOg7c0/s1600/gitolite27.PNG" alt="](http://3.bp.blogspot.com/-YbJHnLs5Ky4/UEtS_-NpGvI/AAAAAAAAD5Q/6-IZwpOg7c0/s320/gitolite27.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://3.bp.blogspot.com/-YbJHnLs5Ky4/UEtS_-NpGvI/AAAAAAAAD5Q/6-IZwpOg7c0/s320/gitolite27.PNG)</div>
+            </figure></p>
+<p>3) 儲存之後依序 commit 並 push 就算設定完成了  </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://4.bp.blogspot.com/-JTFmZsPF78s/UEtTAtJiQYI/AAAAAAAAD5Y/FnT-onWH5p8/s1600/gitolite28.PNG" alt="](http://4.bp.blogspot.com/-JTFmZsPF78s/UEtTAtJiQYI/AAAAAAAAD5Y/FnT-onWH5p8/s320/gitolite28.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://4.bp.blogspot.com/-JTFmZsPF78s/UEtTAtJiQYI/AAAAAAAAD5Y/FnT-onWH5p8/s320/gitolite28.PNG)</div>
+            </figure><br><strong><u>新增 git user</u></strong>  </p>
+<p>1) 利用先前提的步驟，在欲新增的 user 的電腦上執行 ssh-keygen，然後將產生的 id_rsa.pub 複製到管理者電腦的 gitolite-admin/keydir 路徑底下並重新命名為 jack.pub (此處假設這個 user 叫做 jack)  </p>
+<p>2)&nbsp;依序 commit 並 push 就算設定完成了 (假若 push 之後仍然無效則在 Server 端的 /home/git/bin 底下重新執行 ./gitolite setup )   </p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://3.bp.blogspot.com/-D9Jh5HZPluI/UEtTBZiUKcI/AAAAAAAAD5c/G1BSh5osnnY/s1600/gitolite29.PNG" alt="](http://3.bp.blogspot.com/-D9Jh5HZPluI/UEtTBZiUKcI/AAAAAAAAD5c/G1BSh5osnnY/s320/gitolite29.PNG)" title="">
+                </div>
+                <div class="image-caption">](http://3.bp.blogspot.com/-D9Jh5HZPluI/UEtTBZiUKcI/AAAAAAAAD5c/G1BSh5osnnY/s320/gitolite29.PNG)</div>
+            </figure><br><strong><u>設定 git user 之權限</u></strong>  </p>
+<p>1) 先前提的 RW+ =@all 代表所有人可讀取此 repo，若是改為 RW+ =jack 則代表只有 jack 這個 &nbsp;user 可以讀寫此 repo，詳細的設定可以參考&nbsp;<a href="https://github.com/sitaramc/gitolite" target="_blank" rel="external">https://github.com/sitaramc/gitolite</a> 連結的教學  </p>
+<p>2) gitolite 甚至可以限制 repo 裡的某些資料夾只有某些人可以讀寫：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">RW+ = QA-guy  </div><div class="line">RW+ VREF/NAME/CHANGELOG =QA-guy  </div><div class="line">RW+ VREF/NAME/ReleaseNotes/ = QA-guy  </div><div class="line">- VREF/NAME/ =QA-guy</div></pre></td></tr></table></figure>
+<p>上面例子意思是 QA-guy user 只能讀寫此 repo 的 CHANGELOG 檔案及 ReleaseNote 資料夾底下的檔案。  </p>
+<p>此外，底下是吴波熱心提供的幾個建議提供參考 :  </p>
+<p>1) 開啟桌面上的 Cygwin Terminal 捷徑  </p>
+<p>Vista、Win7、Win8、Win2012等系统最好以管理员权限打开  </p>
+<p>6) 輸入 sc start sshd 啟動 ssh server  </p>
+<p>这步之后如果无法正常启动，查看/var/log/sshd.log，如果提示权限过大等，执行以下命令限制权限：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">chmod 600 /etc/ssh_host_dsa_key  </div><div class="line">chmod 600 /etc/ssh_host_ecdsa_key  </div><div class="line">chmod 600 /etc/ssh_host_key  </div><div class="line">chmod 600 /etc/ssh_host_rsa_key  </div><div class="line">chmod 600 /var/empty</div></pre></td></tr></table></figure>
+<p>7) 可以輸入 ipconfig 取得電腦的 ip 位址，後續設定會用到  </p>
+<p>注意，可能要添加防火墙例外</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Git/2015-03-29-git-server-setup.html" target="_blank" rel="external">http://blog.inching.org/Git/2015-03-29-git-server-setup.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Git/2015-03-29-git-server-setup.html&title=《gitolite + cygwin + windows xp》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Git/2015-03-29-git-server-setup.html&title=《gitolite + cygwin + windows xp》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Git/2015-03-29-git-server-setup.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《gitolite + cygwin + windows xp》 — Balance&url=http://blog.inching.org/Git/2015-03-29-git-server-setup.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Git/2015-03-29-git-server-setup.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Tool/2015-03-29-vim-tutorial.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">VIM Tutorial</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Git/2015-03-29-git-migrate.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">GIT 数据迁移</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Git/2015-03-29-git-server-setup.html&title=《gitolite + cygwin + windows xp》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Git/2015-03-29-git-server-setup.html&title=《gitolite + cygwin + windows xp》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Git/2015-03-29-git-server-setup.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《gitolite + cygwin + windows xp》 — Balance&url=http://blog.inching.org/Git/2015-03-29-git-server-setup.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Git/2015-03-29-git-server-setup.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACHUlEQVR42u3aQZKDMAwFUe5/aeYAqUz6S0AVUrNKEWL8vFAky8eBrxNc5PlvI3/+6rjjkiFDxmsZZHJkQnxk8iSfmwwZMvYwSCgkIZJPPX3XjznLkCFDBkjg/r9DnpchQ4aMZxg8oeQjyJAhQwYvYnnBmYbgR2txGTJkvJDBN86e/3xLf0OGDBmvYpzh1U8B0wQRzUqGDBmjGTzAkZSRl7gk9eTzkSFDxgYGCaO18pUUnHycOE2UIUPGOEbaSuSvjJO8RnNChgwZsxm1ErS/cp31liFDxgZGelSLINMm6C0HwmTIkDGIkR7qqjUAeDbKD5zJkCFjGyMNhcE2fXuZ+MLJkCFjNiNtUl61MUfenkZUGTJkbGPUSlwyQnFHkAR3GTJkDGWkw5HjXLVyt3NHhgwZUxk8qPGWAB8nPRD29VsZMmSMZvDgyFuVadMxDb4/wq4MGTKGMlp5ZbhVR4Jv60CGDBkyRjPSF6cbbenRijRVlSFDxmxGcHYMh9pOoVtsl8qQIWMBI91WS5M5/i3fepMhQ8Y2BhmoEyL5pn+aSsqQIWM24wyvq1oFaeMBba7JkCFjKOOqYpW3G9OW51VBX4YMGW9n1FLDWjDtLNmPFoIMGTIWMDqBr9YK7S+NDBkyZPC0LJ1i58hXcBRMhgwZixm1O52WA1oIGTJkLGDwZkAaankiyLfzZMiQsY3BS8c0QHfanLW/ARkyZIxj/AEmArwqgJsE2AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

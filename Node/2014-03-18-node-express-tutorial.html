@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Node Express | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="node">
+    <meta name="description" content="Node 的框架：http://nodeframework.com/。
+其中比较流行的MVC框架是 Ruby’s Sinatra 风格的 visionmedia/express，和 Ruby’s Rack 风格的 senchalabs/connect 。其中 Connect 的领导者为Sencha的visionmedia (TJ Holowaychuk)，Express的领导者为还是TJ Holo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node Express">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-03-18-node-express-tutorial.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="Node 的框架：http://nodeframework.com/。
+其中比较流行的MVC框架是 Ruby’s Sinatra 风格的 visionmedia/express，和 Ruby’s Rack 风格的 senchalabs/connect 。其中 Connect 的领导者为Sencha的visionmedia (TJ Holowaychuk)，Express的领导者为还是TJ Holo">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/express-public.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/express-skeleton.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/express-response-time.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/express-error-handle.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/express-error-handler-rooter.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/express-json-callback.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/express-download.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/express-form-get.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/express-form-muilti-checkbox.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/express-form-submit.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/express-cookie.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/express-signed-cookie.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/http-response.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/http-content-type.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node Express">
+<meta name="twitter:description" content="Node 的框架：http://nodeframework.com/。
+其中比较流行的MVC框架是 Ruby’s Sinatra 风格的 visionmedia/express，和 Ruby’s Rack 风格的 senchalabs/connect 。其中 Connect 的领导者为Sencha的visionmedia (TJ Holowaychuk)，Express的领导者为还是TJ Holo">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/express-public.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Node Express</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Node Express</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-03-17T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-03-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Framework"><span class="post-toc-text">Framework</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Install"><span class="post-toc-text">Install</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Express-三大组件"><span class="post-toc-text">Express 三大组件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#application-对象"><span class="post-toc-text">application 对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#request-对象"><span class="post-toc-text">request 对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#response-对象"><span class="post-toc-text">response 对象</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#几个核心概念"><span class="post-toc-text">几个核心概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Middlewares"><span class="post-toc-text">Middlewares</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Router"><span class="post-toc-text">Router</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Quick-Start"><span class="post-toc-text">Quick Start</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#create-package-json"><span class="post-toc-text">create package.json</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#create-app-js"><span class="post-toc-text">create app.js</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#start-amp-stop"><span class="post-toc-text">start & stop</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#views"><span class="post-toc-text">views</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#public-directory-for-the-app"><span class="post-toc-text">public directory for the app</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#auto-generate-experss-app-skeleton"><span class="post-toc-text">auto generate experss app skeleton</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Empowering-Express-with-middlewares"><span class="post-toc-text">Empowering Express with middlewares</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Empowering-Express-with-Node-modules"><span class="post-toc-text">Empowering Express with Node modules</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#logger"><span class="post-toc-text">logger</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#configuration"><span class="post-toc-text">configuration</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Router-1"><span class="post-toc-text">Router</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#String-based-routes"><span class="post-toc-text">String-based routes</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#regular-expression-router"><span class="post-toc-text">regular-expression router</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#order-of-router-precedence"><span class="post-toc-text">order of router precedence</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#handle-routers"><span class="post-toc-text">handle routers</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#organize-routes"><span class="post-toc-text">organize routes</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Using-Node-modules"><span class="post-toc-text">Using Node modules</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Namespaced-routing"><span class="post-toc-text">Namespaced routing</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Resourceful-routing"><span class="post-toc-text">Resourceful routing</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Response-From-the-Server"><span class="post-toc-text">Response From the Server</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Setting-the-HTTP-status-code"><span class="post-toc-text">Setting the HTTP status code</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Setting-HTTP-headers"><span class="post-toc-text">Setting HTTP headers</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Sending-data"><span class="post-toc-text">Sending data</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Plain-text"><span class="post-toc-text">Plain text</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#HTML"><span class="post-toc-text">HTML</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#JSON"><span class="post-toc-text">JSON</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#JSONP"><span class="post-toc-text">JSONP</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Serving-static-files"><span class="post-toc-text">Serving static files</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Serving-error-pages"><span class="post-toc-text">Serving error pages</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Content-negotiation"><span class="post-toc-text">Content negotiation</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Redirecting-a-request"><span class="post-toc-text">Redirecting a request</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Forms-Cookies-and-Sessions"><span class="post-toc-text">Forms, Cookies, and Sessions</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Handling-GET-submissions"><span class="post-toc-text">Handling GET submissions</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Handling-POST-submissions"><span class="post-toc-text">Handling POST submissions</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Handling-text-only-forms"><span class="post-toc-text">Handling text-only forms</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Handling-file-uploads"><span class="post-toc-text">Handling file uploads</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Using-cookies-to-store-data"><span class="post-toc-text">Using cookies to store data</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Creating-cookies"><span class="post-toc-text">Creating cookies</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Other-operation-on-cookies"><span class="post-toc-text">Other operation on cookies</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Session-cookies"><span class="post-toc-text">Session cookies</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Signed-cookies"><span class="post-toc-text">Signed cookies</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Using-sessions-to-store-data"><span class="post-toc-text">Using sessions to store data</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Cookie-based-sessions"><span class="post-toc-text">Cookie-based sessions</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Session-store-based-sessions"><span class="post-toc-text">Session store-based sessions</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Deleting-a-session"><span class="post-toc-text">Deleting a session</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#http-response"><span class="post-toc-text">http response</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP-status-codes"><span class="post-toc-text">HTTP status codes</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP-response-headers"><span class="post-toc-text">HTTP response headers</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Media-types"><span class="post-toc-text">Media types</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Express-in-Production"><span class="post-toc-text">Express in Production</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Server"><span class="post-toc-text">Server</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Restful"><span class="post-toc-text">Restful</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#FAQ"><span class="post-toc-text">FAQ</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#bin"><span class="post-toc-text">bin</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-express-tutorial"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Node Express</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-03-18 00:00:00" datetime="2014-03-17T16:00:00.000Z"  itemprop="datePublished">2014-03-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Node 的框架：<a href="http://nodeframework.com/" target="_blank" rel="external">http://nodeframework.com/</a>。</p>
+<p>其中比较流行的MVC框架是 Ruby’s Sinatra 风格的 <a href="https://github.com/visionmedia/express" target="_blank" rel="external">visionmedia/express</a>，和 Ruby’s Rack 风格的 <a href="https://github.com/senchalabs/connect" target="_blank" rel="external">senchalabs/connect</a> 。其中 Connect 的领导者为Sencha的<a href="https://github.com/visionmedia" target="_blank" rel="external">visionmedia (TJ Holowaychuk)</a>，Express的领导者为还是TJ Holowaychuk，可以看看这个的 Git 首页，无语的。Express 和 Connect 相互补充，而不是取代关系。Express v1.0.0 便是基于 Connect 开发的，时至今日，他们之间仍然维持着这样的关系：Express=Connect+基于Connect的额外功能。Connect的任何修改都会反映到Express。</p>
+<a id="more"></a>
+<p>本文以下部分是 &lt;&lt;<a href="http://www.salttiger.com/express-web-application-development/" target="_blank" rel="external">Express Web Application Development</a>&gt;&gt; 的读书笔记，基于 Express 3.x 。</p>
+<p>关于Express V4 和 Express V3的区别请参考：</p>
+<ul>
+<li><a href="https://github.com/visionmedia/express/wiki/New-features-in-4.x" target="_blank" rel="external">New features in 4.x · visionmedia/express Wiki</a></li>
+<li><a href="http://scotch.io/bar-talk/expressjs-4-0-new-features-and-upgrading-from-3-0" target="_blank" rel="external">ExpressJS 4.0: New Features and Upgrading from 3.0 ♥ Scotch</a></li>
+</ul>
+<h2 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h2><p>See <a href="http://nodeframework.com/index.html#mvc" target="_blank" rel="external">Node.js MVC Frameworks</a></p>
+<p>另外，还有一个新的Web框架 <a href="https://github.com/koajs/koa" target="_blank" rel="external">koajs/koa</a>。Koa是由Express背后的团队开发的新Web框架，目的是为Web应用和Web API提供更小、更有表达力、更稳固的基础。通过生成器，Koa可以摆脱回调，极大地改进错误处理。Koa核心不绑定任何中间件，但提供了优雅的一组方法，可以快速和愉悦地编写服务器应用。</p>
+<p>Koa号称为Node下一代的 Web 框架。但是在官方的FAQ中提到它不会取代Connect，但会不会取代Express，并没有正面回答，参考 <a href="https://github.com/koajs/koa/blob/master/docs/faq.md" target="_blank" rel="external">koa/docs/faq.md at master · koajs/koa</a>。</p>
+<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 安装</span></div><div class="line">npm install express</div><div class="line"></div><div class="line"><span class="comment"># 安装指定版本 3.08</span></div><div class="line">npm install express@3.0.5 -g</div><div class="line"></div><div class="line"><span class="comment">#查看 expres 的版本：</span></div><div class="line">express –V</div></pre></td></tr></table></figure>
+<p>yeoman 生成器：</p>
+<h2 id="Express-三大组件"><a href="#Express-三大组件" class="headerlink" title="Express 三大组件"></a>Express 三大组件</h2><h3 id="application-对象"><a href="#application-对象" class="headerlink" title="application 对象"></a>application 对象</h3><p>The application object is an instance of Express, conventionally represented by the variable named app. This is the main object of your Express app and the bulk of the functionality is built on it.</p>
+<p>创建一个Express模块的实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var express = require(&apos;express&apos;);</div><div class="line">var app = new express();</div></pre></td></tr></table></figure>
+<h3 id="request-对象"><a href="#request-对象" class="headerlink" title="request 对象"></a>request 对象</h3><p>The HTTP request object is created when a client makes a request to the Express app. The object is conventionally represented by a variable named req, which contains a number of properties and methods related to the current request.</p>
+<h3 id="response-对象"><a href="#response-对象" class="headerlink" title="response 对象"></a>response 对象</h3><p>The response object is created along with the request object, and is conventionally represented by a variable named res. While it may sound a little strange that both of them should be created together, it is a necessity to give all the middlewares a chance to work on the request and the response object, before passing the control to the next middleware.</p>
+<h2 id="几个核心概念"><a href="#几个核心概念" class="headerlink" title="几个核心概念"></a>几个核心概念</h2><h3 id="Middlewares"><a href="#Middlewares" class="headerlink" title="Middlewares"></a>Middlewares</h3><p>A middleware is a JavaScript function to handle HTTP requests to an Express app. It can manipulate the request and the response objects or perform an isolated action, or terminate the request flow by sending a response to the client, or pass on the control to the next middleware.</p>
+<p>Middlewares are loaded in an Express app using the app.use()method.</p>
+<p>Following is an example of a middleware. All it does is print the IP address of the client that made the request. Although it may seem like a trivial middleware, it gives you a very good overview of how middlewares work:</p>
+<pre><code>app.use(function(req, res, next) {
+    console.log(&apos;Request from: &apos; + req.ip);
+    next();
+});
+</code></pre><ul>
+<li>res is the request object</li>
+<li>res is the response object</li>
+<li>next is a reference to the next middleware in line.</li>
+</ul>
+<p>Any middleware can end a request by sending a response back to the client using one of the response methods on the resobject. Any middleware that does not call a response method must call the next middleware in line, else the request will be left hanging in there.</p>
+<p>This is how a middleware would look like if it were defined first and then passed to the app.use()method:</p>
+<p>define the middleware:</p>
+<pre><code>var forbidder = function(forbidden_day) {
+    var days = [&apos;Sunday&apos;, &apos;Monday&apos;, &apos;Tueday&apos;, &apos;Wednesday&apos;, &apos;Thursday&apos;, &apos;Friday&apos;, &apos;Saturday&apos;];
+    return function(req, res, next) {
+        // get the current day
+        var day = new Date().getDay();
+        // check if the current day is the forbidden day
+        if (days[day] === forbidden_day) {
+            res.send(&apos;No visitors allowed on &apos; + forbidden_day + &apos;s!&apos;);
+        }
+        // call the next middleware
+        else {
+         next();
+        }
+    }
+};
+</code></pre><p>use the forbidder middleware:</p>
+<pre><code>app.use(forbidder(&apos;Wednesday&apos;));
+// the router middleware goes here
+app.use(app.router);
+</code></pre><p>If we were to rewrite the forbidder middleware as a Node module, we would need to first create the <code>forbidder.js</code> module file with the following content:</p>
+<pre><code>module.exports = function(forbidden_day) {
+    var days = [&apos;Sunday&apos;, &apos;Monday&apos;, &apos;Tueday&apos;, &apos;Wednesday&apos;, &apos;Thursday&apos;,
+        &apos;Friday&apos;, &apos;Saturday&apos;
+    ];
+    return function(req, res, next) {
+        // get the current day
+        var day = new Date().getDay();
+        // check if the current day is the forbidden day
+        if (days[day] === forbidden_day) {
+            res.send(&apos;No visitors allowed on &apos; + forbidden_day + &apos;s!&apos;);
+        }
+        // call the next middleware
+        else {
+            next();
+        }
+    }
+};
+</code></pre><p>使用：</p>
+<pre><code>var forbidder = require(&apos;./forbidder.js&apos;);
+app.use(forbidder(&apos;Wednesday&apos;));
+</code></pre><h3 id="Router"><a href="#Router" class="headerlink" title="Router"></a>Router</h3><p>The destinations of the HTTP request URIs are defined via routes in the app. Routes are how you tell your app “ for this URI, execute this piece of JavaScript code”. The corresponding JavaScript function for a route is called a route handler. It is the responsibility of the route handler to respond to an HTTP request, or pass it on to another handler function if it does not. Route handlers may be defined in the app.js file or loaded as a Node module.</p>
+<p>Here is a working example of some routes and their handlers defined right in the app.js file:</p>
+<pre><code>var http = require(&apos;http&apos;);
+var express = require(&apos;express&apos;);
+var app = express();
+
+app.get(&apos;/&apos;, function(req, res) {
+    res.send(&apos;Welcome!&apos;);
+});
+
+app.get(&apos;/hello.text&apos;, function(req, res) {
+    res.send(&apos;Hola!&apos;);
+});
+app.get(&apos;/contact&apos;, function(req, res) {
+    res.render(&apos;contact&apos;);
+});
+
+http.createServer(app).listen(3000, function(){
+    console.log(&apos;Express server listening on port &apos; + 3000);
+});
+</code></pre><p>Defining the routes and their handlers in the app.js file may work fine if the number of routes is relatively few. It becomes messy if the number of routes starts growing. That’s where defining the routes and their handlers in a Node module comes in handy. If we were to modularize the routes we defined earlier, here is how it would look like.</p>
+<p>The following is the content of the <code>routes.js</code> Node module:</p>
+<pre><code>module.exports = function(app) {
+    app.get(&apos;/&apos;, function(req, res) {
+        // Send a plain text response
+        res.send(&apos;Welcome!&apos;);
+    });
+
+    app.get(&apos;/hello.text&apos;, function(req, res) {
+        // Send a plain text response
+        res.send(&apos;Hola!&apos;);
+    });
+
+    app.get(&apos;/contact&apos;, function(req, res) {
+        // Render a view
+        res.render(&apos;contact&apos;);
+    });
+};
+</code></pre><p>The modified <code>app.js</code> file would look like the following now:</p>
+<pre><code>var http = require(&apos;http&apos;);
+var express = require(&apos;express&apos;);
+var app = express();
+var routes = require(&apos;./routes&apos;)(app);
+http.createServer(app).listen(3000, function(){
+    console.log(&apos;Express server listening on port &apos; + 3000);
+});
+</code></pre><p>The act of sending a response effectively terminates the request flow to any other route handler.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cd ~</div><div class="line">$ mkdir express-app</div><div class="line">$ cd express-app</div></pre></td></tr></table></figure>
+<h3 id="create-package-json"><a href="#create-package-json" class="headerlink" title="create package.json"></a>create <code>package.json</code></h3><p>What is Express?, we learned that Express apps are actually Node modules, which means our app also would need a manifest file. So, create a file named <code>package.json</code> in the app directory.</p>
+<pre><code>{
+    &quot;name&quot;: &quot;test-app&quot;,
+    &quot;version&quot;: &quot;0.0.1&quot;,
+    &quot;private&quot;: true,
+    &quot;scripts&quot;: {
+        &quot;start&quot;: &quot;node app&quot;
+    },
+    &quot;dependencies&quot;: {
+        &quot;express&quot;: &quot;3.2.6&quot;,
+        &quot;jade&quot;: &quot;*&quot;
+    }
+}
+</code></pre><p>参数：</p>
+<ul>
+<li><code>private</code> Indicates whether this module is meant to be published on the<br>npmregistry or not.</li>
+<li><code>scripts</code> npm commands for the module. In our case, we will support only<br>the startcommand. npm startwill call the node app.</li>
+</ul>
+<p>在<code>package.json</code>所在的文件夹中执行：</p>
+<pre><code>$ npm install
+</code></pre><p>You will find a new directory named node_modulesin the directory; that’s where all the dependencies are installed.</p>
+<h3 id="create-app-js"><a href="#create-app-js" class="headerlink" title="create app.js"></a>create app.js</h3><p>Create a file called app.js and put the following code in it:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Include the Node HTTP library</span></div><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</div><div class="line"></div><div class="line"><span class="comment">// Include the Express module</span></div><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</div><div class="line"></div><div class="line"><span class="comment">// Create an instance of Express</span></div><div class="line"><span class="keyword">var</span> app = express();</div><div class="line"></div><div class="line"><span class="comment">// Start the app</span></div><div class="line">http.createServer(app).listen(<span class="number">3000</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Express app started'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// A route for the home page</span></div><div class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">    res.send(<span class="string">'Welcome!'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>You might have noticed that the route in the app is defined after the code for starting the server, but it works anyway. The reason it works is because routes are defined on the appobject, which is passed to the HTTP API as a reference—any time you make a change on the appobject, it is reflected on the server.</p>
+<h3 id="start-amp-stop"><a href="#start-amp-stop" class="headerlink" title="start &amp; stop"></a>start &amp; stop</h3><p>Since Express apps are Node programs, starting an Express app is similar to executing a Node program. In our case, the program resides in a file named app.js, so this is how you will start the server:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ node app</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Express app started</p>
+</blockquote>
+<p>To stop the server, press Ctrl+ C.</p>
+<p>To send HTML response, just change <code>res.send(&#39;Welcome!&#39;)</code> to <code>res.send(&#39;&lt;h1&gt;Welcome!&lt;/h1&gt;&#39;)</code>, and restart the server.</p>
+<p>For the changes made in application files to reflect, you need to restart the server. This can be a tedious process; you can make it easier for yourself by using <strong>supervisor</strong>, a Node module that will watch the application files and restart the server when any one of them changes. You can learn more about supervisor at <https: github.com="" isaacs="" node-supervisor="">.</https:></p>
+<h3 id="views"><a href="#views" class="headerlink" title="views"></a>views</h3><p>Any changes made in the views will be reflected in the HTML output without requiring the server to be restarted.</p>
+<p>Let go ahead and create a directory for our views, named views:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mkdir views</div></pre></td></tr></table></figure>
+<p>Now create two view files in the <code>views</code> directory: one named <code>index.jade</code> for the home page, another named <code>hello.jade</code> for the hello web page.</p>
+<p>Note that Jade is just one of the many templating languages that is supported by Express.</p>
+<p>Here is the content for index.jade:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">html</div><div class="line">    head</div><div class="line">        title Welcome</div><div class="line">    body Welcome!</div></pre></td></tr></table></figure>
+<p>And here is the content for hello.jade:</p>
+<pre><code>html
+head
+    title Hello
+body
+    b Hello!
+</code></pre><p>Make sure to consistently use spaces or tabs for indentation, or else Jade will throw an error.</p>
+<p>Let’s update app.js to use our newly created views:</p>
+<pre><code>var http = require(&apos;http&apos;);
+var express = require(&apos;express&apos;);
+var app = express();
+
+// Set the view engine
+app.set(&apos;view engine&apos;, &apos;jade&apos;);
+
+// Where to find the view files
+app.set(&apos;views&apos;, &apos;./views&apos;);
+
+// A route for the home page - will render a view
+app.get(&apos;/&apos;, function(req, res) {
+    res.render(&apos;index&apos;);
+});
+
+// A route for /say-hello - will render a view
+app.get(&apos;/say-hello&apos;, function(req, res) {
+    res.render(&apos;hello&apos;);
+});
+
+app.get(&apos;/test&apos;, function(req, res) {
+    res.send(&apos;this is a test&apos;);
+});
+
+http.createServer(app).listen(3000, function() {
+    console.log(&apos;App started&apos;);
+});
+</code></pre><p>For a matched route, <code>res.render()</code> will look for the view in the <code>views</code> directory and render it accordingly</p>
+<h3 id="public-directory-for-the-app"><a href="#public-directory-for-the-app" class="headerlink" title="public directory for the app"></a>public directory for the app</h3><p>Express has a middleware called <em>static</em>, using which we can mark a directory in the filesystem for serving static files for the app. Any file kept in these directories can be directly accessed via the browser.</p>
+<p>This is how you use the <em>static</em> middleware to set a directory for static resources:</p>
+<pre><code>app.use(express.static(&apos;./public&apos;));
+</code></pre><p>Let’s create a static directory named publicand use it for our static content:</p>
+<pre><code>$ mkdir public
+$ mkdir public/images
+$ mkdir public/javascripts
+$ mkdir public/stylesheets
+</code></pre><p>Create a file named <code>main.js</code> in the javascriptsdirectory with the following content:</p>
+<pre><code>window.onload = function() {
+    document.getElementById(&apos;smile&apos;).innerHTML = &apos;:)&apos;;
+};
+</code></pre><p>Create a file named <code>style.css</code> in the <code>styles</code> heetsdirectory with the following content:</p>
+<pre><code>#content {
+    width: 220px;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid #ccc;
+    box-shadow: 0 3px 4px #ccc;
+    padding: 5px;
+}
+</code></pre><p>Update <code>index.jade</code> to include the newly added files:</p>
+<pre><code>html
+    head
+        title Welcome
+        script(src=&apos;javascripts/main.js&apos;)
+        link(rel=&apos;stylesheet&apos;, href=&apos;stylesheets/style.css&apos;)
+    body
+        #content
+            img(src=&apos;images/logo.png&apos;)
+            p WELCOME
+            #smile
+</code></pre><p>Update <code>app.js</code> to set a static directory:</p>
+<pre><code>// ...
+app.set(&apos;view engine&apos;, &apos;jade&apos;);
+app.set(&apos;views&apos;, &apos;./views&apos;);
+
+// Mark the public dir as a static dir
+app.use(express.static(&apos;./public&apos;));
+
+// ...
+</code></pre><p><img src="http://johnnyimages.qiniudn.com/express-public.png" alt="effective"></p>
+<h3 id="auto-generate-experss-app-skeleton"><a href="#auto-generate-experss-app-skeleton" class="headerlink" title="auto generate experss app skeleton"></a>auto generate experss app skeleton</h3><p>Using its help option (-h), let’s ask express how it works and what its options are:</p>
+<pre><code>$ express –h
+</code></pre><p>Let’s create a new app using our newfound knowledge of express:</p>
+<pre><code>$ express --sessions ~/auto-express
+</code></pre><p>run the app:</p>
+<pre><code>$ node app
+</code></pre><p>Take a look at the content of the directory auto generated:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/express-skeleton.png" alt="express-skeleton" title="">
+                </div>
+                <div class="image-caption">express-skeleton</div>
+            </figure>
+<h3 id="Empowering-Express-with-middlewares"><a href="#Empowering-Express-with-middlewares" class="headerlink" title="Empowering Express with middlewares"></a>Empowering Express with middlewares</h3><p>For your reference, the following is the list of the middlewares that are available in Express, by default:</p>
+<table>
+<thead>
+<tr>
+<th>Middleware</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>router</td>
+<td>The app’s routing system</td>
+</tr>
+<tr>
+<td>logger</td>
+<td>Log requests to the server</td>
+</tr>
+<tr>
+<td>compress gzip/deflate</td>
+<td>support on the server</td>
+</tr>
+<tr>
+<td>basicAuth</td>
+<td>Basic HTTP authentication</td>
+</tr>
+<tr>
+<td>json</td>
+<td>Parse application/json</td>
+</tr>
+<tr>
+<td>urlencoded</td>
+<td>Parse application/x-www-formurlencoded</td>
+</tr>
+<tr>
+<td>multipart</td>
+<td>Parse multipart/form-data</td>
+</tr>
+<tr>
+<td>bodyParser</td>
+<td>Parse request body. Bundles json, urlencoded, and multipart middlewares together</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>Request timeout</td>
+</tr>
+<tr>
+<td>cookieParser</td>
+<td>Cookie parser</td>
+</tr>
+<tr>
+<td>session</td>
+<td>Session support</td>
+</tr>
+<tr>
+<td>cookieSession</td>
+<td>Cookie-based sessions</td>
+</tr>
+<tr>
+<td>methodOverride</td>
+<td>HTTP method support</td>
+</tr>
+<tr>
+<td>responseTime</td>
+<td>Show server response time</td>
+</tr>
+<tr>
+<td>static</td>
+<td>Static assets directory for the website</td>
+</tr>
+<tr>
+<td>staticCache</td>
+<td>Cache for the static middleware</td>
+</tr>
+<tr>
+<td>directory</td>
+<td>Directory listing</td>
+</tr>
+<tr>
+<td>vhost</td>
+<td>Enable vhost</td>
+</tr>
+<tr>
+<td>favicon</td>
+<td>Favicon for the website</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>Limit the size of request body</td>
+</tr>
+<tr>
+<td>query</td>
+<td>The GET query parser</td>
+</tr>
+<tr>
+<td>error</td>
+<td>Handler Generate HTML-formatted stack trace of errors in the server</td>
+</tr>
+</tbody>
+</table>
+<p>For this example, we will use the <code>responseTime</code> middleware.</p>
+<p>Modify <code>app.js</code> to use this middleware:</p>
+<pre><code>var http = require(&apos;http&apos;);
+var express = require(&apos;express&apos;);
+var app = express();
+app.set(&apos;view engine&apos;, &apos;jade&apos;);
+app.set(&apos;views&apos;, &apos;./views&apos;);
+app.use(express.static(&apos;./public&apos;));
+
+// Add the responseTime middleware
+app.use(express.responseTime());
+app.get(&apos;/&apos;, function(req, res) {
+    res.render(&apos;index&apos;);
+});
+
+http.createServer(app).listen(3000, function() {
+    console.log(&apos;App started&apos;);
+});
+</code></pre><p>When we enable the <em>responseTime</em> middleware, Express sends the time taken to process a request in the HTTP response header (<strong>X-Response-Time</strong>). You can see it highlighted in the preceding screenshot.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/express-response-time.png" alt="express-response-time.png" title="">
+                </div>
+                <div class="image-caption">express-response-time.png</div>
+            </figure>
+<p>Now let’s try using the <em>errorHandler</em> middleware.</p>
+<p>Edit app.js to include the middleware and generate the error:</p>
+<pre><code>var http = require(&apos;http&apos;);
+var express = require(&apos;express&apos;);
+var app = express();
+app.set(&apos;view engine&apos;, &apos;jade&apos;);
+app.set(&apos;views&apos;, &apos;./views&apos;);
+app.use(express.static(&apos;./public&apos;));
+app.use(express.responseTime());
+
+// Add the errorHander middleware
+app.use(express.errorHandler());
+app.get(&apos;/&apos;, function(req, res) {
+    // Call an undefined function to generate an error
+    fail();
+});
+
+http.createServer(app).listen(3000, function() {
+    console.log(&apos;App started&apos;);
+});
+</code></pre><p>Restart the server and load the home page, you’ll get an error message, as shown in the following screenshot:</p>
+<p><img src="http://johnnyimages.qiniudn.com/express-error-handle.png" alt="express-response-time.png"></p>
+<p>In fact, you can confirm it is not HTML by looking at the source code. Why is the <code>errorHandler</code> middleware not working?  <strong>The most important requirement of errorHandler is that it should be added after the router middleware</strong>. No wonder it didn’t work as expected.</p>
+<p>so let’s modify app.js to include the <code>router</code> middleware explicitly:</p>
+<pre><code>// ...
+app.use(express.static(&apos;./public&apos;));
+app.use(express.responseTime());
+
+// Explicitly add the router middleware
+app.use(app.router);
+
+// Add the errorHander middleware
+app.use(express.errorHandler());
+// ...
+</code></pre><p>Now restart the server, refresh the home page, and see the output:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/express-error-handler-rooter.png" alt="express-response-time.png" title="">
+                </div>
+                <div class="image-caption">express-response-time.png</div>
+            </figure>
+<h3 id="Empowering-Express-with-Node-modules"><a href="#Empowering-Express-with-Node-modules" class="headerlink" title="Empowering Express with Node modules"></a>Empowering Express with Node modules</h3><p>You can find a huge list of Node modules at <https: github.com="" joyent="" node="" wiki="" modules="">. From the command line, you can use the <code>npm search</code> command or use a module such as <code>npm-searchor</code> <code>npm-research</code> to search for modules of your interest.</https:></p>
+<p>We will install a .ini file parsing module named iniparserand use it in our app:</p>
+<pre><code>$ npm install iniparser
+</code></pre><p>Create config.iniin the app directory with the following content:</p>
+<pre><code>title = My Awesome App
+port = 3000
+message = You are awesome!
+</code></pre><p>Now edit <code>app.js</code> to include the module and use it in our app:</p>
+<pre><code>// ...
+var app = express();
+
+// Load the iniparser module
+var iniparser = require(&apos;iniparser&apos;);
+
+// Read the ini file and populate the content on the config object
+var config = iniparser.parseSync(&apos;./config.ini&apos;);
+
+// ...
+
+app.get(&apos;/&apos;, function(req, res) {
+    // Pass two config variables to the view
+    res.render(&apos;index&apos;, {title:config.title, message:config.message});
+});
+
+http.createServer(app).listen(config.port, function() {
+    console.log(&apos;App started on port &apos; + config.port);
+});
+</code></pre><p>Go ahead and edit <code>index.jade</code> too:</p>
+<pre><code>html
+head
+    title #{title}
+    script(src=&apos;javascripts/main.js&apos;)
+    link(rel=&apos;stylesheet&apos;, href=&apos;stylesheets/style.css&apos;)
+body
+    #content
+    img(src=&apos;images/logo.png&apos;)
+    p WELCOME
+    p #{message}
+    #smile
+</code></pre><p>We actually don’t need to use an .ini file for configuring our apps, as shown in a previous example. The purpose of the example was just to show you how to use a Node module, not the recommended practice. We will use configuration file below instead.</p>
+<h3 id="logger"><a href="#logger" class="headerlink" title="logger"></a>logger</h3><p>Express comes with a built-in logging module called logger, it can be a very useful tool while you are developing the app. You enable it like any other Express module:</p>
+<pre><code>app.use(express.logger());
+</code></pre><p>Without any options, the loggermiddleware will log a detailed log. You can customize the details with the following tokens in the formatoption of the loggermiddleware:</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:req[header]</td>
+<td>The specific HTTP header of the request</td>
+</tr>
+<tr>
+<td>:res[header]</td>
+<td>The specific HTTP header of the response</td>
+</tr>
+<tr>
+<td>:http-version</td>
+<td>The HTTP version</td>
+</tr>
+<tr>
+<td>:response-time</td>
+<td>How long it took to generate the response</td>
+</tr>
+<tr>
+<td>:remote-addr</td>
+<td>The user agent’s IP address</td>
+</tr>
+<tr>
+<td>:date</td>
+<td>Date and time of request</td>
+</tr>
+<tr>
+<td>:method</td>
+<td>The HTTP method used for making the request</td>
+</tr>
+<tr>
+<td>:url</td>
+<td>The requested URL</td>
+</tr>
+<tr>
+<td>:referrer</td>
+<td>The URL that referred the current URL</td>
+</tr>
+<tr>
+<td>:user-agent</td>
+<td>The user-agent signature</td>
+</tr>
+<tr>
+<td>:status</td>
+<td>The HTTP status</td>
+</tr>
+</tbody>
+</table>
+<p>And this is how you specify the log format using the tokens:</p>
+<pre><code>app.use(express.logger({ format: &apos;:remote-addr :method :url&apos; }));
+</code></pre><p>After adding the loggermiddleware, you can see the log details in the console, when requests are made to the app:</p>
+<pre><code>127.0.0.1 GET /
+127.0.0.1 GET /favicon.ico
+</code></pre><p>By default the logger outputs the log to the console. We can make it log to a file by specifying the streamoption, as shown here:</p>
+<pre><code>var http = require(&apos;http&apos;);
+var express = require(&apos;express&apos;);
+var fs = require(&apos;fs&apos;);
+var app = express();
+app.use(express.logger({
+    format: &apos;tiny&apos;,
+    stream: fs.createWriteStream(&apos;app.log&apos;, {&apos;flags&apos;: &apos;w&apos;})
+}));
+</code></pre><p>The logger middleware supports four predefined log formats: default, short, tiny, and dev. You can specify one of them this way:</p>
+<pre><code>app.use(express.logger(&apos;dev&apos;));
+</code></pre><h3 id="configuration"><a href="#configuration" class="headerlink" title="configuration"></a>configuration</h3><p>As a side effect of how require() works, Node supports JSON-based configuration files by default. Create a file with a JSON object describing the configurations, save it with a .js on extension, and then load it in the app file using require().</p>
+<p>Here is an example of a JSON-based config file:</p>
+<pre><code>{
+    &quot;development&quot;: {
+        &quot;db_host&quot;: &quot;localhost&quot;,
+        &quot;db_user&quot;: &quot;root&quot;,
+        &quot;db_pass&quot;: &quot;root&quot;
+    },
+    &quot;production&quot;: {
+        &quot;db_host&quot;: &quot;192.168.1.9&quot;,
+        &quot;db_user&quot;: &quot;myappdb&quot;,
+        &quot;db_pass&quot;: &quot;!p4ssw0rd#&quot;
+    }
+}
+</code></pre><p>This is how you would load it:</p>
+<pre><code>var config = require(&apos;./config.json&apos;)[app.get(&apos;env&apos;)];
+</code></pre><p>Usage:</p>
+<pre><code>console.log(config.db_host); // 192.168.1.9
+console.log(config.db_user); // myappdb
+console.log(config.db_pass); // !p4ssw0rd#
+</code></pre><h2 id="Router-1"><a href="#Router-1" class="headerlink" title="Router"></a>Router</h2><p>Routes are defined using an HTTP verb and a path pattern. Any request to the server that matches a route definition is routed to the associated route handler. Route handlers are middleware functions, which can send the HTTP response or pass on the request to the next middleware in line. They may be defined in the app file or loaded via a Node module.</p>
+<p>Even though a total of 13 HTTP verbs are supported by Express, you need not use all of them in your app. In fact, for a basic website, only GETand POSTare likely to be used.</p>
+<p>While other Express middlewares are inherited from Connect, <em>router</em> is implemented by Express itself. Connect-inherited middlewares are referred to in Express from the expressobject (express.favicon(), express.bodyParser(), and so on). The router middleware is referred to from the instance of the Express app (app.router).</p>
+<p>There is a method called <code>app.all()</code> that is not based on an HTTP verb. It is an Express-specific method for listening to requests to a route using any request method:</p>
+<pre><code>app.all(&apos;/&apos;, function(req, res, next) {
+    res.set(&apos;X-Catch-All&apos;, &apos;true&apos;);
+    next();
+});
+</code></pre><p>Routes are defined only for the request path. GET query parameters are not and cannot be included in route definitions. Route identifiers can be string or regular expression objects.</p>
+<p>You will mostly be using string-based routes in a general web app. Use regular expression-based routes only when absolutely necessary; while being powerful, they can often be hard to debug and maintain.</p>
+<h3 id="String-based-routes"><a href="#String-based-routes" class="headerlink" title="String-based routes"></a>String-based routes</h3><p>String-based routes are created by passing a string pattern as the first argument of the routing method. They support a limited pattern matching capability. The following example demonstrates how to create string-based routes:</p>
+<pre><code>// Will match /abcd
+app.get(&apos;/abcd&apos;, function(req, res) {
+    res.send(&apos;abcd&apos;);
+});
+// Will match /acd
+app.get(&apos;/ab?cd&apos;, function(req, res) {
+    res.send(&apos;ab?cd&apos;);
+});
+
+// Will match /abbcd
+app.get(&apos;/ab+cd&apos;, function(req, res) {
+    res.send(&apos;ab+cd&apos;);
+});
+// Will match /abxyzcd
+app.get(&apos;/ab*cd&apos;, function(req, res) {
+    res.send(&apos;ab*cd&apos;);
+});
+// Will match /abe and /abcde
+app.get(&apos;/ab(cd)?e&apos;, function(req, res) {
+    res.send(&apos;ab(cd)?e&apos;);
+});
+</code></pre><p>The characters ?, +, *, and () are subsets of their Regular Expression counterparts. The hyphen (-) and the dot (.) are interpreted literally by string-based route identifiers.</p>
+<p>There is another set of string-based route identifiers, which is used to specify named placeholders in the request path. Take a look at the following example:</p>
+<pre><code>app.get(&apos;/user/:id&apos;, function(req, res) {
+    res.send(&apos;user id: &apos; + req.params.id);
+});
+app.get(&apos;/country/:country/state/:state&apos;, function(req, res) {
+        res.send(req.params.country + &apos;, &apos; + req.params.state);
+}
+</code></pre><p>The value of the named placeholder is available in the req.params object in a property with a similar name. Named placeholders can also be used with special characters for interesting and useful effects, as shown here:</p>
+<pre><code>app.get(&apos;/route/:from-:to&apos;, function(req, res) {
+    res.send(req.params.from + &apos; to &apos; + req.params.to);
+});
+</code></pre><p>The pattern-matching capability of routes can also be used with named placeholders. In the following example, we define a route that makes the <em>format</em> parameter optional:</p>
+<pre><code>app.get(&apos;/feed/:format?&apos;, function(req, res) {
+    if (req.params.format) { res.send(&apos;format: &apos; + req.params.format); }
+    else { res.send(&apos;default format&apos;); }
+});
+</code></pre><h3 id="regular-expression-router"><a href="#regular-expression-router" class="headerlink" title="regular-expression router"></a>regular-expression router</h3><p>The following route will match pineapple, redapple, redaple, aaple, but not apple, and apples:</p>
+<pre><code>app.get(/.+app?le$/, function(req, res) {
+    res.send(&apos;/.+ap?le$/&apos;);
+});
+</code></pre><p>The following route will match anything with an ain the route name:</p>
+<pre><code>app.get(/a/, function(req, res) {
+    res.send(&apos;/a/&apos;);
+});
+</code></pre><h3 id="order-of-router-precedence"><a href="#order-of-router-precedence" class="headerlink" title="order of router precedence"></a>order of router precedence</h3><p>Like in any middleware system, the route that is defined first takes precedence over other matching routes. So the ordering of routes is crucial to the behavior of an app.</p>
+<p>In the following case, <a href="http://localhost:3000/abcdwill" target="_blank" rel="external">http://localhost:3000/abcdwill</a> always print “abc*”</p>
+<pre><code>app.get(&apos;/abcd&apos;, function(req, res) {
+    res.send(&apos;abcd&apos;);
+});
+
+app.get(&apos;/abc*&apos;, function(req, res) {
+    res.send(&apos;abc*&apos;);
+});
+</code></pre><p>Route handler functions accept a third parameter, commonly named next, which refers to the next middleware in line.</p>
+<pre><code>app.get(&apos;/abc*&apos;, function(req, res, next) {
+    // If the request path is /abcd, don&apos;t handle it
+    if (req.path == &apos;/abcd&apos;) {
+        next(); }
+    else {
+        res.send(&apos;abc*&apos;);
+    }
+});
+
+app.get(&apos;/abcd&apos;, function(req, res) {
+    res.send(&apos;abcd&apos;);
+});
+</code></pre><h3 id="handle-routers"><a href="#handle-routers" class="headerlink" title="handle routers"></a>handle routers</h3><p>So far, we have been dealing with a single callback function for a route, but a route can have more than one callback function.</p>
+<pre><code>app.get(&apos;/&apos;,
+    function(req, res, next) {
+        res.set(&apos;X-One&apos;, &apos;hey!&apos;);
+        next();
+    },
+    function(req, res, next) {
+        res.set(&apos;X-Two&apos;, &apos;ho!&apos;);
+        next();
+    },
+    function(req, res) {
+        res.send(&quot;Let&apos;s go!&quot;);
+    }
+);
+</code></pre><p>This route handler stack is composed of three callbacks. The first two add two additional HTTP headers. You can see that the two functions have successfully added the HTTP headers, and the third is printed to the browser:</p>
+<p>The callback functions can be passed in an array too.</p>
+<pre><code>var one = function(req, res, next) {
+    res.set(&apos;X-One&apos;, &apos;hey!&apos;);
+    next();
+};
+
+var two = function(req, res, next) {
+    res.set(&apos;X-Two&apos;, &apos;ho!&apos;);
+    next();
+};
+
+app.get(&apos;/&apos;, [one, two], function(req, res) {
+    res.send(&quot;Let&apos;s go!&quot;);
+});
+</code></pre><p>You can achieve the same thing again by defining multiple routes for a route path. This is not really recommended, but it will help you to better understand how routes work:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res, next) {
+    res.set(&apos;X-One&apos;, &apos;hey!&apos;);
+    next();
+});
+app.get(&apos;/&apos;, function(req, res, next) {
+    res.set(&apos;X-Two&apos;, &apos;ho!&apos;);
+    next();
+});
+app.get(&apos;/&apos;, function(req, res) {
+    res.send(&apos;three&apos;);
+});
+</code></pre><p>Showing the various ways of assigning callbacks to a route is not a recommendation in any manner; it is just to show you the possibilities.</p>
+<h3 id="organize-routes"><a href="#organize-routes" class="headerlink" title="organize routes"></a>organize routes</h3><p>So far, our routes and their handlers have been written right in the app file. It might work for small apps, but is not practical for bigger projects. There are three popular ways of organizing routes in an Express app; let’s explore them.</p>
+<h4 id="Using-Node-modules"><a href="#Using-Node-modules" class="headerlink" title="Using Node modules"></a>Using Node modules</h4><p>Create a directory named <code>handlers</code> to keep our route handlers. In the directory, create two basic Node modules: <code>index.js</code> and <code>users.js</code>.</p>
+<p>Here is the content for index.js:</p>
+<pre><code>exports.index = function(req, res){
+    res.send(&apos;welcome&apos;);
+};
+</code></pre><p>And, here is the content for users.js:</p>
+<pre><code>exports.list = function(req, res){
+    res.send(&apos;Amar, Akbar, Anthony&apos;);
+};
+</code></pre><p>Create a new file called routes.js in the app directory. This file will be responsible for loading the route handlers and defining the routes. Here is the content for the file:</p>
+<pre><code>// Load the route handlers
+var routes = require(&apos;./handlers&apos;);
+var user = require(&apos;./handlers/users&apos;);
+module.exports = function(app) {
+    // Define the routes
+    app.get(&apos;/&apos;, routes.index);
+    app.get(&apos;/users&apos;, user.list);
+};
+</code></pre><p>Now modify the app.js file to incorporate the new changes we have made:</p>
+<pre><code>var http = require(&apos;http&apos;);
+var express = require(&apos;express&apos;);
+var app = express();
+
+// Explicitly add the router middleware
+app.use(app.router);
+
+// Pass the Express instance to the routes module
+var routes = require(&apos;./routes&apos;)(app);
+http.createServer(app).listen(3000, function() {
+    console.log(&apos;App started&apos;);
+});
+</code></pre><h4 id="Namespaced-routing"><a href="#Namespaced-routing" class="headerlink" title="Namespaced routing"></a>Namespaced routing</h4><p>Express does not support namespaced routing by default, but it is very easy to enable support by installing a Node module called express-namespace:</p>
+<pre><code>$ npm install express-namespace
+</code></pre><p>Now, edit app.js to include express-namespaceand redefine the routes using namespaces:</p>
+<pre><code>var http = require(&apos;http&apos;);
+var express = require(&apos;express&apos;);
+// express-namespace should be loaded before app is instantiated
+var namespace = require(&apos;express-namespace&apos;);
+var app = express();
+app.use(app.router);
+app.namespace(&apos;/articles&apos;, function() {
+    app.get(&apos;/&apos;, function(req, res) {
+        res.send(&apos;index of articles&apos;);
+    });
+    app.get(&apos;/new&apos;, function(req, res) {
+        res.send(&apos;new article&apos;);
+    });
+    app.get(&apos;/edit/:id&apos;, function(req, res) {
+        res.send(&apos;edit article &apos; + req.params.id);
+    });
+    app.get(&apos;/delete/:id&apos;, function(req, res) {
+        res.send(&apos;delete article &apos; + req.params.id);
+    });
+    app.get(&apos;/2013&apos;, function(req, res) {
+        res.send(&apos;articles from 2013&apos;);
+    });
+
+    // Namespaces can be nested
+    app.namespace(&apos;/2013/jan&apos;, function() {
+        app.get(&apos;/&apos;, function(req, res) {
+            res.send(&apos;articles from jan 2013&apos;);
+        });
+        app.get(&apos;/nodejs&apos;, function(req, res) {
+            res.send(&apos;articles about Node from jan 2013&apos;);
+        });
+    });
+});
+
+http.createServer(app).listen(3000, function() {
+    console.log(&apos;App started&apos;);
+});
+</code></pre><p>Restart the app and load the following URLs in your browser to see namespaced routing in action:</p>
+<ul>
+<li><a href="http://localhost:3000/articles/" target="_blank" rel="external">http://localhost:3000/articles/</a></li>
+<li><a href="http://localhost:3000/articles/edit/4" target="_blank" rel="external">http://localhost:3000/articles/edit/4</a></li>
+<li><a href="http://localhost:3000/articles/delete/4" target="_blank" rel="external">http://localhost:3000/articles/delete/4</a></li>
+<li><a href="http://localhost:3000/articles/2013" target="_blank" rel="external">http://localhost:3000/articles/2013</a></li>
+<li><a href="http://localhost:3000/articles/2013/jan" target="_blank" rel="external">http://localhost:3000/articles/2013/jan</a></li>
+<li><a href="http://localhost:3000/articles/2013/jan/nodejs" target="_blank" rel="external">http://localhost:3000/articles/2013/jan/nodejs</a></li>
+</ul>
+<p>Namespaces support all the pattern matching and regular expression support we read earlier, so the flexibility and power of defining routes is not compromised by using namespaced routing.</p>
+<p>Although we used <code>app.get()</code> for defining all the routes for the sake of simplicity, it is not recommended to actually do so in production. Doing so can leave the resources of your app open to deletion via the most basic and unexpected actions, even by web spiders. Use app. <code>delete()</code> instead, with authentication.</p>
+<h4 id="Resourceful-routing"><a href="#Resourceful-routing" class="headerlink" title="Resourceful routing"></a>Resourceful routing</h4><p>The idea behind resourceful routing is to create routes based on actions available on objects called resources on the server. Resources are entities such as users, photos, forums, and so on on the server.</p>
+<p>Resourceful routes are defined using a recommended combination of HTTP verbs and path patterns. Corresponding methods are defined in the route handling Node module to perform the necessary actions in the server.</p>
+<p>The following table illustrates resourceful routing for a resource called users in the server:</p>
+<table>
+<thead>
+<tr>
+<th>HTTP Verb</th>
+<th>Path</th>
+<th>Module Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/users</td>
+<td>index</td>
+<td>Lists users</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/users/new</td>
+<td>new</td>
+<td>The form to create a new user</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/users</td>
+<td>create</td>
+<td>Processes new user form submission</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/users/:id</td>
+<td>show</td>
+<td>Shows user with ID :id</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/users/:id/</td>
+<td>edit</td>
+<td>Edit Form to edit user with ID :id</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>/users/:id</td>
+<td>update</td>
+<td>Processes user edit form submission</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/users/:id</td>
+<td>destroy</td>
+<td>Deletes user with ID :id</td>
+</tr>
+</tbody>
+</table>
+<p>Resourceful routing is not supported by Express by default. However, enabling it is as easy as installing a Node module named <strong>express-resource</strong>:</p>
+<pre><code>$ npm install express-resource
+</code></pre><p>Next, we need to create a Node module to handle the resourceful routes. Create a file called <code>users.js</code> and implement the resourceful methods in it:</p>
+<pre><code>exports.index = function(req, res) {
+    res.send(&apos;index of users&apos;);
+};
+exports.new = function(req, res) {
+    res.send(&apos;form for new user&apos;);
+};
+exports.create = function(req, res) {
+    res.send(&apos;handle form for new user&apos;);
+};
+exports.show = function(req, res) {
+    res.send(&apos;show user &apos; + req.params.user);
+};
+exports.edit = function(req, res) {
+    res.send(&apos;form to edit user &apos; + req.params.user);
+};
+exports.update = function(req, res) {
+    res.send(&apos;handle form to edit user &apos; + req.params.user);
+};
+exports.destroy = function(req, res) {
+    res.send(&apos;delete user &apos; + req.params.user);
+};
+</code></pre><p>Now modify app.js to use the express-resourcemodule and load the<br>route-handling Node module:</p>
+<pre><code>var http = require(&apos;http&apos;);
+var express = require(&apos;express&apos;);
+
+// Load express-resource BEFORE app is instantiated
+var resource = require(&apos;express-resource&apos;);
+var app = express();
+app.use(app.router);
+
+// Load the resourceful route handler
+app.resource(&apos;users&apos;, require(&apos;./users.js&apos;));
+http.createServer(app).listen(3000, function() {
+    console.log(&apos;App started&apos;);
+});
+</code></pre><p>Start the app and load the following URLs in your browser to see the resourceful route handlers print the assigned messages:</p>
+<ul>
+<li><a href="http://localhost:3000/users" target="_blank" rel="external">http://localhost:3000/users</a></li>
+<li><a href="http://localhost:3000/users/new" target="_blank" rel="external">http://localhost:3000/users/new</a></li>
+<li><a href="http://localhost:3000/users/7" target="_blank" rel="external">http://localhost:3000/users/7</a></li>
+<li><a href="http://localhost:3000/users/7/edit" target="_blank" rel="external">http://localhost:3000/users/7/edit</a></li>
+</ul>
+<h2 id="Response-From-the-Server"><a href="#Response-From-the-Server" class="headerlink" title="Response From the Server"></a>Response From the Server</h2><p>Express can send an HTTP response using one of its response methods:</p>
+<ul>
+<li>res.send()</li>
+<li>res.json()</li>
+<li>res.jsonp()</li>
+<li>res.sendfile()</li>
+<li>res. download()</li>
+<li>res.render()</li>
+<li>res.redirect()`.</li>
+</ul>
+<p>If none of them is called, the request will be left hanging till the connection times out. If more than one response methods are specified in a route handler, only the first method will take effect, the rest will generate non-fatal, run-time errors.</p>
+<h3 id="Setting-the-HTTP-status-code"><a href="#Setting-the-HTTP-status-code" class="headerlink" title="Setting the HTTP status code"></a>Setting the HTTP status code</h3><p>In the following example, we send a status code of 404 even though the home page route actually exists. If we hadn’t specified 404, Express would have sent a status code of 200:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    // Set the status
+    res.status(404);
+
+    // Specify the body
+    res.send(&apos;forced 404&apos;);
+});
+</code></pre><p><code>res.status()</code> is a chainable method, meaning we can do things like the following:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    // Status and body in one line
+    res.status(404).send(&apos;not found&apos;);
+});
+</code></pre><p>When a status code is not specified, a default of 200 is assigned.</p>
+<p>When a number alone is passed to res.send(), it is assumed to be the intended status code. The server will just send the status code and the basic headers, with no body:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    res.send(404);
+});
+</code></pre><p>And of course, you can set the status code and the body at the same time, like so:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    res.send(404, &apos;not found&apos;);
+});
+</code></pre><p>It is important to note that res.render(), res.sendfile(), and res.download() do not accept a single numeric parameter and send a response with just the status code.</p>
+<h3 id="Setting-HTTP-headers"><a href="#Setting-HTTP-headers" class="headerlink" title="Setting HTTP headers"></a>Setting HTTP headers</h3><p>In the following example, we set a standard HTTP header along with two<br>custom headers:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    // status is optional, it defaults to 200
+    res.status(200);
+    res.set(&apos;Content-Type&apos;, &apos;text/plain; charset=us-ascii&apos;);
+    res.set(&apos;X-Secret-Message&apos;, &apos;not really secret&apos;);
+    res.set(&apos;X-Test&apos;, &apos;OK&apos;);
+    res.send(&apos;welcome&apos;);
+});
+</code></pre><p>Note that HTTP header key names are case-insensitive from the browser’s context—Content-Typeand content-typeare both interpreted as the same thing.</p>
+<p>If the process of individually setting the headers seems tedious to you, you can use the alternative approach of passing an object to res.set()instead. The key-value pair in the object will be assigned as the header and its value in the HTTP response message:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    res.set({
+        &apos;Content-Type&apos;: &apos;text/plain; charset=us-ascii&apos;,
+        &apos;X-Secret-Message&apos;: &apos;not really secret&apos;,
+        &apos;X-Test&apos;: &apos;OK&apos;
+    });
+    res.send(&apos;welcome&apos;);
+});
+</code></pre><p>Very related to setting HTTP headers, Express provides a res.charsetproperty, which can be used to set the value of the optional Content-Typeheader. This property is best used when you just want to change the charset of the default Content-Typeof text/html.</p>
+<p>The following code will set the Content-Typeheader to text/html; charset=us-ascii:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    res.charset = &apos;us-ascii&apos;;
+    res.send(&apos;welcome&apos;);
+});
+</code></pre><h3 id="Sending-data"><a href="#Sending-data" class="headerlink" title="Sending data"></a>Sending data</h3><p>The component of an HTTP response message, which users can generally see and interact with, is called the body of the message. The body can come in many different forms—as HTML, plain text, images, binary files, CSS files and so on—and the Content-Typeheader is exclusively used to convey to the user agent what sort of data it is dealing with.</p>
+<h4 id="Plain-text"><a href="#Plain-text" class="headerlink" title="Plain text"></a>Plain text</h4><p>Let’s create a very simple route handler for the home page route. Our intention is to see the HTML tags as is in the browser:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    res.send(&apos;&lt;h1&gt;welcome&lt;/h1&gt;&apos;);
+});
+</code></pre><p>The browser actually rendered the output as HTML. Maybe you expected it, or maybe you did not; but we need to get to the root of this behavior. The browser interpreted the output as HTML and rendered it accordingly, because the default value of the Content-Typeheader in Express is text/html.</p>
+<p>However, we wanted the browser to treat the output as plain text and not bother rendering it as HTML.</p>
+<p>Using our newfound knowledge of HTTP headers and Express’ res.set()method, we can set the Content-Typeheader to text/plain. Update the code accordingly to confirm our assumption:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    res.set(&apos;Content-Type&apos;, &apos;text/plain&apos;);
+    res.send(&apos;&lt;h1&gt;welcome&lt;/h1&gt;&apos;);
+});
+</code></pre><p>This time the content was really treated as plain text, like how we wanted. When the Content-Typeis set to text/plain, the browser will render the body as plain text—this is the case even for binary files.</p>
+<h4 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h4><p>Being an HTTP server, sending the content as HTML is the default behavior of Express. Anything you send via <code>res.send()</code> or <code>res.render()</code> is sent as HTML by setting the Content-Typeheader to text/html.</p>
+<pre><code>app.use(express.static(&apos;./public&apos;));
+app.set(&apos;views&apos;, __dirname + &apos;/views&apos;);
+app.set(&apos;view engine&apos;, &apos;jade&apos;);
+
+// HTML should be prettified
+app.locals.pretty = true;
+app.get(&apos;/&apos;, function(req, res) {
+    res.render(&apos;index&apos;, {
+        title: &apos;Express&apos;
+    });
+});
+</code></pre><p>The generated HTML will now be pretty-printed. However, in a production environment it is best not to prettify HTML to save some processing power and reduce the download size of the HTML page.</p>
+<h4 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h4><p>Express provides the res.json()method for serving JSON content. You just have to pass an object to it, and it will take care of setting the up right headers and formatting the JSON string according to the JSON specifications.</p>
+<p>Create this route for the home page:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    res.json({message: &apos;welcome&apos;});
+});
+</code></pre><p><code>res.json()</code> has successfully transformed the JavaScript object to a valid JSON string and set the appropriate HTTP headers for the message.</p>
+<p>Like other response methods, <code>res.json()</code> sets a default of 200 when no status code is explicitly set. You can customize the status code by passing a number as the first parameter of res.json(), followed by the object to be sent:</p>
+<pre><code>res.json(404, {error: &apos;not found&apos;});
+</code></pre><h4 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h4><p>JSON with Padding(JSONP) is a JavaScript technique to allow cross-domain scripts to execute callbacks from JSON requests made to an external domain.</p>
+<p>A JSONP request comes with a GETrequest parameter, conventionally named callback, which is the callback function available at the website making the request, which will be executed by passing the JSON result from the external domain.</p>
+<p>Let’s define the route of the home page to respond with res.jsonp():</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    res.jsonp({message: &apos;welcome&apos;});
+});
+</code></pre><p>Start the server, load <code>http://localhost:3000/?callback=json_callback</code> in your browser, and examine the result:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/express-json-callback.png" alt="express-json-callback.png" title="">
+                </div>
+                <div class="image-caption">express-json-callback.png</div>
+            </figure>
+<p>Not only did <code>res.jsonp()</code> wrap the JSON result with the callback function, it also added a quick check for the existence of the callback on the client machine before executing the callback. Also, it set the Content-Typeheader to the appropriate <code>text/javascript</code> content type so that the browser interprets the result as JavaScript.</p>
+<p>By default, res.jsonp()expects the name of the callback parameter to be named callback, but it can be renamed to anything you like using the app.set()method, as shown here:</p>
+<pre><code>app.set(&apos;jsonp callback name&apos;, &apos;cb&apos;);
+</code></pre><p>Now the callback name will be expected to be found in the GETparameter named cb. If the callback name is not found in the expected GETparameter, only the JSON object will be sent, without the callback padding.</p>
+<h4 id="Serving-static-files"><a href="#Serving-static-files" class="headerlink" title="Serving static files"></a>Serving static files</h4><p>Create a directory named filesin the app directory, keep the files in the directory, and add the following to the app file:</p>
+<pre><code>// Use the static middleware to set up a static files directory
+app.use(express.static(&apos;./public&apos;));
+</code></pre><p>Now you can access all the files in the directory from the root of the website. This is how static files for the app, such as CSS, JavaScript, and image files are served in Express.</p>
+<p>If you have a file named logo.pngin the filesdirectory, you can access it at <a href="http://localhost:3000/logo.png" target="_blank" rel="external">http://localhost:3000/logo.png</a>. Any file or subdirectory you create in the filesdirectory will also be correspondingly accessible from the app.</p>
+<p>In a web server context, public files and directories can be accessed via a URL, whereas private files and directories are those that are not exposed to the general public via a URL.</p>
+<p>There is another category of files that can be served by a web server—those that are served dynamically—the requests to which you can apply programming logic. Express provides two methods of handling such requests: <code>res.sendfile()</code> and <code>res.download()</code>. Let’s examine them one after another.</p>
+<p>Using <code>res.sendfile()</code>, you can send files to the browser in the same manner as how regular files are sent to it. The Content-Type header is automatically set based on the file extension, and depending on the file type and browser settings, the file may be shown in the browser, displayed by a plugin, prompted for download, and so on.</p>
+<p>The following is a very simple example of using res.sendfile():</p>
+<pre><code>app.get(&apos;/file&apos;, function(req, res) {
+    res.sendfile(&apos;./secret-file.png&apos;, function(err) {
+        if (err) {
+            condole.log(err);
+        }
+        else {
+            console.log(&apos;file sent&apos;);
+        }
+    });
+});
+</code></pre><p>On loading <a href="http://localhost:3000/file" target="_blank" rel="external">http://localhost:3000/file</a>, and examining the HTTP headers, we will find that no information about the actual name or location of the file was sent to the browser.</p>
+<p>There are times when you want the user to actually download the file, and not let the browser try to render it. This can be achieved using the res.download()method. <code>res.download()</code> requires the target file path, and accepts the optional desired filename and callback function for the download:</p>
+<p>app.get(‘/download’, function(req, res) {<br>    res.download(‘./secret-file.png’, ‘open-secret.png’, function(err) {<br>        if (err) { condole.log(err); }<br>        else { console.log(‘file downloaded’); }<br>    });<br>});</p>
+<p>If you examine the HTTP headers for this response, you will find that the ContentDispositionheader has been set to attachment, because of which the file is being<br>prompted for download or being downloaded:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/express-download.png" alt="express-download.png" title="">
+                </div>
+                <div class="image-caption">express-download.png</div>
+            </figure>
+<h4 id="Serving-error-pages"><a href="#Serving-error-pages" class="headerlink" title="Serving error pages"></a>Serving error pages</h4><p>The router middleware comes with a default 404 error handler, but its output may not be what you would want for your app. Let’s find out how to create a custom 404 error handler.</p>
+<p>A 404 error handler is technically a generic route handler that handles a request that all other middleware before it has failed to handle. It is implemented by adding a custom middleware at the end of the Express middleware stack.</p>
+<p>Add the following middleware code after the router middleware:</p>
+<pre><code>app.use(function(req, res) {
+    res.status(400);
+    res.render(&apos;404.jade&apos;, {
+        title: &apos;404&apos;,
+        message: &apos;File Not Found&apos;
+    });
+});
+</code></pre><p>When the in-built 404 error handler detects that there is a route handler even beyond it, it will pass on the request to the next handler, which would be our custom 404 error handler.</p>
+<p>In the viewsdirectory, create a file named <code>404.jade</code> with the following content:</p>
+<pre><code>doctype 5
+html
+    head
+        title #{title}
+    body
+        h1 #{title}
+        p #{message}
+</code></pre><p>Express also comes with a default 500 error handler that will pass on the control to the next error handler, if there is one beyond it. The 500 error is handled by adding a middleware with an arity of four. Since we want to override the default 500 error handler provided by the router middleware, we would need to add our handler after the router middleware.</p>
+<p>Add the following middleware after the router middleware:</p>
+<pre><code>app.use(function(error, req, res, next) {
+    res.status(500);
+    res.render(&apos;500.jade&apos;,{
+        title: &apos;500&apos;,
+        error: error
+        }
+    );
+});
+</code></pre><p>Now create the corresponding 500.jadeview file in the viewsdirectory:</p>
+<pre><code>doctype 5
+html
+    head
+        title #{title}
+    body
+        h1 #{title}
+        p #{error}
+</code></pre><h4 id="Content-negotiation"><a href="#Content-negotiation" class="headerlink" title="Content negotiation"></a>Content negotiation</h4><p>Content negotiation is the mechanism of specifying the data types a user agent is capable of consuming and prefers, and the server fulfilling the request when it can, and informing when it cannot.</p>
+<p>User agents send their preferred content type for a resource using the AcceptHTTP request header. Express supports content negotiation using the <code>res.format()</code>method.</p>
+<p>This is a useful feature if you want to send different types of content based on the capability of the user agent. <code>res.format()</code> accepts an object whose keys are the canonical content type name (text/plain, text/html, and so on), and whose values are functions that will be used as the handler for the route, for the matching content type. Let’s implement content negotiation in the home page route handler to find out how it works:</p>
+<pre><code>app.get(&apos;/&apos;, function(req, res) {
+    res.format({
+        &apos;text/plain&apos;: function() {
+            res.send(&apos;welcome&apos;);
+        },
+        &apos;text/html&apos;: function() {
+            res.send(&apos;&lt;b&gt;welcome&lt;/b&gt;&apos;);
+        },
+        &apos;application/json&apos;: function() {
+            res.json({
+                message: &apos;welcome&apos;
+            });
+        },
+        &apos;default&apos;: function() {
+            res.send(406, &apos;Not Acceptable&apos;);
+        }
+    });
+});
+</code></pre><p>The server will respond with the appropriate data type based on the Accept header. This fact can be verified by sending an Acceptheader of text/sgml, application/json.</p>
+<p>If a user agent does not support any of thespecified formats in the handler, the server will return a status of 406 Not Acceptable.</p>
+<p>The previous code can be re-written in a less verbose manner by using just the subtype of the content type as the key:</p>
+<pre><code>res.format({
+    text: function() {
+        res.send(&apos;welcome&apos;);
+    },
+    html: function() {
+        res.send(&apos;&lt;b&gt;welcome&lt;/b&gt;&apos;);
+    },
+    json: function() {
+        res.json({
+            message: &apos;welcome&apos;
+        });
+    },
+    default: function() {
+        res.send(406, &apos;Not Acceptable&apos;);
+    }
+});
+</code></pre><h4 id="Redirecting-a-request"><a href="#Redirecting-a-request" class="headerlink" title="Redirecting a request"></a>Redirecting a request</h4><p>Sometimes you may want to redirect the request to a different URL, instead of responding with data. This is made possible in Express using the res.redirect() method. This method takes an optional redirection code that defaults to 302, and the URL to redirect to. The URLparameter can be an absolute URL or relative to the current URL.</p>
+<p>The following are some examples of redirecting requests from an Express app:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>res.redirect(‘/notice’);</td>
+<td>302 redirection to / noticerelative to the requested URL</td>
+</tr>
+<tr>
+<td>res.redirect(301, ‘/help-docs’);</td>
+<td>301 redirection to / help-docsrelative to the requested URL</td>
+</tr>
+<tr>
+<td>res.redirect(‘<a href="http://nodejs.org/api/" target="_blank" rel="external">http://nodejs.org/api/</a>‘);</td>
+<td>301 redirection to an absolute URL</td>
+</tr>
+<tr>
+<td>res.redirect(‘../images’);</td>
+<td>302 redirection to / noticerelative to the requested URL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Forms-Cookies-and-Sessions"><a href="#Forms-Cookies-and-Sessions" class="headerlink" title="Forms, Cookies, and Sessions"></a>Forms, Cookies, and Sessions</h2><p>The HTML form provides two methods for submitting data to the backend using the GET and the POST methods. In this section, we will find out how to read data submitted via these methods.</p>
+<p>GET forms are submitted using the GET HTTP method and the form data is sent in the query string of the URL specified in the actionattribute of the form. POST forms are submitted using the POST HTTP method and the form data is sent in the body of the HTTP request. POST forms come in two varieties: application/x-www-form-urlencodedand multipart/form-data. The former uses urlencodedstring for sending data to the server; it is a lot like the GET query string, except the data is sent in the HTTP body. The latter uses a deliminator to send large chunks of data in the HTTP body, and is the version that is used for uploading files.</p>
+<h3 id="Handling-GET-submissions"><a href="#Handling-GET-submissions" class="headerlink" title="Handling GET submissions"></a>Handling GET submissions</h3><p>Let’s create a route and view for a search form. We will set this form to be submitted<br>via the GET method by specifying it in its method attribute:</p>
+<pre><code>!!! 5
+html
+head
+    title #{title}
+    link(rel=&apos;stylesheet&apos;, href=&apos;/stylesheets/style.css&apos;)
+body
+    h1 #{title}
+    p Enter the name to search for.
+    form(action=&apos;/search-result&apos;, method=&apos;get&apos;)
+        label Name
+        input(type=&apos;text&apos;, name=&apos;name&apos;)
+        input(type=&apos;hidden&apos;, name=&apos;source&apos;, value=&apos;web&apos;)
+        input(type=&apos;submit&apos;, value=&apos;Search&apos;)
+</code></pre><p>Create an appropriate CSS file for the view. The rendered HTML of the Jade view is shown in the following screenshot:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/express-form-get.png" alt="express-form-get.png" title="">
+                </div>
+                <div class="image-caption">express-form-get.png</div>
+            </figure>
+<p>When the form is submitted, the browser will be redirected to its action URL with the query string, which might look like <a href="http://localhost:3000/searchresult?name=Captain&amp;source=web" target="_blank" rel="external">http://localhost:3000/searchresult?name=Captain&amp;source=web</a>.</p>
+<p><strong>Reading form data</strong></p>
+<p>All form data submitted via the GET method is available in the queryproperty of the request object (req.query), at their corresponding keys. For example, if the form had a parameter named color, its value will be available at req.query.color, and so on.</p>
+<p>Trying to read a non-existent key will return undefined, because we are dealing with regular JavaScript objects, and that’s the expected behavior. Let’s create a route to handle our form submission. We won’t render a view or do anything fancy, let’s just read the values and print them:</p>
+<pre><code>app.get(&apos;/search-result&apos;, function(req, res) {
+    var name = req.query.name;
+    var source = req.query.source;
+    console.log(&apos;Searching for: &apos; + name);
+    console.log(&apos;From: &apos; + source);
+    res.send(name + &apos; : &apos; + source);
+});
+</code></pre><p>In case, a GET parameter contains characters that cannot be used as a JavaScript identifier name, you can use a subscript notation to read the value:</p>
+<pre><code>var firstname = req.query[&apos;first name&apos;];
+</code></pre><p>When it comes to data, GET form submissions are nothing more than URLs with query strings constructed out of the form parameters.</p>
+<p>Here is an example of a manually-crafted query string:</p>
+<pre><code>http://localhost:3000/search-result?q=JavaScript&amp;l=CA&amp;e=10
+</code></pre><p>And here is the route and the handler, which reads the data from the previous query string:</p>
+<pre><code>app.get(&apos;/search-result&apos;, function(req, res) {
+    var q = req.query.q;
+    var l = req.query.l;
+    var e = req.query.e;
+    console.log(&apos;Query:&apos; + q);
+    console.log(&apos;Location:&apos; + l);
+    console.log(&apos;Experience:&apos; + e);
+    res.json(req.query);
+});
+</code></pre><p><strong>Handling multiple options</strong></p>
+<p>Let’s create a view with multiple checkboxes. Notice how all of them share a common value for the nameattribute. The form will be submitted to <http: localhost:3000="" skills-search-result="">.</http:></p>
+<pre><code>!!! 5
+html
+head
+    title #{title}
+    link(rel=&apos;stylesheet&apos;, href=&apos;/stylesheets/style.css&apos;)
+body
+    h1 #{title}
+    p Select the skills to search for.
+        form(action=&apos;/skills-search-result&apos;, method=&apos;get&apos;)
+        h3 Skills
+        ul
+            li
+                input(type=&apos;checkbox&apos;, name=&apos;skills&apos;, value=&apos;Nunchucks&apos;)
+                label Nunchucks
+            li
+                input(type=&apos;checkbox&apos;, name=&apos;skills&apos;, value=&apos;Hacking&apos;)
+                label Hacking
+            li
+                input(type=&apos;checkbox&apos;, name=&apos;skills&apos;, value=&apos;Dancing&apos;)
+                label Dancing
+            li
+                input(type=&apos;checkbox&apos;, name=&apos;skills&apos;, value=&apos;Shooting&apos;)
+                label Shooting
+        input(type=&apos;submit&apos;, value=&apos;Search&apos;)
+</code></pre><p>And here is the rendered HTML:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/express-form-muilti-checkbox.png" alt="express-form-get.png" title="">
+                </div>
+                <div class="image-caption">express-form-get.png</div>
+            </figure>
+<p>Now, let’s create the route for handling the form submission. The <code>skills</code> parameter will be available as expected at req.query.skills:</p>
+<pre><code>app.get(&apos;/skills-search-result&apos;, function(req, res) {
+    var skills = req.query.skills;
+    console.log(&apos;Skills: &apos;);
+    skills.forEach(function(skill, i) {
+        console.log((i + 1) + &apos;. &apos; + skill);
+    });
+    res.json(req.query.skills);
+});
+</code></pre><p>Submitting multiple options is all about setting a common value for the name attribute for the set of checkboxes.</p>
+<h3 id="Handling-POST-submissions"><a href="#Handling-POST-submissions" class="headerlink" title="Handling POST submissions"></a>Handling POST submissions</h3><p>Unlike GET submissions, which can be processed right out of the box, we need to enable a built-in middleware named <code>bodyParser</code> before we can process POST submissions.</p>
+<p>Load the bodyParser middleware before the router middleware to enable POST data handling:</p>
+<pre><code>app.use(express.bodyParser());
+</code></pre><p>Although, the <code>bodyParser</code> middleware can be initialized without any parameters, it accepts an optional object with two options that can be used to configure file uploads:</p>
+<ul>
+<li>keepExtensions Whether to include the file extension in temporary files. Defaults to false, so as not to overwrite a file with the same name.</li>
+<li>uploadDir The location where temporary files should be uploaded.</li>
+</ul>
+<p>Here is an example of enabling both the options:</p>
+<pre><code>app.use(express.bodyParser({
+    keepExtensions: true,
+    uploadDir: &apos;./uploads&apos;
+}));
+</code></pre><p>With the bodyParser middleware enabled, we are ready to parse the data submitted by POST forms.</p>
+<p><strong>Reading form data</strong></p>
+<p>The <code>bodyParser</code> middleware will add two new properties: body and files on the request object and populate them with the key-value pairs of the parameters submitted via the POST request.</p>
+<p>Text data from the form is populated in the <code>req.body</code> object and files from the form are populated in the req.filesobject.</p>
+<h4 id="Handling-text-only-forms"><a href="#Handling-text-only-forms" class="headerlink" title="Handling text-only forms"></a>Handling text-only forms</h4><p>When you don’t specify the encytype attribute of a form, it is sent to the server with the default Content-Type of <code>application/x-www-form-urlencoded</code>.</p>
+<p>Create a route and the view for a sign-up form:</p>
+<pre><code>!!! 5
+html
+    head
+    title #{title}
+    link(rel=&apos;stylesheet&apos;, href=&apos;/stylesheets/style.css&apos;)
+body
+    h1 #{title}
+    p Enter your name and email address to become a member.
+    form(action=&apos;/signup&apos;, method=&apos;post&apos;)
+        div
+            label Name
+            input(type=&apos;text&apos;, name=&apos;name&apos;)
+        div
+            label Email
+            input(type=&apos;text&apos;, name=&apos;email&apos;)
+        div
+            input(type=&apos;submit&apos;)
+</code></pre><p>Notice that we have omitted the enctypeattribute in the form. Here is the rendered view:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/express-form-submit.png" alt="express-form-submit.png" title="">
+                </div>
+                <div class="image-caption">express-form-submit.png</div>
+            </figure>
+<p>Let’s create the request-handling route for the form. The text data submitted via the form will be available in the <code>req.body</code> object:</p>
+<pre><code>app.post(&apos;/signup&apos;, function(req, res) {
+    var name = req.body.name;
+    var email = req.body.email;
+    console.log(&apos;Name: &apos; + name);
+    console.log(&apos;Email: &apos; + email);
+    res.json(req.body);
+});
+</code></pre><h4 id="Handling-file-uploads"><a href="#Handling-file-uploads" class="headerlink" title="Handling file uploads"></a>Handling file uploads</h4><p>To upload files using HTML forms, we need to set the <code>enctype</code> attribute of the form to multipart/form-data, and of course, include an input element of the type file.</p>
+<p>Let’s update the previous sign-up view to set the enctypeattribute and include a file input:</p>
+<pre><code>// ...
+form(action=&apos;/signup&apos;, method=&apos;post&apos;, enctype=&apos;multipart/formdata&apos;)
+// ...
+div
+    label Profile Image
+    input(type=&apos;file&apos;, name=&apos;profile_image&apos;)
+// ...
+</code></pre><p>When the form is submitted, the uploaded image will be found in the <code>req.files</code> object.</p>
+<pre><code>app.post(&apos;/signup&apos;, function(req, res) {
+    var name = req.body.name;
+    var email = req.body.email;
+    console.log(req.files);
+    res.json(req.files);
+});
+</code></pre><p>In the console and the browser, you will see an object with a single property named profile_image, which was the name of our image, with a number of properties.</p>
+<p>The following are must-knows to be able to work with file uploads in Express:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>size</td>
+<td>Size of the file in kilobytes</td>
+</tr>
+<tr>
+<td>path</td>
+<td>Temporary location of the uploaded file</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Name of the file as uploaded</td>
+</tr>
+<tr>
+<td>type</td>
+<td>Media type of the file</td>
+</tr>
+</tbody>
+</table>
+<p>Express does nothing apart from giving it random names and moving it to a temporary location. It is the developer’s responsibility to actually move the uploaded files to the right location, rename if necessary, resize, and so on.</p>
+<p>look like /tmp/4e552b0243d20a171f287a687d744b45and so on, with no extensions. If you want to preserve the extension, set the keepExtension property to true.</p>
+<pre><code>app.use(express.bodyParser({keepExtensions: true}));
+</code></pre><p>Since we will need to perform filesystem actions, we will need to include the fsmodule:</p>
+<pre><code>var fs = require(&apos;fs&apos;);
+</code></pre><p>Next, we will modify the route handler. Make sure to include the callback function (next), because we need it for handling any errors that might be encountered:</p>
+<pre><code>app.post(&apos;/signup&apos;, function(req, res, next) {
+    var name = req.body.name;
+    var email = req.body.email;
+
+    // Reference to the profile_image object
+    var profile_image = req.files.profile_image;
+
+    // Temporary location of the uploaded file
+    var tmp_path = profile_image.path;
+
+    // New location of the file
+    var target_path = &apos;./public/images/&apos; + profile_image.name;
+
+    // Move the file from the new location
+    // fs.rename() will create the necessary directory
+    fs.rename(tmp_path, target_path, function(err) {
+        // If an error is encountered, pass it to the next handler
+        if (err) {
+            next(err);
+        }
+
+        // Delete the temporary file
+        fs.unlink(tmp_path, function() {
+            // If an error is encountered, pass it to the next handler
+            if (err) {
+                next(err);
+            }
+
+            console.log(&apos;File uploaded to: &apos; + target_path + &apos; - &apos; +
+                profile_image.size + &apos; bytes&apos;);
+            res.redirect(&apos;/images/&apos; + profile_image.name);
+        });
+    });
+});
+</code></pre><p><strong>Note：</strong>The updated route handler will print some details about the file on the console and redirect the browser to the uploaded file, if everything goes successfully.</p>
+<p>A reference is created in the req.filesobject for each uploaded file. If you upload multiple files in a form, all of them will have a reference in this object. You can process them all by looping through the req.filesobject:</p>
+<pre><code>req.files.forEach(function(file) {
+    // Code to handle the file
+    ...
+});
+</code></pre><p>Although files are uploaded to the system’s temporary directory, we can change the default behavior by setting the value of uploadDirto any location of our choice:</p>
+<pre><code>app.use(express.bodyParser({uploadDir:&apos;./uploads&apos;}));
+</code></pre><p>Express won’t create the upload directory for you if it does not exist already, instead, it will throw an error. So make sure you create the directory before uploading files, when you set the uploadDiroption.</p>
+<p>Here is the code snippet for setting the uploadDiroption and creating the upload directory, if it does not exist already:</p>
+<pre><code>var upload_dir = &apos;./uploads&apos;;
+var exists = fs.existsSync(upload_dir);
+if (!exists) {
+    fs.mkdirSync(upload_dir);
+}
+
+app.use(express.bodyParser({uploadDir: upload_dir}));
+</code></pre><p>It is important to note that the files uploaded to the temporary directory would eventually be cleared by the OS, but when using a custom upload directory, it is the developer’s responsibility to clear the temporary files.</p>
+<h3 id="Using-cookies-to-store-data"><a href="#Using-cookies-to-store-data" class="headerlink" title="Using cookies to store data"></a>Using cookies to store data</h3><p>Cookies can be created by the server backend or the frontend JavaScript. They can then be read or updated by either one of them.</p>
+<p>Express provides a cookie API using the <code>cookieParse</code> rmiddleware. To enable the cookie functionality in Express, load it before the router middleware:</p>
+<pre><code>app.use(express.cookieParser());
+</code></pre><p>The <code>cookieParser</code> middleware must be loaded before the router middleware; else cookie functionality will not be enabled.</p>
+<p>With this middleware enabled, you can find the cookies sent by the browser in the <code>req.cookies</code> object, and set cookies using the <code>res.cookie()</code> method.</p>
+<h4 id="Creating-cookies"><a href="#Creating-cookies" class="headerlink" title="Creating cookies"></a>Creating cookies</h4><p>Cookies are created using the <code>res.cookie()</code> method. You pass it the name of the cookie, its value, and an optional object with the cookie options. Let’s create a route named <code>counter</code> and use the <code>res.cookie()</code> method to create a cookie if it is not there already, and increment its value if it exists already.</p>
+<pre><code>app.get(&apos;/counter&apos;, function(req, res) {
+    var count = req.cookies.count || 0;
+    count++;
+    res.cookie(&apos;count&apos;, count);
+    res.send(&apos;Count: &apos; + count);
+});
+</code></pre><p>Load <code>http://localhost:3000/counter</code> in your browser and keep refreshing it to see the cookie created and its value being incremented:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/express-cookie.png" alt="express-cookie.png" title="">
+                </div>
+                <div class="image-caption">express-cookie.png</div>
+            </figure>
+<p>The <code>res.cookie()</code> method accepts an optional cookie options object. The following table displays a list of possible options that can be specified:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>domain</td>
+<td>Domain name for the cookie. Defaults to the domain name loaded.</td>
+</tr>
+<tr>
+<td>path</td>
+<td>Path for the cookie. Defaults to “/“.</td>
+</tr>
+<tr>
+<td>secure</td>
+<td>Marks the cookie to be used with HTTPS only.</td>
+</tr>
+<tr>
+<td>expires</td>
+<td>Expiry date of the cookie in GMT. If not specified or set to 0, creates a session cookie.</td>
+</tr>
+<tr>
+<td>maxAge</td>
+<td>Convenient option for setting the expiry time relative to the current time in milliseconds.</td>
+</tr>
+<tr>
+<td>httpOnly</td>
+<td>Flags the cookie to be accessible only to the web server. It helps</td>
+</tr>
+<tr>
+<td>prevent</td>
+<td>XSS attacks by disallowing client-side JavaScript access to it.</td>
+</tr>
+<tr>
+<td>signed</td>
+<td>Indicates if the cookie should be signed. Signed cookies cannot be tampered with without invalidating them.</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an example of setting a cookie with some options:</p>
+<pre><code>res.cookie(&apos;count&apos;, count, {
+    path: &apos;/counter&apos;,
+    maxAge: 2000
+});
+</code></pre><h4 id="Other-operation-on-cookies"><a href="#Other-operation-on-cookies" class="headerlink" title="Other operation on cookies"></a>Other operation on cookies</h4><p>All cookies valid for the domain and path are available on the <code>cookies</code> property of the request object: <code>req.cookies</code>. For example, if you created a cookie called <code>count</code>, its value will be available on <code>req.cookies.count</code>.</p>
+<p>Updating a cookie is just about re-creating it with a new set of properties. Assuming we already created a cookie named counter, this is how we would update it:</p>
+<pre><code>res.cookie(&apos;counter&apos;, new_value);
+</code></pre><p>We can use <code>res.clearCookie()</code> method to delete cookies any time.</p>
+<p>Here are some examples of creating cookies and the corresponding methods of deleting them:</p>
+<table>
+<thead>
+<tr>
+<th>Create</th>
+<th>Delete</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>res.cookie(‘count’, 99);</td>
+<td>res.clearCookie(‘count’);</td>
+</tr>
+<tr>
+<td>res.cookie(‘count’, 99, {path: ‘/ counter’});</td>
+<td>res.clearCookie(‘count’, {path: ‘/counter’});</td>
+</tr>
+<tr>
+<td>res.cookie(‘count’, 99, {sign: true});</td>
+<td>res.clearCookie(‘count’);</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Session-cookies"><a href="#Session-cookies" class="headerlink" title="Session cookies"></a>Session cookies</h4><p>Session cookies are those that last for a browsing session and are discarded after the browser is closed. Session cookies are deleted when the browser is closed; other cookies are deleted when the expiry date is reached.</p>
+<p>If you have set your browser to remember the tabs that were open when you re-launch it, session cookies may not be deleted on closing the browser.</p>
+<p>When the <code>expires</code> option is not specified, Express creates a session cookie:</p>
+<pre><code>res.cookie(&apos;name&apos;, &apos;Napoleon&apos;);
+</code></pre><p>Setting the <code>expires</code> option to 0 also creates a session cookie:</p>
+<pre><code>res.cookie(&apos;name&apos;, &apos;Napoleon&apos;, {expires: 0});
+</code></pre><h4 id="Signed-cookies"><a href="#Signed-cookies" class="headerlink" title="Signed cookies"></a>Signed cookies</h4><p>Signed cookies are those that come with a signature attached to its value. The signature is generated using a secret string, which you can specify in the <code>cookieParser</code> middleware. When such cookies are manually tampered with, it is detected and they are invalidated. To create a signed cookie, pass a string to the <code>cookieParser</code> middleware while instantiating it. Signed cookies are not encrypted or hidden from the user’s view. They just have a signature associated with the value that can be used to ensure the cookie values are not tampered with. The secret passed to the cookieParsermiddleware is used to generate a signature for the original cookie value and the value submitted back by the browser; if the values don’t match, it is understood that the value has been tampered with.</p>
+<pre><code>app.use(express.cookieParser(&apos;S3CRE7&apos;));
+</code></pre><p>Signed cookies are located in a special object called <code>signedCookieson</code> the request object. Don’t make the mistake of looking for them in the cookiesproperty of the request object.</p>
+<p>Here is an example of signing and retrieving a signed cookie:</p>
+<pre><code>app.get(&apos;/counter&apos;, function(req, res) {
+    var count = req.signedCookies.count || 0;
+    count++;
+    res.cookie(&apos;count&apos;, count, { signed: true });
+    res.send(&apos;Count: &apos; + count);
+});
+</code></pre><p>Start the app and load <a href="http://localhost:3000/counter" target="_blank" rel="external">http://localhost:3000/counter</a> to see the signed cookie getting created, read, and updated. To test the fact that it can detect tampering, use a cookie-editing browser extension and try editing its value:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/express-signed-cookie.png" alt="express-signed-cookie.png" title="">
+                </div>
+                <div class="image-caption">express-signed-cookie.png</div>
+            </figure>
+<h3 id="Using-sessions-to-store-data"><a href="#Using-sessions-to-store-data" class="headerlink" title="Using sessions to store data"></a>Using sessions to store data</h3><p>There are two broad ways of implementing sessions in Express: using cookies and using a session store at the backend. Both of them add a new object in the request object named session, which contains the session variables.</p>
+<p>No matter which method you use, Express provides a consistent interface for interacting with the session data.</p>
+<h4 id="Cookie-based-sessions"><a href="#Cookie-based-sessions" class="headerlink" title="Cookie-based sessions"></a>Cookie-based sessions</h4><p>Using the fact that cookies can store data in the user’s browser, a session API can be implemented using cookies. Express comes with a built-in middleware called <code>cookieSession</code> that does just that.</p>
+<p>Load the <code>cookieParser</code> middleware with a secret, followed by the <code>cookieSession</code> middleware, before the router middleware. The <code>cookieSession</code> middleware is dependent on the <code>cookieParser</code> middleware because it uses a cookie for storing the session data.</p>
+<p>The <code>cookieParser</code> middleware should be initialized with a secret, because <code>cookieSession</code> needs to generate a signed <code>HttpOnly</code> cookie for storing the session data. If you don’t specify a secret for cookieParser, you will need to specify the secret option of cookieSsession.</p>
+<p>The following is a code for enabling sessions in Express using the cookieSession middleware:</p>
+<pre><code>app.use(express.cookieParser(&apos;S3CRE7&apos;));
+app.use(express.cookieSession());
+app.use(app.router);
+</code></pre><p>Once the session API is enabled, session variables can be accessed on the session object on the request object: req.session.</p>
+<p>Cookie-based sessions work great for simple session data. However, it doesn’t work well with large, complicated, and sensitive data because the session data is visible to the user. There is a limit on the size of cookies a browser can store, and multiple large size cookies can affect the performance of the website.</p>
+<h4 id="Session-store-based-sessions"><a href="#Session-store-based-sessions" class="headerlink" title="Session store-based sessions"></a>Session store-based sessions</h4><p>The <code>session</code> middleware provides a way of creating sessions using session stores. Like cookieSession, the <code>session</code> middleware is dependent on the cookieParser middleware for creating a signed HttpOnlycookie.</p>
+<p>Initializing the sessionmiddleware is a lot like initializing cookieSession—we first load cookieParserwith a secret, and load the session middleware before the router middleware:</p>
+<pre><code>app.use(express.cookieParser(&apos;S3CRE7&apos;));
+app.use(express.session());
+app.use(app.router);
+</code></pre><p>The sessionmiddleware accepts an options object that can be used for defining the options of the middleware. The following are the supported options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>key</td>
+<td>Name of the cookie. Defaults to connect.sid.</td>
+</tr>
+<tr>
+<td>store</td>
+<td>Instance of a session store. Defaults to MemoryStore. The session</td>
+</tr>
+<tr>
+<td>store</td>
+<td>may support options of its own.</td>
+</tr>
+<tr>
+<td>secret</td>
+<td>Secret for signing session cookie. Required if not passed to cookieParser().</td>
+</tr>
+<tr>
+<td>cookie</td>
+<td>Session cookie settings. Regular cookie defaults apply.</td>
+</tr>
+<tr>
+<td>proxy</td>
+<td>To trust the reverse proxy or not. Defaults to false.</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an example of initializing the session middleware with some options:</p>
+<pre><code>app.use(express.session({
+    key: &apos;app.sess&apos;,
+    store: new RedisStore,
+    secret: &apos;SEKR37&apos;
+}));
+</code></pre><p>The interface for accessing and working with the session variables remain the same: <code>req.session</code>, except now the session values reside on the backend.</p>
+<p>Let’s explore three popular session stores for Express.</p>
+<p><strong>MemoryStore</strong></p>
+<p>Express comes with a built-in session store called MemoryStore, which is the default<br>when you don’t specify one explicitly.</p>
+<p>MemoryStoreuses the application RAM for storing session data and works right out of the box, without the need for any database. Seeing how easily it is to set up, you might be tempted to make it the session store of your choice, but it is not recommended to do so because of the following reasons:</p>
+<ul>
+<li>Memory consumption will keep growing with each new session</li>
+<li>In case the app is restarted for any reason, all session data will be lost</li>
+<li>Session data cannot be shared by other instances of the app in a cluster</li>
+</ul>
+<p><strong>RedisStore</strong></p>
+<p>RedisStoreis a popular third-party module that uses Redis for storing session data.</p>
+<p>Install RedisStore in the application directory:</p>
+<pre><code>$ npm install connect-redis
+</code></pre><p>Load the RedisStore module in the app and pass the instance of the Express object to it:</p>
+<pre><code>var express = require(&apos;express&apos;);
+var RedisStore = require(&apos;connect-redis&apos;)(express);
+</code></pre><p>With that, we are ready to use RedisStoreas our session store—load the session middleware with its storeoption set to an instance of RedisStore:</p>
+<pre><code>app.use(express.session({ store: new RedisStore }));
+</code></pre><p>RedisStoreaccepts a configuration object that can be used for specifying various aspects of the session store:</p>
+<pre><code>app.use(express.session({ store: new RedisStore({
+    host:&apos;127.0.0.1&apos;,
+    port:6380,
+    prefix:&apos;sess&apos;
+}), secret: &apos;SEKR37&apos; }));
+</code></pre><p>Once you have set up RedisStore successfully, you can continue to work on the req.sessionobject to create, read, update, and delete session variables as usual; only this time, the data is stored on a Redis server, accessible by multiple instances of your app and persisting if your app is restarted. You can get more information about RedisStoreat <https: github.com="" visionmedia="" connect-redis="">.</https:></p>
+<p><strong>MongoStore</strong></p>
+<p>Another popular session store uses MongoDB for storing the data and is called MongoStore. The usage pattern is very similar to RedisStore.</p>
+<p>MongoDB is a very popular NoSQL database that uses a binary version of JSON, BSON, to store data. Known for its speed and easy of use, it is a popular choice of database for many modern web projects. For MongoStore to work with your app, you will need to have an instance of MongoDB running on your local system or on a remote server. You can learn more about MongoDB at <a href="http://www.mongodb.org/" target="_blank" rel="external">http://www.mongodb.org/</a>.</p>
+<p>Install MongoStorein the application directory:</p>
+<pre><code>$ npm install connect-mongo
+</code></pre><p>Load the MongoStore module in the app and set an instance of it as the session store for the sessionmiddleware:</p>
+<pre><code>var express = require(&apos;express&apos;);
+var MongoStore = require(&apos;connect-mongo&apos;)(express);
+…
+app.use(express.session({
+    store: new MongoStore({
+    db: &apos;myapp&apos;,
+    host: &apos;127.0.0.1&apos;,
+    port: 3355
+    })
+}));
+</code></pre><p>You can read more about MongoStore at <a href="https://github.com/kcbanner/" target="_blank" rel="external">https://github.com/kcbanner/</a> connect-mongo.</p>
+<p><strong>Setting session variables</strong></p>
+<p>To set a session variable, attach it to the req.session object:</p>
+<pre><code>req.session.name = &apos;Napoleon&apos;;
+</code></pre><p>In case the session variable contains illegal characters, use a substring notation to create it:</p>
+<pre><code>req.session[&apos;primary skill&apos;] = &apos;Dancing&apos;;
+</code></pre><p><strong>Reading session variables</strong></p>
+<p>Session variables can be read from the res.sessionobject using either the dot notation or the substring notation:</p>
+<pre><code>var name = req.session.name;
+var primary_skill = req.session[&apos;primary skill&apos;];
+</code></pre><p>If you try to read an undefined property, you will get undefined as expected.</p>
+<p><strong>Updating session variables</strong></p>
+<p>Updating a session variable is just about updating the property in the req.session object or overwriting the existing property with a new value:</p>
+<pre><code>// Assuming req.session.skills and req.session.name were already
+defined
+req.session.skills.push(&apos;Baking&apos;);
+req.session.name = &apos;Pedro&apos;;
+</code></pre><p><strong>Deleting session variables</strong></p>
+<p>To delete a session variable, just delete the property from the req.sessionobject:</p>
+<pre><code>delete req.session.name
+delete req.session[&apos;primary skill&apos;];
+</code></pre><h3 id="Deleting-a-session"><a href="#Deleting-a-session" class="headerlink" title="Deleting a session"></a>Deleting a session</h3><p><strong>Deleting a session store-based session</strong></p>
+<p>To delete a cookie-based session, just delete the sessionobject from the request object, or set it to null: <code>delete req.session</code>; or <code>req.session = null</code>;</p>
+<p>Once the session object is deleted, the session cookie is also deleted from the browser, effectively destroying the session.</p>
+<p><strong>Deleting a session store-based session</strong></p>
+<p>Session store-based sessions do not interpret a missing session object on the request object as the end of a session. If we delete the session object from the request object, it will be recreated from the session store, because the session store decides the state of the session, not JavaScript variables. This also the reason why these sessions are intact even after the app restarts.</p>
+<p>Session store-based sessions have a method called <code>destroy()</code> that is used for destroying sessions from the session store—the proper way of tearing down a session store-based session:</p>
+<pre><code>req.session.destroy();
+</code></pre><p>The <code>destroy()</code> method accepts an optional callback function to be executed after the session is cleared from the store:</p>
+<pre><code>req.session.destroy(function() {
+    res.send(&apos;Session deleted&apos;);
+});
+</code></pre><h2 id="http-response"><a href="#http-response" class="headerlink" title="http response"></a>http response</h2><p>The data sent by an HTTP server in response to a request is called an <strong>HTTP response message</strong>. It is composed of a status code, headers, and optional associated data, which is technically referred to as the body of the message.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/http-response.png" alt="http-response.png" title="">
+                </div>
+                <div class="image-caption">http-response.png</div>
+            </figure>
+<p>The body is presented to the user as plain text, rendered HTML, image, file download, and so on. The status code and the headers are hidden from a regular user, but the browser requires them to process the body appropriately.</p>
+<h3 id="HTTP-status-codes"><a href="#HTTP-status-codes" class="headerlink" title="HTTP status codes"></a>HTTP status codes</h3><p>Following is a list of all the HTTP status codes for your information and general knowledge:</p>
+<ul>
+<li><p>1xx The 1xx series of status codes is classified as <strong>Informational</strong>, and is used for conveying provisional response from the server.</p>
+<p>  The available codes in this series are: 100, 101, and 102.</p>
+</li>
+<li><p>2xx The 2xx series of status codes is classified as <strong>Success</strong>, and is used for conveying a<br>successful request for a resource on the server.</p>
+<p>  The available codes in this series are: <strong>200</strong>, 201, 202, 303, 204, 205, 206, 207, 208, 250,<br>and 226.</p>
+</li>
+<li><p>3xx The 3xx series of status codes is classified as <strong>Redirection</strong>, and is used for information<br>by the user agent about taking additional action to retrieve the requested resource.</p>
+<p>  The available codes in this series are: 300, 301, 302, 303, 304, 305, 306, 307, and 308.</p>
+</li>
+<li><p>4xx The 4xx series of status codes is classified as <strong>Client Error</strong>, and is used for informing the user agent of its erroneous requests to the server.</p>
+<p>  The available codes in this series are: <strong>400</strong>, 401, 402, 403, 404, 405, 406, 407, 408, 409,<br>410, 411, 412, 413, 414, 415, 416, 417, 422, 423, 424, 425, 426, 428, 429, 431, 444, 449,<br>450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 494, 495, 496, 497, and 499.</p>
+</li>
+<li><p>5xx The 5xx series of status codes is classified as Server Error, and is used for informing the user agent that the server has encountered an error because of which the request was not fulfilled.</p>
+<p>  The available codes in this series are: 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 551, 598, and 599.</p>
+</li>
+</ul>
+<h3 id="HTTP-response-headers"><a href="#HTTP-response-headers" class="headerlink" title="HTTP response headers"></a>HTTP response headers</h3><p>HTTP response headers (often referred to as just headers) are key-value pairs sent after the HTTP status code in a HTTP message. These headers are used for conveying various important pieces of information from the server to the user agent.</p>
+<p>The following is an example of headers sent by a web server:</p>
+<pre><code>X-Powered-By: Express
+Accept-Ranges: bytes
+ETag: &quot;819254-1356021445000&quot;
+Date: Mon, 11 Mar 2013 21:19:05 GMT
+Cache-Control: public, max-age=0
+Last-Modified: Thu, 20 Dec 2012 16:37:25 GMT
+Content-Type: image/gif
+Content-Length: 819254
+Connection: keep-alive
+</code></pre><h3 id="Media-types"><a href="#Media-types" class="headerlink" title="Media types"></a>Media types</h3><p>Media type describes the kind of data that is being transferred over the Internet protocol; in our case it would be the HTTP protocol. Media Type is also commonly referred to as MIME Typeor Content Type. You can read more about them at <http: www.="" iana.org="" assignments="" media-types="">.</http:></p>
+<p>Whenever an HTTP server sends a response, it also specifies what kind of data it is sending via the Content-Typeheader, which is shown in the following screenshot:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/http-content-type.png" alt="http-content-type.png" title="">
+                </div>
+                <div class="image-caption">http-content-type.png</div>
+            </figure>
+<p>The Content-Typeheader can have an optional parameter, which specifies the encoding for the data being transferred. On the Web, this parameter is most commonly applicable to string data, such as plain text, HTML, and JSON:</p>
+<pre><code>Content-Type: text/html; charset=iso-8859-1
+</code></pre><p>UTF-8 is the most popular encoding format on the Web, and is the default in JavaScript, Node, and Express.</p>
+<h2 id="Express-in-Production"><a href="#Express-in-Production" class="headerlink" title="Express in Production"></a>Express in Production</h2><p>Express looks up the <code>NODE_ENV</code> environment variable to determine the environment it is in. If the environment variable is not defined, it assumes it as a development environment.</p>
+<p>Since Express depends on the <code>NODE_ENV</code> environment variable to determine the environment, it is pretty easy to make Express behave like it is in the production environment. Just start the app with NODE_ENV temporarily set to production:</p>
+<pre><code>$ NODE_ENV=production node app
+</code></pre><ul>
+<li><a href="https://github.com/likeastore/maintenance" target="_blank" rel="external">likeastore/maintenance</a></li>
+</ul>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="http://luin.github.io/express-di/" target="_blank" rel="external">Express-di by luin</a> Bring dependency injection to the Express.<ul>
+<li><a href="http://zihua.li/2014/03/using-dependency-injection-to-optimise-express-middlewares/" target="_blank" rel="external">Express 框架 middleware 的依赖问题与解决方案 | Zihua Li</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/visionmedia/debug#millisecond-diff" target="_blank" rel="external">visionmedia/debug</a> tiny node.js &amp; browser debugging utility for your libraries and applications.<ul>
+<li><a href="http://smalljs.org/logging/debug" target="_blank" rel="external">Debug</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h2><ul>
+<li><a href="https://devcenter.heroku.com/" target="_blank" rel="external">Heroku Dev Center</a><ul>
+<li><a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs" target="_blank" rel="external">Getting Started with Node.js on Heroku</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://scotch.io/tutorials/javascript/build-a-restful-api-using-node-and-express-4" target="_blank" rel="external">Build a RESTful API Using Node and Express 4</a></li>
+<li><a href="http://scottksmith.com/blog/2014/05/02/building-restful-apis-with-node" target="_blank" rel="external">Beer Locker: Building a RESTful API with Node - Scott Smith</a></li>
+</ul>
+<h3 id="Restful"><a href="#Restful" class="headerlink" title="Restful"></a>Restful</h3><p><a href="http://mcavage.me/node-restify/" target="_blank" rel="external">restify</a> 是一个基于Nodejs的REST应用框架，支持服务器端和客户端。restify比起express更专注于REST服务，去掉了express中的template, render等功能，同时强化了REST协议使用，版本化支持，HTTP的异常处理。</p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="bin"><a href="#bin" class="headerlink" title="bin"></a>bin</h3><ul>
+<li><a href="http://stackoverflow.com/questions/23169941/what-does-bin-www-do-in-express-4-x" target="_blank" rel="external">javascript - What does “./bin/www” do in Express 4.x? - Stack Overflow</a></li>
+<li><a href="http://blog.ibangspacebar.com/npm-scripts/" target="_blank" rel="external">Executables in npm scripts</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-03-18-node-express-tutorial.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-03-18-node-express-tutorial.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-03-18-node-express-tutorial.html&title=《Node Express》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-03-18-node-express-tutorial.html&title=《Node Express》 — Balance&source=Node 的框架：http://nodeframework.com/。
+其中比较流行的MVC框架是 Ruby’s Sinatra 风格的 visionme..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-03-18-node-express-tutorial.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node Express》 — Balance&url=http://blog.inching.org/Node/2014-03-18-node-express-tutorial.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-03-18-node-express-tutorial.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Angular/2014-03-18-mobile-web-tutorial.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Mobile Web Tutorial</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/uncategorized/2014-03-06-javascript-es3-core-function.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-03-18-node-express-tutorial.html&title=《Node Express》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-03-18-node-express-tutorial.html&title=《Node Express》 — Balance&source=Node 的框架：http://nodeframework.com/。
+其中比较流行的MVC框架是 Ruby’s Sinatra 风格的 visionme..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-03-18-node-express-tutorial.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node Express》 — Balance&url=http://blog.inching.org/Node/2014-03-18-node-express-tutorial.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-03-18-node-express-tutorial.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3awW4bMQwEUP//T7dAr2nWM+RqnQBvT0Hhyno6LOmhXq/4+fPv+fovX5/rz+RrJivc9uDh4eGNtn693eQrE+R3sHxv+Z7x8PDwTvOui8Fs08lhXX/j9REnBQwPDw/vs7y2ac5b8+uSgIeHh/d7eW3je300efnBw8PD+5m8JIxIniS8yMvMo1kLHh4eXsxrB2A/4e+D8z08PDy8xVS9fe1ugoYEVu8TDw8P7wAvCQs2xaMdgOWRRFEw8PDw8G7l5T/4Z4OxfHM5uIiD8fDw8A7w2h//+6sD7eAtuUwQpdR4eHh4N/GS9jR59c8a9FkpKr4FDw8P7wBv1tRuysnsWsAspMDDw8M7x5uFsLNSkf+v2TrF7wY8PDy8Ba8ORstP5uzZOm8+g4eHh/cg794xf964X1PryBgPDw/vGG/2am4791nI247E8PDw8J7hzV79eajaBhzt398eHx4eHt4B3iZObTeXbLcNaqPQBA8PD+9WXj68z8f/ycs6WaG9BIaHh4f3JK99Zd81rNpcJoiOCQ8PD+9W3uZq6Sws2MQcyXHg4eHhPcOLxkjlaGq2ubZpfnOlAA8PD+9DvLYwJCvnw7Dk0N8k03h4eHi38tpQ9d7AImm1Z4EyHh4e3jO89qLApuHeBLh1Y42Hh4d3jDdrc9srCO2FrdlIrK57eHh4eCPYLFRNNtSy2+N4s1s8PDy8Y7xkidlVgDbk3bz5X229wsPDwyt5s1fzLEJty087GPvP+nh4eHgHeJtf9KtsuGy1N60/Hh4e3gne7FpV3kwnBWYzWnuzWzw8PLxjvE0TfNfRbGoXHh4e3m/ktexZgamDYDw8PLyP8vLttqOv2QpFGIGHh4d3gLe56pSUk9lo7bYEGg8PD+9W3upiU8xIAHnxmLXseHh4eGveX/w2fYJZb1qKAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

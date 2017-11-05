@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Qt 事件系统 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="qt,event">
+    <meta name="description" content="原文： Qt事件系统 - hai200501019的专栏 - 博客频道 - CSDN.NET
+
+The Event System在Qt中，事件是继承了虚拟类QEvent的对象，它代表了程序所发生的事情或者程序需要知道的一个外部活动的结果。事件可以被任意  QObject子类的实例接收和处理，是与 widgets 密切相关。本文描述了在一个典型的程序中事件是如何被传送和处理的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt 事件系统">
+<meta property="og:url" content="http://blog.inching.org/Qt/2014-05-09-qt-event.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文： Qt事件系统 - hai200501019的专栏 - 博客频道 - CSDN.NET
+
+The Event System在Qt中，事件是继承了虚拟类QEvent的对象，它代表了程序所发生的事情或者程序需要知道的一个外部活动的结果。事件可以被任意  QObject子类的实例接收和处理，是与 widgets 密切相关。本文描述了在一个典型的程序中事件是如何被传送和处理的。">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Qt 事件系统">
+<meta name="twitter:description" content="原文： Qt事件系统 - hai200501019的专栏 - 博客频道 - CSDN.NET
+
+The Event System在Qt中，事件是继承了虚拟类QEvent的对象，它代表了程序所发生的事情或者程序需要知道的一个外部活动的结果。事件可以被任意  QObject子类的实例接收和处理，是与 widgets 密切相关。本文描述了在一个典型的程序中事件是如何被传送和处理的。">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Qt 事件系统</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Qt 事件系统</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-08T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-09
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Qt/">Qt</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#The-Event-System"><span class="post-toc-text">The Event System</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#How-Events-are-Delivered"><span class="post-toc-text">How Events are Delivered</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Event-Types"><span class="post-toc-text">Event Types</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Event-Handlers"><span class="post-toc-text">Event Handlers</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Event-Filters"><span class="post-toc-text">Event Filters</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Sending-Events"><span class="post-toc-text">Sending Events</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-qt-event"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Qt 事件系统</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-09 00:00:00" datetime="2014-05-08T16:00:00.000Z"  itemprop="datePublished">2014-05-09</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Qt/">Qt</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>原文： <a href="http://blog.csdn.net/hai200501019/article/details/9294631" target="_blank" rel="external">Qt事件系统 - hai200501019的专栏 - 博客频道 - CSDN.NET</a></p>
+</blockquote>
+<h2 id="The-Event-System"><a href="#The-Event-System" class="headerlink" title="The Event System"></a>The Event System</h2><p>在Qt中，事件是继承了虚拟类<a href="http://qt-project.org/doc/qt-5.0/qtcore/qevent.html" target="_blank" rel="external">QEvent</a>的对象，它代表了程序所发生的事情或者程序需要知道的一个外部活动的结果。事件可以被任意  <a href="http://qt-project.org/doc/qt-5.0/qtcore/qobject.html" target="_blank" rel="external">QObject</a>子类的实例接收和处理，是与 widgets 密切相关。本文描述了在一个典型的程序中事件是如何被传送和处理的。</p>
+<a id="more"></a>
+<h2 id="How-Events-are-Delivered"><a href="#How-Events-are-Delivered" class="headerlink" title="How Events are Delivered"></a>How Events are Delivered</h2><p>当发生一个事件，Qt通过构造一个适当的 <a href="http://qt-project.org/doc/qt-5.0/qtcore/qevent.html" target="_blank" rel="external">QEvent</a>子类的实例来创建事件对象来代表它，并通过调用vevent()函数把它传送到特定的 <a href="http://qt-project.org/doc/qt-5.0/qtcore/qobject.html" target="_blank" rel="external">QObject</a> 实例。</p>
+<p>该函数本身不处理事件：根据传送的事件类型，它为特定的时间类型调用一个事件处理程序，并根据事件是被接受或忽略发送一个响应。</p>
+<p>一些事件，如<a href="http://qt-project.org/doc/qt-5.0/qtgui/qmouseevent.html" target="_blank" rel="external">QMouseEvent</a> 和 <a href="http://qt-project.org/doc/qt-5.0/qtgui/qkeyevent.html" target="_blank" rel="external">QKeyEvent</a>来自windows系统。如<a href="http://qt-project.org/doc/qt-5.0/qtcore/qtimerevent.html" target="_blank" rel="external">QTimerEvent</a>, 来自其他来源，一些来自程序本身。</p>
+<h2 id="Event-Types"><a href="#Event-Types" class="headerlink" title="Event Types"></a>Event Types</h2><p>大多数的事件类型有特别的类，尤其是 <a href="http://qt-project.org/doc/qt-5.0/qtgui/qresizeevent.html" target="_blank" rel="external">QResizeEvent</a>, <a href="http://qt-project.org/doc/qt-5.0/qtgui/qpaintevent.html" target="_blank" rel="external">QPaintEvent</a>, <a href="http://qt-project.org/doc/qt-5.0/qtgui/qmouseevent.html" target="_blank" rel="external">QMouseEvent</a>, <a href="http://qt-project.org/doc/qt-5.0/qtgui/qkeyevent.html" target="_blank" rel="external">QKeyEvent</a>,and<a href="http://qt-project.org/doc/qt-5.0/qtgui/qcloseevent.html" target="_blank" rel="external">QCloseEvent</a>. ，它们都继承了<a href="http://qt-project.org/doc/qt-5.0/qtcore/qevent.html" target="_blank" rel="external">QEvent</a> 和添加了特殊的函数。如 <a href="http://qt-project.org/doc/qt-5.0/qtgui/qresizeevent.html" target="_blank" rel="external">QResizeEvent</a> 添加了 <a href="http://qt-project.org/doc/qt-5.0/qtgui/qresizeevent.html#size" target="_blank" rel="external">size()</a>和 <a href="http://qt-project.org/doc/qt-5.0/qtgui/qresizeevent.html#oldSize" target="_blank" rel="external">oldSize()</a>函数使得widgets 可以获得其改变的规模。</p>
+<p>一些类支持多于一种实际的事件类型。 <a href="http://qt-project.org/doc/qt-5.0/qtgui/qmouseevent.html" target="_blank" rel="external">QMouseEvent</a> 支持鼠标按下，双击，移动和其他相关操作。</p>
+<p>每个事件都有一个定义在<a href="http://qt-project.org/doc/qt-5.0/qtcore/qevent.html#Type-enum" target="_blank" rel="external">QEvent::Type</a>的相关的类型，它可以用作运行时的类型信息以快速确定事件对象是构造自哪个子类。</p>
+<p>由于程序需要多种复杂的方式的响应，Qt的事件传送机制也是灵活的。<a href="http://qt-project.org/doc/qt-5.0/qtcore/qcoreapplication.html#notify" target="_blank" rel="external">QCoreApplication::notify</a>()文档对称进行了确切的描述。</p>
+<h2 id="Event-Handlers"><a href="#Event-Handlers" class="headerlink" title="Event Handlers"></a>Event Handlers</h2><p>通常事件被传送的方法是调用一个虚函数。例如， <a href="http://qt-project.org/doc/qt-5.0/qtgui/qpaintevent.html" target="_blank" rel="external">QPaintEvent</a> 通过调用 <a href="http://qt-project.org/doc/qt-5.0/qtwidgets/qwidget.html#paintEvent" target="_blank" rel="external">QWidget::paintEvent</a>().而被传送。该虚函数复杂作出适当的响应，通常是重绘widget。如果在你实现的虚函数里不能完成所需要的功能，可以调用基类的实现。</p>
+<p>例如，下面的代码处理了自定义的checkbox 鼠标左键按下事件，把其他按键按下的事件传送给基类<a href="http://qt-project.org/doc/qt-5.0/qtwidgets/qcheckbox.html" target="_blank" rel="external">QCheckBox</a> ：</p>
+<pre><code>void MyCheckBox::mousePressEvent(QMouseEvent*event)
+{
+    if (event-&gt;button() ==Qt::LeftButton) {
+        // handle left mouse button here
+    } else {
+        // pass on other buttons to base class
+        QCheckBox::mousePressEvent(event);
+    }
+}
+</code></pre><p>如果你想取代基类的函数，你必须自己实现每件事。然而，如果你只想扩展基类的功能，你可以实现自己想实现的部分，在任何你不想处理情况，可以调用基类来获得默认的处理。</p>
+<p>偶尔，可能没有特定事件的函数，或者特定事件的函数功能不充分。最常见的例子包含Tab 按下。通常， <a href="http://qt-project.org/doc/qt-5.0/qtwidgets/qwidget.html" target="_blank" rel="external">QWidget</a>拦截事件来移动键盘焦点，但是有的widget需要自己处理Tab 按下事件。</p>
+<p>这些对象可以重新实现 <a href="http://qt-project.org/doc/qt-5.0/qtcore/qobject.html#event" target="_blank" rel="external">QObject::event</a>(),，一般的事件处理程序，可以在通常的事件处理之前或之后对它们的事件进行处理，或者完全取代整个函数的。一个既拦截Tab 也有自定义事件的widget 可能包含以下的<a href="http://qt-project.org/doc/qt-5.0/qtcore/qobject.html#event" target="_blank" rel="external">event()</a> 函数：</p>
+<pre><code>bool MyWidget::event(QEvent*event)
+{
+    if (event-&gt;type() ==QEvent::KeyPress) {
+    QKeyEvent*ke =static_cast&lt;QKeyEvent*&gt;(event);
+    if (ke-&gt;key() ==Qt::Key_Tab) {
+        // special tab handling here
+        returntrue;
+    }
+    } elseif (event-&gt;type() == MyCustomEventType) {
+    MyCustomEvent *myEvent =static_cast&lt;MyCustomEvent *&gt;(event);
+    // custom event handling here
+    returntrue;
+    }
+
+    returnQWidget::event(event);
+}
+</code></pre><p>我们注意到对于没有处理的所有情况都调用了<a href="http://qt-project.org/doc/qt-5.0/qtwidgets/qwidget.html#event" target="_blank" rel="external">QWidget::event</a>() ，而且返回值表明了事件是否被处理。返回值true阻止了事件被传递给其他对象。</p>
+<h2 id="Event-Filters"><a href="#Event-Filters" class="headerlink" title="Event Filters"></a>Event Filters</h2><p>有时一个对象需要检查并可能拦截被传送给其他对象的事件。例如，对话框一般需要为一下widget过滤键盘按键事件。例如，修改返回键处理。</p>
+<p><a href="http://qt-project.org/doc/qt-5.0/qtcore/qobject.html#installEventFilter" target="_blank" rel="external">QObject::installEventFilter</a>()设置了eventfilter,，在目标对象的<a href="http://qt-project.org/doc/qt-5.0/qtcore/qobject.html#eventFilter" target="_blank" rel="external">QObject::eventFilter</a>() 函数里接收事件。事件过滤器在目标对象之前处理事件，根据需要允许对事件进行检查和丢弃。可以用 <a href="http://qt-project.org/doc/qt-5.0/qtcore/qobject.html#removeEventFilter" target="_blank" rel="external">QObject::removeEventFilter</a>()函数移除一个已经存在的事件过滤器。</p>
+<p>当一个过滤器对象的<a href="http://qt-project.org/doc/qt-5.0/qtcore/qobject.html#eventFilter" target="_blank" rel="external">eventFilter()</a> 实现被调用，它可以接受或不接受事件，允许或拒绝更进一步的处理事件。如果所有的事件过滤器允许更进一步的处理事件，事件将被发送给目标对象本身。如果其中某个事件停止处理，目标对象和后面一些事件过滤器都接收不到该事件。</p>
+<pre><code>bool FilterObject::eventFilter(QObject*object,QEvent*event)
+{
+    if (object == target &amp;&amp; event-&gt;type() ==QEvent::KeyPress) {
+        QKeyEvent*keyEvent =static_cast&lt;QKeyEvent*&gt;(event);
+        if (keyEvent-&gt;key() ==Qt::Key_Tab) {
+            // Special tab handling
+            returntrue;
+        } else
+            returnfalse;
+    }
+    returnfalse;
+}
+</code></pre><p>以上代码演示了另一种拦截Tab按键事件并发送到特定目标widget的方法。在这种情况下，事件过滤器处理了相关的事件并返回true阻止事件被进一步处理。其他的事件则被忽略，事件过滤器返回false以允许它们被发送到目标widget，通过任何已经安装的事件过滤器。</p>
+<p>为整个程序过滤所有的事件也是可能的，通过为 <a href="http://qt-project.org/doc/qt-5.0/qtwidgets/qapplication.html" target="_blank" rel="external">QApplication</a> 或<a href="http://qt-project.org/doc/qt-5.0/qtcore/qcoreapplication.html" target="_blank" rel="external">QCoreApplication</a> 安装事件过滤器。这样的全局事件过滤器将会在特定对象的过滤器之前被调用。这很强大，但是也会使得整个程序的事件发送变慢。</p>
+<h2 id="Sending-Events"><a href="#Sending-Events" class="headerlink" title="Sending Events"></a>Sending Events</h2><p>很多程序想创建和发送自己的事件。你可以用像Qt的事件循环一样的方法发送事件，通过构造合适的事件对象并用<a href="http://qt-project.org/doc/qt-5.0/qtcore/qcoreapplication.html#sendEvent" target="_blank" rel="external">QCoreApplication::sendEvent</a>()和<a href="http://qt-project.org/doc/qt-5.0/qtcore/qcoreapplication.html#postEvent" target="_blank" rel="external">QCoreApplication::postEvent</a>().发送事件。</p>
+<p><a href="http://qt-project.org/doc/qt-5.0/qtcore/qcoreapplication.html#sendEvent" target="_blank" rel="external">sendEvent()</a>立即处理事件。当它返回，事件过滤器和对象本身已经处理了事件。对于很多事件类型，有一个isAccepted()函数用来获取最近的处理过程事件是被接受还是不被接受。</p>
+<p><a href="http://qt-project.org/doc/qt-5.0/qtcore/qcoreapplication.html#postEvent" target="_blank" rel="external">postEvent()</a>把事件传递到队列等待分发。下一次主事件循环运行，它进行一些优化将分发所有的队列中的事件。例如，有一些resize 事件，将被压缩成一个事件。同样的应用与paint事件：<a href="http://qt-project.org/doc/qt-5.0/qtwidgets/qwidget.html#update" target="_blank" rel="external">QWidget::update</a>()调用 <a href="http://qt-project.org/doc/qt-5.0/qtcore/qcoreapplication.html#postEvent" target="_blank" rel="external">postEvent()</a>，它消除闪烁和增加速度以避免多次重绘。</p>
+<p><a href="http://qt-project.org/doc/qt-5.0/qtcore/qcoreapplication.html#postEvent" target="_blank" rel="external">postEvent()</a>在对象初始化过程中也被用到，因为发出的事件将在对象的初始化完成之后立即分发。当实现一个widget，意识到事件可能在其生命期的早期被分发这很重要，在其构造函数中，确保在早期初始化成员变量，在其有机会接收到事件之前。</p>
+<p>要创建自定义的事件类型，需要定义一个事件号，必须大于 <a href="http://qt-project.org/doc/qt-5.0/qtcore/qevent.html#Type-enum" target="_blank" rel="external">QEvent::User</a>.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Qt/2014-05-09-qt-event.html" target="_blank" rel="external">http://blog.inching.org/Qt/2014-05-09-qt-event.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/event/">event</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/qt/">qt</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Qt/2014-05-09-qt-event.html&title=《Qt 事件系统》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Qt/2014-05-09-qt-event.html&title=《Qt 事件系统》 — Balance&source=
+原文： Qt事件系统 - hai200501019的专栏 - 博客频道 - CSDN.NET
+
+The Event System在Qt中，事件是继承了虚..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Qt/2014-05-09-qt-event.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Qt 事件系统》 — Balance&url=http://blog.inching.org/Qt/2014-05-09-qt-event.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Qt/2014-05-09-qt-event.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Qt/2014-05-09-qt-timer.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">QT 定时器QTimer</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/OS/2014-05-08-linux-tutorial.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Linux Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Qt/2014-05-09-qt-event.html&title=《Qt 事件系统》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Qt/2014-05-09-qt-event.html&title=《Qt 事件系统》 — Balance&source=
+原文： Qt事件系统 - hai200501019的专栏 - 博客频道 - CSDN.NET
+
+The Event System在Qt中，事件是继承了虚..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Qt/2014-05-09-qt-event.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Qt 事件系统》 — Balance&url=http://blog.inching.org/Qt/2014-05-09-qt-event.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Qt/2014-05-09-qt-event.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACM0lEQVR42u3aS46DMBBFUfa/aVrqUUsJ5j4Xbony9ShKCPgwsOp3HHidv+vq+7/r6vvPO4z/daxYMmTIeC3jHK5PBr9+/C/yysizZMiQsQ+D3y49oPnn8eu72bMMGTJkAAAP9cYvRYYMGTKeOnDngr8xTIYMGTLGDJ6U8hQ0Lcz9Uy4uQ4aMFzLWJaX1zwv7GzJkyHgJ4wxXPSgk18e7kiFDRmvG1QGXFsJ4WT8dy+CtAhkyZPRmkEcSAC/9V4p68fyaDBkyWjDmCli8rMaTVV7Ou6kaypAhozWDH7tk0yQoTK+8vIMMGTKaMurNSD7m9exYxpeqoQwZMjZjpIMXafOAH+UonZYhQ8YGDF5257/ydmYlcJQhQ8Y+jHrJrJ7izqWvMmTI2IHBRyvqzYC0nZkm0jJkyOjN4D2Eue2mzYM0iJQhQ0ZvRjoGkZbD5l4QDxO/RLgyZMhoyqhsggR8lSR5ciBMhgwZjRhku7wBUBnzmhtHkyFDxs4MMlSRPoC3LXkYKkOGjB0YvPjFQze+0fTpKMKVIUNGU0ZlE5VElz/9Bi9DhozWDJ6IPrUJktampToZMmT0ZpzhSo/CtNnAC20yZMjYh5E2HcntyAMqyfPcMS1Dhoy3M/jRmTY7V7wg1B6QIUNGUwYvzS850afA6GcZMmRsxuCBHW9APjXkIUOGDBnkeJ0b6uLlucdCQxkyZLyWUWk6pqRKSS4YtpAhQ0YjxtxoBQkNK0c5fx0yZMhozfgBGPtgvp0Dy28AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

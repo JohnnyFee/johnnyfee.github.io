@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Rx Operators and Transformations | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="java,rx,rxjava">
+    <meta name="description" content="OperatorsOne of the reasons why RxJava is so powerful is the rich universe of built-in operators it provides and the possibility of creating custom ones. An operator is a function that takes upstream">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rx Operators and Transformations">
+<meta property="og:url" content="http://blog.inching.org/RxJava/2017-01-01-13-rx-java-operator-transformer.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="OperatorsOne of the reasons why RxJava is so powerful is the rich universe of built-in operators it provides and the possibility of creating custom ones. An operator is a function that takes upstream">
+<meta property="og:image" content="http://blog.inching.org/../uploads/rprx_03in01.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/rprx_03in02.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/rprx_03in03.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/mergeMap.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/mergeMapIterable.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/concatMap.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/rprx_03in05.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/rprx_03in06.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/rprx_03in07.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/withLatestFrom.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/rprx_03in08.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/scan.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/reduce.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/collect.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/distinct.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/distinctUntilChanged.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/takeUntil.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/takeWhile.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/elementAt.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/concat.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/merge.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/switchDo.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/buffer3.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/buffer4.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/groupBy.png">
+<meta property="og:image" content="http://blog.inching.org/../uploads/window3.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Rx Operators and Transformations">
+<meta name="twitter:description" content="OperatorsOne of the reasons why RxJava is so powerful is the rich universe of built-in operators it provides and the possibility of creating custom ones. An operator is a function that takes upstream">
+<meta name="twitter:image" content="http://blog.inching.org/../uploads/rprx_03in01.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Rx Operators and Transformations</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Rx Operators and Transformations</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-31T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-01-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Operators"><span class="post-toc-text">Operators</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Marble-Diagrams"><span class="post-toc-text">Marble Diagrams</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Core-Operators-Filtering"><span class="post-toc-text">Core Operators: Filtering</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Core-Operators-Mapping"><span class="post-toc-text">Core Operators: Mapping</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Wrapping-Up-Using-flatMap"><span class="post-toc-text">Wrapping Up Using flatMap()</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Order-of-Events-After-flatMap"><span class="post-toc-text">Order of Events After flatMap()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Preserving-Order-Using-concatMap"><span class="post-toc-text">Preserving Order Using concatMap()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Controlling-the-concurrency-of-flatMap"><span class="post-toc-text">Controlling the concurrency of flatMap()</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Postponing-Events-Using-the-delay-Operator"><span class="post-toc-text">Postponing Events Using the delay() Operator</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Treating-Several-Observables-as-One-Using-merge"><span class="post-toc-text">Treating Several Observables as One Using merge()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Pairwise-Composing-Using-zip-and-zipWith"><span class="post-toc-text">Pairwise Composing Using zip() and zipWith()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#When-Streams-Are-Not-Synchronized-with-One-Another"><span class="post-toc-text">When Streams Are Not Synchronized with One Another</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#combineLatest"><span class="post-toc-text">combineLatest()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#withLatestFrom"><span class="post-toc-text">withLatestFrom()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#amb"><span class="post-toc-text">amb()</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Scanning-Through-the-Sequence-with-Scan-and-Reduce"><span class="post-toc-text">Scanning Through the Sequence with Scan and Reduce</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reduction-with-Mutable-Accumulator-collect"><span class="post-toc-text">Reduction with Mutable Accumulator: collect()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Asserting-Observable-Has-Exactly-One-Item-Using-single"><span class="post-toc-text">Asserting Observable Has Exactly One Item Using single()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Dropping-Duplicates-Using-distinct-and-distinctUntilChanged"><span class="post-toc-text">Dropping Duplicates Using distinct() and distinctUntilChanged()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Slicing-and-Dicing-Using-skip-takeWhile-and-Others"><span class="post-toc-text">Slicing and Dicing Using skip(), takeWhile(), and Others</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#take-n-and-skip-n"><span class="post-toc-text">take(n) and skip(n)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#takeLast-n-and-skipLast-n"><span class="post-toc-text">takeLast(n) and skipLast(n)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#first-and-last"><span class="post-toc-text">first() and last()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#takeFirst-predicate"><span class="post-toc-text">takeFirst(predicate)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#takeUntil-predicate-and-takeWhile-predicate"><span class="post-toc-text">takeUntil(predicate) and takeWhile(predicate)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#elementAt-n"><span class="post-toc-text">elementAt(n)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#…OrDefault-operators"><span class="post-toc-text">…OrDefault() operators</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#count"><span class="post-toc-text">count()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#all-predicate-exists-predicate-and-contains-value"><span class="post-toc-text">all(predicate), exists(predicate), and contains(value)</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Ways-of-Combining-Streams-concat-merge-and-switchOnNext"><span class="post-toc-text">Ways of Combining Streams: concat(), merge(), and switchOnNext()</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#concat"><span class="post-toc-text">concat</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#merge"><span class="post-toc-text">merge</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#switchOnNext"><span class="post-toc-text">switchOnNext</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Buffer"><span class="post-toc-text">Buffer</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Criteria-Based-Splitting-of-Stream-Using-groupBy"><span class="post-toc-text">Criteria-Based Splitting of Stream Using groupBy()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Taking-Periodic-Samples-and-Throttling"><span class="post-toc-text">Taking Periodic Samples and Throttling</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Buffering-Events-to-a-List"><span class="post-toc-text">Buffering Events to a List</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Buffering-by-time-periods"><span class="post-toc-text">Buffering by time periods</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Moving-window"><span class="post-toc-text">Moving window</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Skipping-Stale-Events-by-Using-debounce"><span class="post-toc-text">Skipping Stale Events by Using debounce()</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-13-rx-java-operator-transformer"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Rx Operators and Transformations</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-01-01 00:00:00" datetime="2016-12-31T16:00:00.000Z"  itemprop="datePublished">2017-01-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Operators"><a href="#Operators" class="headerlink" title="Operators"></a>Operators</h2><p>One of the reasons why RxJava is so powerful is the rich universe of built-in operators it provides and the possibility of creating custom ones. An operator is a function that takes upstream <code>Observable&lt;T&gt;</code> and returns downstream <code>Observable&lt;R&gt;</code>, where types <code>T</code> and <code>R</code> might or might not be the same. Operators allow composing simple transformations into complex processing graphs.</p>
+<p>Operators are typically instance methods on <code>Observable</code> that somehow alter the behavior of upstream <code>Observable</code> as seen by downstream <code>Observable</code>s or <code>Subscriber</code>s.</p>
+<p>In RxJava, you must forget about mutating data structures internally: modifying variables outside of stream is considered very nonidiomatic and dangerous. Every single operator returns a <em>new</em> <code>Observable</code>, leaving the original one untouched.</p>
+<p>Every time you use any operator, including those that we did not explain yet, you basically create a wrapper around original <code>Observable</code>. This wrapper can intercept events flying through it but typically does not subscribe on its own.</p>
+<p>This is an antipattern in RxJava, operators should be nonblocking, fast, and as pure as possible.</p>
+<h2 id="Marble-Diagrams"><a href="#Marble-Diagrams" class="headerlink" title="Marble Diagrams"></a>Marble Diagrams</h2><p>A marble diagram illustrates how various operators work. Most of the time you will see two horizontal axes representing time flying by from left to right. Shapes on these diagrams (the aforementioned marbles) visualize events. Between the top and bottom axes there is an operator in question that somehow alters the sequence of events coming from the source <code>Observable</code> (upstream) to form the resulting <code>Observable</code> (downstream), as demonstrated in the following graphic:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/rprx_03in01.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="Core-Operators-Filtering"><a href="#Core-Operators-Filtering" class="headerlink" title="Core Operators: Filtering"></a>Core Operators: Filtering</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/rprx_03in02.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>It is also a common practice to <code>filter()</code> the same <code>Observable</code> multiple times, each time with a different predicate. We can apply several filters on original <code>Observable</code> and even chain them (<code>filter(p1).filter(p2).filter(p3)</code>), effectively implementing logical conjunction (<code>filter(p1 &amp;&amp; p2 &amp;&amp; p3)</code>).</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Observable&lt;String&gt; strings = someFileSource.lines();</div><div class="line">Observable&lt;String&gt; comments = strings.filter(s -&gt; s.startsWith(<span class="string">"#"</span>));</div><div class="line">Observable&lt;String&gt; instructions = strings.filter(s -&gt; s.startsWith(<span class="string">"&gt;"</span>));</div><div class="line">Observable&lt;String&gt; empty = strings.filter(String::isBlank);</div></pre></td></tr></table></figure>
+<h2 id="Core-Operators-Mapping"><a href="#Core-Operators-Mapping" class="headerlink" title="Core Operators: Mapping"></a>Core Operators: Mapping</h2><p>Mappings are used to perform certain transformation on each event. This can be decoding from  JSON to Java object (or vice versa), enriching, wrapping, extracting from the event, and so on.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/rprx_03in03.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> rx.functions.Func1;</div><div class="line"></div><div class="line">Observable&lt;Status&gt; tweets = <span class="comment">//...</span></div><div class="line">Observable&lt;Date&gt; dates = tweets.map(<span class="keyword">new</span> Func1&lt;Status, Date&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Date <span class="title">call</span><span class="params">(Status status)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> status.getCreatedAt();</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">Observable&lt;Date&gt; dates =</div><div class="line">        tweets.map((Status status) -&gt; status.getCreatedAt());</div><div class="line"></div><div class="line">Observable&lt;Date&gt; dates =</div><div class="line">        tweets.map((status) -&gt; status.getCreatedAt());</div><div class="line"></div><div class="line">Observable&lt;Date&gt; dates =</div><div class="line">        tweets.map(Status::getCreatedAt);</div></pre></td></tr></table></figure>
+<p>Whatever you return from a function in <code>map()</code> is wrapped again inside an <code>Observable</code>.</p>
+<p>By the way having mutable events (like <code>java.util.Date</code>) is problematic because any operator or <code>Subscriber</code> can unintentionally mutate events consumed by other <code>Subscriber</code>s. We can quickly fix this by applying subsequent <code>map()</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Instant&gt; instants = tweets</div><div class="line">        .map(Status::getCreatedAt)</div><div class="line">        .map((Date d) -&gt; d.toInstant());</div></pre></td></tr></table></figure>
+<p><code>doOnNext()</code> is like a probe that you can safely inject anywhere in your pipeline of <code>Observable</code>s to keep an eye on what is flowing through. <code>doOnNext()</code> allows looking at items going through without touching them. <code>doOnNext()</code> simply receives every event that flew from upstream <code>Observable</code> and passes it downstream, it cannot modify it in any way. </p>
+<p>Technically, <code>doOnNext()</code> can mutate the event. However, having mutable events controlled by <code>Observable</code> is a recipe for a disaster.</p>
+<h2 id="Wrapping-Up-Using-flatMap"><a href="#Wrapping-Up-Using-flatMap" class="headerlink" title="Wrapping Up Using flatMap()"></a>Wrapping Up Using flatMap()</h2><p><code>flatMap()</code> first constructs <code>Observable&lt;Observable&lt;R&gt;&gt;</code> replacing all upstream values of type <code>T</code> with <code>Observable&lt;R&gt;</code> (just like <code>map()</code>). However, it does not stop there: it automatically subscribes to these inner <code>Observable&lt;R&gt;</code> streams to produce a single stream of type <code>R</code>, containing all values from all inner streams, as they come.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/mergeMap.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><code>flatMap()</code> is the most fundamental operator in RxJava, using it one can easily implement <code>map()</code> or <code>filter()</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> rx.Observable.empty;</div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> rx.Observable.just;</div><div class="line"></div><div class="line">numbers.map(x -&gt; x * <span class="number">2</span>);</div><div class="line">numbers.filter(x -&gt; x != <span class="number">10</span>);</div><div class="line"></div><div class="line"><span class="comment">//equivalent</span></div><div class="line">numbers.flatMap(x -&gt; just(x * <span class="number">2</span>));</div><div class="line">numbers.flatMap(x -&gt; (x != <span class="number">10</span>) ? just(x) : empty());</div></pre></td></tr></table></figure>
+<p>In practice, we do not replace <code>map()</code> and <code>filter()</code> with <code>flatMap()</code> due to the clarity of code and performance.</p>
+<p>As a rule of thumb, you use <code>flatMap()</code> for the following situations:</p>
+<ul>
+<li><p>The result of transformation in <code>map()</code> must be an <code>Observable</code>. For example, performing long-running, asynchronous operation on each element of the stream without blocking.</p>
+</li>
+<li><p>You need a one-to-many transformation, a single event is expanded into multiple sub-events. For example, a stream of customers is translated into streams of their orders, for which each customer can have an arbitrary number of orders.</p>
+</li>
+</ul>
+<p>Now imagine that you would like to use a method returning an <code>Iterable</code>  (like  <code>List</code> or  <code>Set</code>). For example, if <code>Customer</code> has a simple <code>List&lt;Order&gt; getOrders()</code>, you are forced to go through several operators to take advantage of it in <code>Observable</code> pipeline:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Customer&gt; customers = <span class="comment">//...</span></div><div class="line">Observable&lt;Order&gt; orders = customers</div><div class="line">        .flatMap(customer -&gt; Observable.from(customer.getOrders()));</div></pre></td></tr></table></figure>
+<p>Or, equivalent and equally verbose:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Order&gt; orders = customers</div><div class="line">        .map(Customer::getOrders)</div><div class="line">        .flatMap(Observable::from);</div></pre></td></tr></table></figure>
+<p>The need to map from a single item to <code>Iterable</code> is so popular that an operator, <code>flatMapIterable()</code>, was created to perform just such a transformation:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Order&gt; orders = customers</div><div class="line">        .flatMapIterable(Customer::getOrders);</div></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/mergeMapIterable.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>If <code>getOrders()</code> was not a simple getter but an expensive operation in terms of run time, it is better to implement <code>getOrders()</code> to explicitly return <code>Observable&lt;Order&gt;</code>.</p>
+<p>Another interesting variant of <code>flatMap()</code> can react not only to events, but on any notification, namely events, errors, and completion. The simplified signature of this <code>flatMap()</code> overload follows. For an <code>Observable&lt;T&gt;</code> we must provide the following:</p>
+<ul>
+<li>A function mapping single <code>T</code> → <code>Observable&lt;R&gt;</code></li>
+<li>A function mapping an error notification → <code>Observable&lt;R&gt;</code></li>
+<li>A no-arg function reacting on upstream completion that can return <code>Observable&lt;R&gt;</code></li>
+</ul>
+<p>Here is what the code looks like:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;R&gt; <span class="function">Observable&lt;R&gt; <span class="title">flatMap</span><span class="params">(</span></span></div><div class="line">        Func1&lt;T, Observable&lt;R&gt;&gt; onNext,</div><div class="line">        Func1&lt;Throwable, Observable&lt;R&gt;&gt; onError,</div><div class="line">        Func0&lt;Observable&lt;R&gt;&gt; onCompleted)</div></pre></td></tr></table></figure>
+<p>Imagine that you are creating a service that uploads videos. It takes a <code>UUID</code> and returns upload progress with <code>Observable&lt;Long&gt;</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">store</span><span class="params">(UUID id)</span> </span>&#123;</div><div class="line">    upload(id).subscribe(</div><div class="line">            bytes -&gt; &#123;&#125;, <span class="comment">//ignore</span></div><div class="line">            e -&gt; log.error(<span class="string">"Error"</span>, e),</div><div class="line">            () -&gt; rate(id)</div><div class="line">    );</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">Observable&lt;Long&gt; <span class="title">upload</span><span class="params">(UUID id)</span> </span>&#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">Observable&lt;Rating&gt; <span class="title">rate</span><span class="params">(UUID id)</span> </span>&#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">upload(id)</div><div class="line">    .flatMap(</div><div class="line">            bytes -&gt; Observable.empty(),</div><div class="line">            e -&gt; Observable.error(e),</div><div class="line">            () -&gt; rate(id)</div><div class="line">    );</div></pre></td></tr></table></figure>
+<p>the last lambda expression (<code>() -&gt; rate(id)</code>) reacts upon stream completion. At this point, we replace completion notification with another <code>Observable&lt;Rating&gt;</code>.  So, even if the original <code>Observable</code> wanted to terminate, we ignore that and in a way append a different <code>Observable</code>. Keep in mind that all three callbacks must return <code>Observable&lt;R&gt;</code> of the same type <code>R</code>.</p>
+<p>Just to make sure you understand the syntactic part of <code>flatMap()</code>, another abstract example translates from a sequence of characters to Morse code:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> rx.Observable.empty;</div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> rx.Observable.just;</div><div class="line"></div><div class="line"><span class="function">Observable&lt;Sound&gt; <span class="title">toMorseCode</span><span class="params">(<span class="keyword">char</span> ch)</span> </span>&#123;</div><div class="line">    <span class="keyword">switch</span>(ch) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">'a'</span>: <span class="keyword">return</span> just(DI, DAH);</div><div class="line">        <span class="keyword">case</span> <span class="string">'b'</span>: <span class="keyword">return</span> just(DAH, DI, DI, DI);</div><div class="line">        <span class="keyword">case</span> <span class="string">'c'</span>: <span class="keyword">return</span> just(DAH, DI, DAH, DI);</div><div class="line">        <span class="comment">//...</span></div><div class="line">        <span class="keyword">case</span> <span class="string">'p'</span>: <span class="keyword">return</span> just(DI, DAH, DAH, DI);</div><div class="line">        <span class="keyword">case</span> <span class="string">'r'</span>: <span class="keyword">return</span> just(DI, DAH, DI);</div><div class="line">        <span class="keyword">case</span> <span class="string">'s'</span>: <span class="keyword">return</span> just(DI, DI, DI);</div><div class="line">        <span class="keyword">case</span> <span class="string">'t'</span>: <span class="keyword">return</span> just(DAH);</div><div class="line">        <span class="comment">//...</span></div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">return</span> empty();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">enum</span> Sound &#123; DI, DAH &#125;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">just(<span class="string">'S'</span>, <span class="string">'p'</span>, <span class="string">'a'</span>, <span class="string">'r'</span>, <span class="string">'t'</span>, <span class="string">'a'</span>)</div><div class="line">    .map(Character::toLowerCase)</div><div class="line">    .flatMap(<span class="keyword">this</span>::toMorseCode)</div></pre></td></tr></table></figure>
+<p>As you can clearly see, every character is replaced by a sequence of <code>DI</code> and <code>DAH</code> sounds (<em>dots</em> and <em>dashes</em>). When character is unrecognizable, an empty sequence is returned. <code>flatMap()</code> ensures that we get a steady, flat stream of sounds, as opposed to <code>Observable&lt;Observable&lt;Sound&gt;&gt;</code>, which we would get with plain <code>map()</code>. At this point, we touch an important aspect of <code>flatMap()</code>: order of events. This is best explained with an example, which will be much more enjoyable with <em>delay()</em> operator.</p>
+<p>For the time being, let’s study an example. We will need to produce a <em>Cartesian product</em> of all values from two streams. For example we might have two <code>Observable</code>s, one with  chessboard’s rows (<em>ranks</em>, 1 to 8) and one with columns (<em>files</em>, a to h). We would like to find all possible 64 squares on a chessboard:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Integer&gt; oneToEight = Observable.range(<span class="number">1</span>, <span class="number">8</span>);</div><div class="line">Observable&lt;String&gt; ranks = oneToEight</div><div class="line">    .map(Object::toString);</div><div class="line">Observable&lt;String&gt; files = oneToEight</div><div class="line">    .map(x -&gt; <span class="string">'a'</span> + x - <span class="number">1</span>)</div><div class="line">    .map(ascii -&gt; (<span class="keyword">char</span>)ascii.intValue())</div><div class="line">    .map(ch -&gt; Character.toString(ch));</div><div class="line"></div><div class="line">Observable&lt;String&gt; squares = files</div><div class="line">    .flatMap(file -&gt; ranks.map(rank -&gt; file + rank));</div></pre></td></tr></table></figure>
+<p>The <code>squares</code> <code>Observable</code> will emit exactly 64 events: for <code>1</code> it generates <code>a1</code>, <code>a2</code>,…<code>a8</code>, followed by <code>b1</code>, <code>b2</code>, and so on until it finally reaches <code>h7</code> and <code>h8</code>.</p>
+<h3 id="Order-of-Events-After-flatMap"><a href="#Order-of-Events-After-flatMap" class="headerlink" title="Order of Events After flatMap()"></a>Order of Events After flatMap()</h3><p><code>flatMap()</code> <strong>cannot</strong> give <em>any</em> guarantee about what order of those subevents will arrive at the downstream operator/subscriber. </p>
+<p>What <code>flatMap()</code> essentially does is take a <em>master</em> sequence (<code>Observable</code>) of values appearing over time (events) and replaces each of the events with an independent subsequence. These subsequences are generally unrelated to one another and to the event that generated them from master sequence. To make it clear, you no longer have a single the master sequence but a set of <code>Observable</code>s, each working on its own, coming and going over time.</p>
+<p>Take this simple code snippet as an example:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">just(<span class="number">10L</span>, <span class="number">1L</span>)</div><div class="line">    .flatMap(x -&gt;</div><div class="line">        just(x).delay(x, TimeUnit.SECONDS))</div><div class="line">    .subscribe(System.out::println);</div></pre></td></tr></table></figure>
+<p>In this example, we delay event <code>10L</code> by 10 seconds and event <code>1L</code> (chronologically appearing later in upstream) by 1 second. As a result, we see <code>1</code> after a second and <code>10</code> nine seconds later—the order of events in upstream and downstream is different! Even worse, imagine a <code>flatMap()</code> transformation producing multiple events (even infinite number of them) over wide range of time:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">        .just(DayOfWeek.SUNDAY, DayOfWeek.MONDAY)</div><div class="line">        .flatMap(<span class="keyword">this</span>::loadRecordsFor);</div></pre></td></tr></table></figure>
+<p>The <code>loadRecordsFor()</code> method returns different streams depending on the day of the week:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function">Observable&lt;String&gt; <span class="title">loadRecordsFor</span><span class="params">(DayOfWeek dow)</span> </span>&#123;</div><div class="line">    <span class="keyword">switch</span>(dow) &#123;</div><div class="line">        <span class="keyword">case</span> SUNDAY:</div><div class="line">            <span class="keyword">return</span> Observable</div><div class="line">                .interval(<span class="number">90</span>, MILLISECONDS)</div><div class="line">                .take(<span class="number">5</span>)</div><div class="line">                .map(i -&gt; <span class="string">"Sun-"</span> + i);</div><div class="line">        <span class="keyword">case</span> MONDAY:</div><div class="line">            <span class="keyword">return</span> Observable</div><div class="line">                .interval(<span class="number">65</span>, MILLISECONDS)</div><div class="line">                .take(<span class="number">5</span>)</div><div class="line">                .map(i -&gt; <span class="string">"Mon-"</span> + i);</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The result is like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Mon-0, Sun-0, Mon-1, Sun-1, Mon-2, Mon-3, Sun-2, Mon-4, Sun-3, Sun-4</div></pre></td></tr></table></figure>
+<p>But not:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Sun-0, Sun-1, Sun-2, Sun-3, Sun-4, Mon-0, Mon-1, Mon-2, Mon-3, Mon-4</div></pre></td></tr></table></figure>
+<p>If you carefully track all delays, you will notice that this order is in fact correct. For example, even though Sunday was the first event in the upstream <code>Observable</code>, <code>Mon-0</code> event appeared first because the substream produced by Monday begins emitting faster. This is also the reason why <code>Mon-4</code> appears before <code>Sun-3</code> and <code>Sun-4</code>.</p>
+<p>You have two streams that work independently but their results must somehow <em>merge</em> into a single <code>Observable</code>.</p>
+<p>When <code>flatMap()</code> encounters Sunday in the upstream, it immediately invokes <code>loadRecordsFor(Sunday)</code> and redirects all events emitted by the result of that function (<code>Observable&lt;String&gt;</code>) downstream. However, almost exactly at the same time, Monday appears and <code>flatMap()</code> calls <code>loadRecordsFor(Monday)</code>. Events from the latter substream are also passed downstream, interleaving with events from first substream. <code>flatMap()</code> instead subscribes to all substreams immediately and merges them together, pushing events downstream whenever any of the inner streams emit anything. All subsequences returned from flatMap() are merged and treated equally. </p>
+<h3 id="Preserving-Order-Using-concatMap"><a href="#Preserving-Order-Using-concatMap" class="headerlink" title="Preserving Order Using concatMap()"></a>Preserving Order Using concatMap()</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/concatMap.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>There is a handy <code>concatMap()</code> operator that has the exact same syntax as <code>flatMap()</code> but works quite differently:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">        .just(DayOfWeek.SUNDAY, DayOfWeek.MONDAY)</div><div class="line">        .concatMap(<span class="keyword">this</span>::loadRecordsFor);</div></pre></td></tr></table></figure>
+<p>This time the output is exactly what we anticipated:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Sun-0, Sun-1, Sun-2, Sun-3, Sun-4, Mon-0, Mon-1, Mon-2, Mon-3, Mon-4</div></pre></td></tr></table></figure>
+<p>When the first event (Sunday) appears from upstream, <code>concatMap()</code> subscribes to an <code>Observable</code> returned from <code>loadRecordsFor()</code> and passes all events emitted from it downstream. When this inner stream completes, <code>concatMap()</code> waits for the next upstream event (Monday) and continues. <code>concatMap()</code> does not introduce any concurrency whatsoever but it preserves the order of upstream events, avoiding overlapping.</p>
+<p><code>flatMap()</code> uses the <code>merge()</code> operator internally that subscribes to all sub-<code>Observable</code>s at the same time and does not make any distinction between them. That is why downstream events interleave with one another. <code>concatMap()</code>, on the other hand, could technically use the <code>concat()</code> operator. <code>concat()</code> subscribes only to the first underlying <code>Observable</code> and continues with the second one when the first one completes.</p>
+<h3 id="Controlling-the-concurrency-of-flatMap"><a href="#Controlling-the-concurrency-of-flatMap" class="headerlink" title="Controlling the concurrency of flatMap()"></a>Controlling the concurrency of flatMap()</h3><p>Suppose that you have a large list of users wrapped in an <code>Observable</code>. Each <code>User</code> has a <code>loadProfile()</code> method that returns an <code>Observable&lt;Profile&gt;</code> instance fetched using an HTTP request. Our aim is to load the profiles of all users as fast as possible. </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</div><div class="line">    <span class="function">Observable&lt;Profile&gt; <span class="title">loadProfile</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//Make HTTP request...</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Profile</span> </span>&#123;<span class="comment">/* ... */</span>&#125;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">List&lt;User&gt; veryLargeList = <span class="comment">//...</span></div><div class="line">Observable&lt;Profile&gt; profiles = Observable</div><div class="line">        .from(veryLargeList)</div><div class="line">        .flatMap(User::loadProfile);</div></pre></td></tr></table></figure>
+<p>If we have, say 10,000 <code>User</code>s, we suddenly triggered 10,000 concurrent HTTP connections.</p>
+<p><code>flatMap()</code> has a very simple overloaded version that limits the total number of concurrent subscriptions to inner streams:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flatMap(User::loadProfile, <span class="number">10</span>);</div></pre></td></tr></table></figure>
+<p>he <code>maxConcurrent</code>  parameter limits the number of ongoing inner <code>Observable</code>s. In practice when <code>flatMap()</code> receives the first 10 <code>User</code>s it invokes <code>loadProfile()</code> for each of them. However, when the 11th <code>User</code> appears from upstream, <code>flatMap()</code> will not even call <code>loadProfile()</code>. Instead, it will wait for any ongoing inner streams to complete. Therefore, the <code>maxConcurrent</code> parameter limits the number of background tasks that are forked from <code>flatMap()</code>.</p>
+<p>You can probably see that <code>concatMap(f)</code> is semantically equivalent to <code>flatMap(f, 1)</code>—<code>flatMap()</code> with <code>maxConcurrent</code> equal to one. We could spend a couple of extra pages discussing the nuances of <code>flatMap()</code>, but more exciting operators lie ahead of us.</p>
+<h2 id="Postponing-Events-Using-the-delay-Operator"><a href="#Postponing-Events-Using-the-delay-Operator" class="headerlink" title="Postponing Events Using the delay() Operator"></a>Postponing Events Using the delay() Operator</h2><p><code>delay()</code> basically takes an upstream <code>Observable</code> and shifts all events further in time. So, a construct as simple as:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">just(x, y, z).delay(<span class="number">1</span>, TimeUnit.SECONDS);</div></pre></td></tr></table></figure>
+<p>will not emit <code>x</code>, <code>y</code> and <code>z</code> immediately upon subscription but after given delay.</p>
+<p>We can replace <code>delay()</code> with <code>timer()</code> and (surprise!) <code>flatMap()</code> like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">    .timer(1, TimeUnit.SECONDS)</div><div class="line">    .flatMap(i -&gt; Observable.just(x, y, z))</div></pre></td></tr></table></figure>
+<p>I hope this is clear: we generate an artificial event from <code>timer()</code> that we completely ignore. However, using <code>flatMap()</code> we replace that artificial event (zero, in <code>i</code> value) with three immediately emitted values: <code>x</code>, <code>y</code>, and <code>z</code>. This is somewhat equivalent to <code>just(x, y, z).delay(1, SECONDS)</code> in this particular case; however, it is not so in general.</p>
+<h2 id="Treating-Several-Observables-as-One-Using-merge"><a href="#Treating-Several-Observables-as-One-Using-merge" class="headerlink" title="Treating Several Observables as One Using merge()"></a>Treating Several Observables as One Using merge()</h2><p>The <code>merge()</code> operator is used extensively when you want to treat multiple sources of events of the same type as a single source. Also, if you have just two <code>Observable</code>s you want to <code>merge()</code>, you can use <code>obs1.mergeWith(obs2)</code> instance method.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/rprx_03in05.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>The order of <code>Observable</code>s passed to <code>merge()</code> is rather arbitrary. No matter which one emits a value first, it will be forwarded to the <code>Observer</code> of <code>all</code>.</p>
+<p>Keep in mind that errors appearing in any of the underlying <code>Observable</code>s will be eagerly propagated to <code>Observer</code>s. You can use the <code>mergeDelayError()</code> variant of <code>merge()</code> to postpone any errors until all of the other streams have finished. <code>mergeDelayError()</code> will even make sure to collect all exceptions, not only the first one, and encapsulate them in <code>rx.exceptions.CompositeException</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Observable&lt;LicensePlate&gt; all = Observable.merge(</div><div class="line">        preciseAlgo(photo),</div><div class="line">        fastAlgo(photo),</div><div class="line">        experimentalAlgo(photo)</div><div class="line">);</div></pre></td></tr></table></figure>
+<h2 id="Pairwise-Composing-Using-zip-and-zipWith"><a href="#Pairwise-Composing-Using-zip-and-zipWith" class="headerlink" title="Pairwise Composing Using zip() and zipWith()"></a>Pairwise Composing Using zip() and zipWith()</h2><p>Zipping is the act of taking two (or more) streams and combining them with each other in such a way that each element from one stream is paired with corresponding event from the other. A downstream event is produced by composing the first event from each, second event from each stream, and so on.</p>
+<p>However if one of the streams outperforms the other even slightly, events from the faster <code>Observable</code> will need to wait longer and longer for the lagging stream.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/rprx_03in06.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><code>zip()</code> completes early if any of the upstream <code>Observable</code>s complete, discarding other streams early.</p>
+<p>The <code>zip()</code> and <code>zipWith()</code> operators are equivalent. We use the former when we want to fluently compose one stream with another, like so: <code>s1.zipWith(s2, ...)</code>. Static <code>zip()</code> on <code>Observable</code> can take up to nine streams:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Observable.zip(s1, s2, s3...)</div></pre></td></tr></table></figure>
+<p>For example, think about the <code>WeatherStation</code> API that exposes temperature and wind measurements precisely every minute at the same time:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">WeatherStation</span> </span>&#123;</div><div class="line">    <span class="function">Observable&lt;Temperature&gt; <span class="title">temperature</span><span class="params">()</span></span>;</div><div class="line">    <span class="function">Observable&lt;Wind&gt; <span class="title">wind</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>We have to make an assumption that events from these two <code>Observable</code>s are emitted at the same time and thus with the same frequency. Under this restriction, we can safely join these two streams by combining every pair of events.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Weather</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Weather</span><span class="params">(Temperature temperature, Wind wind)</span> </span>&#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">Observable&lt;Temperature&gt; temperatureMeasurements = station.temperature();</div><div class="line">Observable&lt;Wind&gt; windMeasurements = station.wind();</div><div class="line"></div><div class="line">temperatureMeasurements</div><div class="line">    .zipWith(windMeasurements,</div><div class="line">        (temperature, wind) -&gt; <span class="keyword">new</span> Weather(temperature, wind));</div></pre></td></tr></table></figure>
+<p>When a new <code>Temperature</code> event occurs, <code>zipWith()</code> waits (obviously without blocking!) for <code>Wind</code>, and vice versa. Two events are passed to our custom lambda and combined into a <code>Weather</code> object.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Long&gt; red   = Observable.interval(<span class="number">10</span>, TimeUnit.MILLISECONDS);</div><div class="line">Observable&lt;Long&gt; green = Observable.interval(<span class="number">10</span>, TimeUnit.MILLISECONDS);</div><div class="line"></div><div class="line">Observable.zip(</div><div class="line">    red.timestamp(),</div><div class="line">    green.timestamp(),</div><div class="line">    (r, g) -&gt; r.getTimestampMillis() - g.getTimestampMillis()</div><div class="line">).forEach(System.out::println);</div></pre></td></tr></table></figure>
+<p>When streams are synchronized, this value oscillates around zero. However, if we slightly slow down one <code>Observable</code>, say <code>green</code> becomes <code>Observable.interval(11, MILLISECONDS)</code>, the situation is much different. The time difference between <code>red</code> and <code>green</code> keeps going up: <code>red</code> is consumed in real time but it must wait, increasing the amount of time for the slower item. Over time this difference piles up and can lead to stale data or even memory leak.</p>
+<h2 id="When-Streams-Are-Not-Synchronized-with-One-Another"><a href="#When-Streams-Are-Not-Synchronized-with-One-Another" class="headerlink" title="When Streams Are Not Synchronized with One Another"></a>When Streams Are Not Synchronized with One Another</h2><h3 id="combineLatest"><a href="#combineLatest" class="headerlink" title="combineLatest()"></a>combineLatest()</h3><p><img src="../uploads/rprx_03in07.png" alt=""></p>
+<p>Take the following artificial example. One stream produces <code>S0</code>, <code>S1</code>, <code>S2</code> values every 17 milliseconds whereas the other <code>F0</code>, <code>F1</code>, <code>F2</code> every 10 milliseconds (considerably faster):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.util.concurrent.TimeUnit.MILLISECONDS;</div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> rx.Observable.interval;</div><div class="line"></div><div class="line">Observable.combineLatest(</div><div class="line">    interval(<span class="number">17</span>, MILLISECONDS).map(x -&gt; <span class="string">"S"</span> + x),</div><div class="line">    interval(<span class="number">10</span>, MILLISECONDS).map(x -&gt; <span class="string">"F"</span> + x),</div><div class="line">    (s, f) -&gt; f + <span class="string">":"</span> + s</div><div class="line">).forEach(System.out::println);</div></pre></td></tr></table></figure>
+<p>We combine these two streams and produce a new value every time any of the streams produces something. The output quickly becomes out-of-sync, but at least values are consumed in real time, and the faster stream does not need to wait for the slower one:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">F0:S0</div><div class="line">F1:S0</div><div class="line">F2:S0</div><div class="line">F2:S1</div><div class="line">F3:S1</div><div class="line">F4:S1</div><div class="line">F4:S2</div><div class="line">F5:S2</div><div class="line">F5:S3</div><div class="line">...</div><div class="line">F998:S586</div><div class="line">F998:S587</div><div class="line">F999:S587</div><div class="line">F1000:S587</div><div class="line">F1000:S588</div><div class="line">F1001:S588</div></pre></td></tr></table></figure>
+<p>RxJava notices the new event on the fast stream so takes whatever the latest value was of the slow stream (it still has two wait for at least one event!)—<code>S0</code> in this case—and produces a new pair. However, neither stream is distinguished: when the new slow <code>S1</code> appears, the latest known fast value (<code>F2</code>) is taken and combined, as well. After about 10 seconds we encounter the <code>F1000:S588</code> event. Everything adds up: during 10 seconds, fast stream produced about 1,000 events, whereas the slow stream only 588 (10 seconds divided by 17 milliseconds).</p>
+<h3 id="withLatestFrom"><a href="#withLatestFrom" class="headerlink" title="withLatestFrom()"></a>withLatestFrom()</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/withLatestFrom.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>It is similar to combineLatest, but only emits items when the single source Observable emits an item. Events from the second stream do not trigger a downstream event; they are used only when first stream emits.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Observable&lt;String&gt; fast = interval(<span class="number">10</span>, MILLISECONDS).map(x -&gt; <span class="string">"F"</span> + x);</div><div class="line">Observable&lt;String&gt; slow = interval(<span class="number">17</span>, MILLISECONDS).map(x -&gt; <span class="string">"S"</span> + x);</div><div class="line">slow</div><div class="line">    .withLatestFrom(fast, (s, f) -&gt; s + <span class="string">":"</span> + f)</div><div class="line">    .forEach(System.out::println);</div></pre></td></tr></table></figure>
+<p>The <code>slow</code> stream is primary, the resulting <code>Observable</code> will <em>always</em> emit an event when <code>slow</code> emits. Conversely, <code>fast</code> stream is just a helper used only when <code>slow</code> emits something.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">S0:F1</div><div class="line">S1:F2</div><div class="line">S2:F4</div><div class="line">S3:F5</div><div class="line">S4:F7</div><div class="line">S5:F9</div><div class="line">S6:F11</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>All <code>slow</code> events appearing before the first <code>fast</code> event are silently dropped because there is nothing with which to combine them. This is by design, but if you truly need to preserve all events from the primary stream, you must ensure that the other stream emits some dummy event as soon as possible.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Observable&lt;String&gt; fast = interval(<span class="number">10</span>, MILLISECONDS)</div><div class="line">        .map(x -&gt; <span class="string">"F"</span> + x)</div><div class="line">        .delay(<span class="number">100</span>, MILLISECONDS)</div><div class="line">        .startWith(<span class="string">"FX"</span>);</div><div class="line">Observable&lt;String&gt; slow = interval(<span class="number">17</span>, MILLISECONDS).map(x -&gt; <span class="string">"S"</span> + x);</div><div class="line">slow</div><div class="line">        .withLatestFrom(fast, (s, f) -&gt; s + <span class="string">":"</span> + f)</div><div class="line">        .forEach(System.out::println);</div></pre></td></tr></table></figure>
+<p>The output reveals that no <code>slow</code> events are dropped. However, in the beginning we see dummy <code>&quot;FX&quot;</code> events a few times, until the first <code>&quot;F0&quot;</code> shows up after 100 milliseconds:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">S0:FX</div><div class="line">S1:FX</div><div class="line">S2:FX</div><div class="line">S3:FX</div><div class="line">S4:FX</div><div class="line">S5:FX</div><div class="line">S6:F1</div><div class="line">S7:F3</div><div class="line">S8:F4</div><div class="line">S9:F6</div><div class="line">...</div></pre></td></tr></table></figure>
+<p><code>startWith()</code> basically returns a new <code>Observable</code> that, upon subscription, first emits some constant values (like <code>&quot;FX&quot;</code>) followed by original <code>Observable</code>. For example, the following code block yields <code>0</code>, <code>1</code> and <code>2</code>, in that order:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">    .just(<span class="number">1</span>, <span class="number">2</span>)</div><div class="line">    .startWith(<span class="number">0</span>)</div><div class="line">    .subscribe(System.out::println);</div></pre></td></tr></table></figure>
+<h3 id="amb"><a href="#amb" class="headerlink" title="amb()"></a>amb()</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/rprx_03in08.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>amb() (together with ambWith()) waits for the very first item emitted. When one of the <code>Observable</code>s emits the first event, <code>amb()</code> discards all other streams and just keep forwarding events from the first <code>Observable</code> that woke up.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function">Observable&lt;String&gt; <span class="title">stream</span><span class="params">(<span class="keyword">int</span> initialDelay, <span class="keyword">int</span> interval, String name)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Observable</div><div class="line">        .interval(initialDelay, interval, MILLISECONDS)</div><div class="line">        .map(x -&gt; name + x)</div><div class="line">        .doOnSubscribe(() -&gt;</div><div class="line">            log.info(<span class="string">"Subscribe to "</span> + name))</div><div class="line">        .doOnUnsubscribe(() -&gt;</div><div class="line">            log.info(<span class="string">"Unsubscribe from "</span> + name));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">Observable.amb(</div><div class="line">        stream(<span class="number">100</span>, <span class="number">17</span>, <span class="string">"S"</span>),</div><div class="line">        stream(<span class="number">200</span>, <span class="number">10</span>, <span class="string">"F"</span>)</div><div class="line">).subscribe(log::info);</div></pre></td></tr></table></figure>
+<p>You can write an equivalent program using nonstatic <code>ambWith()</code>, but it is less readable because it hides the symmetry of <code>amb()</code>.</p>
+<p>The <code>slow</code> stream produces events less frequently, but the first event appears after 100 milliseconds, whereas the <code>fast</code> stream begins after 200 milliseconds. What <code>amb()</code> does is first subscribe to both <code>Observable</code>s, and when it encounters the first event in the <code>slow</code> stream, it immediately unsubscribes from the fast one and forwards events from only the slow one:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">14:46:13.334: Subscribe to S</div><div class="line">14:46:13.341: Subscribe to F</div><div class="line">14:46:13.439: Unsubscribe from F</div><div class="line">14:46:13.442: S0</div><div class="line">14:46:13.456: S1</div><div class="line">14:46:13.473: S2</div><div class="line">14:46:13.490: S3</div><div class="line">14:46:13.507: S4</div><div class="line">14:46:13.525: S5</div></pre></td></tr></table></figure>
+<p><code>doOnSubscribe()</code> and <code>doOnUnsubscribe()</code> callbacks are useful for debugging purposes. Notice how unsubscription from <code>F</code> occurs roughly 100 millisecond after subscription to <code>S</code>; this is the moment when first event from <code>S</code> <code>Observable</code> appeared. At this point, listening for events from <code>F</code> no longer makes any sense.</p>
+<h2 id="Scanning-Through-the-Sequence-with-Scan-and-Reduce"><a href="#Scanning-Through-the-Sequence-with-Scan-and-Reduce" class="headerlink" title="Scanning Through the Sequence with Scan and Reduce"></a>Scanning Through the Sequence with Scan and Reduce</h2><p><code>scan()</code> is like a bulldozer, going through the source (upstream) <code>Observable</code> and accumulating items. </p>
+<p><img src="../uploads/scan.png" alt=""></p>
+<p><code>scan()</code> takes two parameters: the last generated value (known as the <em>accumulator</em>) and current value from upstream <code>Observable</code>. In the first iteration, <code>total</code> is simply the first item from <code>progress</code>, whereas in the second iteration it becomes the result of <code>scan()</code> from the previous one.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Long&gt; totalProgress = progress <span class="comment">// [10, 14, 12, 13, 14, 16]</span></div><div class="line">    .scan((total, chunk) -&gt; total + chunk); <span class="comment">// [10, 24, 36, 49, 63, 79]</span></div></pre></td></tr></table></figure>
+<p>Overloaded version of <code>scan()</code> can provide an initial value (if it is different than simply the first element):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Observable&lt;BigInteger&gt; factorials = Observable</div><div class="line">    .range(<span class="number">2</span>, <span class="number">100</span>)</div><div class="line">    .scan(BigInteger.ONE, (big, cur) -&gt;</div><div class="line">        big.multiply(BigInteger.valueOf(cur)));</div></pre></td></tr></table></figure>
+<p><code>factorials</code> will generate <code>1</code>, <code>2</code>, <code>6</code>, <code>24</code>, <code>120</code>, <code>720</code>…, and so forth. </p>
+<p><code>scab</code>  care about intermediate results, but <code>reduce</code> just the final one.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/reduce.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><code>reduce()</code> is implemented using <code>scan().takeLast(1).single()</code>.</p>
+<p>Imagine that you have a source of <code>CashTransfer</code> objects with <code>getAmount()</code> method returning <code>BigDecimal</code>. We would like to calculate the total amount on all transfers. </p>
+<p>The following two transformations are equivalent. They iterate over all transfers and add up amounts, beginning at <code>ZERO</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Observable&lt;CashTransfer&gt; transfers = <span class="comment">//...;</span></div><div class="line"></div><div class="line">Observable&lt;BigDecimal&gt; total1 = transfers</div><div class="line">    .reduce(BigDecimal.ZERO,</div><div class="line">        (totalSoFar, transfer) -&gt;</div><div class="line">            totalSoFar.add(transfer.getAmount()));</div><div class="line"></div><div class="line">Observable&lt;BigDecimal&gt; total2 = transfers</div><div class="line">    .map(CashTransfer::getAmount)</div><div class="line">    .reduce(BigDecimal.ZERO, BigDecimal::add);</div></pre></td></tr></table></figure>
+<p>The second one seems simpler, despite using two steps. This is another reason to prefer smaller, more composable transformations over a single big one.</p>
+<p>Also you can probably see that <code>reduce()</code> is basically <code>scan()</code> talking only to the last element. As a matter of fact, you can implement it as follows:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> &lt;R&gt; <span class="function">Observable&lt;R&gt; <span class="title">reduce</span><span class="params">(</span></span></div><div class="line">        R initialValue,</div><div class="line">        Func2&lt;R, T, R&gt; accumulator) &#123;</div><div class="line">    <span class="keyword">return</span> scan(initialValue, accumulator).takeLast(<span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Reduction-with-Mutable-Accumulator-collect"><a href="#Reduction-with-Mutable-Accumulator-collect" class="headerlink" title="Reduction with Mutable Accumulator: collect()"></a>Reduction with Mutable Accumulator: collect()</h2><p>The <code>collect</code> operator is similar to <code>reduce</code> but is specialized for the purpose of collecting the whole set of items emitted by the source Observable into a single mutable data structure to be emitted by the resulting Observable.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/collect.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable&lt;List&lt;Integer&gt;&gt; all = Observable</div><div class="line">    .range(<span class="number">10</span>, <span class="number">20</span>)</div><div class="line">    .collect(ArrayList::<span class="keyword">new</span>, List::add);</div></pre></td></tr></table></figure>
+<p>It’s equivalent to:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Observable&lt;List&lt;Integer&gt;&gt; all = Observable</div><div class="line">    .range(10, 20)</div><div class="line">    .reduce(new ArrayList&lt;&gt;(), (list, item) -&gt; &#123;</div><div class="line">        list.add(item);</div><div class="line">        return list;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>Another useful use case for <code>collect()</code> is aggregating all events into a  <code>StringBuilder</code>. In that case, the accumulator is an empty <code>StringBuilder</code> and an operation appends one item to that builder:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Observable&lt;String&gt; str = Observable</div><div class="line">    .range(<span class="number">1</span>, <span class="number">10</span>)</div><div class="line">    .collect(</div><div class="line">            StringBuilder::<span class="keyword">new</span>,</div><div class="line">            (sb, x) -&gt; sb.append(x).append(<span class="string">", "</span>))</div><div class="line">    .map(StringBuilder::toString);</div></pre></td></tr></table></figure>
+<p>Transforming <code>Observable&lt;T&gt;</code> into <code>Observable&lt;List&lt;T&gt;&gt;</code> is so common that a built-in <code>toList()</code> operator exists. </p>
+<h2 id="Asserting-Observable-Has-Exactly-One-Item-Using-single"><a href="#Asserting-Observable-Has-Exactly-One-Item-Using-single" class="headerlink" title="Asserting Observable Has Exactly One Item Using single()"></a>Asserting Observable Has Exactly One Item Using single()</h2><p>The <code>single</code> operator is similar to <code>first</code>, but throws a <code>NoSuchElementException</code> if the source Observable does not emit exactly one item before successfully completing.</p>
+<h2 id="Dropping-Duplicates-Using-distinct-and-distinctUntilChanged"><a href="#Dropping-Duplicates-Using-distinct-and-distinctUntilChanged" class="headerlink" title="Dropping Duplicates Using distinct() and distinctUntilChanged()"></a>Dropping Duplicates Using distinct() and distinctUntilChanged()</h2><p>Suppress duplicate items emitted by an Observable. The Distinct operator filters an Observable by only allowing items through that have not already been emitted. <code>distinct()</code> is useful when we want to process unique events only once. Be sure to remember that <code>distinct()</code> must keep in mind all events/keys seen so far for eternity.</p>
+<p>The comparison happens by means of <code>equals()</code> and <code>hashCode()</code>, so ensure that you implement them according to Java guidelines (two equal objects <em>must</em> have the same hash code). </p>
+<p><img src="../uploads/distinct.png" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line">          .distinct() <span class="comment">// [1, 2, 3]</span></div></pre></td></tr></table></figure>
+<p>In practice, <code>distinctUntilChanged()</code> is often more reasonable. In the case of <code>distinctUntilChanged()</code>, any given event is discarded only if the previous event was the same (by default using <code>equals()</code> for comparison). <code>distinctUntilChanged()</code> works best when we receive a steady stream of some measurements and we want to be notified only when the measured value actually changed.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/distinctUntilChanged.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>We experimented with <code>Observable&lt;Weather&gt;</code>, with <code>Weather</code> having two attributes: <code>Temperature</code> and <code>Wind</code>. A new <code>Weather</code> event can appear once every minute, but the weather does not change that often, so we would like to drop duplicated events and focus only on changes:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Weather&gt; measurements = <span class="comment">//...</span></div><div class="line"></div><div class="line">Observable&lt;Weather&gt; tempChanges = measurements</div><div class="line">        .distinctUntilChanged(Weather::getTemperature);</div></pre></td></tr></table></figure>
+<p>Obviously, if we want to an emit event every time either <code>Temperature</code> or <code>Wind</code> changes, parameterless <code>distinctUntilChanged()</code> would work great, assuming that <code>Weather</code> implements  <code>equals()</code>.</p>
+<p>The important difference between <code>distinct()</code> and <code>distinctUntilChanged()</code> is that the latter can produce duplicates but only if they were separated by a different value. </p>
+<p>Also <code>distinctUntilChanged()</code> must only remember the last seen value, as opposed to <code>distinct()</code>, which must keep track of all unique values since the beginning of the stream. This means that <code>distinctUntilChanged()</code> has a predictable, constant memory footprint, as opposed to <code>distinct()</code>.</p>
+<p>You are building an API that will notify clients about every new item. Obviously, you can use <code>java.nio.file.WatchService</code> or database triggers, but take this as an educational example.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function">Observable&lt;Item&gt; <span class="title">observeNewItems</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Observable</div><div class="line">            .interval(<span class="number">1</span>, TimeUnit.SECONDS)</div><div class="line">            .flatMapIterable(x -&gt; query())</div><div class="line">            .distinct();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">List&lt;Item&gt; <span class="title">query</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//take snapshot of file system directory</span></div><div class="line">    <span class="comment">//or database table</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>This simple pattern allows us to replace a bunch of <code>Thread.sleep()</code> invocations and manual caching with periodic polling. It is applicable in many areas, like <a href="https://en.wikipedia.org/wiki/File_Transfer_Protocol" target="_blank" rel="external">File Transfer Protocol (FTP)</a>  polling, web scraping, and so on.</p>
+<h2 id="Slicing-and-Dicing-Using-skip-takeWhile-and-Others"><a href="#Slicing-and-Dicing-Using-skip-takeWhile-and-Others" class="headerlink" title="Slicing and Dicing Using skip(), takeWhile(), and Others"></a>Slicing and Dicing Using skip(), takeWhile(), and Others</h2><p>As a matter of fact, it is a common practice to slice <code>Observable</code> and consume just a small subset. Most operators in this section have examples unless they follow the principle of least astonishment.</p>
+<h3 id="take-n-and-skip-n"><a href="#take-n-and-skip-n" class="headerlink" title="take(n) and skip(n)"></a><code>take(n)</code> and <code>skip(n)</code></h3><p>The <code>take(n)</code> operator will truncate the source <code>Observable</code> prematurely after emitting only the first <code>n</code> events from upstream, unsubscribing afterward (or complete earlier if upstream did not have <code>n</code> items). <code>skip(n)</code> is the exact opposite; it discards the first <code>n</code> elements and begins emitting events from the upstream <code>Observable</code> beginning with event <code>n+1</code>. Both operators are quite liberal: negative numbers are treated as zero, exceeding the <code>Observable</code> size is not treated as a bug:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable.range(<span class="number">1</span>, <span class="number">5</span>).take(<span class="number">3</span>);  <span class="comment">// [1, 2, 3]</span></div><div class="line">Observable.range(<span class="number">1</span>, <span class="number">5</span>).skip(<span class="number">3</span>);  <span class="comment">// [4, 5]</span></div><div class="line">Observable.range(<span class="number">1</span>, <span class="number">5</span>).skip(<span class="number">5</span>);  <span class="comment">// []</span></div></pre></td></tr></table></figure>
+<h3 id="takeLast-n-and-skipLast-n"><a href="#takeLast-n-and-skipLast-n" class="headerlink" title="takeLast(n) and skipLast(n)"></a><code>takeLast(n)</code> and <code>skipLast(n)</code></h3><p><code>takeLast(n)</code> emits only the last <code>n</code> values from the stream before it completes. Internally, this operator must keep a buffer of the last <code>n</code> values and when it receives completion notification, it immediately emits the entire buffer. It makes no sense to call <code>takeLast()</code> on an infinite stream because it will never emit anything—the stream never ends, so there are no <em>last events</em>. <code>skipLast(n)</code>, on the other hand, emits all values from upstream <code>Observable</code> except the last <code>n</code>. Internally, <code>skipLast()</code> can emit the first value from upstream only when it received <code>n+1</code> elements, second when it received <code>n+2</code>, and so on.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Observable.range(<span class="number">1</span>, <span class="number">5</span>).takeLast(<span class="number">2</span>);  <span class="comment">// [4, 5]</span></div><div class="line">Observable.range(<span class="number">1</span>, <span class="number">5</span>).skipLast(<span class="number">2</span>);  <span class="comment">// [1, 2, 3]</span></div></pre></td></tr></table></figure>
+<h3 id="first-and-last"><a href="#first-and-last" class="headerlink" title="first() and last()"></a><code>first()</code> and <code>last()</code></h3><p>The parameterless <code>first()</code> and <code>last()</code> operators can be implement via <code>take(1).single()</code> and <code>takeLast(1).single()</code> accordingly, which should pretty much describe their behavior. The extra <code>single()</code> operator ensures that the downstream <code>Observable</code> emits precisely one value or exception. Additionally, both <code>first()</code> and <code>last()</code> have overloaded versions that take predicates. Rather than returning the very first/last value they emit first/last value, matching a given condition.</p>
+<h3 id="takeFirst-predicate"><a href="#takeFirst-predicate" class="headerlink" title="takeFirst(predicate)"></a><code>takeFirst(predicate)</code></h3><p>The <code>takeFirst(predicate)</code> operator can be expressed by <code>filter(predicate).take(1)</code>. The only difference between this one and <code>first(predicate)</code> is that it will not break with <code>NoSuchElementException</code> in case of missing matching values.</p>
+<h3 id="takeUntil-predicate-and-takeWhile-predicate"><a href="#takeUntil-predicate-and-takeWhile-predicate" class="headerlink" title="takeUntil(predicate) and takeWhile(predicate)"></a><code>takeUntil(predicate)</code> and <code>takeWhile(predicate)</code></h3><p><code>takeUntil()</code> emits values from the source <code>Observable</code> but completes and unsubscribes after emitting the very first value <em>matching</em> <code>predicate</code>. </p>
+<p><img src="../uploads/takeUntil.png" alt=""></p>
+<p><code>takeWhile()</code>, conversely, emits values as long as they match a given predicate. </p>
+<p><img src="../uploads/takeWhile.png" alt=""></p>
+<p>So the only difference is that <code>takeUntil()</code> will emit the first nonmatching value, whereas <code>takeWhile()</code> will not. These operators are quite important because they provide a means of conditionally unsubscribing from an <code>Observable</code> based on the events being emitted. Otherwise, the operator would need to somehow interact with the <code>Subscription</code> instance, which is not available when the operator is invoked.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Observable.range(<span class="number">1</span>, <span class="number">5</span>).takeUntil(x -&gt; x == <span class="number">3</span>);  <span class="comment">// [1, 2, 3]</span></div><div class="line">Observable.range(<span class="number">1</span>, <span class="number">5</span>).takeWhile(x -&gt; x != <span class="number">3</span>);  <span class="comment">// [1, 2]</span></div></pre></td></tr></table></figure>
+<h3 id="elementAt-n"><a href="#elementAt-n" class="headerlink" title="elementAt(n)"></a>elementAt(n)</h3><p>Extracting a specific item by index is rather uncommon, but you can use the built-in <code>elementAt(n)</code> operator for that. It is quite strict, and it can result in an <code>IndexOutOfBoundsException</code> being emitted when upstream <code>Observable</code> is not long enough or the index is negative. Of course, it returns <code>Observable&lt;T&gt;</code> of the same type <code>T</code> as upstream.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/elementAt.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h3 id="…OrDefault-operators"><a href="#…OrDefault-operators" class="headerlink" title="…OrDefault() operators"></a><code>…OrDefault()</code> operators</h3><p>Many operators in this section are strict and can result in exceptions being thrown—for example, <code>first()</code> when upstream <code>Observable</code> is empty. Under these circumstances many <code>...OrDefault</code> operators were introduced to replace exceptions with a default value. All of them are rather self-explanatory: <code>elementAtOrDefault()</code>, <code>firstOrDefault()</code>, <code>lastOrDefault()</code>, and <code>singleOrDefault()</code>.</p>
+<h3 id="count"><a href="#count" class="headerlink" title="count()"></a><code>count()</code></h3><p><code>count()</code> is an interesting operator that calculates how many events were emitted by upstream <code>Observable</code>. By the way, if you need to know how many items matching a given predicate that the upstream <code>Observable</code> emitted, <code>filter(predicate).count()</code> can do that idiomatically. Do not worry, all operators are lazy so this will work even for quite large streams. Obviously, <code>count()</code> never emits any value in case of infinite stream. You can implement<code>count()</code> easily by using <code>reduce()</code> ):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Integer&gt; size = Observable</div><div class="line">        .just(<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>)</div><div class="line">        .reduce(<span class="number">0</span>, (sizeSoFar, ch) -&gt; sizeSoFar + <span class="number">1</span>);</div></pre></td></tr></table></figure>
+<h3 id="all-predicate-exists-predicate-and-contains-value"><a href="#all-predicate-exists-predicate-and-contains-value" class="headerlink" title="all(predicate), exists(predicate), and contains(value)"></a><code>all(predicate)</code>, <code>exists(predicate)</code>, and <code>contains(value)</code></h3><p>Sometimes, it is useful to ensure that all events from a given <code>Observable</code> match some predicate. The <code>all(predicate)</code> operator will emit <code>true</code> when upstream completes and all values matched the predicate. However, <code>false</code> will be emitted as soon as first nonconforming value is found. <code>exists(predicate)</code> is the exact opposite of <code>all()</code>; it emits <code>true</code> when the first matching value is found but <code>false</code> in case of upstream completing without any matching value found. Often, our predicate in <code>exists()</code> simply compares upstream values with some constants. In that case, you can use the <code>contains()</code> operator:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Integer&gt; numbers = Observable.range(<span class="number">1</span>, <span class="number">5</span>);</div><div class="line"></div><div class="line">numbers.all(x -&gt; x != <span class="number">4</span>);    <span class="comment">// [false]</span></div><div class="line">numbers.exists(x -&gt; x == <span class="number">4</span>); <span class="comment">// [true]</span></div><div class="line">numbers.contains(<span class="number">4</span>);         <span class="comment">// [true]</span></div></pre></td></tr></table></figure>
+<h2 id="Ways-of-Combining-Streams-concat-merge-and-switchOnNext"><a href="#Ways-of-Combining-Streams-concat-merge-and-switchOnNext" class="headerlink" title="Ways of Combining Streams: concat(), merge(), and switchOnNext()"></a>Ways of Combining Streams: concat(), merge(), and switchOnNext()</h2><p>Consider a group of people, each one having microphone. Every microphone is modeled as an <code>Observable&lt;String&gt;</code>, for which an event represents a single word. Obviously, events appear over time, as soon as they are spoken. To simulate this behavior we will construct a simple <code>Observable</code> for demonstration purposes, interesting on its own:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function">Observable&lt;String&gt; <span class="title">speak</span><span class="params">(String quote, <span class="keyword">long</span> millisPerChar)</span> </span>&#123;</div><div class="line">    String[] tokens = quote.replaceAll(<span class="string">"[:,]"</span>, <span class="string">""</span>).split(<span class="string">" "</span>);</div><div class="line">    Observable&lt;String&gt; words = Observable.from(tokens);</div><div class="line">    Observable&lt;Long&gt; absoluteDelay = words</div><div class="line">        .map(String::length)</div><div class="line">        .map(len -&gt; len * millisPerChar)</div><div class="line">        .scan((total, current) -&gt; total + current);</div><div class="line">    <span class="keyword">return</span> words</div><div class="line">        .zipWith(absoluteDelay.startWith(<span class="number">0L</span>), Pair::of)</div><div class="line">        .flatMap(pair -&gt; just(pair.getLeft())</div><div class="line">            .delay(pair.getRight(), MILLISECONDS));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Suppose that three people were quoting <em>Hamlet</em> by William Shakespeare:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Observable&lt;String&gt; alice = speak(</div><div class="line">        <span class="string">"To be, or not to be: that is the question"</span>, <span class="number">110</span>);</div><div class="line">Observable&lt;String&gt; bob = speak(</div><div class="line">        <span class="string">"Though this be madness, yet there is method in't"</span>, <span class="number">90</span>);</div><div class="line">Observable&lt;String&gt; jane = speak(</div><div class="line">        <span class="string">"There are more things in Heaven and Earth, "</span> +</div><div class="line">        <span class="string">"Horatio, than are dreamt of in your philosophy"</span>, <span class="number">100</span>);</div></pre></td></tr></table></figure>
+<p>We can finally see how <code>concat()</code>, <code>merge()</code>, and <code>switchOnNext()</code> differ.</p>
+<h3 id="concat"><a href="#concat" class="headerlink" title="concat"></a>concat</h3><p><code>concat()</code> (and instance method  <code>concatWith()</code>) allow joining together two <code>Observable</code>s: when the first one completes, <code>concat()</code> subscribes to the second one. Importantly, <code>concat()</code> will subscribe to the second <code>Observable</code> if, and only if, the first one is completed.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/concat.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><code>concat()</code> is providing fallback value when first stream did not emit anything:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Car&gt; fromCache = loadFromCache();</div><div class="line">Observable&lt;Car&gt; fromDb = loadFromDb();</div><div class="line"></div><div class="line">Observable&lt;Car&gt; found = Observable</div><div class="line">        .concat(fromCache, fromDb)</div><div class="line">        .first();</div></pre></td></tr></table></figure>
+<p><code>Observable</code>s are lazy, so neither <code>loadFromCache()</code> nor <code>loadFromDb()</code> actually load any data yet. <code>loadFromCache()</code> can complete without emitting any events when cache is empty, but <code>loadFromDb()</code> always emits one <code>Car</code>. <code>concat()</code> followed by <code>first()</code> will initially subscribe to <code>fromCache</code> and if that emits one item, <code>concat()</code> will not subscribe to <code>fromDb</code>. However, if <code>fromCache</code> is empty, <code>concat()</code> will continue with <code>fromDb</code>, subscribe to it, and load data from database.</p>
+<p><code>concat()</code> is nonblocking, it emits events only when the underlying stream emits something.</p>
+<h3 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h3><p><code>merge()</code> subscribes to words of each person immediately and forwards them downstream, no matter which person is speaking. If two streams emit an event at more or less the same time, they are both forwarded right away. There is no buffering or halting events within this operator.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/merge.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">    .merge(</div><div class="line">        alice.map(w -&gt; <span class="string">"Alice: "</span> + w),</div><div class="line">        bob.map(w   -&gt; <span class="string">"Bob:   "</span> + w),</div><div class="line">        jane.map(w  -&gt; <span class="string">"Jane:  "</span> + w)</div><div class="line">    )</div><div class="line">.subscribe(System.out::println);</div></pre></td></tr></table></figure>
+<p>The output is very chaotic:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">Alice: To</div><div class="line">Bob:   Though</div><div class="line">Jane:  There</div><div class="line">Alice: be</div><div class="line">Alice: or</div><div class="line">Jane:  are</div><div class="line">Alice: not</div><div class="line">Bob:   this</div><div class="line">Jane:  more</div><div class="line">Alice: to</div><div class="line">Jane:  things</div><div class="line">Alice: be</div><div class="line">Bob:   be</div><div class="line">Alice: that</div><div class="line">Bob:   madness</div><div class="line">Jane:  in</div><div class="line">Alice: is</div><div class="line">Jane:  Heaven</div><div class="line">Alice: the</div><div class="line">Bob:   yet</div><div class="line">Alice: question</div><div class="line">Jane:  and</div><div class="line">Bob:   there</div><div class="line">Jane:  Earth</div><div class="line">Bob:   is</div><div class="line">Jane:  Horatio</div><div class="line">Bob:   method</div><div class="line">Jane:  than</div><div class="line">Bob:   in&apos;t</div><div class="line">Jane:  are</div><div class="line">Jane:  dreamt</div><div class="line">Jane:  of</div><div class="line">Jane:  in</div><div class="line">Jane:  your</div><div class="line">Jane:  philosophy</div></pre></td></tr></table></figure>
+<p>replace <code>merge</code> with <code>concat()</code> operator:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">Alice: To</div><div class="line">Alice: be</div><div class="line">Alice: or</div><div class="line">Alice: not</div><div class="line">Alice: to</div><div class="line">Alice: be</div><div class="line">Alice: that</div><div class="line">Alice: is</div><div class="line">Alice: the</div><div class="line">Alice: question</div><div class="line">Bob:   Though</div><div class="line">Bob:   this</div><div class="line">Bob:   be</div><div class="line">Bob:   madness</div><div class="line">Bob:   yet</div><div class="line">Bob:   there</div><div class="line">Bob:   is</div><div class="line">Bob:   method</div><div class="line">Bob:   in&apos;t</div><div class="line">Jane:  There</div><div class="line">Jane:  are</div><div class="line">Jane:  more</div><div class="line">Jane:  things</div><div class="line">Jane:  in</div><div class="line">Jane:  Heaven</div><div class="line">Jane:  and</div><div class="line">Jane:  Earth</div><div class="line">Jane:  Horatio</div><div class="line">Jane:  than</div><div class="line">Jane:  are</div><div class="line">Jane:  dreamt</div><div class="line">Jane:  of</div><div class="line">Jane:  in</div><div class="line">Jane:  your</div><div class="line">Jane:  philosophy</div></pre></td></tr></table></figure>
+<h3 id="switchOnNext"><a href="#switchOnNext" class="headerlink" title="switchOnNext"></a>switchOnNext</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/switchDo.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><code>switchOnNext()</code> begins by subscribing to an outer <code>Observable&lt;Observable&lt;T&gt;&gt;</code>, which emits inner <code>Observable&lt;T&gt;</code>s. As soon as the first inner <code>Observable&lt;T&gt;</code> appears, this operator subscribes to it and begins pushing events of type <code>T</code> downstream. Now what happens if next inner <code>Observable&lt;T&gt;</code> appears? <code>switchOnNext()</code> discards the first <code>Observable&lt;T&gt;</code> by unsubscribing from it and switches to the next one (thus, the name). In other words, when we have a stream of streams, <code>switchOnNext()</code> always forwards downstream events from the last inner stream, even if older streams keep forwarding fresh events.</p>
+<p>This is how it looks in our <em>Hamlet</em> quoting example:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Random rnd = <span class="keyword">new</span> Random();</div><div class="line">Observable&lt;Observable&lt;String&gt;&gt; quotes = just(</div><div class="line">                alice.map(w -&gt; <span class="string">"Alice: "</span> + w),</div><div class="line">                bob.map(w   -&gt; <span class="string">"Bob:   "</span> + w),</div><div class="line">                jane.map(w  -&gt; <span class="string">"Jane:  "</span> + w))</div><div class="line">        .flatMap(innerObs -&gt; just(innerObs)</div><div class="line">                .delay(rnd.nextInt(<span class="number">5</span>), SECONDS));</div><div class="line"></div><div class="line">Observable</div><div class="line">        .switchOnNext(quotes)</div><div class="line">        .subscribe(System.out::println);</div></pre></td></tr></table></figure>
+<p>One of the possible outcomes, due to the random nature of this example, could look like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Jane:  There</div><div class="line">Jane:  are</div><div class="line">Jane:  more</div><div class="line">Alice: To</div><div class="line">Alice: be</div><div class="line">Alice: or</div><div class="line">Alice: not</div><div class="line">Alice: to</div><div class="line">Bob:   Though</div><div class="line">Bob:   this</div><div class="line">Bob:   be</div><div class="line">Bob:   madness</div><div class="line">Bob:   yet</div><div class="line">Bob:   there</div><div class="line">Bob:   is</div><div class="line">Bob:   method</div><div class="line">Bob:   in&apos;t</div></pre></td></tr></table></figure>
+<p>To illustrate how <code>switchOnNext()</code> works, we shall delay the emission of inner <code>Observable</code>s. We are not delaying each word within that <code>Observable</code> (variant <em>A</em>) but the entire <code>Observable</code> (variant <em>B</em> is subtly different):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//A</span></div><div class="line">map(innerObs -&gt;</div><div class="line">        innerObs.delay(rnd.nextInt(<span class="number">5</span>), SECONDS))</div><div class="line"></div><div class="line"><span class="comment">//B</span></div><div class="line">flatMap(innerObs -&gt; just(innerObs)</div><div class="line">        .delay(rnd.nextInt(<span class="number">5</span>), SECONDS))</div></pre></td></tr></table></figure>
+<p>In variant <em>A</em>, the <code>Observable</code> appears immediately in the outer stream but begins emitting events with some delay. In variant <em>B</em>, on the other hand, we shift the entire <code>Observable</code> event forward in time so that it appears in the outer <code>Observable</code> much later.</p>
+<p>Both static <code>concat()</code> and <code>merge()</code> operators can work with either a fixed list of <code>Observable</code>s or <code>Observable</code> of <code>Observable</code>s. In the case of <code>switchOnNext()</code>, the ladder makes sense.</p>
+<p>In the case of delaying only events in every inner <code>Observable</code> (variant <em>A</em>) three inner <code>Observable</code>s would appear at the same time in outer <code>Observable</code>, and <code>switchOnNext()</code> would only subscribe to one of them.</p>
+<h2 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h2><p>Periodically gather items emitted by an Observable into bundles and emit these bundles rather than emitting the items one at a time.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/buffer3.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/buffer4.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="Criteria-Based-Splitting-of-Stream-Using-groupBy"><a href="#Criteria-Based-Splitting-of-Stream-Using-groupBy" class="headerlink" title="Criteria-Based Splitting of Stream Using groupBy()"></a>Criteria-Based Splitting of Stream Using groupBy()</h2><p>Divide an Observable into a set of Observables that each emit a different subset of items from the original Observable.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/groupBy.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Observable&lt;ReservationEvent&gt; facts = factStore.observe();</div><div class="line"></div><div class="line">Observable&lt;GroupedObservable&lt;UUID, ReservationEvent&gt;&gt; grouped =</div><div class="line">        facts.groupBy(ReservationEvent::getReservationUuid);</div><div class="line"></div><div class="line">grouped.subscribe(byUuid -&gt; &#123;</div><div class="line">    byUuid.subscribe(<span class="keyword">this</span>::updateProjection);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="function">Observable&lt;ReservationEvent&gt; <span class="title">updateProjectionAsync</span><span class="params">(ReservationEvent event)</span> </span>&#123;</div><div class="line">    <span class="comment">//possibly asynchronous</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Whenever a new <code>UUID</code> is discovered, the new <code>GroupedObservable&lt;UUID, ReservationEvent&gt;</code> is emitted, pushing events related to that <code>UUID</code>. So it becomes clear that the outer data structure must be an <code>Observable</code>.</p>
+<p><code>GroupedObservable</code> is a simple subclass of <code>Observable</code> that apart from the standard <code>Observable</code> contract returns a key to which all events in that stream belong (<code>UUID</code>, in our case). The number of emitted <code>GroupedObservable</code>s can be anything from one (in case of all events having the same key) to the total number of events (if each upstream event has a unique key).</p>
+<p>When we <code>subscribe</code> to the outer <code>Observable</code>, every emitted value is actually another <code>Observable</code> (<code>GroupedObservable</code>) to which you can subscribe. </p>
+<p>Of course, the preceding tips only apply to blocking <code>Observable</code>s, which are rarely seen in real applications. If your underlying <code>Observable</code>s are already asynchronous, achieving concurrency is a matter of understanding how they are combined and when subscription occurs. For example, <code>merge()</code> on two streams will subscribe to both of them concurrently, whereas the <code>concat()</code> operator waits until the first stream finishes before it subscribes to the second one.</p>
+<h2 id="Taking-Periodic-Samples-and-Throttling"><a href="#Taking-Periodic-Samples-and-Throttling" class="headerlink" title="Taking Periodic Samples and Throttling"></a>Taking Periodic Samples and Throttling</h2><p>The <code>sample()</code> operator looks at the upstream <code>Observable</code> periodically (for example, every second) and emits the last encountered event. If there were no event at all in the last one-second period, no sample is forwarded downstream and the next sample will be taken after one second, as illustrated in this sample:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">long</span> startTime = System.currentTimeMillis();</div><div class="line">Observable</div><div class="line">    .interval(<span class="number">7</span>, TimeUnit.MILLISECONDS)</div><div class="line">    .timestamp()</div><div class="line">    .sample(<span class="number">1</span>, TimeUnit.SECONDS)</div><div class="line">    .map(ts -&gt; ts.getTimestampMillis() - startTime + <span class="string">"ms: "</span> + ts.getValue())</div><div class="line">    .take(<span class="number">5</span>)</div><div class="line">    .subscribe(System.out::println);</div></pre></td></tr></table></figure>
+<p>The preceding code snippet will print something similar to the following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1088ms: 141</div><div class="line">2089ms: 284</div><div class="line">3090ms: 427</div><div class="line">4084ms: 569</div><div class="line">5085ms: 712</div></pre></td></tr></table></figure>
+<p>Imagine that you have a list of names that appear with some absolute delays, like so:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">Observable&lt;String&gt; names = Observable</div><div class="line">    .just(<span class="string">"Mary"</span>, <span class="string">"Patricia"</span>, <span class="string">"Linda"</span>,</div><div class="line">        <span class="string">"Barbara"</span>,</div><div class="line">        <span class="string">"Elizabeth"</span>, <span class="string">"Jennifer"</span>, <span class="string">"Maria"</span>, <span class="string">"Susan"</span>,</div><div class="line">        <span class="string">"Margaret"</span>, <span class="string">"Dorothy"</span>);</div><div class="line"></div><div class="line">Observable&lt;Long&gt; absoluteDelayMillis = Observable</div><div class="line">    .just(<span class="number">0.1</span>, <span class="number">0.6</span>, <span class="number">0.9</span>,</div><div class="line">        <span class="number">1.1</span>,</div><div class="line">        <span class="number">3.3</span>, <span class="number">3.4</span>, <span class="number">3.5</span>, <span class="number">3.6</span>,</div><div class="line">        <span class="number">4.4</span>, <span class="number">4.8</span>)</div><div class="line">    .map(d -&gt; (<span class="keyword">long</span>)(d * <span class="number">1_000</span>));</div><div class="line"></div><div class="line">Observable&lt;String&gt; delayedNames = names</div><div class="line">    .zipWith(absoluteDelayMillis,</div><div class="line">        (n, d) -&gt; Observable</div><div class="line">                .just(n)</div><div class="line">                .delay(d, MILLISECONDS))</div><div class="line">    .flatMap(o -&gt; o);</div><div class="line"></div><div class="line">delayedNames</div><div class="line">    .sample(<span class="number">1</span>, SECONDS)</div><div class="line">    .subscribe(System.out::println);</div></pre></td></tr></table></figure>
+<p>After the first second, we <code>println</code> <em>Linda</em>, followed by <em>Barbara</em> a second later. Two seconds after <em>Barbara</em> was emitted, we see <em>Susan</em>. <code>sample()</code> will forward completion (and errors, as well) discarding the last period.</p>
+<p>If we want to see <em>Dorothy</em> appearing as well, we can artificially postpone the completion notification, as is done here:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> &lt;T&gt; <span class="function">Observable&lt;T&gt; <span class="title">delayedCompletion</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Observable.&lt;T&gt;empty().delay(<span class="number">1</span>, SECONDS);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">delayedNames</div><div class="line">    .concatWith(delayedCompletion())</div><div class="line">    .sample(<span class="number">1</span>, SECONDS)</div><div class="line">    .subscribe(System.out::println);</div></pre></td></tr></table></figure>
+<p><code>sample()</code> has a more advanced variant taking <code>Observable</code> as an argument rather than a fixed period. This second <code>Observable</code> (known as sampler) basically dictates when to take a sample from the upstream source: every time sampler emits any value, a new sample is taken (if any new value appeared since the last sample). You can use this overloaded version of <code>sample()</code> to dynamically change the sampling rate or take samples only at very specific points in time. For example, taking a snapshot of some value when a new frame is redrawn or when a key is pressed. A trivial example can simply emulate the fixed period by using the <code>interval()</code> operator:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//equivalent:</span></div><div class="line">obs.sample(<span class="number">1</span>, SECONDS);</div><div class="line">obs.sample(Observable.interval(<span class="number">1</span>, SECONDS));</div></pre></td></tr></table></figure>
+<p><code>sample()</code> has an alias in RxJava called <code>throttleLast()</code>. Symmetrically, there is also the <code>throttleFirst()</code> ) operator that emits the very first event that appeared in each period. So, applying <code>throttleFirst()</code> instead of <code>sample()</code> in our name stream yields rather expected results:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Observable&lt;String&gt; names = Observable</div><div class="line">    .just(<span class="string">"Mary"</span>, <span class="string">"Patricia"</span>, <span class="string">"Linda"</span>,</div><div class="line">        <span class="string">"Barbara"</span>,</div><div class="line">        <span class="string">"Elizabeth"</span>, <span class="string">"Jennifer"</span>, <span class="string">"Maria"</span>, <span class="string">"Susan"</span>,</div><div class="line">        <span class="string">"Margaret"</span>, <span class="string">"Dorothy"</span>);</div><div class="line"></div><div class="line">Observable&lt;Long&gt; absoluteDelayMillis = Observable</div><div class="line">    .just(<span class="number">0.1</span>, <span class="number">0.6</span>, <span class="number">0.9</span>,</div><div class="line">        <span class="number">1.1</span>,</div><div class="line">        <span class="number">3.3</span>, <span class="number">3.4</span>, <span class="number">3.5</span>, <span class="number">3.6</span>,</div><div class="line">        <span class="number">4.4</span>, <span class="number">4.8</span>)</div><div class="line">    .map(d -&gt; (<span class="keyword">long</span>)(d * <span class="number">1_000</span>));</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">delayedNames</div><div class="line">    .throttleFirst(<span class="number">1</span>, SECONDS)</div><div class="line">    .subscribe(System.out::println);</div></pre></td></tr></table></figure>
+<p>The output looks like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Mary</div><div class="line">Barbara</div><div class="line">Elizabeth</div><div class="line">Margaret</div></pre></td></tr></table></figure>
+<h2 id="Buffering-Events-to-a-List"><a href="#Buffering-Events-to-a-List" class="headerlink" title="Buffering Events to a List"></a>Buffering Events to a List</h2><p>The <code>buffer()</code> operator aggregates batches of events in real time into a <code>List</code>. However, unlike the <code>toList()</code> operator, <code>buffer()</code> emits several lists grouping some number of subsequent events as opposed to just one containing all events (like <code>toList()</code>). The simplest form of <code>buffer()</code> groups values from upstream <code>Observable</code> into a lists of equal size:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">    .range(<span class="number">1</span>, <span class="number">7</span>)  <span class="comment">//1, 2, 3, ... 7</span></div><div class="line">    .buffer(<span class="number">3</span>)</div><div class="line">    .subscribe((List&lt;Integer&gt; list) -&gt; &#123;</div><div class="line">            System.out.println(list);</div><div class="line">        &#125;</div><div class="line">    );</div></pre></td></tr></table></figure>
+<p>The output shows three events emitted from the <code>buffer(3)</code> operator:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[1, 2, 3]</div><div class="line">[4, 5, 6]</div><div class="line">[7]</div></pre></td></tr></table></figure>
+<p>By using the <code>buffer(int)</code> operator you can replace several fine-grained events with less but bigger batches. For example, if you want to reduce database load, you might want to replace storing each event individually by storing them in batches:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Repository</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">store</span><span class="params">(Record record)</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">storeAll</span><span class="params">(List&lt;Record&gt; records)</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">Observable&lt;Record&gt; events = <span class="comment">//...</span></div><div class="line"></div><div class="line">events</div><div class="line">        .subscribe(repository::store);</div><div class="line"><span class="comment">//vs.</span></div><div class="line">events</div><div class="line">        .buffer(<span class="number">10</span>)</div><div class="line">        .subscribe(repository::storeAll);</div></pre></td></tr></table></figure>
+<p>You can use <code>flatMap()</code> or <code>flatMapIterable()</code> to get back a simple <code>Observable&lt;Integer&gt;</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Integer&gt; odd = Observable</div><div class="line">    .range(<span class="number">1</span>, <span class="number">7</span>)</div><div class="line">    .buffer(<span class="number">1</span>, <span class="number">2</span>)</div><div class="line">    .flatMapIterable(list -&gt; list);</div></pre></td></tr></table></figure>
+<p><code>flatMapIterable()</code> expects a function that transforms each value in the stream (one-element <code>List&lt;Integer&gt;</code>) into a <code>List</code>. Identity transformation (<code>list -&gt; list</code>) is enough here.</p>
+<h3 id="Buffering-by-time-periods"><a href="#Buffering-by-time-periods" class="headerlink" title="Buffering by time periods"></a>Buffering by time periods</h3><p>An overloaded version of <code>buffer()</code> that accepts time period (one second in the preceding example) aggregates all upstream events within that period.<br>Therefore, <code>buffer()</code> collects all events that happened during first time period, second time period, and so on.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Observable&lt;String&gt; names = just(</div><div class="line">        <span class="string">"Mary"</span>,     <span class="string">"Patricia"</span>, <span class="string">"Linda"</span>, <span class="string">"Barbara"</span>, <span class="string">"Elizabeth"</span>,</div><div class="line">        <span class="string">"Jennifer"</span>, <span class="string">"Maria"</span>,    <span class="string">"Susan"</span>, <span class="string">"Margaret"</span>, <span class="string">"Dorothy"</span>);</div><div class="line">Observable&lt;Long&gt; absoluteDelays = just(</div><div class="line">    <span class="number">0.1</span>, <span class="number">0.6</span>, <span class="number">0.9</span>, <span class="number">1.1</span>, <span class="number">3.3</span>,</div><div class="line">    <span class="number">3.4</span>, <span class="number">3.5</span>, <span class="number">3.6</span>, <span class="number">4.4</span>, <span class="number">4.8</span></div><div class="line">).map(d -&gt; (<span class="keyword">long</span>) (d * <span class="number">1_000</span>));</div><div class="line"></div><div class="line">Observable&lt;String&gt; delayedNames = Observable.zip(names,</div><div class="line">        absoluteDelays,</div><div class="line">        (n, d) -&gt; just(n).delay(d, MILLISECONDS)</div><div class="line">).flatMap(o -&gt; o);</div><div class="line"></div><div class="line">delayedNames</div><div class="line">        .buffer(<span class="number">1</span>, SECONDS)</div><div class="line">        .subscribe(System.out::println);</div></pre></td></tr></table></figure>
+<p>Output:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[Mary, Patricia, Linda]</div><div class="line">[Barbara]</div><div class="line">[]</div><div class="line">[Elizabeth, Jennifer, Maria, Susan]</div><div class="line">[Margaret, Dorothy]</div></pre></td></tr></table></figure>
+<p>TODO ch06 for more.</p>
+<h2 id="Moving-window"><a href="#Moving-window" class="headerlink" title="Moving window"></a>Moving window</h2><p>Window is similar to <a href="http://reactivex.io/documentation/operators/buffer.html" target="_blank" rel="external">Buffer</a>, but rather than emitting packets of items from the source Observable, it emits Observables, each one of which emits a subset of items from the source Observable and then terminates with an <code>onCompleted</code> notification.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../uploads/window3.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Observable&lt;KeyEvent&gt; keyEvents = <span class="comment">//...</span></div><div class="line"></div><div class="line">Observable&lt;Integer&gt; eventPerSecond = keyEvents</div><div class="line">    .buffer(<span class="number">1</span>, SECONDS)</div><div class="line">    .map(List::size);</div></pre></td></tr></table></figure>
+<p>We batch all events from <code>Observable&lt;KeyEvent&gt;</code> that occurred in each second into <code>Observable&lt;List&lt;KeyEvent&gt;&gt;</code>. In the next step, we map <code>List</code> into its <code>size</code>. This is quite wasteful, especially if the number of events in each second is significant:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Observable&lt;KeyEvent&gt;&gt; windows = keyEvents.window(<span class="number">1</span>, SECONDS);</div><div class="line">Observable&lt;Integer&gt; eventPerSecond = windows</div><div class="line">    .flatMap(eventsInSecond -&gt; eventsInSecond.count());</div></pre></td></tr></table></figure>
+<p><code>window()</code>, as opposed to <code>buffer()</code>, returns an <code>Observable&lt;Observable&lt;KeyEvent&gt;&gt;</code>. The <code>count()</code> operator transforms an <code>Observable&lt;T&gt;</code> into an <code>Observable&lt;Integer&gt;</code> that emits just one item representing the number of events in the original <code>Observable</code>.</p>
+<h2 id="Skipping-Stale-Events-by-Using-debounce"><a href="#Skipping-Stale-Events-by-Using-debounce" class="headerlink" title="Skipping Stale Events by Using debounce()"></a>Skipping Stale Events by Using debounce()</h2><p><code>buffer()</code> and <code>window()</code> group several events together so that you can process them in batches. <code>sample()</code> picks one fairly arbitrary event once in a while. These operators do not take into account how much time elapsed between events.</p>
+<p><code>debounce()</code> (alias: <code>throttleWithTimeout()</code>) discards all of the events that are shortly followed by another event.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Observable&lt;BigDecimal&gt; prices = tradingPlatform.pricesOf(<span class="string">"NFLX"</span>);</div><div class="line">Observable&lt;BigDecimal&gt; debounced = prices.debounce(<span class="number">100</span>, MILLISECONDS);</div></pre></td></tr></table></figure>
+<p>If the price goes above $150, we would like to forward such an update downstream much faster without hesitation:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">prices</div><div class="line">    .debounce(x -&gt; &#123;</div><div class="line">        <span class="keyword">boolean</span> goodPrice = x.compareTo(BigDecimal.valueOf(<span class="number">150</span>)) &gt; <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> Observable</div><div class="line">            .empty()</div><div class="line">            .delay(goodPrice? <span class="number">10</span> : <span class="number">100</span>, MILLISECONDS);</div><div class="line">    &#125;)</div></pre></td></tr></table></figure>
+<p>If you still struggle to understand how <code>debounce()</code> works, here is a stock price simulator you can try:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function">Observable&lt;BigDecimal&gt; <span class="title">pricesOf</span><span class="params">(String ticker)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Observable</div><div class="line">            .interval(<span class="number">50</span>, MILLISECONDS)</div><div class="line">            .flatMap(<span class="keyword">this</span>::randomDelay)</div><div class="line">            .map(<span class="keyword">this</span>::randomStockPrice)</div><div class="line">            .map(BigDecimal::valueOf);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">Observable&lt;Long&gt; <span class="title">randomDelay</span><span class="params">(<span class="keyword">long</span> x)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Observable</div><div class="line">            .just(x)</div><div class="line">            .delay((<span class="keyword">long</span>) (Math.random() * <span class="number">100</span>), MILLISECONDS);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">double</span> <span class="title">randomStockPrice</span><span class="params">(<span class="keyword">long</span> x)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">100</span> + Math.random() * <span class="number">10</span> +</div><div class="line">           (Math.sin(x / <span class="number">100.0</span>)) * <span class="number">60.0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/RxJava/2017-01-01-13-rx-java-operator-transformer.html" target="_blank" rel="external">http://blog.inching.org/RxJava/2017-01-01-13-rx-java-operator-transformer.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rx/">rx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rxjava/">rxjava</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2017-01-01-13-rx-java-operator-transformer.html&title=《Rx Operators and Transformations》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2017-01-01-13-rx-java-operator-transformer.html&title=《Rx Operators and Transformations》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2017-01-01-13-rx-java-operator-transformer.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Rx Operators and Transformations》 — Balance&url=http://blog.inching.org/RxJava/2017-01-01-13-rx-java-operator-transformer.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2017-01-01-13-rx-java-operator-transformer.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/RxJava/2017-01-01-10-rx-java-observable-observer.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Rx Java Concept</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Angular/Angular2/2016-12-30-angular2-style-class.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Angular2 Style Class</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2017-01-01-13-rx-java-operator-transformer.html&title=《Rx Operators and Transformations》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2017-01-01-13-rx-java-operator-transformer.html&title=《Rx Operators and Transformations》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2017-01-01-13-rx-java-operator-transformer.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Rx Operators and Transformations》 — Balance&url=http://blog.inching.org/RxJava/2017-01-01-13-rx-java-operator-transformer.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2017-01-01-13-rx-java-operator-transformer.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuUlEQVR42u3a0U7rMBAE0P7/T3NfkVCSmbUd0NXJEyptk2Mke5ndzye+vr5d31/JP5v89uc7Z3esLzw8PLyFR/95XfFy0tX3JNf9dyafwsPDwzvHa7fslT35/u7J4ibPjIeHh/c3efev5yXy/cGDh4eH93/w7rfvNlbIy3o8PDy8v8Nrv7qF5WFHvtybsxY8PDy8mLcey77/85H+Hh4eHt5yV72NX9tNfL099vC0eHh4eAd4+YY7a2K1UWwbCkfvxMPDw9vKayOGlZCibWvlAwSXy4SHh4d3jLcyFpAHqUmAu4v9yVcXDw8Pb7I/1yloO1b1fmsNDw8P7xwvCQjycCE/Wlbab0VjDA8PD+8VXlL+tlt2GwrPwoiH/h4eHh7ei7zZAFYeXqwHvg+dPTw8PLytvDaASEhtYLFS4icHGB4eHt45XvIQbQCRx7LtITQMJvDw8PC28pIqdKUQX1nQfKSgRuLh4eGVvJVRp3wJ2itflCh6wMPDw9vKS8rcPDzdG9HOQuHLGAIPDw9vK689JNoSfH2Lz6Pkh78hHh4e3jKvLaPbY6DNRdoDJgoj8PDw8I7x8mZ8Hh/MmmF5u+vhQMLDw8M7xmvHBdqDZNYGW/8ePDw8vBO80yFCHtQmAXEeRuDh4eGd5s1aSgly9nC7GnJ4eHh47/Pywje55WxQoC39o6ErPDw8vK28vMieFdO7BgWKEhwPDw/vGG/W3MrfnxwnszGvhwXCw8PD28r7Kq88nG1jhSTgqEcW8PDw8A7w2q12Fum2gW8+prABhoeHhzfiteOqbRHcNtVmY7J1So2Hh4e3zNs1HJAvUxvvbsha8PDw8H6Vt3KEtIuYl9eXJTUeHh7er/LaoHZXuDAbq8XDw8M7x5s97qzIzu+elN0Pz4aHh4d3gNf+e7+yEHkhfmIYCw8PD2+Z9w/wFuQpdVpp+gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

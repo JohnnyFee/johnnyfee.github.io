@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Node Commander | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="tj/commander.js 快速定义 Node 命令行接口。
+命令选项 Option使用 .option() 方法定义命令选项，并且提供相应的选项描述。
+option 接口定义如下：
+1Command.prototype.option = function(flags, description, fn, defaultValue)
+
+falgs：选项定义。
+description 选项描述。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node Commander">
+<meta property="og:url" content="http://blog.inching.org/Node/2016-11-13-node-commander.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="tj/commander.js 快速定义 Node 命令行接口。
+命令选项 Option使用 .option() 方法定义命令选项，并且提供相应的选项描述。
+option 接口定义如下：
+1Command.prototype.option = function(flags, description, fn, defaultValue)
+
+falgs：选项定义。
+description 选项描述。">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node Commander">
+<meta name="twitter:description" content="tj/commander.js 快速定义 Node 命令行接口。
+命令选项 Option使用 .option() 方法定义命令选项，并且提供相应的选项描述。
+option 接口定义如下：
+1Command.prototype.option = function(flags, description, fn, defaultValue)
+
+falgs：选项定义。
+description 选项描述。">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Node Commander</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Node Commander</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-11-12T17:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-11-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#命令选项-Option"><span class="post-toc-text">命令选项 Option</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#选项定义-flags"><span class="post-toc-text">选项定义 flags</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Boolean-选项"><span class="post-toc-text">Boolean 选项</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#默认值"><span class="post-toc-text">默认值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#可选-必填"><span class="post-toc-text">可选/必填</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#选项值转换-验证-Coercion"><span class="post-toc-text">选项值转换/验证 Coercion</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Unknown-option"><span class="post-toc-text">Unknown option</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#命令-Commands"><span class="post-toc-text">命令 Commands</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#顶级命令参数"><span class="post-toc-text">顶级命令参数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#子命令-Sub-Commands"><span class="post-toc-text">子命令 Sub-Commands</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#命令别名-alias"><span class="post-toc-text">命令别名 alias</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#allowUnknownOption"><span class="post-toc-text">allowUnknownOption</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#可变参数"><span class="post-toc-text">可变参数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#action"><span class="post-toc-text">action</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Help"><span class="post-toc-text">Help</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#自动生成帮助信息"><span class="post-toc-text">自动生成帮助信息</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#自定义帮助信息"><span class="post-toc-text">自定义帮助信息</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#输出帮助信息"><span class="post-toc-text">输出帮助信息</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#References"><span class="post-toc-text">References</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-commander"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Node Commander</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-11-13 01:00:00" datetime="2016-11-12T17:00:00.000Z"  itemprop="datePublished">2016-11-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><a href="https://github.com/tj/commander.js" target="_blank" rel="external">tj/commander.js</a> 快速定义 Node 命令行接口。</p>
+<h2 id="命令选项-Option"><a href="#命令选项-Option" class="headerlink" title="命令选项 Option"></a>命令选项 Option</h2><p>使用 <code>.option()</code> 方法定义命令选项，并且提供相应的选项描述。</p>
+<p><code>option</code> 接口定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Command.prototype.option = function(flags, description, fn, defaultValue)</div></pre></td></tr></table></figure>
+<ul>
+<li><code>falgs</code>：选项定义。</li>
+<li><code>description</code> 选项描述。</li>
+<li><code>fn</code> 选项值转换/验证的函数/正则表达式。如果类型不是函数/正则表达式，则认为该参数为默认值。</li>
+<li><code>defaultValue</code> 选项默认值。</li>
+</ul>
+<p>下面的例子解析 <code>process.argv</code> 中的 args 和 options：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env node</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Module dependencies.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">var</span> program = <span class="built_in">require</span>(<span class="string">'commander'</span>);</div><div class="line"></div><div class="line">program</div><div class="line">  .version(<span class="string">'0.0.1'</span>)</div><div class="line">  .option(<span class="string">'-p, --peppers'</span>, <span class="string">'Add peppers'</span>)</div><div class="line">  .option(<span class="string">'-c, --cheese [type]'</span>, <span class="string">'Add the specified type of cheese [marble]'</span>, <span class="string">'marble'</span>)</div><div class="line">  .parse(process.argv);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'you ordered a pizza with:'</span>);</div><div class="line"><span class="keyword">if</span> (program.peppers) <span class="built_in">console</span>.log(<span class="string">'  - peppers'</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'  - %s cheese'</span>, program.cheese);</div></pre></td></tr></table></figure>
+<p>在命令行中，可以通过 <code>=</code> 或者 <code> </code>给选项赋值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">program.parse(&apos;node test --string=Hello --string2 Hello=World --num=5.5&apos;.split(&apos; &apos;));</div></pre></td></tr></table></figure>
+<h3 id="选项定义-flags"><a href="#选项定义-flags" class="headerlink" title="选项定义 flags"></a>选项定义 flags</h3><p>选项名称包含短名称（short name）和长名称（long name）。如：’-p, –pepper’，其中，<code>p</code> 为短名称，<code>pepper</code> 为长名称。</p>
+<p>可以用长名称或者短名称来定义选项，在程序中，只能用长名称来取选项值。</p>
+<p>短名称和长名称直接可以用<code>|</code>，<code>,</code>，<code> </code>连接：</p>
+<ul>
+<li>“-p, –pepper”</li>
+<li>“-p|–pepper”</li>
+<li>“-p –pepper”</li>
+</ul>
+<p>Short flags may be passed as a single arg, for example <code>-abc</code> is equivalent to <code>-a -b -c</code>. Multi-word options such as “–template-engine” are camel-cased, becoming <code>program.templateEngine</code> etc.</p>
+<p>没有被选项解析的参数留在 <code>program.args</code> 数组中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">program</div><div class="line">  .option(<span class="string">'-f, --foo'</span>, <span class="string">'add some foo'</span>)</div><div class="line">  .option(<span class="string">'-b, --bar'</span>, <span class="string">'add some bar'</span>);</div><div class="line"></div><div class="line"><span class="comment">// 相当于 node test --foo ----bar bar</span></div><div class="line">program.parse([<span class="string">'node'</span>, <span class="string">'test'</span>, <span class="string">'--foo'</span>, <span class="string">'--'</span>, <span class="string">'--bar'</span>, <span class="string">'baz'</span>]);</div><div class="line"></div><div class="line"><span class="comment">// foo 值为 true</span></div><div class="line">program.foo.should.be.true;</div><div class="line"></div><div class="line"><span class="comment">// bar 值为 undefined</span></div><div class="line">should.equal(<span class="literal">undefined</span>, program.bar);</div><div class="line"></div><div class="line"><span class="comment">// --bar，bar 均未被解析</span></div><div class="line">program.args.should.eql([<span class="string">'--bar'</span>, <span class="string">'baz'</span>]);</div></pre></td></tr></table></figure>
+<h3 id="Boolean-选项"><a href="#Boolean-选项" class="headerlink" title="Boolean 选项"></a>Boolean 选项</h3><p>当命令中无选项值时，选项的类型为 Boolean，命令中包含选项名时，值为 <code>true</code>，否则为 <code>false</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">program.option(<span class="string">'-p, --pepper'</span>, <span class="string">'add pepper'</span>);</div><div class="line"></div><div class="line"><span class="comment">//命令中 --pepper 或 -p</span></div><div class="line"><span class="comment">// =&gt; true</span></div><div class="line">program.pepper.should.be.true;</div><div class="line"></div><div class="line"><span class="comment">//命令中不包含选项</span></div><div class="line"><span class="comment">// =&gt; undefined</span></div><div class="line">should.equal(<span class="literal">undefined</span>, program.pepper);</div></pre></td></tr></table></figure>
+<p>如果期望不包含选项名时为 <code>false</code>，包含时为 <code>true</code>，需要为属性名加 <code>no-</code> 前缀取反， ：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">program.option(<span class="string">'-C, --no-cheese'</span>, <span class="string">'remove cheese'</span>);</div><div class="line"></div><div class="line"><span class="comment">// 命令中不包含 --no-cheese</span></div><div class="line"><span class="comment">// =&gt; true</span></div><div class="line">program.cheese.should.be.true;</div><div class="line"></div><div class="line"><span class="comment">// 命令中包含 --no-cheese 或者 -C</span></div><div class="line"><span class="comment">// =&gt; false</span></div><div class="line">program.cheese.should.be.false;</div></pre></td></tr></table></figure>
+<p>短名称的联合写法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">program</div><div class="line">  .version(<span class="string">'0.0.1'</span>)</div><div class="line">  .option(<span class="string">'-p, --pepper'</span>, <span class="string">'add pepper'</span>)</div><div class="line">  .option(<span class="string">'-c, --no-cheese'</span>, <span class="string">'remove cheese'</span>);</div><div class="line"></div><div class="line">program.parse([<span class="string">'node'</span>, <span class="string">'test'</span>, <span class="string">'-pc'</span>]);</div><div class="line"></div><div class="line"><span class="comment">// test</span></div><div class="line">program.pepper.should.be.true;</div><div class="line">program.cheese.should.be.false;</div></pre></td></tr></table></figure>
+<p>定义选项名用 <code>-</code> 连字符时，在程序中会将选项名的形式转化为小驼峰：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">program.option(<span class="string">'-i, --my-int &lt;n&gt;'</span>, <span class="string">'pass an int'</span>, <span class="built_in">parseInt</span>)</div><div class="line">       .option(<span class="string">'-r, --my-long-range &lt;a..b&gt;'</span>, <span class="string">'pass a range'</span>, parseRange);</div><div class="line"></div><div class="line">program.parse(<span class="string">'node test -i 5.5 -r 1..5'</span>.split(<span class="string">' '</span>));</div><div class="line"></div><div class="line"><span class="comment">// test</span></div><div class="line">program.myInt.should.equal(<span class="number">5</span>);</div><div class="line">program.myLongRange.should.eql([<span class="number">1</span>, <span class="number">5</span>]);</div></pre></td></tr></table></figure>
+<h3 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">program</div><div class="line">  .version(<span class="string">'0.0.1'</span>)</div><div class="line"></div><div class="line">  <span class="comment">// 无默认值</span></div><div class="line">  .option(<span class="string">'-a, --anchovies'</span>, <span class="string">'Add anchovies?'</span>)</div><div class="line"></div><div class="line">  <span class="comment">// 默认值为 true</span></div><div class="line">  .option(<span class="string">'-o, --onions'</span>, <span class="string">'Add onions?'</span>, <span class="literal">true</span>)</div><div class="line"></div><div class="line">  <span class="comment">// 默认值为 'black'</span></div><div class="line">  .option(<span class="string">'-v, --olives'</span>, <span class="string">'Add olives? Sorry we only have black.'</span>, <span class="string">'black'</span>)</div><div class="line"></div><div class="line">  <span class="comment">// 默认值值为 true</span></div><div class="line">  .option(<span class="string">'-s, --no-sauce'</span>, <span class="string">'Uh… okay'</span>)</div><div class="line"></div><div class="line">  <span class="comment">// 必填选项，默认值为 'hand-tossed'</span></div><div class="line">  .option(<span class="string">'-r, --crust &lt;type&gt;'</span>, <span class="string">'What kind of crust would you like?'</span>, <span class="string">'hand-tossed'</span>)</div><div class="line"></div><div class="line">  <span class="comment">// 可选选项，默认值为 'mozzarella'</span></div><div class="line">  .option(<span class="string">'-c, --cheese [type]'</span>, <span class="string">'optionally specify the type of cheese'</span>, <span class="string">'mozzarella'</span>);</div><div class="line"></div><div class="line"><span class="comment">// 命令名</span></div><div class="line">program.should.have.property(<span class="string">'_name'</span>, <span class="string">''</span>);</div><div class="line"></div><div class="line">program.parse([<span class="string">'node'</span>, <span class="string">'test'</span>]);</div><div class="line">program.should.have.property(<span class="string">'_name'</span>, <span class="string">'test'</span>);</div><div class="line"></div><div class="line"><span class="comment">// 无默认值选项</span></div><div class="line">program.should.not.have.property(<span class="string">'anchovies'</span>);</div><div class="line">program.should.not.have.property(<span class="string">'onions'</span>);</div><div class="line">program.should.not.have.property(<span class="string">'olives'</span>);</div><div class="line"></div><div class="line"><span class="comment">// 以下选项均已提供默认值</span></div><div class="line">program.should.have.property(<span class="string">'sauce'</span>, <span class="literal">true</span>);</div><div class="line">program.should.have.property(<span class="string">'crust'</span>, <span class="string">'hand-tossed'</span>);</div><div class="line">program.should.have.property(<span class="string">'cheese'</span>, <span class="string">'mozzarella'</span>);</div></pre></td></tr></table></figure>
+<h3 id="可选-必填"><a href="#可选-必填" class="headerlink" title="可选/必填"></a>可选/必填</h3><p>用尖括号 (e.g. <code>&lt;cmd&gt;</code>) 表示选项必须值，用中括号(e.g. <code>[env]</code>) 表示选项可选值。括号中的名称（<code>cmd</code>, <code>env</code>）用于描述选项值。</p>
+<p>无选项值时，选项的类型默认为 Boolean。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 选项可选值</span></div><div class="line">program.option(<span class="string">'-c, --cheese [type]'</span>, <span class="string">'optionally specify the type of cheese'</span>);</div><div class="line"></div><div class="line">program.parse([<span class="string">'node'</span>, <span class="string">'test'</span>, <span class="string">'--cheese'</span>]);</div><div class="line">program.cheese.should.be.true;</div><div class="line"></div><div class="line"><span class="comment">// 选项必须值</span></div><div class="line">program.option(<span class="string">'-c, --cheese &lt;type&gt;'</span>, <span class="string">'optionally specify the type of cheese'</span>);</div><div class="line"></div><div class="line"><span class="comment">// 没有提供 cheese 选项值，</span></div><div class="line"><span class="comment">// 将输出错误信息 "  error: option `-c, --cheese &lt;type&gt;' argument missing"</span></div><div class="line">program.parse([<span class="string">'node'</span>, <span class="string">'test'</span>, <span class="string">'--cheese'</span>]);</div><div class="line"></div><div class="line"><span class="comment">// 提供 cheese 选项值</span></div><div class="line">program.parse([<span class="string">'node'</span>, <span class="string">'test'</span>, <span class="string">'--cheese'</span>, <span class="string">'feta'</span>]);</div><div class="line">program.cheese.should.equal(<span class="string">'feta'</span>);</div></pre></td></tr></table></figure>
+<h3 id="选项值转换-验证-Coercion"><a href="#选项值转换-验证-Coercion" class="headerlink" title="选项值转换/验证 Coercion"></a>选项值转换/验证 Coercion</h3><p>命令选项值转换函数定义如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fn(val, <span class="literal">undefined</span> === self[name]? defaultValue: self[name]);</div></pre></td></tr></table></figure>
+<p>转换函数 fn 的第一个参数为命令行中的选项值，第二个参数为命令选项值，即 <code>command.optionName</code> 的值，如果命令选项值为 <code>undefined</code>，则为选项默认值。</p>
+<p>经过转换函数对命令行中的选项值转换后，将转换后的值保存为命令选项值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">program</div><div class="line">  .version(<span class="string">'0.0.1'</span>)</div><div class="line">  </div><div class="line">  <span class="comment">// 用 parseInt 将选项值转换为 int 类型 </span></div><div class="line">  .option(<span class="string">'-i, --int &lt;n&gt;'</span>, <span class="string">'pass an int'</span>, <span class="built_in">parseInt</span>)</div><div class="line">  </div><div class="line">  <span class="comment">// 用 Number 构造函数，将选项值转换为 Number 类型 </span></div><div class="line">  .option(<span class="string">'-n, --num &lt;n&gt;'</span>, <span class="string">'pass a number'</span>, <span class="built_in">Number</span>)</div><div class="line"></div><div class="line">  <span class="comment">// 用 parseInt 将选项值转换为 parseFloat 类型 </span></div><div class="line">  .option(<span class="string">'-f, --float &lt;n&gt;'</span>, <span class="string">'pass a float'</span>, <span class="built_in">parseFloat</span>)</div><div class="line"></div><div class="line">  <span class="comment">// 用自定义函数 parseRange 将选项值转换为 Number 数组</span></div><div class="line">  .option(<span class="string">'-r, --range &lt;a..b&gt;'</span>, <span class="string">'pass a range'</span>, parseRange)</div><div class="line"></div><div class="line">  <span class="comment">// 用自定义函数 parseRange 将选项值转换为 Number 数组</span></div><div class="line">  .option(<span class="string">'-v, --verbose'</span>, <span class="string">'increase verbosity'</span>, increaseVerbosity, <span class="number">0</span>)</div><div class="line">  .option(<span class="string">'-c, --collect &lt;str&gt;'</span>, <span class="string">'add a string (can be used multiple times)'</span>, collectValues, []);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseRange</span>(<span class="params">str</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> str.split(<span class="string">'..'</span>).map(<span class="built_in">Number</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">increaseVerbosity</span>(<span class="params">v, total</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> total + <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">collectValues</span>(<span class="params">str, memo</span>) </span>&#123;</div><div class="line">  memo.push(str);</div><div class="line">  <span class="keyword">return</span> memo;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">program.parse(<span class="string">'node test -i 5.5 -f 5.5 -n 15.99 -r 1..5 -c foo -c bar -c baz -vvvv --verbose'</span>.split(<span class="string">' '</span>));</div><div class="line"></div><div class="line"><span class="comment">// parseInt</span></div><div class="line">program.int.should.equal(<span class="number">5</span>);</div><div class="line"></div><div class="line"><span class="comment">// Number</span></div><div class="line">program.num.should.equal(<span class="number">15.99</span>);</div><div class="line"></div><div class="line"><span class="comment">// parseFloat</span></div><div class="line">program.float.should.equal(<span class="number">5.5</span>);</div><div class="line"></div><div class="line"><span class="comment">// parseRange</span></div><div class="line">program.range.should.eql([<span class="number">1</span>, <span class="number">5</span>]);</div><div class="line"></div><div class="line"><span class="comment">// collectValues</span></div><div class="line">program.collect.should.eql([<span class="string">'foo'</span>, <span class="string">'bar'</span>, <span class="string">'baz'</span>]);</div></pre></td></tr></table></figure>
+<p>使用正则表达式验证：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">program</div><div class="line">  .version(<span class="string">'0.0.1'</span>)</div><div class="line">  .option(<span class="string">'-s, --size &lt;size&gt;'</span>, <span class="string">'Pizza Size'</span>, /^(large|medium|small)$/i, <span class="string">'medium'</span>)</div><div class="line">  .option(<span class="string">'-d, --drink [drink]'</span>, <span class="string">'Drink'</span>, /^(Coke|Pepsi|Izze)$/i)</div><div class="line"></div><div class="line">program.parse(<span class="string">'node test -s big -d coke'</span>.split(<span class="string">' '</span>));</div><div class="line">program.size.should.equal(<span class="string">'medium'</span>);</div><div class="line">program.drink.should.equal(<span class="string">'coke'</span>);</div></pre></td></tr></table></figure>
+<h3 id="Unknown-option"><a href="#Unknown-option" class="headerlink" title="Unknown option"></a>Unknown option</h3><p>当接收到未定义的option时，程序会自动抛出错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">✍ ./fe -b</div><div class="line"></div><div class="line">  error: unknown option `-b&apos;</div></pre></td></tr></table></figure>
+<p>Commander同时提供了api来取消这个自动报错机制， <code>.allowUnknownOption()</code>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env node</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> program = <span class="built_in">require</span>(<span class="string">'commander'</span>);</div><div class="line">program</div><div class="line">  .allowUnknownOption()</div><div class="line">  .option(<span class="string">'-d, --date'</span>, <span class="string">'display current time'</span>)</div><div class="line">  .parse(process.argv);</div><div class="line"></div><div class="line"><span class="comment">// omit some detail ...</span></div></pre></td></tr></table></figure>
+<h2 id="命令-Commands"><a href="#命令-Commands" class="headerlink" title="命令 Commands"></a>命令 Commands</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> program = <span class="built_in">require</span>(<span class="string">'program'</span>)</div></pre></td></tr></table></figure>
+<p><code>program</code> 返回一个 Command 对象，称为顶级命令，可以通过 <code>.command</code> 方法添加子命令。</p>
+<h3 id="顶级命令参数"><a href="#顶级命令参数" class="headerlink" title="顶级命令参数"></a>顶级命令参数</h3><p>通过 <code>.arguments</code> 定义顶级命令的参数语法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Command.prototype.arguments = <span class="function"><span class="keyword">function</span> (<span class="params">desc</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.parseExpectedArgs(desc.split(<span class="regexp">/ +/</span>));  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> program = <span class="built_in">require</span>(<span class="string">'../'</span>)</div><div class="line">  , should = <span class="built_in">require</span>(<span class="string">'should'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> envValue = <span class="string">""</span>;</div><div class="line"><span class="keyword">var</span> cmdValue = <span class="string">""</span>;</div><div class="line"></div><div class="line">program</div><div class="line">  .version(<span class="string">'0.0.1'</span>)</div><div class="line">  .arguments(<span class="string">'&lt;cmd&gt; [env]'</span>)</div><div class="line">  .action(<span class="function"><span class="keyword">function</span> (<span class="params">cmd, env</span>) </span>&#123;</div><div class="line">    cmdValue = cmd;</div><div class="line">    envValue = env;</div><div class="line">  &#125;)</div><div class="line">  .option(<span class="string">'-C, --chdir &lt;path&gt;'</span>, <span class="string">'change the working directory'</span>)</div><div class="line">  .option(<span class="string">'-c, --config &lt;path&gt;'</span>, <span class="string">'set config path. defaults to ./deploy.conf'</span>)</div><div class="line">  .option(<span class="string">'-T, --no-tests'</span>, <span class="string">'ignore test hook'</span>);</div><div class="line"></div><div class="line"><span class="comment">// node test --config conf</span></div><div class="line">program.parse([<span class="string">'node'</span>, <span class="string">'test'</span>, <span class="string">'--config'</span>, <span class="string">'conf'</span>]);</div><div class="line"></div><div class="line"><span class="comment">// config 选项值</span></div><div class="line">program.config.should.equal(<span class="string">"conf"</span>);</div><div class="line"></div><div class="line"><span class="comment">// 无 cmd 参数</span></div><div class="line">cmdValue.should.equal(<span class="string">""</span>);</div><div class="line"></div><div class="line"><span class="comment">// 无 env 参数</span></div><div class="line">envValue.should.equal(<span class="string">""</span>);</div><div class="line"></div><div class="line"><span class="comment">// node test --config conf1 setup --setup_mode mode3 env1</span></div><div class="line">program.parse([<span class="string">'node'</span>, <span class="string">'test'</span>, <span class="string">'--config'</span>, <span class="string">'conf1'</span>, <span class="string">'setup'</span>, <span class="string">'--setup_mode'</span>, <span class="string">'mode3'</span>, <span class="string">'env1'</span>]);</div><div class="line"></div><div class="line"><span class="comment">// config 选项值</span></div><div class="line">program.config.should.equal(<span class="string">"conf1"</span>);</div><div class="line"></div><div class="line"><span class="comment">// setup 参数</span></div><div class="line">cmdValue.should.equal(<span class="string">"setup"</span>);</div><div class="line"></div><div class="line"><span class="comment">// evn 参数</span></div><div class="line">envValue.should.equal(<span class="string">"env1"</span>);</div></pre></td></tr></table></figure>
+<h3 id="子命令-Sub-Commands"><a href="#子命令-Sub-Commands" class="headerlink" title="子命令 Sub-Commands"></a>子命令 Sub-Commands</h3><p>通过 <code>command</code> 函数在顶级命令下创建子命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Command.prototype.command = function(name, desc, opts)</div></pre></td></tr></table></figure>
+<ol>
+<li><code>name</code>，子命令名，可以使用<code>&lt;&gt;</code>，<code>[]</code> 语法参数。</li>
+<li><p><code>desc</code>，命令描述。</p>
+<ul>
+<li>没有该参数是，使用 <code>.action(callback)</code> 来处理子命令。返回值为新命令对象。</li>
+<li><p>当使用该参数时，不要调用 <code>.action(callback)</code> 来处理子命令，否则会出错。返回值为上级命令对象。</p>
+<p>  commander 会使用独立的可执行子命令，如 <code>git(1)</code>。commander 会试图在入口脚本文件(like <code>./examples/pm</code>)所在目录下 ，按照 <code>program-command</code> 格式, like <code>pm-install</code>, <code>pm-search</code> 去搜索执行的命令。</p>
+<p>  If the program is designed to be installed globally, make sure the executables have proper modes, like <code>755</code>.</p>
+</li>
+</ul>
+</li>
+<li><p><code>opts</code>: Options can be passed with the call to <code>.command()</code>. </p>
+<ul>
+<li>Specifying <code>true</code> for <code>opts.noHelp</code> will remove the option from the generated help output. </li>
+<li>Specifying <code>true</code> for <code>opts.isDefault</code> will run the subcommand if no other subcommand is specified.</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 顶级命令选项</span></div><div class="line">program</div><div class="line">  .version(<span class="string">'0.0.1'</span>)</div><div class="line">  .option(<span class="string">'-C, --chdir &lt;path&gt;'</span>, <span class="string">'change the working directory'</span>)</div><div class="line">  .option(<span class="string">'-c, --config &lt;path&gt;'</span>, <span class="string">'set config path. defaults to ./deploy.conf'</span>)</div><div class="line">  .option(<span class="string">'-T, --no-tests'</span>, <span class="string">'ignore test hook'</span>)</div><div class="line"></div><div class="line"><span class="comment">// 子命令 setup，无参数</span></div><div class="line">program</div><div class="line">  .command(<span class="string">'setup'</span>)</div><div class="line">  .description(<span class="string">'run remote setup commands'</span>)</div><div class="line">  .action(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'setup'</span>);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line"><span class="comment">// 子命令 exec，必选参数 cmd</span></div><div class="line">program</div><div class="line">  .command(<span class="string">'exec &lt;cmd&gt;'</span>)</div><div class="line">  .description(<span class="string">'run the given remote command'</span>)</div><div class="line">  .action(<span class="function"><span class="keyword">function</span>(<span class="params">cmd</span>) </span>&#123;</div><div class="line">   <span class="built_in">console</span>.log(<span class="string">'exec "%s"'</span>, cmd);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line"><span class="comment">// 子命令 teardown，必选参数 dir，可选参数 otherDirs</span></div><div class="line">program</div><div class="line">  .command(<span class="string">'teardown &lt;dir&gt; [otherDirs...]'</span>)</div><div class="line">  .description(<span class="string">'run teardown commands'</span>)</div><div class="line">  .action(<span class="function"><span class="keyword">function</span>(<span class="params">dir, otherDirs</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'dir "%s"'</span>, dir);</div><div class="line">    <span class="keyword">if</span> (otherDirs) &#123;</div><div class="line">      otherDirs.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">oDir</span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'dir "%s"'</span>, oDir);</div><div class="line">      &#125;);</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line"></div><div class="line"><span class="comment">// When the `name` is "*" an un-matched command will be passed as the first arg, followed by the rest of **ARGV** remaining.</span></div><div class="line">program</div><div class="line">  .command(<span class="string">'*'</span>)</div><div class="line">  .description(<span class="string">'deploy the given env'</span>)</div><div class="line">  .action(<span class="function"><span class="keyword">function</span>(<span class="params">env</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'deploying "%s"'</span>, env);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">program.parse(process.argv);</div></pre></td></tr></table></figure>
+<p>See more examples:</p>
+<ul>
+<li><a href="https://github.com/tj/commander.js/tree/master/examples" target="_blank" rel="external">commander.js/examples at master · tj/commander.js</a></li>
+<li><a href="https://github.com/tj/commander.js/tree/master/test" target="_blank" rel="external">commander.js/test at master · tj/commander.js</a></li>
+</ul>
+<h3 id="命令别名-alias"><a href="#命令别名-alias" class="headerlink" title="命令别名 alias"></a>命令别名 alias</h3><p>通过 <code>.alias</code> 函数设置命令别名。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Command.prototype.alias = <span class="function"><span class="keyword">function</span>(<span class="params">alias</span>)</span>&#123;&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">program</div><div class="line">  .command(<span class="string">'info [thing]'</span>)</div><div class="line">  .alias(<span class="string">'i'</span>)</div><div class="line">  .action(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">program</div><div class="line">  .command(<span class="string">'save [file]'</span>)</div><div class="line">  .alias(<span class="string">'s'</span>)</div><div class="line">  .action(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">program.parse([<span class="string">'node'</span>, <span class="string">'test'</span>]);</div><div class="line"></div><div class="line">program.commandHelp().should.containEql(<span class="string">'info|i'</span>);</div><div class="line">program.commandHelp().should.containEql(<span class="string">'save|s'</span>);</div><div class="line">program.commandHelp().should.not.containEql(<span class="string">'test|'</span>);</div></pre></td></tr></table></figure>
+<h3 id="allowUnknownOption"><a href="#allowUnknownOption" class="headerlink" title="allowUnknownOption"></a>allowUnknownOption</h3><p>允许所有的命令选项，否则解析到未定义的选项时报错。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">program.allowUnknownOption()</div></pre></td></tr></table></figure>
+<h3 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h3><p>一个命令的最后一个参数可以是可变参数, 并且只能是最后一个参数。为了使参数可变，你需要在参数名后面追加 <code>...</code>。 下面是个示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env node</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Module dependencies.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">var</span> program = <span class="built_in">require</span>(<span class="string">'commander'</span>);</div><div class="line"></div><div class="line">program</div><div class="line">  .version(<span class="string">'0.0.1'</span>)</div><div class="line">  .command(<span class="string">'rmdir &lt;dir&gt; [otherDirs...]'</span>)</div><div class="line">  .action(<span class="function"><span class="keyword">function</span> (<span class="params">dir, otherDirs</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'rmdir %s'</span>, dir);</div><div class="line">    <span class="keyword">if</span> (otherDirs) &#123;</div><div class="line">      otherDirs.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">oDir</span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'rmdir %s'</span>, oDir);</div><div class="line">      &#125;);</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">program.parse(process.argv);</div></pre></td></tr></table></figure>
+<p>An <code>Array</code> is used for the value of a variadic argument.  This applies to <code>program.args</code> as well as the argument passed to your action as demonstrated above.</p>
+<p>More API <a href="http://tj.github.io/commander.js/" target="_blank" rel="external">Commander.js - nodejs cli framework</a></p>
+<h3 id="action"><a href="#action" class="headerlink" title="action"></a>action</h3><p>定义命令的执行体，传入的参数为按照命令格式传入的参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">program</div><div class="line">  .version(&apos;0.0.1&apos;)</div><div class="line">  .arguments(&apos;&lt;cmd&gt; [env]&apos;)</div><div class="line">  .action(function (cmd, env) &#123;</div><div class="line">    cmdValue = cmd;</div><div class="line">    envValue = env;</div><div class="line">  &#125;)</div></pre></td></tr></table></figure>
+<h2 id="Help"><a href="#Help" class="headerlink" title="Help"></a>Help</h2><h3 id="自动生成帮助信息"><a href="#自动生成帮助信息" class="headerlink" title="自动生成帮助信息"></a>自动生成帮助信息</h3><p>Commander 会根据配置的 option，sub-command 等信息，自动生成 help 信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">$ ./examples/pizza --help</div><div class="line"></div><div class="line">   Usage: pizza [options]</div><div class="line"></div><div class="line">   An application for pizzas ordering</div><div class="line"></div><div class="line">   Options:</div><div class="line"></div><div class="line">     -h, --help           output usage information</div><div class="line">     -V, --version        output the version number</div><div class="line">     -p, --peppers        Add peppers</div><div class="line">     -P, --pineapple      Add pineapple</div><div class="line">     -b, --bbq            Add bbq sauce</div><div class="line">     -c, --cheese &lt;type&gt;  Add the specified type of cheese [marble]</div><div class="line">     -C, --no-cheese      You do not want any cheese</div></pre></td></tr></table></figure>
+<h3 id="自定义帮助信息"><a href="#自定义帮助信息" class="headerlink" title="自定义帮助信息"></a>自定义帮助信息</h3><p>You can display arbitrary <code>-h, --help</code> information by listening for “–help”. </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// must be before .parse() since node's emit() is immediate</span></div><div class="line">program.on(<span class="string">'--help'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'  Examples:'</span>);</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">''</span>);</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'    $ custom-help --help'</span>);</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'    $ custom-help -h'</span>);</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">''</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">program.parse(process.argv);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'stuff'</span>);</div></pre></td></tr></table></figure>
+<p>Commander will automatically exit once you are done so that the remainder of your program does not execute causing undesired behaviours, for example in the following executable “stuff” will not output when <code>--help</code> is used.</p>
+<h3 id="输出帮助信息"><a href="#输出帮助信息" class="headerlink" title="输出帮助信息"></a>输出帮助信息</h3><p><code>.outputHelp(cb)</code>: Output help information without exiting. Optional callback cb allows post-processing of help text before it is displayed.</p>
+<p>If you want to display help by default (e.g. if no command was provided), you can use something like:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> program =<span class="built_in">require</span>(<span class="string">'commander'</span>);</div><div class="line"><span class="keyword">var</span> colors = <span class="built_in">require</span>(<span class="string">'colors'</span>);</div><div class="line"></div><div class="line">program</div><div class="line">  .version(<span class="string">'0.0.1'</span>)</div><div class="line">  .command(<span class="string">'getstream [url]'</span>, <span class="string">'get stream URL'</span>)</div><div class="line">  .parse(process.argv);</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (!process.argv.slice(<span class="number">2</span>).length) &#123;</div><div class="line">    <span class="comment">// 输出帮助信息</span></div><div class="line">    program.outputHelp(make_red);</div><div class="line">  &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">make_red</span>(<span class="params">txt</span>) </span>&#123;</div><div class="line">  <span class="comment">//display the help text in red on the console</span></div><div class="line">  <span class="keyword">return</span> colors.red(txt); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>.help(cb)</code>: Output help information and exit immediately.<br>Optional callback cb allows post-processing of help text before it is displayed.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://github.com/tj/commander.js" target="_blank" rel="external">Commander.js</a></li>
+<li><a href="https://news.ycombinator.com/item?id=7987146" target="_blank" rel="external">https://news.ycombinator.com/item?id=7987146</a></li>
+<li><a href="http://tj.github.io/commander.js/" target="_blank" rel="external">http://tj.github.io/commander.js/</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2016-11-13-node-commander.html" target="_blank" rel="external">http://blog.inching.org/Node/2016-11-13-node-commander.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2016-11-13-node-commander.html&title=《Node Commander》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2016-11-13-node-commander.html&title=《Node Commander》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2016-11-13-node-commander.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node Commander》 — Balance&url=http://blog.inching.org/Node/2016-11-13-node-commander.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2016-11-13-node-commander.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Gradle/2016-11-14-gradle-android-build.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">配置 Gradle 构建</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Data/2016-11-12-node-encoding-converter.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Node Encoding Converter</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2016-11-13-node-commander.html&title=《Node Commander》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2016-11-13-node-commander.html&title=《Node Commander》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2016-11-13-node-commander.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node Commander》 — Balance&url=http://blog.inching.org/Node/2016-11-13-node-commander.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2016-11-13-node-commander.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNElEQVR42u3a227CMBBFUf7/p1OpT1RA2GfGVGS8/YRIRLxSaToX3254Hb/r/vP9N493Pl49XqxXV2+fWDJkyLgs4zhdj4w+mzPI3mTIkLEPg2ylH17P70yfK0OGDBkkHeRBmW9IhgwZMtYGXBJ8z1/KV/zfkCFDxkUYvB3GQzAvaHlxu6AWlyFDxgUZtfbZ/3z++HxDhgwZX884li5evi5+rgwZMkYzSPHZiXi1IpYkkXENLUOGjMsyeEnJQyova0kgRq9ehgwZGzD6RytqI8nOWPRJUihDhozRjP6BrU6YJve/SRNlyJCxASPddFpqdsBBo02GDBlDGZ0SNG391w6EkV+QIUPGbEZnMFlL79IwjQK9DBkyRjNqJ6x46EyvpuG4dVBMhgwZF2Tw4xHp/ai5v+hIhwwZMqYy0od1Gvq1ltyC020yZMi4LOM8aatR+Sg0TRmDv4MMGTIGMdJWPh9n1saWaZtPhgwZOzD6SSF//NpW3Z/PMmTIGM3guRYvX3loThtq6YuTIUPGJEb/eARP+HgALVbkMmTIGM1Ijz7wrtfadFCGDBl7MnjQ5Jkm/yZtsb3hyZAhYxyjFmo7AZH/WlDEypAhYzSDr1oTrdaS42MAGTJk7MPgQbZ2RCxNCovDSxkyZGzA4EE2TR95odvppMmQIUNGP+Ceb5qXsgsmsTJkyBjNIM2y2lyC3yNDhoydGbVhQNrQT49iBOMHGTJkjGakg4G0fc832nnRMmTIGMr4AetAf60vKJjNAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

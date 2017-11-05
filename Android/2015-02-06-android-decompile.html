@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>APK 反编译 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,decompile">
+    <meta name="description" content="You need Three Tools to decompile an APK file.
+
+
+Dex2jar - Tools to work with android .dex and java .class files
+
+ApkTool - A tool for reverse engineering Android apk files
+
+JD-GUI - Java Decompiler i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="APK 反编译">
+<meta property="og:url" content="http://blog.inching.org/Android/2015-02-06-android-decompile.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="You need Three Tools to decompile an APK file.
+
+
+Dex2jar - Tools to work with android .dex and java .class files
+
+ApkTool - A tool for reverse engineering Android apk files
+
+JD-GUI - Java Decompiler i">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="APK 反编译">
+<meta name="twitter:description" content="You need Three Tools to decompile an APK file.
+
+
+Dex2jar - Tools to work with android .dex and java .class files
+
+ApkTool - A tool for reverse engineering Android apk files
+
+JD-GUI - Java Decompiler i">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">APK 反编译</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">APK 反编译</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-02-05T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2015-02-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#反编译-APK"><span class="post-toc-text">反编译 APK</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Install"><span class="post-toc-text">Install</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Usage"><span class="post-toc-text">Usage</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#反编译-Java-文件"><span class="post-toc-text">反编译 Java 文件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Install-1"><span class="post-toc-text">Install</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Usage-1"><span class="post-toc-text">Usage</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重新打包"><span class="post-toc-text">重新打包</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#对生成的apk签名"><span class="post-toc-text">对生成的apk签名</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#准备签名文件"><span class="post-toc-text">准备签名文件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#签名"><span class="post-toc-text">签名</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tools"><span class="post-toc-text">Tools</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-decompile"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">APK 反编译</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-02-06 00:00:00" datetime="2015-02-05T16:00:00.000Z"  itemprop="datePublished">2015-02-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>You need Three Tools to <em><code>decompile an APK</code></em> file.</p>
+<blockquote>
+<ol>
+<li><p><a href="http://code.google.com/p/dex2jar/" target="_blank" rel="external">Dex2jar</a> - Tools to work with android .dex and java .class files</p>
+</li>
+<li><p><a href="http://ibotpeaches.github.io/Apktool/" target="_blank" rel="external">ApkTool</a> - A tool for reverse engineering Android apk files</p>
+</li>
+<li><p><a href="http://jd.benow.ca/" target="_blank" rel="external">JD-GUI</a> - Java Decompiler is a tools to decompile and analyze Java 5 “byte code” and the later versions.</p>
+</li>
+</ol>
+</blockquote>
+<p>for more <a href="http://stackoverflow.com/questions/5257830/how-to-use-dextojar/19954951#19954951" target="_blank" rel="external">how-to-use-dextojar</a>. Hope this will help You and all! :)</p>
+<h2 id="反编译-APK"><a href="#反编译-APK" class="headerlink" title="反编译 APK"></a>反编译 APK</h2><h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><p>Install <a href="https://ibotpeaches.github.io/Apktool/" target="_blank" rel="external">Apktool - A tool for reverse engineering 3rd party, closed, binary Android apps.</a></p>
+<a id="more"></a>
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">usage: apktool d[ecode] [options] &lt;file_apk&gt;</div><div class="line"> -f,--force              Force delete destination directory.</div><div class="line"> -o,--output &lt;dir&gt;       The name of folder that gets written. Default is apk.out</div><div class="line"> -p,--frame-path &lt;dir&gt;   Uses framework files located in &lt;dir&gt;.</div><div class="line"> -r,--no-res             Do not decode resources.</div><div class="line"> -s,--no-src             Do not decode sources.</div><div class="line"> -t,--frame-tag &lt;tag&gt;    Uses framework files tagged by &lt;tag&gt;.</div></pre></td></tr></table></figure>
+<p>如：</p>
+<pre><code>apktool d CMBMobileBank.apk
+</code></pre><p>默认生成到和 apk 同名的文件夹下。</p>
+<h2 id="反编译-Java-文件"><a href="#反编译-Java-文件" class="headerlink" title="反编译 Java 文件"></a>反编译 Java 文件</h2><h3 id="Install-1"><a href="#Install-1" class="headerlink" title="Install"></a>Install</h3><ol>
+<li>下载 dex2jar，并添加到环境变量。 <a href="https://code.google.com/p/dex2jar/downloads/list" target="_blank" rel="external">Downloads - dex2jar - Tools to work with android .dex and java .class files - Google Project Hosting</a></li>
+<li>下载 JD-GUI。<a href="http://jd.benow.ca/" target="_blank" rel="external">Java Decompiler</a></li>
+</ol>
+<h3 id="Usage-1"><a href="#Usage-1" class="headerlink" title="Usage"></a>Usage</h3><p>解压缩 apk，在 class.dex 所在目录下运行：</p>
+<pre><code>dex2jar.bat classes.dex
+</code></pre><p>在当前目录生成 classes_dex2jar.jar 文件。</p>
+<p>运行 JD-GUI，打开 classes_dex2jar.jar，可以预览反编译结果，可以 File -&gt; Save All Sources 将所有源码保存到资源文件所在的目录，即 <em>CMBMobileBank/</em>。</p>
+<h2 id="重新打包"><a href="#重新打包" class="headerlink" title="重新打包"></a>重新打包</h2><p>将反编译完的文件重新打包成apk文件out.apk </p>
+<pre><code>apktool b ./CMBMobileBank CMBMobileBank_RAW.apk
+</code></pre><h2 id="对生成的apk签名"><a href="#对生成的apk签名" class="headerlink" title="对生成的apk签名"></a>对生成的apk签名</h2><h2 id="准备签名文件"><a href="#准备签名文件" class="headerlink" title="准备签名文件"></a>准备签名文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;C:\Program Files\Java\jdk1.6.0_24\bin\keytool&quot; -genkey -alias wendy.keystore -keyalg RSA -validity 20000 -keystore wendy.keystore</div></pre></td></tr></table></figure>
+<p>注意密码为6位数，如123456。</p>
+<h3 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;C:\Program Files\Java\jdk1.6.0_24\bin\jarsigner&quot; -verbose -keystore wendy.keystore -signedjar out.apk out_raw.apk wendy.keystore</div></pre></td></tr></table></figure>
+<p>此处需输入第2步的密码123456，执行完即可生成签名后的apk文件out.apk。</p>
+<p>See also <a href="http://blog.csdn.net/cloudwu007/article/details/6851800" target="_blank" rel="external">apk破解实战</a></p>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><p><a href="http://www.fasteque.com/android-reverse-engineering-101-part-4/" target="_blank" rel="external">Android Reverse Engineering 101 – Part 4 – Daniele Altomare</a></p>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><ul>
+<li><a href="http://www.decompileandroid.com/" target="_blank" rel="external">Android APK Decompiler</a> <sup>online decompile android apk</sup></li>
+<li><a href="http://www.52pojie.cn/thread-399571-1-1.html" target="_blank" rel="external">APKIDE改之理3.3.5少月增强版发布【20170130】 - 『逆向资源区』 - 吾爱破解 - LCG - LSG</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2015-02-06-android-decompile.html" target="_blank" rel="external">http://blog.inching.org/Android/2015-02-06-android-decompile.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/decompile/">decompile</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2015-02-06-android-decompile.html&title=《APK 反编译》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2015-02-06-android-decompile.html&title=《APK 反编译》 — Balance&source=You need Three Tools to decompile an APK file.
+
+
+Dex2jar - Tools to work with..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2015-02-06-android-decompile.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《APK 反编译》 — Balance&url=http://blog.inching.org/Android/2015-02-06-android-decompile.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2015-02-06-android-decompile.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Angular/2015-03-02-angular-i18n.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Angular i18n</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Database/2015-02-02-database-sqlite.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Sqlite 数据库</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2015-02-06-android-decompile.html&title=《APK 反编译》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2015-02-06-android-decompile.html&title=《APK 反编译》 — Balance&source=You need Three Tools to decompile an APK file.
+
+
+Dex2jar - Tools to work with..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2015-02-06-android-decompile.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《APK 反编译》 — Balance&url=http://blog.inching.org/Android/2015-02-06-android-decompile.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2015-02-06-android-decompile.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACm0lEQVR42u3awW4rIRAEwPz/TyfSO71DbHfPQBxFxcly1ixFJEA9fHzE7fNf+/9z+83z3pJ3PertQMPDw8MbDf1RS3hJb8nQE2o+Zjw8PLzbvHb5Tqj5NvAc1o4HDw8P7/fw8qHMesbDw8P7e7xN0JBsCe2RGg8PD++9vCREyOOA/AjevuVi1oKHh4fXvbcugL338/X6Hh4eHt6oqp6XspKlvy1xHRgnHh4e3gVeXsRqX5aEHUkA0R7Kox/g4eHhrXn5sp4XxvYhxfMJnV10wMPDw9vz2hJXAkh6SKas5X3zWzw8PLxrvPbImxyvN9NxLJnGw8PDu8ZrN4b8UJtvD+22FI0ZDw8P7xpv0zar8T4+fvFXPDw8vGu8WWCag2dlrcM3xfDw8PAutDYgmG0bbc8Hrgvg4eHhXeAlh+NZJLH5Pj+gv6Di4eHhXeO1xf7ZK/MwYgaLwlw8PDy8C7wDxafRM+3hPtpm8PDw8C7wkq7zKwVni2r59YX6eI2Hh4c34rXl/DZIba9bbd7y4mYEHh4e3iHe5md5R7Ogdh+I4OHh4d3jnYpc27CgjRWG/zc8PDy8o7xN9PActj+s5xetHj6Dh4eHd4G3CXCT52fbQ87L42A8PDy8s7w8SG0LYLMrAnk4Er0dDw8P7wIvh23C2dnR/NTU4OHh4Z3l5RFt/n1eQts/WdTx8PDw8K7xNgtxO9B8soYNDw8P7yjvs2yb4lZb+E9ChxdTj4eHh3eB166xbUAw21RuhCN4eHh4Z3n5ZjALMjZTdqy+h4eHh3f56kAbHLThbMuebV14eHh4v5n3k1NTByJ4eHh4b+XVZfvZUr6INvDw8PB+krdfiFt8HitcvECAh4eHd61tylezi1ZtXLuaCDw8PLyU9wWk9sU6X3yfCgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>DOM 事件简介 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="event,dom">
+    <meta name="description" content="本文由 伯乐在线 - 陈 鑫伟 翻译自 smashingmagazine。欢迎加入：翻译小组，通过 翻译频道 贡献一份力量。
+原文：DOM 事件简介
+Click、touch、load、drag、change、input、error、risize — 这些都是冗长的DOM（文档对象模型）事件列表的一部分。事件可以在文档(Document)结构的任何部分被触发，触发者可以是用户操作，也可以是浏览器本身">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DOM 事件简介">
+<meta property="og:url" content="http://blog.inching.org/HTML5/2014-11-07-dom-event.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文由 伯乐在线 - 陈 鑫伟 翻译自 smashingmagazine。欢迎加入：翻译小组，通过 翻译频道 贡献一份力量。
+原文：DOM 事件简介
+Click、touch、load、drag、change、input、error、risize — 这些都是冗长的DOM（文档对象模型）事件列表的一部分。事件可以在文档(Document)结构的任何部分被触发，触发者可以是用户操作，也可以是浏览器本身">
+<meta property="og:image" content="http://jbcdn2.b0.upaiyun.com/2013/12/eventflow.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DOM 事件简介">
+<meta name="twitter:description" content="本文由 伯乐在线 - 陈 鑫伟 翻译自 smashingmagazine。欢迎加入：翻译小组，通过 翻译频道 贡献一份力量。
+原文：DOM 事件简介
+Click、touch、load、drag、change、input、error、risize — 这些都是冗长的DOM（文档对象模型）事件列表的一部分。事件可以在文档(Document)结构的任何部分被触发，触发者可以是用户操作，也可以是浏览器本身">
+<meta name="twitter:image" content="http://jbcdn2.b0.upaiyun.com/2013/12/eventflow.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">DOM 事件简介</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">DOM 事件简介</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-11-06T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-11-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/HTML5/">HTML5</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#监听事件"><span class="post-toc-text">监听事件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#移除监听"><span class="post-toc-text">移除监听</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#维护回调函数上下文"><span class="post-toc-text">维护回调函数上下文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用匿名函数-Anonymous-Functions"><span class="post-toc-text">使用匿名函数(Anonymous Functions)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用Function-prototype-bind"><span class="post-toc-text">使用Function.prototype.bind</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Event对象"><span class="post-toc-text">Event对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#事件阶段-Event-Phases"><span class="post-toc-text">事件阶段(Event Phases)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#事件捕获阶段（Capture-Phase）"><span class="post-toc-text">事件捕获阶段（Capture Phase）</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#目标阶段（Target-Phase）"><span class="post-toc-text">目标阶段（Target Phase）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#冒泡阶段（Bubble-Phase）"><span class="post-toc-text">冒泡阶段（Bubble Phase）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#停止传播（Stopping-Propagation）"><span class="post-toc-text">停止传播（Stopping Propagation）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#阻止浏览器默认行为"><span class="post-toc-text">阻止浏览器默认行为</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自定义事件"><span class="post-toc-text">自定义事件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代理事件监听"><span class="post-toc-text">代理事件监听</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一些有用的事件"><span class="post-toc-text">一些有用的事件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#load"><span class="post-toc-text">load</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#onbeforeunload"><span class="post-toc-text">onbeforeunload</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#在手机Safari上阻止窗口抖动"><span class="post-toc-text">在手机Safari上阻止窗口抖动</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#resize"><span class="post-toc-text">resize</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#transitionend"><span class="post-toc-text">transitionend</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#animtioniteration"><span class="post-toc-text">animtioniteration</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#error"><span class="post-toc-text">error</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#从事件模型中学到"><span class="post-toc-text">从事件模型中学到</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#进一步阅读"><span class="post-toc-text">进一步阅读</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-dom-event"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">DOM 事件简介</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-11-07 00:00:00" datetime="2014-11-06T16:00:00.000Z"  itemprop="datePublished">2014-11-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/HTML5/">HTML5</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文由 <a href="http://blog.jobbole.com/" target="_blank" rel="external">伯乐在线</a> - <a href="http://blog.jobbole.com/author/owenchen/" target="_blank" rel="external">陈 鑫伟</a> 翻译自 <a href="http://coding.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/" target="_blank" rel="external">smashingmagazine</a>。<br>欢迎加入：<a href="http://www.jobbole.com/groups/6/?utm_source=jobboleblog-article" target="_blank" rel="external">翻译小组</a>，通过 <a href="http://fanyi.jobbole.com/?utm_source=jobboleblog-article" target="_blank" rel="external">翻译频道</a> 贡献一份力量。</p>
+<p>原文：<a href="http://blog.jobbole.com/52430/" target="_blank" rel="external">DOM 事件简介</a></p>
+<p>Click、touch、load、drag、change、input、error、risize — 这些都是冗长的DOM（文档对象模型）事件列表的一部分。事件可以在文档(Document)结构的任何部分被触发，触发者可以是用户操作，也可以是浏览器本身。事件并不是只是在一处被触发和终止；他们在整个document中流动，拥有它们自己的生命周期。而这个生命周期让DOM事件有更多的用途和可扩展性。</p>
+<p>作为一个开发人员，我们必须要理解DOM事件是如何工作的，然后才能更好的驾驭它，利用它们潜在的优势，开发出更高交互性的参与体验（engaging experiences）。</p>
+<p>反观我做前端开发的这么长时间里，我觉得我从来没有看到过一个关于DOM事件是如何工作的较为直接准确的解释。今天我的目标就是在这个课题上给大家一个清晰的介绍，让大家能够更快速的了解它。 我首先会介绍DOM事件的基本使用方式，然后会深入挖掘事件内部的工作机制，解释我们如何使用这些机制来解决一些常见的问题。</p>
+<a id="more"></a>
+<h2 id="监听事件"><a href="#监听事件" class="headerlink" title="监听事件"></a>监听事件</h2><p>在过去，主流浏览器之间对于如何给DOM节点添加事件监听有着很大的不一致性。<a href="http://jquery.com/" target="_blank" rel="external">jQuery</a>这样的前端库为我们封装和抽象了这些差异行为，为事件处理带来了极大的便利。</p>
+<p>如今，我们正一步步走向一个标准化的浏览器时代，我们可以更加安全地使用官方规范的接口。为了简单起见，这篇文章将主要介绍在现代浏览器中如何管理事件。如果你在为IE8或者更低版本写JavaScript，我会推荐你使用<a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget.removeEventListener#Polyfill_to_support_older_browsers" target="_blank" rel="external">polyfill</a>或者一些框架（如<a href="http://jquery.com/" target="_blank" rel="external">jQuery</a>）来管理事件监听。</p>
+<p>在JavaScript中，我们使用如下的方式为元素添加事件监听：</p>
+<pre><code>element.addEventListener(&lt;event-name&gt;, &lt;callback&gt;, &lt;use-capture&gt;);
+</code></pre><ul>
+<li><p><code>event-name</code>(string)</p>
+<p>  这是你想监听的事件的名称或类型。它可以是任何的标准DOM事件（click, mousedown, touchstart, transitionEnd,等等），当然也可以是你自己定义的事件名称（我们会在后面介绍自定义事件相关内容）。</p>
+</li>
+<li><p><code>callback</code>(function)（回调函数）</p>
+<p>  这个函数会在事件触发的时候被调用。相应的事件(event)对象，以及事件的数据，会被作为第一个参数传入这个函数。</p>
+</li>
+<li><p><code>use-capture</code>(boolean)</p>
+<p>  这个参数决定了回调函数(callback)是否在“捕获(capture)”阶段被触发。不用担心，我们稍后会对此做详细的解释。</p>
+<pre><code>var element = document.getElementById(&apos;element&apos;);
+
+function callback() {
+  alert(&apos;Hello&apos;);
+}
+
+// Add listener
+element.addEventListener(&apos;click&apos;, callback);
+</code></pre><p>  <a href="http://jsbin.com/ayatif/2/edit" target="_blank" rel="external"><strong>Demo: addEventListener</strong></a></p>
+</li>
+</ul>
+<h2 id="移除监听"><a href="#移除监听" class="headerlink" title="移除监听"></a>移除监听</h2><p>移除不再使用的事件监听是一个最佳实践（尤其对于长时间运行的Web应用）。我们使用<code>element.removeEventListener()</code>方法来移除事件监听：</p>
+<pre><code>element.removeEventListener(&lt;event-name&gt;, &lt;callback&gt;, &lt;use-capture&gt;);
+</code></pre><p>但是<code>removeElementListener</code>有一点需要注意的是：你必须要有这个被绑定的回调函数的引用。简单地调用<code>element.removeEventListener(&#39;click&#39;);</code>是不能达到想要的效果的。</p>
+<p>本质上来讲，如果我们考虑要移除事件监听（我们在长时间运行(long-lived)的应用中需要用到），那么我们就需要保留回调函数的句柄。意思就是说，我们不能使用匿名函数作为回调函数。</p>
+<pre><code>var element = document.getElementById(&apos;element&apos;);
+
+function callback() {
+  alert(&apos;Hello once&apos;);
+  element.removeEventListener(&apos;click&apos;, callback);
+}
+
+// Add listener
+element.addEventListener(&apos;click&apos;, callback);
+</code></pre><p><strong><a href="http://jsbin.com/ayamur/1/edit" target="_blank" rel="external">Demo: removeEventListener</a></strong></p>
+<h2 id="维护回调函数上下文"><a href="#维护回调函数上下文" class="headerlink" title="维护回调函数上下文"></a>维护回调函数上下文</h2><p>一个很容易遇到的问题就是回调函数没有在预想的运行上下文被调用。让我们看一个简单的例子来解释一下：</p>
+<pre><code>var element = document.getElementById(&apos;element&apos;);
+
+var user = {
+ firstname: &apos;Wilson&apos;,
+ greeting: function(){
+   alert(&apos;My name is &apos; + this.firstname);
+ }
+};
+
+// Attach user.greeting as a callback
+element.addEventListener(&apos;click&apos;, user.greeting);
+
+// alert =&gt; &apos;My name is undefined&apos;
+</code></pre><p><a href="http://jsbin.com/atoluy/1/edit" target="_blank" rel="external"><strong>Demo: Incorrect callback context</strong></a></p>
+<h3 id="使用匿名函数-Anonymous-Functions"><a href="#使用匿名函数-Anonymous-Functions" class="headerlink" title="使用匿名函数(Anonymous Functions)"></a>使用匿名函数(Anonymous Functions)</h3><p>我们希望回调函数中能够正确的输出”My name is Wilson”。事实上，结果确是”My name is undefined”。为了使得 this.firstName 能够返回”Wilson”，user.greeting必须在user对象的上下文环境（context）中被执行（这里的运行上下文指的是.号左边的对象）。</p>
+<p>当我们将greeting函数传给addEventListener方法的时候，我们传递的是一个函数的引用；user相应的上下文并没有传递过去。运行的时候，这个回调函数实际上是在element的上下文中被执行了，也就是说，在运行的时候，this指向的是element，而不是user。所以this.firstName是undefined。</p>
+<p>有两种方式可以避免这种上下文错误的问题。第一种方法，我们可以在一个匿名函数内部调用user.greeting()方法，从而获得正确的函数执行上下文(user)。</p>
+<pre><code>element.addEventListener(&apos;click&apos;, function() {
+  user.greeting();
+  // alert =&gt; &apos;My name is Wilson&apos;
+});
+</code></pre><p><a href="http://jsbin.com/onomud/1/edit" target="_blank" rel="external"><strong>Demo：Anonymouse functions</strong></a></p>
+<h3 id="使用Function-prototype-bind"><a href="#使用Function-prototype-bind" class="headerlink" title="使用Function.prototype.bind"></a>使用Function.prototype.bind</h3><p>上一种方式并不是非常好，因为我们不能获得回调函数的句柄以便后面通过.removeEventListener()移除事件监听。另外，这种方式也比较丑陋。。我更喜欢使用.bind()方法(做为ECMAScript 5的标准内建在所有的函数对象中）来生成一个新的函数（被绑定过的函数），这个函数会在指定的上下文中被执行。然后我们将这个被绑定过的函数作为参数传给.addEventListener()的回调函数。</p>
+<pre><code>// Overwrite the original function with
+// one bound to the context of &apos;user&apos;
+user.greeting = user.greeting.bind(user);
+
+// Attach the bound user.greeting as a callback
+button.addEventListener(&apos;click&apos;, user.greeting);
+</code></pre><p>与此同时，我们获得了回调函数的句柄，从而可以随时从元素上移除相应的事件监听。</p>
+<pre><code>button.removeEventListener(&apos;click&apos;, user.greeting);
+</code></pre><p><a href="http://jsbin.com/ozolec/1/edit" target="_blank" rel="external"><strong>DEMO:Function.ptototype.bind</strong></a></p>
+<p>想获取Function.prototype.bind的更多信息，请点击的<a href="http://kangax.github.io/es5-compat-table/#Function.prototype.bind" target="_blank" rel="external">浏览器支持页面</a>，以及<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind#Compatibility" target="_blank" rel="external">polyfill</a>的介绍。</p>
+<h2 id="Event对象"><a href="#Event对象" class="headerlink" title="Event对象"></a>Event对象</h2><p>Event对象在event第一次触发的时候被创建出来，并且一直伴随着事件在DOM结构中流转的整个生命周期。event对象会被作为第一个参数传递给事件监听的回调函数。我们可以通过这个event对象来获取到大量当前事件相关的信息：</p>
+<ul>
+<li><code>type</code> (String) — 事件的名称</li>
+<li><code>target</code> (node) — 事件起源的DOM节点</li>
+<li><code>currentTarget?</code>(node) — 当前回调函数被触发的DOM节点（后面会做比较详细的介绍）</li>
+<li><code>bubbles</code> (boolean) — 指明这个事件是否是一个冒泡事件（接下来会做解释）</li>
+<li><code>preventDefault</code>(function) — 这个方法将阻止浏览器中用户代理对当前事件的相关默认行为被触发。比如阻止 <code>&lt;a&gt;</code>元素的click事件加载一个新的页面</li>
+<li><code>stopPropagation</code> (function) — 这个方法将阻止当前事件链上后面的元素的回调函数被触发，当前节点上针对此事件的其他回调函数依然会被触发。（我们稍后会详细介绍。）</li>
+<li><code>stopImmediatePropagation</code> (function) — 这个方法将阻止当前事件链上所有的回调函数被触发，也包括当前节点上针对此事件已绑定的其他回调函数。</li>
+<li><code>cancelable</code> (boolean) — 这个变量指明这个事件的默认行为是否可以通过调用event.preventDefault来阻止。也就是说，只有cancelable为true的时候，调用event.preventDefault才能生效。</li>
+<li><code>defaultPrevented</code> (boolean) — 这个状态变量表明当前事件对象的preventDefault方法是否被调用过</li>
+<li><code>isTrusted</code> (boolean) — 如果一个事件是由设备本身（如浏览器）触发的，而不是通过JavaScript模拟合成的，那个这个事件被称为可信任的(trusted)</li>
+<li><code>eventPhase</code> (number) — 这个数字变量表示当前这个事件所处的阶段(phase):none(0), capture(1),target(2),bubbling(3)。我们会在下一个部分介绍事件的各个阶段</li>
+<li><code>timestamp</code> (number) — 事件发生的时间</li>
+</ul>
+<p>此外事件对象还可能拥有很多其他的属性，但是他们都是针对特定的event的。比如，鼠标事件包含clientX和clientY属性来表明鼠标在当前视窗的位置。</p>
+<p>我们可以使用熟悉的浏览器的调试工具或者通过console.log在控制台输出来更具体地查看事件对象以及它的属性。</p>
+<h2 id="事件阶段-Event-Phases"><a href="#事件阶段-Event-Phases" class="headerlink" title="事件阶段(Event Phases)"></a>事件阶段(Event Phases)</h2><p>当一个DOM事件被触发的时候，它并不只是在它的起源对象上触发一次，而是会经历三个不同的阶段。简而言之：事件一开始从文档的根节点流向目标对象（捕获阶段），然后在目标对向上被触发（目标阶段），之后再回溯到文档的根节点（冒泡阶段）。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://jbcdn2.b0.upaiyun.com/2013/12/eventflow.png" alt="eventflow" title="">
+                </div>
+                <div class="image-caption">eventflow</div>
+            </figure>
+<p><em>(图片来源:<a href="http://www.w3.org/TR/DOM-Level-3-Events/#event-flow" target="_blank" rel="external">W3C</a>)</em></p>
+<p><strong><a href="http://jsbin.com/exezex/4/edit?css,js,output" target="_blank" rel="external">Demo: Slow motion event path</a></strong></p>
+<h3 id="事件捕获阶段（Capture-Phase）"><a href="#事件捕获阶段（Capture-Phase）" class="headerlink" title="事件捕获阶段（Capture Phase）"></a>事件捕获阶段（Capture Phase）</h3><p>事件的第一个阶段是捕获阶段。事件从文档的根节点出发，随着DOM树的结构向事件的目标节点流去。途中经过各个层次的DOM节点，并在各节点上触发捕获事件，直到到达事件的目标节点。捕获阶段的主要任务是建立传播路径，在冒泡阶段，事件会通过这个路径回溯到文档跟节点。</p>
+<p>正如文章一开始的地方提到，我们可以通过将addEventListener的第三个参数设置成true来为事件的捕获阶段添加监听回调函数。在实际应用中，我们并没有太多使用捕获阶段监听的用例，但是通过在捕获阶段对事件的处理，我们可以阻止类似clicks事件在某个特定元素上被触发。</p>
+<pre><code>var form = document.querySelector(&apos;form&apos;);
+
+form.addEventListener(&apos;click&apos;, function(event) {
+  event.stopPropagation();
+}, true); // Note: &apos;true&apos;
+</code></pre><p>如果你对这种用法不是很了解的话，最好还是将useCapture设置为false或者undefined，从而在冒泡阶段对事件进行监听。</p>
+<h2 id="目标阶段（Target-Phase）"><a href="#目标阶段（Target-Phase）" class="headerlink" title="目标阶段（Target Phase）"></a>目标阶段（Target Phase）</h2><p>当事件到达目标节点的，事件就进入了目标阶段。事件在目标节点上被触发，然后会逆向回流，直到传播至最外层的文档节点。</p>
+<p>对于多层嵌套的节点，鼠标和指针事件经常会被定位到最里层的元素上。假设，你在一个<div>元素上设置了click事件的监听函数，而用户点击在了这个<div>元素内部的<p>元素上，那么</p><p>元素就是这个事件的目标元素。事件冒泡让我们可以在这个<div>（或者更上层的）元素上监听click事件，并且事件传播过程中触发回调函数。</div></p>
+<h2 id="冒泡阶段（Bubble-Phase）"><a href="#冒泡阶段（Bubble-Phase）" class="headerlink" title="冒泡阶段（Bubble Phase）"></a>冒泡阶段（Bubble Phase）</h2><p>事件在目标元素上触发后，并不在这个元素上终止。它会随着DOM树一层层向上冒泡，直到到达最外层的根节点。也就是说，同一个事件会依次在目标节点的父节点，父节点的父节点。。。直到最外层的节点上被触发。</p>
+<p>将DOM结构想象成一个洋葱，事件目标是这个洋葱的中心。在捕获阶段，事件从最外层钻入洋葱，穿过途径的每一层。在到达中心后，事件被触发（目标阶段）。然后事件开始回溯，再次经过每一层返回（冒泡阶段）。当到达洋葱表面的时候，这次旅程就结束了。</p>
+<p>冒泡过程非常有用。它将我们从对特定元素的事件监听中释放出来，相反，我们可以监听DOM树上更上层的元素，等待事件冒泡的到达。如果没有事件冒泡，在某些情况下，我们需要监听很多不同的元素来确保捕获到想要的事件。</p>
+<p><a href="http://jsbin.com/unuhec/4/edit" target="_blank" rel="external"><strong>Demo: Identifying event phases</strong></a></p>
+<p>绝大多数事件会冒泡，但并非所有的。当你发现有些事件不冒泡的时候，它肯定是有原因的。不相信？你可以查看一下相应的<a href="http://www.w3.org/TR/DOM-Level-3-Events/#event-types" target="_blank" rel="external">规范说明</a>。</p>
+<h2 id="停止传播（Stopping-Propagation）"><a href="#停止传播（Stopping-Propagation）" class="headerlink" title="停止传播（Stopping Propagation）"></a>停止传播（Stopping Propagation）</h2><p>可以通过调用事件对象的stopPropagation方法，在任何阶段（捕获阶段或者冒泡阶段）中断事件的传播。此后，事件不会在后面传播过程中的经过的节点上调用任何的监听函数。</p>
+<pre><code>child.addEventListener(&apos;click&apos;, function(event) {
+ event.stopPropagation();
+});
+
+parent.addEventListener(&apos;click&apos;, function(event) {
+ // If the child element is clicked
+ // this callback will not fire
+});
+</code></pre><p>调用<code>event.stopPropagation()</code>不会阻止当前节点上此事件其他的监听函数被调用。如果你希望阻止当前节点上的其他回调函数被调用的话，你可以使用更激进的<code>event.stopImmediatePropagation()</code>方法。</p>
+<pre><code>child.addEventListener(&apos;click&apos;, function(event) {
+ event.stopImmediatePropagation();
+});
+
+child.addEventListener(&apos;click&apos;, function(event) {
+ // If the child element is clicked
+ // this callback will not fire
+});
+</code></pre><p><strong><a href="http://jsbin.com/aparot/3/edit?html,js,output" target="_blank" rel="external">Demo:Stopping propagation</a></strong></p>
+<h2 id="阻止浏览器默认行为"><a href="#阻止浏览器默认行为" class="headerlink" title="阻止浏览器默认行为"></a>阻止浏览器默认行为</h2><p>当特定事件发生的时候，浏览器会有一些默认的行为作为反应。最常见的事件不过于link被点击。当一个click事件在一个 <code>&lt;a&gt;</code> 元素上被触发时，它会向上冒泡直到DOM结构的最外层document，浏览器会解释href属性，并且在窗口中加载新地址的内容。</p>
+<p>在web应用中，开发人员经常希望能够自行管理导航（navigation）信息，而不是通过刷新页面。为了实现这个目的，我们需要阻止浏览器针对点击事件的默认行为，而使用我们自己的处理方式。这时，我们就需要调用<code>event.preventDefault()</code>.</p>
+<pre><code>anchor.addEventListener(&apos;click&apos;, function(event) {
+  event.preventDefault();
+  // Do our own thing
+});
+</code></pre><p>我们可以阻止浏览器的很多其他默认行为。比如，我们可以在HTML5游戏中阻止敲击空格时的页面滚动行为，或者阻止文本选择框的点击行为。</p>
+<p>调用event.stopPropagation()只会阻止传播链中后续的回调函数被触发。它不会阻止浏览器的自身的行为。</p>
+<p><strong><a href="http://jsbin.com/ibotap/1/edit" target="_blank" rel="external">Demo:Preventing default vehaviour</a></strong></p>
+<h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2><p>浏览器并不是唯一能触发DOM事件的载体。我们可以创建自定义的事件并把它们分派给你文档中的任意节点。这些自定义的事件和通常的DOM事件有相同的行为。</p>
+<pre><code>var myEvent = new CustomEvent(&quot;myevent&quot;, {
+  detail: {
+    name: &quot;Wilson&quot;
+  },
+  bubbles: true,
+  cancelable: false
+});
+
+// Listen for &apos;myevent&apos; on an element
+myElement.addEventListener(&apos;myevent&apos;, function(event) {
+  alert(&apos;Hello &apos; + event.detail.name);
+});
+
+// Trigger the &apos;myevent&apos;
+myElement.dispatchEvent(myEvent);
+</code></pre><p>在元素上合成不可信任的（untrusted）DOM事件（如click）来模拟用户操作也是可行的。这个在对DOM相关的代码库进行测试的时候特别有用。如果你对此感兴趣的话，在Mozilla Developer Network上有一篇<a href="https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Creating_and_triggering_events#Triggering_built-in_events" target="_blank" rel="external">相关的文章</a>。</p>
+<p>几个注意点：</p>
+<ul>
+<li>CustomEvent接口在IE 8以及IE更低版本不可用</li>
+<li>来自Twitter的<a href="http://flightjs.github.io/" target="_blank" rel="external">Flight</a>框架使用了自定义事件进行模块间通信。它强调了一种高度解耦的模块化架构。</li>
+</ul>
+<p><a href="http://jsbin.com/emuhef/1/edit" target="_blank" rel="external"><strong>Demo：Custom events</strong></a></p>
+<h2 id="代理事件监听"><a href="#代理事件监听" class="headerlink" title="代理事件监听"></a>代理事件监听</h2><p>代理事件监听可以让你使用一个事件监听器去监听大量的DOM节点的事件，在这种情况下，它是一种更加方便并且高性能的事件监听方法。举例来说，如果有一个列表<code>&lt;ul&gt;</code>包含了100个子元素<code>&lt;li&gt;</code>，它们都需要对click事件做出相似的响应，那么我们可能需要查询这100个子元素，并分别为他们添加上事件监听器。这样的话，我们就会产生100个独立的事件监听器。如果有一个新的元素被添加进去，我们也需要为它添加同样的监听器。这种方式不但代价比较大，维护起来也比较麻烦。</p>
+<p>代理事件监听可以让我们更简单的处理这种情况。我们不去监听所有的子元素的click事件，相反，我们监听他们的父元素<code>&lt;ul&gt;</code>。当一个<code>&lt;li&gt;</code>元素被点击的时候，这个事件会向上冒泡至 <code>&lt;ul&gt;</code>，触发回调函数。我们可以通过检查事件的event.target属性来判断具体是哪一个<code>&lt;li&gt;</code>被点击了。下面我们举个简单的例子来说明：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> list = <span class="built_in">document</span>.querySelector(<span class="string">'ul'</span>);</div><div class="line"></div><div class="line">list.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> target = event.target;</div><div class="line"></div><div class="line">  <span class="keyword">while</span> (target.tagName !== <span class="string">'LI'</span>) &#123;</div><div class="line">    target = target.parentNode;</div><div class="line">    <span class="keyword">if</span> (target === list) <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// Do stuff here</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这样就好多了，我们仅仅使用了一个上层的事件监听器，并且我们不需要在为添加元素而考虑它的事件监听问题。这个概念很简单，但是非常有用。</p>
+<p>但是我并不建议你在你的项目中使用上面的这个粗糙的实现。相反，使用一个事件代理的JavaScript库是更好的选择，比如 FT Lab的<a href="https://github.com/ftlabs/ftdomdelegate" target="_blank" rel="external">ftdomdelegate</a>。如果你在使用jQuery，你可以在调用.on()方法的时候，将一个选择器作为第二个参数的方式来轻松的实现事件代理。</p>
+<pre><code>// Not using event delegation
+$(&apos;li&apos;).on(&apos;click&apos;, function(){});
+
+// Using event delegation
+$(&apos;ul&apos;).on(&apos;click&apos;, &apos;li&apos;, function(){});
+</code></pre><p><strong><a href="http://jsbin.com/isojul/1/edit" target="_blank" rel="external">Demo: Delegate event listeners</a></strong></p>
+<h2 id="一些有用的事件"><a href="#一些有用的事件" class="headerlink" title="一些有用的事件"></a>一些有用的事件</h2><h3 id="load"><a href="#load" class="headerlink" title="load"></a>load</h3><p>load事件可以在任何资源（包括被依赖的资源）被加载完成时被触发，这些资源可以是图片，css，脚本，视频，音频等文件，也可以是document或者window。</p>
+<pre><code>image.addEventListener(&apos;load&apos;, function(event) {
+  image.classList.add(&apos;has-loaded&apos;);
+});
+</code></pre><p><a href="http://jsbin.com/uhimir/1/edit" target="_blank" rel="external"><strong>Demo：Image load event</strong></a></p>
+<h3 id="onbeforeunload"><a href="#onbeforeunload" class="headerlink" title="onbeforeunload"></a>onbeforeunload</h3><p><code>window.onbeforeunload</code>让开发人员可以在想用户离开一个页面的时候进行确认。这个在有些应用中非常有用，比如用户不小心关闭浏览器的tab，我们可以要求用户保存他的修改和数据，否则将会丢失他这次的操作。</p>
+<pre><code>window.onbeforeunload = function() {
+  if (textarea.value != textarea.defaultValue) {
+    return &apos;Do you want to leave the page and discard changes?&apos;;
+  }
+};
+</code></pre><p>需要注意的是，对页面添加<code>onbeforeunload</code>处理会导致浏览器不<a href="https://developer.mozilla.org/en-US/docs/Using_Firefox_1.5_caching" target="_blank" rel="external">对页面进行缓存?</a>，这样会影响页面的访问响应时间。 同时，<code>onbeforeunload</code>的处理函数必须是同步的（synchronous）。</p>
+<p><a href="http://jsbin.com/inelaj/2/edit" target="_blank" rel="external"><strong>Demo: onbeforeunload</strong></a></p>
+<h3 id="在手机Safari上阻止窗口抖动"><a href="#在手机Safari上阻止窗口抖动" class="headerlink" title="在手机Safari上阻止窗口抖动"></a>在手机Safari上阻止窗口抖动</h3><p>在Financial Times中，我们使用了一个简单的<code>event.preventDefault</code>相关的技巧防止了Safari在滚动的时候出现的抖动。（手机端开发接触的不多，所以可能有所误解，如果错误，请了解的同学提点一下。）</p>
+<pre><code>document.body.addEventListener(&apos;touchmove&apos;, function(event) {
+ event.preventDefault();
+});
+</code></pre><p>需要提醒的是这个操作同时也会阻碍正常的原生滚动条的功能（比如使用overflow:scroll）。为了使得内部的子元素在需要的时候能够使用滚动条的功能，我们在支持滚动的元素上监听这个事件，并且在事件对象上设置一个标识属性。在回调函数中，在document这一层，我们通过对这个扩展的<code>isScrollable</code>标识属性来判断是否对触摸事件阻止默认的滚动行为。</p>
+<pre><code>// Lower down in the DOM we set a flag
+scrollableElement.addEventListener(&apos;touchmove&apos;, function(event) {
+ event.isScrollable = true;
+});
+
+// Higher up the DOM we check for this flag to decide
+// whether to let the browser handle the scroll
+document.addEventListener(&apos;touchmove&apos;, function(event) {
+ if (!event.isScrollable) event.preventDefault();
+});
+</code></pre><p>在IE8即一下的版本中，我们是不能操作事件对象的。作为一个变通方案，我们将一些扩展的属性设置在event.target节点对向上。</p>
+<h3 id="resize"><a href="#resize" class="headerlink" title="resize"></a>resize</h3><p>在一些复杂的响应式布局中，对window对象监听resize事件是非常常用的一个技巧。仅仅通过css来达到想要的布局效果比较困难。很多时候，我们需要使用JavaScript来计算并设置一个元素的大小。</p>
+<pre><code>window.addEventListener(&apos;resize&apos;, function() {
+  // update the layout
+});
+</code></pre><p>我推荐使用<a href="http://davidwalsh.name/function-debounce" target="_blank" rel="external">防抖动</a>的回调函数来统一调整回调的频率，从而防止布局上极端抖动的情况出现。</p>
+<p><a href="http://jsbin.com/usevow/1/edit" target="_blank" rel="external"><strong>Demo: Window resizing</strong></a></p>
+<h3 id="transitionend"><a href="#transitionend" class="headerlink" title="transitionend"></a>transitionend</h3><p>现在在项目中，我们经常使用CSS来执行一些转换和动画的效果。有些时候，我们还是需要知道一个特定动画的结束时间。</p>
+<pre><code>el.addEventListener(&apos;transitionEnd&apos;, function() {
+ // Do stuff
+});
+</code></pre><p>一些注意点：</p>
+<ul>
+<li><span style="line-height: 15px;">如果你使用@keyframe动画，那么使用animationEnd事件，而不是transitionEnd。</span></li>
+<li>跟很多事件一样，transitionEnd也向上冒泡。记得在子节点上调用event.stopPropagation()或者检查event.target来防止回调函数在不该被调用的时候被调用。</li>
+<li>事件名目前还是被各种供应商添加了不同的前缀（比如webkitTransitionEnd, msTransitionEnd等等）。使用类似于<a href="http://modernizr.com/" target="_blank" rel="external">Modernizr</a>的库来获取正确的事件前缀。</li>
+</ul>
+<p><a href="http://jsbin.com/ijogok/1/edit" target="_blank" rel="external"><strong>Demo：Transition end</strong></a></p>
+<h3 id="animtioniteration"><a href="#animtioniteration" class="headerlink" title="animtioniteration"></a>animtioniteration</h3><p>animationiteration事件会在当前的动画元素完成一个动画迭代的时候被触发。这个事件非常有用，特别是当我们想在某个迭代完成后停止一个动画，但又不是在动画过程中打断它。</p>
+<pre><code>function start() {
+  div.classList.add(&apos;spin&apos;);
+}
+
+function stop() {
+  div.addEventListener(&apos;animationiteration&apos;, callback);
+
+  function callback() {
+    div.classList.remove(&apos;spin&apos;);
+    div.removeEventListener(&apos;animationiteration&apos;, callback);
+  }
+}
+</code></pre><p>如果你感兴趣的话，我在博客中有另一篇关于<a href="http://wilsonpage.co.uk/animation-iteration-event" target="_blank" rel="external">animationiteration事件的文章</a>。</p>
+<p><strong><a href="http://jsbin.com/AwoYuxE/2" target="_blank" rel="external">Demo：Animation iteration</a></strong></p>
+<h3 id="error"><a href="#error" class="headerlink" title="error"></a>error</h3><p>当我们的应用在加载资源的时候发生了错误，我们很多时候需要去做点什么，尤其当用户处于一个不稳定的网络情况下。Financial Times中，我们使用error事件来监测文章中的某些图片加载失败，从而立刻隐藏它。由于“DOM Leven 3 Event”规定重新定义了error事件不再冒泡，我们可以使用如下的两种方式来处理这个事件。</p>
+<pre><code>imageNode.addEventListener(&apos;error&apos;, function(event) {
+  image.style.display = &apos;none&apos;;
+});
+</code></pre><p>不幸的是，addEventListener并不能处理所有的情况。我的同事<a href="http://twitter.com/pornelski" target="_blank" rel="external">Kornel</a>给了我一个很好的<a href="http://jsbin.com/esimAWA/2/quiet" target="_blank" rel="external">例子</a>，说明确保图片加载错误回调函数被执行的唯一方式是使用让人诟病内联事件处理函数（inline event handlers）。</p>
+<pre><code>&lt;img src=&quot;http://example.com/image.jpg&quot; onerror=&quot;this.style.display=&apos;none&apos;;&quot; /&gt;
+</code></pre><p>原因是你不能确定绑定error事件处理函数的代码会在error事件发生之前被执行。而使用内联处理函数意味着在标签被解析并且请求图片的时候，error监听器也将并绑定。</p>
+<p><a href="http://jsbin.com/ekulop/2/edit" target="_blank" rel="external"><strong>Demo：Image error</strong></a></p>
+<h2 id="从事件模型中学到"><a href="#从事件模型中学到" class="headerlink" title="从事件模型中学到"></a>从事件模型中学到</h2><p>从事件模型的成功上，我们可以学到很多。我们可以在我们的项目中使用类似的解耦的概念。应用中的模块可以有很高的很复杂度，只要它的复杂度被封装隐藏在一套简单的接口背后。很多前端框架（比如Backbone.js）都是重度基于事件的，使用发布-订阅（publish and subscribe）的方式来处理跨模块间的通信，这点跟DOM非常相似。</p>
+<p><strong>基于事件的架构是极好的。</strong>它提供给我们一套非常简单通用的接口，通过针对这套接口的开发，我们能完成适应成千上万不同设备的应用。通过事件，设备们能准确地告诉我们正在发生的事情以及发生的时间，让我们随心所欲地做出响应。我们不再顾虑场景背后具体发生的事情，而是通过一个更高层次的抽象来写出更加令人惊艳的应用。</p>
+<h2 id="进一步阅读"><a href="#进一步阅读" class="headerlink" title="进一步阅读"></a>进一步阅读</h2><ul>
+<li>“<a href="http://www.w3.org/TR/DOM-Level-3-Events" target="_blank" rel="external">Document Object Model Level 3 Events Specification</a>,” W3C</li>
+<li>“<a href="http://www.w3.org/TR/DOM-Level-3-Events/#dom-event-architecture" target="_blank" rel="external">Graphical representation of an event dispatched in a DOM tree using the DOM event flow</a>” (image) W3C</li>
+<li>“<a href="https://developer.mozilla.org/en/docs/Web/API/Event" target="_blank" rel="external">Event</a>,” Mozilla Developer Network</li>
+<li>“<a href="http://alistapart.com/article/domtricks2" target="_blank" rel="external">DOM Design Tricks II</a>,” J. David Eisenberg, A List Apart</li>
+<li>“<a href="http://www.quirksmode.org/dom/events/" target="_blank" rel="external">Event compatibility tables</a>,” Quirksmode</li>
+</ul>
+</div></div></p>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/HTML5/2014-11-07-dom-event.html" target="_blank" rel="external">http://blog.inching.org/HTML5/2014-11-07-dom-event.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dom/">dom</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/event/">event</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/HTML5/2014-11-07-dom-event.html&title=《DOM 事件简介》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/HTML5/2014-11-07-dom-event.html&title=《DOM 事件简介》 — Balance&source=本文由 伯乐在线 - 陈 鑫伟 翻译自 smashingmagazine。欢迎加入：翻译小组，通过 翻译频道 贡献一份力量。
+原文：DOM 事件简介
+Cl..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/HTML5/2014-11-07-dom-event.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《DOM 事件简介》 — Balance&url=http://blog.inching.org/HTML5/2014-11-07-dom-event.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/HTML5/2014-11-07-dom-event.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Grunt/2014-11-11-angular-unit-test.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Angular Unit Test</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Grunt/2014-11-06-grunt-angular-yo.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">使用 Yoeman generator-angular 生成工程的 Gruntfile 源码分析</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/HTML5/2014-11-07-dom-event.html&title=《DOM 事件简介》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/HTML5/2014-11-07-dom-event.html&title=《DOM 事件简介》 — Balance&source=本文由 伯乐在线 - 陈 鑫伟 翻译自 smashingmagazine。欢迎加入：翻译小组，通过 翻译频道 贡献一份力量。
+原文：DOM 事件简介
+Cl..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/HTML5/2014-11-07-dom-event.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《DOM 事件简介》 — Balance&url=http://blog.inching.org/HTML5/2014-11-07-dom-event.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/HTML5/2014-11-07-dom-event.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aQW6EMAwFUO5/6el2pAr6bUMlkpdVhTqEl4VlOz6OeH2+1u8n+crfeTyxMDAwXstINr7+oOuPqP42PywMDIzdGGevPvufsy2v33MdLZN9T59jYGBgnDCScJm8Id8XAwMDIw+CeanZSyUxMDAwekXsXZ+YF8mP1OIYGBgvZFSD5n/+/cj9BgYGxqsYvQvIaoC+Tis/44WBgbE2o9q4nwxM5GVw83swMDAWZdzV7k94edJZbu1hYGBswEhCZHXAotosGx0fBgbG0oxqkpc/mQTf/AIAAwNjH0Yv4FaHJKpFbPUSFAMDY1VGPk6Rb1kuQYsDaoX7VQwMjG0YSQpYPY4bLiy/98LAwNiG0StTJ0ne/LAwMDD2YSTla9Kyz68Neh3BG6pwDAyMFzKSIJuEvEmxmrf5jl60xsDAWIhRSMUGPa7q+wspKQYGxqKMJNQmJWt5smMQfDEwMHZj9PKreXL5eAsPAwNjOUYvsSsXmcW23fXhnrbbMDAwNmAkiVqePlafV1PAci2OgYHxcka+fc5LQnb1aApRHAMDY1FGkqLll47JqiaXp7/CwMBYlPEprl5z/4lRj6N3ZhgYGC9kzDfL/2d+KOVkEQMDYyHGJHWrDl7Mrw1Od8HAwNiA0Uv4eoF4klCWhy0wMDA2ZuQJXC/dLIdyDAwMjEEdfP3b6ljYH0UsBgbG0oz5sNcE3GvDYWBg7MNojjiMC938o++6LsXAwHgh4wcGOtsZt5AuYwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

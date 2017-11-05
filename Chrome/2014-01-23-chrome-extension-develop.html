@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Chrome 扩展开发 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="chrome">
+    <meta name="description" content="概述为了着手创建你的扩展程序，你只需要为你的扩展创建一个文件夹。程序所必须的文件只有manifest.json.，不过也推荐准备一些图片用作图标，和至少一个JavaScript以提供功能。一般来说还会包含HTML文档、样式表、图片等等其他的资源。
+Chrome扩展文件Chrome扩展文件以.crx为后缀名，在Google Chrome扩展官方网站下载扩展时，Chrome会将.crx文件下载到%LO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chrome 扩展开发">
+<meta property="og:url" content="http://blog.inching.org/Chrome/2014-01-23-chrome-extension-develop.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="概述为了着手创建你的扩展程序，你只需要为你的扩展创建一个文件夹。程序所必须的文件只有manifest.json.，不过也推荐准备一些图片用作图标，和至少一个JavaScript以提供功能。一般来说还会包含HTML文档、样式表、图片等等其他的资源。
+Chrome扩展文件Chrome扩展文件以.crx为后缀名，在Google Chrome扩展官方网站下载扩展时，Chrome会将.crx文件下载到%LO">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/chrome-browser-action.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/chrome-popup.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/chrome-omnibox.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/chorme-permission-alert.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/chrome-extension-principle.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/chrome-package.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chrome 扩展开发">
+<meta name="twitter:description" content="概述为了着手创建你的扩展程序，你只需要为你的扩展创建一个文件夹。程序所必须的文件只有manifest.json.，不过也推荐准备一些图片用作图标，和至少一个JavaScript以提供功能。一般来说还会包含HTML文档、样式表、图片等等其他的资源。
+Chrome扩展文件Chrome扩展文件以.crx为后缀名，在Google Chrome扩展官方网站下载扩展时，Chrome会将.crx文件下载到%LO">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/chrome-browser-action.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Chrome 扩展开发</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Chrome 扩展开发</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-01-22T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-01-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Chrome/">Chrome</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-text">概述</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Chrome扩展文件"><span class="post-toc-text">Chrome扩展文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Manifest文件"><span class="post-toc-text">Manifest文件</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#核心概念"><span class="post-toc-text">核心概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Browser-Actions"><span class="post-toc-text">Browser Actions</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#后台页"><span class="post-toc-text">后台页</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#直接调用"><span class="post-toc-text">直接调用</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#消息通信"><span class="post-toc-text">消息通信</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内容安全策略CSP"><span class="post-toc-text">内容安全策略CSP</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Eval和相关函数被禁用"><span class="post-toc-text">Eval和相关函数被禁用</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#不执行Inline-JavaScript"><span class="post-toc-text">不执行Inline JavaScript</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#只加载本地脚本和资源"><span class="post-toc-text">只加载本地脚本和资源</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#开发过程"><span class="post-toc-text">开发过程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#确定扩展类型"><span class="post-toc-text">确定扩展类型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#调试"><span class="post-toc-text">调试</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#FAQ"><span class="post-toc-text">FAQ</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#权限问题"><span class="post-toc-text">权限问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-text">参考</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#文档"><span class="post-toc-text">文档</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#教程"><span class="post-toc-text">教程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Sample"><span class="post-toc-text">Sample</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Tools"><span class="post-toc-text">Tools</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#生成脚手架"><span class="post-toc-text">生成脚手架</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Chrome-Dev-Editor"><span class="post-toc-text">Chrome Dev Editor</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-chrome-extension-develop"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Chrome 扩展开发</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-01-23 00:00:00" datetime="2014-01-22T16:00:00.000Z"  itemprop="datePublished">2014-01-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Chrome/">Chrome</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>为了着手创建你的扩展程序，你只需要为你的扩展创建一个文件夹。程序所必须的文件只有manifest.json.，不过也推荐准备一些图片用作图标，和至少一个JavaScript以提供功能。一般来说还会包含HTML文档、样式表、图片等等其他的资源。</p>
+<h3 id="Chrome扩展文件"><a href="#Chrome扩展文件" class="headerlink" title="Chrome扩展文件"></a>Chrome扩展文件</h3><p>Chrome扩展文件以.crx为后缀名，在Google Chrome扩展官方网站下载扩展时，Chrome会将.crx文件下载到<code>%LOCALAPPDATA%/Google/Chrome/User Data/Temp</code>目录下，安装完成或者取消安装，该文件就会被删除。</p>
+<p>.crx实际上是一个压缩文件。</p>
+<h3 id="Manifest文件"><a href="#Manifest文件" class="headerlink" title="Manifest文件"></a>Manifest文件</h3><p>每个扩展都必须在其根目录下包含一个manifest.json文件。</p>
+<p>这个文件里面声明了扩展的名称、版本、权限、设置选项和其他的一些和扩展相关的元数据。Manifest v1早在Chrome 18便已被弃用，而且会根据这个时间表逐渐淘汰使用Manifest v1的扩展。如果你在参考一些旧扩展的Manifest文件的话，请确认添加”manifest_version”: 2。</p>
+<p>Google发布的<a href="http://developer.chrome.com/extensions/manifest.html" target="_blank" rel="external">Manifest v2</a>中支持的域。</p>
+<a id="more"></a>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><p>Chrome扩展程序分为Browser Actions和Page Actions。</p>
+<h3 id="Browser-Actions"><a href="#Browser-Actions" class="headerlink" title="Browser Actions"></a><a href="http://developer.chrome.com/extensions/browserAction.html" target="_blank" rel="external">Browser Actions</a></h3><p>Browser Actions在界面上的表现如:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/chrome-browser-action.jpg" alt="Browser Actions" title="">
+                </div>
+                <div class="image-caption">Browser Actions</div>
+            </figure>
+<p>Browser Actions允许你在右上角放置一个合适大小的图标，如果扩展应用的界面是全局的，而不是针对某个页面，那就应该使用浏览器操作。如果要使用浏览器按钮，你必须在manifest.json中的browser_action域中做如下声明：</p>
+<pre><code>{
+  &quot;name&quot;: &quot;My extension&quot;,
+  ...
+  &quot;browser_action&quot;: {
+    &quot;default_icon&quot;: {                    // optional
+      &quot;19&quot;: &quot;images/icon19.png&quot;,           // optional
+      &quot;38&quot;: &quot;images/icon38.png&quot;            // optional
+    },
+    &quot;default_title&quot;: &quot;Google Mail&quot;,      // optional; shown in tooltip
+    &quot;default_popup&quot;: &quot;popup.html&quot;        // optional
+  },
+  ...
+}
+</code></pre><p><strong>Note</strong>: Chrome automatically creates a grayscale version of your 16x16-pixel icon. You should provide a full-color version so that it can also be used in other situations that require color. For example, the context menus API also uses a 16x16-pixel icon, but it is displayed in color.</p>
+<p>At the moment, the icon set can contain images with pixel sizes 19 and 38.</p>
+<p>如果只提供19px或者38px大小的图标，可以简写为：</p>
+<pre><code>{
+  &quot;name&quot;: &quot;My extension&quot;,
+  ...
+  &quot;browser_action&quot;: {
+    ...
+    &quot;default_icon&quot;: &quot;images/icon19.png&quot;  // optional
+    // equivalent to &quot;default_icon&quot;: { &quot;19&quot;: &quot;images/icon19.png&quot; }
+  },
+  ...
+}
+</code></pre><p>一个浏览器按钮可以有一个图标、提示、文字标记(badge)和一个弹出内容，文字标记可以将极少的文字（4字符）动态的覆盖在浏览器操作的图标上，你也可以通过chrome.browserAction的API来对浏览器按钮相关的事件做出反应。To set the icon, use the <code>default_icon</code> field of browser_action in the manifest, or call the setIcon method. To set the tooltip, use the <em>default_title</em> field of browser_action in the manifest, or call the setTitle method. Set the text and color of the badge using <a href="http://developer.chrome.com/extensions/browserAction.html#method-setBadgeText" target="_blank" rel="external">setBadgeText</a> and <a href="http://developer.chrome.com/extensions/browserAction.html#method-setBadgeBackgroundColor" target="_blank" rel="external">setBadgeBackgroundColor</a>, respectively.Specify the HTML file in the <code>default_popup</code> field of browser_action in the manifest, or call the setPopup method.</p>
+<p>Demo请参考<a href="http://src.chromium.org/viewvc/chrome/trunk/src/chrome/common/extensions/docs/examples/api/browserAction/" target="_blank" rel="external">examples/api/browserAction</a>。</p>
+<p><strong>弹出页</strong></p>
+<p>popup属于Browser Actions，当点击图标时出现这个窗口，可以在里面放置任何html元素，它的宽度是自适应的。</p>
+<p>弹出页如：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/chrome-popup.png" alt="Browser Actions" title="">
+                </div>
+                <div class="image-caption">Browser Actions</div>
+            </figure>
+<p>在popup中还可以注入代码到web page中，但只限于对dom的访问和修改：</p>
+<pre><code>chrome.tabs.executeScript(null, {code:&quot;document.body.style.backgroundColor=blue&quot;});
+</code></pre><p>在popup.html中可以直接通过background对象可以直接调用background中定义的方法或对象：</p>
+<pre><code>var bg = chrome.extension.getBackgroundPage(); 
+bg.testBG();
+</code></pre><p>###<a href="http://developer.chrome.com/extensions/pageAction.html" target="_blank" rel="external">Page Actions</a></p>
+<p>Page Actions 允许你在多功能栏（地址栏）右边添加一个按钮，其实他和浏览器按钮很相似，区别之处在于页面按钮是专门用来处理某些指定的页面的。页面按钮必须在manfiest.json中声明， page_action域的使用和浏览器按钮一样。页面按钮可以通过chrome.pageAction API控制，可以在不同的标签页中灵活的显示或者隐藏。页面按钮也可以设置图标、提示和弹出内容，和浏览器按钮不同的是其没有文字标记功能。</p>
+<pre><code>![Browser Actions](http://johnnyimages.qiniudn.com/chrome-page-action.jpg)
+</code></pre><p>以上程序均属于Page Actions。</p>
+<p>申明Page Action和Browse Action类似：</p>
+<pre><code>&quot;page_action&quot;: {
+    &quot;default_icon&quot;: {                    // optional
+      &quot;19&quot;: &quot;images/icon19.png&quot;,           // optional
+      &quot;38&quot;: &quot;images/icon38.png&quot;            // optional
+    },
+    &quot;default_title&quot;: &quot;Google Mail&quot;,      // optional; shown in tooltip
+    &quot;default_popup&quot;: &quot;popup.html&quot;        // optional
+  }
+</code></pre><p>Page Actions与Browser Actions的区别就是Page Actions不是必须在特定的页面中才会显示。You make a page action appear and disappear using the <code>show</code> and <code>hide</code> methods, respectively.</p>
+<p>我们可以把对page aciton的设置和处理放在background page中，从而直接在background中通过chrome.pageAction来设置page action，比如如下代码实现了当所访问URL中有mail字符串时就显示page action的icon这样的功能：</p>
+<pre><code>chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {      
+    if (tab.url.indexOf(&quot;mail&quot;) &gt; -1) {           
+        chrome.pageAction.show(tabId);
+    }
+});
+</code></pre><h3 id="后台页"><a href="#后台页" class="headerlink" title="后台页"></a><a href="http://developer.chrome.com/extensions/background_pages.html" target="_blank" rel="external">后台页</a></h3><p>后台页是一个在扩展的进程中生成并运行的页面，存在时间会和扩展的生命周期等长。后台页可用来作为扩展的其他界面的控制器，用来维护某个状态或者保持某些活动。如果你需要用后台页来声明一些标记来用，可以把一个HTML文件名指定给page选项。</p>
+<p>后台页只会在插件加载的时候运行一次，你可以在这个过程中让它绑定一些运行中的事件。比如background中可以直接访问chrome.browserAction对象来设置和定义browserAction，如：</p>
+<pre><code>chrome.browserAction.setIcon({path:&quot;icon.png&quot;});
+</code></pre><p>也可以绑定browserAction的点击事件定义事件响应处理：</p>
+<pre><code>chrome.browserAction.onClicked.addListener(function(){
+     ......
+});    
+</code></pre><p>This event will not fire if the browser action has a popup.</p>
+<p>还可以在background中调用chrome.tabs.create()来创建新的tab。</p>
+<p>在Manifest文件中指定后台脚本的代码如：</p>
+<pre><code>{
+  &quot;name&quot;: &quot;My extension&quot;,
+  ...
+  &quot;background&quot;: {
+    &quot;scripts&quot;: [&quot;background.js&quot;]
+  },
+  ...
+}
+</code></pre><p>一般情况下，后台页面不需要HTML标签。如果你需要，请使用如下代码指定：</p>
+<pre><code>{
+  &quot;name&quot;: &quot;My extension&quot;,
+  ...
+  &quot;background&quot;: {
+    &quot;page&quot;: &quot;background.html&quot;
+  },
+  ...
+}
+</code></pre><p>如下代码片段演示了扩展如何在后台页中与其他页面交互。同时也展示如何使用后台页来处理事件，如用户点击。<br>例子中的扩展有一个后台页，多个由image.html创建的view页面。（通过chrome.tabs.create()）。</p>
+<p>Backgroud.js:</p>
+<pre><code>// React when a browser action&apos;s icon is clicked.
+chrome.browserAction.onClicked.addListener(function(tab) {
+  var viewTabUrl = chrome.extension.getURL(&apos;image.html&apos;);
+  var imageUrl = /* an image&apos;s URL */;
+
+  // Look through all the pages in this extension to find one we can use.
+  var views = chrome.extension.getViews();
+  for (var i = 0; i &lt; views.length; i++) {
+    var view = views[i];
+
+    // If this view has the right URL and hasn&apos;t been used yet...
+    if (view.location.href == viewTabUrl &amp;&amp; !view.imageAlreadySet) {
+
+      // ...call one of its functions and set a property.
+      view.setImageUrl(imageUrl);
+      view.imageAlreadySet = true;
+      break; // we&apos;re done
+    }
+  }
+});
+</code></pre><p>image.html:</p>
+<pre><code>&lt;html&gt;
+  &lt;script&gt;
+    function setImageUrl(url) {
+      document.getElementById(&apos;target&apos;).src = url;
+    }
+  &lt;/script&gt;
+  &lt;body&gt;
+    &lt;p&gt;
+    Image here:
+    &lt;/p&gt;
+    &lt;img id=&quot;target&quot; src=&quot;white.png&quot; width=&quot;640&quot; height=&quot;480&quot;&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>###<a href="http://developer.chrome.com/extensions/event_pages.html" target="_blank" rel="external">事件页</a></p>
+<p>后台页会从扩展被加载的时候被装载，而且会一直留在内存里。这是因为如果有些状态需要被长时间维护，或者需要被扩展的其他部分访问。但是如果你没有这个需求，那么应该尽可能的使用事件页。</p>
+<p>事件页其实只是相当于一个包含了<code>persistent: false</code>条目的后台页，这一行语句告诉Chrome可以不需要把后台页保留在内存里。相对来说，事件页也会在最开始被装载，但是一旦指定的脚本运行完毕，事件页便会从内存卸载，而且会在需要的时候被再次加载（比如用来回应某些操作）。</p>
+<p>定义事件页的方法如：</p>
+<pre><code>{
+  &quot;name&quot;: &quot;My extension&quot;,
+  ...
+  &quot;background&quot;: {
+    &quot;scripts&quot;: [&quot;eventPage.js&quot;],
+    &quot;persistent&quot;: false
+  },
+  ...
+}
+</code></pre><p>Note that opening a view does not cause the event page to load, but only prevents it from closing once loaded.</p>
+<p>使用事件页的例子请参考 <a href="http://src.chromium.org/viewvc/chrome/trunk/src/chrome/common/extensions/docs/examples/extensions/gmail/" target="_blank" rel="external">Gmail Checker</a></p>
+<p>###<a href="http://developer.chrome.com/extensions/contextMenus.html" target="_blank" rel="external">右键菜单</a></p>
+<pre><code>var root = chrome.contextMenus.create({
+   title: &apos;MyExtension&apos;,
+   contexts: [&apos;page&apos;]
+}, function () {
+   var subMenu = chrome.contextMenus.create({
+       title: &apos;Duplicate Tab&apos;
+       contexts: [&apos;page&apos;],
+       parentId: root,
+       onclick: function (evt) {
+           chrome.tabs.create({ url: evt.pageUrl })
+       }
+   });
+});
+</code></pre><p>右键菜单是另一个提供用户界面，方便用户和扩展交互的方式。Chrome的右键菜单通过右键激活，但根据激活内容的变化，菜单内容也会做相应改变。</p>
+<p>chrome.contextMenusAPI允许你向为不同内容激活的右键菜单添加项目，若要使用此API，则在manifest.json文件中声明相应的contextMenus权限。</p>
+<p>目前可用的激活内容有：</p>
+<ul>
+<li>all 所有内容</li>
+<li>page 页面</li>
+<li>frame 框架</li>
+<li>selection 选择</li>
+<li>link 链接</li>
+<li>editable 可编辑</li>
+<li>image 图像</li>
+<li>video 视频</li>
+<li>audio 音频</li>
+</ul>
+<p>示例参考 <a href="http://developer.chrome.com/extensions/examples/api/contextMenus/basic.zip" target="_blank" rel="external">Context Menus Sample</a> </p>
+<p>###<a href="http://developer.chrome.com/extensions/omnibox.html" target="_blank" rel="external">多功能框</a></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/chrome-omnibox.png" alt="多功能框" title="">
+                </div>
+                <div class="image-caption">多功能框</div>
+            </figure>
+<p>Chrome把地址栏/搜索栏称为多功能框，通过chrome.omnibox API，他可以让扩展有另一个界面。通过API 可以设置一个特定的激活字符串，当这个字符串被键入多功能框时扩展便可以对其做出反应。在manifest.json中做如下声明：</p>
+<pre><code>{
+  &quot;omnibox&quot;: {
+    &quot;keyword&quot;: &quot;ext-&quot;
+  }
+}
+</code></pre><p>这部分代码会把ext-作为激活字符串，当用户键入<code>ext-</code>并按下SPACE键或者TAB键时扩展会被激活。激活字符串必须通过manifest.json文件声明，故也不能通过JavaScript来更改。</p>
+<p>用户可以通过右键单击多功能框—–修改搜索引擎来更改。激活字符串是大小写敏感的，同时想为一个扩展声明多个激活字符串也是不可以的。</p>
+<p>chrome.omnibox API可以让你添加激活字符串被键入之后的修改或者输入的事件处理器。</p>
+<p>###<a href="http://developer.chrome.com/extensions/options.html" target="_blank" rel="external">选项页面</a></p>
+<p>选项页面是一个的常见的用户界面，在<code>chrome://extensions</code>里可以通过单击扩展右边的选项按钮来打开。通常这个页面会和存储API结合使用，以用来在计算机上为用户保存设置。而使用脚本通过<code>chrome.tabs</code> API来打开选项页面也是可以的。</p>
+<p>声明选项页面：</p>
+<pre><code>{
+  &quot;name&quot;: &quot;My extension&quot;,
+  ...
+  &quot;options_page&quot;: &quot;options.html&quot;,
+  ...
+}
+</code></pre><p>###<a href="http://developer.chrome.com/extensions/override.html" target="_blank" rel="external">覆写特定页</a></p>
+<p>覆写特定页允许你完全替代一个以下指定页面（一个扩展程序只能重载一个页面）</p>
+<ul>
+<li>书签管理器：通过访问<code>chrome://bookmarks</code>或者Chrome菜单打开的页面</li>
+<li>历史：通过访问<code>chrome://history</code>或者Chrome菜单打开的页面</li>
+<li>新选项卡：通过访问<code>chrome://newtab</code>或者新建选项卡出现的页面</li>
+</ul>
+<p>这些被替换的页面必须在manifest.json文件中如下声明chrome_url_overrides域：</p>
+<pre><code>{
+  &quot;chrome_url_overrides&quot;: {
+    &quot;bookmarks&quot;: &quot;newBookmarkManager.html&quot;
+  }
+}
+</code></pre><p><strong>Note:</strong> A single extension can override only one page. For example, an extension can’t override both the Bookmark Manager and History pages.</p>
+<p>###<a href="http://open.chrome.360.cn/extension_dev/notifications.html" target="_blank" rel="external">桌面通知</a></p>
+<p>请参考该文档 360开发文档 <a href="http://open.chrome.360.cn/extension_dev/notifications.html" target="_blank" rel="external">桌面通知</a>。</p>
+<p>###<a href="http://developer.chrome.com/extensions/content_scripts.html" target="_blank" rel="external">内容脚本</a></p>
+<p>内容脚本是在网页中运行的脚本。这个脚本可以让你访问页面里相应的DOM元素，你可以像这样在manifest.json里通过指定content_scripts定义一个内容脚本：</p>
+<pre><code>{
+  &quot;content_scripts&quot;: [
+    {
+      &quot;matches&quot;: [&quot;http://www.google.com/*&quot;],
+      &quot;css&quot;: [&quot;custom-google-styles.css&quot;],
+      &quot;js&quot;: [&quot;custom-google-script-1.js&quot;, &quot;custom-google-script-2.js&quot;]
+    },
+    {
+      &quot;matches&quot;: [&quot;http://*&quot;],
+      &quot;css&quot;: [&quot;global-styles.css&quot;],
+      &quot;js&quot;: [&quot;global-script.js&quot;]
+    }
+  ]
+}
+</code></pre><p>你也可以用通过chrome.tabs API以动态的把JavaScript或者CSS注入网页。</p>
+<p>content script跟页面page共用同一份页面的dom，也就是说content script可以直接去访问或修改当前页面的dom，但是注意了，它们只是共享了dom的访问，js处理本身却是在两个不同的沙盒中运行的，所以并不能互调各自的js代码。</p>
+<p>如下处理是在当前页面中插入一个div节点：</p>
+<pre><code>var element = document.body.firstChild;
+var div = document.createElement(&quot;div&quot;);
+document.body.insertBefore(div, element);
+</code></pre><p>在content script中可以通过消息机制跟background交互，如在content script监听消息：</p>
+<pre><code>chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {});
+</code></pre><p>在background发送消息：</p>
+<pre><code>chrome.tabs.sendRequest(tab.id, data, function(data) {});
+</code></pre><p>同样，在background.js可以用同样的方法来监听消息。在content script中通过如下方法发送消息：</p>
+<pre><code>chrome.extension.sendRequest(data, function(data) {});
+</code></pre><p>content script除了跟background可以交互，跟web page本身也可以有信息交互。一方面content script可以直接访问page的dom，同时还可以通过dom的Event来跟页面进行交互。 </p>
+<p>content script中绑定事件：</p>
+<pre><code>document.addEventListener(&quot;EventName&quot;,function() {});
+</code></pre><p>web page中如何发送事件给content script呢？如下：</p>
+<pre><code>var ev = document.createEvent(&apos;HTMLEvents&apos;); 
+ev.initEvent(&apos;EventName&apos;, false, false);
+document.dispatchEvent(ev);
+</code></pre><p>反之，web page中绑定事件，content script中触发事件的话同上面处理一样，也成立。</p>
+<p><strong>内容脚本有以下限制：</strong></p>
+<ul>
+<li>不能使用chrome.* API （<a href="http://developer.chrome.com/extensions/extension.html" target="_blank" rel="external">chrome.extension</a>的部分除外）</li>
+<li>不能使用由扩展脚本定义的变量或函数</li>
+<li>不能使用由网页所定义的变量或函数</li>
+<li>不能使用由其他内容脚本定义的变量或函数</li>
+<li>内容脚本可以通过消息传递间接的使用chrome.* API，或者是和扩展脚本交互。</li>
+</ul>
+<p>###<code>chrome.*.APIs</code></p>
+<p>常用的API如下：</p>
+<ul>
+<li><a href="http://developer.chrome.com/extensions/tabs.html" target="_blank" rel="external">chrome.tabs</a> 标签页：新建、刷新、关闭、访问和操控标签页</li>
+<li><a href="http://developer.chrome.com/extensions/history.html" target="_blank" rel="external">chrome.history</a> 历史：访问用户浏览历史</li>
+<li><a href="http://developer.chrome.com/extensions/bookmarks.html" target="_blank" rel="external">chrome.bookmarks</a> 书签：添加、编辑、移除和搜索用户书签</li>
+<li><a href="http://developer.chrome.com/extensions/events.html" target="_blank" rel="external">chrome.events</a> 事件：监听或者管理浏览器发生的事件</li>
+<li><a href="http://developer.chrome.com/extensions/commands.html" target="_blank" rel="external">chrome.commands</a> 命令：添加或者改变键盘命令</li>
+<li><a href="http://developer.chrome.com/extensions/contextMenus.html" target="_blank" rel="external">chrome.contextMenus</a> 右键：添加条目到右键下文菜单</li>
+<li><a href="http://developer.chrome.com/extensions/omnibox.html" target="_blank" rel="external">chrome.omnibox</a> 多功能框（地址栏）：添加多功能框关键字，使用户可以向扩展发送指令或者激活扩展</li>
+</ul>
+<p>请参考Chrome API文档：</p>
+<ul>
+<li><a href="http://developer.chrome.com/extensions/api_index.html" target="_blank" rel="external">Chrome Platform APIs</a>- <a href="http://developer.chrome.com/extensions/api_other.html" target="_blank" rel="external">Web APIs</a></li>
+</ul>
+<p>###<a href="http://developer.chrome.com/extensions/permission_warnings.html" target="_blank" rel="external">权限</a></p>
+<p>有些Chrome API的功能必须要在manifest.json文件中声明相关权限才能被调用，通过在permissions 域中把值设成相应权限名称，或者是通识符组成的数组。</p>
+<p><strong>Note:</strong> You don’t see permission warnings when you load an unpacked extension. You get permission warnings only when you install an extension from a .crx file.</p>
+<p>如果在扩展中需要以下权限：</p>
+<pre><code>&quot;permissions&quot;: [
+  &quot;http://api.flickr.com/&quot;
+]
+</code></pre><p>在安装扩展时，通常会弹出如下警告：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/chorme-permission-alert.png" alt="弹出如下警" title="">
+                </div>
+                <div class="image-caption">弹出如下警</div>
+            </figure>
+<p>申明权限的代码如下：</p>
+<pre><code>{
+  &quot;permissions&quot;: [
+    &quot;contextMenus&quot;,
+    &quot;tabs&quot;,
+    &quot;https://google.com/*&quot;,
+    &quot;https://developer.mozilla.org/*&quot;
+  ]
+}
+</code></pre><p>在这一段声明代码中，数组中的头两个字符串是分别用来为chrome.contextMenus和chrome.tabs  的API授权的，最后的两个字符串则是用来匹配以 <a href="https://google.com/" target="_blank" rel="external">https://google.com/</a> 和 <a href="https://developer.mozilla.org/" target="_blank" rel="external">https://developer.mozilla.org/</a> 开头的地址。</p>
+<p>###<a href="https://developer.chrome.com/extensions/messaging.html" target="_blank" rel="external">消息交互</a></p>
+<p>Reference: <a href="http://my.oschina.net/hierick/blog/136313" target="_blank" rel="external">http://my.oschina.net/hierick/blog/136313</a></p>
+<p>popup.htm,background.htm,content_scripts 之间大体上分为两种交互方式：直接调用和消息通信。</p>
+<h4 id="直接调用"><a href="#直接调用" class="headerlink" title="直接调用"></a>直接调用</h4><p>popup.htm与background.htm 里面的数据可以直接调用，例如：</p>
+<pre><code>var  backgroundWindow = chrome.extension.getBackgroundPage();
+</code></pre><p>此时，popup.htm页面就拥有了background.htm的整个对象，只需要获取一次。如果background.htm里面有计划任务，数据一直在变，可以通过backgroundWindow变量，直接使用。但是如果background.htm里面的文档也在变化，popup.htm想要直接使用background.htm文档页面，就不行，必须要实时刷新文档页面，可以采用定时器实时的把background.htm的页面，刷新到popup.htm页面来。</p>
+<pre><code>setInterval(function(){
+    document.body.innerHTML = backgroundWindow.document.body.innerHTML;
+    popup.BindEvents();
+},1000);
+</code></pre><h4 id="消息通信"><a href="#消息通信" class="headerlink" title="消息通信"></a>消息通信</h4><p>Communication between extensions and their content scripts works by using message passing. Either side can listen for messages sent from the other end, and respond on the same channel. </p>
+<p><strong>扩展的消息通信机制：</strong></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/chrome-extension-principle.png" alt="扩展的工作原理" title="">
+                </div>
+                <div class="image-caption">扩展的工作原理</div>
+            </figure>
+<p>发送消息使用接口<a href="http://developer.chrome.com/extensions/runtime.html#method-sendMessage" target="_blank" rel="external">chrome.runtime.sendMessage</a> 。该接口向扩展内的其它监听者发送一条消息，此消息发送后会触发扩展内每个页面的<a href="http://developer.chrome.com/extensions/runtime.html#event-onMessage" target="_blank" rel="external">chrome.extension.onMessage</a>事件。不能使用<a href="http://developer.chrome.com/extensions/runtime.html#method-sendMessage" target="_blank" rel="external">chrome.runtime.sendMessage</a>方法发送消息到内容页，而需要使用<a href="http://developer.chrome.com/extensions/tabs.html#method-sendMessage" target="_blank" rel="external">chrome.tabs.sendMessage</a>，调用该接口会触发指定tabId的<a href="http://developer.chrome.com/extensions/runtime.html#event-onMessage" target="_blank" rel="external">chrome.runtime.onMessage</a>事件。<a href="http://developer.chrome.com/extensions/extension.html" target="_blank" rel="external">chrome.extension</a>中关于消息通信的接口基本都已废除，取而代之的是<a href="http://developer.chrome.com/extensions/runtime.html" target="_blank" rel="external">chrome.runtime</a>中的接口。</p>
+<p><strong>简单的一次性请求：</strong></p>
+<p>Sending a request from a content script looks like this:</p>
+<pre><code>chrome.runtime.sendMessage({greeting: &quot;hello&quot;}, function(response) {
+  console.log(response.farewell);
+});
+</code></pre><p>Sending a request from the extension to a content script looks very similar, except that you need to specify which tab to send it to. This example demonstrates sending a message to the content script in the selected tab.</p>
+<pre><code>chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  chrome.tabs.sendMessage(tabs[0].id, {greeting: &quot;hello&quot;}, function(response) {
+    console.log(response.farewell);
+  });
+});
+</code></pre><p>On the receiving end, you need to set up an <a href="http://developer.chrome.com/extensions/runtime.html#event-onMessage" target="_blank" rel="external">runtime.onMessage</a> event listener to handle the message. This looks the same from a content script or extension page.</p>
+<pre><code>chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                &quot;from a content script:&quot; + sender.tab.url :
+                &quot;from the extension&quot;);
+    if (request.greeting == &quot;hello&quot;)
+      sendResponse({farewell: &quot;goodbye&quot;});
+  });
+</code></pre><p><strong>Note:</strong> If multiple pages are listening for onMessage events, only the first to call sendResponse() for a particular event will succeed in sending the response. All other responses to that event will be ignored.</p>
+<p><strong>长连接</strong></p>
+<p>Sometimes it’s useful to have a conversation that lasts longer than a single request and response. In this case, you can open a long-lived channel from your content script to an extension page, or vice versa, using <a href="http://developer.chrome.com/extensions/runtime.html#method-connect" target="_blank" rel="external">runtime.connect</a> or <a href="http://developer.chrome.com/extensions/tabs.html#method-connect" target="_blank" rel="external">tabs.connect</a> respectively. The channel can optionally have a name, allowing you to distinguish between different types of connections.</p>
+<p>When establishing a connection, each end is given a <a href="http://developer.chrome.com/extensions/runtime.html#type-Port" target="_blank" rel="external">runtime.Port</a> object which is used for sending and receiving messages through that connection.</p>
+<p>在内容脚本中打开一个信道，并从扩展页收发数据：</p>
+<pre><code>var port = chrome.runtime.connect({name: &quot;knockknock&quot;});
+port.postMessage({joke: &quot;Knock knock&quot;});
+port.onMessage.addListener(function(msg) {
+  if (msg.question == &quot;Who&apos;s there?&quot;)
+    port.postMessage({answer: &quot;Madame&quot;});
+  else if (msg.question == &quot;Madame who?&quot;)
+    port.postMessage({answer: &quot;Madame... Bovary&quot;});
+});
+</code></pre><p>扩展页向内容页发送数据需要调用<a href="http://developer.chrome.com/extensions/tabs.html#method-connect" target="_blank" rel="external">tabs.connect</a>接口，并指定tabId。</p>
+<p>在扩展页中监听连接事件，并收发消息可参考：</p>
+<pre><code>chrome.runtime.onConnect.addListener(function(port) {
+  console.assert(port.name == &quot;knockknock&quot;);
+  port.onMessage.addListener(function(msg) {
+    if (msg.joke == &quot;Knock knock&quot;)
+      port.postMessage({question: &quot;Who&apos;s there?&quot;});
+    else if (msg.answer == &quot;Madame&quot;)
+      port.postMessage({question: &quot;Madame who?&quot;});
+    else if (msg.answer == &quot;Madame... Bovary&quot;)
+      port.postMessage({question: &quot;I don&apos;t get it.&quot;});
+  });
+});
+</code></pre><p>同样，监听断开事件请使用<a href="http://developer.chrome.com/extensions/runtime.html#property-Port-onDisconnect" target="_blank" rel="external">runtime.Port.onDisconnect</a>事件。 This event is fired either when the other side of the channel manually calls <a href="http://developer.chrome.com/extensions/runtime.html#property-Port-disconnect" target="_blank" rel="external">runtime.Port.disconnect</a>, or when the page containing the port is unloaded (for example if the tab is navigated). onDisconnect is guaranteed to be fired only once for any given port.</p>
+<p><strong>跨扩展通信</strong></p>
+<p>和内部通信一样，只是需要额外指定扩展的Id，请参考相关文档。监听消息和连接使用<a href="http://developer.chrome.com/extensions/runtime.html#event-onMessageExternal" target="_blank" rel="external">runtime.onMessageExternal</a> or <a href="http://developer.chrome.com/extensions/runtime.html#event-onConnectExternal" target="_blank" rel="external">runtime.onConnectExternal</a>接口。</p>
+<p>发送消息如：</p>
+<pre><code>// The ID of the extension we want to talk to.
+var laserExtensionId = &quot;abcdefghijklmnoabcdefhijklmnoabc&quot;;
+
+// Make a simple request:
+chrome.runtime.sendMessage(laserExtensionId, {getTargetData: true},
+  function(response) {
+    if (targetInRange(response.targetData))
+      chrome.runtime.sendMessage(laserExtensionId, {activateLasers: true});
+  });
+</code></pre><p><strong>和Web页面通信</strong></p>
+<p>与扩展间通信类似，只是需要在扩展的manifest.json指定允许通信的URL：</p>
+<pre><code>&quot;externally_connectable&quot;: {
+  &quot;matches&quot;: [&quot;*://*.example.com/*&quot;]
+}
+</code></pre><p><strong>和本地应用通信</strong></p>
+<p>请参考相关文档。</p>
+<h3 id="内容安全策略CSP"><a href="#内容安全策略CSP" class="headerlink" title="内容安全策略CSP"></a>内容安全策略CSP</h3><p>出于安全考略，Chrome扩展系统遵循<a href="http://dvcs.w3.org/hg/content-security-policy/raw-file/tip/csp-specification.dev.html" target="_blank" rel="external">Content Security Policy(CSP)</a> 。</p>
+<p>默认策略限制：</p>
+<h4 id="Eval和相关函数被禁用"><a href="#Eval和相关函数被禁用" class="headerlink" title="Eval和相关函数被禁用"></a>Eval和相关函数被禁用</h4><p>如以下代码都不起作用：</p>
+<pre><code>alert(eval(&quot;foo.bar.baz&quot;));
+window.setTimeout(&quot;alert(&apos;hi&apos;)&quot;, 10);
+window.setInterval(&quot;alert(&apos;hi&apos;)&quot;, 10);
+new Function(&quot;return foo.bar.baz&quot;);
+</code></pre><p>需要改为以下代码：</p>
+<pre><code>alert(foo &amp;&amp; foo.bar &amp;&amp; foo.bar.baz);
+window.setTimeout(function() { alert(&apos;hi&apos;); }, 10);
+window.setInterval(function() { alert(&apos;hi&apos;); }, 10);
+function() { return foo &amp;&amp; foo.bar &amp;&amp; foo.bar.baz };
+</code></pre><h4 id="不执行Inline-JavaScript"><a href="#不执行Inline-JavaScript" class="headerlink" title="不执行Inline JavaScript"></a>不执行Inline JavaScript</h4><p>This restriction bans both inline <code>&lt;script&gt;</code> blocks and inline event handlers (e.g. <code>&lt;button onclick=&quot;...&quot;&gt;</code>).</p>
+<h4 id="只加载本地脚本和资源"><a href="#只加载本地脚本和资源" class="headerlink" title="只加载本地脚本和资源"></a>只加载本地脚本和资源</h4><p>只有扩展包内的脚本和资源才会被加载！通过Web即时下载的将不会被加载！ 这确保您的扩展只执行已经打包在扩展之中的可信代码，从而避免了线上的网络攻击者通过恶意重定向您所请求的Web资源所带来的安全隐患。</p>
+<p>###<a href="http://developer.chrome.com/extensions/npapi.html" target="_blank" rel="external">NPAPI Plugin</a></p>
+<p>在IE中，使用ActiveX技术来访问本地组件，如ocx，dll等，在Chrome中对应的技术为NPAPI Plugin。开发过程请参考<a href="http://blog.csdn.net/z6482/article/details/7660748" target="_blank" rel="external">NPAPI插件开发详细记录：用VS2010开发NPAPI插件步骤</a>。</p>
+<p>使用插件时，首先需要在manifest.json中定义如下关于插件的属性：</p>
+<pre><code>&quot;plugins&quot;: [
+    { &quot;path&quot;: &quot;plugin1.dll&quot;, &quot;public&quot;: true },
+    { &quot;path&quot;: &quot;plugin2.dll&quot; }
+]
+</code></pre><p>当chrome插件加载后，就可以在html页面中使用所定义的NPAPI插件了，假设插件的mime-type是x-plugin1时我们可以这样去调用NPAPI插件：</p>
+<pre><code>&lt;embed type=&quot;application/x-plugin1&quot; id=&quot;pluginId&quot;&gt;
+&lt;script&gt;
+  var plugin = document.getElementById(&quot;pluginId&quot;);
+  var result = plugin.PluginMethod(); //调用plugin中定义的方法 
+&lt;/script&gt;
+</code></pre><h2 id="开发过程"><a href="#开发过程" class="headerlink" title="开发过程"></a>开发过程</h2><p><strong>注意：</strong> 出于安全考虑，javascript必须与html分开存放。</p>
+<h3 id="确定扩展类型"><a href="#确定扩展类型" class="headerlink" title="确定扩展类型"></a>确定扩展类型</h3><ul>
+<li>如果扩展时针对所有页面的，请选择BrowserAction；否则选择PageAction。在manifest中声明<code>browser_action</code>或者<code>page_action</code>。</li>
+<li>确定需要使用哪些chrome API，并在<code>permissions</code>中声明相应的权限。</li>
+<li>确定后台页(<code>background</code>)、内容脚本(<code>content_scripts</code>)及其他属性。如：</li>
+</ul>
+<p><a href="https://github.com/GoogleChrome/chrome-app-samples/tree/master/browser" target="_blank" rel="external">chrome-app-samples / browser</a> 的<code>manifest.json</code>文件如下：</p>
+<pre><code>{
+  &quot;manifest_version&quot;: 2,
+  &quot;name&quot;: &quot;Browser Sample&quot;,
+  &quot;minimum_chrome_version&quot;: &quot;24.0.1307.0&quot;,
+  &quot;version&quot;: &quot;1.1&quot;,
+  &quot;icons&quot;: {
+    &quot;16&quot;: &quot;icon_16.png&quot;,
+    &quot;128&quot;: &quot;icon_128.png&quot;
+  },
+  &quot;app&quot;: {
+    &quot;background&quot;: {
+      &quot;scripts&quot;: [&quot;main.js&quot;]
+    }
+  },
+  &quot;permissions&quot;: [
+    &quot;webview&quot;
+  ]
+}
+</code></pre><h3 id="调试"><a href="#调试" class="headerlink" title="调试"></a><a href="http://developer.chrome.com/extensions/tut_debugging.html" target="_blank" rel="external">调试</a></h3><p><strong>加载程序：</strong></p>
+<ul>
+<li>打开 chrome://extensions。确保 chrome://extensions 中“开发者模式”选项已勾选。</li>
+<li>选择Chrome浏览器中扩展程序里的开发者模式，点击“加载正在开发的扩展程序”选中你的扩展所在的文件夹。</li>
+</ul>
+<p><strong>调试：</strong></p>
+<p>调试背景页如下图：</p>
+<pre><code>![调试背景页](http://johnnyimages.qiniudn.com/chorome-debug.png)
+</code></pre><p>弹出Dev Tools之后，调试步骤和调试普通的网页一样。</p>
+<p>调试内容页和调试普通网页类似，只不过内容页在Content Script标签页内，而非Sources标签页，如下图：</p>
+<pre><code>![调试内容页](http://johnnyimages.qiniudn.com/chrome-debug-content-script.png)
+</code></pre><p>调试弹出页，右击Browser Action或者Page Action，选择“审核弹出页”。</p>
+<p>可以使用以下方法访问扩展页面：</p>
+<ol>
+<li>在扩展管理页面上(chrome://extensions)，找到应用（扩展）ID;</li>
+<li>查看应用（扩展）中的文件，使用类似这样的格式访问 chrome-extension://extensionId/filename</li>
+<li>使用开发者工具设置脚本断点，单步调试，查看变量</li>
+<li>使用控制台命令 location.reload(true)来重新加载当前的调试页面</li>
+</ol>
+<p>###<a href="http://developer.chrome.com/extensions/packaging.html" target="_blank" rel="external">打包和发布</a></p>
+<ul>
+<li>打开 chrome://extensions。确保开发模式已被勾选。</li>
+<li><p>点击“打包扩展程序…”。选择扩展根目录，如果是首次打包忽略第二项“私有秘钥文件”，打包后会自动生成密钥文件，「密钥文件名」.pem。</p>
+<p>  <img src="http://johnnyimages.qiniudn.com/chrome-package.png" alt="打包扩展程序"></p>
+</li>
+<li><p>点击 “打包扩展程序”。除了 .pem 文件之外，会生成扩展文件 「扩展文件名」.crx。请妥善保存密钥文件，当需要再次打包（更新扩展）时，则在“私有密钥文件”中选择该密钥文件。</p>
+</li>
+</ul>
+<p>之后你变可以将打包好的扩展程序发布到 <a href="https://chrome.google.com/webstore/developer/dashboard" target="_blank" rel="external">Chrome WebStore</a>中。</p>
+<p>现在注册开发者账户需要5$的注册费用，价格本事不是问题，对于大陆用户来说，支付成了大问题。为了使用大陆信用卡支付，请参考以下方法：</p>
+<ul>
+<li><a href="http://mournelichten.blogspot.com/2012/04/google-wallet.html" target="_blank" rel="external">mournelichten: 【教程】如何注册GOOGLE WALLET(需要一定英语水平)</a></li>
+<li><a href="http://www.v2ex.com/t/81031" target="_blank" rel="external">现在Google Wallet不允许添加大陆信用卡了吗？ - V2EX</a></li>
+<li><a href="http://ikamu.me/6773" target="_blank" rel="external">开通 Google Wallet 最简单的方法，无需信用卡 | 伊卡木</a></li>
+</ul>
+<p><strong>Packaging at the command line：</strong></p>
+<pre><code>chrome.exe --pack-extension=C:\myext --pack-extension-key=C:\myext.pem
+</code></pre><p>其中，–pack-extension指定扩展所在的文件夹，–pack-extension-key指定私钥所在的文件位置，如果你不想看到对话框，请使用 –no-message-box。更多参数设置请参考 <a href="https://developer.chrome.com/extensions/crx.html" target="_blank" rel="external">CRX Package Format</a>。</p>
+<p>发布请参考 <a href="https://developers.google.com/chrome/web-store/docs/publish?hl=zh-CN" target="_blank" rel="external">Publishing Your App - Chrome Web Store</a>.</p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="权限问题"><a href="#权限问题" class="headerlink" title="权限问题"></a>权限问题</h3><blockquote>
+<p>Refused to execute JavaScript URL because it violates the following Content Security Policy directive: “script-src ‘self’ chrome-extension-resource</p>
+</blockquote>
+<p>一般类似这样的报错有这样两种可能：</p>
+<p>第一、在你的manifest.json里面要加入 <code>&quot;permissions&quot;: [&quot;tabs&quot;,&quot;https://*/*&quot;]</code>这样的配置</p>
+<p>第二、在你的html代码里面（如popup.htm,background.htm），a标签之类的在<code>onclick=&quot;&quot;</code> ，<code>href=&quot;javascript:...;&quot;</code>,加了Inline(内敛)js脚本。在实际使用中，A标签的<code>href=&quot;javasript:;&quot;</code>很常见，即使错误控制台有这样的报警也不用理会。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><ul>
+<li><a href="http://developer.chrome.com/extensions/index.html" target="_blank" rel="external">chrome extensions</a></li>
+<li><a href="https://crxdoc-zh.appspot.com/extensions/getstarted.html" target="_blank" rel="external">建立 Chrome 扩展程序</a></li>
+<li><a href="http://open.chrome.360.cn/extension_dev/overview.html" target="_blank" rel="external">360翻译的Chrome扩展开发文档</a></li>
+</ul>
+<h3 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h3><ul>
+<li><a href="http://blog.jobbole.com/46608/" target="_blank" rel="external">如何开发Chrome扩展程序</a></li>
+<li><a href="http://www.cnblogs.com/walkingp/archive/2011/03/31/2001628.html" target="_blank" rel="external">手把手教你开发chrome扩展一：开发Chrome Extenstion其实很简单</a></li>
+<li><a href="http://blog.csdn.net/my_business/article/details/7711525" target="_blank" rel="external">Chrome插件开发进阶</a></li>
+</ul>
+<h3 id="Sample"><a href="#Sample" class="headerlink" title="Sample"></a>Sample</h3><ul>
+<li><a href="http://developer.chrome.com/extensions/samples.html" target="_blank" rel="external">Sample Extensions</a></li>
+<li><a href="https://github.com/kurrik/chrome-extensions" target="_blank" rel="external">kurrik / chrome-extensions</a> Simple Chrome extensions that I haven’t gotten around to putting into <a href="http://chromium.org" target="_blank" rel="external">chromium.org</a>.</li>
+<li><a href="https://github.com/GoogleChrome/chrome-app-samples" target="_blank" rel="external">GoogleChrome / chrome-app-samples</a> 官方Demo。</li>
+<li><a href="https://developer.chrome.com/extensions/getstarted.html" target="_blank" rel="external">Getting Started: Building a Chrome Extension</a></li>
+<li><a href="https://github.com/CoryG89/MDNJump" target="_blank" rel="external">CoryG89 / MDNJump</a> The quickest way to look up something on the Mozilla Developer Network. Chrome extension.</li>
+<li><a href="https://github.com/sneezry/Dualx" target="_blank" rel="external">sneezry / Dualx</a> QQ Client for Chrome.</li>
+<li><a href="https://gitcafe.com/xiongchuan86/XPlayer/" target="_blank" rel="external">xiongchuan86 / XPlayer</a> 豆瓣音乐播放器。</li>
+<li><a href="https://github.com/krasimir/yez" target="_blank" rel="external">krasimir/yez</a> Chrome extension that acts as terminal and task runner. 结合 NodeJS 完成该功能，使用 socket.io 通信。<ul>
+<li><a href="http://flippinawesome.org/2014/06/09/chrome-killed-the-terminal-star/?-killed-the-terminal-star" target="_blank" rel="external">Chrome Killed the Terminal Star</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h3><h4 id="生成脚手架"><a href="#生成脚手架" class="headerlink" title="生成脚手架"></a>生成脚手架</h4><p>源码地址：<a href="https://github.com/yeoman/generator-chrome-extension" target="_blank" rel="external">yeoman / generator-chrome-extension</a> Yeoman generator for Chrome Extensions<br> <a href="http://yeoman.io" target="_blank" rel="external">http://yeoman.io</a>.</p>
+<h4 id="Chrome-Dev-Editor"><a href="#Chrome-Dev-Editor" class="headerlink" title="Chrome Dev Editor"></a>Chrome Dev Editor</h4><ul>
+<li><a href="http://www.omgchrome.com/chrome-dev-editor-preview-app-released/" target="_blank" rel="external">Hands On with the New Chrome Dev Editor App</a></li>
+<li><a href="https://github.com/dart-lang/chromedeveditor" target="_blank" rel="external">dart-lang/chromedeveditor</a></li>
+</ul>
+<p><strong>使用步骤：</strong></p>
+<ul>
+<li>安装node插件 <code>npm install -g generator-chrome-extension</code></li>
+<li><p>在扩展所在目录下运行 <code>yo chrome-extension</code></p>
+<p>可以使用 <code>--skip-install</code> 跳过bower和npm的自动安装，使用<code>--test-framework=[framework]</code>修改测试框架，默认为<code>mocha</code>，可以修改为<code>jasmine</code>。如果测试框架使用<code>generator-jasmine</code>，则需要先运行 <code>npm install -g generator-jasmine</code>。</p>
+</li>
+</ul>
+<p><strong>常用命令：</strong></p>
+<pre><code>yo chrome-extension --skip-install --test-framework=jasmine
+</code></pre><h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://www.smashingmagazine.com/2014/11/17/creating-save-later-chrome-extension-modern-web-tools" target="_blank" rel="external">Creating A “Save For Later” Chrome Extension With Modern Web Tools - Smashing Magazine</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:16.000Z" itemprop="dateUpdated">2017-04-21 20:57:16</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Chrome/2014-01-23-chrome-extension-develop.html" target="_blank" rel="external">http://blog.inching.org/Chrome/2014-01-23-chrome-extension-develop.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chrome/">chrome</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Chrome/2014-01-23-chrome-extension-develop.html&title=《Chrome 扩展开发》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Chrome/2014-01-23-chrome-extension-develop.html&title=《Chrome 扩展开发》 — Balance&source=概述为了着手创建你的扩展程序，你只需要为你的扩展创建一个文件夹。程序所必须的文件只有manifest.json.，不过也推荐准备一些图片用作图标，和至少一..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Chrome/2014-01-23-chrome-extension-develop.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Chrome 扩展开发》 — Balance&url=http://blog.inching.org/Chrome/2014-01-23-chrome-extension-develop.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Chrome/2014-01-23-chrome-extension-develop.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Chrome/2014-01-25-chrome-app-develop.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Chrome 应用开发</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-01-22-javascript-document.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript 文档生成工具</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Chrome/2014-01-23-chrome-extension-develop.html&title=《Chrome 扩展开发》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Chrome/2014-01-23-chrome-extension-develop.html&title=《Chrome 扩展开发》 — Balance&source=概述为了着手创建你的扩展程序，你只需要为你的扩展创建一个文件夹。程序所必须的文件只有manifest.json.，不过也推荐准备一些图片用作图标，和至少一..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Chrome/2014-01-23-chrome-extension-develop.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Chrome 扩展开发》 — Balance&url=http://blog.inching.org/Chrome/2014-01-23-chrome-extension-develop.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Chrome/2014-01-23-chrome-extension-develop.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACw0lEQVR42u3aS27bQBAFQN3/0vY2hkzq9WcSBiitBMEip2hgpvW6X6/49fX2+vPz9/fv3736m/urXd13+YWHh4c3XvoV4+o21WXl90o++fAI8PDw8I7x8g09v3R1W0/Y+Zrx8PDwnsbLH8E9Zl7K4+Hh4f2PvEnRXC2s8fDw8J7Dq5az+dbfixWSx72cteDh4eHFvLyL9Jz3R/p7eHh4eOOuel7sJmVu9cjprfDHFfDw8PAO8HpxarXAnW/0vRYaHh4e3gledcSq9+O/Fxwkx8+H93h4eHgHeFs//pvFbhz1Tga58PDw8HZ5vbZTgu/FDfMBr1+OBDw8PLwDvKvl3m/ivcGC6sOqRsbRM8bDw8Mb8CYXSh5N8t28Eq6GJnh4eHinedVF9Ma2kkgiP6IWjgo8PDy8Ii8vfPNotXow5A22fFgBDw8P7zQvCVvz2+ffqn43j1R+TEbg4eHhrfKqy8pD3l4p3GuVfbgLHh4e3gFeb06p2vQqF8S9Y2CSiODh4eEFvK2NuDpqUA0+euEFHh4e3mler3s26bPlx0B1Pb9kLXh4eHjHePnmnsey1WGp6tDV5TXx8PDwjvEKWUUrTr0Pdu+L5tGIGB4eHt4xXvVg6A1CTUrtXryLh4eHd4KXt6Pypfdi37zZlgS7r+T/g4eHh7fKywvu6hK34oZCcY+Hh4d3jFcNCyZB7W4AUR69wsPDwzvMq273CaPXZkviksswAg8PD+8ALy+gk4g2fyi7bbDu6YGHh4fXh1XbV/N4N/k8/zdcDl3h4eHhLfF2B60mN15odG0dIXh4eHjjyjPf1pMbJ4DJsYGHh4f3N3m9xlg1ik1i2a1jDA8PD+85vGqYWx2iyo+QKKTAw8PDewCvFzQkn/QK7sLQFR4eHt4qLw8Ckm393w4l4OHh4Z3mVX/e5wFrvpTqaMJueIGHh4cX874BMkKSl6NgwoYAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

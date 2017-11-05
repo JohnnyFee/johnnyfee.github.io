@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Encoding | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="基本概念编码解码计算机中储存的信息都是用二进制数表示的；而我们在屏幕上看到的英文、汉字等字符是二进制数转换之后的结果。通俗的说，按照何种规则将字符存储在计算机中，如’a’用什么表示，称为”编码“；反之，将存储在计算机中的二进制数解析显示出来，称为”解码“，如同密码学中的加密和解密。在解码过程中，如果使用了错误的解码规则，则导致’a’解析成’b’或者乱码。
+字符集 Charset是一个系统支持的所有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Encoding">
+<meta property="og:url" content="http://blog.inching.org/Data/2016-11-06-encoding.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="基本概念编码解码计算机中储存的信息都是用二进制数表示的；而我们在屏幕上看到的英文、汉字等字符是二进制数转换之后的结果。通俗的说，按照何种规则将字符存储在计算机中，如’a’用什么表示，称为”编码“；反之，将存储在计算机中的二进制数解析显示出来，称为”解码“，如同密码学中的加密和解密。在解码过程中，如果使用了错误的解码规则，则导致’a’解析成’b’或者乱码。
+字符集 Charset是一个系统支持的所有">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/270064-3b52f52750bb294e.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image011.gif">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image013.gif">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/GBK_encoding_zh.svg/638px-GBK_encoding_zh.svg.png">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image017.gif">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image019.gif">
+<meta property="og:image" content="http://www.ruanyifeng.com/blog/2007/10/bg2007102801.jpg">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Encoding">
+<meta name="twitter:description" content="基本概念编码解码计算机中储存的信息都是用二进制数表示的；而我们在屏幕上看到的英文、汉字等字符是二进制数转换之后的结果。通俗的说，按照何种规则将字符存储在计算机中，如’a’用什么表示，称为”编码“；反之，将存储在计算机中的二进制数解析显示出来，称为”解码“，如同密码学中的加密和解密。在解码过程中，如果使用了错误的解码规则，则导致’a’解析成’b’或者乱码。
+字符集 Charset是一个系统支持的所有">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/270064-3b52f52750bb294e.gif?imageMogr2/auto-orient/strip">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Encoding</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Encoding</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-11-06T14:26:00.000Z" itemprop="datePublished" class="page-time">
+  2016-11-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Data/">Data</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本概念"><span class="post-toc-text">基本概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#编码解码"><span class="post-toc-text">编码解码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#字符集-Charset"><span class="post-toc-text">字符集 Charset</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#字符编码-Character-Encoding"><span class="post-toc-text">字符编码 Character Encoding</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#代码页"><span class="post-toc-text">代码页</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#BOM"><span class="post-toc-text">BOM</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ASCII-码"><span class="post-toc-text">ASCII 码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ISO-8859-1-Latin-1"><span class="post-toc-text">ISO-8859-1/Latin-1</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#GB2312"><span class="post-toc-text">GB2312</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#GBK"><span class="post-toc-text">GBK</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#GB18030"><span class="post-toc-text">GB18030</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Unicode"><span class="post-toc-text">Unicode</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#UTF-16"><span class="post-toc-text">UTF-16</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#UTF-8"><span class="post-toc-text">UTF-8</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Unicode与UTF-8之间的转换"><span class="post-toc-text">Unicode与UTF-8之间的转换</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Little-endian和Big-endian"><span class="post-toc-text">Little endian和Big endian</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实例"><span class="post-toc-text">实例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#延伸阅读"><span class="post-toc-text">延伸阅读</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-encoding"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Encoding</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-11-06 22:26:00" datetime="2016-11-06T14:26:00.000Z"  itemprop="datePublished">2016-11-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Data/">Data</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="编码解码"><a href="#编码解码" class="headerlink" title="编码解码"></a>编码解码</h3><p>计算机中储存的信息都是用二进制数表示的；而我们在屏幕上看到的英文、汉字等字符是二进制数转换之后的结果。通俗的说，按照何种规则将字符存储在计算机中，如’a’用什么表示，称为”<strong>编码</strong>“；反之，将存储在计算机中的二进制数解析显示出来，称为”<strong>解码</strong>“，如同密码学中的加密和解密。在解码过程中，如果使用了错误的解码规则，则导致’a’解析成’b’或者乱码。</p>
+<h3 id="字符集-Charset"><a href="#字符集-Charset" class="headerlink" title="字符集 Charset"></a>字符集 Charset</h3><p>是一个系统支持的所有抽象字符的集合。字符是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等。</p>
+<p>常见字符集名称：ASCII字符集、GB2312字符集、BIG5字符集、GB18030字符集、Unicode字符集等。</p>
+<h3 id="字符编码-Character-Encoding"><a href="#字符编码-Character-Encoding" class="headerlink" title="字符编码 Character Encoding"></a>字符编码 Character Encoding</h3><p><em>字符编码</em> 是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表），与其他东西的一个集合（如号码或电脉冲）进行配对。即在符号集合与数字系统之间建立对应关系，它是信息处理的一项基本技术。</p>
+<p>计算机要准确的处理各种字符集文字，需要进行字符编码，以便计算机能够识别和存储各种文字。</p>
+<p>常见的编码方式有 ASCII、ISO-8859-1、GB2312、GBK、UTF-8、UTF-16 等。</p>
+<p>几种编码格式的比较：</p>
+<ul>
+<li>对中文字符后面四种编码格式都能处理，GB2312 与 GBK 编码规则类似，但是 GBK 范围更大，它能处理所有汉字字符，所以 GB2312 与 GBK 比较应该选择 GBK。</li>
+<li>UTF-16 与 UTF-8 都是处理 Unicode 编码，它们的编码规则不太相同，相对来说 UTF-16 编码效率最高，字符到字节相互转换更简单，进行字符串操作也更好。它适合在本地磁盘和内存之间使用，可以进行字符和字节之间快速切换，如 Java 的内存编码就是采用 UTF-16 编码。但是它不适合在网络之间传输，因为网络传输容易损坏字节流，一旦字节流损坏将很难恢复，相比较而言 UTF-8 更适合网络传输，对 ASCII 字符采用单字节存储，另外单个字符损坏也不会影响后面其它字符，在编码效率上介于 GBK 和 UTF-16 之间，所以 UTF-8 在编码效率上和编码安全性上做了平衡，是理想的中文编码方式。</li>
+</ul>
+<p>如字符串“I am 君山”的 char 数组为 49 20 61 6d 20 541b 5c71，下面把它按照不同的编码格式转化成相应的字节。</p>
+<h3 id="代码页"><a href="#代码页" class="headerlink" title="代码页"></a>代码页</h3><p>代码页是字符集编码的别名，也有人称”内码表”。</p>
+<h3 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h3><h2 id="ASCII-码"><a href="#ASCII-码" class="headerlink" title="ASCII 码"></a>ASCII 码</h2><p>ASCII（American Standard Code for Information Interchange，美国信息交换标准代码）是基于拉丁字母的一套电脑编码系统。它主要用于显示现代英语，而其扩展版本EASCII则可以勉强显示其他西欧语言。</p>
+<p><strong>ASCII字符集</strong>：主要包括控制字符（回车键、退格、换行键等）；可显示字符（英文大小写字符、阿拉伯数字和西文符号）。</p>
+<p><strong>ASCII编码</strong>：将ASCII字符集转换为计算机可以接受的数字系统的数的规则。使用7位（bits）表示一个字符，共128字符；但是7位编码的字符集只能支持128个字符，为了表示更多的欧洲常用字符对ASCII进行了扩展，ASCII扩展字符集使用8位（bits）表示一个字符，共256字符。ASCII字符集映射到数字编码规则如下图所示：</p>
+<p>总共有 128 个，用一个字节的低 7 位表示，最前面的1位统一规定为0。0~31 是控制字符如换行回车删除等；32~126 是打印字符，可以通过键盘输入并且能够显示出来。</p>
+<p>See <a href="http://tool.oschina.net/commons?type=4" target="_blank" rel="external">ASCII码对照表</a></p>
+<p>后来美国人发现128个码位不够用，于是在原来二维表的基础上进行了扩展，256个字符，取名叫EASCII（Extended ASCII）。256个码位，用8位二进制数表示，即 <code>0x00-0xFF</code>。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/270064-3b52f52750bb294e.gif?imageMogr2/auto-orient/strip" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="ISO-8859-1-Latin-1"><a href="#ISO-8859-1-Latin-1" class="headerlink" title="ISO-8859-1/Latin-1"></a>ISO-8859-1/Latin-1</h2><p>英语用128个符号编码就够了，但是用来表示其他语言，128个符号是不够的。比如，在法语中，字母上方有注音符号，它就无法用ASCII码表示。于是，一些欧洲国家就决定，利用字节中闲置的最高位编入新的符号。比如，法语中的é的编码为130（二进制10000010）。这样一来，这些欧洲国家使用的编码体系，可以表示最多256个符号。</p>
+<p>128 个字符显然是不够用的，于是 ISO 组织在 ASCII 码基础上又制定了一些列标准用来扩展 ASCII 编码，它们是 ISO-8859-1~ISO-8859-15，其中 ISO-8859-1 涵盖了大多数西欧语言字符，所有应用的最广泛。<strong>ISO-8859-1 仍然是单字节编码，它总共能表示 256 个字符。</strong></p>
+<p>ISO 8859-1，正式编号为ISO/IEC 8859-1:1998，又称Latin-1或“西欧语言”，是国际标准化组织内ISO/IEC 8859的第一个8位字符集。</p>
+<p>但是，这里又出现了新的问题。不同的国家有不同的字母，因此，哪怕它们都使用256个符号的编码方式，代表的字母却不一样。比如，130在法语编码中代表了é，在希伯来语编码中却代表了字母Gimel (ג)，在俄语编码中又会代表另一个符号。但是不管怎样，所有这些编码方式中，0–127表示的符号是一样的，不一样的只是128–255的这一段。</p>
+<p>至于亚洲国家的文字，使用的符号就更多了，汉字就多达10万左右。一个字节只能表示256种符号，肯定是不够的，就必须使用多个字节表达一个符号。比如，简体中文常见的编码方式是GB2312，使用两个字节表示一个汉字，所以理论上最多可以表示256x256=65536个符号。</p>
+<p>字符串“I am 君山”用 ISO-8859-1 编码，下面是编码结果：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image011.gif" alt="Figure xxx. Requires a heading" title="">
+                </div>
+                <div class="image-caption">Figure xxx. Requires a heading</div>
+            </figure>
+<p>从上图看出 7 个 char 字符经过 ISO-8859-1 编码转变成 7 个 byte 数组，ISO-8859-1 是单字节编码，中文“君山”被转化成值是 3f 的 byte。3f 也就是“？”字符，所以经常会出现中文变成“？”很可能就是错误的使用了 ISO-8859-1 这个编码导致的。中文字符经过 ISO-8859-1 编码会丢失信息，通常我们称之为“黑洞”，它会把不认识的字符吸收掉。由于现在大部分基础的 Java 框架或系统默认的字符集编码都是 ISO-8859-1，所以很容易出现乱码问题，后面将会分析不同的乱码形式是怎么出现的。</p>
+<h2 id="GB2312"><a href="#GB2312" class="headerlink" title="GB2312"></a>GB2312</h2><p>GB2312或GB2312-80 的全称是《信息交换用汉字编码字符集 基本集》，又称GB0。</p>
+<p>GB2312 把那些127号之后的奇异符号们（即EASCII）取消掉，规定：一个小于127的字符的意义与原来相同，但两个 <strong>大于127</strong> 的字符连在一起时，就表示一个汉字。</p>
+<ul>
+<li>前面的一个字节（他称之为高字节）从0xA1用到 0xF7，其中从 A1-A9 是符号区，总共包含 682 个符号，从 B0-F7 是汉字区，包含 6763 个汉字。</li>
+<li>后面一个字节（低字节）从0xA1到0xFE，这样我们就可以组合出大约7000多个简体汉字了。</li>
+</ul>
+<p>区分中文编码的方法是高字节的最高位不为0。</p>
+<p>在这些编码里，还把数学符号、罗马希腊的 字母、日文的假名们都编进去了，连在ASCII里本来就有的数字、标点、字母都统统重新编了两个字节长的编码，这就是常说的”全角”字符，而原来在127号以下的那些就叫”半角”字符了。</p>
+<p>See <a href="http://www.knowsky.com/resource/gb2312tbl.htm" target="_blank" rel="external">GB2312简体中文编码表</a></p>
+<p>字符串“I am 君山”用 GB2312 编码，下面是编码结果：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image013.gif" alt="Figure xxx. Requires a heading" title="">
+                </div>
+                <div class="image-caption">Figure xxx. Requires a heading</div>
+            </figure>
+<p>GB2312 对应的 Charset 是 <code>sun.nio.cs.ext. EUC_CN</code> 而对应的 <code>CharsetDecoder</code> 编码类是 <code>sun.nio.cs.ext.DoubleByte</code>，GB2312 字符集有一个 char 到 byte 的码表，不同的字符编码就是查这个码表找到与每个字符的对应的字节，然后拼装成 byte 数组。查表的规则如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">c2b[c2bIndex[<span class="keyword">char</span> &gt;&gt; <span class="number">8</span>] + (<span class="keyword">char</span> &amp; <span class="number">0xff</span>)]</div></pre></td></tr></table></figure>
+<p>如果<br>查到的码位值大于 0xff 则是双字节，否则是单字节。双字节高 8 位作为第一个字节，低 8 位作为第二个字节，如下代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (bb &gt; <span class="number">0xff</span>) &#123;    <span class="comment">// DoubleByte</span></div><div class="line">   <span class="keyword">if</span> (dl - dp &lt; <span class="number">2</span>)</div><div class="line">       <span class="keyword">return</span> CoderResult.OVERFLOW;</div><div class="line">   da[dp++] = (<span class="keyword">byte</span>) (bb &gt;&gt; <span class="number">8</span>);</div><div class="line">   da[dp++] = (<span class="keyword">byte</span>) bb;</div><div class="line">&#125; <span class="keyword">else</span> &#123;                      <span class="comment">// SingleByte</span></div><div class="line">   <span class="keyword">if</span> (dl - dp &lt; <span class="number">1</span>)</div><div class="line">       <span class="keyword">return</span> CoderResult.OVERFLOW;</div><div class="line">   da[dp++] = (<span class="keyword">byte</span>) bb;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从上图可以看出前 5 个字符经过编码后仍然是 5 个字节，而汉字被编码成双字节，在第一节中介绍到 GB2312 只支持 6763 个汉字，所以并不是所有汉字都能够用 GB2312 编码。</p>
+<h2 id="GBK"><a href="#GBK" class="headerlink" title="GBK"></a>GBK</h2><p>由于 GB2312-80只收录6763个汉字，有不少汉字，如部分在GB 2312-80推出以后才简化的汉字（如”啰”），部分人名用字（如中国前总理朱镕基的”镕”字），台湾及香港使用的繁体字，日语及朝鲜语汉字等，并未有收录在内。于是厂商微软利用GB2312-80未使用的编码空间，收录GB 13000.1-93全部字符制定了GBK编码。</p>
+<p>GBK 全称叫《汉字内码扩展规范》，是国家技术监督局为 Windows95 所制定的新的汉字内码规范，它的出现是为了扩展 GB2312，加入更多的汉字，它的编码范围是 8140~FEFE（去掉 XX7F）总共有 23940 个码位，它能表示 21003 个汉字，它的编码是和 GB2312 兼容的，也就是说用 GB2312 编码的汉字可以用 GBK 来解码，并且不会有乱码。</p>
+<p>字符有一字节和双字节编码，<code>00</code>–<code>7F</code>范围内是第一个字节，和<a href="https://zh.wikipedia.org/wiki/ASCII" title="ASCII" target="_blank" rel="external">ASCII</a>保持一致，此范围内严格上说有96个文字和32个控制符号。</p>
+<p>之后的双字节中，前一字节是双字节的第一位。总体上说第一字节的范围是 <code>81</code>–<code>FE</code>（也就是不含<code>80</code>和<code>FF</code>），第二字节的一部分领域在<code>40</code>–<code>7E</code>，其他领域在<code>80</code>–<code>FE</code>。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/GBK_encoding_zh.svg/638px-GBK_encoding_zh.svg.png" alt="File:GBK encoding zh.svg" title="">
+                </div>
+                <div class="image-caption">File:GBK encoding zh.svg</div>
+            </figure>
+<p>字符串“I am 君山” 用 GBK 编码与 GB2312 相同。</p>
+<h2 id="GB18030"><a href="#GB18030" class="headerlink" title="GB18030"></a>GB18030</h2><p>GB 18030，全称：国家标准GB 18030-2005《信息技术 中文编码字符集》，是中华人民共和国现时最新的内码字集，是GB18030-2000《信息技术 信息交换用汉字编码字符集 基本集的扩充》的修订版。与GB 2312-1980完全兼容，与GBK基本兼容，支持GB13000及Unicode的全部统一汉字，共收录汉字70244个。这个虽然是国家标准，但是实际应用系统中使用的并不广泛。</p>
+<p>GB18030 编码是 1个，2个，4个字节变长编码。</p>
+<ul>
+<li>一字节部分从 0x0~0x7F 与 ASCII 编码兼容。</li>
+<li>二字节部分，首字节从 0x81~0xFE，尾字节从 0x40~0x7E以及 0x80~0xFE，与GBK标准基本兼容。</li>
+<li>四字节部分，第一字节从 0x81~0xFE，第二字节从 0x30~0x39，第三和第四字节的范围和前两个字节分别相同。</li>
+</ul>
+<p>从ASCII、GB2312、GBK到GB18030，这些编码方法是向下兼容的，即同一个字符在这些方案中总是有相同的编码，后面的标准支持更多的字符。在这些编码中，英文和中文可以统一地处理。</p>
+<h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p>Unicode（统一码、万国码、单一码、标准万国码）是世界级字符集，包含各国语言的字符。</p>
+<p>比如，U+0041表示英语的大写字母 A，U+4E25表示汉字”严”。具体的符号对应表，可以查询 <a href="http://www.unicode.org/" target="_blank" rel="external">unicode.org</a>，或者专门的<a href="http://www.chi2ko.com/tool/CJK.htm" target="_blank" rel="external">汉字对应表</a>。</p>
+<p>Unicode 它只规定了符号和二进制代码之间的映射关系，却没有规定这个二进制代码应该如何存储。</p>
+<p>世界上存在着多种编码方式，同一个二进制数字可以被解释成不同的符号。因此，要想打开一个文本文件，就必须知道它的编码方式，否则用错误的编码方式解读，就会出现乱码。为什么电子邮件常常出现乱码？就是因为发信人和收信人使用的编码方式不一样。</p>
+<p>可以想象，如果有一种编码，将世界上所有的符号都纳入其中。每一个符号都给予一个独一无二的编码，那么乱码问题就会消失。这就是Unicode，就像它的名字都表示的，这是一种所有符号的编码。</p>
+<p>Unicode 是字符集，UTF-32/UTF-16/UTF-8是三种字符编码方案。</p>
+<p>比如，汉字”严”的unicode是十六进制数4E25，转换成二进制数足足有15位（100111000100101），也就是说这个符号的表示至少需要2个字节。表示其他更大的符号，可能需要3个字节或者4个字节，甚至更多。</p>
+<p>这里就有两个严重的问题，第一个问题是，如何才能区别Unicode和ASCII？计算机怎么知道三个字节表示一个符号，而不是分别表示三个符号呢？第二个问题是，我们已经知道，英文字母只用一个字节表示就够了，如果Unicode统一规定，每个符号用三个或四个字节表示，那么每个英文字母前都必然有二到三个字节是0，这对于存储来说是极大的浪费，文本文件的大小会因此大出二三倍，这是无法接受的。</p>
+<p>它们造成的结果是：</p>
+<ul>
+<li>出现了Unicode的多种存储方式，也就是说有许多种不同的二进制格式，可以用来表示Unicode。</li>
+<li>Unicode在很长一段时间内无法推广，直到互联网的出现。</li>
+</ul>
+<p><a href="http://unicode-table.com/cn/#control-character" target="_blank" rel="external">Unicode®字符百科</a></p>
+<h3 id="UTF-16"><a href="#UTF-16" class="headerlink" title="UTF-16"></a>UTF-16</h3><p>说到 UTF 必须要提到 Unicode（Universal Code 统一码），ISO 试图想创建一个全新的超语言字典，世界上所有的语言都可以通过这本字典来相互翻译。</p>
+<p>UTF-16 具体定义了 Unicode 字符在计算机中存取方法。UTF-16 用两个字节来表示 Unicode 转化格式，这个是定长的表示方法，不论什么字符都可以用两个字节表示，两个字节是 16 个 bit，所以叫 UTF-16。UTF-16 表示字符非常方便，每两个字节表示一个字符，这个在字符串操作时就大大简化了操作，这也是 Java 以 UTF-16 作为内存的字符存储格式的一个很重要的原因。</p>
+<p>字符串“I am 君山”用 UTF-16 编码，下面是编码结果：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image017.gif" alt="Figure xxx. Requires a heading" title="">
+                </div>
+                <div class="image-caption">Figure xxx. Requires a heading</div>
+            </figure>
+<p>用 UTF-16 编码将 char 数组放大了一倍，单字节范围内的字符，在高位补 0 变成两个字节，中文字符也变成两个字节。从 UTF-16 编码规则来看，仅仅将字符的高位和地位进行拆分变成两个字节。特点是编码效率非常高，规则很简单。</p>
+<p>由于不同处理器对 2 字节处理方式不同，Big-endian（高位字节在前，低位字节在后）或 Little-endian（低位字节在前，高位字节在后）编码，所以在对一串字符串进行编码是需要指明到底是 Big-endian 还是 Little-endian，所以前面有两个字节用来保存 BYTE_ORDER_MARK 值。</p>
+<p>UTF-16 是用定长 16 位（2 字节）来表示的 UCS-2 或 Unicode 转换格式，通过代理对来访问 BMP 之外的字符编码。</p>
+<h3 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a>UTF-8</h3><p>UTF-16 统一采用两个字节表示一个字符，虽然在表示上非常简单方便，但是也有其缺点，有很大一部分字符用一个字节就可以表示的现在要两个字节表示，存储空间放大了一倍，在现在的网络带宽还非常有限的今天，这样会增大网络传输的流量，而且也没必要。</p>
+<p>UTF-8就是在互联网上使用最广的一种Unicode的实现方式。UTF-8 采用了一种变长技术，每个编码区域有不同的字码长度。它可以使用1~4个字节表示一个符号，根据不同的符号而变化字节长度。</p>
+<p>UTF-8编码字符理论上可以最多到6个字节长，然而16位BMP字符最多只用到3字节长。</p>
+<ol>
+<li>128个US-ASCII字符只需一个位元组编码（Unicode范围由U+0000至U+007F）。</li>
+<li>带有附加符号的拉丁文、希腊文、西里尔字母、亚美尼亚语、希伯来文、阿拉伯文、叙利亚文及它拿字母则需要两个位元组编码（Unicode范围由U+0080至U+07FF）。</li>
+<li>其他基本多文种平面（BMP）中的字元（这包含了大部分常用字，如大部分的汉字）使用三个位元组编码（Unicode范围由U+0800至U+FFFF）。</li>
+<li>其他极少使用的Unicode 辅助平面的字元使用四至六位元组编码（Unicode范围由U+10000至U+1FFFFF使用四字节，Unicode范围由U+200000至U+3FFFFFF使用五字节，Unicode范围由U+4000000至U+7FFFFFFF使用六字节）。</li>
+</ol>
+<p>UTF-8的编码规则很简单，只有二条：</p>
+<ol>
+<li><p>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的unicode码。因此对于英语字母，UTF-8编码和ASCII码是相同的。</p>
+</li>
+<li><p>于n字节的符号（n&gt;1），第一个字节的前n位都设为 1，第 n+1 位设为 0，后面字节的前两位一律设为 10。剩下的没有提及的二进制位，全部为这个符号的unicode码。</p>
+</li>
+</ol>
+<p>下表总结了编码规则，字母x表示可用编码的位。</p>
+<table>
+<thead>
+<tr>
+<th>Unicode符号范围(十六进制)</th>
+<th>UTF-8编码方式（二进制）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0000 0000-0000 007F</td>
+<td>0xxxxxxx</td>
+</tr>
+<tr>
+<td>0000 0080-0000 07FF</td>
+<td>110xxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0000 0800-0000 FFFF</td>
+<td>1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0001 0000-0010 FFFF</td>
+<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody>
+</table>
+<p>跟据上表，解读UTF-8编码非常简单。</p>
+<ul>
+<li>如果一个字节的第一位是 0，则这个字节单独就是一个字符；</li>
+<li>如果第一位是1，则连续有多少个1，就表示当前字符占用多少个字节。</li>
+</ul>
+<p>我们分别看三个从一个字节到三个字节的UTF-8编码例子：</p>
+<table>
+<thead>
+<tr>
+<th>实际字符</th>
+<th>在Unicode字库序号的十六进制</th>
+<th>在Unicode字库序号的二进制</th>
+<th>UTF-8编码后的二进制</th>
+<th>UTF-8编码后的十六进制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$</td>
+<td>0024</td>
+<td>010 0100</td>
+<td>0010 0100</td>
+<td>24</td>
+</tr>
+<tr>
+<td>¢</td>
+<td>00A2</td>
+<td>000 1010 0010</td>
+<td>1100 0010 1010 0010</td>
+<td>C2 A2</td>
+</tr>
+<tr>
+<td>€</td>
+<td>20AC</td>
+<td>0010 0000 1010 1100</td>
+<td>1110 0010 1000 0010 1010 1100</td>
+<td>E2 82 AC</td>
+</tr>
+</tbody>
+</table>
+<p>细心的读者不难从以上的简单介绍中得出以下规律：</p>
+<ul>
+<li>3个字节的UTF-8十六进制编码一定是以<code>E</code>开头的</li>
+<li>2个字节的UTF-8十六进制编码一定是以<code>C</code>或<code>D</code>开头的</li>
+<li>1个字节的UTF-8十六进制编码一定是以比<code>8</code>小的数字开头的</li>
+</ul>
+<p>下面，还是以汉字”严”为例，演示如何实现UTF-8编码。</p>
+<ol>
+<li>已知”严”的unicode是4E25（100111000100101）。</li>
+<li>根据上表，可以发现4E25处在第三行的范围内（0000 0800-0000 FFFF），因此”严”的UTF-8编码需要三个字节，即格式是”1110xxxx 10xxxxxx 10xxxxxx”。</li>
+<li>从”严”的最后一个二进制位开始，依次从后向前填入格式中的x，多出的位补0。这样就得到了，”严”的UTF-8编码是”11100100 10111000 10100101”，转换成十六进制就是E4B8A5。</li>
+</ol>
+<p>字符串“I am 君山”用 UTF-8 编码，下面是编码结果：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image019.gif" alt="Figure xxx. Requires a heading" title="">
+                </div>
+                <div class="image-caption">Figure xxx. Requires a heading</div>
+            </figure>
+<p>UTF-8 对单字节范围内字符仍然用一个字节表示，对汉字采用三个字节表示。它的编码规则如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> CoderResult <span class="title">encodeArrayLoop</span><span class="params">(CharBuffer src,</span></span></div><div class="line">ByteBuffer dst)&#123;</div><div class="line">           <span class="keyword">char</span>[] sa = src.array();</div><div class="line">           <span class="keyword">int</span> sp = src.arrayOffset() + src.position();</div><div class="line">           <span class="keyword">int</span> sl = src.arrayOffset() + src.limit();</div><div class="line">           <span class="keyword">byte</span>[] da = dst.array();</div><div class="line">           <span class="keyword">int</span> dp = dst.arrayOffset() + dst.position();</div><div class="line">           <span class="keyword">int</span> dl = dst.arrayOffset() + dst.limit();</div><div class="line">           <span class="keyword">int</span> dlASCII = dp + Math.min(sl - sp, dl - dp);</div><div class="line">           <span class="comment">// ASCII only loop</span></div><div class="line">           <span class="keyword">while</span> (dp &lt; dlASCII &amp;&amp; sa[sp] &lt; <span class="string">'\u0080'</span>)</div><div class="line">               da[dp++] = (<span class="keyword">byte</span>) sa[sp++];</div><div class="line">           <span class="keyword">while</span> (sp &lt; sl) &#123;</div><div class="line">               <span class="keyword">char</span> c = sa[sp];</div><div class="line">               <span class="keyword">if</span> (c &lt; <span class="number">0x80</span>) &#123;</div><div class="line">                   <span class="comment">// Have at most seven bits</span></div><div class="line">                   <span class="keyword">if</span> (dp &gt;= dl)</div><div class="line">                       <span class="keyword">return</span> overflow(src, sp, dst, dp);</div><div class="line">                   da[dp++] = (<span class="keyword">byte</span>)c;</div><div class="line">               &#125; <span class="keyword">else</span> <span class="keyword">if</span> (c &lt; <span class="number">0x800</span>) &#123;</div><div class="line">                   <span class="comment">// 2 bytes, 11 bits</span></div><div class="line">                   <span class="keyword">if</span> (dl - dp &lt; <span class="number">2</span>)</div><div class="line">                       <span class="keyword">return</span> overflow(src, sp, dst, dp);</div><div class="line">                   da[dp++] = (<span class="keyword">byte</span>)(<span class="number">0xc0</span> | (c &gt;&gt; <span class="number">6</span>));</div><div class="line">                   da[dp++] = (<span class="keyword">byte</span>)(<span class="number">0x80</span> | (c &amp; <span class="number">0x3f</span>));</div><div class="line">               &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Character.isSurrogate(c)) &#123;</div><div class="line">                   <span class="comment">// Have a surrogate pair</span></div><div class="line">                   <span class="keyword">if</span> (sgp == <span class="keyword">null</span>)</div><div class="line">                       sgp = <span class="keyword">new</span> Surrogate.Parser();</div><div class="line">                   <span class="keyword">int</span> uc = sgp.parse(c, sa, sp, sl);</div><div class="line">                   <span class="keyword">if</span> (uc &lt; <span class="number">0</span>) &#123;</div><div class="line">                       updatePositions(src, sp, dst, dp);</div><div class="line">                       <span class="keyword">return</span> sgp.error();</div><div class="line">                   &#125;</div><div class="line">                   <span class="keyword">if</span> (dl - dp &lt; <span class="number">4</span>)</div><div class="line">                       <span class="keyword">return</span> overflow(src, sp, dst, dp);</div><div class="line">                   da[dp++] = (<span class="keyword">byte</span>)(<span class="number">0xf0</span> | ((uc &gt;&gt; <span class="number">18</span>)));</div><div class="line">                   da[dp++] = (<span class="keyword">byte</span>)(<span class="number">0x80</span> | ((uc &gt;&gt; <span class="number">12</span>) &amp; <span class="number">0x3f</span>));</div><div class="line">                   da[dp++] = (<span class="keyword">byte</span>)(<span class="number">0x80</span> | ((uc &gt;&gt;  <span class="number">6</span>) &amp; <span class="number">0x3f</span>));</div><div class="line">                   da[dp++] = (<span class="keyword">byte</span>)(<span class="number">0x80</span> | (uc &amp; <span class="number">0x3f</span>));</div><div class="line">                   sp++;  <span class="comment">// 2 chars</span></div><div class="line">               &#125; <span class="keyword">else</span> &#123;</div><div class="line">                   <span class="comment">// 3 bytes, 16 bits</span></div><div class="line">                   <span class="keyword">if</span> (dl - dp &lt; <span class="number">3</span>)</div><div class="line">                       <span class="keyword">return</span> overflow(src, sp, dst, dp);</div><div class="line">                   da[dp++] = (<span class="keyword">byte</span>)(<span class="number">0xe0</span> | ((c &gt;&gt; <span class="number">12</span>)));</div><div class="line">                   da[dp++] = (<span class="keyword">byte</span>)(<span class="number">0x80</span> | ((c &gt;&gt;  <span class="number">6</span>) &amp; <span class="number">0x3f</span>));</div><div class="line">                   da[dp++] = (<span class="keyword">byte</span>)(<span class="number">0x80</span> | (c &amp; <span class="number">0x3f</span>));</div><div class="line">               &#125;</div><div class="line">               sp++;</div><div class="line">           &#125;</div><div class="line">           updatePositions(src, sp, dst, dp);</div><div class="line">           <span class="keyword">return</span> CoderResult.UNDERFLOW;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>UTF-8 编码与 GBK 和 GB2312 不同，不用查码表，所以在编码效率上 UTF-8 的效率会更好，所以在存储中文字符时 UTF-8 编码比较理想。</p>
+<p>See <a href="https://zh.wikipedia.org/wiki/UTF-8" target="_blank" rel="external">UTF-8 - 维基百科，自由的百科全书</a></p>
+<h3 id="Unicode与UTF-8之间的转换"><a href="#Unicode与UTF-8之间的转换" class="headerlink" title="Unicode与UTF-8之间的转换"></a>Unicode与UTF-8之间的转换</h3><p>通过上一节的例子，可以看到”严”的Unicode码是4E25，UTF-8编码是E4B8A5，两者是不一样的。它们之间的转换可以通过程序实现。</p>
+<p>在Windows平台下，有一个最简单的转化方法，就是使用内置的记事本小程序Notepad.exe。打开文件后，点击”文件”菜单中的”另存为”命令，会跳出一个对话框，在最底部有一个”编码”的下拉条。</p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.ruanyifeng.com/blog/2007/10/bg2007102801.jpg" alt="bg2007102801.jpg](http://www.ruanyifeng.com/blog/2007/10/bg2007102801-thumb.jpg)" title="">
+                </div>
+                <div class="image-caption">bg2007102801.jpg](http://www.ruanyifeng.com/blog/2007/10/bg2007102801-thumb.jpg)</div>
+            </figure></p>
+<p>里面有四个选项：ANSI，Unicode，Unicode big endian 和 UTF-8。</p>
+<p>1）ANSI是默认的编码方式。对于英文文件是ASCII编码，对于简体中文文件是GB2312编码（只针对Windows简体中文版，如果是繁体中文版会采用Big5码）。</p>
+<p>2）Unicode编码指的是UCS-2编码方式，即直接用两个字节存入字符的Unicode码。这个选项用的little endian格式。</p>
+<p>3）Unicode big endian编码与上一个选项相对应。我在下一节会解释little endian和big endian的涵义。</p>
+<p>4）UTF-8编码，也就是上一节谈到的编码方法。</p>
+<p>选择完”编码方式”后，点击”保存”按钮，文件的编码方式就立刻转换好了。</p>
+<h3 id="Little-endian和Big-endian"><a href="#Little-endian和Big-endian" class="headerlink" title="Little endian和Big endian"></a>Little endian和Big endian</h3><p>上一节已经提到，Unicode码可以采用UCS-2格式直接存储。以汉字”严”为例，Unicode码是4E25，需要用两个字节存储，一个字节是4E，另一个字节是25。存储的时候，4E在前，25在后，就是Big endian方式；25在前，4E在后，就是Little endian方式。</p>
+<p>这两个古怪的名称来自英国作家斯威夫特的《格列佛游记》。在该书中，小人国里爆发了内战，战争起因是人们争论，吃鸡蛋时究竟是从大头(Big-Endian)敲开还是从小头(Little-Endian)敲开。为了这件事情，前后爆发了六次战争，一个皇帝送了命，另一个皇帝丢了王位。</p>
+<p>因此，第一个字节在前，就是”大头方式”（Big endian），第二个字节在前就是”小头方式”（Little endian）。</p>
+<p>那么很自然的，就会出现一个问题：计算机怎么知道某一个文件到底采用哪一种方式编码？</p>
+<p>Unicode规范中定义，每一个文件的最前面分别加入一个表示编码顺序的字符，这个字符的名字叫做”零宽度非换行空格”（ZERO WIDTH NO-BREAK SPACE），用FEFF表示。这正好是两个字节，而且FF比FE大1。</p>
+<p>如果一个文本文件的头两个字节是FE FF，就表示该文件采用大头方式；如果头两个字节是FF FE，就表示该文件采用小头方式。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>下面，举一个实例。</p>
+<p>打开”记事本”程序Notepad.exe，新建一个文本文件，内容就是一个”严”字，依次采用ANSI，Unicode，Unicode big endian 和 UTF-8编码方式保存。</p>
+<p>然后，用文本编辑软件<a href="http://www.google.cn/search?aq=t&amp;oq=UltraEdit&amp;complete=1&amp;hl=zh-CN&amp;newwindow=1&amp;rlz=1B3GGGL_zh-CNCN216CN216&amp;q=ultraedit+%E4%B8%8B%E8%BD%BD&amp;btnG=Google+%E6%90%9C%E7%B4%A2&amp;meta=" target="_blank" rel="external">UltraEdit中</a>的”十六进制功能”，观察该文件的内部编码方式。</p>
+<p>1）ANSI：文件的编码就是两个字节”D1 CF”，这正是”严”的GB2312编码，这也暗示GB2312是采用大头方式存储的。</p>
+<p>2）Unicode：编码是四个字节”FF FE 25 4E”，其中”FF FE”表明是小头方式存储，真正的编码是4E25。</p>
+<p>3）Unicode big endian：编码是四个字节”FE FF 4E 25”，其中”FE FF”表明是大头方式存储。</p>
+<p>4）UTF-8：编码是六个字节”EF BB BF E4 B8 A5”，前三个字节”EF BB BF”表示这是UTF-8编码，后三个”E4B8A5”就是”严”的具体编码，它的存储顺序与编码顺序是一致的。</p>
+<h3 id="延伸阅读"><a href="#延伸阅读" class="headerlink" title="延伸阅读"></a>延伸阅读</h3><ul>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/" target="_blank" rel="external">深入分析 Java 中的中文编码问题</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="external">字符编码笔记：ASCII，Unicode和UTF-8 - 阮一峰的网络日志</a></li>
+<li><a href="http://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html" target="_blank" rel="external">字符集和字符编码（Charset &amp; Encoding） - 吴秦 - 博客园</a></li>
+<li><a href="http://unicode.org/faq/utf_bom.html#gen0" target="_blank" rel="external">FAQ - UTF-8, UTF-16, UTF-32 &amp; BOM</a></li>
+<li><a href="http://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html" target="_blank" rel="external">字符集和字符编码（Charset &amp; Encoding） - 吴秦 - 博客园</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Data/2016-11-06-encoding.html" target="_blank" rel="external">http://blog.inching.org/Data/2016-11-06-encoding.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Data/2016-11-06-encoding.html&title=《Encoding》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Data/2016-11-06-encoding.html&title=《Encoding》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Data/2016-11-06-encoding.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Encoding》 — Balance&url=http://blog.inching.org/Data/2016-11-06-encoding.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Data/2016-11-06-encoding.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Java/2016-11-06-java-encoding.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Java Encoding</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Java/2016-11-05-java-interview-basic-knowlege.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Java Interview Basic Knowlege</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Data/2016-11-06-encoding.html&title=《Encoding》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Data/2016-11-06-encoding.html&title=《Encoding》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Data/2016-11-06-encoding.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Encoding》 — Balance&url=http://blog.inching.org/Data/2016-11-06-encoding.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Data/2016-11-06-encoding.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3a226EMAxFUf7/p+lrpZbMPjZUxdl5Qh0EWVPJE1+OA6/z2/r596vrq0/XT7i684YlQ4aM1zLO5eIvWFPXTyDv/fAcGTJkbMAgoXC9aXJN8GmYliFDhoz00SQ4kuArQ4YMGf2A23rlMtTKkCFDRieJraWdaXnu8VxchgwZL2TwqvvfXz/S35AhQ8arGGe4eAOSb5GH18tdyZAhYzSDB7i0DUDuT5PeDwU7GTJkDGWkBS+eRtbu4UMev/wfZMiQMZTRKcenxa904CwO2TJkyBjKOBurM9RVO4Ci3w0ZMmRswLhrSOKu+1ETVIYMGRsz+sNhPJXlKSuaFpEhQ8YgBh+wSIcw+hMR8QFRhgwZGzD40APZHPmUf33B4VKGDBkbMNL0sjYERkIqT4llyJCxA+OJJLOGSUkyZMjYh8EPZ7yIljY400Ib2oMMGTJGMGqNgXQ4rNZ4CJoKMmTIGM2IM13w4k7AJTtBxTsZMmQMZZDie+fI2Cn386amDBkypjJ4kK21DUhLoH+slCFDxj6MzphFOrrRuVOGDBk7M9JktXbg460FnkLLkCFjKuMMV3pM5Nvih8iDn0llyJAxgpGGOc5LU9xaoI9hMmTIeC2DbzEdeugc/ni6K0OGjH0YtYGttDCXBt+gRSFDhgwZIPj225NBG6AW9WXIkLEZgx8fay3M9Q4f+d2QIUPGv2ekpbR0UKzWHiADHDJkyNiBURtx4JurPYEnwzJkyBjN+AJyjGqYzLDtWQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

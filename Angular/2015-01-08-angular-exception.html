@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>AngularJS 异常处理 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tutorial,angular,exception">
+    <meta name="description" content="In my recent work I’ve been using two approaches to handling errors and exceptions. The ultimate goal is to not let an error go unnoticed.
+$exceptionHandler对于 Angular digest 中未捕获的异常，由 $exceptionHandle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJS 异常处理">
+<meta property="og:url" content="http://blog.inching.org/Angular/2015-01-08-angular-exception.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="In my recent work I’ve been using two approaches to handling errors and exceptions. The ultimate goal is to not let an error go unnoticed.
+$exceptionHandler对于 Angular digest 中未捕获的异常，由 $exceptionHandle">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJS 异常处理">
+<meta name="twitter:description" content="In my recent work I’ve been using two approaches to handling errors and exceptions. The ultimate goal is to not let an error go unnoticed.
+$exceptionHandler对于 Angular digest 中未捕获的异常，由 $exceptionHandle">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">AngularJS 异常处理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">AngularJS 异常处理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-01-07T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2015-01-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#exceptionHandler"><span class="post-toc-text">$exceptionHandler</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#try-catch"><span class="post-toc-text">try catch</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Exception-Catchers"><span class="post-toc-text">Exception Catchers</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Promising-Errors"><span class="post-toc-text">Promising Errors</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Route-Errors"><span class="post-toc-text">Route Errors</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#See"><span class="post-toc-text">See</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-angular-exception"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">AngularJS 异常处理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-01-08 00:00:00" datetime="2015-01-07T16:00:00.000Z"  itemprop="datePublished">2015-01-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>In my recent work I’ve been using two approaches to handling errors and exceptions. The ultimate goal is to not let an error go unnoticed.</p>
+<h2 id="exceptionHandler"><a href="#exceptionHandler" class="headerlink" title="$exceptionHandler"></a>$exceptionHandler</h2><p>对于 Angular digest 中未捕获的异常，由 <code>$exceptionHandler</code> 处理。</p>
+<p>Any uncaught exception in angular expressions is delegated to this service. The default implementation simply delegates to <code>$log.error</code> which logs it into the browser console.</p>
+<a id="more"></a>
+<p>In unit tests, if <code>angular-mocks.js</code> is loaded, this service is overridden by<br><a href="https://docs.angularjs.org/api/ngMock/service/$exceptionHandler" target="_blank" rel="external">mock $exceptionHandler</a> which aids in testing.</p>
+<p>See <a href="https://docs.angularjs.org/api/ng/service/$exceptionHandler" target="_blank" rel="external">AngularJS: API: $exceptionHandler</a></p>
+<p>Use a <a href="https://docs.angularjs.org/api/auto/service/%24provide#decorator" target="_blank" rel="external">decorator</a>, at config time using the <a href="https://docs.angularjs.org/api/auto/service/%24provide" target="_blank" rel="external"><code>$provide</code></a> service, on the <a href="https://docs.angularjs.org/api/ng/service/%24exceptionHandler" target="_blank" rel="external"><code>$exceptionHandler</code></a> service to perform custom actions when exceptions occur.</p>
+<p><em>Why?</em>: Provides a consistent way to handle uncaught AngularJS exceptions for development-time or run-time.</p>
+<p>Note: Another option is to override the service instead of using a decorator. This is a fine option, but if you want to keep the default behavior and extend it a decorator is recommended.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* recommended */</span></div><div class="line">angular</div><div class="line">    .module(<span class="string">'blocks.exception'</span>)</div><div class="line">    .config(exceptionConfig);</div><div class="line"></div><div class="line">exceptionConfig.$inject = [<span class="string">'$provide'</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">exceptionConfig</span>(<span class="params">$provide</span>) </span>&#123;</div><div class="line">    $provide.decorator(<span class="string">'$exceptionHandler'</span>, extendExceptionHandler);</div><div class="line">&#125;</div><div class="line"></div><div class="line">extendExceptionHandler.$inject = [<span class="string">'$delegate'</span>, <span class="string">'toastr'</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">extendExceptionHandler</span>(<span class="params">$delegate, toastr</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">exception, cause</span>) </span>&#123;</div><div class="line">        <span class="comment">// 调用默认行为</span></div><div class="line">        $delegate(exception, cause);</div><div class="line"></div><div class="line">        <span class="keyword">var</span> errorData = &#123; </div><div class="line">            <span class="attr">exception</span>: exception, </div><div class="line">            <span class="attr">cause</span>: cause </div><div class="line">        &#125;;</div><div class="line">        <span class="comment">/**</span></div><div class="line">         * 在这里自定义错误处理，如：</div><div class="line">         * </div><div class="line">         * 1. add the error to a service's collection,</div><div class="line">         * 2. add errors to $rootScope</div><div class="line">         * 3. log errors to remote web server,or log locally. </div><div class="line">         * 4. throw hard.</div><div class="line">         * </div><div class="line">         * It is entirely up to you.</div><div class="line">         * </div><div class="line">         */</div><div class="line">        toastr.error(exception.msg, errorData);</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如下代码将错误添加到 <code>$rootScope</code> 中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">app.config(<span class="function"><span class="keyword">function</span>(<span class="params">$provide</span>)</span>&#123;</div><div class="line"> </div><div class="line">    $provide.decorator(<span class="string">"$exceptionHandler"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$delegate, $injector</span>)</span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">exception, cause</span>)</span>&#123;</div><div class="line">            <span class="keyword">var</span> $rootScope = $injector.get(<span class="string">"$rootScope"</span>);</div><div class="line">            $rootScope.addError(&#123;<span class="attr">message</span>:<span class="string">"Exception"</span>, <span class="attr">reason</span>:exception&#125;);</div><div class="line">            $delegate(exception, cause);</div><div class="line">        &#125;;</div><div class="line">    &#125;);</div><div class="line"> </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Notice the use of <code>$injector</code> in the above code. Using the <code>$injector</code> service directly is required to avoid a circular dependency error by advertising both $exceptionHandler and <code>$rootScope</code> as dependencies.</p>
+<h2 id="try-catch"><a href="#try-catch" class="headerlink" title="try catch"></a>try catch</h2><h2 id="Exception-Catchers"><a href="#Exception-Catchers" class="headerlink" title="Exception Catchers"></a>Exception Catchers</h2><p>Create a factory that exposes an interface to catch and gracefully handle exceptions.</p>
+<p>在需要显式处理异常时，可以使用 Exception Catchers。</p>
+<p><em>Why?</em>: Provides a consistent way to catch exceptions that may be thrown in your code (e.g. during XHR calls or promise failures).</p>
+<p>Note: The exception catcher is good for catching and reacting to specific exceptions from calls that you know may throw one. For example, when making an XHR call to retrieve data from a remote web service and you want to catch any exceptions from that service and react uniquely.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* recommended */</span></div><div class="line">angular</div><div class="line">    .module(<span class="string">'blocks.exception'</span>)</div><div class="line">    .factory(<span class="string">'exception'</span>, exception);</div><div class="line"></div><div class="line">exception.$inject = [<span class="string">'logger'</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">exception</span>(<span class="params">logger</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> service = &#123;</div><div class="line">        <span class="attr">catcher</span>: catcher</div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">return</span> service;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">catcher</span>(<span class="params">message</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">reason</span>) </span>&#123;</div><div class="line">            logger.error(message, reason);</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Usage:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getAvengers</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> $http.get(<span class="string">'/api/maa'</span>)</div><div class="line">        .then(getAvengersComplete)</div><div class="line">        .catch(<span class="function"><span class="keyword">function</span>(<span class="params">message</span>) </span>&#123;</div><div class="line">            exception.catcher(<span class="string">'XHR Failed for getAvengers'</span>)(message);</div><div class="line">            $location.url(<span class="string">'/'</span>);</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getAvengersComplete</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> response.data[<span class="number">0</span>].data.results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>See <a href="https://github.com/johnpapa/angularjs-styleguide/pull/41" target="_blank" rel="external">Fix minor errors in code samples by anthonychu · Pull Request #41 · johnpapa/angularjs-styleguide</a></p>
+<h2 id="Promising-Errors"><a href="#Promising-Errors" class="headerlink" title="Promising Errors"></a>Promising Errors</h2><p>I’m a fan of using catch at the end of a chain of promises. One reason is that catch is the only sure fire way to process all possible errors. Let’s use the following code as an example. </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">someService</div><div class="line">    .doWork()</div><div class="line">    .then(workComplete, workError);</div></pre></td></tr></table></figure>
+<p>Even though an error handler (workError) is provided to the then method, the error handler doesn’t help if something goes wrong inside of workComplete itself . . .</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> workComplete = <span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span>  $q.reject(<span class="string">"Feeling lazy"</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>because we are already inside a success handler for the previous promise. I like the catch approach because it handles this scenario and also makes it easier to see that an error handler is in place.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">someService</div><div class="line">    .doWork()</div><div class="line">    .then(workComplete)               </div><div class="line">    .catch(errors.catch(<span class="string">"Could not complete work!"</span>));</div></pre></td></tr></table></figure>
+<p>Since so many catch handlers started to look alike, I made an errors service to encapsulate some of the common logic.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">app.factory(<span class="string">"errors"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$rootScope</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">catch</span>: <span class="function"><span class="keyword">function</span>(<span class="params">message</span>)</span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">reason</span>)</span>&#123;</div><div class="line">                $rootScope.addError(&#123;<span class="attr">message</span>: message, <span class="attr">reason</span>: reason&#125;)</div><div class="line">            &#125;;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>And now async related activities can present meaningful error messages to the user when an operation fails.</p>
+<p>对于 Promise 异常，一般使用 <code>catch</code> 来捕获。在 <code>catch</code> 的异常处理中，可以使用上述 Exception Catcher 来处理。</p>
+<p>注意：在 promise 的处理函数中抛出的异常，除了在 <code>catch</code> 或者错误回调中可以捕获，全局异常处理器也会捕获到这个以上。通过 <code>reject</code> 方法拒绝的 Promise 只有在 <code>catch</code> 或者错误回调才能捕获。</p>
+<h2 id="Route-Errors"><a href="#Route-Errors" class="headerlink" title="Route Errors"></a>Route Errors</h2><p>Handle and log all routing errors using <a href="https://docs.angularjs.org/api/ngRoute/service/%24route#%24routeChangeError" target="_blank" rel="external"><code>$routeChangeError</code></a>.</p>
+<p><em>Why?</em>: Provides a consistent way handle all routing errors.</p>
+<p><em>Why?</em>: Potentially provides a better user experience if a routing error occurs and you route them to a friendly screen with more details or recovery options.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* recommended */</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleRoutingErrors</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Route cancellation:</div><div class="line">     * On routing error, go to the dashboard.</div><div class="line">     * Provide an exit clause if it tries to do it twice.</div><div class="line">     */</div><div class="line">     $rootScope.$on(<span class="string">'$routeChangeError'</span>,</div><div class="line">      <span class="function"><span class="keyword">function</span> (<span class="params">event, current, previous, rejection</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> destination = (current &amp;&amp; (current.title || current.name || current.loadedTemplateUrl)) ||</div><div class="line">          <span class="string">'unknown target'</span>;</div><div class="line"></div><div class="line">        <span class="keyword">var</span> msg = <span class="string">'Error routing to '</span> + destination + <span class="string">'. '</span> + (rejection.msg || <span class="string">''</span>);</div><div class="line"></div><div class="line">        exception.catcher(<span class="string">'Route Error'</span>)(msg);</div><div class="line">      &#125;</div><div class="line">    );</div><div class="line"></div><div class="line">    <span class="comment">// 处理路由异常。</span></div><div class="line">    $rootScope.$on(<span class="string">'$stateNotFound'</span>,</div><div class="line">      <span class="function"><span class="keyword">function</span> (<span class="params">event, unfoundState</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> msg = <span class="string">'Error routing to '</span> + unfoundState + <span class="string">'. The state is not found.'</span>;</div><div class="line"></div><div class="line">        exception.catcher(<span class="string">'Route Error'</span>)(msg);</div><div class="line">      &#125;</div><div class="line">    );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意： 只有当 go 函数中传入的 API 无效时，才会触发以下事件。直接在地址栏中路由，不会触发以下事件。</p>
+<h2 id="See"><a href="#See" class="headerlink" title="See"></a>See</h2><ul>
+<li><a href="https://github.com/johnpapa/angularjs-styleguide#exception-handling" target="_blank" rel="external">johnpapa/angularjs-styleguide</a></li>
+<li><a href="http://odetocode.com/blogs/scott/archive/2014/04/21/better-error-handling-in-angularjs.aspx" target="_blank" rel="external">Better Error Handling In AngularJS</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Angular/2015-01-08-angular-exception.html" target="_blank" rel="external">http://blog.inching.org/Angular/2015-01-08-angular-exception.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/exception/">exception</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorial/">tutorial</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2015-01-08-angular-exception.html&title=《AngularJS 异常处理》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2015-01-08-angular-exception.html&title=《AngularJS 异常处理》 — Balance&source=In my recent work I’ve been using two approaches to handling errors and excep..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2015-01-08-angular-exception.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《AngularJS 异常处理》 — Balance&url=http://blog.inching.org/Angular/2015-01-08-angular-exception.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2015-01-08-angular-exception.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2015-01-12-javascript-pattern.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JavaScript 模式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Angular/2014-12-30-angular-promise.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Using AngularJS Promises</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2015-01-08-angular-exception.html&title=《AngularJS 异常处理》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2015-01-08-angular-exception.html&title=《AngularJS 异常处理》 — Balance&source=In my recent work I’ve been using two approaches to handling errors and excep..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2015-01-08-angular-exception.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《AngularJS 异常处理》 — Balance&url=http://blog.inching.org/Angular/2015-01-08-angular-exception.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2015-01-08-angular-exception.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACwklEQVR42u3aQXICMQwEQP7/aVKVUyrJekeSDRzap1QAr9sHLEZ+POLx/B7rV3+O9afW7/n76t+ZNw88PDy81tKvxvo9V/Os/199VsK+3AI8PDy8Y7zJ13eCXFOrh1OyZjw8PLxP4OWlbb4dezcFDw8P7zN5SVG7fv96C6rlNR4eHt67eMnikkNivej8U+sy+kjWgoeHhxfzJkHAu/4+2N/Dw8PDG3TVqyOPGKoBcXM9eHh4eAd4vXJ5HTH0jplkzl7AgYeHh3ea15su/+rvzdBrquHh4eGd4PVK27zwraYE1WzhpnzHw8PDO8Crlrzzr+9qMywv3wubhYeHhzfg5bHs3pC3ej2runGFOxF4eHh4LV7vslQes+Zn1LzEx8PDw3sNb/TDvljs9tjNYBcPDw/vhbzJl3j1IJls1s168PDw8I7xknK2cBMhL3k3hciXM+Ph4eEd4CXlaa9BlUS6yWWsvIjHw8PDez2vSp03/qtRyHqG5qUrPDw8vCKvGq1W49QkVphczLopvvHw8PAO8HoNqmqc2gt8J5uIh4eHd46XN5nyg6HXDMvL+nydeHh4eCd4vYtWvaA2f2LvOLl5Ih4eHt4m3uQHfzVcONFCu9kOPDw8vGO85MHVhlZyJFQL5epG4OHh4Z3m7QpVJzHH/Ik3Vwfw8PDwxrwopYgnmpTR1S3Oy3c8PDy8vbxqc6s3ehcOJlfB/sla8PDw8Dbxem2neRusGtRWN/HR2w88PDy8gPcsjl70UL06UI2Jo5IaDw8PbxNvUhZPWmL5dvSuI+Dh4eGd5k1a9b0otnokjGbGw8PDO8arNr12XSYoXwKoXuTCw8PD+xhe3uKaRLTJkXNzqODh4eG9lZdjeodHb86oDYaHh4d3gJeHEXmomrTQquFvciSMshY8PDy8gDf6qV9cULLcSZS8+eoAHh4e3u//fAGsf/k+ADGHdQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

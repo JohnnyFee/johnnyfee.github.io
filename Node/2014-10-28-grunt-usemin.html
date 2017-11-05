@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Grunt usemin | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="node,grunt">
+    <meta name="description" content="yeoman/grunt-usemin 用来将 HTML 文件中（或者 templates/views）中没有优化的 script 和 stylesheets 替换为优化过的版本。
+usemin 暴露两个内置的任务，分别为：
+
+useminPrepare 为将指定文件中的 usemin block 转换为单独的一行（优化版本）准备配置。这通过为每个优化步骤生成名为 generated 的子任务来完">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Grunt usemin">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-10-28-grunt-usemin.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="yeoman/grunt-usemin 用来将 HTML 文件中（或者 templates/views）中没有优化的 script 和 stylesheets 替换为优化过的版本。
+usemin 暴露两个内置的任务，分别为：
+
+useminPrepare 为将指定文件中的 usemin block 转换为单独的一行（优化版本）准备配置。这通过为每个优化步骤生成名为 generated 的子任务来完">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Grunt usemin">
+<meta name="twitter:description" content="yeoman/grunt-usemin 用来将 HTML 文件中（或者 templates/views）中没有优化的 script 和 stylesheets 替换为优化过的版本。
+usemin 暴露两个内置的任务，分别为：
+
+useminPrepare 为将指定文件中的 usemin block 转换为单独的一行（优化版本）准备配置。这通过为每个优化步骤生成名为 generated 的子任务来完">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Grunt usemin</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Grunt usemin</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-10-27T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-10-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#useminPrepare"><span class="post-toc-text">useminPrepare</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#变换流程"><span class="post-toc-text">变换流程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#路径"><span class="post-toc-text">路径</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#usemin"><span class="post-toc-text">usemin</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#查找资源"><span class="post-toc-text">查找资源</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#路径-1"><span class="post-toc-text">路径</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-grunt-usemin"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Grunt usemin</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-10-28 00:00:00" datetime="2014-10-27T16:00:00.000Z"  itemprop="datePublished">2014-10-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><a href="https://github.com/yeoman/grunt-usemin" target="_blank" rel="external">yeoman/grunt-usemin</a> 用来将 HTML 文件中（或者 templates/views）中没有优化的 script 和 stylesheets 替换为优化过的版本。</p>
+<p><code>usemin</code> 暴露两个内置的任务，分别为：</p>
+<ul>
+<li><code>useminPrepare</code> 为将指定文件中的 usemin block 转换为单独的一行（优化版本）准备配置。这通过为每个优化步骤生成名为 <code>generated</code> 的子任务来完成。</li>
+<li><code>usemin</code> 使用优化版本替换 usemin 块，如果在磁盘上可以找到 revisioned 版本，则替换为 revisioned 版本。</li>
+</ul>
+<a id="more"></a>
+<p><code>usemin</code> 可能用到的插件：</p>
+<ul>
+<li><a href="https://github.com/gruntjs/grunt-contrib-concat" target="_blank" rel="external"><code>concat</code></a> 合并文件 (usually JS or CSS).</li>
+<li><a href="https://github.com/gruntjs/grunt-contrib-uglify" target="_blank" rel="external"><code>uglify</code></a> 压缩 JS 文件。</li>
+<li><a href="https://github.com/gruntjs/grunt-contrib-cssmin" target="_blank" rel="external"><code>cssmin</code></a> 压缩 CSS 文件。</li>
+<li><a href="https://github.com/yeoman/grunt-filerev" target="_blank" rel="external"><code>filerev</code></a> 通过文件内容的哈希重命名静态资源。</li>
+</ul>
+<p><code>usemin</code> 的典型步骤是，先使用 <code>useminPrepare</code>，然后调用每个优化步骤的 <code>generated</code> 子任务，最后调用 <code>usemin</code>。如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// simple build task</span></div><div class="line">grunt.registerTask(<span class="string">'build'</span>, [</div><div class="line">  <span class="string">'useminPrepare'</span>,</div><div class="line">  <span class="string">'concat:generated'</span>,</div><div class="line">  <span class="string">'cssmin:generated'</span>,</div><div class="line">  <span class="string">'uglify:generated'</span>,</div><div class="line">  <span class="string">'filerev'</span>,</div><div class="line">  <span class="string">'usemin'</span></div><div class="line">]);</div></pre></td></tr></table></figure>
+<p>关于目录和任务，最主要的区别是 <code>useminPrepare</code> 的需要指定输入路径、临时路径（默认为 <code>.tmp</code>）和输出路径，这个输出路径用来为处理器管道输出正确的配置，然后 <code>usemin</code> 只和输出路径有关，所有需要的资源都应该已经输入到了目标目录中（变化或者只是拷贝）。</p>
+<p>合并文件默认生成到临时目录(<code>.tmp</code>)下，混淆后的文件默认生成到指定的 dest 目录下。</p>
+<h2 id="useminPrepare"><a href="#useminPrepare" class="headerlink" title="useminPrepare"></a>useminPrepare</h2><p><code>useminPrepare</code> 试图为应用到 usemin 块的步骤（如 concatenation and uglify-cation）准备正确的配置。这需要输入目录，临时目录和目标目录。usemin 块中引用的文件要么是相对路径要么是绝对路径（<code>/images/foo.png</code> or <code>../../images/foo.png</code>）。通过绝对路径引用的文件在指定的搜索路径集合中查找，默认路径为包含 usemin 块的 html/css 文件所在的路径。相对路径引用的文件也在包含 usemin 块文件所在的路径中查找。如果不指定 root，绝对路径和相对路径其实都是相对当前检查的 html/css 文件所在的目录。</p>
+<p><code>useminPrepare</code> 任务更新 grunt 配置，以便对被标记的文件（i.e. usemin 块）应用配置好的变化流程。JS 的默认变换流程由 <code>concat</code> 和 <code>uglifyjs</code> 组成，当可以配置。</p>
+<p>usemin 块可以如下表达:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- build:&lt;type&gt;(alternate search path) &lt;path&gt; --&gt;</span></div><div class="line">... HTML Markup, list of script / link tags.</div><div class="line"><span class="comment">&lt;!-- endbuild --&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>type</strong>: 可以是 <code>js</code>, <code>css</code> 或者使用 <a href="https://github.com/yeoman/grunt-usemin#blockreplacements" target="_blank" rel="external">block replacement function</a> 定义的自定义类型。</li>
+<li><strong>alternate search path</strong>: (可选) 默认情况下，输入文件时相对 usemin 块所在的文件，Alternate search path 让你改变相对路径。这个对应 <code>options.root</code> 选项。</li>
+<li><strong>path</strong>: 优化后的文件路径。</li>
+</ul>
+<p>如:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- build:js js/app.js --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/app.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/controllers/thing-controller.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/models/thing-model.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/views/thing-view.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- endbuild --&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="变换流程"><a href="#变换流程" class="headerlink" title="变换流程"></a>变换流程</h3><p>变换流程有有序的步骤组成：每个步骤都会变换文件，为了让步骤能够正确执行，<code>useminPrepare</code> 会修改配置。</p>
+<p>JS 默认流程是 <code>concat -&gt; uglifyjs</code>，CSS 的默认流程是 concat –&gt; cssmin。此外，一些后处理器可以进一步地修改配置。<code>useminPrepare.options.flow</code> 用来配置流程，可以在目标上指定，也可以在整个任务上指定。你可以分别指定 <code>steps</code> 或者后处理器 <code>post</code>。</p>
+<p>例如，假设目录结构如下：</p>
+<pre><code>|
++- app
+|   +- index.html
+|   +- assets
+|       +- js
+|          +- foo.js
+|          +- bar.js
++- dist
+</code></pre><p>我们想优化 <code>foo.js</code> and <code>bar.js</code>，并生成到使用相对路径的 <code>optimized.js</code> 文件中。<code>index.html</code> 包含下面的 usemin 块；</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- build:js assets/js/optimized.js --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"assets/js/foo.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"assets/js/bar.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- endbuild --&gt;</span></div></pre></td></tr></table></figure>
+<p>如果想让我们的文件生成到 <code>dist</code>  目录中，我们可以使用下面的 <code>useminPrepare</code> 配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">useminPrepare</span>: &#123;</div><div class="line">    <span class="attr">html</span>: <span class="string">'app/index.html'</span>,</div><div class="line">    <span class="attr">options</span>: &#123;</div><div class="line">      <span class="attr">dest</span>: <span class="string">'dist'</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这会产生如下配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">concat</span>:</div><div class="line">  &#123;</div><div class="line">    <span class="string">'.tmp/concat/assets/js/optimized.js'</span>: [</div><div class="line">      <span class="string">'app/assets/js/foo.js'</span>,</div><div class="line">      <span class="string">'app/assets/js/bar.js'</span></div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="attr">uglify</span>:</div><div class="line">  &#123;</div><div class="line">    <span class="string">'dist/assets/js/optimized.js'</span>: [<span class="string">'.tmp/concat/assets/js/optimized.js'</span>]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h3><p><code>useminPrepare</code> 解析你的 HTML 标签，找到每个 block，然后初始化对应的 Grunt 配置，当 <code>type=js</code> 时，使用 <code>concat/uglify</code>，当 <code>type=css</code> 时，使用 <code>concat/cssmin</code>。你不用在指定 concat/uglify/cssmin 的相关配置。</p>
+<p><code>useminPrepare</code> 只有一个目标: <code>html</code>，这个文件中包含相关文件的列表。例如，在 <code>Gruntfile.js</code> 文件中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">useminPrepare: &#123;</div><div class="line">  <span class="attr">html</span>: <span class="string">'index.html'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>默认，它会将这个 html 文件所在的目录当做 ‘root’ 目录，其他文件都将相对这个路径。如果你想改变这个根目录，可以使用 <code>root</code> 选项。<code>useminPrepare</code> 的目标也可以使用 grunt 的 src-dest 文件语法。</p>
+<p><strong>兄弟目录中的  HTML 文件和 资源文件：</strong></p>
+<pre><code>app
+|
++- html
+|   +- index.html
++- assets
+|   +- js
+|      +- foo.js
+|      +- bar.js
++- dist
+</code></pre><p>我们想优化 <code>foo.js</code> and <code>bar.js</code>，并且生成到使用绝对路径引用的 <code>optimized.js</code> 目录中。<code>index.html</code> 包含的 usemin 块：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- build:js /assets/js/optimized.js --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/assets/js/foo.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/assets/js/bar.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- endbuild --&gt;</span></div></pre></td></tr></table></figure>
+<p>我们想让文件生成到 <code>dist</code> 目录，使用的 <code>useminPrepare</code> 配置为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">useminPrepare</span>: &#123;</div><div class="line">    <span class="attr">html</span>: <span class="string">'html/index.html'</span>,</div><div class="line">    <span class="attr">options</span>: &#123;</div><div class="line">      <span class="attr">root</span>: <span class="string">'app'</span>,</div><div class="line">      <span class="attr">dest</span>: <span class="string">'dist'</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这会生成下面的配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">concat</span>:</div><div class="line">  &#123;</div><div class="line">    <span class="string">'.tmp/concat/assets/js/optimized.js'</span>: [</div><div class="line">      <span class="string">'app/assets/js/foo.js'</span>,</div><div class="line">      <span class="string">'app/assets/js/bar.js'</span></div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="attr">uglify</span>:</div><div class="line">  &#123;</div><div class="line">    <span class="string">'dist/assets/js/optimized.js'</span>: [<span class="string">'.tmp/concat/assets/js/optimized.js'</span>]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="usemin"><a href="#usemin" class="headerlink" title="usemin"></a>usemin</h2><p><code>usemin</code> 目标使用优化后的文件替换 html/css 中 images, scripts, css 的引用。 <code>usemin</code> 任务完成两件事:</p>
+<ul>
+<li>首先，使用变换流程创建的优化文件替换替换所有的 usemin 块。</li>
+<li>然后，试图使用 <a href="https://github.com/yeoman/grunt-filerev" target="_blank" rel="external">grunt-filerev</a>  创建的 revved 版本替换资源文件（i.e. images, scripts, …）的引用。</li>
+</ul>
+<h3 id="查找资源"><a href="#查找资源" class="headerlink" title="查找资源"></a>查找资源</h3><p><code>usemin</code> 默认会去找 <a href="https://github.com/yeoman/grunt-filerev" target="_blank" rel="external">grunt-filerev</a> 创建的映射对象，该对象存在于 <code>grunt.filerev.summary</code>。如果没找到，则会到磁盘上查找。</p>
+<p>通过使用 <code>options.revmap</code>，你可以提供映射对象。</p>
+<h3 id="路径-1"><a href="#路径-1" class="headerlink" title="路径"></a>路径</h3><p>当 <code>usemin</code> 试图使用资源的引用替换为他们的 revved 版本时，他们必须查找目录（asset search paths）集合。资源索索路径集合默认是相对当前处理的的文件所在的目录，当让，你可以使用 <code>options.root</code> 修改。</p>
+<p><strong>Example 1: file <code>dist/html/index.html</code> has the following content:</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"styles/main.css"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"../images/test.png"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>usemin</code> 默认会在 <code>dist/html</code> 下查找 revved 版本：</p>
+<ul>
+<li><code>styles/main.css</code>: <code>main.css</code> 的 revved 版本会在 <code>dist/html/styles</code> 下找到。比如 <code>dist/html/styles/main.1234.css</code> 会被匹配到，而 <code>dist/html/main.1234.css</code> 不会被匹配，引用文件的路径很重要。</li>
+<li><code>../images/test.png</code>: <code>test.png</code> 的 revved 版本会在 <code>dist/images</code> 查找。</li>
+</ul>
+<p><strong>Example 2: file <code>dist/html/index.html</code> has the following content:</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;link rel=<span class="string">"stylesheet"</span> href=<span class="string">"/styles/main.css"</span>&gt;</div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"/images/test.png"</span>&gt;</span></span></div></pre></td></tr></table></figure>
+<p><code>usemin</code> 默认会在 <code>dist/html</code> 下查找 <code>styles/main.css</code> 和 <code>images/test.png</code> 的 revved 版本。假设我们的资源分散在 <code>dist/assets</code>，通过修改资源的搜索路径列表为 <code>[&#39;dist/assets&#39;]</code>，revved 版本就会在 <code>dist/assets</code> 下找到（如 <code>dist/assets/images/test.875487.png</code> and <code>dist/assets/styles/main.98090.css</code>）。如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">usemin: &#123;</div><div class="line">  <span class="attr">html</span>: <span class="string">'dist/html/index.html'</span>,</div><div class="line">  <span class="attr">options</span>: &#123;</div><div class="line">    <span class="attr">assetsDirs</span>: [<span class="string">'dist/assets'</span>]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-10-28-grunt-usemin.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-10-28-grunt-usemin.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/grunt/">grunt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-10-28-grunt-usemin.html&title=《Grunt usemin》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-10-28-grunt-usemin.html&title=《Grunt usemin》 — Balance&source=yeoman/grunt-usemin 用来将 HTML 文件中（或者 templates/views）中没有优化的 script 和 styleshee..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-10-28-grunt-usemin.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Grunt usemin》 — Balance&url=http://blog.inching.org/Node/2014-10-28-grunt-usemin.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-10-28-grunt-usemin.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Node/2014-10-28-node-full-stack.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Node Full Stack —— MEAN</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Mobile/2014-10-25-mobile-dpr.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">设备像素比 devicePixelRatio 简单介绍</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-10-28-grunt-usemin.html&title=《Grunt usemin》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-10-28-grunt-usemin.html&title=《Grunt usemin》 — Balance&source=yeoman/grunt-usemin 用来将 HTML 文件中（或者 templates/views）中没有优化的 script 和 styleshee..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-10-28-grunt-usemin.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Grunt usemin》 — Balance&url=http://blog.inching.org/Node/2014-10-28-grunt-usemin.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-10-28-grunt-usemin.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNElEQVR42u3aQY4DIQwF0b7/pXs2sxtB6hsyEqZYRWk14bFwsPHz4PH+GaOn829GM4/e2jxkyJBxLOOdDsIgi+BP5787nEeGDBkXMEgoJHjyLgnWfG0yZMiQQRg12K4DpQwZMmSQz+TYlx4EZciQIaOWxPLASgpztW3akIvLkCHjQAavuv//56/cb8iQIeMoxhuO2jUnKbfV1vP7rgwZMlozeIBbOcylTRW19ciQIeMGxjzt3PAzeGsIGOXiMmTIaMeoNTrw5fJlpWFdhgwZvRk82PFkshagyZXDMFjLkCGjNYNPkV49roRpflSVIUPGPYz0tZVCfy31RZslQ4aMCxhpyT5tj6gdPXkLiAwZMroy+HGQXDSOviFL5E+HubgMGTKaMniRi0zN2yZWinTFQpsMGTJaMFYuFHlJjs8TXy3IkCGjKYOklDxQ8jR1vdCGbmJlyJDRgpE2VdRK/2mzRfHoKUOGjNYM/lqa0PLgy4t9HzZOhgwZFzDSsn4xby5tR9xyIUOGjEaM2iHsGwE0uAaYn3BlyJDRlJFeLtYaI2otGii4y5Ah4wJGWuqah+ZaOE7nf/j+yZAh41jGG45awE2XxQOuDBkybmCshNG0YYJsEGmwWPpLkCFDxrGMXQ0Wu3YuXYMMGTLuYZAmLZ70potYR8qQIUNGGnzJ4njIRlQZMmTIwK0Y6QGx1pCxIeDKkCHjQMbKpSMPlLXt2JyLy5Ah40AGTx1JOaz2dOWyU4YMGa0ZP7cWiYfzy2bnAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

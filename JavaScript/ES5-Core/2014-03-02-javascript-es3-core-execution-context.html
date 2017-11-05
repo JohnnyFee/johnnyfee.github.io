@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>执行上下文（Execution Context） | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,kernel">
+    <meta name="description" content="译文原文：goddyzhao • 执行上下文（Execution Context）
+原文：ECMA-262 » ECMA-262-3 in detail. Chapter 1. Execution Contexts.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="执行上下文（Execution Context）">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="译文原文：goddyzhao • 执行上下文（Execution Context）
+原文：ECMA-262 » ECMA-262-3 in detail. Chapter 1. Execution Contexts.">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="执行上下文（Execution Context）">
+<meta name="twitter:description" content="译文原文：goddyzhao • 执行上下文（Execution Context）
+原文：ECMA-262 » ECMA-262-3 in detail. Chapter 1. Execution Contexts.">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">执行上下文（Execution Context）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">执行上下文（Execution Context）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-03-01T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-03-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/ES5-Core/">ES5 Core</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概要"><span class="post-toc-text">概要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义"><span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#可执行代码类型"><span class="post-toc-text">可执行代码类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#全局代码"><span class="post-toc-text">全局代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#函数代码"><span class="post-toc-text">函数代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Eval代码"><span class="post-toc-text">Eval代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-es3-core-execution-context"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">执行上下文（Execution Context）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-03-02 00:00:00" datetime="2014-03-01T16:00:00.000Z"  itemprop="datePublished">2014-03-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/ES5-Core/">ES5 Core</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>译文原文：<a href="http://goddyzhao.tumblr.com/post/10020230352/execution-context" target="_blank" rel="external">goddyzhao • 执行上下文（Execution Context）</a></p>
+<p>原文：<a href="http://dmitrysoshnikov.com/ecmascript/chapter-1-execution-contexts/" target="_blank" rel="external">ECMA-262 » ECMA-262-3 in detail. Chapter 1. Execution Contexts.</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>本文将向大家介绍ECMAScript的执行上下文以及相关的可执行代码类型。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>每当控制器到达ECMAScript可执行代码的时候，控制器就进入了一个执行上下文。<br>执行上下文（简称：EC）是个抽象的概念，ECMA-262标准中用它来区分不同类型的可执行代码。</p>
+<p>标准中并没有从技术实现的角度来定义执行上下文的具体结构和类型；这是实现标准的ECMAScript引擎所要考虑的问题。</p>
+<p>一系列活动的执行上下文从逻辑上形成一个栈。栈底总是全局上下文，栈顶是当前（活动的）执行上下文。当在不同的执行上下文间切换（退出的而进入新的执行上下文）的时候，栈会被修改（通过压栈或者退栈的形式）。</p>
+<h2 id="可执行代码类型"><a href="#可执行代码类型" class="headerlink" title="可执行代码类型"></a>可执行代码类型</h2><p>可执行代码类型和执行上下文相关。有的时候，当提到代码类型的时候，其实就是在说执行上下文。</p>
+<p>举个例子，我们将执行上下文的栈以数组的形式来表示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ECStask = [ ];</div></pre></td></tr></table></figure>
+<p>每次控制器进入一个函数（哪怕该函数被递归调用或者作为构造器），都会发生压栈的操作。内置eval函数工作的时候也不例外。</p>
+<h2 id="全局代码"><a href="#全局代码" class="headerlink" title="全局代码"></a>全局代码</h2><p>这类代码是在“程序”级别上被处理的：比如，加载一个外部的js文件或者内联的js代码（被包含在<script></script>标签内）。全局代码不包含任何函数体内的代码。</p>
+<p>在初始化的时候（程序开始），ECStack如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ECStack = [</div><div class="line">    globalContext</div><div class="line">];</div></pre></td></tr></table></figure>
+<h2 id="函数代码"><a href="#函数代码" class="headerlink" title="函数代码"></a>函数代码</h2><p>一旦控制器进入函数代码（各类函数），就会有新的元素会被压栈到ECStack。要注意的是：实体函数代码并不包括内部函数的代码。如下所示，我们调用一个函数，该函数递归调用自己一次：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(function foo(bar)&#123;</div><div class="line">    if (bar)&#123;</div><div class="line"></div><div class="line">    return;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">foo(true);</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<p>之后，ECStack就被修改成如下所示:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//首先激活foo函数</div><div class="line">ECStack = [</div><div class="line">     functionContext</div><div class="line">    globalContext</div><div class="line">];</div><div class="line">//递归激活foo函数</div><div class="line">ECStack = [</div><div class="line">     functionContext - recursively</div><div class="line">     functionContext</div><div class="line">    globalContext</div><div class="line">];</div></pre></td></tr></table></figure>
+<p>每次函数返回，退出当前活动的执行上下文时，ECStack就会被执行对应的退栈操作——先进后出——和传统的栈实现一致。同样的，当抛出未捕获的异常时，也会退出一个或者多个执行上下文，ECStack也会做相应的退栈操作。待这些代码完成之后，ECStack中就只剩下一个执行上下文（globalContext）——直到整个程序结束。</p>
+<h2 id="Eval代码"><a href="#Eval代码" class="headerlink" title="Eval代码"></a>Eval代码</h2><p>说到eval代码就比较有意思了。这里要提到一个叫做调用上下文的概念，比如：调用eval函数时候的上下文，就是一个调用上下文，eval函数中执行的动作（例如：变量声明或者函数声明）会影响整个调用上下文：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">eval(‘var x = 10’);</div><div class="line">(function foo()&#123;</div><div class="line">    eval(‘ var y = 20’);</div><div class="line">&#125;)();</div><div class="line">alert(x); // 10</div><div class="line">alert(y); // ”y” is not defined</div></pre></td></tr></table></figure>
+<p>ECStack会被修改为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">ECStack = [</div><div class="line">    globalContext</div><div class="line">];</div><div class="line">//eval(‘var x = 10’);</div><div class="line">ECStack.push(</div><div class="line">    evalContext,</div><div class="line">    callingContext: globalContext</div><div class="line">);</div><div class="line"></div><div class="line">// eval exited context</div><div class="line">ECStack.pop();</div><div class="line"></div><div class="line">//foo function call</div><div class="line">ECStack.push( functionContext);</div><div class="line"></div><div class="line">//eval(‘ var y = 20’);</div><div class="line">ECStack.push(</div><div class="line">    evalContext,</div><div class="line">    callingContext:  functionContext</div><div class="line">);</div><div class="line"></div><div class="line">//return from eval</div><div class="line">ECStack.pop();</div><div class="line"></div><div class="line">//return from foo</div><div class="line">ECStack.pop();</div></pre></td></tr></table></figure>
+<p>在1.7以上版本SpiderMonkey的实现中（Firefox，Thunderbird浏览器内置的JS引擎），允许在调用eval函数的时候，将调用上下文作为第二个参数传递给eval函数。因此，如果传入的调用上下文存在的话，就有可能会影响该上下文中原有的私有变量（在该上下文中声明的变量）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function foo()&#123;</div><div class="line">    var x = 1;</div><div class="line">    return function() &#123; alert(x); &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var bar = foo();</div><div class="line"></div><div class="line">bar(); // 1</div><div class="line">eval(‘x = 2’, bar); //传递上下文，影响了内部变量“var x”</div><div class="line">bar(); // 2</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这些基本理论对于后面执行上下文相关的细节（诸如变量对象、作用域链等等）分析是非常必要的。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kernel/">kernel</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html&title=《执行上下文（Execution Context）》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html&title=《执行上下文（Execution Context）》 — Balance&source=
+译文原文：goddyzhao • 执行上下文（Execution Context）
+原文：ECMA-262 » ECMA-262-3 in detail..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《执行上下文（Execution Context）》 — Balance&url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">变量对象（Variable object）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/ES5-Core/2014-03-01-javascript-core.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript 核心</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html&title=《执行上下文（Execution Context）》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html&title=《执行上下文（Execution Context）》 — Balance&source=
+译文原文：goddyzhao • 执行上下文（Execution Context）
+原文：ECMA-262 » ECMA-262-3 in detail..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《执行上下文（Execution Context）》 — Balance&url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADM0lEQVR42u3aS27kMAwFwNz/0pntADOx36McIGbKq8DtWCr1gs3Px0d8ff51JXf+/TRf5as7X72tXeUDGxsbex378/K6RiZH89Uq+eqzfd58AdjY2Njr2NeBIQFcH8H1/eTN7UHfGLGxsbGxS3y7yvUz1wEMGxsbGztn53dmZaDZ3rCxsbF/JzsPDEXhJlglP4iH94aNjY29iN0Gkp/897f0t7GxsbF/MPuzvJIlvy/U5aWrmzdgY2NjL2KfpAH5cdQbOihvJfvHxsbG3sq+xuQNgPZO24SYpU/DKhc2Njb2q9jtnTz9SN78bBAdpiLY2NjYL2TnxZrzkZqTJ9vgehMssbGxsVez2/LNSaLyVKsgKVHdBDBsbGzs17JPSLO27slabWnp5lixsbGxF7Hb4k4yuHMS5PJWQRKobvaJjY2NvY6d/7hvg1z75EnqMmz3YmNjY7+W3b5uVqxvR3Dy5KQdA8LGxsbexG4L+m3xKNnodwew4jvExsbGfiH7/Jd5jmlbC3lIa78kbGxs7H3sZwPMeXugTWaSFKiIddjY2NivYs8KQ0moaAtJ59RiVAgbGxt7HXtWjm+D00kjoR3lKSI2NjY29svZbfMgbxK0IXAW6s7bz9jY2NhvZ+dt2tnQTPK/eSv3sWCJjY2NvY7dLplTT4ZvZkWlaLfY2NjY69hJ2agdyskLOrODywcu/7MfbGxs7EXsPG1ISvl5WadNWq4DZ1v2wsbGxt7Kbos+bRHqqVXylsNNVwQbGxt7HTspKrXtgaTEP0wkRk0IbGxs7K3sPDy0ZaCTY83HgNrBUGxsbOx97NnP/RY/KwnlDYmkYXCTgWFjY2O/nD0r5cxShdmTsxToy0+xsbGxl7LbEJWHlqQBkGx3NgyEjY2NvZX9WV4nScKMN/tKhhEbGxsb+4Xs/JodxCylKdq0o5CJjY2NvY99HrRmzzxbVKqLX9jY2Njr2CeBIR/BmSUJswgc1dKwsbGxfyX7OkloG8Bt8nOy2wf6xtjY2Ngr2G1LIE91nh0DujlobGxs7HXsk23lBf0cM2sSJKUubGxs7H3sPADMRm3OR2pm6cdj/W1sbGzsn8v+AxhLF3KSov4BAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

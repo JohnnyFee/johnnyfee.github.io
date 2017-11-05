@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Getting gulpy - Advanced tips for using gulp.js | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="gulp">
+    <meta name="description" content="原文：Getting gulpy – Advanced tips for using gulp.js**
+翻译：Gulp思维——Gulp高级技巧
+感受过gulp.js带来的兴奋过后，你需要的不仅仅是它的光鲜，而是切切实实的实例。这篇文章讨论了一些使用gulp.js时常踩的坑，以及一些更加高级和定制化的插件和流的使用技巧。
+基本任务gulp的基本设置拥有非常友好的语法，让你能够非常方便的对文件进行转">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Getting gulpy - Advanced tips for using gulp.js">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2016-08-26-gulp-buffer-stream.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文：Getting gulpy – Advanced tips for using gulp.js**
+翻译：Gulp思维——Gulp高级技巧
+感受过gulp.js带来的兴奋过后，你需要的不仅仅是它的光鲜，而是切切实实的实例。这篇文章讨论了一些使用gulp.js时常踩的坑，以及一些更加高级和定制化的插件和流的使用技巧。
+基本任务gulp的基本设置拥有非常友好的语法，让你能够非常方便的对文件进行转">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Getting gulpy - Advanced tips for using gulp.js">
+<meta name="twitter:description" content="原文：Getting gulpy – Advanced tips for using gulp.js**
+翻译：Gulp思维——Gulp高级技巧
+感受过gulp.js带来的兴奋过后，你需要的不仅仅是它的光鲜，而是切切实实的实例。这篇文章讨论了一些使用gulp.js时常踩的坑，以及一些更加高级和定制化的插件和流的使用技巧。
+基本任务gulp的基本设置拥有非常友好的语法，让你能够非常方便的对文件进行转">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Getting gulpy - Advanced tips for using gulp.js</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Getting gulpy - Advanced tips for using gulp.js</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-08-25T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-08-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本任务"><span class="post-toc-text">基本任务</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#流不兼容？"><span class="post-toc-text">流不兼容？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Vinyl文件对象"><span class="post-toc-text">Vinyl文件对象</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#gulp-dest"><span class="post-toc-text">gulp.dest</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#流和buffer"><span class="post-toc-text">流和buffer</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Gulp默认使用buffer"><span class="post-toc-text">Gulp默认使用buffer</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#从流到buffer"><span class="post-toc-text">从流到buffer</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#将buffer转换为流"><span class="post-toc-text">将buffer转换为流</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#不是所有事都需要插件"><span class="post-toc-text">不是所有事都需要插件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#vinyl-source-stream"><span class="post-toc-text">vinyl-source-stream</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#文本转换"><span class="post-toc-text">文本转换</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#任务流程"><span class="post-toc-text">任务流程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最后的思考"><span class="post-toc-text">最后的思考</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-gulp-buffer-stream"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Getting gulpy - Advanced tips for using gulp.js</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-08-26 00:00:00" datetime="2016-08-25T16:00:00.000Z"  itemprop="datePublished">2016-08-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>原文：<a href="https://medium.com/@webprolific/getting-gulpy-a2010c13d3d5" target="_blank" rel="external">Getting gulpy – Advanced tips for using gulp.js</a>**</p>
+<p>翻译：<a href="https://segmentfault.com/a/1190000000711469" target="_blank" rel="external">Gulp思维——Gulp高级技巧</a></p>
+<p>感受过<a href="http://gulpjs.com/" target="_blank" rel="external">gulp.js</a>带来的兴奋过后，你需要的不仅仅是它的光鲜，而是切切实实的实例。这篇文章讨论了一些使用gulp.js时常踩的坑，以及一些更加高级和定制化的插件和流的使用技巧。</p>
+<h2 id="基本任务"><a href="#基本任务" class="headerlink" title="基本任务"></a>基本任务</h2><p>gulp的基本设置拥有非常友好的语法，让你能够非常方便的对文件进行转换：</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">gulp.task(&apos;scripts&apos;, function() &#123;</div><div class="line">    return gulp.src(&apos;./src/**/*.js&apos;)</div><div class="line">        .pipe(uglify())</div><div class="line">        .pipe(concat(&apos;all.min.js&apos;))</div><div class="line">        .pipe(gulp.dest(&apos;build/&apos;));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这种方式能够应付绝大多数情况，但如果你需要更多的定制，很快就会遇到麻烦了。这篇将介绍这其中的一些情况并提供解决方案。</p>
+<h2 id="流不兼容？"><a href="#流不兼容？" class="headerlink" title="流不兼容？"></a>流不兼容？</h2><p>使用gulp时，你可能会陷入“流不兼容”的问题。这主要是因为常规流和Vinyl文件对象有差异，或是使用了仅支持buffer（不支持流）库的gulp插件与常规流不兼容。</p>
+<p>比如说，你不能直接将常规流与gulp和（或）gulp插件相连。我们创建一个可读流，并尝试使用<a href="https://www.npmjs.org/package/gulp-uglify" target="_blank" rel="external">gulp-uglify</a>和<a href="https://www.npmjs.org/package/gulp-rename" target="_blank" rel="external">gulp-rename</a>来进行转换，将最后得到的内容交给<code>gulp.dest()</code>。下面就是个错误的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var uglify = require(&apos;gulp-uglify&apos;),</div><div class="line">    rename = require(&apos;gulp-rename&apos;);</div><div class="line">gulp.task(&apos;bundle&apos;, function() &#123;</div><div class="line">    return fs.createReadStream(&apos;app.js&apos;)</div><div class="line">        .pipe(uglify())</div><div class="line">        .pipe(rename(&apos;bundle.min.js&apos;))</div><div class="line">        .pipe(gulp.dest(&apos;dist/&apos;));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>为什么我们不能将可读流和一个gulp插件直接相连？gulp难道不就是一个基于流的构建系统吗？是的，但上面的例子忽视了一个事实，gulp插件期望的输入是Vinyl文件对象。你不能直接将一个可读流与一个以Vinyl文件对象作为输入的函数（插件）相连</p>
+<h2 id="Vinyl文件对象"><a href="#Vinyl文件对象" class="headerlink" title="Vinyl文件对象"></a>Vinyl文件对象</h2><p>gulp使用了<a href="https://github.com/wearefractal/vinyl-fs" target="_blank" rel="external">vinyl-fs</a>，它实现了<code>gulp.src()</code>和<code>gulp.dest()</code>方法。vinyl-fs使用<a href="https://github.com/wearefractal/vinyl" target="_blank" rel="external">vinyl</a>文件对象——一种“虚拟文件格式”。如果我们需要将gulp和（或）gulp插件与常规的可读流一起使用，我们就需要先把可读流转换为vinyl。</p>
+<p>使用<a href="https://www.npmjs.org/package/vinyl-source-stream" target="_blank" rel="external">vinyl-source-stream</a>是个不错的选择，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var source = require(&apos;vinyl-source-stream&apos;),</div><div class="line">    marked = require(&apos;gulp-marked&apos;);</div><div class="line">fs.createReadStream(&apos;*.md&apos;)</div><div class="line">    .pipe(source())</div><div class="line">    .pipe(marked())</div><div class="line">    .pipe(gulp.dest(&apos;dist/&apos;));</div></pre></td></tr></table></figure>
+<p>另外一个例子首先通过<a href="http://browserify.org/" target="_blank" rel="external">browserify</a>封装并最终将其转换为一个vinyl流：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var browserify = require(&apos;browserify&apos;),</div><div class="line">    uglify = require(&apos;gulp-uglify&apos;),</div><div class="line">    source = require(&apos;vinyl-source-stream&apos;);</div><div class="line">gulp.task(&apos;bundle&apos;, function() &#123;</div><div class="line">    return browserify(&apos;./src/app.js&apos;)</div><div class="line">        .bundle()</div><div class="line">        .pipe(source(‘bundle.min.js))</div><div class="line">        .pipe(uglify())</div><div class="line">        .pipe(gulp.dest(&apos;dist/&apos;));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>哎呦不错哦。注意我们不再需要使用gulp-rename了，因为vinyl-source-stream创建了一个拥有指定文件名的vinyl文件实例（这样gulp.dest方法将使用这个文件名）</p>
+<h3 id="gulp-dest"><a href="#gulp-dest" class="headerlink" title="gulp.dest"></a>gulp.dest</h3><p>这个gulp方法创建了一个可写流，它真的很方便。它重新使用可读流中的文件名，然后在必要时创建文件夹（使用<a href="https://www.npmjs.org/package/mkdirp" target="_blank" rel="external">mkdirp</a>）。在写入操作完成后，你能够继续使用这个流（比如：你需要使用gzip压缩数据并写入到其他文件）</p>
+<h2 id="流和buffer"><a href="#流和buffer" class="headerlink" title="流和buffer"></a>流和buffer</h2><p>既然你有兴趣使用gulp，这篇文章假设你已经了解了流的基础知识。无论是buffer还是流，vinyl的虚拟文件都能包含在内。使用常规可读流时，你可以监听data事件来检测数据碎片的到来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">fs.createReadStream(&apos;/usr/share/dict/words&apos;).on(&apos;data&apos;, function(chunk) &#123;</div><div class="line">    console.log(&apos;Read %d bytes of data&apos;, chunk.length);</div><div class="line">&#125;);</div><div class="line">&gt; Read 65536 bytes of data</div><div class="line">&gt; Read 65536 bytes of data</div><div class="line">&gt; Read 65536 bytes of data</div><div class="line">&gt; Read 65536 bytes of data</div><div class="line">&gt; ...</div></pre></td></tr></table></figure>
+<p>不同的是，使用<code>gulp.src()</code>会将转换成buffer的vinyl文件对象重新写入到流中。也就是说，你获得的不再是数据碎片，而是将内容转换成buffer后的（虚拟）文件。vinyl文件格式拥有一个属性来表示里面是buffer还是流，gulp默认使用buffer：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">gulp.src(&apos;/usr/share/dict/words&apos;).on(&apos;data&apos;, function(file) &#123;</div><div class="line">    console.log(&apos;Read %d bytes of data&apos;, file.contents.length);</div><div class="line">&#125;);</div><div class="line">&gt; Read 2493109 bytes of data</div></pre></td></tr></table></figure>
+<p>这个例子说明了在文件被完整加入到流之前数据会被转换成buffer。</p>
+<h2 id="Gulp默认使用buffer"><a href="#Gulp默认使用buffer" class="headerlink" title="Gulp默认使用buffer"></a>Gulp默认使用buffer</h2><p>尽管更加推荐使用流中的数据，但很多插件的底层库使用的是buffer。有时候必须使用buffer，因为转换需要完整的文件内容。比如文本替换和正则表达式的情形。如果使用数据碎片，将会面临匹配失败的风险。同样，像<a href="http://lisperator.net/uglifyjs/" target="_blank" rel="external">UglifyJS</a>和<a href="https://github.com/google/traceur-compiler" target="_blank" rel="external">Traceur Compiler</a>需要输入完整的文件内容（至少需要语法完整的JavaScript字符串）</p>
+<p>这就是为什么gulp默认使用转换成buffer的流，因为这更好处理。</p>
+<p>使用转换成buffer的流也有缺点，处理大文件时将非常低效。文件必须完全读取，然后才能被加入到流中。那么问题来了，文件的尺寸多大才会降低性能？对于普通的文本文件，比如JavaScript、CSS、模板等等，这些使用buffer开销非常小。</p>
+<p>在任何情况下，如果将buffer选项设为false，你可以告诉gulp流中传递的内容究竟是什么。如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">gulp.src(&apos;/usr/share/dict/words&apos;, &#123;buffer: false&#125;).on(&apos;data&apos;, function(file) &#123;</div><div class="line">    var stream = file.contents;</div><div class="line">    stream.on(&apos;data&apos;, function(chunk) &#123;</div><div class="line">        console.log(&apos;Read %d bytes of data&apos;, chunk.length);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div><div class="line">&gt; Read 65536 bytes of data</div><div class="line">&gt; Read 65536 bytes of data</div><div class="line">&gt; Read 65536 bytes of data</div><div class="line">&gt; Read 65536 bytes of data</div><div class="line">&gt; ...</div></pre></td></tr></table></figure>
+<h2 id="从流到buffer"><a href="#从流到buffer" class="headerlink" title="从流到buffer"></a>从流到buffer</h2><p>由于所需的输入（输出）流和gulp插件不尽相同，你可能需要将流转换成buffer（反之亦然）。之前已经有过介绍，大多数插件使用buffer（尽管他们的一部分也支持流）。比如<a href="https://www.npmjs.org/package/gulp-uglify" target="_blank" rel="external">gulp-uglify</a>和<a href="https://www.npmjs.org/package/gulp-traceur" target="_blank" rel="external">gulp-traceur</a>。你可以通过<a href="https://www.npmjs.org/package/gulp-buffer" target="_blank" rel="external">gulp-buffer</a>来转换成buffer：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var source = require(&apos;vinyl-source-stream&apos;),</div><div class="line">    buffer = require(&apos;gulp-buffer&apos;),</div><div class="line">    uglify = require(&apos;gulp-uglify&apos;);</div><div class="line">fs.createReadStream(&apos;./src/app.js&apos;)</div><div class="line">    .pipe(source(&apos;app.min.js&apos;))</div><div class="line">    .pipe(buffer())</div><div class="line">    .pipe(uglify())</div><div class="line">    .pipe(gulp.dest(&apos;dist/&apos;));</div></pre></td></tr></table></figure>
+<p>或者另一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var buffer = require(&apos;gulp-buffer&apos;),</div><div class="line">    traceur = require(&apos;gulp-traceur&apos;);</div><div class="line">gulp.src(&apos;app.js&apos;, &#123;buffer: false&#125;)</div><div class="line">    .pipe(buffer())</div><div class="line">    .pipe(traceur())</div><div class="line">    .pipe(gulp.dest(&apos;dist/&apos;));</div></pre></td></tr></table></figure>
+<h2 id="将buffer转换为流"><a href="#将buffer转换为流" class="headerlink" title="将buffer转换为流"></a>将buffer转换为流</h2><p>你也可以使用<a href="https://www.npmjs.org/package/gulp-streamify" target="_blank" rel="external">gulp-streamify</a>或<a href="https://www.npmjs.org/package/gulp-stream" target="_blank" rel="external">gulp-stream</a>将一个使用buffer的插件的输出转化为一个可读流。这样处理之后，跟在使用buffer的插件后面的（只能）使用流的插件也能正常工作了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var wrap = require(&apos;gulp-wrap&apos;),</div><div class="line">    streamify = require(&apos;gulp-streamify&apos;),</div><div class="line">    uglify = require(&apos;gulp-uglify&apos;),</div><div class="line">    gzip = require(&apos;gulp-gzip&apos;);</div><div class="line">gulp.src(&apos;app.js&apos;, &#123;buffer: false&#125;)</div><div class="line">    .pipe(wrap(&apos;(function()&#123;&lt;%= contents %&gt;&#125;());&apos;))</div><div class="line">    .pipe(streamify(uglify()))</div><div class="line">    .pipe(gulp.dest(&apos;build&apos;))</div><div class="line">    .pipe(gzip())</div><div class="line">    .pipe(gulp.dest(&apos;build&apos;));</div></pre></td></tr></table></figure>
+<h2 id="不是所有事都需要插件"><a href="#不是所有事都需要插件" class="headerlink" title="不是所有事都需要插件"></a>不是所有事都需要插件</h2><p>虽然已经有很多使用且方便的插件，很多任务以及转换可以不使用插件而轻易完成。插件会带来一些问题，你需要依赖一个额外的npm模块，一个插件接口和（反应迟钝？）的维护者，等等。如果一个任务可以不使用插件而使用原生模块就能轻易完成，绝大多数情况下，都建议不要使用插件。能够理解上面所说的概念，并能够在所处的情况下做出正确的决定，这点非常重要。下面来看一些例子：</p>
+<h3 id="vinyl-source-stream"><a href="#vinyl-source-stream" class="headerlink" title="vinyl-source-stream"></a>vinyl-source-stream</h3><p>之前的例子中，我们已经直接使用了browserify，而不是使用（现已加入黑名单）<a href="https://www.npmjs.org/package/gulp-browserify" target="_blank" rel="external">gulp-browserify</a>插件。这里的关键是使用vinyl-source-stream（或类似的库）进行加工，来将常规的可读流输入使用vinyl的插件。</p>
+<h3 id="文本转换"><a href="#文本转换" class="headerlink" title="文本转换"></a>文本转换</h3><p>另一个例子就是基于字符串的变换。这里有一个非常基础的插件，直接使用了vinyl的buffer：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function modify(modifier) &#123;</div><div class="line">    return through2.obj(function(file, encoding, done) &#123;</div><div class="line">        var content = modifier(String(file.contents));</div><div class="line">        file.contents = new Buffer(content);</div><div class="line">        this.push(file);</div><div class="line">        done();</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>你可以像这样使用这个插件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">gulp.task(&apos;modify&apos;, function() &#123;</div><div class="line">    return gulp.src(&apos;app.js&apos;)</div><div class="line">        .pipe(modify(version))</div><div class="line">        .pipe(modify(swapStuff))</div><div class="line">        .pipe(gulp.dest(&apos;build&apos;));</div><div class="line">&#125;);</div><div class="line">function version(data) &#123;</div><div class="line">    return data.replace(/__VERSION__/, pkg.version);</div><div class="line">&#125;</div><div class="line">function swapStuff(data) &#123;</div><div class="line">    return data.replace(/(\w+)\s(\w+)/, &apos;$2, $1&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个插件并没有完成，而且也不能处理流。然而，这个例子说明，可以很轻易地通过一些基本函数来创建新的变换。<a href="https://www.npmjs.org/package/through2" target="_blank" rel="external">through2</a>库提供了非常优秀的Node流封装，并且允许像上面那样使用转换函数。</p>
+<h2 id="任务流程"><a href="#任务流程" class="headerlink" title="任务流程"></a>任务流程</h2><p>如果你需要去运行一些定制化或动态的任务，了解gulp所使用的<a href="https://www.npmjs.org/package/orchestrator" target="_blank" rel="external">Orchestrator</a>模块会很有帮助。<code>gulp.add</code>方法其实就是<code>Orchestrator.add</code>方法（事实上所有的方法都是从Orchestrator继承而来的）。但为什么你需要这个？<br>* 你不想“私有任务”（比如：不暴露给命令行工具）弄乱gulp任务列表。<br>* 你需要更多的动态的和（或）可重用的子任务。</p>
+<h2 id="最后的思考"><a href="#最后的思考" class="headerlink" title="最后的思考"></a>最后的思考</h2><p>请注意，gulp（或grunt）并不总是当前情境下的最佳工具。比如说，如果你需要拼接并使用uglify压缩一系列的JavaScript文件，又或者你需要编译一些SASS文件，你可能需要考虑使用makefile或npm run，通过命令行来实现。减少依赖，减少配置，才是正解。</p>
+<p>阅读<a href="http://substack.net/task_automation_with_npm_run" target="_blank" rel="external">通过npm run来实现任务自动化</a>来了解更多信息。你需要明确通过一系列的“自定义构建”后需要得到什么，而哪个工具最合适。</p>
+<p>不过，我觉得gulp是一个伟大的构建系统，我很喜欢使用它，它展现了Node.js中流的强大。</p>
+<p>希望这些能够帮到你！如果你有任何反馈或其他提议，请在评论中告诉我，或者加我的twitter：<a href="https://twitter.com/webprolific" target="_blank" rel="external">@webprolific</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2016-08-26-gulp-buffer-stream.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2016-08-26-gulp-buffer-stream.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gulp/">gulp</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2016-08-26-gulp-buffer-stream.html&title=《Getting gulpy - Advanced tips for using gulp.js》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2016-08-26-gulp-buffer-stream.html&title=《Getting gulpy - Advanced tips for using gulp.js》 — Balance&source=原文：Getting gulpy – Advanced tips for using gulp.js**
+翻译：Gulp思维——Gulp高级技巧
+感受过g..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2016-08-26-gulp-buffer-stream.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Getting gulpy - Advanced tips for using gulp.js》 — Balance&url=http://blog.inching.org/JavaScript/2016-08-26-gulp-buffer-stream.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2016-08-26-gulp-buffer-stream.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2016-08-26-es6-symbols.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Symbols in ECMAScript 6</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2016-08-25-gulp-tutorial.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Gulp Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2016-08-26-gulp-buffer-stream.html&title=《Getting gulpy - Advanced tips for using gulp.js》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2016-08-26-gulp-buffer-stream.html&title=《Getting gulpy - Advanced tips for using gulp.js》 — Balance&source=原文：Getting gulpy – Advanced tips for using gulp.js**
+翻译：Gulp思维——Gulp高级技巧
+感受过g..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2016-08-26-gulp-buffer-stream.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Getting gulpy - Advanced tips for using gulp.js》 — Balance&url=http://blog.inching.org/JavaScript/2016-08-26-gulp-buffer-stream.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2016-08-26-gulp-buffer-stream.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACt0lEQVR42u3awW7rMAwEwPz/T78H9NRDbC8pMm2B8Slom1qjgygs+XrFz7+v5/vn5CfJ56vf3n93+MHDw8NrLf3qqS73anEnG3f/l1drxsPDw9vmVV98fwLfb1++Ncl3Hyx4eHh4P8rLy0mvJCT3YTw8PLy/xcsXkccK+UUcDw8P77fxkitsgkyu2tV39f4GDw8Pb4/Xa4D97Of1/h4eHh5eq6ueHMpJVNHbprwMXK4WDw8Pb4F3HgfkjPwiPjWwhYeHh7fN6x3Hs62s3gDBAxUPDw9vjXfS6LovD70AtxcfP1yp8fDw8NZ4yRKr21FtuZ2UFjw8PLzP8KoloTz8dNDQyuOSwq7g4eHhjfJ6LbG8bCSlojfc8Oa7eHh4eAu882O90I5qFaTqOMLD2/Hw8PCOecmi94axeiFvc+gKDw8P75hXjV+rpaJ6CT4ZI3izKjw8PLwFXq9hnxeAaiRRDW2jDcXDw8Mb5VWP2qn4tRdelMcO8PDw8NZ4J4dvL5g4aaflpQgPDw9vg7cxdJWHsL1GWrk44eHh4Y3yZhta+dGfhyDVYvOm7uHh4eGN8qqNq96i86ZaNQ6OyhUeHh7eKK96/e1djpNmWLVtFl278fDw8JZ5SZg7Gz3kwwHNcoKHh4e3xjsJavNX5m2wfIzg4Y14eHh4y7zeUnojVhsjAg+TEXh4eHhDvJMBqV5YcBJwNAsVHh4e3ihv6lKbL3oqpIhWgoeHh/dxXgLOxw7yItEbFHjz3/Dw8PAWeEchaStuyItHNaToFRI8PDy8Hq965a1ejnsxbm9M4SHGxcPDwxvl9a6/vWtuLwJOylJhgAAPDw/vI7ze4vLlngwN4OHh4f1mXq87X01H8o2Ismo8PDy8BV4SMVSjiuqBXm13RYEyHh4e3gLvpAE2NaRVLTyv2QcPDw8vfdd/04T5PsCgW88AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

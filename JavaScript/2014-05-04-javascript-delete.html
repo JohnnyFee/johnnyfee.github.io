@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JavaScript delete 操作符 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,operator">
+    <meta name="description" content="理论delete 操作符通常用来删除对象的属性：
+var o = { x: 1 };
+delete o.x; // true
+o.x; // undefined
+而不是一般的变量：
+var x = 1;
+delete x; // false
+x; // 1
+或者是函数：
+function x(){}
+delete x; // false
+typeof x; // &amp;quot;function&amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript delete 操作符">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-05-04-javascript-delete.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="理论delete 操作符通常用来删除对象的属性：
+var o = { x: 1 };
+delete o.x; // true
+o.x; // undefined
+而不是一般的变量：
+var x = 1;
+delete x; // false
+x; // 1
+或者是函数：
+function x(){}
+delete x; // false
+typeof x; // &amp;quot;function&amp;qu">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript delete 操作符">
+<meta name="twitter:description" content="理论delete 操作符通常用来删除对象的属性：
+var o = { x: 1 };
+delete o.x; // true
+o.x; // undefined
+而不是一般的变量：
+var x = 1;
+delete x; // false
+x; // 1
+或者是函数：
+function x(){}
+delete x; // false
+typeof x; // &amp;quot;function&amp;qu">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript delete 操作符</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript delete 操作符</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-03T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#理论"><span class="post-toc-text">理论</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#代码的类型"><span class="post-toc-text">代码的类型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#执行上下文-Execution-Context"><span class="post-toc-text">执行上下文(Execution Context)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Activation-object-Variable-object"><span class="post-toc-text">Activation object / Variable object</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#变量属性的标记"><span class="post-toc-text">变量属性的标记</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内建对象与DontDelete"><span class="post-toc-text">内建对象与DontDelete</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#非声明性赋值"><span class="post-toc-text">非声明性赋值</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Firebug的困扰"><span class="post-toc-text">Firebug的困扰</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#delete与宿主对象-host-objects"><span class="post-toc-text">delete与宿主对象(host objects)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ES5-strict-mode"><span class="post-toc-text">ES5 strict mode</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#IE-bugs"><span class="post-toc-text">IE bugs</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#delete操作符删除的对象"><span class="post-toc-text">delete操作符删除的对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#delete的返回值"><span class="post-toc-text">delete的返回值</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-delete"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript delete 操作符</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-04 00:00:00" datetime="2014-05-03T16:00:00.000Z"  itemprop="datePublished">2014-05-04</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h2><p><code>delete</code> 操作符通常用来删除对象的属性：</p>
+<pre><code>var o = { x: 1 };
+delete o.x; // true
+o.x; // undefined
+</code></pre><p>而不是一般的变量：</p>
+<pre><code>var x = 1;
+delete x; // false
+x; // 1
+</code></pre><p>或者是函数：</p>
+<pre><code>function x(){}
+delete x; // false
+typeof x; // &quot;function&quot;
+</code></pre><a id="more"></a>
+<p>注意 <code>delete</code> 只有在无法删除的情况下才会返回 <code>false</code>。为了理解这一点，我们必须解释一下变量初始化以及变量属性的一些基本概念–不幸的是很少有 Javascript 的书能讲到这些。如果你只想知其然而不是知其所以然的话，你完全可以跳过这一节。</p>
+<h3 id="代码的类型"><a href="#代码的类型" class="headerlink" title="代码的类型"></a>代码的类型</h3><p>在ECMAScript中，有三种可执行代码类型：全局代码、函数代码、eval代码。</p>
+<ol>
+<li>当一段代码被当做程序段运行的时候，它是在全局作用域下执行的，也就是全局代码。在浏览器环境下，通常 <code>&lt;SCRIPT&gt;</code> 元素就是一段全局代码。</li>
+<li>所有在 <code>function</code> 中声明的代码即是函数代码，最常见的是HTML元素的响应事件(<code>&lt;p onclick=&quot;...&quot;&gt;</code>)。</li>
+<li>传入内建的 <code>eval</code> 函数中的代码段称为 eval 代码，稍后我们会看到这种类型的特别性。</li>
+</ol>
+<h3 id="执行上下文-Execution-Context"><a href="#执行上下文-Execution-Context" class="headerlink" title="执行上下文(Execution Context)"></a>执行上下文(Execution Context)</h3><p>在ECMAScript代码执行的时候，总是会有一个执行的上下文。这是一个比较抽象的概念，但可以帮助我们理解作用域以及变量初始化的相关过程。对于以上三种代码段类型，都有一个相应的执行上下文，比如函数代码有函数上下文，全局代码有全局上下文，等等。</p>
+<p>逻辑上执行上下文相互间可以形成堆栈，在全局代码执行的最开始会有一个全局上下文，当调用一个函数的时候会进入相应函数的上下文，之后又可以再继续调用其他的函数亦或是递归调用自己，这时执行上下文的嵌套类似于函数调用栈。</p>
+<h3 id="Activation-object-Variable-object"><a href="#Activation-object-Variable-object" class="headerlink" title="Activation object / Variable object"></a>Activation object / Variable object</h3><p>每个执行上下文都和一个 Variable object（变量对象）相关联 ，这也是一个抽象的概念，便于我们理解变量实例化机制：在源代码中声明的变量和方法实际上都是作为属性被加入到与当前上下文相关联的这个对象当中 。</p>
+<p>当执行全局代码的时候，Variable object就是一个全局对象，也就是说所有全局变量和函数都是作为这个变量的属性存在。</p>
+<pre><code>/* 全局环境下，this所指向的就是这个全局对象 */  
+var GLOBAL_OBJECT = this;  
+
+var foo = 1;  
+GLOBAL_OBJECT.foo; // 1  
+foo === GLOBAL_OBJECT.foo; // true  
+
+function bar(){}  
+typeof GLOBAL_OBJECT.bar; // &quot;function&quot;  
+GLOBAL_OBJECT.bar === bar; // true
+</code></pre><p>那么对于在函数中声明的变量呢？情况是类似的，函数中声明的变量也是被当做相应上下文对象的属性，唯一的区别是在函数代码段中，这个对象被称为Activation object（活动对象）。每次进入一个函数调用都会新建一个新的活动对象。</p>
+<p>在函数段中，并不是只有显式声明的变量和函数会成为活动对象的属性，对于每个函数中隐式存在的arguments对象（函数的参数列表）也是一样的。注意活动对象其实是一种内部机制，程序代码是无法访问到的。</p>
+<pre><code>(function(foo){  
+
+  var bar = 2;  
+  function baz(){}  
+
+  /* 
+  可以把活动对象作为一个抽象的存在，在每进入一个函数的时候，默认的arguments对象以及传入的参数都会自动被设为活动对象的属性:  
+    ACTIVATION_OBJECT.arguments; // arguments变量 
+
+  传入参数foo: 
+    ACTIVATION_OBJECT.foo; // 1 
+
+    函数内声明的变量bar: 
+    ACTIVATION_OBJECT.bar; // 2 
+
+    以及函数内定义的baz函数: 
+    typeof ACTIVATION_OBJECT.baz; // &quot;function&quot; 
+  */  
+
+})(1);
+</code></pre><p>最后，在evel代码段中定义的变量都是被加入到当前执行eval的上下文环境对象中，也就是说进入eval代码时并不会新建新的变量对象，而是沿用当前的环境。</p>
+<pre><code>var GLOBAL_OBJECT = this;  
+
+/* foo被加入到当前变量对象中，也就是全局对象。 */  
+
+eval(&apos;var foo = 1;&apos;);  
+GLOBAL_OBJECT.foo; // 1  
+
+(function(){  
+
+  /* bar被加入到当前这个函数的活动对象中。 */  
+
+  eval(&apos;var bar = 1;&apos;);  
+
+  /*  
+    可以抽象地表示为:  
+    ACTIVATION_OBJECT.bar; // 1 
+  */  
+
+})();
+</code></pre><h3 id="变量属性的标记"><a href="#变量属性的标记" class="headerlink" title="变量属性的标记"></a>变量属性的标记</h3><p>我们已经知道声明变量时发生了什么（他们都变成了当前上下文对象的属性），接下来我们就要看一下属性究竟是怎么样一回事。每一个变量属性都可以有以下任意多个属性: ReadOnly, DontEnum, DontDelete, Internal。你可以把这些当做标记，标明了变量属性可以持有的某种特性。这里我们最感兴趣的就是DontDelete标记。</p>
+<p>在声明变量或者函数时，他们都变成了当前上下文对象的属性–对于函数代码来说是活动对象，对于全局代码来说则是变量对象，而值得注意的是这些属性在创建时都带有DontDelete标记，但是显式或者隐式的赋值语句所产生的<strong>属性</strong>并不会带有这个标记！这就是为什么有一些属性我们可以删除，但另一些却不可以：</p>
+<pre><code>var GLOBAL_OBJECT = this;  
+
+/*  foo是被正常声明的，所以带有DontDelete标记，从而不能被删除！ */  
+
+var foo = 1;  
+delete foo; // false  
+typeof foo; // &quot;number&quot;  
+
+/* bar是作为函数被声明，一样带有DontDelete，不能被删除。 */  
+
+function bar(){}  
+delete bar; // false  
+typeof bar; // &quot;function&quot;  
+
+/*  baz是直接通过一个赋值而没有声明，不会持有DontDelete标记，才可以被删除！ */  
+
+GLOBAL_OBJECT.baz = &apos;blah&apos;;  
+delete GLOBAL_OBJECT.baz; // true  
+typeof GLOBAL_OBJECT.baz; // &quot;undefined&quot;
+</code></pre><h3 id="内建对象与DontDelete"><a href="#内建对象与DontDelete" class="headerlink" title="内建对象与DontDelete"></a>内建对象与DontDelete</h3><p>DontDelete就是一个特殊的标记，用来表明某一个属性能否被删除。需要注意的是一些内建的对象是自动持有这个标记的，从而不能被删除，比如函数内的arguments，以及函数的length属性。</p>
+<pre><code>(function(){  
+
+  /*arguments对象默认持有DontDelete标记，不能被删除。 */  
+
+  delete arguments; // false  
+  typeof arguments; // &quot;object&quot;  
+
+  /* 函数的length属性也一样 */  
+
+  function f(){}  
+  delete f.length; // false  
+  typeof f.length; // &quot;number&quot;  
+
+})();
+</code></pre><p>函数的传入参数也是一样的:</p>
+<pre><code>(function(foo, bar){  
+
+  delete foo; // false  
+  foo; // 1  
+
+  delete bar; // false  
+  bar; // &apos;blah&apos;  
+
+})(1, &apos;blah&apos;); 
+</code></pre><p>prototype中声明的属性无法被delete：</p>
+<pre><code>function C() { this.x = 42; }
+C.prototype.x = 12;
+
+var o = new C();
+o.x;     // 42, 构造函数中定义的o.x
+
+delete o.x;
+o.x;     // 12,  prototype中定义的o.x，即使再次执行delete o.x也不会被删除
+</code></pre><p>对象的预定义属性也无法删除。 可以认为这类属性带有DontDelete的特性。</p>
+<pre><code>var re = /abc/i;
+delete re.ignoreCase;
+re.ignoreCase; // true, ignoreCase无法删除
+</code></pre><h3 id="非声明性赋值"><a href="#非声明性赋值" class="headerlink" title="非声明性赋值"></a>非声明性赋值</h3><p>你可能知道，非声明性的赋值语句会产生全局变量，进而变成全局变量对象的属性。所以根据上面的解释，非声明性的赋值所产生的对象是可以被删除的：</p>
+<pre><code>var GLOBAL_OBJECT = this;  
+
+/* 通过声明的全局变量会持有DontDelete，无法被删除。 */  
+var foo = 1;  
+
+/* 没有经过声明的变量赋值不会带DontDelete，可以被删除。 */  
+bar = 2;  
+
+delete foo; // false  
+typeof foo; // &quot;number&quot;  
+
+delete bar; // true  
+typeof bar; // &quot;undefined&quot;
+</code></pre><p>需要注意的是属性标记诸如DontDelete是在这个属性被创建的时候 产生的，之后对该属性的任何赋值都不会改变此属性的标记！</p>
+<pre><code>/* foo被声明时会带有DontDelete标记 */  
+function foo(){}  
+
+/* 之后对foo的赋值无法改变他所带的标记！ */  
+foo = 1;  
+delete foo; // false  
+typeof foo; // &quot;number&quot;  
+
+/* 当给一个还不存在的属性赋值的时候会创建一个不带任何标记的属性（包括DontDelete），进而可以被删除！ */  
+
+this.bar = 1;  
+delete bar; // true  
+typeof bar; // &quot;undefined&quot;
+</code></pre><h2 id="Firebug的困扰"><a href="#Firebug的困扰" class="headerlink" title="Firebug的困扰"></a>Firebug的困扰</h2><p>现在再让我们回到最开始的问题，为什么在Firebug控制台里声明的变量可以被删除呢？这就要牵涉到eval代码段的特殊行为，也就是在eval中声明的变量创建时都不会带有DontDelete标记！</p>
+<pre><code>eval(&apos;var foo = 1;&apos;);  
+foo; // 1  
+delete foo; // true  
+typeof foo; // &quot;undefined&quot;  
+ 在函数内部也是一样的:
+Js代码      收藏代码
+(function(){  
+
+  eval(&apos;var foo = 1;&apos;);  
+  foo; // 1  
+  delete foo; // true  
+  typeof foo; // &quot;undefined&quot;  
+
+})();  
+</code></pre><p>这就是导致Firebug”诡异”行为的罪魁祸首: 在Firebug控制台中的代码最终将通过eval执行，而不是作为全局代码或函数代码。显然地，这样声明出来的变量都不会带DontDelete标记，所以才能被删除！(译者:也不能太信任Firebug啊。)</p>
+<h2 id="delete与宿主对象-host-objects"><a href="#delete与宿主对象-host-objects" class="headerlink" title="delete与宿主对象(host objects)"></a>delete与宿主对象(host objects)</h2><p>delete的大致算法如下:</p>
+<ol>
+<li>如果操作对象不是一个引用，返回true</li>
+<li>如果当前上下文对象没有此名字的一个直接属性，返回true（上下文对象可以是全局对象或者函数内的活动对象）</li>
+<li>如果存在这样一个属性但是有DontDelete标记，返回false</li>
+<li>其他情况则删除该属性并返回true</li>
+</ol>
+<p>然而有一个例外，即对于宿主对象而言，delete操作的结果是不可预料的。这并不奇怪，因为宿主对象根据不同浏览器的实现允许有不同的行为，这其中包括了delete。所以当处理宿主对象时，其结果是不可信的，比如在FF下:</p>
+<pre><code>/* &quot;alert&quot; 是window对象的一个属性 */  
+window.hasOwnProperty(&apos;alert&apos;); // true  
+
+delete window.alert; // true  
+typeof window.alert; // &quot;function&quot;，表明实际上并没有真正删除  
+</code></pre><p>总而言之，任何时候都不要相信宿主对象。</p>
+<h2 id="ES5-strict-mode"><a href="#ES5-strict-mode" class="headerlink" title="ES5 strict mode"></a>ES5 strict mode</h2><p>为了能更早地发现一些应该被发现的问题，ECMAScript 5th edition 提出了strict mode的概念。下面是一个例子:</p>
+<pre><code>(function(foo){  
+
+  &quot;use strict&quot;; // enable strict mode within this function  
+
+  var bar;  
+  function baz(){}  
+
+  delete foo; // SyntaxError (when deleting argument)  
+  delete bar; // SyntaxError (when deleting variable)  
+  delete baz; // SyntaxError (when deleting variable created with function declaration)  
+
+  /* `length` of function instances has { [[Configurable]] : false } */  
+
+  delete (function(){}).length; // TypeError  
+
+})();  
+</code></pre><p>删除不存在的变量:</p>
+<pre><code>&quot;use strict&quot;;  
+delete i_dont_exist; // SyntaxError  
+</code></pre><p>对未声明的变量赋值:</p>
+<pre><code>&quot;use strict&quot;;  
+i_dont_exist = 1; // ReferenceError  
+</code></pre><p>可以看出，strict mode采用了更主动并且描述性的方法，而不是简单的忽略无效的删除操作。</p>
+<h2 id="IE-bugs"><a href="#IE-bugs" class="headerlink" title="IE bugs"></a>IE bugs</h2><p>是的，你没有看错，整个这一节都是在讲IE的bug! 在IE6-8中，下面的代码会抛出错误（全局代码）:</p>
+<pre><code>this.x = 1;  
+delete x; // TypeError: Object doesn&apos;t support this action  
+
+var x = 1;  
+delete this.x; // TypeError: Cannot delete &apos;this.x&apos;  
+</code></pre><p>看起来似乎在IE里变量声明并不会在全局变量对象里产生相应的属性。还有更有趣的，对于显式赋值的属性总是会在删除时出错，并不是真正抛出错误，而是这些属性似乎都带有DontDelete标记，和我们的设想相反。</p>
+<pre><code>this.x = 1;  
+
+delete this.x; // TypeError: Object doesn&apos;t support this action  
+typeof x; // &quot;number&quot; (没有被删除！)  
+
+delete x; // TypeError: Object doesn&apos;t support this action  
+typeof x; // &quot;number&quot; (还是没有被删除！)  
+</code></pre><p>但下面的代码表明，非声明性的赋值产生的属性确实是可以删除的:</p>
+<pre><code>x = 1;  
+delete x; // true  
+typeof x; // &quot;undefined&quot;  
+</code></pre><p>不过当你试图通过全局变量对象this来访问x的时候，错误又来了:</p>
+<pre><code>x = 1;  
+delete this.x; // TypeError: Cannot delete &apos;this.x&apos;  
+</code></pre><p>总而言之，通过全局this变量去删除属性(delete this.x)总会出错，而直接删除该属性(delete x)时：如果x是通过全局this赋值产生会(this.x=1)导致错误；如果x通过显式声明创建(var x=1)则delete会像我们预料的那样无法删除并返回false；如果x通过非声明式赋值创建(x=1)则delete可以正常删除。</p>
+<p>对于以上的问题，<a href="http://dhtmlkitchen.com/" target="_blank" rel="external">Garrett Smith</a> 的一个解释是”IE的全局变量对象是通过JScript实现，而一般的全局变量是由host实现的。”(ref: <a href="http://blogs.msdn.com/ericlippert/archive/2005/05/04/414684.aspx" target="_blank" rel="external">Eric Lippert’s blog entry</a>)</p>
+<p>我们可以自己验证一下这个解释，注意this和window看上去是指向同一个对象，但是函数所返回的当前环境的变量对象却和this不同。</p>
+<pre><code>/* in Global code */  
+function getBase(){ return this; }  
+
+getBase() === this.getBase(); // false  
+this.getBase() === this.getBase(); // true  
+window.getBase() === this.getBase(); // true  
+window.getBase() === getBase(); // false  
+</code></pre><h2 id="delete操作符删除的对象"><a href="#delete操作符删除的对象" class="headerlink" title="delete操作符删除的对象"></a>delete操作符删除的对象</h2><p>C++中也有delete操作符，它删除的是指针所指向的对象。例如：</p>
+<pre><code>// C++
+class Object {
+public:
+  Object *x;
+}
+
+Object o;
+o.x = new Object();
+delete o.x;     // 上一行new的Object对象将被释放
+</code></pre><p>但Javascript的delete与C++不同，<strong>它不会删除o.x指向的对象，而是删除o.x属性本身</strong>。</p>
+<pre><code>// Javascript
+var o = {};
+o.x = new Object();
+delete o.x;     // 上一行new的Object对象依然存在
+o.x;            // undefined，o的名为x的属性被删除了
+</code></pre><p>在实际的Javascript中，delete o.x之后，Object对象会由于失去了引用而被垃圾回收， 所以delete o.x也就“相当于”删除了o.x所指向的对象，但这个动作并不是ECMAScript标准， 也就是说，即使某个实现完全不删除Object对象，也不算是违反ECMAScript标准。</p>
+<p>“删除属性而不是删除对象”这一点，可以通过以下的代码来确认。</p>
+<pre><code>var o = {};
+var a = { x: 10 };
+o.a = a;
+delete o.a;    // o.a属性被删除
+o.a;           // undefined
+a.x;           // 10, 因为{ x: 10 } 对象依然被 a 引用，所以不会被回收
+</code></pre><p>另外，delete o.x 也可以写作 delete o[“x”]，两者效果相同。</p>
+<h2 id="delete的返回值"><a href="#delete的返回值" class="headerlink" title="delete的返回值"></a>delete的返回值</h2><p>delete是普通运算符，会返回true或false。规则为：当被delete的对象的属性存在并且拥有DontDelete时<br>返回false，否则返回true。 这里的一个特点就是，对象属性不存在时也返回true，所以返回值并非完全等同于删除成功与否。</p>
+<pre><code>function C() { this.x = 42; }
+C.prototype.y = 12;
+var o = new C();
+
+delete o.x; // true
+o.x;        // undefined
+&quot;x&quot; in o;   // false
+// o.x存在并且没有DontDelete，返回true
+
+delete o.y; // true
+o.y;        // 12
+// o自身没有o.y属性，所以返回true
+// 从这里也可以看到prototype链的存在，对象自身属性和prototype属性是不同的
+
+delete o;   // false
+// Global.o拥有DontDelete特性所以返回false
+
+delete undefinedProperty;  // true
+// Global没有名为undefinedProperty的属性因此返回true
+
+delete 42;  // true
+// 42不是属性所以返回true。有的实现会抛出异常（违反ECMAScript标准）
+
+var x = 24;
+delete x++;  // true
+x;           // 25
+// 被删除的是x++的返回值(24)，不是属性，所以返回true
+</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>变量和函数的声明实际上都会成为全局对象或者当前函数活动对象的属性。</li>
+<li>属性都有一个DontDelete标记，用于表明该属性是否能被delete。</li>
+<li>变量和函数的声明创建的属性都会带有DontDelete标记。</li>
+<li>函数内建的arguments对象作为该函数活动对象的默认属性，创建时总会带有DontDelete标记。</li>
+<li>在eval代码块中声明的变量和方法都不带有DontDelete标记。</li>
+<li>对还不存在的变量或属性的直接赋值产生的对象不会带有任何标记，包括DontDelete。</li>
+<li>对于宿主对象而言，delete操作的结果有可能是不可预料的。</li>
+</ul>
+<p>如果你希望对以上这些有更进一步的了解，请参考ECMA规范:<a href="http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf" target="_blank" rel="external">ECMA-262 3rd edition specification</a></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://m.oschina.net/blog/28926" target="_blank" rel="external">深入详解javascript之delete操作符</a><ul>
+<li><a href="http://perfectionkills.com/understanding-delete/" target="_blank" rel="external">Understanding delete — Perfection Kills</a></li>
+</ul>
+</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete" target="_blank" rel="external">delete - JavaScript</a></li>
+<li><a href="http://blog.charlee.li/javascript-variables-and-delete-operator/" target="_blank" rel="external">Javascript的变量与delete操作符</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-05-04-javascript-delete.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-05-04-javascript-delete.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/operator/">operator</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-05-04-javascript-delete.html&title=《JavaScript delete 操作符》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-05-04-javascript-delete.html&title=《JavaScript delete 操作符》 — Balance&source=理论delete 操作符通常用来删除对象的属性：
+var o = { x: 1 };
+delete o.x; // true
+o.x; // undefi..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-05-04-javascript-delete.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript delete 操作符》 — Balance&url=http://blog.inching.org/JavaScript/2014-05-04-javascript-delete.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-05-04-javascript-delete.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/C/2014-05-05-cpp-const.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">C/C++ 常量</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Qt/2014-05-04-qt-thread-sync.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Qt 线程同步</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-05-04-javascript-delete.html&title=《JavaScript delete 操作符》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-05-04-javascript-delete.html&title=《JavaScript delete 操作符》 — Balance&source=理论delete 操作符通常用来删除对象的属性：
+var o = { x: 1 };
+delete o.x; // true
+o.x; // undefi..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-05-04-javascript-delete.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript delete 操作符》 — Balance&url=http://blog.inching.org/JavaScript/2014-05-04-javascript-delete.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-05-04-javascript-delete.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACs0lEQVR42u3aQW7CQAwFUO5/aSp1Vaki+bbHwOJlVaVNmJdKsfmexyM+nr/H/zN/z786c32H/9cm5w8feHh4eK2lvzquF3r98fndene4XjMeHh7eNu+6GCSLS5ZVLTPJb28seHh4eB/lTUpIb6H5nfHw8PC+k5cUgyqyF2fg4eHhfQMved1Pzsw/ZT1rwcPDw4t51QHYN/y8ON/Dw8PDG0zVJwFEspTJmC1aGx4eHt4Cr7qgfPtUvnUgChRaQTAeHh7eBi//kj9puydbCpKrXq4EDw8Pb5mXN8p5YUgKTw8ZtfJ4eHh4b+TlA6q8zc2vqn5i1FLj4eHhLfCqLXJOqrbseYRRKAx4eHh4R3mTBrqH6cW45bYeDw8Pb4E3D1jzZeUNfW8wVhiG4eHh4Q3WcCrAzZvd6raAqHXGw8PDeyMvuWAey/ZKSDW2eFSfGR4eHl6Llw+9erFvvtxJKPyy/ODh4eEt8Hoj/ASZL7TapifIQrqMh4eHV+Qlr+l8C9TZgVbeykc7I/Dw8PAO8aqRwTM48uZ7Mmwr3BMPDw/vKG8eRpyKKnrN9E3xwMPDw1vm9UrC3uKS8lBOWfDw8PDGvGpYkA+f8gdRTZ2TLVl4eHh427xJ61yNJ3qxQvUx3fwP8fDw8Ma8eRTbC2qrr/heXIKHh4e3wZsP+/NH0IPl5WT0p3h4eHgxr7oJoLrE6it+srHgJqvGw8PDW+P1YoJe61wdepXLAx4eHt5R3iSQ7YUXk0dWLV14eHh4G7zeC3c+6OoFstUtBXh4eHh7vOrgP2mIkxd6NcDtFSQ8PDy8PV5SDKqv717wujIAw8PDw/soLwdvN9/RPfHw8PA+yqtuCKj+Tb5BIW/Z8fDw8PZ4veFTvkVgPuIaDbfw8PDwjvJ6X/V7bXT+UKrR8E2Yi4eHh3eG9wOPMhg8F5gpDwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

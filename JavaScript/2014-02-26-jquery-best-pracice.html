@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>编写更好的jQuery代码的建议 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="本文由 yanhaijing 翻译自 Mathew Carella
+
+##参考
+
+airbnb/javascript · GitHub A mostly reasonable approach to JavaScript.
+
+讨论jQuery和javascript性能的文章并不罕见。然而，本文我计划总结一些速度方面的技巧和我本人的一些建议，来提升你的jQuery和javascript代码。好的代">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编写更好的jQuery代码的建议">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-02-26-jquery-best-pracice.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文由 yanhaijing 翻译自 Mathew Carella
+
+##参考
+
+airbnb/javascript · GitHub A mostly reasonable approach to JavaScript.
+
+讨论jQuery和javascript性能的文章并不罕见。然而，本文我计划总结一些速度方面的技巧和我本人的一些建议，来提升你的jQuery和javascript代码。好的代">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编写更好的jQuery代码的建议">
+<meta name="twitter:description" content="本文由 yanhaijing 翻译自 Mathew Carella
+
+##参考
+
+airbnb/javascript · GitHub A mostly reasonable approach to JavaScript.
+
+讨论jQuery和javascript性能的文章并不罕见。然而，本文我计划总结一些速度方面的技巧和我本人的一些建议，来提升你的jQuery和javascript代码。好的代">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">编写更好的jQuery代码的建议</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">编写更好的jQuery代码的建议</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-02-25T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-02-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#规范"><span class="post-toc-text">规范</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#避免全局变量"><span class="post-toc-text">避免全局变量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用匈牙利命名法"><span class="post-toc-text">使用匈牙利命名法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#请使用-on"><span class="post-toc-text">请使用 on</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#精简-javascript"><span class="post-toc-text">精简 javascript</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#熟记技巧"><span class="post-toc-text">熟记技巧</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#data"><span class="post-toc-text">data</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#选择器"><span class="post-toc-text">选择器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用子查询缓存的父元素"><span class="post-toc-text">使用子查询缓存的父元素</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#避免通用选择符"><span class="post-toc-text">避免通用选择符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#避免隐式通用选择符"><span class="post-toc-text">避免隐式通用选择符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#缓存变量"><span class="post-toc-text">缓存变量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#繁重的操作中分离元素"><span class="post-toc-text">繁重的操作中分离元素</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#必要时组合jQuery和javascript原生代码"><span class="post-toc-text">必要时组合jQuery和javascript原生代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最后忠告"><span class="post-toc-text">最后忠告</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-jquery-best-pracice"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">编写更好的jQuery代码的建议</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-02-26 00:00:00" datetime="2014-02-25T16:00:00.000Z"  itemprop="datePublished">2014-02-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p><strong>本文由 <a href="http://blog.jobbole.com/author/yanhaijing/" target="_blank" rel="external">yanhaijing</a> 翻译自 <a href="http://flippinawesome.org/2013/11/25/writing-better-jquery-code/" target="_blank" rel="external">Mathew Carella</a></strong></p>
+</blockquote>
+<p>##参考</p>
+<ul>
+<li><a href="https://github.com/airbnb/javascript" target="_blank" rel="external">airbnb/javascript · GitHub</a> A mostly reasonable approach to JavaScript.</li>
+</ul>
+<p>讨论jQuery和javascript性能的文章并不罕见。然而，本文我计划总结一些速度方面的技巧和我本人的一些建议，来提升你的jQuery和javascript代码。好的代码会带来速度的提升。快速渲染和响应意味着更好的用户体验。</p>
+<p>首先，在脑子里牢牢记住jQuery就是javascript。这意味着我们应该采取相同的编码惯例,风格指南和最佳实践。</p>
+<a id="more"></a>
+<p>首先，如果你是一个javascript新手，我建议您阅读 《<a href="http://net.tutsplus.com/tutorials/JavaScript-ajax/24-JavaScript-best-practices-for-beginners/" target="_blank" rel="external">JavaScript初学者的最佳实践</a>》 ，这是一篇高质量的javascript教程，接触jQuery之前最好先阅读。</p>
+<p>当你准备使用jQuery，我强烈建议你遵循下面这些指南：</p>
+<h2 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h2><h3 id="避免全局变量"><a href="#避免全局变量" class="headerlink" title="避免全局变量"></a>避免全局变量</h3><p>jQuery与javascript一样，一般来说,最好确保你的变量在函数作用域内。</p>
+<pre><code>// 糟糕
+
+$element = $(&apos;#element&apos;);
+h = $element.height();
+$element.css(&apos;height&apos;,h-20);
+
+// 建议
+
+var $element = $(&apos;#element&apos;);
+var h = $element.height();
+$element.css(&apos;height&apos;,h-20);
+</code></pre><h3 id="使用匈牙利命名法"><a href="#使用匈牙利命名法" class="headerlink" title="使用匈牙利命名法"></a>使用匈牙利命名法</h3><p>在变量前加$前缀，便于识别出jQuery对象。</p>
+<pre><code>// 糟糕
+
+var first = $(&apos;#first&apos;);
+var second = $(&apos;#second&apos;);
+var value = $first.val();
+
+// 建议 - 在jQuery对象前加$前缀
+
+var $first = $(&apos;#first&apos;);
+var $second = $(&apos;#second&apos;),
+var value = $first.val();
+</code></pre><h3 id="请使用-on"><a href="#请使用-on" class="headerlink" title="请使用 on"></a>请使用 <code>on</code></h3><p>在新版jQuery中，更短的 on(“click”) 用来取代类似 click() 这样的函数。在之前的版本中 on() 就是 bind()。自从jQuery 1.7版本后，on()?附加事件处理程序的首选方法。然而，出于一致性考虑，你可以简单的全部使用 on()方法。</p>
+<pre><code>// 糟糕
+
+$first.click(function(){
+    $first.css(&apos;border&apos;,&apos;1px solid red&apos;);
+    $first.css(&apos;color&apos;,&apos;blue&apos;);
+});
+
+$first.hover(function(){
+    $first.css(&apos;border&apos;,&apos;1px solid red&apos;);
+})
+
+// 建议
+$first.on(&apos;click&apos;,function(){
+    $first.css(&apos;border&apos;,&apos;1px solid red&apos;);
+    $first.css(&apos;color&apos;,&apos;blue&apos;);
+})
+
+$first.on(&apos;hover&apos;,function(){
+    $first.css(&apos;border&apos;,&apos;1px solid red&apos;);
+})
+</code></pre><h3 id="精简-javascript"><a href="#精简-javascript" class="headerlink" title="精简 javascript"></a>精简 javascript</h3><p>一般来说,最好尽可能合并函数。</p>
+<pre><code>// 糟糕
+
+$first.click(function(){
+    $first.css(&apos;border&apos;,&apos;1px solid red&apos;);
+    $first.css(&apos;color&apos;,&apos;blue&apos;);
+});
+
+// 建议
+
+$first.on(&apos;click&apos;,function(){
+    $first.css({
+        &apos;border&apos;:&apos;1px solid red&apos;,
+        &apos;color&apos;:&apos;blue&apos;
+    });
+});
+</code></pre><h2 id="熟记技巧"><a href="#熟记技巧" class="headerlink" title="熟记技巧"></a>熟记技巧</h2><h3 id="data"><a href="#data" class="headerlink" title="data"></a>data</h3><p>你可能对使用jQuery中的方法缺少经验，一定要查看的文档，可能会有一个更好或更快的方法来使用它。</p>
+<pre><code>// 糟糕
+$(&apos;#id&apos;).data(key,value);
+
+// 建议 (高效)
+$.data(&apos;#id&apos;,key,value);
+</code></pre><h2 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h2><h3 id="使用子查询缓存的父元素"><a href="#使用子查询缓存的父元素" class="headerlink" title="使用子查询缓存的父元素"></a>使用子查询缓存的父元素</h3><p>正如前面所提到的，DOM遍历是一项昂贵的操作。典型做法是缓存父元素并在选择子元素时重用这些缓存元素。</p>
+<pre><code>// 糟糕
+
+var 
+    $container = $(&apos;#container&apos;),
+    $containerLi = $(&apos;#container li&apos;),
+    $containerLiSpan = $(&apos;#container li span&apos;);
+
+// 建议 (高效)
+
+var 
+    $container = $(&apos;#container &apos;),
+    $containerLi = $container.find(&apos;li&apos;),
+    $containerLiSpan= $containerLi.find(&apos;span&apos;);
+</code></pre><h3 id="避免通用选择符"><a href="#避免通用选择符" class="headerlink" title="避免通用选择符"></a>避免通用选择符</h3><p>将通用选择符放到后代选择符中，性能非常糟糕。</p>
+<pre><code>// 糟糕
+
+$(&apos;.container &gt; *&apos;); 
+
+// 建议
+
+$(&apos;.container&apos;).children();
+</code></pre><h3 id="避免隐式通用选择符"><a href="#避免隐式通用选择符" class="headerlink" title="避免隐式通用选择符"></a>避免隐式通用选择符</h3><p>通用选择符有时是隐式的，不容易发现。</p>
+<pre><code>// 糟糕
+
+$(&apos;.someclass :radio&apos;); 
+
+// 建议
+
+$(&apos;.someclass input:radio&apos;);
+</code></pre><h3 id="缓存变量"><a href="#缓存变量" class="headerlink" title="缓存变量"></a>缓存变量</h3><p>DOM遍历是昂贵的，所以尽量将会重用的元素缓存。</p>
+<pre><code>// 糟糕
+
+h = $(&apos;#element&apos;).height();
+$(&apos;#element&apos;).css(&apos;height&apos;,h-20);
+
+// 建议
+
+$element = $(&apos;#element&apos;);
+h = $element.height();
+$element.css(&apos;height&apos;,h-20);
+</code></pre><h3 id="繁重的操作中分离元素"><a href="#繁重的操作中分离元素" class="headerlink" title="繁重的操作中分离元素"></a>繁重的操作中分离元素</h3><p>如果你打算对DOM元素做大量操作（连续设置多个属性或css样式），建议首先分离元素然后在添加。</p>
+<pre><code>// 糟糕
+
+var 
+    $container = $(&quot;#container&quot;),
+    $containerLi = $(&quot;#container li&quot;),
+    $element = null;
+
+$element = $containerLi.first(); 
+//... 许多复杂的操作
+
+// better
+
+var 
+    $container = $(&quot;#container&quot;),
+    $containerLi = $container.find(&quot;li&quot;),
+    $element = null;
+
+$element = $containerLi.first().detach(); 
+//... 许多复杂的操作
+
+$container.append($element);
+</code></pre><h2 id="必要时组合jQuery和javascript原生代码"><a href="#必要时组合jQuery和javascript原生代码" class="headerlink" title="必要时组合jQuery和javascript原生代码"></a>必要时组合jQuery和javascript原生代码</h2><p>如上所述，jQuery就是javascript，这意味着用jQuery能做的事情，同样可以用原生代码来做。原生代码（或?<a href="http://vanilla-js.com/" target="_blank" rel="external">vanilla</a>）的可读性和可维护性可能不如jQuery，而且代码更长。但也意味着更高效（通常更接近底层代码可读性越差，性能越高，例如：汇编，当然需要更强大的人才可以）。牢记没有任何框架能比原生代码更小，更轻，更高效（注：测试链接已失效，可上网搜索测试代码）。</p>
+<p>鉴于vanilla 和 jQuery之间的性能差异，我强烈建议吸收两人的精华，使用（可能的话）和<a href="http://www.leebrimelow.com/native-methods-jQuery/" target="_blank" rel="external">jQuery等价的原生代码</a>。</p>
+<h2 id="最后忠告"><a href="#最后忠告" class="headerlink" title="最后忠告"></a>最后忠告</h2><p>最后，我记录这篇文章的目的是提高jQuery的性能和其他一些好的建议。如果你想深入的研究对这个话题你会发现很多乐趣。记住，jQuery并非不可或缺，仅是一种选择。思考为什么要使用它。DOM操作？ajax？模版？css动画？还是选择符引擎？或许javascript微型框架或 jQuery的定制版是更好的选择。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-02-26-jquery-best-pracice.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-02-26-jquery-best-pracice.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-26-jquery-best-pracice.html&title=《编写更好的jQuery代码的建议》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-26-jquery-best-pracice.html&title=《编写更好的jQuery代码的建议》 — Balance&source=
+本文由 yanhaijing 翻译自 Mathew Carella
+
+##参考
+
+airbnb/javascript · GitHub A mostly..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-26-jquery-best-pracice.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《编写更好的jQuery代码的建议》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-26-jquery-best-pracice.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-26-jquery-best-pracice.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-02-26-javascript-pure.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Jquery</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Node/2014-02-25-node-npm.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Node NPM</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-26-jquery-best-pracice.html&title=《编写更好的jQuery代码的建议》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-26-jquery-best-pracice.html&title=《编写更好的jQuery代码的建议》 — Balance&source=
+本文由 yanhaijing 翻译自 Mathew Carella
+
+##参考
+
+airbnb/javascript · GitHub A mostly..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-26-jquery-best-pracice.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《编写更好的jQuery代码的建议》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-26-jquery-best-pracice.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-26-jquery-best-pracice.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACs0lEQVR42u3aS24CMRAFQO5/aSJlhZTAvP6YEKlmFUVguryYbj37douf+/fz+Pfjf35+5vUKP9fJn9uJBw8PD69V+uvlni2dFPF6tdelJ9+62AI8PDy8Y7x86fxFX/1u3oqSmvHw8PA+gTcffyeF4uHh4f1HXm+8zgtNhm88PDy8z+ElYUQvWs1byNYn8fDw8E7zegdgf/v38fM9PDw8vMEru/qCrl4mmA/rTyvEw8PDO8BLDu+3rme9f1Pw8PDwzvHy467R5acirBDUVrNqPDw8vAGvx8gbQNJ48gtY1aM1PDw8vNO83tLNH24dvOUNBg8PD+80b/L67rWTCalQPx4eHt4B3uTF3YseJpHxKMjAw8PDW+Ll0W3yos/DhUnQkKxWTqbx8PDwYl5+zj4Jc/PRuTdMl69B4OHh4Q14k1Ly7ejt8cJn8PDw8A7z5tRegJtHtHnT+qUx4OHh4a3yqmFEb9TOD88mW7OQteDh4eEVedXietdP8w3NrwhENyPw8PDwlni9gHUSE1TH6+bFAjw8PLwDvPxVWx2486g32ZTq7+Lh4eGd401e9NXjsejOQhF/UT8eHh7eYV5v5L3HT6/QvJ1cxLh4eHh4q7zJctERfjFi6G3TRdaCh4eHt8TLf6aHqYYL+VjfG+7x8PDwdnnzY6c8PtgKaguNBw8PD2+V1yuxGRC02sboygIeHh7eMV5vbM0H7vxkqtecCqd8eHh4eAPevfjkL/3ehYDkd5Mx/ZeUGg8PD2+Jt9VbCtnwoNDetuLh4eGd4M2bQVJKPoJXI4yLqwN4eHh4x3hb5VYjhq0OVr40gIeHh/dGXrJotdnMm0GUUuPh4eG9nZeXOL8WkKwQNSo8PDy8Y7z88GkSYVwEB0m4MJm18fDw8JZ4vQOwaom9Y7DqsN7cCDw8PLyU9wU1n1/0fA+8OwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

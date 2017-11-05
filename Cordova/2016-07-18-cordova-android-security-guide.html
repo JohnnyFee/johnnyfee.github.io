@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Cordova Android Security Guide | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="cordova,csp">
+    <meta name="description" content="See Security Guide - Apache Cordova
+Webkit Cross Domain默认情况下，WebView 只能访问本地资源：
+1WebSettings.setAllowFileAccessFromFileURLs(true)
+如果要实现跨域访问，需要：
+1WebSettings.setAllowUniversalAccessFromFileURLs(true)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cordova Android Security Guide">
+<meta property="og:url" content="http://blog.inching.org/Cordova/2016-07-18-cordova-android-security-guide.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See Security Guide - Apache Cordova
+Webkit Cross Domain默认情况下，WebView 只能访问本地资源：
+1WebSettings.setAllowFileAccessFromFileURLs(true)
+如果要实现跨域访问，需要：
+1WebSettings.setAllowUniversalAccessFromFileURLs(true)">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cordova Android Security Guide">
+<meta name="twitter:description" content="See Security Guide - Apache Cordova
+Webkit Cross Domain默认情况下，WebView 只能访问本地资源：
+1WebSettings.setAllowFileAccessFromFileURLs(true)
+如果要实现跨域访问，需要：
+1WebSettings.setAllowUniversalAccessFromFileURLs(true)">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Cordova Android Security Guide</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Cordova Android Security Guide</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-07-17T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-07-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cordova/">Cordova</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Webkit-Cross-Domain"><span class="post-toc-text">Webkit Cross Domain</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#setAllowFileAccess"><span class="post-toc-text">setAllowFileAccess</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#setAllowFileAccessFromFileURLs"><span class="post-toc-text">setAllowFileAccessFromFileURLs</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#setAllowUniversalAccessFromFileURLs"><span class="post-toc-text">setAllowUniversalAccessFromFileURLs</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#JavascriptInterface（CVE-2012-6636）"><span class="post-toc-text">@JavascriptInterface（CVE-2012-6636）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CVE-2014-1939"><span class="post-toc-text">CVE-2014-1939</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CVE-2014-7224"><span class="post-toc-text">CVE-2014-7224</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#setSavePassword"><span class="post-toc-text">setSavePassword</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Whitelist"><span class="post-toc-text">Whitelist</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Navigation-Whitelist"><span class="post-toc-text">Navigation Whitelist</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Intent-Whitelist"><span class="post-toc-text">Intent Whitelist</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Network-Request-Whitelist"><span class="post-toc-text">Network Request Whitelist</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Content-Security-Policy"><span class="post-toc-text">Content Security Policy</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Iframes-and-the-Callback-Id-Mechanism"><span class="post-toc-text">Iframes and the Callback Id Mechanism</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Certificate-Pinning"><span class="post-toc-text">Certificate Pinning</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Self-signed-Certificates"><span class="post-toc-text">Self-signed Certificates</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Encrypted-storage"><span class="post-toc-text">Encrypted storage</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#General-Tips"><span class="post-toc-text">General Tips</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Do-not-use-Android-Gingerbread"><span class="post-toc-text">Do not use Android Gingerbread!</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Use-InAppBrowser-for-outside-links"><span class="post-toc-text">Use InAppBrowser for outside links</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Validate-all-user-input"><span class="post-toc-text">Validate all user input</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Do-not-cache-sensitive-data"><span class="post-toc-text">Do not cache sensitive data</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Don’t-use-eval-unless-you-know-what-you’re-doing"><span class="post-toc-text">Don’t use eval() unless you know what you’re doing</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Do-not-assume-that-your-source-code-is-secure"><span class="post-toc-text">Do not assume that your source code is secure</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-cordova-android-security-guide"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Cordova Android Security Guide</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-07-18 00:00:00" datetime="2016-07-17T16:00:00.000Z"  itemprop="datePublished">2016-07-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cordova/">Cordova</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="https://cordova.apache.org/docs/en/latest/guide/appdev/security/index.html" target="_blank" rel="external">Security Guide - Apache Cordova</a></p>
+<h2 id="Webkit-Cross-Domain"><a href="#Webkit-Cross-Domain" class="headerlink" title="Webkit Cross Domain"></a>Webkit Cross Domain</h2><p>默认情况下，WebView 只能访问本地资源：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WebSettings.setAllowFileAccessFromFileURLs(<span class="keyword">true</span>)</div></pre></td></tr></table></figure>
+<p>如果要实现跨域访问，需要：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WebSettings.setAllowUniversalAccessFromFileURLs(<span class="keyword">true</span>)</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>一旦 <code>setAllowUniversalAccessFromFileURLs</code> 设置为 true，<code>setAllowFileAccessFromFileURLs</code> 设置将被忽略。</p>
+<p>See: </p>
+<ul>
+<li><a href="https://developer.android.com/reference/android/webkit/WebSettings.html#setAllowFileAccess(boolean" target="_blank" rel="external">WebSettings</a>)</li>
+<li><a href="http://stackoverflow.com/questions/14825943/setallowuniversalaccessfromfileurls" target="_blank" rel="external">android - setAllowUniversalAccessFromFileURLs? - Stack Overflow</a></li>
+</ul>
+<p>注：如有必要，请做实验验证。</p>
+<h3 id="setAllowFileAccess"><a href="#setAllowFileAccess" class="headerlink" title="setAllowFileAccess"></a>setAllowFileAccess</h3><p>Android中默认mWebView.setAllowFileAccess(true)，在File域下，能够执行任意的JavaScript代码，同源策略跨域访问能够对私有目录文件进行访问等。APP对嵌入的WebView未对file:/// 形式的URL做限制，会导致隐私信息泄露，针对IM类软件会导致聊天信息、联系人等等重要信息泄露，针对浏览器类软件，则更多的是cookie信息泄露。</p>
+<h3 id="setAllowFileAccessFromFileURLs"><a href="#setAllowFileAccessFromFileURLs" class="headerlink" title="setAllowFileAccessFromFileURLs"></a>setAllowFileAccessFromFileURLs</h3><p>在JELLY_BEAN以前的版本默认是setAllowFileAccessFromFileURLs(true),允许通过file域url中的Javascript读取其他本地文件，在 <code>JELLY_BEAN</code> 及以后的版本中默认已被是禁止。</p>
+<h3 id="setAllowUniversalAccessFromFileURLs"><a href="#setAllowUniversalAccessFromFileURLs" class="headerlink" title="setAllowUniversalAccessFromFileURLs"></a>setAllowUniversalAccessFromFileURLs</h3><p>在JELLY_BEAN以前的版本默认是 <code>setAllowUniversalAccessFromFileURLs(true)</code>,允许通过file域url中的Javascript访问其他的源，包括其他的本地文件和http,https源的数据。在JELLY_BEAN及以后的版本中默认已被禁止。</p>
+<h3 id="JavascriptInterface（CVE-2012-6636）"><a href="#JavascriptInterface（CVE-2012-6636）" class="headerlink" title="@JavascriptInterface（CVE-2012-6636）"></a>@JavascriptInterface（CVE-2012-6636）</h3><p>Android API Level &gt;= <code>[JELLY_BEAN_MR1](https://developer.android.com/reference/android/os/Build.VERSION_CODES.html#JELLY_BEAN_MR1)</code>，暴露的 API 必须用 <code>@JavascriptInterface</code> 注解。可以避免 <em>CVE-2012-6636</em> 攻击。</p>
+<p><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6636" target="_blank" rel="external">CVE - CVE-2012-6636</a></p>
+<p>The Android API before 17 does not properly restrict the<br>WebView.addJavascriptInterface method, which allows remote attackers<br>to execute arbitrary methods of Java objects by using the Java<br>Reflection API within crafted JavaScript code that is loaded into the<br>WebView component in an application targeted to API level 16 or<br>earlier, a related issue to CVE-2013-4710.</p>
+<h3 id="CVE-2014-1939"><a href="#CVE-2014-1939" class="headerlink" title="CVE-2014-1939"></a>CVE-2014-1939</h3><p>在2014年二月，安全研究员Joshua J. Drak发现并公布了一个在Android WebView中可以被利用的Javascript bridge “searchBoxJavaBridge_”[1][2]， 在 <em>Android4.0 ~ Android4.3.1</em> 版本中，当BrowserFrame初始化的时候，会创建一个 android.webkit.SearchBoxImpl[3] 实例，并将此实例使用“searchBoxJavaBridge_”这个名字添加为JavaScript Object，而攻击者可以利用这个实例执行远程代码。而此漏洞的根源是CVE-2012-6636这个漏洞[4]。</p>
+<p>可以调用以下接口这两个对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">removeJavascriptInterface(<span class="string">"searchBoxJavaBridge_"</span>)</div></pre></td></tr></table></figure>
+<h3 id="CVE-2014-7224"><a href="#CVE-2014-7224" class="headerlink" title="CVE-2014-7224"></a>CVE-2014-7224</h3><p>在2014年，研究人员Daoyuan Wu和Rocky Chang发现，当系统辅助功能服务被开启时，在 <code>Android4.4</code> 以下的系统中，由系统提供的WebView组件都默认导出”accessibility” 和”accessibilityTraversal”这两个接口，代码位于“android/webkit/AccessibilityInjector.java”，这两个接口同样存在远程任意代码执行的威胁。</p>
+<p><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7224" target="_blank" rel="external">CVE - CVE-2014-7224</a></p>
+<p>可以调用以下接口这两个对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">removeJavascriptInterface(<span class="string">"accessibility"</span>)；</div><div class="line">removeJavascriptInterface(<span class="string">"accessibilityTraversal"</span>)</div></pre></td></tr></table></figure>
+<h3 id="setSavePassword"><a href="#setSavePassword" class="headerlink" title="setSavePassword"></a><code>setSavePassword</code></h3><p><code>WebSettings.setSavePassword(true)</code> This method was deprecated in API level 18.<br>Saving passwords in WebView will not be supported in future versions.</p>
+<p>Sets whether the WebView should save passwords. The default is true.</p>
+<p>WebView默认开启密码保存功能 <em>mWebView.setSavePassword(true)</em>，如果该功能未关闭，在用户输入密码时，会弹出提示框，询问用户是否保存密码，如果选择”是”，密码会被明文保到 <em>/data/data/com.package.name/databases/webview.db</em></p>
+<h2 id="Whitelist"><a href="#Whitelist" class="headerlink" title="Whitelist"></a>Whitelist</h2><ul>
+<li><p>Read and understand the <a href="https://cordova.apache.org/docs/en/latest/guide/appdev/whitelist/index.html" target="_blank" rel="external">Whitelist Guide</a></p>
+</li>
+<li><p>Domain whitelisting does not work on Android API 10 and below, and WP8 for iframes and XMLHttpRequest. This means an attacker can load any domain in an iframe and any script on that page within the iframe can directly access Cordova JavaScript objects and the corresponding native Java objects. You should take this into consideration when building applications for these platforms. In practice this means making sure you target an Android API higher than 10, and that if possible you do not use an iframe to load external content - use the inAppBrowser plugin or other third-party plugins.</p>
+</li>
+</ul>
+<p>See <a href="https://cordova.apache.org/docs/en/latest/guide/appdev/whitelist/index.html" target="_blank" rel="external">Whitelist Guide - Apache Cordova</a></p>
+<p>See also <a href="http://stackoverflow.com/questions/4780899/intercept-and-override-http-requests-from-webview" target="_blank" rel="external">android - Intercept and override HTTP-requests from WebView - Stack Overflow</a></p>
+<p>注：Whitelist 通过三种方式来指定白名单。</p>
+<h3 id="Navigation-Whitelist"><a href="#Navigation-Whitelist" class="headerlink" title="Navigation Whitelist"></a>Navigation Whitelist</h3><p>指定导航白名单，允许通过 WebView 直接打开。默认只能导航到 <code>file://</code> URLs，需要在 <code>&lt;allow-navigation&gt;</code> tags to your <code>config.xml</code>:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- Allow links to example.com --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"http://example.com/*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Wildcards are allowed for the protocol, as a prefix</span></div><div class="line">     to the host, or as a suffix to the path --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"*://*.example.com/*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- A wildcard can be used to whitelist the entire network,</span></div><div class="line">     over HTTP and HTTPS.</div><div class="line">     *NOT RECOMMENDED* --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- The above is equivalent to these three declarations --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"http://*/*"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"https://*/*"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"data:*"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>如，  在 <code>config.xml</code> 修改 content 地址 <code>&lt;content src=&quot;http://www.baidu.com&quot; /&gt;</code>，默认情况下，会使用默认浏览器打开该链接，将改链接加入到白名单:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"http://www.baidu.com/*"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">"https://www.baidu.com/*"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>则可以在 WebView 中打开指定链接了。</p>
+<h3 id="Intent-Whitelist"><a href="#Intent-Whitelist" class="headerlink" title="Intent Whitelist"></a>Intent Whitelist</h3><p>Controls which URLs the app is allowed to ask the system to open.<br>By default, no external URLs are allowed.</p>
+<p>On Android, this equates to sending an intent of type BROWSEABLE.</p>
+<p>This whitelist does not apply to plugins, only hyperlinks and calls to <code>window.open()</code>.</p>
+<p>In <code>config.xml</code>, add <code>&lt;allow-intent&gt;</code> tags, like this:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- Allow links to web pages to open in a browser --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"http://*/*"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"https://*/*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allow links to example.com to open in a browser --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"http://example.com/*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Wildcards are allowed for the protocol, as a prefix</span></div><div class="line">     to the host, or as a suffix to the path --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"*://*.example.com/*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allow SMS links to open messaging app --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"sms:*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allow tel: links to open the dialer --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"tel:*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allow geo: links to open maps --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"geo:*"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Allow all unrecognized URLs to open installed apps</span></div><div class="line">     *NOT RECOMMENDED* --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">"*"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>注：当某个资源不在导航白名单中，而在 Intent 白名单中，则会调用系统程序打开自定资源，如调用浏览器打开链接。如果资源出现在导航白名单中，则优先使用 WebView 打开。</p>
+<h3 id="Network-Request-Whitelist"><a href="#Network-Request-Whitelist" class="headerlink" title="Network Request Whitelist"></a>Network Request Whitelist</h3><p>Controls which network requests (images, XHRs, etc) are allowed to be made (via cordova native hooks).</p>
+<p>Note: We suggest you use a Content Security Policy (see below), which is more secure.  This whitelist is mostly historical for webviews which do not support CSP.</p>
+<p>In <code>config.xml</code>, add <code>&lt;access&gt;</code> tags, like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;!-- Allow images, xhrs, etc. to google.com --&gt;</div><div class="line">&lt;access origin=&quot;http://google.com&quot; /&gt;</div><div class="line">&lt;access origin=&quot;https://google.com&quot; /&gt;</div><div class="line"></div><div class="line">&lt;!-- Access to the subdomain maps.google.com --&gt;</div><div class="line">&lt;access origin=&quot;http://maps.google.com&quot; /&gt;</div><div class="line"></div><div class="line">&lt;!-- Access to all the subdomains on google.com --&gt;</div><div class="line">&lt;access origin=&quot;http://*.google.com&quot; /&gt;</div><div class="line"></div><div class="line">&lt;!-- Enable requests to content: URLs --&gt;</div><div class="line">&lt;access origin=&quot;content:///*&quot; /&gt;</div><div class="line"></div><div class="line">&lt;!-- Don&apos;t block any requests --&gt;</div><div class="line">&lt;access origin=&quot;*&quot; /&gt;</div></pre></td></tr></table></figure>
+<p>Without any <code>&lt;access&gt;</code> tags, only requests to <code>file://</code> URLs are allowed. However, the default Cordova application includes <code>&lt;access origin=&quot;*&quot;&gt;</code> by default.</p>
+<p>Note: Whitelist cannot block network redirects from a whitelisted remote website (i.e. http or https) to a non-whitelisted website. Use CSP rules to mitigate redirects to non-whitelisted websites for webviews that support CSP.</p>
+<p>Quirk: Android also allows requests to <a href="https://ssl.gstatic.com/accessibility/javascript/android/" target="_blank" rel="external">https://ssl.gstatic.com/accessibility/javascript/android/</a> by default, since this is required for TalkBack to function properly.</p>
+<h3 id="Content-Security-Policy"><a href="#Content-Security-Policy" class="headerlink" title="Content Security Policy"></a>Content Security Policy</h3><p>Controls which network requests (images, XHRs, etc) are allowed to be made (via webview directly).</p>
+<p>On Android and iOS, the network request whitelist (see above) is not able to filter all types of requests (e.g. <code>&lt;video&gt;</code> &amp; WebSockets are not blocked). So, in addition to the whitelist, you should use a <a href="http://content-security-policy.com/" target="_blank" rel="external">Content Security Policy</a> <code>&lt;meta&gt;</code> tag on all of your pages.</p>
+<p>On Android, support for CSP within the system webview starts with KitKat (but is available on all versions using Crosswalk WebView).</p>
+<p>Here are some example CSP declarations for your <code>.html</code> pages:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;!-- Good default declaration:</div><div class="line">    * gap: is required only on iOS (when using UIWebView) and is needed for JS-&gt;native communication</div><div class="line">    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly</div><div class="line">    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:</div><div class="line">        * Enable inline JS: add &apos;unsafe-inline&apos; to default-src</div><div class="line">        * Enable eval(): add &apos;unsafe-eval&apos; to default-src</div><div class="line">--&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos; data: gap: https://ssl.gstatic.com; style-src &apos;self&apos; &apos;unsafe-inline&apos;; media-src *&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- Allow everything but only from the same origin and foo.com --&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos; foo.com&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- This policy allows everything (eg CSS, AJAX, object, frame, media, etc) except that </div><div class="line">    * CSS only from the same origin and inline styles,</div><div class="line">    * scripts only from the same origin and inline styles, and eval()</div><div class="line">--&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src *; style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos;&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- Allows XHRs only over HTTPS on the same domain. --&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos; https:&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- Allow iframe to https://cordova.apache.org/ --&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos;; frame-src &apos;self&apos; https://cordova.apache.org&quot;&gt;</div></pre></td></tr></table></figure>
+<h2 id="Iframes-and-the-Callback-Id-Mechanism"><a href="#Iframes-and-the-Callback-Id-Mechanism" class="headerlink" title="Iframes and the Callback Id Mechanism"></a>Iframes and the Callback Id Mechanism</h2><p>If content is served in an iframe from a whitelisted domain, that domain will have access to the native Cordova bridge. This means that if you whitelist a third-party advertising network and serve those ads through an iframe, it is possible that a malicious ad will be able to break out of the iframe and perform malicious actions. Because of this, you should generally not use iframes unless you control the server that hosts the iframe content.  Also note that there are third party plugins available to support advertising networks. Note that this statement is not true for iOS, which intercepts everything including iframe connections.</p>
+<p>注：通过 CSP 禁用 iframe。</p>
+<h2 id="Certificate-Pinning"><a href="#Certificate-Pinning" class="headerlink" title="Certificate Pinning"></a>Certificate Pinning</h2><p>Cordova does not support true certificate pinning. The main barrier to this is a lack of native APIs in Android for intercepting SSL connections to perform the check of the server’s certificate. (Although it is possible to do certificate pinning on Android in Java using JSSE, the webview on Android is written in C++, and server connections are handled for you by the webview, so it is not possible to use Java and JSSE there.) Since Apache Cordova is meant to offer consistent APIs across multiple platforms, not having a capability in a major platform breaks that consistency.</p>
+<p>There are ways to approximate certificate pinning, such as checking the server’s public key (fingerprint) is the expected value when your application starts or at other various times during your application’s lifetime. There are third-party plugins available for Cordova that can do that. However, this is not the same as true certificate pinning which automatically verifies the expected value on every connection to the server.</p>
+<p>There are also plugins that can do true certificate pinning for some platforms, assuming your app is able to do all of its network requests using the plugin (i.e.: no traditional XHR/AJAX requests, etc).</p>
+<p>注：通过第三方 Cordova 插件实现 SSL，如 <a href="https://github.com/wymsee/cordova-HTTP" target="_blank" rel="external">wymsee/cordova-HTTP: Cordova / Phonegap plugin for communicating with HTTP servers. Allows for SSL pinning!</a>。</p>
+<h2 id="Self-signed-Certificates"><a href="#Self-signed-Certificates" class="headerlink" title="Self-signed Certificates"></a>Self-signed Certificates</h2><p>Using self-signed certificates on your server is not recommended. If you desire SSL, then it is highly recommended that your server have a certificate that has been properly signed by a well-known CA (certificate authority). The inability to do true certificate pinning makes this important.</p>
+<p>The reason is that accepting self-signed certificates bypasses the certificate chain validation, which allows any server certificate to be considered valid by the device. This opens up the communication to man-in-the-middle attacks. It becomes very easy for a hacker to not only intercept and read all communication between the device and the server, but also to modify the communication. The device will never know this is happening because it doesn’t verify that the server’s certificate is signed by a trusted CA. The device has no proof that the server is who it expects. Because of the ease of doing a man-in-the-middle attack, accepting self-signed certificates is only marginally better than just running http instead of https on an untrusted network. Yes, the traffic would be encrypted, but it could be encrypted with the key from a man-in-the-middle, so the man-in-the-middle can access everything, so encryption is useless except to passive observers. Users trust SSL to be secure, and this would be deliberately making it insecure, so the SSL use becomes misleading. If this will be used on a trusted network (i.e., you are entirely inside a controlled enterprise), then self-signed certs are still not recommended. The two recommendations in a trusted network are to just use http because the network itself is trusted, or to get a certificate signed by a trusted CA (not self-signed). Either the network is trusted or it is not.</p>
+<p>The principles described here are not specific to Apache Cordova, they apply to all client-server communication.</p>
+<p>When running Cordova on Android, using <code>android:debuggable=&quot;true&quot;</code> in the application manifest will permit SSL errors such as certificate chain validation errors on self-signed certs. So you can use self-signed certs in this configuration, but this is not a configuration that should be used when your application is in production. It is meant to be used only during application development.</p>
+<h2 id="Encrypted-storage"><a href="#Encrypted-storage" class="headerlink" title="Encrypted storage"></a>Encrypted storage</h2><p>(TBD)</p>
+<h2 id="General-Tips"><a href="#General-Tips" class="headerlink" title="General Tips"></a>General Tips</h2><p>通过 CSP 控制。</p>
+<h3 id="Do-not-use-Android-Gingerbread"><a href="#Do-not-use-Android-Gingerbread" class="headerlink" title="Do not use Android Gingerbread!"></a>Do not use Android Gingerbread!</h3><ul>
+<li>Set your min-target-sdk level higher than 10. API 10 is Gingerbread, and Gingerbread is no longer supported by Google or device manufacturers, and is therefore not recommend by the Cordova team.</li>
+<li>Gingerbread has been shown to be insecure and one of the most targeted mobile OSs <a href="http://bgr.com/2012/11/06/android-security-gingerbread-malware/" target="_blank" rel="external">http://www.mobilemag.com/2012/11/06/andriod-2-3-gingerbread-security/</a>.</li>
+<li>The Whitelist on Android does not work with Gingerbread or lower. This means an attacker can load malicious code in an iframe that would then have access to all of the Cordova APIs and could use that access to steal personal data, send SMS messages to premium-rate numbers, and perform other malicious acts.</li>
+</ul>
+<h3 id="Use-InAppBrowser-for-outside-links"><a href="#Use-InAppBrowser-for-outside-links" class="headerlink" title="Use InAppBrowser for outside links"></a>Use InAppBrowser for outside links</h3><ul>
+<li>Use the InAppBrowser when opening links to any outside website. This is much safer than whitelisting a domain name and including the content directly in your application because the InAppBrowser will use the native browser’s security features and will not give the website access to your Cordova environment. Even if you trust the third party website and include it directly in your application, that third party website could link to malicious web content.</li>
+</ul>
+<h3 id="Validate-all-user-input"><a href="#Validate-all-user-input" class="headerlink" title="Validate all user input"></a>Validate all user input</h3><ul>
+<li>Always validate any and all input that your application accepts. This includes usernames, passwords, dates, uploaded media, etc. Because an attacker could manipulate your HTML and JS assets (either by decompiling your application or using debugging tools like chrome://inspect), this validation should also be performed on your server, especially before handing the data off to any backend service.</li>
+<li>Other sources where data should be validated: user documents, contacts, push notifications</li>
+</ul>
+<h3 id="Do-not-cache-sensitive-data"><a href="#Do-not-cache-sensitive-data" class="headerlink" title="Do not cache sensitive data"></a>Do not cache sensitive data</h3><ul>
+<li>If usernames, password, geolocation information, and other sensitive data is cached, then it could potentially be retrieved later by an unauthorized user or application.</li>
+</ul>
+<h3 id="Don’t-use-eval-unless-you-know-what-you’re-doing"><a href="#Don’t-use-eval-unless-you-know-what-you’re-doing" class="headerlink" title="Don’t use eval() unless you know what you’re doing"></a>Don’t use eval() unless you know what you’re doing</h3><ul>
+<li>The JavaScript function eval() has a long history of being abused. Using it incorrectly can open your code up for injection attacks, debugging difficulties, and slower code execution.</li>
+</ul>
+<h3 id="Do-not-assume-that-your-source-code-is-secure"><a href="#Do-not-assume-that-your-source-code-is-secure" class="headerlink" title="Do not assume that your source code is secure"></a>Do not assume that your source code is secure</h3><ul>
+<li>Since a Cordova application is built from HTML and JavaScript assets that get packaged in a native container, you should not consider your code to be secure. It is possible to reverse engineer a Cordova application.</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Cordova/2016-07-18-cordova-android-security-guide.html" target="_blank" rel="external">http://blog.inching.org/Cordova/2016-07-18-cordova-android-security-guide.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cordova/">cordova</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csp/">csp</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Cordova/2016-07-18-cordova-android-security-guide.html&title=《Cordova Android Security Guide》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Cordova/2016-07-18-cordova-android-security-guide.html&title=《Cordova Android Security Guide》 — Balance&source=See Security Guide - Apache Cordova
+Webkit Cross Domain默认情况下，WebView 只能访问本地资源..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Cordova/2016-07-18-cordova-android-security-guide.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Cordova Android Security Guide》 — Balance&url=http://blog.inching.org/Cordova/2016-07-18-cordova-android-security-guide.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Cordova/2016-07-18-cordova-android-security-guide.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/CSS/2016-07-22-css-filter.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">CSS Filters</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Web/2016-07-15-web-browser-csp.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Web Brower CSP</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Cordova/2016-07-18-cordova-android-security-guide.html&title=《Cordova Android Security Guide》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Cordova/2016-07-18-cordova-android-security-guide.html&title=《Cordova Android Security Guide》 — Balance&source=See Security Guide - Apache Cordova
+Webkit Cross Domain默认情况下，WebView 只能访问本地资源..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Cordova/2016-07-18-cordova-android-security-guide.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Cordova Android Security Guide》 — Balance&url=http://blog.inching.org/Cordova/2016-07-18-cordova-android-security-guide.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Cordova/2016-07-18-cordova-android-security-guide.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3aQW4bMRAEQP3/08rVASKle4a0ZaB4MlbyLmsP5KiHj0c8nl/G1yvv/351Jfn0+WI8bgw8PDy8xdRf3S75NAE8y/H+5UavAA8PD+8aL5lWsgK/enz7rPcbTHIfPDw8vM/hzRb32StLCno8PDy838vbbBt5GY2Hh4f3ObyzcUMbGSQv63rWgoeHhxfz8qL2c/6+0t/Dw8PDW3fV88U6X/Tz4wKzGf51Bzw8PLwLvLa5lRTWG2TOLuaJh4eHd42XF7Kzo1Gzttbs/nh4eHj3eEkJ2/7G3x/Gmt2tOHGAh4eHd4iXbAB5WHC2Ada+bjw8PLx7vPZn/4EHBE21ZD7DxhgeHh7empf/+G+n0gYc+7DjZX8PDw8P7ygv/3nfhg75dPMoedY8w8PDw7vB2xyQSq60RfbZTQgPDw/vBi86X1BGrvk2037zfYH+jznj4eHhHeUlXxrmwW2xWx6xisIOPDw8vAu8dop5yNtGrnnxvX/deHh4eHveMLcYxbWbF5e/Jjw8PLyf4uUNpyRWmMW7m6AEDw8P7wZvdvgp3wyS5lkbN+T/i4eHh3ePlxSmbWnbbgZtCR5dx8PDw7vAS76UN5w2JfJsDnh4eHg/y2tDhHwDmIUdeRgRRRV4eHh4R3mzzSAPF26HEf8p6/Hw8PAu89q4tj0cMCuI83DkMcs58PDw8Na8duSwdqJt0yvaGPDw8PAO8fIQdr98t8cC2oGHh4d3j3dqA2hjhTxcWIXIeHh4eBd47VI7e3AbxebF9PB8BB4eHt6a17b223b+5kjWbNvAw8PD+x5e2xi7VzQ/FiM6GYGHh4f37bx2aW7xedgRldp4eHh4H8DbBLh59DA8KJDHL3h4eHhrXj6tU4t4O4dZxIyHh4d3g1ccYyqX/hvsYz09PDw8vAnvD4YE5CkatM6wAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

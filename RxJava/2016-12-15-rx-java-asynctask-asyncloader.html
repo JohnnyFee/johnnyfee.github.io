@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="java,rx,rxjava">
+    <meta name="description" content="From  android-tech-frontier/androidweekly/使用RxJava.Observable取代AsyncTask和AsyncTaskLoader at master · hehonghui/android-tech-frontier
+在网上有很多关于RxJava入门指南的帖子，其中一些是基于Android环境的。但是，我想到目前为止，很多人只是喜欢他们所看到的这些，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns">
+<meta property="og:url" content="http://blog.inching.org/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="From  android-tech-frontier/androidweekly/使用RxJava.Observable取代AsyncTask和AsyncTaskLoader at master · hehonghui/android-tech-frontier
+在网上有很多关于RxJava入门指南的帖子，其中一些是基于Android环境的。但是，我想到目前为止，很多人只是喜欢他们所看到的这些，">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns">
+<meta name="twitter:description" content="From  android-tech-frontier/androidweekly/使用RxJava.Observable取代AsyncTask和AsyncTaskLoader at master · hehonghui/android-tech-frontier
+在网上有很多关于RxJava入门指南的帖子，其中一些是基于Android环境的。但是，我想到目前为止，很多人只是喜欢他们所看到的这些，">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-15T01:51:00.000Z" itemprop="datePublished" class="page-time">
+  2016-12-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题一：后台任务"><span class="post-toc-text">问题一：后台任务</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#默认的解决方案：AsyncTask"><span class="post-toc-text">默认的解决方案：AsyncTask</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#错误处理"><span class="post-toc-text">错误处理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Activity和Fragment的生命周期"><span class="post-toc-text">Activity和Fragment的生命周期</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#组合的多个Web-Server调用"><span class="post-toc-text">组合的多个Web Server调用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#可测试性"><span class="post-toc-text">可测试性</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#更好的解决方案：RxJava’s-Observable"><span class="post-toc-text">更好的解决方案：RxJava’s Observable</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#错误处理-1"><span class="post-toc-text">错误处理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Activity和Fragment的生命周期-1"><span class="post-toc-text">Activity和Fragment的生命周期</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#组合的多个Web-Server调用-1"><span class="post-toc-text">组合的多个Web Server调用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#旋转时的缓存-或是其他情况"><span class="post-toc-text">旋转时的缓存(或是其他情况)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#可测试性-1"><span class="post-toc-text">可测试性</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结论"><span class="post-toc-text">结论</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-rx-java-asynctask-asyncloader"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-12-15 09:51:00" datetime="2016-12-15T01:51:00.000Z"  itemprop="datePublished">2016-12-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>From  <a href="https://github.com/hehonghui/android-tech-frontier/tree/master/androidweekly/%E4%BD%BF%E7%94%A8RxJava.Observable%E5%8F%96%E4%BB%A3AsyncTask%E5%92%8CAsyncTaskLoader" target="_blank" rel="external">android-tech-frontier/androidweekly/使用RxJava.Observable取代AsyncTask和AsyncTaskLoader at master · hehonghui/android-tech-frontier</a></p>
+<p>在网上有很多关于RxJava入门指南的帖子，其中一些是基于Android环境的。但是，我想到目前为止，很多人只是喜欢他们所看到的这些，当要解决在他们的Android项目中出现的具体问题时，他们并不知道如何或者是为什么要使用RxJava。在这一系列的文章中，我想要探索在我工作过的一些依赖于RxJava架构的Android项目中的模式。</p>
+<p>在文章的开始，我想要处理一些Android开发者在使用RxJava的时候，很容易遇到的状况。从这个角度，我将提供更高级和更合适的解决方案。在这一系列的文章中，我希望可以听到其他开发者在使用RxJava的过程中解决类似的问题，或许他们和我发现的一样呢。</p>
+<h1 id="问题一：后台任务"><a href="#问题一：后台任务" class="headerlink" title="问题一：后台任务"></a>问题一：后台任务</h1><p>Android开发者首先遇到的挑战就是如何有效的在后台线程中工作，然后在UI线程中更新UI。这经常是因为需要从web service中获取数据。对于已经有相关经验的你可能会说：“这有什么挑战性？你只需要启动一个AsyncTask，然后所有的工作它就都给你做了。”如果你是这样想的，那么你有一个机会去改善这种状况。这是因为你已经习惯了这种复杂的方式并且忘记这本应该是很简洁的，或者是说你没有处理所有应该处理的边界情况。让我们来谈谈这个。</p>
+<h2 id="默认的解决方案：AsyncTask"><a href="#默认的解决方案：AsyncTask" class="headerlink" title="默认的解决方案：AsyncTask"></a>默认的解决方案：AsyncTask</h2><p>AsyncTask是在Android里面默认的处理工具，开发者可以做里面一些长时间的处理工作，而不会阻塞用户界面。(注意：最近，AsyncTaskLoader用来处理一些更加具体的数据加载任务，我们以后会再谈谈这个)</p>
+<p>表面上，这似乎很简单，你定义一些代码在后台线程中运行，然后定义一些代码运行在UI线程中，在后台任务处理完之后，它在UI线程会处理从后台任务传递过来的执行结果。</p>
+<pre>
+private class CallWebServiceTask extends AsyncTask<string, result,="" void=""> {
+
+        protected Result doInBackground(String... someData) {
+            Result result = webService.doSomething(someData);
+            return result;
+        }
+
+        protected void onPostExecute(Result result) {
+            if (result.isSuccess() {
+                resultText.setText("It worked!");
+            }
+        }
+    }
+</string,></pre>
+
+<p>使用AsyncTask的最大的问题是在细节的处理上，让我们谈谈这个问题。</p>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p>这种简单用法的第一个问题就是：“如果出现了错误怎么办？”不幸的是，暂时没有非常好的解决方案。所以很多的开发者最终要继承AsyncTask，然后在doInBackground()中包裹一个try/catch，返回一个，然后根据发生的情况，分发到新定义的例如onSuccess()或者是onError()中。(我也曾经见过仅捕获异常的引用，然后在 onPostExcecute()中进行检查的写法)</p>
+<p>这最终是有点帮助的，但是你必须为你的每个项目写上额外的代码，随着时间的推移，这些自定义的代码在开发者之间和项目之间，可能不会保持很好的一致性和可预见性。</p>
+<h3 id="Activity和Fragment的生命周期"><a href="#Activity和Fragment的生命周期" class="headerlink" title="Activity和Fragment的生命周期"></a>Activity和Fragment的生命周期</h3><p>另外一个你必须面对的问题是：“当AsyncTask正在运行的时候，如果我退出Activity或者是旋转设备的话会发生什么？”嗯，如果你只是发送一些数据，之后就不再关心发送结果，那可能是没有问题的，但是如果你需要根据Task的返回结果更新UI呢？如果你不做一些事情阻止的话，那么当你试图去调用Activity或者是view的话，你将得到一个空指针异常导致程序崩溃，因为他们现在是不可见或者是null的。</p>
+<p>同样，在这个问题上AsyncTask没有做很多工作去帮助你。作为一个开发者，你需要确保保持一个Task的引用，并且要么当Activity正在被销毁的时候取消Task，要么当你试图在onPostExecute()里面更新UI的时候，确保Activity是在一个可达状态。当你只想明确的做一些工作，并且让项目容易维护的时候，这将会继续提高维护项目的难度。</p>
+<p>###</p>
+<p>当你的用户还是待在当前Activity，仅仅是旋转屏幕会发生什么？在这种情况下，取消Task没有任何意义，因为在旋转之后，你最终还是需要重新启动Task。或者是你不想重启Task，因为状况在一些地方以非幕等的方式发生了突变(because it mutates some state somewhere in a non-idempotent way),但是你确实想要得到结果，因为这样你就可以更新UI来反映这种情况。</p>
+<p>如果你专门的做一个只读的加载操作，你可以使用AsyncTaskLoader去解决这个问题。但是对于标准的Android方式来说，它还是很沉重，因为缺少错误处理，在Activity中没有缓存，还有很多独有的其他怪癖。</p>
+<h3 id="组合的多个Web-Server调用"><a href="#组合的多个Web-Server调用" class="headerlink" title="组合的多个Web Server调用"></a>组合的多个Web Server调用</h3><p>现在，假如说我们已经想办法把上面的问题都解决了，但是我们现在需要做一些连续的网络请求，每一个请求都需要基于前一个请求的结果。或者是，我们想做一些并发的网络请求，然后把结果合并在一起发送到UI线程，但是，再次抱歉，AsyncTask在这里帮不到你。</p>
+<p>一旦你开始做这样的事情，随着更多的复杂线程模型的增长，之前的问题会导致处理这样的事情非常的痛苦和苍白无力。如果想要这些线程一起运行，要么你就让它们单独运行，然后回调，要么让它们在一个后台线程中同步运行，最后复制组成不同。(To chain calls together, you either keep them separate and end up in callback hell, or run them synchronously together in one background task end up duplicating work to compose them differently in other situations.)</p>
+<p>如果要并行运行，你必须创建一个自定义的executor然后传递给AsyncTaskTask，因为默认的AsyncTask不支持并行。并且为了协调并行线程，你需要使用像是CountDownLatchs, Threads, Executors 和 Futures去降低更复杂的同步模式。</p>
+<h3 id="可测试性"><a href="#可测试性" class="headerlink" title="可测试性"></a>可测试性</h3><p>抛开这些不说，如果你喜欢测试你的代码，AsyncTask并不能给你带来什么帮助。如果我们不做额外的工作，测试AsyncTask非常困难，它很脆弱并且难以维持。这是一篇有关如何成功测试AsyncTask的<a href="http://www.making-software.com/2012/10/31/testable-android-asynctask/" target="_blank" rel="external">帖子</a>。</p>
+<h2 id="更好的解决方案：RxJava’s-Observable"><a href="#更好的解决方案：RxJava’s-Observable" class="headerlink" title="更好的解决方案：RxJava’s Observable"></a>更好的解决方案：RxJava’s Observable</h2><p>幸运的是，一旦我们决定使用RxJava依赖库的时候，我们讨论的这些问题就都迎刃而解了。下面我们看看它能为我们做什么。</p>
+<p>下面我们将会使用Observables写一个请求代码来替代上面的AsyncTask方式。(如果你使用Retrofit，那么你应该很容易使用，其次它还支持Observable 返回值，并且它工作在一个后台的线程池，无需你额外的工作)</p>
+<pre>
+    webService.doSomething(someData)
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe(
+        result -> resultText.setText("It worked!")),
+        e -> handleError(e)
+    );
+</pre>
+
+<h3 id="错误处理-1"><a href="#错误处理-1" class="headerlink" title="错误处理"></a>错误处理</h3><p>你可能会注意到，没有做额外的工作，我们已经处理了AsyncTask不会处理的成功和错误的情况，并且我们写了很少的代码。你看到的额外的组件是我们想要Observer 在UI主线程中处理的结果。这样可以让我们前进一点点。并且如果你的webService对象不想在后台线程中运行，你也可以在这里通过使用.subscribeOn(…) 声明。(注意：这些例子是使用Java 8的lambda语法，使用<a href="https://github.com/orfjackal/retrolambda" target="_blank" rel="external">Retrolambda</a>就可以在Android项目中进行使用了，但在我看来，这样做的回报是高于风险的，和写这篇文章相比，我们更喜欢在我们的项目中使用。)</p>
+<h3 id="Activity和Fragment的生命周期-1"><a href="#Activity和Fragment的生命周期-1" class="headerlink" title="Activity和Fragment的生命周期"></a>Activity和Fragment的生命周期</h3><p>现在，我们想在这里利用RxAndroid解决上面提到的生命周期的问题，我们不需要指定mainThread() scheduler(顺便说一句，你只需要导入RxAndroid)。就像下面这样</p>
+<pre>
+AppObservable.bindFragment(this, webService.doSomething(someData))
+    .subscribe(
+        result -> resultText.setText("It worked!")),
+        e -> handleError(e)
+    );
+</pre>
+
+<p>我通常的做法是在应用的Base Fragment里面创建一个帮助方法来简化这一点，你可以参考我维护的一个<a href="https://github.com/rosshambrick/standardlib/blob/master/src/main/java/com/rosshambrick/standardlib/RxFragment.java" target="_blank" rel="external">Base RxFragment</a> 获得一些指导。</p>
+<pre>
+    bind(webService.doSomething(someData))
+    .subscribe(
+        result -> resultText.setText("It worked!")),
+        e -> handleError(e)
+    );
+</pre>
+
+<p>如果我们的Activity或者是Fragment不再是可见状态，那么AppObservable.bindFragment()可以在调用链中插入一个垫片，来阻止onNext()运行。如果当Task试图运行的时候，Activity、Fragment是不可达状态，subscription 将会取消订阅并且停止运行，所以不会存在空指针的风险，程序也不会崩溃。一个需要注意的是，当我们离开Activity和Fragment时，我们会暂时或者是永久的泄露，这取决于问题中的Observable 的行为。所以在bind()方法中，我也会调用LifeCycleObservable机制，当Fragment销毁的时候自动取消。这样做的好处是一劳永逸。</p>
+<p>所以，这解决了首要的两个问题，但是下面这一个才是RxJava大发神威的地方。</p>
+<h3 id="组合的多个Web-Server调用-1"><a href="#组合的多个Web-Server调用-1" class="headerlink" title="组合的多个Web Server调用"></a>组合的多个Web Server调用</h3><p>在这里我不会详细的说明，因为这是一个<a href="http://reactivex.io/documentation/observable.html" target="_blank" rel="external">复杂的问题</a>，但是通过使用Observables，你可以用非常简单和易于理解的方式完成复杂的事情。这里是一个链式Web Service调用的例子，这些请求互相依赖，在线程池中运行第二批并行调用，然后在将结果返回给Observer之前，对数据进行合并和排序。为了更好的测量，我甚至在里面放置了一个过滤器。所有的业务逻辑都在下面这短短五行代码里面…</p>
+<pre>
+publicObservable<list<cityweather>> getWeatherForLargeUsCapitals() {
+    return cityDirectory.getUsCapitals()
+        .flatMap(cityList -> Observable.from(cityList))
+        .filter(city -> city.getPopulation() > 500,000)
+        .flatMap(city -> weatherService.getCurrentWeather(city)) //each runs in parallel
+        .toSortedList((cw1,cw2) -> cw1.getCityName().compare(cw2.getCityName()));
+    }
+</list<cityweather></pre>
+
+<h3 id="旋转时的缓存-或是其他情况"><a href="#旋转时的缓存-或是其他情况" class="headerlink" title="旋转时的缓存(或是其他情况)"></a>旋转时的缓存(或是其他情况)</h3><p>既然这是一个加载的数据，那么我们可能需要将数据进行缓存，这样当我们旋转设备的时候，就不会触发再次调用全部web service的事件。一种实现的方式是保留Fragment，并且保存一个对Observable 的缓存的引用，就像下面这样：</p>
+<pre>
+@Overridepublic void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setRetainInstance(true);
+        weatherObservable = weatherManager.getWeatherForLargeUsCapitals().cache();
+    }
+
+    public void onViewCreated(...) {
+        super.onViewCreated(...)
+        bind(weatherObservable).subscribe(this);
+    }
+</pre>
+
+<p>在旋转之时,正在运行当中的Subscription(代表了事件源和订阅者之间的关系)会被缓存到一个实例,在旋转之后，这个实例就会立即发送一些和旋转之前已经发送过的事件相同的事件，从而避免了再去重复请求网络服务。</p>
+<p>如果你想要避免缓存的Fragment(或者是由于它是一个子Fragment,你不能缓存它)，此时我们可以通过putting the same cache instance one layer down inside a service singleton,或者使用一个无论何时被订阅,都会重新发出最后的事件AsyncSubject实现缓存,或者使用可以在整个应用中获得最后的值以及由改变引起的新值的BehaviorSubject这些来完成缓存(以上这些我将会在我不久后的一篇文章里面更详细的讲明,那篇文章我将使用一种更接近事件总线的observables)。</p>
+<pre>
+WeatherListFragment.java
+
+    publicvoid onViewCreated() {
+    super.onViewCreated()
+    bind(weatherManager.getWeatherForLargeUsCapitals()).subscribe(this);
+    }
+
+ WeatherManager.java
+
+    public Observable<list<cityweather>> getWeatherForLargeUsCapitals() {
+    if (weatherSubject == null) {
+        weatherSubject = AsyncSubject.create();
+
+        cityDirectory.getUsCapitals()
+            .flatMap(cityList -> Observable.from(cityList))
+            .filter(city -> city.getPopulation() > 500,000)
+            .flatMap(city -> weatherService.getCurrentWeather(city))
+            .toSortedList((cw1,cw2) -> cw1.getCityName().compare(cw2.getCityName()))
+            .subscribe(weatherSubject);
+    }
+    return weatherSubject;
+    }
+</list<cityweather></pre>
+
+<p>因为“缓存”是由Manager单独管理的，它不会与Fragment/Activity的周期绑定，并且会保持与Activity/Fragment的解耦。如果你想以一种和处理保存的fragment的生命周期事件相同的手段来强制刷新这个缓存实例的话，你可以这样做：</p>
+<pre>
+public void onCreate() {
+    super.onCreate()
+    if (savedInstanceState == null) {
+        weatherManager.invalidate(); //invalidate cache on fresh start
+    }
+    }
+</pre>
+
+<p>这件事情的伟大之处在于，它不像是Loaders，我们可以很灵活的缓存这些结果,他们来自我们选择的Activity和Services中。只需要去掉oncreate()中的invalidate()调用，并让你的Manager对象决定何时发出新的气象数据就可以了。可能是一个Timer，或者是用户定位改变，或者是其他任何时刻，这真的没关系。你现在可以控制什么时候如何去更新缓存和重新加载。并且当你的缓存策略发生改变的时候，Fragment和你的Manager对象之间的接口不需要进行改变。它只不过是一个 List的Observer。</p>
+<h3 id="可测试性-1"><a href="#可测试性-1" class="headerlink" title="可测试性"></a>可测试性</h3><p>测试是我们想要实现干净、简单的最后一个挑战。(我们可以不用模拟真实的网络服务来进行测试。做法很简单，下面通过一个接口注入这些依赖,这个接口你可能已经在用了。)</p>
+<p>幸运的是，Observables给我们一个简单的方式来将一个异步方法变成同步，你要做的就是使用toblocking()方法。我们看一个测试例子。</p>
+<pre>
+List results = getWeatherForLargeUsCapitals().toBlocking().first();
+    assertEquals(12, results.size());
+</pre>
+
+<p>就像这样，我们没有必要去使用Futures或者是CountDownLatchs让做一些脆弱的操作，比如线程睡眠或者是让我们的测试变得很复杂，我们的测试现在是简单、干净、可维护的。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>更新：我已经创建了一对简单的项目来演示<a href="https://github.com/rosshambrick/AsyncExamples" target="_blank" rel="external">AsyncTask风格</a>和<a href="https://github.com/rosshambrick/rain-or-shine" target="_blank" rel="external">AsyncTaskLoader</a>风格。</p>
+<p>RxJava，你值得拥有。我们使用rx.Observable来替换AsyncTask和AsyncTaskLoader可实现更加强大和清晰的代码。使用RxJava Observables很快乐，而且我期待能够呈现更多的Android问题的解决方案。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html" target="_blank" rel="external">http://blog.inching.org/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rx/">rx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rxjava/">rxjava</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html&title=《Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html&title=《Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns》 — Balance&url=http://blog.inching.org/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/uncategorized/2016-12-16-crypto.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Crypto</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/RxJava/2016-12-13-rx-java2-quickstart.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">RxJava2 QuickStart</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html&title=《Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html&title=《Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns》 — Balance&url=http://blog.inching.org/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3aQW4cMQwEwP3/px0gpwDxTppNyTaQmtMexiOVDiLd0usVPx+/nz9///08v/num9P3XzcePDw8vGrqyaQTxvN3ktGflzWfMx4eHt5tXlcMnofPN/fnsVbfx8PDw/tW3rRIPDfKefHAw8PD+994XVOOh4eH9/N5XbvcRQk3xj2QteDh4eE1meq4nf2u39fP9/Dw8PCqU/Xppr/Z+vfF4JPv4+Hh4V3g5QdOScFIWudNEcqrQHQ3AQ8PD6/ibUKEzfH/NAKeLtYndQ8PDw/vKG/aInfHWslGny9KdE0BDw8P7wIvHzIf/rlsdG16EnC8/QIeHh7eUV4eQyQRbYKZLsRqyfDw8PAu8Kbt7GYJNo37dEHHWTUeHh7ekNdtxPn7+2UqY1w8PDy8a7zptp43uAn7+citiz/w8PDw7vFuNLV56JD8bbdMeHh4eF/Jm4YFeZOdtNTdpatBYcDDw8M7xHtVzzgOqArGtBF/e6cMDw8P7xCviwO67XvKnoYgg6wFDw8Pb83LW+dpNHBqi58Gx3h4eHi3eV30kG/3+VTyYjP+Dh4eHt4hXnJdINni81i2CxTK+eDh4eFd4CVxQBcQ5Eu2aaDHqTMeHh7emtddk9osxKZxLwNcPDw8vKO86dS7I6t8EZPmezoTPDw8vLO87p//zXSnlwC6ABcPDw/va3jd9an9ZawkCC6XFQ8PD+8CL9n0N7Hs9GLW5ugLDw8P72t4H8Nnf+qUXyPYXCzAw8PDu8frKkkH6CKPpL2eHuDh4eHh7Xmb4/9uo8+PvrogGA8PD+9reNNi0B1Q5Ren8gr2j2XFw8PD+1ZeXgbyonIqvHi7HHh4eHg/jJc0zZuAeDMKHh4e3m1evmVPj77yQ6lu9KilxsPDwzvK625pJVt8N/DZ0oKHh4d3lPcLDJa7YGreS88AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

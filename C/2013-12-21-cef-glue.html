@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>基于CefGlue的桌面应用开发 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="c#,cef">
+    <meta name="description" content="##前言
+如果你想使用WEB技术来开发桌面客户端，并且是想使用的语言也是C#时，那请耐心往下看。使用WEB技术开发桌面客户端的核心其实就是使用一个能够独立运行WEB前端的组件，如WinForm中的WebBrowser，Android平台的WebView，以及Qt提供的WebView，等等。对于桌面客户端开发而言，使用WebBrowser空间依赖于客户端安装的IE浏览器版本，而且IE本身的种种诟病让">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于CefGlue的桌面应用开发">
+<meta property="og:url" content="http://blog.inching.org/C/2013-12-21-cef-glue.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="##前言
+如果你想使用WEB技术来开发桌面客户端，并且是想使用的语言也是C#时，那请耐心往下看。使用WEB技术开发桌面客户端的核心其实就是使用一个能够独立运行WEB前端的组件，如WinForm中的WebBrowser，Android平台的WebView，以及Qt提供的WebView，等等。对于桌面客户端开发而言，使用WebBrowser空间依赖于客户端安装的IE浏览器版本，而且IE本身的种种诟病让">
+<meta property="og:updated_time" content="2017-04-21T12:57:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于CefGlue的桌面应用开发">
+<meta name="twitter:description" content="##前言
+如果你想使用WEB技术来开发桌面客户端，并且是想使用的语言也是C#时，那请耐心往下看。使用WEB技术开发桌面客户端的核心其实就是使用一个能够独立运行WEB前端的组件，如WinForm中的WebBrowser，Android平台的WebView，以及Qt提供的WebView，等等。对于桌面客户端开发而言，使用WebBrowser空间依赖于客户端安装的IE浏览器版本，而且IE本身的种种诟病让">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">基于CefGlue的桌面应用开发</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">基于CefGlue的桌面应用开发</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2013-12-20T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2013-12-21
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C#</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-cef-glue"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">基于CefGlue的桌面应用开发</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2013-12-21 00:00:00" datetime="2013-12-20T16:00:00.000Z"  itemprop="datePublished">2013-12-21</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C#</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>##前言</p>
+<p>如果你想使用WEB技术来开发桌面客户端，并且是想使用的语言也是C#时，那请耐心往下看。使用WEB技术开发桌面客户端的核心其实就是使用一个能够独立运行WEB前端的组件，如WinForm中的WebBrowser，Android平台的WebView，以及Qt提供的WebView，等等。对于桌面客户端开发而言，使用WebBrowser空间依赖于客户端安装的IE浏览器版本，而且IE本身的种种诟病让人望而生畏。而如今，Chrome浏览器突飞猛进的发展大家有目共睹，而且其使用的核心<a href="https://code.google.com/p/chromiumembedded/" target="_blank" rel="external">CEF</a>和Webkit一样是开源的。由于Chromium是C/C++开发的，想要在C#中使用需要再次封装，一些基于Chromium的浏览器控件便应运而生。如今，市面上存在的基于Chromium的C#封装有：</p>
+<a id="more"></a>
+<ul>
+<li><a href="https://bitbucket.org/xilium/xilium.cefglue/" target="_blank" rel="external">Xilium.CefGlue</a></li>
+<li><a href="https://github.com/cefsharp/CefSharp" target="_blank" rel="external">CefSharp</a></li>
+<li><a href="http://www.one-lab.net/" target="_blank" rel="external">O.N.E</a></li>
+<li><a href="http://webkitdotnet.sourceforge.net/" target="_blank" rel="external">WebKit.NET</a></li>
+<li><a href="https://code.google.com/p/open-webkit-sharp/" target="_blank" rel="external">Open-Webkit-Sharp</a></li>
+</ul>
+<p>关于这几个项目的优劣，<a href="http://www.wuleba.com/author/flydoos" target="_blank" rel="external">牛A与牛C之间</a>做了非常细致的比较，请参看<a href="http://www.wuleba.com/23590.html" target="_blank" rel="external">.NET多种WebKit内核/Blink内核浏览器初步测评报告</a>。最终优胜的为<strong>Xilium.CefGlue</strong>。此前，本作者使用过<strong>CefSharp</strong>，感觉很明显的优点是JS和C#之间的互调非常方便，由于本作者只是使用CefSharp开发一个小工具，所以性能和发布方面的问题暂时未碰到。</p>
+<p>值得一提的是CEF有两个版本CEF1和CEF3。</p>
+<ul>
+<li><p>CEF1是单进程的。实现了更多的特性，内存使用更少，与客户端应用更能完美的结合，使用的是WebKit的API，但是FLASH无法在这个框架中正常播放，不支持html5的音频和视频，只支持NPAPI插件。关于NPAPI插件的相关知识，请参阅这里：<a href="http://developer.chrome.com/extensions/npapi.html" target="_blank" rel="external">http://developer.chrome.com/extensions/npapi.html</a>。</p>
+</li>
+<li><p>CEF3是多进程的。使用异步消息的方式来完成主进程和其他进程的通信（其他进程有可能是Webkit，也有可能是V8的解析引擎进程），使用的是chromium官方- 的内容呈现API，支持NPAPI和PPAPI插件，有一个单独的进程用于调试，相对于CEF1来说，虽然可以播放FLASH等视频，但是还有很多问题没有处理掉，社区里的人认为CEF1更稳定一些。</p>
+</li>
+</ul>
+<p>我们选用的是CEF3和Xilium.CefGlue，Xilium.CefGlue是对CEF项目的.net的包装，它是用P/Invoke的方式来调用CEF类库的，请参见：<a href="https://bitbucket.org/xilium/xilium.cefglue/wiki/Home。" target="_blank" rel="external">https://bitbucket.org/xilium/xilium.cefglue/wiki/Home。</a></p>
+<p>下面我们就<strong>Xilium.CefGlue</strong>开发桌面应用中需要解决的问题逐一分析。</p>
+<p>##运行官方Demo</p>
+<p>####Clone或下载CefGlue</p>
+<p>CefGlue的源码地址为 <a href="https://bitbucket.org/xilium/xilium.cefglue/" target="_blank" rel="external">https://bitbucket.org/xilium/xilium.cefglue/</a>，里边除了源码，还包含Winform和Wpf的Demo。Clone或者下载下来。</p>
+<p>下载后，Unload或者删除其中的<code>CefGlue.Demo.GtkSharp</code>项目，这个项目是在Linux平台使用的。将<code>CefGlue.Demo.WinForms</code>设为启动项目。</p>
+<p>####下载CEF动态链接库</p>
+<p>CefGlue依赖的CEF的<strong>版本支持</strong>请参考 <a href="http://xilium.bitbucket.org/cefglue/" target="_blank" rel="external">http://xilium.bitbucket.org/cefglue/</a> 。CefGlue当前支持的CEF的最新版本为3.1650.1503，也就是当前的CEF的最新版本（不算开发分支），下载地址为 <a href="http://cefbuilds.com/" target="_blank" rel="external">http://cefbuilds.com/</a> 。</p>
+<p>CEF同时提供Linux、Mac、Windows平台的x86、x64版本，本作者所有的实验均在Windows平台完成，使用的系统为<strong>Windows8 x64</strong>。如果你的机器是x64的，那么x64和x86的CEF版本均可使用。唯一的区别是，如果你使用的是x86的版本，你需要将CefGlue项目的<code>CefGlue.Demo.WinForms</code>工程属性下的<code>Build</code>选项的Platform target设置为x86，而非默认的AnyCPU。我们以x64平台为例，假设下载下来的文件件为cef_binary_3.1650.1544_windows64。</p>
+<ul>
+<li><p>将<code>cef_binary_3.1650.1544_windows64/Release/</code>或者<code>cef_binary_3.1650.1544_windows64/Debug/</code>下的内容拷贝到CefGlue项目下的<code>CefGlue.Demo.WinForms/CefGlue.Demo.WinForms/bin/Debug/</code>目录下。当然，在实际项目中我们可能将这些文件拷贝到工程目录的一个文件夹中，然后使用工程属性下的Build Event选项将这些文件拷贝到Debug目录下，具体做法可以参考<a href="http://www.cnblogs.com/liulun/archive/2013/05/12/3035127.html" target="_blank" rel="external">怎么用CefGlue开发一个最简单的浏览器</a>。</p>
+</li>
+<li><p>将<code>cef_binary_3.1650.1544_windows64/Resources/locales</code>目录下的文件拷贝到<code>CefGlue.Demo.WinForms/CefGlue.Demo.WinForms/bin/Debug/locales</code>目录下。</p>
+</li>
+</ul>
+<p>运行即可成功，如果你有啥问题，欢迎共同探讨，或者加入QQ群244840771，群主为<code>牛A与牛C之间</code>。</p>
+<p><strong>参考</strong></p>
+<ul>
+<li><a href="http://www.cnblogs.com/liulun/archive/2013/04/20/3031502.html" target="_blank" rel="external">基于.net开发chrome核心浏览器二</a></li>
+<li><a href="http://www.cnblogs.com/liulun/p/3287028.html" target="_blank" rel="external">基于.net开发chrome核心浏览器六</a></li>
+</ul>
+<p>##Tutorial</p>
+<ul>
+<li><a href="http://www.cnblogs.com/liulun/archive/2013/05/12/3035127.html" target="_blank" rel="external">基于.net开发chrome核心浏览器三</a> 怎么用CefGlue开发一个最简单的浏览器。</li>
+<li><a href="http://www.cnblogs.com/liulun/archive/2013/05/31/3079516.html" target="_blank" rel="external">基于.net开发chrome核心浏览器四</a> 实现浏览器地址栏、浏览器窗口大小变化、浏览器下载文件。</li>
+<li><a href="http://www.cnblogs.com/liulun/p/3115015.html" target="_blank" rel="external">基于.net开发chrome核心浏览器五</a> JsDialog的按钮错位的问题、右键菜单问题、打印的问题、打开chrome的调试器。</li>
+<li><a href="http://www.wuleba.com/23614.html" target="_blank" rel="external">Xilium CefGlue关于CLR Object与JS 交互类库封装报告</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:16.000Z" itemprop="dateUpdated">2017-04-21 20:57:16</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/C/2013-12-21-cef-glue.html" target="_blank" rel="external">http://blog.inching.org/C/2013-12-21-cef-glue.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cef/">cef</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/C/2013-12-21-cef-glue.html&title=《基于CefGlue的桌面应用开发》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/C/2013-12-21-cef-glue.html&title=《基于CefGlue的桌面应用开发》 — Balance&source=##前言
+如果你想使用WEB技术来开发桌面客户端，并且是想使用的语言也是C#时，那请耐心往下看。使用WEB技术开发桌面客户端的核心其实就是使用一个能够独立..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/C/2013-12-21-cef-glue.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《基于CefGlue的桌面应用开发》 — Balance&url=http://blog.inching.org/C/2013-12-21-cef-glue.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/C/2013-12-21-cef-glue.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2013-12-23-android-ui-library.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android Views</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/C/2013-12-04-mfc-activex.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MFC ActiveX</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/C/2013-12-21-cef-glue.html&title=《基于CefGlue的桌面应用开发》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/C/2013-12-21-cef-glue.html&title=《基于CefGlue的桌面应用开发》 — Balance&source=##前言
+如果你想使用WEB技术来开发桌面客户端，并且是想使用的语言也是C#时，那请耐心往下看。使用WEB技术开发桌面客户端的核心其实就是使用一个能够独立..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/C/2013-12-21-cef-glue.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《基于CefGlue的桌面应用开发》 — Balance&url=http://blog.inching.org/C/2013-12-21-cef-glue.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/C/2013-12-21-cef-glue.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3aOXLDMAwFUN//0kqbzFjKB0gVJB8rj0Utr8Fg4ecTr+vXuvsn2X+3M3nmhIWBgbEs43pczy/IX5yz7957twcDA+McRhIKn/fkd+Xvyt+LgYGB8RwEk+fkwRoDAwPjjYCbJ5S9/RgYGBh5ETueDvaC+ORaHAMDY0HGrCLzjd+vzDcwMDCWYlzFVU0fR5LFwldhYGBszcgD3DNpVrnb+x4MDIzTGL3jX72CsxqOC11DDAyMjRhJopaE3ZHBQDWt/HIVAwPjGEZ0QzGWj5TB+V0YGBh7M6qYuYndrGIYAwPjBEYvaXuvVZf8U34ZBgbGsoyRz82HkXljLk8o/zwTAwPjYMaskjX/oDyV/NJuw8DA2JSRHFftXZ21p3cvBgbGroyRA1vVxC4va/NSGQMDY1dG78BWNSnMhwR5o+02w8XAwNiO0StW5+ahI9MMDAyM0xj5RxTyzccxwMiBsEK7DQMDYwtGPsisMqpHWvOUdOjIBQYGxrKMwtygGCLzYjVh32IwMDAOY0xoewVPToYKhREFBgbGwYwkiUySy5G2WqGIxcDA2I5xFVc1QPeOiBUK16Sfh4GBsTij19wfOeaVw5LfZRgGBsayjPdGjL2BaB5wMTAwTmPkga/X0E+ovbEoBgYGRrWJlqeV1db/P1QMDAyM1lCzesisetdQaoiBgbEgo9ru7x0aqwblAhgDA2NrRq90rB4mG/no8dIXAwNjWcYPf89qmLaXLtkAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

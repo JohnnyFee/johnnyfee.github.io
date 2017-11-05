@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Node Global Objects | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="node,syntax">
+    <meta name="description" content="globaljavascript的语言特性决定了，一定会有一个顶层对象（top object），但是根据执行环境的不同，这个顶层对象是不一样的。由执行环境决定，比如在浏览器执行环境中，顶层对象是window。而在node里，顶层对象是global
+global里定义了一些全局的对象或函数，在node的任何一个模块里，都可以直接使用，比如console，setTimeout()，require()等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node Global Objects">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-05-14-node-global.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="globaljavascript的语言特性决定了，一定会有一个顶层对象（top object），但是根据执行环境的不同，这个顶层对象是不一样的。由执行环境决定，比如在浏览器执行环境中，顶层对象是window。而在node里，顶层对象是global
+global里定义了一些全局的对象或函数，在node的任何一个模块里，都可以直接使用，比如console，setTimeout()，require()等">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node Global Objects">
+<meta name="twitter:description" content="globaljavascript的语言特性决定了，一定会有一个顶层对象（top object），但是根据执行环境的不同，这个顶层对象是不一样的。由执行环境决定，比如在浏览器执行环境中，顶层对象是window。而在node里，顶层对象是global
+global里定义了一些全局的对象或函数，在node的任何一个模块里，都可以直接使用，比如console，setTimeout()，require()等">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Node Global Objects</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Node Global Objects</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-13T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#global"><span class="post-toc-text">global</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#module"><span class="post-toc-text">module</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#relative-path"><span class="post-toc-text">relative path</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-global"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Node Global Objects</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-14 00:00:00" datetime="2014-05-13T16:00:00.000Z"  itemprop="datePublished">2014-05-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="global"><a href="#global" class="headerlink" title="global"></a>global</h2><p>javascript的语言特性决定了，一定会有一个顶层对象（top object），但是根据执行环境的不同，这个顶层对象是不一样的。由执行环境决定，比如在浏览器执行环境中，顶层对象是window。而在node里，顶层对象是global</p>
+<p>global里定义了一些全局的对象或函数，在node的任何一个模块里，都可以直接使用，比如console，setTimeout()，require()等，完整的global object document见：<a href="http://nodejs.org/api/globals.html" target="_blank" rel="external">node.js global objects</a></p>
+<p>如果想在不同的模块（文件）之间共享变量，有一个可行但是很糟糕的做法，就是借助这个global object，在global上定义的属性和函数，在任何模块里都可以访问到</p>
+<pre><code>global.name = &quot;Tony&quot;;
+</code></pre><p>然后在a.js里 </p>
+<pre><code>require(&quot;./b&quot;);// 执行b.js里的代码
+console.log(name);// Tony
+</code></pre><a id="more"></a>
+<p>另外一种更简单（也更容易引起错误）的做法，是不用var关键字声明变量，也会成为global的属性 </p>
+<pre><code>name = &quot;Tony&quot;;
+</code></pre><p>但是，如果加上了var关键字，声明的变量就只局限在module（当前文件）的作用域中，所以强烈推荐显式地用var来声明变量，以免不小心挂到了global上 </p>
+<pre><code>var name = &quot;Tony&quot;;
+</code></pre><p>为什么依赖global是不好的实践呢？因为所有的模块都可以不受限制地使用global，而且缺少命名空间的约束，非常容易引起冲突，从而引发潜在的BUG。而且这种BUG一旦发生，要定位是极其困难的，不知道是在哪里改变了全局变量而引发的问题 所以javascript的最佳实践，是强烈建议 不要修改global object，只使用global上预定义的属性和函数</p>
+<h2 id="module"><a href="#module" class="headerlink" title="module"></a>module</h2><p>在模块里用var声明的变量，全部都是在module作用域里的，优先于global作用域的属性</p>
+<pre><code>global.name = &quot;Tony&quot;;
+
+require(&quot;./b&quot;);// 执行b.js里的代码
+var name = &quot;kyfxbl&quot;;
+console.log(name);// kyfxbl
+</code></pre><p>以上代码会输出”kyfxbl”，而不是”Tony”，因为module的name比global的name更优先</p>
+<h2 id="relative-path"><a href="#relative-path" class="headerlink" title="relative path"></a>relative path</h2><ul>
+<li><code>module.filename</code>：该行代码所在的文件。</li>
+<li><code>__filename</code>：始终等于 module.filename</li>
+<li><code>__dirname</code>：该行代码所在的目录。</li>
+<li><code>process.cwd()</code>：运行node的工作目录，可以使用  cd /d 修改工作目录。</li>
+<li><code>require.main.filename</code>：用node命令启动的module的filename, 如 node xxx，这里的filename就是这个xxx。</li>
+<li><code>require()</code> 方法的相对路径是：module.filename；fs.readFile()的相对路径是：process.cwd()。</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://nodejs.org/docs/latest/api/globals.html#globals_dirname" target="_blank" rel="external">Global Objects Node.js v0.10.29 Manual &amp; Documentation</a></li>
+<li><a href="http://blog.csdn.net/kyfxbl/article/details/12587385" target="_blank" rel="external">node.js的global variable，和module.exports</a></li>
+<li><a href="http://www.cnblogs.com/happyframework/archive/2013/05/16/3080910.html" target="_blank" rel="external">NodeJs：module.filename、<strong>filename、</strong>dirname、process.cwd()和require.main.filename 解惑</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-05-14-node-global.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-05-14-node-global.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/syntax/">syntax</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-05-14-node-global.html&title=《Node Global Objects》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-05-14-node-global.html&title=《Node Global Objects》 — Balance&source=globaljavascript的语言特性决定了，一定会有一个顶层对象（top object），但是根据执行环境的不同，这个顶层对象是不一样的。由执行环境..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-05-14-node-global.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node Global Objects》 — Balance&url=http://blog.inching.org/Node/2014-05-14-node-global.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-05-14-node-global.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Node/2014-05-14-database-mongo-mongoose.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">MongoDb</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Web/2014-05-13-web-ui.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Web View</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-05-14-node-global.html&title=《Node Global Objects》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-05-14-node-global.html&title=《Node Global Objects》 — Balance&source=globaljavascript的语言特性决定了，一定会有一个顶层对象（top object），但是根据执行环境的不同，这个顶层对象是不一样的。由执行环境..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-05-14-node-global.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node Global Objects》 — Balance&url=http://blog.inching.org/Node/2014-05-14-node-global.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-05-14-node-global.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3aQW6FMAwFQO5/abqtVBWeHVjgTFbVLxCGheXYPo54nb/W319+/359ff7M442FgYHxWcZ5ufLXun7+9V3JvtcfDgMDYwdGvn3Cq4KTvW7eGQMDA+MyscsTwSQFxMDAwHiD8dRBFwMDA+OaUQ2gvUQwP6y+eBbHwMD4IGOlZPb236/0NzAwMD7FOIsrf0LekjyXFwYGxmxGtXBfPXZW2wm998HAwNiNUW1GJvcmATcv4UVVQwwMjKGMJAgmJf682dlrPNwEXAwMjHGMKqDXEsjLZ73DMwYGxmzGs5vlR9NqCa8wioGBgTGUkVzau2bl6FsdFMPAwJjKWB+3Ska4emE6TxAxMDBmM3rF+jeaBHnBLh/jwMDAmMGoNhfXmwS95ujStAgGBsYIxnoCVx3tygtqhRQQAwNjG0bvFfOEr9qSLA9bYGBgjGMkI1n5OMXKf6vNhkILEwMDYxxjfcte8E2C/s1eGBgYWzJ6Yxa9o+zKaRQDA2M3Rm/wq/fS622GqMuBgYExiFENrysDXnmKWS63YWBgbMaoDlj02Edx/XsvBgbGUMZZXPnYRPKKeZi+eSYGBsZoxkqYy0Nn79OsNzgxMDAmMapHzZVmZ/WTYWBgYFQbA3lRLC/3V6nRsAUGBsb2jDyB66WbzSMrBgYGRmvwolpEi4Yq3kgNMTAwPsKoJnxPBevqp8HAwNiTUc27ngq4ySd46uiLgYHxWcYPOWYZBlA2JZwAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

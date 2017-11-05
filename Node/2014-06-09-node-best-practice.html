@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Node 最佳实践 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="node">
+    <meta name="description" content="原文： &amp;lt;http://webapplog.com/seven-things-you-should-stop-doing-with-node-js/
+Inspired by 5 Things You Should Stop Doing With jQuery by Burke Holland, I decided to open a discussion and highlight seve">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node 最佳实践">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-06-09-node-best-practice.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文： &amp;lt;http://webapplog.com/seven-things-you-should-stop-doing-with-node-js/
+Inspired by 5 Things You Should Stop Doing With jQuery by Burke Holland, I decided to open a discussion and highlight seve">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/node-inspector-watch.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node 最佳实践">
+<meta name="twitter:description" content="原文： &amp;lt;http://webapplog.com/seven-things-you-should-stop-doing-with-node-js/
+Inspired by 5 Things You Should Stop Doing With jQuery by Burke Holland, I decided to open a discussion and highlight seve">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/node-inspector-watch.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Node 最佳实践</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Node 最佳实践</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-06-08T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-06-09
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Stop-Using-Callbacks-in-Node-js"><span class="post-toc-text">Stop Using Callbacks in Node.js</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Stop-Using-WildCard-for-Versions-with-Node-js"><span class="post-toc-text">Stop Using WildCard * for Versions with Node.js</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Stop-Using-console-log-for-Debugging-Node-js-Apps"><span class="post-toc-text">Stop Using console.log for Debugging Node.js Apps</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Stop-Using-GET-and-POST-for-Everything-in-Node-js-servers"><span class="post-toc-text">Stop Using GET and POST for Everything in Node.js servers</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Stop-Using-Semicolons-with-Node-js"><span class="post-toc-text">Stop Using Semicolons with Node.js</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Stop-Using-Comma-First-Style"><span class="post-toc-text">Stop Using Comma-First Style</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Stop-Limiting-Your-Connections-with-Default-MaxSockets-Value"><span class="post-toc-text">Stop Limiting Your Connections with Default MaxSockets Value</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Conclusion-About-Things-to-Stop-Doing-with-Node-js"><span class="post-toc-text">Conclusion About Things to Stop Doing with Node.js</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tools"><span class="post-toc-text">Tools</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-best-practice"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Node 最佳实践</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-06-09 00:00:00" datetime="2014-06-08T16:00:00.000Z"  itemprop="datePublished">2014-06-09</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>原文： &lt;<a href="http://webapplog.com/seven-things-you-should-stop-doing-with-node-js/" target="_blank" rel="external">http://webapplog.com/seven-things-you-should-stop-doing-with-node-js/</a></p>
+<p>Inspired by <a href="http://flippinawesome.org/2013/05/06/5-things-you-should-stop-doing-with-jquery/" target="_blank" rel="external">5 Things You Should Stop Doing With jQuery</a> by Burke Holland, I decided to open a discussion and highlight seven things you should immediately stop doing with Node.js.</p>
+<h2 id="Stop-Using-Callbacks-in-Node-js"><a href="#Stop-Using-Callbacks-in-Node-js" class="headerlink" title="Stop Using Callbacks in Node.js"></a>Stop Using Callbacks in Node.js</h2><p>Callbacks are the bread and butter (or the meat and veggies for paleo lifestyle readers) of the JavaScript/Node.js language and the main pattern. However, you should stop using callbacks for nesting code of multiple methods unless you want to end up with the <a href="http://callbackhell.com/" target="_blank" rel="external">Callback Hell</a>.</p>
+<p><a href="https://github.com/caolan/async" target="_blank" rel="external">Async</a> is for the win. Particularly its series() and waterfall() methods. </p>
+<p>To illustrate the drastic difference, here is an example in which we perform multiple operations <strong>with callbacks</strong> to find a user, then find posts that belong to the user:</p>
+<pre><code>codeA(function(a){
+  codeB(function(b){
+    codeC(function(c){
+      codeD(function(d){
+        // Final callback code        
+      })
+    })
+  })
+})
+</code></pre><a id="more"></a>
+<p>The series example:</p>
+<pre><code>async.series([
+  function(callback){
+    // code a
+    callback(null, &apos;a&apos;)
+  },
+  function(callback){
+    // code b
+    callback(null, &apos;b&apos;)
+  },
+  function(callback){
+    // code c
+    callback(null, &apos;c&apos;)
+  },
+  function(callback){
+    // code d
+    callback(null, &apos;d&apos;)
+  }],
+  // optional callback
+  function(err, results){
+    // results is [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;]
+    // final callback code
+  }
+)
+</code></pre><p>The waterfall example:</p>
+<pre><code>async.waterfall([
+  function(callback){
+    // code a
+    callback(null, &apos;a&apos;, &apos;b&apos;)
+  },
+  function(arg1, arg2, callback){
+    // arg1 is equals &apos;a&apos; and arg2 is &apos;b&apos;
+    // Code c
+    callback(null, &apos;c&apos;)
+  },
+  function(arg1, callback){      
+    // arg1 is &apos;c&apos;
+    // code d
+    callback(null, &apos;d&apos;);
+  }], function (err, result) {
+   // result is &apos;d&apos;    
+  }
+)
+</code></pre><h2 id="Stop-Using-WildCard-for-Versions-with-Node-js"><a href="#Stop-Using-WildCard-for-Versions-with-Node-js" class="headerlink" title="Stop Using WildCard * for Versions with Node.js"></a>Stop Using WildCard * for Versions with Node.js</h2><p>The wildcard * instead of the version number in package.json seems like a good idea — an automatic update in the near future. Wrong! You should use exact version numbers to prevent any third-party module changes from breaking your app and waking up you in the middle of the night wondering what went south. </p>
+<p>This is especially true if you don’t <a href="http://www.futurealoof.com/posts/nodemodules-in-git.html" target="_blank" rel="external">commit your node_modules folder</a> or don’t use <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html" target="_blank" rel="external">shrinkwrap</a>. </p>
+<p>A bad example from <a href="https://github.com/azat-co/hackhall/blob/master/package.json" target="_blank" rel="external">HackHall package.json</a> circa summer 2013:</p>
+<pre><code>{
+    &quot;name&quot;: &quot;hackhall&quot;,
+    &quot;version&quot;: &quot;0.0.1&quot;,
+    &quot;private&quot;: true,
+    &quot;main&quot;: &quot;server&quot;,
+    &quot;scripts&quot;: {
+        &quot;start&quot;: &quot;node server&quot;
+    },
+    &quot;dependencies&quot;: {
+        &quot;express&quot;: &quot;&gt;=2.2.0&quot;,
+        &quot;jade&quot;: &quot;*&quot;,
+        &quot;mongodb&quot;: &quot;*&quot;,
+        &quot;mongoose&quot;:&quot;&quot;,
+        &quot;oauth&quot;:&quot;*&quot;
+    },
+    &quot;devDependencies&quot;:{
+        &quot;mocha&quot;: &quot;&quot;,
+        &quot;superagent&quot;:&quot;&quot;
+    },
+    &quot;engines&quot;: {
+      &quot;node&quot;: &quot;&gt;=0.6&quot;
+    }
+}
+</code></pre><p>A good example from <a href="http://amzn.to/NuQ0fM" target="_blank" rel="external">the Practical Node.js book</a> [2014, Apress]:</p>
+<pre><code>{
+  &quot;name&quot;: &quot;blog-express&quot;,
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;private&quot;: true,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node app.js&quot;,
+    &quot;test&quot;: &quot;mocha test&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;3.4.5&quot;,
+    &quot;jade&quot;: &quot;0.35.0&quot;,
+    &quot;mongoskin&quot;: &quot;~0.6.1&quot;,
+    &quot;stylus&quot;: &quot;~0.40.3&quot;,
+    &quot;mocha&quot;: &quot;1.16.2&quot;,
+    &quot;superagent&quot;: &quot;0.15.7&quot;,
+    &quot;expect.js&quot;: &quot;0.2.0&quot;
+  }
+}
+</code></pre><p>If you don’t want to go to <a href="http://npmjs.org/" target="_blank" rel="external">NPM website</a> every time to check the version, you can use $ npm install package_name –save which will save the version number in the package.json. </p>
+<p>If the module is installed already you can:</p>
+<ul>
+<li>Type $ npm ls</li>
+<li>Open the package folder and copy the version number form package.json</li>
+</ul>
+<h2 id="Stop-Using-console-log-for-Debugging-Node-js-Apps"><a href="#Stop-Using-console-log-for-Debugging-Node-js-Apps" class="headerlink" title="Stop Using console.log for Debugging Node.js Apps"></a>Stop Using console.log for Debugging Node.js Apps</h2><p>What is the best debugger? Right, it’s console.log! It’s fast, non-interrupting and gives us any information we ask for (like the value of a pesky variable). Then why should you stop using it? Because real debuggers like <a href="https://github.com/node-inspector/node-inspector" target="_blank" rel="external">Node Inspector</a> provide not only the value of a variable you just hard-coded, but also give you a dynamic ability to look around, inside the process. </p>
+<p><img src="http://johnnyimages.qiniudn.com/node-inspector-watch.png" alt=""></p>
+<p>For example, I might have a condition (where resubmit is a boolean) that is not acting right:</p>
+<pre><code>if (resubmit &amp;&amp; post.published &amp;&amp; user.plan.paid &amp;&amp; post.isVisible) {
+  // code A
+} else {
+ // code B
+}
+</code></pre><p>With console.log I can type only console.log(resubmit), or console.log(resubmit, …) some other variables. But, with debugger, I can poke around and print anything I have access to in that scope. If that is not enough, I’ll step over or step in the Code A or B as show in the example.</p>
+<h2 id="Stop-Using-GET-and-POST-for-Everything-in-Node-js-servers"><a href="#Stop-Using-GET-and-POST-for-Everything-in-Node-js-servers" class="headerlink" title="Stop Using GET and POST for Everything in Node.js servers"></a>Stop Using GET and POST for Everything in Node.js servers</h2><p>Stop using GET and POST for all of your incoming HTTP requests. <a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank" rel="external">Representational state transfer</a> application programming interface methodology (RESTful API) has PUT and DELETE so <strong>use them for updates and deletions</strong> (<a href="http://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services" target="_blank" rel="external">wiki</a>). </p>
+<p>For example in this Express.js route, instead of using POST to update a record, you can use PUT:</p>
+<pre><code>app.post(&apos;/comments/update/:id&apos;, routes.comments.update)
+
+
+app.put(&apos;/comments/:id&apos;, routes.comments.update)
+</code></pre><p>For more information, take a look at <a href="http://www.restapitutorial.com/" target="_blank" rel="external">REST API Tutorial</a>.</p>
+<h2 id="Stop-Using-Semicolons-with-Node-js"><a href="#Stop-Using-Semicolons-with-Node-js" class="headerlink" title="Stop Using Semicolons with Node.js"></a>Stop Using Semicolons with Node.js</h2><p>Semicolons are actually optional, because ECMAScript (the standard for Node.js and browser JavaScript implementations) has an automatic semicolon-insertion feature (ASI). Here’s the draft of the <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-automatic-semicolon-insertion" target="_blank" rel="external">ECMAScript 6 (ES6) documentation</a> about ASI.</p>
+<p>The gist is that <strong>semicolons are optional</strong> and except for two cases: in front of the IIFE and inside of the for loop.</p>
+<p>The problem with using semicolons:</p>
+<ul>
+<li><strong>Extra characters to type:</strong> In a 1,000-line file there will be at least 1,000 extra symbols</li>
+<li><strong>Inconsistency:</strong> When semicolons are missed due to neglect, the code base still works but becomes inconsistent (solvable by <a href="https://github.com/reid/node-jslint" target="_blank" rel="external">linting</a>, but that’s an extra build step)</li>
+</ul>
+<p>Some popular Node.js projects have been written with a semicolon-less style:</p>
+<ul>
+<li><a href="https://github.com/npm/npm/blob/master/lib/init.js" target="_blank" rel="external">NPM</a>: the Node.js package manager</li>
+<li><a href="https://github.com/mikeal/request/blob/master/request.js" target="_blank" rel="external">Request</a>: a module for making HTTP requests</li>
+</ul>
+<p>Are you still doubtful because <a href="http://www.crockford.com/" target="_blank" rel="external">Doug Crockford</a> told you that you had to use semicolons? Then maybe you should read <a href="http://blog.izs.me/post/2353458699/an-open-letter-to-javascript-leaders-regarding" target="_blank" rel="external">An Open Letter to JavaScript Leaders Regarding Semicolons</a>.</p>
+<h2 id="Stop-Using-Comma-First-Style"><a href="#Stop-Using-Comma-First-Style" class="headerlink" title="Stop Using Comma-First Style"></a>Stop Using Comma-First Style</h2><p>Okay, this topic is very subjective and probably not that important, but I want to voice my dislike for the comma-first style. Please, stop the madness! </p>
+<p>The style in question is often seen when one might write arrays and objects with a comma at the beginning of lines instead of at the end. For example, we can define an array:</p>
+<pre><code>var arr = [ &apos;nodejs&apos;
+  , &apos;python&apos;
+  , &apos;ruby&apos;
+  , &apos;php&apos;
+  , &apos;java&apos;
+]
+</code></pre><p>Or in a more traditional style it would look like this:</p>
+<pre><code>var arr = [ &apos;nodejs&apos;, 
+  &apos;python&apos;, 
+  &apos;ruby&apos;, 
+  &apos;php&apos;,
+  &apos;java&apos;
+]
+</code></pre><p>Please, don’t do the former. I don’t care how much better it might be for catching missing commas. The comma-first style just look ridiculous, because we would never use this style in our normal language writing. Nobody writes like this:</p>
+<pre><code>Paleo lifestyle is good for ,adult men ,adult women ,children ,and elderly people.
+</code></pre><p>In my humble opinion, comma-first style is hard for the brain to adapt and just plain silly. </p>
+<h2 id="Stop-Limiting-Your-Connections-with-Default-MaxSockets-Value"><a href="#Stop-Limiting-Your-Connections-with-Default-MaxSockets-Value" class="headerlink" title="Stop Limiting Your Connections with Default MaxSockets Value"></a>Stop Limiting Your Connections with Default MaxSockets Value</h2><p>The default maxSockets value is 5 and it determines the limit on number of sockets per host (<a href="http://nodejs.org/api/http.html#http_agent_maxsockets" target="_blank" rel="external">official docs</a>).</p>
+<p>To avoid bottlenecking your system just use something like this:</p>
+<pre><code>var http = require(&apos;http&apos;)
+http.globalAgent.maxSockets = 10
+</code></pre><p>Or, if you want to make it unlimited:</p>
+<pre><code>require(&apos;http&apos;).globalAgent.maxSockets = Infinity
+</code></pre><p>Here is a good comparison article <a href="http://markdawson.tumblr.com/post/17525116003/node" target="_blank" rel="external">Node.js Connection Pooling</a>.</p>
+<p>Another approach is to disable pooling all together (agent: false) like <a href="http://engineering.linkedin.com/nodejs/blazing-fast-nodejs-10-performance-tips-linkedin-mobile" target="_blank" rel="external">LinkedIn did</a> or <a href="http://markdawson.tumblr.com/post/17525116003/node" target="_blank" rel="external">Substack recommends</a> in his <a href="https://github.com/substack/hyperquest" target="_blank" rel="external">hyperquest module</a>. </p>
+<h2 id="Conclusion-About-Things-to-Stop-Doing-with-Node-js"><a href="#Conclusion-About-Things-to-Stop-Doing-with-Node-js" class="headerlink" title="Conclusion About Things to Stop Doing with Node.js"></a>Conclusion About Things to Stop Doing with Node.js</h2><p>Of course, this list of seven things you should immediately stop doing with Node.js is subjective, but it was born out of careful and ongoing observation, as well as some painful real-world experience (i.e., * in package.json). What is on your list of things not to do with Node.js?</p>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><ul>
+<li><a href="https://github.com/RisingStack/node-style-guide" target="_blank" rel="external">RisingStack/node-style-guide</a></li>
+<li><a href="https://github.com/jscs-dev/node-jscs" target="_blank" rel="external">jscs-dev/node-jscs</a></li>
+<li><a href="https://github.com/jscs-dev/grunt-jscs" target="_blank" rel="external">jscs-dev/grunt-jscs</a></li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="https://www.airpair.com/node.js/posts/top-10-mistakes-node-developers-make" target="_blank" rel="external">Top 10 Mistakes Node.js Developers Make</a></li>
+<li><a href="http://blog.risingstack.com/node-js-best-practices-part-2" target="_blank" rel="external">Node.js Best Practices - Part 2</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-06-09-node-best-practice.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-06-09-node-best-practice.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-06-09-node-best-practice.html&title=《Node 最佳实践》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-06-09-node-best-practice.html&title=《Node 最佳实践》 — Balance&source=原文： &lt;http://webapplog.com/seven-things-you-should-stop-doing-with-node-js/..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-06-09-node-best-practice.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node 最佳实践》 — Balance&url=http://blog.inching.org/Node/2014-06-09-node-best-practice.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-06-09-node-best-practice.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/OS/2014-06-09-eclipse.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Eclipse</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Angular/2014-06-08-angular-tutorial.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Angular Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-06-09-node-best-practice.html&title=《Node 最佳实践》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-06-09-node-best-practice.html&title=《Node 最佳实践》 — Balance&source=原文： &lt;http://webapplog.com/seven-things-you-should-stop-doing-with-node-js/..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-06-09-node-best-practice.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node 最佳实践》 — Balance&url=http://blog.inching.org/Node/2014-06-09-node-best-practice.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-06-09-node-best-practice.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuklEQVR42u3aQW4CMQwFUO5/aSp1VYkOfNsxsHizQgVm8lIpMT++3eLr/nv9ff33evx7frer+z++m9y5eeHh4eG1hn51JQ9IhpvcIWcnY8bDw8Pb5lU3g+dDmWw/yeTmE42Hh4f3WV5v6X8+3GTQyXjw8PDwvp+Xbwk5Pi/c8fDw8L6Bl4QR+XB7we5kDAeyFjw8PLyY1zsA++zr9fM9PDw8vNZynEcG+TKdM5II48Vz8fDw8BZ4k1A1bymoNlH1CuXCLwY8PDy8MS9f7quADUz+GTw8PLxt3jyAyCcrL5F7zQd4eHh427zkkdX4YDKgXvBxObl4eHh4R3nV3WNSWE+atKrPvfU2Rzw8PLwWr3rcVS2yT01iFJ3g4eHhLfDyAKJ32N9rnBptBs+fgoeHhzfm5WVrPpReC1ceiBR+DODh4eGt8XqNAnlBnA9xUtZHuxweHh7eMq+6beTfTeKM5mbwWFLj4eHhLfDyxT1vrqo2s/biiRcbGx4eHt4Cr9cQkCzu1VCjGgcX/hl4eHh4C7zesX0vLKgu8afaEfDw8PBO8aoB64Tae7caRuDh4eFt8/Jydn4Y1msjmEwBHh4e3jZvEsXmAcRkca9OPR4eHt57eL3othc95K0DeYB7652k4eHh4RV5+cPyhqe8HSEv5fOp/+d8Dw8PD+8QLw9kq0t89Zi/youmGw8PD+8tvCSYyIvg3nScKs3x8PDwNnjz+LUXFsxjiGMpNR4eHl6Rdy9ekyW+F2QkkXH5FwMeHh7egNfbSXqNWfl38yJ+0jSGh4eHN+FV49FJUFsto/M2hcsSHA8PD2+N14sMzoawvR3sRTiCh4eH91FeFVxtwDpVRuPh4eF9Jy+PHnqBbHXzwMPDw3s/Lw8jkgf32ggmJfuLkhoPDw/vKK/XpZVPRL55TBoIRhceHh5eyvsBuJYiFnfdV7cAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

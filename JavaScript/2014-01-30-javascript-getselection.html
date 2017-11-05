@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JavaScript 获取选取范围 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="##概述
+获取选中的功能有如下应用场景：
+
+网页划词翻译 
+选中内容发送到微博 
+转载功能 
+网易的选中纠错 
+
+参考 用getSelection来获取网页的选中内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 获取选取范围">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-01-30-javascript-getselection.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="##概述
+获取选中的功能有如下应用场景：
+
+网页划词翻译 
+选中内容发送到微博 
+转载功能 
+网易的选中纠错 
+
+参考 用getSelection来获取网页的选中内容">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 获取选取范围">
+<meta name="twitter:description" content="##概述
+获取选中的功能有如下应用场景：
+
+网页划词翻译 
+选中内容发送到微博 
+转载功能 
+网易的选中纠错 
+
+参考 用getSelection来获取网页的选中内容">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript 获取选取范围</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript 获取选取范围</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-01-29T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-01-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-javascript-getselection"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript 获取选取范围</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-01-30 00:00:00" datetime="2014-01-29T16:00:00.000Z"  itemprop="datePublished">2014-01-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>##概述</p>
+<p>获取选中的功能有如下应用场景：</p>
+<ul>
+<li>网页划词翻译 </li>
+<li>选中内容发送到微博 </li>
+<li>转载功能 </li>
+<li>网易的选中纠错 </li>
+</ul>
+<p>参考 <a href="http://classjs.com/2011/11/17/%E7%94%A8getselection%E6%9D%A5%E8%8E%B7%E5%8F%96%E7%BD%91%E9%A1%B5%E7%9A%84%E9%80%89%E4%B8%AD%E5%86%85%E5%AE%B9/" target="_blank" rel="external">用getSelection来获取网页的选中内容</a></p>
+<a id="more"></a>
+<p>##Window.getSelection</p>
+<p>该接口等同于docuement.getSelection。</p>
+<p>The document.getSelection method works differently in Google Chrome, Safari and Internet Explorer than in Firefox and Opera. It returns a <strong>string</strong> in Firefox and Opera, and returns a <strong>selectionRange</strong> object in Google Chrome, Safari and Internet Explorer (the document.getSelection method is identical to the window.getSelection method in Google Chrome, Safari and Internet Explorer). Because of that, this method should not be used. </p>
+<ul>
+<li>In Firefox, Opera, Google Chrome, Safari and Internet Explorer from version 9, use the <strong>window.getSelection</strong> method and the toString method of the selectionRange object returned by the window.getSelection method to get the text content of the selection.</li>
+<li>In older Internet Explorer versions, use the createRange method of the <strong>selection</strong> object and the text property of the TextRange object returned by the createRange method to get the text content of the selection.</li>
+</ul>
+<p>可以使用以下代码作为兼容，参考<a href="http://help.dottoro.com/ljqxhfte.php" target="_blank" rel="external">http://help.dottoro.com/ljqxhfte.php</a>：</p>
+<pre><code>if (document.getSelection) {    // all browsers, except IE before version 9
+    var sel = document.getSelection ();
+        // sel is a string in Firefox and Opera, 
+        // and a selectionRange object in Google Chrome, Safari and IE from version 9
+        // the alert method displays the result of the toString method of the passed object
+    alert (sel);
+} 
+else {
+    if (document.selection) {   // Internet Explorer before version 9
+        var textRange = document.selection.createRange ();
+        alert (textRange.text);
+    }
+}
+</code></pre><p>对于<code>window.getSelection()</code>返回SelectionRange的返回值请参考<a href="https://developer.mozilla.org/en-US/docs/DOM/Selection" target="_blank" rel="external">Selection</a>，对于常用数据请参考<a href="http://www.lowxp.com/g/article/detail/269" target="_blank" rel="external">document.selection和window.getSelection属性和方法详解</a>。可以调用Selection对象的getRangeAt(index)方法获取选择的区域，该接口返回<a href="https://developer.mozilla.org/en-US/docs/DOM/range" target="_blank" rel="external">Range</a>对象。调用Selection<br>对象的<a href="https://developer.mozilla.org/en-US/docs/Web/API/Selection/toString" target="_blank" rel="external">Selection/toString()</a>返回选中区域的文本。</p>
+<p>使用方法如：</p>
+<pre><code>function foo() {
+    var selObj = window.getSelection(); 
+    alert(selObj);
+    var selRange = selObj.getRangeAt(0);
+    // do stuff with the range
+}
+</code></pre><p>##最终代码</p>
+<p>最终选择当前选中区域的HTML的代码请参考<a href="http://stackoverflow.com/questions/14691196/chrome-doesnt-get-the-selected-html-string-wrapping-tags-contenteditable" target="_blank" rel="external">Chrome doesn’t get the selected html string wrapping tags (contenteditable)</a></p>
+<pre><code>function adjustRange(range) {
+    range = range.cloneRange();
+    // Expand range to encompass complete element if element&apos;s text
+    // is completely selected by the range
+    var container = range.commonAncestorContainer;
+    var parentElement = container.nodeType == 3 ?
+            container.parentNode : container;
+    if (parentElement.textContent == range.toString()) {
+        range.selectNode(parentElement);
+    }
+    return range;
+}
+
+function getSelectionHtml() {
+    var html = &quot;&quot;, sel, range;
+    if (typeof window.getSelection != &quot;undefined&quot;) {
+        sel = window.getSelection();
+        if (sel.rangeCount) {
+            var container = document.createElement(&quot;div&quot;);
+            for (var i = 0, len = sel.rangeCount; i &lt; len; ++i) {
+                range = adjustRange( sel.getRangeAt(i) );
+                container.appendChild(range.cloneContents());
+            }
+            html = container.innerHTML;
+        }
+    } else if (typeof document.selection != &quot;undefined&quot;) {
+        if (document.selection.type == &quot;Text&quot;) {
+            html = document.selection.createRange().htmlText;
+        }
+    }
+    return html;
+}
+</code></pre><p>运行效果请参考 <a href="http://fqblog.qiniudn.com/assets/example/html-selection.html" target="_blank" rel="external">http://fqblog.qiniudn.com/assets/example/html-selection.html</a>。Demo中值演示单区域选择。</p>
+<p>##参考</p>
+<ul>
+<li><a href="https://github.com/dhruvvemula/copylinkaddress" target="_blank" rel="external">dhruvvemula / copylinkaddress</a> Just point to your link and hit your standard keyboard shortcut (Ctrl-C, or Cmd-C for Mac) and you’re done! 可参考该开源项目查看Selection和Range的用途。</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-01-30-javascript-getselection.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-01-30-javascript-getselection.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-01-30-javascript-getselection.html&title=《JavaScript 获取选取范围》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-01-30-javascript-getselection.html&title=《JavaScript 获取选取范围》 — Balance&source=##概述
+获取选中的功能有如下应用场景：
+
+网页划词翻译 
+选中内容发送到微博 
+转载功能 
+网易的选中纠错 
+
+参考 用getSelection来获取网..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-01-30-javascript-getselection.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 获取选取范围》 — Balance&url=http://blog.inching.org/JavaScript/2014-01-30-javascript-getselection.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-01-30-javascript-getselection.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-02-02-javascript-clipboard.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JavaScript 剪切板</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Chrome/2014-01-25-chrome-app-develop.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Chrome 应用开发</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-01-30-javascript-getselection.html&title=《JavaScript 获取选取范围》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-01-30-javascript-getselection.html&title=《JavaScript 获取选取范围》 — Balance&source=##概述
+获取选中的功能有如下应用场景：
+
+网页划词翻译 
+选中内容发送到微博 
+转载功能 
+网易的选中纠错 
+
+参考 用getSelection来获取网..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-01-30-javascript-getselection.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 获取选取范围》 — Balance&url=http://blog.inching.org/JavaScript/2014-01-30-javascript-getselection.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-01-30-javascript-getselection.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtklEQVR42u3awa7bMAwEwPz/T6fXVzR2d0UpdYHxqXhQZY4PEkPy9Yqf948nX/OOn5/r73d7nXjw8PDwBqHfv/jPF1z9pd3zfuU9/v5/4eHh4Z3jXZ2oOSM/3PO/3O98HzMeHh7e03h5uO2e+Vvw8PDw/i9enviuVQkedO/h4eHhDYoRk7JvW5hIPvfmWgseHh5ezMvDfc6/j/T38PDw8MZd9bXUdi0Rnw8ffIgWDw8P7wAvP3Db0YE2ZZ+PfF2uxMPDw/s67x6Wlw8mF0nSBrvcBw8PD++LvIS9q5yxNnwQxYOHh4d3gDe5EtpkOq+45g2wNu3Gw8PDO8HLB6omPbe1cdgNvT48PDy8rbz88E0Cul+f79DGE/16wMPDw1vitaHkR/la4XXy9svWFx4eHt4BXpvstiNZ8/XtxfPbxYCHh4e3ldce0JPjfpJ25624Dyvx8PDwtvLWDuh38EwukvZTXpY58PDw8A7w1n6z702I20Gr9hrDw8PD28s7l/62R3+eRhfXEh4eHt4/4p0YxipmGeKP8mFnPDw8vAO8SQLdHu75mjztLuLEw8PD28RLUuS2nNqmwm2qXVxaeHh4eMd4eRCTgYN2qCspc/wFj4eHh3eAt7ZFe6wnJdc26PYD4eHh4e3lJcGtFVjzku68GFEn1nh4eHibeGvH/fwQb9PlJHHHw8PD+w5vUsCdf4K8oJwn63h4eHjneHmxIC/g5sd3O4Y16vLh4eHhDXjv8smLuUkjrU2v20IzHh4e3gne6D6J21RtMSK/kOoBAjw8PLxNvLWUuh2xahP0bek7Hh4e3jFe27jKGZNPs3aB4eHh4T2NlzDWCgTt4EL0Fjw8PLzH8NYaY1GzPxhiyHfAw8PDO8ebNL3mxYs2hqIxhoeHh3eAt/YjPy+/TkJJVm4oauDh4eGlvF8rpuQp8/zzYgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

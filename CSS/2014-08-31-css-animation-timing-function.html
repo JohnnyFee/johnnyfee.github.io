@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Understanding CSS Timing Functions | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="css,animation">
+    <meta name="description" content="orign: http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/
+
+People of the world, strap yourself in and hold on tight, for you are about to experience truly hair-raising exc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding CSS Timing Functions">
+<meta property="og:url" content="http://blog.inching.org/CSS/2014-08-31-css-animation-timing-function.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="orign: http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/
+
+People of the world, strap yourself in and hold on tight, for you are about to experience truly hair-raising exc">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/bezier-curve-ease.jpg">
+<meta property="og:image" content="http://www.smashingmagazine.com/wp-content/uploads/2014/04/02-bezier-curve-drawing.gif">
+<meta property="og:image" content="http://www.smashingmagazine.com/wp-content/uploads/2014/04/03-bezier-curve-ease-in-out.jpg">
+<meta property="og:image" content="http://www.smashingmagazine.com/wp-content/uploads/2014/04/04-bezier-curve-ease.jpg">
+<meta property="og:image" content="http://www.smashingmagazine.com/wp-content/uploads/2014/04/05-bezier-curve-ease-in-ease-out.jpg">
+<meta property="og:image" content="http://www.smashingmagazine.com/wp-content/uploads/2014/04/06-bezier-curve-linear.jpg">
+<meta property="og:image" content="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/#9">
+<meta property="og:image" content="http://www.smashingmagazine.com/wp-content/uploads/2014/04/08-custom-bezier-curve.jpg">
+<meta property="og:image" content="http://www.smashingmagazine.com/wp-content/uploads/2014/04/09-custom-bezier-curve-outside-range.jpg">
+<meta property="og:image" content="http://www.smashingmagazine.com/wp-content/uploads/2014/04/10-custom-bezier-curve-outside-range.jpg">
+<meta property="og:image" content="http://www.smashingmagazine.com/wp-content/uploads/2014/04/11-bezier-curve-bouncing-balloon.jpg">
+<meta property="og:image" content="http://www.smashingmagazine.com/wp-content/uploads/2014/04/12-steps-start-end.jpg">
+<meta property="og:image" content="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/#33">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Understanding CSS Timing Functions">
+<meta name="twitter:description" content="orign: http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/
+
+People of the world, strap yourself in and hold on tight, for you are about to experience truly hair-raising exc">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/bezier-curve-ease.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Understanding CSS Timing Functions</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Understanding CSS Timing Functions</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-08-30T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-08-31
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/CSS/">CSS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#The-CSS-Timing-Function-Explained"><span class="post-toc-text">The CSS Timing Function Explained</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Looking-Under-the-Hood"><span class="post-toc-text">Looking Under the Hood</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Introducing-The-cubic-bezier-Function"><span class="post-toc-text">Introducing The cubic-bezier() Function</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ease-in-out"><span class="post-toc-text">ease-in-out</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Ease"><span class="post-toc-text">Ease</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ease-in-and-ease-out"><span class="post-toc-text">ease-in and ease-out</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Linear"><span class="post-toc-text">Linear</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Creating-Custom-Acceleration-Patterns-With-The-cubic-bezier-Function"><span class="post-toc-text">Creating Custom Acceleration Patterns With The cubic-bezier() Function</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Getting-Creative-With-Bezier-Curves"><span class="post-toc-text">Getting Creative With Bézier Curves</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Timing-Functions-And-Keyframe-Based-CSS-Animation"><span class="post-toc-text">Timing Functions And Keyframe-Based CSS Animation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Introducing-The-steps-Timing-Function"><span class="post-toc-text">Introducing The steps() Timing Function</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Creative-Use-Cases-For-Stepping-Functions"><span class="post-toc-text">Creative Use Cases For Stepping Functions</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#The-Browser-Support-Situation"><span class="post-toc-text">The Browser Support Situation</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Support-for-CSS-Transitions"><span class="post-toc-text">Support for CSS Transitions</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Support-for-CSS-Animation"><span class="post-toc-text">Support for CSS Animation</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Support-for-CSS-Timing-Functions"><span class="post-toc-text">Support for CSS Timing Functions</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Summary"><span class="post-toc-text">Summary</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-css-animation-timing-function"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Understanding CSS Timing Functions</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-08-31 00:00:00" datetime="2014-08-30T16:00:00.000Z"  itemprop="datePublished">2014-08-31</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/CSS/">CSS</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>orign: <a href="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/" target="_blank" rel="external">http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/</a></p>
+</blockquote>
+<p>People of the world, strap yourself in and hold on tight, for you are about to experience truly hair-raising excitement as you get to grips with the intricacies of the hugely interesting CSS timing function!</p>
+<p>OK, so the subject matter of this article probably hasn’t sent your blood racing, but all jokes aside, <strong>the timing function is a bit of a hidden gem</strong> when it comes to CSS animation, and you could well be surprised by just how much you can do with it.</p>
+<p>First of all, let’s set the scene and ensure we’re all familiar with the scenarios in which the timing function is relevant. As alluded to, the functionality becomes available when you’re working in the realm of CSS animation, which includes CSS transitions as well as keyframe-based animation. So, what exactly is it and what does it do?</p>
+<a id="more"></a>
+<h3 id="The-CSS-Timing-Function-Explained"><a href="#The-CSS-Timing-Function-Explained" class="headerlink" title="The CSS Timing Function Explained"></a>The CSS Timing Function Explained</h3><p>It’s one of the less obvious animation-based CSS properties, whereas most of its counterparts are rather self-explanatory. Nevertheless, the gist of it is that it enables you to control and vary the acceleration of an animation — that is, it defines where the animation speeds up and slows down over the specified duration.</p>
+<p>While it does not affect the actual duration of an animation, it could have profound effects on how fast or slow the user <em>perceives</em> the animation to be. If you’re not sold having learned of its actual purpose, then stick with me here because the timing-function property gets a lot more interesting than the definition suggests.</p>
+<p><strong>Note</strong>: There is no actual property named “timing-function.” When I refer to this “property,” I am actually referring to both the <code>transition-timing-function</code> and the <code>animation-timing-function</code> properties.</p>
+<p>Before moving on, let’s just familiarize ourselves with the syntax and where it fits into the whole process of defining an animation in CSS. To keep things simple, let’s use a CSS transition for this example. We’ll begin with the full array of transition properties:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">div &#123;</div><div class="line">   transition-property: background;</div><div class="line">   transition-duration: 1s;</div><div class="line">   transition-delay: .5s;</div><div class="line">   transition-timing-function: linear;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/* This could, of course, be shortened to: */</div><div class="line">div &#123;</div><div class="line">   transition: background 1s .5s linear;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The shorthand for defining a transition is fairly lenient, the only requirement for the order being that the delay parameter must be stated after the duration value (but not necessarily immediately after). Furthermore, the <code>transition-duration</code> value is the only one that is actually required for the code to function; and because the default values of the other parameters are adequate most of the time, your transitions seldom need to be anything more than the following snippet:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">div &#123;</div><div class="line">   transition: 1s;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/* This is the same as saying: */</div><div class="line">div &#123;</div><div class="line">   transition: all 1s 0s ease;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>But that’s a bit boring. While the defaults are often sufficient for standard hover events and such, if you’re working on something a little more substantial, then the timing function is a serious trick for fine-tuning an animation!</p>
+<p>Anyway, you now have an idea of what the timing function does. Let’s look at how it does it.</p>
+<h3 id="Looking-Under-the-Hood"><a href="#Looking-Under-the-Hood" class="headerlink" title="Looking Under the Hood"></a>Looking Under the Hood</h3><p>Many of you probably don’t look past the available keywords for the timing-function property, of which there are five: <code>ease</code> (the default), <code>ease-in</code>, <code>ease-out</code>, <code>ease-in-out</code> and <code>linear</code>. However, these keywords are simply shorthands for defining the Bézier curve.</p>
+<p>The what?!</p>
+<p>You might not be familiar with the term, but I’d wager that you’ve actually seen a Bézier curve — heck, if you’ve used graphical editing software, then you’ve probably even created one! That’s right, when you use the Pen or Path tool to create a nice smooth curve, then you’re drawing a Bézier curve! Anyway, to get to the point of this section, <strong>the Bézier curve is the magic behind the timing function</strong>; it basically describes the acceleration pattern on a graph.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/bezier-curve-ease.jpg" alt="This Bézier curve translates to the ease keyword." title="This">
+                </div>
+                <div class="image-caption">This</div>
+            </figure>  
+<p><em>This Bézier curve translates to the <code>ease</code> keyword.</em></p>
+<p>If you’re anything like me the first time I saw a Bézier curve like this, then you might be wondering how on earth that curve could be formed from four points plotted on a graph! I couldn’t possibly tell you in words, but, fortunately, I have a particularly fantastic GIF to do the job for me, <a href="http://en.wikipedia.org/wiki/File:Bezier_3_big.gif" target="_blank" rel="external">courtesy of Wikipedia</a><sup class="po"><a href="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/#1" target="_blank" rel="external">1</a></sup>.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.smashingmagazine.com/wp-content/uploads/2014/04/02-bezier-curve-drawing.gif" alt="A cubic Bézier curve being drawn." title="A">
+                </div>
+                <div class="image-caption">A</div>
+            </figure>  
+<p>_A cubic Bézier curve being drawn (Image: <a href="http://en.wikipedia.org/wiki/File:Bezier_3_big.gif" target="_blank" rel="external">Wikipedia</a><sup class="po"><a href="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/#2" target="_blank" rel="external">2</a></sup>)_</p>
+<p>Because this curve is formed from four points, we refer to it as a “cubic” Bézier curve, as opposed to a “quadratic” curve (three points) or a “quartic” curve (five points).</p>
+<h3 id="Introducing-The-cubic-bezier-Function"><a href="#Introducing-The-cubic-bezier-Function" class="headerlink" title="Introducing The cubic-bezier() Function"></a>Introducing The cubic-bezier() Function</h3><p>Now then, this is where things get really exciting, as I reveal that you can actually get access to this curve through the <code>cubic-bezier()</code> function, which can simply be used in place of the keywords of the timing-function property value. I appreciate that you may need a moment to contain your excitement…</p>
+<p>With the <code>cubic-bezier()</code> function, you can <strong>manipulate the Bézier curve whichever way you desire</strong>, creating completely custom acceleration patterns for your animation! So, let’s look at how this function works and how it enables you to create your very own Bézier curve.</p>
+<p>First, we know that the curve is formed by four points, which are referred to as point 0, point 1, point 2 and point 3. The other important thing to note is that the first and last points (0 and 3) are already defined on the graph, with point 0 always sitting at <code>0,0</code> (bottom left) and point 3 always sitting at <code>1,1</code> (top right).</p>
+<p>That leaves just point 1 and point 2 available for you to plot on the graph, which you can do using the <code>cubic-bezier()</code> function! The function takes four parameters, the first two being the x and y coordinates of point 1 and the latter two being the x and y coordinates of point 2.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">transition-timing-function: cubic-bezier(x, y, x, y);</div></pre></td></tr></table></figure>
+<p>To get comfortable with the syntax, as well as with how it creates the curve and with its physical effect on the animation, I’ll take you through the five timing-function keywords, their equivalent <code>cubic-bezier()</code> values and the resulting effect on the animation.</p>
+<h4 id="ease-in-out"><a href="#ease-in-out" class="headerlink" title="ease-in-out"></a>ease-in-out</h4><p>Let’s start with the <code>ease-in-out</code> keyword because the logic behind this curve and how it translates to the animation are probably the easiest to understand.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/* The cubic-bezier() equivalent of the ease-in-out keyword */</div><div class="line">transition-timing-function: cubic-bezier(.42, 0, .58, 1);</div></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.smashingmagazine.com/wp-content/uploads/2014/04/03-bezier-curve-ease-in-out.jpg" alt="A perfectly symmetrical Bézier curve, which means the animation will ease in to full speed and then ease out at exactly the same rate." title="A">
+                </div>
+                <div class="image-caption">A</div>
+            </figure>  
+<p><em>A perfectly symmetrical Bézier curve, which means that the animation will ease in to full speed and then ease out at exactly the same rate.</em></p>
+<p>You can see that point 1 is positioned at 0.42 along the x-axis and at 0 on the y-axis, whereas point 2 is positioned at 0.58 on the x-axis and 1 on the y-axis. The result is a perfectly symmetrical Bézier curve, which means that the animation will ease in to full speed and then ease out at exactly the same rate; hence, the name of this keyword.</p>
+<p>If you look at the demo below, you will see the physical effect of the <code>ease-in-out</code> value, as well as how it compares to the other keyword values.</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="tuvfp" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/stephengreig/pen/tuvfp/" target="_blank" rel="external">tuvfp</a> by Stephen Greig (<a href="http://codepen.io/stephengreig" target="_blank" rel="external">@stephengreig</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<h4 id="Ease"><a href="#Ease" class="headerlink" title="Ease"></a>Ease</h4><p>The <code>ease</code> keyword is the default value of the CSS timing-function property, and it is actually quite similar to the previous one, although it eases in at a faster rate before easing out much more gradually.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/* The ease keyword and its cubic-bezier() equivalent */</div><div class="line">transition-timing-function: cubic-bezier(.25, .1, .25, 1);</div></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.smashingmagazine.com/wp-content/uploads/2014/04/04-bezier-curve-ease.jpg" alt="The curve for the keyword ease, eases in at a faster pace before easing out much more gradually." title="The">
+                </div>
+                <div class="image-caption">The</div>
+            </figure>  
+<p><em>The curve for the keyword <code>ease</code> eases in at a faster pace before easing out much more gradually.</em></p>
+<p>You can see a sharper incline in the curve initially, while the finish is more drawn out, which directly translates to the physical effect of this timing function on the animation. Don’t forget to refer to the earlier demo after reviewing each of these examples to compare the effects.</p>
+<h4 id="ease-in-and-ease-out"><a href="#ease-in-and-ease-out" class="headerlink" title="ease-in and ease-out"></a>ease-in and ease-out</h4><p>The <code>ease-in</code> and <code>ease-out</code> keywords are, unsurprisingly, exact opposites. The former eases in before maintaining full speed right through to the finish, while the latter hits full speed right off the bat before easing to a finish. The <code>ease-in-out</code> keyword that we looked at previously is, as logic would suggest, a perfect combination of these two Bézier curves.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/* The ease-in keyword and its cubic-bezier() equivalent */</div><div class="line">transition-timing-function: cubic-bezier(.42, 0, 1, 1);</div><div class="line"></div><div class="line">/* The ease-out keyword and its cubic-bezier() equivalent */</div><div class="line">transition-timing-function: cubic-bezier(0, 0, .58, 1);</div></pre></td></tr></table></figure>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.smashingmagazine.com/wp-content/uploads/2014/04/05-bezier-curve-ease-in-ease-out.jpg" alt="Bézier Curve for the ease-in keyword, left and the ease-out keyword, right.](http://www.smashingmagazine.com/wp-content/uploads/2014/04/05-bezier-curve-ease-in-ease-out-500.jpg " bézier="" curve="" for="" the="" ease-in="" keyword,="" left="" and="" ease-out="" right.")"="" title="">
+                </div>
+                <div class="image-caption">Bézier Curve for the ease-in keyword, left and the ease-out keyword, right.](http://www.smashingmagazine.com/wp-content/uploads/2014/04/05-bezier-curve-ease-in-ease-out-500.jpg "Bézier Curve for the ease-in keyword, left and the ease-out keyword, right.")</div>
+            </figure><br><em>Bézier curve for the <code>ease-in</code> keyword (left) and the <code>ease-out</code> keyword (right) (<a href="http://www.smashingmagazine.com/wp-content/uploads/2014/04/05-bezier-curve-ease-in-ease-out.jpg" target="_blank" rel="external">Large version</a><sup class="po"><a href="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/#7" target="_blank" rel="external">7</a></sup>)</em></p>
+<h4 id="Linear"><a href="#Linear" class="headerlink" title="Linear"></a>Linear</h4><p>The final keyword to address does not correspond to a curve at all. As the name implies, the <code>linear</code> timing-function value maintains the same speed throughout the animation, which means that the resulting Bézier curve (or lack of) would be just a straight line. There is simply no <strong>varying</strong> acceleration pattern to depict on the graph.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/* The linear keyword and its cubic-bezier() equivalent */</div><div class="line">transition-timing-function: cubic-bezier(0, 0, 1, 1);</div></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.smashingmagazine.com/wp-content/uploads/2014/04/06-bezier-curve-linear.jpg" alt="The linear" title="">
+                </div>
+                <div class="image-caption">The linear</div>
+            </figure>  
+<p><em>The <code>linear</code> timing-function value maintains the same speed throughout the animation.</em></p>
+<p>If you refer back to the demo, you will probably notice that, despite all of the examples having the exact same duration values, some of the animations appear to be slower than the others. Why is that? Well, to take the <code>ease-in-out</code> keyword as an example, we know that it starts and finishes at a slower pace, which means that it has to cover the middle ground of the animation at a much faster pace. This effectively ensures that we perceive the actual animation to be both shorter and faster, while, say, the linear animation appears longer and more drawn out.</p>
+<p>You might feel that this article is very slowly easing into its full pace (see what I did there?), so now it’s finally time to step things up a bit and look at how to use the <code>cubic-bezier()</code> function to create our own custom timing functions.</p>
+<h3 id="Creating-Custom-Acceleration-Patterns-With-The-cubic-bezier-Function"><a href="#Creating-Custom-Acceleration-Patterns-With-The-cubic-bezier-Function" class="headerlink" title="Creating Custom Acceleration Patterns With The cubic-bezier() Function"></a>Creating Custom Acceleration Patterns With The cubic-bezier() Function</h3><p>Now that we’ve seen how the keywords equate to the corresponding Bézier curves and seen their effect on the animation, let’s look at how to manipulate the curve to create custom acceleration patterns.</p>
+<p>You should now be able to plot points 1 and 2 on the graph using the <code>cubic-bezier()</code> function and have a pretty solid idea of how this will affect the animation. However, considering that you’re plotting points on a graph that you typically can’t see, obviously this could get very tedious very quickly.</p>
+<p>Fortunately, people like Lea Verou exist, who seemingly won’t rest until CSS development couldn’t be made any easier! Lea has developed the aptly named Cubic Bézier, which is basically a playground for creating completely custom Bézier curves and comparing them in action to the predefined keywords. What this means for you is that, instead of tediously editing the decimals in your <code>cubic-bezier()</code> functions, you can just visit <a href="http://cubic-bezier.com/" target="_blank" rel="external">Cubic Bezier</a><sup class="po"><a href="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/#8" target="_blank" rel="external">8</a></sup> and play around with the curve until you’ve achieved the desired effect. Much more convenient.</p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/#9" alt="Lea Verous" title="superbly">
+                </div>
+                <div class="image-caption">superbly</div>
+            </figure><br><em>Lea Verou’s superbly useful <a href="http://cubic-bezier.com/" target="_blank" rel="external">Cubic Bézier</a><sup class="po"><a href="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/#10" target="_blank" rel="external">10</a></sup> (<a href="http://www.smashingmagazine.com/wp-content/uploads/2014/04/07-cubic-bezier-site.jpg" target="_blank" rel="external">Large version</a><sup class="po"><a href="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/#11" target="_blank" rel="external">11</a></sup>)</em></p>
+<p>The shorthand keywords give you great options for timing functions to start with, but the differences between them often appear minor. Only when you start to create custom Bézier curves will you realize the radical effect the timing function can have on an animation.</p>
+<p>Just look at the following working examples to see the extreme differences between the animations, despite all of them having the exact same duration values.</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="Blbcs" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/stephengreig/pen/Blbcs/" target="_blank" rel="external">Blbcs</a> by Stephen Greig (<a href="http://codepen.io/stephengreig" target="_blank" rel="external">@stephengreig</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<p>Let’s take a closer look at the first of these examples and try to understand why it produces such a radically different effect.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/* cubic-bezier() values for first example from preceding demo page */</div><div class="line">transition-timing-function: cubic-bezier(.1, .9, .9, .1);</div></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.smashingmagazine.com/wp-content/uploads/2014/04/08-custom-bezier-curve.jpg" alt="Example for a custom Bézier curve." title="Example">
+                </div>
+                <div class="image-caption">Example</div>
+            </figure>  
+<p><em>Example of a custom Bézier curve</em></p>
+<p>The main difference between this timing function and the default keywords is the sharp inclines of the Bézier curve against the “progression” scale (the y-axis). This means that the animation progresses in short bursts, with a long gradual pause in the middle (where the curve levels out). This pattern contrasts starkly with what we’ve become used to with the timing-function keywords, which take the opposite approach, with the easing periods coming at the beginning or the end of the animation, rather than in the middle.</p>
+<p>With custom Bézier curves now in the bag, surely we have all but exhausted the capabilities of the <code>cubic-bezier()</code> function, right?! You’d think so, but this crafty beggar has got even more up its sleeve!</p>
+<h3 id="Getting-Creative-With-Bezier-Curves"><a href="#Getting-Creative-With-Bezier-Curves" class="headerlink" title="Getting Creative With Bézier Curves"></a>Getting Creative With Bézier Curves</h3><p>Yep, it’s true: Bézier curves get even more exciting! Who’d have thought? The scope widens with the revelation that only the time scale (x-axis) is limited to the 0–1 range on the graph, whereas the progression scale (y-axis) can extend below and beyond the typical 0–1 range.</p>
+<p>The progression scale is exactly what you’d think it is, with the bottom end (0) marking the beginning of the animation and the top end (1) marking the end of the animation. Typically, the cubic Bézier curve always travels north along this progression scale at varying intensities until it reaches the end point of the animation. However, the ability to plot points 1 and 2 outside of this 0–1 range allows the curve to meander back <em>down</em> the progression scale, which actually causes reverse motion in the animation! As ever, the best way to understand this is through visuals:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.smashingmagazine.com/wp-content/uploads/2014/04/09-custom-bezier-curve-outside-range.jpg" alt="Custom Bézier curve using value outside the typical 0-1 range." title="Custom">
+                </div>
+                <div class="image-caption">Custom</div>
+            </figure>  
+<p><em>A custom Bézier curve using a value outside of the typical 0–1 range</em></p>
+<p>You can see that point 2 is plotted outside of the typical 0–1 range at -0.5, which in turn pulls the curve downward. If you look at the following demo, you’ll see that this creates a bouncing effect in the middle of the animation.</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="LmohC" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/stephengreig/pen/LmohC/" target="_blank" rel="external">LmohC</a> by Stephen Greig (<a href="http://codepen.io/stephengreig" target="_blank" rel="external">@stephengreig</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<p>Conversely, you could place this backward motion at the beginning of the animation and also make it temporarily run past its intended finishing point. Think of it like taking a couple of steps back to get a running start; then, at the end, your momentum carries you past your destination, causing you to take a couple of steps back to ensure that you arrive at the intended destination. Look at the working example to really understand what we’re talking about here. In addition, the Bézier curve that produces this effect can be seen below.</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="baFhH" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/stephengreig/pen/baFhH/" target="_blank" rel="external">baFhH</a> by Stephen Greig (<a href="http://codepen.io/stephengreig" target="_blank" rel="external">@stephengreig</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.smashingmagazine.com/wp-content/uploads/2014/04/10-custom-bezier-curve-outside-range.jpg" alt="Custom Bézier curve using value outside the typical 0-1 range." title="Custom">
+                </div>
+                <div class="image-caption">Custom</div>
+            </figure>  
+<p><em>A custom Bézier curve using a value outside of the typical 0–1 range</em></p>
+<p>You should now have a pretty good idea of how <code>cubic-bezier()</code> values outside of the typical 0–1 range can physically affect how an animation plays out. We can look at moving boxes all day long, but let’s finish this section with an example that clearly demonstrates this type of creative timing function.</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="kILDb" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/stephengreig/pen/kILDb/" target="_blank" rel="external">kILDb</a> by Stephen Greig (<a href="http://codepen.io/stephengreig" target="_blank" rel="external">@stephengreig</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<p>That’s right: We’re animating a floating balloon! …What? Haven’t you always wanted to do that with CSS?</p>
+<p>The brief for this animation is to “add helium” to the balloon on click so that it floats to the “ceiling,” where it will bounce slightly before sticking to the top, as it naturally would. Using a <code>cubic-bezier()</code> value outside of the 0–1 range allows us to create the bounce and ultimately helps to produce a realistic effect. The following snippet shows the coordinates used in the <code>cubic-bezier()</code> function, and the resulting Bézier curve appears below that.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/* The cubic-bezier() values for the bouncing balloon */</div><div class="line">transition-timing-function: cubic-bezier(.65, 1.95, .03, .32);</div></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.smashingmagazine.com/wp-content/uploads/2014/04/11-bezier-curve-bouncing-balloon.jpg" alt="Custom Bézier curve to emulate a bouncing balloon." title="Custom">
+                </div>
+                <div class="image-caption">Custom</div>
+            </figure>  
+<p><em>A custom Bézier curve to emulate a bouncing balloon</em></p>
+<p>This example explains particularly well how the curve translates to the resulting animation because it reflects it almost perfectly. First, you can see that the curve travels from the beginning of the progression scale to the end in a straight line, indicating that the balloon travels from the start of the animation to the finish at a constant speed. Then, very similarly to the balloon, the curve bounces off the tip of the scale and goes into reverse before returning steadily and gradually to the top. All quite straightforward really!</p>
+<p>Once you’ve mastered the curve and the art of manipulating it to do what you want, you’ve nailed it.</p>
+<h3 id="Timing-Functions-And-Keyframe-Based-CSS-Animation"><a href="#Timing-Functions-And-Keyframe-Based-CSS-Animation" class="headerlink" title="Timing Functions And Keyframe-Based CSS Animation"></a>Timing Functions And Keyframe-Based CSS Animation</h3><p>One final thing to note before moving on (yes, there is more to cover!) is how timing functions behave when applied to CSS keyframe animation. The concepts are all exactly the same as those in the transition examples we’ve been working with so far, but with one exception that is important to be aware of: When you apply a timing function to a set of keyframes, it is executed <strong>per keyframe</strong>, rather than for the animation as a whole.</p>
+<p>To clarify, if you have four keyframes that move a box around four corners of a square, and you apply the “bouncing” timing function that we used in the earlier balloon example, then <em>each</em> of the four movements would experience the bounce, rather than the entire animation. Let’s see this in action and view the code.</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="rscGb" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/stephengreig/pen/rscGb/" target="_blank" rel="external">rscGb</a> by Stephen Greig (<a href="http://codepen.io/stephengreig" target="_blank" rel="external">@stephengreig</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">keyframes</span> square &#123;</div><div class="line">   25% &#123;</div><div class="line">      <span class="attribute">top</span>:<span class="number">200px</span>;</div><div class="line">      <span class="attribute">left</span>:<span class="number">0</span>;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   50% &#123;</div><div class="line">      <span class="attribute">top</span>:<span class="number">200px</span>;</div><div class="line">      <span class="attribute">left</span>:<span class="number">400px</span>;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   75% &#123;</div><div class="line">      <span class="attribute">top</span>:<span class="number">0</span>;</div><div class="line">      <span class="attribute">left</span>:<span class="number">400px</span>;</div><div class="line">   &#125;     </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">div</span> &#123;</div><div class="line">   <span class="attribute">animation</span>: square <span class="number">8s</span> infinite <span class="built_in">cubic-bezier</span>(.65, 1.95, .03, .32);</div><div class="line">   <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">   <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">   <span class="comment">/* Other styles */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Note that if the <code>100%</code> keyframe isn’t defined, then the element will simply return to its original style, which is the desired result in this case, so defining it is not necessary. It is clearly evident from the demo that the timing function is applied to each of the four keyframes because they each appear to bounce off the walls of the container.</p>
+<p>If you need certain keyframes to take on a timing function that is different from the others, then go ahead and apply a separate timing-function value directly to the keyframe, as indicated in the following snippet.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@keyframes square &#123; </div><div class="line">   50% &#123;</div><div class="line">      top: 200px;</div><div class="line">      left: 400px;</div><div class="line">      animation-timing-function: ease-in-out;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Introducing-The-steps-Timing-Function"><a href="#Introducing-The-steps-Timing-Function" class="headerlink" title="Introducing The steps() Timing Function"></a>Introducing The steps() Timing Function</h3><p>Did you think we were done with timing functions? Ha, think again, pal! I told you that there’s a lot more to CSS timing functions than a few predefined easing functions!</p>
+<p>For this section, we can swap our curves for straight lines as we explore the concept of “stepping functions,” which are achieved through the <code>steps()</code> timing function.</p>
+<p>The <code>steps()</code> function is more of a niche tool, but it’s useful to have in the toolkit nonetheless. It enables you to break up an animation into steps, rather than the usual tweened motion that we’re used to. For example, if we wanted to animate a square moving 400 pixels to the right in four steps over 4 seconds, then the square would jump 100 pixels to the right every second, rather than animating in a continuous motion. Let’s examine the syntax that we’d need for this particular example, which should be an absolute breeze now that we’ve tackled the intricacies of the <code>cubic-bezier()</code> function!</p>
+<div><br>    <iframe src="//codepen.io/anon/embed/Gwbry?height=&theme-id=0&slug-hash=Gwbry&default-tab=result" scrolling="no" frameborder="0" height="300" allowtransparency="true" allowfullscreen="true" class="cp_embed_iframe" style="width: 100%; overflow: hidden;"></iframe><br></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">div &#123;</div><div class="line">   transition: 4s steps(4);</div><div class="line">&#125;</div><div class="line"></div><div class="line">div:target &#123;</div><div class="line">   left: 400px;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>As you can see, it’s a simple matter of stating the number of steps to divide the animation into — but bear in mind that this number must be a positive integer, so no negatives or decimals. However, a second, optional parameter affords us slightly more control, the possible values for which are <code>start</code> and <code>end</code>, the latter being the default value.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">transition-timing-function: steps(4, start);</div><div class="line">transition-timing-function: steps(4, end);</div></pre></td></tr></table></figure>
+<p>A value of <code>start</code> would run the animation at the beginning of each step, whereas a value of <code>end</code> would run the animation at the end of each step. Using the previous “moving box” example, the following image does a far better job of explaining the difference between these values.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.smashingmagazine.com/wp-content/uploads/2014/04/12-steps-start-end.jpg" alt="The difference between the start and end value in the steps() function." title="The">
+                </div>
+                <div class="image-caption">The</div>
+            </figure>  
+<p><em>The difference between the start and end values in the <code>steps()</code> function.</em></p>
+<p>You can see that with a value of <code>start</code>, the animation begins as soon as it is triggered, whereas with a value of <code>end</code>, it begins at the end of the first step (in this case, one second after being triggered).</p>
+<p>And just to ensure that this overview is truly comprehensive, there are also two predefined keywords for the <code>steps()</code> function: <code>step-start</code> and <code>step-end</code>. The former is equivalent to <code>steps(1, start)</code>, and the latter is the same as <code>steps(1, end)</code>.</p>
+<h3 id="Creative-Use-Cases-For-Stepping-Functions"><a href="#Creative-Use-Cases-For-Stepping-Functions" class="headerlink" title="Creative Use Cases For Stepping Functions"></a>Creative Use Cases For Stepping Functions</h3><p>OK, so you probably don’t have much of a need to animate a moving box in steps very often, but there are plenty of other cool uses for the <code>steps()</code> function. For example, if you have all of the sprites for a basic cartoon, then you could use this technique to play it through frame by frame, using just a couple of CSS properties! Let’s look at a demo and the code that makes it function.</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="rscGb" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/stephengreig/pen/rscGb/" target="_blank" rel="external">rscGb</a> by Stephen Greig (<a href="http://codepen.io/stephengreig" target="_blank" rel="external">@stephengreig</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">div &#123;</div><div class="line">   width: 125px;</div><div class="line">   height: 150px;</div><div class="line">   background: url(images/sprite.jpg) left;</div><div class="line">   transition: 2s steps(16);</div><div class="line">   /* The number of steps = the number of frames in the cartoon */</div><div class="line">&#125;</div><div class="line"></div><div class="line">div:target &#123;</div><div class="line">   background-position: -2000px 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>First, we have a small rectangular box (125 pixels wide), which has a background image (2000 pixels wide) containing 16 frames side by side. This background image is initially flush with the left edge of the box; so, all we need to do now is move the background image all the way to the left so that all 16 frames pass through the small rectangular window. With a normal animation, the frames would just slide in and out of view as the background image moves leftwards; however, with the <code>steps()</code> function, the background image can move to the left in 16 steps, ensuring that each of the 16 frames snaps in and out of view, as desired. And just like that, you are playing a basic cartoon using just a CSS transition!</p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img 2014="" src="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/#33" alt="This GIF demonstrates the concept of the background image passing through the window in steps](http://www.smashingmagazine.com/wp-content/uploads/2014/04/13-frames-concept-500.gif " this="" gif="" demonstrates="" the="" concept="" of="" background="" image="" passing="" through="" window="" in="" steps")](http:="" www.smashingmagazine.com="" wp-content="" uploads="" 04="" 13-frames-concept.gif)<sup="" class="po">[33" title="">
+                </div>
+                <div class="image-caption">This GIF demonstrates the concept of the background image passing through the window in steps](http://www.smashingmagazine.com/wp-content/uploads/2014/04/13-frames-concept-500.gif "This GIF demonstrates the concept of the background image passing through the window in steps")](http://www.smashingmagazine.com/wp-content/uploads/2014/04/13-frames-concept.gif)<sup class="po">[33</sup></div>
+            </figure><br><em>This GIF demonstrates the concept of the background image passing through the “window” in steps, so that each frame snaps in and out of view. (<a href="http://www.smashingmagazine.com/wp-content/uploads/2014/04/13-frames-concept.gif" target="_blank" rel="external">Large version</a><sup class="po"><a href="http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/#34" target="_blank" rel="external">34</a></sup>)</em></p>
+<p>Another creative use of the <code>steps()</code> function that I’ve found comes courtesy of Lea Verou (who else?), who has come up with a particularly clever typing animation, which I’ll break down for you now.</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="Gwbry" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/stephengreig/pen/Gwbry/" target="_blank" rel="external">Gwbry</a> by Stephen Greig (<a href="http://codepen.io/stephengreig" target="_blank" rel="external">@stephengreig</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<p>First, you need some text, and — unfortunately — you need to know exactly how many characters you’re working with because you’ll need to use this number in the CSS. Another requirement is that the font must be monospaced, so that all characters are exactly the same width.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;p&gt;smashingmag&lt;/p&gt;</div><div class="line"></div><div class="line">.text &#123;</div><div class="line">   width: 6.6em;</div><div class="line">   width: 11ch; /* Number of characters */</div><div class="line">   border-right: .1em solid;</div><div class="line">   font: 5em monospace;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The text we’re working with has 11 characters. With the help of the <code>ch</code> CSS unit, we can actually use this figure to define the width of the paragraph, although we should specify a fallback width for browsers that don’t support this unit. The paragraph is then given a solid black border on the right side, which will become the cursor. Now everything is in place; we just need to animate it, which is extremely simple.</p>
+<p>Two separate animations are required: one for the cursor and one for the typing. To achieve the former, all we need to do is make the black border blink, which couldn’t be simpler.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@keyframes cursor &#123;</div><div class="line">   50% &#123;</div><div class="line">     border-color: transparent;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.text &#123;</div><div class="line">   /* existing styles */</div><div class="line">   animation: cursor 1s step-end infinite;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>As intended, the black border simply switches between black and transparent and then loops continuously. This is where the <code>steps()</code> function is vital because, without it, the cursor would just fade in and out, rather than blink.</p>
+<p>Finally, the typing animation is just as simple. All we need to do is reduce the width of the paragraph to zero, before animating it back to full width in 11 steps (the number of characters).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@keyframes typing &#123;</div><div class="line">   from &#123;</div><div class="line">      width: 0;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.text &#123;</div><div class="line">   /* existing styles */</div><div class="line">   animation: typing 8s steps(11), </div><div class="line">              cursor 1s step-end infinite;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>With this single keyframe in place, the text will reveal itself one letter at a time over 8 seconds, while the black <code>border-right</code> (the cursor) will blink away continuously. The technique is very simple yet extremely effective.</p>
+<p>Just to add to this excellent use of the <code>steps()</code> function by Lea Verou, reversing the effect and making the text appear to be deleted is also a cinch. To achieve this, just change the keyframe keyword so that it reads <code>to</code> rather than <code>from</code>, and then add an <code>animation-fill-mode</code> parameter of <code>forwards</code> to the set of <code>animation</code> rules. This will ensure that once the text “deletes” (i.e. when the animation has finished), the text will remain deleted. Look at the demo below to see this in action.</p>
+<p data-height="268" data-theme-id="0" data-slug-hash="bHzqm" data-default-tab="result" class="codepen">See the Pen <a href="http://codepen.io/stephengreig/pen/bHzqm/" target="_blank" rel="external">bHzqm</a> by Stephen Greig (<a href="http://codepen.io/stephengreig" target="_blank" rel="external">@stephengreig</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p>
+
+<p>The downside to both of the examples featured in this section is that you must know the number of frames or characters beforehand in order to specify the right number of steps, and if this number changes at all, then you will need to alter the code as well. Still, the <code>steps()</code> function has shown its worth here and is another fantastic piece of functionality of the CSS timing function.</p>
+<h3 id="The-Browser-Support-Situation"><a href="#The-Browser-Support-Situation" class="headerlink" title="The Browser Support Situation"></a>The Browser Support Situation</h3><p>We’ve established that you can’t use a CSS timing function unless the browser supports CSS-based animation — namely, the CSS Transitions and CSS Animation (keyframe-based) modules. Fortunately, support is in pretty great shape these days.</p>
+<h4 id="Support-for-CSS-Transitions"><a href="#Support-for-CSS-Transitions" class="headerlink" title="Support for CSS Transitions"></a>Support for CSS Transitions</h4><table>
+<thead>
+<tr>
+<th>col 1</th>
+<th>col 2</th>
+<th>col 3                 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Browser</strong></td>
+<td><strong>Prefixed support</strong></td>
+<td><strong>Unprefixed support</strong></td>
+</tr>
+<tr>
+<td>Internet Explorer</td>
+<td>N/A</td>
+<td>10+                   </td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>4+ (<code>-moz-</code>)</td>
+<td>16+                   </td>
+</tr>
+<tr>
+<td>Chrome</td>
+<td>4+ (<code>-webkit-</code>)</td>
+<td>26+                   </td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>3.1+ (<code>-webkit-</code>)</td>
+<td>6.1+                  </td>
+</tr>
+<tr>
+<td>Opera</td>
+<td>10.5+ (<code>-o-</code> prefix)</td>
+<td>12.1+                 </td>
+</tr>
+</tbody>
+</table>
+<p>Although all current browser versions have dropped the prefix for transitions (which is awesome), you’d be wise to still include the <code>-webkit-</code> prefix to cater to old mobile browsers. I think the need to include the <code>-moz-</code> and <code>-o-</code> prefixes, however, has passed, as long as you progressively enhance, which you should be doing anyway!</p>
+<h4 id="Support-for-CSS-Animation"><a href="#Support-for-CSS-Animation" class="headerlink" title="Support for CSS Animation"></a>Support for CSS Animation</h4><table>
+<thead>
+<tr>
+<th>Browser</th>
+<th>Prefixed support</th>
+<th>Unprefixed support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Internet Explorer</td>
+<td>N/A</td>
+<td>10+                                             </td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>5+ (<code>-moz-</code>)</td>
+<td>16+                                             </td>
+</tr>
+<tr>
+<td>Chrome</td>
+<td>4+ (<code>-webkit-</code>)</td>
+<td>Not supported                                   </td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>4+ (<code>-webkit-</code>)</td>
+<td>Not Supported                                   </td>
+</tr>
+<tr>
+<td>Opera</td>
+<td>12 (<code>-o-</code> prefix), 15+ (<code>-webkit-</code> prefix)</td>
+<td>12.1 only (not supported since switch to WebKit)</td>
+</tr>
+</tbody>
+</table>
+<p>Again, for keyframe animations, include only the <code>-webkit-</code> prefix alongside your unprefixed code.</p>
+<p>Evidently, browser support for CSS-based animation is in excellent shape, but support is slightly more fragmented when it comes to the nuances of timing functions. The following table explains in more detail.</p>
+<h4 id="Support-for-CSS-Timing-Functions"><a href="#Support-for-CSS-Timing-Functions" class="headerlink" title="Support for CSS Timing Functions"></a>Support for CSS Timing Functions</h4><table>
+<thead>
+<tr>
+<th>Browser</th>
+<th>Basic support</th>
+<th>cubic-bezier() outside of 0-1 range</th>
+<th>steps()</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Internet Explorer</td>
+<td>10+</td>
+<td>10+</td>
+<td>10+        </td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>4+</td>
+<td>4+</td>
+<td>4+         </td>
+</tr>
+<tr>
+<td>Chrome</td>
+<td>4+</td>
+<td>16+</td>
+<td>8+         </td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>3.1+</td>
+<td>6+</td>
+<td>5.1+       </td>
+</tr>
+<tr>
+<td>Opera</td>
+<td>10.5+</td>
+<td>12.1+</td>
+<td>12.1+      </td>
+</tr>
+</tbody>
+</table>
+<p>Again, although certain browsers have taken a little longer to support the full range of timing-function capabilities, you can see that support is now universal across current browser versions.</p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>So, what have we learned about CSS timing functions? Time to recap.</p>
+<ul>
+<li>They define where an animation accelerates and decelerates.</li>
+<li>There is a great deal more to them than just the predefined keywords.</li>
+<li>You can create bounce effects with <code>cubic-bezier()</code> values outside of the 0–1 range.</li>
+<li>You can break an animation into any number of steps, rather than tweened motion.</li>
+<li>Browser support is in fantastic shape and ever improving.</li>
+</ul>
+<p>Finally, although these techniques are now supported across the board, this wouldn’t be an article about CSS3 techniques if I didn’t mention progressive enhancement. Always work from the bottom up; that is to say, ensure that your work is acceptable and accessible on devices and browsers that can’t deal with this functionality before enhancing for browsers that can cope with them.</p>
+<p>Other than that, go wild! Happy curving and stepping!</p>
+<script async src="//codepen.io/assets/embed/ei.js"></script>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/CSS/2014-08-31-css-animation-timing-function.html" target="_blank" rel="external">http://blog.inching.org/CSS/2014-08-31-css-animation-timing-function.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/animation/">animation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/CSS/2014-08-31-css-animation-timing-function.html&title=《Understanding CSS Timing Functions》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/CSS/2014-08-31-css-animation-timing-function.html&title=《Understanding CSS Timing Functions》 — Balance&source=
+orign: http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-f..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/CSS/2014-08-31-css-animation-timing-function.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Understanding CSS Timing Functions》 — Balance&url=http://blog.inching.org/CSS/2014-08-31-css-animation-timing-function.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/CSS/2014-08-31-css-animation-timing-function.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Web/2014-09-02-web-components.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">A Guide to Web Components</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/CSS/2014-08-30-css-material-loading-spinner.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Material Design Loading Spinner</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/CSS/2014-08-31-css-animation-timing-function.html&title=《Understanding CSS Timing Functions》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/CSS/2014-08-31-css-animation-timing-function.html&title=《Understanding CSS Timing Functions》 — Balance&source=
+orign: http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-f..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/CSS/2014-08-31-css-animation-timing-function.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Understanding CSS Timing Functions》 — Balance&url=http://blog.inching.org/CSS/2014-08-31-css-animation-timing-function.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/CSS/2014-08-31-css-animation-timing-function.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrklEQVR42u3aQZLCMAwEQP7/aXgA5TCSIiqHzmkLsrE7B1uM/HrF1/vy+r7z9En+7ffzv//3tgsPDw9vYerXn5+eltxTHb36uvHw8PD2eKcV9XrJzic3WcOTDeb4OR4eHt4jea+1q/rK8PDw8J7My8vou0pkPDw8vKfxqmVxHukmU0y2mfWsBQ8PDy/m5aXtc/5eqdzx8PDwxl31ZMFNtoT8qEG11P4xCh4eHt4CL19wJ83+6qvpFdzHO/Hw8PAWeEkwmker+XOq8UTySTOrxsPDwyvy/lP49g5vRS2uyUkuPDw8vCIvb18lLbHqga3k/smWg4eHh7fHS37S56Vw9cm9cCF6Ah4eHt4ar7eIJwFuOWxtveKov4eHh4f3F15v4Ekc3ItCfiTTeHh4eH/hTcD5RPOAuBn74uHh4a3xXsVrA3/vgQM8PDy8bV4eyFbD2d7GMN+0CmEEHh4eXpFX3R56oUAev07mcHwCHh4e3q286lR60UO13ZXHwT9GwcPDw1vj5cOP9p84aJgcujoeHcDDw8Nb4OXBa3WTyJfy3nOOz8TDw8Nb4PWW6eqxreTbXhhRiFTw8PDwbuJVm0lJgfuOr8krw8PDw3sCr9rInxTByZ3VF3o8GYGHh4d3Ky8/6tQLVScNs2p8fJwhHh4e3hqvusRXQ4rexjA/aoCHh4e3zZscgcrbWtVYodn0wsPDw1vmVYfpFc2TIKO6YeDh4eFt8N7Fq0rtNduq5TgeHh7eP3m9BXfOroYUvYMOeHh4eHu8PFDIp5JX9L32W2HjwcPDw1vjXS+yScibx7jNwjfewMoxLh4eHt4yLy928zB3MuKPsfDw8PAew8sxk8Z/dUNqHh3Aw8PDa/F6ZXEv/M0BvYgZDw8Pb5tX/ZE/b1NVC+5887ghw8DDw8O7GuUDCUppzg7KWGQAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>RxJava2 QuickStart | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="java,rx,rxjava">
+    <meta name="description" content="What’s different in 2.0 · ReactiveX/RxJava Wiki
+RxJava2 vs RxJava1 - 简书
+
+Observable and Flowable在前一个版本里backpressure被集成到了Observable中，官方也提供了很多方法让我们来处理backpressure问题。但是有一些特殊的场景根本无法用其来解决，最常见的例如UI事件。而不处理b">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJava2 QuickStart">
+<meta property="og:url" content="http://blog.inching.org/RxJava/2016-12-13-rx-java2-quickstart.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="What’s different in 2.0 · ReactiveX/RxJava Wiki
+RxJava2 vs RxJava1 - 简书
+
+Observable and Flowable在前一个版本里backpressure被集成到了Observable中，官方也提供了很多方法让我们来处理backpressure问题。但是有一些特殊的场景根本无法用其来解决，最常见的例如UI事件。而不处理b">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJava2 QuickStart">
+<meta name="twitter:description" content="What’s different in 2.0 · ReactiveX/RxJava Wiki
+RxJava2 vs RxJava1 - 简书
+
+Observable and Flowable在前一个版本里backpressure被集成到了Observable中，官方也提供了很多方法让我们来处理backpressure问题。但是有一些特殊的场景根本无法用其来解决，最常见的例如UI事件。而不处理b">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">RxJava2 QuickStart</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">RxJava2 QuickStart</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-13T05:57:00.000Z" itemprop="datePublished" class="page-time">
+  2016-12-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Observable-and-Flowable"><span class="post-toc-text">Observable and Flowable</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Single"><span class="post-toc-text">Single</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Completable"><span class="post-toc-text">Completable</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Base-reactive-interfaces"><span class="post-toc-text">Base reactive interfaces</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Subjects-and-Processors"><span class="post-toc-text">Subjects and Processors</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Other-classes"><span class="post-toc-text">Other classes</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Functional-interfaces"><span class="post-toc-text">Functional interfaces</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Actions"><span class="post-toc-text">Actions</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Functions"><span class="post-toc-text">Functions</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Subscriber"><span class="post-toc-text">Subscriber</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Subscription"><span class="post-toc-text">Subscription</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Backpressure"><span class="post-toc-text">Backpressure</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Schedulers"><span class="post-toc-text">Schedulers</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Entering-the-reactive-world"><span class="post-toc-text">Entering the reactive world</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Leaving-the-reactive-world"><span class="post-toc-text">Leaving the reactive world</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Operator-differences"><span class="post-toc-text">Operator differences</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-rx-java2-quickstart"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">RxJava2 QuickStart</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-12-13 13:57:00" datetime="2016-12-13T05:57:00.000Z"  itemprop="datePublished">2016-12-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li><a href="https://github.com/ReactiveX/RxJava/wiki/What&#39;s-different-in-2.0" target="_blank" rel="external">What’s different in 2.0 · ReactiveX/RxJava Wiki</a></li>
+<li><a href="http://www.jianshu.com/p/850af4f09b61" target="_blank" rel="external">RxJava2 vs RxJava1 - 简书</a></li>
+</ul>
+<h2 id="Observable-and-Flowable"><a href="#Observable-and-Flowable" class="headerlink" title="Observable and Flowable"></a>Observable and Flowable</h2><p>在前一个版本里<code>backpressure</code>被集成到了<code>Observable</code>中，官方也提供了很多方法让我们来处理<code>backpressure</code>问题。但是有一些特殊的场景根本无法用其来解决，最常见的例如UI事件。而不处理<code>backpressure</code>有可能导致<code>MissingBackpressureException</code>的出现。</p>
+<blockquote>
+<p>关于<code>backpressure</code>的概念可以看一下<a href="http://www.dundunwen.com/article/275b1d92-f9da-4bb8-b111-3aa8a6ace245.html" target="_blank" rel="external">RxJava中backpressure这个概念的理解</a></p>
+</blockquote>
+<p>为了解决这个问题，在RxJava2里，引入了Flowable这个类：Observable不包含<code>backpressure</code>处理，而Flowable包含。</p>
+<p>例如:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Flowable&lt;Long&gt; flowable =</div><div class="line">    Flowable.create((FlowableOnSubscribe&lt;Long&gt;) e -&gt; &#123;</div><div class="line">        Observable.interval(<span class="number">10</span>, TimeUnit.MILLISECONDS)</div><div class="line">            .take(Integer.MAX_VALUE)</div><div class="line">            .subscribe(e::onNext);</div><div class="line">&#125;, FlowableEmitter.BackpressureMode.DROP);</div><div class="line"></div><div class="line">Observable&lt;Long&gt; observable =</div><div class="line">    Observable.create((ObservableOnSubscribe&lt;Long&gt;) e -&gt; &#123;</div><div class="line">        Observable.interval(<span class="number">10</span>, TimeUnit.MILLISECONDS)</div><div class="line">            .take(Integer.MAX_VALUE)</div><div class="line">            .subscribe(e::onNext);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>两个对象都以10毫秒一次派发数据，假设订阅他们的方法都是:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">i -&gt; &#123;</div><div class="line">    Thread.sleep(100);</div><div class="line">    Log.v(&quot;TEST&quot;, &quot;out : &quot; + i);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以100毫秒一次消费数据，消费数据的效率是生产的1/10。那么</p>
+<ul>
+<li><p>对于observable<br>  他会按照<code>0,1,2,3,4...</code>的顺序依次消费，并输出log，而没有消费的数据将会都存在内存中。如果在RxJava1中，内存数据超过128个时将会抛出<code>MissingBackpressureException</code>错误；而在RxJava2中并不会报错，数据会一直放到内存中，直到发生<code>OutOfMemoryError</code>。</p>
+</li>
+<li><p>对于flowable, 在创建时我们设定了<code>FlowableEmitter.BackpressureMode.DROP</code>，一开始他会输出<code>0,1,2,3....127</code>但之后会忽然跳跃到<code>966,967,968 ...</code>。中间的部分数据由于缓存不了，被抛弃掉了。</p>
+</li>
+</ul>
+<h2 id="Single"><a href="#Single" class="headerlink" title="Single"></a>Single</h2><p>和Observable，Flowable一样会发送数据，不同的是订阅后只能接受到一次:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Single&lt;Long&gt; single = Single.just(<span class="number">1l</span>);</div><div class="line"></div><div class="line">single.subscribe(<span class="keyword">new</span> SingleObserver&lt;Long&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Disposable d)</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(Long value)</span> </span>&#123;</div><div class="line">        <span class="comment">// 和onNext是一样的</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>普通Observable可以使用toSingle转换:<code>Observable.just(1).toSingle()</code></p>
+<h2 id="Completable"><a href="#Completable" class="headerlink" title="Completable"></a>Completable</h2><p>与Single类似，只能接受到完成(onComplete)和错误(onError)</p>
+<p>同样也可以由普通的Observable转换而来:<code>Observable.just(1).toCompletable()</code></p>
+<blockquote>
+<p>可订阅的对象在RxJava1中只有Observable一种，之前我们经常会直接把数据源称作Observable。而在RxJava2中扩充成了4种，因此在之后还是把他们统称为<code>数据源</code>为宜</p>
+</blockquote>
+<h2 id="Base-reactive-interfaces"><a href="#Base-reactive-interfaces" class="headerlink" title="Base reactive interfaces"></a>Base reactive interfaces</h2><p>和Flowable的接口Publisher类似，Observable、Single、Completable也有类似的基类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ObservableSource</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(Observer&lt;? <span class="keyword">super</span> T&gt; observer)</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">SingleSource</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(SingleObserver&lt;? <span class="keyword">super</span> T&gt; observer)</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">CompletableSource</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(CompletableObserver observer)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>因此许多操作符接受的参数从以前的具体对象，变成了现在的接口:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Flowable&lt;R&gt; flatMap(</div><div class="line">    Function&lt;? super T, ? extends Publisher&lt;? extends R&gt;&gt; mapper</div><div class="line">);</div><div class="line"></div><div class="line">Observable&lt;R&gt; flatMap(</div><div class="line">    Function&lt;? super T, ? extends ObservableSource&lt;? extends R&gt;&gt; mapper</div><div class="line">);</div><div class="line"></div><div class="line">------</div><div class="line">// 以前</div><div class="line">Observable&lt;R&gt; flatMap(Func1&lt;? super T, ? extends Observable&lt;? extends R&gt;&gt; func) &#123;</div></pre></td></tr></table></figure>
+<p>由于接收的都是接口，在使用其他遵循<code>Reactive-Streams</code>设计的第三方库的时候，就不需要把他自定义的<code>Flowable</code>转换成标准Flowable了。</p>
+<h2 id="Subjects-and-Processors"><a href="#Subjects-and-Processors" class="headerlink" title="Subjects and Processors"></a>Subjects and Processors</h2><p><code>io.reactivex.subjects.AsyncSubject</code>,<br><code>io.reactivex.subjects.BehaviorSubject</code>,<br><code>io.reactivex.subjects.PublishSubject</code>,<br><code>io.reactivex.subjects.ReplaySubject</code>,<br><code>io.reactivex.subjects.UnicastSubject</code></p>
+<p>在RxJava2中依然存在，但现在他们不支持<code>backpressure</code>。新出现的</p>
+<p><code>io.reactivex.processors.AsyncProcessor</code>,<br><code>io.reactivex.processors.BehaviorProcessor</code>,<br><code>io.reactivex.processors.PublishProcessor</code>,<br><code>io.reactivex.processors.ReplayProcessor</code><br><code>io.reactivex.processors.UnicastProcessor</code></p>
+<p>支持<code>backpressure</code></p>
+<h2 id="Other-classes"><a href="#Other-classes" class="headerlink" title="Other classes"></a>Other classes</h2><p><code>rx.observables.ConnectableObservable</code>变成了<code>io.reactivex.observables.ConnectableObservable&lt;T&gt;</code>和<code>io.reactivex.flowables.ConnectableFlowable&lt;T&gt;</code></p>
+<p>类似的还有<code>rx.observables.GroupedObservable</code>。</p>
+<h2 id="Functional-interfaces"><a href="#Functional-interfaces" class="headerlink" title="Functional interfaces"></a>Functional interfaces</h2><p>需要注意的一点是，现在RxJava2的接口方法里加上了<code>throws Exception</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ublic <span class="class"><span class="keyword">interface</span> <span class="title">Consumer</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(T t)</span> <span class="keyword">throws</span> Exception</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>意味着在这些方法里调用一些会发生异常的方法不需要<code>try-catch</code>了</p>
+<h2 id="Actions"><a href="#Actions" class="headerlink" title="Actions"></a>Actions</h2><p>另外大部分接口方法都按照Java8的接口方法名进行了相应的修改，比如上面那个<code>Consumer&lt;T&gt;</code>接口原来叫<code>Action1&lt;T&gt;</code>，而<code>Action2&lt;T&gt;</code>改名成了<code>BiConsumer</code></p>
+<p><code>Action3</code>-<code>Action9</code>被删掉了，大概因为没人用。。</p>
+<h2 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h2><p>同上，基本就是名字的修改和不常用类的删除</p>
+<h2 id="Subscriber"><a href="#Subscriber" class="headerlink" title="Subscriber"></a>Subscriber</h2><p>RxJava1里<code>Subscriber</code>只是一个空接口，在新版里<code>Subscriber</code>被赋予了更多的作用，有几个实现类可以供我们使用，例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">ResourceSubscriber&lt;Integer&gt; subscriber = <span class="keyword">new</span> ResourceSubscriber&lt;Integer&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</div><div class="line">        request(Long.MAX_VALUE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(Integer t)</span> </span>&#123;</div><div class="line">        System.out.println(t);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable t)</span> </span>&#123;</div><div class="line">        t.printStackTrace();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Done"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><code>request()</code>方法可以控制当前subscriber需要接收几个事件。而且，还可以调用<code>subscriber.dispose()</code>来断开对信号的监听。</p>
+<p>同时，<code>onCompleted</code>方法改成了<code>onComplete</code>。意味着完成时调用这个方法，而不是完成后<code>d</code></p>
+<p>由于<code>Subscription</code>被改掉了(下面会讲到)。如果需要类似以前CompositeSubscription的用法，可以使用:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CompositeDisposable composite2 = <span class="keyword">new</span> CompositeDisposable();</div><div class="line">composite2.add(Flowable.range(<span class="number">1</span>, <span class="number">5</span>).subscribeWith(subscriber));</div></pre></td></tr></table></figure>
+<p>注意这里需要使用subscribeWith而不是subscribe，因为subscribe方法现在返回void</p>
+<hr>
+<h2 id="Subscription"><a href="#Subscription" class="headerlink" title="Subscription"></a>Subscription</h2><p>在RxJava1里，Subscription起到的是订阅桥梁的作用。在2中，由于Subscription本身和<code>Reactive-Streams</code>里的另外一个同名概念冲突。因此把原本的Subscription改名成了<code>Disposable</code>。</p>
+<p>除了上一节里<code>subscribe(Subscriber )</code>方法返回<code>void</code>，其他名为<code>subscribe</code>的方法都返回<code>Disposable</code></p>
+<p>相应的，</p>
+<ul>
+<li><code>CompositeSubscription</code> 改名成了 <code>CompositeDisposable</code></li>
+<li><code>SerialSubscription</code> 和 <code>MultipleAssignmentSubscription</code>被合并到了<code>SerialDisposable</code>里. set() 方法会处理掉就的值，而replace()方法不会。</li>
+<li><code>RefCountSubscription</code>被移除了</li>
+</ul>
+<h2 id="Backpressure"><a href="#Backpressure" class="headerlink" title="Backpressure"></a>Backpressure</h2><p>在第一节Observable and Flowable里已经说到了这个问题，在2中，Observable将不会处理backpressure，也就不会发生<code>MissingBackpressureException</code>问题，但内存仍然会缓存多余的数据。</p>
+<p>而在使用Flowable时，如果配置Backpressure有问题，那么<code>MissingBackpressureException</code>依然存在</p>
+<h2 id="Schedulers"><a href="#Schedulers" class="headerlink" title="Schedulers"></a>Schedulers</h2><p>RxJava2里仍然包含了<code>computation</code>, <code>io</code>, <code>newThread</code> 和 <code>trampoline</code>这些默认线程调度。而<code>immediate</code>被移除了，因为他经常被人错误使用。同时<code>Schedulers.test</code>也被移除了。</p>
+<h2 id="Entering-the-reactive-world"><a href="#Entering-the-reactive-world" class="headerlink" title="Entering the reactive world"></a>Entering the reactive world</h2><p>将普通方法转换成RxJava的数据源，在RxJava1中，提供了<code>Observable.create()</code>方法，但是这个方法过于强大，但使用时需要注意的东西太多经常会发生错误。</p>
+<p>因此在RxJava2中，把原来的<code>fromAsync</code>重命名成了<code>create</code>，<code>fromAsync</code>是一个和<code>create</code>类似但更为简单和安全的方法。这样大部分旧代码都能够继续使用。</p>
+<h2 id="Leaving-the-reactive-world"><a href="#Leaving-the-reactive-world" class="headerlink" title="Leaving the reactive world"></a>Leaving the reactive world</h2><p>之前如果想把数据源转换成普通的数据对象，需要先转换成<code>BlockingObservable</code>。而在2中，可以调用<code>blockingXXX</code>方法直接把数据源转换成对象:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;Integer&gt; <span class="built_in">list</span> = Flowable.range(<span class="number">1</span>, <span class="number">100</span>).toList().blockingFirst();</div></pre></td></tr></table></figure>
+<p>有一点需要特别注意，在RxJava2里，不建议在<code>Subscriber</code>里抛出错误，这意味着下面的代码可能有一天就不能继续运行了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">Subscriber&lt;Integer&gt; subscriber = <span class="keyword">new</span> Subscriber&lt;Integer&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Subscription s)</span> </span>&#123;</div><div class="line">        s.request(Long.MAX_VALUE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(Integer t)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (t == <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (e <span class="keyword">instanceof</span> IllegalArgumentException) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Flowable.just(<span class="number">1</span>).subscribe(subscriber);</div></pre></td></tr></table></figure>
+<p>由于上面类似的代码实际中出现得很多，因此在2中提供了<code>safeSubscribe</code>方法，使用它就可以继续在<code>subscriber</code>里抛出错误。</p>
+<p>当然，你可以绕过<code>subscribe(subscriber)</code>这个方法，使用类似:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">Flowable</span><span class="selector-class">.just</span>(1)<span class="selector-class">.subscribe</span>(<span class="selector-tag">subscriber</span><span class="selector-pseudo">::onNext</span>, <span class="selector-tag">subscriber</span><span class="selector-pseudo">::onError</span>, <span class="selector-tag">subscriber</span><span class="selector-pseudo">::onComplete)</span>;</div></pre></td></tr></table></figure>
+<p>这样的方法，之前的代码仍然可以继续throw错误。</p>
+<h2 id="Operator-differences"><a href="#Operator-differences" class="headerlink" title="Operator differences"></a>Operator differences</h2><p>操作符的改动不大，大部分是扩充了参数数量。<br>或者是加入<code>prefetch</code>代表可以加入预置数据。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>可以明显的看到，RxJava2最大的改动就是对于<code>backpressure</code>的处理，为此将原来的<code>Observable</code>拆分成了新的<code>Observable</code>和<code>Flowable</code>，同时其他相关部分也同时进行了拆分。</p>
+<p>除此之外，他和我们最熟悉和喜爱的RxJava~</p>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://www.jianshu.com/p/220955eefc1f" target="_blank" rel="external">关于 RxJava 最友好的文章—— RxJava 2.0 全新来袭 - 简书</a></li>
+<li><a href="https://github.com/amitshekhariitbhu/RxJava2-Android-Samples" target="_blank" rel="external">RxJava2-Android-Samples: RxJava 2 Android Examples</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/RxJava/2016-12-13-rx-java2-quickstart.html" target="_blank" rel="external">http://blog.inching.org/RxJava/2016-12-13-rx-java2-quickstart.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rx/">rx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rxjava/">rxjava</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2016-12-13-rx-java2-quickstart.html&title=《RxJava2 QuickStart》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2016-12-13-rx-java2-quickstart.html&title=《RxJava2 QuickStart》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2016-12-13-rx-java2-quickstart.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RxJava2 QuickStart》 — Balance&url=http://blog.inching.org/RxJava/2016-12-13-rx-java2-quickstart.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2016-12-13-rx-java2-quickstart.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/RxJava/2016-12-13-rx-java-backpressure.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">RxJava Backpressure</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2016-12-13-rx-java2-quickstart.html&title=《RxJava2 QuickStart》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2016-12-13-rx-java2-quickstart.html&title=《RxJava2 QuickStart》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2016-12-13-rx-java2-quickstart.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RxJava2 QuickStart》 — Balance&url=http://blog.inching.org/RxJava/2016-12-13-rx-java2-quickstart.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2016-12-13-rx-java2-quickstart.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3aS27jQAwFwNz/0s7WgGHp8dOGFqVVMFEklhbNnsf++4uv19v1/i+f93z7q8/r2z35G9cuPDw8vEHpeRHX939jXwOuYXk9eHh4eL/hVcuaf5rkaUk9NxY8PDy8B/CSopNtd3J/dXuNh4eH90xeHkwkraXaYPDw8PCew8sfnYSqvbi2uqVezlrw8PDwallrNEV6zs9H5nt4eHh446l63iSSj3I99OoNum6qxcPDwzvAy8utbrJ7A7Dqx0rqxMPDwzvHq47254FvL5at1oOHh4e3y6s+tDmCan2C/Dk3+TQeHh7eKq8a2lbvTF6ctKU8woiQeHh4eGNePuDv8XbHb+Un4+Hh4R3gJf+xTxbu5P5kKZ+/6+ZkGR4eHt6Ylx8XyKPeXuPpxcE323c8PDy8Vd5WTLAVMUQdrNoS8PDw8FZ51ZH8/KjBZGzWG6fh4eHh7fJ6C/ekoPzTJFvnmxrw8PDwDvB64/nkt/OAozrJiv4ADw8Pb4lX3bz2Qt7qbyf34+Hh4f2Gly+7W+HCpA30GhgeHh7eLq8aFvQW9DyE7R0v+IrHw8PDW+JtFZe3k+tYNm8YUSvCw8PDO8A7EZhuFTrZfEfvxcPDwxvw8sV6dzyWN4xROIKHh4d3gJcssvnSPFnidwdpeHh4eOd4+cZ3EjckxxEmm+/ymQg8PDy8Ma+3sb5+QS/krb7xpo3h4eHhHePlsGqskMcTvQh4OWvBw8PDu+S9ileyLc4PIiTPHAW7eHh4eAd4u+P8atETcC+8wMPDw9vi5Uv5JLStNoxe8IGHh4f3S141w+gFuMtb4eQ5eHh4eA/g9WKLPAjODxxEIQUeHh7ew3g5oxcu5Bvu8kkxPDw8vDGvN7KqjvOrx6ry+OOmMeDh4eGt8hbObRUbw+R41pELDw8PL73+AVyBAyfNdUCFAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

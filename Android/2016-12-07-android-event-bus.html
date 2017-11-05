@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android EventBus | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android">
+    <meta name="description" content="EventBus: Events for Android - Open Source by greenrobot
+EventBus框架EventBus是一个Android端优化的publish/subscribe消息总线，简化了应用程序内各组件间、组件与后台线程间的通信。比如请求网络，等网络返回时通过Handler或Broadcast通知UI，两个Fragment之间需要通过Listener通信，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android EventBus">
+<meta property="og:url" content="http://blog.inching.org/Android/2016-12-07-android-event-bus.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="EventBus: Events for Android - Open Source by greenrobot
+EventBus框架EventBus是一个Android端优化的publish/subscribe消息总线，简化了应用程序内各组件间、组件与后台线程间的通信。比如请求网络，等网络返回时通过Handler或Broadcast通知UI，两个Fragment之间需要通过Listener通信，">
+<meta property="og:image" content="https://segmentfault.com/img/bVr7mp">
+<meta property="og:image" content="https://segmentfault.com/img/bVsgvf">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android EventBus">
+<meta name="twitter:description" content="EventBus: Events for Android - Open Source by greenrobot
+EventBus框架EventBus是一个Android端优化的publish/subscribe消息总线，简化了应用程序内各组件间、组件与后台线程间的通信。比如请求网络，等网络返回时通过Handler或Broadcast通知UI，两个Fragment之间需要通过Listener通信，">
+<meta name="twitter:image" content="https://segmentfault.com/img/bVr7mp">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android EventBus</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android EventBus</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-06T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-12-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#EventBus框架"><span class="post-toc-text">EventBus框架</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加依赖库"><span class="post-toc-text">添加依赖库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注册"><span class="post-toc-text">注册</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#订阅者"><span class="post-toc-text">订阅者</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#发布者"><span class="post-toc-text">发布者</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原理初探"><span class="post-toc-text">原理初探</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如果你post的是对象"><span class="post-toc-text">如果你post的是对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注解-Subscribe"><span class="post-toc-text">注解 @Subscribe</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ThreadMode"><span class="post-toc-text">ThreadMode</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#sticky-true"><span class="post-toc-text">sticky = true</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#priority-1"><span class="post-toc-text">priority = 1</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加-processor"><span class="post-toc-text">添加 processor</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-event-bus"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android EventBus</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-12-07 00:00:00" datetime="2016-12-06T16:00:00.000Z"  itemprop="datePublished">2016-12-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><a href="http://greenrobot.org/eventbus/" target="_blank" rel="external">EventBus: Events for Android - Open Source by greenrobot</a></p>
+<h2 id="EventBus框架"><a href="#EventBus框架" class="headerlink" title="EventBus框架"></a>EventBus框架</h2><p>EventBus是一个Android端优化的publish/subscribe消息总线，简化了应用程序内各组件间、组件与后台线程间的通信。比如请求网络，等网络返回时通过Handler或Broadcast通知UI，两个Fragment之间需要通过Listener通信，这些需求都可以通过<strong>EventBus</strong>实现。</p>
+<p>大家谈到EventBus，总会想到greenrobot的EventBus，但是实际上EventBus是一个通用的叫法，例如Google出品的Guava，Guava是一个庞大的库，EventBus只是它附带的一个小功能，因此实际项目中使用并不多。用的最多的是greenrobot/EventBus，这个库的优点是接口简洁，集成方便，但是限定了方法名，不支持注解。另一个库square/otto修改自 Guava ，用的人也不少。</p>
+<p>这篇博文暂时只讨论greenrobot的EventBus库。</p>
+<h2 id="添加依赖库"><a href="#添加依赖库" class="headerlink" title="添加依赖库"></a>添加依赖库</h2><p>首先你要为你的app添加依赖库：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile <span class="string">'de.greenrobot:eventbus:3.0.0-beta1'</span></div></pre></td></tr></table></figure>
+<p>关于如何添加依赖库，请参考<a href="http://segmentfault.com/a/1190000004237922" target="_blank" rel="external">Gradle for Android 第三篇( 依赖管理 )</a>。</p>
+<p>有些人会问为什么是beta版本，因为eventbus现阶段3.0版本只处于beta测试阶段。有些人会问如何找到eventbus 3.0.0版本，具体添加:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://segmentfault.com/img/bVr7mp" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h2><p>举个例子，你需要在一个activity中注册eventbus事件，然后定义接收方法，这和Android的广播机制很像，你需要首先注册广播，然后需要编写内部类，实现接收广播，然后操作UI,在EventBus中，你同样需要这么做。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">    EventBus.getDefault().register(<span class="keyword">this</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onDestroy();</div><div class="line">    EventBus.getDefault().unregister(<span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="订阅者"><a href="#订阅者" class="headerlink" title="订阅者"></a>订阅者</h2><p>类似广播，但是有别于2.4版本，你不必再去约定OnEvent方法开头了（看不懂没关系）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Subscribe(threadMode = ThreadMode.MainThread)</div><div class="line">public void helloEventBus(String message)&#123;</div><div class="line">    mText.setText(message);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该操作很简单，定义了一个hello方法，需要传入String参数，在其中操作UI操作，注意：<br>我们添加了注解@Subscribe，其含义为订阅者，在其内传入了threadMode，我们定义为ThreadMode.MainThread，其含义为该方法在UI线程完成，这样你就不要担心抛出异常啦。是不是很简单？</p>
+<h2 id="发布者"><a href="#发布者" class="headerlink" title="发布者"></a>发布者</h2><p>既然你在某个地方订阅了内容，当然就会在某个地方发布消息。举个例子，你的这个activity需要http请求，而http请求你肯定是在异步线程中操作，其返回结果后，你可以这么写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String json=<span class="string">""</span>;</div><div class="line">EventBus.getDefault().post(json);</div></pre></td></tr></table></figure>
+<p>这样就OK了，你可以试下能否正常运行了！</p>
+<h2 id="原理初探"><a href="#原理初探" class="headerlink" title="原理初探"></a>原理初探</h2><p>你订阅了内容，所以你需要在该类注册EventBus，而你订阅的方法需要传入String,即你的接收信息为String类型，那么在post的时候，你post出去的也应该是String类型，其才会接收到消息。</p>
+<h2 id="如果你post的是对象"><a href="#如果你post的是对象" class="headerlink" title="如果你post的是对象"></a>如果你post的是对象</h2><p>首先你需要定义一个类似pojo类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageEvent</span> </span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">final</span> String name;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">final</span> String password;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">MessageEvent</span><span class="params">(String name,String password)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">    <span class="keyword">this</span>.password=password;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后你post的时候：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">EventBus.getDefault().post(<span class="keyword">new</span> MessageEvent(<span class="string">"hello"</span>,<span class="string">"world"</span>));</div></pre></td></tr></table></figure>
+<p>当然，你接收的方法也需要改为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Subscribe</span>(threadMode = ThreadMode.MainThread)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">helloEventBus</span><span class="params">(MessageEvent message)</span></span>&#123;</div><div class="line">    mText.setText(message.name);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>疑问，当你post了消息之后，你的订阅者有多个，每一个都接收吗？能否做到指定接收者。</p>
+<h2 id="注解-Subscribe"><a href="#注解-Subscribe" class="headerlink" title="注解 @Subscribe"></a>注解 <code>@Subscribe</code></h2><h3 id="ThreadMode"><a href="#ThreadMode" class="headerlink" title="ThreadMode"></a>ThreadMode</h3><p><code>threadMode = ThreadMode.MainThread</code></p>
+<p>用注解的方式代替约定的方法名规范，是其最大的改变。在2.4中，你可能需要这么定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEventMainThread</span><span class="params">(MessageEvent event)</span> </span>&#123;</div><div class="line">	log(event.message);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该方法为接收消息后在主线程中处理事件，而在3.0中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Subscribe</span>(threadMode = ThreadMode.MainThread) <span class="comment">//在ui线程执行</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUserEvent</span><span class="params">(UserEvent event)</span> </span>&#123;</div><div class="line">        log(event.message);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>其中ThreadMode提供了四个常量：</p>
+<ol>
+<li>PostThread：事件的处理在和事件的发送在相同的进程，所以事件处理时间不应太长，不然影响事件的发送线程，而这个线程可能是UI线程。对应的函数名是onEvent。</li>
+<li>MainThread: 事件的处理会在UI线程中执行。事件处理时间不能太长，这个不用说的，长了会ANR的，对应的函数名是onEventMainThread。</li>
+<li>BackgroundThread：事件的处理会在一个后台线程中执行，对应的函数名是onEventBackgroundThread，虽然名字是BackgroundThread，事件处理是在后台线程，但事件处理时间还是不应该太长，因为如果发送事件的线程是后台线程，会直接执行事件，如果当前线程是UI线程，事件会被加到一个队列中，由一个线程依次处理这些事件，如果某个事件处理时间太长，会阻塞后面的事件的派发或处理。</li>
+<li>Async：事件处理会在单独的线程中执行，主要用于在后台线程中执行耗时操作，每个事件会开启一个线程（有线程池），但最好限制线程的数目。</li>
+</ol>
+<h3 id="sticky-true"><a href="#sticky-true" class="headerlink" title="sticky = true"></a>sticky = true</h3><p>默认情况下，其为false。什么情况下使用sticky呢？</p>
+<p>相信大多数使用过EventBus 2.4的同学或多或少的使用过：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">EventBus.getDefault().postSticky(<span class="keyword">new</span> VoteEvent(obj));</div><div class="line">EventBus.getDefault().registerSticky(<span class="keyword">this</span>);</div></pre></td></tr></table></figure>
+<p>你会发现非常的麻烦，那么在3.0中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">EventBus.getDefault().postSticky(<span class="keyword">new</span> VoteEvent(obj));</div><div class="line">EventBus.getDefault().register(<span class="keyword">this</span>);</div><div class="line"><span class="meta">@Subscribe</span>(sticky = <span class="keyword">true</span>)</div></pre></td></tr></table></figure>
+<p>事件分为一般事件和Sticky事件，相对于一般事件，Sticky事件不同之处在于，当事件发布后，再有订阅者开始订阅该类型事件，依然能收到该类型事件的最近一个Sticky事件。</p>
+<h3 id="priority-1"><a href="#priority-1" class="headerlink" title="priority = 1"></a>priority = 1</h3><p>相信大部分人知道该用法，值越小优先级越低，默认为0。</p>
+<h3 id="添加-processor"><a href="#添加-processor" class="headerlink" title="添加 processor"></a>添加 processor</h3><p>按照Markus Junginger的说法（EventBus创作者），在3.0中，如果你想进一步提升你的app的性能，你需要添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">provided &apos;de.greenrobot:eventbus-annotation-processor:3.0.0-beta1&apos;</div></pre></td></tr></table></figure>
+<p>其在编译的时候为注册类构建了一个索引，而不是在运行时，这样的结果是其让EventBus 3.0的性能提升了一倍，相比2.4来说，其会是它的3到6倍。大家可以感受下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://segmentfault.com/img/bVsgvf" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="https://segmentfault.com/a/1190000004279679" target="_blank" rel="external">EventBus 3.0的用法详解（一） - neu - SegmentFault</a></li>
+<li><a href="https://segmentfault.com/a/1190000004314315" target="_blank" rel="external">EventBus 3.0的用法详解(二) - neu - SegmentFault</a></li>
+<li><a href="http://www.jianshu.com/p/a040955194fc" target="_blank" rel="external">EventBus使用详解 - 简书</a></li>
+<li><a href="http://www.jianshu.com/p/818d0b56d40c" target="_blank" rel="external">EventBus详解-全面讲解用法 - 简书</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2016-12-07-android-event-bus.html" target="_blank" rel="external">http://blog.inching.org/Android/2016-12-07-android-event-bus.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2016-12-07-android-event-bus.html&title=《Android EventBus》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2016-12-07-android-event-bus.html&title=《Android EventBus》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2016-12-07-android-event-bus.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android EventBus》 — Balance&url=http://blog.inching.org/Android/2016-12-07-android-event-bus.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2016-12-07-android-event-bus.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Angular/Angular2/2016-12-08-angular2-webpack-starter.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Angular2 Webpack Starter</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2016-12-07-android-timer.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Timer</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2016-12-07-android-event-bus.html&title=《Android EventBus》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2016-12-07-android-event-bus.html&title=《Android EventBus》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2016-12-07-android-event-bus.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android EventBus》 — Balance&url=http://blog.inching.org/Android/2016-12-07-android-event-bus.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2016-12-07-android-event-bus.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuklEQVR42u3a0W4iMQwFUP7/p1mpT5W6zNzrJBRVZ54QnQ4+QUqM7ccjvp5f16v3v//1+eO6ftrPe56X1+PEhYeHhzcK/fpxrwDXISavrwHX8URLgIeHh3eMl2/f1x+2cgwkR04eMx4eHt4n8JIDoA0CDw8P72/zkt/7K0dCTsLDw8P7BF5SjGjT6Nl2nxSFj9Ra8PDw8A50kT7n9cH+Hh4eHt5CV33XgZG0uGatspsI8fDw8A7wkuQ4L0AkYwdJ+aAtfNxEjoeHh7eVlxcU2pZVWyzIixRF0RkPDw/vAO89u2j+nKS51R4zeHh4eHt5bTs/SX/bgsJs+eraMx4eHt4mXpuwroe7Tr1eymgyAg8PD+8AL2loJXl62ypb2eGjBhgeHh7eMm/XR67fmRd8h8k0Hh4e3lZe/nr2tFlReHYU4eHh4b2TlyfEbcI9e3+2EHh4eHi/y2s/Ph9BaO/M0+7/FCPw8PDwDvDabT0fSM0Dul6yvFDysj6Nh4eHt5XXllZnV7s0G/B4eHh4b+QVcwej8mtLakcKbn4x4OHh4W3itVv2MM0dtc3y5cDDw8M7zWtHAdqS7vp4Qf5OPaqFh4eHN+LlRdv1BtWsMTZD4uHh4Z3jJYXR9US5Xb62yHtzJx4eHt4xXl4CWGlcXe/YbUMuigcPDw/vAG9WmGiDzksJSXDt0uDh4eHt5c1S1ZV7El5+Z/HN4OHh4W3ltdtxeyUHzPoAFh4eHt5p3izEdoOeDUslx8xNeo2Hh4d3gLdejMjHAlbGEfIYNtda8PDw8C7rnLNywHpDqx04qA8GPDw8vGO8tumV/1fb2p+dYEUDDA8PD+/tvL1Ls9ISixYdDw8P71d5KyWJ9gCYJe54eHh47+S141Nt6Hmgs0R8OECAh4eHtzyA1W7is4GAfOtvU/OlbxgPDw/vnvcP2mV9gvl1VPcAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

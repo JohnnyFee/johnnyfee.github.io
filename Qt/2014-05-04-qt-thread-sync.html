@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Qt 线程同步 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="qt,thread">
+    <meta name="description" content="原文：http://blog.csdn.net/hai200501019/article/details/9889123
+
+Qt同步线程我们知道，多线程有的时候是很有用的，但是在访问一些公共的资源或者数据时，需要进行同步，否则会使数据遭到破坏或者获取的值不正确。Qt提供了一些类来实现线程的同步，如：
+
+QMutex
+QMutexLocker
+QReadWriteLock
+QReadLocker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt 线程同步">
+<meta property="og:url" content="http://blog.inching.org/Qt/2014-05-04-qt-thread-sync.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文：http://blog.csdn.net/hai200501019/article/details/9889123
+
+Qt同步线程我们知道，多线程有的时候是很有用的，但是在访问一些公共的资源或者数据时，需要进行同步，否则会使数据遭到破坏或者获取的值不正确。Qt提供了一些类来实现线程的同步，如：
+
+QMutex
+QMutexLocker
+QReadWriteLock
+QReadLocker">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/Center">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Qt 线程同步">
+<meta name="twitter:description" content="原文：http://blog.csdn.net/hai200501019/article/details/9889123
+
+Qt同步线程我们知道，多线程有的时候是很有用的，但是在访问一些公共的资源或者数据时，需要进行同步，否则会使数据遭到破坏或者获取的值不正确。Qt提供了一些类来实现线程的同步，如：
+
+QMutex
+QMutexLocker
+QReadWriteLock
+QReadLocker">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/Center">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Qt 线程同步</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Qt 线程同步</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-03T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Qt/">Qt</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Qt同步线程"><span class="post-toc-text">Qt同步线程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#QMutex"><span class="post-toc-text">QMutex</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#QMutexLocker"><span class="post-toc-text">QMutexLocker</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#QreadWriteLock"><span class="post-toc-text">QreadWriteLock</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#QSemaphore"><span class="post-toc-text">QSemaphore</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#QWaitCondition"><span class="post-toc-text">QWaitCondition</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-qt-thread-sync"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Qt 线程同步</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-04 00:00:00" datetime="2014-05-03T16:00:00.000Z"  itemprop="datePublished">2014-05-04</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Qt/">Qt</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>原文：<a href="http://blog.csdn.net/hai200501019/article/details/9889123" target="_blank" rel="external">http://blog.csdn.net/hai200501019/article/details/9889123</a></p>
+</blockquote>
+<h2 id="Qt同步线程"><a href="#Qt同步线程" class="headerlink" title="Qt同步线程"></a>Qt同步线程</h2><p>我们知道，多线程有的时候是很有用的，但是在访问一些公共的资源或者数据时，需要进行同步，否则会使数据遭到破坏或者获取的值不正确。Qt提供了一些类来实现线程的同步，如：</p>
+<ul>
+<li><a href="http://qt-project.org/doc/qt-5.0/qtcore/qmutex.html" target="_blank" rel="external">QMutex</a></li>
+<li><a href="http://qt-project.org/doc/qt-5.0/qtcore/qmutexlocker.html" target="_blank" rel="external">QMutexLocker</a></li>
+<li><a href="http://qt-project.org/doc/qt-5.0/qtcore/qreadwritelock.html" target="_blank" rel="external">QReadWriteLock</a></li>
+<li><a href="http://qt-project.org/doc/qt-5.0/qtcore/qreadlocker.html" target="_blank" rel="external">QReadLocker</a></li>
+<li><a href="http://qt-project.org/doc/qt-5.0/qtcore/qwritelocker.html" target="_blank" rel="external">QWriteLocker</a></li>
+<li><a href="http://qt-project.org/doc/qt-5.0/qtcore/qsemaphore.html" target="_blank" rel="external">QSemaphore</a></li>
+<li><a href="http://qt-project.org/doc/qt-5.0/qtcore/qwaitcondition.html" target="_blank" rel="external">QWaitCondition</a>。</li>
+</ul>
+<p>下面我们分别来看它们的用法：</p>
+<a id="more"></a>
+<h2 id="QMutex"><a href="#QMutex" class="headerlink" title="QMutex"></a>QMutex</h2><p>首先，简单的了解一下QMutex提供的函数。<br>构造函数：</p>
+<pre><code>QMutex (RecursionMode mode = NonRecursive )
+</code></pre><p>需要注意的是构造函数的参数，<code>RecursionMode</code> 递归模式。枚举类型 RecursionMode有两个值：</p>
+<ul>
+<li>QMutex::Recursive ，在这个模式下，一个线程可以多次锁同一个互斥量。需要注意的是，调用 lock() 多少次锁，就必须相应的调用 unlock() 一样次数解锁。</li>
+<li><p>QMutex::NonRecursive( 默认 ) ，在这个模式下，一个线程只能锁互斥量一次。</p>
+<p>  void QMutex:: lock ()</p>
+</li>
+</ul>
+<p>该函数用来锁住一个互斥量。如果另外的线程已经锁住了互斥量，函数将被阻塞等待另外的线程解锁互斥量。<br>如果是一个可递归的互斥量，则可以从同一个线程多次调用这个函数，如果是非递归的互斥量，多次调用这个函数将会引发死锁。</p>
+<pre><code>bool QMutex::tryLock ()
+</code></pre><p>该函数试图锁一个互斥量，如果成功则返回 true 。如果另外的线程已经锁住了互斥量，函数直接返回 false 。</p>
+<pre><code>bool QMutex::tryLock ( int timeout)
+</code></pre><p>该函数跟上面的 trylock() 相似。不同的是，如果互斥量在别的线程锁住的情况下，函数会等待 timeout 毫秒。需要注意的是，如果传入的 timeout 为负数，函数将无限期等待，跟调用 lock() 一样的效果。</p>
+<pre><code>void QMutex::unlock ()
+</code></pre><p>该函数对互斥量进行解锁。如果在另外的线程加锁，尝试在别的线程进行解锁则会引发错误。试图对没有加锁的互斥量解锁结果是未定义的。</p>
+<h2 id="QMutexLocker"><a href="#QMutexLocker" class="headerlink" title="QMutexLocker"></a>QMutexLocker</h2><p>QmutexLocker 只是为了简化我们队互斥量的加锁和解锁操作。就像智能指针方便我们使用普通指针一样。</p>
+<pre><code>QMutexLocker(QMutex * mutex)
+</code></pre><p>构造函数必须传入一个互斥量指针，然后在构造函数里 mutex 直接调用 lock() 。</p>
+<p>下面来看看具体的用法：</p>
+<p>假设有个函数有很多return 语句，那么我们就必须记得在每个语句前unlock互斥量，否则互斥量将无法得到解锁，导致其他等待的线程无法继续执行。</p>
+<pre><code>int complexFunction(intflag)
+{
+    mutex.lock();
+
+    int retVal = 0;
+    switch (flag) {
+        case 0:
+        case1:
+            retVal = moreComplexFunction(flag);
+            break;
+        case 2:
+            {
+                int status = anotherFunction();
+                if (status &lt; 0) {
+                    mutex.unlock();
+                    return -2;
+                }
+                retVal = status + flag;
+            }
+            break;
+        default:
+            if (flag &gt; 10) {
+                mutex.unlock();
+                return -1;
+            }
+
+            break;
+    }
+
+    mutex.unlock();
+    return retVal;
+}
+</code></pre><p>这样的代码显得很冗余又容易出错。如果我们用 QMutexLocker</p>
+<pre><code>int complexFunction(int flag)
+{
+    QMutexLocker locker(&amp;mutex);
+
+    int retVal = 0;
+    switch (flag) {
+        case 0:
+        case 1:
+            return moreComplexFunction(flag);
+        case 2:
+            {
+            int status = anotherFunction();
+
+            if (status &lt; 0)
+                return -2;
+
+            retVal = status + flag;
+            }
+            break;
+
+        default:
+            if (flag &gt; 10)
+                return -1;
+                break;
+            }
+
+    return retVal;
+}
+</code></pre><p>由于locker 是局部变量，在离开函数作用域时，mutex肯定会被解锁。</p>
+<h2 id="QreadWriteLock"><a href="#QreadWriteLock" class="headerlink" title="QreadWriteLock"></a>QreadWriteLock</h2><p>QreadWriteLock是一个读写锁，主要用来同步保护需要读写的资源。当你想多个读线程可以同时读取资源，但是只能有一个写线程操作资源，而其他线程必须等待写线程完成时，这时候用这个读写锁就很有用了。QreadWriteLock也有递归和非递归模式之分。</p>
+<p>我们主要来看看最重要的两个函数是如何实现读写操作的同步的。</p>
+<pre><code>void QReadWriteLock::lockForRead ()
+</code></pre><p>该函数lock接了读操作的锁。如果有别的线程已经对lock接了写操作的锁，则函数会阻塞等待。</p>
+<pre><code>void QReadWriteLock::lockForWrite ()
+</code></pre><p>该函数给lock加了写操作的锁，如果别的线程已经加了读或者写的锁，则函数会被阻塞。</p>
+<h2 id="QSemaphore"><a href="#QSemaphore" class="headerlink" title="QSemaphore"></a>QSemaphore</h2><p>QSemaphore是提供一个计数的信号量。信号量是泛化的互斥量。一个信号量只能锁一次，但是我们可以多次获得信号量。信号量可以用来同步保护一定数量的资源。</p>
+<p>信号量支持两个基本是函数， <code>acquire</code>和<code>release</code>：</p>
+<ul>
+<li>acquire(n) ：尝试获取n个资源。如果没有足够的可用资源，该函数调用会被则是。</li>
+<li>release(n) ：释放n个资源。</li>
+</ul>
+<p>由于avail变量，实际就是一个int的计数变量 。所以我们在调用release()传入的参数n大于信号量初始值也没关系，只是说明可用资源增加了。</p>
+<p>例如以下代码：</p>
+<pre><code>int main( int argc, char *argv[])
+{
+    QCoreApplication a(argc, argv);
+
+    QSemaphore sem(5); 
+    sem.acquire(5); 
+
+    cout&lt;&lt; &quot;acquire(5); &quot; &lt;&lt; &quot;remaindresource :&quot; &lt;&lt;sem.available()&lt;&lt;endl;
+    sem.release(5); 
+    cout&lt;&lt; &quot;release(5) &quot; &lt;&lt; &quot;remaindresource :&quot; &lt;&lt;sem.available()&lt;&lt;endl;
+
+    sem.release(10); 
+    cout&lt;&lt; &quot;release(10) &quot; &lt;&lt; &quot;remaindresource :&quot; &lt;&lt;sem.available()&lt;&lt;endl;
+
+    sem.acquire(15);
+    cout&lt;&lt; &quot;acquire(15); &quot; &lt;&lt; &quot;remaindresource :&quot; &lt;&lt;sem.available()&lt;&lt;endl;
+    return a.exec();
+}
+</code></pre><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/Center" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>信号量最著名的就是生产者与消费者的例子，以后再研究了。</p>
+<h2 id="QWaitCondition"><a href="#QWaitCondition" class="headerlink" title="QWaitCondition"></a>QWaitCondition</h2><p>QWaitCondition类提供了一个条件变量，它允许我们通知其他线程，等待的某些条件已经满足。等待QWaitCondition变量的可以是一个或多个线程。当我们用 <code>wakeOne</code> 通知其他线程时，系统会随机的选中一个等待进行唤醒，让它继续运行。其实前面的信号量和读写锁内部实现都有用到QWaitCondition的。</p>
+<p>下面我们来看这个类重要的几个函数：</p>
+<p>bool QWaitCondition::wait (QMutex * mutex, unsigned long time =ULONG_MAX )</p>
+<p>该函数对mutex解锁，然后等待。在调用这个函数之前，mutex必须是加锁状态。如果mutex没有加锁，则函数直接返回。如果mutex是可递归的，函数也直接返回。该函数对mutex解锁，然后等待，知道以下条件之一满足：</p>
+<ol>
+<li>另外的线程调用 <code>wakeOne()</code> 或 <code>wakeAll()</code>，则该函数会返回 true。</li>
+<li><p>时间过了Time毫秒。如果time为ULONG_MAX（默认），则将会一直等待不会超时。如果超时则返回false。</p>
+<p> bool QWaitCondition::wait (QReadWriteLock * readWriteLock, unsigned long time = ULONG_MAX)</p>
+</li>
+</ol>
+<p>函数对 <code>readWriteLock</code> 解锁并等待条件变量。在调用这个函数之前，<code>readWriteLock</code> 必须是加锁状态的。如果不是加锁状态，则函数立即返回。<code>readWriteLock</code> 必须不能是递归加锁的，否则将不能正确的解锁。返回的满足条件跟上面的函数一样。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Qt/2014-05-04-qt-thread-sync.html" target="_blank" rel="external">http://blog.inching.org/Qt/2014-05-04-qt-thread-sync.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/qt/">qt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/thread/">thread</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Qt/2014-05-04-qt-thread-sync.html&title=《Qt 线程同步》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Qt/2014-05-04-qt-thread-sync.html&title=《Qt 线程同步》 — Balance&source=
+原文：http://blog.csdn.net/hai200501019/article/details/9889123
+
+Qt同步线程我们知道，多线程..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Qt/2014-05-04-qt-thread-sync.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Qt 线程同步》 — Balance&url=http://blog.inching.org/Qt/2014-05-04-qt-thread-sync.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Qt/2014-05-04-qt-thread-sync.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-05-04-javascript-delete.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JavaScript delete 操作符</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Qt/2014-05-03-qt-thread.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Qt 线程</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Qt/2014-05-04-qt-thread-sync.html&title=《Qt 线程同步》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Qt/2014-05-04-qt-thread-sync.html&title=《Qt 线程同步》 — Balance&source=
+原文：http://blog.csdn.net/hai200501019/article/details/9889123
+
+Qt同步线程我们知道，多线程..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Qt/2014-05-04-qt-thread-sync.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Qt 线程同步》 — Balance&url=http://blog.inching.org/Qt/2014-05-04-qt-thread-sync.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Qt/2014-05-04-qt-thread-sync.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aS3LCMBAFQO5/abJNVYJ4TzKpWGqvUsHIai+G+ejxiK/nt2t8z6v7X313/K2LLwwMjNsynsPr1T3j77ZbbNf/ZR0MDIwDGEkoHAfTn+vkAXT8rPH9GBgYGON7xpteCb4YGBgYn2Mk/08SQQwMDIy5InaloM1TwI/X4hgYGDdk5F33v//7I/MNDAyMWzGe5bXOyz8tdoWBgbE1Y6WVlmwi2dxVrT0MDIy9GXPbWnrMMPhecFAMAwNjO0bbjs9Jees/b+e9+d3AwMDYlLGewLXjgbngW6eGGBgYGzHyFttK8ZkfeG2LYQwMjL0Z7UJJEpkkeXNDgrryxsDA2ILRdqvWA25+BK19BRgYGLsy2kVXSs02ccxLZQwMDIz8Ye3YModdVoVjYGDckPEmW4yb/m1il5fBSdKJgYFxDiNPy9ojXHkovyolxcDA2I/Rtv7n2mftaLNOHzEwMA5gzJWUeUE7NxjIU1gMDIxzGHkDrm2xzaWDRW6LgYFxGGOuoZ+kmEkxPNcKxMDAOIdRpGJTIXIuZUyegoGBcSYjb7qtbL0dUkapIQYGxkaM9WDXjiSTqjMZMGBgYJzDWG+Ntccs2pJ18swIBgbGdoz2wET7Jlbux8DAwJgrUFeC8sr6UZ6LgYGBUaZ97cghZ0/OOTEwMA5j5Ntqw26+zgd/NzAwMP4loz0S0Y4524Fo8loxMDDOYbSl40raNzceWC99MTAwbsv4AnF1S6lySFsOAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android Loader | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android">
+    <meta name="description" content="See Android中Loader及LoaderManager的使用
+managedQuery方法的缺陷Loader是用来更好地加载数据的，在我们谈论Loader之前，我们先研究一下Activity的managedQuery方法，该方法也是用于在Activity中加载数据的。在Android 3.0之前的版本中，我们如果想在Activity中通过ContentResolver对ContentPr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Loader">
+<meta property="og:url" content="http://blog.inching.org/Android/2016-09-06-android-loader.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See Android中Loader及LoaderManager的使用
+managedQuery方法的缺陷Loader是用来更好地加载数据的，在我们谈论Loader之前，我们先研究一下Activity的managedQuery方法，该方法也是用于在Activity中加载数据的。在Android 3.0之前的版本中，我们如果想在Activity中通过ContentResolver对ContentPr">
+<meta property="og:image" content="http://img.blog.csdn.net/20150930001204214">
+<meta property="og:image" content="http://img.blog.csdn.net/20150930003216022">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Loader">
+<meta name="twitter:description" content="See Android中Loader及LoaderManager的使用
+managedQuery方法的缺陷Loader是用来更好地加载数据的，在我们谈论Loader之前，我们先研究一下Activity的managedQuery方法，该方法也是用于在Activity中加载数据的。在Android 3.0之前的版本中，我们如果想在Activity中通过ContentResolver对ContentPr">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20150930001204214">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android Loader</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android Loader</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-09-05T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-09-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#managedQuery方法的缺陷"><span class="post-toc-text">managedQuery方法的缺陷</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Loader相关的核心类"><span class="post-toc-text">Loader相关的核心类</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#示例代码"><span class="post-toc-text">示例代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用support-v4-支持库"><span class="post-toc-text">使用support v4 支持库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#More"><span class="post-toc-text">More</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-loader"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android Loader</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-09-06 00:00:00" datetime="2016-09-05T16:00:00.000Z"  itemprop="datePublished">2016-09-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="http://blog.csdn.net/iispring/article/details/48834767" target="_blank" rel="external">Android中Loader及LoaderManager的使用</a></p>
+<h2 id="managedQuery方法的缺陷"><a href="#managedQuery方法的缺陷" class="headerlink" title="managedQuery方法的缺陷"></a>managedQuery方法的缺陷</h2><p>Loader是用来更好地加载数据的，在我们谈论Loader之前，我们先研究一下Activity的managedQuery方法，该方法也是用于在Activity中加载数据的。在Android 3.0之前的版本中，我们如果想在Activity中通过ContentResolver对ContentProvider进行查询，我们可以方便的调用Activity的managedQuery方法，该方法的源码如下：</p>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Deprecated</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Cursor <span class="title">managedQuery</span><span class="params">(Uri uri, String[] projection, String selection,</span></span></div><div class="line">        String[] selectionArgs, String sortOrder) &#123;</div><div class="line">    Cursor c = getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder);</div><div class="line">    <span class="keyword">if</span> (c != <span class="keyword">null</span>) &#123;</div><div class="line">        startManagingCursor(c);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> c;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从上面的代码我们可以看出managedQuery中通过ContentResolver执行了query方法，并将得到的Cursor对象交给startManagingCursor()方法来管理，这就导致了managedQuery方法存在如下缺陷：   </p>
+<ol>
+<li><p>Activity的managedQuery方法内部在主线程上执行了ContentResolver的query()方法，但该方法是个耗时方法，很可能导致应用程序无响应，出现ANR现象。   </p>
+</li>
+<li><p>ContentResolver的query()方法返回了一个Cursor对象，将该Cursor对象传递给了startManagingCursor()方法，该方法是干嘛的呢？查看API文档，我们发现可以用startManagingCursor()方法管理Cursor的生命周期，使Cursor的生命周期与Activity的生命周期相对应，具体如下：</p>
+</li>
+</ol>
+<ul>
+<li>当Activity处于stopped状态的时候，会自动调用Cursor的deactive()方法</li>
+<li>当Activity从stopped状态变为started状态的时候，其又会自动调用该Cursor的requery()方法重新查询数据</li>
+<li>当Activity销毁的时候，该Cursor对象也会自动关闭</li>
+<li>当Activity configuration发生变化的时候（比如手机的横屏竖屏来回切换等），Activity会重启，在重启的时候Cursor也会重新执行requery()方法</li>
+</ul>
+<p>通过上面的描述，看起来startManagingCursor()很智能，而且貌似很完美地帮我们处理了Cursor的生命周期，但是我们需要注意的是，当Activity从onStop()转变到onStart()的时候，其会重新执行Cursor的requery()方法，但是该方法的执行时运行在主线程上的，并且Cursor的requery()方法也是耗时方法，该方法很有可能阻塞UI线程，导致ANR现象，并且在Activity重启的时候，也会导致Cursor执行requery()方法，进一步增加应用出现无响应的情况，即ANR。</p>
+<p>综上，如果我们在Activity中调用了managedQuery()方法，那么我们就导致我们在主线程上执行ContentResolver的query()方法，并增大了在主线程上执行Cursor的requery()方法的几率，这两个方法都是耗时方法，都会阻塞主线程，因此，Activity中调用managedQuery()方法会极大增加应用出现ANR的现象。</p>
+<h2 id="Loader相关的核心类"><a href="#Loader相关的核心类" class="headerlink" title="Loader相关的核心类"></a>Loader相关的核心类</h2><p>现在如果去看Android 最新的API查看Activity的startManagingCursor()方法，你会发现该方法从Android 3.0之后就被废弃掉了，Android官方建议用Loader作为替代，其实Loader的作用不仅仅是作为startManagingCursor()方法的替代品，<strong>Loader以及LoaderManager是Android Framework中异步加载各种数据（不限于Cursor）的标准机制。</strong></p>
+<p>Android从3.0版本之后引入了Loader以及LoaderManager，使得我们可以在Activity或Fragment中使用它们。Loader是加载器，它完成实际的数据加载工作。LoaderManager是Loader的管理着，其管理着一个或多个Loader的生命周期。</p>
+<p>在应用程序中使用Loader常牵涉到以下的及各类：</p>
+<p><strong>LoaderManager</strong>：我们使用Loader加载数据时，实际上我们并不直接与Loader打交道，即我们无需也不应该调用Loader的相应的方法，相反，我们应用使用LoaderManager实现对Loader的管理。LoaderManager，顾名思义，就是Loader的管理器，我们可以在Activity或Fragment中通过调用getLoaderManager()方法获取到LoaderManager对象，一个Activity/Fragment只有一个单例的LoaderManager对象。LoaderManager可以管理一个或多个的Loader，能够维护Loader的生命周期。LoaderManger有两个方法我们会经常用到：initLoader()方法和restartLoader()方法。</p>
+<ul>
+<li>initLoader：通过调用LoaderManagr的initLoader()方法，我们可以创建一个Loader。</li>
+<li>restartLoader：通过调用LoaderManager的restartLoader()方法，我们可以重启一个Loader。</li>
+<li>destroyLoader：另外通过调用LoaderManager的destroyLoader()方法我们可以销毁一个Loader，不过该方法不常用，因为LoaderManager在合适的时机下会自动销毁Loader。</li>
+</ul>
+<p>我们是在Activity或Fragment使用Loader的，Activity、Fragment与LoaderManagement交互类似于client-server模式，即Activity或Fragment是该client-server模型中的client端，即客户端，在本文中，我们所提到的客户端均指的是Loader的使用者，即Activity或Fragment。</p>
+<p><strong>LoaderManager.LoaderCallbacks</strong>：LoaderManager.LoaderCallbacks是LoaderManager中的内部接口，客户端与Loader的通信完全是事件机制，即客户端需要实现LoaderCallbacks中的各种回调方法，以响应Loader &amp; LoaderManager触发的各种事件。客户端在调用LoaderManager的initLoader()或restartLoader()方法时，就需要客户端向这两个方法中传入一个LoaderCallbacks的实例。LoaderCallbacks有三个回调方法需要实现：onCreateLoader()、onLoadFinished()以及onLoaderReset()。</p>
+<ul>
+<li><p>onCreateLoader：我们要在onCreateLoader()方法内返回一个Loader的实例对象。很多情况下，我们需要查询ContentProvider里面的内容，那么我们就需要在onCreateLoader中返回一个CursorLoader的实例，CursorLoader继承自Loader。当然，如果CursorLoader不能满足我们的需求，我们可以自己编写自己的Loader然后在此onCreateLoader方法中返回。</p>
+</li>
+<li><p>onLoadFinished：当onCreateLoader中创建的Loader完成数据加载的时候，我们会在onLoadFinished回调函数中得到加载的数据。在此方法中，客户端可以得到数据并加以使用，在这之前，如果客户端已经保存了一份老的数据，那么我们需要释放对老数据的引用。</p>
+</li>
+<li><p>onLoaderReset：当之前创建的Loader被销毁（且该Loader向客户端发送过数据）的时候，就会触发onLoaderReset()回调方法，此时表明我们之前获取的数据被重置且处于无效状态了，所以客户端不应该再使用这份“过期”的无效的老数据，应该释放对该无效数据的引用。</p>
+</li>
+</ul>
+<p><strong>Loader</strong>：Loader是具体的数据加载器，但是需要说明的是Loader类本身并不支持异步加载机制，所以当我们要编写自己的数据加载器的时候，我们不应该直接继承自Loader类，我们应该继承自AsyncTaskLoader类，AsyncTaskLoader支持异步加载机制，下面会对AsyncTaskLoader详细解释，此处不多说。Loader有许多public的方法，比如startLoading()、stopLoading()等，但是客户端不应该直接调用这些方法，这些方法是由LoaderManager调用的，如果客户端调用了这些public的方法，就很有可能导致Loader生命周期出现混乱，进而影响到LoaderManager对Loader的管理。</p>
+<p><strong>AsyncTaskLoader</strong>： AsyncTaskLoader继承自Loader，上面我们提到了Loader类本身没有异步加载数据的机制，但是AsyncTaskLoader具有异步加载的机制，这是因为AsyncTaskLoader内部使用了AsyncTask来进行异步数据加载，所以如果我们想实现自己的Loader，我们应该直接继承自AsyncTaskLoader类（或其子类），而非Loader类。AsyncTaskLoader中的loadInBackground()方法是抽象方法，所以AsyncTaskLoader是抽象类，其子类应该实现loadInBackground()方法，在该方法中应该实现具体的异步加载逻辑。总之，AsyncTaskLoader不会阻塞主线程。</p>
+<p><strong>CursorLoader</strong>：CursorLoader继承自AsyncTaskLoader，其实现了AsyncTaskLoader的loadInBackground()方法，在该方法中会执行ContentResolver的query()方法，从而实现对ContentProvider的数据查询，其得到的数据是Cursor对象。当我们想从ContentProvider中查询数据时候，我们不应该使用Activity中的managedQuery()方法，我们应该使用LoaderManager和CursorLoader，因为CursorLoader是异步加载数据，不会阻塞主线程。</p>
+<p>下面一张图能反应出这几个类之间的关系：<br><img src="http://img.blog.csdn.net/20150930001204214" alt="这里写图片描述"></p>
+<p>Activity与Fragment是客户端，客户端通过LoaderManager的initLoader或restartLoader向LoaderManager发起获取数据的请求，LoaderManager内部会创建相应的Loader去加载数据，数据加载完毕后会触发LoaderCallbacks中的相应回调方法，通过这些回调方法，Loader可以得知相应事件的触发。</p>
+<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><p>我根据Android API中的示例代码做了一个示例应用，并做了一些相应处理。该应用默认情况下会显示用户的所有联系人，也可以输入相应的关键字对联系人进行过滤，UI界面如下所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://img.blog.csdn.net/20150930003216022" alt="这里写图片描述" title="">
+                </div>
+                <div class="image-caption">这里写图片描述</div>
+            </figure>
+<p>代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.ispring.loaderdemo;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.app.Activity;</div><div class="line"><span class="keyword">import</span> android.app.LoaderManager;</div><div class="line"><span class="keyword">import</span> android.content.CursorLoader;</div><div class="line"><span class="keyword">import</span> android.content.Loader;</div><div class="line"><span class="keyword">import</span> android.database.Cursor;</div><div class="line"><span class="keyword">import</span> android.net.Uri;</div><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> android.provider.ContactsContract;</div><div class="line"><span class="keyword">import</span> android.text.Editable;</div><div class="line"><span class="keyword">import</span> android.text.TextWatcher;</div><div class="line"><span class="keyword">import</span> android.view.KeyEvent;</div><div class="line"><span class="keyword">import</span> android.widget.EditText;</div><div class="line"><span class="keyword">import</span> android.widget.ListView;</div><div class="line"><span class="keyword">import</span> android.widget.SimpleCursorAdapter;</div><div class="line"><span class="keyword">import</span> android.widget.TextView;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> <span class="keyword">implements</span> <span class="title">LoaderManager</span>.<span class="title">LoaderCallbacks</span>&lt;<span class="title">Cursor</span>&gt;, <span class="title">TextWatcher</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> EditText editText = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> ListView listView = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> SimpleCursorAdapter adapter = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> CURSOR_LOADER_ID = <span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        <span class="comment">//绑定编辑框的文本变化事件</span></div><div class="line">        editText = (EditText)findViewById(R.id.editText);</div><div class="line">        editText.setOnEditorActionListener(<span class="keyword">new</span> TextView.OnEditorActionListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onEditorAction</span><span class="params">(TextView v, <span class="keyword">int</span> actionId, KeyEvent event)</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        editText.addTextChangedListener(<span class="keyword">this</span>);</div><div class="line"></div><div class="line">        <span class="comment">//获取ListView</span></div><div class="line">        listView = (ListView)findViewById(R.id.listView);</div><div class="line"></div><div class="line">        <span class="comment">//创建Adapter</span></div><div class="line">        adapter = <span class="keyword">new</span> SimpleCursorAdapter(</div><div class="line">                <span class="keyword">this</span>,</div><div class="line">                android.R.layout.simple_list_item_2,</div><div class="line">                <span class="keyword">null</span>,</div><div class="line">                <span class="keyword">new</span> String[]&#123;ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.Contacts.CONTACT_STATUS&#125;,</div><div class="line">                <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;android.R.id.text1, android.R.id.text2&#125;,</div><div class="line">                <span class="number">0</span>);</div><div class="line">        listView.setAdapter(adapter);</div><div class="line"></div><div class="line">        <span class="comment">//查询全部联系人</span></div><div class="line">        Bundle args = <span class="keyword">new</span> Bundle();</div><div class="line">        args.putString(<span class="string">"filter"</span>, <span class="keyword">null</span>);</div><div class="line">        LoaderManager lm = getLoaderManager();</div><div class="line">        lm.initLoader(CURSOR_LOADER_ID, args, <span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beforeTextChanged</span><span class="params">(CharSequence s, <span class="keyword">int</span> start, <span class="keyword">int</span> count, <span class="keyword">int</span> after)</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTextChanged</span><span class="params">(CharSequence s, <span class="keyword">int</span> start, <span class="keyword">int</span> before, <span class="keyword">int</span> count)</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterTextChanged</span><span class="params">(Editable s)</span> </span>&#123;</div><div class="line">        String filter = editText.getText().toString();</div><div class="line">        Bundle args = <span class="keyword">new</span> Bundle();</div><div class="line">        args.putString(<span class="string">"filter"</span>, filter);</div><div class="line">        LoaderManager lm = getLoaderManager();</div><div class="line">        lm.restartLoader(CURSOR_LOADER_ID, args, <span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Loader&lt;Cursor&gt; <span class="title">onCreateLoader</span><span class="params">(<span class="keyword">int</span> id, Bundle args)</span> </span>&#123;</div><div class="line"></div><div class="line">        Uri uri;</div><div class="line"></div><div class="line">        String filter = args != <span class="keyword">null</span> ? args.getString(<span class="string">"filter"</span>) : <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(filter != <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="comment">//根据用户指定的filter过滤显示</span></div><div class="line">            uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, Uri.encode(filter));</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="comment">//显示全部</span></div><div class="line">            uri = ContactsContract.Contacts.CONTENT_URI;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        String[] projection = <span class="keyword">new</span> String[]&#123;</div><div class="line">                ContactsContract.Contacts._ID,</div><div class="line">                ContactsContract.Contacts.DISPLAY_NAME,</div><div class="line">                ContactsContract.Contacts.CONTACT_STATUS</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        String selection = <span class="string">"(("</span> + ContactsContract.Contacts.DISPLAY_NAME + <span class="string">" NOTNULL) AND "</span>+</div><div class="line">                <span class="string">"("</span> + ContactsContract.Contacts.HAS_PHONE_NUMBER + <span class="string">" =1) AND "</span>+</div><div class="line">                <span class="string">"("</span> + ContactsContract.Contacts.DISPLAY_NAME + <span class="string">" != ''))"</span>;</div><div class="line"></div><div class="line">        String sortOrder = ContactsContract.Contacts.DISPLAY_NAME + <span class="string">" COLLATE LOCALIZED ASC"</span>;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CursorLoader(<span class="keyword">this</span>, uri, projection, selection, <span class="keyword">null</span>, sortOrder);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLoadFinished</span><span class="params">(Loader&lt;Cursor&gt; loader, Cursor data)</span> </span>&#123;</div><div class="line">        adapter.swapCursor(data);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLoaderReset</span><span class="params">(Loader&lt;Cursor&gt; loader)</span> </span>&#123;</div><div class="line">        adapter.swapCursor(<span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们在AndroidManifest.xml中需要加入<code>android.permission.READ_CONTACTS</code>权限以读取联系人信息。</p>
+<p>我们分析一下以上代码：</p>
+<ol>
+<li><p>首先MainActivity实现了LoaderManager.LoaderCallbacks接口，实现了其中的onCreateLoader()、onLoadFinished()和onLoaderReset()方法。</p>
+</li>
+<li><p>在MainActivity的onCreate()方法中，我们为ListView创建了一个SimpleCursorAdapter对象，不过我们在SimpleCursorAdapter的构造函数中传入的cursor对象为null，因为我们后面会通过Loader得到该Cursor对象。</p>
+</li>
+<li><p>我们创建了一个Bundle对象，并向其中添加了一个key为filter的键值对，值为null，表示我们不过滤，这在后面会用到。然后我们调用LoaderManager的initLoader(loaderId, bundle, LoaderCallbacks)方法，该方法会启动一个指定ID的Loader。</p>
+<ul>
+<li>该方法的第一个参数loaderId指的是我们要启动的Loader的ID，如果我们想要启动多个不同用途的Loader，那么我们就要给不同用途的Loader设置不同的loaderId，如果我们的Activity中只用到了一个Loader，那么此处的loaderId就不那么重要了，随便一个数字即可，比如0。</li>
+<li>该方法的第二个参数是Bundle对象，该对象携带了我们要创建Loader时所需要的必要信息，当然如果我们没有必要信息需要传递，那么第二个参数可以传递null。</li>
+<li>该方法的第三个参数是一个LoaderCallbacks对象，由于我们的MainActivity实现了LoaderCallbacks接口，所以我们此处就传递了this。</li>
+</ul>
+</li>
+<li><p>在执行了LoaderManager的initLoader()方法之后，Android会首先查找LoaderManager中有没有指定loaderId的Loader，如果没有，就会执行LoaderCallbacks的onCreateLoader()方法去创建一个Loader，onCreateLoader()方法是个回调方法，该方法中的loaderId参数和Bundle参数都是在上面提到的LoaderManager的initLoader(loaderId， bundle, LoaderCallbacks)中传递过来的。由于我们的Activity中在业务逻辑上只用到一种类型的Loader，所以我们无需在onCreateLoader()方法中判断loaderId的类型做判断处理。然后我们根据传入的bundle对象判断是要查询全部联系人还是查询包含指定关键字的联系人，并基于创建了用于查询ContentProvider的Uri和sql语句，并将其作为CursorLoader()的构造函数，从而得到CursorLoader的实例对象。此处需要注意的是，虽然LoaderManager的initLoader()方法会返回一个Loader对象，但是我们在Activity中不应该保存该Loader对象，因为客户端不应该直接调用Loader的方法，所以保存一个Loader对象也是无意义的。在执行了LoaderManager的initLoader()方法之后，Android会将该方法得到的Loader对象保存在LoaderManager中。</p>
+</li>
+<li><p>当我们创建的CursorLoader对象获取到Cursor数据的时候，Android会执行onLoadFinished()回调方法，在该方法的的形参中我们可以得到Cursor数据对象，然后调用<code>adapter.swapCursor(data)</code>方法，这样我们的ListView就会用我们得到的Cursor对象显示UI了。</p>
+</li>
+<li><p>上面的过程演示了我们的应用在一开始的时候会显示所有的联系人信息，当我们文本编辑框中输入关键字的时候，会触发afterTextChanged()方法的执行，在该方法中我们又构建了一个Bundle对象，并将文本编辑框中的关键字放入到Bundle对象中，然后我们调用了LoaderManager的restartLoader(loaderId, Bundle, LoaderCallbacks)方法，该方法与initLoader(loaderId, Bundle, LoaderCallbacks)方法中的形参列表完全相同。当我们调用restartLoader()方法时，LoaderManager会首先查找看一下LoaderManager中是否已经存在该指定loaderId的Loader，如果有的话先标记一下。然后重新执行LoaderCallbacks的onCreateLoader()方法，不过这次由于Bundle中含有关键字信息，所以我们会利用该关键字构建Uri及sql语句，从而构建新的Loader，从而根据关键字从ContentProvider中过滤并加载新的数据。当该新的Loader完成加载数据之后，LoaderManager会首先看一下有没有标记过该loaderId对应的老的Loader，如果有的话会执行LoaderCallbacks的onLoaderReset()方法，从而告知客户端老的Cursor对象废弃无用了，所以我们在onLoaderReset()中执行<code>adapter.swapCursor(null)</code>，从而是客户端取消对原有Cursor对象的引用，在这之后LoaderManager会销毁该loaderId的老的Loader。然后LoaderManager又会马上将新的Loader得到的数据传递给LoaderCallbacks方法的onLoadFinished()方法中，这样我们就在onLoadFinished()中获取到了新的数据，并通过调用<code>adapter.swapCursor(data)</code>而使客户端能够应用到新的Cursor对象。</p>
+</li>
+</ol>
+<p>以上就是我们全部的逻辑代码，需要注意的是，我们在以上代码中并没有调用LoaderManager的destroyLoader()方法，因为在Activity和Fragment销毁执行onDestroy()的时候，Android会执行LoaderManager的doDestroy()方法，该方法会销毁LoaderManager中所存储的所有的Loader对象。需要注意的是，LoaderManager的doDestroy()方法不是一个public方法，所以在API文档中看不到，在源码中可以看到。</p>
+<h2 id="使用support-v4-支持库"><a href="#使用support-v4-支持库" class="headerlink" title="使用support v4 支持库"></a>使用support v4 支持库</h2><p>我们在上面提到，Loader机制是从Android 3.0才开始引入的，那么是不是Android 3.0之前我们就不能使用Loader了呢？</p>
+<p>其实在Android 3.0之前，我们也可以使用Loader，方案就是使用Android提供的support v4支持库。</p>
+<p>这里简单介绍一下Android的support支持库。Android系统在不断更新，每个版本都会推出许多重要的新的类和特性，那么为了让低版本的Android系统也能使用这些新的特性，Google的工程师们开发了许多向后支持库，目前有v4、v7、v8、v13、v14、v17等版本。支持库的命名原则很简单，就是”v”加上从开始支持的API Level，比如support v4支持从API Level 4开始的Android系统，即从Android 1.6开始可以使用support v4；support v7支持从API Level 7开始的Android系统，即从Android 2.1开始可以使用support v7。每个版本的support支持库都对应一个jar包，在使用时我们需要引入对应的jar包。需要注意的是，高版本的support支持库需要依赖低版本的support支持库，比如要使用support v7支持库，那么我们也必须同时引入support v4支持库，因为v7依赖v4。</p>
+<p>每个support版本支持的特性不一样，拿support v4支持库来说，v4最大的作用就是可以使低版本的Android（1.6+）的系统可以使用Fragment和Loader，所以为了让低版本的Android能够使用Loader，我们需要使用support v4支持库，我们要对以上的源码进行一些类的替换，具体方法如下：</p>
+<p>首先在MainActivity开头要引入support v4相关的类，即首先注释掉以下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.app.Activity;</div><div class="line"><span class="keyword">import</span> android.app.LoaderManager;</div><div class="line"><span class="keyword">import</span> android.content.Loader;</div><div class="line"><span class="keyword">import</span> android.content.CursorLoader;</div><div class="line"><span class="keyword">import</span> android.widget.SimpleCursorAdapter;</div></pre></td></tr></table></figure>
+<p>然后将其替换成如下的support v4的相关类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.support.v4.app.FragmentActivity;</div><div class="line"><span class="keyword">import</span> android.support.v4.app.LoaderManager;</div><div class="line"><span class="keyword">import</span> android.support.v4.content.Loader;</div><div class="line"><span class="keyword">import</span> android.support.v4.content.CursorLoader;</div><div class="line"><span class="keyword">import</span> android.support.v4.widget.SimpleCursorAdapter;</div></pre></td></tr></table></figure>
+<p>让我们的MainActivity继承自<code>android.support.v4.app.FragmentActivity</code>而非直接继承自<code>android.app.Activity</code>。</p>
+<p>将系统中两处调用<code>getLoaderManager()</code>的地方替换成<code>getSupportLoaderManager()</code>，<code>getSupportLoaderManager()</code>是<code>android.support.v4.app.FragmentActivity</code>中的方法，该方法返回<code>android.support.v4.app.LoaderManager</code>的实例，而非<code>android.app.LoaderManager</code>。</p>
+<p>源码下载链接：<br><a href="http://download.csdn.net/detail/sunqunsunqun/9150955" target="_blank" rel="external">http://download.csdn.net/detail/sunqunsunqun/9150955</a></p>
+<p>如果想深入了解Loader的生命周期以及Loader、AsyncTaskLoader、CursorLoader、LoaderManager的源码执行过程，可参见博文<a href="http://blog.csdn.net/iispring/article/details/48958117" target="_blank" rel="external">《深入源码解析Android中Loader、AsyncTaskLoader、CursorLoader、LoaderManager》</a>。</p>
+<h2 id="More"><a href="#More" class="headerlink" title="More"></a>More</h2><ul>
+<li><a href="http://blog.csdn.net/iispring/article/details/48958117" target="_blank" rel="external">深入源码解析Android中Loader、AsyncTaskLoader、CursorLoader、LoaderManager</a>   </li>
+<li><a href="http://blog.csdn.net/iispring/article/details/50793455" target="_blank" rel="external">使用详解及源码解析Android中的Adapter、BaseAdapter、ArrayAdapter、SimpleAdapter和SimpleCursorAdapter</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2016-09-06-android-loader.html" target="_blank" rel="external">http://blog.inching.org/Android/2016-09-06-android-loader.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2016-09-06-android-loader.html&title=《Android Loader》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2016-09-06-android-loader.html&title=《Android Loader》 — Balance&source=See Android中Loader及LoaderManager的使用
+managedQuery方法的缺陷Loader是用来更好地加载数据的，在我们谈论L..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2016-09-06-android-loader.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Loader》 — Balance&url=http://blog.inching.org/Android/2016-09-06-android-loader.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2016-09-06-android-loader.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2016-09-06-android-asyn-task.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android AysncTask</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2016-09-06-android-intent.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Intent</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2016-09-06-android-loader.html&title=《Android Loader》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2016-09-06-android-loader.html&title=《Android Loader》 — Balance&source=See Android中Loader及LoaderManager的使用
+managedQuery方法的缺陷Loader是用来更好地加载数据的，在我们谈论L..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2016-09-06-android-loader.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Loader》 — Balance&url=http://blog.inching.org/Android/2016-09-06-android-loader.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2016-09-06-android-loader.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aS27DMAxFUe9/0+m0QGH1PlIOYOp6FDSO5aMBK36uC1+fX9f6L3+/XV93919PXDJkyHgtgy+zXvLu8x17/Q783WTIkHEO4+7RtXvWoZmEcr6uDBkyZKSvGCy8DM0yZMiQUWPwBTp3ypAhQ0Ynia3dQ1LZr+biMmTIeCGDV92///mR/oYMGTJexfiEV61MVmswBG8lQ4aM0YxaC3NXmK4lureprAwZMkYzyHhEmqzylJWsSLZJhgwZUxnpgwgpLf33j5UyZMiYzSCJ5foAl7YK+gNh6D+GDBkyBjF2DUaQXz3xBBkyZJzD6CScJFDyYlmNKkOGjBMYnXIYP0rWWpVoK2XIkDGaUWtDksJ9Z3iCb0qrmypDhoyXMGo/64fCdCP++a0MGTJGM3h5K47TpTEOvk1oSRkyZIxg1FqG/CU6pb1gE2XIkDGa8VxZv9MW3ZZty5AhYwSDF+LTkQhedNsQ0GXIkDGakaayKbKf+qZlPhkyZExl1EYl+DhFGtx5G0CGDBmnMdJRiX4bgAyKBcVBGTJkjGakjYE01BJePyeVIUPGVMauQdLgAIeT1aBtIEOGjNGMTvGLHNr41vCn1YK1DBky3s7gQTY9AqZPawVcGTJkHMAggY8sWWszpKksagzIkCHjYEZ6yOsfK6/UJ0OGjOMZu0a++BAYKt7JkCHjAAZPYtNX4WG6c7iUIUPGbEYtddx77EsT5mLQlyFDxvsYP6ZPo4kQkSxqAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

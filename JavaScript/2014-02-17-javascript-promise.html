@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JavaScript Promise | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,async,promise">
+    <meta name="description" content="简介Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供统一接口。
+Promise/A+的规范内容请参考 Promises/A+。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript Promise">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-02-17-javascript-promise.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="简介Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供统一接口。
+Promise/A+的规范内容请参考 Promises/A+。">
+<meta property="og:image" content="http://www.html5rocks.com/en/tutorials/es6/promises/promise-flow.svg">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript Promise">
+<meta name="twitter:description" content="简介Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供统一接口。
+Promise/A+的规范内容请参考 Promises/A+。">
+<meta name="twitter:image" content="http://www.html5rocks.com/en/tutorials/es6/promises/promise-flow.svg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript Promise</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript Promise</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-02-16T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-02-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简介"><span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么选择Promise"><span class="post-toc-text">为什么选择Promise</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#避免厄运的金字塔"><span class="post-toc-text">避免厄运的金字塔</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#完美解耦"><span class="post-toc-text">完美解耦</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Promises接口"><span class="post-toc-text">Promises接口</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Constructor"><span class="post-toc-text">Constructor</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Methods"><span class="post-toc-text">Methods</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Static-Methods"><span class="post-toc-text">Static Methods</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实例"><span class="post-toc-text">实例</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Usage"><span class="post-toc-text">Usage</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Transforming-values"><span class="post-toc-text">Transforming values</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Queuing-asynchronous-actions"><span class="post-toc-text">Queuing asynchronous actions</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Error-handling-in-practice"><span class="post-toc-text">Error handling in practice</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#异步显示"><span class="post-toc-text">异步显示</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Promises对象的实现"><span class="post-toc-text">Promises对象的实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-text">小结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现"><span class="post-toc-text">实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ES6-Promise"><span class="post-toc-text">ES6 Promise</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考链接"><span class="post-toc-text">参考链接</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-promise"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript Promise</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-02-17 00:00:00" datetime="2014-02-16T16:00:00.000Z"  itemprop="datePublished">2014-02-17</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供<a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="external">统一接口</a>。</p>
+<p>Promise/A+的规范内容请参考 <a href="http://promises-aplus.github.io/promises-spec/" target="_blank" rel="external">Promises/A+</a>。</p>
+<a id="more"></a>
+<p>那么，什么是Promises？首先，它是一个对象，也就是说与其他JavaScript对象的用法，没有什么两样；其次，它起到代理作用（proxy），使得异步操作具备同步操作（synchronous code）的接口，即充当异步操作与回调函数之间的中介，使得程序具备正常的同步运行的流程，回调函数不必再一层层包裹起来。</p>
+<p>JavaScript Promise 最初以“Futures”为名归为 DOM 规范，后来改名为“Promises”，最终纳入 JavaScript 规范。将其加入 JavaScript 而非 DOM 的好处是方便在非浏览器环境中使用，如Node.js（他们会不会在核心API中使用就是另一回事了）。</p>
+<p>尽管它被归位 JavaScript 特性，DOM 也很乐意拿过来用。事实上，所有包含异步成功/失败方法的新 DOM API 都会使用 Promise 机制，已经实现的包括 <a href="https://dvcs.w3.org/hg/quota/raw-file/tip/Overview.html#idl-def-StorageQuota" target="_blank" rel="external">Quota Management</a>, <a href="http://dev.w3.org/csswg/css-font-loading/#font-face-set-ready" target="_blank" rel="external">Font Load Events</a>,<a href="https://github.com/slightlyoff/ServiceWorker/blob/cf459d473ae09f6994e8539113d277cbd2bce939/service_worker.ts#L17" target="_blank" rel="external">ServiceWorker</a>, <a href="http://webaudio.github.io/web-midi-api/#widl-Navigator-requestMIDIAccess-Promise-MIDIOptions-options" target="_blank" rel="external">Web MIDI</a>, <a href="https://github.com/whatwg/streams#basereadablestream" target="_blank" rel="external">Streams</a> 等等。</p>
+<p>一个 Promise 只能成功或失败一次，并且状态无法改变（不能从成功变为失败，反之亦然）<br>如果一个 Promise 成功或者失败之后，你为其添加针对成功/失败的回调，则相应的回调函数会立即执行</p>
+<p>Promises原本只是社区提出的一个构想，一些第三方函数库率先实现了这个功能，目前ECMAScript 6正在考虑将其写入语言标准，Chrome(32+)和Firefox(25+)浏览器的最新版本都初步部署了这个功能。不过这两个浏览器的实现都还不够完整彻底，你可以 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=918806" target="_blank" rel="external">在 bugzilla 上跟踪 Firefox 的最新进展</a>或者<a href="http://www.chromestatus.com/features/5681726336532480" target="_blank" rel="external">到 Chromium Dashboard 查看 Chrome 的实现情况</a>。</p>
+<p>要在这两个浏览器上达到兼容标准 Promise，或者在其他浏览器以及 Node.js 中使用 Promise，可以看看这个 <a href="https://github.com/jakearchibald/ES6-Promises/blob/master/README.md" target="_blank" rel="external">polyfill</a>（gzip 之后 2K）。</p>
+<h2 id="为什么选择Promise"><a href="#为什么选择Promise" class="headerlink" title="为什么选择Promise"></a>为什么选择Promise</h2><p>参考：<a href="http://blogs.telerik.com/kendoui/posts/13-03-28/what-is-the-point-of-promises" target="_blank" rel="external">What’s The Point Of Promises?</a><br>中文翻译：<a href="http://www.oschina.net/translate/what-is-the-point-of-promises" target="_blank" rel="external">什么是Promises的重点 - 技术翻译 - 开源中国社区</a></p>
+<p>那么Promise能给我们带来什么呢？</p>
+<h3 id="避免厄运的金字塔"><a href="#避免厄运的金字塔" class="headerlink" title="避免厄运的金字塔"></a>避免厄运的金字塔</h3><p>网上你可以找到很多文章引用“厄运的金字塔”的说法作为使用promises的主要原因。这是指需要连续的执行多个异步操作。在普通回调下，我们将会在相互的调用之间结束嵌套的调用；随着这种调用代码变得更缩进，生成了一个金字塔（指向右方的）因此有了“厄运的金字塔”的名字。如果你只需连续执行一两个异步操作，那么这还不是太坏，但一旦你需要做3个或更多，它将会变得难以阅读，特别是当每一步都有相当多的处理需要做的时候。使用promises可以帮助代码变平，而且使它再一次变得更容易阅读。我们来看看。</p>
+<p>比如说一下为一个厄运的金字塔的例子：</p>
+<pre><code>// Normal callback usage =&gt; PYRAMID OF DOOOOOOOOM
+asyncOperation(function(data){
+  // Do some processing with `data`
+  anotherAsync(function(data2){
+      // Some more processing with `data2`
+      yetAnotherAsync(function(){
+          // Yay we&apos;re finished!
+      });
+  });
+});
+</code></pre><p>使用Promise之后代码可能变为：</p>
+<pre><code>asyncOperation()
+.then(function(data){
+    // Do some processing with `data`
+    return anotherAsync();
+})
+.then(function(data2){
+    // Some more processing with `data2`
+    return yetAnotherAsync();
+})
+.then(function(){
+    // Yay we&apos;re finished!
+});
+</code></pre><h3 id="完美解耦"><a href="#完美解耦" class="headerlink" title="完美解耦"></a>完美解耦</h3><p>也许你会说，使用命名的回调（Named Callbacks）也可以解决厄运的金字塔问题，比如：</p>
+<pre><code>// Normal callback usage =&gt; PYRAMID OF DOOOOOOOOM
+asyncOperation(handler1);
+
+function handler1(data) {
+    // Do some processing with `data`
+    anotherAsync(handler2);
+}
+
+function handler2(data2) {
+    // Some more processing with `data2`
+    yetAnotherAsync(handler3);
+}
+
+function handler3() {
+    // Yay we&apos;re finished!
+}
+</code></pre><p>在以上的例子中，handler1依赖handler2，handler2依赖handler3.这就意味着handler1无论出于任何目的都不可在被用除非handler2也呈现出来。假如你不打算重用他们，那么给你的函数命名又有什么意义呢？</p>
+<p>使用Promise的链式回调可以完美解决上述问题：</p>
+<pre><code>asyncOperation().then(handler1).then(handler2).then(handler3);
+
+function handler1(data) {
+    // Do some processing with `data`
+    return anotherAsync();
+}
+
+function handler2(data2) {
+    // Some more processing with `data2`
+    return yetAnotherAsync();
+}
+
+function handler3() {
+    // Yay we&apos;re finished!
+}
+</code></pre><p>handler1、handler2、handler3互不依赖，而只是使用Promise的then方法将他们串联起来。</p>
+<h2 id="Promises接口"><a href="#Promises接口" class="headerlink" title="Promises接口"></a>Promises接口</h2><p>参考<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Methods" target="_blank" rel="external">Promise - JavaScript | MDN</a>。</p>
+<p>Promise主要提供以下接口：</p>
+<h3 id="Constructor"><a href="#Constructor" class="headerlink" title="Constructor"></a>Constructor</h3><pre><code>new Promise(function(resolve, reject) {});
+</code></pre><ul>
+<li>resolve<ul>
+<li>类型为 thenable. Your promise will be fulfilled/rejected with the outcome of thenable</li>
+<li>类型为 object. Your promise is fulfilled with obj</li>
+</ul>
+</li>
+<li>reject(obj) Your promise is rejected with obj. For consistency and debugging (eg stack traces), obj should be an instanceof Error. Any errors thrown in the constructor callback will be implicitly passed to reject().</li>
+</ul>
+<h3 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h3><ul>
+<li><p><code>Promise.prototype.then(onFulfilled, onRejected)</code><br>  promise对象的then方法用来添加回调函数。它可以接受两个回调函数，第一个是操作成功（fulfilled）时的回调函数，第二个是操作失败（rejected）时的回调函数（可以不提供）。一旦状态改变，就调用相应的回调函数。</p>
+<p>  Appends fullfillment and rejection handlers to the promise, and returns a new promise resolving to the return value of the called handler.</p>
+<p>  Sometimes, the then method takes up to three arguments: a success callback, a failure callback, and a progress callback (the spec does not require implementations to include the progress feature, but many do).</p>
+<p>  For the implementations that include the progress feature, a promise can be updated on its progress at any time before it leaves the unfulfilled state. When the progress is updated, all of the progress callbacks will be immediately invoked and passed the progress value. Progress callbacks are handled differently than the success and failure callbacks; If you register a progress callback after a progress update has already happened, the new progress callback will only be called for progress updates that occur after it was registered.</p>
+<p>  Just like an example below:</p>
+<pre><code>asyncOperation()
+.then(function(data){
+    // Do some processing with `data`
+    return anotherAsync();
+})
+.then(function(data2){
+    // Some more processing with `data2`
+    return yetAnotherAsync();
+})
+.then(function(){
+    // Yay we&apos;re finished!
+});
+</code></pre><p>  asyncOperation returns a promise object. So we call then on that promise object and pass it a callback function; <code>then</code> will also return a promise. When the asyncOperation finishes, it’ll fulfill the promise with data. The callback is then invoked and data is passed in as an argument to it.</p>
+<ul>
+<li>If the callback doesn’t have a return value, the promise that was returned by <code>then</code> is immediately fulfilled with no value.</li>
+<li>If the callback returns something other than a promise, then the promise that was returned by <code>then</code> will be immediately fulfilled with that value.</li>
+<li>If the callback returns a promise (like in the example), then the promise that was returned by <code>then</code> will wait until the promise that was returned by our callback is fulfilled.</li>
+<li><p>Once our callback’s promise is fulfilled, the value that it was fulfilled with (in this case, data2) will be given to <code>then</code>‘s promise. Then the promise from <code>then</code> is fulfilled with data2. And so on.</p>
+<p>It sounds a bit complicated, but it’s actually pretty simple. If what I’ve told you doesn’t sink in, I’m sorry. I guess I’m just not the best person to talk about it.</p>
+</li>
+</ul>
+</li>
+<li><p><code>Promise.prototype.catch(onRejected)</code></p>
+<p>  Appends a rejection handler callback to the promise, and returns a new promise resolving to the return value of the callback if it is called, or to its original fulfillment value if the promise is instead fulfilled.</p>
+</li>
+</ul>
+<h3 id="Static-Methods"><a href="#Static-Methods" class="headerlink" title="Static Methods"></a>Static Methods</h3><ul>
+<li><p>Promise.resolve(value)</p>
+<p>  Returns a Promise object that is resolved with the given value. If the value is a thenable (i.e. has a then method), the returned promise will “follow” that thenable, adopting its eventual state; otherwise the returned promise will be fulfilled with the value.</p>
+<ul>
+<li>If you pass it something promise-like (has a ‘then’ method), it creates a new promise that fulfills/rejects in the same way, effectively a clone.</li>
+<li>If you pass in any other value, eg Promise.resolve(‘Hello’), it creates a promise that fulfills with that value.</li>
+<li><p>If you call it with no value, as above, it fulfills with “undefined”.</p>
+<p><code>reject</code>接口同理。</p>
+</li>
+</ul>
+</li>
+<li><p>Promise.reject(reason)</p>
+<p>  Returns a Promise object that is rejected with the given reason.</p>
+</li>
+<li><p>Promise.cast(value)</p>
+<p>  Casts a value to a promise. Useful for quick returns from methods that should return promises.</p>
+<pre><code>Promise.cast(3).then(function(result) {
+  // result == 3;
+});
+</code></pre></li>
+<li><p>Promise.all(iterable)</p>
+<p>  Returns a promise that resolves when all of the promises in iterable have resolved. The result is passed an array of values from all the promises. If something passed in the iterable array is not a promise, it’s converted to one by Promise.cast. If any of the passed in promises rejects, the all Promise should also reject (and receives the value of the promise that rejected.</p>
+<pre><code>var p = new Promise(function(resolve, reject) { resolve(3); });
+Promise.all([true, p]).then(function(values) {
+  // values == [ true, 3 ]
+});
+</code></pre></li>
+<li><p>Promise.race(iterable)</p>
+<p>  Returns a promise that resolves when the first promise in the iterable resolves.</p>
+<pre><code>var p1 = new Promise(function(resolve, reject) { setTimeout(resolve, 500, &quot;one&quot;); });
+var p2 = new Promise(function(resolve, reject) { setTimeout(resolve, 100, &quot;two&quot;); });
+Promise.race([p1, p2]).then(function(value) {
+  // value == &quot;two&quot;
+});
+</code></pre></li>
+</ul>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>在下面的章节中，我们都将围绕如下实例来展开讨论：</p>
+<ol>
+<li>显示一个加载指示图标</li>
+<li>加载一篇小说的 JSON，包含小说名和每一章内容的 URL。</li>
+<li>在页面中填上小说名</li>
+<li>加载所有章节正文</li>
+<li>在页面中添加章节正文</li>
+<li>停止加载指示</li>
+</ol>
+<p>这个过程中如果发生什么错误了要通知用户，并且把加载指示停掉，不然它就会不停转下去，令人眼晕，或者搞坏界面什么的。</p>
+<p><strong>将 Promise 用于 XMLHttpRequest</strong></p>
+<p>只要能保持向后兼容，现有 API 都会更新以支持 Promise，XMLHttpRequest 是重点考虑对象之一。不过现在我们先来写个 GET 请求：</p>
+<pre><code>function get(url) {
+  // 返回一个新的 Promise
+  return new Promise(function(resolve, reject) {
+    // 经典 XHR 操作
+    var req = new XMLHttpRequest();
+    req.open(&apos;GET&apos;, url);
+
+    req.onload = function() {
+      // 当发生 404 等状况的时候调用此函数
+      // 所以先检查状态码
+      if (req.status == 200) {
+        // 以响应文本为结果，完成此 Promise
+        resolve(req.response);
+      }
+      else {
+        // 否则就以状态码为结果否定掉此 Promise
+        // （提供一个有意义的 Error 对象）
+        reject(Error(req.statusText));
+      }
+    };
+
+    // 网络异常的处理方法
+    req.onerror = function() {
+      reject(Error(&quot;Network Error&quot;));
+    };
+
+    // 发出请求
+    req.send();
+  });
+}
+</code></pre><p>现在可以调用它了：</p>
+<pre><code>get(&apos;story.json&apos;).then(function(response) {
+  console.log(&quot;Success!&quot;, response);
+}, function(error) {
+  console.error(&quot;Failed!&quot;, error);
+});
+</code></pre><h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>当异步任务返回一个promise对象（小写表示这是Promise的实例）时，该对象只有三种状态：未完成（pending）、已完成（fulfilled）、失败（rejected）。</p>
+<p>这三种的状态的变化途径只有两个，且只能发生一次：从“未完成”到“已完成”，或者从“未完成”到“失败”。一旦当前状态变为“已完成”或“失败”，就意味着不会再发生状态变化了。</p>
+<pre><code>(new Promise(step1))
+.then(step2)
+.then(step3)
+.then(step4)
+.then(console.log, console.error);
+</code></pre><p>再来看上面的代码就很清楚，step1是一个耗时很长的异步任务，然后使用then方法，依次绑定了三个step1操作成功后的回调函数step2、step3、step4，最后再用then方法绑定两个回调函数：操作成功时的回调函数console.log，操作失败时的回调函数console.error。</p>
+<p>console.log和console.error这两个最后的回调函数，用法上有一点重要的区别。console.log只显示回调函数step4的返回值，而<strong>console.error可以显示step2、step3、step4之中任何一个发生的错误</strong>。也就是说，假定step2操作失败，抛出一个错误，这时step3和step4都不会再运行了，promises对象开始寻找接下来的第一个错误回调函数，在上面代码中是console.error。所以，结论就是Promises对象的错误有传递性。</p>
+<h3 id="Transforming-values"><a href="#Transforming-values" class="headerlink" title="Transforming values"></a>Transforming values</h3><p>你可以对结果做些修改然后返回一个新值：</p>
+<pre><code>var promise = new Promise(function(resolve, reject) {
+  resolve(1);
+});
+
+promise.then(function(val) {
+  console.log(val); // 1
+  return val + 2;
+}).then(function(val) {
+  console.log(val); // 3
+});
+</code></pre><p>回到前面的代码：</p>
+<pre><code>get(&apos;story.json&apos;).then(function(response) {
+  console.log(&quot;Success!&quot;, response);
+});
+</code></pre><p>收到的响应是一个纯文本的 JSON，我们可以修改 get 函数，设置 <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#responseType" target="_blank" rel="external">responseType</a> 为 JSON 来指定服务器响应格式，也可以在 Promise 的世界里搞定这个问题：</p>
+<pre><code>get(&apos;story.json&apos;).then(function(response) {
+  return JSON.parse(response);
+}).then(function(response) {
+  console.log(&quot;Yey JSON!&quot;, response);
+});
+</code></pre><p>既然 JSON.parse 只接收一个参数，并返回转换后的结果，我们还可以再精简一下：</p>
+<pre><code>get(&apos;story.json&apos;).then(JSON.parse).then(function(response) {
+  console.log(&quot;Yey JSON!&quot;, response);
+});
+</code></pre><p><a href="story.json">点击这里查看代码运行页面</a>，打开控制台查看输出结果。 事实上，我们可以把 getJSON 函数写得超级简单：</p>
+<pre><code>function getJSON(url) {
+  return get(url).then(JSON.parse);
+}
+</code></pre><p>getJSON 会返回一个获取 JSON 并加以解析的 Promise。</p>
+<h3 id="Queuing-asynchronous-actions"><a href="#Queuing-asynchronous-actions" class="headerlink" title="Queuing asynchronous actions"></a>Queuing asynchronous actions</h3><p>你也可以把“then”串联起来依次执行异步操作。</p>
+<p>当你从“then”的回调函数返回的时候，这里有点小魔法。如果你返回一个值，它就会被传给下一个“then”的回调；而如果你返回一个“类 Promise”的对象，则下一个“then”就会等待这个 Promise 明确结束（成功/失败）才会执行。例如：</p>
+<pre><code>getJSON(&apos;story.json&apos;).then(function(story) {
+  return getJSON(story.chapterUrls[0]);
+}).then(function(chapter1) {
+  console.log(&quot;Got chapter 1!&quot;, chapter1);
+});
+</code></pre><p>这里我们发起一个对“story.json”的异步请求，返回给我们更多 URL，然后我们会请求其中的第一个。Promise 开始首次显现出相较事件回调的优越性了。你甚至可以写一个抓取章节内容的独立函数：</p>
+<pre><code>var storyPromise;
+
+function getChapter(i) {
+  storyPromise = storyPromise || getJSON(&apos;story.json&apos;);
+
+  return storyPromise.then(function(story) {
+    return getJSON(story.chapterUrls[i]);
+  })
+}
+
+// 用起来非常简单：
+getChapter(0).then(function(chapter) {
+  console.log(chapter);
+  return getChapter(1);
+}).then(function(chapter) {
+  console.log(chapter);
+});
+</code></pre><p>我们一开始并不加载 story.json，直到第一次 getChapter，而以后每次 getChapter 的时候都可以重用已经加载完成的 story Promise，所以 story.json 只需要请求一次。Promise 好棒！</p>
+<p>###Error handling</p>
+<p>then接受两个参数，一个处理成功，一个处理失败（或者说确认和否定，按 Promise 术语）：</p>
+<pre><code>get(&apos;story.json&apos;).then(function(response) {
+  console.log(&quot;Success!&quot;, response);
+}, function(error) {
+  console.log(&quot;Failed!&quot;, error);
+});
+</code></pre><p>你还可以使用<code>catch</code>：</p>
+<pre><code>get(&apos;story.json&apos;).then(function(response) {
+  console.log(&quot;Success!&quot;, response);
+}).catch(function(error) {
+  console.log(&quot;Failed!&quot;, error);
+});
+</code></pre><p>这段代码等价于：</p>
+<pre><code>get(&apos;story.json&apos;).then(function(response) {
+  console.log(&quot;Success!&quot;, response);
+}).then(undefined, function(error) {
+  console.log(&quot;Failed!&quot;, error);
+});
+</code></pre><p>这里的 catch 并无任何特殊之处，只是<code>then(undefined, func)</code>的语法糖衣，更直观一点而已。使用<code>then(func1, func2)</code>和使用<code>then(func1).catch(func2)</code>处理错误并不相同。With then(func1, func2), func1 or func2 will be called, never both. But with then(func1).catch(func2), both will be called if func1 rejects, as they’re separate steps in the chain.</p>
+<p>Promise 的否定回调可以由 Promise.reject() 触发，也可以由构造器回调中抛出的错误触发：</p>
+<pre><code>var jsonPromise = new Promise(function(resolve, reject) {
+  // JSON.parse throws an error if you feed it some
+  // 抛出异常后，也会被后续的catch捕获到。
+  resolve(JSON.parse(&quot;This ain&apos;t JSON&quot;));
+});
+</code></pre><p>有个比较复杂的例子：</p>
+<pre><code>asyncThing1().then(function() {
+  return asyncThing2();
+}).then(function() {
+  return asyncThing3();
+}).catch (function(err) {
+  return asyncRecovery1();
+}).then(function() {
+  return asyncThing4();
+}, function(err) {
+  return asyncRecovery2();
+}).catch (function(err) {
+  console.log(&quot;Don&apos;t worry about it&quot;);
+}).then(function() {
+  console.log(&quot;All done!&quot;);
+});
+</code></pre><p>这段流程非常像 JavaScript 的 try/catch 组合，try 代码块中发生的错误会径直跳转到 catch 代码块，流程图如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.html5rocks.com/en/tutorials/es6/promises/promise-flow.svg" alt="Promise Flow" title="">
+                </div>
+                <div class="image-caption">Promise Flow</div>
+            </figure>
+<p>####JavaScript exceptions and promises</p>
+<p>Promise 的否定回调可以由 Promise.reject() 触发，也可以由构造器回调中抛出的错误触发：</p>
+<pre><code>var jsonPromise = new Promise(function(resolve, reject) {
+  // 如果数据格式不对的话 JSON.parse 会抛出错误
+  // 可以作为隐性的否定结果：
+  resolve(JSON.parse(&quot;This ain&apos;t JSON&quot;));
+});
+
+jsonPromise.then(function(data) {
+  // 永远不会发生：
+  console.log(&quot;It worked!&quot;, data);
+}).catch(function(err) {
+  // 这才是真相：
+  console.log(&quot;It failed!&quot;, err);
+});
+</code></pre><p>这意味着你可以把所有 Promise 相关操作都放在它的构造函数回调中进行，这样发生任何错误都能捕捉到并且触发 Promise 否定。</p>
+<p>“then”回调中抛出的错误也一样：</p>
+<pre><code>get(&apos;/&apos;).then(JSON.parse).then(function() {
+  // This never happens, &apos;/&apos; is an HTML page, not JSON
+  // so JSON.parse throws
+  console.log(&quot;It worked!&quot;, data);
+}).catch(function(err) {
+  // Instead, this happens:
+  console.log(&quot;It failed!&quot;, err);
+});
+</code></pre><h4 id="Error-handling-in-practice"><a href="#Error-handling-in-practice" class="headerlink" title="Error handling in practice"></a>Error handling in practice</h4><p>回到我们的故事和章节，我们用 catch 来捕捉错误并显示给用户：</p>
+<pre><code>getJSON(&apos;story.json&apos;).then(function(story) {
+  return getJSON(story.chapterUrls[0]);
+}).then(function(chapter1) {
+  addHtmlToPage(chapter1.html);
+}).catch(function() {
+  addTextToPage(&quot;Failed to show chapter&quot;);
+}).then(function() {
+  document.querySelector(&apos;.spinner&apos;).style.display = &apos;none&apos;;
+});
+</code></pre><p>如果请求 story.chapterUrls[0] 失败（http 500 或者用户掉线什么的）了，它会跳过之后所有针对成功的回调，包括 getJSON 中将响应解析为 JSON 的回调，和这里把第一张内容添加到页面里的回调。JavaScript 的执行会进入 catch 回调。结果就是前面任何章节请求出错，页面上都会显示“Failed to show chapter”。</p>
+<p>和 JavaScript 的 try/catch 一样，捕捉到错误之后，接下来的代码会继续执行，按计划把加载指示器给停掉。上面的代码就是下面这段的非阻塞异步版：</p>
+<pre><code>try {
+  var story = getJSONSync(&apos;story.json&apos;);
+  var chapter1 = getJSONSync(story.chapterUrls[0]);
+  addHtmlToPage(chapter1.html);
+}
+catch (e) {
+  addTextToPage(&quot;Failed to show chapter&quot;);
+}
+
+document.querySelector(&apos;.spinner&apos;).style.display = &apos;none&apos;;
+</code></pre><p>如果只是要捕捉异常做记录输出而不打算在用户界面上对错误进行反馈的话，只要抛出 Error 就行了，这一步可以放在 getJSON 中：</p>
+<pre><code>function getJSON(url) {
+  return get(url).then(JSON.parse).catch(function(err) {
+    console.log(&quot;getJSON failed for&quot;, url, err);
+    throw err;
+  });
+}
+</code></pre><p>现在我们已经搞定第一章了，接下来搞定全部章节。</p>
+<p>###Parallelism and sequencing</p>
+<p>如果我们使用同步的方式来实现，代码可能是这样的：</p>
+<pre><code>try {
+  var story = getJSONSync(&apos;story.json&apos;);
+  addHtmlToPage(story.heading);
+
+  story.chapterUrls.forEach(function(chapterUrl) {
+    var chapter = getJSONSync(chapterUrl);
+    addHtmlToPage(chapter.html);
+  });
+
+  addTextToPage(&quot;All done&quot;);
+}
+catch (err) {
+  addTextToPage(&quot;Argh, broken: &quot; + err.message);
+}
+
+document.querySelector(&apos;.spinner&apos;).style.display = &apos;none&apos;;
+</code></pre><p>但是用异步的方式来实现并非易事儿，代码的结构是这样的：</p>
+<pre><code>getJSON(&apos;story.json&apos;).then(function(story) {
+  addHtmlToPage(story.heading);
+
+  // TODO: for each url in story.chapterUrls, fetch &amp; display
+}).then(function() {
+  // And we&apos;re all done!
+  addTextToPage(&quot;All done&quot;);
+}).catch(function(err) {
+  // Catch any error that happened along the way
+  addTextToPage(&quot;Argh, broken: &quot; + err.message);
+}).then(function() {
+  // Always hide the spinner
+  document.querySelector(&apos;.spinner&apos;).style.display = &apos;none&apos;;
+});
+</code></pre><p>我们需要用then的确保chapter一个一个地顺序请求，你可能会想到使用如下代码来遍历实现：</p>
+<pre><code>story.chapterUrls.forEach(function(chapterUrl) {
+  // Fetch chapter
+  getJSON(chapterUrl).then(function(chapter) {
+    // and add it to the page
+    addHtmlToPage(chapter.html);
+  });
+});
+</code></pre><p>但这是不正确的，因为forEach保证不了chapter下载的顺序，它是async-aware的。</p>
+<p>####顺序下载</p>
+<p>为了保证下载的顺序性，我们需要使用<code>resove</code>接口，详细用法请参考接口一节。</p>
+<p>We can tidy up the above code using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce" target="_blank" rel="external">array.reduce</a>：</p>
+<pre><code>// Loop through our chapter urls
+story.chapterUrls.reduce(function(sequence, chapterUrl) {
+  // Add these actions to the end of the sequence
+  return sequence.then(function() {
+    return getJSON(chapterUrl);
+  }).then(function(chapter) {
+    addHtmlToPage(chapter.html);
+  });
+}, Promise.resolve());
+</code></pre><p>Our reduce callback is called for each item in the array. “sequence” is <code>Promise.resolve()</code> the first time around, but for the rest of the calls “sequence” is whatever we returned from the previous call. <code>array.reduce</code> is really useful for boiling an array down to a single value, which in this case is a promise.</p>
+<p>最终的代码为：</p>
+<pre><code>getJSON(&apos;story.json&apos;).then(function(story) {
+  addHtmlToPage(story.heading);
+
+  return story.chapterUrls.reduce(function(sequence, chapterUrl) {
+    // Once the last chapter&apos;s promise is done…
+    return sequence.then(function() {
+      // …fetch the next chapter
+      return getJSON(chapterUrl);
+    }).then(function(chapter) {
+      // and add it to the page
+      addHtmlToPage(chapter.html);
+    });
+  }, Promise.resolve());
+}).then(function() {
+  // And we&apos;re all done!
+  addTextToPage(&quot;All done&quot;);
+}).catch(function(err) {
+  // Catch any error that happened along the way
+  addTextToPage(&quot;Argh, broken: &quot; + err.message);
+}).then(function() {
+  // Always hide the spinner
+  document.querySelector(&apos;.spinner&apos;).style.display = &apos;none&apos;;
+});
+</code></pre><p>And there we have it (<a href="http://www.html5rocks.com/en/tutorials/es6/promises/async-example.html" target="_blank" rel="external">see example</a>), a fully async version of the sync version. But we can do better.</p>
+<p>####异步下载</p>
+<p>为了达到更好的效率，我们可以同时下载所有的chapter，然后把这些chapter连成一个story，最后显示在网页上。</p>
+<p>为了达到这个目的，我们需要使用一个新的Promise API：</p>
+<pre><code>Promise.all(arrayOfPromises).then(function(arrayOfResults) {
+  //...
+});
+</code></pre><p><code>Promise.all</code>的用法请参考接口一节。完整代码为：</p>
+<pre><code>getJSON(&apos;story.json&apos;).then(function(story) {
+  addHtmlToPage(story.heading);
+
+  // Take an array of promises and wait on them all
+  return Promise.all(
+    // Map our array of chapter urls to
+    // an array of chapter json promises
+    story.chapterUrls.map(getJSON)
+  );
+}).then(function(chapters) {
+  // Now we have the chapters jsons in order! Loop through…
+  chapters.forEach(function(chapter) {
+    // …and add to the page
+    addHtmlToPage(chapter.html);
+  });
+  addTextToPage(&quot;All done&quot;);
+}).catch(function(err) {
+  // catch any error that happened so far
+  addTextToPage(&quot;Argh, broken: &quot; + err.message);
+}).then(function() {
+  document.querySelector(&apos;.spinner&apos;).style.display = &apos;none&apos;;
+});
+</code></pre><p>查看<a href="http://www.html5rocks.com/en/tutorials/es6/promises/async-all-example.html" target="_blank" rel="external">演示效果</a></p>
+<h4 id="异步显示"><a href="#异步显示" class="headerlink" title="异步显示"></a>异步显示</h4><p>我们还有提神用户体验的空间，比如在异步下载过程中，chapter1下载完整之后，我们就显示在页面中，当chapter3到达时，我们不显示，等到chapter2到达时一起显示…</p>
+<p>To do this, we fetch JSON for all our chapters at the same time, then create a sequence to add them to the document:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">getJSON(<span class="string">'story.json'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">story</span>) </span>&#123;</div><div class="line">  addHtmlToPage(story.heading);</div><div class="line"></div><div class="line">  <span class="comment">// Map our array of chapter urls to</span></div><div class="line">  <span class="comment">// an array of chapter json promises.</span></div><div class="line">  <span class="comment">// This makes sure they all download parallel.</span></div><div class="line">  <span class="keyword">return</span> story.chapterUrls.map(getJSON)</div><div class="line">    .reduce(<span class="function"><span class="keyword">function</span>(<span class="params">sequence, chapterPromise</span>) </span>&#123;</div><div class="line">      <span class="comment">// Use reduce to chain the promises together,</span></div><div class="line">      <span class="comment">// adding content to the page for each chapter</span></div><div class="line">      <span class="keyword">return</span> sequence.then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// Wait for everything in the sequence so far,</span></div><div class="line">        <span class="comment">// then wait for this chapter to arrive.</span></div><div class="line">        <span class="keyword">return</span> chapterPromise;</div><div class="line">      &#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">chapter</span>) </span>&#123;</div><div class="line">        addHtmlToPage(chapter.html);</div><div class="line">      &#125;);</div><div class="line">    &#125;, <span class="built_in">Promise</span>.resolve());</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  addTextToPage(<span class="string">"All done"</span>);</div><div class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">  <span class="comment">// catch any error that happened along the way</span></div><div class="line">  addTextToPage(<span class="string">"Argh, broken: "</span> + err.message);</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">document</span>.querySelector(<span class="string">'.spinner'</span>).style.display = <span class="string">'none'</span>;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这里的重点是先使用<code>Array.map</code>，使所有的章节异步加载；在使用reduce使异步加载的章节顺序显示。</p>
+<p>查看<a href="http://www.html5rocks.com/en/tutorials/es6/promises/async-best-example.html" target="_blank" rel="external">演示效果</a>。</p>
+<p>####使用ES6 的Generator实现</p>
+<p>请参考 <a href="http://www.html5rocks.com/en/tutorials/es6/promises/#toc-parallelism-sequencing" target="_blank" rel="external">JavaScript Promises: There and back again - HTML5 Rocks</a></p>
+<h2 id="Promises对象的实现"><a href="#Promises对象的实现" class="headerlink" title="Promises对象的实现"></a>Promises对象的实现</h2><p>Promises只是一个规范，JavaScript语言原生还未提供支持。一般来说，总是选用现成的函数库。为了真正理解Promises对象，下面我们自己动手写一个Promises的实现。</p>
+<p>首先，将Promise定义成构造函数。</p>
+<pre><code>var Promise = function () {
+  this.state = &apos;pending&apos;;
+  this.thenables = [];
+};
+</code></pre><p>上面代码表示，Promise的实例对象的state属性默认为“未完成”状态（pending），还有一个thenables属性指向一个数组，用来存放then方法生成的内部对象。</p>
+<p>接下来，部署实例对象的resolve方法，该方法用来将实例对象的状态从“未完成”变为“已完成”。</p>
+<pre><code>Promise.prototype.resolve = function (value) {
+  if (this.state != &apos;pending&apos;) return;
+
+  this.state = &apos;fulfilled&apos;;
+  this.value = value;
+  this._handleThen();
+  return this;
+}
+</code></pre><p>上面代码除了改变实例的状态，还将异步任务的返回值存入实例对象的value属性，然后调用内部方法_handleThen，最后返回实例对象本身。</p>
+<p>类似地，部署实例对象的reject方法。</p>
+<pre><code>Promise.prototype.reject = function (reason) {
+  if (this.state != &apos;pending&apos;) return;
+
+  this.state = &apos;rejected&apos;;
+  this.reason = reason;
+  this._handleThen();
+  return this;
+};
+</code></pre><p>然后，部署实例对象的then方法。它接受两个参数，分别是异步任务成功时的回调函数（onFulfilled）和出错时的回调函数（onRejected）。为了可以部署链式操作，它必须返回一个新的Promise对象。</p>
+<pre><code>Promise.prototype.then = function (onFulfilled, onRejected) {
+  var thenable = {};
+
+  if (typeof onFulfilled == &apos;function&apos;) {
+    thenable.fulfill = onFulfilled;
+  };
+
+  if (typeof onRejected == &apos;function&apos;) {
+    thenable.reject = onRejected;
+  };
+
+  if (this.state != &apos;pending&apos;) {
+    setImmediate(function () {
+      this._handleThen();
+    }.bind(this));
+  }
+
+  thenable.promise = new Promise();
+  this.thenables.push(thenable);
+
+  return thenable.promise;
+}
+</code></pre><p>上面代码首先定义了一个内部变量thenable对象，将then方法的两个参数都加入这个对象的属性。然后，检查当前状态，如果不等于“未完成”，则在当前操作结束后，立即调用_handleThen方法。接着，在thenable对象的promise属性上生成一个新的Promise对象，并在稍后返回这个对象。最后，将thenable对象加入实例对象的thenables数组。</p>
+<p>下一步就要部署内部方法_handleThen，它用来处理通过then方法绑定的回调函数。</p>
+<pre><code>Promise.prototype._handleThen = function () {
+  if (this.state === &apos;pending&apos;) return;
+
+  if (this.thenables.length) {
+    for (var i = 0; i &lt; this.thenables.length; i++) {
+      var thenPromise = this.thenables[i].promise;
+      var returnedVal;
+      try {
+        // 运行回调函数
+      } catch (e) {
+        thenPromise.reject(e);
+      }
+    }
+    this.thenables = [];
+  }
+}
+</code></pre><p>上面代码的逻辑是这样的：如果实例对象的状态是“未完成”，就返回，否则检查thenables属性是否有值。如果有值，表明里面储存了需要执行的回调函数，则依次运行回调函数。</p>
+<p>之所以把回调函数的执行放在try…catch结构中，是因为一旦出错，就会自动执行catch代码块，从而可以运行下一个Promise实例对象的reject方法，这使得调用reject方法变得很简单。下面是try代码块中的代码。</p>
+<pre><code>try {
+      switch (this.state) {
+        case &apos;fulfilled&apos;:
+          if (this.thenables[i].fulfill) {
+            returnedVal = this.thenables[i].fulfill(this.value);
+          } else {
+            thenPromise.resolve(this.value);
+          }
+          break;
+        case &apos;rejected&apos;:
+          if (this.thenables[i].reject) {
+            returnedVal = this.thenables[i].reject(this.reason);
+          } else {
+            thenPromise.reject(this.reason);
+          }
+          break;
+      }
+
+        if (returnedVal === null) {
+          this.thenables[i].promise.resolve(returnedVal);
+        }
+        else if (returnedVal instanceof Promise || typeof returnedVal.then === &apos;function&apos;) {
+          returnedVal.then(thenPromise.resolve.bind(thenPromise), thenPromise.reject.bind(thenPromise));
+        }
+        else {
+          this.thenables[i].promise.resolve(returnedVal);
+        }
+}
+</code></pre><p>上面代码首先根据实例对象的状态，分别调用fulfill或reject回调函数，并传入相应的参数，并将返回值存入returnVal变量。然后再去改变this.thenables[i].promise对象的状态，触发下一个Promise对象的resolve或者reject方法。</p>
+<p>最后，由于我们写的是供调用的函数库，需要将构造函数输出。</p>
+<pre><code>module.exports = Promise;
+</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Promises的优点在于，让回调函数变成了变成了规范的链式写法，程序流程可以看得很清楚。它的一整套接口，可以实现许多强大的功能，比如为多个异步操作部署一个回调函数、为多个回调函数中抛出的错误统一指定处理方法等等。</p>
+<p>而且，它还有一个前面三种方法都没有的好处：如果一个任务已经完成，再添加回调函数，该回调函数会立即执行。所以，你不用担心是否错过了某个事件或信号。这种方法的缺点就是，编写和理解都相对比较难。</p>
+<p>实际可以使用的Promises实现，参见jQuery的deferred对象一节。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p><a href="http://complexitymaze.com/2014/03/03/javascript-promises-a-comparison-of-libraries/" target="_blank" rel="external">ComplexityMaze » Blog Archive » JavaScript Promises – a comparison of libraries</a></p>
+<ul>
+<li><a href="https://github.com/kriskowal/q" target="_blank" rel="external">Q</a>  Star 4565 Fork 360</li>
+<li><a href="https://github.com/cujojs/when" target="_blank" rel="external">when</a>  Star 1415 Fork 160</li>
+<li><a href="https://github.com/tildeio/rsvp.js" target="_blank" rel="external">RSVP.js</a>  Star 1570 Fork 104</li>
+<li><a href="https://github.com/then/promise" target="_blank" rel="external">then/promise</a> Star 148 Fork 21. Bare bones Promises/A+ implementation.</li>
+<li><a href="https://github.com/dfilatov/vow" target="_blank" rel="external">dfilatov/vow</a> Star 200 Fork 28</li>
+<li><a href="http://api.jquery.com/category/deferred-object/" target="_blank" rel="external">jQuery 1.5</a> jQuery 有个类似的方法叫 <a href="http://api.jquery.com/category/deferred-object/" target="_blank" rel="external">Deferred</a>，但不兼容 Promises/A+ 规范，于是会<a href="https://thewayofcode.wordpress.com/tag/jquery-deferred-broken/" target="_blank" rel="external">有点小问题</a>，使用需谨慎。jQuery 还有一个 <a href="http://api.jquery.com/Types/#Promise" target="_blank" rel="external">Promise 类型</a>，它其实是 Deferred 的缩减版，所以也有同样问题。<ul>
+<li><a href="http://javascript.ruanyifeng.com/jquery/deferred.html" target="_blank" rel="external">jQuery.Deferred对象 – JavaScript 标准参考教程（alpha）</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2011/08/a_detailed_explanation_of_jquery_deferred_object.html" target="_blank" rel="external">jQuery的deferred对象详解 - 阮一峰的网络日志</a></li>
+</ul>
+</li>
+</ul>
+<p>参考：<a href="http://www.promisejs.org/implementations/" target="_blank" rel="external">Promises</a></p>
+<p>###与标准接口的兼容性</p>
+<p>avaScript Promise 的 API 会把任何包含有 then 方法的对象当作“类 Promise”（或者用术语来说就是 <em>thenable</em>）的对象，这些对象经过 Promise.cast 处理之后就和原生的 JavaScript Promise 实例没有任何区别了。所以如果你使用的库返回一个 Q Promise，那没问题，无缝融入新的 JavaScript Promise。</p>
+<p>尽管，如前所述，jQuery 的 Deferred 对象有点……没什么用，不过幸好还可以转换成标准 Promise，你最好一拿到对象就马上加以转换：</p>
+<pre><code>var jsPromise = Promise.cast($.ajax(&apos;/whatever.json&apos;));
+</code></pre><p>这里 jQuery 的 $.ajax 返回一个 Deferred 对象，含有“then”方法，因此 Promise.cast 可以将其转换为 JavaScript Promise。不过有时候 Deferred 对象会给它的回调函数传递多个参数，例如：</p>
+<pre><code>var jqDeferred = $.ajax(&apos;/whatever.json&apos;);
+
+jqDeferred.then(function(response, statusText, xhrObj) {
+  // ...
+}, function(xhrObj, textStatus, err) {
+  // ...
+});
+</code></pre><p>除了第一个参数，其他都会被 JavaScript Promise 忽略掉：</p>
+<pre><code>jsPromise.then(function(response) {
+  // ...
+}, function(xhrObj) {
+  // ...
+});
+</code></pre><p>……还好这通常就是你想要的了，至少你能够用这个办法实现想要的。另外还要注意，jQuery 也没有遵循给否定回调函数传递 Error 对象的惯例。</p>
+<h2 id="ES6-Promise"><a href="#ES6-Promise" class="headerlink" title="ES6 Promise"></a>ES6 Promise</h2><ul>
+<li><a href="https://github.com/domenic/promises-unwrapping" target="_blank" rel="external">domenic/promises-unwrapping</a> The ES6 promises spec, as per September 2013 TC39 meeting</li>
+<li><a href="https://github.com/jakearchibald/es6-promise#readme" target="_blank" rel="external">jakearchibald/es6-promise</a> A polyfill for ES6-style Promises</li>
+</ul>
+<p>如何使用请参考 <a href="http://www.html5rocks.com/en/tutorials/es6/promises/#toc-parallelism-sequencing" target="_blank" rel="external">JavaScript Promises: There and back again - HTML5 Rocks</a>。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="http://www.html5rocks.com/en/tutorials/es6/promises/#toc-async" target="_blank" rel="external">JavaScript Promises: There and back again - HTML5 Rocks</a><ul>
+<li><a href="http://www.html5rocks.com/zh/tutorials/es6/promises/" target="_blank" rel="external">JavaScript Promises: There and back again - HTML5 Rocks</a> 翻译。</li>
+</ul>
+</li>
+<li><a href="http://javascript.ruanyifeng.com/advanced/asynchronous.html#toc4" target="_blank" rel="external">JavaScript异步编程的模式 – JavaScript 标准参考教程（alpha）</a></li>
+<li><a href="http://davidwalsh.name/write-javascript-promises" target="_blank" rel="external">Write Better JavaScript with Promises</a></li>
+<li>Sebastian Porto, <a href="http://sporto.github.com/blog/2012/12/09/callbacks-listeners-promises/" target="_blank" rel="external">Asynchronous JS: Callbacks, Listeners, Control Flow Libs and Promises</a></li>
+<li>Rhys Brett-Bowen, <a href="http://modernjavascript.blogspot.com/2013/08/promisesa-understanding-by-doing.html" target="_blank" rel="external">Promises/A+ - understanding the spec through implementation</a></li>
+<li>Matt Podwysocki, Amanda Silver, <a href="http://blogs.msdn.com/b/ie/archive/2011/09/11/asynchronous-programming-in-javascript-with-promises.aspx" target="_blank" rel="external">Asynchronous Programming in JavaScript with “Promises”</a></li>
+<li>Marc Harter, <a href="https://gist.github.com//wavded/5692344" target="_blank" rel="external">Promise A+ Implementation</a></li>
+<li>Bryan Klimt, <a href="http://blog.parse.com/2013/01/29/whats-so-great-about-javascript-promises/" target="_blank" rel="external">What’s so great about JavaScript Promises?</a></li>
+<li>Jake Archibald, <a href="http://www.html5rocks.com/en/tutorials/es6/promises/" target="_blank" rel="external">JavaScript Promises There and back again</a></li>
+</ul>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="https://github.com/facundoolano/promise-log" target="_blank" rel="external">facundoolano/promise-log: shortcut for console.loggin’ your promises</a></li>
+<li><a href="https://github.com/petkaantonov/bluebird" target="_blank" rel="external">petkaantonov/bluebird: Bluebird is a full featured promise library with unmatched performance.</a></li>
+<li><a href="https://github.com/kriskowal/q" target="_blank" rel="external">kriskowal/q: A promise library for JavaScript</a></li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://www.ghostchina.com/promises-in-node-js-with-q-an-alternative-to-callbacks/" target="_blank" rel="external">在 Node.js 中用 Q 实现 Promise – Callback 之外的另一种选择</a></li>
+<li><a href="https://github.com/getify/native-promise-only" target="_blank" rel="external">getify/native-promise-only</a></li>
+<li><a href="http://www.dmfeel.com/post/536799f91f1bf49646000001" target="_blank" rel="external">JavaScript Promise启示录</a></li>
+<li><a href="https://remysharp.com/2014/11/19/my-five-promise-patterns" target="_blank" rel="external">My five promise patterns</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-02-17-javascript-promise.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-02-17-javascript-promise.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/async/">async</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/promise/">promise</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-17-javascript-promise.html&title=《JavaScript Promise》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-17-javascript-promise.html&title=《JavaScript Promise》 — Balance&source=简介Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供统一接口。
+Promise/A+的规范内容请参考 Promises/A+。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-17-javascript-promise.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript Promise》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-17-javascript-promise.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-17-javascript-promise.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Node/2014-02-18-nodejs-module.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Node Tutorial</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Web/2014-02-17-web-tutorial.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Web Front Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-17-javascript-promise.html&title=《JavaScript Promise》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-17-javascript-promise.html&title=《JavaScript Promise》 — Balance&source=简介Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供统一接口。
+Promise/A+的规范内容请参考 Promises/A+。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-17-javascript-promise.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript Promise》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-17-javascript-promise.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-17-javascript-promise.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrklEQVR42u3aMY7jMBAEQP//0770LpDUzSEFH1CKDNtrsRSQsz3z+cTX9/a6+s7f71+9vvr0/m83X3h4eHiHl5680z6IvffCw8PDe4d3taPufb13375fMx4eHt5v8trbr5XLeHh4eP87L7nlQ5kbl+DtYYOHh4f3Ji//6RZ/XxxPIt3NWQseHh5ezMu7SL/z+kh/Dw8PD2/cVb/fcNcaWruK7Gi1eHh4eAd4beTaltFtoJCEue068fDw8Pby1rbptcJ37Xfa0at/fgcPDw/vGO8+YM3bXcn3J9+sjxM8PDy8Y7xk811LTfMwoh0LiB4KHh4e3gHe2obbtvlbxkN2MmmG4eHh4Y15yWa9FrZOHsGRrAUPDw9vE68dtHooW7eGHZP222eyODw8PLzgF9Y26LaAzuPg+YACHh4e3jneZOQ0jxhaUnuaXd4dDw8P7xgv35qL02bpUGmDhofHjYeHh3eMt+tmbbMt/512VZ8TzxIPDw9v6X/2E8lxu9xvcOHh4eGd5q1d9cDooBc3GQjDw8PD28vLR5raQjzZsteaYfffvwwj8PDw8LbydoWta/ikhbY24oCHh4d3jteWs22xOxlEaEOKYul4eHh4S7y1Jla+0eeNrsn7Dw8IDw8P70XepFxOWlbtMbDYcsPDw8N7kZcfCXmAu6tcLg4zPDw8vGO8SWSQk/LDow2RH8IIPDw8vGO8XZFBHtG2a6gvPDw8vK28b3nlceracncV35dDV3h4eHhj3uk9dhLynhjMwsPDw9vFW4tfkxiiDY7zB1QcG3h4eHjHeG2B24aw7YOb5A91goKHh4f3Om8eELef5sExHh4e3i/wkkHSvD02H1CIRgfw8PDwDvCSwjfZjuuhqLhAXxvYwsPDwzvBa//Jb5tSk1I7WfS28Sw8PDy8Z94fqNZek4Ly1WUAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

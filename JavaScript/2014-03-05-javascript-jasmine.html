@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Jasmine—— JavaScript 单元测试框架 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="对于JavaScript世界比较流行的测试框架的介绍及比较，请参考 JavaScript 单元测试。
+源码结构源码地址参考Reference，大致结构：
+
+src 源码。
+lib 这里放了运行测试案例所必须的文件。其中jasmine.js就是整个框架的核心代码，jasmine-html.js用来展示测试结果，jasmine.css用来美化测试结果。
+dist/jasmine-standalone-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jasmine—— JavaScript 单元测试框架">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-03-05-javascript-jasmine.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="对于JavaScript世界比较流行的测试框架的介绍及比较，请参考 JavaScript 单元测试。
+源码结构源码地址参考Reference，大致结构：
+
+src 源码。
+lib 这里放了运行测试案例所必须的文件。其中jasmine.js就是整个框架的核心代码，jasmine-html.js用来展示测试结果，jasmine.css用来美化测试结果。
+dist/jasmine-standalone-">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jasmine—— JavaScript 单元测试框架">
+<meta name="twitter:description" content="对于JavaScript世界比较流行的测试框架的介绍及比较，请参考 JavaScript 单元测试。
+源码结构源码地址参考Reference，大致结构：
+
+src 源码。
+lib 这里放了运行测试案例所必须的文件。其中jasmine.js就是整个框架的核心代码，jasmine-html.js用来展示测试结果，jasmine.css用来美化测试结果。
+dist/jasmine-standalone-">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Jasmine—— JavaScript 单元测试框架</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Jasmine—— JavaScript 单元测试框架</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-03-04T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-03-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#源码结构"><span class="post-toc-text">源码结构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#核心概念"><span class="post-toc-text">核心概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Suites"><span class="post-toc-text">Suites</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Specs"><span class="post-toc-text">Specs</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Expectations"><span class="post-toc-text">Expectations</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Matchers"><span class="post-toc-text">Matchers</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内置的Matcher"><span class="post-toc-text">内置的Matcher</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本用法"><span class="post-toc-text">基本用法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Setup-and-Teardown"><span class="post-toc-text">Setup and Teardown</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#this"><span class="post-toc-text">this</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#describe嵌套"><span class="post-toc-text">describe嵌套</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#禁用Suites"><span class="post-toc-text">禁用Suites</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#挂起Specs"><span class="post-toc-text">挂起Specs</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#高级用法"><span class="post-toc-text">高级用法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Spies"><span class="post-toc-text">Spies</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Spies-and-callThrough"><span class="post-toc-text">Spies: and.callThrough</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Spies-and-returnValue"><span class="post-toc-text">Spies: and.returnValue</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Spies-and-callFake"><span class="post-toc-text">Spies: and.callFake</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Spies-and-throwError"><span class="post-toc-text">Spies: and.throwError</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Spies-and-stub"><span class="post-toc-text">Spies: and.stub</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#calls"><span class="post-toc-text">calls</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Spies-createSpy"><span class="post-toc-text">Spies: createSpy</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Spies-createSpyObj"><span class="post-toc-text">Spies: createSpyObj</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#jasmine-any"><span class="post-toc-text">jasmine.any</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#jasmine-objectContaining"><span class="post-toc-text">jasmine.objectContaining</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟Timer"><span class="post-toc-text">虚拟Timer</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#异步支持"><span class="post-toc-text">异步支持</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#官方"><span class="post-toc-text">官方</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第三方"><span class="post-toc-text">第三方</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-jasmine"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Jasmine—— JavaScript 单元测试框架</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-03-05 00:00:00" datetime="2014-03-04T16:00:00.000Z"  itemprop="datePublished">2014-03-05</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>对于JavaScript世界比较流行的测试框架的介绍及比较，请参考 <a href="/javascript/2014/02/14/javascript-unit-test/">JavaScript 单元测试</a>。</p>
+<h2 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h2><p>源码地址参考Reference，大致结构：</p>
+<ul>
+<li>src 源码。</li>
+<li>lib 这里放了运行测试案例所必须的文件。其中jasmine.js就是整个框架的核心代码，<br>jasmine-html.js用来展示测试结果，jasmine.css用来美化测试结果。</li>
+<li>dist/jasmine-standalone-2.0.0.zip/<ul>
+<li>spec/: 包含了就是这个测试案例所有的测试规则<ul>
+<li>PlayerSpec.js就是针对src文件夹下的Player.js所写的测试用例</li>
+<li>SpecHelper.js用来添加自定义的检验规则的，</li>
+</ul>
+</li>
+<li>src/: 存放了我们需要测试的js文件对象</li>
+<li>SpecRunner.html: 运行测试用例的环境</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id="Suites"><a href="#Suites" class="headerlink" title="Suites"></a>Suites</h3><p><code>describe (string, function)</code> 一个测试组开始于全局函数describe，一个describe是一个it的集合。describe包含n个it，一个it包含n个判断断言。string：测试组名称，function：测试组函数。An expectation in Jasmine is an assertion that is either true or false. If you name them well, your specs read as full sentences in traditional <a href="http://en.wikipedia.org/wiki/Behavior-driven_development" target="_blank" rel="external">BDD</a> style.</p>
+<h3 id="Specs"><a href="#Specs" class="headerlink" title="Specs"></a>Specs</h3><p><code>it(string, function)</code>   一个测试Spec。string：测试名称，function：测试函数。 JavaScript scoping rules apply, so variables declared in a <code>describe</code> are available to any <code>it</code> block inside the suite.</p>
+<h3 id="Expectations"><a href="#Expectations" class="headerlink" title="Expectations"></a>Expectations</h3><p>一个Expectation在jasmine中就是一个断言（<code>expect</code>语句），返回true或false。只有当一个spec中的expections全为ture时，这个spec显示通过，否则失败。</p>
+<p>Expectation带有实际值，它和表示匹配规则的方法链接在一起，Matcher方法带期望值。</p>
+<h3 id="Matchers"><a href="#Matchers" class="headerlink" title="Matchers"></a>Matchers</h3><p>Matcher可以理解为断言，将Expectation传入的是实际值和Matcher传入的是期望值比较。任何Matcher都能通过在expect调用matcher前加上not来判断一个否定的断言。</p>
+<p>beforeEach(function)   定义在一个describe的所有it执行前做的操作。</p>
+<p>afterEach(function)   定义在一个describe的所有it执行后做的操作。</p>
+<p><strong>Demo：</strong></p>
+<pre><code>// Suites
+describe(&quot;A suite is just a function&quot;, function() {
+  var a;
+
+  // Specs
+  it(&quot;and so is a spec&quot;, function() {
+    // 访问describe的变量。
+    a = true;
+
+    // Expectation，toBe is a Matcher.
+    expect(a).toBe(true);
+  });
+});
+</code></pre><h3 id="内置的Matcher"><a href="#内置的Matcher" class="headerlink" title="内置的Matcher"></a>内置的Matcher</h3><ul>
+<li>toBe 相当于===，处理简单字面值和变量。</li>
+<li>toNotBe </li>
+<li>toEqual   处理简单字面值和变量，而且可以处理对象，数组。</li>
+<li>toNotEqual</li>
+<li>toMatch   按正则式匹配。</li>
+<li>toBeDefined   是否已声明且赋值</li>
+<li>toBeUndefined</li>
+<li>toBeNull   是否null</li>
+<li>toBeTruthy   如果转换为布尔值，是否为true</li>
+<li>toBeFalsy</li>
+<li>toContain   数组中是否包含元素（值）。只能用于数组，不能用于对象</li>
+<li>toBeLessThan   数值比较，小于</li>
+<li>toBeGreaterThan   数值比较，大于</li>
+<li>toBeCloseTo   数值比较时定义精度，先四舍五入后再比较</li>
+<li>toThrow    检验一个函数是否会抛出一个错误</li>
+</ul>
+<p>你也可以通过 <a href="http://jasmine.github.io/2.0/custom_matcher.html" target="_blank" rel="external">custom_matcher.js</a> 来自定义Matcher。</p>
+<p><strong>使用方法：</strong></p>
+<pre><code>it(&quot;Some Rulers&quot;, function(){
+    expect(a).not.toBe(null);
+    expect(a).toEqual(12);
+    expect(message).toMatch(/^f/);
+});
+
+it(&quot;toContain检验数组中是否包含元素(值)&quot;, function(){
+    var a = [&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;];
+
+    expect(a).toContain(&quot;bar&quot;);
+});
+
+
+it(&quot;toBeCloseTo数值比较，指定精度，先四舍五入再比较&quot;, function() {
+    var pi = 3.1415926, e = 2.78;
+
+    // can have more than one expectation
+    expect(pi).toBeCloseTo(e, 0);
+    expect(pi).not.toBeCloseTo(e, 0.1);
+});
+
+it(&quot;toThrow检验一个函数是否会抛出一个错误&quot;, function() {
+    var foo = function() {
+      return 1 + 2;
+    };
+    var bar = function() {
+      return a + 1;
+    };
+
+    expect(foo).not.toThrow();
+    expect(bar).toThrow();
+});
+</code></pre><h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><h3 id="Setup-and-Teardown"><a href="#Setup-and-Teardown" class="headerlink" title="Setup and Teardown"></a>Setup and Teardown</h3><p>jasmine提供了全局的方法 beforeEach和afterEach，beforeEach在每个spec(it)前执行一次，afterEach在每个spec（it）后执行一次。</p>
+<pre><code>describe(&quot;A spec (with setup and tear-down)&quot;, function() {
+  var foo;
+
+  beforeEach(function() {
+    foo = 0;
+    foo += 1;
+  });
+
+  afterEach(function() {
+    foo = 0;
+  });
+
+  it(&quot;is just a function, so it can contain any code&quot;, function() {
+    expect(foo).toEqual(1);
+  });
+});
+</code></pre><h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><p>除了在describe定义变量，用于各it共享数据外，还可以通过this关键字来共享数据。在在每一个Spec的声明周期（beforeEach-&gt;it-&gt;afterEach）的开始，都将有一个空对象this。</p>
+<h3 id="describe嵌套"><a href="#describe嵌套" class="headerlink" title="describe嵌套"></a>describe嵌套</h3><p>describe是可以嵌套的，并且specs可以定义在任何一层的describe中，jasmine允许用树状的方法来组成一个suite。在一个spec执行之前，jasmine从树的根节点依次执行（先序遍历）各个beforeEach,spec执行之后再以同样的方式执行afterEach（后序遍历）。</p>
+<p>Demo请参考<a href="http://jasmine.github.io/2.0/introduction.html#section-Nesting_&lt;code&gt;describe&lt;/code&gt;_Blocks" target="_blank" rel="external">Nesting describe Blocks</a>.</p>
+<h3 id="禁用Suites"><a href="#禁用Suites" class="headerlink" title="禁用Suites"></a>禁用Suites</h3><p>suites和specs是可以设为无效的，只需要将describe和it写成xdescribe,这样在运行时它们是被忽略的，它们的结果不会出现在总的结果里。</p>
+<pre><code>xit(&quot;can be declared &apos;xit&apos;&quot;, function() {
+    expect(true).toBe(false);
+});
+</code></pre><h3 id="挂起Specs"><a href="#挂起Specs" class="headerlink" title="挂起Specs"></a>挂起Specs</h3><p>挂起的Specs不运行，但是该Specs的名字将出现在结果中，并将结果设置为Pending。任何使用<code>xit</code>标志的Spec或者没有function body将将被标志位pending。</p>
+<p>And if you call the function pending anywhere in the spec body, no matter the expectations, the spec will be marked pending.</p>
+<pre><code>it(&quot;can be declared by calling &apos;pending&apos; in the spec body&quot;, function() {
+    expect(true).toBe(false);
+    pending();
+  });
+</code></pre><h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><h3 id="Spies"><a href="#Spies" class="headerlink" title="Spies"></a>Spies</h3><p>在Jasmine中，我们使用Spi来跟踪函数被调用的情况，包括被方法调用的参数，Jasmine有专门的mather来跟这些Spi交互，如<code>toHaveBeenCalled</code>、<code>toHaveBeenCalledWith</code>等。</p>
+<p>我们可以用如下方法为<code>foo</code>的<code>setBar</code>方法声明一个spi。</p>
+<pre><code>spyOn(foo, &apos;setBar&apos;);
+</code></pre><p>我们称<code>foo.setBar</code>为一个spi。之后我们便可以使用<code>expect(foo.setBar).toHaveBeenCalled();</code>等方法断言<code>foo.setBar</code>的调用情况。Spi的调用并不会影响真实的值，除非你使用下面介绍的如<code>and.callThrough</code>等方法。。</p>
+<p>如果一个spy被调用过，则<code>toHaveBeenCalled</code>这个Mather将返回true。如果一个Spi被调用的参数列表和<code>toHaveBeenCalledWith</code>的参数相符，则<code>toHaveBeenCalledWith</code>将返回true。</p>
+<p>完整例子如下：</p>
+<pre><code>describe(&quot;A spy&quot;, function() {
+  var foo, bar = null;
+
+  beforeEach(function() {
+    foo = {
+      setBar: function(value) {
+        bar = value;
+      }
+    };
+
+    spyOn(foo, &apos;setBar&apos;);
+
+    foo.setBar(123);
+    foo.setBar(456, &apos;another param&apos;);
+  });
+
+  it(&quot;tracks that the spy was called&quot;, function() {
+    expect(foo.setBar).toHaveBeenCalled();
+  });
+
+  it(&quot;tracks all the arguments of its calls&quot;, function() {
+    expect(foo.setBar).toHaveBeenCalledWith(123);
+    expect(foo.setBar).toHaveBeenCalledWith(456, &apos;another param&apos;);
+  });
+
+  it(&quot;stops all execution on a function&quot;, function() {
+    // Spi的调用并不会影响真实的值，bar仍然是null。
+    expect(bar).toBeNull();
+  });
+});
+</code></pre><p>以下例子中，均使用类似的结构，但值给出关键代码，详情请参考官方文档。</p>
+<h3 id="Spies-and-callThrough"><a href="#Spies-and-callThrough" class="headerlink" title="Spies: and.callThrough"></a>Spies: and.callThrough</h3><p>如果spi调用<code>and.callThrough</code>，那么spi除了跟踪所有的函数调用外，还会受实际实现的影响，即spi返回的值就是实际的值。</p>
+<pre><code>spyOn(foo, &apos;getBar&apos;).and.callThrough();
+foo.setBar(123);
+fetchedBar = foo.getBar(); 
+
+it(&quot;should not effect other functions&quot;, function() {
+  expect(bar).toEqual(123);
+});
+
+it(&quot;when called returns the requested value&quot;, function() {
+  // 和实际的bar相等
+  expect(fetchedBar).toEqual(123);
+});
+</code></pre><h3 id="Spies-and-returnValue"><a href="#Spies-and-returnValue" class="headerlink" title="Spies: and.returnValue"></a>Spies: and.returnValue</h3><p>如果spi调用<code>and.returnValue</code>，那么该spi返回的值为在<code>and.returnValue</code>中返回的值。</p>
+<pre><code>spyOn(foo, &quot;getBar&quot;).and.returnValue(745);
+
+foo.setBar(123);
+fetchedBar = foo.getBar();
+
+it(&quot;should not effect other functions&quot;, function() {
+  expect(bar).toEqual(123);
+});
+
+it(&quot;when called returns the requested value&quot;, function() {
+  // 和实际的bar不等，使用的是returnValue中定义的值。
+  expect(fetchedBar).toEqual(745);
+});
+</code></pre><h3 id="Spies-and-callFake"><a href="#Spies-and-callFake" class="headerlink" title="Spies: and.callFake"></a>Spies: and.callFake</h3><p>和<code>and.returnValue</code>类似，只不过是用function的形式指定spi的返回值。</p>
+<pre><code>spyOn(foo, &quot;getBar&quot;).and.callFake(function() {
+    return 1001;
+});
+
+foo.setBar(123);
+fetchedBar = foo.getBar();
+
+it(&quot;when called returns the requested value&quot;, function() {
+    // 实际的bar值为123，这里返回callFake中指定的值。
+    expect(fetchedBar).toEqual(1001);
+});
+</code></pre><h3 id="Spies-and-throwError"><a href="#Spies-and-throwError" class="headerlink" title="Spies: and.throwError"></a>Spies: and.throwError</h3><p>使用<code>and.throwError</code>来指定spi返回的异常。</p>
+<pre><code>spyOn(foo, &quot;setBar&quot;).and.throwError(&quot;quux&quot;);
+it(&quot;throws the value&quot;, function() {
+    expect(function() {
+      foo.setBar(123)
+    }).toThrowError(&quot;quux&quot;);
+});
+</code></pre><h3 id="Spies-and-stub"><a href="#Spies-and-stub" class="headerlink" title="Spies: and.stub"></a>Spies: and.stub</h3><p>在调用<code>and.callThrough</code>后，如果你想阻止spi继续对实际值产生影响，你可以调用<code>and.stub</code>。也就是说，<code>and.stub</code>是将spi对实际实现的影响还原到最终的状态——不影响实际值。</p>
+<pre><code>spyOn(foo, &apos;setBar&apos;).and.callThrough();
+
+foo.setBar(123);
+// 实际的bar=123
+expect(bar).toEqual(123);
+
+// 调用该代码后，之后调用foo.setBar将不会影响bar的值。
+foo.setBar.and.stub();
+bar = null;
+
+foo.setBar(123);
+expect(bar).toBe(null);
+</code></pre><h3 id="calls"><a href="#calls" class="headerlink" title="calls"></a>calls</h3><p>除了使用<code>toHaveBeenCalled</code>和<code>toHaveBeenCalledWith</code>来跟踪spi的调用情况外，我们还可以使用<code>calls</code>属性来跟踪更复杂的调用。</p>
+<pre><code>spyOn(foo, &apos;setBar&apos;);
+
+// .calls.any() 只要调用一次则返回`true`，否则返回`false`。
+expect(foo.setBar.calls.any()).toEqual(true);
+
+// .calls.count() 返回调用次数。
+expect(foo.setBar.calls.count()).toEqual(2);
+
+// .calls.argsFor(index) 返回指定调用次数参数。
+// 其中1只的是第二次调用。
+expect(foo.setBar.calls.argsFor(1)).toEqual([456, &quot;baz&quot;]);
+
+// calls.allArgs() 返回所有参数。
+foo.setBar(123);
+foo.setBar(456, &quot;baz&quot;);
+expect(foo.setBar.calls.allArgs()).toEqual([[123],[456, &quot;baz&quot;]]);
+
+// .calls.all(): returns the context (the this) and arguments passed all calls
+expect(foo.setBar.calls.all()).toEqual([{object: foo, args: [123]}]);
+
+// .calls.mostRecent() 返回上下文和最近调用的参数。
+foo.setBar(123);
+foo.setBar(456, &quot;baz&quot;);
+expect(foo.setBar.calls.mostRecent()).toEqual({object: foo, args: [456, &quot;baz&quot;]});
+
+// .calls.first()返回上下问和第一次调用的参数
+foo.setBar(123);
+foo.setBar(456, &quot;baz&quot;);
+expect(foo.setBar.calls.first()).toEqual({object: foo, args: [123]});
+
+// .calls.reset() 清除所有追踪信息。
+foo.setBar(123);
+foo.setBar(456, &quot;baz&quot;);
+expect(foo.setBar.calls.any()).toBe(true);
+foo.setBar.calls.reset();
+expect(foo.setBar.calls.any()).toBe(false);
+</code></pre><h3 id="Spies-createSpy"><a href="#Spies-createSpy" class="headerlink" title="Spies: createSpy"></a>Spies: createSpy</h3><p>使用<code>jasmine.createSpy</code>来创建一个虚拟spi，除了没有任何实现，具有其他spi相同的功能。</p>
+<pre><code>var whatAmI = jasmine.createSpy(&apos;whatAmI&apos;);
+whatAmI(&quot;I&quot;, &quot;am&quot;, &quot;a&quot;, &quot;spy&quot;);
+expect(whatAmI.and.identity()).toEqual(&apos;whatAmI&apos;);
+</code></pre><h3 id="Spies-createSpyObj"><a href="#Spies-createSpyObj" class="headerlink" title="Spies: createSpyObj"></a>Spies: createSpyObj</h3><p>定义一个具有spi数组的对象。</p>
+<pre><code>var tape = jasmine.createSpyObj(&apos;tape&apos;, [&apos;play&apos;, &apos;pause&apos;, &apos;stop&apos;, &apos;rewind&apos;]);
+tape.play();
+tape.pause();
+tape.rewind(0);
+
+expect(tape.play).toHaveBeenCalled();
+</code></pre><h3 id="jasmine-any"><a href="#jasmine-any" class="headerlink" title="jasmine.any"></a>jasmine.any</h3><p><code>jasmine.any</code>的参数为一个构造函数或者“类”名，用于匹配所有构造函数为<code>jasmine.any</code>传入的构造函数的对象。</p>
+<pre><code>expect({}).toEqual(jasmine.any(Object));
+expect(12).toEqual(jasmine.any(Number));
+expect(foo).toHaveBeenCalledWith(jasmine.any(Number), jasmine.any(Function));
+</code></pre><h3 id="jasmine-objectContaining"><a href="#jasmine-objectContaining" class="headerlink" title="jasmine.objectContaining"></a>jasmine.objectContaining</h3><p><code>jasmine.objectContaining</code>接收一个Object类型的参数，用于匹配所有包含传入对象的所有对象。</p>
+<pre><code>var foo = {
+  a: 1,
+  b: 2,
+  bar: &quot;baz&quot;
+};
+
+expect(foo).toEqual(jasmine.objectContaining({
+  bar: &quot;baz&quot;
+}));
+expect(foo).not.toEqual(jasmine.objectContaining({
+  c: 37
+}));
+</code></pre><h2 id="虚拟Timer"><a href="#虚拟Timer" class="headerlink" title="虚拟Timer"></a>虚拟Timer</h2><p>Jasmine Clock 用于<code>setTimeout</code>和<code>setInterval</code>的回调控制，它使timer的回调函数同步化，一旦到达指定的时间，注册的毁掉函数便立即调用，这将是timer相关的代码更容易测试。也就是说，<code>setTimeout</code>和<code>setInterval</code>的回调是异步执行的，且时间是不精确的，使用 Jasmine Clock 可使它同步化，且精确计算时间。</p>
+<p><strong>安装：</strong></p>
+<p>在Spec或者Suite中安装Jasmine Clock。</p>
+<pre><code>beforeEach(function() {
+    timerCallback = jasmine.createSpy(&quot;timerCallback&quot;);
+    jasmine.clock().install();
+});
+</code></pre><p><strong>卸载：</strong></p>
+<p>保证使用完成后，切记要关闭Jasmine Clock。</p>
+<pre><code>afterEach(function() {
+  jasmine.clock().uninstall();
+});
+</code></pre><p><strong>计时：</strong></p>
+<p>使用<code>jasmine.clock().tick</code>来计时，一旦累计的时间达到<code>setTimeout</code>或者<code>setInterval</code>中指定的延时时间，则触发回调函数。</p>
+<pre><code>it(&quot;causes an interval to be called synchronously&quot;, function() {
+  setInterval(function() {
+    timerCallback();
+  }, 100);
+
+  expect(timerCallback).not.toHaveBeenCalled();
+
+  jasmine.clock().tick(101);
+  expect(timerCallback.calls.count()).toEqual(1);
+
+  jasmine.clock().tick(50);
+  expect(timerCallback.calls.count()).toEqual(1);
+
+  jasmine.clock().tick(50);
+  expect(timerCallback.calls.count()).toEqual(2);
+});
+</code></pre><h2 id="异步支持"><a href="#异步支持" class="headerlink" title="异步支持"></a>异步支持</h2><p><code>beforeEach</code>, <code>it</code>, 或者 <code>afterEach</code>添加一个可选参数（Function类型），我们假设该参数为<code>done</code>，当异步操作的回调，就调用<code>done</code>，表示异步操作的回调函数调用成功，否则如果没有调用<code>done</code>，则该Spec会因为超时退出，超时时间通过<code>jasmine.DEFAULT_TIMEOUT_INTERVAL</code>指定。</p>
+<pre><code>var value;
+
+// setTimeout代表一个异步操作。
+beforeEach(function(done) {
+  setTimeout(function() {
+    value = 0;
+    // 调用done表示回调成功，否则超时。
+    done();
+  }, 1);
+});
+
+// 如果在beforeEach中的setTimeout的回调中没有调用done，最终导致下面的it因超时而失败。
+it(&quot;should support async execution of test preparation and expectations&quot;, function(done) {
+  value++;
+  expect(value).toBeGreaterThan(0);
+  done();
+});
+</code></pre><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><h3 id="官方"><a href="#官方" class="headerlink" title="官方"></a>官方</h3><ul>
+<li>源码：<a href="https://github.com/pivotal/jasmine" target="_blank" rel="external">pivotal/jasmine</a></li>
+<li>文档：<a href="http://jasmine.github.io/2.0/introduction.html" target="_blank" rel="external">introduction.js</a></li>
+</ul>
+<h3 id="第三方"><a href="#第三方" class="headerlink" title="第三方"></a>第三方</h3><ul>
+<li><a href="http://www.taobaotest.com/blogs/2175" target="_blank" rel="external">javaScript测试框架jasmine介绍（一）</a></li>
+<li><a href="http://www.taobaotest.com/blogs/2267" target="_blank" rel="external">javaScript测试框架jasmine介绍（二）</a></li>
+</ul>
+<p>###　Other</p>
+<ul>
+<li><a href="http://lorenzoplanas.com/blog/20140302-headless-javascript-testing-with-jasmine-20" target="_blank" rel="external">Headless Javascript testing with Jasmine 2.0</a> 结合PhantomJS使用的解决方案。</li>
+<li><a href="http://lorenzoplanas.com/blog/20140305-cleaning-up-selectors-from-jasmine-specs" target="_blank" rel="external">Cleaning up DOM selectors in Jasmine specs</a></li>
+<li><a href="http://lorenzoplanas.com/blog/20140312-testing-event-binding-and-unbinding-with-jasmine" target="_blank" rel="external">Testing event binding and unbinding with Jasmine</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-03-05-javascript-jasmine.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-03-05-javascript-jasmine.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-03-05-javascript-jasmine.html&title=《Jasmine—— JavaScript 单元测试框架》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-03-05-javascript-jasmine.html&title=《Jasmine—— JavaScript 单元测试框架》 — Balance&source=对于JavaScript世界比较流行的测试框架的介绍及比较，请参考 JavaScript 单元测试。
+源码结构源码地址参考Reference，大致结构：
+..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-03-05-javascript-jasmine.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Jasmine—— JavaScript 单元测试框架》 — Balance&url=http://blog.inching.org/JavaScript/2014-03-05-javascript-jasmine.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-03-05-javascript-jasmine.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/ES5-Core/2014-03-05-javascript-es3-core-scope-chain.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">作用域链（Scope Chain）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">this</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-03-05-javascript-jasmine.html&title=《Jasmine—— JavaScript 单元测试框架》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-03-05-javascript-jasmine.html&title=《Jasmine—— JavaScript 单元测试框架》 — Balance&source=对于JavaScript世界比较流行的测试框架的介绍及比较，请参考 JavaScript 单元测试。
+源码结构源码地址参考Reference，大致结构：
+..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-03-05-javascript-jasmine.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Jasmine—— JavaScript 单元测试框架》 — Balance&url=http://blog.inching.org/JavaScript/2014-03-05-javascript-jasmine.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-03-05-javascript-jasmine.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACp0lEQVR42u3ay24jMQwEwPz/TyfnReBxNykhXqB0Mux5qHSQaJJfX/H4/jWev/9976vPs18PDzw8PLz11J8ZyV2ze5Pr8znj4eHh3ea1G/rz9a+m1e7bz0uQzAEPDw/v03hJSP0MS+aAh4eH97/z2lRCPvX8MMDDw8P7BF4bwp5KTCTpifaNeHh4eLd5m/D3rz5fqe/h4eHhravq+Ya7KXclYfps4OHh4d3g5RtuHuzm6dfkOXkh7eWVeHh4eEd5bWm/LV+dBSfHxj934eHh4V3jJVtzW+KaJXCTY6Bo7cLDw8O7xss367YJYFPc2qQ88PDw8O7x8kMiefS+kWsW0NcVPDw8PLw1L/+Tn4fd+yVItv7oXXh4eHhHebMS/qZVq31jexRFlT08PDy8NW9TdpodBqcYUbsVHh4e3jXe7KFtkL0/MIoEBx4eHt41XpvzPAXLk8Xt0rxpusLDw8O7wJs1ELRJinaZ2sYvPDw8vBu8WQDdbtDt1PMgO5knHh4e3g3epiVrViRrpzJrO8DDw8O7wWsLXZui1KliWBH04+Hh4V3j7R80C77bZEebMsbDw8O7wcs3+qhUXyZtNwdPgcfDw8O7wMtTAO0mnhe6Nt/nqQo8PDy8s7z2GJilVmetsXnDwZvAGg8PD+8QLw+L8xTDHjMrgBXnGx4eHt4FXj7R2ZX79MewXRUPDw/vAm+fMshTtHm4PBx4eHh4R3nf5ZgdKrPAfRN8v2y6wsPDw1vzzu6xefh79smrBgI8PDy8EW+Wft1sxLPjZNgKhoeHh3eNlwe4syRsu3CnEit4eHh4n8BrF2L/nHaJ8fDw8D6NlzSS5uWx/N5ZohkPDw/vHi8JfDcLkRfA2jm8eQseHh7eBV77J78tSm2Sv8mVx9qz8PDw8N7zfgBzZaZLo5m2ywAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

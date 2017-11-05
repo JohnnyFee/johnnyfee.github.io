@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>C# RDLC报表  | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="csharp,report">
+    <meta name="description" content="本文原发表在ITEYE上,均为本作者原创。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C# RDLC报表 ">
+<meta property="og:url" content="http://blog.inching.org/C/2012-04-20-csharp-rdlc-report.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="本文原发表在ITEYE上,均为本作者原创。">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/rdlc/create_report.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/rdlc/insert_table.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/rdlc/add_data_set.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/rdlc/add_data_adapter.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/rdlc/new_data_set.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/rdlc/set_data_set_name.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/rdlc/data_expression.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/rdlc/report_view.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/rdlc/choose_data_set.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/rdlc/parameter.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/rdlc/sub_report.jpg">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/rdlc/group.jpg">
+<meta property="og:updated_time" content="2017-04-21T12:57:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C# RDLC报表 ">
+<meta name="twitter:description" content="本文原发表在ITEYE上,均为本作者原创。">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/rdlc/create_report.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">C# RDLC报表 </div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">C# RDLC报表 </h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2012-04-19T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2012-04-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C#</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-csharp-rdlc-report"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">C# RDLC报表 </h1>
+        <div class="post-meta">
+            <time class="post-time" title="2012-04-20 00:00:00" datetime="2012-04-19T16:00:00.000Z"  itemprop="datePublished">2012-04-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C#</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文原发表在<a href="http://feiqiang.iteye.com/blog/1490634" target="_blank" rel="external">ITEYE</a>上,均为本作者原创。</p>
+<a id="more"></a>
+<p>##创建报表</p>
+<p>可以通过Report或者Report Wizard创建报表</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/rdlc/create_report.jpg" alt="创建报表" title="">
+                </div>
+                <div class="image-caption">创建报表</div>
+            </figure>
+<p>右键 Insert–&gt;Table, 可以为插入的Table选择或创建数据源</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/rdlc/insert_table.jpg" alt="创建数据源" title="">
+                </div>
+                <div class="image-caption">创建数据源</div>
+            </figure>
+<p>我们也可以跳过这一步，暂且生成一个空报表，动态地为报表设置数据源，关于这个在后边会提到。</p>
+<p>关于报表的创建，可以参考</p>
+<ul>
+<li><p><a href="http://blog.csdn.net/yanchao1023/article/details/5537169" target="_blank" rel="external">概述</a></p>
+</li>
+<li><p><a href="http://msdn.microsoft.com/en-us/library/ms252073(v=vs.80" target="_blank" rel="external">Walkthrough: Creating a ReportViewer Report</a>.aspx)</p>
+</li>
+<li><a href="http://www.cnblogs.com/jack86514/archive/2009/10/16/1584391.html" target="_blank" rel="external">RDLC 报表系列（一） 创建一个报表</a></li>
+<li><a href="http://www.cnblogs.com/robinli/archive/2011/09/27/2192440.html" target="_blank" rel="external">WinForm中创建Rdlc报表</a></li>
+<li><a href="http://www.cnblogs.com/robinli/archive/2011/09/27/2192440.html" target="_blank" rel="external">Windows Forms Control in Local Processing Mode</a></li>
+</ul>
+<p>##报表数据源</p>
+<p>###添加DataSet数据源</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/rdlc/add_data_set.jpg" alt="添加DataSet数据源" title="">
+                </div>
+                <div class="image-caption">添加DataSet数据源</div>
+            </figure>
+<p>在DataSet中新建一个TableAdapter，创建第一个DataAdapter时，会提示创建数据库连接。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/rdlc/add_data_adapter.jpg" alt="创建数据库" title="">
+                </div>
+                <div class="image-caption">创建数据库</div>
+            </figure>
+<p>当然，我们也可以不映射数据库中的字段，直接手动添加列，之后为这些DataSet复制，可以参考<a href="http://hi.baidu.com/flowsing/blog/item/f237c3a1e3d877814610646e.html" target="_blank" rel="external">这里</a>。</p>
+<p>###为Rdlc报表生成数据源</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/rdlc/new_data_set.jpg" alt="生成数据源" title="">
+                </div>
+                <div class="image-caption">生成数据源</div>
+            </figure>
+<p>配置Rdlc的数据源，当然可以在为Rdlc创建Table时根据Wizard配置好：</p>
+<p>右键Table–&gt;Tablix Properties–&gt;General–&gt;Data Set Name</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/rdlc/set_data_set_name.jpg" alt="DataSet" title="">
+                </div>
+                <div class="image-caption">DataSet</div>
+            </figure>
+<p>接下来就可以把DataSet中的字段往Table中拖拽或者直接编辑该列的Expression。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/rdlc/data_expression.jpg" alt="Expression" title="">
+                </div>
+                <div class="image-caption">Expression</div>
+            </figure>
+<p>###添加页眉和页脚</p>
+<p>Report–&gt;Add Report Header, Add Report Foo。</p>
+<p>如果不能在每页都显示页眉或页脚，请在RDLC源码<keepwithgroup>After</keepwithgroup>后加上<keepwithgroup>After</keepwithgroup>，如：</p>
+<pre><code>&lt;TablixRowHierarchy&gt;
+          &lt;TablixMembers&gt;
+            &lt;TablixMember&gt;
+              &lt;KeepWithGroup&gt;After&lt;/KeepWithGroup&gt;
+              &lt;RepeatOnNewPage&gt;true&lt;/RepeatOnNewPage&gt;
+              &lt;/TablixMember&gt;
+            &lt;TablixMember&gt;
+              &lt;Group Name=&quot;详细信息&quot; /&gt;
+            &lt;/TablixMember&gt;
+            &lt;TablixMember&gt;
+              &lt;KeepWithGroup&gt;Before&lt;/KeepWithGroup&gt;
+            &lt;/TablixMember&gt;
+          &lt;/TablixMembers&gt;
+&lt;/TablixRowHierarchy&gt;
+&lt;TablixRowHierarchy&gt;
+          &lt;TablixMembers&gt;
+            &lt;TablixMember&gt;
+              &lt;KeepWithGroup&gt;After&lt;/KeepWithGroup&gt;
+              &lt;RepeatOnNewPage&gt;true&lt;/RepeatOnNewPage&gt;
+              &lt;/TablixMember&gt;
+            &lt;TablixMember&gt;
+              &lt;Group Name=&quot;详细信息&quot; /&gt;
+            &lt;/TablixMember&gt;
+            &lt;TablixMember&gt;
+              &lt;KeepWithGroup&gt;Before&lt;/KeepWithGroup&gt;
+            &lt;/TablixMember&gt;
+          &lt;/TablixMembers&gt;
+&lt;/TablixRowHierarchy&gt;
+</code></pre><p>报表的数据源还可以是某个类的方法，这个方法应该返回一个集合，可以参考<a href="http://msdn.microsoft.com/en-us/library/ms251692(v=vs.100" target="_blank" rel="external">这里</a>.aspx)，如：</p>
+<pre><code>/// &lt;summary&gt;
+/// The data source.
+/// &lt;/summary&gt;
+public class DataSource
+{
+    /// &lt;summary&gt;
+    /// The get Meterials.
+    /// &lt;/summary&gt;
+    /// &lt;returns&gt;
+    /// &lt;/returns&gt;
+    public static IEnumerable&lt;Meterial&gt; GetMeterials()
+    {
+        return null;
+    }
+
+    public static IEnumerable&lt;Meterial&gt; GetMeterials2()
+    {
+        return null;
+    }
+
+}
+
+/// &lt;summary&gt;
+/// The Meterial
+/// &lt;/summary&gt;
+public class Meterial
+{
+    /// &lt;summary&gt;
+    /// Gets or sets Name.
+    /// &lt;/summary&gt;
+    public string Name { get; set; }
+
+    /// &lt;summary&gt;
+    /// Gets or sets Email.
+    /// &lt;/summary&gt;
+    public string Email { get; set; }
+}
+/// &lt;summary&gt;
+/// The data source.
+/// &lt;/summary&gt;
+public class DataSource
+{
+    /// &lt;summary&gt;
+    /// The get Meterials.
+    /// &lt;/summary&gt;
+    /// &lt;returns&gt;
+    /// &lt;/returns&gt;
+    public static IEnumerable&lt;Meterial&gt; GetMeterials()
+    {
+        return null;
+    }
+
+    public static IEnumerable&lt;Meterial&gt; GetMeterials2()
+    {
+        return null;
+    }
+
+}
+
+/// &lt;summary&gt;
+/// The Meterial
+/// &lt;/summary&gt;
+public class Meterial
+{
+    /// &lt;summary&gt;
+    /// Gets or sets Name.
+    /// &lt;/summary&gt;
+    public string Name { get; set; }
+
+    /// &lt;summary&gt;
+    /// Gets or sets Email.
+    /// &lt;/summary&gt;
+    public string Email { get; set; }
+}
+</code></pre><p>##在apsx页面中显示报表</p>
+<p>新建Aspx页面，拖拽一个ScriptManager(在Toolbox–&gt;Ajax Extensions中)到具有runat=”server”的控件之下，如</p>
+<pre><code>&lt;form id=&quot;form1&quot; runat=&quot;server&quot;&gt;
+    &lt;asp:ScriptManager ID=&quot;ScriptManager1&quot; runat=&quot;server&quot;&gt;
+    &lt;/asp:ScriptManager&gt;
+&lt;/form&gt;
+&lt;form id=&quot;form1&quot; runat=&quot;server&quot;&gt;
+    &lt;asp:ScriptManager ID=&quot;ScriptManager1&quot; runat=&quot;server&quot;&gt;
+    &lt;/asp:ScriptManager&gt;
+&lt;/form&gt;
+</code></pre><p>插入ReportView控件</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/rdlc/report_view.jpg" alt="插入ReportView控件" title="">
+                </div>
+                <div class="image-caption">插入ReportView控件</div>
+            </figure>
+<p>为报表的数据源初始化实例</p>
+<p>点击上图的”ReportView Tasks”–&gt;Choose Data Source</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/rdlc/choose_data_set.jpg" alt="Choose Data Source" title="">
+                </div>
+                <div class="image-caption">Choose Data Source</div>
+            </figure>
+<p>在弹出的Wizard中，选择“Object”，输入Data Source Id， 点击OK确认，此时可以选择在”报表数据源“中创建的TableAdapter。当然，我们可以通过代码来创建数据源，代码如下：</p>
+<pre><code>ObjectResult&lt;MeterialReturnResult&gt; meterials = DbEntities.BusinessScale();
+var rdsMeterials = new ReportDataSource(
+    &quot;MeterialDataSet&quot;, meterials );
+
+localReport.DataSources.Clear();
+localReport.DataSources.Add(rdsMeterials );
+localReport.Refresh();
+ObjectResult&lt;MeterialReturnResult&gt; meterials = DbEntities.BusinessScale();
+var rdsMeterials = new ReportDataSource(
+                    &quot;MeterialDataSet&quot;, meterials );
+
+localReport.DataSources.Clear();
+localReport.DataSources.Add(rdsMeterials );
+localReport.Refresh();
+</code></pre><p>我在以上代码中使用EF调用存储过程发挥的结果作为报表的数据源。</p>
+<p>##报表参数</p>
+<p>报表参数的值只能通过程序来设定，在报表上无法接收参数值的输入，只能显示。通过右键“Report Data” View的“Parameters”添加参数，如：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/rdlc/parameter.jpg" alt="报表参数" title="">
+                </div>
+                <div class="image-caption">报表参数</div>
+            </figure>
+<p>设置报表参数的值：</p>
+<pre><code>var reportDateParameter = new ReportParameter(&quot;ReportDate&quot;, reportDate);
+reportParameters.Add(reportDateParameter);
+var reportDateParameter = new ReportParameter(&quot;ReportDate&quot;, reportDate);
+reportParameters.Add(reportDateParameter);
+</code></pre><p>多次添加相同参数名的报表参数，前者将会被覆盖。</p>
+<p>##报表变量和常量</p>
+<ul>
+<li>ExecutionTime 生成报表的时间</li>
+<li>PageNumber 当前的页号</li>
+<li>ReportFolder 包含报表的文件路径</li>
+<li>ReportName 报表的名称</li>
+<li>ReportServerUrl 执行报表Server的路径（这里没有用Server，所以没有，如果用ReportService那就就存在了）</li>
+<li>TotalPages 总行数</li>
+<li>UserID 当前执行报表的人</li>
+<li>Language 执行报表Server的系统语言</li>
+</ul>
+<p>显示页码：</p>
+<pre><code>Globals!PageNumber.ToString() &amp; &quot;/&quot; &amp;&amp; Globals!TotalPages.ToString()
+Globals!PageNumber.ToString() &amp; &quot;/&quot; &amp;&amp; Globals!TotalPages.ToString()
+</code></pre><p>显示行号：</p>
+<pre><code>=RowNumber(&quot;MeterialDataSet&quot;)
+=RowNumber(&quot;MeterialDataSet&quot;)
+</code></pre><p>参考：<a href="http://www.cnblogs.com/jack86514/archive/2009/10/17/1585254.html" target="_blank" rel="external">RDLC 报表系列（三） 参数、常量及常用表达式的使用</a></p>
+<p>##报表表达式</p>
+<p>回车拼接字符串：</p>
+<pre><code>=Fields!FirstName.Value &amp; vbCrLf &amp; Fields!LastName.Value
+=Fields!FirstName.Value &amp; vbCrLf &amp; Fields!LastName.Value
+</code></pre><p>其他表达式请参考：<a href="http://www.cnblogs.com/hubcarl/archive/2009/10/08/1579029.html" target="_blank" rel="external">rdlc报表表达式应用(字符串和转换)</a></p>
+<p>可以两个小应用可以参考：</p>
+<ul>
+<li><a href="http://blog.csdn.net/lee576/article/details/6310147" target="_blank" rel="external">RDLC报表中给Matrix矩阵控件中的小计subtotal行加上背景色</a></li>
+<li><a href="http://blog.csdn.net/lee576/article/details/6309652" target="_blank" rel="external">RDLC报表中Matrix矩阵控件空值替换成0</a></li>
+</ul>
+<p>##子报表<br>如果希望单击报表中某个值后，弹出一个新的报表，即钻取报表或自报表，则<br>右键报表的某个单元格–&gt;Text Box Property–&gt;制定钻取报表和传递给钻取报表的参数</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/rdlc/sub_report.jpg" alt="插入ReportView控件" title="">
+                </div>
+                <div class="image-caption">插入ReportView控件</div>
+            </figure>
+<p>在钻取报表中添加一个参数已接收主报表传递过来的参数，参数名和主报表传递给钻取报表的参数名相同。</p>
+<p>捕获主报表的Drillthrough事件，实例化钻取报表的数据源，如：</p>
+<pre><code>private void reportViewer1_Drillthrough(object sender, DrillthroughEventArgs e)
+{
+    LocalReport lp = (LocalReport)e.Report;
+    string customerid = lp.GetParameters()[&quot;customerid&quot;].Values[0].Trim();
+
+    lp.DataSources.Clear();
+    lp.DataSources.Add(new ReportDataSource(&quot;NorthwindDataSet_Orders&quot;,
+        new NorthwindDataSetTableAdapters.OrdersTableAdapter().GetDataByCustomerID(customerid)));
+}
+private void reportViewer1_Drillthrough(object sender, DrillthroughEventArgs e)
+{
+    LocalReport lp = (LocalReport)e.Report;
+    string customerid = lp.GetParameters()[&quot;customerid&quot;].Values[0].Trim();
+
+    lp.DataSources.Clear();
+    lp.DataSources.Add(new ReportDataSource(&quot;NorthwindDataSet_Orders&quot;,
+        new NorthwindDataSetTableAdapters.OrdersTableAdapter().GetDataByCustomerID(customerid)));
+}
+</code></pre><p>详细请参考：<a href="http://www.cnblogs.com/wjhx/archive/2007/03/07/666928.html" target="_blank" rel="external">使用RDLC报表(四)–钻取式报表</a></p>
+<p>##分组</p>
+<p>对于新建的Table，有一个默认的分组，名为Details，但是没有制定分组的字段，我们可以为这个分组设置分组字段，如：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/rdlc/group.jpg" alt="插入ReportView控件" title="">
+                </div>
+                <div class="image-caption">插入ReportView控件</div>
+            </figure>
+<p>##在报表中插入图片</p>
+<p>将图片复制到工程，右键“Report Data”视图中的Image，选择“Add”，将图片引入报表。之后便可以将图标拖到报表中，我们这里插入图片的方式为Embedded，参考<a href="http://www.cnblogs.com/jack86514/archive/2009/10/17/1584862.html" target="_blank" rel="external">这里</a>。</p>
+<p>##阅读</p>
+<ul>
+<li><a href="http://www.gotreportviewer.com/" target="_blank" rel="external">蜡人张</a></li>
+<li><a href="http://www.gotreportviewer.com/" target="_blank" rel="external">gotreportviewer </a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:16.000Z" itemprop="dateUpdated">2017-04-21 20:57:16</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/C/2012-04-20-csharp-rdlc-report.html" target="_blank" rel="external">http://blog.inching.org/C/2012-04-20-csharp-rdlc-report.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/report/">report</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/C/2012-04-20-csharp-rdlc-report.html&title=《C# RDLC报表 》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/C/2012-04-20-csharp-rdlc-report.html&title=《C# RDLC报表 》 — Balance&source=本文原发表在ITEYE上,均为本作者原创。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/C/2012-04-20-csharp-rdlc-report.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C# RDLC报表 》 — Balance&url=http://blog.inching.org/C/2012-04-20-csharp-rdlc-report.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/C/2012-04-20-csharp-rdlc-report.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/ExtJS/2013-07-15-extjs-design.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">ExtJS 设计规范</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/C/2012-04-20-csharp-rdlc-report.html&title=《C# RDLC报表 》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/C/2012-04-20-csharp-rdlc-report.html&title=《C# RDLC报表 》 — Balance&source=本文原发表在ITEYE上,均为本作者原创。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/C/2012-04-20-csharp-rdlc-report.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C# RDLC报表 》 — Balance&url=http://blog.inching.org/C/2012-04-20-csharp-rdlc-report.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/C/2012-04-20-csharp-rdlc-report.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3ay26DMBAF0Pz/T9Ntqgh0rx2qYh9WUUrAx4vpPPx6xdfxdr1/8/k5uf/zzrNfffnCwMB4LOO4vM7u+dZGtO89XQMGBsYGjCQUJn9t8W0oP/0eAwMD4zKBO1to/oSZhBIDAwOjDYJ5wE22AwMDA6MtJq8X0bbhEvAttTgGBsYDGXmz7O8/3zLfwMDAeBTjKK+ZFHBsPBCtCgMDY2lGHuDy5CwpWZMntANRDAyMHRhjzfr5gnN+5ICBgbE2Y6Z0vLtJl2zfrwwXAwNjG0YSQPNUbyzg5uNVDAyMfRjt4YZ2MNkusR6RYmBgbMCYmQwmS2yba8m/gdfYfmBgYDyQMdbWT5K85Ml50lm/EQMDYznGd5eeJ45jqWc0wsTAwFiUMZbG5SE7L3eLRtu3slEMDIx/z8jDZRuI8yNibRCPilgMDIyFGG1La+yY13wgrjNcDAyMhRjt69tv7mZjYGDsxkgC3MxxinZr2qQTAwNjB0ayuLFCtB1qtu05DAyMtRl5m37sQFgbaq/fe/p2DAyMzRjJg9oEcez+qa4hBgbGoow2oxwbZ7ajiCjpxMDAWJRxlFc7yJwvZYv6GwMDY1FGe1ysHQO0YTdv/OXbhIGBsQZjrEy9L1COtfYwMDB2YORDzbFSM2+rTdXiGBgYGHGxOvbbmdQTAwMDY+aARR6IrzclKmIxMDCWZiRFbHu0K2mu5ckiBgbGzoy2dGyPkc0c0WiHExgYGMsxfgBz9GqY1n14PAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

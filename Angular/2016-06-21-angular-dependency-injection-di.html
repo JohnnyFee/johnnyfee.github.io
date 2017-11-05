@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Angular Dependency Injection | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="angular,di,dependency injection">
+    <meta name="description" content="See AngularJS: Developer Guide: Dependency Injection
+Dependency Injection (DI) is a software design pattern that deals with how components get hold of their dependencies.
+The Angular injector subsyste">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular Dependency Injection">
+<meta property="og:url" content="http://blog.inching.org/Angular/2016-06-21-angular-dependency-injection-di.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See AngularJS: Developer Guide: Dependency Injection
+Dependency Injection (DI) is a software design pattern that deals with how components get hold of their dependencies.
+The Angular injector subsyste">
+<meta property="og:image" content="https://docs.angularjs.org/img/guide/concepts-module-injector.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular Dependency Injection">
+<meta name="twitter:description" content="See AngularJS: Developer Guide: Dependency Injection
+Dependency Injection (DI) is a software design pattern that deals with how components get hold of their dependencies.
+The Angular injector subsyste">
+<meta name="twitter:image" content="https://docs.angularjs.org/img/guide/concepts-module-injector.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Angular Dependency Injection</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Angular Dependency Injection</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-06-20T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-06-21
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Using-Dependency-Injection"><span class="post-toc-text">Using Dependency Injection</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Factory-Methods"><span class="post-toc-text">Factory Methods</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Module-Methods"><span class="post-toc-text">Module Methods</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Controllers"><span class="post-toc-text">Controllers</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Dependency-Annotation"><span class="post-toc-text">Dependency Annotation</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Inline-Array-Annotation"><span class="post-toc-text">Inline Array Annotation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#inject-Property-Annotation"><span class="post-toc-text">$inject Property Annotation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Implicit-Annotation"><span class="post-toc-text">Implicit Annotation</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Using-Strict-Dependency-Injection"><span class="post-toc-text">Using Strict Dependency Injection</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Why-Dependency-Injection"><span class="post-toc-text">Why Dependency Injection?</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-angular-dependency-injection-di"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Angular Dependency Injection</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-06-21 00:00:00" datetime="2016-06-20T16:00:00.000Z"  itemprop="datePublished">2016-06-21</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Angular/">Angular</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="https://docs.angularjs.org/guide/di#using-strict-dependency-injection" target="_blank" rel="external">AngularJS: Developer Guide: Dependency Injection</a></p>
+<p>Dependency Injection (DI) is a software design pattern that deals with how components get hold of their dependencies.</p>
+<p>The Angular injector subsystem is in charge of creating components, resolving their dependencies, and providing them to other components as requested.</p>
+<a id="more"></a>
+<p>When the application bootstraps, Angular creates an injector that will be used to find and inject all of the services that are required by your application. The injector itself doesn’t know anything about what the <code>$http</code> or <code>$route</code> services do. In fact, the injector doesn’t even know about the existence of these services, unless it is configured with proper module definitions.</p>
+<p>The injector only carries out the following steps:</p>
+<ul>
+<li>Load the module definition(s) that you specify in your application.</li>
+<li>Register all Providers defined in these module definition(s).</li>
+<li>When asked to do so, lazily instantiate services and their dependencies, via their Providers, as parameters to an injectable function.</li>
+</ul>
+<h2 id="Using-Dependency-Injection"><a href="#Using-Dependency-Injection" class="headerlink" title="Using Dependency Injection"></a>Using Dependency Injection</h2><p>DI is pervasive throughout Angular. You can use it when defining components or when providing <code>run</code> and <code>config</code> blocks for a module.</p>
+<ul>
+<li><p>Components such as services, directives, filters, and animations are defined by an injectable factory method or constructor function. These components can be injected with “service” and “value”components as dependencies.</p>
+</li>
+<li><p>Controllers are defined by a constructor function, which can be injected with any of the “service”and “value” components as dependencies, but they can also be provided with special dependencies. See <a href="https://docs.angularjs.org/guide/di#controllers" target="_blank" rel="external">Controllers</a> below for a list of these special dependencies.</p>
+</li>
+<li><p>The <code>run</code> method accepts a function, which can be injected with “service”, “value” and “constant”components as dependencies. Note that you cannot inject “providers” into <code>run</code> blocks.</p>
+</li>
+<li><p>The <code>config</code> method accepts a function, which can be injected with “provider” and “constant”components as dependencies. Note that you cannot inject “service” or “value” components into configuration.</p>
+</li>
+</ul>
+<p>See <a href="https://docs.angularjs.org/guide/module#module-loading-dependencies" target="_blank" rel="external">Modules</a> for more details about <code>run</code> and <code>config</code><br>blocks.</p>
+<h3 id="Factory-Methods"><a href="#Factory-Methods" class="headerlink" title="Factory Methods"></a>Factory Methods</h3><p>The way you define a directive, service, or filter is with a factory function.<br>The factory methods are registered with modules. The recommended way of declaring factories is:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'myModule'</span>, [])</div><div class="line">.factory(<span class="string">'serviceId'</span>, [<span class="string">'depService'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">depService</span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;])</div><div class="line">.directive(<span class="string">'directiveName'</span>, [<span class="string">'depService'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">depService</span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;])</div><div class="line">.filter(<span class="string">'filterName'</span>, [<span class="string">'depService'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">depService</span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;]);</div></pre></td></tr></table></figure>
+<h3 id="Module-Methods"><a href="#Module-Methods" class="headerlink" title="Module Methods"></a>Module Methods</h3><p>We can specify functions to run at configuration and run time for a module by calling the <code>config</code> and <code>run</code> methods. These functions are injectable with dependencies just like the factory functions<br>above.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'myModule'</span>, [])</div><div class="line">.config([<span class="string">'depProvider'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">depProvider</span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;])</div><div class="line">.run([<span class="string">'depService'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">depService</span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;]);</div></pre></td></tr></table></figure>
+<h3 id="Controllers"><a href="#Controllers" class="headerlink" title="Controllers"></a>Controllers</h3><p>Controllers are “classes” or “constructor functions” that are responsible for providing the application behavior that supports the declarative markup in the template. The recommended way of declaring Controllers is using the array notation:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">someModule.controller(<span class="string">'MyController'</span>, [<span class="string">'$scope'</span>, <span class="string">'dep1'</span>, <span class="string">'dep2'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, dep1, dep2</span>) </span>&#123;</div><div class="line">  ...</div><div class="line">  $scope.aMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    ...</div><div class="line">  &#125;</div><div class="line">  ...</div><div class="line">&#125;]);</div></pre></td></tr></table></figure>
+<p>Unlike services, there can be many instances of the same type of controller in an application.</p>
+<p>Moreover, additional dependencies are made available to Controllers:</p>
+<ul>
+<li><a href="https://docs.angularjs.org/guide/scope" target="_blank" rel="external"><code>$scope</code></a>: Controllers are associated with an element in the DOM and so are provided with access to the <a href="https://docs.angularjs.org/guide/scope" target="_blank" rel="external">scope</a>. Other components (like services) only have access to the <a href="https://docs.angularjs.org/api/ng/service/$rootScope" target="_blank" rel="external"><code>$rootScope</code></a> service.</li>
+<li><a href="https://docs.angularjs.org/api/ngRoute/provider/$routeProvider#when" target="_blank" rel="external">resolves</a>: If a controller is instantiated as part of a route, then any values that are resolved as part of the route are made available for injection into the controller.</li>
+</ul>
+<h2 id="Dependency-Annotation"><a href="#Dependency-Annotation" class="headerlink" title="Dependency Annotation"></a>Dependency Annotation</h2><p>Angular invokes certain functions (like service factories and controllers) via the injector. You need to annotate these functions so that the injector knows what services to inject into the function. There are three ways of annotating your code with service name information:</p>
+<ul>
+<li>Using the inline array annotation (preferred)</li>
+<li>Using the <code>$inject</code> property annotation</li>
+<li>Implicitly from the function parameter names (has caveats)</li>
+</ul>
+<h3 id="Inline-Array-Annotation"><a href="#Inline-Array-Annotation" class="headerlink" title="Inline Array Annotation"></a>Inline Array Annotation</h3><p>This is the preferred way to annotate application components. This is how the examples in the documentation are written.</p>
+<p>For example:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">someModule.controller(<span class="string">'MyController'</span>, [<span class="string">'$scope'</span>, <span class="string">'greeter'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, greeter</span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;]);</div></pre></td></tr></table></figure>
+<p>Here we pass an array whose elements consist of a list of strings (the names of the dependencies) followed by the function itself.</p>
+<p>When using this type of annotation, take care to keep the annotation array in sync with the parameters in the function declaration.</p>
+<h3 id="inject-Property-Annotation"><a href="#inject-Property-Annotation" class="headerlink" title="$inject Property Annotation"></a><code>$inject</code> Property Annotation</h3><p>To allow the minifiers to rename the function parameters and still be able to inject the right services, the function needs to be annotated with the <code>$inject</code> property. The <code>$inject</code> property is an array of service names to inject.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> MyController = <span class="function"><span class="keyword">function</span>(<span class="params">$scope, greeter</span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line">MyController.$inject = [<span class="string">'$scope'</span>, <span class="string">'greeter'</span>];</div><div class="line">someModule.controller(<span class="string">'MyController'</span>, MyController);</div></pre></td></tr></table></figure>
+<p>In this scenario the ordering of the values in the <code>$inject</code> array must match the ordering of the parameters in <code>MyController</code>.</p>
+<p>Just like with the array annotation, you’ll need to take care to keep the <code>$inject</code> in sync with the parameters in the function declaration.</p>
+<h3 id="Implicit-Annotation"><a href="#Implicit-Annotation" class="headerlink" title="Implicit Annotation"></a>Implicit Annotation</h3><p><strong>Careful:</strong> If you plan to <a href="http://en.wikipedia.org/wiki/Minification_(programming" target="_blank" rel="external">minify</a>) your code, your service names will get renamed and break your app.</p>
+<p>The simplest way to get hold of the dependencies is to assume that the function parameter names are the names of the dependencies.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">someModule.controller(<span class="string">'MyController'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, greeter</span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Given a function, the injector can infer the names of the services to inject by examining the function declaration and extracting the parameter names. In the above example, <code>$scope</code> and <code>greeter</code> are two services which need to be injected into the function.</p>
+<p>One advantage of this approach is that there’s no array of names to keep in sync with the function parameters. You can also freely reorder dependencies.</p>
+<p>However this method will not work with JavaScript minifiers/obfuscators because of how they rename parameters.</p>
+<p>Tools like <a href="https://github.com/olov/ng-annotate" target="_blank" rel="external">ng-annotate</a> let you use implicit dependency annotations in your app and automatically add inline array annotations prior to minifying. If you decide to take this approach, you probably want to use <code>ng-strict-di</code>.</p>
+<p>Because of these caveats, we recommend avoiding this style of annotation.</p>
+<h2 id="Using-Strict-Dependency-Injection"><a href="#Using-Strict-Dependency-Injection" class="headerlink" title="Using Strict Dependency Injection"></a>Using Strict Dependency Injection</h2><p>You can add an <code>ng-strict-di</code> directive on the same element as <code>ng-app</code> to opt into strict DI mode:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!doctype html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">ng-app</span>=<span class="string">"myApp"</span> <span class="attr">ng-strict-di</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  I can add: &#123;&#123; 1 + 2 &#125;&#125;.</div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"angular.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Strict mode throws an error whenever a service tries to use implicit annotations.</p>
+<p>Consider this module, which includes a <code>willBreak</code> service that uses implicit DI:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'myApp'</span>, [])</div><div class="line">.factory(<span class="string">'willBreak'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$rootScope</span>) </span>&#123;</div><div class="line">  <span class="comment">// $rootScope is implicitly injected</span></div><div class="line">&#125;)</div><div class="line">.run([<span class="string">'willBreak'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">willBreak</span>) </span>&#123;</div><div class="line">  <span class="comment">// Angular will throw when this runs</span></div><div class="line">&#125;]);</div></pre></td></tr></table></figure>
+<p>When the <code>willBreak</code> service is instantiated, Angular will throw an error because of strict mode. This is useful when using a tool like <a href="https://github.com/olov/ng-annotate" target="_blank" rel="external">ng-annotate</a> to ensure that all of your application components have annotations.</p>
+<p>If you’re using manual bootstrapping, you can also use strict DI by providing <code>strictDi: true</code> in the optional config argument:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">angular.bootstrap(<span class="built_in">document</span>, [<span class="string">'myApp'</span>], &#123;</div><div class="line">  <span class="attr">strictDi</span>: <span class="literal">true</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="Why-Dependency-Injection"><a href="#Why-Dependency-Injection" class="headerlink" title="Why Dependency Injection?"></a>Why Dependency Injection?</h2><p>This section motivates and explains Angular’s use of DI. For how to use DI, see above.</p>
+<p>For in-depth discussion about DI, see <a href="http://en.wikipedia.org/wiki/Dependency_injection" target="_blank" rel="external">Dependency Injection</a> at Wikipedia, <a href="http://martinfowler.com/articles/injection.html" target="_blank" rel="external">Inversion of Control</a> by Martin Fowler,<br>or read about DI in your favorite software design pattern book.</p>
+<p>There are only three ways a component (object or function) can get a hold of its dependencies:</p>
+<ol>
+<li>The component can create the dependency, typically using the <code>new</code> operator.</li>
+<li>The component can look up the dependency, by referring to a global variable.</li>
+<li>The component can have the dependency passed to it where it is needed.</li>
+</ol>
+<p>The first two options of creating or looking up dependencies are not optimal because they hard code the dependency to the component. This makes it difficult, if not impossible, to modify the dependencies. This is especially problematic in tests, where it is often desirable to provide mock dependencies for test isolation.</p>
+<p>The third option is the most viable, since it removes the responsibility of locating the dependency from the component. The dependency is simply handed to the component.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">SomeClass</span>(<span class="params">greeter</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.greeter = greeter;</div><div class="line">&#125;</div><div class="line"></div><div class="line">SomeClass.prototype.doSomething = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.greeter.greet(name);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>In the above example <code>SomeClass</code> is not concerned with creating or locating the <code>greeter</code> dependency, it is simply handed the <code>greeter</code> when it is instantiated.</p>
+<p>This is desirable, but it puts the responsibility of getting hold of the dependency on the code that constructs <code>SomeClass</code>.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://docs.angularjs.org/img/guide/concepts-module-injector.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>To manage the responsibility of dependency creation, each Angular application has an <a href="https://docs.angularjs.org/api/ng/function/angular.injector" target="_blank" rel="external">injector</a>. The injector is a <a href="http://en.wikipedia.org/wiki/Service_locator_pattern" target="_blank" rel="external">service locator</a> that is responsible for construction and lookup of dependencies.</p>
+<p>Here is an example of using the injector service:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Provide the wiring information in a module</span></div><div class="line"><span class="keyword">var</span> myModule = angular.module(<span class="string">'myModule'</span>, []);</div></pre></td></tr></table></figure>
+<p>Teach the injector how to build a <code>greeter</code> service. Notice that <code>greeter</code> is dependent on the <code>$window</code> service. The <code>greeter</code> service is an object that contains a <code>greet</code> method.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">myModule.factory(<span class="string">'greeter'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$window</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">greet</span>: <span class="function"><span class="keyword">function</span>(<span class="params">text</span>) </span>&#123;</div><div class="line">      $<span class="built_in">window</span>.alert(text);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Create a new injector that can provide components defined in our <code>myModule</code> module and request our <code>greeter</code> service from the injector. (This is usually done automatically by angular bootstrap).</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> injector = angular.injector([<span class="string">'ng'</span>, <span class="string">'myModule'</span>]);</div><div class="line"><span class="keyword">var</span> greeter = injector.get(<span class="string">'greeter'</span>);</div></pre></td></tr></table></figure>
+<p>Asking for dependencies solves the issue of hard coding, but it also means that the injector needs to be passed throughout the application. Passing the injector breaks the <a href="http://en.wikipedia.org/wiki/Law_of_Demeter" target="_blank" rel="external">Law of Demeter</a>. To remedy this, we use a declarative notation in our HTML templates, to hand the responsibility of creating components over to the injector, as in this example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"MyController"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-click</span>=<span class="string">"sayHello()"</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyController</span>(<span class="params">$scope, greeter</span>) </span>&#123;</div><div class="line">  $scope.sayHello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    greeter.greet(<span class="string">'Hello World'</span>);</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>When Angular compiles the HTML, it processes the <code>ng-controller</code> directive, which in turn asks the injector to create an instance of the controller and its dependencies.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">injector.instantiate(MyController);</div></pre></td></tr></table></figure>
+<p>This is all done behind the scenes. Notice that by having the <code>ng-controller</code> ask the injector to instantiate the class, it can satisfy all of the dependencies of <code>MyController</code> without the controller ever knowing about the injector.</p>
+<p>This is the best outcome. The application code simply declares the dependencies it needs, without having to deal with the injector. This setup does not break the Law of Demeter.</p>
+<p><strong>Note:</strong> Angular uses <a href="http://misko.hevery.com/2009/02/19/constructor-injection-vs-setter-injection/" target="_blank" rel="external"><strong>constructor injection</strong></a>.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Angular/2016-06-21-angular-dependency-injection-di.html" target="_blank" rel="external">http://blog.inching.org/Angular/2016-06-21-angular-dependency-injection-di.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dependency-injection/">dependency injection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/di/">di</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2016-06-21-angular-dependency-injection-di.html&title=《Angular Dependency Injection》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2016-06-21-angular-dependency-injection-di.html&title=《Angular Dependency Injection》 — Balance&source=See AngularJS: Developer Guide: Dependency Injection
+Dependency Injection (DI..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2016-06-21-angular-dependency-injection-di.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Dependency Injection》 — Balance&url=http://blog.inching.org/Angular/2016-06-21-angular-dependency-injection-di.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2016-06-21-angular-dependency-injection-di.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Angular/2016-06-22-angular-expression.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Angular Expression</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Angular/2016-06-21-angular-bootstrap.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Angular Bootstrap</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Angular/2016-06-21-angular-dependency-injection-di.html&title=《Angular Dependency Injection》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Angular/2016-06-21-angular-dependency-injection-di.html&title=《Angular Dependency Injection》 — Balance&source=See AngularJS: Developer Guide: Dependency Injection
+Dependency Injection (DI..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Angular/2016-06-21-angular-dependency-injection-di.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Angular Dependency Injection》 — Balance&url=http://blog.inching.org/Angular/2016-06-21-angular-dependency-injection-di.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Angular/2016-06-21-angular-dependency-injection-di.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3ay44bMQwEwP3/n3aAXB3H3aTkOEDNaTE7D5UOI7qpn5/4ePw+Xp1//u/z+cfT8ep8ctfhAw8PD2809Pw1CTh5ckvKn4yHh4f3GV4y0Bwz+27n1yTjwcPDw/sGXltAJ2/JS3M8PDy8/5fXFr77BQAPDw/vO3lJQLAJC/bDvZ614OHh4cW8tgH2DX9f7O/h4eHhLbrqp1pW7YaAfHvBm7Hh4eHhXeDN4tpZU6qNaFt2lLXg4eHhHeXlMcEmvIiC17iFFhXZeHh4eEd5yad/s02q3W6Vt8eSZQMPDw/vM7y2FM7P58PdLDB/yFrw8PDwjvI2jaj8M725t62Qo6wFDw8Pb81rS948XNhvpcLDw8P7Zl5b2m7i2lnMsQp28fDw8C63xNqyOG/tz1pfbaNu2PfDw8PDC3jRds/R9oL8rjbIyFtieHh4eDd4bWMpWUhaWF4EJ4sQHh4e3m1e8dO9DHxnRXm7NeHNkoaHh4d3gddGpW0kkRx1ibxozuHh4eHd5p2lbiaoDSPw8PDwbvPaAjfvqm36b/lGgTqrxsPDw1vwZm3+v09Eu8zk1HoMeHh4eNd4bTCabxqYDa5tdL28Bg8PD+8Cr/0Q54Xv7HOfF+JtQIyHh4d3itcuA8lA24J7P0Ev78LDw8O7wNswZs2q2dKyiZLx8PDwzvJOLQz7EnkWdry5Eg8PD+8Crx1oMimzzVJFUhKX9Xh4eHg3eI/yyIfblumnyveopMbDw8Nb8NrPbhI0tOFC0uJqx4CHh4d3m5cvBpucOC+g8ydERTweHh7eNV7bmN9MQTJB7TpWd/bw8PDwPs7Lr09C4U0Y8SaAxsPDw/unvBbfPnkWIr95Ix4eHt41Xh5G5PHr7Jl56BDtjMDDw8O7wJv91G+j22QiNqXzEIaHh4fX8X4BQWsiFkyWKwAAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

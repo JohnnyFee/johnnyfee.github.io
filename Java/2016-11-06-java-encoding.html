@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Java Encoding | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="java,encoding">
+    <meta name="description" content="Java 中需要编码的场景前面描述了常见的几种编码格式，下面将介绍 Java 中如何处理对编码的支持，什么场合中需要编码。
+I/O 操作中存在的编码我们知道涉及到编码的地方一般都在字符到字节或者字节到字符的转换上，而需要这种转换的场景主要是在 I/O 的时候，这个 I/O 包括磁盘 I/O 和网络 I/O，关于网络 I/O 部分在后面将主要以 Web 应用为例介绍。下图是 Java 中处理 I/O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Encoding">
+<meta property="og:url" content="http://blog.inching.org/Java/2016-11-06-java-encoding.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="Java 中需要编码的场景前面描述了常见的几种编码格式，下面将介绍 Java 中如何处理对编码的支持，什么场合中需要编码。
+I/O 操作中存在的编码我们知道涉及到编码的地方一般都在字符到字节或者字节到字符的转换上，而需要这种转换的场景主要是在 I/O 的时候，这个 I/O 包括磁盘 I/O 和网络 I/O，关于网络 I/O 部分在后面将主要以 Web 应用为例介绍。下图是 Java 中处理 I/O">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image002.png">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image004.png">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image007.jpg">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image009.jpg">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image021.gif">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image023.gif">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image025.jpg">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image027.gif">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image029.gif">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image031.gif">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image033.gif">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Encoding">
+<meta name="twitter:description" content="Java 中需要编码的场景前面描述了常见的几种编码格式，下面将介绍 Java 中如何处理对编码的支持，什么场合中需要编码。
+I/O 操作中存在的编码我们知道涉及到编码的地方一般都在字符到字节或者字节到字符的转换上，而需要这种转换的场景主要是在 I/O 的时候，这个 I/O 包括磁盘 I/O 和网络 I/O，关于网络 I/O 部分在后面将主要以 Web 应用为例介绍。下图是 Java 中处理 I/O">
+<meta name="twitter:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image002.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Java Encoding</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Java Encoding</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-11-06T14:56:00.000Z" itemprop="datePublished" class="page-time">
+  2016-11-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java-中需要编码的场景"><span class="post-toc-text">Java 中需要编码的场景</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#I-O-操作中存在的编码"><span class="post-toc-text">I/O 操作中存在的编码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内存中操作中的编码"><span class="post-toc-text">内存中操作中的编码</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java-中如何编解码"><span class="post-toc-text">Java 中如何编解码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java-Web-涉及到的编码"><span class="post-toc-text">Java Web 涉及到的编码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#URL-的编解码"><span class="post-toc-text">URL 的编解码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP-Header-的编解码"><span class="post-toc-text">HTTP Header 的编解码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#POST-表单的编解码"><span class="post-toc-text">POST 表单的编解码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP-BODY-的编解码"><span class="post-toc-text">HTTP BODY 的编解码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#其它需要编码的地方"><span class="post-toc-text">其它需要编码的地方</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#常见问题分析"><span class="post-toc-text">常见问题分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#中文变成了看不懂的字符"><span class="post-toc-text">中文变成了看不懂的字符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一个汉字变成一个问号"><span class="post-toc-text">一个汉字变成一个问号</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一个汉字变成两个问号"><span class="post-toc-text">一个汉字变成两个问号</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一种不正常的正确编码"><span class="post-toc-text">一种不正常的正确编码</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#See-more"><span class="post-toc-text">See more</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-java-encoding"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Java Encoding</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-11-06 22:56:00" datetime="2016-11-06T14:56:00.000Z"  itemprop="datePublished">2016-11-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Java-中需要编码的场景"><a href="#Java-中需要编码的场景" class="headerlink" title="Java 中需要编码的场景"></a>Java 中需要编码的场景</h2><p>前面描述了常见的几种编码格式，下面将介绍 Java 中如何处理对编码的支持，什么场合中需要编码。</p>
+<h3 id="I-O-操作中存在的编码"><a href="#I-O-操作中存在的编码" class="headerlink" title="I/O 操作中存在的编码"></a>I/O 操作中存在的编码</h3><p>我们知道涉及到编码的地方一般都在字符到字节或者字节到字符的转换上，而需要这种转换的场景主要是在 I/O 的时候，这个 I/O 包括磁盘 I/O 和网络 I/O，关于网络 I/O 部分在后面将主要以 Web 应用为例介绍。下图是 Java 中处理 I/O 问题的接口：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image002.png" alt="Figure xxx. Requires a heading" title="">
+                </div>
+                <div class="image-caption">Figure xxx. Requires a heading</div>
+            </figure>
+<p>Reader 类是 Java 的 I/O 中读字符的父类，而 InputStream 类是读字节的父类，InputStreamReader 类就是关联字节到字符的桥梁，它负责在 I/O 过程中处理读取字节到字符的转换，而具体字节到字符的解码实现它由 StreamDecoder 去实现，在 StreamDecoder 解码过程中必须由用户指定 Charset 编码格式。值得注意的是如果你没有指定 Charset，将使用本地环境中的默认字符集，例如在中文环境中将使用 GBK 编码。</p>
+<p>写的情况也是类似，字符的父类是 Writer，字节的父类是 OutputStream，通过 OutputStreamWriter 转换字符到字节。如下图所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image004.png" alt="Figure xxx. Requires a heading" title="">
+                </div>
+                <div class="image-caption">Figure xxx. Requires a heading</div>
+            </figure>
+<p>同样 StreamEncoder 类负责将字符编码成字节，编码格式和默认编码规则与解码是一致的。</p>
+<p>如下面一段代码，实现了文件的读写功能：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">String file = <span class="string">"c:/stream.txt"</span>;</div><div class="line">String charset = <span class="string">"UTF-8"</span>;</div><div class="line"><span class="comment">// 写字符换转成字节流</span></div><div class="line">FileOutputStream outputStream = <span class="keyword">new</span> FileOutputStream(file);</div><div class="line">OutputStreamWriter writer = <span class="keyword">new</span> OutputStreamWriter(</div><div class="line">outputStream, charset);</div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">   writer.write(<span class="string">"这是要保存的中文字符"</span>);</div><div class="line">&#125; <span class="keyword">finally</span> &#123;</div><div class="line">   writer.close();</div><div class="line">&#125;</div><div class="line"><span class="comment">// 读取字节转换成字符</span></div><div class="line">FileInputStream inputStream = <span class="keyword">new</span> FileInputStream(file);</div><div class="line">InputStreamReader reader = <span class="keyword">new</span> InputStreamReader(</div><div class="line">inputStream, charset);</div><div class="line">StringBuffer buffer = <span class="keyword">new</span> StringBuffer();</div><div class="line"><span class="keyword">char</span>[] buf = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">64</span>];</div><div class="line"><span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">   <span class="keyword">while</span> ((count = reader.read(buf)) != -<span class="number">1</span>) &#123;</div><div class="line">       buffer.append(buffer, <span class="number">0</span>, count);</div><div class="line">   &#125;</div><div class="line">&#125; <span class="keyword">finally</span> &#123;</div><div class="line">   reader.close();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在我们的应用程序中涉及到 I/O 操作时只要注意指定统一的编解码 Charset 字符集，一般不会出现乱码问题，有些应用程序如果不注意指定字符编码，中文环境中取操作系统默认编码，如果编解码都在中文环境中，通常也没问题，但是还是强烈的不建议使用操作系统的默认编码，因为这样，你的应用程序的编码格式就和运行环境绑定起来了，在跨环境下很可能出现乱码问题。</p>
+<h3 id="内存中操作中的编码"><a href="#内存中操作中的编码" class="headerlink" title="内存中操作中的编码"></a>内存中操作中的编码</h3><p>在 Java 开发中除了 I/O 涉及到编码外，最常用的应该就是在内存中进行字符到字节的数据类型的转换，Java 中用 String 表示字符串，所以 String 类就提供转换到字节的方法，也支持将字节转换为字符串的构造函数。如下代码示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">String s = <span class="string">"这是一段中文字符串"</span>;</div><div class="line"><span class="keyword">byte</span>[] b = s.getBytes(<span class="string">"UTF-8"</span>);</div><div class="line">String n = <span class="keyword">new</span> String(b,<span class="string">"UTF-8"</span>);</div></pre></td></tr></table></figure>
+<p>另外一个是已经被被废弃的 ByteToCharConverter 和 CharToByteConverter 类，它们分别提供了 convertAll 方法可以实现 byte[] 和 char[] 的互转。如下代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ByteToCharConverter charConverter = ByteToCharConverter.getConverter(<span class="string">"UTF-8"</span>);</div><div class="line"><span class="keyword">char</span> c[] = charConverter.convertAll(byteArray);</div><div class="line">CharToByteConverter byteConverter = CharToByteConverter.getConverter(<span class="string">"UTF-8"</span>);</div><div class="line"><span class="keyword">byte</span>[] b = byteConverter.convertAll(c);</div></pre></td></tr></table></figure>
+<p>这两个类已经被 Charset 类取代，Charset 提供 encode 与 decode 分别对应 char[] 到 byte[] 的编码和 byte[] 到 char[] 的解码。如下代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Charset charset = Charset.forName(<span class="string">"UTF-8"</span>);</div><div class="line">ByteBuffer byteBuffer = charset.encode(string);</div><div class="line">CharBuffer charBuffer = charset.decode(byteBuffer);</div></pre></td></tr></table></figure>
+<p>编码与解码都在一个类中完成，通过 forName 设置编解码字符集，这样更容易统一编码格式，比 ByteToCharConverter 和 CharToByteConverter 类更方便。</p>
+<p>Java 中还有一个 ByteBuffer 类，它提供一种 char 和 byte 之间的软转换，它们之间转换不需要编码与解码，只是把一个 16bit 的 char 格式，拆分成为 2 个 8bit 的 byte 表示，它们的实际值并没有被修改，仅仅是数据的类型做了转换。如下代码所以：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ByteBuffer heapByteBuffer = ByteBuffer.allocate(<span class="number">1024</span>);</div><div class="line">ByteBuffer byteBuffer = heapByteBuffer.putChar(c);</div></pre></td></tr></table></figure>
+<p>以上这些提供字符和字节之间的相互转换只要我们设置编解码格式统一一般都不会出现问题。</p>
+<h2 id="Java-中如何编解码"><a href="#Java-中如何编解码" class="headerlink" title="Java 中如何编解码"></a>Java 中如何编解码</h2><p>前面介绍了几种常见的编码格式，这里将以实际例子介绍 Java 中如何实现编码及解码，下面我们以“I am 君山”这个字符串为例介绍 Java 中如何把它以 ISO-8859-1、GB2312、GBK、UTF-16、UTF-8 编码格式进行编码的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">encode</span><span class="params">()</span> </span>&#123;</div><div class="line">        String name = <span class="string">"I am 君山"</span>;</div><div class="line">        toHex(name.toCharArray());</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">byte</span>[] iso8859 = name.getBytes(<span class="string">"ISO-8859-1"</span>);</div><div class="line">            toHex(iso8859);</div><div class="line">            <span class="keyword">byte</span>[] gb2312 = name.getBytes(<span class="string">"GB2312"</span>);</div><div class="line">            toHex(gb2312);</div><div class="line">            <span class="keyword">byte</span>[] gbk = name.getBytes(<span class="string">"GBK"</span>);</div><div class="line">            toHex(gbk);</div><div class="line">            <span class="keyword">byte</span>[] utf16 = name.getBytes(<span class="string">"UTF-16"</span>);</div><div class="line">            toHex(utf16);</div><div class="line">            <span class="keyword">byte</span>[] utf8 = name.getBytes(<span class="string">"UTF-8"</span>);</div><div class="line">            toHex(utf8);</div><div class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>我们把 name 字符串按照前面说的几种编码格式进行编码转化成 byte 数组，然后以 16 进制输出，我们先看一下 Java 是如何进行编码的。</p>
+<p>下面是 Java 中编码需要用到的类图</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image007.jpg" alt="图 1. Java 编码类图" title="">
+                </div>
+                <div class="image-caption">图 1. Java 编码类图</div>
+            </figure>
+<p>首先根据指定的 charsetName 通过 Charset.forName(charsetName) 设置 Charset 类，然后根据 Charset 创建 CharsetEncoder 对象，再调用 CharsetEncoder.encode 对字符串进行编码，不同的编码类型都会对应到一个类中，实际的编码过程是在这些类中完成的。下面是 String. getBytes(charsetName) 编码过程的时序图</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image009.jpg" alt="图 2.Java 编码时序图" title="">
+                </div>
+                <div class="image-caption">图 2.Java 编码时序图</div>
+            </figure>
+<p>从上图可以看出根据 charsetName 找到 Charset 类，然后根据这个字符集编码生成 CharsetEncoder，这个类是所有字符编码的父类，针对不同的字符编码集在其子类中定义了如何实现编码，有了 CharsetEncoder 对象后就可以调用 encode 方法去实现编码了。这个是 String.getBytes 编码方法，其它的如 StreamEncoder 中也是类似的方式。下面看看不同的字符集是如何将前面的字符串编码成 byte 数组的？</p>
+<p>如字符串“I am 君山”的 char 数组为 49 20 61 6d 20 541b 5c71，下面把它按照不同的编码格式转化成相应的字节。</p>
+<h2 id="Java-Web-涉及到的编码"><a href="#Java-Web-涉及到的编码" class="headerlink" title="Java Web 涉及到的编码"></a>Java Web 涉及到的编码</h2><p>对于使用中文来说，有 I/O 的地方就会涉及到编码，前面已经提到了 I/O 操作会引起编码，而大部分 I/O 引起的乱码都是网络 I/O，因为现在几乎所有的应用程序都涉及到网络操作，而数据经过网络传输都是以字节为单位的，所以所有的数据都必须能够被序列化为字节。在 Java 中数据被序列化必须继承 Serializable 接口。</p>
+<p>这里有一个问题，你是否认真考虑过一段文本它的实际大小应该怎么计算，我曾经碰到过一个问题：就是要想办法压缩 Cookie 大小，减少网络传输量，当时有选择不同的压缩算法，发现压缩后字符数是减少了，但是并没有减少字节数。所谓的压缩只是将多个单字节字符通过编码转变成一个多字节字符。减少的是 String.length()，而并没有减少最终的字节数。例如将“ab”两个字符通过某种编码转变成一个奇怪的字符，虽然字符数从两个变成一个，但是如果采用 UTF-8 编码这个奇怪的字符最后经过编码可能又会变成三个或更多的字节。同样的道理比如整型数字 1234567 如果当成字符来存储，采用 UTF-8 来编码占用 7 个 byte，采用 UTF-16 编码将会占用 14 个 byte，但是把它当成 int 型数字来存储只需要 4 个 byte 来存储。所以看一段文本的大小，看字符本身的长度是没有意义的，即使是一样的字符采用不同的编码最终存储的大小也会不同，所以从字符到字节一定要看编码类型。</p>
+<p>另外一个问题，你是否考虑过，当我们在电脑中某个文本编辑器里输入某个汉字时，它到底是怎么表示的？我们知道，计算机里所有的信息都是以 01 表示的，那么一个汉字，它到底是多少个 0 和 1 呢？我们能够看到的汉字都是以字符形式出现的，例如在 Java 中“淘宝”两个字符，它在计算机中的数值 10 进制是 28120 和 23453，16 进制是 6bd8 和 5d9d，也就是这两个字符是由这两个数字唯一表示的。Java 中一个 char 是 16 个 bit 相当于两个字节，所以两个汉字用 char 表示在内存中占用相当于四个字节的空间。</p>
+<p>这两个问题搞清楚后，我们看一下 Java Web 中那些地方可能会存在编码转换？</p>
+<p>用户从浏览器端发起一个 HTTP 请求，需要存在编码的地方是 URL、Cookie、Parameter。服务器端接受到 HTTP 请求后要解析 HTTP 协议，其中 URI、Cookie 和 POST 表单参数需要解码，服务器端可能还需要读取数据库中的数据，本地或网络中其它地方的文本文件，这些数据都可能存在编码问题，当 Servlet 处理完所有请求的数据后，需要将这些数据再编码通过 Socket 发送到用户请求的浏览器里，再经过浏览器解码成为文本。这些过程如下图所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image021.gif" alt="图 3. 一次 HTTP 请求的编码示例" title="">
+                </div>
+                <div class="image-caption">图 3. 一次 HTTP 请求的编码示例</div>
+            </figure>
+<p>如上图所示一次 HTTP 请求设计到很多地方需要编解码，它们编解码的规则是什么？下面将会重点阐述一下：</p>
+<h3 id="URL-的编解码"><a href="#URL-的编解码" class="headerlink" title="URL 的编解码"></a>URL 的编解码</h3><p>用户提交一个 URL，这个 URL 中可能存在中文，因此需要编码，如何对这个 URL 进行编码？根据什么规则来编码？有如何来解码？如下图一个 URL：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image023.gif" alt="图 4.URL 的几个组成部分" title="">
+                </div>
+                <div class="image-caption">图 4.URL 的几个组成部分</div>
+            </figure>
+<p>上图中以 Tomcat 作为 Servlet Engine 为例，它们分别对应到下面这些配置文件中：</p>
+<p>Port 对应在 Tomcat 的 <connector port="8080"> 中配置，而 Context Path 在 <context path="/examples"> 中配置，Servlet Path 在 Web 应用的 web.xml 中的</context></connector></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>junshanExample<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/servlets/servlet/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><url-pattern> 中配置，PathInfo 是我们请求的具体的 Servlet，QueryString 是要传递的参数，注意这里是在浏览器里直接输入 URL 所以是通过 Get 方法请求的，如果是 POST 方法请求的话，QueryString 将通过表单方式提交到服务器端，这个将在后面再介绍。</url-pattern></p>
+<p>上图中 PathInfo 和 QueryString 出现了中文，当我们在浏览器中直接输入这个 URL 时，在浏览器端和服务端会如何编码和解析这个 URL 呢？为了验证浏览器是怎么编码 URL 的我们选择 FireFox 浏览器并通过 HTTPFox 插件观察我们请求的 URL 的实际的内容，以下是 URL：HTTP://localhost:8080/examples/servlets/servlet/ 君山 ?author= 君山在中文 FireFox3.6.12 的测试结果</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image025.jpg" alt="图 5. HTTPFox 的测试结果" title="">
+                </div>
+                <div class="image-caption">图 5. HTTPFox 的测试结果</div>
+            </figure>
+<p>君山的编码结果分别是：e5 90 9b e5 b1 b1，be fd c9 bd，查阅上一届的编码可知，PathInfo 是 UTF-8 编码而 QueryString 是经过 GBK 编码，至于为什么会有“%”？查阅 URL 的编码规范 RFC3986 可知浏览器编码 URL 是将非 ASCII 字符按照某种编码格式编码成 16 进制数字然后将每个 16 进制表示的字节前加上“%”，所以最终的 URL 就成了上图的格式了。</p>
+<p>默认情况下中文 IE 最终的编码结果也是一样的，不过 IE 浏览器可以修改 URL 的编码格式在选项 -&gt; 高级 -&gt; 国际里面的发送 UTF-8 URL 选项可以取消。</p>
+<p>从上面测试结果可知浏览器对 PathInfo 和 QueryString 的编码是不一样的，不同浏览器对 PathInfo 也可能不一样，这就对服务器的解码造成很大的困难，下面我们以 Tomcat 为例看一下，Tomcat 接受到这个 URL 是如何解码的。</p>
+<p>解析请求的 URL 是在 org.apache.coyote.HTTP11.InternalInputBuffer 的 parseRequestLine 方法中，这个方法把传过来的 URL 的 byte[] 设置到 org.apache.coyote.Request 的相应的属性中。这里的 URL 仍然是 byte 格式，转成 char 是在 org.apache.catalina.connector.CoyoteAdapter 的 convertURI 方法中完成的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">convertURI</span><span class="params">(MessageBytes uri, Request request)</span></span></div><div class="line"> <span class="keyword">throws</span> Exception &#123;</div><div class="line">        ByteChunk bc = uri.getByteChunk();</div><div class="line">        <span class="keyword">int</span> length = bc.getLength();</div><div class="line">        CharChunk cc = uri.getCharChunk();</div><div class="line">        cc.allocate(length, -<span class="number">1</span>);</div><div class="line">        String enc = connector.getURIEncoding();</div><div class="line">        <span class="keyword">if</span> (enc != <span class="keyword">null</span>) &#123;</div><div class="line">            B2CConverter conv = request.getURIConverter();</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="keyword">if</span> (conv == <span class="keyword">null</span>) &#123;</div><div class="line">                    conv = <span class="keyword">new</span> B2CConverter(enc);</div><div class="line">                    request.setURIConverter(conv);</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;...&#125;</div><div class="line">            <span class="keyword">if</span> (conv != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    conv.convert(bc, cc, cc.getBuffer().length -</div><div class="line"> cc.getEnd());</div><div class="line">                    uri.setChars(cc.getBuffer(), cc.getStart(),</div><div class="line"> cc.getLength());</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;...&#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// Default encoding: fast conversion</span></div><div class="line">        <span class="keyword">byte</span>[] bbuf = bc.getBuffer();</div><div class="line">        <span class="keyword">char</span>[] cbuf = cc.getBuffer();</div><div class="line">        <span class="keyword">int</span> start = bc.getStart();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</div><div class="line">            cbuf[i] = (<span class="keyword">char</span>) (bbuf[i + start] &amp; <span class="number">0xff</span>);</div><div class="line">        &#125;</div><div class="line">        uri.setChars(cbuf, <span class="number">0</span>, length);</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>从上面的代码中可以知道对 URL 的 URI 部分进行解码的字符集是在 connector 的 <connector uriencoding="”UTF-8”/"> 中定义的，如果没有定义，那么将以默认编码 ISO-8859-1 解析。所以如果有中文 URL 时最好把 URIEncoding 设置成 UTF-8 编码。</connector></p>
+<p>QueryString 又如何解析？ GET 方式 HTTP 请求的 QueryString 与 POST 方式 HTTP 请求的表单参数都是作为 Parameters 保存，都是通过 request.getParameter 获取参数值。对它们的解码是在 request.getParameter 方法第一次被调用时进行的。request.getParameter 方法被调用时将会调用 org.apache.catalina.connector.Request 的 parseParameters 方法。这个方法将会对 GET 和 POST 方式传递的参数进行解码，但是它们的解码字符集有可能不一样。POST 表单的解码将在后面介绍，QueryString 的解码字符集是在哪定义的呢？它本身是通过 HTTP 的 Header 传到服务端的，并且也在 URL 中，是否和 URI 的解码字符集一样呢？从前面浏览器对 PathInfo 和 QueryString 的编码采取不同的编码格式不同可以猜测到解码字符集肯定也不会是一致的。的确是这样 QueryString 的解码字符集要么是 Header 中 ContentType 中定义的 Charset 要么就是默认的 ISO-8859-1，要使用 ContentType 中定义的编码就要设置 connector 的 <connector uriencoding="”UTF-8”" usebodyencodingforuri="”true”/"> 中的 useBodyEncodingForURI 设置为 true。这个配置项的名字有点让人产生混淆，它并不是对整个 URI 都采用 BodyEncoding 进行解码而仅仅是对 QueryString 使用 BodyEncoding 解码，这一点还要特别注意。</connector></p>
+<p>从上面的 URL 编码和解码过程来看，比较复杂，而且编码和解码并不是我们在应用程序中能完全控制的，所以在我们的应用程序中应该尽量避免在 URL 中使用非 ASCII 字符，不然很可能会碰到乱码问题，当然在我们的服务器端最好设置 <connector> 中的 URIEncoding 和 useBodyEncodingForURI 两个参数。</connector></p>
+<h3 id="HTTP-Header-的编解码"><a href="#HTTP-Header-的编解码" class="headerlink" title="HTTP Header 的编解码"></a>HTTP Header 的编解码</h3><p>当客户端发起一个 HTTP 请求除了上面的 URL 外还可能会在 Header 中传递其它参数如 Cookie、redirectPath 等，这些用户设置的值很可能也会存在编码问题，Tomcat 对它们又是怎么解码的呢？</p>
+<p>对 Header 中的项进行解码也是在调用 request.getHeader 是进行的，如果请求的 Header 项没有解码则调用 MessageBytes 的 toString 方法，这个方法将从 byte 到 char 的转化使用的默认编码也是 ISO-8859-1，而我们也不能设置 Header 的其它解码格式，所以如果你设置 Header 中有非 ASCII 字符解码肯定会有乱码。</p>
+<p>我们在添加 Header 时也是同样的道理，不要在 Header 中传递非 ASCII 字符，如果一定要传递的话，我们可以先将这些字符用 org.apache.catalina.util.URLEncoder 编码然后再添加到 Header 中，这样在浏览器到服务器的传递过程中就不会丢失信息了，如果我们要访问这些项时再按照相应的字符集解码就好了。</p>
+<h3 id="POST-表单的编解码"><a href="#POST-表单的编解码" class="headerlink" title="POST 表单的编解码"></a>POST 表单的编解码</h3><p>在前面提到了 POST 表单提交的参数的解码是在第一次调用 request.getParameter 发生的，POST 表单参数传递方式与 QueryString 不同，它是通过 HTTP 的 BODY 传递到服务端的。当我们在页面上点击 submit 按钮时浏览器首先将根据 ContentType 的 Charset 编码格式对表单填的参数进行编码然后提交到服务器端，在服务器端同样也是用 ContentType 中字符集进行解码。所以通过 POST 表单提交的参数一般不会出现问题，而且这个字符集编码是我们自己设置的，可以通过 request.setCharacterEncoding(charset) 来设置。</p>
+<p>另外针对 multipart/form-data 类型的参数，也就是上传的文件编码同样也是使用 ContentType 定义的字符集编码，值得注意的地方是上传文件是用字节流的方式传输到服务器的本地临时目录，这个过程并没有涉及到字符编码，而真正编码是在将文件内容添加到 parameters 中，如果用这个编码不能编码时将会用默认编码 ISO-8859-1 来编码。</p>
+<h3 id="HTTP-BODY-的编解码"><a href="#HTTP-BODY-的编解码" class="headerlink" title="HTTP BODY 的编解码"></a>HTTP BODY 的编解码</h3><p>当用户请求的资源已经成功获取后，这些内容将通过 Response 返回给客户端浏览器，这个过程先要经过编码再到浏览器进行解码。这个过程的编解码字符集可以通过 response.setCharacterEncoding 来设置，它将会覆盖 request.getCharacterEncoding 的值，并且通过 Header 的 Content-Type 返回客户端，浏览器接受到返回的 socket 流时将通过 Content-Type 的 charset 来解码，如果返回的 HTTP Header 中 Content-Type 没有设置 charset，那么浏览器将根据 Html 的 <meta http-equiv="Content-Type" content="text/html; charset=GBK"> 中的 charset 来解码。如果也没有定义的话，那么浏览器将使用默认的编码来解码。</p>
+<h3 id="其它需要编码的地方"><a href="#其它需要编码的地方" class="headerlink" title="其它需要编码的地方"></a>其它需要编码的地方</h3><p>除了 URL 和参数编码问题外，在服务端还有很多地方可能存在编码，如可能需要读取 xml、velocity 模版引擎、JSP 或者从数据库读取数据等。</p>
+<p>xml 文件可以通过设置头来制定编码格式</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div></pre></td></tr></table></figure>
+<p>Velocity 模版设置编码格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">services.VelocityService.input.encoding=UTF-8</div></pre></td></tr></table></figure>
+<p>JSP 设置编码格式：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;%<span class="meta">@page</span> contentType=<span class="string">"text/html; charset=UTF-8"</span>%&gt;</div></pre></td></tr></table></figure>
+<p>访问数据库都是通过客户端 JDBC 驱动来完成，用 JDBC 来存取数据要和数据的内置编码保持一致，可以通过设置 JDBC URL 来制定如 MySQL：url=”jdbc:mysql://localhost:3306/DB?useUnicode=true&amp;characterEncoding=GBK”。</p>
+<h2 id="常见问题分析"><a href="#常见问题分析" class="headerlink" title="常见问题分析"></a>常见问题分析</h2><p>在了解了 Java Web 中可能需要编码的地方后，下面看一下，当我们碰到一些乱码时，应该怎么处理这些问题？出现乱码问题唯一的原因都是在 char 到 byte 或 byte 到 char 转换中编码和解码的字符集不一致导致的，由于往往一次操作涉及到多次编解码，所以出现乱码时很难查找到底是哪个环节出现了问题，下面就几种常见的现象进行分析。</p>
+<h3 id="中文变成了看不懂的字符"><a href="#中文变成了看不懂的字符" class="headerlink" title="中文变成了看不懂的字符"></a>中文变成了看不懂的字符</h3><p>例如，字符串“淘！我喜欢！”变成了“Ì Ô £ ¡Î Ò Ï²»¶ £ ¡”编码过程如下图所示</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image027.gif" alt="Figure xxx. Requires a heading" title="">
+                </div>
+                <div class="image-caption">Figure xxx. Requires a heading</div>
+            </figure>
+<p>字符串在解码时所用的字符集与编码字符集不一致导致汉字变成了看不懂的乱码，而且是一个汉字字符变成两个乱码字符。</p>
+<h3 id="一个汉字变成一个问号"><a href="#一个汉字变成一个问号" class="headerlink" title="一个汉字变成一个问号"></a>一个汉字变成一个问号</h3><p>例如，字符串“淘！我喜欢！”变成了“？？？？？？”编码过程如下图所示</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image029.gif" alt="Figure xxx. Requires a heading" title="">
+                </div>
+                <div class="image-caption">Figure xxx. Requires a heading</div>
+            </figure>
+<p>将中文和中文符号经过不支持中文的 ISO-8859-1 编码后，所有字符变成了“？”，这是因为用 ISO-8859-1 进行编解码时遇到不在码值范围内的字符时统一用 3f 表示，这也就是通常所说的“黑洞”，所有 ISO-8859-1 不认识的字符都变成了“？”。</p>
+<h3 id="一个汉字变成两个问号"><a href="#一个汉字变成两个问号" class="headerlink" title="一个汉字变成两个问号"></a>一个汉字变成两个问号</h3><p>例如，字符串“淘！我喜欢！”变成了“？？？？？？？？？？？？”编码过程如下图所示</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image031.gif" alt="Figure xxx. Requires a heading" title="">
+                </div>
+                <div class="image-caption">Figure xxx. Requires a heading</div>
+            </figure>
+<p>这种情况比较复杂，中文经过多次编码，但是其中有一次编码或者解码不对仍然会出现中文字符变成“？”现象，出现这种情况要仔细查看中间的编码环节，找出出现编码错误的地方。</p>
+<h3 id="一种不正常的正确编码"><a href="#一种不正常的正确编码" class="headerlink" title="一种不正常的正确编码"></a>一种不正常的正确编码</h3><p>还有一种情况是在我们通过 request.getParameter 获取参数值时，当我们直接调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">String value = request.getParameter(name);</div></pre></td></tr></table></figure>
+<p>会出现乱码，但是如果用下面的方式</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String value = String(request.getParameter(name).getBytes("</div><div class="line">ISO-8859-1"), "GBK");</div></pre></td></tr></table></figure>
+<p>解析时取得的 value 会是正确的汉字字符，这种情况是怎么造成的呢？</p>
+<p>看下如所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/image033.gif" alt="Figure xxx. Requires a heading" title="">
+                </div>
+                <div class="image-caption">Figure xxx. Requires a heading</div>
+            </figure>
+<p>这种情况是这样的，ISO-8859-1 字符集的编码范围是 0000-00FF，正好和一个字节的编码范围相对应。这种特性保证了使用 ISO-8859-1 进行编码和解码可以保持编码数值“不变”。虽然中文字符在经过网络传输时，被错误地“拆”成了两个欧洲字符，但由于输出时也是用 ISO-8859-1，结果被“拆”开的中文字的两半又被合并在一起，从而又刚好组成了一个正确的汉字。虽然最终能取得正确的汉字，但是还是不建议用这种不正常的方式取得参数值，因为这中间增加了一次额外的编码与解码，这种情况出现乱码时因为 Tomcat 的配置文件中 useBodyEncodingForURI 配置项没有设置为”true”，从而造成第一次解析式用 ISO-8859-1 来解析才造成乱码的。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文首先总结了几种常见编码格式的区别，然后介绍了支持中文的几种编码格式，并比较了它们的使用场景。接着介绍了 Java 那些地方会涉及到编码问题，已经 Java 中如何对编码的支持。并以网络 I/O 为例重点介绍了 HTTP 请求中的存在编码的地方，以及 Tomcat 对 HTTP 协议的解析，最后分析了我们平常遇到的乱码问题出现的原因。</p>
+<p>综上所述，要解决中文问题，首先要搞清楚哪些地方会引起字符到字节的编码以及字节到字符的解码，最常见的地方就是读取会存储数据到磁盘，或者数据要经过网络传输。然后针对这些地方搞清楚操作这些数据的框架的或系统是如何控制编码的，正确设置编码格式，避免使用软件默认的或者是操作系统平台默认的编码格式。</p>
+<h2 id="See-more"><a href="#See-more" class="headerlink" title="See more"></a>See more</h2><ul>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/" target="_blank" rel="external">深入分析 Java 中的中文编码问题</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Java/2016-11-06-java-encoding.html" target="_blank" rel="external">http://blog.inching.org/Java/2016-11-06-java-encoding.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/encoding/">encoding</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Java/2016-11-06-java-encoding.html&title=《Java Encoding》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Java/2016-11-06-java-encoding.html&title=《Java Encoding》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Java/2016-11-06-java-encoding.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java Encoding》 — Balance&url=http://blog.inching.org/Java/2016-11-06-java-encoding.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Java/2016-11-06-java-encoding.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Data/2016-11-11-unicode.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Unicode</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Data/2016-11-06-encoding.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Encoding</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Java/2016-11-06-java-encoding.html&title=《Java Encoding》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Java/2016-11-06-java-encoding.html&title=《Java Encoding》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Java/2016-11-06-java-encoding.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java Encoding》 — Balance&url=http://blog.inching.org/Java/2016-11-06-java-encoding.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Java/2016-11-06-java-encoding.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3aQY7bMAwF0Nz/0ul2CteeT9IpEPppFQSKracFI5J6veLx/jF+fnP8fJx//O31M48zbxsYGBhfy3hfjrM5xydUN+J6DfnaMDAwnsM4e/R1SD37XA2jeSg//R4DAwMjDqnJ/CT4YmBgYNzFyA+UOQYDAwNjksRWFzFJVj+Yi2NgYHwhI6+6///PH+lvYGBgfBXjXRzXsEmhLQ+y/3gXBgbGakavATlpGPSubkQJMAYGxmpGXlDLSXmq2Wt/nj4ZAwNjHeN6UjWZ7F38yst5pzwMDIzVjN4L8vBa3Y7k6FloYWJgYKxgJAe+XhuymsT2tvWv/w0MDIzVjOtAmc9J0tRJ4I7+MTAwMJYy8hL/ZEG9q2DRAREDA+MBjCogufqQzM8Ldr9QMTAwVjM+d4yrLrda5vulhIeBgbGUkZfJerx5O7PQR8XAwFjHyI9u1TA9bxWMLltgYGCsYPQelIfd3nGzXODDwMBYzeidIidLrDYDykkyBgbGUkavNNZLbnvl/uiNGBgYD2DkB8S8NFa9WpEATt+OgYHxGEbvOkVedKuG3UJijIGB8RjGvZctJpuSdCoxMDCewHgXx7xtWU2So+dgYGCsZlSvU/QubE02aNLgxMDA2MSYpKzVxmR1yzAwMDDmDchegeyuJBYDAwOjelVicmSsbtwrfyUGBsYjGZP8OA/ceZMVAwPjOYxeOnpdOJuU5MoNVAwMjNWMPHXsNQCqi7irOYqBgbGC8Qc0R507fTehtAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

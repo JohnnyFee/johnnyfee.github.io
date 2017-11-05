@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>RxJava Custom Operator | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="java,rx,rxjava">
+    <meta name="description" content="See Implementing Your Own Operators · ReactiveX/RxJava Wiki
+Transformational OperatorsThe following example shows how you can use the compose( ) operator to chain your custom operator (in this example">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJava Custom Operator">
+<meta property="og:url" content="http://blog.inching.org/RxJava/2017-01-26-rx-java-custom-operator.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See Implementing Your Own Operators · ReactiveX/RxJava Wiki
+Transformational OperatorsThe following example shows how you can use the compose( ) operator to chain your custom operator (in this example">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJava Custom Operator">
+<meta name="twitter:description" content="See Implementing Your Own Operators · ReactiveX/RxJava Wiki
+Transformational OperatorsThe following example shows how you can use the compose( ) operator to chain your custom operator (in this example">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">RxJava Custom Operator</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">RxJava Custom Operator</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-01-25T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-01-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Transformational-Operators"><span class="post-toc-text">Transformational Operators</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Implementing-Advanced-Operators-Using-lift"><span class="post-toc-text">Implementing Advanced Operators Using lift()</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Looking-under-the-hood-of-the-map-operator"><span class="post-toc-text">Looking under the hood of the map() operator</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Our-first-operator"><span class="post-toc-text">Our first operator</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-rx-java-custom-operator"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">RxJava Custom Operator</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-01-26 00:00:00" datetime="2017-01-25T16:00:00.000Z"  itemprop="datePublished">2017-01-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="https://github.com/ReactiveX/RxJava/wiki/Implementing-Your-Own-Operators" target="_blank" rel="external">Implementing Your Own Operators · ReactiveX/RxJava Wiki</a></p>
+<h2 id="Transformational-Operators"><a href="#Transformational-Operators" class="headerlink" title="Transformational Operators"></a>Transformational Operators</h2><p>The following example shows how you can use the <code>compose( )</code> operator to chain your custom operator (in this example, an operator called <code>myTransformer</code> that transforms an Observable that emits Integers into one that emits Strings) alongside standard RxJava operators like <code>ofType</code> and <code>map</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">fooObservable = barObservable.ofType(Integer)</div><div class="line">    .map(&#123;it*<span class="number">2</span>&#125;)</div><div class="line">    .compose(<span class="keyword">new</span> myTransformer&lt;Integer,String&gt;())</div><div class="line">    .map(&#123;<span class="string">"transformed by myOperator: "</span> + it&#125;);</div></pre></td></tr></table></figure>
+<p>Define your transforming function as a public class that implements the <a href="http://reactivex.io/RxJava/javadoc/rx/Observable.Transformer.html" target="_blank" rel="external"><code>Transformer</code></a> interface, like so:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">myTransformer</span>&lt;<span class="title">Integer</span>,<span class="title">String</span>&gt; <span class="keyword">implements</span> <span class="title">Transformer</span>&lt;<span class="title">Integer</span>,<span class="title">String</span>&gt; </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">myTransformer</span><span class="params">( <span class="comment">/* any necessary params here */</span> )</span> </span>&#123;</div><div class="line">    <span class="comment">/* any necessary initialization here */</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> Observable&lt;String&gt; <span class="title">call</span><span class="params">(Observable&lt;Integer&gt; source)</span> </span>&#123;</div><div class="line">    <span class="comment">/* </span></div><div class="line">     * this simple example Transformer applies map() to the source Observable</div><div class="line">     * in order to transform the "source" observable from one that emits</div><div class="line">     * integers to one that emits string representations of those integers.</div><div class="line">     */</div><div class="line">    <span class="keyword">return</span> source.map( <span class="keyword">new</span> Func1&lt;Integer,String&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">(Integer t1)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> String.valueOf(t1);</div><div class="line">      &#125;</div><div class="line">    &#125; );</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Another example:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> &lt;T&gt; Observable.<span class="function">Transformer&lt;T, T&gt; <span class="title">odd</span><span class="params">()</span> </span>&#123;</div><div class="line">    Observable&lt;Boolean&gt; trueFalse = just(<span class="keyword">true</span>, <span class="keyword">false</span>).repeat();</div><div class="line">    <span class="keyword">return</span> upstream -&gt; upstream</div><div class="line">            .zipWith(trueFalse, Pair::of)</div><div class="line">            .filter(Pair::getRight)</div><div class="line">            .map(Pair::getLeft);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line"><span class="comment">//[A, B, C, D, E...]</span></div><div class="line">Observable&lt;Character&gt; alphabet =</div><div class="line">        Observable</div><div class="line">                .range(<span class="number">0</span>, <span class="string">'Z'</span> - <span class="string">'A'</span> + <span class="number">1</span>)</div><div class="line">                .map(c -&gt; (<span class="keyword">char</span>) (<span class="string">'A'</span> + c));</div><div class="line"></div><div class="line"><span class="comment">//[A, C, E, G, I...]</span></div><div class="line">alphabet</div><div class="line">        .compose(odd())</div><div class="line">        .forEach(System.out::println);</div></pre></td></tr></table></figure>
+<p>The <code>odd()</code> function returns a <code>Transformer&lt;T, T&gt;</code> from <code>Observable&lt;T&gt;</code> to <code>Observable&lt;T&gt;</code> (of course, types can be different). Thus, <code>Transformer</code> is a function on its own, so we can replace it with a lambda expression (<code>upstream -&gt; upstream...</code>).</p>
+<p>Notice that the <code>odd()</code> function is executed eagerly when <code>Observable</code> is assembled, not during subscription.</p>
+<h2 id="Implementing-Advanced-Operators-Using-lift"><a href="#Implementing-Advanced-Operators-Using-lift" class="headerlink" title="Implementing Advanced Operators Using lift()"></a>Implementing Advanced Operators Using lift()</h2><p><code>compose()</code> is only useful for grouping existing operators together.<br>With <code>lift()</code>, on the other hand, you can implement almost any operator, altering the flow of upstream events. </p>
+<p>Whereas <code>compose()</code> transforms <code>Observable</code>s, <code>lift()</code> allows transforming <code>Subscriber</code>s.</p>
+<p>Almost all operators, excluding those working with multiple streams at once (like <code>flatMap()</code>) are implemented by means of <code>lift()</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">    .range(<span class="number">1</span>, <span class="number">1000</span>)</div><div class="line">    .filter(x -&gt; x % <span class="number">3</span> == <span class="number">0</span>)</div><div class="line">    .distinct()</div><div class="line">    .reduce((a, x) -&gt; a + x)</div><div class="line">    .map(Integer::toHexString)</div><div class="line">    .subscribe(System.out::println)</div></pre></td></tr></table></figure>
+<p>This quite complex sequence of operators becomes very regular (notice how <code>reduce()</code> is implemented using <code>scan().takeLast(1).single()</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">    .range(1, 1000)</div><div class="line">    .lift(new OperatorFilter&lt;&gt;(x -&gt; x % 3 == 0))</div><div class="line">    .lift(    OperatorDistinct.&lt;Integer&gt;instance())</div><div class="line">    .lift(new OperatorScan&lt;&gt;((Integer a, Integer x) -&gt; a + x))</div><div class="line">    .lift(    OperatorTakeLastOne.&lt;Integer&gt;instance())</div><div class="line">    .lift(    OperatorSingle.&lt;Integer&gt;instance())</div><div class="line">    .lift(new OperatorMap&lt;&gt;(Integer::toHexString))</div><div class="line">    .subscribe(System.out::println);</div></pre></td></tr></table></figure>
+<h3 id="Looking-under-the-hood-of-the-map-operator"><a href="#Looking-under-the-hood-of-the-map-operator" class="headerlink" title="Looking under the hood of the map() operator"></a>Looking under the hood of the map() operator</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">OperatorMap</span>&lt;<span class="title">T</span>, <span class="title">R</span>&gt; <span class="keyword">implements</span> <span class="title">Operator</span>&lt;<span class="title">R</span>, <span class="title">T</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Func1&lt;T, R&gt; transformer;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OperatorMap</span><span class="params">(Func1&lt;T, R&gt; transformer)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.transformer = transformer;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Subscriber&lt;T&gt; <span class="title">call</span><span class="params">(<span class="keyword">final</span> Subscriber&lt;R&gt; child)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Subscriber&lt;T&gt;(child) &#123;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">()</span> </span>&#123;</div><div class="line">                child.onCompleted();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</div><div class="line">                child.onError(e);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(T t)</span> </span>&#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    child.onNext(transformer.call(t));</div><div class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                    onError(e);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>This is essentially what <code>OperatorMap</code>  class is doing: providing a transformation from downstream (<code>child</code>) <code>Subscriber&lt;R&gt;</code> into upstream <code>Subscriber&lt;T&gt;</code>. Here is the real implementation found in RxJava, with some minor readability simplifications:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">OperatorMap</span>&lt;<span class="title">T</span>, <span class="title">R</span>&gt; <span class="keyword">implements</span> <span class="title">Operator</span>&lt;<span class="title">R</span>, <span class="title">T</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Func1&lt;T, R&gt; transformer;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OperatorMap</span><span class="params">(Func1&lt;T, R&gt; transformer)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.transformer = transformer;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Subscriber&lt;T&gt; <span class="title">call</span><span class="params">(<span class="keyword">final</span> Subscriber&lt;R&gt; child)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Subscriber&lt;T&gt;(child) &#123;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">()</span> </span>&#123;</div><div class="line">                child.onCompleted();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</div><div class="line">                child.onError(e);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(T t)</span> </span>&#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    child.onNext(transformer.call(t));</div><div class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                    onError(e);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>One unusual detail is the reversed order of <code>T</code> and <code>R</code> generic types. The <code>map()</code> operator transforms values flowing from upstream of type <code>T</code> to type <code>R</code>. However, the operator’s responsibility is transforming <code>Subscriber&lt;R&gt;</code> (coming from downstream subscription) to <code>Subscriber&lt;T&gt;</code> (passed to upstream <code>Observable</code>). We expect subscribe via <code>Subscriber&lt;R&gt;</code>, whereas operator <code>map()</code> is used against <code>Observable&lt;T&gt;</code>, requiring <code>Subscriber&lt;T&gt;</code>.</p>
+<p>Every time you <code>map()</code> over a stream, you actually call <code>lift()</code> with a new instance of <code>OperatorMap</code> class, providing the <code>transformer</code> function. This function operates on upstream events of type <code>T</code> and returns downstream events of type <code>R</code>.</p>
+<p>Every time a user provides any custom function/transformation to your operator, make sure you catch all unexpected exceptions and forward them downstream via the <code>onError()</code> method. This also ensures that you unsubscribe from upstream, preventing it from emitting further events.</p>
+<p>Keep in mind that until someone actually subscribes, we barely created a new <code>Observable</code> (<code>lift()</code>, like any other operator, creates new <code>Observable</code>) with a reference to <code>OperatorMap</code> instance underneath, which in turns holds a reference to our function. But only when someone actually subscribes, the <code>call()</code> function of <code>OperatorMap</code> is invoked. This function receives our <code>Subscriber&lt;String&gt;</code> (e.g., wrapping <code>System.out::println</code>) and returns another <code>Subscriber&lt;Integer&gt;</code>. It is the latter <code>Subscriber</code> that travels upstream, to preceding operators.</p>
+<p>That is pretty much how all operators work, both built-in and custom. You receive a <code>Subscriber</code> and return another one, enhancing and passing whatever it wishes to downstream <code>Subscriber</code>.</p>
+<h3 id="Our-first-operator"><a href="#Our-first-operator" class="headerlink" title="Our first operator"></a>Our first operator</h3><p>This time we would like to implement an operator that will emit <code>toString()</code> of every odd (1st, 3rd, 5th, etc.) element. It is best explained with some sample code:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Observable&lt;String&gt; odd = Observable</div><div class="line">        .range(1, 9)</div><div class="line">        .lift(toStringOfOdd()) </div><div class="line">// Will emit: &quot;1&quot;, &quot;3&quot;, &quot;5&quot;, &quot;7&quot; and &quot;9&quot; strings</div></pre></td></tr></table></figure>
+<p>You can achieve the same functionality by using built-in operators, we are writing a custom operator just for educational purposes:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">        .range(1, 9)</div><div class="line">        .buffer(1, 2)</div><div class="line">        .concatMapIterable(x -&gt; x)</div><div class="line">        .map(Object::toString);</div></pre></td></tr></table></figure>
+<p><code>buffer(1, 2)</code> will transform any <code>Observable&lt;T&gt;</code> into <code>Observable&lt;List&lt;T&gt;&gt;</code>, where each inner <code>List</code> has exactly one odd element and skips even ones. We reconstruct a flat stream using <code>concatMapIterable()</code>.</p>
+<p>The custom operator can be in one of two states:</p>
+<ul>
+<li>It either received odd event (1st, 3rd, 5th, etc.) from upstream which it forwards downstream after applying it to <code>toString()</code>.</li>
+<li>It received even event which it simply discards.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&lt;T&gt; Observable.<span class="function">Operator&lt;String, T&gt; <span class="title">toStringOfOdd</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Observable.Operator&lt;String, T&gt;() &#123;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> <span class="keyword">boolean</span> odd = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="keyword">public</span> Subscriber&lt;? <span class="keyword">super</span> T&gt; call(Subscriber&lt;? <span class="keyword">super</span> String&gt; child) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Subscriber&lt;T&gt;(child) &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">()</span> </span>&#123;</div><div class="line">                    child.onCompleted();</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</div><div class="line">                    child.onError(e);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(T t)</span> </span>&#123;</div><div class="line">                    <span class="keyword">if</span>(odd) &#123;</div><div class="line">                        child.onNext(t.toString());</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        request(<span class="number">1</span>);</div><div class="line">                    &#125;</div><div class="line">                    odd = !odd;</div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>When a <code>Subscriber</code> requests just a subset of events—for example, only the first two (<code>take(2)</code>)—RxJava takes care of requesting only that amount of data by calling <code>request(2)</code> internally. This request is passed upstream and we receive barely <code>1</code> and <code>2</code>. However, we drop <code>2</code> (even), yet we were obligated to provide two events downstream. Therefore, we must request one extra event (<code>request(1)</code>) in addition to that so that we receive <code>3</code>, as well. RxJava implements quite a sophisticated mechanism called <em>backpressure</em>  that allows subscribers to request only the amount of events they can process, protecting from producers outperforming consumers.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/RxJava/2017-01-26-rx-java-custom-operator.html" target="_blank" rel="external">http://blog.inching.org/RxJava/2017-01-26-rx-java-custom-operator.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rx/">rx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rxjava/">rxjava</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2017-01-26-rx-java-custom-operator.html&title=《RxJava Custom Operator》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2017-01-26-rx-java-custom-operator.html&title=《RxJava Custom Operator》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2017-01-26-rx-java-custom-operator.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RxJava Custom Operator》 — Balance&url=http://blog.inching.org/RxJava/2017-01-26-rx-java-custom-operator.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2017-01-26-rx-java-custom-operator.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/RxJava/2017-01-31-rx-java-scheduler.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">RxJava Schedulers</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/RxJava/2017-01-26-rx-java-applying-to-existing-application.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Applying Reactive Programming to Existing Applications</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2017-01-26-rx-java-custom-operator.html&title=《RxJava Custom Operator》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2017-01-26-rx-java-custom-operator.html&title=《RxJava Custom Operator》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2017-01-26-rx-java-custom-operator.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RxJava Custom Operator》 — Balance&url=http://blog.inching.org/RxJava/2017-01-26-rx-java-custom-operator.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2017-01-26-rx-java-custom-operator.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3awY7iMBAEUP7/p2elPY00m1DVtslI+3JCEIifD25T7dcrvr7+Xsnr7+9c/cLP9/PrdeLCw8PDGw39/udmg766ZzYpV996MwV4eHh4x3izId4P/erO9ltL042Hh4f3KC/f5t7j8w16Pt14eHh4v5PXstsoYQWPh4eH93lesoVdWdDbp6zciYeHh3eat7cB9pnXj/X38PDw/nve1+jaNa9tOFuPEw8PD+8AL2ne5w9r21d5C202KXh4eHif4a0EE3kJ2XuE6809eHh4eFt57SK7MuiclP9OvZnGw8PD28TbtV1O2mD5oa728NYrnzk8PDy8BV5+a75Rzhn5ct9OEB4eHt5pXrIE71q+29D2viDln+Lh4eHt5RXLazJPZdzQ/lr7LDw8PLzTvJaRf5qXjZVygoeHh/cUbzboPLqdlZ/hsS08PDy8rbz7WLZtd7VXG0m0z8XDw8M7zbtHrhzJWj+k1R5oKFIQPDw8vBFvfSiz//75xjrf0OPh4eGd5uV//nP2StyQFJhhWw4PDw9vE2+2rLdHDVbihjqTvopx8fDw8DbxZkcB2olISs7sqicaDw8Pb5nXHhGYDbedrDZueFP38PDw8A7w8qX/XNMrCUTq4AMPDw/vAG+lDOTBQdvEakONqFDh4eHhHeC1Aesslt0b1G6LNvDw8PBGu81tSXAZ+OYxRJvN4uHh4Z3m5a2vdmnOY9ziEEAeoODh4eFt5Z0OHWbtrlnZ+MeneHh4eAd4K8eb2u34LMbNn7uUu+Dh4eGVvHxRziPXNj7YFWHUhwbw8PDwFnjrxWBX8ZjVrjeRBB4eHt6jvPaowcoGui0Gl1tqPDw8vId4eTt/drgqCRfaRh0eHh7eOV67EO9d6Ntm2OtEjcLDw8Pbes0a/3kbrC0edZiLh4eHt4f3B3sVnHFQpFZyAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

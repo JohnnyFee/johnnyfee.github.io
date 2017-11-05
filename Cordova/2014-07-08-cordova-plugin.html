@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Cordova Plugin | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="cordova,plugin">
+    <meta name="description" content="插件开发指南See Apache Cordova API Documentation
+插件 是应用中用来显示的 Cordova WebView 和原生平台通信的植入代码包。插件提供了访问设备和平台的功能，这些功能在基于网页的应用本不存在。请参考插件中心 registry。
+插件包含每一个支持的平台的一个单独的 JavaScript 接口和一个相应的原生代码。我们通过一个简单的 echo 插件逐步讲">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cordova Plugin">
+<meta property="og:url" content="http://blog.inching.org/Cordova/2014-07-08-cordova-plugin.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="插件开发指南See Apache Cordova API Documentation
+插件 是应用中用来显示的 Cordova WebView 和原生平台通信的植入代码包。插件提供了访问设备和平台的功能，这些功能在基于网页的应用本不存在。请参考插件中心 registry。
+插件包含每一个支持的平台的一个单独的 JavaScript 接口和一个相应的原生代码。我们通过一个简单的 echo 插件逐步讲">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cordova Plugin">
+<meta name="twitter:description" content="插件开发指南See Apache Cordova API Documentation
+插件 是应用中用来显示的 Cordova WebView 和原生平台通信的植入代码包。插件提供了访问设备和平台的功能，这些功能在基于网页的应用本不存在。请参考插件中心 registry。
+插件包含每一个支持的平台的一个单独的 JavaScript 接口和一个相应的原生代码。我们通过一个简单的 echo 插件逐步讲">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Cordova Plugin</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Cordova Plugin</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-07-07T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-07-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cordova/">Cordova</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#插件开发指南"><span class="post-toc-text">插件开发指南</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Building-a-Plugin"><span class="post-toc-text">Building a Plugin</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Validating-a-Plugin-using-Plugman"><span class="post-toc-text">Validating a Plugin using Plugman</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#The-JavaScript-Interface"><span class="post-toc-text">The JavaScript Interface</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Sample-JavaScript"><span class="post-toc-text">Sample JavaScript</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Native-Interfaces"><span class="post-toc-text">Native Interfaces</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Publishing-Plugins"><span class="post-toc-text">Publishing Plugins</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Integrating-with-Plugin-Search"><span class="post-toc-text">Integrating with Plugin Search</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#插件规范"><span class="post-toc-text">插件规范</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#plugin"><span class="post-toc-text">plugin</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#engines-和-engine"><span class="post-toc-text">engines 和 engine</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#name"><span class="post-toc-text">name</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#description"><span class="post-toc-text">description</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#author"><span class="post-toc-text">author</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#keywords"><span class="post-toc-text">keywords</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#license"><span class="post-toc-text">license</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#asset"><span class="post-toc-text">asset</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#js-module"><span class="post-toc-text">js-module</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#dependency"><span class="post-toc-text">dependency</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#相对依赖路径"><span class="post-toc-text">相对依赖路径</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#platform"><span class="post-toc-text">platform</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#source-file"><span class="post-toc-text">source-file</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#config-file"><span class="post-toc-text">config-file</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#plugins-plist"><span class="post-toc-text">plugins-plist</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#resource-file-and-header-file-Elements"><span class="post-toc-text">resource-file and header-file Elements</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#lib-file"><span class="post-toc-text">lib-file</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#framework"><span class="post-toc-text">framework</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#info"><span class="post-toc-text">info</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#变量"><span class="post-toc-text">变量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#PACKAGE-NAME"><span class="post-toc-text">$PACKAGE_NAME</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Android-插件"><span class="post-toc-text">Android 插件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#插件的目录结构"><span class="post-toc-text">插件的目录结构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#plugin-xml"><span class="post-toc-text">plugin.xml</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#www-device-js"><span class="post-toc-text">www/device.js</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#The-JavaScript-Interface-1"><span class="post-toc-text">The JavaScript Interface</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#src-android-Device-java"><span class="post-toc-text">src/android/Device.java</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Android-Plugin-Native-Interfaces"><span class="post-toc-text">Android Plugin (Native Interfaces)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#插件初始化和声明周期"><span class="post-toc-text">插件初始化和声明周期</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Android-集成"><span class="post-toc-text">Android 集成</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Upgrading-Android"><span class="post-toc-text">Upgrading Android</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-cordova-plugin"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Cordova Plugin</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-07-08 00:00:00" datetime="2014-07-07T16:00:00.000Z"  itemprop="datePublished">2014-07-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cordova/">Cordova</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="插件开发指南"><a href="#插件开发指南" class="headerlink" title="插件开发指南"></a>插件开发指南</h2><p>See <a href="http://cordova.apache.org/docs/en/4.0.0/guide_hybrid_plugins_index.md.html#Plugin%20Development%20Guide" target="_blank" rel="external">Apache Cordova API Documentation</a></p>
+<p><em>插件</em> 是应用中用来显示的 Cordova WebView 和原生平台通信的植入代码包。插件提供了访问设备和平台的功能，这些功能在基于网页的应用本不存在。请参考插件中心 <a href="http://plugins.cordova.io/" target="_blank" rel="external">registry</a>。</p>
+<p>插件包含每一个支持的平台的一个单独的 JavaScript 接口和一个相应的原生代码。我们通过一个简单的 <em>echo</em> 插件逐步讲解，这个例子可以作为编写插件模板。</p>
+<h2 id="Building-a-Plugin"><a href="#Building-a-Plugin" class="headerlink" title="Building a Plugin"></a>Building a Plugin</h2><p>应用开发者使用 CLI 的 <code>plugin add</code> 命令来添加一个插件到工程中，命令参数为插件代码的 GIT 库的 URL。这个例子实现了 Cordova 的 Device API：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git</div></pre></td></tr></table></figure>
+<p>插件代码库的顶层目录中必须包含 <code>plugin.xml</code> 文件。There are many ways to configure this file, details for which are available in the <a href="https://cordova.apache.org/docs/en/latest/plugin_ref/spec.html" target="_blank" rel="external">Plugin Specification</a>. This abbreviated version of the <code>Device</code> plugin provides a simple example to use as a model: </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">plugin</span> <span class="attr">xmlns</span>=<span class="string">"http://apache.org/cordova/ns/plugins/1.0"</span></span></div><div class="line">        <span class="attr">id</span>=<span class="string">"org.apache.cordova.device"</span> <span class="attr">version</span>=<span class="string">"0.2.3"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Device<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Cordova Device Plugin<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">license</span>&gt;</span>Apache 2.0<span class="tag">&lt;/<span class="name">license</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">keywords</span>&gt;</span>cordova,device<span class="tag">&lt;/<span class="name">keywords</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">js-module</span> <span class="attr">src</span>=<span class="string">"www/device.js"</span> <span class="attr">name</span>=<span class="string">"device"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">clobbers</span> <span class="attr">target</span>=<span class="string">"device"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">js-module</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">platform</span> <span class="attr">name</span>=<span class="string">"ios"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">config-file</span> <span class="attr">target</span>=<span class="string">"config.xml"</span> <span class="attr">parent</span>=<span class="string">"/*"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">feature</span> <span class="attr">name</span>=<span class="string">"Device"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"ios-package"</span> <span class="attr">value</span>=<span class="string">"CDVDevice"</span>/&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">feature</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">config-file</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">header-file</span> <span class="attr">src</span>=<span class="string">"src/ios/CDVDevice.h"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">source-file</span> <span class="attr">src</span>=<span class="string">"src/ios/CDVDevice.m"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">platform</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>The top-level <code>plugin</code> tag’s <code>id</code> attribute uses the same reverse-domain format to identify the plugin package as the apps to they’re added.  The <code>js-module</code> tag specifies the path to the common JavaScript interface.  The <code>platform</code> tag specifies a corresponding set of native code, for the <code>ios</code> platform in this case.  The <code>config-file</code> tag encapsulates a <code>feature</code> tag that is injected into the platform-specific <code>config.xml</code> file to make the platform aware of the additional code library.  The <code>header-file</code> and <code>source-file</code> tags specify the path to the library’s component files.</p>
+<h2 id="Validating-a-Plugin-using-Plugman"><a href="#Validating-a-Plugin-using-Plugman" class="headerlink" title="Validating a Plugin using Plugman"></a>Validating a Plugin using Plugman</h2><p>可以使用 plugman 工具去检查插件在每一个平台是是否安装成功。</p>
+<p>You need an valid app source directory, such as the top-level <code>www</code> directory included in a default CLI-generated project as described in <a href="https://cordova.apache.org/docs/en/latest/guide/cli/index.html" target="_blank" rel="external">Create your first app</a> guide.</p>
+<p>Then run a command such as the following to test whether iOS dependencies load properly:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ plugman install --platform ios --project /path/to/my/project/www --plugin /path/to/my/plugin</div></pre></td></tr></table></figure>
+<h2 id="The-JavaScript-Interface"><a href="#The-JavaScript-Interface" class="headerlink" title="The JavaScript Interface"></a>The JavaScript Interface</h2><p>he JavaScript provides the front-facing interface, making it perhaps the most important part of the plugin.  You can structure your plugin’s JavaScript however you like, but you need to call <code>cordova.exec</code> to communicate with the native platform, using the following syntax:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cordova.exec(<span class="function"><span class="keyword">function</span>(<span class="params">winParam</span>) </span>&#123;&#125;,  </div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;&#125;,  </div><div class="line">    <span class="string">"service"</span>,  </div><div class="line">    <span class="string">"action"</span>,  </div><div class="line">    [<span class="string">"firstArgument"</span>, <span class="string">"secondArgument"</span>, <span class="number">42</span>, <span class="literal">false</span>]);</div></pre></td></tr></table></figure>
+<p>Here is how each parameter works:</p>
+<ul>
+<li><code>function(winParam) {}</code>: A success callback function. Assuming your <code>exec</code> call completes successfully, this function executes along with any parameters you pass to it.</li>
+<li><code>function(error) {}</code>: An error callback function. If the operation does not complete successfully, this function executes with an optional error parameter.</li>
+<li><code>&quot;service&quot;</code>: The service name to call on the native side. This corresponds to a native class, for which more information is available in the native guides listed below.</li>
+<li><code>&quot;action&quot;</code>: The action name to call on the native side. This generally corresponds to the native class method. See the native guides listed below.</li>
+<li><code>[/* arguments */]</code>: An array of arguments to pass into the native environment.</li>
+</ul>
+<h2 id="Sample-JavaScript"><a href="#Sample-JavaScript" class="headerlink" title="Sample JavaScript"></a>Sample JavaScript</h2><p>This example shows one way to implement the plugin’s JavaScript<br>interface:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.echo = <span class="function"><span class="keyword">function</span>(<span class="params">str, callback</span>) </span>&#123;</div><div class="line">    cordova.exec(callback, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">        callback(<span class="string">'Nothing to echo.'</span>);</div><div class="line">    &#125;, <span class="string">"Echo"</span>, <span class="string">"echo"</span>, [str]);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>In this example, the plugin attaches itself to the <code>window</code> object as<br>the <code>echo</code> function, which plugin users would call as follows:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.echo(<span class="string">"echome"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">echoValue</span>) </span>&#123;</div><div class="line">    alert(echoValue == <span class="string">"echome"</span>); <span class="comment">// should alert true.</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Look at the last three arguments to the <code>cordova.exec</code> function. The first calls the <code>Echo</code> <em>service</em>, a class name. The second requests the <code>echo</code> <em>action</em>, a method within that class. The third is an array of arguments containing the echo string, which is the <code>window.echo</code> function’s the first parameter.</p>
+<p>The success callback passed into <code>exec</code> is simply a reference to the callback function <code>window.echo</code> takes. If the native platform fires the error callback, it simply calls the success callback and passes it a default string.</p>
+<h2 id="Native-Interfaces"><a href="#Native-Interfaces" class="headerlink" title="Native Interfaces"></a>Native Interfaces</h2><p>Once you define JavaScript for your plugin, you need to complement it<br>with at least one native implementation. Details for each platform are<br>listed below, and each builds on the simple Echo Plugin example above:</p>
+<ul>
+<li><a href="https://cordova.apache.org/docs/en/latest/guide/platforms/android/plugin.html" target="_blank" rel="external">Android Plugins</a></li>
+<li><a href="https://cordova.apache.org/docs/en/latest/guide/platforms/ios/plugin.html" target="_blank" rel="external">iOS Plugins</a></li>
+<li><a href="https://cordova.apache.org/docs/en/latest/guide/platforms/blackberry10/plugin.html" target="_blank" rel="external">BlackBerry 10 Plugins</a></li>
+<li><a href="https://cordova.apache.org/docs/en/latest/guide/platforms/wp8/plugin.html" target="_blank" rel="external">Windows Phone 8 Plugins</a></li>
+<li><a href="https://cordova.apache.org/docs/en/latest/guide/platforms/win8/plugin.html" target="_blank" rel="external">Windows Plugins</a></li>
+</ul>
+<h2 id="Publishing-Plugins"><a href="#Publishing-Plugins" class="headerlink" title="Publishing Plugins"></a>Publishing Plugins</h2><p>You can publish your plugin to any <code>npmjs</code>-based registry, but the recommended one is the <a href="https://www.npmjs.com/" target="_blank" rel="external">NPM registry</a>. Other developers can install your plugin automatically using either <code>plugman</code> or the Cordova CLI.</p>
+<p>To publish a plugin to NPM registry you need to follow steps below:</p>
+<ul>
+<li><p>install the <code>plugman</code> CLI:</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g plugman</div></pre></td></tr></table></figure>
+</li>
+<li><p>create <code>package.json</code> file for your plugin:</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ plugman createpackagejson /path/to/your/plugin</div></pre></td></tr></table></figure>
+</li>
+<li><p>publish it:</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ npm adduser # that is if you don&apos;t have an account yet</div><div class="line">$ npm publish /path/to/your/plugin</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>For more details on npm usage refer to <a href="https://docs.npmjs.com/getting-started/publishing-npm-packages" target="_blank" rel="external">publishing a npm package</a> on the NPM documentation site.</p>
+<h2 id="Integrating-with-Plugin-Search"><a href="#Integrating-with-Plugin-Search" class="headerlink" title="Integrating with Plugin Search"></a>Integrating with Plugin Search</h2><p>To surface the plugin in <a href="https://cordova.apache.org/plugins/" target="_blank" rel="external">Cordova Plugin Search</a>, add the <code>ecosystem:cordova</code> keyword to the <code>package.json</code> file of your plugin before publishing.</p>
+<p>To indicate support for a particular platform add a keyword with the <code>&lt;platformName&gt;</code> as <code>**cordova-&lt;platformName&gt;**</code> to the list of keywords in package.json. Plugman’s <code>createpackagejson</code> command does this for you, but if you did not use it to generate your <code>package.json</code>, you should manually edit it as shown below.</p>
+<p>For example, for a plugin that supports android, iOS &amp; Windows, the keywords in package.json should include:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">"keywords": [</div><div class="line">    "ecosystem:cordova",</div><div class="line">    "cordova-android",</div><div class="line">    "cordova-ios",</div><div class="line">    "cordova-windows"</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>For more detailed example of a package.json, review the <a href="https://github.com/apache/cordova-plugin-device/blob/master/package.json" target="_blank" rel="external">package.json file of cordova-plugin-device</a>.</p>
+<h2 id="插件规范"><a href="#插件规范" class="headerlink" title="插件规范"></a>插件规范</h2><p>See： </p>
+<ul>
+<li><a href="http://cordova.apache.org/docs/en/4.0.0/plugin_ref_spec.md.html#Plugin%20Specification" target="_blank" rel="external">Apache Cordova API Documentation</a></li>
+<li><a href="http://blog.csdn.net/jacob_wang520/article/details/18350355" target="_blank" rel="external">PhoneGap 13 插件配置标准 - jacob的专栏 - 博客频道 - CSDN.NET</a></li>
+</ul>
+<p><code>plugin.xml</code> 文件是在 plugins 命名空间（<a href="http://apache.org/cordova/ns/plugins/1.0" target="_blank" rel="external">http://apache.org/cordova/ns/plugins/1.0</a>) 下面的 XML 文档。</p>
+<p>如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">plugin</span> <span class="attr">xmlns</span>=<span class="string">"http://apache.org/cordova/ns/plugins/1.0"</span>  </span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">id</span>=<span class="string">"com.alunny.foo"</span>  </div><div class="line">    <span class="attr">version</span>=<span class="string">"1.0.2"</span>&gt;</div></pre></td></tr></table></figure>
+<h3 id="plugin"><a href="#plugin" class="headerlink" title="plugin"></a>plugin</h3><p><code>plugin</code> 元素是插件 manifest 的底层元素，它有下面的特性：</p>
+<ul>
+<li><code>xmlns</code> (必须): 插件命名空间，<code>http://apache.org/cordova/ns/plugins/1.0</code>。如果文档中包含其他命名空间的 XML，如 <code>AndroidManifest.xml</code> 文件中的命名空间，这些命名空间应该添加到顶级元素，如 <code>xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</code>。</li>
+<li><code>id</code> (必须): 插件的全路径，如：<code>com.alunny.foo</code></li>
+<li><code>version</code> (必须): 插件的版本，使用 major.minor.patch 模式，正则表达式为： <code>^\d+[.]\d+[.]\d+$</code></li>
+</ul>
+<h3 id="engines-和-engine"><a href="#engines-和-engine" class="headerlink" title="engines 和 engine"></a>engines 和 engine</h3><p><code>&lt;engines&gt;</code> 指定插件支持的基于 Cordova 的框架的版本，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">engines</span>&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">engine</span> <span class="attr">name</span>=<span class="string">"cordova"</span> <span class="attr">version</span>=<span class="string">"1.7.0"</span> /&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">engine</span> <span class="attr">name</span>=<span class="string">"cordova"</span> <span class="attr">version</span>=<span class="string">"1.8.1"</span> /&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">engine</span> <span class="attr">name</span>=<span class="string">"worklight"</span> <span class="attr">version</span>=<span class="string">"1.0.0"</span> <span class="attr">platform</span>=<span class="string">"android"</span> <span class="attr">scriptSrc</span>=<span class="string">"worklight_version"</span>/&gt;</span>  </div><div class="line"><span class="tag">&lt;/<span class="name">engines</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>跟 <code>&lt;plugin&gt;</code> 的 <code>version</code> 属性相似，<code>engine</code> 的 <code>version</code> 也符合 major.minor.patch 格式。<code>&lt;engine&gt;</code> 元素也可以使用模糊匹配来避免重复，减少由于平台升级带来的维护。可以使用的模糊操作符为：<code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code> and <code>&lt;=</code>，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">engines</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">engine</span> <span class="attr">name</span>=<span class="string">"cordova"</span> <span class="attr">version</span>=<span class="string">"&gt;=1.7.0"</span> /&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">engine</span> <span class="attr">name</span>=<span class="string">"cordova"</span> <span class="attr">version</span>=<span class="string">"&lt;1.8.1"</span> /&gt;</span>  </div><div class="line"><span class="tag">&lt;/<span class="name">engines</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>&lt;engine&gt;</code> 默认支持 Cordova 支持的所有主要平台，<code>version</code> 属性指的是支持 Cordova 的版本号。你可以列出指定的平台和他们的版本，以覆盖 <code>cordova</code> 引擎的默认配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">engines</span>&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">engine</span> <span class="attr">name</span>=<span class="string">"cordova"</span> <span class="attr">version</span>=<span class="string">"&gt;=1.7.0"</span> /&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">engine</span> <span class="attr">name</span>=<span class="string">"cordova-android"</span> <span class="attr">version</span>=<span class="string">"&gt;=1.8.0"</span> /&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">engine</span> <span class="attr">name</span>=<span class="string">"cordova-ios"</span> <span class="attr">version</span>=<span class="string">"&gt;=1.7.1"</span> /&gt;</span>  </div><div class="line"><span class="tag">&lt;/<span class="name">engines</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>下面是 <code>&lt;engine&gt;</code> 标签默认支持的引擎列表：</p>
+<ul>
+<li>‘cordova’ </li>
+<li>‘cordova-plugman’ </li>
+<li>‘cordova-amazon-fireos’</li>
+<li>‘cordova-android’</li>
+<li>‘cordova-ios’</li>
+<li>‘cordova-blackberry10’ </li>
+<li>‘cordova-wp7’</li>
+<li>‘cordova-wp8’</li>
+<li>‘cordova-windows8’</li>
+<li>‘android-sdk’ // returns the highest Android api level installed</li>
+<li>‘apple-xcode’ // returns the xcode version </li>
+<li>‘apple-ios’ // returns the highest iOS version installed</li>
+<li>‘apple-osx’ // returns the OSX version</li>
+<li>‘blackberry-ndk’ // returns the native blackberry SDK version</li>
+</ul>
+<p>如果要指明一个基于 Cordova 的自定义框架，应该使用下面的 <code>engine</code> 标签列出：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">engines</span>&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">engine</span> <span class="attr">name</span>=<span class="string">"my_custom_framework"</span> <span class="attr">version</span>=<span class="string">"1.0.0"</span> <span class="attr">platform</span>=<span class="string">"android"</span> <span class="attr">scriptSrc</span>=<span class="string">"path_to_my_custom_framework_version"</span>/&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">engine</span> <span class="attr">name</span>=<span class="string">"another_framework"</span> <span class="attr">version</span>=<span class="string">"&gt;0.2.0"</span> <span class="attr">platform</span>=<span class="string">"ios|android"</span> <span class="attr">scriptSrc</span>=<span class="string">"path_to_another_framework_version"</span>/&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">engine</span> <span class="attr">name</span>=<span class="string">"even_more_framework"</span> <span class="attr">version</span>=<span class="string">"&gt;=2.2.0"</span> <span class="attr">platform</span>=<span class="string">"*"</span> <span class="attr">scriptSrc</span>=<span class="string">"path_to_even_more_framework_version"</span>/&gt;</span>  </div><div class="line"><span class="tag">&lt;/<span class="name">engines</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>一个基于 Cordova 的自定义框架要求 engine 元素必须包含以下属性：</p>
+<ul>
+<li><code>name</code>（必须）：框架名称。</li>
+<li><code>version</code>（必须）：框架版本。</li>
+<li><code>scriptSrc</code>（必须）：告诉 plugman 框架版本的脚本文件，理想情况下，这个文件应该在插件目录的顶级目录。</li>
+<li><code>platform</code>（必须）：框架支持的平台。你可以使用通配符 <code>*</code> 来代表所有平台，也可以指定多个平台，如 <code>android|ios|blackberry10</code>，还可以只指定一个平台 <code>android</code>。</li>
+</ul>
+<p>如果没指定 <code>&lt;engine&gt;</code> 标签，plugman 会盲目地将插件安装到 Cordova 过程目录下。</p>
+<h3 id="name"><a href="#name" class="headerlink" title="name"></a>name</h3><p>指定插件的名称，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;name&gt;Foo&lt;/name&gt;</div></pre></td></tr></table></figure>
+<p>这个元素没有处理本地化。</p>
+<h3 id="description"><a href="#description" class="headerlink" title="description"></a>description</h3><p>指定插件描述，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Foo plugin description<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>该元素也没有处理本地化</p>
+<h3 id="author"><a href="#author" class="headerlink" title="author"></a>author</h3><p>指定插件的作者，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">author</span>&gt;</span>Foo plugin description<span class="tag">&lt;/<span class="name">author</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="keywords"><a href="#keywords" class="headerlink" title="keywords"></a>keywords</h3><p>指定插件关键字，使用逗号分隔，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">keywords</span>&gt;</span>foo,bar<span class="tag">&lt;/<span class="name">keywords</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="license"><a href="#license" class="headerlink" title="license"></a>license</h3><p>指定插件许可，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">license</span>&gt;</span>Apache 2.0 License<span class="tag">&lt;/<span class="name">license</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="asset"><a href="#asset" class="headerlink" title="asset"></a>asset</h3><p>指定需要复制到 www 目录的文件或者目录，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- a single file, to be copied in the root directory --&gt;</span>  </div><div class="line"><span class="tag">&lt;<span class="name">asset</span> <span class="attr">src</span>=<span class="string">"www/foo.js"</span> <span class="attr">target</span>=<span class="string">"foo.js"</span> /&gt;</span>  </div><div class="line"><span class="comment">&lt;!-- a directory, also to be copied in the root directory --&gt;</span>  </div><div class="line"><span class="tag">&lt;<span class="name">asset</span> <span class="attr">src</span>=<span class="string">"www/foo"</span> <span class="attr">target</span>=<span class="string">"foo"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>所有的 asset 元素都必须包含 <code>src</code> 和 <code>target</code> 属性，基于 web 插件多半包含 <code>&lt;asset&gt;</code> 元素。嵌套在 <code>&lt;platform&gt;</code> 元素下 <code>&lt;asset&gt;</code> 元素指定平台相关的 Web 资源。属性包含：</p>
+<ul>
+<li><code>src</code> (required): 插件包下相对 <code>plugin.xml</code> 文档的文件或者目录。如果文件不存在于指定的 <code>src</code> 下，plugman 会停止并报错。</li>
+<li><p><code>target</code> (required):相对 <code>www</code> 的文件或目录。如：</p>
+<pre><code>&lt;asset src=&quot;www/new-foo.js&quot; target=&quot;js/experimental/foo.js&quot; /&gt;
+</code></pre><p>  这会在 <code>www</code> 目录下创建 <code>js/experimental</code> 目录（如果不存在），然后拷贝 <code>new-foo.js</code> 文件，并且重命名为 <code>foo.js</code>。如果文件在目标位置已经存在，plugman 会停止并报错。</p>
+</li>
+</ul>
+<h3 id="js-module"><a href="#js-module" class="headerlink" title="js-module"></a>js-module</h3><p>大多数插件包含一个或者多个 JavaScript 文件。每一个 <code>&lt;js-module&gt;</code> 标签对应一个 JavaScript 文件。<code>&lt;asset&gt;</code> 标签只是简单地从插件子目录将文件拷贝到 <code>www</code> 下，<code>&lt;js-module&gt;</code> 更加复杂，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">js-module</span> <span class="attr">src</span>=<span class="string">"socket.js"</span> <span class="attr">name</span>=<span class="string">"Socket"</span>&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">clobbers</span> <span class="attr">target</span>=<span class="string">"chrome.socket"</span> /&gt;</span>  </div><div class="line"><span class="tag">&lt;/<span class="name">js-module</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>当安装一个上面的插件时，<code>socket.js</code> 被复制到 <code>www/plugins/my.plugin.id/socket.js</code>，并且在 <code>www/cordova_plugins.js</code> 中增加了一个入口。加载时，<code>cordova.js</code> 中的代码使用 XHR 去读取每一个文件并使用 <code>&lt;script&gt;</code> 将它们注入到 HTML 页面中。</p>
+<p>不要使用 <code>cordova.define</code> 去包装文件，它会被自动包装。模块封装在一个闭包中， <code>module</code>，<br><code>exports</code>, and <code>require</code> 都在作用域中，因为这对 AMD 模块来说是正常的。</p>
+<p><code>&lt;js-module&gt;</code> 标签的详情：</p>
+<ul>
+<li><p><code>src</code> 引用插件目录下一个相对于 <code>plugin.xml</code> 文件的文件。</p>
+</li>
+<li><p><code>name</code> 模块名称的最后一部分。这在你使用 <code>cordova.require</code> 来导入插件的其他模块时有用。<code>&lt;js-module&gt;</code> 的模块名称是插件的 <code>id</code> + <code>name</code>。前面的例子中，<code>id</code> 是 <code>chrome.socket</code>，<code>name</code> 是 <code>Socket</code>，模块名称为 <code>chrome.socket.Socket</code>。</p>
+</li>
+<li><p><code>&lt;js-module&gt;</code> 中可以有以下三个标签:</p>
+<ul>
+<li><p><code>&lt;clobbers target=&quot;some.value&quot;/&gt;</code> 指明 <code>module.exports</code> 将 <code>window.some.value</code> 插入到 <code>window</code> 对象中。只要你喜欢，你可以有很多 <code>&lt;clobber&gt;</code>。Any object not available on <code>window</code> is created.</p>
+</li>
+<li><p><code>&lt;merges target=&quot;some.value&quot;/&gt;</code> 表示模块应该和已经存在的 <code>window.some.value</code> 合并，如果 key 已经存在，使用模块的版本覆盖原来的。可以有多个 <code>&lt;merges&gt;</code> 标签。Any object not available on <code>window</code> is created.</p>
+</li>
+<li><p><code>&lt;runs/&gt;</code> 表示你的代码应该使用 <code>cordova.require</code> 指定，但不安装到 <code>window</code> 对象上。这在初始化模块时很有用，如绑定事件处理器。你最多只能有一个 <code>&lt;runs/&gt;</code> 标签。注意在 <code>&lt;clobbers/&gt;</code> or <code>&lt;merges/&gt;</code> 中包含 <code>&lt;runs/&gt;</code> 是多余的，因为它们也会 <code>cordova.require</code> 你的模块。</p>
+</li>
+<li><p>空的 <code>&lt;js-module&gt;</code> 仍会加载并且可以被其他模块通过 <code>cordova.require</code> 访问。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>如果 <code>src</code> 不能解析为一个文件地址，plugman 会停止加载并回滚安装，发出问题的通知并以非 0 代码退出。</p>
+<p>嵌套在 <code>&lt;platform&gt;</code> 下的 <code>&lt;js-module&gt;</code> 元素申明了指定平台的 JavaScript 的模块绑定。</p>
+<h3 id="dependency"><a href="#dependency" class="headerlink" title="dependency"></a>dependency</h3><p><code>&lt;dependency&gt;</code> 标签让你指定当前插件的依赖插件。未来的版本会从插件库中访问，就眼前来说，插件通过 <code>&lt;dependency&gt;</code> 标签的 URL 来引用。如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span> <span class="attr">id</span>=<span class="string">"com.plugin.id"</span> <span class="attr">url</span>=<span class="string">"https://github.com/myuser/someplugin"</span> <span class="attr">commit</span>=<span class="string">"428931ada3891801"</span> <span class="attr">subdir</span>=<span class="string">"some/path/here"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>id</code>: 插件ID，它需要全局唯一的，使用反向域名来表达。</li>
+<li><code>url</code>: 插件库地址。</li>
+<li><code>commit</code>: 它是 <code>git checkout</code> 用的 git 引用：一个分支或者一个标签名称（(e.g., <code>master</code>, <code>0.3.1</code>)，或者一个提交的hash码(e.g.,<br>  <code>975ddb228af811dd8bb37ed1dfd092a3d05295f9</code>)。</li>
+<li><code>subdir</code>: 指定代码库中的子目录作为插件依赖。这让库可以包含几个相关的插件，这有时比较好用。</li>
+</ul>
+<p>未来会引入版本约束，可以通过 name 获取而非显式的 URL。</p>
+<h4 id="相对依赖路径"><a href="#相对依赖路径" class="headerlink" title="相对依赖路径"></a>相对依赖路径</h4><p>如果你设置了 <code>&lt;dependency&gt;</code> 标签的 <code>url</code> 为 <code>&quot;.&quot;</code>，并且提供了 <code>subdir</code>，依赖插件将会从定义 <code>&lt;dependency&gt;</code> 的父插件的本地或者远程 git 库中安装。</p>
+<p><code>subdir</code> 总是指定相对 git 库的根的目录，而不是父插件的目录。即使插件是使用本地路径来安装的，也还是如此。plugman 在 git 库的根目录寻找并发现其他的插件。</p>
+<h3 id="platform"><a href="#platform" class="headerlink" title="platform"></a>platform</h3><p><code>&lt;platform&gt;</code> 指明了本地代码相关的或者需要修改配置文件的平台。工具可以根据它识别支持的平台并把代码安装到 Cordova 工程中。</p>
+<p>没有指定 <code>&lt;platform&gt;</code> 插件只支持 JavaScript，因此可以在平台上安装。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">platform</span> <span class="attr">name</span>=<span class="string">"android"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">source-file</span> <span class="attr">src</span>=<span class="string">"src/android/Device.java"</span> <span class="attr">target-dir</span>=<span class="string">"src/org/apache/cordova/device"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">platform</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">platform</span> <span class="attr">name</span>=<span class="string">"ios"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- ios-specific elements --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">platform</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>name</code> 表示支持的平台，子元素指定平台相关的特性。</p>
+<p>平台名称应该使用小写，平台列表为：</p>
+<ul>
+<li>amazon-fireos</li>
+<li>android</li>
+<li>blackberry10</li>
+<li>ios</li>
+<li>wp7</li>
+<li>wp8</li>
+<li>windows8</li>
+</ul>
+<h3 id="source-file"><a href="#source-file" class="headerlink" title="source-file"></a>source-file</h3><p><code>&lt;source-file&gt;</code> 元素指定安装到项目中的可执行代码，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- android --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">source-file</span> <span class="attr">src</span>=<span class="string">"src/android/Foo.java"</span></span></div><div class="line">                <span class="attr">target-dir</span>=<span class="string">"src/com/alunny/foo"</span> /&gt;</div><div class="line"><span class="comment">&lt;!-- ios --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">source-file</span> <span class="attr">src</span>=<span class="string">"src/ios/CDVFoo.m"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">source-file</span> <span class="attr">src</span>=<span class="string">"src/ios/someLib.a"</span> <span class="attr">framework</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">source-file</span> <span class="attr">src</span>=<span class="string">"src/ios/someLib.a"</span> <span class="attr">compiler-flags</span>=<span class="string">"-fno-objc-arc"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>它支持以下属性:</p>
+<ul>
+<li><code>src</code> (required): 相对 <code>plugin.xml</code> 文件路径。</li>
+<li><code>target-dir</code>: 文件拷贝的目标路径，相对 Cordova 项目的跟路径。实际中，这在 Java 平台很重要，在 <code>com.alunny.foo</code> 包下的文件必须在 <code>com/alunny/foo</code> 目录下。在源目录不重要的平台，这个属性应该被忽略。如果 <code>source-file</code> 会覆盖已经存在的文件，则 plugman 会报错。</li>
+<li><code>framework</code> (iOS only): If set to <code>true</code>, also adds the specified file as a framework to the project.</li>
+<li><code>compiler-flags</code> (iOS only): If set, assigns the specified compiler flags for the particular source file.</li>
+</ul>
+<h3 id="config-file"><a href="#config-file" class="headerlink" title="config-file"></a>config-file</h3><p>标志一个基于 XML 的配置文件，这个配置文件可以修改两种文件类型，分别为 <code>xml</code> 和 <code>plist</code> 文件。<code>config-file</code> 元素只允许添加新的子元素到 XML 文档树中。子元素会插入到目标文档中。</p>
+<p>修改类型为 xml 的文件，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">config-file</span> <span class="attr">target</span>=<span class="string">"AndroidManifest.xml"</span> <span class="attr">parent</span>=<span class="string">"/manifest/application"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">"com.foo.Foo"</span> <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">config-file</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>plist</code> 的例子:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">config-file</span> <span class="attr">target</span>=<span class="string">"*-Info.plist"</span> <span class="attr">parent</span>=<span class="string">"CFBundleURLTypes"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">array</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dict</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">key</span>&gt;</span>PackageName<span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">string</span>&gt;</span>$PACKAGE_NAME<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dict</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">array</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">config-file</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>支持的属性如下:</p>
+<ul>
+<li><p><code>target</code>: 修改的目标文件，相对于 Cordova 项目的根目录。target 可以包含通配符（*），这种情况下，plugman 递归搜索工程目录，并使用第一个匹配的结果。IOS 中，相对于项目根目录的配置文件路径是不可知的，所以标明一个相对 <code>cordova-ios-project/MyAppName/config.xml</code> 的目标文件 <code>config.xml</code>。</p>
+</li>
+<li><p><code>parent</code>: 一个 XPath 选择器，指定配置文件将要添加到的目标文件。如果使用绝对选择器，你可以使用通配符（*）去指定根元素。对于 <code>plist</code> 文件，<code>parent</code> 元素指定了 XML 被插入的父文件的 key。</p>
+</li>
+</ul>
+<h3 id="plugins-plist"><a href="#plugins-plist" class="headerlink" title="plugins-plist"></a>plugins-plist</h3><p>This is <em>outdated</em> as it only applies to cordova-ios 2.2.0 and<br>below. Use the <code>&lt;config-file&gt;</code> tag for newer versions of Cordova.</p>
+<p>Example:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">config-file</span> <span class="attr">target</span>=<span class="string">"config.xml"</span> <span class="attr">parent</span>=<span class="string">"/widget/plugins"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">feature</span> <span class="attr">name</span>=<span class="string">"ChildBrowser"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"ios-package"</span> <span class="attr">value</span>=<span class="string">"ChildBrowserCommand"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">feature</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">config-file</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Specifies a key and value to append to the correct <code>AppInfo.plist</code><br>file in an iOS Cordova project. For example:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">plugins-plist</span> <span class="attr">key</span>=<span class="string">"Foo"</span> <span class="attr">string</span>=<span class="string">"CDVFoo"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="resource-file-and-header-file-Elements"><a href="#resource-file-and-header-file-Elements" class="headerlink" title="resource-file and header-file Elements"></a>resource-file and header-file Elements</h3><p>像 source file 一样，指定 header 和资源文件。如 iOS：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resource-file</span> <span class="attr">src</span>=<span class="string">"CDVFoo.bundle"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">resource-file</span> <span class="attr">src</span>=<span class="string">"CDVFooViewController.xib"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">header-file</span> <span class="attr">src</span>=<span class="string">"CDVFoo.h"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>Android 示例:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resource-file</span> <span class="attr">src</span>=<span class="string">"FooPluginStrings.xml"</span> <span class="attr">target</span>=<span class="string">"res/values/FooPluginStrings.xml"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="lib-file"><a href="#lib-file" class="headerlink" title="lib-file"></a>lib-file</h3><p>像 source, resource, and header files，指定用户自定义的库：</p>
+<p>如:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">lib-file</span> <span class="attr">src</span>=<span class="string">"src/BlackBerry10/native/device/libfoo.so"</span> <span class="attr">arch</span>=<span class="string">"device"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">lib-file</span> <span class="attr">src</span>=<span class="string">"src/BlackBerry10/native/simulator/libfoo.so"</span> <span class="attr">arch</span>=<span class="string">"simulator"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>支持的属性:</p>
+<ul>
+<li><code>src</code> (required): 相对 <code>plugin.xml</code> 的文件路径。</li>
+<li><code>arch</code>: <code>.so</code> 文件编译的架构，如 <code>device</code> or <code>simulator</code>。</li>
+</ul>
+<h3 id="framework"><a href="#framework" class="headerlink" title="framework"></a>framework</h3><p>指定插件依赖的平台（通常是 OS/平台）。</p>
+<p>如:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">framework</span> <span class="attr">src</span>=<span class="string">"libsqlite3.dylib"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">framework</span> <span class="attr">src</span>=<span class="string">"social.framework"</span> <span class="attr">weak</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">framework</span> <span class="attr">src</span>=<span class="string">"relative/path/to/my.framework"</span> <span class="attr">custom</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">framework</span> <span class="attr">src</span>=<span class="string">"path/to/project/LibProj.csproj"</span> <span class="attr">custom</span>=<span class="string">"true"</span> <span class="attr">type</span>=<span class="string">"projectReference"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<p><code>src</code> 属性指定一个添加到 Cordova 工程的框架。</p>
+<ul>
+<li><code>src</code> 属性指定框架，plugman 会视图添加到 Cordova 工程。</li>
+<li><code>weak</code> 指定跨家是否应该被软连接，默认为 <code>false</code>。</li>
+<li><code>custom</code> 默认为  <code>false</code>。指定 framework 是否作文插件文件的一部分（因此，它不是系统框架）。在 Android 平台，它指定如何处理 <strong>src</strong>，如果为  <code>true</code> <strong>src</strong> 乡镇应用的工程目录，否则，相对 Android SDK 目录。</li>
+<li><code>custom</code> The optional <code>custom</code> attribute is a boolean indicating whether the framework is one that is included as part of your plugin files (thus it is not a system framework). The default is <code>false</code>.  <strong><em>On Android</em></strong> it specifies how to treat <strong>src</strong>. If <code>true</code> <strong>src</strong> is a relative path from the application project’s directory, otherwise – from the Android SDK directory.</li>
+<li><code>type</code> The optional <code>type</code> attribute is a string indicating the type of framework to add. Currently only <code>projectReference</code> is supported and only on Windows 8.  Using <code>custom=&#39;true&#39;</code> and <code>type=&#39;projectReference&#39;</code> will add a reference to the project which will be added to the compile+link steps of the cordova project.  This essentially is the only way currently that a ‘custom’ framework can target multiple architectures as they are explicitly built as a dependency by the referencing cordova application.</li>
+<li><code>parent</code> The optional <code>parent</code> attribute is currently supported only on Android. It sets the relative path to the directory containing the sub-project to which to add the reference. The default is <code>.</code>, i.e. the application project. It allows to add references between sub projects like in this example:</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">framework</span> <span class="attr">src</span>=<span class="string">"FeedbackLib"</span> <span class="attr">custom</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">framework</span> <span class="attr">src</span>=<span class="string">"extras/android/support/v7/appcompat"</span> <span class="attr">custom</span>=<span class="string">"false"</span> <span class="attr">parent</span>=<span class="string">"FeedbackLib"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="info"><a href="#info" class="headerlink" title="info"></a>info</h3><p>提供给用户的额外信息。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">info</span>&gt;</span></div><div class="line">You need to install __Google Play Services__ from the `Android Extras` section using the Android SDK manager (run `android`).</div><div class="line"></div><div class="line">You need to add the following line to the `local.properties`:</div><div class="line"></div><div class="line">android.library.reference.1=PATH_TO_ANDROID_SDK/sdk/extras/google/google_play_services/libproject/google-play-services_lib</div><div class="line"><span class="tag">&lt;/<span class="name">info</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>在某些情况下，一个插件需要根据目标平台对配置文件进行更改。比如，为了在 Android 上面注册 C2DM（一个 package id 为 <code>com.alunny.message</code> 的应用），需要如下面的权限：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"com.alunny.message.permission.C2D_MESSAGE"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<p>在这种情况下面，事先并不知道插入 <code>plugin.xml</code> 文件的内容。这个时候就需要使用到变量的概念，变量是以美元符号（$)开头的，后接一系列大写字母、数字及下划线。对于上面的例子，<code>plugin.xml</code> 中会包含下面的标签：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"$PACKAGE_NAME.permission.C2D_MESSAGE"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<p>plugman 会使用特定的值代替变量，如果没有找到则使用一个空的字符串代替。变量的值可以被自动检测（如从 <code>AndroidManifest.xml</code> 文件中），也可以由工具指定，该过程依赖于特定的工具；</p>
+<p>plugman 可以要求用户指定插件需要的变量值，如：C2M 和 Google 地图的 API_KEY 可以使用下面的命令参数指定：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plugman --platform android --project /path/to/project --plugin name|git-url|path --variable API_KEY=!@CFATGWE%^WGSFDGSDFW$%^#$%YTHGsdfhsfhyer56734</div></pre></td></tr></table></figure>
+<p>为了强制使用标量，在 <code>&lt;platform&gt;</code> 标签下需要包含一个 <code>&lt;preference&gt;</code> 标签，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">preference</span> <span class="attr">name</span>=<span class="string">"API_KEY"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>plugman 会检查必须的 preferences 传入，如果没有，报错退出。</p>
+<h3 id="PACKAGE-NAME"><a href="#PACKAGE-NAME" class="headerlink" title="$PACKAGE_NAME"></a>$PACKAGE_NAME</h3><p>包的反向域风格的唯一标识符，对应 iOS 的 <code>CFBundleIdentifier</code> 或 Android 中的 <code>AndroidManifest.xml</code> 文件的顶级 <code>manifest</code> 元素的 <code>package</code> 属性。</p>
+<h2 id="Android-插件"><a href="#Android-插件" class="headerlink" title="Android 插件"></a>Android 插件</h2><h3 id="插件的目录结构"><a href="#插件的目录结构" class="headerlink" title="插件的目录结构"></a>插件的目录结构</h3><p>我们以 <code>org.apache.cordova.device</code> 插件为例：</p>
+<pre><code>org.apache.cordova.device
+|   LICENSE
+|   package.json 插件的模块描述文件，模仿 Node。
+|   plugin.xml 插件的配置文件。
+|   README.md
+|
++---doc
+|       index.md 插件的 API 文档。
+|
++---src Native 层代码。
+|   +---android
+|   |       Device.java
+|   |
+|   +---ios
+|   |       CDVDevice.h
+|   |       CDVDevice.m
+|   |
+|   \...other platforms
+|
+\---www
+        device.js JavaScript 层代码的实现。
+</code></pre><a id="more"></a>
+<h3 id="plugin-xml"><a href="#plugin-xml" class="headerlink" title="plugin.xml"></a>plugin.xml</h3><p><code>plugin.xml</code> 的内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">plugin</span> <span class="attr">xmlns</span>=<span class="string">"http://apache.org/cordova/ns/plugins/1.0"</span></span></div><div class="line">    <span class="attr">xmlns:rim</span>=<span class="string">"http://www.blackberry.com/ns/widgets"</span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">id</span>=<span class="string">"org.apache.cordova.device"</span></div><div class="line">    <span class="attr">version</span>=<span class="string">"0.2.9"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Device<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Cordova Device Plugin<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">license</span>&gt;</span>Apache 2.0<span class="tag">&lt;/<span class="name">license</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">keywords</span>&gt;</span>cordova,device<span class="tag">&lt;/<span class="name">keywords</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">repo</span>&gt;</span>https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git<span class="tag">&lt;/<span class="name">repo</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">issue</span>&gt;</span>https://issues.apache.org/jira/browse/CB/component/12320648<span class="tag">&lt;/<span class="name">issue</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">js-module</span> <span class="attr">src</span>=<span class="string">"www/device.js"</span> <span class="attr">name</span>=<span class="string">"device"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">clobbers</span> <span class="attr">target</span>=<span class="string">"device"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">js-module</span>&gt;</span></div><div class="line"></div><div class="line">     <span class="comment">&lt;!-- android --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">platform</span> <span class="attr">name</span>=<span class="string">"android"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">config-file</span> <span class="attr">target</span>=<span class="string">"res/xml/config.xml"</span> <span class="attr">parent</span>=<span class="string">"/*"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">feature</span> <span class="attr">name</span>=<span class="string">"Device"</span> &gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"android-package"</span> <span class="attr">value</span>=<span class="string">"org.apache.cordova.device.Device"</span>/&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">feature</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">config-file</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">source-file</span> <span class="attr">src</span>=<span class="string">"src/android/Device.java"</span> <span class="attr">target-dir</span>=<span class="string">"src/org/apache/cordova/device"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">platform</span>&gt;</span></div><div class="line"></div><div class="line">     <span class="comment">&lt;!-- ios --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">platform</span> <span class="attr">name</span>=<span class="string">"ios"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">config-file</span> <span class="attr">target</span>=<span class="string">"config.xml"</span> <span class="attr">parent</span>=<span class="string">"/*"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">feature</span> <span class="attr">name</span>=<span class="string">"Device"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"ios-package"</span> <span class="attr">value</span>=<span class="string">"CDVDevice"</span>/&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">feature</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">config-file</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">header-file</span> <span class="attr">src</span>=<span class="string">"src/ios/CDVDevice.h"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">source-file</span> <span class="attr">src</span>=<span class="string">"src/ios/CDVDevice.m"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">platform</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--other platforms--&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>id: 插件的标识，即发布到 <a href="http://plugins.cordova.io/" target="_blank" rel="external">plugins.cordova.io</a> 的 ID。</li>
+<li>name：插件的名称</li>
+<li>description：插件描述信息</li>
+<li><p>js-module 插件的 JavaScript 模块申明。</p>
+<pre><code>&lt;js-module src=&quot;www/device.js&quot; name=&quot;device&quot;&gt;
+    &lt;clobbers target=&quot;device&quot; /&gt;
+&lt;/js-module&gt;
+</code></pre><p>  插件对应的 javascript 模块，src 属性指向 JavaScript 文件，如这里的 <code>www/device.js</code>。对于 Android 平台，插件安装后，该文件会被拷贝到 <code>assets/www/plugins/org.apache.cordova.device/www/</code> 下。该 JavaScript 文件在 <code>index.html</code> 被加载。<code>clobbers</code> 为映射的变量，默认为全局变量，本例中将 device 模块映射为全局变量 <code>windows.device</code>。如果没有使用 <code>clobbers</code> 来映射，我们可以使用 <code>require</code> 方法来加载模块：</p>
+<pre><code>var device = cordova.require(&apos;org.apache.cordova.device&apos;);
+</code></pre></li>
+<li><p>config-file：插件的平台配置，以 Android 为例。</p>
+<pre><code>&lt;config-file target=&quot;res/xml/config.xml&quot; parent=&quot;/*&quot;&gt;
+    &lt;feature name=&quot;Device&quot; &gt;
+        &lt;param name=&quot;android-package&quot; value=&quot;org.apache.cordova.device.Device&quot;/&gt;
+    &lt;/feature&gt;
+&lt;/config-file&gt;
+</code></pre><p>  The service <code>name</code> matches the one used in the JavaScript exec call. The <code>value</code> is the Java class’s fully qualified namespace identifier.</p>
+<p>  安装插件后 <code>feature</code> 标签会被添加到 <code>res/xml/config.xml</code> 文件中。</p>
+<pre><code>&lt;source-file src=&quot;src/android/Device.java&quot; target-dir=&quot;src/org/apache/cordova/device&quot; /&gt;
+</code></pre><p>  安装插件后，<code>src/android/Device.java</code> 复制到 android 的 package 包(<code>src/</code>)中。</p>
+</li>
+</ul>
+<h3 id="www-device-js"><a href="#www-device-js" class="headerlink" title="www/device.js"></a>www/device.js</h3><p>模块的写法采用 CommonJS Module 规范。</p>
+<h4 id="The-JavaScript-Interface-1"><a href="#The-JavaScript-Interface-1" class="headerlink" title="The JavaScript Interface"></a>The JavaScript Interface</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> argscheck = <span class="built_in">require</span>(<span class="string">'cordova/argscheck'</span>),</div><div class="line">    channel = <span class="built_in">require</span>(<span class="string">'cordova/channel'</span>),</div><div class="line">    utils = <span class="built_in">require</span>(<span class="string">'cordova/utils'</span>),</div><div class="line">    exec = <span class="built_in">require</span>(<span class="string">'cordova/exec'</span>),</div><div class="line">    cordova = <span class="built_in">require</span>(<span class="string">'cordova'</span>);</div><div class="line"></div><div class="line">channel.createSticky(<span class="string">'onCordovaInfoReady'</span>);</div><div class="line"><span class="comment">// Tell cordova channel to wait on the CordovaInfoReady event</span></div><div class="line">channel.waitForInitialization(<span class="string">'onCordovaInfoReady'</span>);</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * This represents the mobile device, and provides properties for inspecting the model, version, UUID of the</div><div class="line"> * phone, etc.</div><div class="line"> * @constructor</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Device</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.available = <span class="literal">false</span>;</div><div class="line">    <span class="keyword">this</span>.platform = <span class="literal">null</span>;</div><div class="line">    <span class="keyword">this</span>.version = <span class="literal">null</span>;</div><div class="line">    <span class="keyword">this</span>.uuid = <span class="literal">null</span>;</div><div class="line">    <span class="keyword">this</span>.cordova = <span class="literal">null</span>;</div><div class="line">    <span class="keyword">this</span>.model = <span class="literal">null</span>;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> me = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">    channel.onCordovaReady.subscribe(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        me.getInfo(<span class="function"><span class="keyword">function</span>(<span class="params">info</span>) </span>&#123;</div><div class="line">            <span class="comment">//ignoring info.cordova returning from native, we should use value from cordova.version defined in cordova.js</span></div><div class="line">            <span class="comment">//<span class="doctag">TODO:</span> CB-5105 native implementations should not return info.cordova</span></div><div class="line">            <span class="keyword">var</span> buildLabel = cordova.version;</div><div class="line">            me.available = <span class="literal">true</span>;</div><div class="line">            me.platform = info.platform;</div><div class="line">            me.version = info.version;</div><div class="line">            me.uuid = info.uuid;</div><div class="line">            me.cordova = buildLabel;</div><div class="line">            me.model = info.model;</div><div class="line">            channel.onCordovaInfoReady.fire();</div><div class="line">        &#125;,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">            me.available = <span class="literal">false</span>;</div><div class="line">            utils.alert(<span class="string">"[ERROR] Error initializing Cordova: "</span> + e);</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Get device info</div><div class="line"> *</div><div class="line"> * @param &#123;Function&#125; successCallback The function to call when the heading data is available</div><div class="line"> * @param &#123;Function&#125; errorCallback The function to call when there is an error getting the heading data. (OPTIONAL)</div><div class="line"> */</div><div class="line">Device.prototype.getInfo = <span class="function"><span class="keyword">function</span>(<span class="params">successCallback, errorCallback</span>) </span>&#123;</div><div class="line">    argscheck.checkArgs(<span class="string">'fF'</span>, <span class="string">'Device.getInfo'</span>, <span class="built_in">arguments</span>);</div><div class="line">    exec(successCallback, errorCallback, <span class="string">"Device"</span>, <span class="string">"getDeviceInfo"</span>, []);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = <span class="keyword">new</span> Device();</div></pre></td></tr></table></figure>
+<h3 id="src-android-Device-java"><a href="#src-android-Device-java" class="headerlink" title="src/android/Device.java"></a>src/android/Device.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Device</span> <span class="keyword">extends</span> <span class="title">CordovaPlugin</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String uuid;                                <span class="comment">// Device UUID</span></div><div class="line"></div><div class="line">    <span class="comment">// ... other fileds</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(CordovaInterface cordova, CordovaWebView webView)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.initialize(cordova, webView);</div><div class="line">        Device.uuid = getUuid();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Executes the request and returns PluginResult.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> action            The action to execute.</div><div class="line">     * <span class="doctag">@param</span> args              JSONArry of arguments for the plugin.</div><div class="line">     * <span class="doctag">@param</span> callbackContext   The callback id used when calling back into JavaScript.</div><div class="line">     * <span class="doctag">@return</span>                  True if the action was valid, false if not.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">execute</span><span class="params">(String action, JSONArray args, CallbackContext callbackContext)</span> <span class="keyword">throws</span> JSONException </span>&#123;</div><div class="line">        <span class="keyword">if</span> (action.equals(<span class="string">"getDeviceInfo"</span>)) &#123;</div><div class="line">            JSONObject r = <span class="keyword">new</span> JSONObject();</div><div class="line">            r.put(<span class="string">"uuid"</span>, Device.uuid);</div><div class="line">            r.put(<span class="string">"version"</span>, <span class="keyword">this</span>.getOSVersion());</div><div class="line">            r.put(<span class="string">"platform"</span>, <span class="keyword">this</span>.getPlatform());</div><div class="line">            r.put(<span class="string">"model"</span>, <span class="keyword">this</span>.getModel());</div><div class="line">            callbackContext.success(r);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Get the device's Universally Unique Identifier (UUID).</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUuid</span><span class="params">()</span> </span>&#123;</div><div class="line">        String uuid = Settings.Secure.getString(<span class="keyword">this</span>.cordova.getActivity().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);</div><div class="line">        <span class="keyword">return</span> uuid;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ... other method</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>插件必须继承插件父类 <code>CordovaPlugin</code>。</li>
+<li><code>initialize</code> 重写父类的初始化方法，当插件被实例化后，该方法自动被调用。</li>
+<li><p><code>execute</code> 重写父类的执行请求方法。方法签名为：</p>
+<pre><code>public boolean execute(String action, JSONArray args, CallbackContext callbackContext)
+</code></pre><ul>
+<li>action 用于标识插件的行为。</li>
+<li>args 参数。</li>
+<li>callbackContext 和 JavaScript 的交互上下文。成功调用 <code>callbackContext.success(message)</code>，失败调用 <code>callbackContext.error(message)</code> 方法，分别对应 JavaScript 文件中的 <code>success</code> 和 <code>error</code> 回调函数。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Android-Plugin-Native-Interfaces"><a href="#Android-Plugin-Native-Interfaces" class="headerlink" title="Android Plugin (Native Interfaces)"></a>Android Plugin (Native Interfaces)</h3><p>插件描述为 <code>config.xml</code> 文件中的类映射。一个插件至少包含一个继承于 <code>CordovaPlugin</code> 的 Java 类，并且覆盖其中的 <code>execute</code> 方法。作为最佳实践，插件应该处理 <code>pause</code> and <code>resume</code> 事件，以及插件之间传递的任何信息。长时间运行的插件，如媒体播放，监听器，或者内部内部状态，其后台的 Activity 还应该实现 <code>onReset()</code> 方法。它在 WebView 导航到新的页面或者刷新的时候执行，这会重新加载 JavaScript。</p>
+<p>不管你把插件发布为 Java 文件还是 jar 文件，插件都必须在 Cordova-Android 应用的 <code>res/xml/config.xml</code> 文件中指定。如何在 <code>plugin.xml</code> 文件中注入 feature 元素：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">feature</span> <span class="attr">name</span>=<span class="string">"&lt;service_name&gt;"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"android-package"</span> <span class="attr">value</span>=<span class="string">"&lt;full_name_including_namespace&gt;"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">feature</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>service_name</code> 必须和 JavaScript 中 <code>exec</code> 匹配，<code>value</code> 为 Java 类的全限定名。否则，插件虽然可以编译，但在 Cordova 中还是不能用。</p>
+<h3 id="插件初始化和声明周期"><a href="#插件初始化和声明周期" class="headerlink" title="插件初始化和声明周期"></a>插件初始化和声明周期</h3><p>插件实例和 WebView 的生命周期一致。插件直到第一次在 JavaScript 被调用时才被引用，除非 <code>config.xml</code> 文件中 <code>onloadname</code> 参数被设置为 <code>true</code>，如</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">feature</span> <span class="attr">name</span>=<span class="string">"Echo"</span>&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"android-package"</span> <span class="attr">value</span>=<span class="string">"&lt;full_name_including_namespace&gt;"</span> /&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"onload"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span>  </div><div class="line"><span class="tag">&lt;/<span class="name">feature</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>插件应该使用初始化方法来实现启动逻辑：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@override</span>  </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(CordovaInterface cordova, CordovaWebView webView)</span> </span>&#123;  </div><div class="line">    <span class="keyword">super</span>.initialize(cordova, webView);</div><div class="line">    <span class="comment">// your init code here</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Android-集成"><a href="#Android-集成" class="headerlink" title="Android 集成"></a>Android 集成</h3><p>Android 的 Intent 系统可以实现进程间通信。插件可以访问 CordovaInterface 对象，CordovaInterface 对象可以访问运行应用 Android Activity，这个 Activity 启动一个 Android Itent 的上下文。CordovaInterface 可以让插件为了结果启动一个 Activity，让后当 Intent 结果返回时设置回调件。 </p>
+<p>Cordova 2.0 开始，插件不再能直接访问 Context，<code>ctx</code> 成员已被废弃。所有的 <code>ctx</code> 的方法在 Context 中都可以找到，所以 <code>getContext()</code> and <code>getActivity()</code> 都可以放回需要的对象。</p>
+<h3 id="Upgrading-Android"><a href="#Upgrading-Android" class="headerlink" title="Upgrading Android"></a>Upgrading Android</h3><ul>
+<li><a href="http://docs.phonegap.com/en/edge/guide_platforms_android_upgrade.md.html#Upgrading%20Android" target="_blank" rel="external">PhoneGap API Documentation</a></li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://docs.phonegap.com/en/edge/guide_hybrid_plugins_index.md.html" target="_blank" rel="external">Plugin Development Guide</a></li>
+<li><a href="http://blog.csdn.net/jacob_wang520/article/details/18349625" target="_blank" rel="external">PhoneGap 12 插件开发指南</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Cordova/2014-07-08-cordova-plugin.html" target="_blank" rel="external">http://blog.inching.org/Cordova/2014-07-08-cordova-plugin.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cordova/">cordova</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/plugin/">plugin</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Cordova/2014-07-08-cordova-plugin.html&title=《Cordova Plugin》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Cordova/2014-07-08-cordova-plugin.html&title=《Cordova Plugin》 — Balance&source=插件开发指南See Apache Cordova API Documentation
+插件 是应用中用来显示的 Cordova WebView 和原生平台..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Cordova/2014-07-08-cordova-plugin.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Cordova Plugin》 — Balance&url=http://blog.inching.org/Cordova/2014-07-08-cordova-plugin.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Cordova/2014-07-08-cordova-plugin.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/PowerShell/2014-07-08-powershell-file.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Powershell File</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-07-08-javascript-augorithm.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript Algorithm</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Cordova/2014-07-08-cordova-plugin.html&title=《Cordova Plugin》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Cordova/2014-07-08-cordova-plugin.html&title=《Cordova Plugin》 — Balance&source=插件开发指南See Apache Cordova API Documentation
+插件 是应用中用来显示的 Cordova WebView 和原生平台..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Cordova/2014-07-08-cordova-plugin.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Cordova Plugin》 — Balance&url=http://blog.inching.org/Cordova/2014-07-08-cordova-plugin.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Cordova/2014-07-08-cordova-plugin.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNElEQVR42u3ay26DMBAFUP7/p9NtpLbo3oE+bA6rKEqwD4vB8ziO+Hq9XZ+//+73yTfv33+3ym0XBgbGsozX6ZUseb78+T2T30RrYWBgPIBxHjTv+nweLfP/YmBgYCS3y4PseXht18XAwMCYBcH2WNmmtRgYGBh5EpuX0nLwH+TiGBgYCzLyqvvvf/6R/gYGBsZSjFd5JeH1PBwnd6t3hYGBsTWjLdzPim55ontpPxgYGJsy2vCXNwDybeUjHcUzxsDA2I4xK/1faRgk5bOiCYqBgbE1o12sbUBeH624rYWJgYGxLKPd+owx22LyUIqqIQYGxrKMtsR2V+k//2+RymJgYDyGkW+0PcC1I1/t48PAwNiVMSv6z7aer5WX3jAwMJ7AaDfUNgnaAbI2xT1mUR8DA2NZRtsASFoLyR1mKx6zmI2BgbEg40rnMz/wXQnB9cwIBgbGpoykyNUy2vS1ZR9tvMfAwFicMRuVmIXLNgGOXgkYGBhbM/IGQN5czEtpeUiNBjgwMDAew8gPavmQRBKUZy2EL1qYGBgYD2BcaTT+RMguRj0wMDAexmgHxdqyXVFKy9NpDAyMTRmv8rrhmcVZZxFwMTAwtma028rblnl74PpxEwMD4wmMWeEsGRebPblkD/XbAwMDYwvGLPDd1SS4jsTAwMDIhydmR8Ab0lQMDAyMMuC2B8e2mfpL7w0MDIx/xmjbkHkpLU9ik3IeBgbGMxmzc9csTZ2luNdTXwwMjGUZH4ZKiYdtLrerAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

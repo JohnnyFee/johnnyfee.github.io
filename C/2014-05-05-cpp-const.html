@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>C/C++ 常量 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="c++,syntax">
+    <meta name="description" content="为什么使用const？采用符号常量写出的代码更容易维护；指针常常是边读边移动，而不是边写边移动；许多函数参数是只读不写的。const最常见用途是作为数组的界和switch分情况标号(也可以用枚举符代替)，分类如下：
+
+常变量： const 类型说明符 变量名
+常引用： const 类型说明符 &amp;amp;引用名
+常对象： 类名 const 对象名
+常成员函数： 类名::fun(形参) const
+常">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C/C++ 常量">
+<meta property="og:url" content="http://blog.inching.org/C/2014-05-05-cpp-const.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="为什么使用const？采用符号常量写出的代码更容易维护；指针常常是边读边移动，而不是边写边移动；许多函数参数是只读不写的。const最常见用途是作为数组的界和switch分情况标号(也可以用枚举符代替)，分类如下：
+
+常变量： const 类型说明符 变量名
+常引用： const 类型说明符 &amp;amp;引用名
+常对象： 类名 const 对象名
+常成员函数： 类名::fun(形参) const
+常">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C/C++ 常量">
+<meta name="twitter:description" content="为什么使用const？采用符号常量写出的代码更容易维护；指针常常是边读边移动，而不是边写边移动；许多函数参数是只读不写的。const最常见用途是作为数组的界和switch分情况标号(也可以用枚举符代替)，分类如下：
+
+常变量： const 类型说明符 变量名
+常引用： const 类型说明符 &amp;amp;引用名
+常对象： 类名 const 对象名
+常成员函数： 类名::fun(形参) const
+常">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">C/C++ 常量</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">C/C++ 常量</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-04T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#常量"><span class="post-toc-text">常量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#传入参数"><span class="post-toc-text">传入参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#指针"><span class="post-toc-text">指针</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引用"><span class="post-toc-text">引用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类"><span class="post-toc-text">类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常量函数和常量对象"><span class="post-toc-text">常量函数和常量对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#成员"><span class="post-toc-text">成员</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#返回值"><span class="post-toc-text">返回值</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#const-在c和c-中的区别"><span class="post-toc-text">const 在c和c++中的区别</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-cpp-const"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">C/C++ 常量</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-05 00:00:00" datetime="2014-05-04T16:00:00.000Z"  itemprop="datePublished">2014-05-05</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>为什么使用const？采用符号常量写出的代码更容易维护；指针常常是边读边移动，而不是边写边移动；许多函数参数是只读不写的。const最常见用途是作为数组的界和switch分情况标号(也可以用枚举符代替)，分类如下：</p>
+<ul>
+<li>常变量： <strong>const 类型说明符 变量名</strong></li>
+<li>常引用： <strong>const 类型说明符 &amp;引用名</strong></li>
+<li>常对象： <strong>类名 const 对象名</strong></li>
+<li>常成员函数： <strong>类名::fun(形参) const</strong></li>
+<li>常数组： <strong>类型说明符 const 数组名[大小]</strong></li>
+<li>常指针： <strong>const 类型说明符<em> 指针名 ，类型说明符</em> const 指针名</strong></li>
+</ul>
+<a id="more"></a>
+<p>首先提示的是： 在常变量（<strong>const 类型说明符 变量名）、</strong>常引用（<strong>const 类型说明符 &amp;引用名</strong>）、常对象（<strong>类名 const 对象名）、</strong> 常数组（<strong>类型说明符 const 数组名[大小]），</strong> <strong>const”</strong> <strong>与 “类型说明符”或“类名”（其实类名是一种自定义的类型说明符）</strong>的位置可以互换。如：</p>
+<pre><code>// 以下两句代码等同
+const int a=5;
+int const a=5; 
+</code></pre><p>类名 const 对象名 与 const 类名 对象名 等同。</p>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>取代了C中的宏定义，声明时必须进行初始化(!c++类中则不然） 。const限制了常量的使用方式，并没有描述常量应该如何分配。如果编译器知道了某const的所有使用，它甚至可以不为该const分配空间。最简单的常见情况就是 常量的值在编译时已知，而且不需要分配存储 。―《C++ Program Language》<br>用const声明的变量虽然增加了分配空间，但是可以保证类型安全。<br>C标准中， const定义的常量是全局的，C++中视声明位置而定 。</p>
+<h2 id="传入参数"><a href="#传入参数" class="headerlink" title="传入参数"></a>传入参数</h2><p>将函数传入参数声明为const，以指明使用这种参数仅仅是为了效率的原因，而不是想让调用函数能够修改对象的值。同理，将指针参数声明为const，函数将不修改由这个参数所指的对象。<br>通常修饰指针参数和引用参数：  </p>
+<pre><code>void Fun( const A *in); //修饰指针型传入参数  
+void Fun(const A &amp;in); //修饰引用型传入参数
+</code></pre><h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><p>使用指针时涉及到两个对象：该指针本身和被它所指的对象。将一个指针的声明用const“预先固定”将使那个对象而不是使这个指针成为常量。要将指针本身而不是被指对象声明为常量，必须使用声明运算符<em>const。<br>所以出现在 </em> 之前的const是作为基础类型的一部分：  </p>
+<pre><code>char *const cp; //到char的const指针  
+char const *pc1; //到const char的指针  
+const char *pc2; //到const char的指针（后两个声明是等同的）  
+</code></pre><p>从右向左读的记忆方式：  </p>
+<p>cp is a const pointer to char. 故pc不能指向别的字符串，但可以修改其指向的字符串的内容<br>pc2 is a pointer to const char. 故*pc2的内容不可以改变，但pc2可以指向别的字符串</p>
+<p>且注意：允许把非 const 对象的地址赋给指向 const 对象的指针,不允许把一个 const 对象的地址赋给一个普通的、非 const 对象的指针 。</p>
+<p>常量与指针放在一起很容易让人迷糊。对于常量指针和指针常量也不是所有的学习C/C++的人都能说清除。例如：</p>
+<pre><code>const int *m1 = new int(10);
+int* const m2 = new int(20);
+</code></pre><p>在上面的两个表达式中，最容易让人迷惑的是const到底是修饰指针还是指针指向的内存区域？其实，只要知道：const只对它左边的东西起作用，唯一的例外就是const本身就是最左边的修饰符，那么它才会对右边的东西起作用。根据这个规则来判断，m1应该是常量指针（即，不能通过m1来修改它所指向的内容。）；而m2应该是指针常量（即，不能让m2指向其他的内存模块）。由此可见：</p>
+<ol>
+<li><p>对于常量指针，不能通过该指针来改变所指的内容 。即，下面的操作是错误的：</p>
+<pre><code>int i = 10;
+const int *pi = &amp;i;
+*pi = 100;
+</code></pre><p> 因为你在试图通过pi改变它所指向的内容。但是，并不是说该内存块中的内容不能被修改。我们仍然可以通过其他方式去修改其中的值。例如：</p>
+<pre><code>// 1: 通过i直接修改。
+i = 100;
+
+// 2: 使用另外一个指针来修改。
+int *p = (int*)pi;
+*p = 100;
+</code></pre><p> 实际上，在将程序载入内存的时候，会有专门的一块内存区域来存放常量。但是，上面的i本身不是常量，是存放在栈或者堆中的。我们仍然可以修改它的值。而pi不能修改指向的值应该说是编译器的一个限制。  </p>
+</li>
+<li><p>根据上面const的规则，const int *m1 = new int(10);我们也可写作：</p>
+<pre><code>int const *m1 = new int(10);
+</code></pre><p> 这是，理由就不须作过多说明了。  </p>
+</li>
+<li><p>在函数参数中指针常量时表示不允许将该指针指向其他内容 。</p>
+<pre><code>void func_02(int* const p)
+{
+    int *pi = new int(100);
+
+    //错误！P是指针常量。不能对它赋值。
+    p = pi;
+}
+
+int main()
+{
+    int* p = new int(10);
+    func_02(p);
+    delete p;
+    return 0;
+}
+</code></pre></li>
+<li><p>在函数参数中使用常量指针时表示在函数中不能改变指针所指向的内容。</p>
+<pre><code>void func(const int *pi)
+{
+    //错误！不能通过pi去改变pi所指向的内容！
+    *pi = 100;
+}
+
+int main()
+{
+    int* p = new int(10);
+    func(p); 
+    delete p;
+    return 0;
+}
+</code></pre><p> 我们可以使用这样的方法来防止函数调用者改变参数的值。但是，这样的限制是有限的，作为参数调用者，我们也不要试图去改变参数中的值。因此，下面的操作是在语法上是正确的，但是可能破还参数的值：</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+void func(const int *pi)
+{
+    //这里相当于重新构建了一个指针，指向相同的内存区域。当然就可以通过该指针修改内存中的值了。
+     int* pp = (int*)pi;
+    *pp = 100;
+}
+
+int main()
+{
+    using namespace std;
+    int* p = new int(10);
+    cout &lt;&lt; &quot;*p = &quot; &lt;&lt; *p &lt;&lt; endl;
+    func(p);
+    cout &lt;&lt; &quot;*p = &quot; &lt;&lt; *p &lt;&lt; endl;
+    delete p;
+    return 0;
+}
+</code></pre></li>
+</ol>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>常量与引用的关系稍微简单一点。因为引用就是另一个变量的别名，它本身就是一个常量。也就是说 不能再让一个引用成为另外一个变量的别 名 , 那么他们只剩下代表的内存区域是否可变 。即：</p>
+<pre><code>int i = 10;
+// 正确：表示不能通过该引用去修改对应的内存的内容。
+const int&amp; ri = i;
+// 错误！不能这样写。
+int&amp; const rci = i;
+</code></pre><p>由此可见， 如果我们不希望函数的调用者改变参数的值。最可靠的方法应该是使用引用 。下面的操作会存在编译错误：</p>
+<pre><code>void func(const int&amp; i)
+{
+    // 错误！不能通过i去改变它所代表的内存区域。
+    i = 100;
+}
+
+int main()
+{
+    int i = 10;
+    func(i);
+    return 0;
+}
+</code></pre><p>这里已经明白了常量与指针以及常量与引用的关系。但是，有必要深入的说明以下。在系统加载程序的时候，系统会将内存分为4个区域：堆区 栈区全局区（静态）和代码区。从这里可以看出， 对于常量来说，系统没有划定专门的区域来保护其中的数据不能被更改 。也就是说， 使用常量的方式对数据进行保护是通过编译器作语法限制来实现的 。我们仍然可以绕过编译器的限制去修改被定义为“常量”的内存区域。看下面的代码：</p>
+<pre><code>const int i = 10;
+// 这里i已经被定义为常量，但是我们仍然可以通过另外的方式去修改它的值。
+// 这说明把i定义为常量，实际上是防止通过i去修改所代表的内存。
+int *pi = (int*) &amp;i;
+</code></pre><h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><ul>
+<li>const对象只能访问const成员函数 ，而非const对象可以访问任意的成员函数，包括const成员函数；  </li>
+<li>const对象的成员是不能修改的 ，而通过指针维护的对象确实可以修改的；  </li>
+<li>const成员函数不可以修改对象的数据 ， 不管对象是否具有const性质 。编译时以是否修改成员数据为依据进行检查。</li>
+</ul>
+<h3 id="常量函数和常量对象"><a href="#常量函数和常量对象" class="headerlink" title="常量函数和常量对象"></a>常量函数和常量对象</h3><p>常量函数是C++对常量的一个扩展，它很好的确保了C++中类的封装性。在C++中，为了防止类的数据成员被非法访问，将类的成员函数分成了两类，一类是常量成员函数（也被称为观察着）；另一类是非常量成员函数（也被成为变异者）。在 一个函数的签名后面加上关键字const后该函数就成了常量函数 。对于常量函数，最关键的不同是编译器不允许其修改类的数据成员。例如：</p>
+<pre><code>class Test
+{
+    public:
+        void func() const;
+    private:
+        int intValue;
+};
+
+void Test::func() const
+{
+    intValue = 100;
+}
+</code></pre><p>上面的代码中， 常量函数func函数内试图去改变数据成员intValue的值，因此将在编译的时候引发异常 。<br>当然，对于非常量的成员函数，我们可以根据需要读取或修改数据成员的值。但是，这要依赖调用函数的对象是否是常量。通常，如果我们把一个类定义为常量，我们的本意是希望他的状态（数据成员）不会被改变。那么，如果一个常量的对象调用它的非常量函数会产生什么后果呢？看下面的代码：</p>
+<pre><code>class Fred{
+    public:
+        void inspect() const;
+        void mutate();
+};
+
+void UserCode(Fred&amp; changeable, const Fred&amp; unChangeable)
+{
+    changeable.inspect(); // 正确， 非常量对象可以调用常量函数 。
+    changeable.mutate(); // 正确，非常量对象也允许修改调用非常量成员函数修改数据成员。
+    unChangeable.inspect(); // 正确，常量对象只能调用常理函数。因为不希望修改对象状态。
+    unChangeable.mutate(); // 错误！常量对象的状态不能被修改，而非常量函数存在修改对象状态的可能
+}
+</code></pre><p>从上面的代码可以看出，由于常量对象的状态不允许被修改，因此，通过 常量对象调用非常量函数时将会产生语法错误 。实际上，我们知道每个成员函数都有一个隐含的指向对象本身的this指针。而常量函数则包含一个this的常量指针。如下：</p>
+<pre><code>void inspect(const Fred* this) const;
+void mutate(Fred* this);
+</code></pre><p>也就是说对于常量函数，我们不能通过this指针去修改对象对应的内存块。但是，在上面我们已经知道，这仅仅是编译器的限制，我们仍然可以绕过编译器的限制，去改变对象的状态。看下面的代码：</p>
+<pre><code>class Fred{
+public:
+    void inspect() const;  
+private:
+    int intValue;
+};
+
+void Fred::inspect() const
+{
+    cout &lt;&lt; &quot;At the beginning. intValue = &quot;&lt;&lt; intValue &lt;&lt; endl;
+    // 这里，我们 根据this指针重新定义了一个指向同一块内存地址的指针 。
+    // 通过这个新定义的指针，我们仍然可以修改对象的状态。
+    Fred* pFred = (Fred*)this;
+    pFred-&gt;intValue = 50;
+    cout &lt;&lt; &quot;Fred::inspect() called. intValue = &quot;&lt;&lt; intValue &lt;&lt; endl;
+}
+
+int main()
+{
+    Fred fred;
+    fred.inspect();
+    return 0;
+}
+</code></pre><p>上面的代码说明， 只要我们愿意，我们还是可以通过常量函数修改对象的状态 。同理，对于常量对象，我们也可以构造另外一个指向同一块内存的指针去修改它的状态。这里就不作过多描述了。</p>
+<p>另外，也有这样的情况，虽然我们可以绕过编译器的错误去修改类的数据成员。但是 C++也允许我们在数据成员的定义前面加上mutable ， 以允许该成员可以在常量函数中被修改 。例如：</p>
+<pre><code>class Fred{
+    public:
+        void inspect() const;
+    private:
+        mutable int intValue;
+};
+
+void Fred::inspect() const
+{
+    intValue = 100;
+}
+</code></pre><p>但是，并不是所有的编译器都支持mutable关键字。这个时候我们上面的歪门邪道就有用了。</p>
+<p>关于常量函数，还有一个问题是重载。</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+class Fred{
+public:
+    void func() const;
+    void func();
+};
+
+void Fred::func() const
+{
+    cout &lt;&lt; &quot;const function is called.&quot;&lt;&lt; endl;
+}
+
+void Fred::func()
+{
+    cout &lt;&lt; &quot;non-const function is called.&quot;&lt;&lt; endl;
+}
+
+void UserCode(Fred&amp; fred, const Fred&amp; cFred)
+{
+    cout &lt;&lt; &quot;fred is non-const object, and the result of fred.func() is:&quot; &lt;&lt; endl;
+    fred.func();
+    cout &lt;&lt; &quot;cFred is const object, and the result of cFred.func() is:&quot; &lt;&lt; endl;
+    cFred.func();
+}
+
+int main()
+{
+    Fred fred;
+    UserCode(fred, fred);
+    return 0;
+}
+</code></pre><p>输出结果为：</p>
+<pre><code>fred is non-const object, and the result of fred.func() is:
+non-const function is called.
+cFred is const object, and the result of cFred.func() is:
+const function is called.
+</code></pre><p>从上面的输出结果，我们可以看出。当 存在同名同参数和返回值的常量函数和非常量函数时，具体调用哪个函数是根据调用对象是常量对像还是非常量对象来决定的。常量对象调用常量成员；非常量对象调用非常量的成员。</p>
+<p>总之，我们需要明白常量函数是为了最大程度的保证对象的安全。通过使用常量函数，我们可以只允许必要的操作去改变对象的状态，从而防止误操作对对象状态的破坏。但是，就像上面看见的一样，这样的保护其实是有限的。关键还是在于我们开发人员要严格的遵守使用规则。另外需要注意的是常量对象不允许调用非常量的函数。这样的规定虽然很武断，但如果我们都根据原则去编写或使用类的话这样的规定也就完全可以理解了。  </p>
+<h3 id="成员"><a href="#成员" class="headerlink" title="成员"></a>成员</h3><p>const修饰类的成员函数，表示成员常量，不能被修改，同时它只能在初始化列表中赋值。</p>
+<pre><code>class A
+{
+    // …
+    const int nValue;         //成员常量不能被修改
+
+    //…
+    A(int x): nValue(x) { } ; //只能在初始化列表中赋值
+}
+</code></pre><h2 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h2><p>很多时候，我们的函数中会返回一个地址或者引用。调用这得到这个返回的地址或者引用后就可以修改所指向或者代表的对象。这个时候如果我们不希望这个函数的调用这修改这个返回的内容，就应该返回一个常量。这应该很好理解，大家可以去试试。</p>
+<ol>
+<li>const常量，如const int max = 100;<br>优点：const常量有数据类型，而 宏常量没有数据类型 。编译器可以对前者进行类型安全检查，而对后者只进行字符替换，没有类型安全检查，并且在字符替换时可能会产生意料不到的错误（边际效应）  </li>
+<li><p>const 修饰类的数据成员。如：  </p>
+<pre><code>class A  
+{
+    const int size;
+    … 
+}
+</code></pre><p> const数据成员只在某个对象生存期内是常量，而对于整个类而言却是可变的 。因为类可以创建多个对象，不同的对象其const数据成员的值可以不同。所以 不能在类声明中初始化const数据成员 ，因为类的对象未被创建时，编译器不知道const 数据成员的值是什么。如</p>
+<pre><code>class A
+{
+    const int size = 100; //错误
+    int array[size]; //错误，未知的size
+}  
+</code></pre><p> const数据成员的初始化只能在类的构造函数的初始化表中进行 。要想建立 在整个类中都恒定的常量，应该用类中的枚举常量来实现 。如</p>
+<pre><code>class A
+{…
+    enum {size1=100, size2 = 200 };
+    int array1[size1];
+    int array2[size2]; 
+}
+</code></pre><p> 枚举常量不会占用对象的存储空间，他们在编译时被全部求值 。但是枚举常量的隐含数据类型是整数，其最大值有限，且不能表示浮点数。</p>
+</li>
+<li><p>const修饰指针的情况，见下式：</p>
+<pre><code>int b = 500;   
+const int* a = &amp; [1]   
+int const *a = &amp; [2]   
+int* const a = &amp; [3]   
+const int* const a = &amp; [4] 
+</code></pre><p> 如果你能区分出上述四种情况，那么，恭喜你，你已经迈出了可喜的一步。不知道，也没关系，我们可以参考《Effectivec++》Item21上的做法，如果const位于星号的左侧，则const就是用来修饰指针所指向的变量，即指针指向为常量；如果const位于星号的右侧，const就是修饰指针本身，即指针本身是常量。因此，[1]和[2]的情况相同，都是指针所指向的内容为常量（const放在变量声明符的位置无关），这种情况下不允许对内容进行更改操作，如不能*a = 3；[3]为指针本身是常量，而指针所指向的内容不是常量，这种情况下不能对指针本身进行更改操作，如a++是错误的； [4]为指针本身和指向的内容均为常量 。 </p>
+</li>
+<li><p>const的初始化 </p>
+<p> 先看一下const变量初始化的情况   </p>
+<p> 1) 非指针const常量初始化的情况：A b;   </p>
+<pre><code>const A a = b; 
+</code></pre><p> 2) 指针const常量初始化的情况：</p>
+<pre><code>A* d = new A();   
+const A* c = d;   
+</code></pre><p> 或者： const A* c = new A();   </p>
+<p> 3）引用const常量初始化的情况：   </p>
+<pre><code>A f;   
+const A&amp; e = f ; // 这样作e只能访问声明为const的函数，而不能访问一般的成员函数； 
+
+[思考1]： 以下的这种赋值方法正确吗？   
+const A* c=new A();   
+A* e = c;   
+[思考2]： 以下的这种赋值方法正确吗？   
+A* const c = new A();   
+A* b = c;
+</code></pre></li>
+<li><p>另外const 的一些强大的功能在于它在函数声明中的应用。在一个函数声明中，const可以修饰函数的返回值，或某个参数；对于成员函数，还可以修饰是整个函数。有如下几种情况，以下会逐渐的说明用法：</p>
+<pre><code>A&amp;operator=(const A&amp; a);   
+void fun0(const A* a );   
+void fun1( ) const; // fun1( ) 为类成员函数   
+const A fun2( );
+</code></pre><p> 1) 修饰参数的const，如 void fun0(const A* a ); void fun1(const A&amp; a);   </p>
+<p> 调用函数的时候，用相应的变量初始化const常量，则在函数体中，按照const所修饰的部分进行常量化，如形参为 <code>const A*a</code>，则不能对传递进来的指针的内容进行改变，保护了原指针所指向的内容；如形参为 <code>const A&amp;</code>a，则不能对传递进来的引用对象进行改变，保护了原对象的属性。   </p>
+<p> [注意]： 参数const通常用于参数为指针或引用的情况，且只能修饰输入参数 ; 若输入参数采用“值传递”方式，由于函数将自动产生临时变量用于复制该参数，该参数本就不需要保护，所以不用const修饰。</p>
+<p> [总结] 对于非内部数据类型的输入参数，因该将“值传递”的方式改为“const引用传递” ，目的是为了提高效率。例如，将void Func(A a)改为void Func(const A &amp;a)</p>
+<p>  对于内部数据类型的输入参数，不要将“值传递”的方式改为“const引用传递” 。否则既达不到提高效率的目的，又降低了函数的可理解性。例如void Func(int x)不应该改为void Func(const int &amp;x)</p>
+<p> 2) 修饰返回值的const，如const A fun2( ); const A* fun3( );<br> 这样声明了返回值后，const按照”修饰原则”进行修饰，起到相应的保护作用。</p>
+<pre><code>const Rational operator*(const Rational&amp; lhs, const Rational&amp; rhs)   
+{   
+    return Rational(lhs.numerator() * rhs.numerator(),   
+    lhs.denominator() * rhs.denominator());   
+} 
+</code></pre><p> 返回值用const修饰可以防止允许这样的操作发生:Rational a,b;   </p>
+<pre><code>Radional c;   
+(a*b) = c; 
+</code></pre><p> 一般用const修饰返回值为对象本身（非引用和指针）的情况多用于二目操作符重载函数并产生新对象的时候。   </p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li><p>一般情况下，函数的返回值为某个对象时，如果将其声明为const时，多用于操作符的重载。通常，不建议用const修饰函数的返回值类型为某个对象或对某个对象引用的情况。原因如下：如果返回值为某个对象为const（const A test = A实例）或某个对象的引用为const（const A&amp; test = A实例），则返回值具有const属性，则返回实例只能访问类A中的公有（保护）数据成员和const成员函数，并且不允许对其进行赋值操作，这在一般情况下很少用到。 </p>
+</li>
+<li><p>如果给采用“指针传递”方式的函数返回值加const修饰，那么函数返回值（即指针）的内容不能被修改，该返回值只能被赋给加const 修饰的同类型指针。如：</p>
+<pre><code>const char * GetString(void);
+</code></pre><p> 如下语句将出现编译错误：</p>
+<pre><code>char *str=GetString();
+</code></pre><p> 正确的用法是：</p>
+<pre><code>const char *str=GetString();
+</code></pre></li>
+<li><p>函数返回值采用“引用传递”的场合不多，这种方式一般只出现在类的赙值函数中，目的是为了实现链式表达。如：</p>
+<pre><code>class A
+{
+    // …
+    A &amp;operate = (const A &amp;other); //负值函数
+}
+
+A a,b,c; //a,b,c为A的对象
+
+a=b=c; //正常
+(a=b)=c; //不正常，但是合法
+</code></pre><p> 若负值函数的返回值加const修饰，那么该返回值的内容不允许修改，上例中a=b=c依然正确。(a=b)=c就不正确了。<br> [思考3]： 这样定义赋值操作符重载函数可以吗？   </p>
+<p> const A&amp; operator=(const A&amp; a);</p>
+</li>
+<li><p>类成员函数中const的使用<br> 一般放在函数体后，形如：<code>void fun() const;</code><br> 任何不会修改数据成员的函数都因该声明为const类型。如果在编写const成员函数时，不慎修改了数据成员，或者调用了其他非const成员函数，编译器将报错，这大大提高了程序的健壮性。如：</p>
+<pre><code>class Stack
+{
+public:
+    void Push(int elem);
+    int Pop(void);
+    int GetCount(void) const; //const 成员函数
+private: 
+    int m_num;
+    int m_data[100];
+};
+
+int Stack::GetCount(void) const
+{
+    ++m_num; //编译错误，企图修改数据成员m_num
+    Pop(); //编译错误，企图调用非const函数
+    Return m_num;
+}
+</code></pre></li>
+<li><p>使用const的一些建议 </p>
+<p> 1) 要大胆的使用const，这将给你带来无尽的益处，但前提是你必须搞清楚原委；<br> 2) 要避免最一般的赋值操作错误，如将const变量赋值，具体可见思考题；<br> 3) 在参数中使用const应该使用引用或指针，而不是一般的对象实例，原因同上；<br> 4) const在成员函数中的三种用法（参数、返回值、函数）要很好的使用；<br> 5) 不要轻易的将函数的返回值类型定为const;<br> 6) 除了重载操作符外一般不要将返回值类型定为对某个对象的const引用; </p>
+<p> [思考题答案]<br> 1) 这种方法不正确，因为声明指针的目的是为了对其指向的内容进行改变，而声明的指针e指向的是一个常量，所以不正确；<br> 2) 这种方法正确，因为声明指针所指向的内容可变；<br> 3) 这种做法不正确；<br> 在const A::operator=(const A&amp; a)中，参数列表中的const的用法正确，而当这样连续赋值的时侯，问题就出现了：<br> A a,b,c:<br> (a=b)=c;<br> 因为a.operator=(b)的返回值是对a的const引用，不能再将c赋值给const常量。</p>
+</li>
+</ol>
+<h2 id="const-在c和c-中的区别"><a href="#const-在c和c-中的区别" class="headerlink" title="const 在c和c++中的区别"></a>const 在c和c++中的区别</h2><p><a href="http://tech.e800.com.cn/articles/2009/722/1248229886744_1.html" target="_blank" rel="external">http://tech.e800.com.cn/articles/2009/722/1248229886744_1.html</a></p>
+<ol>
+<li><p>C++中的const正常情况下是看成编译期的常量,编译器并不为const分配空间,只是在编译的时候将期值保存在名字表中,并在适当的时候折合在代码中 .所以,以下代码:</p>
+<pre><code>using namespace std;  
+int main()  
+{  
+    const int a = 1;  
+    const int b = 2;  
+    int array[ a + b ] = {0};  
+    for (int i = 0; i &lt; sizeof array / sizeof *array; i++)  
+    {  
+        cout &lt;&lt; array &lt;&lt; endl;  
+    }  
+}
+</code></pre><p> 在可以通过编译,并且正常运行.但稍加修改后,放在C编译器中,便会出现错误:  </p>
+<pre><code>int main()  
+{  
+    int i;  
+    const int a = 1;  
+    const int b = 2;  
+    int array[ a + b ] = {0};  
+    for (i = 0; i &lt; sizeof array / sizeof *array; i++)  
+    {  
+        printf(&quot;%d&quot;,array);  
+    }  
+} 
+</code></pre><p> 错误消息:<br> c:\test1\te.c(8): error C2057: 应输入常数表达式<br> c:\test1\te.c(8): error C2466: 不能分配常数大小为 0 的数组<br> 出现这种情况的原因是: 在C中,const是一个不能被改变的普通变量,既然是变量,就要占用存储空间 ,所以编译器不知道编译时的值.而且,数组定义时的下标必须为常量.  </p>
+</li>
+<li><p>在C语言中: const int size; 这个语句是正确的，因为它被C编译器看作一个声明,指明在别的地方分配存储空间.但在C++中这样写是不正确的.C++中const默认是内部连接,如果想在C++中达到以上的效果,必须要用extern关键字.即 <strong>C++中,const默认使用内部连接.而C中使用外部连接.</strong><br><strong>(1) 内连接</strong>:编译器只对正被编译的文件创建存储空间,别的文件可以使用相同的表示符或全局变量.C/C++中内连接使用static关键字指定.<br><strong>(2) 外连接</strong>:所有被编译过的文件创建一片单独存储空间.一旦空间被创建,连接器必须解决对这片存储空间的引用.全局变量和函数使用外部连接.通过extern关键字声明,可以从其他文件访问相应的变量和函数.  </p>
+<pre><code>/* C++代码 header.h */  
+const int test = 1;  
+
+/* C++代码 test1.cpp */  
+#include &quot;header.h&quot;  
+using namespace std;  
+int main() { cout &lt;&lt; &quot;in test1 :&quot; &lt;&lt; test &lt;&lt; endl; }  
+
+/* C++代码 test2.cpp */  
+#include &quot;header.h&quot;  
+using namespace std;  
+void print() { cout &lt;&lt; &quot;in test2:&quot; &lt;&lt; test &lt;&lt; endl;}  
+</code></pre><p> 以上代码编译连接完全不会出问题,但如果把header.h改为:  </p>
+<pre><code>extern const int test = 1;  
+</code></pre><p> 在连接的时候,便会出现以下错误信息:  </p>
+<pre><code>test2 error LNK2005: &quot;int const test&quot; ([?test@@3HB](mailto:?test@@3HB)) 已经在 test1.obj 中定义  
+</code></pre><p> 因为extern关键字告诉C++编译器test会在其他地方引用,所以,C++编译器就会为test创建存储空间,不再是简单的存储在名字表里面.所以,当两个文件同时包含header.h的时候,会发生名字上的冲突.<br> 此种情况和C中const含义相似:  </p>
+<pre><code>/* C代码 header.h */  
+const int test = 1;  
+/* C代码 test1.c */   
+#include &quot;header.h&quot;  
+int main() { printf(&quot;in test1:%d\n&quot;,test); }  
+/* C代码 test2.c */  
+#include &quot;header.h&quot;  
+void print() { printf(&quot;in test2:%d\n&quot;,test); }  
+</code></pre><p> 错误消息:  </p>
+<pre><code>test3 fatal error LNK1169: 找到一个或多个多重定义的符号  
+test3 error LNK2005: _test 已经在 test1.obj 中定义
+</code></pre><p> 也就是说： 在c++ 中const 对象默认为文件的局部变量 。与其他变量不同，除非特别说明，在全局作用域声明的 const 变量是定义该对象的文件的局部变量。此变量只存在于那个文件中，不能被其他文件访问。通过指定 const 变更为 extern，就可以在整个程序中访问 const 对象：  </p>
+<pre><code>// file_1.cc  
+// defines and initializes a const that is accessible to other files  
+extern const int bufSize = fcn();  
+// file_2.cc  
+extern const int bufSize; // uses bufSize from file_1  
+// uses bufSize defined in file_1  
+for (int index = 0; index != bufSize; ++index)  
+// ...
+</code></pre></li>
+<li><p>C++中,是否为const分配空间要看具体情况.如果加上关键字extern或者取const变量地址,则编译器就要为const分配存储空间.   </p>
+</li>
+<li>C++中定义常量的时候不再采用define,因为define只做简单的宏替换，并不提供类型检查.</li>
+</ol>
+<p>##　参考</p>
+<ul>
+<li><a href="http://blog.csdn.net/eric_jo/article/details/4138548" target="_blank" rel="external">关于C++ const 的全面总结 - 亿言 - 博客频道 - CSDN.NET</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/C/2014-05-05-cpp-const.html" target="_blank" rel="external">http://blog.inching.org/C/2014-05-05-cpp-const.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/syntax/">syntax</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/C/2014-05-05-cpp-const.html&title=《C/C++ 常量》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/C/2014-05-05-cpp-const.html&title=《C/C++ 常量》 — Balance&source=为什么使用const？采用符号常量写出的代码更容易维护；指针常常是边读边移动，而不是边写边移动；许多函数参数是只读不写的。const最常见用途是作为数组的..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/C/2014-05-05-cpp-const.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C/C++ 常量》 — Balance&url=http://blog.inching.org/C/2014-05-05-cpp-const.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/C/2014-05-05-cpp-const.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/C/2014-05-07-cpp-memory-address.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">C语言内存地址基础</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-05-04-javascript-delete.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript delete 操作符</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/C/2014-05-05-cpp-const.html&title=《C/C++ 常量》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/C/2014-05-05-cpp-const.html&title=《C/C++ 常量》 — Balance&source=为什么使用const？采用符号常量写出的代码更容易维护；指针常常是边读边移动，而不是边写边移动；许多函数参数是只读不写的。const最常见用途是作为数组的..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/C/2014-05-05-cpp-const.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C/C++ 常量》 — Balance&url=http://blog.inching.org/C/2014-05-05-cpp-const.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/C/2014-05-05-cpp-const.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3aO24DMQxF0ex/05PWRSTcR8oBRryqAtsZ6UxBiJ+fH7yej7X6/PPbZ7FWT97vcmzJkCHjtYxnu/ix9p/vD53u+wdVhgwZAxgkFPLf78PxN/aSIUOGjH0YXQXcWmiWIUOGjFMM9GiQ6MqQIUMGZ5BkMmUTWD/RlSFDxgQGr7r//99f6W/IkCHjVYwnXGlwJMfi4XV5KhkyZFzNSBPUfomNXxzj88iQIeNSBgmFtSIaTzX3PPJSZMiQMYdRu8zVCnA8HJNrqAwZMiYweEjlY6y1xmfaAJAhQ8Y0Bk8ya2E3vT4Gr0mGDBlXM84erpaUnhoUkyFDxmRG7ZLXn4ioBX0ZMmTczUiTybTRyI/VaZTKkCHjPgYf5OKF+87oRvFKKkOGjKsZtTBHkl4SrHkoDxJXGTJkXMqohcv+iyCXUTRsIUOGjKsZnSDLf0NalbX/kiFDxgQGD6ydwQieAKd7yZAhYw4jbT2SIYnahbLGliFDxkxGWrjv9E6PFeZkyJAxgJEOVfDks9YGQEG2022QIUPGCxn9olvtwpc2KYMkVoYMGVcwnnCRQhuv6qUBevk0GTJkXM3gq3Pc9HDpcIYMGTImMGojWbVmZ5p78n1lyJAxgXGq9E9g/SQ2+EKGDBnjGeQJ5Pm1AQ4ZMmTI4A+tlfX5tRK1JWTIkDGAwQcm0u1rDQbyWmXIkDGHkd670oEwNPERluEOXB9lyJDxDsYvrYJ0cmeWLBMAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

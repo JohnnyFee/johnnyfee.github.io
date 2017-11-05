@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>C#、C++/CLI、非托管C++三层架构 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="csharp,c#,c++,cpp">
+    <meta name="description" content="几个概念
+CLR：通用语言运行平台（Common Language Runtime，简称CLR）定义了一个代码运行的环境，核心功能包括：内存管理、程序集加载、安全性、异常处理和线程同步等。
+非托管C++：不能享受一些运行库所提供的服务，必须自己提供垃圾回收、类型检查、安全支持等操作。（从C++到C++/CLI）
+托管C++：是微软对C++的一个语法扩展，允许C++程序员在.NET框架和CLR的基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C#、C++/CLI、非托管C++三层架构">
+<meta property="og:url" content="http://blog.inching.org/C/2015-04-06-csharp-cpp.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="几个概念
+CLR：通用语言运行平台（Common Language Runtime，简称CLR）定义了一个代码运行的环境，核心功能包括：内存管理、程序集加载、安全性、异常处理和线程同步等。
+非托管C++：不能享受一些运行库所提供的服务，必须自己提供垃圾回收、类型检查、安全支持等操作。（从C++到C++/CLI）
+托管C++：是微软对C++的一个语法扩展，允许C++程序员在.NET框架和CLR的基础">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/cli-new-project.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/cli-library.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/cli-add-class.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/cpp-project.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/cli-cpp-project.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/cli-class.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/cli-cpp-h.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/cli-lib2.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/cli-lib3.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/cli-charp.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C#、C++/CLI、非托管C++三层架构">
+<meta name="twitter:description" content="几个概念
+CLR：通用语言运行平台（Common Language Runtime，简称CLR）定义了一个代码运行的环境，核心功能包括：内存管理、程序集加载、安全性、异常处理和线程同步等。
+非托管C++：不能享受一些运行库所提供的服务，必须自己提供垃圾回收、类型检查、安全支持等操作。（从C++到C++/CLI）
+托管C++：是微软对C++的一个语法扩展，允许C++程序员在.NET框架和CLR的基础">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/cli-new-project.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">C#、C++/CLI、非托管C++三层架构</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">C#、C++/CLI、非托管C++三层架构</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-04-05T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2015-04-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C#</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#几个概念"><span class="post-toc-text">几个概念</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#C-、C-CLI、非托管C-三层架构："><span class="post-toc-text">C#、C++/CLI、非托管C++三层架构：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#托管和非托管C-数据类型对应"><span class="post-toc-text">托管和非托管C++数据类型对应</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#C-消费C"><span class="post-toc-text">C++ 消费C</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#C-函数指针转化为C-代理"><span class="post-toc-text">C++函数指针转化为C#代理</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#相关资料链接"><span class="post-toc-text">相关资料链接</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-csharp-cpp"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">C#、C++/CLI、非托管C++三层架构</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-04-06 00:00:00" datetime="2015-04-05T16:00:00.000Z"  itemprop="datePublished">2015-04-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C#</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h2><ol>
+<li>CLR：通用语言运行平台（Common Language Runtime，简称CLR）定义了一个代码运行的环境，核心功能包括：内存管理、程序集加载、安全性、异常处理和线程同步等。</li>
+<li>非托管C++：不能享受一些运行库所提供的服务，必须自己提供垃圾回收、类型检查、安全支持等操作。<br>（从C++到C++/CLI）</li>
+<li><a href="http://zh.wikipedia.org/wiki/C%2B%2B%E6%89%98%E7%AE%A1%E6%89%A9%E5%B1%95" target="_blank" rel="external">托管C++</a>：是微软对C++的一个语法扩展，允许C++程序员在.NET框架和CLR的基础上进行托管编程，可以无缝地集成托管和非托管代码，所以经常被用于其他语言和非托管代码之间的桥梁。</li>
+<li><a href="http://zh.wikipedia.org/zh-cn/C%2B%2B/CLI" target="_blank" rel="external">C++/CLI</a>：是用来代替托管C++的语言规范，在兼容原有的C++标准的同时，重新简化了托管C++的语法，提供了更好的代码可读性。C++/CLI现在可以被Visual C++ 2005和更高版本的编译器支持。</li>
+</ol>
+<a id="more"></a>
+<h2 id="C-、C-CLI、非托管C-三层架构："><a href="#C-、C-CLI、非托管C-三层架构：" class="headerlink" title="C#、C++/CLI、非托管C++三层架构："></a>C#、C++/CLI、非托管C++三层架构：</h2><ol>
+<li><p>创建非托管C++的static library工程：</p>
+<p> <img src="http://johnnyimages.qiniudn.com/cli-new-project.png" alt=""></p>
+<p> <img src="http://johnnyimages.qiniudn.com/cli-library.png" alt=""></p>
+</li>
+<li><p>添加非托管的c++文件：.h和.cpp文件：</p>
+<p> <img src="http://johnnyimages.qiniudn.com/cli-add-class.png" alt=""></p>
+</li>
+<li><p>编译非托管C++工程，然后可在与.sln文件同级的Debug文件夹下找到非托管C++工程编译后的.lib文件。</p>
+</li>
+<li><p>创建托管C++的工程：</p>
+<p> <img src="http://johnnyimages.qiniudn.com/cpp-project.png" alt=""></p>
+<p> 红框处设置了该工程是支持CLR的托管C++工程：</p>
+<p> <img src="http://johnnyimages.qiniudn.com/cli-cpp-project.png" alt=""></p>
+</li>
+<li><p>为托管C++工程添加非托管C++工程引用（如果添加了非托管C++工程引用，则不用将非托管C++的.lib文件添加到托管C++工程中，但.h文件还是要添加到托管C++工程中）</p>
+<p> <img src="http://johnnyimages.qiniudn.com/cli-class.png" alt=""></p>
+</li>
+<li><p>在托管C++工程中添加要引用的非托管C++的.h文件（注：引用的非托管C++的.h文件要复制到托管工程文件夹下，然后再包含到托管C++工程中，不能通过Add Existing Item方式来添加，因为通过Add Existing Item方式添加的只是.h文件的引用，并没有真正把.h文件拷贝到托管C++工程中，这样编译托管C++工程的时候会提示找不到文件）：</p>
+<p> <img src="http://johnnyimages.qiniudn.com/cli-cpp-h.png" alt=""></p>
+</li>
+<li><p>添加非托管C++工程的.lib文件：</p>
+<p> <img src="http://johnnyimages.qiniudn.com/cli-lib2.png" alt=""></p>
+<p> 也可在托管C++工程中添加一个筛选文件夹Lib，用来存放所有引用的.lib文件。</p>
+<p> <img src="http://johnnyimages.qiniudn.com/cli-lib3.png" alt="">    </p>
+</li>
+<li><p>在Clr.h中定义了类myClass，该类拥有一个非托管C++类的实例对象，实现对非托管C++类的实例对象的调用。</p>
+</li>
+<li><p>创建C#工程：</p>
+<p> <img src="http://johnnyimages.qiniudn.com/cli-charp.png" alt=""></p>
+</li>
+<li><p>在C#工程中添加对托管C++工程的引用：</p>
+</li>
+<li><p>在C#工程可直接使用托管C++工程中定义的类及其属性和方法，如下：</p>
+<p>var myC = new myClass { FirstName = “FirstName”, LastName =<br>“LastName” };<br>myC.myHandler += DoMyHandler;<br>string str = myC.JoinName();</p>
+</li>
+</ol>
+<h2 id="托管和非托管C-数据类型对应"><a href="#托管和非托管C-数据类型对应" class="headerlink" title="托管和非托管C++数据类型对应"></a>托管和非托管C++数据类型对应</h2><p><a href="http://hi.baidu.com/buildingit/blog/item/4785fd1126031f78ca80c4eb.html" target="_blank" rel="external">http://hi.baidu.com/buildingit/blog/item/4785fd1126031f78ca80c4eb.html</a></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>类名</th>
+<th>说明</th>
+<th>C# 数据类型</th>
+<th>C++ 托管扩展数据类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>整数</td>
+<td>Byte</td>
+<td>8 位的无符号整数。</td>
+<td>byte</td>
+<td>char</td>
+</tr>
+<tr>
+<td></td>
+<td>SByte</td>
+<td>8 位的有符号整数。不符合 CLS。</td>
+<td>sbyte</td>
+<td>signed char</td>
+</tr>
+<tr>
+<td></td>
+<td>Int16</td>
+<td>16 位的有符号整数。</td>
+<td>short</td>
+<td>short</td>
+</tr>
+<tr>
+<td></td>
+<td>Int32</td>
+<td>32 位的有符号整数。</td>
+<td>int</td>
+<td>int 或 long</td>
+</tr>
+<tr>
+<td></td>
+<td>Int64</td>
+<td>64 位的有符号整数。</td>
+<td>long</td>
+<td>__int64</td>
+</tr>
+<tr>
+<td></td>
+<td>UInt16</td>
+<td>16 位的无符号整数。不符合 CLS。</td>
+<td>ushort</td>
+<td>unsigned short</td>
+</tr>
+<tr>
+<td></td>
+<td>UInt32</td>
+<td>32 位的无符号整数。 不符合 CLS。</td>
+<td>uint</td>
+<td>unsigned int 或 unsigned long</td>
+</tr>
+<tr>
+<td></td>
+<td>UInt64</td>
+<td>64 位的无符号整数。 不符合 CLS。</td>
+<td>ulong</td>
+<td>unsigned __int64</td>
+</tr>
+<tr>
+<td>浮点</td>
+<td>Single</td>
+<td>单精度（32 位）浮点数字。</td>
+<td>float</td>
+<td>float</td>
+</tr>
+<tr>
+<td></td>
+<td>Double</td>
+<td>双精度（64 位）浮点数字。</td>
+<td>double</td>
+<td>double</td>
+</tr>
+<tr>
+<td>逻辑</td>
+<td>Boolean 布尔值（真或假）。</td>
+<td>bool</td>
+<td>bool</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>Char</td>
+<td>Unicode（16 位）字符。</td>
+<td>char</td>
+<td>wchar_t</td>
+</tr>
+<tr>
+<td></td>
+<td>Decimal</td>
+<td>96 位十进制值。</td>
+<td>decimal</td>
+<td>Decimal</td>
+</tr>
+<tr>
+<td></td>
+<td>IntPtr</td>
+<td>大小取决于基础平台（32 位平台上为 32 位值，64 位平台上为 64 位值）的有符号整数。</td>
+<td>IntPtr 无内置类型。</td>
+<td>IntPtr 无内置类型。</td>
+</tr>
+<tr>
+<td></td>
+<td>UIntPtr</td>
+<td>大小取决于基础平台的无符号整数（32 位平台上为 32 位值，64 位平台上为 64 位值）。 不符合 CLS。</td>
+<td>UIntPtr</td>
+<td>UIntPtr </td>
+</tr>
+<tr>
+<td>类对象 Object</td>
+<td>对象层次结构的根。</td>
+<td>object</td>
+<td>Object*</td>
+</tr>
+<tr>
+<td></td>
+<td>String</td>
+<td>Unicode 字符的不变的定长串。</td>
+<td>string</td>
+<td>String*</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Wtypes.h 中的非托管类型</th>
+<th>非托管 C 语言类型</th>
+<th>托管类名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HANDLE</td>
+<td>void*</td>
+<td>System.IntPtr</td>
+<td>32 位</td>
+</tr>
+<tr>
+<td>BYTE</td>
+<td>unsigned char</td>
+<td>System.Byte</td>
+<td>8 位</td>
+</tr>
+<tr>
+<td>SHORT</td>
+<td>short</td>
+<td>System.Int16</td>
+<td>16 位</td>
+</tr>
+<tr>
+<td>WORD</td>
+<td>unsigned short</td>
+<td>System.UInt16</td>
+<td>16 位</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>int</td>
+<td>System.Int32</td>
+<td>32 位</td>
+</tr>
+<tr>
+<td>UINT</td>
+<td>unsigned int</td>
+<td>System.UInt32</td>
+<td>32 位</td>
+</tr>
+<tr>
+<td>LONG</td>
+<td>long</td>
+<td>System.Int32</td>
+<td>32 位</td>
+</tr>
+<tr>
+<td>BOOL</td>
+<td>long</td>
+<td>System.Int32</td>
+<td>32 位</td>
+</tr>
+<tr>
+<td>DWORD</td>
+<td>unsigned long</td>
+<td>System.UInt32</td>
+<td>32 位</td>
+</tr>
+<tr>
+<td>ULONG</td>
+<td>unsigned long</td>
+<td>System.UInt32</td>
+<td>32 位</td>
+</tr>
+<tr>
+<td>CHAR</td>
+<td>char</td>
+<td>System.Char</td>
+<td>用 ANSI 修饰。</td>
+</tr>
+<tr>
+<td>LPSTR</td>
+<td>char*</td>
+<td>System.String 或 System.StringBuilder</td>
+<td>用 ANSI 修饰。</td>
+</tr>
+<tr>
+<td>LPCSTR</td>
+<td>Const char*</td>
+<td>System.String 或 System.StringBuilder</td>
+<td>用 ANSI 修饰。</td>
+</tr>
+<tr>
+<td>LPWSTR</td>
+<td>wchar_t*</td>
+<td>System.String 或 System.StringBuilder</td>
+<td>用 Unicode 修饰。</td>
+</tr>
+<tr>
+<td>LPCWSTR</td>
+<td>Const wchar_t*</td>
+<td>System.String 或 System.StringBuilder</td>
+<td>用 Unicode 修饰。</td>
+</tr>
+<tr>
+<td>FLOAT</td>
+<td>Float</td>
+<td>System.Single</td>
+<td>32 位</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>Double</td>
+<td>System.Double</td>
+<td>64 位</td>
+</tr>
+</tbody>
+</table>
+<p>See also <a href="http://www.cppblog.com/mzty/archive/2006/08/17/11358.html" target="_blank" rel="external">http://www.cppblog.com/mzty/archive/2006/08/17/11358.html</a></p>
+<h2 id="C-消费C"><a href="#C-消费C" class="headerlink" title="C++ 消费C"></a>C++ 消费C</h2><ol>
+<li>c#注册为控件：<a href="http://www.cppblog.com/free2000fly/archive/2009/03/23/77578.html" target="_blank" rel="external">http://www.cppblog.com/free2000fly/archive/2009/03/23/77578.html</a></li>
+<li>c#注册为控件：<a href="http://dearymz.blog.163.com/blog/static/2056574201191295525523/" target="_blank" rel="external">http://dearymz.blog.163.com/blog/static/2056574201191295525523/</a> 这个文章下面的参考里有英文文档链接，英文文档链接里有源码下载</li>
+<li>直接引用c#工程：<a href="http://developer.51cto.com/art/201104/254308.htm" target="_blank" rel="external">http://developer.51cto.com/art/201104/254308.htm</a><br>C#调用C++的DLL搜集整理的所有数据类型转换方式 ：<a href="http://blog.csdn.net/xqf222/article/details/5877795" target="_blank" rel="external">http://blog.csdn.net/xqf222/article/details/5877795</a><br>C#调用VC的DLL的接口函数参数类型转换一览表：<a href="http://www.cnblogs.com/afishman/archive/2009/03/27/1422874.html" target="_blank" rel="external">http://www.cnblogs.com/afishman/archive/2009/03/27/1422874.html</a></li>
+</ol>
+<h3 id="C-函数指针转化为C-代理"><a href="#C-函数指针转化为C-代理" class="headerlink" title="C++函数指针转化为C#代理"></a>C++函数指针转化为C#代理</h3><pre><code>TmsPluginImpl::LPFN_ONREADDATA ^ dOnReadData = (TmsPluginImpl:: LPFN_ONREADDATA ^)Marshal::GetDelegateForFunctionPointer((IntPtr )pOnReadData , TmsPluginImpl::LPFN_ONREADDATA ::typeid );
+</code></pre><p>C# byte[]对应Clr的类型</p>
+<pre><code>array&lt;Byte &gt; ^data = gcnew array&lt;Byte&gt;(100);
+</code></pre><p>C++指针转化为C# ref</p>
+<pre><code>unsigned char ret = *pRet ;
+unsigned char% refRet = ret;
+</code></pre><h2 id="相关资料链接"><a href="#相关资料链接" class="headerlink" title="相关资料链接"></a>相关资料链接</h2><ol>
+<li><a href="http://msdn.microsoft.com/zh-cn/library/ms379603(VS.80" target="_blank" rel="external">将程序从托管扩展C++迁移到C++/CLI</a>.aspx)</li>
+<li><a href="http://msdn.microsoft.com/zh-cn/library/ms235289.aspx" target="_blank" rel="external">C++/CLI迁移入门</a></li>
+<li><a href="http://www.bccn.net/Article/kfyy/cjj/jszl/200608/4229.html" target="_blank" rel="external">C++/CLI基本数据类型探索</a></li>
+<li><a href="http://msdn.microsoft.com/zh-cn/library/0wf2yk2k.aspx" target="_blank" rel="external">对应于 C++ 本机类型的 .NET Framework 类型</a></li>
+<li><a href="http://msdn.microsoft.com/zh-cn/library/ms235631(v=VS.100" target="_blank" rel="external">如何：在各种字符串类型之间进行转换</a>.aspx)</li>
+<li><a href="http://msdn.microsoft.com/zh-cn/library/ms235631(v=VS.100" target="_blank" rel="external">托管代码中的指针</a>.aspx)<ul>
+<li>interior_ptr：当垃圾回收器移动对象时，Interior pointer能随之移动，并始终指向该对象。可以进行指针运算，可以解引用。</li>
+<li>pin_ptr：在外部调用托管堆中指针时，垃圾回收过程中该指针会发生改变，引起外部调用的错误。必须使用pin_ptr指针将该指针固定。</li>
+</ul>
+</li>
+<li><p>从 System::String<em> 转换为 Char</em> 有以下两种方式：</p>
+<ul>
+<li><p>PtrToStringChars 指定了一个指向实际 String 对象的内部指针。如果将此指针传递给非托管函数调用，则必须先锁定该指针，以确保在进行异步垃圾回收过程中对象不会移动。</p>
+<pre><code>pin_ptr&lt;const WCHAR&gt; wch = PtrToStringChars(str);
+</code></pre></li>
+<li><p>StringToHGlobalAnsi 将托管 String 对象的内容复制到本机堆，然后动态地将它转换为美国国家标准学会 (ANSI) 格式。此方法将分配所需的本机堆内存。</p>
+<pre><code>//using namespace System::Runtime::InteropServices;
+System::String * str = S&quot;Hello world\n&quot;;
+char* str2 = (char*)(void*)Marshal::StringToHGlobalAnsi(str);
+printf(str2);
+Marshal::FreeHGlobal(str2);
+</code></pre><p>第一种方式是托管指针，由CLR管理内存的释放，第二种方式由于在本机堆内分配了内存，要手动释放在本机堆内分配的内存。Marshal设计的目的是给不能访问非托管的代码以访问托管代码的能力，比如C＃。C++本身能够访问非托管代码，所以没有迫切需要，不要使用。</p>
+</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/C/2015-04-06-csharp-cpp.html" target="_blank" rel="external">http://blog.inching.org/C/2015-04-06-csharp-cpp.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpp/">cpp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/C/2015-04-06-csharp-cpp.html&title=《C#、C++/CLI、非托管C++三层架构》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/C/2015-04-06-csharp-cpp.html&title=《C#、C++/CLI、非托管C++三层架构》 — Balance&source=几个概念
+CLR：通用语言运行平台（Common Language Runtime，简称CLR）定义了一个代码运行的环境，核心功能包括：内存管理、程序集加..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/C/2015-04-06-csharp-cpp.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C#、C++/CLI、非托管C++三层架构》 — Balance&url=http://blog.inching.org/C/2015-04-06-csharp-cpp.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/C/2015-04-06-csharp-cpp.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/C/2015-04-06-code-generator.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Code Generator 学习大纲</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Java/2015-04-06-hibernate-tutorial.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Hibenate相关文章</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/C/2015-04-06-csharp-cpp.html&title=《C#、C++/CLI、非托管C++三层架构》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/C/2015-04-06-csharp-cpp.html&title=《C#、C++/CLI、非托管C++三层架构》 — Balance&source=几个概念
+CLR：通用语言运行平台（Common Language Runtime，简称CLR）定义了一个代码运行的环境，核心功能包括：内存管理、程序集加..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/C/2015-04-06-csharp-cpp.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C#、C++/CLI、非托管C++三层架构》 — Balance&url=http://blog.inching.org/C/2015-04-06-csharp-cpp.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/C/2015-04-06-csharp-cpp.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3aQW7DMAwEwP7/0y7QU4vAzpKSg1oanYIkVTQ+sCTFr694HT/r9fXrd36vs/dfd7j+dNrCwMB4LOO4XGdHrx7lbLfkd5MHgYGBsQNjVpC9DpfX+OrvYmBgYJwFvjxYJ7w8NGNgYGBUA+5I+pgkiBgYGBi9IjYPnck+SVi/pRbHwMB4IGPkYuDu1x+638DAwPjHjGPSqjbgjqkLAwNjbcZ1Ky0PwdW0L080C4EYAwNjUUZvhGJW6786rnG6AwYGxjaMkYTv+q9G3okeDQYGxtKMJDUcb/fnx62miYUiFgMD47GMPNVLPu1dMEwofTEwMJZmjKd9efCtDkzkMAwMjLUZeUjNLxV6BW219YaBgbEno3f/mbfvR9LQN2wMDIylGfmxosBXfBC98Y7oXwIGBsZCjCScJSnaHQNkhSCLgYGxNGNk6/ySoBeCq+U0BgbGqoxeGTneYhu/CsXAwNiH0RvSmvuYqrw3bAwMjEUZvWZZngj2mnrJlScGBsaejN4wRH55kDfsyrU4BgbGBoyRNG6E3Qv6pwEXAwNjUUavcL0D1iuJMTAw1mb0BkyrYxZ5+K4+lD9jYRgYGIsyejeDI4Vur612vT8GBsYOjCTIVscmesMZecAttNswMDAWYsy6GKgetDe68WbYAgMDY3tGHnyrQxv5oNiEgIuBgbEoo5oOjjfm8tNiYGDswMhHLmYNRlTfmVaLY2BgPJDxmdGKXpOuGu4xMDCWY3wDS4w39eRG9cwAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

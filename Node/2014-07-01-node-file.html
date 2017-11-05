@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Node File | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="node,file">
+    <meta name="description" content="fs 模块是文件操作的封装，它提供了文件的读取、写入、更名、删除、遍历目录、链接等 POSIX 文件系统操作。与其他模块不同的是，fs 模块中所有的操作都提供了异步的和同步的两个版本， 例如读取文件内容的函数有异步的 fs.readFile() 和同步的fs.readFileSync()。
+Common APIs可以使用封装性更高的文件模块，aconbere/node-file-utils.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node File">
+<meta property="og:url" content="http://blog.inching.org/Node/2014-07-01-node-file.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="fs 模块是文件操作的封装，它提供了文件的读取、写入、更名、删除、遍历目录、链接等 POSIX 文件系统操作。与其他模块不同的是，fs 模块中所有的操作都提供了异步的和同步的两个版本， 例如读取文件内容的函数有异步的 fs.readFile() 和同步的fs.readFileSync()。
+Common APIs可以使用封装性更高的文件模块，aconbere/node-file-utils.">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node File">
+<meta name="twitter:description" content="fs 模块是文件操作的封装，它提供了文件的读取、写入、更名、删除、遍历目录、链接等 POSIX 文件系统操作。与其他模块不同的是，fs 模块中所有的操作都提供了异步的和同步的两个版本， 例如读取文件内容的函数有异步的 fs.readFile() 和同步的fs.readFileSync()。
+Common APIs可以使用封装性更高的文件模块，aconbere/node-file-utils.">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Node File</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Node File</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-06-30T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-07-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Common-APIs"><span class="post-toc-text">Common APIs</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#open"><span class="post-toc-text">open</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#read"><span class="post-toc-text">read</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#readdir"><span class="post-toc-text">readdir</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mkdir"><span class="post-toc-text">mkdir</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#write"><span class="post-toc-text">write</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#delete"><span class="post-toc-text">delete</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#state"><span class="post-toc-text">state</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#watch"><span class="post-toc-text">watch</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#rename-and-chmod"><span class="post-toc-text">rename and chmod</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Operation"><span class="post-toc-text">Operation</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Reading-a-file-and-writing-to-another-file"><span class="post-toc-text">Reading a file and writing to another file</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Traversing-the-file-system"><span class="post-toc-text">Traversing the file system</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Watching-a-file-for-changes"><span class="post-toc-text">Watching a file for changes</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#下载文件"><span class="post-toc-text">下载文件</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Reference"><span class="post-toc-text">Reference</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-file"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Node File</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-07-01 00:00:00" datetime="2014-06-30T16:00:00.000Z"  itemprop="datePublished">2014-07-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>fs 模块是文件操作的封装，它提供了文件的读取、写入、更名、删除、遍历目录、链接等 POSIX 文件系统操作。与其他模块不同的是，fs 模块中所有的操作都提供了异步的和同步的两个版本， 例如读取文件内容的函数有异步的 fs.readFile() 和同步的fs.readFileSync()。</p>
+<h2 id="Common-APIs"><a href="#Common-APIs" class="headerlink" title="Common APIs"></a>Common APIs</h2><p>可以使用封装性更高的文件模块，<a href="https://github.com/aconbere/node-file-utils" target="_blank" rel="external">aconbere/node-file-utils</a>.</p>
+<a id="more"></a>
+<h3 id="open"><a href="#open" class="headerlink" title="open"></a>open</h3><p>fs.open(path, flags, [mode], [callback(err, fd)])是 POSIX open 函数的封装，与 C 语言标准库中的 fopen 函数类似。它接受两个必选参数，path 为文件的路径，flags 可以是以下值。</p>
+<ul>
+<li>r ：以读取模式打开文件。  </li>
+<li>r+ ：以读写模式打开文件。  </li>
+<li>w ：以写入模式打开文件，如果文件不存在则创建，如果存在，内容被清空。</li>
+<li>w+ ：以读写模式打开文件，如果文件不存在则创建。  </li>
+<li>a ：以追加模式打开文件，如果文件不存在则创建。  </li>
+<li>a+ ：以读取追加模式打开文件，如果文件不存在则创建。  </li>
+</ul>
+<p>mode 参数用于创建文件时给文件指定权限，默认是 0666回调函数将会传递一个文件描述符 fd②。</p>
+<pre><code>fs.open(&quot;test.txt&quot;, &quot;w&quot;);
+</code></pre><h3 id="read"><a href="#read" class="headerlink" title="read"></a>read</h3><pre><code>fs.read(fd, buffer, offset, length, position, [callback(err, bytesRead,buffer)]) 
+</code></pre><p><code>fs.read</code> 是 POSIX read 函数的封装，相比fs.readFile 提供了更底层的接口。<code>fs.read</code>的功能是从指定的文件描述符 fd 中读取数据并写入 buffer 指向的缓冲区对象。offset 是buffer 的写入偏移量。length 是要从文件中读取的字节数。position 是文件读取的起始位置，如果 position 的值为 null，则会从当前文件指针的位置读取。回调函数传递bytesRead 和 buffer，分别表示读取的字节数和缓冲区对象。<br>实例:</p>
+<p>Opening, seeking to a position, reading from a file and closing it (in parts):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">fs.open(<span class="string">'./data/index.html'</span>, <span class="string">'r'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, fd</span>) </span>&#123;</div><div class="line">   <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</div><div class="line">   <span class="keyword">var</span> str = <span class="keyword">new</span> Buffer(<span class="number">3</span>);</div><div class="line">   fs.read(fd, buf, <span class="number">0</span>, buf.length, <span class="literal">null</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, bytesRead, buffer</span>) </span>&#123;</div><div class="line">     <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</div><div class="line">     <span class="built_in">console</span>.log(err, bytesRead, buffer);</div><div class="line">     fs.close(fd, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">       <span class="built_in">console</span>.log(<span class="string">'Done'</span>);</div><div class="line">     &#125;);</div><div class="line">   &#125;);</div><div class="line"> &#125;);</div></pre></td></tr></table></figure>
+<pre><code>fs.readFile(filename,[encoding],[callback(err,data)])
+</code></pre><p><code>fs.readFile</code> 是最简单的读取文件的函数。它接受一个必选参数 filename，表示要读取的文件名。第二个参数 encoding是可选的，表示文件的字符编码。callback 是回调函数，用于接收文件的内容。如果不指定 encoding，则 callback 就是第二个参数。回调函数提供两个参数 err 和 data，err 表示有没有错误发生，data 是文件内容。如果指定了 encoding，data 是一个解析后的字符串，否则 data 将会是以 Buffer 形式表示的二进制数据。<br>不指定编码方式就默认使用二进制的方式进行读取数据。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line">fs.readFile(<span class="string">'content.txt'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, data</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (err) &#123;</div><div class="line">        <span class="built_in">console</span>.error(err);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(data);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="readdir"><a href="#readdir" class="headerlink" title="readdir"></a>readdir</h3><p>Reading a directory returns the names of the items (files, directories and others) in it.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="string">'./data/'</span>;</div><div class="line">fs.readdir(path, <span class="function"><span class="keyword">function</span> (<span class="params">err, files</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</div><div class="line">  files.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">file</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(path+file);</div><div class="line">    fs.stat(path+file, <span class="function"><span class="keyword">function</span>(<span class="params">err, stats</span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(stats);</div><div class="line">    &#125;);</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// fs.js</span></div><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line">fs.mkdirSync(<span class="string">'a'</span>, <span class="number">0755</span>);</div><div class="line">fs.mkdirSync(<span class="string">'a/b'</span>, <span class="number">0755</span>);</div><div class="line">fs.mkdirSync(<span class="string">'a/b/c'</span>, <span class="number">0755</span>);</div></pre></td></tr></table></figure>
+<p>那么它会在fs.js所在目录中创建一个a目录，a目录下再创建b目录，b目录下创建c目录。mkdirSync是一个同步方法，拥有三个参数，第一个是路径，第二个是<a href="http://hi.baidu.com/zhang_js521/blog/item/6976d10e2ca7d5fa36d122d6.html" target="_blank" rel="external">目录权限</a>，第三个是回调</p>
+<p>但这样做有点不妥，如果指定目录已存在，就报错。如果要建立多级目录，一层层判定此目录是否存在，立即会陷入“回调地狱”的境地。虽然node.js对于IO操作的方法都提供了两个版本，一个是同步的，一个是异步的。想了想，搞出我自己的mkdirSync函数，实现比<a href="https://github.com/substack/node-mkdirp/blob/master/index.js" target="_blank" rel="external">mkdirp</a>的作者好很多。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">mkdirSync</span>(<span class="params">url,mode,cb</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>), arr = url.split(<span class="string">"/"</span>);</div><div class="line">    mode = mode || <span class="number">0755</span>;</div><div class="line">    cb = cb || <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</div><div class="line">    <span class="keyword">if</span>(arr[<span class="number">0</span>]===<span class="string">"."</span>)&#123;<span class="comment">//处理 ./aaa</span></div><div class="line">        arr.shift();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(arr[<span class="number">0</span>] == <span class="string">".."</span>)&#123;<span class="comment">//处理 ../ddd/d</span></div><div class="line">        arr.splice(<span class="number">0</span>,<span class="number">2</span>,arr[<span class="number">0</span>]+<span class="string">"/"</span>+arr[<span class="number">1</span>])</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">inner</span>(<span class="params">cur</span>)</span>&#123;</div><div class="line">        <span class="keyword">if</span>(!path.existsSync(cur))&#123;<span class="comment">//不存在就创建一个</span></div><div class="line">            fs.mkdirSync(cur, mode)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(arr.length)&#123;</div><div class="line">            inner(cur + <span class="string">"/"</span>+arr.shift());</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            cb();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    arr.length &amp;&amp; inner(arr.shift());</div><div class="line">&#125;</div><div class="line"><span class="comment">//测试代码</span></div><div class="line">mkdirSync(<span class="string">"aaa/ddd/dd"</span>,<span class="number">0</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(e)&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'出错了'</span>);</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">"创建成功"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>有关目录的创建的讨论，详见<a href="http://stackoverflow.com/questions/5308514/prescriptive-nodejs" target="_blank" rel="external">这里</a></p>
+<h3 id="write"><a href="#write" class="headerlink" title="write"></a>write</h3><pre><code>fs.write(fd, buffer, offset, length, position, callback)
+</code></pre><p>Opening, writing to a file and closing it (in parts):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">fs.open(<span class="string">'./data/index.html'</span>, <span class="string">'w'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, fd</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</div><div class="line">  <span class="keyword">var</span> buf = <span class="keyword">new</span> Buffer(<span class="string">'bbbbb\n'</span>);</div><div class="line">  fs.write(fd, buf, <span class="number">0</span>, buf.length, <span class="literal">null</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, written, buffer</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</div><div class="line">    <span class="built_in">console</span>.log(err, written, buffer);</div><div class="line">    fs.close(fd, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'Done'</span>);</div><div class="line">    &#125;);</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>The read() and write() functions operate on Buffers, so in the example above we create a new Buffer() from a string. Note that built-in readable streams (e.g. HTTP, Net) generally return Buffers.</p>
+<pre><code>fs.writeFile(filename, data, [options], callback)
+</code></pre><p>Write some content to a file:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"></div><div class="line">fs.writeFile(<span class="string">"test.txt"</span>,<span class="string">"third fs!"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">    <span class="comment">//会先清空原先的内容</span></div><div class="line">    <span class="keyword">if</span>(e) <span class="keyword">throw</span> e;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Or using stream:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> file = fs.createWriteStream(<span class="string">'./data/results.txt'</span>, &#123;<span class="attr">flags</span>: <span class="string">'a'</span>&#125; );</div><div class="line">file.write(<span class="string">'HELLO!\n'</span>);</div><div class="line">file.end(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  test.done();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line">fs.rmdir(<span class="string">"aaa"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(e)&#123;</div><div class="line">        <span class="built_in">console</span>.log(e)</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line"><span class="comment">/**</span></div><div class="line">&#123; stack: [Getter/Setter],</div><div class="line">  arguments: undefined,</div><div class="line">  type: undefined,</div><div class="line">  message: 'ENOTEMPTY, Directory not empty \'aaa\'',</div><div class="line">  errno: 39,</div><div class="line">  code: 'ENOTEMPTY',</div><div class="line">  path: 'aaa' &#125;</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>报错，缘由是之前我们还为aaa创建了子目录，必须逐个删除，实在不人性化，于是又造了一个轮子。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> getAllFolersAndFiles = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">iterator</span>(<span class="params">url, folders, files</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> stat = fs.statSync(url);</div><div class="line">        <span class="keyword">if</span>(stat.isDirectory())&#123;</div><div class="line">            folders.unshift(url);<span class="comment">//收集目录</span></div><div class="line">            inner(url,folders, files);</div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(stat.isFile())&#123;</div><div class="line">            files.unshift(url);<span class="comment">//收集文件</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">inner</span>(<span class="params">path,folders,files</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> arr = fs.readdirSync(path);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, el ; el = arr[i++];)&#123;</div><div class="line">            iterator(path+<span class="string">"/"</span>+el,folders,files);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">dir</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> folders = [], files = [];</div><div class="line">        <span class="keyword">try</span>&#123;</div><div class="line">            iterator(dir,folders,files);</div><div class="line">        &#125;<span class="keyword">catch</span>(e)&#123;</div><div class="line">        &#125;<span class="keyword">finally</span>&#123;</div><div class="line">            <span class="keyword">return</span> &#123;</div><div class="line">                <span class="attr">folders</span> : folders,</div><div class="line">                <span class="attr">files</span>   : files</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;)()</div></pre></td></tr></table></figure>
+<p>如果我们只想取得指定目下的所有文件，还可以更精简些！</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getAllFiles</span>(<span class="params">root</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> result = [], files = fs.readdirSync(root)</div><div class="line">  files.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">file</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> pathname = root+ <span class="string">"/"</span> + file</div><div class="line">      , stat = fs.lstatSync(pathname)</div><div class="line">    <span class="keyword">if</span> (stat === <span class="literal">undefined</span>) <span class="keyword">return</span></div><div class="line"></div><div class="line">    <span class="comment">// 不是文件夹就是文件</span></div><div class="line">    <span class="keyword">if</span> (!stat.isDirectory()) &#123;</div><div class="line">      result.push(pathname)</div><div class="line">    <span class="comment">// 递归自身</span></div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      result = result.concat(getAllFiles(pathname))</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line">  <span class="keyword">return</span> result</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>另外可以参考：<a href="https://github.com/sindresorhus/trash" target="_blank" rel="external">sindresorhus/trash</a> Cross-platform command-line app for moving files and directories to the trash - A safer alternative to <code>rm</code>.</p>
+<h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3><p>You want to get certain attributes of a given file such as whether or not it is a file or a directory, and you want to be able to set certain attributes such as the file’s name or the file’s permissions.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line">fs.stat(<span class="string">'data.txt'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, stats</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</div><div class="line">    <span class="keyword">if</span> (stats.isFile()) &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'It\'s a file!'</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (stats.isDirectory()) &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'It\'s a directory!'</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> stats) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="string">'function'</span> !== <span class="keyword">typeof</span> stats[i]) <span class="built_in">console</span>.log(i + <span class="string">'\t= '</span> + stats[i]);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>s.stat() gives us more information about each item. The object returned from fs.stat looks like this:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    dev: 2114,</div><div class="line">    ino: 48064969,</div><div class="line">    mode: 33188,</div><div class="line">    nlink: 1,</div><div class="line">    uid: 85,</div><div class="line">    gid: 100,</div><div class="line">    rdev: 0,</div><div class="line">    size: 527,</div><div class="line">    blksize: 4096,</div><div class="line">    blocks: 8,</div><div class="line">    atime: Mon,</div><div class="line">    10 Oct 2011 23: 24: 11 GMT,</div><div class="line">    mtime: Mon,</div><div class="line">    10 Oct 2011 23: 24: 11 GMT,</div><div class="line">    ctime: Mon,</div><div class="line">    10 Oct 2011 23: 24: 11 GMT</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>atime, mtime and ctime are Date instances. The stat object also has the following functions:</p>
+<ul>
+<li>stats.isFile()</li>
+<li>stats.isDirectory()</li>
+<li>stats.isBlockDevice()</li>
+<li>stats.isCharacterDevice()</li>
+<li>stats.isSymbolicLink() (only valid with fs.lstat())</li>
+<li>stats.isFIFO()</li>
+<li>stats.isSocket()</li>
+</ul>
+<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><p>就是使用watchFile及其同步版本。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>),</div><div class="line">sys = <span class="built_in">require</span>(<span class="string">"util"</span>);</div><div class="line">fs.open(<span class="string">"aaa.js"</span>,<span class="string">"w"</span>,<span class="number">0644</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e,fd</span>)</span>&#123;</div><div class="line">    fs.writeSync(fd,<span class="string">"console.log(1111);"</span>);</div><div class="line">    fs.closeSync(fd);</div><div class="line">&#125;)</div><div class="line"></div><div class="line">fs.watchFile(<span class="string">"aaa.js"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">curr, prev</span>) </span>&#123;</div><div class="line">  sys.puts(<span class="string">"\n\ttest_file.txt has been edited"</span>);</div><div class="line">  sys.puts(<span class="string">"\tThe current mtime is: "</span> + curr.mtime);</div><div class="line">  sys.puts(<span class="string">"\tThe previous mtime was: "</span> + prev.mtime + <span class="string">"\n"</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">fs.open(<span class="string">"aaa.js"</span>,<span class="string">"a"</span>,<span class="number">0644</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e,fd</span>)</span>&#123;</div><div class="line">    fs.writeSync(fd,<span class="string">"console.log(2222)"</span>);</div><div class="line">    fs.closeSync(fd);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://github.com/paulmillr/chokidar" target="_blank" rel="external">paulmillr/chokidar</a> A neat wrapper around node.js fs.watch / fs.watchFile. <a href="http://paulmillr.com" target="_blank" rel="external">http://paulmillr.com</a></li>
+</ul>
+<h3 id="rename-and-chmod"><a href="#rename-and-chmod" class="headerlink" title="rename and chmod"></a>rename and chmod</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">fs.rename(<span class="string">'data2.txt'</span>, <span class="string">'data2_new.txt'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Renamed!'</span>);</div><div class="line">&#125;);</div><div class="line">fs.chmod(<span class="string">'data3.txt'</span>, <span class="string">'0777'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'File permissions changed!'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="Operation"><a href="#Operation" class="headerlink" title="Operation"></a>Operation</h2><h3 id="Reading-a-file-and-writing-to-another-file"><a href="#Reading-a-file-and-writing-to-another-file" class="headerlink" title="Reading a file and writing to another file"></a>Reading a file and writing to another file</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> file = fs.createReadStream(<span class="string">'./data/results.txt'</span>, &#123;</div><div class="line">    <span class="attr">flags</span>: <span class="string">'r'</span></div><div class="line">&#125;);</div><div class="line"><span class="keyword">var</span> out = fs.createWriteStream(<span class="string">'./data/results2.txt'</span>, &#123;</div><div class="line">    <span class="attr">flags</span>: <span class="string">'w'</span></div><div class="line">&#125;);</div><div class="line">file.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'data'</span>, data);</div><div class="line">    out.write(data);</div><div class="line">&#125;);</div><div class="line">file.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'end'</span>);</div><div class="line">    out.end(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'Finished writing to file'</span>);</div><div class="line">        test.done();</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>You can also use pipe():</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> file = fs.createReadStream(<span class="string">'./data/results.txt'</span>, &#123;<span class="attr">flags</span>: <span class="string">'r'</span>&#125; );</div><div class="line"><span class="keyword">var</span> out = fs.createWriteStream(<span class="string">'./data/results2.txt'</span>, &#123;<span class="attr">flags</span>: <span class="string">'w'</span>&#125;);</div><div class="line">file.pipe(out);</div></pre></td></tr></table></figure>
+<h3 id="Traversing-the-file-system"><a href="#Traversing-the-file-system" class="headerlink" title="Traversing the file system"></a>Traversing the file system</h3><p><strong>Problem:</strong></p>
+<p>You want to recursively read through a list of all of the files in a given directory location and display each file’s name or recursively traverse the file if it is a directory.</p>
+<p><strong>Solution:</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> traverseFileSystem = <span class="function"><span class="keyword">function</span>(<span class="params">currentPath</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(currentPath);</div><div class="line">    <span class="keyword">var</span> files = fs.readdirSync(currentPath);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> files) &#123;</div><div class="line">        <span class="keyword">var</span> currentFile = currentPath + <span class="string">'/'</span> + files[i];</div><div class="line">        <span class="keyword">var</span> stats = fs.statSync(currentFile);</div><div class="line">        <span class="keyword">if</span> (stats.isFile()) &#123;</div><div class="line">            <span class="built_in">console</span>.log(currentFile);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (stats.isDirectory()) &#123;</div><div class="line">            traverseFileSystem(currentFile);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line">traverseFileSystem(<span class="string">'..'</span>);</div></pre></td></tr></table></figure>
+<h3 id="Watching-a-file-for-changes"><a href="#Watching-a-file-for-changes" class="headerlink" title="Watching a file for changes"></a>Watching a file for changes</h3><p><strong>Problem:</strong></p>
+<p>You want to be notified of any changes that occur within a given directory either to the directory’s contents or directory itself.</p>
+<p><strong>Solution:</strong></p>
+<p>This solution requires a special module called “inotify.” Assuming you have the node package manager installed, you can install inotify using: npm install inotify The code below must then reference the install path:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> Inotify = <span class="built_in">require</span>(<span class="string">'inotify'</span>).Inotify;</div><div class="line"><span class="keyword">var</span> inotify = <span class="keyword">new</span> Inotify();</div><div class="line"><span class="keyword">var</span> watcher = &#123;</div><div class="line">    <span class="attr">path</span>: <span class="string">'.'</span>,</div><div class="line">    <span class="attr">watch_for</span>: Inotify.IN_OPEN | Inotify.IN_CLOSE,</div><div class="line">    <span class="attr">callback</span>: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> file = event.name ? event.name : <span class="string">''</span>;</div><div class="line">        <span class="keyword">var</span> mask = event.mask;</div><div class="line">        <span class="keyword">if</span> (file != <span class="string">''</span> &amp;&amp; file.indexOf(<span class="string">'.'</span>) !== <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (mask &amp; Inotify.IN_OPEN) &#123;</div><div class="line">                <span class="built_in">console</span>.log(file + <span class="string">' was opened '</span>);</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mask &amp; Inotify.IN_CLOSE) &#123;</div><div class="line">                <span class="built_in">console</span>.log(file + <span class="string">' was closed '</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line">inotify.addWatch(watcher);</div></pre></td></tr></table></figure>
+<p>也可以使用 <a href="https://github.com/mikeal/watch" target="_blank" rel="external">mikeal/watch</a> 来监听文件.</p>
+<h3 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a>下载文件</h3><p>下载文件中关键的一步是将 Response 返回的数据流 pile 到本地文件的流：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> request = requestProtocol.get(fileUrl, <span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</div><div class="line">   <span class="keyword">if</span> (response.statusCode !== <span class="number">200</span>) &#123;</div><div class="line">       request.abort();</div><div class="line">       <span class="keyword">return</span>;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">var</span> file = fs.createWriteStream(filePath);</div><div class="line">   response.pipe(file);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://www.cnblogs.com/rubylouvre/archive/2011/11/28/2264717.html" target="_blank" rel="external">node.js 文件操作</a></li>
+<li><a href="http://blog.csdn.net/gxhacx/article/details/12430969" target="_blank" rel="external">Node.js学习(10) 文件系统fs</a></li>
+<li><a href="http://blog.monitis.com/2011/07/09/6-node-js-recipes-working-with-the-file-system/" target="_blank" rel="external">Network &amp; IT Systems Monitoring</a></li>
+</ul>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="https://github.com/isaacs/node-glob" target="_blank" rel="external">isaacs/node-glob</a> glob functionality for node.js.</li>
+<li><a href="https://github.com/substack/node-mkdirp" target="_blank" rel="external">substack/node-mkdirp</a> Recursively mkdir, like <code>mkdir -p</code>, but in node.js.</li>
+<li><a href="https://github.com/dominictarr/through" target="_blank" rel="external">dominictarr/through</a> simple way to create a ReadableWritable stream that works.</li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://book.mixu.net/node/ch11.html" target="_blank" rel="external">11. File system - Mixu’s Node book</a></li>
+<li><a href="http://chawlasumit.wordpress.com/2014/08/04/how-to-create-a-web-based-file-browser-using-nodejs-express-and-jquery-datatables" target="_blank" rel="external">How to create a Web based File Browser using NodeJS, Express and JQuery Datatables</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2014-07-01-node-file.html" target="_blank" rel="external">http://blog.inching.org/Node/2014-07-01-node-file.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/file/">file</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-07-01-node-file.html&title=《Node File》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-07-01-node-file.html&title=《Node File》 — Balance&source=fs 模块是文件操作的封装，它提供了文件的读取、写入、更名、删除、遍历目录、链接等 POSIX 文件系统操作。与其他模块不同的是，fs 模块中所有的操作都..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-07-01-node-file.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node File》 — Balance&url=http://blog.inching.org/Node/2014-07-01-node-file.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-07-01-node-file.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/OS/2014-07-03-linux-command.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Linux Common Command</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Node/2014-07-01-node-thread.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Node Thread</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2014-07-01-node-file.html&title=《Node File》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2014-07-01-node-file.html&title=《Node File》 — Balance&source=fs 模块是文件操作的封装，它提供了文件的读取、写入、更名、删除、遍历目录、链接等 POSIX 文件系统操作。与其他模块不同的是，fs 模块中所有的操作都..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2014-07-01-node-file.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node File》 — Balance&url=http://blog.inching.org/Node/2014-07-01-node-file.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2014-07-01-node-file.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aS26EMBAFwLn/pck2UoR53XZGwi6vUMYBikWrP/584nXdrN+/3u2v7vm7c9nCwMB4LeMarh5jfP98T/JuGBgY5zDubn13nTw4D6PjZ433Y2BgYMxfjz9E/lwMDAyM6u2qCeU4HcTAwMBIGL0ydVVB+9VaHAMD44WMvOv+/et/mW9gYGC8inEVV54m9gaZvYWBgbE3Iw9weXI2M07ovQ8GBsYJjGT0mIfO6gGv3vjz9s4YGBjbMfKmfC+M9tp51T0YGBh7M/KBYrmkTGJ8/IGmUkMMDIyXM/IHjP8+c9giH3PesjEwMLZmJMVkXmSuCrjlV8fAwDiMsSpBzJt3vcHnQ8DFwMDYiJE/phpe51ty+T0xMDDOZMwPGnvUaolbnp1iYGBswYhmCPEgYabSzMtgDAyMvRnVplh1T95KqzbaHiaxGBgYmzKqYbEX8fL/zT8cBgbGCYxxc63XMsuHCtXE9PYdMDAwtmZUj1xUg2Y1lcwHA1MnRzAwMF7FqLa9ellnbyxaaMxhYGAcw6gev5gvg/MEtBBwMTAwNmXkwbdXiDbb+nnqiYGBsSnjKq7qUYy1yeJDcw0DA2NTRjXM5YF41WBywWELDAyMLRgzI8akcZ+H5t5IFQMD4xxGL/D1Gm0zad/DmREMDAyMiUyzWqY2s1cMDAyMIKUbh9S1ZfBUwMXAwHghIyliewOD6pCgGrIxMDBOYMzkXfkgIT9ellMxMDAOYPwAbvaJh1qnrHQAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

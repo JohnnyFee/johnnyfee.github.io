@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Git Rebase | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="git">
+    <meta name="description" content="原文： Git Rebase
+
+git rebase是个非常强大灵活的命令，它可以让你对commit进行修改、调整顺序、合并等操作、并能以线性的方式进行分支的合并与嫁接等。
+简单来说rebase就是把某个分支上的一部分commit嫁接到另一个commit后面，而在这个过程中这些commit的base（基）变了，所以这个操作叫做『变基』。
+比如我们有如下的提交历史，当前的分支是topic：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git Rebase">
+<meta property="og:url" content="http://blog.inching.org/Git/2016-07-10-git-rebase.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="原文： Git Rebase
+
+git rebase是个非常强大灵活的命令，它可以让你对commit进行修改、调整顺序、合并等操作、并能以线性的方式进行分支的合并与嫁接等。
+简单来说rebase就是把某个分支上的一部分commit嫁接到另一个commit后面，而在这个过程中这些commit的base（基）变了，所以这个操作叫做『变基』。
+比如我们有如下的提交历史，当前的分支是topic：">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git Rebase">
+<meta name="twitter:description" content="原文： Git Rebase
+
+git rebase是个非常强大灵活的命令，它可以让你对commit进行修改、调整顺序、合并等操作、并能以线性的方式进行分支的合并与嫁接等。
+简单来说rebase就是把某个分支上的一部分commit嫁接到另一个commit后面，而在这个过程中这些commit的base（基）变了，所以这个操作叫做『变基』。
+比如我们有如下的提交历史，当前的分支是topic：">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Git Rebase</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Git Rebase</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-07-09T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-07-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Git/">Git</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-text">参考</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-git-rebase"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Git Rebase</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-07-10 00:00:00" datetime="2016-07-09T16:00:00.000Z"  itemprop="datePublished">2016-07-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Git/">Git</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>原文： <a href="http://weizhifeng.net/git-rebase.html" target="_blank" rel="external">Git Rebase</a></p>
+</blockquote>
+<p><code>git rebase</code>是个非常强大灵活的命令，它可以让你对commit进行修改、调整顺序、合并等操作、并能以线性的方式进行分支的合并与嫁接等。</p>
+<p>简单来说<code>rebase</code>就是把某个分支上的一部分commit嫁接到另一个commit后面，而在这个过程中这些commit的base（基）变了，所以这个操作叫做『变基』。</p>
+<p>比如我们有如下的提交历史，当前的分支是<code>topic</code>：</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">A---B---C topic(HEAD)</div><div class="line">    /</div><div class="line">D---E---F---G master</div></pre></td></tr></table></figure>
+<p>我们执行了如下任何一个命令之后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git rebase master</div><div class="line">$ git rebase master topic</div></pre></td></tr></table></figure>
+<p>提交历史将会变成如下这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">A&apos;--B&apos;--C&apos; topic(HEAD)</div><div class="line">             /</div><div class="line">D---E---F---G master</div></pre></td></tr></table></figure>
+<p>可以看出git把<code>A---B---C</code>这段commit嫁接到了<code>G</code>之后，不过虽然这些新commit的内容是一样的，但是hash值是不同的（<code>A&#39;--B&#39;--C&#39;</code>），原因将在后面解释。</p>
+<p>命令完整的形式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git rebase &lt;upstream&gt; &lt;branch&gt;</div></pre></td></tr></table></figure>
+<p>其中<code>&lt;upstream&gt;</code>是新的base，如果你提供<code>&lt;branch&gt;</code>，那么首先会checkout到这个<code>&lt;branch&gt;</code>，然后再进行rebase操作。所以以下两种方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git rebase master topic</div><div class="line">$ git rebase master</div></pre></td></tr></table></figure>
+<p>的区别是第一种形式会首先checkout到topic分支，然后再执行rebase的操作。</p>
+<p>那么rebase都做了什么事情呢？</p>
+<ol>
+<li><p>首先，git会对topic分支和<code>&lt;upstream&gt;</code>做一个差集，把不同的commit找出来，类似于执行<code>git log &lt;upstream&gt;..HEAD</code>，对于以上例子来说结果就是<code>A---B---C</code>，然后把这些commit存在一个临时的地方。</p>
+</li>
+<li><p>其次，git会把当前分支reset到<code>&lt;upstream&gt;</code>上，类似于执行<code>git reset --hard &lt;upstream&gt;</code>命令。对于以上例子来说就是reset到<code>master</code>。</p>
+</li>
+<li><p>最后，git把第一步中暂存的commit，按照顺序一个一个地应用到分支上，相当于一个一个重复提交，这就是为什么rebase之后commit的hash值变了。</p>
+</li>
+</ol>
+<p>如果</p>
+<upstream>中的一个commit进行了某项修改，而当前分支中也存在一个commit，这两个commit的修改的内容一样，那么当前分支中的commit将会被忽略。比如以下的<code>A</code>和<code>A’</code>就是这样两个commit。</upstream>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">A---B---C topic</div><div class="line">         /</div><div class="line">    D---E---A&apos;---F master</div></pre></td></tr></table></figure>
+<p>执行完git rebase master之后，结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">B&apos;---C&apos; topic</div><div class="line">              /</div><div class="line">D---E---A&apos;---F master</div></pre></td></tr></table></figure>
+<p>如果你想更灵活的进行commit嫁接，那么你需要<code>rebase --onto</code>，命令格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git rebase --onto &lt;newbase&gt; &lt;upstream&gt; &lt;branch&gt;</div></pre></td></tr></table></figure>
+<p>假设你有如下的branch tree：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">o---o---o---o---o  master</div><div class="line">         \</div><div class="line">          o---o---o---o---o  next</div><div class="line">                           \</div><div class="line">                            o---o---o  topic</div></pre></td></tr></table></figure>
+<p>你想要得到如下的branch tree：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">o---o---o---o---o  master</div><div class="line">        |            \</div><div class="line">        |             o&apos;--o&apos;--o&apos;  topic</div><div class="line">         \</div><div class="line">          o---o---o---o---o  next</div></pre></td></tr></table></figure>
+<p>那我们需要如下操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git rebase --onto master next topic</div></pre></td></tr></table></figure>
+<p>这个操作会把从<code>next</code>开始的commit嫁接到<code>master</code>上。如果你提供<code>&lt;branch&gt;</code>，那么首先会checkout到这个<code>&lt;branch&gt;</code>，然后再进行rebase操作。</p>
+<p>我们再看一个例子，比如我们有如下的branch tree：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">E---F---G---H---I---J  topicA</div></pre></td></tr></table></figure>
+<p>我们想要删除<code>F---G</code>这两个commit，那么通过<code>rebase --onto</code>就可以实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git rebase --onto topicA~5 topicA~3 topicA</div></pre></td></tr></table></figure>
+<p>执行结果是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">E---H&apos;---I&apos;---J&apos;  topicA</div></pre></td></tr></table></figure>
+<p>同样，rebase也会产生冲突，当解决完冲突之后你可以继续rebase的进程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git rebase --continue</div></pre></td></tr></table></figure>
+<p>或者取消此次rebase：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git rebase --abort</div></pre></td></tr></table></figure>
+<p>关于commit修改、顺序调整、合并等操作可以通过<code>rebase -i</code>来完成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git rebase -i &lt;upstream&gt;</div></pre></td></tr></table></figure>
+<p>chitsaou写的<a href="http://blog.yorkxin.org/posts/2011/07/29/git-rebase/" target="_blank" rel="external">《Git-rebase 小筆記》</a>中有详细的介绍，可以自行查看。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://git-scm.com/docs/git-rebase" target="_blank" rel="external">http://git-scm.com/docs/git-rebase</a></li>
+<li><a href="http://blog.yorkxin.org/posts/2011/07/29/git-rebase/" target="_blank" rel="external">http://blog.yorkxin.org/posts/2011/07/29/git-rebase/</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Git/2016-07-10-git-rebase.html" target="_blank" rel="external">http://blog.inching.org/Git/2016-07-10-git-rebase.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Git/2016-07-10-git-rebase.html&title=《Git Rebase》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Git/2016-07-10-git-rebase.html&title=《Git Rebase》 — Balance&source=
+原文： Git Rebase
+
+git rebase是个非常强大灵活的命令，它可以让你对commit进行修改、调整顺序、合并等操作、并能以线性的方式进行..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Git/2016-07-10-git-rebase.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git Rebase》 — Balance&url=http://blog.inching.org/Git/2016-07-10-git-rebase.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Git/2016-07-10-git-rebase.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Web/2016-07-15-web-browser-csp.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Web Brower CSP</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2016-07-09-requirejs.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript RequireJS</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Git/2016-07-10-git-rebase.html&title=《Git Rebase》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Git/2016-07-10-git-rebase.html&title=《Git Rebase》 — Balance&source=
+原文： Git Rebase
+
+git rebase是个非常强大灵活的命令，它可以让你对commit进行修改、调整顺序、合并等操作、并能以线性的方式进行..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Git/2016-07-10-git-rebase.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git Rebase》 — Balance&url=http://blog.inching.org/Git/2016-07-10-git-rebase.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Git/2016-07-10-git-rebase.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACOklEQVR42u3aS4rDMBBFUe9/0840ECLdeuUEJF2Nmm7F1klDUR9dF17323r/TX//557xk1tLhgwZyzLu4SJ7xkfMdvKzyZAh4xwGCYUPvxi8i5xNhgwZMsYM8pxqCihDhgwZTzF44UrSwU7pK0OGjHMYpIglAZe34Ug6+JNaXIYMGQsyeNf9/z//ZL4hQ4aMpRh3cZF0rZrqkUbe5FQyZMjYmtEpUElo5uPMfsEsQ4aMXRnVY/FgmrGrDbvy/0GGDBmLMzoBcdwIKyd51S9RhgwZBzDGhSUPiFmq1wnZMmTIOIeRhVQ+aOQXJh64LSJDhoxNGTxB7JfB1SIWBV8ZMmRszeChjQ8yq18QH5pOxp8yZMg4htFvh2VBnP8VTWJlyJCxHYOPJHn4I/gs6QyzXRkyZCzLmCRbjcIyG0yGv5EhQ8YBjP4FC97o50lh4dqZDBkytmZkqVi1BOWLhNpJs0+GDBmbMlDbPSpleQuvmpJOEkQZMmQcwCBt+izWZcEUPVmGDBmHMcYJYnaNrHqRojqukCFDxgkMksxxNi9us2thqNEmQ4aM7RiTTVFqSFJP8kb0KRkyZGzKuIsrC8c86SRJ5FWN2TJkyFicUR0udspX/ilSsobjUhkyZCzLyEaM5NHZJYzqmFOGDBnnMMgR+YtJSM3Svq9PliFDhgwyRMTNOBJS+VUMGTJkyOBHzwaf1T2TIlaGDBlbM7JhAB8MkFI2a9vJkCHjBAYvHasjzGyQ8FRpLUOGjC0YL0WX+ghwqustAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

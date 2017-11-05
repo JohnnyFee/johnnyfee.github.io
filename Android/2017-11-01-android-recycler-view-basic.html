@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android RecyclerView – The Basics | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,ui">
+    <meta name="description" content="From Android RecyclerView – The Basics – TheRubberDuckDev
+When it comes to displaying a lot of similar data on mobile, you usually rely on List or Grid structure. In Android you can implement this usi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android RecyclerView – The Basics">
+<meta property="og:url" content="http://blog.inching.org/Android/2017-11-01-android-recycler-view-basic.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="From Android RecyclerView – The Basics – TheRubberDuckDev
+When it comes to displaying a lot of similar data on mobile, you usually rely on List or Grid structure. In Android you can implement this usi">
+<meta property="og:image" content="https://therubberduckdev.files.wordpress.com/2017/10/screenshot_20171009-003555.jpg">
+<meta property="og:updated_time" content="2017-11-05T05:25:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android RecyclerView – The Basics">
+<meta name="twitter:description" content="From Android RecyclerView – The Basics – TheRubberDuckDev
+When it comes to displaying a lot of similar data on mobile, you usually rely on List or Grid structure. In Android you can implement this usi">
+<meta name="twitter:image" content="https://therubberduckdev.files.wordpress.com/2017/10/screenshot_20171009-003555.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android RecyclerView – The Basics</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android RecyclerView – The Basics</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-10-31T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-11-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#How-it-works"><span class="post-toc-text">How it works</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Adapter-and-ViewHolder"><span class="post-toc-text">Adapter and ViewHolder</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#LayoutManager"><span class="post-toc-text">LayoutManager</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Recycler"><span class="post-toc-text">Recycler</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RecyclerView-Adapter"><span class="post-toc-text">RecyclerView Adapter</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#onCreateViewHolder"><span class="post-toc-text">onCreateViewHolder</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#onBindViewHolder"><span class="post-toc-text">onBindViewHolder</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getItemCount"><span class="post-toc-text">getItemCount</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getItemViewType"><span class="post-toc-text">getItemViewType</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-recycler-view-basic"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android RecyclerView – The Basics</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-01 00:00:00" datetime="2017-10-31T16:00:00.000Z"  itemprop="datePublished">2017-11-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>From <a href="https://therubberduckdev.wordpress.com/2017/10/09/android-recyclerview-the-basics/" target="_blank" rel="external">Android RecyclerView – The Basics – TheRubberDuckDev</a></p>
+<p>When it comes to displaying a lot of similar data on mobile, you usually rely on List or Grid structure. In Android you can implement this using ListView for Lists, GridView for Grids, or RecyclerView for both.</p>
+<p><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html" target="_blank" rel="external">RecyclerView</a> provides advanced set of features to enable complex animations, child view decorations and performance compared to ListView or GridView.</p>
+<h2 id="How-it-works"><a href="#How-it-works" class="headerlink" title="How it works"></a>How it works</h2><h3 id="Adapter-and-ViewHolder"><a href="#Adapter-and-ViewHolder" class="headerlink" title="Adapter and ViewHolder"></a>Adapter and ViewHolder</h3><p>RecyclerView uses the <strong><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html" target="_blank" rel="external">Adapter</a></strong> class to bind the data that you want to display to the corresponding Views. Unlike ListView, <strong><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.ViewHolder.html" target="_blank" rel="external">ViewHolder</a></strong> is mandatory in RecyclerView. ViewHolder stores some meta information about the position of the view in the RecyclerView. ViewHolder should be used to cache findViewById of child views.</p>
+<h3 id="LayoutManager"><a href="#LayoutManager" class="headerlink" title="LayoutManager"></a>LayoutManager</h3><p>The way in which the data should be rendered i.e., either List or Grid is specified using a <strong><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.LayoutManager.html" target="_blank" rel="external">LayoutManager</a></strong>. LayoutManager does the actual layout of the child views. RecyclerView provides three basic LayoutManagers:</p>
+<ul>
+<li><strong><a href="https://developer.android.com/reference/android/support/v7/widget/LinearLayoutManager.html" target="_blank" rel="external">LinearLayoutManager</a></strong> – for laying out children as a list either vertically or horizontally</li>
+<li><strong><a href="https://developer.android.com/reference/android/support/v7/widget/GridLayoutManager.html" target="_blank" rel="external">GridLayoutManager</a></strong> – for laying out children as a grid either vertically or horizontally</li>
+<li><strong><a href="https://developer.android.com/reference/android/support/v7/widget/StaggeredGridLayoutManager.html" target="_blank" rel="external">StaggeredGridLayoutManager</a></strong> – for laying out children in a staggered grid format, where each child may have different dimensions</li>
+</ul>
+<p>All three layout managers support reverse ordering of child views.</p>
+<h3 id="Recycler"><a href="#Recycler" class="headerlink" title="Recycler"></a>Recycler</h3><p>There is a <strong><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Recycler.html" target="_blank" rel="external">Recycler</a></strong> class which is responsible to manage scrapped views and views that are recycled to be used in future. The LayoutManager won’t directly communicate with the Adapter. Instead it contacts the Recycler for any recycled views and if available renders it. If not, Recycler asks the Adapter for a new view and gives it back to LayoutManager.</p>
+<h2 id="RecyclerView-Adapter"><a href="#RecyclerView-Adapter" class="headerlink" title="RecyclerView Adapter"></a>RecyclerView Adapter</h2><p>The main functions that’s required to override are</p>
+<ul>
+<li>onCreateViewHolder</li>
+<li>onBindViewHolder</li>
+<li>getItemCount</li>
+<li>getItemViewType</li>
+</ul>
+<h3 id="onCreateViewHolder"><a href="#onCreateViewHolder" class="headerlink" title="onCreateViewHolder"></a><strong>onCreateViewHolder</strong></h3><p>This method is called each time a new view is required to be inflated for displaying child. This is where we create and return a new instance of the ViewHolder for each child item.</p>
+<p>Whenever there is no child view to be reused a new view is created using this method.</p>
+<p>It takes two parameters: a <code>parent</code> ViewGroup and a <code>viewType</code> int.<br>The <code>viewType</code> integer is used to identify the type of child view that needs to be displayed based on the data. Using this you can inflate the necessary view.</p>
+<p><em><strong>Remember:</strong> Do not try to cache the inflated views yourselves as it may lead to inconsistent behaviours. The necessary caching is done internally by RecyclerView itself.</em></p>
+<p>  __</p>
+<p>Here is a simple example of onCreateViewHolder:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">    @Override  </div><div class="line">public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) &#123;  </div><div class="line">View view = LayoutInflater.from(parent.getContext())  </div><div class="line">                .inflate(R.layout.layout_user_list_item, parent, false);  </div><div class="line">return new UserViewHolder(view);  </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>In this example, a layout is inflated using the LayoutInflater and a new ViewHolder is returned. This View is used as a child view and the ViewHolder is used to identify the views position within the RecyclerView and refer the views inside the child view.</p>
+<h3 id="onBindViewHolder"><a href="#onBindViewHolder" class="headerlink" title="onBindViewHolder"></a>onBindViewHolder</h3><p>This is where the data at a given position is displayed on the child view. It takes two parameters: a <code>ViewHolder</code> and a <code>position</code>. By referring the view items in the ViewHolder you can show relevant information for the given <code>position</code> in RecyclerView. The ViewHolder is used to refer the view items and the position can be used to get the data from say, an ArrayList.</p>
+<p><strong><em>Remember:</em></strong> <em>For example, when using an <code>onClickListener</code> in this method you might make the position parameter final. Do not do this. Since RecyclerView will not call this method again if the position of the data in the ArrayList changes. So to handle this condition, you can use the <code>getAdapterPosition()</code> method of the ViewHolder inside onClickListener.</em><br>  __Here is an example of onBindViewHolder:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    @Override  </div><div class="line">public void onBindViewHolder(UserViewHolder holder, int position) &#123;  </div><div class="line">        holder.username.setText(usersList.get(position).getName());  </div><div class="line">Glide.with(holder.itemView).load(usersList.get(position).getImageUrl()).into(holder.userAvatar);  </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>In the code, <code>userList</code> is an ArrayList. Using the <code>position</code> param, the name of the user at that position in the ArrayList is retrieved. Now using the ViewHolder, the TextView is referred and the name is set to the it.</p>
+<h3 id="getItemCount"><a href="#getItemCount" class="headerlink" title="getItemCount"></a>getItemCount</h3><p>This method is used to return the total number of data items that needs to be displayed in the Adapter. If it returns zero, no view items will be rendered. If any positive number is returned, then the adapter should handle that many data items.</p>
+<h3 id="getItemViewType"><a href="#getItemViewType" class="headerlink" title="getItemViewType"></a>getItemViewType</h3><p>Sometimes you want to display different types of views based on different data at each position in RecyclerView. This is when getItemViewType is used.</p>
+<p>Based on the position parameter, you can return a integer representing the type of view that needs to be displayed at the position.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@Override  </div><div class="line">publicint getItemViewType(int position) &#123;  </div><div class="line">int type;  </div><div class="line">if (!TextUtils.isEmpty(usersList.get(position).getName())) &#123;  </div><div class="line">            type = USER_TYPE;  </div><div class="line">        &#125; else &#123;  </div><div class="line">            type = HEADER_TYPE;  </div><div class="line">        &#125;  </div><div class="line">return type;  </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>Here the type is represented by a constant integers. Now the type of view to be displayed is returned based on the data. Next change the onCreateViewHolder to return the relevant view based on the view type.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">@Override  </div><div class="line">publicRecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) &#123;  </div><div class="line">View view;  </div><div class="line">switch (viewType) &#123;  </div><div class="line">case USER_TYPE:  </div><div class="line">                view = LayoutInflater.from(parent.getContext())  </div><div class="line">                        .inflate(R.layout.layout_user_list_item, parent, false);  </div><div class="line">return new UserViewHolder(view);  </div><div class="line">case HEADER_TYPE:  </div><div class="line">                view = LayoutInflater.from(parent.getContext())  </div><div class="line">                        .inflate(R.layout.layout_user_list_section_header, parent, false);  </div><div class="line">return new SectionHeaderViewHolder(view);  </div><div class="line">default:  </div><div class="line">                view = LayoutInflater.from(parent.getContext())  </div><div class="line">                        .inflate(R.layout.layout_user_list_item, parent, false);  </div><div class="line">return new UserViewHolder(view);  </div><div class="line">        &#125;  </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>After that in onBindViewHolder bind the correct data to the correct view type using the relevant ViewHolder.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@Override  </div><div class="line">public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) &#123;  </div><div class="line">int itemViewType = getItemViewType(position);  </div><div class="line">if (itemViewType == USER_TYPE) &#123;  </div><div class="line">            ((UserViewHolder) holder).username.setText(usersList.get(position).getName());  </div><div class="line">Glide.with(holder.itemView).load(usersList.get(position).getImageUrl()).into(((UserViewHolder) holder).userAvatar);  </div><div class="line">        &#125; else &#123;  </div><div class="line">            ((SectionHeaderViewHolder) holder).sectionTitle.setText(usersList.get(position).getType());  </div><div class="line">        &#125;  </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>Here is how the UI looks like:</p>
+<p>[<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://therubberduckdev.files.wordpress.com/2017/10/screenshot_20171009-003555.jpg" alt="RecyclerView using view types](https://therubberduckdev.files.wordpress.com/2017/10/screenshot_20171009-003555.jpg?w=360&h=640 " recyclerview="" list="" using="" view="" types")"="" title="">
+                </div>
+                <div class="image-caption">RecyclerView using view types](https://therubberduckdev.files.wordpress.com/2017/10/screenshot_20171009-003555.jpg?w=360&h=640 "RecyclerView list using view types")</div>
+            </figure></p>
+<p>Here the bold titles are the section headers which is represented by type <code>HEADER_TYPE</code> and user views are represented by type <code>USER_TYPE</code>.</p>
+<p>This is how you can create a simple RecyclerView.</p>
+<p>In the next post, I will cover how to decorate items like adding dividers and how to animate the views when new view is added, or a view is removed or changed.</p>
+<p>Source code <a href="https://github.com/sjthn/RecyclerViewDemo" target="_blank" rel="external">here</a>.</p>
+<p>If you have any feedback, please comment below.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-11-05T05:25:34.000Z" itemprop="dateUpdated">2017-11-05 13:25:34</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2017-11-01-android-recycler-view-basic.html" target="_blank" rel="external">http://blog.inching.org/Android/2017-11-01-android-recycler-view-basic.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ui/">ui</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-basic.html&title=《Android RecyclerView – The Basics》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-basic.html&title=《Android RecyclerView – The Basics》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-11-01-android-recycler-view-basic.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android RecyclerView – The Basics》 — Balance&url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-basic.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-basic.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2017-11-01-android-recycler-view-drag-drop.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android RecyclerView – Drag and Drop and Swipe to Dismiss</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2017-11-01-android-recycle-view-item-decoration-animation.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android RecyclerView – ItemDecoration and ItemAnimator</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-basic.html&title=《Android RecyclerView – The Basics》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-basic.html&title=《Android RecyclerView – The Basics》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-11-01-android-recycler-view-basic.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android RecyclerView – The Basics》 — Balance&url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-basic.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-basic.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtklEQVR42u3awY7iQAwEUP7/p3evK60Squw0zEgvJzQE0i8jxU3Zr1d8/Lk4/n33/zOv3r2/ytVf7j+7OvDw8PAeWvrVou8XkSzr/puTq+SfwsPDwzvHu39Mbx7Qyfn3pSVfAx4eHt7P5OVb7ZaU7Irx8PDwfiOv3Wrn4UUbeeDh4eF9lzcLavNjg/lQ1oKHh4cX8zbb32+9PtLfw8PDw1t31dutbfLgnkUbw1KEh4eHd4DXNqjyBv9sBKFtiSWBLx4eHt6zvPwyedSbg/PIYzhkgIeHh3eMl7ey8nZ+WxjuFz2MJ/Dw8PAO8HJAcvnZNjr5Sxth4OHh4Z3jJRvW9ha0wUG+9IT6yu8cHh4e3oL31JjUbNOcw9q14eHh4Z3jtQ/c/TBB3jBLrni5cjw8PLwP8mYxxH7AtC0nbwoMHh4e3gHeftHPbo5nYcSb78HDw8N7lJdvXtvANxnYaoPjvDC8CSPw8PDw1rzZY7pterXFI+9qRRUPDw8P7xjv2ZGpWcMseugn34+Hh4d3jNcOYz01bpWHvG0YcfmLAQ8PD2/Nax/ubcyal5NN++3NFfHw8PAO89rX+aL35aQtHnh4eHgnePlAVf6wzoPX2egVHh4e3nd5s6Xkge/snHzLnkcneHh4eM/y8uBgFj3MulEPhxF4eHh4H+HNRqD2xwP5ymayDA8PD2/9C30WBMzGtmbnvPnH4OHh4R3jzS4wGxrIlzgrFXh4eHjneJvN7mZAKg8XNhEzHh4e3gnepp60UUIbwrb4Ip7Aw8PDW/Par86DiVkxqFtc7TQEHh4e3kO8fKHtdjZf0LBqJYUBDw8P76u8NvzNb0d7xejW4+Hh4f0wXh7Xtg2wWWDxwJYaDw8PL+a1Da12IGDWTmu38qsYFw8PD6/rufc/8uMS0m6mZ2euDjw8PLyU9xd6Hvk+yGxvOAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

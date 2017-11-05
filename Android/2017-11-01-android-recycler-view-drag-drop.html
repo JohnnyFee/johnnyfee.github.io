@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android RecyclerView – Drag and Drop and Swipe to Dismiss | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,ui">
+    <meta name="description" content="In the last post I explained how you can implement an expandable recyclerview. In this post we will see how to implement swipe-to-remove and drag-and-drop gestures.
+RecyclerView provides a built-in me">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android RecyclerView – Drag and Drop and Swipe to Dismiss">
+<meta property="og:url" content="http://blog.inching.org/Android/2017-11-01-android-recycler-view-drag-drop.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="In the last post I explained how you can implement an expandable recyclerview. In this post we will see how to implement swipe-to-remove and drag-and-drop gestures.
+RecyclerView provides a built-in me">
+<meta property="og:image" content="https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-itemtouchhelper1.gif?w=1100">
+<meta property="og:image" content="https://therubberduckdev.files.wordpress.com/2017/10/components-listcontrols-reorder.png?w=1100">
+<meta property="og:image" content="https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-manual-drag-drop.gif?w=1100">
+<meta property="og:image" content="https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-swipe-fade-out.gif?w=1100">
+<meta property="og:updated_time" content="2017-11-05T05:25:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android RecyclerView – Drag and Drop and Swipe to Dismiss">
+<meta name="twitter:description" content="In the last post I explained how you can implement an expandable recyclerview. In this post we will see how to implement swipe-to-remove and drag-and-drop gestures.
+RecyclerView provides a built-in me">
+<meta name="twitter:image" content="https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-itemtouchhelper1.gif?w=1100">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android RecyclerView – Drag and Drop and Swipe to Dismiss</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android RecyclerView – Drag and Drop and Swipe to Dismiss</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-10-31T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-11-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-android-recycler-view-drag-drop"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android RecyclerView – Drag and Drop and Swipe to Dismiss</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-01 00:00:00" datetime="2017-10-31T16:00:00.000Z"  itemprop="datePublished">2017-11-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>In the <a href="https://therubberduckdev.wordpress.com/2017/10/17/android-recyclerview-expandable-headers/" target="_blank" rel="external">last post</a> I explained how you can implement an expandable recyclerview. In this post we will see how to implement swipe-to-remove and drag-and-drop gestures.</p>
+<p>RecyclerView provides a built-in mechanism to enable drag and drop and swipe to dismiss gestures. This is a great advantage for Recyclerview compared to ListView where we had to write all the boilerplate for animating items for dragging and swiping. So if you are still using ListView this is a great feature for you to switch to RecyclerView.</p>
+<p>This can be accomplished using the <a href="https://developer.android.com/reference/android/support/v7/widget/helper/ItemTouchHelper.html" target="_blank" rel="external">ItemTouchHelper</a> class provided with RecyclerView. This class does all the heavy lifting needed for handling swiping and dragging and animating the view accordingly.</p>
+<p>You can specify in which directions and in which ViewHolders the gestures should work. Also you need to be notified when a swipe or drag and drop gesture is completed. This can be addressed using the <a href="https://developer.android.com/reference/android/support/v7/widget/helper/ItemTouchHelper.Callback.html" target="_blank" rel="external">ItemTouchHelper.Callback</a> class.</p>
+<p>To quickly setup these gestures, we can subclass the <code>Callback</code> class and override three methods: <code>getMovementFlags()</code>, <code>onMove()</code> and <code>onSwiped()</code>.</p>
+<ul>
+<li>In <code>getMovementFlags()</code> you have to return a <code>int</code> value. This value denotes a composite flag that defines the movement directions for each movement states namely IDLE, DRAG and SWIPE. This method takes two parameters: a RecyclerView instance and the ViewHolder of the view. You can return the flag using the method <code>makeFlag()</code> or the convenience method <code>makeMovementFlags()</code>. In the below code, drag supports both up and down directions, and swipe supports left and right directions.</li>
+</ul>
+<pre>
+@Override
+public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+    int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+    int swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+    return makeMovementFlags(dragFlags, swipeFlags);
+}
+</pre>
+
+<ul>
+<li><code>onMove()</code> gets called when a view is dragged from its position to other positions. You have to return true if the item has been moved from its old position to a new position. Here you can notify the adapter about the position change. By default an item can be moved only after long pressing it.</li>
+<li>Similarly, <code>onSwipe()</code> gets called when a view is completely swiped out. Here you can notify the adapter about the removal.</li>
+</ul>
+<p>To correctly handle drag-and-drop and swipe, we can create a interface.</p>
+<pre>
+public interface ActionCompletionContract {
+    void onViewMoved(int oldPosition, int newPosition);
+    void onViewSwiped(int position);
+}
+</pre>
+
+<p>And let’s make our Adapter implement this. In the <code>onViewMoved()</code> callback, we will remove the data at the <code>oldPosition</code> and add it to the <code>newPosition</code>, and notify the adapter:</p>
+<pre>
+@Override
+public void onViewMoved(int oldPosition, int newPosition) {
+    User targetUser = usersList.get(oldPosition);
+    User user = new User(targetUser);
+    usersList.remove(oldPosition);
+    usersList.add(newPosition, user);
+    notifyItemMoved(oldPosition, newPosition);
+}
+</pre>
+
+<p>For swipe to dismiss action, we call <code>onViewSwiped()</code> interface callback and remove the item:</p>
+<pre>
+@Override
+public void onViewSwiped(int position) {
+    usersList.remove(position);
+    notifyItemRemoved(position);
+}
+</pre>
+
+<p>Now to call these appropriate callbacks from the ItemTouchHelper.Callback class, we will pass the adapter to the class:</p>
+<pre>
+SwipeAndDragHelper swipeAndDragHelper = new SwipeAndDragHelper(adapter);
+ItemTouchHelper touchHelper = new ItemTouchHelper(swipeAndDragHelper);
+</pre>
+
+<p>Here I have created a subclass of the ItemTouchHelper.Callback called <code>SwipeAndDragHelper</code>.</p>
+<p>And finally to integrate this ItemTouchHelper with our RecyclerView, we call <code>attachToRecyclerView()</code> method:</p>
+<pre>
+touchHelper.attachToRecyclerView(userRecyclerView);
+</pre>
+
+<p>That’s it. We have implemented the drag-and-drop and swipe-to-dismiss gestures. This is how it looks:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-itemtouchhelper1.gif?w=1100" alt="recyclerview-itemtouchhelper" title="">
+                </div>
+                <div class="image-caption">recyclerview-itemtouchhelper</div>
+            </figure>
+<p>Now what if we want to move the items only by touching a handle something like below:</p>
+<figure data-shortcode="caption" id="attachment_331" style="width: 1520px" class="wp-caption alignnone"><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://therubberduckdev.files.wordpress.com/2017/10/components-listcontrols-reorder.png?w=1100" alt="components-listcontrols-reorder" title="">
+                </div>
+                <div class="image-caption">components-listcontrols-reorder</div>
+            </figure><br><figcaption class="wp-caption-text">Source: <a href="https://material.io/guidelines/components/lists-controls.html#lists-controls-types-of-list-controls" target="_blank" rel="external">Material Design Guidelines</a></figcaption></figure>
+
+<p>For that, the ItemTouchHelper provides <code>startDrag()</code> and <code>startSwipe()</code> methods to manually start drag and swipe actions respectively. Let’s implement this.</p>
+<p>First to manually drag, we must disable the default dragging. Since default dragging is started when a view is long pressed, we must disable it. This can be done by returning false in <code>isLongPressEnabled()</code> of the Callback class.</p>
+<p>Then pass the instance of ItemTouchHelper to the adapter. Then implement <code>onTouchListener</code> for the reorder handle ImageView. Inside <code>onTouch</code> call the <code>startDrag</code> method passing the ViewHolder as parameter like below:</p>
+<p>In onBindViewHolder:</p>
+<pre>
+((UserViewHolder) holder).reorderView.setOnTouchListener(new View.OnTouchListener() {
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+            touchHelper.startDrag(holder);
+        }
+        return false;
+    }
+});
+</pre>
+
+<p>Result:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-manual-drag-drop.gif?w=1100" alt="recyclerview-item-touch-helper-reorder" title="">
+                </div>
+                <div class="image-caption">recyclerview-item-touch-helper-reorder</div>
+            </figure>
+<p>Next we will add some fade effect to the swipe action. Right now when the view gets swiped there is no effect except the view gets transitioned in x direction.</p>
+<p>The Callback class provides <code>onChildDraw()</code> method to draw anything over the area of the child view being swiped or dragged. It provides a canvas, viewholder, x and y displacement caused by the gesture, and action state as parameters among others. So we will check the action state and if it is equal to <code>ACTION_STATE_SWIPE</code> we will reduce the alpha of the view as it moves away from its original position.</p>
+<pre>
+@Override
+public void onChildDraw(Canvas c,
+                        RecyclerView recyclerView,
+                        RecyclerView.ViewHolder viewHolder,
+                        float dX,
+                        float dY,
+                        int actionState,
+                        boolean isCurrentlyActive) {
+    if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+        float alpha = 1 - (Math.abs(dX) / recyclerView.getWidth());
+        viewHolder.itemView.setAlpha(alpha);
+    }
+    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+}
+</pre>
+
+<p>Now you will get a nice fade as below when swiping:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://therubberduckdev.files.wordpress.com/2017/10/recyclerview-swipe-fade-out.gif?w=1100" alt="recyclerview-swipe-dismiss-item-fade-out" title="">
+                </div>
+                <div class="image-caption">recyclerview-swipe-dismiss-item-fade-out</div>
+            </figure>
+<p>Checkout the full source code <a href="https://github.com/sjthn/RecyclerViewDemo/tree/advanced-usecases" target="_blank" rel="external">here</a>.</p>
+<p>If you have feedback, comment below.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-11-05T05:25:34.000Z" itemprop="dateUpdated">2017-11-05 13:25:34</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2017-11-01-android-recycler-view-drag-drop.html" target="_blank" rel="external">http://blog.inching.org/Android/2017-11-01-android-recycler-view-drag-drop.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ui/">ui</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-drag-drop.html&title=《Android RecyclerView – Drag and Drop and Swipe to Dismiss》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-drag-drop.html&title=《Android RecyclerView – Drag and Drop and Swipe to Dismiss》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-11-01-android-recycler-view-drag-drop.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android RecyclerView – Drag and Drop and Swipe to Dismiss》 — Balance&url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-drag-drop.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-drag-drop.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2017-11-01-android-recycler-view-expandable-headers.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android RecyclerView – Expandable Headers</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2017-11-01-android-recycler-view-basic.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android RecyclerView – The Basics</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-drag-drop.html&title=《Android RecyclerView – Drag and Drop and Swipe to Dismiss》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-drag-drop.html&title=《Android RecyclerView – Drag and Drop and Swipe to Dismiss》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-11-01-android-recycler-view-drag-drop.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android RecyclerView – Drag and Drop and Swipe to Dismiss》 — Balance&url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-drag-drop.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-11-01-android-recycler-view-drag-drop.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACt0lEQVR42u3aQW7DMAwEwPz/0+m5COzuUlLrAuNTEKeORgVEhuTrFV/vj+vq7v3fXt39fJ3c3Xbh4eHhLS/9c0H5O/fbMXsnef7lJuLh4eEd47VHdnsOJ0Gi5d2vGQ8PD+85vOQ4TrYj3777IISHh4f3f3n5FuRPu/8rPDw8vL/l5Y+eFXDzjchLuptrLXh4eHgxLy8xPOf1kf4eHh4e3nJXPR8XyA/0PMysX3h4eHgneG3JtV36SvG3bZtdfhIPDw9vKy8vsLYHdxsGclLxGTw8PLxjvNlY1frQVbutdXkCDw8P7wCvDQZt7XSlSZZva9Tfw8PDw9vEyx/XDhbkhYPZaEIREvDw8PAO8GYHfb4Rs7Q4CTBRfw8PDw9vKy9PmvNEeRZO8jGFOhTh4eHhHeO1TabZuMBKEGobb3h4eHjneEmau16AaAew2vBThAc8PDy8TbxZ6tymwu3iZoGh+PWAh4eHt8BrU+c2PMw2In9OHRLw8PDwRrzkeG1T3rZB9Y6vOjXHw8PDO8zLCwrRwFN5rLfTUwkYDw8P7wRv5ShPvn5WnE1CSNFsw8PDw/tFXn5A582zpLC7EnKKzhseHh7eiLerKDBrd7X9fTw8PLzn8JIwsFJUTQYFdg1dfXsHDw8P7wCvLbnO0uVZiXZbMQIPDw/vAK9tRO0dAti7NdMP4eHh4c1zy/VG1EppOE+gi/Xg4eHhHePN8u48Ic7P6mRTilXh4eHhbeW9y6sdDsgLtXlxttg4PDw8vAO89qhdOcrzu23zbMPwFh4eHl7Jmz16PeHOCw1JYLhcDx4eHt4xXp7srowX5OXa2XUZGPDw8PD+lDcrH+Rho737w78BDw8P75G82XDAytBA0ajDw8PDO8abDVq1CzrXQruk4uHh4R3gtT/y8y/Ol9KOZ732Xnh4eHjpd30BHMrkKd2mfPMAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

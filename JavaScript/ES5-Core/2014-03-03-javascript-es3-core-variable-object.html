@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>变量对象（Variable object） | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,kernel">
+    <meta name="description" content="译文：goddyzhao • 变量对象（Variable object）
+原文：ECMA-262 » ECMA-262-3 in detail. Chapter 2. Variable object.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="变量对象（Variable object）">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="译文：goddyzhao • 变量对象（Variable object）
+原文：ECMA-262 » ECMA-262-3 in detail. Chapter 2. Variable object.">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="变量对象（Variable object）">
+<meta name="twitter:description" content="译文：goddyzhao • 变量对象（Variable object）
+原文：ECMA-262 » ECMA-262-3 in detail. Chapter 2. Variable object.">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">变量对象（Variable object）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">变量对象（Variable object）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-03-02T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-03-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/ES5-Core/">ES5 Core</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概要"><span class="post-toc-text">概要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据声明"><span class="post-toc-text">数据声明</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#不同执行上下文中的变量对象"><span class="post-toc-text">不同执行上下文中的变量对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#全局上下文中的变量对象"><span class="post-toc-text">全局上下文中的变量对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#函数上下文中的变量对象"><span class="post-toc-text">函数上下文中的变量对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#处理上下文代码的几个阶段"><span class="post-toc-text">处理上下文代码的几个阶段</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#进入执行上下文"><span class="post-toc-text">进入执行上下文</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#执行代码"><span class="post-toc-text">执行代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关于变量"><span class="post-toc-text">关于变量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现层的特性：parent属性"><span class="post-toc-text">实现层的特性：parent属性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-es3-core-variable-object"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">变量对象（Variable object）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-03-03 00:00:00" datetime="2014-03-02T16:00:00.000Z"  itemprop="datePublished">2014-03-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/ES5-Core/">ES5 Core</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>译文：<a href="http://goddyzhao.tumblr.com/post/11141710441/variable-object" target="_blank" rel="external">goddyzhao • 变量对象（Variable object）</a></p>
+<p>原文：<a href="http://dmitrysoshnikov.com/ecmascript/chapter-2-variable-object/" target="_blank" rel="external">ECMA-262 » ECMA-262-3 in detail. Chapter 2. Variable object.</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>我们总是会在程序中定义一些函数和变量，之后会使用这些函数和变量来构建我们的系统。<br>然而，对于解释器来说，它又是如何以及从哪里找到这些数据的（函数，变量）？当引用一个对象的时候，在解释器内部又发生了什么？</p>
+<p>许多ECMA脚本程序员都知道，变量和<a href="http://goddyzhao.tumblr.com/post/10020230352/execution-context" target="_blank" rel="external">执行上下文</a>是密切相关的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var a = 10; // 全局上下文中的变量</div><div class="line"></div><div class="line">(function () &#123;</div><div class="line">  var b = 20; // 函数上下文中的局部变量</div><div class="line">&#125;)();</div><div class="line"></div><div class="line">alert(a); // 10</div><div class="line">alert(b); // &quot;b&quot; is not defined</div></pre></td></tr></table></figure>
+<p>不仅如此，许多程序员也都知道，ECMAScript标准中指出独立的作用域只有通过“函数代码”（可执行代码类型中的一种）才能创建出来。比方说，与C/C++不同的是，在ECMAScript中<em>for</em>循环的代码块是无法创建本地上下文的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">for (var k in &#123;a: 1, b: 2&#125;) &#123;</div><div class="line">  alert(k);</div><div class="line">&#125;</div><div class="line"></div><div class="line">alert(k); // 尽管循环已经结束，但是变量“k”仍然在作用域中</div></pre></td></tr></table></figure>
+<p>下面就来详细介绍下，当声明变量和函数的时候，究竟发生了什么。</p>
+<h2 id="数据声明"><a href="#数据声明" class="headerlink" title="数据声明"></a>数据声明</h2><p>既然变量和执行上下文有关，那它就该知道数据存储在哪里以及如何获取。这种机制就称作<em>变量对象</em>：</p>
+<blockquote>
+<p>A variable object (in abbreviated form — VO) is a special object related with an execution context and which stores:</p>
+<ul>
+<li>variables (var, VariableDeclaration);  </li>
+<li>function declarations (FunctionDeclaration, in abbreviated form FD);  </li>
+<li><p>and function formal parameters  </p>
+<pre><code>declared in the context.  
+</code></pre></li>
+</ul>
+</blockquote>
+<p>举个例子，可以用ECMAScript的对象来表示变量对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">VO = &#123;&#125;;</div></pre></td></tr></table></figure>
+<p>VO同时也是一个执行上下文的属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">activeExecutionContext = &#123;</div><div class="line">  VO: &#123;</div><div class="line">    // 上下文中的数据 (变量声明（var）, 函数声明（FD), 函数形参（function arguments）)</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>对变量的间接引用（通过VO的属性名）只允许发生在<em>全局上下文</em>中的变量对象上(全局对象本身就是变量对象，这部分会在后续作相应的介绍)。<br>对于其他的上下文而言，是无法直接引用VO的，因为VO是实现层的。</p>
+<p>声明新的变量和函数的过程其实就是在VO中创建新的和变量以及函数名对应的属性和属性值的过程。</p>
+<p>如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var a = 10;</div><div class="line"></div><div class="line">function test(x) &#123;</div><div class="line">  var b = 20;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">test(30);</div></pre></td></tr></table></figure>
+<p>上述代码对应的变量对象则如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 全局上下文中的变量对象</div><div class="line">VO(globalContext) = &#123;</div><div class="line">  a: 10,</div><div class="line">  test: </div><div class="line">&#125;;</div><div class="line"></div><div class="line">// “test”函数上下文中的变量对象</div><div class="line">VO(test functionContext) = &#123;</div><div class="line">  x: 30,</div><div class="line">  b: 20</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>但是，在实现层（标准中定义的），变量对象只是一个抽象的概念。在实际执行上下文中，VO可能完全不叫VO，并且初始的结构也可能完全不同。</p>
+<h2 id="不同执行上下文中的变量对象"><a href="#不同执行上下文中的变量对象" class="headerlink" title="不同执行上下文中的变量对象"></a>不同执行上下文中的变量对象</h2><p>变量对象上的一些操作（比如：变量的初始化）和行为对于所有的执行上下文类型来说都已一样的。从这一点来说，将变量对象表示成抽象的概念更加合适。<br>函数上下文还能定义额外的与变量对象相关的信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">AbstractVO (generic behavior of the variable instantiation process)</div><div class="line"></div><div class="line">  ║</div><div class="line">  ╠══&gt; GlobalContextVO</div><div class="line">  ║        (VO === this === global)</div><div class="line">  ║</div><div class="line">  ╚══&gt; FunctionContextVO</div><div class="line">           (VO === AO,  object and  are added)</div></pre></td></tr></table></figure>
+<p>接下来对这块内容进行详细介绍。</p>
+<h2 id="全局上下文中的变量对象"><a href="#全局上下文中的变量对象" class="headerlink" title="全局上下文中的变量对象"></a>全局上下文中的变量对象</h2><p>首先，有必要对<em>全局对象（Global object）</em>作个定义。</p>
+<blockquote>
+<p>全局对象是一个在进入任何执行上下文前就创建出来的对象；此对象以单例形式存在；它的属性在程序任何地方都可以直接访问，其生命周期随着程序的结束而终止。</p>
+</blockquote>
+<p>全局对象在创建的时候，诸如Math,String,Date,parseInt等等属性也会被初始化，同时，其中一些对象会指向全局对象本身——比如，DOM中，全局对象上的<em>window</em>属性就指向了全局对象（但是，并非所有的实现都是如此）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">global = &#123;</div><div class="line">  Math: &lt;...&gt;,</div><div class="line">  String: &lt;...&gt;</div><div class="line">  ...</div><div class="line">  ...</div><div class="line">  window: global</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>在引用全局对象的属性时，前缀通常可以省略，因为全局对象是不能通过名字直接访问的。然而，通过全局对象上的<em>this</em>值，以及通过如DOM中的window对象这样递归引用的方式都可以访问到全局对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">String(10); // 等同于 global.String(10);</div><div class="line"></div><div class="line">// 带前缀</div><div class="line">window.a = 10; // === global.window.a = 10 === global.a = 10;</div><div class="line">this.b = 20; // global.b = 20;</div></pre></td></tr></table></figure>
+<p>回到全局上下文的变量对象上——这里变量对象就是全局对象本身：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">VO(globalContext) === global;</div></pre></td></tr></table></figure>
+<p>准确地理解这个事实是非常必要的：正是由于这个原因，当在全局上下文中声明一个变量时，可以通过全局对象上的属性来间地引用该变量（比方说，当变量名提前未知的情况下）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var a = new String(&apos;test&apos;);</div><div class="line"></div><div class="line">alert(a); // directly, is found in VO(globalContext): &quot;test&quot;</div><div class="line"></div><div class="line">alert(window[&apos;a&apos;]); // indirectly via global === VO(globalContext): &quot;test&quot;</div><div class="line">alert(a === this.a); // true</div><div class="line"></div><div class="line">var aKey = &apos;a&apos;;</div><div class="line">alert(window[aKey]); // indirectly, with dynamic property name: &quot;test&quot;</div></pre></td></tr></table></figure>
+<h2 id="函数上下文中的变量对象"><a href="#函数上下文中的变量对象" class="headerlink" title="函数上下文中的变量对象"></a>函数上下文中的变量对象</h2><p>在函数的执行上下文中，VO是不能直接访问的。它主要扮演被称作<em>活跃对象（activation object）</em>（简称：AO）的角色。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">VO(functionContext) === AO;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>活跃对象会在进入函数上下文的时候创建出来，初始化的时候会创建一个<em>arguments</em>属性，其值就是<em>Arguments</em>对象：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">AO = &#123;</div><div class="line">  arguments: </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><em>Arguments</em>对象是活跃对象上的属性，它包含了如下属性：</p>
+<ul>
+<li><em>callee</em> —— 对当前函数的引用  </li>
+<li><em>length</em> —— 实参的个数  </li>
+<li><p><em>properties-indexes(数字，转换成字符串)</em>其值是函数参数的值（参数列表中，从左到右）。properties-indexes的个数 == arguments.length;  </p>
+<p>  arguments对象的properties-indexes的值和当前（实际传递的）形参是共享的。</p>
+</li>
+</ul>
+<p>如下所示：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">function foo(x, y, z) &#123;</div><div class="line"></div><div class="line">  // 定义的函数参数（x,y,z）的个数</div><div class="line">  alert(foo.length); // 3</div><div class="line"></div><div class="line">  // 实际传递的参数个数</div><div class="line">  alert(arguments.length); // 2</div><div class="line"></div><div class="line">  // 引用函数自身</div><div class="line">  alert(arguments.callee === foo); // true</div><div class="line"></div><div class="line">  // 参数互相共享</div><div class="line"></div><div class="line">  alert(x === arguments[0]); // true</div><div class="line">  alert(x); // 10</div><div class="line"></div><div class="line">  arguments[0] = 20;</div><div class="line">  alert(x); // 20</div><div class="line"></div><div class="line">  x = 30;</div><div class="line">  alert(arguments[0]); // 30</div><div class="line"></div><div class="line">  // 然而，对于没有传递的参数z，</div><div class="line">  // 相关的arguments对象的index-property是不共享的</div><div class="line"></div><div class="line">  z = 40;</div><div class="line">  alert(arguments[2]); // undefined</div><div class="line"></div><div class="line">  arguments[2] = 50;</div><div class="line">  alert(z); // 40</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">foo(10, 20);</div></pre></td></tr></table></figure>
+<p>上述例子，在当前的Google Chrome浏览器中有个bug——参数z和arguments[2]也是互相共享的。</p>
+<h2 id="处理上下文代码的几个阶段"><a href="#处理上下文代码的几个阶段" class="headerlink" title="处理上下文代码的几个阶段"></a>处理上下文代码的几个阶段</h2><p>至此，也就到了本文最核心的部分了。处理执行上下文代码分为两个阶段：</p>
+<ol>
+<li>进入执行上下文  </li>
+<li>执行代码  </li>
+</ol>
+<p>对变量对象的修改和这两个阶段密切相关。</p>
+<p>要注意的是，这两个处理阶段是通用的行为，与上下文类型无关（不管是全局上下文还是函数上下文都是一致的）。</p>
+<h2 id="进入执行上下文"><a href="#进入执行上下文" class="headerlink" title="进入执行上下文"></a>进入执行上下文</h2><p>一旦进入执行上下文（在执行代码之前），VO就会被一些属性填充（在此前已经描述过了）：</p>
+<ul>
+<li><p>函数的形参（当进入函数执行上下文时）  </p>
+<p>  —— 变量对象的一个属性，其属性名就是形参的名字，其值就是实参的值；对于没有传递的参数，其值为<em>undefined</em></p>
+</li>
+<li><p>函数声明（<em>FunctionDeclaration</em>, FD）<br>  —— 变量对象的一个属性，其属性名和值都是函数对象创建出来的；如果变量对象已经包含了相同名字的属性，则替换它的值</p>
+</li>
+<li>变量声明（<em>var</em>，<em>VariableDeclaration</em>）<br>  —— 变量对象的一个属性，其属性名即为变量名，其值为<em>undefined</em>;如果变量名和已经声明的函数名或者函数的参数名相同，则不会影响已经存在的属性。  </li>
+</ul>
+<p>看下面这个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function test(a, b) &#123;</div><div class="line">  var c = 10;</div><div class="line">  function d() &#123;&#125;</div><div class="line">  var e = function _e() &#123;&#125;;</div><div class="line">  (function x() &#123;&#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">test(10); // call</div></pre></td></tr></table></figure>
+<p>当以10为参数进入“test”函数上下文的时候，对应的AO如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">AO(test) = &#123;</div><div class="line">  a: 10,</div><div class="line">  b: undefined,</div><div class="line">  c: undefined,</div><div class="line">  d: </div><div class="line">  e: undefined</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>注意了，上面的AO并不包含函数“x”。这是因为这里的“x”并不是函数声明而是<em>函数表达式</em>（<em>FunctionExpression</em>，简称FE），函数表达式不会对VO造成影响。<br>尽管函数“_e”也是函数表达式，然而，正如我们所看到的，由于它被赋值给了变量“e”，因此它可以通过“e”来访问到。关于函数声明和函数表达式的区别会在第五章——函数作具体介绍。</p>
+<p>至此，处理上下文代码的第一阶段介绍完了，接下来介绍第二阶段——<em>执行代码</em>阶段。</p>
+<h2 id="执行代码"><a href="#执行代码" class="headerlink" title="执行代码"></a>执行代码</h2><p>此时，AO/VO的属性已经填充好了。（尽管，大部分属性都还没有赋予真正的值，都只是初始化时候的<em>undefined</em>值）。</p>
+<p>继续以上一例子为例，到了执行代码阶段，AO/VO就会修改成为如下形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AO[&apos;c&apos;] = 10;</div><div class="line">AO[&apos;e&apos;] = &lt;指向函数表达式&quot;_e&quot;&gt;;</div></pre></td></tr></table></figure>
+<p>再次注意到，这里函数表达式“_e”仍在内存中，这是因为它被保存在声明的变量“e”中，而同样是函数表达式的“x”却不在AO/VO中：<br>如果尝试在定义前或者定义后调用“x”函数，这时会发生“x为定义”的错误。未保存的函数表达式只有在定义或者递归时才能调用。</p>
+<p>如下是更加典型的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">alert(x); // function</div><div class="line"></div><div class="line">var x = 10;</div><div class="line">alert(x); // 10</div><div class="line"></div><div class="line">x = 20;</div><div class="line"></div><div class="line">function x() &#123;&#125;;</div><div class="line"></div><div class="line">alert(x); // 20</div></pre></td></tr></table></figure>
+<p>上述例子中，为何“x”打印出来是函数呢？为何在声明前就可以访问到？又为何不是10或者20呢？原因在于，根据规则——在进入上下文的时候，VO会被填充函数声明；<br>同一阶段，还有变量声明“x”，但是，正如此前提到的，变量声明是在函数声明和函数形参之后，并且，变量声明不会对已经存在的同样名字的函数声明和函数形参发生冲突，<br>因此，在进入上下文的阶段，VO填充为如下形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">VO = &#123;&#125;;</div><div class="line"></div><div class="line">VO[&apos;x&apos;] = </div><div class="line"></div><div class="line">// 发现var x = 10;</div><div class="line">// 如果函数“x”还未定义</div><div class="line">// 则 &quot;x&quot; 为undefined, 但是，在我们的例子中</div><div class="line">// 变量声明并不会影响同名的函数值</div><div class="line"></div><div class="line">VO[&apos;x&apos;] =</div></pre></td></tr></table></figure>
+<p>随后，在执行代码阶段，VO被修改为如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">VO[&apos;x&apos;] = 10;</div><div class="line">VO[&apos;x&apos;] = 20;</div></pre></td></tr></table></figure>
+<p>正如在第二个和第三个alert显示的那样。</p>
+<p>如下例子再次看到在进入上下文阶段，变量存储在VO中（因此，尽管else的代码块永远都不会执行到，而“b”却仍然在VO中）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">if (true) &#123;</div><div class="line">  var a = 1;</div><div class="line">&#125; else &#123;</div><div class="line">  var b = 2;</div><div class="line">&#125;</div><div class="line"></div><div class="line">alert(a); // 1</div><div class="line">alert(b); // undefined, but not &quot;b is not defined&quot;</div></pre></td></tr></table></figure>
+<h2 id="关于变量"><a href="#关于变量" class="headerlink" title="关于变量"></a>关于变量</h2><p>大多数讲JavaScript的文章甚至是JavaScript的书通常都会这么说：“声明全局变量的方式有两种，一种是使用<em>var</em>关键字（在全局上下文中），另外一种是不用<em>var</em>关键字（在任何位置）”。<br>而这样的描述是错误的。要记住的是：<br><em>使用var关键字是声明变量的唯一方式</em></p>
+<p>如下赋值语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a = 10;</div></pre></td></tr></table></figure>
+<p>仅仅是在全局对象上创建了新的属性（而不是变量）。“不是变量”并不意味着它无法改变，它是ECMAScript中变量的概念（它之后可以变为全局对象的属性，因为VO(globalContext) === global，还记得吧？）</p>
+<p>不同点如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">alert(a); // undefined</div><div class="line">alert(b); // &quot;b&quot; is not defined</div><div class="line"></div><div class="line">b = 10;</div><div class="line">var a = 20;</div></pre></td></tr></table></figure>
+<p>接下来还是要谈到VO和在不同阶段对VO的修改（进入上下文阶段和执行代码阶段）：<br>进入上下文：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">VO = &#123;</div><div class="line">  a: undefined</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>我们看到，这个阶段并没有任何“b”，因为它不是变量，“b”在执行代码阶段才出现。（但是，在我们这个例子中也不会出现，因为在“b”出现前就发生了错误）</p>
+<p>将上述代码稍作改动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">alert(a); // undefined, we know why</div><div class="line"></div><div class="line">b = 10;</div><div class="line">alert(b); // 10, created at code execution</div><div class="line"></div><div class="line">var a = 20;</div><div class="line">alert(a); // 20, modified at code execution</div></pre></td></tr></table></figure>
+<p>这里关于变量还有非常重要的一点：与简单属性不同的是，变量是不能删除的{DontDelete},这意味着要想通过<strong>delete</strong>操作符来删除一个变量是不可能的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">a = 10;</div><div class="line">alert(window.a); // 10</div><div class="line"></div><div class="line">alert(delete a); // true</div><div class="line"></div><div class="line">alert(window.a); // undefined</div><div class="line"></div><div class="line">var b = 20;</div><div class="line">alert(window.b); // 20</div><div class="line"></div><div class="line">alert(delete b); // false</div><div class="line"></div><div class="line">alert(window.b); // still 20</div></pre></td></tr></table></figure>
+<p>但是，这里有个例外，就是“eval”执行上下文中，是可以删除变量的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">eval(&apos;var a = 10;&apos;);</div><div class="line">alert(window.a); // 10</div><div class="line"></div><div class="line">alert(delete a); // true</div><div class="line"></div><div class="line">alert(window.a); // undefined</div></pre></td></tr></table></figure>
+<p>利用某些debug工具，在终端测试过这些例子的童鞋要注意了：其中Firebug也是使用了eval来执行终端的代码。因此，这个时候var也是可以删除的。</p>
+<h2 id="实现层的特性：parent属性"><a href="#实现层的特性：parent属性" class="headerlink" title="实现层的特性：parent属性"></a>实现层的特性：<strong>parent</strong>属性</h2><p>正如此前介绍的，标准情况下，是无法直接访问活跃对象的。然而，在某些实现中，比如知名的SpiderMonkey和Rhino,函数有个特殊的属性<strong>parent</strong>，<br>该属性是对该函数创建所在的活跃对象的引用（或者全局变量对象）。</p>
+<p>如下所示（SpiderMonkey,Rhino）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var global = this;</div><div class="line">var a = 10;</div><div class="line"></div><div class="line">function foo() &#123;&#125;</div><div class="line"></div><div class="line">alert(foo.__parent__); // global</div><div class="line"></div><div class="line">var VO = foo.__parent__;</div><div class="line"></div><div class="line">alert(VO.a); // 10</div><div class="line">alert(VO === global); // true</div></pre></td></tr></table></figure>
+<p>上述例子中，可以看到函数<em>foo</em>是在全局上下文中创建的，相应的，它的<strong>parent</strong>属性设置为全局上下文的变量对象，比如说：全局对象。</p>
+<p>然而，在SpiderMonkey中以相同的方式获取活跃对象是不可能的：不同的版本表现都不同，内部函数的<strong>parent</strong>属性会返回null或者全局对象。<br>在Rhino中，以相同的方式获取活跃对象是允许的：</p>
+<p>如下所示（Rhino）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">var global = this;</div><div class="line">var x = 10;</div><div class="line"></div><div class="line">(function foo() &#123;</div><div class="line"></div><div class="line">  var y = 20;</div><div class="line"></div><div class="line">  // the activation object of the &quot;foo&quot; context</div><div class="line">  var AO = (function () &#123;&#125;).__parent__;</div><div class="line"></div><div class="line">  print(AO.y); // 20</div><div class="line"></div><div class="line">  // __parent__ of the current activation</div><div class="line">  // object is already the global object,</div><div class="line">  // i.e. the special chain of variable objects is formed,</div><div class="line">  // so-called, a scope chain</div><div class="line">  print(AO.__parent__ === global); // true</div><div class="line"></div><div class="line">  print(AO.__parent__.x); // 10</div><div class="line"></div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文，我们介绍了与执行上下文相关的对象。希望，本文能够对大家有所帮助，同时也希望本文能够起到解惑的作用。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kernel/">kernel</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html&title=《变量对象（Variable object）》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html&title=《变量对象（Variable object）》 — Balance&source=
+译文：goddyzhao • 变量对象（Variable object）
+原文：ECMA-262 » ECMA-262-3 in detail. Cha..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《变量对象（Variable object）》 — Balance&url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/ES5-Core/2014-03-04-javascript-es3-core-this.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">this</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/ES5-Core/2014-03-02-javascript-es3-core-execution-context.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">执行上下文（Execution Context）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html&title=《变量对象（Variable object）》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html&title=《变量对象（Variable object）》 — Balance&source=
+译文：goddyzhao • 变量对象（Variable object）
+原文：ECMA-262 » ECMA-262-3 in detail. Cha..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《变量对象（Variable object）》 — Balance&url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/ES5-Core/2014-03-03-javascript-es3-core-variable-object.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADK0lEQVR42u3aQW7jQAwEwPz/097zIrDUJGcXFl06BbJjTU2A0GzOz098vd5c16/+fk/ylHd33n1C8snNCxsbG/sh7HzR14u4fs/vV5MNzdecW7CxsbG3sq8Lw/VS8hJyDau+mpdJbGxsbOxkKb3iVF10r+HBxsbGxu41IZMYKNnKUfCEjY2NvY49KQy9UtcbHuTR1bEsDRsbG/vj2XkY9Pk//5P5NjY2NvYHs1/Fqxo89cpJbw0FBTY2NvYi9tk2oLeIfCOuG49yRIWNjY29gj0B5w/Oh7u94zjlg0TY2NjYi9iTozPVAW0+JJ60KOUyiY2Njf0F7GpxmmxEUiarrcjNCrGxsbHXsSeHJvMtqC76VEQVnVfCxsbGfhQ7D4wmMdC8RJWjouttxcbGxl7NnrQWOW/eoiTHd97+kbCxsbFXs6vIeftR3YgD4wdsbGzsRexqW3L2/WcPXObNEjY2NvYmdvWYTn44plqQkgjpwFg3n2NjY2NjP4RdbS2u2Umhqt4/24rc1G1sbGzsx7Lz8lMN9Hux1Nn2phwnYWNjYz+KXQX3vuFXB7Q5Jv+tv+5gY2NjL2JPRrO9ZiMfLUwODzUvbGxs7Iezy//u403ptSvVaKk5WsbGxsZeyq5mL/PFVQfD+ZbdrBYbGxt7BTufJFTLzP8pkM1QDBsbG3sFe/LgU7FONa5Ktjga9GJjY2OvYJcjmOKA9uw4oVp0C6ESNjY29gp2r8BUw6lqo9ILs5IoChsbG3sHOz+82Fti9Zt/Hm9Nno6NjY29iT35iF4kNN/KvPZGFRsbGxt7BXsewecBU69dyaOoggIbGxt7HTtvS6rFphoGJZsyiauwsbGxd7PzO3nh6c0req1RYRiMjY2NvYL9Kl5Jk1ANgCalsXnoBxsbG3sRO7/yL/3JiLc6u+g1G5PRAjY2Nvaz2L2ilW9QHtz3ju/0WhpsbGzsfexekzAP8fMx8KTJuZlvY2NjY38Zu1o2qkXu7Kj4WAHDxsbGXseuDmWTVicPmKplDBsbG/sb2NVlJV/68wM3CbtaFG+ejo2Njb2InQ968zaguoj88ycDYGxsbOx17D8uKO05eLhVRQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

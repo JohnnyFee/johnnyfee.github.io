@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android ViewStub | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="view,android">
+    <meta name="description" content="See Android ViewStub的使用 - Coding - SegmentFault
+简介在Android开发中，布局的加载速度会影响APP的性能。如果布局实现的不好，会导致程序非常占内存并且UI运行缓慢。优化布局可以从三个方面着手:
+
+使用标签重用layouts
+
+使用标签避免冗余的布局嵌套
+
+使用ViewStub实现按需加载
+
+
+本文讲解一下ViewStub的使用。ViewStub相">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android ViewStub">
+<meta property="og:url" content="http://blog.inching.org/Android/2017-01-12-android-view-viewstub.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See Android ViewStub的使用 - Coding - SegmentFault
+简介在Android开发中，布局的加载速度会影响APP的性能。如果布局实现的不好，会导致程序非常占内存并且UI运行缓慢。优化布局可以从三个方面着手:
+
+使用标签重用layouts
+
+使用标签避免冗余的布局嵌套
+
+使用ViewStub实现按需加载
+
+
+本文讲解一下ViewStub的使用。ViewStub相">
+<meta property="og:image" content="https://segmentfault.com/img/bVtUOZ">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android ViewStub">
+<meta name="twitter:description" content="See Android ViewStub的使用 - Coding - SegmentFault
+简介在Android开发中，布局的加载速度会影响APP的性能。如果布局实现的不好，会导致程序非常占内存并且UI运行缓慢。优化布局可以从三个方面着手:
+
+使用标签重用layouts
+
+使用标签避免冗余的布局嵌套
+
+使用ViewStub实现按需加载
+
+
+本文讲解一下ViewStub的使用。ViewStub相">
+<meta name="twitter:image" content="https://segmentfault.com/img/bVtUOZ">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android ViewStub</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android ViewStub</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-01-11T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-01-12
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简介"><span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义ViewStub"><span class="post-toc-text">定义ViewStub</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#加载ViewStub布局"><span class="post-toc-text">加载ViewStub布局</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-view-viewstub"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android ViewStub</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-01-12 00:00:00" datetime="2017-01-11T16:00:00.000Z"  itemprop="datePublished">2017-01-12</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="https://segmentfault.com/a/1190000004707516" target="_blank" rel="external">Android ViewStub的使用 - Coding - SegmentFault</a></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在Android开发中，布局的加载速度会影响APP的性能。如果布局实现的不好，会导致程序非常占内存并且UI运行缓慢。优化布局可以从三个方面着手:</p>
+<ol>
+<li><p>使用<include>标签重用layouts</include></p>
+</li>
+<li><p>使用<merge>标签避免冗余的布局嵌套</merge></p>
+</li>
+<li><p>使用<code>ViewStub</code>实现按需加载</p>
+</li>
+</ol>
+<p>本文讲解一下<code>ViewStub</code>的使用。<code>ViewStub</code>相当于延迟加载，有的时候在布局中有一些不怎么重用的视图，可以只在需要的时候再加载，提高UI的渲染速度。</p>
+<h2 id="定义ViewStub"><a href="#定义ViewStub" class="headerlink" title="定义ViewStub"></a>定义ViewStub</h2><p><code>ViewStub</code>是轻量级视图，不需要大小信息，不会在布局中绘制任何东西，每个 ViewStub 只需要设置<code>android:layout</code>属性来指定需要被 inflate 的 Layout 类型。</p>
+<p>比如下面的布局文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line"><span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line"><span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">Button</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/button"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:text</span>=<span class="string">"加载ViewStub"</span> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ViewStub</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/view_stub"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout</span>=<span class="string">"@layout/extra"</span> /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>布局中定义了一个<code>ViewStub</code>，<code>layout</code>属性引用了另一个布局<code>extra.xml</code>，这个布局就是被延迟加载的布局，而<code>ViewStub</code>本身不会显示任何内容。上面的<code>Button</code>是为了在代码中实现延迟加载。</p>
+<p><code>extra.xml</code>定义了一个<code>TextView</code>和一个<code>progressBar</code>，代码如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line"><span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line"><span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/text_view"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">        <span class="attr">android:background</span>=<span class="string">"#36e7ea"</span></div><div class="line">        <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">        <span class="attr">android:textSize</span>=<span class="string">"18sp"</span> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ProgressBar</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_gravity</span>=<span class="string">"center"</span> /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="加载ViewStub布局"><a href="#加载ViewStub布局" class="headerlink" title="加载ViewStub布局"></a>加载ViewStub布局</h2><p>要加载<code>ViewStub</code>引用的布局只需要调用<code>inlfate()</code>方法，在我们的这个例子中设置为点击<code>Button</code>，代码比较简单：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Button button = (Button) findViewById(R.id.button);</div><div class="line">    button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">            View view = ((ViewStub)findViewById(R.id.view_stub)).inflate();</div><div class="line">            TextView tv = (TextView) view.findViewById(R.id.text_view);</div><div class="line">            tv.setText(<span class="string">"ViewStub的使用"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>获取<code>ViewStub</code>之后直接调用<code>inflate()</code>即可把<code>extra.xml</code>解析为<code>View</code>，通过它可以得到<code>extra.xml</code>内部的控件，这样便实现了按需加载。</p>
+<p>下面两幅图分别是点击<code>Button</code>前后的界面：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://segmentfault.com/img/bVtUOZ" alt="](https://segmentfault.com/img/bVtUOS)![" title="">
+                </div>
+                <div class="image-caption">](https://segmentfault.com/img/bVtUOS)![</div>
+            </figure>
+<p>注意：<code>ViewStub</code>不支持使用<merge>标签的布局。</merge></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2017-01-12-android-view-viewstub.html" target="_blank" rel="external">http://blog.inching.org/Android/2017-01-12-android-view-viewstub.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/view/">view</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-01-12-android-view-viewstub.html&title=《Android ViewStub》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-01-12-android-view-viewstub.html&title=《Android ViewStub》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-01-12-android-view-viewstub.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android ViewStub》 — Balance&url=http://blog.inching.org/Android/2017-01-12-android-view-viewstub.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-01-12-android-view-viewstub.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/RxJava/2017-01-26-rx-java-applying-to-existing-application.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Applying Reactive Programming to Existing Applications</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2017-01-12-android-resource.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Resource</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-01-12-android-view-viewstub.html&title=《Android ViewStub》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-01-12-android-view-viewstub.html&title=《Android ViewStub》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-01-12-android-view-viewstub.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android ViewStub》 — Balance&url=http://blog.inching.org/Android/2017-01-12-android-view-viewstub.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-01-12-android-view-viewstub.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3aQW7jMAwF0N7/0p1tBzNR/hcltwWeV0Hg2HpakAypj4/4+vxyff1mff/6c3Jn/sbRhYeHhzdY+r9X8rKcmjPyX71aMx4eHt5tXhvc18tqA/pkc99Y8PDw8H4AL1loe+d6DXh4eHi/nbcudtuiObna7cDDw8N7hnfq0W1xvE4Aj/Za8PDw8GLepPz9rs9X5nt4eHh446n6OuDeOAQwL77/egIeHh7eBd7ZAVV7VCvZsnUhHt2Jh4eHd4E3GYPlKaRteew1iA9P+fDw8PDi+X774rwtm3++2H3Bw8PDG/PysVMSsvOGwilMMd/Dw8PDG/OSpeRb0B6KyrNWXTTj4eHhXebl4T5pAeTFdHsAqx2P4eHh4d3gzZsLebBuU8tehK9PjeHh4eGVvLZNkCeP9lBC3piokwEeHh7eg7wkbUyK8lNN5JfrwcPDw7vAa1+Qj7XOHkFoE8ObMRgeHh7egDcJ0Plv99JJ0tSIUgIeHh7eNd5mwbq1lDz0t/f/J+Ph4eHhHeWdCsp5ejh1Z9HawMPDwzvKy8f5eVthr0mxN5B7k1Tw8PDwLvDmy5ocDpgP0qLKGQ8PD+8oL3nZZGSVvCV/Qr6JeHh4eM/w9hq7B8ZUwfebW4yHh4d3gZc/ug3uE3A+4iqaEXh4eHiXeXutgfxoaX5QoC6jk5vw8PDwDvHaw0ztmGqSGPLV4uHh4T3Jm7Ro2yZCeyxgdOHh4eEd5X2W114x3TaI2615ua14eHh4F3h7MXYepZPo3SatUTrBw8PDK3l5MjhVgrcjt1HawMPDw7vGmxy02mu8Hu6prBMDHh4e3rfyktC8B9vbxDebhYeHh/djeG1rdW/83x7kynIFHh4e3hneXiMgCeVJ0by59GSL8fDw8C7w2j/5eeGbsw8fBcDDw8O7xfsD8aT33QwxRDYAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

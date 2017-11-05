@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Categories: RxJava | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="java,rx,rxjava">
+    <meta name="description" content="What Is a Scheduler?
+Observable without any Scheduler works like a single-threaded program with blocking method calls passing data between one another.
+Observable with a single subscribeOn() is like s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJava Schedulers">
+<meta property="og:url" content="http://blog.inching.org/RxJava/2017-01-31-rx-java-scheduler.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="What Is a Scheduler?
+Observable without any Scheduler works like a single-threaded program with blocking method calls passing data between one another.
+Observable with a single subscribeOn() is like s">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJava Schedulers">
+<meta name="twitter:description" content="What Is a Scheduler?
+Observable without any Scheduler works like a single-threaded program with blocking method calls passing data between one another.
+Observable with a single subscribeOn() is like s">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">RxJava Schedulers</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">RxJava Schedulers</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-01-30T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-01-31
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#What-Is-a-Scheduler"><span class="post-toc-text">What Is a Scheduler?</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Schedulers-newThread"><span class="post-toc-text">Schedulers.newThread()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Schedulers-io"><span class="post-toc-text">Schedulers.io()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Schedulers-computation"><span class="post-toc-text">Schedulers.computation()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Schedulers-from-Executor-executor"><span class="post-toc-text">Schedulers.from(Executor executor)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Schedulers-immediate"><span class="post-toc-text">Schedulers.immediate()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Schedulers-trampoline"><span class="post-toc-text">Schedulers.trampoline()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Schedulers-test"><span class="post-toc-text">Schedulers.test()</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#subscribeOn"><span class="post-toc-text">subscribeOn()</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Declarative-Subscription-with-subscribeOn"><span class="post-toc-text">Declarative Subscription with subscribeOn()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#subscribeOn-Concurrency-and-Behavior"><span class="post-toc-text">subscribeOn() Concurrency and Behavior</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Batching-Requests-Using-groupBy"><span class="post-toc-text">Batching Requests Using groupBy()</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#observeOn"><span class="post-toc-text">observeOn()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Schedulers-in-Android"><span class="post-toc-text">Schedulers in Android</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-rx-java-scheduler"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">RxJava Schedulers</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-01-31 00:00:00" datetime="2017-01-30T16:00:00.000Z"  itemprop="datePublished">2017-01-31</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/RxJava/">RxJava</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="What-Is-a-Scheduler"><a href="#What-Is-a-Scheduler" class="headerlink" title="What Is a Scheduler?"></a>What Is a Scheduler?</h2><ul>
+<li><code>Observable</code> without any <code>Scheduler</code> works like a single-threaded program with blocking method calls passing data between one another.</li>
+<li><code>Observable</code> with a single <code>subscribeOn()</code> is like starting a big task in the background <code>Thread</code>. The program within that <code>Thread</code> is still sequential, but at least it runs in the background.</li>
+<li><code>Observable</code> using <code>flatMap()</code> where each internal <code>Observable</code> has <code>subscribeOn()</code> works like <code>ForkJoinPool</code> from <code>java.util.concurrent</code>, where each substream is a <em>fork</em> of execution and <code>flatMap()</code> is a safe <em>join</em> stage.</li>
+</ul>
+<p>In principle it works similarly to <code>ScheduledExecutorService</code>  from <code>java.util.concurrent</code>.</p>
+<p>Schedulers are used together with <code>subscribeOn()</code> and <code>observeOn()</code> operators as well as when creating certain types of <code>Observable</code>s. A scheduler only creates instances of <code>Worker</code>s that are responsible for scheduling and running code. When RxJava needs to schedule some code it first asks <code>Scheduler</code> to provide a <code>Worker</code> and uses the latter to schedule subsequent tasks.</p>
+<p>You will find examples of this API later on, but first familiarize yourself with available built-in schedulers:</p>
+<p>There are numerous operators that by default use some <code>Scheduler</code>.<br>Typically, <code>Schedulers.computation()</code> is used if none is supplied. For example, the <code>delay()</code> operator takes upstream events and pushes them downstream after a given time. </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Observable</div><div class="line">    .just(<span class="string">'A'</span>, <span class="string">'B'</span>)</div><div class="line">    .delay(<span class="number">1</span>, SECONDS, schedulerA)</div><div class="line">    .subscribe(<span class="keyword">this</span>::log);</div></pre></td></tr></table></figure>
+<p>Without supplying a custom <code>schedulerA</code>, all operators below <code>delay()</code> would use the <code>computation()</code> <code>Scheduler</code>. Other important operators that support custom <code>Scheduler</code> are: <code>interval()</code>, <code>range()</code>, <code>timer()</code>, <code>repeat()</code>, <code>skip()</code>, <code>take()</code>, <code>timeout()</code>. If you do not provide a scheduler to such operators, <code>computation()</code> <code>Scheduler</code> is utilized, which is a safe default in most cases.</p>
+<h3 id="Schedulers-newThread"><a href="#Schedulers-newThread" class="headerlink" title="Schedulers.newThread()"></a><code>Schedulers.newThread()</code></h3><p>This scheduler simply starts a new thread every time it is requested via <code>subscribeOn()</code> or <code>observeOn()</code>. <code>newThread()</code> is hardly ever a good choice, not only because of the latency involved when starting a thread, but also because this thread is not reused. </p>
+<p>Stack space must be allocated up front (typically around one megabyte, as controlled by the <code>-Xss</code> parameter of the JVM) and the operating system must start new native thread. When the <code>Worker</code> is done, the thread simply terminates. </p>
+<p>This scheduler can be useful only when tasks are coarse-grained: it takes a lot of time to complete but there are very few of them, so that threads are unlikely to be reused at all. In practice, following <code>Schedulers.io()</code> is almost always a better choice.</p>
+<h3 id="Schedulers-io"><a href="#Schedulers-io" class="headerlink" title="Schedulers.io()"></a><code>Schedulers.io()</code></h3><p>This scheduler is similar to <code>newThread()</code>, but already started threads are recycled and can possibly handle future requests. This implementation works similarly to <code>ThreadPoolExecutor</code>  from <code>java.util.concurrent</code> with an unbounded pool of threads. Every time a new <code>Worker</code> is requested, either a new thread is started (and later kept idle for some time) or the idle one is reused.</p>
+<p>The name <code>io()</code> is not a coincidence. Consider using this scheduler for I/O bound tasks which require very little CPU resources. However they tend to take quite some time, waiting for network or disk. Thus, it is a good idea to have a relatively big pool of threads. Still, be careful with unbounded resources of any kind—in case of slow or unresponsive external dependencies like web services, <code>io()</code> scheduler might start an enormous number of threads, leading to your very own application becoming unresponsive, as well.</p>
+<h3 id="Schedulers-computation"><a href="#Schedulers-computation" class="headerlink" title="Schedulers.computation()"></a><code>Schedulers.computation()</code></h3><p>You should use a computation scheduler when tasks are entirely  CPU-bound; that is, they require computational power and have no blocking code (reading from disk, network, sleeping, waiting for lock, etc.) Because each task executed on this scheduler is supposed to fully utilize one CPU core, executing more such tasks in parallel than there are available cores would not bring much value. Therefore, <code>computation()</code> scheduler by default limits the number of threads running in parallel to the value of <code>availableProcessors()</code>, as found in the <code>Runtime.getRuntime()</code> utility class.If for some reason you need a different number of threads than the default, you can always use the <code>rx.scheduler.max-computation-threads</code> system property. By taking less threads you ensure that there is always one or more CPU cores idle, and even under heavy load, <code>computation()</code> thread pool does not saturate your server. It is not possible to have more computation threads than cores. </p>
+<p><code>computation()</code> scheduler uses unbounded queue in front of every thread, so if the task is scheduled but all cores are occupied, they are queued. In case of load peak, this scheduler will keep the number of threads limited. However, the queue just before each thread will keep growing.</p>
+<p>Luckily, built-in operators, especially <code>observeOn()</code> ensure that this <code>Scheduler</code> is not overloaded.</p>
+<h3 id="Schedulers-from-Executor-executor"><a href="#Schedulers-from-Executor-executor" class="headerlink" title="Schedulers.from(Executor executor)"></a><code>Schedulers.from(Executor executor)</code></h3><p><code>Scheduler</code>s are internally more complex than <code>Executor</code>s  from <code>java.util.concurrent</code>, so a separate abstraction was needed. But because they are conceptually quite similar, unsurprisingly there is a wrapper that can turn <code>Executor</code> into <code>Scheduler</code> using  the <code>from()</code> factory method:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> com.google.common.util.concurrent.ThreadFactoryBuilder;</div><div class="line"><span class="keyword">import</span> rx.Scheduler;</div><div class="line"><span class="keyword">import</span> rx.schedulers.Schedulers;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.LinkedBlockingQueue;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.ThreadFactory;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.ThreadPoolExecutor;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">ThreadFactory threadFactory = <span class="keyword">new</span> ThreadFactoryBuilder()</div><div class="line">    .setNameFormat(<span class="string">"MyPool-%d"</span>)</div><div class="line">    .build();</div><div class="line">Executor executor = <span class="keyword">new</span> ThreadPoolExecutor(</div><div class="line">    <span class="number">10</span>,  <span class="comment">//corePoolSize</span></div><div class="line">    <span class="number">10</span>,  <span class="comment">//maximumPoolSize</span></div><div class="line">    <span class="number">0L</span>, TimeUnit.MILLISECONDS, <span class="comment">//keepAliveTime, unit</span></div><div class="line">    <span class="keyword">new</span> LinkedBlockingQueue&lt;&gt;(<span class="number">1000</span>),  <span class="comment">//workQueue</span></div><div class="line">    threadFactory</div><div class="line">);</div><div class="line">Scheduler scheduler = Schedulers.from(executor);</div></pre></td></tr></table></figure>
+<p>I am intentionally using this verbose syntax for creating <code>ExecutorService</code> rather than the more simple version:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line">ExecutorService executor = Executors.newFixedThreadPool(<span class="number">10</span>);</div></pre></td></tr></table></figure>
+<p>Although tempting, the <code>Executors</code>  factory class hardcodes several defaults that are impractical or even dangerous in enterprise applications. </p>
+<p>For examples, it uses unbounded <code>LinkedBlockingQueue</code> that can grow infinitely, resulting in <code>OutOfMemoryError</code> for cases in which there are a of large number of outstanding tasks. </p>
+<p>Also, the default <code>ThreadFactory</code>  uses meaningless thread names like <code>pool-5-thread-3</code>. Naming threads properly is an invaluable tool when profiling or analyzing thread dumps. </p>
+<p>Implementing <code>ThreadFactory</code> from scratch is a bit cumbersome, so we used ThreadFactoryBuilder from <a href="https://github.com/google/guava" target="_blank" rel="external">Guava</a>.</p>
+<p>Creating schedulers from <code>Executor</code> that we consciously configured is advised for projects dealing with high load. However, because RxJava has no control over independently created threads in an <code>Executor</code>, it cannot pin threads (that is, try to keep work of the same task on the same thread to improve cache locality). This <code>Scheduler</code> barely makes sure a single <code>Scheduler.Worker</code> processes events sequentially.</p>
+<h3 id="Schedulers-immediate"><a href="#Schedulers-immediate" class="headerlink" title="Schedulers.immediate()"></a><code>Schedulers.immediate()</code></h3><p><code>Schedulers.immediate()</code> is a special scheduler that invokes a task within the client thread in a blocking fashion, rather than asynchronously. Using it is pointless unless some part of your API requires providing a scheduler, whereas you are absolutely fine with default behavior of <code>Observable</code>, not involving any threading at all. In fact, subscribing to an <code>Observable</code> (more on that in a second) via <code>immediate()</code> <code>Scheduler</code> typically has the same effect as not subscribing with any particular scheduler at all. In general, avoid this scheduler, it blocks the calling thread and is of limited use.</p>
+<h3 id="Schedulers-trampoline"><a href="#Schedulers-trampoline" class="headerlink" title="Schedulers.trampoline()"></a><code>Schedulers.trampoline()</code></h3><p>The <code>trampoline()</code> scheduler is very similar to <code>immediate()</code> because it also schedules tasks in the same thread, effectively blocking. However, as opposed to <code>immediate()</code>, the upcoming task is executed when all previously scheduled tasks complete.</p>
+<p><code>immediate()</code> invokes a given task right away, whereas <code>trampoline()</code> waits for the current task to finish. Trampoline is a pattern in functional programming that allows implementing recursion without infinitely growing the call stack. This is best explained with an example, first involving <code>immediate()</code>. By the way, notice that we do not interact directly with a <code>Scheduler</code> instance but first create a  <code>Worker</code>.</p>
+<p>The output is as expected; you could actually replace <code>schedule()</code> with a simple method invocation:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1044    | main  | Main start</div><div class="line">1094    | main  |  Outer start</div><div class="line">2097    | main  |   Inner start</div><div class="line">3097    | main  |   Inner end</div><div class="line">3100    | main  |  Outer end</div><div class="line">3100    | main  | Main end</div></pre></td></tr></table></figure>
+<p>Inside the <code>Outer</code> block we <code>schedule()</code> <code>Inner</code> block that gets invoked immediately, interrupting the <code>Outer</code> task. When <code>Inner</code> is done, the control goes back to <code>Outer</code>. Again, this is simply a convoluted way of invoking a task in a blocking manner indirectly via <code>immediate()</code> <code>Scheduler</code>. But what happens if we replace <code>Schedulers.immediate()</code> with <code>Schedulers.trampoline()</code>? The output is quite different:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">log(&quot;Main start&quot;);</div><div class="line">worker.schedule(() -&gt; &#123;</div><div class="line">    log(&quot; Outer start&quot;);</div><div class="line">    sleepOneSecond();</div><div class="line">    worker.schedule(() -&gt; &#123;</div><div class="line">        log(&quot;  Middle start&quot;);</div><div class="line">        sleepOneSecond();</div><div class="line">        worker.schedule(() -&gt; &#123;</div><div class="line">            log(&quot;   Inner start&quot;);</div><div class="line">            sleepOneSecond();</div><div class="line">            log(&quot;   Inner end&quot;);</div><div class="line">        &#125;);</div><div class="line">        log(&quot;  Middle end&quot;);</div><div class="line">    &#125;);</div><div class="line">    log(&quot; Outer end&quot;);</div><div class="line">&#125;);</div><div class="line">log(&quot;Main end&quot;);</div></pre></td></tr></table></figure>
+<p>The <code>Worker</code> from <code>immediate()</code> <code>Scheduler</code> outputs the following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1029    | main  | Main start</div><div class="line">1091    | main  |  Outer start</div><div class="line">2093    | main  |   Middle start</div><div class="line">3095    | main  |    Inner start</div><div class="line">4096    | main  |    Inner end</div><div class="line">4099    | main  |   Middle end</div><div class="line">4099    | main  |  Outer end</div><div class="line">4099    | main  | Main end</div></pre></td></tr></table></figure>
+<p>Versus the <code>trampoline()</code> worker:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1041    | main  | Main start</div><div class="line">1095    | main  |  Outer start</div><div class="line">2099    | main  |  Outer end</div><div class="line">2099    | main  |   Middle start</div><div class="line">3101    | main  |   Middle end</div><div class="line">3101    | main  |    Inner start</div><div class="line">4102    | main  |    Inner end</div><div class="line">4102    | main  | Main end</div></pre></td></tr></table></figure>
+<h3 id="Schedulers-test"><a href="#Schedulers-test" class="headerlink" title="Schedulers.test()"></a><code>Schedulers.test()</code></h3><p>This <code>Scheduler</code> is used only for testing purposes, and you will never see it in production code. Its main advantage is the ability to arbitrarily advance the clock, simulating time passing by.</p>
+<h2 id="subscribeOn"><a href="#subscribeOn" class="headerlink" title="subscribeOn()"></a>subscribeOn()</h2><h3 id="Declarative-Subscription-with-subscribeOn"><a href="#Declarative-Subscription-with-subscribeOn" class="headerlink" title="Declarative Subscription with subscribeOn()"></a>Declarative Subscription with subscribeOn()</h3><p><code>subscribe()</code> by default uses the client thread. To recap, here is the most simple subscription that you can come up with where no threading was involved whatsoever:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function">Observable&lt;String&gt; <span class="title">simple</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Observable.create(subscriber -&gt; &#123;</div><div class="line">        log(<span class="string">"Subscribed"</span>);</div><div class="line">        subscriber.onNext(<span class="string">"A"</span>);</div><div class="line">        subscriber.onNext(<span class="string">"B"</span>);</div><div class="line">        subscriber.onCompleted();</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line">log(<span class="string">"Starting"</span>);</div><div class="line"><span class="keyword">final</span> Observable&lt;String&gt; obs = simple();</div><div class="line">log(<span class="string">"Created"</span>);</div><div class="line"><span class="keyword">final</span> Observable&lt;String&gt; obs2 = obs</div><div class="line">        .map(x -&gt; x)</div><div class="line">        .filter(x -&gt; <span class="keyword">true</span>);</div><div class="line">log(<span class="string">"Transformed"</span>);</div><div class="line">obs2.subscribe(</div><div class="line">        x -&gt; log(<span class="string">"Got "</span> + x),</div><div class="line">        Throwable::printStackTrace,</div><div class="line">        () -&gt; log(<span class="string">"Completed"</span>)</div><div class="line">);</div><div class="line">log(<span class="string">"Exiting"</span>);</div></pre></td></tr></table></figure>
+<p>Output:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">33  | main  | Starting</div><div class="line">120 | main  | Created</div><div class="line">128 | main  | Transformed</div><div class="line">133 | main  | Subscribed</div><div class="line">133 | main  | Got A</div><div class="line">133 | main  | Got B</div><div class="line">133 | main  | Completed</div><div class="line">134 | main  | Exiting</div></pre></td></tr></table></figure>
+<p>There is an inherent but hidden connection between <code>subscribe()</code> and <code>create()</code>. Every time you call <code>subscribe()</code> on an <code>Observable</code>, its  <code>OnSubscribe</code> callback method is invoked (wrapping the lambda expression you passed to <code>create()</code>). It receives your <code>Subscriber</code> as an argument.</p>
+<p>By default, this happens in the same thread and is blocking, so whatever you do inside <code>create()</code> will block <code>subscribe()</code>. If your <code>create()</code> method sleeps for few seconds, <code>subscribe()</code> will block. Moreover, if there are operators between <code>Observable.create()</code> and your <code>Subscriber</code> (lambda acting as callback), all these operators are invoked on behalf of the thread that invoked <code>subscribe()</code>.</p>
+<p>RxJava does not inject any concurrency facilities by default between <code>Observable</code> and <code>Subscriber</code>. The reason behind that is that <code>Observable</code>s tend to be backed by other concurrency mechanisms like event loops or custom threads, so Rx lets you take full control rather than imposing any convention.</p>
+<p>By inserting <code>subscribeOn()</code> anywhere between an original <code>Observable</code> and <code>subscribe()</code>, you declaratively select <code>Scheduler</code> where the <code>OnSubscribe</code> callback method will be invoked. No matter what you do inside <code>create()</code>, this work is offloaded to an independent <code>Scheduler</code> and your <code>subscribe()</code> invocation no longer blocks:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">log(<span class="string">"Starting"</span>);</div><div class="line"><span class="keyword">final</span> Observable&lt;String&gt; obs = simple();</div><div class="line">log(<span class="string">"Created"</span>);</div><div class="line">obs</div><div class="line">    .subscribeOn(schedulerA)</div><div class="line">    .subscribe(</div><div class="line">            x -&gt; log(<span class="string">"Got "</span> + x),</div><div class="line">            Throwable::printStackTrace,</div><div class="line">            () -&gt; log(<span class="string">"Completed"</span>)</div><div class="line">    );</div><div class="line">log(<span class="string">"Exiting"</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">35  | main  | Starting</div><div class="line">112 | main  | Created</div><div class="line">123 | main  | Exiting</div><div class="line">123 | Sched-A-0 | Subscribed</div><div class="line">124 | Sched-A-0 | Got A</div><div class="line">124 | Sched-A-0 | Got B</div><div class="line">124 | Sched-A-0 | Completed</div></pre></td></tr></table></figure>
+<p>The <code>schedulerA</code> as well as <code>Sched-A-0</code> thread come from the following sample schedulers we built for illustration purposes:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.util.concurrent.Executors.newFixedThreadPool;</div><div class="line"></div><div class="line"></div><div class="line">ExecutorService poolA = newFixedThreadPool(<span class="number">10</span>, threadFactory(<span class="string">"Sched-A-%d"</span>));</div><div class="line">Scheduler schedulerA = Schedulers.from(poolA);</div><div class="line"></div><div class="line">ExecutorService poolB = newFixedThreadPool(<span class="number">10</span>, threadFactory(<span class="string">"Sched-B-%d"</span>));</div><div class="line">Scheduler schedulerB = Schedulers.from(poolB);</div><div class="line"></div><div class="line">ExecutorService poolC = newFixedThreadPool(<span class="number">10</span>, threadFactory(<span class="string">"Sched-C-%d"</span>));</div><div class="line">Scheduler schedulerC = Schedulers.from(poolC);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> ThreadFactory <span class="title">threadFactory</span><span class="params">(String pattern)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadFactoryBuilder()</div><div class="line">        .setNameFormat(pattern)</div><div class="line">        .build();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>In mature applications, in terms of Rx adoption, <code>subscribeOn()</code> is very seldom used. Normally, <code>Observable</code>s come from sources that are naturally asynchronous or apply scheduling on their own. You should treat <code>subscribeOn()</code> only in special cases when the underlying <code>Observable</code> is known to be synchronous (<code>create()</code> being blocking).</p>
+<p>Most of the time <code>Observable</code>s come from asynchronous sources and they are treated as asynchronous by default. Therefore, using <code>subscribeOn()</code> is very limited, mostly when retrofitting existing APIs or libraries.</p>
+<h3 id="subscribeOn-Concurrency-and-Behavior"><a href="#subscribeOn-Concurrency-and-Behavior" class="headerlink" title="subscribeOn() Concurrency and Behavior"></a>subscribeOn() Concurrency and Behavior</h3><ul>
+<li>If two invocations of the <code>subscribeOn()</code> appear between <code>Observable</code> and <code>subscribe()</code>, <code>subscribeOn()</code> closest to the original <code>Observable</code> <em>wins</em>.</li>
+<li>If you are designing an API and you use <code>subscribeOn()</code> internally, the client code has no way of overriding the <code>Scheduler</code> of your choice. This can be a conscious design decision; after all, the API designer might know best which <code>Scheduler</code> is appropriate. On the other hand, providing an overloaded version of said API that allows overriding the chosen <code>Scheduler</code> is always a good idea.</li>
+</ul>
+<p>All operators are executed by default in the same thread (scheduler), no concurrency is involved by default:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">log(<span class="string">"Starting"</span>);</div><div class="line"><span class="keyword">final</span> Observable&lt;String&gt; obs = simple();</div><div class="line">log(<span class="string">"Created"</span>);</div><div class="line">obs</div><div class="line">        .doOnNext(<span class="keyword">this</span>::log)</div><div class="line">        .map(x -&gt; x + <span class="string">'1'</span>)</div><div class="line">        .doOnNext(<span class="keyword">this</span>::log)</div><div class="line">        .map(x -&gt; x + <span class="string">'2'</span>)</div><div class="line">        .subscribeOn(schedulerA)</div><div class="line">        .doOnNext(<span class="keyword">this</span>::log)</div><div class="line">        .subscribe(</div><div class="line">                x -&gt; log(<span class="string">"Got "</span> + x),</div><div class="line">                Throwable::printStackTrace,</div><div class="line">                () -&gt; log(<span class="string">"Completed"</span>)</div><div class="line">        );</div><div class="line">log(<span class="string">"Exiting"</span>);</div></pre></td></tr></table></figure>
+<p>Position of <code>subscribeOn()</code> is not relevant, it can be right after <code>Observable</code> or just before <code>subscribe()</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">20  | main  | Starting</div><div class="line">104 | main  | Created</div><div class="line">123 | main  | Exiting</div><div class="line">124 | Sched-A-0 | Subscribed</div><div class="line">124 | Sched-A-0 | A</div><div class="line">124 | Sched-A-0 | A1</div><div class="line">124 | Sched-A-0 | A12</div><div class="line">124 | Sched-A-0 | Got A12</div><div class="line">124 | Sched-A-0 | B</div><div class="line">124 | Sched-A-0 | B1</div><div class="line">124 | Sched-A-0 | B12</div><div class="line">125 | Sched-A-0 | Got B12</div></pre></td></tr></table></figure>
+<p>RxJava creates a single <code>Worker</code> instance for the entire pipeline, mostly to guarantee sequential processing of events. This means that if one of your operators is particularly slow—for example, <code>map()</code> reading data from disk in order to transform events passing by—this costly operation will be invoked within the same thread. A single broken operator can slow down the entire pipeline, from production to consumption. This is an antipattern in RxJava, operators should be nonblocking, fast, and as pure as possible.</p>
+<p>Rather than blocking within <code>map()</code>, we can invoke <code>flatMap()</code> and asynchronously collect all the results.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RxGroceries</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function">Observable&lt;BigDecimal&gt; <span class="title">purchase</span><span class="params">(String productName, <span class="keyword">int</span> quantity)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> Observable.fromCallable(() -&gt;</div><div class="line">            doPurchase(productName, quantity));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">BigDecimal <span class="title">doPurchase</span><span class="params">(String productName, <span class="keyword">int</span> quantity)</span> </span>&#123;</div><div class="line">        log(<span class="string">"Purchasing "</span> + quantity + <span class="string">" "</span> + productName);</div><div class="line">        <span class="comment">//real logic here</span></div><div class="line">        log(<span class="string">"Done "</span> + quantity + <span class="string">" "</span> + productName);</div><div class="line">        <span class="keyword">return</span> priceForProduct;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>When purchasing several goods we would like to parallelize as much as possible and calculate total price for all goods in the end. The first attempt is fruitless:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Observable&lt;BigDecimal&gt; totalPrice = Observable</div><div class="line">    .just(<span class="string">"bread"</span>, <span class="string">"butter"</span>, <span class="string">"milk"</span>, <span class="string">"tomato"</span>, <span class="string">"cheese"</span>)</div><div class="line">    .subscribeOn(schedulerA)  <span class="comment">//BROKEN!!!</span></div><div class="line">    .map(prod -&gt; rxGroceries.doPurchase(prod, <span class="number">1</span>))</div><div class="line">    .reduce(BigDecimal::add)</div><div class="line">    .single();</div></pre></td></tr></table></figure>
+<p>The code does not work concurrently because there is just a single flow of events, which by design must run sequentially. The main <code>Observable</code> emitting products cannot be parallelized. However, for each product, we create a new, independent <code>Observable</code> as returned from <code>purchase()</code>. Because they are independent, we can safely schedule each one of them concurrently:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Observable&lt;BigDecimal&gt; totalPrice = Observable</div><div class="line">    .just(<span class="string">"bread"</span>, <span class="string">"butter"</span>, <span class="string">"milk"</span>, <span class="string">"tomato"</span>, <span class="string">"cheese"</span>)</div><div class="line">    .flatMap(prod -&gt;</div><div class="line">            rxGroceries</div><div class="line">                    .purchase(prod, <span class="number">1</span>)</div><div class="line">                    .subscribeOn(schedulerA))</div><div class="line">    .reduce(BigDecimal::add)</div><div class="line">    .single();</div></pre></td></tr></table></figure>
+<p>Each substream created within <code>flatMap()</code> is supplied with a <code>schedulerA</code>. Every time <code>subscribeOn()</code> is used to the <code>Scheduler</code> gets a chance to return a new <code>Worker</code>, and therefore a separate thread (simplifying a bit):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">113  | Sched-A-1 | Purchasing 1 butter</div><div class="line">114  | Sched-A-0 | Purchasing 1 bread</div><div class="line">125  | Sched-A-2 | Purchasing 1 milk</div><div class="line">125  | Sched-A-3 | Purchasing 1 tomato</div><div class="line">126  | Sched-A-4 | Purchasing 1 cheese</div><div class="line">1126 | Sched-A-2 | Done 1 milk</div><div class="line">1126 | Sched-A-0 | Done 1 bread</div><div class="line">1126 | Sched-A-1 | Done 1 butter</div><div class="line">1128 | Sched-A-3 | Done 1 tomato</div><div class="line">1128 | Sched-A-4 | Done 1 cheese</div></pre></td></tr></table></figure>
+<p>We can no longer rely on the order of downstream events—they neither begin nor complete in the same order as they were emitted (the original sequence began at bread). When events reach the <code>reduce()</code> operator, they are already sequential and well behaving.</p>
+<h3 id="Batching-Requests-Using-groupBy"><a href="#Batching-Requests-Using-groupBy" class="headerlink" title="Batching Requests Using groupBy()"></a>Batching Requests Using groupBy()</h3><p>We can declaratively batch such requests by using <code>groupBy()</code>—and this still works with declarative concurrency:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.commons.lang3.tuple.Pair;</div><div class="line"></div><div class="line">Observable&lt;BigDecimal&gt; totalPrice = Observable</div><div class="line">    .just(<span class="string">"bread"</span>, <span class="string">"butter"</span>, <span class="string">"egg"</span>, <span class="string">"milk"</span>, <span class="string">"tomato"</span>,</div><div class="line">      <span class="string">"cheese"</span>, <span class="string">"tomato"</span>, <span class="string">"egg"</span>, <span class="string">"egg"</span>)</div><div class="line">    .groupBy(prod -&gt; prod)</div><div class="line">    .flatMap(grouped -&gt; grouped</div><div class="line">        .count()</div><div class="line">        .map(quantity -&gt; &#123;</div><div class="line">            String productName = grouped.getKey();</div><div class="line">            <span class="keyword">return</span> Pair.of(productName, quantity);</div><div class="line">        &#125;))</div><div class="line">    .flatMap(order -&gt; store</div><div class="line">        .purchase(order.getKey(), order.getValue())</div><div class="line">        .subscribeOn(schedulerA))</div><div class="line">    .reduce(BigDecimal::add)</div><div class="line">    .single();</div></pre></td></tr></table></figure>
+<p>The output:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">164  | Sched-A-0 | Purchasing 1 bread</div><div class="line">165  | Sched-A-1 | Purchasing 1 butter</div><div class="line">166  | Sched-A-2 | Purchasing 3 egg</div><div class="line">166  | Sched-A-3 | Purchasing 1 milk</div><div class="line">166  | Sched-A-4 | Purchasing 2 tomato</div><div class="line">166  | Sched-A-5 | Purchasing 1 cheese</div><div class="line">1151 | Sched-A-0 | Done 1 bread</div><div class="line">1178 | Sched-A-1 | Done 1 butter</div><div class="line">1180 | Sched-A-5 | Done 1 cheese</div><div class="line">1183 | Sched-A-3 | Done 1 milk</div><div class="line">1253 | Sched-A-4 | Done 2 tomato</div><div class="line">1354 | Sched-A-2 | Done 3 egg</div></pre></td></tr></table></figure>
+<h2 id="observeOn"><a href="#observeOn" class="headerlink" title="observeOn()"></a>observeOn()</h2><p><code>subscribeOn()</code> allows choosing which <code>Scheduler</code> will be used to invoke  <code>OnSubscribe</code> (lambda expression inside <code>create()</code>). <code>observeOn()</code> controls which <code>Scheduler</code> is used to invoke downstream <code>Subscriber</code>s occurring after <code>observeOn()</code>.</p>
+<p>For example, calling <code>create()</code> happens in the <code>io()</code> <code>Scheduler</code> (via <code>subscribeOn(io())</code>) to avoid blocking the user interface. However, updating the user interface widgets must happen in the UI thread (both  Swing and  Android have this constraint), so we use <code>observeOn()</code> for example with <code>AndroidSchedulers.mainThread()</code> before operators or subscribers changing UI.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">log(<span class="string">"Starting"</span>);</div><div class="line"><span class="keyword">final</span> Observable&lt;String&gt; obs = simple();</div><div class="line">log(<span class="string">"Created"</span>);</div><div class="line">obs</div><div class="line">        .doOnNext(x -&gt; log(<span class="string">"Found 1: "</span> + x))</div><div class="line">        .observeOn(schedulerA)</div><div class="line">        .doOnNext(x -&gt; log(<span class="string">"Found 2: "</span> + x))</div><div class="line">        .subscribe(</div><div class="line">                x -&gt; log(<span class="string">"Got 1: "</span> + x),</div><div class="line">                Throwable::printStackTrace,</div><div class="line">                () -&gt; log(<span class="string">"Completed"</span>)</div><div class="line">        );</div><div class="line">log(<span class="string">"Exiting"</span>);</div></pre></td></tr></table></figure>
+<p><code>observeOn()</code> occurs somewhere in the pipeline chain, and this time, as opposed to <code>subscribeOn()</code>, the position of <code>observeOn()</code> is quite important. No matter what <code>Scheduler</code> was running operators above <code>observeOn()</code> (if any), everything below uses the supplied <code>Scheduler</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">23  | main  | Starting</div><div class="line">136 | main  | Created</div><div class="line">163 | main  | Subscribed</div><div class="line">163 | main  | Found 1: A</div><div class="line">163 | main  | Found 1: B</div><div class="line">163 | main  | Exiting</div><div class="line">163 | Sched-A-0 | Found 2: A</div><div class="line">164 | Sched-A-0 | Got 1: A</div><div class="line">164 | Sched-A-0 | Found 2: B</div><div class="line">164 | Sched-A-0 | Got 1: B</div><div class="line">164 | Sched-A-0 | Completed</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">log(<span class="string">"Starting"</span>);</div><div class="line"><span class="keyword">final</span> Observable&lt;String&gt; obs = simple();</div><div class="line">log(<span class="string">"Created"</span>);</div><div class="line">obs</div><div class="line">        .doOnNext(x -&gt; log(<span class="string">"Found 1: "</span> + x))</div><div class="line">        .observeOn(schedulerB)</div><div class="line">        .doOnNext(x -&gt; log(<span class="string">"Found 2: "</span> + x))</div><div class="line">        .observeOn(schedulerC)</div><div class="line">        .doOnNext(x -&gt; log(<span class="string">"Found 3: "</span> + x))</div><div class="line">        .subscribeOn(schedulerA)</div><div class="line">        .subscribe(</div><div class="line">                x -&gt; log(<span class="string">"Got 1: "</span> + x),</div><div class="line">                Throwable::printStackTrace,</div><div class="line">                () -&gt; log(<span class="string">"Completed"</span>)</div><div class="line">        );</div><div class="line">log(<span class="string">"Exiting"</span>);</div></pre></td></tr></table></figure>
+<p>Everything below <code>observeOn()</code> is run within the supplied <code>Scheduler</code>, of course until another <code>observeOn()</code> is encountered. Additionally <code>subscribeOn()</code> can occur anywhere between <code>Observable</code> and <code>subscribe()</code>, but this time it only affects operators down to the first <code>observeOn()</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">21  | main  | Starting</div><div class="line">98  | main  | Created</div><div class="line">108 | main  | Exiting</div><div class="line">129 | Sched-A-0 | Subscribed</div><div class="line">129 | Sched-A-0 | Found 1: A</div><div class="line">129 | Sched-A-0 | Found 1: B</div><div class="line">130 | Sched-B-0 | Found 2: A</div><div class="line">130 | Sched-B-0 | Found 2: B</div><div class="line">130 | Sched-C-0 | Found 3: A</div><div class="line">130 | Sched-C-0 | Got: A</div><div class="line">130 | Sched-C-0 | Found 3: B</div><div class="line">130 | Sched-C-0 | Got: B</div><div class="line">130 | Sched-C-0 | Completed</div></pre></td></tr></table></figure>
+<p>Subscription occurs in <code>schedulerA</code> because that is what we specified in <code>subscribeOn()</code>. Also <code>&quot;Found 1&quot;</code> operator was executed within that <code>Scheduler</code> because it is before the first <code>observeOn()</code>. Later, the situation becomes more interesting. <code>observeOn()</code> switches current <code>Scheduler</code> to <code>schedulerB</code>, and <code>&quot;Found 2&quot;</code> is using this one, instead. The last <code>observeOn(schedulerC)</code> affects both <code>&quot;Found 3&quot;</code> operator as well as <code>Subscriber</code>. Remember that <code>Subscriber</code> works within the context of the last encountered <code>Scheduler</code>.</p>
+<p><code>subscribeOn()</code> can be placed close to the original <code>Observable</code> to improve readability, whereas <code>observeOn()</code> is close to <code>subscribe()</code> so that only <code>Subscriber</code> uses that special <code>Scheduler</code>, other operators rely on the <code>Scheduler</code> from <code>subscribeOn()</code>.</p>
+<p>Here is a more advanced program that takes advantage of these two operators:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">log(<span class="string">"Starting"</span>);</div><div class="line">Observable&lt;String&gt; obs = Observable.create(subscriber -&gt; &#123;</div><div class="line">    log(<span class="string">"Subscribed"</span>);</div><div class="line">    subscriber.onNext(<span class="string">"A"</span>);</div><div class="line">    subscriber.onNext(<span class="string">"B"</span>);</div><div class="line">    subscriber.onNext(<span class="string">"C"</span>);</div><div class="line">    subscriber.onNext(<span class="string">"D"</span>);</div><div class="line">    subscriber.onCompleted();</div><div class="line">&#125;);</div><div class="line">log(<span class="string">"Created"</span>);</div><div class="line">obs</div><div class="line">    .subscribeOn(schedulerA)</div><div class="line">    .flatMap(record -&gt; store(record).subscribeOn(schedulerB))</div><div class="line">    .observeOn(schedulerC)</div><div class="line">    .subscribe(</div><div class="line">            x -&gt; log(<span class="string">"Got: "</span> + x),</div><div class="line">            Throwable::printStackTrace,</div><div class="line">            () -&gt; log(<span class="string">"Completed"</span>)</div><div class="line">    );</div><div class="line">log(<span class="string">"Exiting"</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function">Observable&lt;UUID&gt; <span class="title">store</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> Observable.create(subscriber -&gt; &#123;</div><div class="line">        log(<span class="string">"Storing "</span> + s);</div><div class="line">        <span class="comment">//hard work</span></div><div class="line">        subscriber.onNext(UUID.randomUUID());</div><div class="line">        subscriber.onCompleted();</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The output:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">93   | main  | Created</div><div class="line">121  | main  | Exiting</div><div class="line"></div><div class="line">122  | Sched-A-0 | Subscribed</div><div class="line">124  | Sched-B-0 | Storing A</div><div class="line">124  | Sched-B-1 | Storing B</div><div class="line">124  | Sched-B-2 | Storing C</div><div class="line">124  | Sched-B-3 | Storing D</div><div class="line"></div><div class="line">1136 | Sched-C-1 | Got: 44b8b999-e687-485f-b17a-a11f6a4bb9ce</div><div class="line">1136 | Sched-C-1 | Got: 532ed720-eb35-4764-844e-690327ac4fe8</div><div class="line">1136 | Sched-C-1 | Got: 13ddf253-c720-48fa-b248-4737579a2c2a</div><div class="line">1136 | Sched-C-1 | Got: 0eced01d-3fa7-45ec-96fb-572ff1e33587</div><div class="line">1137 | Sched-C-1 | Completed</div></pre></td></tr></table></figure>
+<p>RxJava controls concurrency with just two operators (<code>subscribeOn()</code> and <code>observeOn()</code>), but the more you use reactive extensions, the less frequently you will see these in production code.</p>
+<h2 id="Schedulers-in-Android"><a href="#Schedulers-in-Android" class="headerlink" title="Schedulers in Android"></a>Schedulers in Android</h2><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">compile</span> <span class="string">'io.reactivex:rxandroid:1.1.0'</span></div></pre></td></tr></table></figure>
+<p>This small library will add the <code>AndroidSchedulers</code>  class to your CLASSPATH, which is essential for writing concurrent code on Android with RxJava.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        meetup</div><div class="line">            .listCities(<span class="number">52.229841</span>, <span class="number">21.011736</span>)</div><div class="line">            .concatMapIterable(extractCities())</div><div class="line">            .map(toCityName())</div><div class="line">            .toList()</div><div class="line">            .subscribeOn(Schedulers.io())</div><div class="line">            .observeOn(AndroidSchedulers.mainThread())</div><div class="line">            .subscribe(</div><div class="line">                    putOnListView(),</div><div class="line">                    displayError());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//...</span></div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>When all transformations are done, we invoke a UI update only on the main thread because we want to carry out as little processing as possible there.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/RxJava/2017-01-31-rx-java-scheduler.html" target="_blank" rel="external">http://blog.inching.org/RxJava/2017-01-31-rx-java-scheduler.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rx/">rx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rxjava/">rxjava</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2017-01-31-rx-java-scheduler.html&title=《RxJava Schedulers》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2017-01-31-rx-java-scheduler.html&title=《RxJava Schedulers》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2017-01-31-rx-java-scheduler.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RxJava Schedulers》 — Balance&url=http://blog.inching.org/RxJava/2017-01-31-rx-java-scheduler.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2017-01-31-rx-java-scheduler.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/RxJava/2017-02-08-rx-java-backpress.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Rx Java Unit Test</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/RxJava/2017-01-26-rx-java-custom-operator.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">RxJava Custom Operator</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/RxJava/2017-01-31-rx-java-scheduler.html&title=《RxJava Schedulers》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/RxJava/2017-01-31-rx-java-scheduler.html&title=《RxJava Schedulers》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/RxJava/2017-01-31-rx-java-scheduler.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RxJava Schedulers》 — Balance&url=http://blog.inching.org/RxJava/2017-01-31-rx-java-scheduler.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/RxJava/2017-01-31-rx-java-scheduler.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqUlEQVR42u3aQY4iQQwEQP7/afa60gg2065iWCnqhGhoiEZqF2k/HvF6/rV+Pp88/rleHU3Of3jh4eHhLb568iVmsORoeynff2c8PDy827xXd9TZa9rCcKpI4OHh4X0nb1Yw2qPvSwUeHh7e/8h7Hw3M2G0JwcPDw/tdXn7qfCucv2b/iQeyFjw8PLyYl3eRvufxlf4eHh4e3rqrnoSqycY6f9fz6MLDw8O7wctvuDk1Dxo2YXExHIaHh4d3lDcLDpIIeDOq9f69+dgWHh4e3md4+c03LwyzkazNhXjsawseHh5ewGujgeQDcnY7FnAghsDDw8P74OhA3rDPW1Y5vm6G4eHh4V3j5ZvszYjVvmCsqh8eHh7eBV4SOrRBRh4Qb7bddSSBh4eHN+Llg1Ob9lh7htkgAh4eHt5neO2/+FPP7MOIfRsPDw8Pb8ZLQtI2OMhfkwTHq4uFh4eH9xFeu9k99cpHvBLe8N8AHh4eXsnbNJw2EcOsCEVlCQ8PD+8CbzYu0BaV4W09bsVFbTA8PDy8C7z9jbgtAO04wuyceHh4eGd5s23xY7Q2JWf2M+Dh4eHd5kU1ZB8NjC5EPkDwcnQADw8P7xDvwJvjS5BvnfPQIfox8PDw8C7wNkFtwi7GpOJ4og6R8fDw8I7yZl8r4SXtq7wsteUKDw8P7/O8Nlxog9dZhNEWJzw8PLxP8tqmfhJMJC2u/DxF1oKHh4d3iPcsV7u9bgcR8mgjKlF4eHh4F3i32/mbiHbY6JotPDw8vJLXFoP97T5vYuWxSDQ0gIeHh3eUV2cYo83x4XqVbKnx8PDwvow3o842zW2hwsPDw/seXj5o1WLaIYaozODh4eFd481aVrPLkRxtRwf+URjw8PDwjvLqv/cxYNP+b9ts59ILPDw8vDfrD0dsac4KLdx1AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

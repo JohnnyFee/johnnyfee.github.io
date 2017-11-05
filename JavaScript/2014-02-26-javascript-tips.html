@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JavaScript 技巧 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript,performance">
+    <meta name="description" content="JavaScript 本身可以算是一门简单的语言，但我们也不断用智慧和灵活的模式来改进它。昨天我们将这些模式应用到了 JavaScript 框架中，今天这些框架又驱动了我们的 Web 应用程序。很多新手开发者被各种强大的 JavaScript 框架吸引进来，但他们却忽略了框架身后浩如星海的 JavaScript 实用技巧。
+Typeundefined, null, 0, false, NaN, &amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 技巧">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-02-26-javascript-tips.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="JavaScript 本身可以算是一门简单的语言，但我们也不断用智慧和灵活的模式来改进它。昨天我们将这些模式应用到了 JavaScript 框架中，今天这些框架又驱动了我们的 Web 应用程序。很多新手开发者被各种强大的 JavaScript 框架吸引进来，但他们却忽略了框架身后浩如星海的 JavaScript 实用技巧。
+Typeundefined, null, 0, false, NaN, &amp;">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 技巧">
+<meta name="twitter:description" content="JavaScript 本身可以算是一门简单的语言，但我们也不断用智慧和灵活的模式来改进它。昨天我们将这些模式应用到了 JavaScript 框架中，今天这些框架又驱动了我们的 Web 应用程序。很多新手开发者被各种强大的 JavaScript 框架吸引进来，但他们却忽略了框架身后浩如星海的 JavaScript 实用技巧。
+Typeundefined, null, 0, false, NaN, &amp;">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript 技巧</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript 技巧</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-02-25T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-02-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Type"><span class="post-toc-text">Type</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#等于操作符"><span class="post-toc-text">等于操作符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#undefined-和-null"><span class="post-toc-text">undefined 和 null</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#typeof-操作符"><span class="post-toc-text">typeof 操作符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#instanceof-操作符"><span class="post-toc-text">instanceof 操作符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#类型转换"><span class="post-toc-text">类型转换</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#How-can-I-check-whether-a-variable-is-defined-in-JavaScript"><span class="post-toc-text">How can I check whether a variable is defined in JavaScript</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#How-to-test-if-a-parameter-is-provided-to-a-function"><span class="post-toc-text">How to test if a parameter is provided to a function?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Be-careful-when-using-typeof-instanceof-and-constructor"><span class="post-toc-text">Be careful when using typeof, instanceof and constructor</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Use-logical-AND-OR-for-conditions"><span class="post-toc-text">Use logical AND/ OR for conditions</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#What-does-void-0-mean"><span class="post-toc-text">What does void 0 mean?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Better-way-to-get-type-of-a-Javascript-variable"><span class="post-toc-text">Better way to get type of a Javascript variable?</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Object"><span class="post-toc-text">Object</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#属性"><span class="post-toc-text">属性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Check-the-properties-of-an-object-when-using-a-for-in-loop"><span class="post-toc-text">Check the properties of an object when using a for-in loop</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Create-an-object-whose-prototype-is-a-given-object"><span class="post-toc-text">Create an object whose prototype is a given object</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#高效探测功能特性和对象属性"><span class="post-toc-text">高效探测功能特性和对象属性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getter-and-setter"><span class="post-toc-text">getter and setter</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#构造函数"><span class="post-toc-text">构造函数</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JSON"><span class="post-toc-text">JSON</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Serialization-and-deserialization-working-with-JSON"><span class="post-toc-text">Serialization and deserialization (working with JSON)</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Number"><span class="post-toc-text">Number</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Get-a-random-number-in-a-specific-range"><span class="post-toc-text">Get a random number in a specific range</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Verify-that-a-given-argument-is-a-number"><span class="post-toc-text">Verify that a given argument is a number</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Rounding-number-to-N-decimal-place"><span class="post-toc-text">Rounding number to N decimal place</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Verify-the-argument-before-passing-it-to-isFinite"><span class="post-toc-text">Verify the argument before passing it to isFinite()</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#String"><span class="post-toc-text">String</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#在-String-prototype-replace-方法中使用-g-和-i-标志位"><span class="post-toc-text">在 String.prototype.replace 方法中使用 /g 和 /i 标志位</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#String-replaceAll"><span class="post-toc-text">String.replaceAll</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#String-endsWith"><span class="post-toc-text">String.endsWith</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#toString-NaN"><span class="post-toc-text">toString</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#A-string-trim-function"><span class="post-toc-text">A string trim function</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Array"><span class="post-toc-text">Array</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#类数组对象和-Array-prototype-slice-方法"><span class="post-toc-text">类数组对象和 Array.prototype.slice 方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Array-prototype-sort-方法"><span class="post-toc-text">Array.prototype.sort 方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#用-length-属性来截断数组"><span class="post-toc-text">用 length 属性来截断数组</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用-push-来合并数组"><span class="post-toc-text">使用 push 来合并数组</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Verify-that-a-given-argument-is-an-array"><span class="post-toc-text">Verify that a given argument is an array</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Get-a-random-item-from-an-array"><span class="post-toc-text">Get a random item from an array</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Generate-an-array-of-numbers-with-numbers-from-0-to-max"><span class="post-toc-text">Generate an array of numbers with numbers from 0 to max</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Generate-a-random-set-of-alphanumeric-characters"><span class="post-toc-text">Generate a random set of alphanumeric characters</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Shuffle-an-array-of-numbers"><span class="post-toc-text">Shuffle an array of numbers</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Get-the-max-or-the-min-in-an-array-of-numbers"><span class="post-toc-text">Get the max or the min in an array of numbers</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Empty-an-array"><span class="post-toc-text">Empty an array</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Don’t-use-delete-to-remove-an-item-from-array"><span class="post-toc-text">Don’t use delete to remove an item from array</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Truncate-an-array-using-length"><span class="post-toc-text">Truncate an array using length</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Create-array-sequence-0-1-…-N-1-in-one-line"><span class="post-toc-text">Create array sequence [0, 1, …, N-1] in one line</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#filled-JavaScript-array"><span class="post-toc-text">filled JavaScript array</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Function"><span class="post-toc-text">Function</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#变量声明提升（Hoisting）"><span class="post-toc-text">变量声明提升（Hoisting）</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Event"><span class="post-toc-text">Event</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#事件对象的-preventDefault-和-stopPropagation-方法"><span class="post-toc-text">事件对象的 preventDefault 和 stopPropagation 方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#URL"><span class="post-toc-text">URL</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Util"><span class="post-toc-text">Util</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#An-HTML-escaper-function"><span class="post-toc-text">An HTML escaper function</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#obj-length-obj-length"><span class="post-toc-text">obj.length === +obj.length</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Deal-with-WebSocket-timeout"><span class="post-toc-text">Deal with WebSocket timeout</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#intelligence"><span class="post-toc-text">intelligence</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Ref"><span class="post-toc-text">Ref</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-tips"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript 技巧</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-02-26 00:00:00" datetime="2014-02-25T16:00:00.000Z"  itemprop="datePublished">2014-02-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>JavaScript 本身可以算是一门简单的语言，但我们也不断用智慧和灵活的模式来改进它。昨天我们将这些模式应用到了 JavaScript 框架中，今天这些框架又驱动了我们的 Web 应用程序。很多新手开发者被各种强大的 JavaScript 框架吸引进来，但他们却忽略了框架身后浩如星海的 JavaScript 实用技巧。</p>
+<h2 id="Type"><a href="#Type" class="headerlink" title="Type"></a>Type</h2><p><code>undefined</code>, <code>null</code>, 0, <code>false</code>, <code>NaN</code>, <code>&#39;&#39;</code> (empty string) are all falsy.</p>
+<h3 id="等于操作符"><a href="#等于操作符" class="headerlink" title="等于操作符"></a>等于操作符</h3><p>等于操作符由两个等号组成：<code>==</code></p>
+<p>JavaScript 是 <em>弱类型</em> 语言，这就意味着，等于操作符会为了比较两个值而进行<strong>强制类型转换</strong>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="string">""</span>           ==   <span class="string">"0"</span>           <span class="comment">// false</span></div><div class="line"><span class="number">0</span>            ==   <span class="string">""</span>            <span class="comment">// true</span></div><div class="line"><span class="number">0</span>            ==   <span class="string">"0"</span>           <span class="comment">// true</span></div><div class="line"><span class="literal">false</span>        ==   <span class="string">"false"</span>       <span class="comment">// false</span></div><div class="line"><span class="literal">false</span>        ==   <span class="string">"0"</span>           <span class="comment">// true</span></div><div class="line"><span class="literal">false</span>        ==   <span class="literal">undefined</span>     <span class="comment">// false</span></div><div class="line"><span class="literal">false</span>        ==   <span class="literal">null</span>          <span class="comment">// false</span></div><div class="line"><span class="literal">null</span>         ==   <span class="literal">undefined</span>     <span class="comment">// true</span></div><div class="line"><span class="string">" \t\r\n"</span>    ==   <span class="number">0</span>             <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>上面的表格展示了强制类型转换，这也是使用 <code>==</code> 被广泛认为是不好编程习惯的主要原因，<br>由于它的复杂转换规则，会导致难以跟踪的问题。</p>
+<p>此外，强制类型转换也会带来性能消耗，比如一个字符串为了和一个数字进行比较，必须事先被强制转换为数字。</p>
+<p>严格等于操作符由<strong>三</strong>个等号组成：<code>===</code></p>
+<p>不像普通的等于操作符，严格等于操作符<strong>不会</strong>进行强制类型转换。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="string">""</span>           ===   <span class="string">"0"</span>           <span class="comment">// false</span></div><div class="line"><span class="number">0</span>            ===   <span class="string">""</span>            <span class="comment">// false</span></div><div class="line"><span class="number">0</span>            ===   <span class="string">"0"</span>           <span class="comment">// false</span></div><div class="line"><span class="literal">false</span>        ===   <span class="string">"false"</span>       <span class="comment">// false</span></div><div class="line"><span class="literal">false</span>        ===   <span class="string">"0"</span>           <span class="comment">// false</span></div><div class="line"><span class="literal">false</span>        ===   <span class="literal">undefined</span>     <span class="comment">// false</span></div><div class="line"><span class="literal">false</span>        ===   <span class="literal">null</span>          <span class="comment">// false</span></div><div class="line"><span class="literal">null</span>         ===   <span class="literal">undefined</span>     <span class="comment">// false</span></div><div class="line"><span class="string">" \t\r\n"</span>    ===   <span class="number">0</span>             <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<p>上面的结果更加清晰并有利于代码的分析。如果两个操作数类型不同就肯定不相等也有助于性能的提升。</p>
+<h3 id="undefined-和-null"><a href="#undefined-和-null" class="headerlink" title="undefined 和 null"></a>undefined 和 null</h3><p>JavaScript 有两个表示‘空’的值，其中比较有用的是 <code>undefined</code>。</p>
+<p><code>undefined</code> 是一个值为 <code>undefined</code> 的类型。</p>
+<p>这个语言也定义了一个全局变量，它的值是 <code>undefined</code>，这个变量也被称为 <code>undefined</code>。<br>但是这个变量<strong>不是</strong>一个常量，也不是一个关键字。这意味着它的<em>值</em>可以轻易被覆盖。</p>
+<p>下面的情况会返回 <code>undefined</code> 值：</p>
+<ul>
+<li>访问未修改的全局变量 <code>undefined</code>。</li>
+<li>由于没有定义 <code>return</code> 表达式的函数隐式返回。</li>
+<li><code>return</code> 表达式没有显式的返回任何内容。</li>
+<li>访问不存在的属性。</li>
+<li>函数参数没有被显式的传递值。</li>
+<li>任何被设置为 <code>undefined</code> 值的变量。</li>
+</ul>
+<p><strong><code>null</code> 的用处</strong></p>
+<p>JavaScript 中的 <code>undefined</code> 的使用场景类似于其它语言中的 <em>null</em>，实际上 JavaScript 中的 <code>null</code> 是另外一种数据类型。</p>
+<p>它在 JavaScript 内部有一些使用场景（比如声明原型链的终结 <code>Foo.prototype = null</code>），但是大多数情况下都可以使用 <code>undefined</code> 来代替。</p>
+<h3 id="typeof-操作符"><a href="#typeof-操作符" class="headerlink" title="typeof 操作符"></a>typeof 操作符</h3><p><code>typeof</code> 操作符（和 <a href="https://bonsaiden.github.io/JavaScript-Garden/zh/#types.instanceof" target="_blank" rel="external"><code>instanceof</code></a> 一起）或许是 JavaScript 中最大的设计缺陷，<br>因为几乎不可能从它们那里得到想要的结果。</p>
+<p>尽管 <code>instanceof</code> 还有一些极少数的应用场景，<code>typeof</code> 只有一个实际的应用（<strong><a href="http://cnblogs.com/sanshi/" target="_blank" rel="external">译者注</a>：</strong>这个实际应用是用来检测一个对象是否已经定义或者是否已经赋值），<br>而这个应用却<strong>不是</strong>用来检查对象的类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">typeof foo !== &apos;undefined&apos;</div></pre></td></tr></table></figure>
+<p>上面代码会检测 <code>foo</code> 是否已经定义；如果没有定义而直接使用会导致 <code>ReferenceError</code> 的异常。<br>这是 <code>typeof</code> 唯一有用的地方。</p>
+<p>为了检测一个对象的类型，强烈推荐使用 <code>Object.prototype.toString</code> 方法；<br>因为这是唯一一个可依赖的方式。正如上面表格所示，<code>typeof</code> 的一些返回值在标准文档中并未定义，<br>因此不同的引擎实现可能不同。</p>
+<p>除非为了检测一个变量是否已经定义，我们应尽量避免使用 <code>typeof</code> 操作符。</p>
+<p><strong>JavaScript 类型表格</strong></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Class</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“foo”</td>
+<td>String</td>
+<td>string</td>
+</tr>
+<tr>
+<td>new String(“foo”)</td>
+<td>String</td>
+<td>object</td>
+</tr>
+<tr>
+<td>1.2</td>
+<td>Number</td>
+<td>number</td>
+</tr>
+<tr>
+<td>new Number(1.2)</td>
+<td>Number</td>
+<td>object</td>
+</tr>
+<tr>
+<td>true</td>
+<td>Boolean</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>new Boolean(true)</td>
+<td>Boolean</td>
+<td>object</td>
+</tr>
+<tr>
+<td>new Date()</td>
+<td>Date</td>
+<td>object</td>
+</tr>
+<tr>
+<td>new Error()</td>
+<td>Error</td>
+<td>object</td>
+</tr>
+<tr>
+<td>[1,2,3]</td>
+<td>Array</td>
+<td>object</td>
+</tr>
+<tr>
+<td>new Array(1, 2, 3)</td>
+<td>Array</td>
+<td>object</td>
+</tr>
+<tr>
+<td>new Function(“”)</td>
+<td>Function</td>
+<td>function</td>
+</tr>
+<tr>
+<td>/abc/g</td>
+<td>RegExp</td>
+<td>object (function in Nitro/V8)</td>
+</tr>
+<tr>
+<td>new RegExp(“meow”)</td>
+<td>RegExp</td>
+<td>object (function in Nitro/V8)</td>
+</tr>
+<tr>
+<td>{}</td>
+<td>Object</td>
+<td>object</td>
+</tr>
+<tr>
+<td>new Object()</td>
+<td>Object</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+<p>上面表格中，<em>Type</em> 一列表示 <code>typeof</code> 操作符的运算结果。可以看到，这个值在大多数情况下都返回 “object”。</p>
+<p><em>Class</em> 一列表示对象的内部属性 <code>[[Class]]</code> 的值。</p>
+<p><strong>JavaScript 标准文档中定义:</strong><code>[[Class]]</code> 的值只可能是下面字符串中的一个：<code>Arguments</code>, <code>Array</code>, <code>Boolean</code>, <code>Date</code>, <code>Error</code>, <code>Function</code>, <code>JSON</code>, <code>Math</code>, <code>Number</code>, <code>Object</code>, <code>RegExp</code>, <code>String</code>.</p>
+<p>为了获取对象的 <code>[[Class]]</code>，我们需要使用定义在 <code>Object.prototype</code> 上的方法 <code>toString</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function is(type, obj) &#123;</div><div class="line">    var clas = Object.prototype.toString.call(obj).slice(8, -1);</div><div class="line">    return obj !== undefined &amp;&amp; obj !== null &amp;&amp; clas === type;</div><div class="line">&#125;</div><div class="line"></div><div class="line">is(&apos;String&apos;, &apos;test&apos;); // true</div><div class="line">is(&apos;String&apos;, new String(&apos;test&apos;)); // true</div></pre></td></tr></table></figure>
+<p>上面例子中，<code>Object.prototype.toString</code> 方法被调用，<a href="https://bonsaiden.github.io/JavaScript-Garden/zh/#function.this" target="_blank" rel="external">this</a> 被设置为了需要获取 <code>[[Class]]</code> 值的对象。</p>
+<p><strong><a href="http://cnblogs.com/sanshi/" target="_blank" rel="external">译者注</a>：</strong><code>Object.prototype.toString</code> 返回一种标准格式字符串，所以上例可以通过 <code>slice</code> 截取指定位置的字符串，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Object.prototype.toString.call([])    // &quot;[object Array]&quot;</div><div class="line">Object.prototype.toString.call(&#123;&#125;)    // &quot;[object Object]&quot;</div><div class="line">Object.prototype.toString.call(2)    // &quot;[object Number]&quot;</div></pre></td></tr></table></figure>
+<p><strong><a href="http://cnblogs.com/sanshi/" target="_blank" rel="external">译者注</a>：</strong>这种变化可以从 IE8 和 Firefox 4 中看出区别，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// IE8</div><div class="line">Object.prototype.toString.call(null)    // &quot;[object Object]&quot;</div><div class="line">Object.prototype.toString.call(undefined)    // &quot;[object Object]&quot;</div><div class="line"></div><div class="line">// Firefox 4</div><div class="line">Object.prototype.toString.call(null)    // &quot;[object Null]&quot;</div><div class="line">Object.prototype.toString.call(undefined)    // &quot;[object Undefined]&quot;</div></pre></td></tr></table></figure>
+<h3 id="instanceof-操作符"><a href="#instanceof-操作符" class="headerlink" title="instanceof 操作符"></a>instanceof 操作符</h3><p><code>instanceof</code> 操作符用来比较两个操作数的构造函数。只有在比较自定义的对象时才有意义。<br>如果用来比较内置类型，将会和 <a href="https://bonsaiden.github.io/JavaScript-Garden/zh/#types.typeof" target="_blank" rel="external"><code>typeof</code> 操作符</a> 一样用处不大。</p>
+<p><code>instanceof</code> 操作符应该<strong>仅仅</strong>用来比较来自同一个 JavaScript 上下文的自定义对象。<br>正如 <a href="https://bonsaiden.github.io/JavaScript-Garden/zh/#types.typeof" target="_blank" rel="external"><code>typeof</code></a> 操作符一样，任何其它的用法都应该是避免的。</p>
+<p>比较自定义对象:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function Foo() &#123;&#125;</div><div class="line">function Bar() &#123;&#125;</div><div class="line">Bar.prototype = new Foo();</div><div class="line"></div><div class="line">new Bar() instanceof Bar; // true</div><div class="line">new Bar() instanceof Foo; // true</div><div class="line"></div><div class="line">// 如果仅仅设置 Bar.prototype 为函数 Foo 本身，而不是 Foo 构造函数的一个实例</div><div class="line">Bar.prototype = Foo;</div><div class="line">new Bar() instanceof Foo; // false</div></pre></td></tr></table></figure>
+<p><code>instanceof</code> 比较内置类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">new String(&apos;foo&apos;) instanceof String; // true</div><div class="line">new String(&apos;foo&apos;) instanceof Object; // true</div><div class="line"></div><div class="line">&apos;foo&apos; instanceof String; // false</div><div class="line">&apos;foo&apos; instanceof Object; // false</div></pre></td></tr></table></figure>
+<p>有一点需要注意，<code>instanceof</code> 用来比较属于不同 JavaScript 上下文的对象（比如，浏览器中不同的文档结构）时将会出错，<br>因为它们的构造函数不会是同一个对象。</p>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><p>JavaScript 是弱类型语言，所以会在任何可能的情况下应用强制类型转换。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 下面的比较结果是：true</span></div><div class="line"><span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">10</span>) == <span class="number">10</span>; <span class="comment">// Number.toString() 返回的字符串被再次转换为数字</span></div><div class="line"></div><div class="line"><span class="number">10</span> == <span class="string">'10'</span>;           <span class="comment">// 字符串被转换为数字</span></div><div class="line"><span class="number">10</span> == <span class="string">'+10 '</span>;         <span class="comment">// 同上</span></div><div class="line"><span class="number">10</span> == <span class="string">'010'</span>;          <span class="comment">// 同上 </span></div><div class="line"><span class="built_in">isNaN</span>(<span class="literal">null</span>) == <span class="literal">false</span>; <span class="comment">// null 被转换为数字 0</span></div><div class="line">                      <span class="comment">// 0 当然不是一个 NaN（译者注：否定之否定）</span></div><div class="line"></div><div class="line"><span class="comment">// 下面的比较结果是：false</span></div><div class="line"><span class="number">10</span> == <span class="number">010</span>;</div><div class="line"><span class="number">10</span> == <span class="string">'-10'</span>;</div></pre></td></tr></table></figure>
+<p>为了避免上面复杂的强制类型转换，强烈推荐使用严格的等于操作符。 虽然这可以避免大部分的问题，但 JavaScript 的弱类型系统仍然会导致一些其它问题。</p>
+<p>内置类型（比如 <code>Number</code> 和 <code>String</code>）的构造函数在被调用时，使用或者不使用 <code>new</code> 的结果完全不同。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">10</span>) === <span class="number">10</span>;     <span class="comment">// False, 对象与数字的比较</span></div><div class="line"><span class="built_in">Number</span>(<span class="number">10</span>) === <span class="number">10</span>;         <span class="comment">// True, 数字与数字的比较</span></div><div class="line"><span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">10</span>) + <span class="number">0</span> === <span class="number">10</span>; <span class="comment">// True, 由于隐式的类型转换</span></div></pre></td></tr></table></figure>
+<p>使用内置类型 <code>Number</code> 作为构造函数将会创建一个新的 <code>Number</code> 对象，<br>而在不使用 <code>new</code> 关键字的 <code>Number</code> 函数更像是一个数字转换器。</p>
+<p>另外，在比较中引入对象的字面值将会导致更加复杂的强制类型转换。</p>
+<p>最好的选择是把要比较的值<strong>显式</strong>的转换为三种可能的类型之一。</p>
+<p><strong>转换为数字</strong></p>
+<pre><code>+&apos;10&apos; === 10; // true
+</code></pre><p>使用一元的加号操作符，可以把字符串转换为数字。</p>
+<p>译者注：字符串转换为数字的常用方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+&apos;010&apos; === 10</div><div class="line">Number(&apos;010&apos;) === 10</div><div class="line">parseInt(&apos;010&apos;, 10) === 10  // 用来转换为整数</div><div class="line"></div><div class="line">+&apos;010.2&apos; === 10.2</div><div class="line">Number(&apos;010.2&apos;) === 10.2</div><div class="line">parseInt(&apos;010.2&apos;, 10) === 10</div></pre></td></tr></table></figure>
+<p><strong>转换为布尔型</strong></p>
+<p>通过使用 否 操作符两次，可以把一个值转换为布尔型。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">!!<span class="string">'foo'</span>;   <span class="comment">// true</span></div><div class="line">!!<span class="string">''</span>;      <span class="comment">// false</span></div><div class="line">!!<span class="string">'0'</span>;     <span class="comment">// true</span></div><div class="line">!!<span class="string">'1'</span>;     <span class="comment">// true</span></div><div class="line">!!<span class="string">'-1'</span>     <span class="comment">// true</span></div><div class="line">!!&#123;&#125;;      <span class="comment">// true</span></div><div class="line">!!<span class="literal">true</span>;    <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<h3 id="How-can-I-check-whether-a-variable-is-defined-in-JavaScript"><a href="#How-can-I-check-whether-a-variable-is-defined-in-JavaScript" class="headerlink" title="How can I check whether a variable is defined in JavaScript"></a>How can I check whether a variable is defined in JavaScript</h3><p>In JavaScript, <code>null</code> is an object. There’s another value for things that don’t exist, <code>undefined</code>. The DOM returns <code>null</code> for almost all cases where it fails to find some structure in the document, but in JavaScript itself <code>undefined</code> is the value used.</p>
+<p>Second, no, there is not a direct equivalent. If you really want to check for <code>null</code>, do:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">if (null == yourvar) // With casting</div><div class="line">if (null === yourvar) // Without casting</div></pre></td></tr></table></figure>
+<p>If you want to check if a variable exists</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">if (typeof yourvar != &apos;undefined&apos;) // Any scope</div><div class="line">if (window[&apos;varname&apos;] != void 0) // Old browsers</div></pre></td></tr></table></figure>
+<p>If you know the variable exists, but don’t know if there’s any value<br>stored in it:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">if (undefined != yourvar)</div><div class="line">if (void 0 != yourvar) // For older browsers</div></pre></td></tr></table></figure>
+<p>If you want to know if a member exists independent of whether it has been assigned a value or not:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">if (&apos;membername&apos; in object) // With inheritance</div><div class="line">if (object.hasOwnProperty(&apos;membername&apos;)) // Without inheritance</div></pre></td></tr></table></figure>
+<p>If you want to to know whether a variable autocasts to true:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">if(variablename)</div></pre></td></tr></table></figure>
+<p>Don’t do this, because there is no constant named undefined.  It will work, but only so long as someone doesn’t create a variable named undefined:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">if (window[&apos;varname&apos;] != undefined)</div></pre></td></tr></table></figure>
+<p>I probably forgot some method as well…</p>
+<p><a href="http://lists.evolt.org/archive/Week-of-Mon-20050214/099714.html" target="_blank" rel="external">Source</a></p>
+<p>See <a href="http://stackoverflow.com/questions/858181/how-to-check-a-not-defined-variable-in-javascript" target="_blank" rel="external">How to check a not-defined variable in JavaScript - Stack Overflow</a></p>
+<h3 id="How-to-test-if-a-parameter-is-provided-to-a-function"><a href="#How-to-test-if-a-parameter-is-provided-to-a-function" class="headerlink" title="How to test if a parameter is provided to a function?"></a>How to test if a parameter is provided to a function?</h3><h3 id="Be-careful-when-using-typeof-instanceof-and-constructor"><a href="#Be-careful-when-using-typeof-instanceof-and-constructor" class="headerlink" title="Be careful when using typeof, instanceof and constructor"></a>Be careful when using <code>typeof</code>, <code>instanceof</code> and <code>constructor</code></h3><ul>
+<li><em>typeof</em> : a JavaScript unary operator used to return a string that represents the primitive type of a variable, don’t forget that <code>typeof null</code> will return “object”, and for the majority of object types (Array, Date, and others) will return also “object”.</li>
+<li><em>constructor</em> : is a property of the internal prototype property, which could be overridden by code.</li>
+<li><em>instanceof</em> : is another JavaScript operator that check in all the prototypes chain the constructor it returns true if it’s found and false if not.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>];</div><div class="line"><span class="keyword">typeof</span> arr;   <span class="comment">// return "object" </span></div><div class="line">arr <span class="keyword">instanceof</span> <span class="built_in">Array</span> <span class="comment">// true</span></div><div class="line">arr.constructor();  <span class="comment">//[]</span></div></pre></td></tr></table></figure>
+<h3 id="Use-logical-AND-OR-for-conditions"><a href="#Use-logical-AND-OR-for-conditions" class="headerlink" title="Use logical AND/ OR for conditions"></a>Use logical AND/ OR for conditions</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var foo = 10;  </div><div class="line">foo == 10 &amp;&amp; doSomething(); // is the same thing as if (foo == 10) doSomething(); </div><div class="line">foo == 5 || doSomething(); // is the same thing as if (foo != 5) doSomething();</div></pre></td></tr></table></figure>
+<p>The logical OR could also be used to set a default value for function argument.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function doSomething(arg1)&#123; </div><div class="line">    arg1 = arg1 || 10; // arg1 will have 10 as a default value if it’s not already set</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="What-does-void-0-mean"><a href="#What-does-void-0-mean" class="headerlink" title="What does void 0 mean?"></a>What does <code>void 0</code> mean?</h3><p><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special_Operators/void_Operator" target="_blank" rel="external"><code>void</code><sup>[MDN]</sup></a> is a prefix keyword that takes one argument and always returns <code>undefined</code>.</p>
+<p><strong>Examples</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">void 0</div><div class="line">void (0)</div><div class="line">void &quot;hello&quot;</div><div class="line">void (new Date())</div><div class="line">//all will return undefined</div></pre></td></tr></table></figure>
+<p><strong>What’s the point of that?</strong></p>
+<p>It seems pretty useless, doesn’t it? If it always returns <code>undefined</code>, what’s wrong with just using <code>undefined</code> itself?</p>
+<p>In a perfect world we would be able to safely just use <code>undefined</code>: it’s much simpler and easier to understand than <code>void 0</code>. But in case you’ve never noticed before, <em>this isn’t a perfect world</em>, especially when it comes to Javascript. </p>
+<p>The problem with using <code>undefined</code> is that <code>undefined</code> is not a reserved word (<a href="http://wtfjs.com/2010/02/15/undefined-is-mutable" target="_blank" rel="external">and in some Javascript environments is actually a global variable <sup>[wtfjs]</sup></a>). That is, <code>undefined</code> is a permissible variable name, so you can assign a new value to it at your own caprice.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">alert(undefined); //alerts &quot;undefined&quot;</div><div class="line">var undefined = &quot;new value&quot;;</div><div class="line">alert(undefined) //alerts &quot;new value&quot;</div></pre></td></tr></table></figure>
+<p>Because of this, you cannot safely rely on <code>undefined</code> having the value that you expect.</p>
+<p><code>void</code>, on the other hand, cannot be overidden. <code>void 0</code> will <em>always</em> return <code>undefined</code>. <code>undefined</code>, on the other hand, can be whatever Mr. Javascript decides he wants it to be.</p>
+<p><strong>Why <code>void 0</code>, specifically?</strong></p>
+<p>Why should we use <code>void 0</code>? What’s so special about <code>0</code>? Couldn’t we just as easily use <code>1</code>, or <code>42</code>, or <code>1000000</code> or <code>&quot;Hello, world!&quot;</code>?</p>
+<p>And the answer is, yes, we could, and it would work just as well. The only benefit of passing in <code>0</code> instead of some other argument is that <code>0</code> is short and idiomatic.</p>
+<p>See <a href="http://stackoverflow.com/questions/7452341/what-does-void-0-mean" target="_blank" rel="external">javascript - What does <code>void 0</code> mean? - Stack Overflow</a></p>
+<h3 id="Better-way-to-get-type-of-a-Javascript-variable"><a href="#Better-way-to-get-type-of-a-Javascript-variable" class="headerlink" title="Better way to get type of a Javascript variable?"></a>Better way to get type of a Javascript variable?</h3><p>Angus Croll recently wrote an interesting blog post about this -</p>
+<p><a href="http://javascriptweblog.wordpress.com/2011/08/08/fixing-the-javascript-typeof-operator/" target="_blank" rel="external">http://javascriptweblog.wordpress.com/2011/08/08/fixing-the-javascript-typeof-operator/</a></p>
+<p>He goes through the pros and cons of the various methods then defines a new method ‘toType’ -</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> toType = <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> (&#123;&#125;).toString.call(obj).match(<span class="regexp">/\s([a-zA-Z]+)/</span>)[<span class="number">1</span>].toLowerCase()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>See <a href="http://stackoverflow.com/questions/7390426/better-way-to-get-type-of-a-javascript-variable" target="_blank" rel="external">Better way to get type of a Javascript variable? - Stack Overflow</a></p>
+<h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><p>JavaScript 中所有变量都是对象，除了两个例外 <a href="https://bonsaiden.github.io/JavaScript-Garden/zh/#core.undefined" target="_blank" rel="external"><code>null</code></a> 和 <a href="https://bonsaiden.github.io/JavaScript-Garden/zh/#core.undefined" target="_blank" rel="external"><code>undefined</code></a>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">false.toString(); // &apos;false&apos;</div><div class="line">[1, 2, 3].toString(); // &apos;1,2,3&apos;</div><div class="line">function Foo()&#123;&#125;</div><div class="line">Foo.bar = 1;</div><div class="line">Foo.bar; // 1</div></pre></td></tr></table></figure>
+<p>一个常见的误解是数字的字面值（literal）不是对象。这是因为 JavaScript 解析器的一个错误，<br>它试图将<em>点操作符</em>解析为浮点数字面值的一部分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2.toString(); // 出错：SyntaxError</div></pre></td></tr></table></figure>
+<p>有很多变通方法可以让数字的字面值看起来像对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2..toString(); // 第二个点号可以正常解析2 .toString(); // 注意点号前面的空格(2).toString(); // 2先被计算</div></pre></td></tr></table></figure>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>删除属性的唯一方法是使用 <code>delete</code> 操作符；设置属性为 <code>undefined</code> 或者 <code>null</code> 并不能真正的删除属性，<br>而<strong>仅仅</strong>是移除了属性和值的关联。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var test = &#123;    &apos;case&apos;: &apos;I am a keyword so I must be notated as a string&apos;,    delete: &apos;I am a keyword too so me&apos; // 出错：SyntaxError&#125;;</div></pre></td></tr></table></figure>
+<p>对象的属性名可以使用字符串或者普通字符声明。但是由于 JavaScript 解析器的另一个错误设计，<br>上面的第二种声明方式在 ECMAScript 5 之前会抛出 <code>SyntaxError</code> 的错误。</p>
+<p>这个错误的原因是 <code>delete</code> 是 JavaScript 语言的一个<em>关键词</em>；因此为了在更低版本的 JavaScript 引擎下也能正常运行，<br>必须使用<em>字符串字面值</em>声明方式。</p>
+<h3 id="Check-the-properties-of-an-object-when-using-a-for-in-loop"><a href="#Check-the-properties-of-an-object-when-using-a-for-in-loop" class="headerlink" title="Check the properties of an object when using a for-in loop"></a>Check the properties of an object when using a for-in loop</h3><p>This code snippet could be useful in order to avoid iterating through the properties from the object’s prototype.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> name <span class="keyword">in</span> object) &#123;  </div><div class="line">    <span class="keyword">if</span> (object.hasOwnProperty(name)) &#123; </div><div class="line">        <span class="comment">// do something with name                    </span></div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Create-an-object-whose-prototype-is-a-given-object"><a href="#Create-an-object-whose-prototype-is-a-given-object" class="headerlink" title="Create an object whose prototype is a given object"></a>Create an object whose prototype is a given object</h3><p>It’s possible to write a function that creates an object whose prototype is the given argument like this…</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">clone</span>(<span class="params">object</span>) </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">OneShotConstructor</span>(<span class="params"></span>)</span>&#123;&#125;; </div><div class="line">    OneShotConstructor.prototype= object;  </div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> OneShotConstructor(); </div><div class="line">&#125; </div><div class="line">clone(<span class="built_in">Array</span>).prototype ;  <span class="comment">// []</span></div></pre></td></tr></table></figure>
+<h3 id="高效探测功能特性和对象属性"><a href="#高效探测功能特性和对象属性" class="headerlink" title="高效探测功能特性和对象属性"></a>高效探测功能特性和对象属性</h3><p>很多时候开发者们会像下面这样来探测浏览器的某个特性：</p>
+<pre><code>if(navigator.geolocation) {
+    // Do some stuff
+    // 在这里干点事情
+}
+</code></pre><p>当然这可以正常工作，但它并不一定有很好的效率。因为这个对象探测方法会在浏览器中初始化资源。在过去，上面的代码片断可能会在某些浏览器下导致内存泄露。更好、更快的方法是检查对象是否包含某个键名：</p>
+<pre><code>if(&quot;geolocation&quot; in navigator) {
+    // Do some stuff
+    // 在这里干点事情
+}
+</code></pre><p>键名检查十分简单，而且可以避免内存泄露。另外请注意，如果这个属性的值是假值，那么前一种探测方式将会得到“否”的结果，并不能真正探测出这个键名是否存在。</p>
+<p>See also <a href="http://designpepper.com/blog/drips/retrieving-property-names-with-object-getownpropertynames-and-object-keys.html" target="_blank" rel="external">Retrieving Property Names with <code>Object.getOwnPropertyNames</code> and <code>Object.keys</code> · Design Pepper</a></p>
+<h3 id="getter-and-setter"><a href="#getter-and-setter" class="headerlink" title="getter and setter"></a>getter and setter</h3><ul>
+<li><a href="http://www.cnblogs.com/sniper007/archive/2012/04/24/2468175.html" target="_blank" rel="external"> <strong>defineGetter</strong> 跟 <strong>defineSetter</strong></a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineGetter" target="_blank" rel="external">Object.prototype.<strong>defineGetter</strong>() - JavaScript</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineSetter" target="_blank" rel="external">Object.prototype.<strong>defineSetter</strong>() - JavaScript</a></li>
+</ul>
+<p>IE 11+ 和其他主流浏览器均支持。</p>
+<p>Getter是一种获取一个属性的值的方法，Setter是一种设置一个属性的值的方法。可以为任何预定义的核心对象或用户自定义对象定义getter和setter方法，从而为现有的对象添加新的属性。</p>
+<p>有两种方法来定义Getter或Setter方法：</p>
+<ul>
+<li>在对象初始化时定义。</li>
+<li>在对象定义后通过Object的<strong>defineGetter</strong>、<strong>defineSetter</strong>方法来追加定义。</li>
+</ul>
+<p>在使用对象初始化过程来定义Getter和Setter方法时唯一要做的事情就是在getter方法前面加上“get”，在setter方法前面加上“set”。  </p>
+<p>还有一点要注意的就是getter方法没有参数，setter方法必须有一个参数，也就是要设置的属性的新值。  </p>
+<p>例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">o = &#123;  </div><div class="line">    <span class="attr">value</span>:<span class="number">9</span>,  </div><div class="line">    get b() &#123;<span class="keyword">return</span> <span class="keyword">this</span>.value;&#125;,  </div><div class="line">    set setter(x) &#123;<span class="keyword">this</span>.value = x;&#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在对象定义后给对象添加getter或setter方法要通过两个特殊的方法<code>__defineGetter__</code>和<code>__defineSetter__</code>。这两个函数要求第一个是getter或setter的名称，以string给出，第二个参数是作为getter或setter的函数。  </p>
+<p>例如我们给Date对象添加一个year属性：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Date</span>.prototype.__defineGetter__(<span class="string">'year'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="keyword">return</span> <span class="keyword">this</span>.getFullYear();&#125;);  </div><div class="line"><span class="built_in">Date</span>.prototype.__defineSetter__(<span class="string">'year'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">y</span>) </span>&#123;<span class="keyword">this</span>.setFullYear(y)&#125;);  </div><div class="line">  </div><div class="line"><span class="keyword">var</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>;  </div><div class="line">alert(now.year);  </div><div class="line">now.year = <span class="number">2006</span>;  </div><div class="line">alert(now);</div></pre></td></tr></table></figure>
+<p>至于采用哪种形式主要取决于个人的编程风格，采用第一种形式结构紧凑，更容易理解。但是假如你想在对象定义以后再添加Getter或Setter，或者这个对象的原型不是你写的或是内置对象，那么只好采用第二种方式了。  </p>
+<p>下面是一个为Mozilla浏览器添加innerText属性的实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">HTMLElement.prototype.__defineGetter__(  </div><div class="line">    <span class="string">"innerText"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)  </span></div><div class="line">    //<span class="title">define</span> <span class="title">a</span> <span class="title">getter</span> <span class="title">method</span> <span class="title">to</span> <span class="title">get</span> <span class="title">the</span> <span class="title">value</span> <span class="title">of</span> <span class="title">innerText</span>,   </div><div class="line">    //<span class="title">so</span> <span class="title">you</span> <span class="title">can</span> <span class="title">read</span> <span class="title">it</span> <span class="title">now</span>!   </div><div class="line">    &#123;  </div><div class="line">      <span class="keyword">var</span> textRange = <span class="keyword">this</span>.ownerDocument.createRange();  </div><div class="line">      <span class="comment">//Using range to retrieve the content of the object  </span></div><div class="line">      textRange.selectNodeContents(<span class="keyword">this</span>);  </div><div class="line">      <span class="comment">//only get the content of the object node  </span></div><div class="line">      <span class="keyword">return</span> textRange.toString();  </div><div class="line">      <span class="comment">// give innerText the value of the node content  </span></div><div class="line">    &#125;  </div><div class="line">    );</div></pre></td></tr></table></figure>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>在编写 JavaScript 模块时，经常会看着这样的代码：</p>
+<pre><code>function Buffer (subject, encoding, noZero) {
+  if (!(this instanceof Buffer)){
+    return new Buffer(subject, encoding, noZero);
+  }
+  // ...
+}
+</code></pre><p>这样可以保证用户忘记 <code>new</code> 的时候，也返回 JavaScript 对象。 </p>
+<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h2><h3 id="Serialization-and-deserialization-working-with-JSON"><a href="#Serialization-and-deserialization-working-with-JSON" class="headerlink" title="Serialization and deserialization (working with JSON)"></a>Serialization and deserialization (working with JSON)</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> person = &#123;<span class="attr">name</span> :<span class="string">'Saad'</span>, <span class="attr">age</span> : <span class="number">26</span>, <span class="attr">department</span> : &#123;<span class="attr">ID</span> : <span class="number">15</span>, <span class="attr">name</span> : <span class="string">"R&amp;D"</span>&#125; &#125;; </div><div class="line"><span class="keyword">var</span> stringFromPerson = <span class="built_in">JSON</span>.stringify(person); </div><div class="line"><span class="comment">/* stringFromPerson is equal to "&#123;"name":"Saad","age":26,"department":&#123;"ID":15,"name":"R&amp;D"&#125;&#125;"   */</span> </div><div class="line"><span class="keyword">var</span> personFromString = <span class="built_in">JSON</span>.parse(stringFromPerson);  </div><div class="line"><span class="comment">/* personFromString is equal to person object  */</span></div></pre></td></tr></table></figure>
+<h2 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h2><h3 id="Get-a-random-number-in-a-specific-range"><a href="#Get-a-random-number-in-a-specific-range" class="headerlink" title="Get a random number in a specific range"></a>Get a random number in a specific range</h3><p>This code snippet can be useful when trying to generate fake data for testing purposes, such as a salary between min and max.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * (max - min + <span class="number">1</span>)) + min;</div></pre></td></tr></table></figure>
+<h3 id="Verify-that-a-given-argument-is-a-number"><a href="#Verify-that-a-given-argument-is-a-number" class="headerlink" title="Verify that a given argument is a number"></a>Verify that a given argument is a number</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isNumber</span>(<span class="params">n</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> !<span class="built_in">isNaN</span>(<span class="built_in">parseFloat</span>(n)) &amp;&amp; <span class="built_in">isFinite</span>(n);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Rounding-number-to-N-decimal-place"><a href="#Rounding-number-to-N-decimal-place" class="headerlink" title="Rounding number to N decimal place"></a>Rounding number to N decimal place</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> num =<span class="number">2.443242342</span>;</div><div class="line">num = num.toFixed(<span class="number">4</span>);  <span class="comment">// num will be equal to 2.4432</span></div></pre></td></tr></table></figure>
+<p>NOTE : the <code>toFixed()</code> function returns a string and not a number.</p>
+<p><strong>Floating point problems</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">0.1 + 0.2 === 0.3 // is false </div><div class="line">9007199254740992 + 1 // is equal to 9007199254740992  </div><div class="line">9007199254740992 + 2 // is equal to 9007199254740994</div></pre></td></tr></table></figure>
+<p>Why does this happen? 0.1 +0.2 is equal to 0.30000000000000004. What you need to know is that all JavaScript numbers are floating points represented internally in 64 bit binary according to the IEEE 754 standard. For more explanation, take a look to <a href="http://www.2ality.com/2012/04/number-encoding.html" target="_blank" rel="external">this blog post</a>.</p>
+<p>You can use <code>toFixed()</code> and <code>toPrecision()</code> to resolve this problem.</p>
+<h3 id="Verify-the-argument-before-passing-it-to-isFinite"><a href="#Verify-the-argument-before-passing-it-to-isFinite" class="headerlink" title="Verify the argument before passing it to isFinite()"></a>Verify the argument before passing it to <code>isFinite()</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">isFinite(0/0) ; // false </div><div class="line">isFinite(&quot;foo&quot;); // false </div><div class="line">isFinite(&quot;10&quot;); // true </div><div class="line">isFinite(10);   // true </div><div class="line">isFinite(undefined);  // false </div><div class="line">isFinite();   // false </div><div class="line">isFinite(null);  // true  !!!</div></pre></td></tr></table></figure>
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><h3 id="在-String-prototype-replace-方法中使用-g-和-i-标志位"><a href="#在-String-prototype-replace-方法中使用-g-和-i-标志位" class="headerlink" title="在 String.prototype.replace 方法中使用 /g 和 /i 标志位"></a>在 String.prototype.replace 方法中使用 /g 和 /i 标志位</h3><p>令很多 JavaScript 初学者意外的是，字符串的 replace 方法并不会 <a href="http://davidwalsh.name/javascript-replace" target="_blank" rel="external">替换所有匹配的子串</a>——而仅仅替换第一次匹配。当然 JavaScript 老手们都知道这里可以使用正则表达式，并且需要加上一个全局标志位（/g）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Mistake</span></div><div class="line"><span class="comment">// 踩到坑了</span></div><div class="line"><span class="keyword">var</span> str = <span class="string">"David is an Arsenal fan, which means David is great"</span>;</div><div class="line">str.replace(<span class="string">"David"</span>, <span class="string">"Darren"</span>); <span class="comment">// "Darren is an Arsenal fan, which means David is great"</span></div><div class="line"></div><div class="line"><span class="comment">// Desired</span></div><div class="line"><span class="comment">// 符合预期</span></div><div class="line">str.replace(<span class="regexp">/David/g</span>, <span class="string">"Darren"</span>); <span class="comment">// "Darren is an Arsenal fan, which means Darren is great"</span></div></pre></td></tr></table></figure>
+<p>另一个基本的逻辑错误就是在大小写不敏感的校验场合（字母可大写可小写）没有忽略大小写，此时 /i 标志位就很实用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">str.replace(<span class="regexp">/david/gi</span>, <span class="string">"Darren"</span>); <span class="comment">// "Darren will always be an Arsenal fan, which means Darren will always be great"</span></div></pre></td></tr></table></figure>
+<p>（译注：上面这段例程我没有看懂用意，可能是注释有误吧……）</p>
+<p>每个 JavaScript 开发者都曾踩过这两个标志位的坑——因此别忘了在适当的时候用上它们！</p>
+<h3 id="String-replaceAll"><a href="#String-replaceAll" class="headerlink" title="String.replaceAll"></a>String.replaceAll</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">replaceAll</span>(<span class="params">find, replace, str</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> str.replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(find, <span class="string">'g'</span>), replace);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Reference: <a href="http://stackoverflow.com/questions/1144783/replacing-all-occurrences-of-a-string-in-javascript" target="_blank" rel="external">Replacing all occurrences of a string in javascript? - Stack Overflow</a></p>
+<h3 id="String-endsWith"><a href="#String-endsWith" class="headerlink" title="String.endsWith"></a>String.endsWith</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">String</span>.prototype.endsWith = <span class="function"><span class="keyword">function</span>(<span class="params">suffix</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.indexOf(suffix, <span class="keyword">this</span>.length - suffix.length) !== <span class="number">-1</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString"></a>toString</h3><p>In JavaScript, when an object is passed to a function expecting a string (like <a href="https://developer.mozilla.org/en-US/docs/Web/API/window.alert" target="_blank" rel="external">window.alert</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/API/document.write" target="_blank" rel="external">document.write</a>), the object’s toString() method is called and the returned value is passed to the function. This can make the object appear to be a string when used with other functions when it is really an object with properties and methods.</p>
+<pre><code>var selObj = window.getSelection(); 
+</code></pre><p>In the above example, selObj.toString() is automatically called when it is passed to window.alert. However, attempting to use a JavaScript String property or method such as length or substr directly on a Selection object will result in an error if it does not have that property or method and may return unexpected results if it does. To use a Selection object as a string, call its toString method directly:</p>
+<pre><code>var selectedText = selObj.toString();
+</code></pre><p>Refrerence: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window.getSelection" target="_blank" rel="external">Window.getSelection</a></p>
+<h3 id="A-string-trim-function"><a href="#A-string-trim-function" class="headerlink" title="A string trim function"></a>A string trim function</h3><p>The classic trim function of Java, C#, PHP and many other language that remove whitespace from a string doesn’t exist in JavaScript, so we could add it to the <code>String</code> object.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">String</span>.prototype.trim = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/^\s+|\s+$/g</span>, <span class="string">""</span>);&#125;;</div></pre></td></tr></table></figure>
+<p>A native implementation of the trim() function is available in the recent JavaScript engines.</p>
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><ul>
+<li><a href="http://tech.pro/tutorial/1834/working-with-es5-javascript-array-functions-in-modern-and-legacy-br" target="_blank" rel="external">Working with ES5 JavaScript array functions in modern and legacy browsers - Tech.Pro</a></li>
+</ul>
+<h3 id="类数组对象和-Array-prototype-slice-方法"><a href="#类数组对象和-Array-prototype-slice-方法" class="headerlink" title="类数组对象和 Array.prototype.slice 方法"></a>类数组对象和 Array.prototype.slice 方法</h3><p>数组的 slice 方法通常用来从一个数组中抽取片断。但很多开发者不了解的是，这个方法还可以用来将“类数组”元素（比如 arguments 参数列表、节点列表和属性列表）转换成真正的数组：（译注：DOM 元素的属性列表通过 attributes 属性获取，比如 document.body.attributes。）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> nodesArr = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">document</span>.querySelectorAll(<span class="string">"div"</span>));</div><div class="line"><span class="comment">// "true" array of DIVs</span></div><div class="line"><span class="comment">// 得到一个由 div 元素组成的“真正的”数组</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> argsArr = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>);</div><div class="line"><span class="comment">// changes arguments to "true" array</span></div><div class="line"><span class="comment">// 把 arguments 转换成一个“真正的”数组</span></div></pre></td></tr></table></figure>
+<p>你还可以使用一次简单的 slice 调用来克隆一个数组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> clone = myArray.slice(<span class="number">0</span>); <span class="comment">// naive clone 浅克隆</span></div></pre></td></tr></table></figure>
+<p>（译注：这里的参数 0 也可以省略，我估计 undefined 被 slice 方法自动转换为 0 了吧。）</p>
+<p>Array.prototype.slice 绝对是 JavaScript 世界中的一玫珍宝，但 JavaScript 初学者们显然还没有意识到它的全部潜力。</p>
+<h3 id="Array-prototype-sort-方法"><a href="#Array-prototype-sort-方法" class="headerlink" title="Array.prototype.sort 方法"></a>Array.prototype.sort 方法</h3><p><a href="http://davidwalsh.name/array-sort" target="_blank" rel="external">数组的 sort 方法</a> 远远没有被充分利用，而且可能比开发者们想像的更加强大。很多开发者可能觉得 sort 方法可以用来做这种事情：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[<span class="number">1</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">2</span>].sort();</div><div class="line"></div><div class="line"><span class="comment">// Returns: [1, 2, 3, 9]</span></div><div class="line"><span class="comment">// 返回 [1, 2, 3, 9]</span></div></pre></td></tr></table></figure>
+<p>……这没错，但它还有更强大的用法，比如这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">    &#123; <span class="attr">name</span>: <span class="string">"Robin Van PurseStrings"</span>, <span class="attr">age</span>: <span class="number">30</span> &#125;,</div><div class="line">    &#123; <span class="attr">name</span>: <span class="string">"Theo Walcott"</span>, <span class="attr">age</span>: <span class="number">24</span> &#125;,</div><div class="line">    &#123; <span class="attr">name</span>: <span class="string">"Bacary Sagna"</span>, <span class="attr">age</span>: <span class="number">28</span>  &#125;</div><div class="line">].sort(<span class="function"><span class="keyword">function</span>(<span class="params">obj1, obj2</span>) </span>&#123;</div><div class="line">    <span class="comment">// Ascending: first age less than the previous</span></div><div class="line">    <span class="comment">// 实现增序排列：前者的 age 小于后者</span></div><div class="line">    <span class="keyword">return</span> obj1.age - obj2.age;</div><div class="line">&#125;);</div><div class="line"><span class="comment">// Returns:  </span></div><div class="line"><span class="comment">// [</span></div><div class="line"><span class="comment">//    &#123; name: "Theo Walcott", age: 24 &#125;,</span></div><div class="line"><span class="comment">//    &#123; name: "Bacary Sagna", age: 28  &#125;,</span></div><div class="line"><span class="comment">//    &#123; name: "Robin Van PurseStrings", age: 30 &#125;</span></div><div class="line"><span class="comment">// ]</span></div></pre></td></tr></table></figure>
+<p>你不仅可以对简单类型的数组项进行排序，可以通过属性来排序对象。如果哪天服务器端发来一段 JSON 数据，而且其中的对象需要排序，你可别忘了这一招！</p>
+<h3 id="用-length-属性来截断数组"><a href="#用-length-属性来截断数组" class="headerlink" title="用 length 属性来截断数组"></a>用 length 属性来截断数组</h3><p>几乎所有开发者都踩过 JavaScript 的这个坑——“传对象只是传引用”。开发者们经常会试图 <a href="http://davidwalsh.name/empty-array" target="_blank" rel="external">把一个数组清空</a>，但实际上却错误地创建了一个新数组。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myArray = yourArray = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div><div class="line"></div><div class="line"><span class="comment">// :(</span></div><div class="line"><span class="comment">// 囧</span></div><div class="line">myArray = []; <span class="comment">// `yourArray` is still [1, 2, 3]</span></div><div class="line">              <span class="comment">// `yourArray` 仍然是 [1, 2, 3]</span></div><div class="line"></div><div class="line"><span class="comment">// The right way, keeping reference</span></div><div class="line"><span class="comment">// 正确的方法是保持引用</span></div><div class="line">myArray.length = <span class="number">0</span>; <span class="comment">// `yourArray` and `myArray` both []</span></div><div class="line">                    <span class="comment">// `yourArray` 和 `myArray`（以及其它所有对这个数组的引用）都变成 [] 了</span></div></pre></td></tr></table></figure>
+<p>坑里的人们终于明白，原来传对象只是在传引用。因此当我把 myArray 重新赋值为 [] 时，确实会创建出一个新的空数组，但其它对老数组的引用仍然没变！大坑啊！还是换用截断的方法吧，少年。</p>
+<h3 id="使用-push-来合并数组"><a href="#使用-push-来合并数组" class="headerlink" title="使用 push 来合并数组"></a>使用 push 来合并数组</h3><p>在上面的第 2 节里，我展示了数组的 slice 和 apply 方法所能组合出的几个小妙招，所以对于数组方法的其它技巧，你应该已经做好心理准备了吧。这次我们使用 push 方法来合并数组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mergeTo = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>];</div><div class="line"><span class="keyword">var</span> mergeFrom = [<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>];</div><div class="line"></div><div class="line"><span class="built_in">Array</span>.prototype.push.apply(mergeTo, mergeFrom);</div><div class="line">mergeTo; <span class="comment">// is: [4, 5, 6, 7, 8, 9]</span></div></pre></td></tr></table></figure>
+<p>这是一项不为人知的小技巧，简单的原生方法就可以实现数组合并这样的常见任务。</p>
+<p>See also <a href="http://davidwalsh.name/combining-js-arrays" target="_blank" rel="external">Combining JS Arrays</a></p>
+<h3 id="Verify-that-a-given-argument-is-an-array"><a href="#Verify-that-a-given-argument-is-an-array" class="headerlink" title="Verify that a given argument is an array"></a>Verify that a given argument is an array</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isArray</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(obj) === <span class="string">'[object Array]'</span> ;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Note that if the toString() method is overridden, you will not get the expected result using this trick.</p>
+<p>Or use…</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Array</span>.isArray(obj); <span class="comment">// its a new Array method</span></div></pre></td></tr></table></figure>
+<p>You could also use <code>instanceof</code> if you are not working with multiple frames. However, if you have many contexts, you will get a wrong result.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myFrame = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>);</div><div class="line"><span class="built_in">document</span>.body.appendChild(myFrame);</div><div class="line"></div><div class="line"><span class="keyword">var</span> myArray = <span class="built_in">window</span>.frames[<span class="built_in">window</span>.frames.length<span class="number">-1</span>].Array;</div><div class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> myArray(a,b,<span class="number">10</span>); <span class="comment">// [a,b,10]  </span></div><div class="line"></div><div class="line"><span class="comment">// instanceof will not work correctly, myArray loses his constructor </span></div><div class="line"><span class="comment">// constructor is not shared between frames</span></div><div class="line">arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>; <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<h3 id="Get-a-random-item-from-an-array"><a href="#Get-a-random-item-from-an-array" class="headerlink" title="Get a random item from an array"></a>Get a random item from an array</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> items = [<span class="number">12</span>, <span class="number">548</span> , <span class="string">'a'</span> , <span class="number">2</span> , <span class="number">5478</span> , <span class="string">'foo'</span> , <span class="number">8852</span>, , <span class="string">'Doe'</span> , <span class="number">2145</span> , <span class="number">119</span>];</div><div class="line"><span class="keyword">var</span>  randomItem = items[<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * items.length)];</div></pre></td></tr></table></figure>
+<h3 id="Generate-an-array-of-numbers-with-numbers-from-0-to-max"><a href="#Generate-an-array-of-numbers-with-numbers-from-0-to-max" class="headerlink" title="Generate an array of numbers with numbers from 0 to max"></a>Generate an array of numbers with numbers from 0 to max</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> numbersArray = [] , max = <span class="number">100</span>;</div><div class="line"><span class="keyword">for</span>( <span class="keyword">var</span> i=<span class="number">1</span>; numbersArray.push(i++) &lt; max;);  <span class="comment">// numbers = [1,2,3 ... 100]</span></div></pre></td></tr></table></figure>
+<h3 id="Generate-a-random-set-of-alphanumeric-characters"><a href="#Generate-a-random-set-of-alphanumeric-characters" class="headerlink" title="Generate a random set of alphanumeric characters"></a>Generate a random set of alphanumeric characters</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">generateRandomAlphaNum</span>(<span class="params">len</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> rdmString = <span class="string">""</span>;</div><div class="line">    <span class="keyword">for</span>( ; rdmString.length &lt; len; rdmString  += <span class="built_in">Math</span>.random().toString(<span class="number">36</span>).substr(<span class="number">2</span>));</div><div class="line">    <span class="keyword">return</span>  rdmString.substr(<span class="number">0</span>, len);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Shuffle-an-array-of-numbers"><a href="#Shuffle-an-array-of-numbers" class="headerlink" title="Shuffle an array of numbers"></a>Shuffle an array of numbers</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> numbers = [<span class="number">5</span>, <span class="number">458</span> , <span class="number">120</span> , <span class="number">-215</span> , <span class="number">228</span> , <span class="number">400</span> , <span class="number">122205</span>, <span class="number">-85411</span>];</div><div class="line">numbers = numbers.sort(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> <span class="built_in">Math</span>.random() - <span class="number">0.5</span>&#125;);</div><div class="line"><span class="comment">/* the array numbers will be equal for example to [120, 5, 228, -215, 400, 458, -85411, 122205]  */</span></div></pre></td></tr></table></figure>
+<p>A better option could be to implement a random sort order by code (e.g. : Fisher-Yates shuffle), than using the native sort JavaScript function. For more details take a look to <a href="http://stackoverflow.com/questions/962802/is-it-correct-to-use-javascript-array-sort-method-for-shuffling/962890#962890" target="_blank" rel="external">this discussion</a>.</p>
+<h3 id="Get-the-max-or-the-min-in-an-array-of-numbers"><a href="#Get-the-max-or-the-min-in-an-array-of-numbers" class="headerlink" title="Get the max or the min in an array of numbers"></a>Get the max or the min in an array of numbers</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span>  numbers = [<span class="number">5</span>, <span class="number">458</span> , <span class="number">120</span> , <span class="number">-215</span> , <span class="number">228</span> , <span class="number">400</span> , <span class="number">122205</span>, <span class="number">-85411</span>]; </div><div class="line"><span class="keyword">var</span> maxInNumbers = <span class="built_in">Math</span>.max.apply(<span class="built_in">Math</span>, numbers); </div><div class="line"><span class="keyword">var</span> minInNumbers = <span class="built_in">Math</span>.min.apply(<span class="built_in">Math</span>, numbers);</div></pre></td></tr></table></figure>
+<h3 id="Empty-an-array"><a href="#Empty-an-array" class="headerlink" title="Empty an array"></a>Empty an array</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myArray = [<span class="number">12</span> , <span class="number">222</span> , <span class="number">1000</span> ];  </div><div class="line">myArray.length = <span class="number">0</span>; <span class="comment">// myArray will be equal to [].</span></div></pre></td></tr></table></figure>
+<h3 id="Don’t-use-delete-to-remove-an-item-from-array"><a href="#Don’t-use-delete-to-remove-an-item-from-array" class="headerlink" title="Don’t use delete to remove an item from array"></a>Don’t use delete to remove an item from array</h3><p>Use <code>splice</code> instead of using <code>delete</code> to delete an item from an array. Using <code>delete</code> replaces the item with <code>undefined</code> instead of the removing it from the array.</p>
+<p>Instead of…</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> items = [<span class="number">12</span>, <span class="number">548</span> ,<span class="string">'a'</span> , <span class="number">2</span> , <span class="number">5478</span> , <span class="string">'foo'</span> , <span class="number">8852</span>, , <span class="string">'Doe'</span> ,<span class="number">2154</span> , <span class="number">119</span> ]; </div><div class="line">items.length; <span class="comment">// return 11 </span></div><div class="line"><span class="keyword">delete</span> items[<span class="number">3</span>]; <span class="comment">// return true </span></div><div class="line">items.length; <span class="comment">// return 11 </span></div><div class="line"><span class="comment">/* items will be equal to [12, 548, "a", undefined × 1, 5478, "foo", 8852, undefined × 1, "Doe", 2154,       119]   */</span></div></pre></td></tr></table></figure>
+<p>Use…</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> items = [<span class="number">12</span>, <span class="number">548</span> ,<span class="string">'a'</span> , <span class="number">2</span> , <span class="number">5478</span> , <span class="string">'foo'</span> , <span class="number">8852</span>, , <span class="string">'Doe'</span> ,<span class="number">2154</span> , <span class="number">119</span> ]; </div><div class="line">items.length; <span class="comment">// return 11 </span></div><div class="line">items.splice(<span class="number">3</span>,<span class="number">1</span>) ; </div><div class="line">items.length; <span class="comment">// return 10 </span></div><div class="line"><span class="comment">/* items will be equal to [12, 548, "a", 5478, "foo", 8852, undefined × 1, "Doe", 2154,       119]   */</span></div></pre></td></tr></table></figure>
+<p>The delete method should be used to delete an object property.</p>
+<h3 id="Truncate-an-array-using-length"><a href="#Truncate-an-array-using-length" class="headerlink" title="Truncate an array using length"></a>Truncate an array using length</h3><p>Like the previous example of emptying an array, we truncate it using the <code>length</code> property.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myArray = [<span class="number">12</span> , <span class="number">222</span> , <span class="number">1000</span> , <span class="number">124</span> , <span class="number">98</span> , <span class="number">10</span> ];  </div><div class="line">myArray.length = <span class="number">4</span>; <span class="comment">// myArray will be equal to [12 , 222 , 1000 , 124].</span></div></pre></td></tr></table></figure>
+<p>As a bonus, if you set the array length to a higher value, the length will be changed and new items will be added with <code>undefined</code> as a value. The array length is not a read only property.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">myArray.length = <span class="number">10</span>; <span class="comment">// the new array length is 10 </span></div><div class="line">myArray[myArray.length - <span class="number">1</span>] ; <span class="comment">// undefined</span></div></pre></td></tr></table></figure>
+<h3 id="Create-array-sequence-0-1-…-N-1-in-one-line"><a href="#Create-array-sequence-0-1-…-N-1-in-one-line" class="headerlink" title="Create array sequence [0, 1, …, N-1] in one line"></a>Create array sequence [0, 1, …, N-1] in one line</h3><ul>
+<li><a href="http://www.jstips.co/en/create-range-0...n-easily-using-one-line/" target="_blank" rel="external">Create array sequence <code>[0, 1, ..., N-1]</code> in one line – JS Tips – A JS tip per day!</a></li>
+<li><a href="http://stackoverflow.com/questions/36947847/how-to-generate-range-of-numbers-from-0-to-n-in-es2015-only" target="_blank" rel="external">javascript - How to generate range of numbers from 0 to n in ES2015 only? - Stack Overflow</a></li>
+</ul>
+<h3 id="filled-JavaScript-array"><a href="#filled-JavaScript-array" class="headerlink" title="filled JavaScript array"></a>filled JavaScript array</h3><p><a href="http://stackoverflow.com/questions/1295584/most-efficient-way-to-create-a-zero-filled-javascript-array" target="_blank" rel="external">Most efficient way to create a zero filled JavaScript array? - Stack Overflow</a></p>
+<h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><p>下面是将参数从一个函数传递到另一个函数的推荐做法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;    </div><div class="line">    bar.apply(null, arguments);</div><div class="line">&#125;</div><div class="line"></div><div class="line">function bar(a, b, c) &#123;    </div><div class="line">    // 干活</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>另一个技巧是同时使用 <code>call</code> 和 <code>apply</code>，创建一个快速的解绑定包装器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function Foo() &#123;&#125;</div><div class="line"></div><div class="line">Foo.prototype.method = function(a, b, c) &#123;</div><div class="line">    console.log(this, a, b, c);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">// 创建一个解绑定的 &quot;method&quot;</div><div class="line">// 输入参数为: this, arg1, arg2...argN</div><div class="line">Foo.method = function() &#123;</div><div class="line"></div><div class="line">    // 结果: Foo.prototype.method.call(this, arg1, arg2... argN)</div><div class="line">    Function.call.apply(Foo.prototype.method, arguments);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><strong><a href="http://cnblogs.com/sanshi/" target="_blank" rel="external">译者注</a></strong>：上面的 <code>Foo.method</code> 函数和下面代码的效果是一样的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Foo.method = function() &#123;</div><div class="line">    var args = Array.prototype.slice.call(arguments);</div><div class="line">    Foo.prototype.method.apply(args[0], args.slice(1));</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="变量声明提升（Hoisting）"><a href="#变量声明提升（Hoisting）" class="headerlink" title="变量声明提升（Hoisting）"></a>变量声明提升（Hoisting）</h3><p>JavaScript 会<strong>提升</strong>变量声明。这意味着 <code>var</code> 表达式和 <code>function</code> 声明都将会被提升到当前作用域的顶部。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">bar();</div><div class="line">var bar = function() &#123;&#125;;</div><div class="line">var someValue = 42;</div><div class="line"></div><div class="line">test();</div><div class="line">function test(data) &#123;</div><div class="line">    if (false) &#123;</div><div class="line">        goo = 1;</div><div class="line"></div><div class="line">    &#125; else &#123;</div><div class="line">        var goo = 2;</div><div class="line">    &#125;</div><div class="line">    for(var i = 0; i &lt; 100; i++) &#123;</div><div class="line">        var e = data[i];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面代码在运行之前将会被转化。JavaScript 将会把 <code>var</code> 表达式和 <code>function</code> 声明提升到当前作用域的顶部。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">// var 表达式被移动到这里</div><div class="line">var bar, someValue; // 缺省值是 &apos;undefined&apos;</div><div class="line"></div><div class="line">// 函数声明也会提升</div><div class="line">function test(data) &#123;</div><div class="line">    var goo, i, e; // 没有块级作用域，这些变量被移动到函数顶部</div><div class="line">    if (false) &#123;</div><div class="line">        goo = 1;</div><div class="line"></div><div class="line">    &#125; else &#123;</div><div class="line">        goo = 2;</div><div class="line">    &#125;</div><div class="line">    for(i = 0; i &lt; 100; i++) &#123;</div><div class="line">        e = data[i];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">bar(); // 出错：TypeError，因为 bar 依然是 &apos;undefined&apos;</div><div class="line">someValue = 42; // 赋值语句不会被提升规则（hoisting）影响</div><div class="line">bar = function() &#123;&#125;;</div><div class="line"></div><div class="line">test();</div></pre></td></tr></table></figure>
+<p>没有块级作用域不仅导致 <code>var</code> 表达式被从循环内移到外部，而且使一些 <code>if</code> 表达式更难看懂。</p>
+<p>在原来代码中，<code>if</code> 表达式看起来修改了<em>全局变量</em> <code>goo</code>，实际上在提升规则被应用后，却是在修改<em>局部变量</em>。</p>
+<p>如果没有提升规则（hoisting）的知识，下面的代码看起来会抛出异常 <code>ReferenceError</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 检查 SomeImportantThing 是否已经被初始化</div><div class="line">if (!SomeImportantThing) &#123;</div><div class="line">    var SomeImportantThing = &#123;&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实际上，上面的代码正常运行，因为 <code>var</code> 表达式会被提升到<em>全局作用域</em>的顶部。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var SomeImportantThing;</div><div class="line"></div><div class="line">// 其它一些代码，可能会初始化 SomeImportantThing，也可能不会</div><div class="line"></div><div class="line">// 检查是否已经被初始化</div><div class="line">if (!SomeImportantThing) &#123;</div><div class="line">    SomeImportantThing = &#123;&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong><a href="http://cnblogs.com/sanshi/" target="_blank" rel="external">译者注</a>：</strong>在 Nettuts+ 网站有一篇介绍 hoisting 的<a href="http://net.tutsplus.com/tutorials/javascript-ajax/quick-tip-javascript-hoisting-explained/" target="_blank" rel="external">文章</a>，其中的代码很有启发性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 译者注：来自 Nettuts+ 的一段代码，生动的阐述了 JavaScript 中变量声明提升规则</div><div class="line">var myvar = &apos;my value&apos;;  </div><div class="line"></div><div class="line">(function() &#123;  </div><div class="line">    alert(myvar); // undefined  </div><div class="line">    var myvar = &apos;local value&apos;;  </div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<h2 id="Event"><a href="#Event" class="headerlink" title="Event"></a>Event</h2><h3 id="事件对象的-preventDefault-和-stopPropagation-方法"><a href="#事件对象的-preventDefault-和-stopPropagation-方法" class="headerlink" title="事件对象的 preventDefault 和 stopPropagation 方法"></a>事件对象的 preventDefault 和 stopPropagation 方法</h3><p>很多时候，当一个动作元素（比如链接）被点击时，会触发某个功能。显然我们并不希望点击链接时浏览器顺着这个链接跳转，于是我们会习惯性地使用 JavaScript 类库的 Event.stop 方法：</p>
+<pre><code>$(&quot;a.trigger&quot;).on(&quot;click&quot;, function(e) {
+    e.stop();
+
+    // Do more stuff
+    // 在这里干点事情
+});
+</code></pre><p>（译注：不知道哪个类库有这个方法，估计其作用相当于 return false; 吧。语法看起来像 jQuery，但 jQuery 并没有这个方法，而且 jQuery 是支持 e.preventDefault 和 e.stopPropagation 方法的。）</p>
+<p>这个懒方法有一个问题，它不仅阻止了浏览器的默认动作，同时也阻止了事件继续冒泡。这意味着元素上绑定的其它事件监听器将不会被触发，因为它们根本就不知道有事件发生。此时不妨使用 preventDefault 吧！</p>
+<p>JavaScript 老鸟们看到这篇文章可能会说“我早知道了”，但说不定什么时候，他们就会在某一点上栽跟头。提醒大家留意 JavaScript 中的各种小细节，失之毫厘谬以千里啊！</p>
+<h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><p>js对文字进行编码涉及3个函数：escape,encodeURI,encodeURIComponent，相应3个解码函数：unescape,decodeURI,decodeURIComponent</p>
+<ol>
+<li><p>传递参数时需要使用 encodeURIComponent，这样组合的 url 才不会被#等特殊字符截断。</p>
+<p> 例如：</p>
+<pre><code>document.write(‘&lt;a href=”http://passport.baidu.com/?logout&amp;aid=7&amp;u=’+encodeURIComponent(“http://cang.baidu.com/bruce42″)+’”&gt;退出&lt;/a&gt;’);
+</code></pre></li>
+<li><p>进行 url 跳转时可以整体使用 encodeURI</p>
+<p> 例如：</p>
+<pre><code>Location.href=encodeURI(“http://cang.baidu.com/do/s?word=百度&amp;ct=21″);
+</code></pre></li>
+<li><p>escape 对0-255以外的unicode值进行编码时输出%u<em>**</em>格式，其它情况下 escape，encodeURI，encodeURIComponent 编码结果相同。<br>最多使用的应为 encodeURIComponent，它是将中文、韩文等特殊字符转换成utf-8格式的url编码，所以如果给后台传递参数需要使用encodeURIComponent时需要后台解码对utf-8支持（form中的编码方式和当前页面编码方式相同）</p>
+</li>
+<li><p>escape 不编码字符有69个：*，+，-，.，/，@，_，0-9，a-z，A-Z</p>
+<p> encodeURI 不编码字符有82个：!，#，$，&amp;，’，(，)，*，+，,，-，.，/，:，;，=，?，@，_，~，0-9，a-z，A-Z</p>
+<p> encodeURIComponent 不编码字符有71个：!， ‘，(，)，*，-，.，_，~，0-9，a-z，A-Z</p>
+</li>
+</ol>
+<p><a href="http://www.cnblogs.com/baibaluo/archive/2011/03/03/2071250.html" target="_blank" rel="external">javascript对url进行encode的两种方式 - baibaluo - 博客园</a></p>
+<h2 id="Util"><a href="#Util" class="headerlink" title="Util"></a>Util</h2><ul>
+<li><a href="http://arqex.com/939/learning-much-javascript-one-line-code" target="_blank" rel="external">Learning much javascript from one line of code - arqex</a></li>
+</ul>
+<h3 id="An-HTML-escaper-function"><a href="#An-HTML-escaper-function" class="headerlink" title="An HTML escaper function"></a>An HTML escaper function</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escapeHTML</span>(<span class="params">text</span>) </span>&#123;  </div><div class="line">    <span class="keyword">var</span> replacements= &#123;<span class="string">"&lt;"</span>: <span class="string">"&amp;lt;"</span>, <span class="string">"&gt;"</span>: <span class="string">"&amp;gt;"</span>,<span class="string">"&amp;"</span>: <span class="string">"&amp;amp;"</span>, <span class="string">"\""</span>: <span class="string">"&amp;quot;"</span>&#125;;                      </div><div class="line">    <span class="keyword">return</span> text.replace(<span class="regexp">/[&lt;&gt;&amp;"]/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">character</span>) </span>&#123;  </div><div class="line">        <span class="keyword">return</span> replacements[character];  </div><div class="line">    &#125;); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="obj-length-obj-length"><a href="#obj-length-obj-length" class="headerlink" title="obj.length === +obj.length"></a>obj.length === +obj.length</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (obj.length === +obj.length)&#123;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>It’s another way of writing if (typeof obj.length == ‘number’). Why they do it that way, it’s anyone’s guess. Probably trying to be clever at the expense of readability. Which is not too uncommon these days, unfortunately.</p>
+<p>Although it might be so that it can be compressed more by minifiers (<a href="http://developer.yahoo.com/yui/compressor/" target="_blank" rel="external">YUI Compressor</a>, <a href="http://closure-compiler.appspot.com/home" target="_blank" rel="external">Closure Compiler</a>, <a href="https://github.com/mishoo/UglifyJS" target="_blank" rel="external">UglifyJS</a>, etc):</p>
+<p>(a.length===+a.length)<strong>vs</strong>(typeof a.length==’number’)Doing it their way would save 5 bytes, each instance.</p>
+<p>This tests if obj’s length property is a number.</p>
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Arithmetic_Operators#Unary_plus_%28.2B%29" target="_blank" rel="external">unary + operator</a> converts its operand to a number, and the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators#Identity_.2F_strict_equality_%28.3D.3D.3D%29" target="_blank" rel="external">strict equality operator</a> compares the result with the original length property without performing type coercion.</p>
+<p>Therefore, the expression will only be true if obj.length is an actual number (not e.g. a string that can be converted to a number).</p>
+<p>—— <a href="http://stackoverflow.com/questions/9188998/obj-length-obj-length-in-javascript" target="_blank" rel="external">underscore.js - obj.length === +obj.length in javascript - Stack Overflow</a></p>
+<h3 id="Deal-with-WebSocket-timeout"><a href="#Deal-with-WebSocket-timeout" class="headerlink" title="Deal with WebSocket timeout"></a>Deal with WebSocket timeout</h3><p>Generally when a WebSocket connection is established, a server could time out your connection after 30 seconds of inactivity. The firewall could also time out the connection after a period of inactivity.</p>
+<p>To deal with the timeout issue you could send an empty message to the server periodically. To do this, add these two functions to your code: one to keep alive the connection and the other one to cancel the keep alive. Using this trick, you’ll control the timeout.</p>
+<p>Add a <code>timerID</code>…</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> timerID = <span class="number">0</span>; </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">keepAlive</span>(<span class="params"></span>) </span>&#123; </div><div class="line">    <span class="keyword">var</span> timeout = <span class="number">15000</span>;  </div><div class="line">    <span class="keyword">if</span> (webSocket.readyState == webSocket.OPEN) &#123;  </div><div class="line">        webSocket.send(<span class="string">''</span>);  </div><div class="line">    &#125;  </div><div class="line">    timerId = setTimeout(keepAlive, timeout);  </div><div class="line">&#125;  </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">cancelKeepAlive</span>(<span class="params"></span>) </span>&#123;  </div><div class="line">    <span class="keyword">if</span> (timerId) &#123;  </div><div class="line">        cancelTimeout(timerId);  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The <code>keepAlive()</code> function should be added at the end of the <code>onOpen()</code> method of the webSocket connection and the <code>cancelKeepAlive()</code> at the end of the <code>onClose()</code> method.</p>
+<h3 id="intelligence"><a href="#intelligence" class="headerlink" title="intelligence"></a>intelligence</h3><p>Can you explain why ++[[]][+[]]+[+[]] = “10”?<br><a href="http://stackoverflow.com/questions/7202157/can-you-explain-why-10" target="_blank" rel="external">http://stackoverflow.com/questions/7202157/can-you-explain-why-10</a></p>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><ul>
+<li><a href="http://tech.pro/tutorial/1453/7-javascript-basics-many-developers-aren-t-using-properly" target="_blank" rel="external">7 JavaScript Basics Many Developers Aren’t Using (Properly)</a></li>
+<li><a href="https://github.com/cssmagic/blog/issues/21" target="_blank" rel="external">[译] JavaScript 开发者经常忽略或误用的七个基础知识点 · Issue #21 · cssmagic/blog · GitHub</a> </li>
+<li><a href="http://modernweb.com/2013/12/23/45-useful-javascript-tips-tricks-and-best-practices" target="_blank" rel="external">45 Useful JavaScript Tips, Tricks and Best Practices - Modern Web</a></li>
+<li><a href="https://bonsaiden.github.io/JavaScript-Garden/zh/" target="_blank" rel="external">JavaScript 秘密花园</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-02-26-javascript-tips.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-02-26-javascript-tips.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/performance/">performance</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-26-javascript-tips.html&title=《JavaScript 技巧》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-26-javascript-tips.html&title=《JavaScript 技巧》 — Balance&source=JavaScript 本身可以算是一门简单的语言，但我们也不断用智慧和灵活的模式来改进它。昨天我们将这些模式应用到了 JavaScript 框架中，今天这..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-26-javascript-tips.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 技巧》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-26-javascript-tips.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-26-javascript-tips.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Node/2014-02-27-dao-ask-question.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">提问的智慧</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/CSS/2014-02-26-css-less-sass.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Less Sass</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-02-26-javascript-tips.html&title=《JavaScript 技巧》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-02-26-javascript-tips.html&title=《JavaScript 技巧》 — Balance&source=JavaScript 本身可以算是一门简单的语言，但我们也不断用智慧和灵活的模式来改进它。昨天我们将这些模式应用到了 JavaScript 框架中，今天这..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-02-26-javascript-tips.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 技巧》 — Balance&url=http://blog.inching.org/JavaScript/2014-02-26-javascript-tips.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-02-26-javascript-tips.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuUlEQVR42u3aQU7DQAwF0N7/0iCxQqJNvu1x6eJlVZU2zBuk2HzP4xFfXz/X79d/r7+ffHWH63euf9dj48LDw8NrLT1fdO+n15/P15avGQ8PD2+blxSDyXac+o3V8oOHh4f3v7xJu9xbaLWc4OHh4X0a75qaNNPJnXufxMPDw3s/L2mRe6UiDw6+gmsxa8HDw8OLeb0B2P++Xp/v4eHh4bWm6tVSkRSMPMLIy8DLdeLh4eEt8KoLyj/fO5iVswsFAw8PD2+NNwlPqzFrHky8+lah5ODh4eEd5VXb5V5A8M5jBy+baTw8PLyjvMnIKsf0jhrko7Jy9oyHh4c34OXhQrXZ7Y388wjjZiPw8PDwlnmHE45xgak+558o8PDw8N7Cm4QOk3ChHDTk+TQeHh7eUV4vhqhuR7VxL7fO13fAw8PDO8rrhQjJYz3fiLyBTtZZ2C08PDy8Fm+CzBvlvIGulo1obXh4eHhrvDyAmCyiugX5twphBB4eHt6A1/u3Pw9/JzHu5G54eHh47+HlD9w89q223dVh28098fDw8BZ41ZigNxibl5xR8cDDw8M7yuuFqtXDWBtloJCy4OHh4S3wNpZVDWTzKDkJUPDw8PD2eL1bnBqDVZvvfJsKWTUeHh7eIV71YMHkEMC82Nz8M4CHh4e3wMsxyXArKQ/ltrhYTh69vxUeHh5ezMsf65NxV94KnwpB8PDw8N7Dyx/68yMCzdrVWxAeHh7eMiw/hlV9ZFcjhrxcPSlFeHh4eAu8s0lGL6TII4/qkQI8PDy8PV5eDJLC0BuGzQdgN0cH8PDw8BZ41Sg2LwnVwHcyAHvyXTw8PLwP4CWYarHJR2X5iA4PDw/vE3j54vK2O9mm6/dv7oaHh4e3xjs19ErKSRJP9A57jWJcPDw8vKNXL1CoNt95u5xvFh4eHt5R3jfwU6ZL6FCDFwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

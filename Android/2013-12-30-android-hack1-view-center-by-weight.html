@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android绝招一——利用weight属性居中View | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="hack,weight,center">
+    <meta name="description" content="##前言
+从salttiger上看到一本书，《[50.Android.Hacks(2013.6)].Carlos.Sessa.文字版》，个人认为都是Android的开发中都会碰到的问题。完了本人看书从来都是要写笔记的，因为看过的书很少有耐心再看第二遍，不用就忘。这可能会是一个系列文章，如果我能坚持的话。本人不会翻译这本书，因为我现在没有这么多的时间和精力，我只是尽量提及其中最最核心的点。如果你有兴">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android绝招一——利用weight属性居中View">
+<meta property="og:url" content="http://blog.inching.org/Android/2013-12-30-android-hack1-view-center-by-weight.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="##前言
+从salttiger上看到一本书，《[50.Android.Hacks(2013.6)].Carlos.Sessa.文字版》，个人认为都是Android的开发中都会碰到的问题。完了本人看书从来都是要写笔记的，因为看过的书很少有耐心再看第二遍，不用就忘。这可能会是一个系列文章，如果我能坚持的话。本人不会翻译这本书，因为我现在没有这么多的时间和精力，我只是尽量提及其中最最核心的点。如果你有兴">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/hack1-center.png">
+<meta property="og:image" content="http://www.chess-ix.com/ChessContent/uploads/2012/01/layout4-180x300.png">
+<meta property="og:updated_time" content="2017-04-21T12:57:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android绝招一——利用weight属性居中View">
+<meta name="twitter:description" content="##前言
+从salttiger上看到一本书，《[50.Android.Hacks(2013.6)].Carlos.Sessa.文字版》，个人认为都是Android的开发中都会碰到的问题。完了本人看书从来都是要写笔记的，因为看过的书很少有耐心再看第二遍，不用就忘。这可能会是一个系列文章，如果我能坚持的话。本人不会翻译这本书，因为我现在没有这么多的时间和精力，我只是尽量提及其中最最核心的点。如果你有兴">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/hack1-center.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android绝招一——利用weight属性居中View</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android绝招一——利用weight属性居中View</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2013-12-29T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2013-12-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-android-hack1-view-center-by-weight"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android绝招一——利用weight属性居中View</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2013-12-30 00:00:00" datetime="2013-12-29T16:00:00.000Z"  itemprop="datePublished">2013-12-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>##前言</p>
+<p>从<a href="http://www.salttiger.com/" target="_blank" rel="external">salttiger</a>上看到一本书，<a href="http://www.salttiger.com/50-android-hacks/" target="_blank" rel="external">《[50.Android.Hacks(2013.6)].Carlos.Sessa.文字版》</a>，个人认为都是Android的开发中都会碰到的问题。完了本人看书从来都是要写笔记的，因为看过的书很少有耐心再看第二遍，不用就忘。这可能会是一个系列文章，如果我能坚持的话。本人不会翻译这本书，因为我现在没有这么多的时间和精力，我只是尽量提及其中最最核心的点。如果你有兴趣或者有疑虑可以直接看书中对应的点。另外，<a href="http://blog.csdn.net/u011418185/article/category/1706265" target="_blank" rel="external">KOST-昱东</a>哥哥翻译了前七篇，可能就此终止了，呵呵。所以前七篇可以直接看他的翻译。</p>
+<a id="more"></a>
+<p>本系列的代码均在github上的<a href="https://github.com/Macarse/50AH-code，请使用" target="_blank" rel="external">https://github.com/Macarse/50AH-code，请使用</a></p>
+<p>##目标</p>
+<p>我们的目标是实现</p>
+<ul>
+<li>View（以Button为例）的居中对齐，这个不是重点。</li>
+<li>这个Button的宽度占屏幕宽度的50%。</li>
+</ul>
+<p>我们最终要实现的效果为：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/hack1-center.png" alt="居中" title="">
+                </div>
+                <div class="image-caption">居中</div>
+            </figure>
+<p>##实现居中</p>
+<p>实现居中相对简单，我们使用<strong>android:gravity</strong>属性，如：</p>
+<pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:orientation=&quot;horizontal&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:gravity=&quot;center&quot;&gt;
+
+    &lt;Button
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;New Button&quot;
+        android:id=&quot;@+id/button&quot; /&gt;
+&lt;/LinearLayout&gt;
+</code></pre><p>##实现宽度为容器的50%</p>
+<p>###layout_weight</p>
+<p>官方解释为，Indicates how much of the extra space in the [ViewGroup] will be allocated to the view associated with these LayoutParams， 说了等于没说。我们来看到例子：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:orientation=&quot;vertical&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;&gt;
+    &lt;LinearLayout
+        android:background=&quot;#0000FF&quot;
+        android:layout_height=&quot;0dp&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_weight=&quot;2&quot; /&gt;
+    &lt;LinearLayout
+        android:background=&quot;#00FF00&quot;
+        android:layout_height=&quot;0dp&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_weight=&quot;1&quot; /&gt;
+&lt;/LinearLayout&gt;
+</code></pre><p>效果图为：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.chess-ix.com/ChessContent/uploads/2012/01/layout4-180x300.png" alt="layout_weight" title="">
+                </div>
+                <div class="image-caption">layout_weight</div>
+            </figure>
+<p>所以我们把layout_weight理解为计算控件占用控件的一个参数，作用在水平方向还是作用的垂直方向由父容器的<strong>android:orientation</strong>决定。假如作用在水平方向，那么控件占用宽度的计算方法为：</p>
+<pre><code>View&apos;s width + View&apos;s weight * 200 / sum(weight)
+</code></pre><p>当把控件本身的宽度(android:width)或者高度(android:height)设置为0时，该控件的最终的宽度或者高度将由layout_weight计算得出，这其实就是子控件占用在父容器中的占用比例。</p>
+<p>作用在垂直位置的计算公式同理。</p>
+<p>对于这个例子，需要说明的是LinearLayout默认的layout_width和layout_height都为0dp，所以我们可以省略<code>android:layout_height=&quot;0dp&quot;</code>，而如果是控件（如Button）就不能省略这句代码了。</p>
+<p>###weightSum</p>
+<p>可想而知，要实现控件占用父容器的一般控件，实现的思路为子控件的layout_weight为sum(weight)的一半，并且将该控件的宽度指定为0即可。我们可以通过<strong>weightSum</strong>指定sum(weight)，而无需自动计算。</p>
+<p>最终我们的代码如下：</p>
+<pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:orientation=&quot;horizontal&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:gravity=&quot;center&quot;
+    android:weightSum=&quot;1&quot;&gt;
+    &lt;Button
+        android:layout_width=&quot;0&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;New Button&quot;
+        android:layout_weight=&quot;0.5&quot;
+        android:id=&quot;@+id/button&quot; /&gt;
+&lt;/LinearLayout&gt;
+</code></pre><p>##参考</p>
+<ul>
+<li>关于layout_weight和更详细的使用方法可以参考<a href="http://www.chess-ix.com/blog/the-use-of-layout_weight-with-android-layouts/" target="_blank" rel="external">The use of layout_weight with Android layouts</a>。    </li>
+<li><a href="http://www.salttiger.com/50-android-hacks/" target="_blank" rel="external">《[50.Android.Hacks(2013.6)].Carlos.Sessa.文字版》</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:16.000Z" itemprop="dateUpdated">2017-04-21 20:57:16</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2013-12-30-android-hack1-view-center-by-weight.html" target="_blank" rel="external">http://blog.inching.org/Android/2013-12-30-android-hack1-view-center-by-weight.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/center/">center</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hack/">hack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/weight/">weight</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2013-12-30-android-hack1-view-center-by-weight.html&title=《Android绝招一——利用weight属性居中View》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2013-12-30-android-hack1-view-center-by-weight.html&title=《Android绝招一——利用weight属性居中View》 — Balance&source=##前言
+从salttiger上看到一本书，《[50.Android.Hacks(2013.6)].Carlos.Sessa.文字版》，个人认为都是And..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2013-12-30-android-hack1-view-center-by-weight.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android绝招一——利用weight属性居中View》 — Balance&url=http://blog.inching.org/Android/2013-12-30-android-hack1-view-center-by-weight.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2013-12-30-android-hack1-view-center-by-weight.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2013-12-31-android-hack2-lazy-loading-using-include.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android绝招二——延迟加载与避免重复</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2013-12-23-android-ui-library.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Views</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2013-12-30-android-hack1-view-center-by-weight.html&title=《Android绝招一——利用weight属性居中View》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2013-12-30-android-hack1-view-center-by-weight.html&title=《Android绝招一——利用weight属性居中View》 — Balance&source=##前言
+从salttiger上看到一本书，《[50.Android.Hacks(2013.6)].Carlos.Sessa.文字版》，个人认为都是And..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2013-12-30-android-hack1-view-center-by-weight.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android绝招一——利用weight属性居中View》 — Balance&url=http://blog.inching.org/Android/2013-12-30-android-hack1-view-center-by-weight.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2013-12-30-android-hack1-view-center-by-weight.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACoUlEQVR42u3awU4DMQwEUP7/p+GMgDJjJ6VCb08Itbt5e4jdcd7e4uv9y/X1/4+/mz/lpzvn96kvPDw8vPXSc8bsM/unJ9/Cw8PDu81Ltum8YLSFIUfma8bDw8N7Zd6+SCRNOR4eHt7/4D2GJZi2jcbDw8N7HV7ezubNdILJY4XrWQseHh5ezJuNpv727yvzPTw8PLz1VP3UOKqNJDaF5NMd8PDw8C7wZgOqU6FD2wTP1omHh4d3lpcHuO12/8sbjYPa9j+f7oOHh4d3jbeJQWft+OzYQR1P4OHh4V3g7dvlfLtPoo0cVozi8PDw8C7wNgcC8jZ3tsW37Xtdx/Dw8PBKXv6DPy8Ys2Iwe3HFfA8PDw/vEK89XJUXjLbYtOBVqcDDw8Nb8zaDq/oI1KgHzsdyeHh4eLd59TD+0ICqfW6ynm+eiIeHh/dHvDxWaF9E8jpm5afOWvDw8PBiXhvUtqP9PDKYtd1JEcLDw8M7y8s35TxsnUW07WGvKJLAw8PDu8BL2uI2YthQ26Fa1MTj4eHhHeW1UUK+rLb5Pht84OHh4d3mzdrrWdywOV7QHvbCw8PDeyZvc+hqNuKavTI8PDy85/PaTT8fRM2OIMya8l9WjoeHh3eNl4+jZsudHQvIn1JP+fDw8PCu8fJNuR16zSKJttXGw8PDu8fbx6ybYVg79MoHY3h4eHj3eLONPi8DeZFojykcm/Lh4eHhBbz38mq38jaozT8fvXo8PDy8C7xNW5wvt110Ak6CEjw8PLx7vHbUNEtK23Z8M5DDw8PDew5vM+hq77BqfzdZCx4eHt7L8JLPnwoj8vXg4eHhvRovjw/ycCEh1cca8PDw8K7xNkOvPAJOvpVQi/vj4eHhXeDNfuS3Ue/su5un4OHh4V3gfQC95XOoRp54FAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

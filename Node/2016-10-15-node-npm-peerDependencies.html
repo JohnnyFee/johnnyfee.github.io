@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Dealing with the deprecation of peerDependencies in NPM 3 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="node,npm,peerDependencies">
+    <meta name="description" content="From: Dealing with the deprecation of peerDependencies in NPM 3
+The peerDependencies configuration was originally designed to address the problem of NPM packages that were ‘plugins’ for other framewor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dealing with the deprecation of peerDependencies in NPM 3">
+<meta property="og:url" content="http://blog.inching.org/Node/2016-10-15-node-npm-peerDependencies.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="From: Dealing with the deprecation of peerDependencies in NPM 3
+The peerDependencies configuration was originally designed to address the problem of NPM packages that were ‘plugins’ for other framewor">
+<meta property="og:image" content="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f626.svg">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dealing with the deprecation of peerDependencies in NPM 3">
+<meta name="twitter:description" content="From: Dealing with the deprecation of peerDependencies in NPM 3
+The peerDependencies configuration was originally designed to address the problem of NPM packages that were ‘plugins’ for other framewor">
+<meta name="twitter:image" content="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f626.svg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Dealing with the deprecation of peerDependencies in NPM 3</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Dealing with the deprecation of peerDependencies in NPM 3</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-10-14T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-10-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Dependencies-vs-PeerDependencies-in-NPM2"><span class="post-toc-text">Dependencies vs PeerDependencies in NPM2</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#peerDependencies-to-the-rescue"><span class="post-toc-text">peerDependencies to the rescue</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Buh-bye-peerDependencies"><span class="post-toc-text">Buh-bye, peerDependencies!</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#So-what-now"><span class="post-toc-text">So what now?</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#in-NPM2…"><span class="post-toc-text">in NPM2…</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#in-NPM3…"><span class="post-toc-text">in NPM3…</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Works-on-my-machine"><span class="post-toc-text">Works on my machine!</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-npm-peerDependencies"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Dealing with the deprecation of peerDependencies in NPM 3</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-10-15 00:00:00" datetime="2016-10-14T16:00:00.000Z"  itemprop="datePublished">2016-10-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Node/">Node</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>From: <a href="https://codingwithspike.wordpress.com/2016/01/21/dealing-with-the-deprecation-of-peerdependencies-in-npm-3/" target="_blank" rel="external">Dealing with the deprecation of peerDependencies in NPM 3</a></p>
+<p>The <code>peerDependencies</code> configuration was originally designed to address the problem of NPM packages that were ‘plugins’ for other frameworks.</p>
+<p>The original problem is discussed more in-depth <a href="https://nodejs.org/en/blog/npm/peer-dependencies/" target="_blank" rel="external">here on the NPM blog</a>.</p>
+<p>For example, the <code>grunt-contrib-jasmine</code> package requires that the project using it also lists <code>grunt</code> in its dependencies. Because of the way NPM v1 and v2 resolved packages, <code>grunt-contrib-jasmine</code> couldn’t just list <code>grunt</code> as one of its dependencies and expect things to work.</p>
+<p>Let’s look at a more detailed explanation of why:</p>
+<h2 id="Dependencies-vs-PeerDependencies-in-NPM2"><a href="#Dependencies-vs-PeerDependencies-in-NPM2" class="headerlink" title="Dependencies vs PeerDependencies in NPM2"></a>Dependencies vs PeerDependencies in NPM2</h2><p>Assume we are working on our own project, named “MySuperApp”. We have a few dependencies we want to use.</p>
+<p>One of them will be “PackageA”. <code>PackageA</code>‘s package.json file looks like this:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  dependencies: &#123;</div><div class="line">    "PackageB": "1.0.0"</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>So we can see here that <code>PackageA</code> has a dependency on <code>PackageB</code>.</p>
+<p>If you were to <code>npm install PackageA</code>, you would end up with the directory structure:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">MySuperApp</div><div class="line">|- node_modules</div><div class="line">   |- PackageA</div><div class="line">      |- node_modules</div><div class="line">         |- PackageB</div></pre></td></tr></table></figure>
+<p>So back in “MySuperApp” we can get a reference to “PackageA” by doing:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> packageA = <span class="built_in">require</span>(<span class="string">'PackageA'</span>);</div></pre></td></tr></table></figure>
+<p>You might also want to use “PackageB” directly in “MySuperApp”, and knowing that <code>PackageA</code> already depends on, and installed <code>PackageB</code>, you might think that you can do:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> packageA = <span class="built_in">require</span>(<span class="string">'PackageA'</span>);</div><div class="line"><span class="keyword">var</span> packageB = <span class="built_in">require</span>(<span class="string">'PackageB'</span>);</div></pre></td></tr></table></figure>
+<p>But you can’t. The require for <code>PackageB</code> would fail. Node would only look in “MySuperApp/node_modules” for a “PackageB” but would not look further down the tree, under <code>PackageA</code>‘s modules.</p>
+<p>To fix this, “MySuperApp” would have to directly import “PackageB”.</p>
+<p>Sometimes this is OK, but if <code>PackageA</code> was something like a grunt plugin, for example <code>grunt-contrib-jshint</code>, then <code>MySuperApp</code> would <em>always</em> have to depend on the <code>grunt</code> package as well.</p>
+<h2 id="peerDependencies-to-the-rescue"><a href="#peerDependencies-to-the-rescue" class="headerlink" title="peerDependencies to the rescue"></a>peerDependencies to the rescue</h2><p>To make this “if you install me, you better also install X, Y, and Z!” problem easier, <code>peerDependencies</code> was introduced. If “PackageA” had this <code>package.json</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  peerDependencies: &#123;</div><div class="line">    &quot;PackageB&quot;: &quot;1.0.0&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Then it would tell NPM that “if a package lists me as a dependency, then assume that package also has a dependency on PackageB”.</p>
+<p>If you were to <code>npm install PackageA</code> now with, you would end up with the directory structure:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MySuperApp</div><div class="line">|- node_modules</div><div class="line">   |- PackageA</div><div class="line">   |- PackageB</div></pre></td></tr></table></figure>
+<p>Notice that “PackageB” is now in “MySuperApp”‘s node_modules folder even though it didn’t directly depend on PackageB.</p>
+<p>This code would now work just fine, because both packages can be resolved from “MySuperApp/node_modules”:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> packageA = <span class="built_in">require</span>(<span class="string">'PackageA'</span>);</div><div class="line"><span class="keyword">var</span> packageB = <span class="built_in">require</span>(<span class="string">'PackageB'</span>);</div></pre></td></tr></table></figure>
+<h2 id="Buh-bye-peerDependencies"><a href="#Buh-bye-peerDependencies" class="headerlink" title="Buh-bye, peerDependencies!"></a>Buh-bye, peerDependencies!</h2><p>With the introduction of NPM3, peerDependencies behaves differently. It no longer actually installs the peerDependency packages. Instead, it just checks at the end of install to see that they are resolvable, and prints a warning if they are not. So from the previous example, if you were to <code>npm install PackageA</code> then you would get a warning at the end saying that “PackageB” is a required dependency but is not resolved. You would need to manually add “PackageB” to “MySuperApp”‘s dependencies.</p>
+<p>In real-life, this sort of sucks. It means that if a package you are using gets updated and they change a version of a peerDependency, you now need to also change your own package.json to get the right version.</p>
+<p>In my real-life use of peerDependencies, I actually have a “core” projects that is using peerDependencies to make sure 4 other “child” projects all have the same dependencies. Then if a version changes, I only have to change the package.json in “core” and the 4 other projects are automatically updated on next npm install. This is no more with NPM3<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f626.svg" alt="😦" title="">
+                </div>
+                <div class="image-caption">😦</div>
+            </figure></p>
+<h2 id="So-what-now"><a href="#So-what-now" class="headerlink" title="So what now?"></a>So what now?</h2><p>So how do we deal with this in a sane way, especially when as a package maintainer, you don’t know if someone using your package will be on NPM2 or 3?</p>
+<p>The solution I used was in my package (“PackageA” in this example) I list all the <code>peerDependencies</code> in the regular <code>dependencies</code> too:</p>
+<p>In PackageA’s package.json:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">dependencies</span>: &#123;</div><div class="line">    <span class="string">"PackageB"</span>: <span class="string">"1.0.0"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">peerDependencies</span>: &#123;</div><div class="line">    <span class="string">"PackageB"</span>: <span class="string">"1.0.0"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>So the dependencies are duplicated. This seems weird, but let’s explore why it works:</p>
+<h3 id="in-NPM2…"><a href="#in-NPM2…" class="headerlink" title="in NPM2…"></a>in NPM2…</h3><p>It actually installs the dependency twice. You get the directory structure:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">MySuperApp</div><div class="line">|- node_modules</div><div class="line">   |- PackageA</div><div class="line">   |  |- node_modules</div><div class="line">   |     |- PackageB</div><div class="line">   |- PackageB</div></pre></td></tr></table></figure>
+<p>So PackageB is actually installed twice, but you can “fix” this with an <code>npm dedupe</code> which would clean up the duplicate. Even without the dedupe, you waste some drive space, but the code at least works and can resolve its dependencies!</p>
+<h3 id="in-NPM3…"><a href="#in-NPM3…" class="headerlink" title="in NPM3…"></a>in NPM3…</h3><p>NPM3 installs to a “flat” directory structure now. So as it runs through the <code>dependencies</code> section, it actually makes the directory structure:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MySuperApp</div><div class="line">|- node_modules</div><div class="line">   |- PackageA</div><div class="line">   |- PackageB</div></pre></td></tr></table></figure>
+<p>Then NPM checks the <code>peerDependencies</code> and sees that <code>PackageB</code> is installed and resolvable, so does not complain.</p>
+<h3 id="Works-on-my-machine"><a href="#Works-on-my-machine" class="headerlink" title="Works on my machine!"></a>Works on my machine!</h3><p>In my case I needed to support both versions of NPM, because I can’t reasonable expect to have all developers and all build servers update from NPM 2 to 3 at the same time.</p>
+<p>This “duplicating” of the dependencies seems to work great for me and what I needed it to do.</p>
+<p>If it works for you too, awesome!</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Node/2016-10-15-node-npm-peerDependencies.html" target="_blank" rel="external">http://blog.inching.org/Node/2016-10-15-node-npm-peerDependencies.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/peerDependencies/">peerDependencies</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2016-10-15-node-npm-peerDependencies.html&title=《Dealing with the deprecation of peerDependencies in NPM 3》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2016-10-15-node-npm-peerDependencies.html&title=《Dealing with the deprecation of peerDependencies in NPM 3》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2016-10-15-node-npm-peerDependencies.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dealing with the deprecation of peerDependencies in NPM 3》 — Balance&url=http://blog.inching.org/Node/2016-10-15-node-npm-peerDependencies.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2016-10-15-node-npm-peerDependencies.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Node/2016-10-15-node-oauth2.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Node Tutorial</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Node/2016-10-15-node-core.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Node Core</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Node/2016-10-15-node-npm-peerDependencies.html&title=《Dealing with the deprecation of peerDependencies in NPM 3》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Node/2016-10-15-node-npm-peerDependencies.html&title=《Dealing with the deprecation of peerDependencies in NPM 3》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Node/2016-10-15-node-npm-peerDependencies.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dealing with the deprecation of peerDependencies in NPM 3》 — Balance&url=http://blog.inching.org/Node/2016-10-15-node-npm-peerDependencies.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Node/2016-10-15-node-npm-peerDependencies.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqklEQVR42u3aQW4DIQwF0Nz/0ukB0pl827iaSo9VFTGUxwIj269XPN4f4/P3q/lXK1x9db/Ca2Pg4eHhjbc+2Vzy7RUmOZp8z3h4eHjbvKsb9WpOb3O9rSf7ufwdDw8P7wG8yyv49kl9v/XeUx4PDw/vv/CSDfUOKwkheHh4eM/h5UsnASC/4vOAsZ5rwcPDw4t51ev+CX+v1Pfw8PDwxlX1auJ1EjB6+/myWzw8PLwFXn7hJsgDZf5iUjiaiYeHh3eU12u0yp+8yfxTrVe/BBs8PDy8BV61ZFVtIDjFzp/go4ocHh4eXpGXFKWqj+NJi1X1mKL6Hh4eHt6YN7nc84TFZM172OEcBh4eHl5cZ++Vu3q/JwFjss6X8ICHh4d3iNdLH+RXfxIqEnBvh3h4eHhneXlCoZp+Ta7vs8fxJcuCh4eHt8zrFeknrQY5OP8WDw8Pb5tXTUxUn90JuAeLesrw8PDwDvF6490aPUyz0Woy8PDw8AYV9lOP4Dyd0Ut5RGA8PDy8o7zkOk4SAb3kRa89q/B/8fDw8I7yeomDXvm/F4RG5Tc8PDy8BV51ofLSg7aqPFCNymB4eHh4Rd5ZWDWbWk1GVBu28PDw8P6eVy3bVxOv6wEDDw8Pb+stWtjW/KGcH1keQqJkBB4eHt4Cr/pgTZ7C82/zkFDuicDDw8Mb83rtU/PQ0puZF+3w8PDwtnnVpqgknOSkvA3rNY8eeHh4eANYPpKjSVaYpHQLT388PDy8Bd7kju0VqBJY9UF/LDbi4eHhxbz8Ks/n9xoUqv83Suni4eHhrfGq5aXqQazEqyTVi4eHh/cAXo7pJSnuD7ScbsbDw8N7DG+SqK0eTfWY8PDw8P6Gl2+3lxroze8lmvHw8PC2eb3GrLOtBtXC22L2Ag8PD+9u/ABat2nO0t8H9gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

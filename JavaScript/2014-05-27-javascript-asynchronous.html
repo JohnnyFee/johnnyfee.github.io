@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JavaScript 异步编程 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="javascript">
+    <meta name="description" content="Javascript语言的执行环境是”单线程”（single thread）。所谓”单线程”，就是指一次只能完成一件任务。如果有多个任务，就必须排队，前面一个任务完成，再执行后面一个任务，以此类推。
+这种模式的好处是实现起来比较简单，执行环境相对单纯；坏处是只要有一个任务耗时很长，后面的任务都必须排队等着，会拖延整个程序的执行。常见的浏览器无响应（假死），往往就是因为某一段Javascript代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 异步编程">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2014-05-27-javascript-asynchronous.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="Javascript语言的执行环境是”单线程”（single thread）。所谓”单线程”，就是指一次只能完成一件任务。如果有多个任务，就必须排队，前面一个任务完成，再执行后面一个任务，以此类推。
+这种模式的好处是实现起来比较简单，执行环境相对单纯；坏处是只要有一个任务耗时很长，后面的任务都必须排队等着，会拖延整个程序的执行。常见的浏览器无响应（假死），往往就是因为某一段Javascript代码">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 异步编程">
+<meta name="twitter:description" content="Javascript语言的执行环境是”单线程”（single thread）。所谓”单线程”，就是指一次只能完成一件任务。如果有多个任务，就必须排队，前面一个任务完成，再执行后面一个任务，以此类推。
+这种模式的好处是实现起来比较简单，执行环境相对单纯；坏处是只要有一个任务耗时很长，后面的任务都必须排队等着，会拖延整个程序的执行。常见的浏览器无响应（假死），往往就是因为某一段Javascript代码">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript 异步编程</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript 异步编程</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-26T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#回调函数"><span class="post-toc-text">回调函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#事件监听"><span class="post-toc-text">事件监听</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#发布-订阅"><span class="post-toc-text">发布/订阅</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Async-js"><span class="post-toc-text">Async.js</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Promises对象"><span class="post-toc-text">Promises对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#错误处理"><span class="post-toc-text">错误处理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#其他"><span class="post-toc-text">其他</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-text">参考</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-javascript-asynchronous"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript 异步编程</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-27 00:00:00" datetime="2014-05-26T16:00:00.000Z"  itemprop="datePublished">2014-05-27</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Javascript语言的执行环境是”单线程”（single thread）。所谓”单线程”，就是指一次只能完成一件任务。如果有多个任务，就必须排队，前面一个任务完成，再执行后面一个任务，以此类推。</p>
+<p>这种模式的好处是实现起来比较简单，执行环境相对单纯；坏处是只要有一个任务耗时很长，后面的任务都必须排队等着，会拖延整个程序的执行。常见的浏览器无响应（假死），往往就是因为某一段Javascript代码长时间运行（比如死循环），导致整个页面卡在这个地方，其他任务无法执行。</p>
+<p>为了解决这个问题，Javascript语言将任务的执行模式分成两种：同步（Synchronous）和异步（Asynchronous）。</p>
+<p>“同步模式”就是上一段的模式，后一个任务等待前一个任务结束，然后再执行，程序的执行顺序与任务的排列顺序是一致的、同步的；”异步模式”则完全不同，每一个任务有一个或多个回调函数（callback），前一个任务结束后，不是执行后一个任务，而是执行回调函数，后一个任务则是不等前一个任务结束就执行，所以程序的执行顺序与任务的排列顺序是不一致的、异步的。</p>
+<p>“异步模式”非常重要。在浏览器端，耗时很长的操作都应该异步执行，避免浏览器失去响应，最好的例子就是Ajax操作。在服务器端，”异步模式”甚至是唯一的模式，因为执行环境是单线程的，如果允许同步执行所有http请求，服务器性能会急剧下降，很快就会失去响应。</p>
+<p>以下总结了”异步模式”编程的4种方法，理解它们可以让你写出结构更合理、性能更出色、维护更方便的JavaScript程序。</p>
+<a id="more"></a>
+<h2 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h2><p>这是异步编程最基本的方法。</p>
+<p>假定有两个函数f1和f2，后者等待前者的执行结果。</p>
+<pre><code>f1();
+f2();
+</code></pre><p>如果f1是一个很耗时的任务（我们暂且使用setTimeout去代替耗时操作，以下同理），可以考虑改写f1，把f2写成f1的回调函数。</p>
+<pre><code>function f1(callback){
+    setTimeout(function () {
+        // f1的任务代码
+        callback();
+    }, 1000);
+}
+</code></pre><p>执行代码就变成下面这样：</p>
+<pre><code>f1(f2);
+</code></pre><p>采用这种方式，我们把同步操作变成了异步操作，f1不会堵塞程序运行，相当于先执行程序的主要逻辑，将耗时的操作推迟执行。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>是一个很常见的模式，所以非常容易理解。</li>
+<li>很容易实现。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>不利于代码的阅读和维护，如果使用内嵌的方式可能使代码非常难看，流程会很混乱，请参考<a href="http://callbackhell.com/" target="_blank" rel="external">Callback Hell</a>。不过可以将内联函数作为外部函数来避免这个问题。</li>
+<li>每个任务只能指定一个回调函数，这在很多情况下都是不能够满足需求的。</li>
+</ul>
+<h2 id="事件监听"><a href="#事件监听" class="headerlink" title="事件监听"></a>事件监听</h2><p>另一种思路是采用事件驱动模式。任务的执行不取决于代码的顺序，而取决于某个事件是否发生。</p>
+<p>还是以f1和f2为例。首先，为f1绑定一个事件（这里采用的jQuery的<a href="http://api.jquery.com/on/" target="_blank" rel="external">写法</a>）。</p>
+<pre><code>f1.on(&apos;done&apos;, f2);
+</code></pre><p>‘on’ is one of many common name for this function, other common names you will come across are ‘bind’, ‘listen’, ‘addEventListener’, ‘observe’.</p>
+<p>当f1发生done事件，就执行f2。然后，对f1进行改写：</p>
+<pre><code>function f1(){
+    setTimeout(function () {
+        // f1的任务代码
+        f1.trigger(&apos;done&apos;);
+    }, 1000);
+}
+</code></pre><p>f1.trigger(‘done’)表示，执行完成后，立即触发done事件，从而开始执行f2。</p>
+<p>Note that they are calling a method trigger when the work is done, I will add this method to these objects using a mix-in. Again ‘trigger’ is one of the names you will come across, others common names are ‘fire’ and ‘publish’.</p>
+<p>We need a mix-in object that has the listener behaviour, in this case I will just lean on jQuery for this:</p>
+<pre><code>var eventable = {
+    on: function(event, cb) {
+        $(this).on(event, cb);
+    },
+    trigger: function (event, args) {
+        $(this).trigger(event, args);
+    }
+}
+</code></pre><p>Then apply the behaviour to our finder and processor objects:</p>
+<pre><code>$.extend(f1, eventable);
+$.extend(f2, eventable);
+</code></pre><p><strong>优点：</strong></p>
+<ul>
+<li>比较容易理解</li>
+<li>可以绑定多个事件，每个事件可以指定多个回调函数，而且可以”去耦合”（Decoupling），有利于实现<a href="http://www.ruanyifeng.com/blog/2012/10/javascript_module.html" target="_blank" rel="external">模块化</a>。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>整个程序都要变成事件驱动型，运行流程会变得相对不清晰。</li>
+<li>A bit more difficult to setup than callbacks in your own code, you will probably want to use a library e.g. jQuery, <a href="https://github.com/fat/bean" target="_blank" rel="external">bean.js</a>.</li>
+</ul>
+<h2 id="发布-订阅"><a href="#发布-订阅" class="headerlink" title="发布/订阅"></a>发布/订阅</h2><p>上一节的”事件”，完全可以理解成”信号”。</p>
+<p>我们假定，存在一个”信号中心”，某个任务执行完成，就向信号中心”发布”（publish）一个信号，其他任务可以向信号中心”订阅”（subscribe）这个信号，从而知道什么时候自己可以开始执行。这就叫做<a href="http://en.wikipedia.org/wiki/Publish-subscribe_pattern" target="_blank" rel="external">“发布/订阅模式”</a>（publish-subscribe pattern），又称<a href="http://en.wikipedia.org/wiki/Observer_pattern" target="_blank" rel="external">“观察者模式”</a>（observer pattern）。</p>
+<p>这个模式有多种<a href="http://msdn.microsoft.com/en-us/magazine/hh201955.aspx" target="_blank" rel="external">实现</a>，下面采用的是Ben Alman的<a href="https://gist.github.com/661855" target="_blank" rel="external">Tiny Pub/Sub</a>，这是jQuery的一个插件。</p>
+<p>首先，f2向”信号中心”jQuery订阅”done”信号。</p>
+<pre><code>jQuery.subscribe(&quot;done&quot;, f2);
+</code></pre><p>然后，f1进行如下改写：</p>
+<pre><code>function f1(){
+    setTimeout(function () {
+        // f1的任务代码
+       jQuery.publish(&quot;done&quot;);
+    }, 1000);
+}
+</code></pre><p>jQuery.publish(“done”)的意思是，f1执行完成后，向”信号中心”jQuery发布”done”信号，从而引发f2的执行。</p>
+<p>此外，f2完成执行后，也可以取消订阅（unsubscribe）。</p>
+<pre><code>jQuery.unsubscribe(&quot;done&quot;, f2);
+</code></pre><p>这种方法的性质与”事件监听”类似，但是明显优于后者。因为我们可以通过查看”消息中心”，了解存在多少信号、每个信号有多少订阅者，从而监控程序的运行。</p>
+<h2 id="Async-js"><a href="#Async-js" class="headerlink" title="Async.js"></a>Async.js</h2><p>Flow control libraries are also a very nice way to deal with asynchronous code. <a href="https://github.com/caolan/async" target="_blank" rel="external">Async.js</a> is one of the most popular .</p>
+<p>为了使用Async.js，我们需要修改一下f1的回调函数的调用方式：</p>
+<pre><code>function f1(callback){
+    setTimeout(function () {
+        // f1的任务代码
+        callback(null, otherArguments);
+    }, 1000);
+}
+</code></pre><p>The first argument in the callback is null if no error occurs; or the error if one occurs. This is a common pattern in Node.js libraries and Async.js uses this pattern. By using this style the flow between Async.js and the callbacks becomes super simple.</p>
+<p>我们使用Async后，代码将变成：</p>
+<pre><code>async.waterfall([
+    function(argument...){
+        f1(..., callback);
+    },
+    f2
+]);
+</code></pre><p> Note how we can just pass the ‘f2’ function, this is because we are using the Node continuation style.</p>
+<p> Now, when doing front-end development it is unlikely that you will have a library that follows the callback(null, results) signature. So a more realistic example will look like this:</p>
+<pre><code> async.waterfall([
+    function(argument...){
+        f1(..., callback);
+    },
+    function(argument...){
+        f2(argument...) {
+            //...
+        });
+    },
+]);
+</code></pre><p><strong>优点：</strong></p>
+<ul>
+<li>Usually code using a control flow library is easier to understand because it follows a natural order (from top to bottom). This is not true with callbacks and listeners.</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>If the signatures of the functions don’t match as in the second example then you can argue that the flow control library offers little in terms of readability.</li>
+</ul>
+<h2 id="Promises对象"><a href="#Promises对象" class="headerlink" title="Promises对象"></a>Promises对象</h2><p><strong>Promises对象是CommonJS工作组提出的一种规范</strong>，目的是为异步编程提供<a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="external">统一接口</a>。</p>
+<p>简单说，它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。比如，f1的回调函数f2,可以写成：</p>
+<pre><code>f1().then(f2);
+</code></pre><p>Note how in the first callback we can simply pass the ‘f2’ function. This is because this function returns a promise itself so everything will just flow nicely.</p>
+<p>f1要进行如下改写（这里使用的是jQuery的<a href="http://www.ruanyifeng.com/blog/2011/08/a_detailed_explanation_of_jquery_deferred_object.html" target="_blank" rel="external">实现</a>）：</p>
+<pre><code>function f1(){
+    var dfd = $.Deferred();
+    setTimeout(function () {
+        // f1的任务代码
+        dfd.resolve();
+    }, 500);
+    return dfd.promise;
+}
+</code></pre><p>Each function creates a deferred object and returns a promise. Then it resolves the deferred when the results arrive.</p>
+<p>除了Jquery，还有其他库也实现了Promises，如：</p>
+<ul>
+<li><a href="https://github.com/cujojs/when" target="_blank" rel="external">when.js</a>   </li>
+</ul>
+<p>使用when.js实现和使用Jquery实现类似：</p>
+<pre><code>function f1(){
+    var deferred = when.defer();
+    setTimeout(function () {
+        // f1的任务代码
+        deferred.resolve();
+    }, 500);
+    return deferred.promise;
+}
+
+// f2可以传入f1中deferred.resolve()中传入的参数。
+function f2(){
+    var deferred = when.defer();
+    setTimeout(function () {
+        // f2的任务代码
+        dfd.resolve();
+    }, 500);
+    return deferred.promise;
+}
+</code></pre><p><strong>优点：</strong></p>
+<ul>
+<li>这样写的优点在于，回调函数变成了链式写法，程序的流程可以看得很清楚，而且有一整套的<a href="http://api.jquery.com/category/deferred-object/" target="_blank" rel="external">配套方法</a>，可以实现许多强大的功能。</li>
+</ul>
+<p>比如，指定多个回调函数：</p>
+<pre><code>f1().then(f2).then(f3);
+</code></pre><p>再比如，指定发生错误时的回调函数：</p>
+<pre><code>f1().then(f2).fail(f3);
+</code></pre><ul>
+<li>而且，它还有一个前面三种方法都没有的好处：如果一个任务已经完成，再添加回调函数，该回调函数会立即执行。所以，你不用担心是否错过了某个事件或信号。</li>
+</ul>
+<p>如：</p>
+<pre><code>var promise = finder([1,2]);
+
+// wait 
+setTimeout(function () {
+    // when this is called the finder promise has already been resolved
+    promise.then(function (records) {
+        log(&apos;records received&apos;);        
+    });
+}, 1500);
+</code></pre><p>This is a huge feature for dealing with user interaction in the browser. In complex applications you may not know the order of actions that the user will take, so you can use promises to track use interaction.</p>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>The least understood of all these tools.</li>
+<li>They can get difficult to track when you have lots of aggregated promises with added listeners along the way.</li>
+</ul>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>前面已经提到了 setTimeout 函数的一些问题，JS 中的 try..catch 机制并不能拿到 setTimeout 函数中出现的错误，一个 throw error 的影响范围有多大呢？我做了一个测试：</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+    throw new Error(&quot;error&quot;);
+    console.log(&quot;show me&quot;); // 并没有打印出来
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    console.log(&quot;show me&quot;); // 打印出来了
+&lt;/script&gt;
+</code></pre><p>从上面的测试我们可以看出，throw new Error 的作用范围就是阻断一个 script 标签内的程序运行，但是不会影响下面的 script。这个测试没什么作用，只是想告诉大家不要担心一个 Error 会影响全局的函数执行。所以把代码分为两段，一段可能出错的，一段确保不会出错的，这样不至于让全局代码都死掉，当然这样的处理方式是不可取的。</p>
+<p>庆幸的是 window 全局对象上有一个便利的函数，window.error，我们可以利用他捕捉到所有的错误，并作出相应的处理，比如：</p>
+<pre><code>window.onerror = function(msg, url, line){
+    console.log(msg, url, line);
+    // 必须返回 true，否则 Error 还是会触发阻塞程序
+    return true;
+}
+
+setTimeout(function(){
+    throw new Error(&quot;error&quot;);
+    // console：
+    //Uncaught Error: error path/to/ie6bug.html 99  
+}, 50);
+</code></pre><p>很显然，报错已经不可怕了，利用 window 提供的 onerror 函数可以很方便地处理错误并作出及时的反应，如果出现了不可知的错误，可以把信息 post 到后台，这也算是一个十分不错的监控方式。</p>
+<p>不过这样的处理存在一个问题，所有的错误我们都给屏蔽了，但有些错误本应该阻断所有程序的运行的。比如我们通过 ajax 获取数据中出了错误，程序误以为已经拿到了数据，本应该停下工作报出这个致命的错误，但是这个错误被 window.onerror 给截获了，从而进行了错误的处理。</p>
+<p>参考：<a href="http://www.cnblogs.com/hustskyking/p/javascript-asynchronous-programming.html" target="_blank" rel="external">JavaScript异步编程原理 - Barret Lee - 博客园</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><a href="http://www.admin10000.com/document/3917.html" target="_blank" rel="external">短小强悍的JavaScript异步调用库 - WEB开发者</a><ul>
+<li>原文 <a href="http://krasimirtsonev.com/blog/article/7-lines-JavaScript-library-for-calling-asynchronous-functions" target="_blank" rel="external">7 lines JavaScript library for calling asynchronous functions</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/BYVoid/continuation" target="_blank" rel="external">continuation.js</a></li>
+<li><a href="https://github.com/JeffreyZhao/wind" target="_blank" rel="external">JeffreyZhao/wind</a></li>
+</ul>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="https://github.com/yortus/asyncawait" target="_blank" rel="external">yortus/asyncawait</a> Callback heaven for Node.js with async/await.<ul>
+<li><a href="https://github.com/yortus/asyncawait/tree/master/comparison#comparison-summary" target="_blank" rel="external">asyncawait/comparison at master · yortus/asyncawait</a> 各种异步库的比较。</li>
+</ul>
+</li>
+<li><a href="https://github.com/stackp/promisejs" target="_blank" rel="external">promise</a></li>
+<li><a href="https://github.com/kriskowal/q" target="_blank" rel="external">Q</a></li>
+<li><a href="https://github.com/caolan/async" target="_blank" rel="external">async</a></li>
+<li><a href="https://github.com/creationix/step" target="_blank" rel="external">step</a></li>
+<li><a href="https://github.com/petkaantonov/bluebird" target="_blank" rel="external">petkaantonov/bluebird</a> Bluebird is a full featured promise library with unmatched performance.</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://www.ruanyifeng.com/blog/2012/12/asynchronous%EF%BC%BFjavascript.html" target="_blank" rel="external">Javascript异步编程的4种方法 - 阮一峰的网络日志</a></li>
+<li><a href="http://javascript.ruanyifeng.com/advanced/asynchronous.html" target="_blank" rel="external">JavaScript异步编程的模式 – JavaScript 标准参考教程（alpha）</a></li>
+<li><a href="http://sporto.github.com/blog/2012/12/09/callbacks-listeners-promises/" target="_blank" rel="external">Asynchronous JS: Callbacks, Listeners, Control Flow Libs and Promises</a></li>
+<li><a href="http://sporto.github.io/blog/2012/09/22/embracing-async-with-deferreds/" target="_blank" rel="external">Embracing Async with Deferreds and Promises - Sebastian’s Blog</a></li>
+<li><a href="http://software.intel.com/zh-cn/articles/asynchronized-javascript-programming" target="_blank" rel="external">JavaScript异步编程</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2014-05-27-javascript-asynchronous.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2014-05-27-javascript-asynchronous.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-05-27-javascript-asynchronous.html&title=《JavaScript 异步编程》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-05-27-javascript-asynchronous.html&title=《JavaScript 异步编程》 — Balance&source=Javascript语言的执行环境是”单线程”（single thread）。所谓”单线程”，就是指一次只能完成一件任务。如果有多个任务，就必须排队，前面..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-05-27-javascript-asynchronous.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 异步编程》 — Balance&url=http://blog.inching.org/JavaScript/2014-05-27-javascript-asynchronous.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-05-27-javascript-asynchronous.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Grunt/2014-05-27-grunt-tutorial.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Grunt Tutorial</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JavaScript/2014-05-26-javascript-async-load.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Javascript 异步加载</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2014-05-27-javascript-asynchronous.html&title=《JavaScript 异步编程》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2014-05-27-javascript-asynchronous.html&title=《JavaScript 异步编程》 — Balance&source=Javascript语言的执行环境是”单线程”（single thread）。所谓”单线程”，就是指一次只能完成一件任务。如果有多个任务，就必须排队，前面..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2014-05-27-javascript-asynchronous.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 异步编程》 — Balance&url=http://blog.inching.org/JavaScript/2014-05-27-javascript-asynchronous.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2014-05-27-javascript-asynchronous.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuUlEQVR42u3a0W7bMAwF0P7/T2evA7Z495JSmwHHT0Hh2DoMILEkv77i6/Xb1d7zerz+vPPdX57fvrrw8PDwFkt/9/pn3vOdyTNbfP4tPDw8vHu8ZNHPQck393f358FN1oyHh4f3abwcsE+R8fDw8P53Xpv4bmoFz2vAw8PD+1le/uh2oXlQZqn5sVoLHh4eXszLk9rP+Xylv4eHh4e37qq3qW2+uT8nxG2T7O1q8fDw8C7wZulyW3rYp7/5/Xh4eHjfw0sAG1hSMt6MHUSlEzw8PLyjvFkhoN3i20T8VMjw8PDwbvDyjbhd0CwE+ShDHhQ8PDy8G7z2y6tW/dEiyIEjAQ8PDy/mJVv5bHBqPw7VhvgvKTseHh7eBV7yuFkLqn1mHtbZUAIeHh7eWV4+ApUUGnJAG+I8KNFkBB4eHt6IFyWj+dlSlhJm4Ly1hoeHh3eP127iRQkgLnAk62lbdHh4eHg3ePlNe0ay6HxooBhNwMPDwzvKS1rys2JrHpr211hVWfDw8PC+hTc7Qm4UNequFh4eHt5lXvt5NiC1GVZoCxl4eHh4N3hRGykuxeaHQdt4O9Ccw8PDwzvE27SX6mrxKJRtkeJrc/Lg4eHhdftq3b6aHRuzsYNZgPDw8PBu8/IiwqxZlR8SeeKe/wB4eHh4Z3lt0bZteq3iPZoBiF6Ph4eHt+bNtuN2jGBWrk3KJf8YvcLDw8O7wHtOlGebeztW1QaiaIPh4eHhHeK9yitPhfMn5AWOuvyBh4eHd4E323Dz1n5beN2k8pvjBA8PD6/lzVr7s+0+Ly7k6X4xLoCHh4d3lNc2xtrxgtUSNxceHh7ex/DyAYK8QNC21qK34OHh4X0YLxkaqJv98TOTJ+Dh4eHd480Ktfsiwiw0RWMMDw8P7wJv9h/9vjyRJ9nPdx4oYeDh4eGlvF/4PsU6Tq2ylAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

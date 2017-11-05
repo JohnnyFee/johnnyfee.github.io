@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android Hybrid Develpment Tutorial | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,mobile,hybrid">
+    <meta name="description" content="See Building Hybrid Android Apps with Java and JavaScript
+什么是混合“混合” 应用是一种特殊的 WEB 应用，它扩展基于 WEB 的应用，并且可以使用设备平台的本地 API。混合应用的设计模式同时适用于移动和桌面环境。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Hybrid Develpment Tutorial">
+<meta property="og:url" content="http://blog.inching.org/Android/2014-09-11-android-webkit-hybrid-tutorial.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See Building Hybrid Android Apps with Java and JavaScript
+什么是混合“混合” 应用是一种特殊的 WEB 应用，它扩展基于 WEB 的应用，并且可以使用设备平台的本地 API。混合应用的设计模式同时适用于移动和桌面环境。">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/android-hybird-communication.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/android-hybird-architect.png">
+<meta property="og:image" content="http://johnnyimages.qiniudn.com/android-hybrid-html.png">
+<meta property="og:updated_time" content="2017-11-05T05:25:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Hybrid Develpment Tutorial">
+<meta name="twitter:description" content="See Building Hybrid Android Apps with Java and JavaScript
+什么是混合“混合” 应用是一种特殊的 WEB 应用，它扩展基于 WEB 的应用，并且可以使用设备平台的本地 API。混合应用的设计模式同时适用于移动和桌面环境。">
+<meta name="twitter:image" content="http://johnnyimages.qiniudn.com/android-hybird-communication.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android Hybrid Develpment Tutorial</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android Hybrid Develpment Tutorial</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-09-10T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-09-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是混合"><span class="post-toc-text">什么是混合</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Quick-Start"><span class="post-toc-text">Quick Start</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#WebView"><span class="post-toc-text">WebView</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#加载网页"><span class="post-toc-text">加载网页</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#加载-HTML"><span class="post-toc-text">加载 HTML</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#加载本地文件"><span class="post-toc-text">加载本地文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#加载-Flash-文件"><span class="post-toc-text">加载 Flash 文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#从-res-raw-目录中读取文件"><span class="post-toc-text">从 res/raw 目录中读取文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#以全屏模式打开-WebView"><span class="post-toc-text">以全屏模式打开  WebView</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#当应用是全屏模式时启用-Resize-事件"><span class="post-toc-text">当应用是全屏模式时启用 Resize 事件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#JavaScript-调用-Java-方法"><span class="post-toc-text">JavaScript 调用 Java 方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#在-Java-层调用-JavaScript-函数"><span class="post-toc-text">在 Java 层调用 JavaScript 函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Routing-Data-to-the-Correct-JavaScript-Receiver"><span class="post-toc-text">Routing Data to the Correct JavaScript Receiver</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Domain-Whitelisting"><span class="post-toc-text">Domain Whitelisting</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#处理返回键为返回上一页"><span class="post-toc-text">处理返回键为返回上一页</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#设置-android-WebView-不显示滚动条"><span class="post-toc-text">设置 android WebView 不显示滚动条</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#android-scrollbarStyle控制滚动条位置"><span class="post-toc-text">android:scrollbarStyle控制滚动条位置</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#线程安全"><span class="post-toc-text">线程安全</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#WebViewClient"><span class="post-toc-text">WebViewClient</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#处理页面内的url"><span class="post-toc-text">处理页面内的url</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#WebChromeClient"><span class="post-toc-text">WebChromeClient</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用原生弹出框"><span class="post-toc-text">使用原生弹出框</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#WebSettings"><span class="post-toc-text">WebSettings</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#阻止本地文件被加载"><span class="post-toc-text">阻止本地文件被加载</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#启用-JavaScript"><span class="post-toc-text">启用 JavaScript</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#设置默认的字号"><span class="post-toc-text">设置默认的字号</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#缩放控制"><span class="post-toc-text">缩放控制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#硬件加速"><span class="post-toc-text">硬件加速</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#设置可以自动加载图片"><span class="post-toc-text">设置可以自动加载图片</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#获得UA信息"><span class="post-toc-text">获得UA信息</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#混合应用的架构"><span class="post-toc-text">混合应用的架构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#混合应用的-HTML-架构"><span class="post-toc-text">混合应用的 HTML 架构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Web-应用的架构"><span class="post-toc-text">Web 应用的架构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#SPA-关键的设计点"><span class="post-toc-text">SPA 关键的设计点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#混合应用中使用的库和框架"><span class="post-toc-text">混合应用中使用的库和框架</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CSS-Reset-避免浏览器不一致"><span class="post-toc-text">CSS Reset 避免浏览器不一致</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#首页-index-html"><span class="post-toc-text">首页 index.html</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Viewport-Meta-Tag"><span class="post-toc-text">Viewport Meta Tag</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Viewport-Width"><span class="post-toc-text">Viewport Width</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Viewport-Scaling-with-the-Content-Attribute"><span class="post-toc-text">Viewport Scaling with the Content Attribute</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#响应式设计和媒体查询"><span class="post-toc-text">响应式设计和媒体查询</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#EM-or-Percent-unit-for-scalable-interface"><span class="post-toc-text">EM or Percent (%) unit for scalable interface</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Opacity-or-RGBA-区别是什么"><span class="post-toc-text">Opacity or RGBA: 区别是什么?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Event-Pooling"><span class="post-toc-text">Event Pooling</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CSS-DOM-and-JavaScript-Optimization-Tips-and-Useful-Snippets"><span class="post-toc-text">CSS, DOM, and JavaScript: Optimization Tips and Useful Snippets</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#图片垃圾回收"><span class="post-toc-text">图片垃圾回收</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Data-URI-images"><span class="post-toc-text">Data URI images</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#预加载图片"><span class="post-toc-text">预加载图片</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#避免使用-text-shadow-box-shadow-border-radius-gradient-opacity-CSS-RGBA-and-image-transparency"><span class="post-toc-text">避免使用 text-shadow, box-shadow, border-radius, gradient, opacity, CSS RGBA, and image transparency</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用-CSS3-Transitions-而不是-JavaScript-animations"><span class="post-toc-text">使用 CSS3 Transitions 而不是 JavaScript animations</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#雪碧图"><span class="post-toc-text">雪碧图</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#对象缓存"><span class="post-toc-text">对象缓存</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Database"><span class="post-toc-text">Database</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#localStorage"><span class="post-toc-text">localStorage</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#打开本地缓存提供JS调用"><span class="post-toc-text">打开本地缓存提供JS调用</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内核"><span class="post-toc-text">内核</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Framework"><span class="post-toc-text">Framework</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#FAQ"><span class="post-toc-text">FAQ</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#How-to-listen-for-a-WebView-finishing-loading-a-URL"><span class="post-toc-text">How to listen for a WebView finishing loading a URL?</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Performance"><span class="post-toc-text">Performance</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Book"><span class="post-toc-text">Book</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-webkit-hybrid-tutorial"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android Hybrid Develpment Tutorial</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-09-11 00:00:00" datetime="2014-09-10T16:00:00.000Z"  itemprop="datePublished">2014-09-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="http://www.salttiger.com/building-hybrid-android-apps-with-java-and-javascript/" target="_blank" rel="external">Building Hybrid Android Apps with Java and JavaScript</a></p>
+<h2 id="什么是混合"><a href="#什么是混合" class="headerlink" title="什么是混合"></a>什么是混合</h2><p>“混合” 应用是一种特殊的 WEB 应用，它扩展基于 WEB 的应用，并且可以使用设备平台的本地 API。混合应用的设计模式同时适用于移动和桌面环境。</p>
+<a id="more"></a>
+<p><strong>相对本地应用的优点：</strong></p>
+<ul>
+<li><p>缩短跨平台开发周期</p>
+</li>
+<li><p>丰富的人力资源</p>
+</li>
+<li><p>简化审核过程。大多数的应用商店在产品上架前都有一个审核过程。因为混合应用可以不通过应用商店更新，所以你无需提交到应用商店。一旦你审核通过，之后便可以自由更新。需要注意的一点是，一旦你对本地代码做了更改，这时候你就需要提交一个新版本到应用商店。</p>
+</li>
+<li><p>混合应用是未来。展望移动系统技术，你可以很容易认为混合应用是开发的未来。 Windows Phone 8，Google 提出合并 Chrome OS 和 Android，Tizen OS 和 Firefox，这些都证实了这一点，因此，在不久的将来，构建和发布混合应用是具有战略性的正确选择。</p>
+</li>
+</ul>
+<!-- more -->
+<p><strong>相对本地应用的不足：</strong></p>
+<ul>
+<li><p>性能。因为 JavaScript 是单线程的，你可能会碰到性能问题。然而，你可以把后台任务在运行本地线程中，这样，当应用忙于处理 UI 操作时，这些任务同时可以并行。本地线程会将事件和完成失败通知到 JavaScript。</p>
+</li>
+<li><p>不同平台的差异。WebKit 并不是在所有平台都是一致的，这意味着特定平台的显示可能有些不一样，这是一个易理解的话题，你需要找到缩小这些 UI 差异的方法。</p>
+</li>
+<li><p>不允许的高级特性。可能有一些高级特性不能在混合层轻易实现，如基于 OpenGL 的渲染，然后，随着 Microsoft, Google, and Mozilla 引进一些新的标准用来弥补这些空白，这些不能实现的技术正在不断减少。</p>
+</li>
+<li><p>不一致的用户界面。特定平台的的 UI 的观感可能很难用 HTML, CSS, and JavaScript 来模拟。</p>
+</li>
+</ul>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><p>你可以构建一个样例工程，使用 HTML 来来实现 UI，使用 WebView 来渲染。首先，使用 Eclipse 或者使用命令行创建样例工程。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ mkdir helloworld</div><div class="line">$ <span class="built_in">cd</span> helloworld</div><div class="line">$ android create project -n HelloWorld -p ./ -t \</div><div class="line">  android-14 -k com.helloworld --activity MainActivity</div></pre></td></tr></table></figure>
+<p>执行命令之后，一个空的本地 <em>Hello World</em> 应用将被创建。修改 AndroidManifest 文件，以包含 <code>INTERNET</code> 权限：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">package</span>=<span class="string">"com.helloworld"</span> &gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span> /&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">application</span></span></div><div class="line">        <span class="attr">android:icon</span>=<span class="string">"@drawable/icon"</span></div><div class="line">        <span class="attr">android:label</span>=<span class="string">"HelloWorld"</span> &gt;</div><div class="line">        <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">"com.helloworld.MainActivity"</span> &gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></div><div class="line"></div><div class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>然后，我们修改布局资源文件，让它在视图层包含一个 WebView 控件。我们会在 <code>MainActivity</code> 类中将该布局文件设置为内容视图：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span> &gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">WebView</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/WebView"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span> /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>打开 <code>MainActivity.java</code>，作如下修改:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.helloworld;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.helloworld.R;</div><div class="line"><span class="keyword">import</span> android.app.Activity;</div><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> android.WebKit.WebView;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">                <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line"></div><div class="line">                <span class="comment">// Set the content view for the activity as the 'main' layout resource.</span></div><div class="line">                <span class="comment">// Calling this API will cause the resource to be inflated and view</span></div><div class="line">                <span class="comment">// hierarchy to created and associated with the activity.</span></div><div class="line">                setContentView(R.layout.main);</div><div class="line"></div><div class="line">                <span class="comment">// Since our modified layout resource file contains a WebView,</span></div><div class="line">                <span class="comment">// find the instance of it for us to process it further.</span></div><div class="line">                WebView webView = (WebView) findViewById(R.id.WebView);</div><div class="line"></div><div class="line">                <span class="comment">// Enable JavaScript</span></div><div class="line">                webView.getSettings().setJavaScriptEnabled(<span class="keyword">true</span>);</div><div class="line"></div><div class="line">                <span class="comment">// Load the entry point page into the webView.</span></div><div class="line">                webView.loadUrl(<span class="string">"file:///android_asset/index.html"</span>);</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>除此之外，你也可以用编程方式来为应用视图层创建和添加 WebView：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">WebView WebView = <span class="keyword">new</span> WebView(<span class="keyword">this</span>);</div><div class="line">contentView.addView(webView);</div></pre></td></tr></table></figure>
+<p>以下是一个被应用显示 HTML 页面：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width,</span></span></div><div class="line">        initial-scale=1.0,</div><div class="line">        user-scalable=0,</div><div class="line">        minimum-scale=1.0,</div><div class="line">        maximum-scale=1.0"&gt;</div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello World<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line">* &#123;</div><div class="line">        <span class="attribute">-webkit-tap-highlight-color</span>: <span class="built_in">rgba</span>(0, 0, 0, 0);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">html</span> &#123;</div><div class="line">        <span class="attribute">height</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">html</span>, <span class="selector-tag">body</span> &#123;</div><div class="line">        <span class="attribute">margin</span>: <span class="number">0</span>;</div><div class="line">        <span class="attribute">padding</span>: <span class="number">0</span>;</div><div class="line">        <span class="attribute">overflow</span>: hidden;</div><div class="line">        <span class="attribute">-webkit-text-size-adjust</span>: none;</div><div class="line">        <span class="attribute">-webkit-user-select</span>: none;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">body</span> &#123;</div><div class="line">        <span class="attribute">font-family</span>: Helvetica, Arial, sans-serif;</div><div class="line">        <span class="attribute">font-size</span>: <span class="number">100%</span>;</div><div class="line">        <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">        <span class="attribute">height</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">article</span> &#123;</div><div class="line">        <span class="attribute">display</span>: -webkit-box;</div><div class="line">        <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">        <span class="attribute">height</span>: <span class="number">100%</span>;</div><div class="line">        <span class="attribute">-webkit-box-orient</span>: vertical;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">article</span> <span class="selector-tag">section</span><span class="selector-class">.view</span> &#123;</div><div class="line">        <span class="attribute">display</span>: -webkit-box;</div><div class="line">        <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">        <span class="attribute">height</span>: <span class="number">100%</span>;</div><div class="line">        <span class="attribute">-webkit-box-orient</span>: vertical;</div><div class="line">        <span class="attribute">-webkit-box-align</span>: center;</div><div class="line">        <span class="attribute">-webkit-box-pack</span>: center;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">article</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">"view"</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">section</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">article</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="WebView"><a href="#WebView" class="headerlink" title="WebView"></a>WebView</h2><ul>
+<li><a href="https://github.com/lzyzsd/JsBridge" target="_blank" rel="external">lzyzsd/JsBridge: android java and javascript bridge, inspired by wechat webview jsbridge</a></li>
+</ul>
+<h3 id="加载网页"><a href="#加载网页" class="headerlink" title="加载网页"></a>加载网页</h3><p>一旦你创建了 WevView 控件，通过调用 <code>loadURL()</code> API，并且传入请求的 URL 来加载页面。</p>
+<ul>
+<li><em>asset</em> 文件夹的根路径为 _file:///android<em>asset</em></li>
+<li><em>res</em> 文件夹的根路径为 _file:///android<em>res</em></li>
+</ul>
+<p>请注意，路径是 _file:///android<em>asset</em>，而非 _file:///android<em>assets</em>，不是复数。</p>
+<p><em>file:///</em> 表示你想访问的本地文件系统，并且指向根目录。我们接下来在 WebView 中加载的路径都是相对这个根目录的。因此，_file:///android<em>asset</em> 表示应用包中相对 <em>asset</em> 文件夹的路径。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// load index.html from the assets folder</span></div><div class="line">WebView.loadUrl(<span class="string">"file:///android_asset/index.html"</span>);</div><div class="line"></div><div class="line"><span class="comment">// load logo.png from the res folder</span></div><div class="line">WebView.loadUrl(<span class="string">"file:///android_res/drawable/logo.png"</span>);</div><div class="line"></div><div class="line"><span class="comment">// load a web based URL, Oreilly's homepage in this case</span></div><div class="line">WebView.loadUrl(<span class="string">"http://www.oreilly.com"</span>);</div></pre></td></tr></table></figure>
+<h3 id="加载-HTML"><a href="#加载-HTML" class="headerlink" title="加载 HTML"></a>加载 HTML</h3><p>你可以让 WevView 使用 <code>loadData()</code> 方法来显示任何合法的 HTML（以字符串的形式），如：</p>
+<pre><code>loadData(String data, String mimeType, String encoding)
+</code></pre><p>其中，<code>data</code> 为要加载的数据，这让我们可以在网页中包含内联数据，好像它们是外部资源一样。使用这个技术，我们可以在一个 HTTP 请求中加载多个通常是分离的资源，如图片和样式。</p>
+<p><code>mimeType</code> 表示数据类型，如 <code>text/html</code>。</p>
+<p><code>encoding</code> 指定编码方式。如 <code>base64</code> 表示数据使用 base64 编码，<code>UTF-8</code> 表示使用 UTF-8 编码方式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">String data = <span class="string">"&lt;!DOCTYPE html&gt;"</span>;</div><div class="line">data += <span class="string">"&lt;head&gt;&lt;title&gt;Hello World&lt;/title&gt;&lt;/head&gt;"</span>;</div><div class="line">data += <span class="string">"&lt;body&gt;Welcome to the WebView&lt;/body&gt;"</span>;</div><div class="line">data += <span class="string">"&lt;/html&gt;"</span>;</div><div class="line"><span class="comment">// args: data, mimeType, encoding</span></div><div class="line">WebView.loadData(data, <span class="string">"text/html"</span>, <span class="string">"UTF-8"</span>);</div></pre></td></tr></table></figure>
+<p>如果你想在 HTML 中引用 <em>res/drawable</em> 目录中的任意文件，你可能会使用如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Bad example</span></div><div class="line">String data = <span class="string">"&lt;!DOCTYPE html&gt;"</span>;</div><div class="line">data += <span class="string">"&lt;head&gt;&lt;title&gt;THIS WILL NOT WORK&lt;/title&gt;&lt;/head&gt;"</span>;</div><div class="line">data += <span class="string">"&lt;body&gt;&lt;img src=\"file:///android_res/drawable/logo.png\" /&gt;&lt;/body&gt;"</span>;</div><div class="line">data += <span class="string">"&lt;/html&gt;"</span>;</div><div class="line">WebView.loadData(data, <span class="string">"text/html"</span>, <span class="string">"UTF-8"</span>);</div></pre></td></tr></table></figure>
+<p>这段代码不会加载 <em>logo.png</em> 图片，因为受 <em>同源策略</em> 的限制，网页中的所有资源都必须来自同一个站点，本例中，我们请求的是 <code>data:[&lt;MIME-type&gt;]</code> 而非 <em>file:///</em>。</p>
+<p>为了避免这个限制，Google 建议使用 <code>loadDataWithBaseURL()</code>，传入一个合适的基地址，这可以同时解决相对地址和同源策略两个问题。</p>
+<h3 id="加载本地文件"><a href="#加载本地文件" class="headerlink" title="加载本地文件"></a>加载本地文件</h3><p>Android WebView 提供一组非常灵活的 API 用来从加载多个来源的文档。然而，你在某些场合必须调整 WebView 的行为，因为同源策略会限制在 web 浏览器中加载内容的地址，如从文件系统加载本地文件。</p>
+<p>下面，我们会使用一些技术来让浏览器从加载多个来源的内容。</p>
+<p>从 <em>res/drawable</em> 加载文件，需要指定基地址：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">String html = <span class="string">"&lt;!DOCTYPE html&gt;"</span>;</div><div class="line">html += <span class="string">"&lt;head&gt;&lt;title&gt;Loading files from res/drawable directory&lt;/title&gt;&lt;/head&gt;"</span>;</div><div class="line">html += <span class="string">"&lt;body&gt;&lt;img src=\"logo.png\" /&gt;/body&gt;"</span>;</div><div class="line">html += <span class="string">"&lt;/html&gt;"</span>;</div><div class="line">WebView.loadDataWithBaseURL(<span class="string">"file:///android_res/drawable/"</span>, html, <span class="string">"text/html"</span>, <span class="string">"UTF-8"</span>, <span class="keyword">null</span>);</div></pre></td></tr></table></figure>
+<p>从 SD 卡中加载文件，无需指定基地址：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">String base = Environment.getExternalStorageDirectory().getAbsolutePath()</div><div class="line">        .toString();</div><div class="line">String imagePath = <span class="string">"file://"</span>+ base + <span class="string">"/logo.png"</span>;</div><div class="line">String html = <span class="string">"&lt;!DOCTYPE html&gt;"</span>;</div><div class="line">html += <span class="string">"&lt;head&gt;&lt;title&gt;Loading files from SDCard&lt;/title&gt;&lt;/head&gt;"</span>;</div><div class="line">html += <span class="string">"&lt;body&gt;&lt;img src=\""</span>+ imagePath + <span class="string">"\" /&gt;/body&gt;"</span>;</div><div class="line">html += <span class="string">"&lt;/html&gt;"</span>;</div><div class="line">WebView.loadDataWithBaseURL(<span class="string">""</span>, html, <span class="string">"text/html"</span>,<span class="string">"UTF-8"</span>, <span class="keyword">null</span>);</div></pre></td></tr></table></figure>
+<p>先在 Java 中读取文件内容，然后将数据传入 WebView：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Load an html file</span></div><div class="line">String html = loadFileFromSDCard(<span class="string">"file:///sdcard/oreilly/book/logo.png"</span>);</div><div class="line">WebView.loadDataWithBaseURL(<span class="string">""</span>, html, <span class="string">"text/html"</span>, <span class="string">"UTF-8"</span>, <span class="keyword">null</span>);</div></pre></td></tr></table></figure>
+<p>或者:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Load an image file</span></div><div class="line">String pngData = loadFileFromAssets(<span class="string">"file:///android_asset/images/logo.png"</span>);</div><div class="line">WebView.loadData(pngData, <span class="string">"image/png"</span>, <span class="string">"UTF-8"</span>);</div></pre></td></tr></table></figure>
+<h3 id="加载-Flash-文件"><a href="#加载-Flash-文件" class="headerlink" title="加载 Flash 文件"></a>加载 Flash 文件</h3><p>In order to load flash files from SDCard into the view, you can link your flash files in the embed tag using <em>file:///</em> protocol.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- flash.html --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Playing Flash movie<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">object</span> <span class="attr">width</span>=<span class="string">"200"</span> <span class="attr">height</span>=<span class="string">"200"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"movie"</span> <span class="attr">value</span>=<span class="string">"hybrid.swf"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">embed</span> <span class="attr">src</span>=<span class="string">"file:///sdcard/hybrid.swf"</span> <span class="attr">width</span>=<span class="string">"200"</span> <span class="attr">height</span>=<span class="string">"200"</span>&gt;</span><span class="tag">&lt;/<span class="name">embed</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">object</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Then, you need to load your <em>flash.html</em> file from <em>SDCard</em> using the <code>loadUrl()</code> method.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">String base = Environment.getExternalStorageDirectory().getAbsolutePath().toString();</div><div class="line">String html = <span class="string">"file://"</span> + base + <span class="string">"/flash.html"</span>;</div><div class="line"><span class="keyword">if</span> (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) &#123;</div><div class="line">        WebView.loadUrl(html);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="从-res-raw-目录中读取文件"><a href="#从-res-raw-目录中读取文件" class="headerlink" title="从 res/raw 目录中读取文件"></a>从 res/raw 目录中读取文件</h3><p>如果你需要从 <em>res/raw</em> 读取文件并显示在 WebView 中，你需要传入资源 ID（如 <em>R.raw.home</em>）读取函数，以便能够作为字符串来获取。</p>
+<pre><code>WebView.loadData(getRawFileFromResource(R.raw.home), &quot;text/html&quot;, &quot;UTF-8&quot;);
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getRawFileFromResource</span><span class="params">(<span class="keyword">int</span> resourceId)</span> </span>&#123;</div><div class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">    Scanner s = <span class="keyword">new</span> Scanner(getResources().openRawResource(resourceId));</div><div class="line">    <span class="keyword">while</span> (s.hasNextLine()) &#123;</div><div class="line">            sb.append(s.nextLine() + <span class="string">"\n"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> sb.toString();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="以全屏模式打开-WebView"><a href="#以全屏模式打开-WebView" class="headerlink" title="以全屏模式打开  WebView"></a>以全屏模式打开  WebView</h3><p>虽然你可以让 WebView 来覆盖整个 Activity，但默认请款下，Activity 没有覆盖整个屏幕，你可以看见标题栏和通知栏。你可以在 manifest 文件中设置 Activity 的标志也可以编程来让 Activity 以全屏方式显示。</p>
+<p>通过 <em>AndroidManifest.xml</em>:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">...</span> &gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">activity</span></span></div><div class="line">            <span class="attr">android:theme</span>=<span class="string">"@android:style/Theme.NoTitleBar.Fullscreen"</span> &gt;</div><div class="line">            ...</div><div class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>以编程方式实现:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        requestWindowFeature(Window.FEATURE_NO_TITLE);</div><div class="line">        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,</div><div class="line">                WindowManager.LayoutParams.FLAG_FULLSCREEN);</div><div class="line">        setContentView(R.layout.main);</div><div class="line">        ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="当应用是全屏模式时启用-Resize-事件"><a href="#当应用是全屏模式时启用-Resize-事件" class="headerlink" title="当应用是全屏模式时启用 Resize 事件"></a>当应用是全屏模式时启用 Resize 事件</h3><p>当你把 Activity 设置成全屏模式时，当软键盘在 WebView 中显示时，resize 事件不会被触发。这可能是 Android 的限制或者是 bug。</p>
+<p>我们可以通过下面这种方式来启用 resize 事件:</p>
+<p>1.在 <em>res/values/styles.xml</em> 中设置主题，让你的应用全屏并且关闭窗口标题</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"Theme"</span> <span class="attr">parent</span>=<span class="string">"android:Theme.Light"</span>&gt;</span><span class="xml"></span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textViewStyle"</span>&gt;</span>@style/Theme.TextView<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowTitleStyle"</span>&gt;</span>@style/WindowTitle<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowContentOverlay"</span>&gt;</span>@null<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowNoTitle"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"WindowTitle"</span> <span class="attr">parent</span>=<span class="string">"@android:style/Theme"</span>&gt;</span><span class="xml"></span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textSize"</span>&gt;</span>10sp<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textColor"</span>&gt;</span>@android:color/white<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"Theme.TextView"</span> <span class="attr">parent</span>=<span class="string">"@android:style/Widget.TextView"</span>&gt;</span><span class="xml"></span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textSize"</span>&gt;</span>10sp<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textColor"</span>&gt;</span>@android:color/black<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>2.在 manifest 文件中应用这个主题：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">application</span></span></div><div class="line">    <span class="attr">android:icon</span>=<span class="string">"@drawable/icon"</span></div><div class="line">    <span class="attr">android:label</span>=<span class="string">"Demo"</span></div><div class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/Theme"</span> &gt; ... <span class="tag">&lt;/<span class="name">application</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>3.现在可以在 HTML 中捕获 resize 事件了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">window</span>).bind(<span class="string">'resize'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.error(<span class="string">'onResize'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="JavaScript-调用-Java-方法"><a href="#JavaScript-调用-Java-方法" class="headerlink" title="JavaScript 调用 Java 方法"></a>JavaScript 调用 Java 方法</h3><p>WebView 允许开发者通过在 Java 中定义组件让后并使它们从 JavaScript 可访问来扩展 JavaScrip API。当你想访问的平台特性在 JavaScript 中还没有或者想消费使用 Java 写的组件的时候，这个技术就能派上用场。</p>
+<p><code>addJavaScriptInterface()</code> 可以用来实现这个目的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">JavaScriptInterface JavaScriptInterface = <span class="keyword">new</span> JavaScriptInterface(<span class="keyword">this</span>);</div><div class="line">myWebView = <span class="keyword">new</span> MyWebView(<span class="keyword">this</span>);</div><div class="line">myWebView.addJavaScriptInterface(JavaScriptInterface, <span class="string">"HybridNote"</span>);</div></pre></td></tr></table></figure>
+<p>它的流程图为：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/android-hybird-communication.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>这个例子中，<code>JavaScriptInterface</code> WebView 的 JavaScript 环境，并且可以通过 <code>HybridNote</code> 对象（aka <em>namespace</em>）来访问。一旦对象被添加到 WebView，这个对象在页面下次加载或者重新载入后便可使用。这可以通过 WebView 对象的 <code>loadData()</code> 函数来实现。</p>
+<p>对象绑定框架非常灵活和强大。它会让 Java 方法返回的对象也可以从 JavaScript 环境访问。不像显式的对象，隐式绑定的对象是匿名对象，除非你用 JavaScript 变量来存储它的引用，否则它将丢失。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyLocationProvider</span> </span>&#123;</div><div class="line">        <span class="function">Location <span class="title">getLocation</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">WebView.addJavaScriptInterface(myLocationProvider, <span class="string">"nativeLocProvider"</span>);</div></pre></td></tr></table></figure>
+<p>上例中，<code>nativeLocProvider</code> 是全局变量，可以在 JavaScript 的任何地方访问：</p>
+<pre><code>var location = nativeLocProvider.getLocation();
+</code></pre><p>当我们在 JavaScript 中调用 <code>getLocation</code> 方法时，返回的对象自动绑定到了 JavaScript 环境，然而我们必须维持这个返回对象的引用，之后才能使用。</p>
+<p>Jelly Bean MR1 (API Level - 17) 之前的 Android 版本中，暴露的 Java 对象的所有共有方法都可以在 JavaScript 层 访问。For Jelly Bean MR1 API Level and above，暴露的方法必须标注有 <code>@JavaScriptInterface</code>，以阻止不想让 JavaScript 访问的方法暴露。</p>
+<p>JavaScript 层不能直接访问 Java 对象的域，如果需要，你可以使用显式的 getter 和setter 来实现。</p>
+<p><strong>@JavaScriptInterface</strong></p>
+<p>如果你在 <em>AndroidManifest.xml</em> 中设置 <code>targetSdkVersion</code> 为 17+，所有暴露给 JavaScript 的方法必须有 <code>@JavaScriptInterface</code> 标注。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.WebKit.javaScriptInterface;</div><div class="line"></div><div class="line"><span class="comment">// SDK version 17 or above.</span></div><div class="line"><span class="meta">@JavaScriptInterface</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showToast</span><span class="params">(String toast)</span>  </span>&#123;</div><div class="line">        <span class="comment">// show toast...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在 Android 2.3，<code>addJavaScriptInterface()</code> 不能正常工作。然而，<em>2.3</em> 让然是使用的比较广泛的版本，你可能想让你的应用可以运行在 2.3 的设备上。</p>
+<p>开发者提出了很多变通方案，你可以在 <a href="http://goo.gl/EICOa" target="_blank" rel="external">Android 2.3 WebView’s broken AddJavascriptInterface website</a> 找到一个实现。</p>
+<p>另一个方法是使用 <code>onJsPrompt()</code> 回调，在这里，可以使用 <code>message</code> 或者 <code>defaultValue</code> 参数可以用来传入在原生环境执行的方法名和参数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onJsPrompt</span><span class="params">(WebView view, String url, String message,</span></span></div><div class="line">        String defaultValue, JsPromptResult result) &#123;</div><div class="line"></div><div class="line">        <span class="comment">// Check the url to ensure that the request originated from</span></div><div class="line">        <span class="comment">// whitelisted source</span></div><div class="line"></div><div class="line">        <span class="comment">// Check to see if message or defaultValue contain JavaScript request.</span></div><div class="line">        <span class="keyword">if</span> (defaultValue.startsWith(<span class="string">"karura:"</span>)) &#123;</div><div class="line">                <span class="comment">// process the request</span></div><div class="line">        &#125; <span class="keyword">else</span>&#123;</div><div class="line">                <span class="comment">// display the confirmation dialog to the user if required</span></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> trueOrFalse; <span class="comment">// based on whether you handled the notification</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="在-Java-层调用-JavaScript-函数"><a href="#在-Java-层调用-JavaScript-函数" class="headerlink" title="在 Java 层调用 JavaScript 函数"></a>在 Java 层调用 JavaScript 函数</h3><p>混合应用的一个关键特点允许本地代码调用 JavaScript 的 API，比如传递数据，回调和事件，WebKit 没有直接的 API，开发者经常使用 <code>loadUrl()</code> 函数来达到这个目的。<code>loadURL()</code> 函数请求 WebView 加载和执行指定的 URL。</p>
+<p>比如，如果我们希望在 WebView 中显示一个提示框，我们可以像这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String js = <span class="string">"alert('Alert from Java');"</span>;</div><div class="line">WebView.loadUrl(<span class="string">"javascript:"</span> + js);</div></pre></td></tr></table></figure>
+<p>从 Java 调用 JavaScript 不像 Java 调 JavaScript 那么直观。JavaScript 对象没有暴露给 Java 层。你调用 JavaScript 方法是通过创建 JavaScript URL，然后传到 WebView 执行。使用这个方法有两个注意点，首先你必须知道 JavaScript 运行时的代码结构，其次，你必须保证 JavaScript URL 有合适的错误处理代码。JavaScript URL 中的变量必须是可寻址的，为了做到这个，你可以通过把这些变量的作用域设置为全局的，也可以通过构建调度框架来将响应路由到正确的接收对象。</p>
+<h3 id="Routing-Data-to-the-Correct-JavaScript-Receiver"><a href="#Routing-Data-to-the-Correct-JavaScript-Receiver" class="headerlink" title="Routing Data to the Correct JavaScript Receiver"></a>Routing Data to the Correct JavaScript Receiver</h3><p>为了实现一个路由框架将从 Java 运行的代码交付到正确的 JavaScript 对象，有以下几个方法可以做到这个：</p>
+<ul>
+<li>如果你使用已经存在的应用框架，如 PhoneGap, Cordova, or Karura，那么他们已经帮你做了这些事情。</li>
+<li>你可以使用现有的异步框架，如 JQuery 中的 Deferred 对象框架。</li>
+<li>自定义一个框架。</li>
+</ul>
+<h3 id="Domain-Whitelisting"><a href="#Domain-Whitelisting" class="headerlink" title="Domain Whitelisting"></a>Domain Whitelisting</h3><p>你可以使用 <code>shouldOverrideUrlLoading(WebView view, String url)</code>  方法创建一个允许的域名列表：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldOverrideUrlLoading</span><span class="params">(WebView view, String url)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!Uri.parse(url).getHost().equals(<span class="string">"www.oreilly.com"</span>)) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        view.loadUrl(url);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>However, restricting loading remote resources within the <code>shouldOverrideUrlLoading(WebView view, String url)</code> method does not intercept the requests that are made from IFRAME, XmlHttpRequests Ajax Object, and SRC attributes in HTML tags.</p>
+<p>然而，<code>shouldOverrideUrlLoading(WebView view, String url)</code> 并不会拦截来自 IFRAME, XmlHttpRequests Ajax Object, and SRC attributes in HTML tags 的请求。</p>
+<p>这个问题的解决办法是使用 <code>shouldInterceptRequest</code> 拦截请求，并且手动替换为不同的内容到视图中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> WebResourceResponse <span class="title">shouldInterceptRequest</span><span class="params">(WebView view, String url)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (url.contains(<span class="string">".js"</span>)) &#123;</div><div class="line">                String str = <span class="string">"alert('This is a replaced JavaScript code.')"</span>;</div><div class="line">                InputStream is = <span class="keyword">null</span>;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                        is = <span class="keyword">new</span> ByteArrayInputStream(str.getBytes(<span class="string">"UTF8"</span>));</div><div class="line">                &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">                String type = <span class="string">"application/JavaScript"</span>;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">new</span> WebResourceResponse(type, <span class="string">"UTF-8"</span>, is);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.shouldInterceptRequest(view, url);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="处理返回键为返回上一页"><a href="#处理返回键为返回上一页" class="headerlink" title="处理返回键为返回上一页"></a>处理返回键为返回上一页</h3><p>如果用webview点链接看了很多页以后，如果不做任何处理，点击系统“Back”键，整个浏览器会调用finish()而结束自身，如果希望浏览的网页回退而不是退出浏览器，需要在当前Activity中处理并消费掉该Back事件，覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// To handle the back button key press</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onKeyDown</span><span class="params">(<span class="keyword">int</span> keyCode, KeyEvent event)</span> </span>&#123;</div><div class="line">    LogUtil.i(<span class="keyword">this</span>, <span class="string">"keyCode="</span>   keyCode);</div><div class="line">    <span class="keyword">if</span> ((keyCode == KeyEvent.KEYCODE_BACK) &amp;&amp; mWebView.canGoBack()) &#123;</div><div class="line">        mWebView.goBack();</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onKeyDown(keyCode, event);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="设置-android-WebView-不显示滚动条"><a href="#设置-android-WebView-不显示滚动条" class="headerlink" title="设置 android WebView 不显示滚动条"></a>设置 android WebView 不显示滚动条</h3><p>可以直接在layout中添加 android:scrollbars=”none” 来设置不显示滚动条，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">WebView</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@ id/wv"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@drawable/bg"</span></div><div class="line">    <span class="attr">android:scrollbars</span>=<span class="string">"none"</span> /&gt;</div></pre></td></tr></table></figure>
+<h3 id="android-scrollbarStyle控制滚动条位置"><a href="#android-scrollbarStyle控制滚动条位置" class="headerlink" title="android:scrollbarStyle控制滚动条位置"></a>android:scrollbarStyle控制滚动条位置</h3><p>WebView有一个设置滚动条位置的属性：android:scrollbarStyle 可以是insideOverlay可以是outsideOverlay，两个的区别是SCROLLBARS_INSIDE_OVERLAY的样式是滚动条在整个page里，类似css中的padding，看代码下的这个图吧，很清晰.</p>
+<pre><code>//mWebView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
+mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+</code></pre><h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><p>从 JavaScript 访问 Java 对象时，方法可能运行在一个和 WebView 相关的后台线程中，这个线程不同于主应用线程。这意味着应用开发者在 JavaScript 中访问 Java 对象以及这些方法中的对象域时，应该注意线程安全问题。</p>
+<p>为了解决这个问题，我们建议使用一个主线程相关的处理器让访问 Java 方法的请求排队。这个处理器可以将这些事件发送给主线程，从而避免任何线程问题。</p>
+<p>你可以扩展这个思路，在 非 UI 的 looper（和相关的 handler）上排队 UI 无关的事件，从而让 UI 线程具有轻量性和和可访问性。</p>
+<h2 id="WebViewClient"><a href="#WebViewClient" class="headerlink" title="WebViewClient"></a>WebViewClient</h2><p>Android 的 WebView 是可扩展的并且有很多具有代表性的类，包括 WebViewClient 和 W ebChromeClient，这些类可以用来自定义 WebView 的默认行为，并且可以在请求/相应 调用流中注入数据。</p>
+<p>WebViewClient is a class that the WebView refers to before it handles everything that, in some way, is related to the rendering of a page. Using this class, you can add callback methods that are invoked to inform you of changes in the rendering.</p>
+<p>WebViewClient 是 WebView 引用的是一个和页面显示相关的类。这个类可以用来添加用来报告显示过程的回调方法。</p>
+<p>这些回调包括:</p>
+<ul>
+<li>web 请求开始加载和结束加载</li>
+<li>浏览区是否应该加载指定的资源</li>
+<li>错误通知，登陆请求和 form 重提交</li>
+</ul>
+<p>Android WebView 有一个 WebViewClint 的默认实现，可以使用 WebView 的 <code>setWebViewClient()</code> 方法覆盖这个默认实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">webView.setWebViewClient(<span class="keyword">new</span> WebViewClient() &#123;</div><div class="line">  <span class="comment">// override all the methods</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="处理页面内的url"><a href="#处理页面内的url" class="headerlink" title="处理页面内的url"></a>处理页面内的url</h3><p>防止页面内的url使用browser来打开</p>
+<p><a href="http://stackoverflow.com/questions/4066438/android-webview-how-to-handle-redirects-in-app-instead-of-opening-a-browser" target="_blank" rel="external">http://stackoverflow.com/questions/4066438/android-webview-how-to-handle-redirects-in-app-instead-of-opening-a-browser</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">webview.setWebViewClient(<span class="keyword">new</span> WebViewClient() &#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldOverrideUrlLoading</span><span class="params">(WebView view, String url)</span></span>&#123;</div><div class="line">        <span class="comment">// do your handling codes here, which url is the requested url</span></div><div class="line">        <span class="comment">// probably you need to open that url rather than redirect:</span></div><div class="line">        view.loadUrl(url);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>; <span class="comment">// then it is not handled by default action</span></div><div class="line">   &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>以下Demo指定只有url里包含eoe.cn的时候才在webview里打开，否则还是启动浏览器打开.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldOverrideUrlLoading</span><span class="params">(WebView view, String url)</span> </span>&#123;</div><div class="line">    LogUtil.i(<span class="keyword">this</span>, <span class="string">"url="</span>   url);</div><div class="line">    <span class="keyword">if</span> ( url.contains(<span class="string">"eoe.cn"</span>) == <span class="keyword">true</span>)&#123;</div><div class="line">        view.loadUrl(url);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        Intent in = <span class="keyword">new</span> Intent (Intent.ACTION_VIEW , Uri.parse(url));</div><div class="line">        startActivity(in);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="WebChromeClient"><a href="#WebChromeClient" class="headerlink" title="WebChromeClient"></a>WebChromeClient</h2><p>WebChromeClient 负责浏览器 UI 的所有事情。WebChromeClient 可以用来处理浏览器的访问历史，创建新的窗口，关注 alerts, prompts, and console messages。一个没有综合需求的简单应用可以不用覆盖默认的 WebChromeClient。你可以使用 WebView 的 <code>setWebChromeClient()</code> 方法来指定你自己的实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">webView.setWebChromeClient(<span class="keyword">new</span> WebChromeClient()&#123;</div><div class="line">  <span class="comment">// override all the methods</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在不设置WebChromeClient实例时，调用alert、prompt等接口时无效果。必须像使用console对象的方法一样，设置WebChromeClient实例，alert和prompt才起作用。</p>
+<p>See <a href="http://stackoverflow.com/questions/6463151/alert-is-not-appear-from-web-view-in-android" target="_blank" rel="external">java - Alert is not appear from web view in android? - Stack Overflow</a></p>
+<pre><code>this.webView.setWebChromeClient(new WebChromeClient());
+</code></pre><h3 id="使用原生弹出框"><a href="#使用原生弹出框" class="headerlink" title="使用原生弹出框"></a>使用原生弹出框</h3><p>我们可以覆盖WebChromeClient的<a href="http://developer.android.com/reference/android/webkit/WebChromeClient.html#onJsAlert" target="_blank" rel="external">onJsAlert</a>、<a href="http://developer.android.com/reference/android/webkit/WebChromeClient.html#onJsConfirm" target="_blank" rel="external">onJsConfirm</a>、<a href="http://developer.android.com/reference/android/webkit/WebChromeClient.html#onJsPrompt" target="_blank" rel="external">onJsPrompt</a>、onReceivedTitle等接口来使用Android原生的界面来显示，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> WebChromeClient() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceivedTitle</span><span class="params">(WebView view, String title)</span> </span>&#123;</div><div class="line">        MainWebView3.<span class="keyword">this</span>.setTitle(modifiedTitle);</div><div class="line">        <span class="keyword">super</span>.onReceivedTitle(view, title);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onJsAlert</span><span class="params">(WebView view, String url, String message,</span></span></div><div class="line">            <span class="keyword">final</span> JsResult result) &#123;</div><div class="line">        <span class="keyword">new</span> AlertDialog.Builder(context)</div><div class="line">                .setTitle(<span class="string">"alert"</span>)</div><div class="line">                .setMessage(message)</div><div class="line">                .setPositiveButton(<span class="string">"YES"</span>,</div><div class="line">                        <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</div><div class="line">                            <span class="meta">@Override</span></div><div class="line">                            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog,</span></span></div><div class="line">                                    <span class="keyword">int</span> which) &#123;</div><div class="line">                                <span class="comment">// 处理结果为确定状态 同时唤醒WebCore线程</span></div><div class="line">                                result.confirm();</div><div class="line">                            &#125;</div><div class="line">                        &#125;).create().show();</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>; <span class="comment">// 已处理</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onJsConfirm</span><span class="params">(WebView view, String url,</span></span></div><div class="line">            String message, <span class="keyword">final</span> JsResult result) &#123;</div><div class="line">        <span class="keyword">new</span> AlertDialog.Builder(context)</div><div class="line">                .setTitle(<span class="string">"confirm"</span>)</div><div class="line">                .setMessage(message)</div><div class="line">                .setPositiveButton(<span class="string">"YES"</span>,</div><div class="line">                        <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</div><div class="line">                            <span class="meta">@Override</span></div><div class="line">                            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog,</span></span></div><div class="line">                                    <span class="keyword">int</span> which) &#123;</div><div class="line">                                Toast.makeText(context,</div><div class="line">                                        <span class="string">"you clicked yes"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">                                result.confirm();</div><div class="line">                            &#125;</div><div class="line">                        &#125;)</div><div class="line">                .setNegativeButton(<span class="string">"NO"</span>,</div><div class="line">                        <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</div><div class="line">                            <span class="meta">@Override</span></div><div class="line">                            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog,</span></span></div><div class="line">                                    <span class="keyword">int</span> which) &#123;</div><div class="line">                                <span class="comment">// 处理结果为取消状态 同时唤醒WebCore线程</span></div><div class="line">                                result.cancel();</div><div class="line">                            &#125;</div><div class="line">                        &#125;).create().show();</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="WebSettings"><a href="#WebSettings" class="headerlink" title="WebSettings"></a>WebSettings</h2><p>Android 的 WebView 提供了一个非常综合的配置接口 <code>WebSettings</code>，用来配置 WebView 运行时的行为。<code>WebSettings</code> 在 WebView 的声明周期内是一个合法的对象。换句话说，如果 WebView 已经销毁，你还视图访问 <code>WebView.getSettings()</code> 的任何方法，会抛出 <code>IllegalStateException</code> 异常。</p>
+<p>你可以通过 <code>WebView.getSettings()</code> 获取 <code>WebSettings</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">WebView WebView = <span class="keyword">new</span> WebView(<span class="keyword">this</span>);</div><div class="line">WebSettings settings = WebView.getSettings();</div></pre></td></tr></table></figure>
+<h3 id="阻止本地文件被加载"><a href="#阻止本地文件被加载" class="headerlink" title="阻止本地文件被加载"></a>阻止本地文件被加载</h3><p><code>setAllowFileAccess()</code> 接口用来控制本地文件是否可以被 WebView 访问。这是其中一个可以在运行时配置的设置项。默认请款下，允许访问本地文件系统。这个设置不会限制 WebView 从  _file:///android<em>asset</em> (assets) and _file:///android<em>res</em> (resources) 目录加载本地资源。出于安全考虑，如果你的应用没有必要访问文件系统，最好把这个设置关闭。</p>
+<pre><code>settings.setAllowFileAccess(false);
+</code></pre><h3 id="启用-JavaScript"><a href="#启用-JavaScript" class="headerlink" title="启用 JavaScript"></a>启用 JavaScript</h3><p>出于安全考虑，JavaScript 默认是被禁止的。你可以通过 <code>setJavaScriptEnabled()</code> 方法来启用/禁用 JavaScript。</p>
+<pre><code>settings.setJavaScriptEnabled(true);
+</code></pre><p>打开一些不需要的 WebView 设置可能导致不期望的行为。因此，最好关闭你应用中无需使用的特性。</p>
+<p>比如，你如果不需要使用 Flash 插件，请使用 <code>setPluginState(PluginState.OFF)</code> 方法关闭，这可以阻止受到第三方插件的攻击。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">WebView WebView = <span class="keyword">new</span> WebView(<span class="keyword">this</span>);</div><div class="line">WebSettings settings = WebView.getSettings();</div><div class="line">settings.setPluginState(PluginState.OFF);</div></pre></td></tr></table></figure>
+<p>我们建议你读以下几篇 Syracuse University in New York 发表的研究论文：</p>
+<ul>
+<li><a href="http://goo.gl/LyPev" target="_blank" rel="external">“Attacks on WebView in the Android Systems” article</a>.</li>
+<li><a href="http://goo.gl/i89Sn" target="_blank" rel="external">“Touchjacking Attacks on Web in Android, iOS, and Windows Phone” article</a>.</li>
+</ul>
+<h3 id="设置默认的字号"><a href="#设置默认的字号" class="headerlink" title="设置默认的字号"></a>设置默认的字号</h3><p>默认情况下，WebKit 的渲染和显示的字体大小为 16sp (scale-independent pixels) 。这个单位允许 WebView 让字体大小同时适应屏幕密度和用户偏好。如果你想改变默认的字体大小，你可以使用 <code>setDefaultFontSize()</code> 方法。</p>
+<h3 id="缩放控制"><a href="#缩放控制" class="headerlink" title="缩放控制"></a>缩放控制</h3><p>设置 <code>setBuiltInZoomControls()</code> 方法为 <code>false</code> 会阻止内置的缩放机制，设置为 <code>true</code> 则允许 <code>setDisplayZoomControls()</code> 方法显示屏幕上的缩放控制。<code>setDefaultZoom(ZoomDensity.FAR)</code> 设置网页的默认缩放密度（zoom density），设置为 <code>FAR</code>，让它在 240 dpi 的屏幕上以 100% 显示。<code>setSupportZoom()</code> 设置 WebView 是否支持使用屏幕上的缩放控件和手势进行缩放。</p>
+<p>从用户体验的角度来看，对于大多数应用来说，最好关闭缩放，除非应用要求具有缩放功能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">WebView WebView = <span class="keyword">new</span> WebView(<span class="keyword">this</span>);</div><div class="line">WebSettings settings = WebView.getSettings();</div><div class="line">settings.setBuiltInZoomControls(<span class="keyword">false</span>);</div><div class="line">settings.setDefaultZoom(ZoomDensity.FAR);</div><div class="line">settings.setSupportZoom(<span class="keyword">false</span>);</div></pre></td></tr></table></figure>
+<h3 id="硬件加速"><a href="#硬件加速" class="headerlink" title="硬件加速"></a>硬件加速</h3><p>从 Android 3.0 开始，Android 引入的全硬件加速。这在目标为 4.0 以下默认是未启用的。The web browser itself moved to a <em>tile-based rendering architecture</em> as opposed to display list architecture, which makes it more responsive.</p>
+<p>如果你在应用或者 acitvity 中启用硬件加速，你可以在 manifest 中设置 <code>android:handwareAccelerated=&quot;true&quot;</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// enable hardware acceleration using code (&gt;= level 11)</span></div><div class="line"><span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.HONEYCOMB) &#123;</div><div class="line">    WebView.setLayerType(View.LAYER_TYPE_HARDWARE, <span class="keyword">null</span>);</div><div class="line">&#125;</div><div class="line">settings.setRenderPriority(WebSettings.RenderPriority.HIGH);</div><div class="line">settings.setCacheMode(WebSettings.LOAD_NO_CACHE);</div></pre></td></tr></table></figure>
+<p>如果你为你的应用启用硬件加速，要确保你测试过。启用硬件测试有些副作用，最重要的是添加了大量的内存需求（至少约 7-8M）。这会对低配置的设备产生严重影响。</p>
+<p>考虑状况 Android 生态系统是严重分裂的，你可能需要观察硬件加速的 WebView 可能产生的问题。你可以用选择地通过 <code>android:handwareAccelerated=&quot;false&quot;</code> 来在 manifest 文件中关闭整个应用或者寄宿 WebView 的 activity。</p>
+<p>你可以使用以下代码达到相同的效果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// selectively disable hardware acceleration for WebView</span></div><div class="line"><span class="comment">// honeycomb (3.0) and higher</span></div><div class="line"><span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.HONEYCOMB) &#123;</div><div class="line">        WebView.setLayerType(View.LAYER_TYPE_SOFTWARE, <span class="keyword">null</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="设置可以自动加载图片"><a href="#设置可以自动加载图片" class="headerlink" title="设置可以自动加载图片"></a>设置可以自动加载图片</h3><pre><code>mWebView.getSettings().setLoadsImagesAutomatically(true);
+</code></pre><h3 id="获得UA信息"><a href="#获得UA信息" class="headerlink" title="获得UA信息"></a>获得UA信息</h3><pre><code>String ua = webview.getSettings().getUserAgentString();
+</code></pre><p>Nexus One手机中测试结果UA如下:</p>
+<p>Mozilla/5.0 (Linux; U; Android 2.2; zh-cn; Nexus One Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1</p>
+<h2 id="混合应用的架构"><a href="#混合应用的架构" class="headerlink" title="混合应用的架构"></a>混合应用的架构</h2><p>混合应用将两个最好的世间结合到了一起。一个足够负载的混合应用一般会包含大多数组件。让我们快速复习这些组件：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/android-hybird-architect.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<ul>
+<li><p><strong>WebView：</strong> 一个混合应用首先是一个 web 应用，并且具有通过额外的用户自定的 API 访问平台特性的能力。这个 web 应用要求使用 WebView 来渲染内容并且 host 业务逻辑。</p>
+</li>
+<li><p><strong>View, model, and controller：</strong> 由于应用主要使用 JavaScript 来编写，取决于你用的 JavaScript 库，你可能有多种实现 MVC 组件的方式。</p>
+</li>
+<li><p><strong>JS-Java Bridge：</strong> 这是允许原生代码和 web 环境互相访问的粘合层。这个桥梁允许执行同步和异步执行因为包含性能，易用即安全等原因，这层是最要的层之一。</p>
+</li>
+<li><p><strong>Java 插件：</strong> Java 插件是个用户定义的扩展 API，这些 API 都暴露给 JavaScript 环境。</p>
+</li>
+<li><p><strong>原生组件:</strong> 这是在混合应用中想访问的原生服务和组件，如显示工具栏，原生提示框，访问地址等等。</p>
+</li>
+<li><p><strong>应用数据:</strong>  While HTML5 data storage gives us some capabilities to store data, you may often want to store BLOBs in custom formats; this is where application data, filesystem APIs, and native APIs come into play.</p>
+</li>
+<li><p><strong>Assets and resources:</strong>  Assets and resources 包含应用的静态资源。如果你愿意，可以用资源来本地化文本。</p>
+</li>
+</ul>
+<p><strong>原生业务逻辑:</strong> 在设计混合应用的时候，原生和 web 组件之间的业务逻辑的分离是一个重要的架构问题。你可能会经常想处于某些原因，如访问原生组件、安全问题、你想使用某个只能在原生层才能访问的组件，而感觉需要把部分业务逻辑在原生代码层实现。</p>
+<h2 id="混合应用的-HTML-架构"><a href="#混合应用的-HTML-架构" class="headerlink" title="混合应用的 HTML 架构"></a>混合应用的 HTML 架构</h2><p>混合应用是一个使用 mobile 友好的 JavaScript 和 CSS 样式构建，以具有原生应用的观感。像其他应用一样，混合应用可能根据用户体验而变得相当复杂。出于简单考虑中，我们假设一个简单的应用只包含一个简单的 WebView 和一个简单的入口网页，如 index.html。一个原生应用会在应用启动器上对用户可见。一旦用户点击了启动图标，带有 WebView 的主 activity 会被创建，WebView 会加载默认的入口网页来初始化 UI。之后，web 组件的设计完全取决于你的选择，然而，单页面应用是这些应用的的事实标准设计策略。</p>
+<h3 id="Web-应用的架构"><a href="#Web-应用的架构" class="headerlink" title="Web 应用的架构"></a>Web 应用的架构</h3><p>一个典型的 web 应用的架构可以描述为：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://johnnyimages.qiniudn.com/android-hybrid-html.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>架构是自解释的，然而，我们想重申几个要点：</p>
+<ul>
+<li>UI events generate DOM objects based on user interactions.</li>
+<li>The model abstracts network connectivity and storage making the controller and views agnostic of the source and destination for data.</li>
+<li>模型使用存储数据的唯一组件。</li>
+</ul>
+<h3 id="SPA-关键的设计点"><a href="#SPA-关键的设计点" class="headerlink" title="SPA 关键的设计点"></a>SPA 关键的设计点</h3><p>以下是设计 单页面应用的时需要记住的几件事情：</p>
+<ul>
+<li>尽可能让你的代码模块化。</li>
+<li>如果可能，让这些模块相互独立。</li>
+<li>使用恰当的方式访问变量，保证部暴露不需要暴露的变量。</li>
+<li>Develop a mechanism wherein you can explicitly identify module dependencies and hence load them at runtime.</li>
+<li>Additionally, it would be beneficial if non-UI modules can be run from the command line. This will greatly facilitate unit testing.</li>
+</ul>
+<h3 id="混合应用中使用的库和框架"><a href="#混合应用中使用的库和框架" class="headerlink" title="混合应用中使用的库和框架"></a>混合应用中使用的库和框架</h3><ul>
+<li>Backbone.js 提供 MVC 框架</li>
+<li>Underscore.js 提供工具函数</li>
+<li><p>iScroll.js 提供滚动支持。 iScroll.js 是个必要的库，用来在指定宽高的元素中滚动内容，而且是跨设备的，这在原生代码中是不支持的。</p>
+<p>  为了使用 <code>iScroll.js</code>，列表项需要添加到一个 <code>iScroll</code> 容器元素中：</p>
+<pre><code>&lt;div id=&quot;wrapper&quot;&gt;
+    &lt;div id=&quot;scroller&quot;&gt;
+        &lt;ul id=&quot;thelist&quot;&gt;
+                        &lt;li&gt;row 1&lt;/li&gt;
+                        &lt;li&gt;row 2&lt;/li&gt;
+                        &lt;li&gt;row 3&lt;/li&gt;
+                        &lt;li&gt;row 4&lt;/li&gt;
+                &lt;/ul&gt;
+        &lt;/div&gt;
+&lt;/div&gt;
+var myScroll = new iScroll(&apos;wrapper&apos;);
+</code></pre><p>  由于一个列表需要预填充，当你渲染大量的列表项的时候，你可能会碰到性能问题，比如 1000 行的花名册。当让，你可以使用分页来内容分散到多个视图，然而，难免有些场合你需要在一个视图中列出所有的类表象。</p>
+<p>  理想情况下，<code>iScroll</code> 可以允许我们随着滚动，向 DOM 中慢慢添加列表项，这个现在还不之支持。一个可行的方法是使用 <code>setTimeout(func, delay)</code> 加载内容到滚动区域。这种方式，我们可以加载一个初始集合到视图中，就像内容很快被加载到了视图中，随后，当用户开始滚动的时候，添加其他的列表项到滚动容器中。</p>
+<p>  这个方法对相对比较小的列表可行。理想的方法是当你滚动的时候，一项一项添加列表项到滚动视图中。这个最佳技术相比之前提到的方案可以提供一个更好的用户体验。</p>
+</li>
+<li><p>jQuery.js for JavaScript application</p>
+</li>
+</ul>
+<h3 id="CSS-Reset-避免浏览器不一致"><a href="#CSS-Reset-避免浏览器不一致" class="headerlink" title="CSS Reset 避免浏览器不一致"></a>CSS Reset 避免浏览器不一致</h3><p>不是所有的浏览器完全相等，移动浏览同样是这样。CSS Reset 通过在你自定义的 CSS 应用之前，将内置的默认样式值重置到 baseline value，让显示效果尽可能统一。</p>
+<p>HTML5 Boilerplate 提供了两个 CSS 文件 (<em>main.css</em> and <em>normalize.css</em>)，提供了一个很好的重置浏览器默认样式设置的方法。你可以从  <a href="http://goo.gl/3JUxZ" target="_blank" rel="external">Html5boilerplate website</a> 下载这两个文件。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">Sample CSS Reset</div><div class="line">*/</div><div class="line"><span class="selector-tag">html</span>, <span class="selector-tag">body</span>, <span class="selector-tag">div</span>, <span class="selector-tag">form</span>, <span class="selector-tag">fieldset</span>, <span class="selector-tag">legend</span>, <span class="selector-tag">label</span> &#123;</div><div class="line">        <span class="attribute">margin</span>: <span class="number">0</span>;</div><div class="line">        <span class="attribute">padding</span>: <span class="number">0</span>;</div><div class="line">        <span class="attribute">border</span>: <span class="number">0px</span>;</div><div class="line">        <span class="attribute">outline</span>: <span class="number">0px</span>;</div><div class="line">        <span class="attribute">font-size</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="首页-index-html"><a href="#首页-index-html" class="headerlink" title="首页 index.html"></a>首页 index.html</h3><p>网页通常放在 <em>assets</em> 目录。我们定义 <code>viewport</code> meta 标签，它控制网页加载时的初始外观。<code>link</code> 标签故意留空，因为我们想使用 JavaScript 来根据 <code>window.devicePixelRatio</code> 属性加载 CSS 文件。</p>
+<p>我们发现，在一些老版本的 Android 中，我们的示例应用在用 <code>link</code> 标签加载 CSS 时，处理 <strong><code>0.75</code></strong> Device Pixel Ratio (DPR) 时会崩溃。我们可以在一些相同版本的手机上重现这个变态的崩溃，然而，使用 <code>link</code> 比使用 JavaScript 加载 CSS 更具有响应性。由于 JavaScript 中 <code>onDomReady()</code> 的延时，你会先看到一个无样式的视图，然后才显示有样式的版本。</p>
+<p>下面把 CSS 装载入 DOM 的方法是最理想的方式：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span></span></div><div class="line">        <span class="attr">media</span>=<span class="string">"screen and (-webkit-min-device-pixel-ratio: 0.75)"</span></div><div class="line">        <span class="attr">href</span>=<span class="string">"ldpi.css"</span> /&gt;</div><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span></span></div><div class="line">        <span class="attr">media</span>=<span class="string">"screen and (-webkit-min-device-pixel-ratio: 1.0)"</span></div><div class="line">        <span class="attr">href</span>=<span class="string">"mdpi.css"</span> /&gt;</div><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span></span></div><div class="line">        <span class="attr">media</span>=<span class="string">"screen and (-webkit-min-device-pixel-ratio: 1.5)"</span></div><div class="line">        <span class="attr">href</span>=<span class="string">"hdpi.css"</span> /&gt;</div><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span></span></div><div class="line">        <span class="attr">media</span>=<span class="string">"screen and (-webkit-min-device-pixel-ratio: 2.0)"</span></div><div class="line">        <span class="attr">href</span>=<span class="string">"xhdpi.css"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>下面是另外一种解决方法，但是我们不推荐使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadCSS</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">switch</span>(<span class="built_in">window</span>.devicePixelRatio) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="number">2.0</span>:</div><div class="line">                $(<span class="string">'#dpr-css'</span>).attr(<span class="string">'href'</span>, <span class="string">'css/xhdpi.css'</span>); <span class="number">1</span></div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="number">1.5</span>:</div><div class="line">                $(<span class="string">'#dpr-css'</span>).attr(<span class="string">'href'</span>, <span class="string">'css/hdpi.css'</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="number">0.75</span>:</div><div class="line">                $(<span class="string">'#dpr-css'</span>).attr(<span class="string">'href'</span>, <span class="string">'css/ldpi.css'</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">default</span>: <span class="comment">// 1</span></div><div class="line">                $(<span class="string">'#dpr-css'</span>).attr(<span class="string">'href'</span>, <span class="string">'css/mdpi.css'</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>#dpr-css</code> 是 <code>&lt;link&gt;</code> 标签的 ID：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">id</span>=<span class="string">"dpr-css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span></span></div><div class="line">      <span class="attr">href</span>=<span class="string">"css/default.css"</span></div><div class="line">      <span class="attr">type</span>=<span class="string">"text/css"</span></div><div class="line">      <span class="attr">media</span>=<span class="string">"screen"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>你也可以使用下面的代码为不同的密度将样式添加到 DOM 中，我们也不推荐这样做：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$(&apos;HEAD&apos;).append($(&apos;&lt;link rel=&quot;stylesheet&quot; href=&quot;xhdpi.css&quot; type=&quot;text/css&quot;</div><div class="line">        media=&quot;screen and (-webkit-min-device-pixel-ratio: 2.0)&quot; /&gt;&apos;));</div></pre></td></tr></table></figure>
+<p>以下是混合 Android 应用的模板文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">&lt;script type=&quot;text/x-tmpl&quot; id=&quot;tmpl_contacts_item&quot;&gt;</div><div class="line">&lt;div class=&quot;contact item&quot; data-id=&quot;&lt;%= id %&gt;&quot;&gt;</div><div class="line">    &lt;div class=&quot;edit&quot;&gt;Edit&lt;/div&gt;</div><div class="line">    &lt;div class=&quot;profile&quot;&gt;</div><div class="line">        &lt;img data-id=&quot;&lt;%= id %&gt;&quot; class=&quot;avatar&quot; src=&quot;&lt;%= avatar %&gt;&quot; /&gt;</div><div class="line">        &lt;div class=&quot;full_name&quot;&gt;&lt;%= name.givenName %&gt; &lt;%= name.familyName %&gt;&lt;/div&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">    &lt;% if (emails.length &gt; 0) &#123; %&gt;</div><div class="line">    &lt;div class=&quot;details&quot;&gt;</div><div class="line">        &lt;div class=&quot;caption emails&quot;&gt;Emails&lt;/div&gt;</div><div class="line">        &lt;% _.each(emails, function(email) &#123; %&gt;</div><div class="line">                &lt;div class=&quot;comm&quot;&gt;&lt;span&gt;&lt;%= email.type %&gt;&lt;/span&gt; :</div><div class="line">                &lt;a href=&quot;mailto:&lt;%= email.value %&gt;&quot;&gt;&lt;%= email.value %&gt;&lt;/a&gt;&lt;/div&gt;</div><div class="line">                &lt;% &#125;); %&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">    &lt;% &#125; %&gt;</div><div class="line">    &lt;% if (phoneNumbers.length &gt; 0) &#123; %&gt;</div><div class="line">    &lt;div class=&quot;details&quot;&gt;</div><div class="line">        &lt;div class=&quot;caption phones&quot;&gt;Phones&lt;/div&gt;</div><div class="line">                &lt;% _.each(phoneNumbers, function(phone) &#123; %&gt;</div><div class="line">                &lt;div class=&quot;comm&quot;&gt;&lt;span&gt;&lt;%= phone.type %&gt;&lt;/span&gt; :</div><div class="line">                &lt;a href=&quot;tel:&lt;%= phone.value %&gt;&quot;&gt;&lt;%= phone.value %&gt;&lt;/a&gt;&lt;/div&gt;</div><div class="line">                &lt;% &#125;); %&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">    &lt;% &#125; %&gt;</div><div class="line">    &lt;% if (note != &apos;&apos;) &#123; %&gt;</div><div class="line">    &lt;div class=&quot;details&quot;&gt;</div><div class="line">        &lt;div class=&quot;caption notes&quot;&gt;Notes&lt;/div&gt;</div><div class="line">        &lt;div class=&quot;note&quot;&gt;&lt;%= note %&gt;&lt;/div&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">    &lt;% &#125; %&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<h3 id="Viewport-Meta-Tag"><a href="#Viewport-Meta-Tag" class="headerlink" title="Viewport Meta Tag"></a>Viewport Meta Tag</h3><p><code>viewport</code> 元标签定义了一组属性用来描述当网页基于设备屏幕尺寸第一次显式时，网页的行为和初始外观。</p>
+<h4 id="Viewport-Width"><a href="#Viewport-Width" class="headerlink" title="Viewport Width"></a>Viewport Width</h4><p>viewport 的 <code>width</code> 属性告诉浏览器如何最好地横向显式网页。比如，我们在目标为 320px 宽度的屏幕上显式网页内容。</p>
+<pre><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=320&quot;&gt;
+</code></pre><p>这不会为不同尺寸的屏幕进行缩放。</p>
+<p>把 <code>width</code> 属性社这为 <code>device-width</code> 会让内容缩放带适合屏幕的宽度。</p>
+<pre><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;&gt;
+</code></pre><p>不管你的屏幕宽度是竖屏模式下的 480px 还是横屏模式下的 800px，<code>device-width</code> 值让 <code>width</code> 不受屏幕宽度的约束。</p>
+<h4 id="Viewport-Scaling-with-the-Content-Attribute"><a href="#Viewport-Scaling-with-the-Content-Attribute" class="headerlink" title="Viewport Scaling with the Content Attribute"></a>Viewport Scaling with the Content Attribute</h4><p>以下是一些 <code>content</code> 属性允许的选型：</p>
+<ul>
+<li><p><strong>initial-scale</strong>： 网页第一显示后的缩放倍数。值在 0 到 10.0 之间。1.0 表示不放大，1.0 以上表示放大，1.0 以下表示缩小。</p>
+</li>
+<li><p><strong>minimum-scale</strong>：网页最小的缩小倍数。1.0 表示不允许缩放，缩放比例为 0 to 10.0 之间。</p>
+</li>
+<li><p><strong>maximum-scale</strong>：网页最大的放大倍数。1.0 表示不允许缩放，缩放比例为 0 to 10.0 之间。</p>
+</li>
+<li><p><strong>user-scalable</strong>：是否允许用户控制网页的缩放，默认值是允许。</p>
+</li>
+<li><p><code>target-densitydpi=device-dpi</code> 这个属性已经从 WebKit 中删除。这个属性不再被 iOS 支持，这个问题可以参考 <a href="http://goo.gl/URmQd" target="_blank" rel="external">WebKit bug website</a>。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width,</span></span></div><div class="line">    minimum-scale=1,</div><div class="line">    initial-scale=1,</div><div class="line">    maximum-scale=1,</div><div class="line">    user-scalable=no" /&gt;</div></pre></td></tr></table></figure>
+<p>这个元标签在为移动设备优化网页时非常重要。它主要阻止移动浏览器修改网页的缩放级别。</p>
+<h3 id="响应式设计和媒体查询"><a href="#响应式设计和媒体查询" class="headerlink" title="响应式设计和媒体查询"></a>响应式设计和媒体查询</h3><p>在移动应用范例中，由于可用的屏幕区域是有限的，响应式设计应被考虑。</p>
+<p>CSS3 中的媒体查询可以帮助应用适应不同的 CSS 属性和规则。媒体查询忘让我们适应不同的设备，而且可以使用设备的不同特性，如 <code>orientation</code>, <code>device-aspect-ratio</code>, <code>color</code>, or <code>resolution</code>。</p>
+<p>响应设计可以通过 CSS 中的媒体查询来实现。有几种在 HTML 文档中定义 CSS 媒体查询的方式。我们将使在下面的例子中使用第一种方式：</p>
+<p>在 <code>&lt;style&gt;</code> 元素中使用媒体规则：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span></div><div class="line">    @<span class="keyword">media</span> only screen and (-webkit-min-device-pixel-ratio: <span class="number">1.0</span>) &#123;</div><div class="line">            <span class="comment">/* some CSS definitions here */</span></div><div class="line">    &#125;</div><div class="line">    @<span class="keyword">media</span> only screen and (orientation: portrait)&#123;</div><div class="line">            <span class="comment">/* some CSS definitions here */</span></div><div class="line">    &#125;</div><div class="line">    @<span class="keyword">media</span> only screen and (orientation: landscape)&#123;</div><div class="line">            <span class="comment">/* some CSS definitions here */</span></div><div class="line">    &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>外部引用：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span></span></div><div class="line">        <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"small_screen.css"</span></div><div class="line">        <span class="attr">media</span>=<span class="string">"only screen and (max-width: 320px)"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>通过导入样式：</p>
+<pre><code>@import &quot;small_screen.css&quot; only screen and (max-width: 320px);
+</code></pre><p>Android 为 WebKit 提供了一个渲染引擎，支持返回设备的像素密度的 <code>-webkit-min-device-pixel-ratio</code> 属性。当前有至少冲个可能的 Device Pixel Ratio (DPR，设备像素比) ：<code>0.75</code>, <code>1.0</code>, <code>1.5</code>, and <code>2.0</code>。这些值可以使用 JavaScript 的 <code>window.devicePixelRatio</code> 属性访问。</p>
+<ul>
+<li>如果 <code>DPR</code> 是 0.75，则该设备为低密度的，网页默认按比例缩小。</li>
+<li>如果 <code>DPR</code> is 1，设备为中等密度，网页不会缩放。</li>
+<li>如果 <code>DPR</code> is 1.5，设备为高密度的，网页会按这个比例放大。</li>
+<li>如果 <code>DPR</code> is 2，设备为超高密度，网页按这个比例放大。</li>
+</ul>
+<p>如果想深入了解像素密度，可以参考 Peter-Paul Koch 这篇文章 <a href="http://goo.gl/hKYlS" target="_blank" rel="external">Quirksmode website</a>。</p>
+<h3 id="EM-or-Percent-unit-for-scalable-interface"><a href="#EM-or-Percent-unit-for-scalable-interface" class="headerlink" title="EM or Percent (%) unit for scalable interface"></a>EM or Percent (%) unit for scalable interface</h3><p>浏览器中有几种缩放 HTML 元素的单位：EMs (em), Root Ems (rem), Pixels (px), Picas (pc), Exes (ex), Percents (%), and Points (pt)。然而，其中一些没有被完全支持用来在 CSS 文档中缩放字体大小的 <code>font-size</code> 属性。</p>
+<p>对于移动应用，我们主要关注其他的两个：<code>em</code> and <code>%</code>。如果你想在所有的屏幕分辨率中显示文本的正确尺寸，<code>em</code> or <code>%</code> 是最好的解决方案，因为他们在 web 中是被普遍使用在字体大小上。当时，两者哪个更好呢？</p>
+<p>通常，WebKit 使用 16px（在 Android 中为 16 sp） 显示字体大小，除非你使用 WebKit settings 的 <code>setDefaultFontSize()</code> 方法改变 Webkit 默认的字体大小。换句话说，大多数浏览器显示字体大小为 <code>16px</code>，这个值等于 <code>1em</code> or <code>100%</code>。但是，我们不建议你在 CSS 文档中使用使用 <code>px</code> 作为字体大小的单位。</p>
+<p>为了更好的收缩性和健壮性，W3C 也建议使用 <code>em</code> or <code>%</code> 作为字体大小的单位。我们实际上发现使用 percent (<code>%</code>) 让设计者 to preserve readability for maximum consistency and accessibility in visual designs。</p>
+<p>有时候，在 HTML 标签内设置 <code>font-size</code> 的值可能不会有预期的结果。这是因为内元素从父元素中继承了 <code>font-size</code> ，并相对父元素的 <code>font-size</code> 应用自己的 <code>font-size</code>。所以，你可能看到更小的字体。</p>
+<p>在嵌套的 HTML 标签中的字体大小的示例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">header &#123;</div><div class="line">    font-size: 2em;</div><div class="line">        /*font-size: 200%;*/</div><div class="line">&#125;</div><div class="line">span &#123;</div><div class="line">    font-size: 0.5em;</div><div class="line">        /*font-size: 50%;*/</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;<span class="name">header</span>&gt;</span>This is a large header without any nested tag<span class="tag">&lt;/<span class="name">header</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">header</span>&gt;</span>This is a large header with <span class="tag">&lt;<span class="name">span</span>&gt;</span>a span tag<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">header</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span>This is a span tag<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>示例的效果可参考 <a href="http://goo.gl/AVRxh" target="_blank" rel="external">Jsfiddle website</a>。</p>
+<p><code>&lt;header&gt;</code> 的字体大小为 <code>2em</code>，这是基础字体大小的两倍，第二个 <code>&lt;header&gt;</code> 内部的 <code>&lt;span&gt;</code> 标签继承父标签的字体大小 <code>2em</code>，然后乘以 <code>0.5</code>，结果为 <code>1em</code>，而和 <code>&lt;header&gt;</code> 平行的 <code>&lt;span&gt;</code>，它的字体大小是 <code>0.5em</code>。<code>em</code> and <code>%</code> 两个单位都会随着基础字体大小的变大而变大。。</p>
+<p>你可能需要 <code>px</code> 和 <code>em</code> 的互相转换。你可以使用 jQuery 插件来 <a href="http://goo.gl/BwjJZ" target="_blank" rel="external">jQuery-Pixel-Em-Converter plug-in website</a> 来实现，也可以直接使用工具 <a href="http://goo.gl/iTYJE" target="_blank" rel="external">Pxtoem website</a>。</p>
+<p><strong>CSS3 引入 rem 单位：</strong></p>
+<p><code>rem</code> 单位是相对根元素 (<code>&lt;html&gt;</code>)而言的。你可以定义根元素的字体大小，让后将这个字体大小作为 CSS 文档中的基准。就像前面提到的，<code>em</code> 会在内嵌元素上会有混合的问题，<code>rem</code> 则通过使用 root 元素的字体大小的百分比避免了这个问题。</p>
+<h3 id="Opacity-or-RGBA-区别是什么"><a href="#Opacity-or-RGBA-区别是什么" class="headerlink" title="Opacity or RGBA: 区别是什么?"></a>Opacity or RGBA: 区别是什么?</h3><p>CSS 中 <code>opacity</code> 属性指定了一个元素的透明度，它的取值范围是 <code>0.0</code> to <code>1</code>。值越小表示元素越透明。<code>opacity</code> and <code>RGBA</code>  之间的主要区别为：<code>opacity</code> 影响元素的子元素，让子元素具有相同的透明度，然而 <code>RGBA</code> 之后影响单个元素的透明度。</p>
+<pre><code>-webkit-opacity: 0.5;
+</code></pre><p>RGBA 代表 <em>Red, Green, Blue, and Alpha</em>。CSS3 introduced the RGBA support to set the alpha transparency, which sets the opacity via the alpha channel and controls how much of what is behind the color shows through.</p>
+<pre><code>background: rgba(255, 0, 0, 0.5);
+</code></pre><p>我们可以使用 RGBA 转换工具 <a href="http://goo.gl/R7X82" target="_blank" rel="external">Devoth’s HEX 2 RGBA Color Calculator website</a> 来将 <code>HEX</code> 颜色转化为 <code>RGBA</code> 格式。</p>
+<h3 id="Event-Pooling"><a href="#Event-Pooling" class="headerlink" title="Event Pooling"></a>Event Pooling</h3><p>随着你的应用变得更加复杂，事件管理可能会很繁杂。可以把事件阻止到一个事件池机制中，该机制是观察者模式的变化，可能是管理依赖的另一个解决方案。jQuery 提供了 <code>bind</code> 和 <code>trigger</code> 以一个简单的方式来处理事件池。当事件从 Java 层派发的时候，事件池非常有用。</p>
+<p>这是一个使用 jQuery’s <code>bind</code> and the <code>trigger</code> 的事件池的一个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateContact</span>(<span class="params">e, data</span>) </span>&#123;</div><div class="line">        <span class="keyword">switch</span>(e.type) &#123;</div><div class="line">                <span class="keyword">case</span> <span class="string">'NAME_UPDATE'</span>:</div><div class="line">                        <span class="comment">// update the name</span></div><div class="line">                        <span class="comment">// data.name</span></div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> <span class="string">'PHONE_UPDATE'</span>:</div><div class="line">                        <span class="comment">// update the phone number</span></div><div class="line">                        <span class="comment">// data.phone_number</span></div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">default</span>:</div><div class="line">                        <span class="comment">// default action</span></div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下面的代码让我们绑定一个事件到文档，这个事件可以在 HTML、URL 地址 或者 JavaScript 代码中通过 <code>trigger</code> 来触发。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">subscribeEvents</span>(<span class="params">eventName, callback</span>) </span>&#123;</div><div class="line">        $(<span class="built_in">document</span>).bind(eventName, callback);</div><div class="line">&#125;</div><div class="line"></div><div class="line">subscribeEvents(<span class="string">'NAME_UPDATE PHONE_UPDATE'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e, data</span>) </span>&#123;</div><div class="line">        updateContact.apply(<span class="literal">null</span>, [e, data]);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>使用下面的代码，我们可以轻易地将一个常用功能创想到 <code>triggerEvent()</code> 方法中，在这个方法中，你可以使用 <code>eventName</code>, <code>args</code>, and <code>delay</code> 参数触发一个事件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">triggerEvent</span>(<span class="params">eventName, args, delay</span>) </span>&#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                $(<span class="built_in">document</span>).trigger(eventName, args);</div><div class="line">        &#125;, delay || <span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一旦你使用 <code>subscribeEvents()</code> 函数订阅了事件，你便可以从 HTML、Android WebView 的 URL 地址 或者直接从 JavaScript 中触发这些事件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// from HTML</div><div class="line">&lt;input type=&quot;text&quot; name=&quot;full_name&quot;</div><div class="line">  onKeyUp=&quot;triggerEvent(&apos;NAME_UPDATE&apos;, &#123; name : $(this).val().trim() &#125;, 100);&quot; /&gt;</div><div class="line"></div><div class="line">// from URL location (Android WebView can trigger this)</div><div class="line">javascript: triggerEvent(&apos;NAME_UPDATE&apos;, &#123; name : &apos;Karura&apos; &#125;, 100)</div><div class="line"></div><div class="line">// or from JavaScript code</div><div class="line">triggerEvent(&apos;NAME_UPDATE&apos;, &#123; name : &apos;Karura&apos; &#125;, 100);</div></pre></td></tr></table></figure>
+<p>处于某些原因，在 form 中输入的时候，当 Android WebView 在 URL 地址中执行 javascript: func(); 时，软键盘隐藏 WebView 会消失。这可能会导致很不好的用户体验。一个理想的解决方案是，当用户的焦点在表单项的时候，你要么在 Java 层检测焦点，要么从 JavaScript 通知 Java 层，然后使用 JavaScript 从 Java 层拉取内容和事件。这样，在派发事件到 UI 层时可以防止 Android WebView 获取焦点。</p>
+<h2 id="CSS-DOM-and-JavaScript-Optimization-Tips-and-Useful-Snippets"><a href="#CSS-DOM-and-JavaScript-Optimization-Tips-and-Useful-Snippets" class="headerlink" title="CSS, DOM, and JavaScript: Optimization Tips and Useful Snippets"></a>CSS, DOM, and JavaScript: Optimization Tips and Useful Snippets</h2><p>我们接下来会介绍如何通过利用高性能的优化技术来避免内存泄露构建一个移动应用。性能在移动应用中是一个大焦点，因为手机的资源是有限的。</p>
+<h3 id="图片垃圾回收"><a href="#图片垃圾回收" class="headerlink" title="图片垃圾回收"></a>图片垃圾回收</h3><p>当你移除 DOM 容器元素时，视图中的图片可能不会被立即被垃圾收集。为了释放前一个图片的引用，你可能需要在安全移除图片对象前，将 <code>1x1</code> 像素的透明图片的数据赋值给 <code>src</code> 属性。你可以将这个图片编码为 <code>base64</code>，以避免一个网络请求。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeImage</span>(<span class="params">image</span>) </span>&#123;</div><div class="line">        image.src = <span class="string">'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='</span>;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">delete</span> image.src;</div><div class="line">                image = <span class="literal">null</span>;</div><div class="line">        &#125;, <span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Data-URI-images"><a href="#Data-URI-images" class="headerlink" title="Data URI images"></a>Data URI images</h3><p>在移动应用中使用 <code>base64</code> 编码的数据图片是很流行的。这让你的图面能够立即显示在网页中，这能让你的应用更像本地应用。一个额外的好处是你可以从 Java 层轻易取得JSON 字符串中相对小的图片（如头像）。</p>
+<p>你可以使用下面的指令手动创建 URI 图片：</p>
+<pre><code>openssl base64 -in image.png
+</code></pre><h3 id="预加载图片"><a href="#预加载图片" class="headerlink" title="预加载图片"></a>预加载图片</h3><p>也许有些网页数据需要从远程加载或者太大而不适合使用 base64 编码。你可以预加载图面缓存到浏览器内存中。这个解决本法适合在登陆页或者其他有在后台加载数据的机会的 “正门”。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImage</span>(<span class="params">src</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> image = <span class="keyword">new</span> Image();</div><div class="line">        image.src = src;</div><div class="line">        image.onerror = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                debug.error(<span class="string">'Missing image source: '</span> + <span class="keyword">this</span>.src);</div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">return</span> image;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> image = loadImage(<span class="string">'path/to/image'</span>);</div><div class="line">image.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// do something</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>对于我们的实例应用，我们可以使用 jQuery plug-in 来加载 CSS 文档中图片。<code>preloadCssImages.jQuery_v5.js</code> 插件提过一个从不同目录中预加载图片的方法。</p>
+<p>你可以从 <a href="http://goo.gl/Gj6Eh" target="_blank" rel="external">jQuery-Preload-CSS-Images plug-in website</a> 加载这个库。</p>
+<pre><code>$(document).ready(function(){
+        $.preloadCssImages();
+});
+</code></pre><h3 id="避免使用-text-shadow-box-shadow-border-radius-gradient-opacity-CSS-RGBA-and-image-transparency"><a href="#避免使用-text-shadow-box-shadow-border-radius-gradient-opacity-CSS-RGBA-and-image-transparency" class="headerlink" title="避免使用 text-shadow, box-shadow, border-radius, gradient, opacity, CSS RGBA, and image transparency"></a>避免使用 text-shadow, box-shadow, border-radius, gradient, opacity, CSS RGBA, and image transparency</h3><p>这些样式效果会减缓 WebKit 中的滚动。<code>text-shadow</code> and <code>box-shadow</code>  问题在当前的 WebKit 中已经解决了，但是 WebKit 的 Android 版本还没有修复。所以，尽量不要再在滚动区使用，访问 <a href="http://goo.gl/SJf87" target="_blank" rel="external">WebKit bug website</a> 查看更多信息。使用 <code>opacity</code> and CSS <code>RGBA</code> 属性可能在滚动视图妨碍硬件加速渲染。如果这些需要效果，使用 轻量级的 <em>.png</em> 图片，组合多个想过图到一个静态图片中。</p>
+<h3 id="使用-CSS3-Transitions-而不是-JavaScript-animations"><a href="#使用-CSS3-Transitions-而不是-JavaScript-animations" class="headerlink" title="使用 CSS3 Transitions 而不是 JavaScript animations"></a>使用 CSS3 Transitions 而不是 JavaScript animations</h3><p>CSS3 变换是硬件加速的，不仅使用 CPU 同时也使用显卡的 GPU。他们提供了更平滑的用户体验。</p>
+<pre><code>-webkit-transition: width 1s;
+</code></pre><h3 id="雪碧图"><a href="#雪碧图" class="headerlink" title="雪碧图"></a>雪碧图</h3><p>一个雪碧图是将一组图片放在单个图片中，并且为每个图片提供一个唯一的位置。使用雪碧图会节省很多 HTTP 请求并节省带宽。比如，你可以把世界上所有国家的标志放在一个单独的 CSS 雪碧图中。这个概念同样可以用在 Android Java 层。你可以在 <a href="http://goo.gl/NWStf" target="_blank" rel="external">Flag-sprites website</a> 查看这个例子。</p>
+<h3 id="对象缓存"><a href="#对象缓存" class="headerlink" title="对象缓存"></a>对象缓存</h3><p>缓存的 JavaScript 和 DOM 变量可以让你在迭代和以后的代码中更快地访问。</p>
+<h2 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h2><h3 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h3><p><strong>启用localStorage</strong></p>
+<pre><code>settings.setDomStorageEnabled(true);
+</code></pre><p><strong>防止应用重启之后数据丢失</strong></p>
+<pre><code>webView.getSettings().setDatabasePath(&quot;/data/data/&quot; + webView.getContext().getPackageName() + &quot;/databases/&quot;);
+</code></pre><p><a href="http://stackoverflow.com/questions/5899087/android-webview-localstorage" target="_blank" rel="external">http://stackoverflow.com/questions/5899087/android-webview-localstorage</a></p>
+<p><strong>多个 webview 共享数据</strong></p>
+<ul>
+<li><a href="https://github.com/didimoo/AndroidLocalStorage" target="_blank" rel="external">didimoo/AndroidLocalStorage</a></li>
+</ul>
+<h3 id="打开本地缓存提供JS调用"><a href="#打开本地缓存提供JS调用" class="headerlink" title="打开本地缓存提供JS调用"></a>打开本地缓存提供JS调用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mWebView.getSettings().setDomStorageEnabled(<span class="keyword">true</span>); </div><div class="line"><span class="comment">// Set cache size to 8 mb by default. should be more than enough </span></div><div class="line">mWebView.getSettings().setAppCacheMaxSize(<span class="number">1024</span>*<span class="number">1024</span>*<span class="number">8</span>); </div><div class="line"><span class="comment">// This next one is crazy. It's the DEFAULT location for your app's cache </span></div><div class="line"><span class="comment">// But it didn't work for me without this line. </span></div><div class="line"><span class="comment">// UPDATE: no hardcoded path. Thanks to Kevin Hawkins </span></div><div class="line">String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath(); </div><div class="line">mWebView.getSettings().setAppCachePath(appCachePath); </div><div class="line">mWebView.getSettings().setAllowFileAccess(<span class="keyword">true</span>); </div><div class="line">mWebView.getSettings().setAppCacheEnabled(<span class="keyword">true</span>);</div></pre></td></tr></table></figure>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="http://stefanodacchille.github.io/blog/2014/02/23/webview-explorations/" target="_blank" rel="external">WebView Explorations - Octodroid</a></li>
+<li><a href="https://github.com/pwnall/chromeview" target="_blank" rel="external">pwnall/chromeview</a></li>
+<li><a href="https://github.com/mogoweb/chromium_webview" target="_blank" rel="external">mogoweb/chromium_webview</a></li>
+</ul>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="http://goo.gl/j6m2q" target="_blank" rel="external">Android WebKit Development</a></li>
+<li><a href="http://www.smashingmagazine.com/2014/10/21/providing-a-native-experience-with-web-technologies" target="_blank" rel="external">Hybrid Mobile Apps: Providing A Native Experience With Web Technologies</a></li>
+<li><a href="https://www.discovermeteor.com/blog/meteor-cordova-famous-the-chill-way-to-build-apps" target="_blank" rel="external">Meteor, Cordova, and Famo.us: The Chill Way to Build Apps - Discover Meteor</a></li>
+<li><a href="http://my.eoe.cn/iceskysl/archive/1028.html" target="_blank" rel="external">Android中Webview使用经验总结（持续更新）</a></li>
+<li><a href="http://trinea.iteye.com/blog/1152557" target="_blank" rel="external">Android WebView使用</a></li>
+<li><a href="http://android.yaohuiji.com/archives/734#comments" target="_blank" rel="external">第二十九讲：WebView学习指南 « { Android学习指南 }</a></li>
+<li><a href="http://jimbergman.net/webkit-version-in-android-version/" target="_blank" rel="external">What WebKit version is in what Android version?</a></li>
+</ul>
+<h3 id="内核"><a href="#内核" class="headerlink" title="内核"></a>内核</h3><ul>
+<li><a href="http://mogoweb.github.io/blog/2014/01/16/analysis-of-android-4-4-webview-implementation/" target="_blank" rel="external">Android 4.4 WebView实现分析 - 放飞梦想</a></li>
+<li><a href="http://mogoweb.net/archives/182" target="_blank" rel="external">Webkit for Android分析</a></li>
+<li><a href="http://mogoweb.github.io/blog/2013/10/24/translated-android-webview/" target="_blank" rel="external">[译]Android WebView - 放飞梦想</a></li>
+<li><a href="http://mogoweb.github.io/blog/2014/03/18/chromium-loading-speed-research-0/" target="_blank" rel="external">Chromium网络加载速度研究(1) - 放飞梦想</a></li>
+<li><a href="http://mogoweb.github.io/blog/2014/04/03/chromium-loading-spped-research-1/" target="_blank" rel="external">Chromium网络加载速度研究(2) - 放飞梦想</a></li>
+<li><a href="http://mogoweb.github.io/blog/2014/06/10/about-chromium-webview-project/" target="_blank" rel="external">关于 chromium_webview 项目 - 放飞梦想</a></li>
+</ul>
+<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><ul>
+<li><a href="http://www.telerik.com/platform" target="_blank" rel="external">Telerik Mobile Application Development Platform</a>    <ul>
+<li><a href="http://www.tuicool.com/articles/2qiI7f" target="_blank" rel="external">使用Telerik平台构建Web、混合与原生应用 - 推酷</a></li>
+</ul>
+</li>
+<li><a href="http://www.infoq.com/cn/articles/hybrid-app-development-combat" target="_blank" rel="external">Hybrid App开发实战</a></li>
+</ul>
+<h3 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h3><ul>
+<li><a href="http://blog.meathill.com/tech/app/web/traps-in-developing-android-hybrid-app.html" target="_blank" rel="external">Android Hybrid App四大坑</a></li>
+</ul>
+<h3 id="How-to-listen-for-a-WebView-finishing-loading-a-URL"><a href="#How-to-listen-for-a-WebView-finishing-loading-a-URL" class="headerlink" title="How to listen for a WebView finishing loading a URL?"></a>How to listen for a WebView finishing loading a URL?</h3><p>See <a href="https://stackoverflow.com/questions/3149216/how-to-listen-for-a-webview-finishing-loading-a-url" target="_blank" rel="external">android - How to listen for a WebView finishing loading a URL? - Stack Overflow</a></p>
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><ul>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&amp;mid=2650993637&amp;idx=1&amp;sn=8a2673272575abbef4b0f6dbc25e0186&amp;scene=1&amp;srcid=0807wbgKvqjTjMD555ZBcIxO#rd" target="_blank" rel="external">QQ空间面向移动时代Hybrid架构设计</a></li>
+</ul>
+<h2 id="Book"><a href="#Book" class="headerlink" title="Book"></a>Book</h2><ul>
+<li><a href="http://www.salttiger.com/building-hybrid-android-apps-with-java-and-javascript/" target="_blank" rel="external">Building Hybrid Android Apps with Java and JavaScript</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-11-05T05:25:34.000Z" itemprop="dateUpdated">2017-11-05 13:25:34</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2014-09-11-android-webkit-hybrid-tutorial.html" target="_blank" rel="external">http://blog.inching.org/Android/2014-09-11-android-webkit-hybrid-tutorial.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hybrid/">hybrid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mobile/">mobile</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2014-09-11-android-webkit-hybrid-tutorial.html&title=《Android Hybrid Develpment Tutorial》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2014-09-11-android-webkit-hybrid-tutorial.html&title=《Android Hybrid Develpment Tutorial》 — Balance&source=See Building Hybrid Android Apps with Java and JavaScript
+什么是混合“混合” 应用是一种特殊的 ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2014-09-11-android-webkit-hybrid-tutorial.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Hybrid Develpment Tutorial》 — Balance&url=http://blog.inching.org/Android/2014-09-11-android-webkit-hybrid-tutorial.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2014-09-11-android-webkit-hybrid-tutorial.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/FullStack/2014-09-15-yeoman.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Yeoman Tutorial</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Angular/2014-09-10-mobile-angular.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Angular Mobile Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2014-09-11-android-webkit-hybrid-tutorial.html&title=《Android Hybrid Develpment Tutorial》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2014-09-11-android-webkit-hybrid-tutorial.html&title=《Android Hybrid Develpment Tutorial》 — Balance&source=See Building Hybrid Android Apps with Java and JavaScript
+什么是混合“混合” 应用是一种特殊的 ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2014-09-11-android-webkit-hybrid-tutorial.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Hybrid Develpment Tutorial》 — Balance&url=http://blog.inching.org/Android/2014-09-11-android-webkit-hybrid-tutorial.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2014-09-11-android-webkit-hybrid-tutorial.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtUlEQVR42u3aUW4qMRAEQO5/ad7vk4Cle2wDkWq/okR4XUayJz2+3eLn/t/z+JvHvz5+Nn/L9RtvJx48PDy8ham/mu4149VvrsfJ336Nf7PEeHh4eMd4yTadTzEZJ1ni2Th4eHh4v8bLy+52yRI2Hh4e3t/lJWV0gmmLbzw8PLzf4a1MLh/tulz+ctaCh4eHF/Nmranv/nykv4eHh4e33FXPt/J8427L65UHDw8P7wRvFtHmjbF8OfIwt46S8fDw8Lbykn/jV65k7QK3C4qHh4d3jpe3o/LrVm38ml/qGsYTeHh4eAd4+aY8e317qBTXAoKvBA8PD+80r92sV5r3+RafxxZFCIOHh4e3lXc6aGhDkA1LjIeHh7eJlxfH7YWAlebZrFX25hvDw8PD+yBvpYyeFdmzJcbDw8P7JK+NRO/BMwuC89AhOszw8PDwjvFOlNGzyHXlWHoyKzw8PLwDvKL1vqnkzY+KWSer+AAeHh7eiLfyynxrzpesHe3NwuHh4eEd4OUHwLZTaGH8PIx4MzIeHh7eJl4e6c6OijyczUPh60MCDw8P7wRvpXG1qwRvW19FWIyHh4d3mJcHtW37Pzl+2rAYDw8P77u8lc23vVC1UqYnYcSTmxF4eHh4W3ltsZtfikomnUxuQ9aCh4eH9xFe8pq22G3DiGEAMevR4eHh4Y14w4J1VEyvN73qm2V4eHh4H+HlEe3KFYGVUDg6C/Dw8PC28u7ls2u7z7f4/OLCkzHx8PDwDvDarXb24aRAb0Ph9ijCw8PD28ubtfbzkDcPbdsDKfre8PDw8I7x8g09eWVbTO96Xh4MeHh4eF/ltcFrG0asH0V4eHh4v8abRb35mNdzqC9s4eHh4R3jtZef2ksAM0Z7EWEpxsXDw8Pb072KNug8aGinUh8D6xkGHh4e3tXzD+A7QQX0AKXJAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

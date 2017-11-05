@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>PHP IO | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tutorial,php">
+    <meta name="description" content="See 《Modern PHP》 and 《Learning PHP, MySQL &amp;amp; JavaScript, 4th Edition》.
+FileChecking Whether a File ExistsTo determine whether a file already exists, you can use the file_exists function, which retu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP IO">
+<meta property="og:url" content="http://blog.inching.org/PHP/2015-05-26-php-io.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="See 《Modern PHP》 and 《Learning PHP, MySQL &amp;amp; JavaScript, 4th Edition》.
+FileChecking Whether a File ExistsTo determine whether a file already exists, you can use the file_exists function, which retu">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP IO">
+<meta name="twitter:description" content="See 《Modern PHP》 and 《Learning PHP, MySQL &amp;amp; JavaScript, 4th Edition》.
+FileChecking Whether a File ExistsTo determine whether a file already exists, you can use the file_exists function, which retu">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">PHP IO</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">PHP IO</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-05-25T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2015-05-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/PHP/">PHP</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#File"><span class="post-toc-text">File</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Checking-Whether-a-File-Exists"><span class="post-toc-text">Checking Whether a File Exists</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Creating-a-File"><span class="post-toc-text">Creating a File</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Reading-from-Files"><span class="post-toc-text">Reading from Files</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Copying-Files"><span class="post-toc-text">Copying Files</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Moving-a-File"><span class="post-toc-text">Moving a File</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Deleting-a-File"><span class="post-toc-text">Deleting a File</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Updating-Files"><span class="post-toc-text">Updating Files</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Locking-Files-for-Multiple-Accesses"><span class="post-toc-text">Locking Files for Multiple Accesses</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Reading-an-Entire-File"><span class="post-toc-text">Reading an Entire File</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Uploading-Files"><span class="post-toc-text">Uploading Files</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#System-Calls"><span class="post-toc-text">System Calls</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Streams"><span class="post-toc-text">Streams</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Stream-Wrappers"><span class="post-toc-text">Stream Wrappers</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Stream-Context"><span class="post-toc-text">Stream Context</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Stream-Filters"><span class="post-toc-text">Stream Filters</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-php-io"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">PHP IO</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-05-26 00:00:00" datetime="2015-05-25T16:00:00.000Z"  itemprop="datePublished">2015-05-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/PHP/">PHP</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>See <a href="http://www.salttiger.com/modern-php/" target="_blank" rel="external">《Modern PHP》</a> and <a href="http://www.salttiger.com/learning-php-mysql-javascript-4th-edition/" target="_blank" rel="external">《Learning PHP, MySQL &amp; JavaScript, 4th Edition》</a>.</p>
+<h2 id="File"><a href="#File" class="headerlink" title="File"></a>File</h2><h3 id="Checking-Whether-a-File-Exists"><a href="#Checking-Whether-a-File-Exists" class="headerlink" title="Checking Whether a File Exists"></a>Checking Whether a File Exists</h3><p>To determine whether a file already exists, you can use the <code>file_exists</code> function, which returns either <code>TRUE</code> or <code>FALSE</code>, and is used like this:</p>
+<pre><code>if (file_exists(&quot;testfile.txt&quot;)) echo &quot;File exists&quot;;
+</code></pre><a id="more"></a>
+<h3 id="Creating-a-File"><a href="#Creating-a-File" class="headerlink" title="Creating a File"></a>Creating a File</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> <span class="comment">// testfile.php</span></div><div class="line">  $fh = fopen(<span class="string">"testfile.txt"</span>, <span class="string">'w'</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"Failed to create file"</span>);</div><div class="line"></div><div class="line">  $text = <span class="string">&lt;&lt;&lt;_END</span></div><div class="line">Line 1</div><div class="line">Line 2</div><div class="line">Line 3</div><div class="line">_END;</div><div class="line"></div><div class="line">  fwrite($fh, $text) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"Could not write to file"</span>);</div><div class="line">  fclose($fh);</div><div class="line">  <span class="keyword">echo</span> <span class="string">"File 'testfile.txt' written successfully"</span>;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>Upon failure, <code>FALSE</code> will be returned by <code>fopen</code>. The previous example shows a simple way to capture and respond to the failure: it calls the <code>die</code> function to end the program and give the user an error message. A web application would never abort in this crude way (you would create a web page with an error message instead), but this is fine for our testing purposes.</p>
+<p><strong>The supported fopen modes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Action</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘r’</td>
+<td>Read from file start</td>
+<td>Open for reading only; place the file pointer at the beginning of the file. Return FALSE if the file doesn’t already exist.</td>
+</tr>
+<tr>
+<td>‘r+’</td>
+<td>Read from file start and allow writing</td>
+<td>Open for reading and writing; place the file pointer at the beginning of the file. Return FALSE if the file doesn’t already exist.</td>
+</tr>
+<tr>
+<td>‘w’</td>
+<td>Write from file start and truncate file</td>
+<td>Open for writing only; place the file pointer at the beginning of the file and truncate the file to zero length. If the file doesn’t exist, attempt to create it.</td>
+</tr>
+<tr>
+<td>‘w+’</td>
+<td>Write from file start, truncate file, and allow reading</td>
+<td>Open for reading and writing; place the file pointer at the beginning of the file and truncate the file to zero length. If the file doesn’t exist, attempt to create it.</td>
+</tr>
+<tr>
+<td>‘a’</td>
+<td>Append to file end</td>
+<td>Open for writing only; place the file pointer at the end of the file. If the file doesn’t exist, attempt to create it.</td>
+</tr>
+<tr>
+<td>‘a+’</td>
+<td>Append to file end and allow reading</td>
+<td>Open for reading and writing; place the file pointer at the end of the file. If the file doesn’t exist, attempt to create it.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Reading-from-Files"><a href="#Reading-from-Files" class="headerlink" title="Reading from Files"></a>Reading from Files</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $fh = fopen(<span class="string">"testfile.txt"</span>, <span class="string">'r'</span>) <span class="keyword">or</span></div><div class="line">    <span class="keyword">die</span>(<span class="string">"File does not exist or you lack permission to open it"</span>);</div><div class="line"></div><div class="line">  $text = fread($fh, <span class="number">3</span>);</div><div class="line">  fclose($fh);</div><div class="line">  <span class="keyword">echo</span> $text;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="Copying-Files"><a href="#Copying-Files" class="headerlink" title="Copying Files"></a>Copying Files</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> <span class="comment">// copyfile.php</span></div><div class="line">  copy(<span class="string">'testfile.txt'</span>, <span class="string">'testfile2.txt'</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"Could not copy file"</span>);</div><div class="line">  <span class="keyword">echo</span> <span class="string">"File successfully copied to 'testfile2.txt'"</span>;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="Moving-a-File"><a href="#Moving-a-File" class="headerlink" title="Moving a File"></a>Moving a File</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;?php // movefile.php</div><div class="line">  if (!rename(&apos;testfile2.txt&apos;, &apos;testfile2.new&apos;))</div><div class="line">    echo &quot;Could not rename file&quot;;</div><div class="line">  else echo &quot;File successfully renamed to &apos;testfile2.new&apos;&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>You can use the <code>rename</code> function on directories, too. To avoid any warning messages, if the original file doesn’t exist, you can call the <code>file_exists</code> function first to check.</p>
+<h3 id="Deleting-a-File"><a href="#Deleting-a-File" class="headerlink" title="Deleting a File"></a>Deleting a File</h3><p>Deleting a file is just a matter of using the <code>unlink</code> function to remove it from the file system.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?php // deletefile.php</div><div class="line">  if (!unlink(&apos;testfile2.new&apos;)) echo &quot;Could not delete file&quot;;</div><div class="line">  else echo &quot;File &apos;testfile2.new&apos; successfully deleted&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>As with moving a file, a warning message will be displayed if the file doesn’t exist, which you can avoid by using <code>file_exists</code> to first check for its existence before calling <code>unlink</code>.</p>
+<h3 id="Updating-Files"><a href="#Updating-Files" class="headerlink" title="Updating Files"></a>Updating Files</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?php // update.php</div><div class="line">  $fh   = fopen(&quot;testfile.txt&quot;, &apos;r+&apos;) or die(&quot;Failed to open file&quot;);</div><div class="line">  $text = fgets($fh);</div><div class="line"></div><div class="line">  fseek($fh, 0, SEEK_END);</div><div class="line">  fwrite($fh, &quot;$text&quot;) or die(&quot;Could not write to file&quot;);</div><div class="line">  fclose($fh);</div><div class="line"></div><div class="line">  echo &quot;File &apos;testfile.txt&apos; successfully updated&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>As used here, in addition to the <code>$fh</code> file handle, the <code>fseek</code> function was passed two other parameters, <code>0</code> and <code>SEEK_END</code>. <code>SEEK_END</code> tells the function to move the file pointer to the end of the file, and <code>0</code> tells it how many positions it should then be moved backward from that point. In the case of Example 7-11, a value of <code>0</code> is used, because the pointer is required to remain at the file’s end.</p>
+<p>There are two other seek options available to the <code>fseek</code> function: <code>SEEK_SET</code> and <code>SEEK_CUR</code>. The <code>SEEK_SET</code> option tells the function to set the file pointer to the exact position given by the preceding parameter. Thus, the following example moves the file pointer to position 18:</p>
+<pre><code>fseek($fh, 18, SEEK_SET);
+</code></pre><p><code>SEEK_CUR</code> sets the file pointer to the current position <em>plus</em> the value of the given offset. Therefore, if the file pointer is currently at position 18, the following call will move it to position 23:</p>
+<pre><code>fseek($fh, 5, SEEK_CUR);
+</code></pre><p>Although this is not recommended unless you have very specific reasons for it, it is even possible to use text files such as this (but with fixed line lengths) as simple flat file databases. Your program can then use <code>fseek</code> to move back and forth within such a file to retrieve, update, and add new records. You can also delete records by overwriting them with zero characters, and so on.</p>
+<h3 id="Locking-Files-for-Multiple-Accesses"><a href="#Locking-Files-for-Multiple-Accesses" class="headerlink" title="Locking Files for Multiple Accesses"></a>Locking Files for Multiple Accesses</h3><p>Web programs are often called by many users at the same time. If more than one person tries to write to a file simultaneously, it can become corrupted. And if one person writes to it while another is reading from it, the file is all right, but the person reading it can get odd results. To handle simultaneous users, you must use the file-locking <code>flock</code> function. This function queues up all other requests to access a file until your program releases the lock.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $fh   = fopen(<span class="string">"testfile.txt"</span>, <span class="string">'r+'</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"Failed to open file"</span>);</div><div class="line">  $text = fgets($fh);</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (flock($fh, LOCK_EX))</div><div class="line">  &#123;</div><div class="line">    fseek($fh, <span class="number">0</span>, SEEK_END);</div><div class="line">    fwrite($fh, <span class="string">"$text"</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"Could not write to file"</span>);</div><div class="line">    flock($fh, LOCK_UN);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  fclose($fh);</div><div class="line">  <span class="keyword">echo</span> <span class="string">"File 'testfile.txt' successfully updated"</span>;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>There is a trick to file locking to preserve the best possible response time for your website visitors: perform it directly before a change you make to a file, and then unlock it immediately afterward. Having a file locked for any longer than this will slow down your application unnecessarily. This is why the calls to <code>flock</code> are directly before and after the <code>fwrite</code> call:</p>
+<p>The first call to <code>flock</code> sets an exclusive file lock on the file referred to by <code>$fh</code> using the <code>LOCK_EX</code> parameter:</p>
+<pre><code>flock($fh, LOCK_EX);
+</code></pre><p>From this point onward, no other processes can write to (or even read from) the file until you release the lock by using the <code>LOCK_UN</code> parameter, like this:</p>
+<pre><code>flock($fh, LOCK_UN);
+</code></pre><p>As soon as the lock is released, other processes are again allowed access to the file. This is one reason why you should re-seek to the point you wish to access in a file each time you need to read or write data, because another process could have changed the file since the last access.</p>
+<p><code>flock</code> is not supported on all systems. <code>flock</code> will not work on NFS and many other networked file systems.</p>
+<h3 id="Reading-an-Entire-File"><a href="#Reading-an-Entire-File" class="headerlink" title="Reading an Entire File"></a>Reading an Entire File</h3><p>A handy function for reading in an entire file without having to use file handles is <code>file_get_contents</code>. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">  echo &quot;&lt;pre&gt;&quot;;  // Enables display of line feeds</div><div class="line">  echo file_get_contents(&quot;testfile.txt&quot;);</div><div class="line">  echo &quot;&lt;/pre&gt;&quot;; // Terminates pre tag</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>But the function is actually a lot more useful than that, because you can also use it to fetch a file from a server across the Internet.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">  echo file_get_contents(&quot;http://oreilly.com&quot;);</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h4 id="Uploading-Files"><a href="#Uploading-Files" class="headerlink" title="Uploading Files"></a>Uploading Files</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> <span class="comment">// upload.php</span></div><div class="line">  <span class="keyword">echo</span> <span class="string">&lt;&lt;&lt;_END</span></div><div class="line">    &lt;html&gt;&lt;head&gt;&lt;title&gt;PHP Form Upload&lt;/title&gt;&lt;/head&gt;&lt;body&gt;</div><div class="line">    &lt;form method='post' action='upload.php' enctype='multipart/form-data'&gt;</div><div class="line">    Select File: &lt;input type='file' name='filename' size='10'&gt;</div><div class="line">    &lt;input type='submit' value='Upload'&gt;</div><div class="line">    &lt;/form&gt;</div><div class="line">_END;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> ($_FILES)</div><div class="line">  &#123;</div><div class="line">    $name = $_FILES[<span class="string">'filename'</span>][<span class="string">'name'</span>];</div><div class="line">    move_uploaded_file($_FILES[<span class="string">'filename'</span>][<span class="string">'tmp_name'</span>], $name);</div><div class="line">    <span class="keyword">echo</span> <span class="string">"Uploaded image '$name'&lt;br&gt;&lt;img src='$name'&gt;"</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">echo</span> <span class="string">"&lt;/body&gt;&lt;/html&gt;"</span>;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>The PHP code to receive the uploaded data is fairly simple, because all uploaded files are placed into the associative system array <code>$_FILES</code>. Therefore, a quick check to see whether <code>$_FILES</code> contains anything is sufficient to determine whether the user has uploaded a file. This is done with the statement <code>if ($_FILES)</code>.</p>
+<p>Once the program realizes that a file was uploaded, the actual name, as read from the uploading computer, is retrieved and placed into the variable <code>$name</code>. Now all that’s necessary is to move the file from the temporary location in which PHP stored the uploaded file to a more permanent one. We do this using the <code>move_uploaded_file</code> function, passing it the original name of the file, with which it is saved to the current directory.</p>
+<p>Five things are stored in the $_FILES array when a file is uploaded:</p>
+<table>
+<thead>
+<tr>
+<th>Array element</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$_FILES[‘file’][‘name’]</td>
+<td>The name of the uploaded file (e.g., smiley.jpg)</td>
+</tr>
+<tr>
+<td>$_FILES[‘file’][‘type’]</td>
+<td>The content type of the file (e.g., image/jpeg)</td>
+</tr>
+<tr>
+<td>$_FILES[‘file’][‘size’]</td>
+<td>The file’s size in bytes</td>
+</tr>
+<tr>
+<td>$_FILES[‘file’][‘tmp_name’]</td>
+<td>The name of the temporary file stored on the server</td>
+</tr>
+<tr>
+<td>$_FILES[‘file’][‘error’]</td>
+<td>The error code resulting from the file upload</td>
+</tr>
+</tbody>
+</table>
+<p>In addition to maliciously formed input data, some of the things you also have to check are whether a file was actually received and, if so, whether the right type of data was sent.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> <span class="comment">// upload2.php</span></div><div class="line">  <span class="keyword">echo</span> <span class="string">&lt;&lt;&lt;_END</span></div><div class="line">    &lt;html&gt;&lt;head&gt;&lt;title&gt;PHP Form Upload&lt;/title&gt;&lt;/head&gt;&lt;body&gt;</div><div class="line">    &lt;form method='post' action='upload2.php' enctype='multipart/form-data'&gt;</div><div class="line">    Select a JPG, GIF, PNG or TIF File:</div><div class="line">    &lt;input type='file' name='filename' size='10'&gt;</div><div class="line">    &lt;input type='submit' value='Upload'&gt;&lt;/form&gt;</div><div class="line">_END;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> ($_FILES)</div><div class="line">  &#123;</div><div class="line">    $name = $_FILES[<span class="string">'filename'</span>][<span class="string">'name'</span>];</div><div class="line"></div><div class="line">    <span class="keyword">switch</span>($_FILES[<span class="string">'filename'</span>][<span class="string">'type'</span>])</div><div class="line">    &#123;</div><div class="line">      <span class="keyword">case</span> <span class="string">'image/jpeg'</span>: $ext = <span class="string">'jpg'</span>; <span class="keyword">break</span>;</div><div class="line">      <span class="keyword">case</span> <span class="string">'image/gif'</span>:  $ext = <span class="string">'gif'</span>; <span class="keyword">break</span>;</div><div class="line">      <span class="keyword">case</span> <span class="string">'image/png'</span>:  $ext = <span class="string">'png'</span>; <span class="keyword">break</span>;</div><div class="line">      <span class="keyword">case</span> <span class="string">'image/tiff'</span>: $ext = <span class="string">'tif'</span>; <span class="keyword">break</span>;</div><div class="line">      <span class="keyword">default</span>:           $ext = <span class="string">''</span>;    <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> ($ext)</div><div class="line">    &#123;</div><div class="line">      $n = <span class="string">"image.$ext"</span>;</div><div class="line">      move_uploaded_file($_FILES[<span class="string">'filename'</span>][<span class="string">'tmp_name'</span>], $n);</div><div class="line">      <span class="keyword">echo</span> <span class="string">"Uploaded image '$name' as '$n':&lt;br&gt;"</span>;</div><div class="line">      <span class="keyword">echo</span> <span class="string">"&lt;img src='$n'&gt;"</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">echo</span> <span class="string">"'$name' is not an accepted image file"</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> <span class="keyword">echo</span> <span class="string">"No image has been uploaded"</span>;</div><div class="line"></div><div class="line">  <span class="keyword">echo</span> <span class="string">"&lt;/body&gt;&lt;/html&gt;"</span>;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="System-Calls"><a href="#System-Calls" class="headerlink" title="System Calls"></a>System Calls</h4><p>Sometimes PHP will not have the function you need to perform a certain action, but the operating system it is running on may. In such cases, you can use the <code>exec</code> system call to do the job.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> <span class="comment">// exec.php</span></div><div class="line">  $cmd = <span class="string">"dir"</span>;   <span class="comment">// Windows</span></div><div class="line">  <span class="comment">// $cmd = "ls"; // Linux, Unix &amp; Mac</span></div><div class="line"></div><div class="line">  exec(escapeshellcmd($cmd), $output, $status);</div><div class="line"></div><div class="line">  <span class="keyword">if</span> ($status) <span class="keyword">echo</span> <span class="string">"Exec command failed"</span>;</div><div class="line">  <span class="keyword">else</span></div><div class="line">  &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;"</span>;</div><div class="line">    <span class="keyword">foreach</span>($output <span class="keyword">as</span> $line) <span class="keyword">echo</span> htmlspecialchars(<span class="string">"$line\n"</span>);</div><div class="line">    <span class="keyword">echo</span> <span class="string">"&lt;/pre&gt;"</span>;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>The <code>htmlspecialchars</code> function is called to turn any special characters returned by the system into ones that HTML can understand and properly display, neatening the output.</p>
+<p><code>exec</code> takes three arguments:* The command itself (in the previous case, <code>$cmd</code>)</p>
+<ul>
+<li><p>An array in which the system will put the output from the command (in the previous case, <code>$output</code>)</p>
+</li>
+<li><p>A variable to contain the returned status of the call (which, in the previous case, is <code>$status</code>)</p>
+</li>
+</ul>
+<h2 id="Streams"><a href="#Streams" class="headerlink" title="Streams"></a>Streams</h2><p>If you’ve read from <code>php://stdin</code> or written to <code>php://stdout</code>, you’ve used streams. Streams provide the underlying implementation for many of PHP’s IO functions like <code>file_get_contents()</code>, <code>fopen()</code>, <code>fgets()</code>, and <code>fwrite()</code>. PHP’s stream functions help us manipulate different stream resources (origins and destinations) with a single interface.</p>
+<h3 id="Stream-Wrappers"><a href="#Stream-Wrappers" class="headerlink" title="Stream Wrappers"></a>Stream Wrappers</h3><p>There are different types of streamable data that require unique <em>protocols</em> for reading and writing data. We call these protocols <a href="http://php.net/manual/wrappers.php" target="_blank" rel="external">stream wrappers</a>. For example, we can read and write data to the filesystem. We can talk with remote web servers via HTTP, HTTPS, or SSH (secure shell). We can open, read, and write ZIP, RAR, or PHAR archives. All of these communication methods imply the same generic process:</p>
+<ol>
+<li>Open communication.</li>
+<li>Read data.</li>
+<li>Write data.</li>
+<li>Close communication.</li>
+</ol>
+<p>Every stream has a <em>scheme</em> and a <em>target</em>. We specify the scheme and target in the stream’s <em>identifier</em> using this familiar format:</p>
+<pre><code>&lt;scheme&gt;://&lt;target&gt;
+</code></pre><p>The <code>&lt;scheme&gt;</code> identifies the stream’s wrapper. The <code>&lt;target&gt;</code> identifies the stream data source. Example 5-28 creates a PHP stream to/from the Flickr API. It uses the HTTP stream wrapper.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$json = file_get_contents(</div><div class="line">    &apos;http://api.flickr.com/services/feeds/photos_public.gne?format=json&apos;</div><div class="line">);</div></pre></td></tr></table></figure>
+<p>Don’t be fooled by what appears to be a traditional website URL. The <code>file_get_contents()</code> function’s string argument is actually a stream identifier. The <code>http</code> scheme prompts PHP to use the HTTP stream wrapper. The argument’s remainder is the stream target. The stream target looks like a traditional website URL only because that’s what the HTTP stream wrapper expects. This may not be true for other stream wrappers.</p>
+<p>We use the <code>file_get_contents()</code>, <code>fopen()</code>, <code>fwrite()</code>, and <code>fclose()</code> methods to read from and write to the filesystem. We rarely consider these functions as using PHP streams, because the default PHP stream wrapper is <code>file://</code>. We’re using PHP streams and we don’t even realize it! Example 5-29 creates a stream to/from the <em>/etc/hosts</em> file using the <code>file://</code> stream wrapper.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$handle = fopen(&apos;/etc/hosts&apos;, &apos;rb&apos;);</div><div class="line">while (feof($handle) !== true) &#123;</div><div class="line">    echo fgets($handle);</div><div class="line">&#125;</div><div class="line">fclose($handle);</div></pre></td></tr></table></figure>
+<p>HP developers who write command-line scripts will appreciate the <code>php://</code> stream wrapper. This stream wrapper communicates with the PHP script’s standard input, standard output, and standard error file descriptors. You can open, read from, and write to these four streams with PHP’s filesystem functions:</p>
+<ul>
+<li><p>php://stdin</p>
+<p>  This read-only PHP stream exposes data provided via standard input. For example, a PHP script can use this stream to receive information piped into the script on the command line. </p>
+</li>
+<li><p>php://stdout</p>
+<p>  This PHP stream lets you write data to the current output buffer. This stream is write-only and cannot be read or seeked.</p>
+</li>
+<li><p>php://memory</p>
+<p>  This PHP stream lets you read and write data to system memory. The downside to this PHP stream is that available memory is finite. It’s safer to use the php://temp stream instead.</p>
+</li>
+<li><p>php://temp</p>
+<p>  This PHP stream acts just like php://memory, except that when available memory is gone, PHP instead writes to a temporary file.</p>
+</li>
+</ul>
+<h3 id="Stream-Context"><a href="#Stream-Context" class="headerlink" title="Stream Context"></a>Stream Context</h3><p>Some PHP streams accept an optional set of parameters, or a <em>stream context</em>, to customize the stream’s behavior. Different stream wrappers expect different context parameters. You create a stream context with the <code>stream_context_create()</code> function. The returned context object can be passed into and used by most PHP filesystem and stream functions.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$requestBody = &apos;&#123;&quot;username&quot;:&quot;josh&quot;&#125;&apos;;</div><div class="line">$context = stream_context_create(array(</div><div class="line">    &apos;http&apos; =&gt; array(</div><div class="line">        &apos;method&apos; =&gt; &apos;POST&apos;,</div><div class="line">        &apos;header&apos; =&gt; &quot;Content-Type: application/json;charset=utf-8;\r\n&quot; .</div><div class="line">                    &quot;Content-Length: &quot; . mb_strlen($requestBody),</div><div class="line">        &apos;content&apos; =&gt; $requestBody</div><div class="line">    )</div><div class="line">));</div><div class="line">$response = file_get_contents(&apos;https://my-api.com/users&apos;, false, $context);</div></pre></td></tr></table></figure>
+<p>The stream context is an associative array whose topmost array key is the stream wrapper name. The stream context’s array values are specific to each stream wrapper. Consult the appropriate PHP stream wrapper’s documentation for a list of valid settings.</p>
+<h3 id="Stream-Filters"><a href="#Stream-Filters" class="headerlink" title="Stream Filters"></a>Stream Filters</h3><p>PHP provides several built-in stream filters, including <code>string.rot13</code>, <code>string.toupper</code>, <code>string.tolower</code>, and <code>string.strip_tags</code>. These are not useful. Use custom stream filters, instead.</p>
+<p>You attach a filter to an existing stream with the <code>stream_filter_append()</code> function.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$handle = fopen(&apos;data.txt&apos;, &apos;rb&apos;);</div><div class="line">stream_filter_append($handle, &apos;string.toupper&apos;);</div><div class="line">while(feof($handle) !== true) &#123;</div><div class="line">    echo fgets($handle); // &lt;-- Outputs all uppercase characters</div><div class="line">&#125;</div><div class="line">fclose($handle);</div></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/PHP/2015-05-26-php-io.html" target="_blank" rel="external">http://blog.inching.org/PHP/2015-05-26-php-io.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorial/">tutorial</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/PHP/2015-05-26-php-io.html&title=《PHP IO》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/PHP/2015-05-26-php-io.html&title=《PHP IO》 — Balance&source=See 《Modern PHP》 and 《Learning PHP, MySQL &amp; JavaScript, 4th Edition》.
+Fil..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/PHP/2015-05-26-php-io.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《PHP IO》 — Balance&url=http://blog.inching.org/PHP/2015-05-26-php-io.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/PHP/2015-05-26-php-io.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/PHP/2015-05-26-php-oop.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">PHP OOP</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Database/2015-05-26-database-mysql.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MySQL Tutorial</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/PHP/2015-05-26-php-io.html&title=《PHP IO》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/PHP/2015-05-26-php-io.html&title=《PHP IO》 — Balance&source=See 《Modern PHP》 and 《Learning PHP, MySQL &amp; JavaScript, 4th Edition》.
+Fil..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/PHP/2015-05-26-php-io.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《PHP IO》 — Balance&url=http://blog.inching.org/PHP/2015-05-26-php-io.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/PHP/2015-05-26-php-io.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIklEQVR42u3aQW7DMAwEwP7/0+m1QGBlSTpALY1PheHIGh9YUuTPT3y9/lzv95Pnr377/szVmjdcGBgYj2W8lleyrTUmX2H93qtnMDAwzmEkm1gvvd5QEi17HwgDAwMjSezWm16nlet0EwMDA2PCqAbfyfMYGBgYeRG7XihJB/9FLY6BgfFAxl1F5jf+/kp/AwMD41GMV/GqFqXzO9GuMDAwtmbkAW6SMvaO58rDHxgYGAczqsExb2T2wnGUvWJgYGzEyAGTRmbO7h3PYWBgnMDIhyp628oTwWqoxcDAOIExGQWrHo1Nmp3VEhcDA+MExjxcJkd1vRXKTU0MDIyNGNXRq2qb864w/SH4YmBgHMBopmKDkN1rMFyuiYGBsSmjF+DygraX6pV/i4GBsTVjUhVW07tqWVtICjEwMDZlJKXmJH1MEsT8QzSHLTAwMDZlVGF56MypN8yMYGBgbMGoHpCVz/CCkJoPdnz4rBgYGFszquEv2UQvQN9Wi2NgYGzHSBLB7w2HNQ/6r/5vYGBgHMBIXtnDJ+lm9U4zumNgYDycEZWIcYNztK3quzAwMDZlvIrXZJgsH/OqlsoYGBh7M3rDYdUWZrVknRfVGBgY+zEmLcbvtQHKe8DAwDiAUQ18+Z08EFdDPwYGBsZknKKaVk7eiIGBgZEExLvSu9ERHgYGxgGMpIjNz+p6bdHq8BkGBsY5jLx0zMNi/lHmGAwMjK0Zv7JVapgAL5XOAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

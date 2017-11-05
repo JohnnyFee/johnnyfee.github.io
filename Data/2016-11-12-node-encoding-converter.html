@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Node Encoding Converter | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="Node.js 自带的 toString() 方法不支持 gbk，因此中文转换的时候需要加载第三方库，推荐以下两个编码转换库，iconv-lite 和 encoding。
+
+iconv：是在类 Unix 系统中一种标准字符集转换接口，用于在不同字符集编码之间进行转换，最早出现在 HP-UX 系统中。
+iconv-lite：是 iconv 的纯 js 实现，支持的编码包括 node.js 原生编码：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node Encoding Converter">
+<meta property="og:url" content="http://blog.inching.org/Data/2016-11-12-node-encoding-converter.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="Node.js 自带的 toString() 方法不支持 gbk，因此中文转换的时候需要加载第三方库，推荐以下两个编码转换库，iconv-lite 和 encoding。
+
+iconv：是在类 Unix 系统中一种标准字符集转换接口，用于在不同字符集编码之间进行转换，最早出现在 HP-UX 系统中。
+iconv-lite：是 iconv 的纯 js 实现，支持的编码包括 node.js 原生编码：">
+<meta property="og:updated_time" content="2017-04-21T12:57:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node Encoding Converter">
+<meta name="twitter:description" content="Node.js 自带的 toString() 方法不支持 gbk，因此中文转换的时候需要加载第三方库，推荐以下两个编码转换库，iconv-lite 和 encoding。
+
+iconv：是在类 Unix 系统中一种标准字符集转换接口，用于在不同字符集编码之间进行转换，最早出现在 HP-UX 系统中。
+iconv-lite：是 iconv 的纯 js 实现，支持的编码包括 node.js 原生编码：">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.17">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Node Encoding Converter</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Node Encoding Converter</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-11-12T08:36:00.000Z" itemprop="datePublished" class="page-time">
+  2016-11-12
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Data/">Data</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#iconv-lite-安装使用"><span class="post-toc-text">iconv-lite 安装使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#encoding-安装使用"><span class="post-toc-text">encoding 安装使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#jschardet"><span class="post-toc-text">jschardet</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-node-encoding-converter"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Node Encoding Converter</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-11-12 16:36:00" datetime="2016-11-12T08:36:00.000Z"  itemprop="datePublished">2016-11-12</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Data/">Data</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Node.js 自带的 <code>toString()</code> 方法不支持 gbk，因此中文转换的时候需要加载第三方库，推荐以下两个编码转换库，iconv-lite 和 encoding。</p>
+<ul>
+<li>iconv：是在类 Unix 系统中一种标准字符集转换接口，用于在不同字符集编码之间进行转换，最早出现在 HP-UX 系统中。</li>
+<li>iconv-lite：是 iconv 的纯 js 实现，支持的编码包括 node.js 原生编码：utf8, ucs2, ascii, binary, base64；同时支持广泛使用的单字节编码：Windows 125x family, ISO-8859 family, IBM/DOS codepages, Macintosh family, KOI8 family, latin1, us-ascii；多字节编码：gbk, gb2313, Big5, cp950。官方宣称比 node-iconv 更快。</li>
+<li>encoding：是对 node-iconv 和 iconv-lite 的再次封装，encoding 首先调用 node-iconv，如果 node-iconv 无法解析，则调用 iconv-lite 作为替代方案。</li>
+</ul>
+<h2 id="iconv-lite-安装使用"><a href="#iconv-lite-安装使用" class="headerlink" title="iconv-lite 安装使用"></a>iconv-lite 安装使用</h2><p>安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install iconv-lite</div></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> iconv = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);<span class="comment">// Convert from an encoded buffer to js string.</span></div><div class="line">str = iconv.decode(buf, <span class="string">'win1251'</span>);<span class="comment">// Convert from js string to an encoded buffer.</span></div><div class="line">buf = iconv.encode(<span class="string">"Sample input string"</span>, <span class="string">'win1251'</span>);<span class="comment">// Check if encoding is supported</span></div><div class="line">iconv.encodingExists(<span class="string">"us-ascii"</span>)</div></pre></td></tr></table></figure>
+<p>iconv-lite和node-iconv的性能对比</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">operation             iconv@1.2.4   iconv-lite@0.2.4</div><div class="line">----------------------------------------------------------encode(&apos;win1251&apos;)     ~115 Mb/s     ~230 Mb/s</div><div class="line">decode(&apos;win1251&apos;)     ~95 Mb/s      ~130 Mb/s</div></pre></td></tr></table></figure>
+<h2 id="encoding-安装使用"><a href="#encoding-安装使用" class="headerlink" title="encoding 安装使用"></a>encoding 安装使用</h2><p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install encoding</div></pre></td></tr></table></figure>
+<p>使用</p>
+<p>encoding 模块就一个方法 convert()，使用方法为：encoding.convert(text, toCharset, fromCharset)。</p>
+<ul>
+<li>text: 需要转换的对象，可以为 Buffer 或者 String 对象。</li>
+<li>toCharset: 转换后的编码。</li>
+<li>fromCharset: 转换前的编码，缺省为 uft8。</li>
+</ul>
+<p>转换后的输入结果为 Buffer 对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> encoding = <span class="built_in">require</span>(<span class="string">'encoding'</span>);<span class="keyword">var</span> result = encoding.convert(<span class="string">"ÕÄÖÜ"</span>, <span class="string">"Latin_1"</span>);</div><div class="line"><span class="built_in">console</span>.log(result); <span class="comment">//&lt;Buffer d5 c4 d6 dc&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="jschardet"><a href="#jschardet" class="headerlink" title="jschardet"></a>jschardet</h2><p>什么是 jschardet？</p>
+<p>jschardet 是由 António Afonso 从 Python 的 chardet 移植到 Javascript 的 jschardet。</p>
+<p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install jschardet</div></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> jschardet = <span class="built_in">require</span>(<span class="string">"jschardet"</span>)<span class="comment">// "àíàçã" in UTF-8</span></div><div class="line">jschardet.detect(<span class="string">"\xc3\xa0\xc3\xad\xc3\xa0\xc3\xa7\xc3\xa3"</span>)<span class="comment">// &#123; encoding: "utf-8", confidence: 0.9690625 &#125;</span></div><div class="line"></div><div class="line"><span class="comment">// "次常用國字標準字體表" in Big5</span></div><div class="line">jschardet.detect(<span class="string">"\xa6\xb8\xb1\x60\xa5\xce\xb0\xea\xa6\x72\xbc\xd0\xb7\xc7\xa6\x72\xc5\xe9\xaa\xed"</span>)<span class="comment">// &#123; encoding: "Big5", confidence: 0.99 &#125;</span></div></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-21T12:57:17.000Z" itemprop="dateUpdated">2017-04-21 20:57:17</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Data/2016-11-12-node-encoding-converter.html" target="_blank" rel="external">http://blog.inching.org/Data/2016-11-12-node-encoding-converter.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Data/2016-11-12-node-encoding-converter.html&title=《Node Encoding Converter》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Data/2016-11-12-node-encoding-converter.html&title=《Node Encoding Converter》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Data/2016-11-12-node-encoding-converter.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node Encoding Converter》 — Balance&url=http://blog.inching.org/Data/2016-11-12-node-encoding-converter.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Data/2016-11-12-node-encoding-converter.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Node/2016-11-13-node-commander.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Node Commander</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Data/2016-11-11-unicode.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Unicode</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Data/2016-11-12-node-encoding-converter.html&title=《Node Encoding Converter》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Data/2016-11-12-node-encoding-converter.html&title=《Node Encoding Converter》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Data/2016-11-12-node-encoding-converter.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node Encoding Converter》 — Balance&url=http://blog.inching.org/Data/2016-11-12-node-encoding-converter.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Data/2016-11-12-node-encoding-converter.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACxUlEQVR42u3aQW7jQAwEQP//015gTwF2pXQPxTiH0ilQZHlqDhya5OsVX++/16u8vn7q3ze8v1xXd+ZrwMPDw9vgvW+vq2fuvzh/2z0sX8/l1uDh4eGt8ZKwngT6fLnzSB4dHnh4eHgf5bUhO1nuN2E9Xg8eHh7eb+a1Sz9LmvHw8PB+P69NYXP8WQp+v4aVWgseHh7eSdZat7I+9fdifw8PDw9v0FVPDok27Z5vX7FaPDw8vAVeUpBNom4en9v7+WFQ/GLAw8PDG/DaYanJONTZZ0cFXzw8PLwFXl5CPUua27JCwrs/DL5JqfHw8PAe5Z3VQidJ8EZj7PJgwMPDw3uI1w5I5Ys7K0DkgGideHh4eAu8+4XOB6fmx8bZxl3WqvHw8PDGvLad/1TZNwnreWmjqFLj4eHhjXmTVlY+GtWOKTzVQsPDw8P7Gd4kKJ+NVbVbmfwMiE4kPDw8vCNeG/T3ihTzasp/1oOHh4e3wJu3xCZPtluZbMTDHT88PDy821/rbbJ7NoCVl3rbkkQ0U4aHh4e3wGvv5Il1XkRoixHFwYCHh4c35p0F+vzL2nGEnB2tEA8PD2+Z1w4ztWMEbUqdF3Av34CHh4e3wDsLx2eYNqznCXo0roqHh4f3KK8dCGgT7jbct021V37h4eHhPcRLwn0bgiepc1uMiFJqPDw8vId4yaN5sG4bV2ebVTyDh4eHt8w7G59qG2CTjDffFDw8PLw93lOpcHKQ5Jg8oa8rLnh4eHhj3ru82kDctrWS/xYbhIeHh7fAmzTGzhLfCThvzuHh4eFt89rRqDa9fqoAkRdz633Fw8PDO+Ilh0He/j8bwzo7wb5J8fHw8PA+yrsP0/mhkjfS2jR6dDDg4eHhrfHatlaelM+Pn8tiBB4eHt4Crx3Amoxq5W+eHC14eHh4e7y2AVaks4N22mI3Dw8PD++c9wd7LPk+NilhhwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

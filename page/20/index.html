@@ -884,7 +884,7 @@ Directives指令继承 HTML 语法，是一种为自定义元素和属性与 DOM
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-angular-scope"
+            <article id="post-angular-template"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -902,7 +902,7 @@ Directives指令继承 HTML 语法，是一种为自定义元素和属性与 DOM
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/Angular/2014-09-23-angular-scope.html">Angular Scope</a>
+      <a class="post-title-link" href="/Angular/2014-09-23-angular-template.html">Angular Template Loading</a>
     </h3>
   
 
@@ -912,10 +912,24 @@ Directives指令继承 HTML 语法，是一种为自定义元素和属性与 DOM
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        作用域Angular 中作用域的继承使用的是原型继承，也就在说子作用域的 prototype 会指向父作用域。在子作用域中查找属性时，先查找子作用域中的属性，如果未找到，在去父作用域中查找，以此类推，直到找到跟作用域 $rootScope。
+        模板在 Angular 中，templates 是包含 Angular 特殊元素和属性的 HTML。Angular 结合 template 和来自模型和控制器的信息，将动态视图显示在浏览器上。
+&lt;%raw%&gt;1234&lt;div ng-repeat="item in items"&gt;  &lt;span&gt;&#123;&#123;item.title&#125;&#125;&lt;/span&gt;  ...&lt;/div&gt;
+&lt;%endraw%&gt;
+有以下几种 Angular 元素和属性会使用 Angular 模板：
+
+Directive — An attribute or element that  augments an existing DOM element or represents a reusable DOM component.
+Markup — The double curly brace notation {{ }} to bind expressions to elements is built-in Angular markup.
+Filter — Formats data for display.
+Form controls — Validates user input.
+
+模板加载Angular 模板可以通过 &lt;script&gt; 或者 $templateCache 添加，通过这两种方式添加的模板存在于内存中，请求模板的时候不会发起 HTTP 请求。除了这种方式，可以通过 HTTP 直接请求单独的模板文件。
+模板请求的循序优先级从高到低为：
+&lt;script&gt; 方式 &gt; $templateCache &gt; 独立的模板文件
+通过 script 标签引入123&lt;script type="text/ng-template" id="templateId.html"&gt;  &lt;p&gt;This is the content of the template&lt;/p&gt;&lt;/script&gt;
+其中，type=&quot;text/ng-template&quot; 是指明这是 ng 模板。id 是模板标识。
     
 
-        <a href="/Angular/2014-09-23-angular-scope.html" class="post-more waves-effect waves-button">
+        <a href="/Angular/2014-09-23-angular-template.html" class="post-more waves-effect waves-button">
             Continue reading...
         </a>
     </div>

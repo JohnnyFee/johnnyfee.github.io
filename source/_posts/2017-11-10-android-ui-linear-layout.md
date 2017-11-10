@@ -4,6 +4,8 @@ tags: [android, ui, layout]
 category: Android
 ---
 
+See [线性布局](https://developer.android.com/guide/topics/ui/layout/linear.html?hl=zh-cn)
+
 LinearLayout displays views in a single row or column
 
 As you already know, a linear layout displays its views next to each other, either vertically or horizontally. If it’s vertically, the views are displayed in a single column. If it’s horizontally, the views are displayed in a single row.

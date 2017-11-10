@@ -15,6 +15,7 @@ tags: [android, tutorial]
 - [android10 (Fernando Cejas)](https://github.com/android10)
 - [android-libs](http://android-libs.com/)
 - [AndroidDevTools](http://www.androiddevtools.cn/)
+- [12 Practices every Android Development Beginner should know — Part 1](https://android.jlelse.eu/12-practices-every-android-beginner-should-know-cd43c3710027)
 
 <!-- more -->
 

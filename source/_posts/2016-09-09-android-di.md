@@ -13,132 +13,89 @@ Dagger 2 is a great dependency injection library, but its sharp edges can be tri
 
 - Field injection requires the fields to be non final and non private.
 
-    <pre name="3abb" id="3abb" class="graf graf--pre graf-after--li">
-    // BAD  
-    class CardConverter {
-    </pre>
-
-    <pre name="a2c5" id="a2c5" class="graf graf--pre graf-after--pre">
-    **@Inject** PublicKeyManager publicKeyManager;
-    </pre>
-
-    <pre name="5ad6" id="5ad6" class="graf graf--pre graf-after--pre">
-    **@Inject** public CardConverter() {}  
-    }
-    </pre>
+        // BAD  
+        class CardConverter {
+            @Inject PublicKeyManager publicKeyManager;
+            @Inject public CardConverter() {}  
+        }
 
 * Forgetting an `@Inject` on a field introduces a `NullPointerException`.
 
-    <pre name="adda" id="adda" class="graf graf--pre graf-after--li">
-    // BAD  
-    class CardConverter {
-    </pre>
-
-    <pre name="9f60" id="9f60" class="graf graf--pre graf-after--pre">
-      **@Inject** PublicKeyManager publicKeyManager;  
-      Analytics analytics; // Oops, forgot to @Inject
-    </pre>
-
-    <pre name="bbdc" id="bbdc" class="graf graf--pre graf-after--pre">
-      **@Inject** public CardConverter() {}  
-    }
-    </pre>
-
+        // BAD  
+        class CardConverter {
+        
+            @Inject PublicKeyManager publicKeyManager;  
+            Analytics analytics; // Oops, forgot to @Inject
+        
+            @Inject public CardConverter() {}  
+        }
+    
 * Constructor injection is better because it allows for **immutable** and therefore **thread safe** objects that don’t have a partially constructed state.
 
-    <pre name="3aa3" id="3aa3" class="graf graf--pre graf-after--li">
-    // GOOD  
-    class CardConverter {
-    </pre>
-
-    <pre name="2d9f" id="2d9f" class="graf graf--pre graf-after--pre">
-      private final PublicKeyManager publicKeyManager;
-    </pre>
-
-    <pre name="628b" id="628b" class="graf graf--pre graf-after--pre">
-    **@Inject** public CardConverter(PublicKeyManager publicKeyManager) {  
-        this.publicKeyManager = publicKeyManager;  
-      }  
-    }
-    </pre>
-
+        // GOOD  
+        class CardConverter {
+        
+            private final PublicKeyManager publicKeyManager;
+        
+            @Inject public CardConverter(PublicKeyManager publicKeyManager) {  
+            this.publicKeyManager = publicKeyManager;  
+          }  
+        }
+    
 * Kotlin eliminates the constructor injection boilerplate:
 
-    <pre name="260b" id="260b" class="graf graf--pre graf-after--li">
-    class CardConverter  
-    **@Inject** **constructor**(  
-      private val publicKeyManager: PublicKeyManager  
-    )
-    </pre>
-
+        class CardConverter  
+        @Inject constructor(private val publicKeyManager: PublicKeyManager)
+    
 * We still use field injection for objects constructed by the system, such as Android activities:
 
-    <pre name="5366" id="5366" class="graf graf--pre graf-after--li">
-    public class MainActivity extends Activity {
-    </pre>
-
-    <pre name="27e6" id="27e6" class="graf graf--pre graf-after--pre">
-      public interface Component {  
-    **void inject(MainActivity activity);**  
-      }
-    </pre>
-
-    <pre name="be3a" id="be3a" class="graf graf--pre graf-after--pre">
-    **@Inject** ToastFactory toastFactory;
-    </pre>
-
-    <pre name="7290" id="7290" class="graf graf--pre graf-after--pre">
-      @Override protected void onCreate(Bundle savedInstanceState) {  
-        super.onCreate(savedInstanceState);  
-        Component component = SquareApplication.component(this);  
-        component.**inject**(this);  
-      }  
-    }
-    </pre>
-
+        public class MainActivity extends Activity {
+        
+            public interface Component {  
+                void inject(MainActivity activity);
+            }
+        
+            @Inject ToastFactory toastFactory;
+        
+            @Override protected void onCreate(Bundle savedInstanceState) {  
+                super.onCreate(savedInstanceState);  
+                Component component = SquareApplication.component(this);  
+                component.**inject**(this);  
+           }  
+        }
+    
 ### Singletons should be extremely rare
 
 * Singletons are useful when we need a **centralized access to a mutable state**.
 
-    <pre name="5c54" id="5c54" class="graf graf--pre graf-after--li">
-    // GOOD**  
-    @Singleton**  
-    public class BadgeCounter {
-    </pre>
-
-    <pre name="02bf" id="02bf" class="graf graf--pre graf-after--pre">
-      public final **Observable<Integer> badgeCount**;
-    </pre>
-
-    <pre name="c1ae" id="c1ae" class="graf graf--pre graf-after--pre">
-      @Inject public BadgeCounter(...) {  
-         badgeCount = ...  
-      }    
-    }
-    </pre>
-
+        // GOOD
+        @Singleton
+        public class BadgeCounter {
+        
+            public final Observable<Integer> badgeCount;
+        
+            @Inject public BadgeCounter(...) {  
+                badgeCount = ...  
+          }
+        }
+    
 * If an object has no mutable state, it doesn’t need to be a singleton.
 
-    <pre name="fd9f" id="fd9f" class="graf graf--pre graf-after--li">
-    **//** BAD**,** should not be a singleton!**    
-    @Singleton**  
-    class RealToastFactory implements ToastFactory {  
-      private **final** Application context;
-    </pre>
+        //BAD, should not be a singleton!
 
-    <pre name="e0e3" id="e0e3" class="graf graf--pre graf-after--pre">
-      @Inject public RealToastFactory(Application context) {  
-        this.context = context;  
-      }
-    </pre>
-
-    <pre name="b4e0" id="b4e0" class="graf graf--pre graf-after--pre">
-      @Override public Toast makeText(int resId, int duration) {  
-        return Toast.makeText(context, resId, duration);  
-      }  
-    }
-    </pre>
-
+        @Singleton
+        class RealToastFactory implements ToastFactory {  
+          private **final** Application context;
+        
+              @Inject public RealToastFactory(Application context) {  
+            this.context = context;  
+          }
+        
+              @Override public Toast makeText(int resId, int duration) {  
+            return Toast.makeText(context, resId, duration);  
+          }  
+        }
+    
 * On **rare occasions**, we use scoping to cache instances that are expensive to create, or that are repeatedly created and thrown away.
 
 ### Favor @Inject over @Provides
@@ -146,104 +103,82 @@ Dagger 2 is a great dependency injection library, but its sharp edges can be tri
 * `@Provides` methods should not duplicate the constructor boilerplate.
 * Code is easier to understand when coupled concerns are in one place.
 
-    <pre name="811c" id="811c" class="graf graf--pre graf-after--li">
-    @Module  
-    class ToastModule {  
-      // BAD, remove this binding and add @Inject to RealToastFactory  
-    **@Provides** RealToastFactory realToastFactory(Application context) {  
-        return **new RealToastFactory(context)**;  
-      }  
-    }
-    </pre>
-
+        @Module  
+        class ToastModule {  
+          // BAD, remove this binding and add @Inject to RealToastFactory  
+            @Provides RealToastFactory realToastFactory(Application context) {  
+                return new RealToastFactory(context);  
+           }  
+        }
+    
 * This is especially important for **singletons**; it’s a key **implementation detail** that you need to know when reading that class.
 
-<pre name="8e56" id="8e56" class="graf graf--pre graf-after--li">
-// GOOD, I have all the details I need in one place.**  
-@Singleton**  
-public class BadgeCounter {
-</pre>
+        // GOOD, I have all the details I need in one place.**  
+        @Singleton**  
+        public class BadgeCounter {
 
-    <pre name="84cd" id="84cd" class="graf graf--pre graf-after--pre">
-      **@Inject** public BadgeCounter(...) {}    
-    }
-    </pre>
-
+              @Inject public BadgeCounter(...) {}    
+        }
+    
 ### Favor static @Provides methods
 
 * Dagger `@Provides` methods can be static.
 
-    <pre name="d1b4" id="d1b4" class="graf graf--pre graf-after--li">
-    @Module  
-    class ToastModule {  
-      @Provides  
-    **static** ToastFactory toastFactory(RealToastFactory factory) {  
-        return factory;  
-      }  
-    }
-    </pre>
-
+        @Module  
+        class ToastModule {  
+          @Provides  
+          static ToastFactory toastFactory(RealToastFactory factory) {  
+            return factory;  
+          }  
+        }
+    
 * The generated code can directly invoke the method instead of having to create a module instance. That method call can be inlined by the compiler.
 
-    <pre name="8ad1" id="8ad1" class="graf graf--pre graf-after--li">
-    @Generated  
-    public final class DaggerAppComponent extends AppComponent {  
-      // ...
-    </pre>
-
-    <pre name="6b18" id="6b18" class="graf graf--pre graf-after--pre">
-      @Override public ToastFactory toastFactory() {  
-        return **ToastModule.toastFactory**(realToastFactoryProvider.get())  
-      }  
-    }
-    </pre>
-
+        @Generated  
+        public final class DaggerAppComponent extends AppComponent {  
+          // ...
+        
+            @Override public ToastFactory toastFactory() {  
+                return ToastModule.toastFactory(realToastFactoryProvider.get())  
+          }  
+        }
+    
 * One static method won’t change much, but all bindings being static will result in a sizable performance increase.
 * Make your modules abstract and Dagger [will fail](https://github.com/google/dagger/issues/621#issuecomment-321868005) at compile time if one of the `@Provides` methods isn’t static.
 
-    <pre name="efd7" id="efd7" class="graf graf--pre graf-after--li">
-    @Module  
-    **abstract** class ToastModule {  
-      @Provides  
-    **static** ToastFactory toastFactory(RealToastFactory factory) {  
-        return factory;  
-      }  
-    }
-    </pre>
+        @Module  
+        abstract class ToastModule {  
+          @Provides  
+          static ToastFactory toastFactory(RealToastFactory factory) {  
+            return factory;  
+          }  
+        }
 
 ### Favor @Binds over @Provides
 
 * `@Binds` replaces `@Provides` for when you’re mapping one type to another.
 
-    <pre name="7965" id="7965" class="graf graf--pre graf-after--li">
-    @Module  
-    abstract class ToastModule {  
-    **@Binds**  
-    **abstract** **ToastFactory** toastFactory(**RealToastFactory** factory);  
-    }
-    </pre>
-
+        @Module  
+        abstract class ToastModule {  
+            @Binds
+            abstract **ToastFactory** toastFactory(**RealToastFactory** factory);  
+        }
+    
 * The method must be abstract. It will never be invoked; the generated code will know to directly use the implementation.
 
-    <pre name="361d" id="361d" class="graf graf--pre graf-after--li">
-    @Generated  
-    public final class DaggerAppComponent extends AppComponent {  
-      // ...
-    </pre>
-
-    <pre name="507b" id="507b" class="graf graf--pre graf-after--pre">
-      private DaggerAppComponent() {  
-        // ...  
-        this.**toastFactoryProvider =** (Provider) **realToastFactoryProvider;**  
-      }
-    </pre>
-
-    <pre name="b9c6" id="b9c6" class="graf graf--pre graf-after--pre">
-      @Override public ToastFactory toastFactory() {  
-        return toastFactoryProvider.get();  
-      }  
-    }
-    </pre>
+        @Generated  
+        public final class DaggerAppComponent extends AppComponent {  
+          // ...
+        
+              private DaggerAppComponent() {  
+            // ...  
+            this.toastFactoryProvider = (Provider) **realToastFactoryProvider;
+          }
+        
+              @Override public ToastFactory toastFactory() {  
+            return toastFactoryProvider.get();  
+          }  
+        }
 
 ### Avoid @Singleton on interface bindings
 
@@ -252,15 +187,13 @@ public class BadgeCounter {
 * Only implementations know if they need to ensure centralized access to mutable state.
 * When binding an implementation to an interface, there shouldn’t be any scoping annotation.
 
-    <pre name="70e6" id="70e6" class="graf graf--pre graf-after--li">
-    @Module  
-    abstract class ToastModule {  
-      // BAD, remove @Singleton  
-      @Binds **@Singleton**  
-      abstract **ToastFactory** toastFactory(**RealToastFactory** factory);  
-    }
-    </pre>
-
+        @Module  
+        abstract class ToastModule {  
+          // BAD, remove @Singleton  
+          @Binds **@Singleton**  
+          abstract **ToastFactory** toastFactory(**RealToastFactory** factory);  
+        }
+    
 ### Enable error-prone
 
 Several Square teams are using it to detect common Dagger mistakes, [check it out](https://github.com/google/error-prone).

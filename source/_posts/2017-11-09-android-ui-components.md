@@ -14,6 +14,10 @@ tags: [android]
 
 - [umano/AndroidSlidingUpPanel](https://github.com/umano/AndroidSlidingUpPanel) 可拖拽。
 
+## Combobox
+
+- [tylersuehr7/chips-input-layout](https://github.com/tylersuehr7/chips-input-layout) 可过滤列表。
+
 ## Grid Layout
 
 - [etsy/AndroidStaggeredGrid](https://github.com/etsy/AndroidStaggeredGrid) 流式格子布局。

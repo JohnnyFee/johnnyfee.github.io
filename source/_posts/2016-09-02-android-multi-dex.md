@@ -13,7 +13,7 @@ See [Android应用打破65K方法数限制](http://www.infoq.com/cn/news/2014/11
 
 <!-- more -->
 
-`Conversion to Dalvik format failed: Unable to execute dex: method ID not in [0, 0xffff]: 65536`
+Conversion to Dalvik format failed: Unable to execute dex: method ID not in [0, 0xffff]: 65536
 
 这个错误是Android应用的方法总数限制造成的。Android平台的Java虚拟机Dalvik在执行DEX格式的Java应用程序时，使用原生类型short来索引DEX文件中的方法。这意味着单个DEX文件可被引用的方法总数被限制为65536。通常APK包含一个classes.dex文件，因此Android应用的方法总数不能超过这个数量，这包括Android框架、类库和你自己开发的代码。
 

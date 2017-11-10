@@ -162,3 +162,7 @@ In the next post, I will cover how to decorate items like adding dividers and ho
 Source code [here](https://github.com/sjthn/RecyclerViewDemo).
 
 If you have any feedback, please comment below.
+
+## Tutorial
+
+- [StanKocken/EfficientAdapter](https://github.com/StanKocken/EfficientAdapter) An efficient adapter to make the use of RecyclerView much easier for Android.

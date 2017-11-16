@@ -4,11 +4,7 @@ tags: [android, ui, layout]
 category: Android
 ---
 
-[`ConstraintLayout`](https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html) allows you to create large and complex layouts with a flat view
-hierarchy (no nested view groups). It's similar to [`RelativeLayout`](https://developer.android.com/reference/android/widget/RelativeLayout.html) in that all
-views are laid out according to relationships between sibling views and the parent layout, but it's
-more flexible than `RelativeLayout` and easier to use with Android Studio's Layout
-Editor.
+[`ConstraintLayout`](https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html) allows you to create large and complex layouts with a flat view hierarchy (no nested view groups). It's similar to [`RelativeLayout`](https://developer.android.com/reference/android/widget/RelativeLayout.html) in that all views are laid out according to relationships between sibling views and the parent layout, but it's more flexible than `RelativeLayout` and easier to use with Android Studio's Layout Editor.
 
 - [Build a Responsive UI with ConstraintLayout](https://developer.android.com/training/constraint-layout/index.html)
 - [ConstraintLayout](https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html)

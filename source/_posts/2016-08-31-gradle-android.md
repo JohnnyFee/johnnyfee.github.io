@@ -4,13 +4,16 @@ description: ""
 category: Java
 tags: [android, build, gradle]
 ---
+## Beginner
+
+- [Beginner’s Guide to Gradle for Android Developers – Apptivity Lab](https://journals.apptivitylab.com/beginners-guide-to-gradle-for-android-developers-7972bfdf0668)
+
 
 ## Gradle 构建系统
 
 Android Studio 基于 Gradle 构建系统，并通过 [Android Gradle 插件](https://developer.android.com/tools/revisions/gradle-plugin.html)提供更多面向 Android 的功能。该构建系统可以作为集成工具从 Android Studio 菜单运行，也可从命令行独立运行。
 
-Android Studio 构建文件以 `build.gradle` 命名。
- 这些文件是纯文本文件，使用 Android Gradle 插件提供的元素以 [Groovy](http://groovy.codehaus.org/) 语法配置构建。每个项目有一个用于整个项目的顶级构建文件，以及用于各模块的单独的模块层级构建文件。
+Android Studio 构建文件以 `build.gradle` 命名。这些文件是纯文本文件，使用 Android Gradle 插件提供的元素以 [Groovy](http://groovy.codehaus.org/) 语法配置构建。每个项目有一个用于整个项目的顶级构建文件，以及用于各模块的单独的模块层级构建文件。
 
 您的项目的每个模块都有相应的 `build.gradle`
 文件，整个项目也有相应的 `build.gradle` 文件。
@@ -99,6 +102,10 @@ if (android.defaultConfig.testInstrumentationRunner == null) {
 如果这个值一直保持null，那么在构建执行期间将会实际替换成第三列的默认值。但是在DSL元素中并没有包含这个默认值，所以，你无法查询到这个值。
 除非是真的需要，这是为了预防解析应用的manifest文件。
 
+## Implementation vs API dependency
+
+- [Implementation vs API dependency - Jeroen Mols](https://jeroenmols.com/blog/2017/06/14/androidstudio3/)
+- [Experimenting with Gradle dependencies](http://alexfu.github.io/android/2017/11/07/experimenting-with-gradle-dependencies.html)
 
 ## Build Configurations
 

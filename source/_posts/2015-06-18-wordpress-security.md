@@ -212,15 +212,9 @@ If you think your IP address of you or your backend users may change often or yo
     AuthUserFile /path/to/protected/dir/.htpasswd
     require valid-user
 
-Notice the `AuthUserFile` line; you will need to create a _.htpasswd_ file somewhere in a directory above or outside of your WordPress install. In this file, you will need to add a username and password. The password can’t just be plain text; use a tool like [htaccess password generator](http://bit.ly/htaccess-pw) to create an encrypted password.
+Notice the `AuthUserFile` line; you will need to create a _.htpasswd_ file somewhere in a directory above or outside of your WordPress install. In this file, you will need to add a username and password. The password can’t just be plain text; use a tool like [Best Random Password Generator 2017](https://www.vpnmentor.com/tools/secure-password-generator/) to create an encrypted password.
 
-So the username/password for:
-
-letmein/Pr3tTyPL3a$3!
-
-after encryption should be:
-
-letmein:E5Dj7cUaQVcN.
+So the password for is like  `KxXpQNhgQ4`
 
 Add the entire encrypted string `letmein:E5Dj7cUaQVcN.` to your _.htpasswd_ file; and when users try to go to _/wp-admin_, they will be prompted for a username and password. Make sure to let your backend users know what this username and password is and tell them not to share it with anybody.
 

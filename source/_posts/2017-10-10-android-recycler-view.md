@@ -162,3 +162,7 @@ In the next post, I will cover how to decorate items like adding dividers and ho
 Source code [here](https://github.com/sjthn/RecyclerViewDemo).
 
 If you have any feedback, please comment below.
+
+## Library
+
+- [Zuluft/AutoAdapter](https://github.com/Zuluft/AutoAdapter) This Repository simplifies working with RecyclerView Adapter

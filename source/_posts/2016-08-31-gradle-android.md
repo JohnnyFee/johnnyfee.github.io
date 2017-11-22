@@ -126,6 +126,7 @@ See [Configure Your Build](https://developer.android.com/studio/build/index.html
 ## Plugins
 
 - [Gradle - Plugins](https://plugins.gradle.org/)
+- [platan/idea-gradle-dependencies-formatter](https://github.com/platan/idea-gradle-dependencies-formatter) Gradle dependencies formatter for IntelliJ IDEA.
 
 ## UserGuide
 

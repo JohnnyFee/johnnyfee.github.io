@@ -24,7 +24,7 @@ If for some reason you need to do this manually:
 4.  Ensure it contains the Google Maven repository and version 3 of the Gradle plugin. _Note: there might be a version higher than 3.0.0 available, so use the latest one._
 
 ```markup--code
-buildscript {、
+buildscript {
     repositories {
             google()
     }

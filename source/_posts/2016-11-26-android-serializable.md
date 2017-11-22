@@ -214,3 +214,7 @@ If you are trying to pass a list with thousands of serialized objects, it is pos
 
 - [Android: Difference between Parcelable and Serializable? - Stack Overflow](http://stackoverflow.com/questions/3323074/android-difference-between-parcelable-and-serializable)
 - [Parcelable vs Serializable](http://www.developerphil.com/parcelable-vs-serializable/)
+
+## Library
+
+- [twitter/Serial](https://github.com/twitter/serial) Light-weight, fast framework for object serialization in Java, with Android support.

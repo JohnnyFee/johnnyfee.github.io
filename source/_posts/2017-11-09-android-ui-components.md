@@ -1,6 +1,5 @@
-`layout: post
+layout: post
 title: "Android Views"
-d`escription: ""
 category: Android
 tags: [android]
 ---

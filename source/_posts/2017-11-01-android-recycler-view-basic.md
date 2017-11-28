@@ -11,6 +11,14 @@ When it comes to displaying a lot of similar data on mobile, you usually rely on
 
 [RecyclerView](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html) provides advanced set of features to enable complex animations, child view decorations and performance compared to ListView or GridView.
 
+`RecyclerView` 小部件为 [v7 支持内容库](https://developer.android.com/tools/support-library/features.html#v7)的一部分。 如果要在您的项目中使用这些小部件，请将这些 [Gradle 依赖项](https://developer.android.com/studio/build/index.html#dependencies)添加至您的应用模块：
+
+```
+dependencies {  
+    ...  
+    compile 'com.android.support:recyclerview-v7:21.0.+'  }
+```
+
 ## How it works
 
 ### Adapter and ViewHolder

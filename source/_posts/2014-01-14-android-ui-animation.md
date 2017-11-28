@@ -389,30 +389,10 @@ This application code will set the animation as the background for a View, then 
 ## Library
 
 - [daimajia/AnimationEasingFunctions](https://github.com/daimajia/AnimationEasingFunctions)
-- [Udinic / ActivitySplitAnimation](https://github.com/Udinic/ActivitySplitAnimation) Activity展开动画。
-- [JakeWharton / NineOldAndroids](https://github.com/JakeWharton/NineOldAndroids) Android library for using the Honeycomb animation API on all versions of the platform back to 1.0!
 - [koral--/android-gif-drawable](https://github.com/koral--/android-gif-drawable)
-- [DesarrolloAntonio/FragmentTransactionExtended](https://github.com/DesarrolloAntonio/FragmentTransactionExtended)
-
-## 参考
-
-- [Android动画学习笔记-Android Animation](http://www.cnblogs.com/angeldevil/archive/2011/12/02/2271096.html)
-- [Animation Resources](http://developer.android.com/guide/topics/resources/animation-resource.html)
-- [View Animation](http://developer.android.com/guide/topics/graphics/view-animation.html)
-- [Property Animation](http://developer.android.com/guide/topics/graphics/prop-animation.htm)
-- [Animation Docs](http://developer.android.com/reference/android/view/animation/Animation.html#attr_android:repeatMode)
-- [ListView Animation Tutorial](http://karnshah8890.blogspot.com/2013/04/listview-animation-tutorial.html)
-- [Android Animations动画使用详解](http://blog.csdn.net/ithomer/article/details/7523328)
-- [Building Animations with the android.transition Framework, Part 1](http://blog.bignerdranch.com/4541-building-animations-android-transition-framework-part-1)
-- [Android Property Animations: Building Complex Animations | Cogito Learning](http://cogitolearning.co.uk/?p=1404)
-
-## Tutorial
-
-- [Getting Started with Activity & Fragment Transitions (part 1)](http://www.androiddesignpatterns.com/2014/12/activity-fragment-transitions-in-android-lollipop-part1.html)
-- [Getting Started with Activity & Fragment Transitions (part 1)](http://www.androiddesignpatterns.com/2014/12/activity-fragment-transitions-in-android-lollipop-part1.html)
-- [Content Transitions In-Depth (part 2)](http://www.androiddesignpatterns.com/2014/12/activity-fragment-content-transitions-in-depth-part2.html)
-- <sup>video</sup>[Render 2016 - Val Head on Vimeo](https://vimeo.com/165995133)
 
 ## Resource
 
+- [airbnb/lottie-android: Render After Effects animations natively on Android and iOS, Web, and React Native](https://github.com/airbnb/lottie-android)
 - [LottieFiles - Free high quality Lottie animation files](http://www.lottiefiles.com/popular)
+

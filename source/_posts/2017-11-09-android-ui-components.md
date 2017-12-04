@@ -7,6 +7,7 @@ tags: [android]
 ## Resource
 
 - [Google Design](https://www.google.com/design/)
+- [Android 内部控件](https://developer.android.google.cn/guide/topics/ui/controls.html?hl=zh-cn)
 
 ## Menu
 

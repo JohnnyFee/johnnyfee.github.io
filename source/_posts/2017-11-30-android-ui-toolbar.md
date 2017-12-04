@@ -54,6 +54,8 @@ Toolbar 小部件能够在运行 Android 2.1（API 级别 7）或更高版本的
 
     将工具栏定位在 Activity [布局](https://developer.android.google.cn/guide/topics/ui/declaring-layout.html?hl=zh-cn)的顶部，因为您要使用它作为应用栏。
 
+    `app:popupTheme` 这个属性就是用来自定义我们弹出的菜单的样式，在之前的 Actionbar 的溢出菜单，我们是不能自定义他的样式的。`app:popupTheme="ThemeOverlay.AppCompat.Light`，那么这个 Overflow 弹出的是白底黑字。
+
 4.  在 Activity 的 `onCreate()` 方法中，调用 Activity 的 `setSupportActionBar()` 方法，然后传递 Activity 的工具栏。该方法会将工具栏设置为 Activity 的应用栏。例如：
 
         @Override
@@ -64,8 +66,21 @@ Toolbar 小部件能够在运行 Android 2.1（API 级别 7）或更高版本的
             setSupportActionBar(myToolbar);
         }
 
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.main, menu);
+            return true;
+        }
+
 
 您的应用现在具有一个基本操作栏。默认情况下，操作栏只包含应用的名称和一个溢出菜单。选项菜单最初只包含 **Settings** 菜单项。您可以按照 [添加和处理操作](https://developer.android.google.cn/training/appbar/actions.html?hl=zh-cn) 中所述向操作栏和溢出菜单添加更多操作。
+
+### 使用应用栏实用方法
+
+将工具栏设置为 Activity 的应用栏后，您就可以访问 [v7 appcompat](https://developer.android.google.cn/tools/support-library/features.html?hl=zh-cn#v7-appcompat) 支持库的 ActionBar 类提供的各种实用方法。您可以通过此方法执行许多有用的操作，例如隐藏和显示应用栏。
+
+要使用 ActionBar 实用方法，请调用 Activity 的 `getSupportActionBar()` 方法。此方法将返回对 appcompat ActionBar 对象的引用。获得该引用后，您就可以调用任何一个 ActionBar 方法来调整应用栏。例如，要隐藏应用栏，请调用 `ActionBar.hide()`。
 
 ## 风格(style)
 

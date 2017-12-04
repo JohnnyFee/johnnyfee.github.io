@@ -71,6 +71,10 @@ See [使用材料主题](https://developer.android.com/training/material/theme.h
 
 您也可以使用 [`Window.setStatusBarColor()`](https://developer.android.com/reference/android/view/Window.html#setStatusBarColor(int))方法进行动画或淡出设置。
 
+## Android Theme
+
+- [样式和主题](https://developer.android.google.cn/guide/topics/ui/themes.html?hl=zh-cn)
+
 ## Material Components
 
 - [Material Components for Android](https://material.io/components/android/)

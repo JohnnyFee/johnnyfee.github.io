@@ -82,6 +82,18 @@ Toolbar 小部件能够在运行 Android 2.1（API 级别 7）或更高版本的
 
 要使用 ActionBar 实用方法，请调用 Activity 的 `getSupportActionBar()` 方法。此方法将返回对 appcompat ActionBar 对象的引用。获得该引用后，您就可以调用任何一个 ActionBar 方法来调整应用栏。例如，要隐藏应用栏，请调用 `ActionBar.hide()`。
 
+### 添加和处理操作
+
+- [Adding and Handling Actions](https://developer.android.google.cn/training/appbar/actions.html?hl=zh-cn)
+
+### 添加向上操作
+
+[Adding an Up Action](https://developer.android.google.cn/training/appbar/up-action.html?hl=zh-cn)
+
+### 操作视图和操作提供程序
+
+[Action Views and Action Providers](https://developer.android.google.cn/training/appbar/action-views.html?hl=zh-cn)
+
 ## 风格(style)
 
 风格要调整的地方有二

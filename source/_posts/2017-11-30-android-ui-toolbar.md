@@ -14,6 +14,8 @@ category: Android
 
 Toolbar 小部件能够在运行 Android 2.1（API 级别 7）或更高版本的设备上提供 Material Design 体验，但除非设备运行的是 Android 5.0（API 级别 21）或更高版本，否则原生操作栏不会支持 Material Design。
 
+ActionBar 是固定在顶部，并不能移动，我觉得这是最大的不好，而我们的 ToolBar 可以让我们随便摆放，就就可以带来很多灵活性和效果啦！
+
 本篇所使用到的程序请到 [Github](https://github.com/mosil/Android-Mosil-Sample-Toolbar "Android-Mosil-Sample-Toolbar") 取得。
 
 <div style="clear: both;"></div>
@@ -38,6 +40,47 @@ Toolbar 小部件能够在运行 Android 2.1（API 级别 7）或更高版本的
 
     
         <application  android:theme="@style/Theme.AppCompat.Light.NoActionBar"  />
+
+    以上这种方式，直接替换了整个应用的主题，有的时候这种手法过于残暴。我们可以修改当前主题来达到目的。
+
+    修改 `styles.xml` 文件中的 `<AppTheme>` 标签中，加入如下两行：
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    
+    还可以选择通过将 AppTheme 的 parent 设置为 Theme.AppCompat.Light.NoActionBar 的方式。
+
+    为了之后设定方便，我们先在 res/values/styles.xml 里增加一个名为 AppTheme.Base 的风格
+
+        <style name="AppTheme.Base" parent="Theme.AppCompat">
+          <item name="windowActionBar">false</item>
+          <item name="android:windowNoTitle">true</item>
+        </style>
+
+    因为此范例只使用 Toolbar，所以我们要将让原本的 ActionBar 隐藏起来，然后将原本 AppTheme 的 parent 属性 改为上面的AppTheme.Base，代码如下：
+
+        <resources>
+         
+          <!-- Base application theme. -->
+          <style name="AppTheme" parent="AppTheme.Base">
+          </style>
+          
+          <style name="AppTheme.Base" parent="Theme.AppCompat">
+            <item name="windowActionBar">false</item>
+            <del><item name="android:windowNoTitle">true</item></del>
+            <!-- 使用 API Level 22 編譯的話，要拿掉前綴字 -->
+            <item name="windowNoTitle">true</item>
+          </style>
+         
+        </resources>
+
+    再来调整 Android 5.0 的style：/res/values-v21/styles.xml，也将其 parent 属性改为 AppTheme.Base：
+
+        <?xml version="1.0" encoding="utf-8"?>
+        <resources>
+            <style name="AppTheme" parent="AppTheme.Base">
+            </style>
+        </resources>
 
 3.  向 Activity 的布局添加一个 Toolbar。例如，以下布局代码可以添加一个 Toolbar 并赋予其浮动在 Activity 之上的外观： 
 
@@ -94,87 +137,13 @@ Toolbar 小部件能够在运行 Android 2.1（API 级别 7）或更高版本的
 
 [Action Views and Action Providers](https://developer.android.google.cn/training/appbar/action-views.html?hl=zh-cn)
 
-## 风格(style)
+## AppBarLayout
 
-风格要调整的地方有二
+AppBarLayout 继承自 LinearLayout，布局方向为垂直方向。所以你可以把它当成垂直布局的LinearLayout来使用。AppBarLayout 是在 LinearLayou 上加了一些材料设计的概念，它可以让你定制当某个可滚动View的滚动手势发生变化时，其内部的子View实现何种动作。
 
-- res/values/styles.xml
-- /res/values-v21/styles.xml
+请注意：上面提到的某个可滚动View，可以理解为某个 ScrollView。怎么理解上面的话呢？就是说，当某个ScrollView发生滚动时，你可以定制你的“顶部栏”应该执行哪些动作（如跟着一起滚动、保持不动等等）。那某个可移动的View到底是哪个可移动的 View 呢？这是由你自己指定的！如何指定，我们后面说。
 
-为了之后设定方便，我们先在 res/values/styles.xml 里增加一个名为 AppTheme.Base 的风格
-
-```xml
-<style name="AppTheme.Base" parent="Theme.AppCompat">
-  <item name="windowActionBar">false</item>
-  <item name="android:windowNoTitle">true</item>
-</style>
-```
-
-因为此范例只使用 Toolbar，所以我们要将让原本的 ActionBar 隐藏起来，然后将原本 AppTheme 的 parent 属性 改为上面的AppTheme.Base，代码如下：
-
-```xml
-<resources>
- 
-  <!-- Base application theme. -->
-  <style name="AppTheme" parent="AppTheme.Base">
-  </style>
-  
-  <style name="AppTheme.Base" parent="Theme.AppCompat">
-    <item name="windowActionBar">false</item>
-    <del><item name="android:windowNoTitle">true</item></del>
-    <!-- 使用 API Level 22 編譯的話，要拿掉前綴字 -->
-    <item name="windowNoTitle">true</item>
-  </style>
- 
-</resources>
-```
-
-再来调整Android 5.0的style：  /res/values-v21/styles.xml，也将其 parent 属性改为  AppTheme.Base：
-
-```xnl
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="AppTheme" parent="AppTheme.Base">
-    </style>
-</resources>
-```
-
-### 界面(Layout)
-
-在 activity_main.xml 里面添加 Toolbar 控件：
-
-```xml
-<android.support.v7.widget.Toolbar
-  android:id="@+id/toolbar"
-  android:layout_height="?attr/actionBarSize"
-  android:layout_width="match_parent" >
- 
-</android.support.v7.widget.Toolbar>
-```
-
-请记得用 support v7 里的 toolbar，不然然只有 API Level 21 也就是 Android 5.0 以上的版本才能使用。
-
-这里需注意，要将 RelatvieLayout 里的四个方向的padding 属性去掉，并记得将原本的 Hello World 设为 layout_below="@+id/toolbar" ，否则会看到像下面这样的错误画面。
-
-![](http://www.jcodecraeer.com/uploads/20141118/14162844682218.png "Screenshot_2014-10-24-17-19-45-300x103.png")
-
-### 程序 (Java)
-
-<img src="http://www.jcodecraeer.com/uploads/20141118/14162846136933.png "Screenshot_2014-10-24-17-43-08-168x300.png" style="float: right; margin-left: 20px">
-
-在 MainActivity.java 中加入 Toolbar 的声明：
-
-```java
-Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-setSupportActionBar(toolbar);
-```
-
-声明后，再将之用 setSupportActionBar 设定，Toolbar即能取代原本的 actionbar 了，此阶段完成画面如下：
-
-
-完整代码见：[toolbar_demo_checkpoint1](https://github.com/mosil/Android-Mosil-Sample-Toolbar/tree/master/toolbar_demo_checkpoint1 "checok point 1")
-
-<div style="clear: both;"></div>
+See [Material Design之 AppbarLayout 开发实践总结](http://www.jianshu.com/p/ac56f11e7ce1)
 
 ## 自定义颜色(Customization color)
 

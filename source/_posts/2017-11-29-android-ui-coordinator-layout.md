@@ -6,11 +6,11 @@ category: Android
 
 From [CoordinatorLayout 完全解析 - 简书](http://www.jianshu.com/p/4a77ae4cd82f)
 
-## CoordinatorLayout 的作用
+## CoordinatorLayout
 
 CoordinatorLayout 作为一个 **“super-powered FrameLayout”**，主要有以下两个作用：
 
-1.  作为顶层布局；
+1.  作为顶层布局。
 2.  作为协调子 View 之间交互的容器。
 
 使用 CoordinatorLayout 需要在 build.gradle 加入：
@@ -18,6 +18,107 @@ CoordinatorLayout 作为一个 **“super-powered FrameLayout”**，主要有�
 ```
 compile 'com.android.support:design:25.1.0'
 ```
+
+<img src="http://img.blog.csdn.net/20160601113015449" style="float: right; width: 300px; margin-left: 20px">
+
+在学习 `CoordinatorLayout` 之前，很有必要了解 `CoordinatorLayout`能帮我们做什么，从名字上可以看出，就是帮我们协调子 `View`的。怎么个协调法呢?就是它根据我们的定制，帮助我们协调各个子 `View`的布局。我们先看一组动画图~
+
+稍微解释一下这个动画，蓝色的矩形是我们一个普通`View`，黄色的Hello是一个`Button`。我们水平拖动蓝色矩形时，黄色`Button`查着与蓝色矩形相反方向移动；竖直移动蓝色矩形时，黄色也跟着竖直。简而言之：它们在竖直方向同步移动，在水平方向相反。
+
+这个效果如果让你不用`CoordinatorLayout`去实现，应该没有任何问题，但是代码的耦合度应该非常大，你的代码必须要持有2个`View`的引用，然后在`onTouchEvent`里面做各种判断。如果我们想要实现的功能是，有更多的`View`要根据蓝色的`View`的移动相应作出响应，那么那就得在蓝色`View`的`onTounchEvent`里面针对其他的View处理各种逻辑。这耦合度未免太伤感了~
+
+而`CoordinatorLayout`既然号称能帮我们协调子View的布局，我们接下来看看`CoordinatorLayout`如何实现~
+
+<div style="clear: both;"></div>
+
+## CoordinatorLayout 使用
+
+`CoordinatorLayout`的使用核心是`Behavior`，`Behavior`就是执行你定制的动作。在讲`Behavior`之前必须先理解两个概念：`Child`和`Dependency`，什么意思呢？`Child`当然是子`View`的意思了，是谁的子`View`呢，当然是`CoordinatorLayout`的子`View`；其实`Child`是指要执行动作的`CoordinatorLayout`的子`View`。而`Dependency`是指`Child`依赖的`View`。比如上面的gif图中，蓝色的`View`就是`Dependency`，黄色的`View`就是`Child`，因为黄色的View的动作是依赖于蓝色的`View`。简而言之，就是如过`Dependency`这个View发生了变化，那么`Child`这个`View`就要相应发生变化。发生变化是具体发生什么变化呢？这里就要引入`Behavior`，`Child`发生变化的具体执行的代码都是放在`Behavior`这个类里面。
+
+怎么使用`Behavior`呢，首先，我们定义一个类，继承`CoordinatorLayout.Behavior<T>`,其中，泛型参数T是我们要执行动作的`View`类，也就是`Child`。然后就是去实现`Behavior`的两个方法：
+
+```java
+package com.hc.studyCoordinatorLayout;
+
+/**
+ * Package com.hc.studyCoordinatorLayout
+ * Created by HuaChao on 2016/6/1.
+ */
+public class MyBehavior extends CoordinatorLayout.Behavior<Button> {
+    private int width;
+
+    public MyBehavior(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        DisplayMetrics display = context.getResources().getDisplayMetrics();
+        width = display.widthPixels;
+    }
+
+    @Override
+    public boolean layoutDependsOn(CoordinatorLayout parent, Button child, View dependency) {
+        //如果dependency是TempView的实例，说明它就是我们所需要的Dependency
+        return dependency instanceof TempView;
+    }
+
+    //每次dependency位置发生变化，都会执行onDependentViewChanged方法
+    @Override
+    public boolean onDependentViewChanged(CoordinatorLayout parent, Button btn, View dependency) {
+
+        //根据dependency的位置，设置Button的位置
+
+        int top = dependency.getTop();
+        int left = dependency.getLeft();
+
+        int x = width - left - btn.getWidth();
+        int y = top;
+
+        setPosition(btn, x, y);
+        return true;
+    }
+
+    private void setPosition(View v, int x, int y) {
+        CoordinatorLayout.MarginLayoutParams layoutParams = (CoordinatorLayout.MarginLayoutParams) v.getLayoutParams();
+        layoutParams.leftMargin = x;
+        layoutParams.topMargin = y;
+        v.setLayoutParams(layoutParams);
+    }
+
+
+}
+```
+
+OK，现在我们为`Button`类指定了`Dependency`，并且定义好了跟随`Dependency`一直变化的动作（`Behavior`），接下来我们就要指定好为哪个具体的`Button`实例来绑定这些。方法很简单，直接在布局文件指定就好：
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hc.studyCoordinatorLayout.MainActivity">
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="300dp"
+        android:background="#FFCC00"
+        android:text="Hello"
+        app:layout_behavior="com.hc.studyCoordinatorLayout.MyBehavior" />
+
+    <com.hc.studyCoordinatorLayout.TempView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="300dp"
+        android:background="#3366CC"  />
+</android.support.design.widget.CoordinatorLayout>
+```
+
+是不是很简单呢？我们只需关注`Behavior`的编写就好了，把`Child`和`Dependency`之间的关系完全解耦了~
+
+附上源码地址：<http://download.csdn.net/detail/huachao1001/9537636>
 
 ## CoordinatorLayout 与 FloatingActionButton
 

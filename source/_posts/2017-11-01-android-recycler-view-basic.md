@@ -59,18 +59,15 @@ The `viewType` integer is used to identify the type of child view that needs to 
 
 _**Remember:** Do not try to cache the inflated views yourselves as it may lead to inconsistent behaviours. The necessary caching is done internally by RecyclerView itself._
 
-  __
-
 Here is a simple example of onCreateViewHolder:
 
-```
-    @Override  
+```java
+@Override  
 public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {  
-View view = LayoutInflater.from(parent.getContext())  
-                .inflate(R.layout.layout_user_list_item, parent, false);  
-return new UserViewHolder(view);  
-    }  
-
+    View view = LayoutInflater.from(parent.getContext())  
+                    .inflate(R.layout.layout_user_list_item, parent, false);  
+    return new UserViewHolder(view);  
+}  
 ```
 
 In this example, a layout is inflated using the LayoutInflater and a new ViewHolder is returned. This View is used as a child view and the ViewHolder is used to identify the views position within the RecyclerView and refer the views inside the child view.
@@ -79,16 +76,16 @@ In this example, a layout is inflated using the LayoutInflater and a new ViewHol
 
 This is where the data at a given position is displayed on the child view. It takes two parameters: a `ViewHolder` and a `position`. By referring the view items in the ViewHolder you can show relevant information for the given `position` in RecyclerView. The ViewHolder is used to refer the view items and the position can be used to get the data from say, an ArrayList.
 
-**_Remember:_** _For example, when using an `onClickListener` in this method you might make the position parameter final. Do not do this. Since RecyclerView will not call this method again if the position of the data in the ArrayList changes. So to handle this condition, you can use the `getAdapterPosition()` method of the ViewHolder inside onClickListener._  
-  __Here is an example of onBindViewHolder:
+**_Remember:_** For example, when using an `onClickListener` in this method you might make the position parameter final. Do not do this. Since RecyclerView will not call this method again if the position of the data in the ArrayList changes. So to handle this condition, you can use the `getAdapterPosition()` method of the ViewHolder inside onClickListener.
 
-```
-    @Override  
+__Here is an example of onBindViewHolder:__
+
+```java
+@Override  
 public void onBindViewHolder(UserViewHolder holder, int position) {  
-        holder.username.setText(usersList.get(position).getName());  
-Glide.with(holder.itemView).load(usersList.get(position).getImageUrl()).into(holder.userAvatar);  
-    }  
-
+    holder.username.setText(usersList.get(position).getName());  
+    Glide.with(holder.itemView).load(usersList.get(position).getImageUrl()).into(holder.userAvatar);  
+}  
 ```
 
 In the code, `userList` is an ArrayList. Using the `position` param, the name of the user at that position in the ArrayList is retrieved. Now using the ViewHolder, the TextView is referred and the name is set to the it.
@@ -103,57 +100,57 @@ Sometimes you want to display different types of views based on different data a
 
 Based on the position parameter, you can return a integer representing the type of view that needs to be displayed at the position.
 
-```
-@Override  
+```java
+@Override
 publicint getItemViewType(int position) {  
 int type;  
 if (!TextUtils.isEmpty(usersList.get(position).getName())) {  
-            type = USER_TYPE;  
-        } else {  
-            type = HEADER_TYPE;  
-        }  
-return type;  
+        type = USER_TYPE;  
+    } else {  
+        type = HEADER_TYPE;  
     }  
+    return type;  
+}  
 
 ```
 
 Here the type is represented by a constant integers. Now the type of view to be displayed is returned based on the data. Next change the onCreateViewHolder to return the relevant view based on the view type.
 
-```
+```java
 @Override  
-publicRecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {  
-View view;  
-switch (viewType) {  
-case USER_TYPE:  
-                view = LayoutInflater.from(parent.getContext())  
-                        .inflate(R.layout.layout_user_list_item, parent, false);  
-return new UserViewHolder(view);  
-case HEADER_TYPE:  
-                view = LayoutInflater.from(parent.getContext())  
-                        .inflate(R.layout.layout_user_list_section_header, parent, false);  
-return new SectionHeaderViewHolder(view);  
-default:  
-                view = LayoutInflater.from(parent.getContext())  
-                        .inflate(R.layout.layout_user_list_item, parent, false);  
-return new UserViewHolder(view);  
-        }  
+public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {  
+    View view;  
+    switch (viewType) {  
+        case USER_TYPE:  
+            view = LayoutInflater.from(parent.getContext())  
+                    .inflate(R.layout.layout_user_list_item, parent, false);  
+            return new UserViewHolder(view);  
+        case HEADER_TYPE:  
+            view = LayoutInflater.from(parent.getContext())  
+                .inflate(R.layout.layout_user_list_section_header, parent, false);  
+            return new SectionHeaderViewHolder(view);  
+        default:  
+            view = LayoutInflater.from(parent.getContext())  
+                .inflate(R.layout.layout_user_list_item, parent, false);  
+        return new UserViewHolder(view);  
     }  
+}  
 
 ```
 
 After that in onBindViewHolder bind the correct data to the correct view type using the relevant ViewHolder.
 
-```
+```java
 @Override  
 public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {  
-int itemViewType = getItemViewType(position);  
-if (itemViewType == USER_TYPE) {  
-            ((UserViewHolder) holder).username.setText(usersList.get(position).getName());  
-Glide.with(holder.itemView).load(usersList.get(position).getImageUrl()).into(((UserViewHolder) holder).userAvatar);  
-        } else {  
-            ((SectionHeaderViewHolder) holder).sectionTitle.setText(usersList.get(position).getType());  
-        }  
-    }  
+    int itemViewType = getItemViewType(position);  
+    if (itemViewType == USER_TYPE) {
+        ((UserViewHolder) holder).username.setText(usersList.get(position).getName());  
+        Glide.with(holder.itemView).load(usersList.get(position).getImageUrl()).into(((UserViewHolder) holder).userAvatar);}
+     else {  
+        ((SectionHeaderViewHolder) holder).sectionTitle.setText(usersList.get(position).getType());  
+    }
+}  
 
 ```
 

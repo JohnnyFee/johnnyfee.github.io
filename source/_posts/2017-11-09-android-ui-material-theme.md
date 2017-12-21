@@ -14,6 +14,7 @@ category: Android
 ## 使用材料主题
 
 See [使用材料主题](https://developer.android.com/training/material/theme.html)
+See also [样式和主题](https://developer.android.google.cn/guide/topics/ui/themes.html?hl=zh-cn)
 
 如果要在 Android 5.0 之前的 Android 版本中使用材料主题，请参考 [保持兼容性](https://developer.android.com/training/material/compatibility.html)。
 

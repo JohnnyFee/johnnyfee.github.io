@@ -58,6 +58,8 @@ All usage of the componets: [Material Components for Android](https://material.i
 </android.support.v4.widget.DrawerLayout>
 ```
 
+See also [DrawerLayout 和 NavigationView 使用详解 - 简书](http://www.jianshu.com/p/d2b1689a23bf)
+
 <div style="clear: both;"></div>
 
 ## Floating Action Button

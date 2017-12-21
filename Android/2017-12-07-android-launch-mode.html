@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android Activity 启动模式 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,activity">
+    <meta name="description" content="英文原文：Understand Android Activity’s launchMode: standard, singleTop, singleTask and singleInstance  另外关于启动模式还有篇很好的文章：Android中Activity四种启动模式和taskAffinity属性详解 
+Activity是安卓上最聪明的设计之一，优秀的内存管理让多任务完美运行在最流行的操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Activity 启动模式">
+<meta property="og:url" content="http://blog.inching.org/Android/2017-12-07-android-launch-mode.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="英文原文：Understand Android Activity’s launchMode: standard, singleTop, singleTask and singleInstance  另外关于启动模式还有篇很好的文章：Android中Activity四种启动模式和taskAffinity属性详解 
+Activity是安卓上最聪明的设计之一，优秀的内存管理让多任务完美运行在最流行的操作">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087372621766.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087374604123.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087376117515.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087379116164.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087381513369.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087384460569.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087386731411.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087389219419.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087391351182.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087394416117.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087640888692.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087642408027.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087644832751.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087647863217.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087649102071.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087652830427.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087655129646.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087657657439.jpg">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087705107940.jpg">
+<meta property="og:updated_time" content="2017-12-21T14:54:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Activity 启动模式">
+<meta name="twitter:description" content="英文原文：Understand Android Activity’s launchMode: standard, singleTop, singleTask and singleInstance  另外关于启动模式还有篇很好的文章：Android中Activity四种启动模式和taskAffinity属性详解 
+Activity是安卓上最聪明的设计之一，优秀的内存管理让多任务完美运行在最流行的操作">
+<meta name="twitter:image" content="http://www.jcodecraeer.com/uploads/20150520/1432087372621766.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/style/style.css?v=1.6.17">
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2846834382442028",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android Activity 启动模式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android Activity 启动模式</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-12-06T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-12-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设置一个launchMode"><span class="post-toc-text">设置一个launchMode</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#standard"><span class="post-toc-text">standard</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#singleTop"><span class="post-toc-text">singleTop</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#singleTask"><span class="post-toc-text">singleTask</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#singleInstance"><span class="post-toc-text">singleInstance</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Intent-Flags"><span class="post-toc-text">Intent Flags</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-launch-mode"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android Activity 启动模式</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-12-07 00:00:00" datetime="2017-12-06T16:00:00.000Z"  itemprop="datePublished">2017-12-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>英文原文：<a href="http://inthecheesefactory.com/blog/understand-android-activity-launchmode/en" target="_blank" rel="external">Understand Android Activity’s launchMode: standard, singleTop, singleTask and singleInstance</a>  另外关于启动模式还有篇很好的文章：<a href="http://blog.csdn.net/zhangjg_blog/article/details/10923643" target="_blank" rel="external">Android中Activity四种启动模式和taskAffinity属性详解 </a></p>
+<p>Activity是安卓上最聪明的设计之一，优秀的内存管理让多任务完美运行在最流行的操作系统之上。并不是让Activity在屏幕上启动就完事了，其启动方式也是需要关注的。这个话题的内容很多，其中很重要的就是启动模式（launchMode）。这也是我们这篇博客要讨论的内容。</p>
+<p>因为不同的Activity有不同的目的。有些被设计成每发送一个intent都单独一个Activity工作，比如邮件客户端中撰写邮件的Activity，而有些则被设计成单例的，比如邮件收件箱的Activity。</p>
+<p>这就是为什么指明一个Activity是否需要新建还是使用现有Activity是很有必要的，否则可能导致糟糕的用户体验。多亏了安卓的核心工程师，让launchMode可以帮助你专门应对这种情况。  </p>
+<h2 id="设置一个launchMode"><a href="#设置一个launchMode" class="headerlink" title="设置一个launchMode"></a>设置一个launchMode</h2><p>一般地，我们可以直接在AndroidManifest.xml <activity>标签的一个属性中设置launchMode，如下：</activity></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;activity</div><div class="line">    android:name=&quot;.SingleTaskActivity&quot;</div><div class="line">    android:label=&quot;singleTask launchMode&quot;</div><div class="line">    android:launchMode=&quot;singleTask&quot;&gt;</div></pre></td></tr></table></figure>
+<p>有4种类型的launchMode，我们一个一个的看。</p>
+<h2 id="standard"><a href="#standard" class="headerlink" title="standard"></a>standard</h2><p>这是默认的模式。  </p>
+<p>这种模式下，当Intent发送的时候，Activity总是被创建一个新的出来单独工作。想象一下，如果有发送10个撰写邮件的Intent，那么将有10个不同的Activity启动。</p>
+<p><strong>在</strong>Lollipop<strong>之前设备上的表现</strong></p>
+<hr>
+<p>这种Activity将被创建并置于栈顶，和发送intent的Activity处于同一个任务中。注：一般来讲，安卓第三个虚拟键所列出的那些就是任务。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087372621766.jpg" alt="standardtopstandard" title="">
+                </div>
+                <div class="image-caption">standardtopstandard</div>
+            </figure>
+<p>下面的图片显示了向标准启动模式的Activity分享照片时的情况。虽然分别来自不同的应用，但仍然它会和发送intent的Activity处于同一个任务中。</p>
+<p>注：从图中可以看出分享图片的是Gallery应用。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087374604123.jpg" alt="standardgallery2" title="">
+                </div>
+                <div class="image-caption">standardgallery2</div>
+            </figure>
+<p>同时你会看到此时任务管理器是这样的（有一点怪异）。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087376117515.jpg" alt="gallerystandard" title="">
+                </div>
+                <div class="image-caption">gallerystandard</div>
+            </figure>
+<p>如果我们切换到另外一个应用然后再切回到Gallery，你会发现standard launchMode启动的Activity仍然在Gallery任务的上面，导致在操作Gallery之前，我们必须首先结束这个额外的Activity。</p>
+<p><strong>在</strong>Lollipop<strong>设备上的表现</strong></p>
+<p>如果Activity都是来自同一个应用，其表现和Lollipop之前的设备一样，在任务的顶端。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087379116164.jpg" alt="standardstandardl" title="">
+                </div>
+                <div class="image-caption">standardstandardl</div>
+            </figure>
+<p>但是如果intent来自其他应用，将创建一个新的任务，同时新创建的Activity会被作为一个根Activity，如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087381513369.jpg" alt="standardgalleryl" title="">
+                </div>
+                <div class="image-caption">standardgalleryl</div>
+            </figure>
+<p>注：图片中的Task#2和Task#3分别表示两个任务，序号大的比序号小的后启动。  </p>
+<p>下面是任务管理器中的样子：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087384460569.jpg" alt="gallerystandardl1" title="">
+                </div>
+                <div class="image-caption">gallerystandardl1</div>
+            </figure>
+<p>发生这种情况的原因是Lollipop中任务管理系统做了修改，让它看起来更合理了。因为它们在不同的任务中，你可以直接切回Gallery，你还可以触发另一个Intent，创建新的与之前相同的任务。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087386731411.jpg" alt="gallerystandardl2" title="">
+                </div>
+                <div class="image-caption">gallerystandardl2</div>
+            </figure>
+<p>撰写邮件的Activity或者发布社交网络状态的Activity都是采用这种Activity的例子。如果你希望Activity单独服务于一个Intent，就可以考虑standard启动模式。</p>
+<h2 id="singleTop"><a href="#singleTop" class="headerlink" title="singleTop"></a>singleTop</h2><p>接下来就是singleTop模式。它的表现几乎和standard模式一模一样，一个singleTop Activity 的实例可以无限多，唯一的区别是如果在栈顶已经有一个相同类型的Activity实例，Intent不会再创建一个Activity，而是通过onNewIntent()被发送到现有的Activity。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087389219419.jpg" alt="singletop" title="">
+                </div>
+                <div class="image-caption">singletop</div>
+            </figure>
+<p>在singleTop模式下我们需要同时在onCreate() 和 onNewIntent()中处理发来的intent，以满足不同情况。</p>
+<p>这种启动模式的用例之一就是搜索功能。假设我们创建了一个搜索框，点击搜索的时候将导航到一个显示搜索结果列表的SearchActivity中，为了更好的用户体验，这个搜索框一般也会被放到SearchActivity中，这样用户想要再次搜索就不需要按返回键。</p>
+<p>想像一下，如果每次显示搜索结果的时候我们都启动一个新的activity，10次搜索10个activity，那样当我们想返回最初的那个activity的时候需要按10次返回。</p>
+<p>所以我们应该这样，如果栈顶已经有一个SearchActivity，我们将Intent发送给现有的activity，让它来更新搜索结果。这样就只会有一个在栈顶的SearchActivity，只需点一次back就可以回到之前的activity。</p>
+<p>不管怎样，singleTop和它的调用者处在一个任务中。如果你想要让intent发送给另一个任务中处于栈顶的Activity，是不行的。</p>
+<p>而当Intent来自于另外一个应用的时候，新的Activity的启动方式和standard模式是一致的（pre-Lollipop:处于调用者任务的栈顶，Lollipop:会创建一个新的任务）。</p>
+<h2 id="singleTask"><a href="#singleTask" class="headerlink" title="singleTask"></a>singleTask</h2><p>这种模式和standard以及singleTop有很大不同。singleTask模式的Activity只允许在系统中有一个实例。如果系统中已经有了一个实例，持有这个实例的任务将移动到顶部，同时intent将被通过onNewIntent()发送。如果没有，则会创建一个新的Activity并置放在合适的任务中。</p>
+<p><strong>在同一个应用中的情况</strong></p>
+<hr>
+<p>如果系统中还没有singleTask的Activity，会新创建一个，并放在同一任务的栈顶。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087391351182.jpg" alt="singleTask1" title="">
+                </div>
+                <div class="image-caption">singleTask1</div>
+            </figure>
+<p>但是如果已经存在，singleTask Activity上面的所有Activity将以合适的方式自动销毁，让我们想要显示的Activity处于栈顶。同时Intent也会通过onNewIntent()方法发送到这个singleTask Activity。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087394416117.jpg" alt="singleTaskD" title="">
+                </div>
+                <div class="image-caption">singleTaskD</div>
+            </figure>
+<p>在用户体验方面，可能不是很合理，但是它就是这样设计的…</p>
+<p>你可能注意到了 <a href="http://developer.android.com/guide/components/tasks-and-back-stack.html" target="_blank" rel="external">官方文档</a> 中提到的一个问题：  </p>
+<blockquote>
+<p> 系统会创建一个新的任务，并将这个Activity实例化为新任务的根部（root）。</p>
+</blockquote>
+<p>但从实验结果来看，并不是这么回事。singleTask Activity仍然在任务的Activity栈顶，我们可以从dumpsys activity 命令显示上看出来：  </p>
+<pre>
+Task id #239
+  TaskRecord{428efe30 #239 A=com.thecheesefactory.lab.launchmode U=0 sz=2}
+  Intent
+ { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER]
+ flg=0x10000000 
+cmp=com.thecheesefactory.lab.launchmode/.StandardActivity }
+    Hist #1: ActivityRecord{429a88d0 u0 com.thecheesefactory.lab.launchmode/.SingleTaskActivity t239}
+      Intent { cmp=com.thecheesefactory.lab.launchmode/.SingleTaskActivity }
+      ProcessRecord{42243130 18965:com.thecheesefactory.lab.launchmode/u0a123}
+    Hist #0: ActivityRecord{425fec98 u0 com.thecheesefactory.lab.launchmode/.StandardActivity t239}
+      Intent
+ { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER]
+ flg=0x10000000 
+cmp=com.thecheesefactory.lab.launchmode/.StandardActivity }
+      ProcessRecord{42243130 18965:com.thecheesefactory.lab.launchmode/u0a123}
+</pre>
+
+<p>如果你希望singleTask Activity表现的和文档中描述的一致，你需要为singleTask Activity设置<code>taskAffinity</code>属性。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;activity</div><div class="line">    android:name=&quot;.SingleTaskActivity&quot;</div><div class="line">    android:label=&quot;singleTask launchMode&quot;</div><div class="line">    android:launchMode=&quot;singleTask&quot;</div><div class="line">    android:taskAffinity=&quot;&quot;&gt;</div></pre></td></tr></table></figure>
+<p>这里是启动<code>SingleTaskActivity</code>的的结果（使用了<code>taskAffinity之后</code>）。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087640888692.jpg" alt="singleTaskTaskAffinity" title="">
+                </div>
+                <div class="image-caption">singleTaskTaskAffinity</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087642408027.jpg" alt="screenshot17" title="">
+                </div>
+                <div class="image-caption">screenshot17</div>
+            </figure>
+<p>是否使用<code>taskAffinity</code>取决于你自己。</p>
+<p><strong>和其他应用一起工作的情况</strong></p>
+<p>一旦intent是从另外的应用发送过来，并且系统中也没有任何Activity的实例，则会创建一个新的任务，并且新的Activity被作为根Activity创建。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087644832751.jpg" alt="singleTaskAnotherApp1" title="">
+                </div>
+                <div class="image-caption">singleTaskAnotherApp1</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087647863217.jpg" alt="singletaskfromapp2" title="">
+                </div>
+                <div class="image-caption">singletaskfromapp2</div>
+            </figure>
+<p>除非拥有这个singleTask Activity 的应用已经存在，那样的话，新建的Activity会置于这个任务的上面（而不是新建一个任务）。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087649102071.jpg" alt="singleTaskAnotherApp2" title="">
+                </div>
+                <div class="image-caption">singleTaskAnotherApp2</div>
+            </figure>
+<p>_In case that there is an Activity<br>instance existed in any Task, the whole Task would be moved to top and<br>every single Activity placed above the singleTask Activity will be<br>destroyed with lifecycle. _If back button is pressed, user has to travel through the Activities in the stack before going back to the caller Task.</p>
+<p><em>假设已经有了一个Activity的实例，不管它是在哪个任务中（包括上面的那种情况，在用于这个Activity的应用中），整个任务将被移到顶端，而singleTask  Activity上面的所有 Activity 都将被销毁</em>， 用户需要按back键遍历玩栈中的Activity才能回到调用者任务。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087652830427.jpg" alt="singleTaskAnotherApp3" title="">
+                </div>
+                <div class="image-caption">singleTaskAnotherApp3</div>
+            </figure>
+<p>这种模式的应用案例有。邮件客户端的收件箱或者社交网络的时间轴。这些Activity一般不会设计成拥有多个实例，singleTask可以满足。但是在使用这种模式的时候必须要明智，因为有些Activity会在用户不知情的情况下被销毁。</p>
+<h2 id="singleInstance"><a href="#singleInstance" class="headerlink" title="singleInstance"></a>singleInstance</h2><p>这个模式非常接近于singleTask，系统中只允许一个Activity的实例存在。<strong>区别在于持有这个</strong>Activity<strong>的任务中只能有一个</strong>Activity<strong>：即这个单例本身。</strong>If another Activity is called from this kind of Activity, a new Task<br>would be automatically created to place that new Activity. Likewise, if<br>singleInstance Activity is called, new Task would be created to place<br>the Activity.</p>
+<p>不过结果却很怪异，从<code>dumpsys</code>提供的信息来看，似乎系统中有两个任务但任务管理器中只显示一个,即最后被移到顶部的那个。导致虽然后台有一个任务在运行，我们却无法切换回去，这一点也不科学。</p>
+<p>下面是当singleInstance Activity被调用的同时栈中已经有一些Activity的情况下所发生的事情：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087655129646.jpg" alt="singleInstance" title="">
+                </div>
+                <div class="image-caption">singleInstance</div>
+            </figure>
+<p>本来有两个任务，但是任务管理器中却只显示一个任务：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.jcodecraeer.com/uploads/20150520/1432087657657439.jpg" alt="singleInstances" title="">
+                </div>
+                <div class="image-caption">singleInstances</div>
+            </figure>
+<p>Since this Task could has only one Activity, we couldn’t switch back<br>to Task #1 anymore. Only way to do so is to relaunch the application<br>from launcher but it appears that the singleInstance Task would be<br>hidden in the background instead.</p>
+<p>因为这个任务只有一个Activity，我们再也无法切回到任务#1了。唯一的办法是重新在launcher中启动这个应用。 but之后的没有翻译，因为我也不明白作者的意思。</p>
+<p>不过这个问题也有解决方案，就像我们在singleTask Acvity中做的，只要为<code>singleInstance Activity设置taskAffinity属性就可以了。</code></p>
+<pre class="brush:js;toolbar:false prettyprint linenums prettyprinted" style="overflow: auto;">
+1.  <activity 2.="" android:name=".SingleInstanceActivity" 3.="" android:label="singleInstance launchMode" 4.="" android:launchmode="singleInstance" 5.="" android:taskaffinity="">
+</activity></pre>
+
+<p>现在科学多了。  </p>
+<p><img src="http://www.jcodecraeer.com/uploads/20150520/1432087705107940.jpg" alt="screenshot18"></p>
+<p>这种模式很少被使用。实际使用的案例如Launcher的Activity或者100%确定只有一个Activity的应用。总之除非完全有必要，不然我不建议使用这种模式。</p>
+<h2 id="Intent-Flags"><a href="#Intent-Flags" class="headerlink" title="Intent Flags"></a>Intent Flags</h2><p>除了在<code>AndroidManifest.xml</code>中直接设置launch mode，我们还可以通过叫做 <strong>Intent Flags</strong>的东西设置更多的行为，比如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span></span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">".SingleInstanceActivity"</span></div><div class="line">    <span class="attr">android:label</span>=<span class="string">"singleInstance launchMode"</span></div><div class="line">    <span class="attr">android:launchMode</span>=<span class="string">"singleInstance"</span></div><div class="line">    <span class="attr">android:taskAffinity</span>=<span class="string">""</span>&gt;</div></pre></td></tr></table></figure>
+<p>这段代码将会启动一个singleTop启动模式的的<code>StandardActivity</code> 。  </p>
+<p>有许多种Flag可以使用，更多的请参考<a href="http://developer.android.com/reference/android/content/Intent.html#FLAG_ACTIVITY_BROUGHT_TO_FRONT" target="_blank" rel="external">Intent</a>。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-12-21T14:54:04.000Z" itemprop="dateUpdated">2017-12-21 22:54:04</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2017-12-07-android-launch-mode.html" target="_blank" rel="external">http://blog.inching.org/Android/2017-12-07-android-launch-mode.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/activity/">activity</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-12-07-android-launch-mode.html&title=《Android Activity 启动模式》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-12-07-android-launch-mode.html&title=《Android Activity 启动模式》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-12-07-android-launch-mode.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Activity 启动模式》 — Balance&url=http://blog.inching.org/Android/2017-12-07-android-launch-mode.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-12-07-android-launch-mode.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2017-12-04-android-storage.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Storage</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-12-07-android-launch-mode.html&title=《Android Activity 启动模式》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-12-07-android-launch-mode.html&title=《Android Activity 启动模式》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-12-07-android-launch-mode.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Activity 启动模式》 — Balance&url=http://blog.inching.org/Android/2017-12-07-android-launch-mode.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-12-07-android-launch-mode.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqklEQVR42u3aW27rMAwE0Ox/070LuIg7Q4lBChx/FX3YOi4gKkO+XvH183j9/zvJ3ZKfvnvW5QsPDw9vbenPi0v+9vmJ+X2SNePh4eFt85INerbF56XieaHD9eDh4eF9Ae/5wQlstlA8PDy8v8hLGPnvtNEGHh4e3rfxZg9LHt++pvY+17IWPDw8vJiXd5G+5+uV/h4eHh7ecVe9bVC1R+qTshGtFg8PD2+BNxsdSOLa9j7tkFYeE+Ph4eHt8fJbJ1HvLCw4GUR4+xLx8PDwrvLyLfvWsbuNZY/iCTw8PLwF3slj9tLUPPiIygYeHh7eVV77Ib/d9NtYtg0yfomA8fDw8BZ4CbINavOBgyKKjRtp9f8QDw8P74DXbsT5Zj1rlbUF4G0xw8PDw7vKmwWvw6Nt/EKfv38twMXDw8O7xLs1NDA7CrdDXcVMBB4eHt4ar/1O3uJqX+gs/P1l6AoPDw/vmNe2vvIRgTYObu+TlCs8PDy8DV57nM3xsxZau+lHkxF4eHh4C7zoSBpHsSclJK9mERIPDw9vmZd/4M/j2pM4OH+VeHh4eJ/ktcs6aWK1AwpFjjJLWfDw8PBGvDYySEKE2WBBu6oogMbDw8Nb490dnGrbVPl92iAYDw8Pb4N3chLPj9FtOTk5oOPh4eF9npdvyjPGhVGqOJ7Aw8PD+wyvjSFmsUUbCp8UDzw8PLxt3qwAzELhegggHueKkg88PDy8Ee+nvM439PNCkpcNPDw8vA1eu+HOYotZtDF7Wa/ZhYeHh1fy2sg134JnR+okHMlfBB4eHt4eb9YYy4cP8i3+Qh1ru2d4eHh4X8DbCCyGhQoPDw/vC3ht0LART+QDW3h4eHh7vLb5lB+j23JSLD0JMvDw8PAWeO0n+nyDztv85yMCeHh4eB/h/QN0z9ViiiQfiAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

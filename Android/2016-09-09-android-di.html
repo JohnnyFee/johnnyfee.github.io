@@ -32,27 +32,18 @@ ga('send', 'pageview');
     
     <meta name="keywords" content="android">
     <meta name="description" content="google/dagger A fast dependency injector for Android and Java.
-Tutorial
-Dagger ‡ A fast dependency injector for Android and Java. official
-Tasting Dagger 2 on Android – Fernando Cejas
-详解Dagger2 transl">
+Dagger 2 is a great dependency injection library, but its sharp edges can be tricky to handle. Let’s go over a few best practices that Sq">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Dagger2 - Dependency Injection">
 <meta property="og:url" content="http://blog.inching.org/Android/2016-09-09-android-di.html">
 <meta property="og:site_name" content="Balance">
 <meta property="og:description" content="google/dagger A fast dependency injector for Android and Java.
-Tutorial
-Dagger ‡ A fast dependency injector for Android and Java. official
-Tasting Dagger 2 on Android – Fernando Cejas
-详解Dagger2 transl">
-<meta property="og:updated_time" content="2017-11-05T08:22:17.000Z">
+Dagger 2 is a great dependency injection library, but its sharp edges can be tricky to handle. Let’s go over a few best practices that Sq">
+<meta property="og:updated_time" content="2017-11-22T08:34:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Dagger2 - Dependency Injection">
 <meta name="twitter:description" content="google/dagger A fast dependency injector for Android and Java.
-Tutorial
-Dagger ‡ A fast dependency injector for Android and Java. official
-Tasting Dagger 2 on Android – Fernando Cejas
-详解Dagger2 transl">
+Dagger 2 is a great dependency injection library, but its sharp edges can be tricky to handle. Let’s go over a few best practices that Sq">
     
         <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
     
@@ -203,7 +194,7 @@ Tasting Dagger 2 on Android – Fernando Cejas
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Usage"><span class="post-toc-text">Usage</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Mock"><span class="post-toc-text">Mock</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Sample"><span class="post-toc-text">Sample</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Favor-constructor-injection-over-field-injection"><span class="post-toc-text">Favor constructor injection over field injection</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Singletons-should-be-extremely-rare"><span class="post-toc-text">Singletons should be extremely rare</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Favor-Inject-over-Provides"><span class="post-toc-text">Favor @Inject over @Provides</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Favor-static-Provides-methods"><span class="post-toc-text">Favor static @Provides methods</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Favor-Binds-over-Provides"><span class="post-toc-text">Favor @Binds over @Provides</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Avoid-Singleton-on-interface-bindings"><span class="post-toc-text">Avoid @Singleton on interface bindings</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Enable-error-prone"><span class="post-toc-text">Enable error-prone</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-text">Conclusion</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Resource"><span class="post-toc-text">Resource</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Usage"><span class="post-toc-text">Usage</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Mock"><span class="post-toc-text">Mock</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Sample"><span class="post-toc-text">Sample</span></a></li></ol>
         </nav>
     </aside>
     
@@ -225,7 +216,184 @@ Tasting Dagger 2 on Android – Fernando Cejas
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <p><a href="https://github.com/google/dagger" target="_blank" rel="external">google/dagger</a> A fast dependency injector for Android and Java.</p>
-<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<p>Dagger 2 is a great dependency injection library, but its sharp edges can be tricky to handle. Let’s go over a few best practices that Square follows to keep mobile engineers from hurting themselves!</p>
+<h3 id="Favor-constructor-injection-over-field-injection"><a href="#Favor-constructor-injection-over-field-injection" class="headerlink" title="Favor constructor injection over field injection"></a>Favor constructor injection over field injection</h3><ul>
+<li><p>Field injection requires the fields to be non final and non private.</p>
+<pre><code>// BAD  
+class CardConverter {
+    @Inject PublicKeyManager publicKeyManager;
+    @Inject public CardConverter() {}  
+}
+</code></pre></li>
+</ul>
+<ul>
+<li><p>Forgetting an <code>@Inject</code> on a field introduces a <code>NullPointerException</code>.</p>
+<pre><code>// BAD  
+class CardConverter {
+
+    @Inject PublicKeyManager publicKeyManager;  
+    Analytics analytics; // Oops, forgot to @Inject
+
+    @Inject public CardConverter() {}  
+}
+</code></pre></li>
+<li><p>Constructor injection is better because it allows for <strong>immutable</strong> and therefore <strong>thread safe</strong> objects that don’t have a partially constructed state.</p>
+<pre><code>// GOOD  
+class CardConverter {
+
+    private final PublicKeyManager publicKeyManager;
+
+    @Inject public CardConverter(PublicKeyManager publicKeyManager) {  
+    this.publicKeyManager = publicKeyManager;  
+  }  
+}
+</code></pre></li>
+<li><p>Kotlin eliminates the constructor injection boilerplate:</p>
+<pre><code>class CardConverter  
+@Inject constructor(private val publicKeyManager: PublicKeyManager)
+</code></pre></li>
+<li><p>We still use field injection for objects constructed by the system, such as Android activities:</p>
+<pre><code>public class MainActivity extends Activity {
+
+    public interface Component {  
+        void inject(MainActivity activity);
+    }
+
+    @Inject ToastFactory toastFactory;
+
+    @Override protected void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        Component component = SquareApplication.component(this);  
+        component.**inject**(this);  
+   }  
+}
+</code></pre></li>
+</ul>
+<h3 id="Singletons-should-be-extremely-rare"><a href="#Singletons-should-be-extremely-rare" class="headerlink" title="Singletons should be extremely rare"></a>Singletons should be extremely rare</h3><ul>
+<li><p>Singletons are useful when we need a <strong>centralized access to a mutable state</strong>.</p>
+<pre><code>// GOOD
+@Singleton
+public class BadgeCounter {
+
+    public final Observable&lt;Integer&gt; badgeCount;
+
+    @Inject public BadgeCounter(...) {  
+        badgeCount = ...  
+  }
+}
+</code></pre></li>
+<li><p>If an object has no mutable state, it doesn’t need to be a singleton.</p>
+<pre><code>//BAD, should not be a singleton!
+
+@Singleton
+class RealToastFactory implements ToastFactory {  
+  private **final** Application context;
+
+      @Inject public RealToastFactory(Application context) {  
+    this.context = context;  
+  }
+
+      @Override public Toast makeText(int resId, int duration) {  
+    return Toast.makeText(context, resId, duration);  
+  }  
+}
+</code></pre></li>
+<li><p>On <strong>rare occasions</strong>, we use scoping to cache instances that are expensive to create, or that are repeatedly created and thrown away.</p>
+</li>
+</ul>
+<h3 id="Favor-Inject-over-Provides"><a href="#Favor-Inject-over-Provides" class="headerlink" title="Favor @Inject over @Provides"></a>Favor @Inject over @Provides</h3><ul>
+<li><code>@Provides</code> methods should not duplicate the constructor boilerplate.</li>
+<li><p>Code is easier to understand when coupled concerns are in one place.</p>
+<pre><code>@Module  
+class ToastModule {  
+  // BAD, remove this binding and add @Inject to RealToastFactory  
+    @Provides RealToastFactory realToastFactory(Application context) {  
+        return new RealToastFactory(context);  
+   }  
+}
+</code></pre></li>
+<li><p>This is especially important for <strong>singletons</strong>; it’s a key <strong>implementation detail</strong> that you need to know when reading that class.</p>
+<pre><code>// GOOD, I have all the details I need in one place.**  
+@Singleton**  
+public class BadgeCounter {
+
+      @Inject public BadgeCounter(...) {}    
+}
+</code></pre></li>
+</ul>
+<h3 id="Favor-static-Provides-methods"><a href="#Favor-static-Provides-methods" class="headerlink" title="Favor static @Provides methods"></a>Favor static @Provides methods</h3><ul>
+<li><p>Dagger <code>@Provides</code> methods can be static.</p>
+<pre><code>@Module  
+class ToastModule {  
+  @Provides  
+  static ToastFactory toastFactory(RealToastFactory factory) {  
+    return factory;  
+  }  
+}
+</code></pre></li>
+<li><p>The generated code can directly invoke the method instead of having to create a module instance. That method call can be inlined by the compiler.</p>
+<pre><code>@Generated  
+public final class DaggerAppComponent extends AppComponent {  
+  // ...
+
+    @Override public ToastFactory toastFactory() {  
+        return ToastModule.toastFactory(realToastFactoryProvider.get())  
+  }  
+}
+</code></pre></li>
+<li><p>One static method won’t change much, but all bindings being static will result in a sizable performance increase.</p>
+</li>
+<li><p>Make your modules abstract and Dagger <a href="https://github.com/google/dagger/issues/621#issuecomment-321868005" target="_blank" rel="external">will fail</a> at compile time if one of the <code>@Provides</code> methods isn’t static.</p>
+<pre><code>@Module  
+abstract class ToastModule {  
+  @Provides  
+  static ToastFactory toastFactory(RealToastFactory factory) {  
+    return factory;  
+  }  
+}
+</code></pre></li>
+</ul>
+<h3 id="Favor-Binds-over-Provides"><a href="#Favor-Binds-over-Provides" class="headerlink" title="Favor @Binds over @Provides"></a>Favor @Binds over @Provides</h3><ul>
+<li><p><code>@Binds</code> replaces <code>@Provides</code> for when you’re mapping one type to another.</p>
+<pre><code>@Module  
+abstract class ToastModule {  
+    @Binds
+    abstract **ToastFactory** toastFactory(**RealToastFactory** factory);  
+}
+</code></pre></li>
+<li><p>The method must be abstract. It will never be invoked; the generated code will know to directly use the implementation.</p>
+<pre><code>@Generated  
+public final class DaggerAppComponent extends AppComponent {  
+  // ...
+
+      private DaggerAppComponent() {  
+    // ...  
+    this.toastFactoryProvider = (Provider) **realToastFactoryProvider;
+  }
+
+      @Override public ToastFactory toastFactory() {  
+    return toastFactoryProvider.get();  
+  }  
+}
+</code></pre></li>
+</ul>
+<h3 id="Avoid-Singleton-on-interface-bindings"><a href="#Avoid-Singleton-on-interface-bindings" class="headerlink" title="Avoid @Singleton on interface bindings"></a>Avoid @Singleton on interface bindings</h3><blockquote>
+<p>Statefulness is an implementation detail</p>
+</blockquote>
+<ul>
+<li>Only implementations know if they need to ensure centralized access to mutable state.</li>
+<li><p>When binding an implementation to an interface, there shouldn’t be any scoping annotation.</p>
+<pre><code>@Module  
+abstract class ToastModule {  
+  // BAD, remove @Singleton  
+  @Binds **@Singleton**  
+  abstract **ToastFactory** toastFactory(**RealToastFactory** factory);  
+}
+</code></pre></li>
+</ul>
+<h3 id="Enable-error-prone"><a href="#Enable-error-prone" class="headerlink" title="Enable error-prone"></a>Enable error-prone</h3><p>Several Square teams are using it to detect common Dagger mistakes, <a href="https://github.com/google/error-prone" target="_blank" rel="external">check it out</a>.</p>
+<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>These guiding principles work well for our context: small heterogeneous teams working on a large shared Android codebase. Since your context is likely different, you should apply what makes the most sense for your team.</p>
+<h2 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h2><ul>
 <li><a href="http://google.github.io/dagger/users-guide.html" target="_blank" rel="external">Dagger ‡ A fast dependency injector for Android and Java.</a> <sup>official</sup></li>
 <li><a href="http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/" target="_blank" rel="external">Tasting Dagger 2 on Android – Fernando Cejas</a><ul>
 <li><a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0519/2892.html" target="_blank" rel="external">详解Dagger2</a> <sup>translation</sup></li>
@@ -237,14 +405,14 @@ Tasting Dagger 2 on Android – Fernando Cejas
 <li><a href="http://www.jianshu.com/p/1d42d2e6f4a5" target="_blank" rel="external">Android：dagger2让你爱不释手-重点概念讲解、融合篇 - 简书</a> <sup>analyse</sup></li>
 <li><a href="http://blog.zhaiyifan.cn/2016/03/27/android-new-project-from-0-p4/#" target="_blank" rel="external">从零开始的Android新项目4 - Dagger2篇</a> <sup>important</sup></li>
 </ul>
-<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><ul>
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><ul>
 <li><a href="https://eng.uber.com/deep-scope-hierarchies" target="_blank" rel="external">Rewriting Uber Engineering’s Android Rider App with Deep Scope Hierarchies</a></li>
 <li><a href="https://medium.com/@Zhuinden/retaining-dagger-components-across-configuration-change-using-service-tree-3709c78bf6d2#.6jvjx2tb6" target="_blank" rel="external">Retaining Dagger components across configuration change using Service-Tree</a></li>
 </ul>
-<h2 id="Mock"><a href="#Mock" class="headerlink" title="Mock"></a>Mock</h2><ul>
+<h3 id="Mock"><a href="#Mock" class="headerlink" title="Mock"></a>Mock</h3><ul>
 <li><a href="https://medium.com/fueled-android/how-to-be-a-mock-star-fc00714d8c2f#.9a8fj7mcj" target="_blank" rel="external">How to be a Mock-Star…😎 – Fueled Android – Medium</a></li>
 </ul>
-<h2 id="Sample"><a href="#Sample" class="headerlink" title="Sample"></a>Sample</h2><ul>
+<h3 id="Sample"><a href="#Sample" class="headerlink" title="Sample"></a>Sample</h3><ul>
 <li><a href="https://github.com/android10/Android-CleanArchitecture" target="_blank" rel="external">android10/Android-CleanArchitecture</a></li>
 </ul>
 
@@ -254,7 +422,7 @@ Tasting Dagger 2 on Android – Fernando Cejas
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2017-11-05T08:22:17.000Z" itemprop="dateUpdated">2017-11-05 16:22:17</time>
+    Last updated: <time datetime="2017-11-22T08:34:46.000Z" itemprop="dateUpdated">2017-11-22 16:34:46</time>
 </span><br>
 
 
@@ -346,9 +514,9 @@ Tasting Dagger 2 on Android – Fernando Cejas
 
   
     <div class="waves-block waves-effect next">
-      <a href="/Android/2016-09-09-android-content-provider.html" id="post-next" class="post-nav-link">
+      <a href="/Android/2016-09-09-android-dex.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Android Content Provider</h4>
+        <h4 class="title">Android Test</h4>
       </a>
     </div>
   

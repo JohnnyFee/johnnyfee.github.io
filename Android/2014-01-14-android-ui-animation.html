@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android动画 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,animation">
+    <meta name="description" content="概述参考官方文档，Android动画分为两类，分别为：
+
+Property Animation用于改变目标对象的属性，如背景颜色，透明度等。
+View Animation View动画又分为
+Tween Animation 通过对场景里的对象不断做图像变换(平移、缩放、旋转)产生动画效果，可以理解为渐变动画或者补间动画。
+Frame Animation 通过AnimationDrawable来顺序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android动画">
+<meta property="og:url" content="http://blog.inching.org/Android/2014-01-14-android-ui-animation.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="概述参考官方文档，Android动画分为两类，分别为：
+
+Property Animation用于改变目标对象的属性，如背景颜色，透明度等。
+View Animation View动画又分为
+Tween Animation 通过对场景里的对象不断做图像变换(平移、缩放、旋转)产生动画效果，可以理解为渐变动画或者补间动画。
+Frame Animation 通过AnimationDrawable来顺序">
+<meta property="og:image" content="http://developer.android.com/images/animation/valueanimator.png">
+<meta property="og:image" content="http://developer.android.com/images/animation/animation-linear.png">
+<meta property="og:image" content="http://developer.android.com/images/animation/animation-nonlinear.png">
+<meta property="og:updated_time" content="2017-12-21T14:54:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android动画">
+<meta name="twitter:description" content="概述参考官方文档，Android动画分为两类，分别为：
+
+Property Animation用于改变目标对象的属性，如背景颜色，透明度等。
+View Animation View动画又分为
+Tween Animation 通过对场景里的对象不断做图像变换(平移、缩放、旋转)产生动画效果，可以理解为渐变动画或者补间动画。
+Frame Animation 通过AnimationDrawable来顺序">
+<meta name="twitter:image" content="http://developer.android.com/images/animation/valueanimator.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/style/style.css?v=1.6.17">
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2846834382442028",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android动画</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android动画</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-01-13T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-01-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Property-Animation"><span class="post-toc-text">Property Animation</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ObjectAnimator和ValueAnimator"><span class="post-toc-text">ObjectAnimator和ValueAnimator</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#AnimatorSet"><span class="post-toc-text">AnimatorSet</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ViewPropertyAnimator"><span class="post-toc-text">ViewPropertyAnimator</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#TypeEvalutors和TimeInterplator"><span class="post-toc-text">TypeEvalutors和TimeInterplator</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#其他"><span class="post-toc-text">其他</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#View-Animation"><span class="post-toc-text">View Animation</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Tween-Animation"><span class="post-toc-text">Tween Animation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Frame-Animation"><span class="post-toc-text">Frame Animation</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Library"><span class="post-toc-text">Library</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Resource"><span class="post-toc-text">Resource</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-ui-animation"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android动画</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-01-14 00:00:00" datetime="2014-01-13T16:00:00.000Z"  itemprop="datePublished">2014-01-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>参考官方文档，Android动画分为两类，分别为：</p>
+<ul>
+<li><a href="http://developer.android.com/guide/topics/resources/animation-resource.html#Property" target="_blank" rel="external">Property Animation</a>用于改变目标对象的属性，如背景颜色，透明度等。</li>
+<li><a href="http://developer.android.com/guide/topics/resources/animation-resource.html#View" target="_blank" rel="external">View Animation</a> View动画又分为<ul>
+<li><a href="http://developer.android.com/guide/topics/resources/animation-resource.html#Tween" target="_blank" rel="external">Tween Animation</a> 通过对场景里的对象不断做图像变换(平移、缩放、旋转)产生动画效果，可以理解为渐变动画或者补间动画。</li>
+<li><a href="http://developer.android.com/guide/topics/resources/animation-resource.html#Frame" target="_blank" rel="external">Frame Animation</a> 通过<a href="http://developer.android.com/reference/android/graphics/drawable/AnimationDrawable.html" target="_blank" rel="external">AnimationDrawable</a>来顺序显示一组图片，可以理解为逐帧动画。</li>
+</ul>
+</li>
+<li><a href="http://www.zoftino.com/drawable-animation-in-android" target="_blank" rel="external">Drawable Animation in Android</a></li>
+<li><a href="https://medium.com/mobify-design-team/designing-for-the-appearance-of-speed-aaabc7f568c2" target="_blank" rel="external">Designing for the Appearance of Speed – Mobify Design Team – Medium</a></li>
+<li><a href="http://thetechnocafe.com/make-a-moving-gradient-background-in-android" target="_blank" rel="external">Make a moving Gradient Background in Android - TheTechnoCafe</a></li>
+</ul>
+<p>所有关于动画的定义均应放在res/anim/目录下，在Java中通过<code>R.anim.filename</code>来引用，在XML中通过<code>@[package:]anim/filename</code>来引用。</p>
+<p>Animator对应的监听接口为<code>Animator.AnimatorListener</code>，可以继承AnimatorListenerAdapter而不是实现AnimatorListener接口来简化操作，这个类对AnimatorListener中的函数都定义了一个空函数体，这样我们就只用定义想监听的事件而不用实现每个函数却只定义一空函数体。如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ObjectAnimator oa=ObjectAnimator.ofFloat(tv, <span class="string">"alpha"</span>, <span class="number">0f</span>, <span class="number">1f</span>);</div><div class="line">oa.setDuration(<span class="number">3000</span>);</div><div class="line">oa.addListener(<span class="keyword">new</span> AnimatorListenerAdapter()&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> on <span class="title">AnimationEnd</span><span class="params">(Animator animation)</span></span>&#123;</div><div class="line">        Log.i(<span class="string">"Animation"</span>,<span class="string">"end"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">oa.start();</div></pre></td></tr></table></figure>
+<p>关于Animator的监听器请参考<a href="http://developer.android.com/guide/topics/graphics/prop-animation.html#listeners" target="_blank" rel="external">Animation Listeners</a>。</p>
+<a id="more"></a>
+<h2 id="Property-Animation"><a href="#Property-Animation" class="headerlink" title="Property Animation"></a>Property Animation</h2><p>在XML中定义的语法如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">set</span></span></div><div class="line">  <span class="attr">android:ordering</span>=<span class="string">[</span>"<span class="attr">together</span>" | "<span class="attr">sequentially</span>"]&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">objectAnimator</span></span></div><div class="line">        <span class="attr">android:propertyName</span>=<span class="string">"string"</span></div><div class="line">        <span class="attr">android:duration</span>=<span class="string">"int"</span></div><div class="line">        <span class="attr">android:valueFrom</span>=<span class="string">"float | int | color"</span></div><div class="line">        <span class="attr">android:valueTo</span>=<span class="string">"float | int | color"</span></div><div class="line">        <span class="attr">android:startOffset</span>=<span class="string">"int"</span></div><div class="line">        <span class="attr">android:repeatCount</span>=<span class="string">"int"</span></div><div class="line">        <span class="attr">android:repeatMode</span>=<span class="string">[</span>"<span class="attr">repeat</span>" | "<span class="attr">reverse</span>"]</div><div class="line">        <span class="attr">android:valueType</span>=<span class="string">[</span>"<span class="attr">intType</span>" | "<span class="attr">floatType</span>"]/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">animator</span></span></div><div class="line">        <span class="attr">android:duration</span>=<span class="string">"int"</span></div><div class="line">        <span class="attr">android:valueFrom</span>=<span class="string">"float | int | color"</span></div><div class="line">        <span class="attr">android:valueTo</span>=<span class="string">"float | int | color"</span></div><div class="line">        <span class="attr">android:startOffset</span>=<span class="string">"int"</span></div><div class="line">        <span class="attr">android:repeatCount</span>=<span class="string">"int"</span></div><div class="line">        <span class="attr">android:repeatMode</span>=<span class="string">[</span>"<span class="attr">repeat</span>" | "<span class="attr">reverse</span>"]</div><div class="line">        <span class="attr">android:valueType</span>=<span class="string">[</span>"<span class="attr">intType</span>" | "<span class="attr">floatType</span>"]/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">set</span>&gt;</span></div><div class="line">        ...</div><div class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Property Animation不仅可以应用于View，还可以应用于任何对象。Property Animation只是表示一个值在一段时间内的改变，当值改变时要做什么事情完全是你自己决定的。</p>
+<p>Property Animation更改的是对象的实际属性。如Button的缩放，Button的位置与大小属性值都改变了。这点和View Animation截然不同，可参考本文的View Animation一节。</p>
+<p>定义Propertiy Animation的XML标签包括set、objectAnimator、animator，分别对应的Java类为<a href="http://developer.android.com/reference/android/animation/AnimatorSet.html" target="_blank" rel="external">AnimatorSet</a>, <a href="http://developer.android.com/reference/android/animation/ObjectAnimator.html" target="_blank" rel="external">ObjectAnimator</a>, <a href="http://developer.android.com/reference/android/animation/ValueAnimator.html" target="_blank" rel="external">ValueAnimator</a>。</p>
+<p>The following example plays the two sets of object animations sequentially, with the first nested set playing two object animations together:</p>
+<pre><code>&lt;set android:ordering=&quot;sequentially&quot;&gt;
+    &lt;set&gt;
+        &lt;objectAnimator
+            android:propertyName=&quot;x&quot;
+            android:duration=&quot;500&quot;
+            android:valueTo=&quot;400&quot;
+            android:valueType=&quot;intType&quot;/&gt;
+        &lt;objectAnimator
+            android:propertyName=&quot;y&quot;
+            android:duration=&quot;500&quot;
+            android:valueTo=&quot;300&quot;
+            android:valueType=&quot;intType&quot;/&gt;
+    &lt;/set&gt;
+    &lt;objectAnimator
+        android:propertyName=&quot;alpha&quot;
+        android:duration=&quot;500&quot;
+        android:valueTo=&quot;1f&quot;/&gt;
+&lt;/set&gt;
+</code></pre><p>In order to run this animation, you must inflate the XML resources in your code to an AnimatorSet object, and then set the target objects for all of the animations before starting the animation set. Calling setTarget() sets a single target object for all children of the AnimatorSet as a convenience. The following code shows how to do this:</p>
+<pre><code>AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(myContext,
+    R.anim.property_animator);
+set.setTarget(myObject);
+set.start();
+</code></pre><h3 id="ObjectAnimator和ValueAnimator"><a href="#ObjectAnimator和ValueAnimator" class="headerlink" title="ObjectAnimator和ValueAnimator"></a>ObjectAnimator和ValueAnimator</h3><p>ObjectAnimator继承自ValueAnimator。ValueAnimator包含Property Animation动画的所有核心功能，如开始值，结束值，持续时间等属性，以及相应时间属性值的计算方法等。应用Property Animation有两个步聚：</p>
+<ol>
+<li>计算属性值。</li>
+<li>根据属性值执行相应的动作，如改变对象的某一属性。</li>
+</ol>
+<p>ObjectAnimator可以自动完成两步，而ValueAnimiator只完成了第一步工作，如果要完成第二步，需要实现ValueAnimator.onUpdateListener接口，这个接口只有一个函数onAnimationUpdate()，在这个函数中会传入ValueAnimator对象做为参数，通过这个ValueAnimator对象的getAnimatedValue()函数可以得到当前的属性值如：</p>
+<pre><code>ValueAnimator animation = ValueAnimator.ofFloat(0f, 1f);
+animation.setDuration(1000);
+animation.addUpdateListener(new AnimatorUpdateListener() {
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation) {
+        Log.i(&quot;update&quot;, ((Float) animation.getAnimatedValue()).toString());
+    }
+});
+animation.setInterpolator(new CycleInterpolator(3));
+animation.start();
+</code></pre><p>实际应用中一般都会用ObjectAnimator来改变某一对象的某一属性。</p>
+<p>要想使用ObjectAnimator，应该满足以下条件：</p>
+<ol>
+<li>对象应该有一个setter函数：<code>set&lt;PropertyName&gt;</code>（驼峰命名法）</li>
+<li>如上面的例子中，像ofFloat之类的工场方法，第一个参数为对象名，第二个为属性名，后面的参数为可变参数，如果values…参数只设置了一个值的话，那么会假定为目的值，属性值的变化范围为当前值到目的值，为了获得当前值，该对象要有相应属性的getter方法：<code>get&lt;PropertyName&gt;</code></li>
+<li>如果有getter方法，其应返回值类型应与相应的setter方法的参数类型一致。</li>
+</ol>
+<p>如果上述条件不满足，则不能用ObjectAnimator，应用ValueAnimator代替。</p>
+<p>在Java中的使用Object Property的方法如下：</p>
+<pre><code>tv=(TextView)findViewById(R.id.textview1);
+btn=(Button)findViewById(R.id.button1);
+btn.setOnClickListener(new OnClickListener() {
+　　@Override
+　　public void onClick(View v) {
+　　　　ObjectAnimator oa=ObjectAnimator.ofFloat(tv, &quot;alpha&quot;, 0f, 1f);
+　　　　oa.setDuration(3000);
+　　　　oa.start();
+　　}
+});
+</code></pre><p><strong>根据应用动画的对象或属性的不同，可能需要在onAnimationUpdate函数中调用invalidate()函数刷新视图。</strong>    </p>
+<h3 id="AnimatorSet"><a href="#AnimatorSet" class="headerlink" title="AnimatorSet"></a>AnimatorSet</h3><p>AnimatorSet 用于定义动画的集合，常用的属性为android:ordering表示动画播放的顺序，取值为：</p>
+<ul>
+<li>sequentially 顺序播放。</li>
+<li>together 同时播放。</li>
+</ul>
+<p>以下例子同时应用5个动画：</p>
+<p>播放anim1；<br>同时播放anim2,anim3,anim4；<br>播放anim5。</p>
+<pre><code>AnimatorSet bouncer = new AnimatorSet();
+bouncer.play(anim1).before(anim2);
+bouncer.play(anim2).with(anim3);
+bouncer.play(anim2).with(anim4)
+bouncer.play(anim5).after(amin2);
+animatorSet.start();
+</code></pre><h3 id="ViewPropertyAnimator"><a href="#ViewPropertyAnimator" class="headerlink" title="ViewPropertyAnimator"></a>ViewPropertyAnimator</h3><p>ViewPropertyAnimator和ObjectAnimator类似，都是用于处理对象属性动画的。不同之处在于，ViewPropertyAnimator可以并行地作用于多个属性，而一个ObjectAnimator对象只能作用于一个属性上。而且，在多个属性上应用动画时使用ViewPropertyAnimator更高效。以下使用三种方法将动画同时作用于某个控件的x和y坐标。</p>
+<p>使用多个ObjectAnimator对象：</p>
+<pre><code>ObjectAnimator animX = ObjectAnimator.ofFloat(myView, &quot;x&quot;, 50f);
+ObjectAnimator animY = ObjectAnimator.ofFloat(myView, &quot;y&quot;, 100f);
+AnimatorSet animSetXY = new AnimatorSet();
+animSetXY.playTogether(animX, animY);
+animSetXY.start();
+</code></pre><p>使用一个ObjectAnimator：</p>
+<pre><code>PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat(&quot;x&quot;, 50f);
+PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat(&quot;y&quot;, 100f);
+ObjectAnimator.ofPropertyValuesHolder(myView, pvhX, pvyY).start();
+</code></pre><p>使用ViewPropertyAnimator：</p>
+<pre><code>myView.animate().x(50f).y(100f);
+</code></pre><p>ViewPropertyAnimator的更多内容请参考 <a href="http://android-developers.blogspot.com/2011/05/introducing-viewpropertyanimator.html" target="_blank" rel="external">Introducing ViewPropertyAnimator</a>。</p>
+<h3 id="TypeEvalutors和TimeInterplator"><a href="#TypeEvalutors和TimeInterplator" class="headerlink" title="TypeEvalutors和TimeInterplator"></a>TypeEvalutors和TimeInterplator</h3><p>ValueAnimator封装了一个TimeInterpolator和TypeAnimator。TimeInterpolator定义了属性值在开始值与结束值之间的插值方法，TypeAnimator根据开始、结束值与TimeIniterpolator计算得到的值计算出属性值。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://developer.android.com/images/animation/valueanimator.png" alt="ValueAnimator" title="">
+                </div>
+                <div class="image-caption">ValueAnimator</div>
+            </figure>
+<p>Android提供了以下几个evalutor：</p>
+<ul>
+<li>IntEvaluator：属性的值类型为int；</li>
+<li>FloatEvaluator：属性的值类型为float；</li>
+<li>ArgbEvaluator：属性的值类型为十六进制颜色值；</li>
+</ul>
+<p>自定义TypeEvalutor很简单，只需要实现一个方法，如FloatEvalutor的定义：</p>
+<pre><code>public class FloatEvaluator implements TypeEvaluator {
+    public Object evaluate(float fraction, Object startValue, Object endValue) {
+        float startFloat = ((Number) startValue).floatValue();
+        return startFloat + fraction * (((Number) endValue).floatValue() - startFloat);
+    }
+}
+</code></pre><p>在Property Animation中是TimeInterplator，在View Animation中是Interplator，Interplator继承自TimeInterplator，内部没有任何其他代码。Android中提供以下TimeInterplator：</p>
+<ul>
+<li>AccelerateInterpolator 加速，开始时慢中间加速</li>
+<li>DecelerateInterpolator 减速，开始时快然后减速</li>
+<li>AccelerateDecelerateInterolator 先加速后减速，开始结束时慢，中间加速</li>
+<li>AnticipateInterpolator 反向 ，先向相反方向改变一段再加速播放</li>
+<li>AnticipateOvershootInterpolator 反向加回弹，先向相反方向改变，再加速播放，会超出目的值然后缓慢移动至目的值</li>
+<li>BounceInterpolator 跳跃，快到目的值时值会跳跃，如目的值100，后面的值可能依次为85，77，70，80，90，100</li>
+<li>CycleIinterpolator 循环，动画循环一定次数，值的改变为一正弦函数：Math.sin(2 <em> mCycles </em> Math.PI * input)</li>
+<li>LinearInterpolator 线性，线性均匀改变</li>
+<li>OvershottInterpolator 回弹，最后超出目的值然后缓慢改变到目的值</li>
+</ul>
+<p>与之对应的Android标签以及更多使用方法请参考 <a href="http://developer.android.com/guide/topics/resources/animation-resource.html#Interpolators" target="_blank" rel="external">Interpolator</a></p>
+<p>应用interpolator的方法如：</p>
+<pre><code>&lt;set android:interpolator=&quot;@android:anim/accelerate_interpolator&quot;&gt;
+    ...
+&lt;/set&gt;
+</code></pre><p>ValueAnimator根据动画已进行的时间跟动画总时间(duration)的比计算出一个时间因子(0~1，然后根据TimeInterpolator计算出另一个因子，最后TypeAnimator通过这个因子计算出属性值。</p>
+<p>如使用LinearInterpolator的例子：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://developer.android.com/images/animation/animation-linear.png" alt="LinearInterpolator" title="">
+                </div>
+                <div class="image-caption">LinearInterpolator</div>
+            </figure>
+<p>时间因子（即经过的时间百分比）为：t=10ms/40ms=0.25</p>
+<p>使用AccelerateDecelerateInterolator的例子：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://developer.android.com/images/animation/animation-nonlinear.png" alt="AccelerateDecelerateInterolator" title="">
+                </div>
+                <div class="image-caption">AccelerateDecelerateInterolator</div>
+            </figure>
+<p>经插值计算(inteplator)后的插值因子:大约为0.15，上述例子中用了AccelerateDecelerateInterpolator，计算公式为（input即为时间因子）：</p>
+<pre><code>(Math.cos((input + 1) * Math.PI) / 2.0f) + 0.5f;  
+</code></pre><p>最后根据TypeEvaluator计算出在10ms时的属性值：<code>0.15*（40-0）=6pixel</code>。上例中TypeEvaluator为FloatEvaluator，计算方法为 ：</p>
+<pre><code>public Float evaluate(float fraction, Number startValue, Number endValue) {
+    float startFloat = startValue.floatValue();
+    return startFloat + fraction * (endValue.floatValue() - startFloat);
+}
+</code></pre><p>参数分别为上一步的插值因子，开始值与结束值。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li><a href="http://developer.android.com/guide/topics/graphics/prop-animation.html#keyframes" target="_blank" rel="external">指定关键帧</a></li>
+<li><a href="http://developer.android.com/guide/topics/graphics/prop-animation.html#layout" target="_blank" rel="external">当Layout改变时应用动画</a> 如当一个元素在其父元素中变为Visible或者Gone时。</li>
+</ul>
+<h2 id="View-Animation"><a href="#View-Animation" class="headerlink" title="View Animation"></a>View Animation</h2><p>View animation只能应用于View对象。</p>
+<p>View animation，它只是改变了View绘制效果，而<strong>没有改变View对象本身的属性</strong>，比如，你有一个Button，坐标(100,100)，Width:200,Height:50，而你有一个动画使其变为Width：100，Height：100，你会发现动画过程中触发按钮点击的区域仍是[(100,100),(300,150)]，而不是[(100,100),(200,200)]。这和Property Animation有很大的不同。</p>
+<p>XML文件的根元素可以为<code>&lt;alpha&gt;</code>,<code>&lt;scale&gt;</code>,<code>&lt;translate&gt;</code>,<code>&lt;rotate&gt;</code>或<code>&lt;set&gt;</code>(表示以上几个动画的集合，set可以嵌套)。默认情况下，所有动画是同时进行的，可以通过startOffset属性设置各个动画的开始偏移（开始时间）来达到动画顺序播放的效果。</p>
+<p>可以通过设置interpolator属性改变动画渐变的方式，如AccelerateInterpolator，开始时慢，然后逐渐加快。默认为AccelerateDecelerateInterpolator。</p>
+<p>定义好动画的XML文件后，可以通过类似下面的代码对指定View应用动画。</p>
+<pre><code>ImageView spaceshipImage = (ImageView)findViewById(R.id.spaceshipImage);
+Animation hyperspaceJumpAnimation=AnimationUtils.loadAnimation(this, R.anim.hyperspace_jump);
+spaceshipImage.startAnimation(hyperspaceJumpAnimation);
+</code></pre><h3 id="Tween-Animation"><a href="#Tween-Animation" class="headerlink" title="Tween Animation"></a>Tween Animation</h3><p>在XML中的使用语法如下：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;set xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:interpolator=&quot;@[package:]anim/interpolator_resource&quot;
+    android:shareInterpolator=[&quot;true&quot; | &quot;false&quot;] &gt;
+    &lt;alpha
+        android:fromAlpha=&quot;float&quot;
+        android:toAlpha=&quot;float&quot; /&gt;
+    &lt;scale
+        android:fromXScale=&quot;float&quot;
+        android:toXScale=&quot;float&quot;
+        android:fromYScale=&quot;float&quot;
+        android:toYScale=&quot;float&quot;
+        android:pivotX=&quot;float&quot;
+        android:pivotY=&quot;float&quot; /&gt;
+    &lt;translate
+        android:fromXDelta=&quot;float&quot;
+        android:toXDelta=&quot;float&quot;
+        android:fromYDelta=&quot;float&quot;
+        android:toYDelta=&quot;float&quot; /&gt;
+    &lt;rotate
+        android:fromDegrees=&quot;float&quot;
+        android:toDegrees=&quot;float&quot;
+        android:pivotX=&quot;float&quot;
+        android:pivotY=&quot;float&quot; /&gt;
+    &lt;set&gt;
+        ...
+    &lt;/set&gt;
+&lt;/set&gt;
+</code></pre><p>使用的例子如：</p>
+<pre><code>&lt;set xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:shareInterpolator=&quot;false&quot;&gt;
+    &lt;scale
+        android:interpolator=&quot;@android:anim/accelerate_decelerate_interpolator&quot;
+        android:fromXScale=&quot;1.0&quot;
+        android:toXScale=&quot;1.4&quot;
+        android:fromYScale=&quot;1.0&quot;
+        android:toYScale=&quot;0.6&quot;
+        android:pivotX=&quot;50%&quot;
+        android:pivotY=&quot;50%&quot;
+        android:fillAfter=&quot;false&quot;
+        android:duration=&quot;700&quot; /&gt;
+    &lt;set
+        android:interpolator=&quot;@android:anim/accelerate_interpolator&quot;
+        android:startOffset=&quot;700&quot;&gt;
+        &lt;scale
+            android:fromXScale=&quot;1.4&quot;
+            android:toXScale=&quot;0.0&quot;
+            android:fromYScale=&quot;0.6&quot;
+            android:toYScale=&quot;0.0&quot;
+            android:pivotX=&quot;50%&quot;
+            android:pivotY=&quot;50%&quot;
+            android:duration=&quot;400&quot; /&gt;
+        &lt;rotate
+            android:fromDegrees=&quot;0&quot;
+            android:toDegrees=&quot;-45&quot;
+            android:toYScale=&quot;0.0&quot;
+            android:pivotX=&quot;50%&quot;
+            android:pivotY=&quot;50%&quot;
+            android:duration=&quot;400&quot; /&gt;
+    &lt;/set&gt;
+&lt;/set&gt;
+</code></pre><p>This application code will apply the animation to an ImageView and start the animation:</p>
+<pre><code>ImageView image = (ImageView) findViewById(R.id.image);
+Animation hyperspaceJump = AnimationUtils.loadAnimation(this, R.anim.hyperspace_jump);
+image.startAnimation(hyperspaceJump);
+</code></pre><p>Tween Animation分为以下几种</p>
+<ul>
+<li>alpha AlphaAnimation 渐变透明度动画效果 </li>
+<li>scale ScaleAnimation 渐变尺寸伸缩动画效果 </li>
+<li>translate TranslateAnimation 画面转换位置移动动画效果 </li>
+<li>rotate RotateAnimation 画面转移旋转动画效果</li>
+</ul>
+<p>Tween Animation的interpolator以及使用方法和Property Animation的TimeiInterpolator相同。</p>
+<h3 id="Frame-Animation"><a href="#Frame-Animation" class="headerlink" title="Frame Animation"></a>Frame Animation</h3><p><a href="http://www.cnblogs.com/angeldevil/" target="_blank" rel="external">AngelDevil</a> 在<a href="http://www.cnblogs.com/angeldevil/archive/2011/12/02/2271096.html" target="_blank" rel="external">Android动画学习笔记-Android Animation</a>中提到在使用Frame Animation时，需要注意的几点：</p>
+<ol>
+<li>要在代码中调用Imageview的setBackgroundResource方法，如果直接在XML布局文件中设置其src属性当触发动画时会FC。</li>
+<li>在动画start()之前要先stop()，不然在第一次动画之后会停在最后一帧，这样动画就只会触发一次。</li>
+<li>最后一点是SDK中提到的，不要在onCreate中调用start，因为AnimationDrawable还没有完全跟Window相关联，如果想要界面显示时就开始动画的话，可以在onWindowFoucsChanged()中调用start()。</li>
+</ol>
+<p>使用方法如</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;animation-list xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:oneshot=&quot;false&quot;&gt;
+    &lt;item android:drawable=&quot;@drawable/rocket_thrust1&quot; android:duration=&quot;200&quot; /&gt;
+    &lt;item android:drawable=&quot;@drawable/rocket_thrust2&quot; android:duration=&quot;200&quot; /&gt;
+    &lt;item android:drawable=&quot;@drawable/rocket_thrust3&quot; android:duration=&quot;200&quot; /&gt;
+&lt;/animation-list&gt;
+</code></pre><p>This application code will set the animation as the background for a View, then play the animation:</p>
+<pre><code>ImageView rocketImage = (ImageView) findViewById(R.id.rocket_image);
+rocketImage.setBackgroundResource(R.drawable.rocket_thrust);
+
+rocketAnimation = (AnimationDrawable) rocketImage.getBackground();
+rocketAnimation.start();
+</code></pre><h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><ul>
+<li><a href="https://github.com/daimajia/AnimationEasingFunctions" target="_blank" rel="external">daimajia/AnimationEasingFunctions</a></li>
+<li><a href="https://github.com/koral--/android-gif-drawable" target="_blank" rel="external">koral–/android-gif-drawable</a></li>
+</ul>
+<h2 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h2><ul>
+<li><a href="https://github.com/airbnb/lottie-android" target="_blank" rel="external">airbnb/lottie-android: Render After Effects animations natively on Android and iOS, Web, and React Native</a></li>
+<li><a href="http://www.lottiefiles.com/popular" target="_blank" rel="external">LottieFiles - Free high quality Lottie animation files</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-12-21T14:54:04.000Z" itemprop="dateUpdated">2017-12-21 22:54:04</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2014-01-14-android-ui-animation.html" target="_blank" rel="external">http://blog.inching.org/Android/2014-01-14-android-ui-animation.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/animation/">animation</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2014-01-14-android-ui-animation.html&title=《Android动画》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2014-01-14-android-ui-animation.html&title=《Android动画》 — Balance&source=概述参考官方文档，Android动画分为两类，分别为：
+
+Property Animation用于改变目标对象的属性，如背景颜色，透明度等。
+View A..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2014-01-14-android-ui-animation.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android动画》 — Balance&url=http://blog.inching.org/Android/2014-01-14-android-ui-animation.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2014-01-14-android-ui-animation.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2014-01-17-mxgraph.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">mxGraph 学习</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2014-01-01-android-ui-preference.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Preferences</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2014-01-14-android-ui-animation.html&title=《Android动画》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2014-01-14-android-ui-animation.html&title=《Android动画》 — Balance&source=概述参考官方文档，Android动画分为两类，分别为：
+
+Property Animation用于改变目标对象的属性，如背景颜色，透明度等。
+View A..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2014-01-14-android-ui-animation.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android动画》 — Balance&url=http://blog.inching.org/Android/2014-01-14-android-ui-animation.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2014-01-14-android-ui-animation.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtklEQVR42u3ay07kQAwFUP7/pxlpVkg8cq9dRbM4WbUaSOpkYRvbb2/x9f7/+vj54zfJb37+/c/f53c+fOHh4eGNjv7d9fNBW0D+xO9eVnsHPDw8vHu8WYjfJ4lZwiiSBx4eHt5LeT9/Tg6XBPf2DHh4eHh/n3e20fBQEMfnwcPDw/t9XtKMmCWJ/Kcv7rXg4eHhxbzZAOy1n6/P9/Dw8PBGU/W22E2CeJtC8mTwxWnx8PDwLvDa0dSmFN4vFuRZ4C3pduDh4eEd4rWt1Tx8z1oMBeO7Zi4eHh7eUV57i3zQNWO0q10Pf4uHh4d3gZeE8vaRZ1vGyU8fvsHDw8O7zMtnSZulqLZ5sSmv8fDw8M7ykpueLZGTsD57xQ//MeDh4eEd5SUD+NnYvn19eRqIUgUeHh7eBd7mdvv2xKnlqocz4OHh4V3g7cf2s+ZvXnwn7Y+HAh0PDw/vV3htKyEvpmepZdVExsPDw7vAa8f2+cPyUL5/ejESw8PDw1vz2tCfPDj5vk1O7Znx8PDwzvLaQJwvBGyufTMCDw8P7x5v1lrdLAH8fOg2bUSvGw8PD+8oLw/BScg+26jNTxXtlOHh4eFd5s2G+nVGKgv0pHzHw8PDu81rG6yzBakc1qaTqEmBh4eHd4HXtlDz4N6G+DzoD9vKeHh4eBf6nPs1gjxwt4E+L+jx8PDwfpOXF7JtWM9fRF7WP6QuPDw8vAu8ohm6KK9nRfM+/eDh4eHd4L2X16Z03ozQZoU1Hh4e3g3evuSdjc3aVYC2jMbDw8O7zcvD9z4c58E9Twz1ZgQeHh7eIV7bWk1CczLmz1/BsNeCh4eH91Lefikqefpm0PXFU/Dw8PD+JG+2cJCvxrYLssOSGg8PD6/knW1G5MX07JsiPeDh4eFd4LUDsGO7XYvVq7ZhgYeHh3eI9w9JHLtg7WLhkwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

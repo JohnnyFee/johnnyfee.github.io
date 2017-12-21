@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android 视图高度和阴影的那点事儿 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,ui,layout">
+    <meta name="description" content="Android 视图高度和阴影的那点事儿Material Design 规范针对 UI 元素提出了“高度”这一概念，使过去流行于拟物化设计中的阴影效果，在扁平化设计中消失了很久之后，再次显现。不过，虽然视图高度更多的是以阴影的形式直观地表现在界面中，但更多地是强调一个元素相对重要性的问题。在三维空间中，拥有更高高度的 UI 元素，显然对于用户来讲，相比于其他元素，更加凸显其重要性，更加希望被用户注">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 视图高度和阴影的那点事儿">
+<meta property="og:url" content="http://blog.inching.org/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="Android 视图高度和阴影的那点事儿Material Design 规范针对 UI 元素提出了“高度”这一概念，使过去流行于拟物化设计中的阴影效果，在扁平化设计中消失了很久之后，再次显现。不过，虽然视图高度更多的是以阴影的形式直观地表现在界面中，但更多地是强调一个元素相对重要性的问题。在三维空间中，拥有更高高度的 UI 元素，显然对于用户来讲，相比于其他元素，更加凸显其重要性，更加希望被用户注">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488119646.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488120191.png">
+<meta property="og:updated_time" content="2017-12-21T14:54:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 视图高度和阴影的那点事儿">
+<meta name="twitter:description" content="Android 视图高度和阴影的那点事儿Material Design 规范针对 UI 元素提出了“高度”这一概念，使过去流行于拟物化设计中的阴影效果，在扁平化设计中消失了很久之后，再次显现。不过，虽然视图高度更多的是以阴影的形式直观地表现在界面中，但更多地是强调一个元素相对重要性的问题。在三维空间中，拥有更高高度的 UI 元素，显然对于用户来讲，相比于其他元素，更加凸显其重要性，更加希望被用户注">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488119646.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/style/style.css?v=1.6.17">
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2846834382442028",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android 视图高度和阴影的那点事儿</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android 视图高度和阴影的那点事儿</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-11-15T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-11-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Android-视图高度和阴影的那点事儿"><span class="post-toc-text">Android 视图高度和阴影的那点事儿</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Android-中的视图高度：-Z-属性"><span class="post-toc-text">Android 中的视图高度： Z 属性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#elevation-属性"><span class="post-toc-text">elevation 属性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#translationZ-属性"><span class="post-toc-text">translationZ 属性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现阴影的其他方式"><span class="post-toc-text">实现阴影的其他方式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#FAQ"><span class="post-toc-text">FAQ</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-ui-z-index-axis-elevation-z-transaction"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android 视图高度和阴影的那点事儿</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-16 00:00:00" datetime="2017-11-15T16:00:00.000Z"  itemprop="datePublished">2017-11-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Android-视图高度和阴影的那点事儿"><a href="#Android-视图高度和阴影的那点事儿" class="headerlink" title="Android 视图高度和阴影的那点事儿"></a>Android 视图高度和阴影的那点事儿</h2><p>Material Design 规范针对 UI 元素提出了“高度”这一概念，使过去流行于拟物化设计中的阴影效果，在扁平化设计中消失了很久之后，再次显现。不过，虽然视图高度更多的是以阴影的形式直观地表现在界面中，但更多地是强调一个元素相对重要性的问题。在三维空间中，拥有更高高度的 UI 元素，显然对于用户来讲，相比于其他元素，更加凸显其重要性，更加希望被用户注意到，甚至被频繁操作，这也是设计人员最想表达的初衷。</p>
+<h2 id="Android-中的视图高度：-Z-属性"><a href="#Android-中的视图高度：-Z-属性" class="headerlink" title="Android 中的视图高度： Z 属性"></a>Android 中的视图高度： Z 属性</h2><p>了解三维空间中的 Z 属性，引用<a href="https://developer.android.com/training/material/shadows-clipping.html?hl=zh-cn#Elevation" target="_blank" rel="external">官网</a>的一段介绍：</p>
+<blockquote>
+<p>由 Z 属性所表示的视图高度将决定其阴影的视觉外观：拥有较高 Z 值的视图将投射更大且更柔和的阴影。 拥有较高 Z 值的视图将挡住拥有较低 Z 值的视图；不过视图的 Z 值并不影响视图的大小。</p>
+<p>阴影是由提升的视图的父项所绘制，因此将受到标准视图裁剪的影响，而在默认情况下裁剪将由父项执行。</p>
+</blockquote>
+<p>具体体现在 API 上，请看这一表达式：</p>
+<p><strong>Z = elevation + translationZ</strong></p>
+<p>也就是说，视图高度由 elevation 和 translationZ 属性决定：</p>
+<ul>
+<li><strong>elevation</strong>：高度，静态组件，用于提升 UI 元素高度的属性；</li>
+<li><strong>translationZ</strong>：Z 值转换，动态组件，常用于操作 UI 元素时交互动画的属性。</li>
+</ul>
+<p>不同视图高度呈现出的阴影效果如图所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ocq7gtgqu.bkt.clouddn.com/1488119646.png" alt="不同视图高度的阴影" title="">
+                </div>
+                <div class="image-caption">不同视图高度的阴影</div>
+            </figure>
+<h2 id="elevation-属性"><a href="#elevation-属性" class="headerlink" title="elevation 属性"></a>elevation 属性</h2><p>UI 控件的 elevation 属性可以设置其高度，呈现在界面中的直观效果就是阴影效果，在 xml 布局文件中，通过 <code>android:elevation</code>  属性设置，在 java 代码中通过 View 类提供的 <code>setElevation()</code> 方法设置。但是这个属性存在版本兼容问题，是 Android 5.0 引进的 API。所以，当 <code>minSdkVersion</code> 值小于21时，系统会在 xml 的对应使用地方给出一个 lint 提示：</p>
+<blockquote>
+<p>Attribute elevation is only used in API level 21 and higher</p>
+</blockquote>
+<p>当然你也可以选择忽略这个提示，或者使用 <code>tools:targetApi</code> 属性消除这个提示，这样做的话，在低于 5.0 版本的系统中将不会出现阴影效果。然而，有一个更好的办法做到兼容，那就是借助 <code>ViewCompat</code> 这个万能的兼容类，使 View 的 elevation 属性兼容至低版本中：</p>
+<p><strong>ViewCompat.setElevation(View view, float elevation)</strong></p>
+<blockquote>
+<p>注意：尤其要注意，视图的阴影一定是由有轮廓的视图投射出来的。简单来说，就是需要设置控件的背景，即 <code>android:background</code> 属性。我们可以选择图片作为背景，也可以使用 <code>&lt;shape&gt;</code> 标签定义一个 drawable 形状，事实上，后者更为常用。</p>
+</blockquote>
+<h2 id="translationZ-属性"><a href="#translationZ-属性" class="headerlink" title="translationZ 属性"></a>translationZ 属性</h2><p>前面提到，elevation 偏向于一个高度上的静态提升属性，而 translationZ 偏向于一个高度上的动态转换属性，可用于设置动画，比如元素触摸状态的转换效果，如果你了解 CardView 的设计规范的话，一定了解这个概念，之前我也写过相关的文章，呈现效果不妨参考：<a href="http://yifeng.studio/2016/10/18/android-cardview/" target="_blank" rel="external">Android 使用CardView轻松实现卡片式设计</a>。</p>
+<p>我们可以通过属性动画动态改变 translationZ 属性值，为视图添加高度动画，也可以在 drawable 目录下定义一个资源文件，然后通过 <code>android:stateListAnimator＝&quot;@drawable/selector_elevation&quot;</code> 属性显式地设置给相应的 View 控件。其中，<code>selector_elevation</code> 文件可以这样定义（名字可以自由编写）：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_enabled</span>=<span class="string">"true"</span> <span class="attr">android:state_pressed</span>=<span class="string">"true"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span></div><div class="line">            <span class="attr">android:duration</span>=<span class="string">"@android:integer/config_shortAnimTime"</span></div><div class="line">            <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></div><div class="line">            <span class="attr">android:valueTo</span>=<span class="string">"@dimen/dp_4"</span></div><div class="line">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span> /&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span></div><div class="line">            <span class="attr">android:duration</span>=<span class="string">"@android:integer/config_shortAnimTime"</span></div><div class="line">            <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></div><div class="line">            <span class="attr">android:valueTo</span>=<span class="string">"0dp"</span></div><div class="line">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span> /&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="实现阴影的其他方式"><a href="#实现阴影的其他方式" class="headerlink" title="实现阴影的其他方式"></a>实现阴影的其他方式</h2><p>可以看出，通过设置视图高度可以实现阴影效果。这里需要提及一点，不要与 <code>TextView</code> 控件的 shadow 相关属性混为一谈，后者实现的是内容文字的投影效果，具体由 shadowColor、shadowRadius、shadowDx、shadowDy 四个属性控制，与本文中介绍的视图阴影概念大相径庭。</p>
+<p>像 support:design 包中的 FloatingActionBar、CardView 控件默认都实现了高度上的阴影效果。需要注意的是，前面我们提到的阴影效果都是由于视图 Z 属性提升带来的结果，形状由视图的轮廓所决定的，比如圆形、方形等，至于阴影颜色，所有 UI 元素都是一致的，是无法改变的。</p>
+<p>那么还有没有其他方式实现呢，如果我想改变阴影颜色呢，或者只是局部投影呢？答案是肯定的，那就是使用带阴影的背景图，常见如 <code>.9</code> 图。比如，系统就给我们提供了一个带阴影效果的 <code>.9</code> 背景图，你可以这样使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:background=&quot;@android:drawable/dialog_holo_light_frame&quot;</div></pre></td></tr></table></figure>
+<p>或者你也可以通过 <code>&lt;layer-list&gt;</code> 标签去一层一层定义形状和颜色，不过比较繁琐，不如直接使用 <code>.9</code> 背景图片。这里给大家推荐一个在线工具，通过 GUI 方式制作 <code>.9</code> 阴影背景图，<a href="http://inloop.github.io/shadow4android/" target="_blank" rel="external">Android 9-patch shadow generator</a>，如图：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ocq7gtgqu.bkt.clouddn.com/1488120191.png" alt="Android 9-patch shadow generator" title="">
+                </div>
+                <div class="image-caption">Android 9-patch shadow generator</div>
+            </figure>
+<p>再或者，你可以尝试一下 GitHub 上的这个开源库，借鉴一下作者的思路，更灵活地实现 Android App 中的 UI 阴影效果：</p>
+<p><a href="https://github.com/dmytrodanylyk/shadow-layout" target="_blank" rel="external">https://github.com/dmytrodanylyk/shadow-layout</a></p>
+<hr>
+<p>本文由 <strong>亦枫</strong> 创作并首发于 <strong><a href="http://yifeng.studio/index.html" title="亦枫" target="_blank" rel="external">亦枫的个人博客</a></strong> ，同步推送微信公众号：安卓笔记侠（NiaoTech）。</p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><ul>
+<li><a href="https://stackoverflow.com/questions/27216080/how-to-bring-imageview-in-front-of-button-in-android-5/27216368#27216368" target="_blank" rel="external">How to bring ImageView in front of Button in android 5? - Stack Overflow</a></li>
+<li><a href="https://stackoverflow.com/questions/27080338/android-5-0-androidelevation-works-for-view-but-not-button/27112143#27112143" target="_blank" rel="external">Android 5.0 android:elevation Works for View, but not Button? - Stack Overflow</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-12-21T14:54:04.000Z" itemprop="dateUpdated">2017-12-21 22:54:04</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html" target="_blank" rel="external">http://blog.inching.org/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/layout/">layout</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ui/">ui</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html&title=《Android 视图高度和阴影的那点事儿》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html&title=《Android 视图高度和阴影的那点事儿》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android 视图高度和阴影的那点事儿》 — Balance&url=http://blog.inching.org/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2017-11-16-android-studio-3.0.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Welcome to Android Studio 3.0</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2017-11-16-android-archetecture-component.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Component - Room</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html&title=《Android 视图高度和阴影的那点事儿》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html&title=《Android 视图高度和阴影的那点事儿》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android 视图高度和阴影的那点事儿》 — Balance&url=http://blog.inching.org/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-11-16-android-ui-z-index-axis-elevation-z-transaction.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADKElEQVR42u3aQXIbMQwEQP3/0/IDYm1mQMqlpXpPqXhFs6nDGAAfj/h5vniu3/z3/5Pfcr3O9ac2P9jY2Ng3YT8vn+SdhHr9TnKgr9bJ94mNjY19NjuJk11BOPtd119Jvj42NjY29nW8JbGUlxxJSYONjY2NPWNfbyIpJ/KmUt7AwsbGxv5m9ixycl6+ft7P/6NeGjY2NvbHs9tm0Cf/+y3zbWxsbOwPZj/LJ4+ilcBrx8a1AhsbG/sg9noZ0A4Pdl3QacsMbGxs7FPZK5dj2gZ9O0KerZwMIbCxsbHPZidBlQ9W87BpL/HMYvJlgGFjY2MfwU6OoN30LnBOjYYH2NjY2Ieykz/323bSStGSR2l9xNjY2NjHsWcj1fYaTcuYXc2JBszY2NjYB7FnUdSWEHlArg8hksEDNjY29nnsJHjeV66sDAaWLhthY2NjH8Re2Vz+qaI8KGOp3T82Njb2t7GTP/rzxlDbQmrbTHVDChsbG/vm7DxC9gbJyhhgZVzxcr6NjY2NfXN2e+0ybzPlw932Ik4bgcWVHWxsbOxbsWdt93cPgIuWUPlVYWNjY5/HzsNj1u7fG2DX1OKn2NjY2Mex9zb0E9hKaLVfzy/vYGNjYx/EbmMsKTPyNVcu+uT72ZDe2NjY2B/MzpFJK6eNrna4m+95OBjAxsbGviF7NqxdD6RZ1M2e/6yDjY2NfXN2vt22PFiPnHyI2+4QGxsb+yR2PnBtr9q0BzpbZymPsLGxsb+APRvZzi5H5hc327FBNCTAxsbGPoKdX5psw6wNvHyF/NAfOQAbGxv7IHb+/q5SpB0btyOEKMCwsbGxb8ueXa/Jtzsb97aFUHFA2NjY2Iey3xckLSxvb7VBi42NjX0Se3aZJg+PvICZjQeGZQk2Njb2Qey2lz4rAJKIWomlfERdHwo2Njb2TdgrodW2mXYda35ww4IEGxsb+4bsWZGQf3Zl/LDeVPrlfWxsbGzsTc2gPAjzIiQ6LGxsbOwvZq8MBvJQnO2q2CE2Njb2ceykqdRespk1lWYXg+r9YGNjYx/EzreVD1Ovy5XZocxaS7P3sbGxsW/C/gFbvmkE4f4qewAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

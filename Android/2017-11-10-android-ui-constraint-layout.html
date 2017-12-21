@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android Constraint Layout | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,ui,layout">
+    <meta name="description" content="ConstraintLayout 可以取代传统的布局方式，如线性布局，表格布局，相对布局等。它允许你使用平板（而非嵌套）地创建复杂的布局，这在一定程度上提升了 UI 性能。
+ConstraintLayout 和 Relative Layout 很像，都是根据兄弟组件、父亲组件来确定当前组件的位置，但是它比相对布局更加灵活，并且借助于 Android Studio 的布局可视化编辑器让约束布局更加好">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Constraint Layout">
+<meta property="og:url" content="http://blog.inching.org/Android/2017-11-10-android-ui-constraint-layout.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="ConstraintLayout 可以取代传统的布局方式，如线性布局，表格布局，相对布局等。它允许你使用平板（而非嵌套）地创建复杂的布局，这在一定程度上提升了 UI 性能。
+ConstraintLayout 和 Relative Layout 很像，都是根据兄弟组件、父亲组件来确定当前组件的位置，但是它比相对布局更加灵活，并且借助于 Android Studio 的布局可视化编辑器让约束布局更加好">
+<meta property="og:image" content="https://developer.android.com/training/constraint-layout/images/layout-editor-convert-to-constraint_2x.png">
+<meta property="og:image" content="http://blog.inching.org/../assets/images/constraint-layout/constraint-layout-constraint1.png">
+<meta property="og:image" content="https://developer.android.com/studio/images/buttons/layout-editor-errors.png">
+<meta property="og:image" content="https://developer.android.com/training/constraint-layout/images/alignment-constraint-offset_2x.png">
+<meta property="og:image" content="https://developer.android.com/training/constraint-layout/images/layout-editor-properties-callouts_2x.png">
+<meta property="og:image" content="https://developer.android.com/studio/images/buttons/layout-width-fixed.png">
+<meta property="og:image" content="https://developer.android.com/studio/images/buttons/layout-width-wrap.png">
+<meta property="og:image" content="https://developer.android.com/studio/images/buttons/layout-width-match.png">
+<meta property="og:image" content="https://developer.android.com/training/constraint-layout/images/layout-editor-ratio-properties_2x.png">
+<meta property="og:image" content="https://developer.android.com/training/constraint-layout/images/layout-editor-margin-callout_2x.png">
+<meta property="og:image" content="https://developer.android.com/training/constraint-layout/images/constraint-chain_2x.png">
+<meta property="og:image" content="http://blog.inching.org/../assets/images/constraint-layout/horizontal-chain.png">
+<meta property="og:image" content="https://developer.android.com/training/constraint-layout/images/constraint-chain-styles_2x.png">
+<meta property="og:image" content="https://developer.android.com/studio/images/buttons/layout-editor-action-chain.png">
+<meta property="og:image" content="http://blog.inching.org/../assets/images/constraint-layout/constraint-computer.png">
+<meta property="og:image" content="https://developer.android.com/studio/images/buttons/layout-editor-infer.png">
+<meta property="og:image" content="https://developer.android.com/studio/images/buttons/layout-editor-autoconnect-on.png">
+<meta property="og:updated_time" content="2017-12-21T14:54:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Constraint Layout">
+<meta name="twitter:description" content="ConstraintLayout 可以取代传统的布局方式，如线性布局，表格布局，相对布局等。它允许你使用平板（而非嵌套）地创建复杂的布局，这在一定程度上提升了 UI 性能。
+ConstraintLayout 和 Relative Layout 很像，都是根据兄弟组件、父亲组件来确定当前组件的位置，但是它比相对布局更加灵活，并且借助于 Android Studio 的布局可视化编辑器让约束布局更加好">
+<meta name="twitter:image" content="https://developer.android.com/training/constraint-layout/images/layout-editor-convert-to-constraint_2x.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/style/style.css?v=1.6.17">
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2846834382442028",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android Constraint Layout</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android Constraint Layout</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-11-09T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-11-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#快速开始"><span class="post-toc-text">快速开始</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#升级-Android-Studio"><span class="post-toc-text">升级 Android Studio</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建-Android-工程"><span class="post-toc-text">创建 Android 工程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#入门视频"><span class="post-toc-text">入门视频</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#约束"><span class="post-toc-text">约束</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#排列位置"><span class="post-toc-text">排列位置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#对齐"><span class="post-toc-text">对齐</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#调节约束轴"><span class="post-toc-text">调节约束轴</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#约束于指导线"><span class="post-toc-text">约束于指导线</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#调整控件大小"><span class="post-toc-text">调整控件大小</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#用比例来设置大小"><span class="post-toc-text">用比例来设置大小</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#调整控件的默认边距"><span class="post-toc-text">调整控件的默认边距</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#双向约束-链"><span class="post-toc-text">双向约束 - 链</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自动连接和自动推荐约束"><span class="post-toc-text">自动连接和自动推荐约束</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#FAQ"><span class="post-toc-text">FAQ</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#重叠"><span class="post-toc-text">重叠</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Resource"><span class="post-toc-text">Resource</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-android-ui-constraint-layout"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android Constraint Layout</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-10 00:00:00" datetime="2017-11-09T16:00:00.000Z"  itemprop="datePublished">2017-11-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><a href="https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html" target="_blank" rel="external"><code>ConstraintLayout</code></a> 可以取代传统的布局方式，如线性布局，表格布局，相对布局等。它允许你使用平板（而非嵌套）地创建复杂的布局，这在一定程度上提升了 UI 性能。</p>
+<p>ConstraintLayout 和 Relative Layout 很像，都是根据兄弟组件、父亲组件来确定当前组件的位置，但是它比相对布局更加灵活，并且借助于 Android Studio 的布局可视化编辑器让约束布局更加好用。</p>
+<p>约束布局是未来的布局趋势，只需要是用拖拽的方式就可以构建复杂的布局。</p>
+<p>但这并不是说 ConstraintLayout 能够完全取代所有的布局，比如 CoordinatorLayout。相应的讨论可以看 <a href="https://stackoverflow.com/questions/40929686/constraintlayout-vs-coordinator-layout" target="_blank" rel="external">ConstraintLayout vs Coordinator layout</a>。</p>
+<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><h3 id="升级-Android-Studio"><a href="#升级-Android-Studio" class="headerlink" title="升级 Android Studio"></a>升级 Android Studio</h3><p>兄弟，升级到 Android Studio 3.0 吧。</p>
+<h3 id="创建-Android-工程"><a href="#创建-Android-工程" class="headerlink" title="创建 Android 工程"></a>创建 Android 工程</h3><p>使用 Android Studio 3.0 生成工程的布局文件使用的布局都是 Constraint Layout，也会自动引入 ConstraintLayout 的依赖库。新建布局文件时，默认的布方式也是 ConstraintLayout。</p>
+<details><summary>对于老工程，需要引入 ConstraintLayout 依赖</summary><br><br>修改工程目录下 <em>build.gradle</em> 文件，添加 google 仓库：<br><br><pre><code><br>repositories {<br>    google()<br>    jcenter()<br>}<br></code></pre><br><br>修改 <em>app/build.gradle</em> 文件，添加依赖：:<br><br><pre><code><br>dependencies {<br>    implementation ‘com.android.support.constraint:constraint-layout:1.0.2’<br>}<br></code></pre><br><br>In the toolbar or sync notification, click <strong>Sync Project with Gradle Files</strong>.<br><br>并且可以将 RelativeLayout 等其他布局右键转化为 ConstraintLayout：<br><br><img src="https://developer.android.com/training/constraint-layout/images/layout-editor-convert-to-constraint_2x.png" width="400"><br><br></details>
+
+
+<h3 id="入门视频"><a href="#入门视频" class="headerlink" title="入门视频"></a>入门视频</h3><details><br><summary>我们可以看官方教程中的视频，直观感受下如何给控件添加依赖已完成布局。</summary><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/XamMbnzI5vE" frameborder="0" allowfullscreen></iframe><br><br></details>
+
+<div style="overflow: hidden"><br><img src="../assets/images/constraint-layout/constraint-layout-constraint1.png" style="float: right;"><br><p><br>看完这个视屏，我们应该学会了如何添加约束了。但是，这还不足以让我们理解 ConstraintLayout。<br></p><br><p><br>当我们选中控件时，边的终点位置的圆是用来添加约束的，四个角的正方形是用来调整位置的。<br></p><br></div>
+
+<h2 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h2><p>当你拖拽一个控件到布局编辑器时，默认是没有约束的。缺少约束并不会引起编译错误，但不加约束一般都会造成布局混乱，可以通过 <img src="https://developer.android.com/studio/images/buttons/layout-editor-errors.png" height="25px"> 来查看当前的布局错误信息。</p>
+<p>If a view has no constraints when you run your layout on a device, it is drawn at position [0,0] (the top-left corner).</p>
+<p>约束布局中控件的位置是用约束来定位的，约束分为水平约束和垂直约束。要确定一个控件的位置，必须至少有一个水平约束和垂直约束。这跟我们在平面上要确定一个点是同样的道理，要同时有 X 值和 Y 值才能确定。比如</p>
+{% image ../assets/images/constraint-layout/constraint-layout-constrain-hv.png '' '' %}
+<p>上图中，按钮约束于父容器（根容器），除此之外，还可以用兄弟控件，或者引导线（Guidline）。</p>
+<p>只能在水平约束点或者垂直约束点点之前建立约束，水平约束点和垂直约束点指点不能建立约束关系。用来建立水平约束的点叫水平约束点，用来建立垂直约束的点叫垂直约束点。</p>
+<video width="620" controls><br>  <source src="https://storage.googleapis.com/androiddevelopers/videos/studio/studio-constraint-first.mp4" type="video/mp4"><br></video>
+
+<p>一个约束点只能作为一条约束的出发点，但是可以有多个约束的入口点。</p>
+<h2 id="排列位置"><a href="#排列位置" class="headerlink" title="排列位置"></a>排列位置</h2>{% image https://developer.android.com/training/constraint-layout/images/position-constraint_2x.png '' '' %}
+<p>如上这个图中的约束约定了 B 在 A 的右边，C 在 A 的下面。我们前面有讲过，一个控件的位置需要同时有两个方向的约束才能确定。所以这种约束关系只能大致排列一下位置关系，不足以定位控件的位置。如 B 的垂直方向的位置会上顶，而 C 在水平方向会左顶。</p>
+{% image ../assets/images/constraint-layout/order-position.png '' '' %}
+<h2 id="对齐"><a href="#对齐" class="headerlink" title="对齐"></a>对齐</h2><p>用约束布局来做控件对齐不是一般的简单。</p>
+<p>假如要左对其两个控件。那我们可以建立下图的约束。我们省略了垂直约束。</p>
+<p>&lt;img src=”<a href="https://developer.android.com/training/constraint-layout/images/alignment-constraint_2x.png&quot;&quot;&gt;" target="_blank" rel="external">https://developer.android.com/training/constraint-layout/images/alignment-constraint_2x.png&quot;&quot;&gt;</a></p>
+<p>如果期望 B 在位置相对 A 的左边有一定的偏移，则可以将 B 往右拖，或者在属性面板中直接修改左 Margin 值。</p>
+<p><img src="https://developer.android.com/training/constraint-layout/images/alignment-constraint-offset_2x.png"></p>
+<p>另外，我们还可以使用 Android Studio 的对齐工具来对齐。选中你要对齐的所有控件，然后选择 <strong>Align</strong> {% image https://developer.android.com/studio/images/buttons/layout-editor-align.png '' '' %} 中的左对齐。注意，一定要先选中要对齐的控件，否则对齐的下拉框都点不动。</p>
+{% image ../assets/images/constraint-layout/align-left.png '' '' %}
+<p>也可以右键选择左对齐。</p>
+{% image ../assets/images/constraint-layout/context-menu-align-left.png '' '' %}
+<p>同理可以用于：</p>
+<ul>
+<li>右对齐</li>
+<li>垂直居中对齐</li>
+<li>顶端对齐</li>
+<li>水平居中对齐</li>
+<li>顶端对齐</li>
+<li>基线对齐</li>
+</ul>
+<p>这里要提一下是居中对齐，居中对齐其实就是左对齐和右对齐。</p>
+{% image ../assets/images/constraint-layout/align-center.png '' '' %}
+<p>如果期望控件对齐于父容器，则用父容器来约束控件就好了。与父容器的左边建立约束，则相当于与父容器左边对齐。如果期望居中与父容器，则同样左右对齐于父容器即可。</p>
+{% image ../assets/images/constraint-layout/center-align-parent.png '' '' %}
+<h2 id="调节约束轴"><a href="#调节约束轴" class="headerlink" title="调节约束轴"></a>调节约束轴</h2><p>当控件的左右都被约束的时候，默认情况下该控件水平居中于两个约束点，这时候的偏差为 50%。我们可以通过调节属性面板来调节这个偏差。</p>
+<video width="600" controls><br>  <source src="https://storage.googleapis.com/androiddevelopers/videos/studio/adjust-constraint-bias.mp4" type="video/mp4"><br></video>
+
+<h2 id="约束于指导线"><a href="#约束于指导线" class="headerlink" title="约束于指导线"></a>约束于指导线</h2><p>前面我们说过可以约束于兄弟控件，可以约束于父容器，除此之外，还可以约束指导线。</p>
+<p>指导线是根据父容器定位的基准线，比如我们希望在 C10 上使用 3 列布局，则可以用垂直基准线划分 3 个布局区域。如：</p>
+{% image ../assets/images/constraint-layout/guideline.png '' '' %}
+<p>To create a guideline, click <strong>Guidelines</strong> {% image https://developer.android.com/studio/images/buttons/layout-editor-guidelines.png '' '' %} in the toolbar, and then click either <strong>Add Vertical Guideline</strong> or <strong>Add Horizontal Guideline</strong>.</p>
+<p>指导线是对用户是不可见的，分为水平指导线和垂直指导线。Drag the dotted line to reposition it and click the circle at the edge of the guideline to toggle the measurement mode.</p>
+<h2 id="调整控件大小"><a href="#调整控件大小" class="headerlink" title="调整控件大小"></a>调整控件大小</h2><style type="text/css">
+.callout1 {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background: #E92663;
+    text-align: center;
+    color: white;
+}
+</style>
+
+<p><img src="https://developer.android.com/training/constraint-layout/images/layout-editor-properties-callouts_2x.png" alt="" width="284" style="float: right;"></p>
+<p>可调整的属性包括：</p>
+<p><span class="callout1">1</span> 比例大小的,<br><span class="callout1">2</span> 删除约束,<br><span class="callout1">3</span> 宽高模式,<br><span class="callout1">4</span> 边距<br><span class="callout1">5</span> 约束偏差</p><p></p>
+<p>控件的大小调整可以通过控件四角的小正方形来调整，不过通过这种方式调整的大小是固定值，也就是硬编码的方式，一般情况下不建议用这种方式。</p>
+<p>我们通过属性面板的 <span class="callout1">3</span> 来调整宽高模式。</p>
+<p>宽高模式有三种可选值：</p>
+<ol>
+<li><img src="https://developer.android.com/studio/images/buttons/layout-width-fixed.png" width="30px"> <strong>Fixed</strong>: 可以通过 <code>layout_width</code> 用硬编码方式调整大小，和在编辑器中通过拖拽了调整大小类似.</li>
+<li><img src="https://developer.android.com/studio/images/buttons/layout-width-wrap.png" width="30px"> <strong>Wrap Content</strong>: The view expands only as much as needed to fit its contents. 调整控件大小为内容大小。相当于 <code>wrap_content</code>。</li>
+<li><img src="https://developer.android.com/studio/images/buttons/layout-width-match.png" width="30px"> <strong>Match Constraints</strong>:  控件展开直到充满约束点之间的空白（该空白不包括边距大小），相当于 <code>match_parent</code></li>
+</ol>
+<pre><code>&lt;details&gt;
+&lt;summary&gt;尽量展开是默认行为，你可以同规模修改下面的属性来修改这种行为：&lt;/summary&gt;
+
+-  `layout_constraintWidth_default`
+
+    - `spread`: 默认值，尽可能展开。
+    - `wrap`: Expands the view only as much as needed to fit its contents, but still allows the view to be smaller than that if the constraints require it. So the difference between this and using **Wrap Content** (above), is that setting the width to **Wrap Content** forces the width to always exactly match the content width; whereas using **Match Constraints** with **layout_constraintWidth_default** set to **wrap** also allows the view to be smaller than the content width.
+-  `layout_constraintWidth_min` This takes a `dp` dimension for the view&apos;s minimum width.
+
+- `layout_constraintWidth_max` This takes a `dp` dimension for the view&apos;s maximum width.
+
+&lt;/details&gt;
+</code></pre><h3 id="用比例来设置大小"><a href="#用比例来设置大小" class="headerlink" title="用比例来设置大小"></a>用比例来设置大小</h3><p><img src="https://developer.android.com/training/constraint-layout/images/layout-editor-ratio-properties_2x.png" width="300px" style="float: right; margin-left: 20px"> </p>
+<p>当宽高至少有一个设置为 “match constraints” (<code>0dp</code>) 时，便可以使用比例来设置控件的大小。To enable the ratio, click <strong>Toggle Aspect Ratio Constraint</strong>，如上图中的 <span class="callout1">1</span>。</p>
+<p>If both the width and height are set to match constraints, you can click <strong>Toggle Aspect Ratio Constraint</strong> to select which dimension is based on a ratio of the other. The view inspector indicates which is set as a ratio by connecting the corresponding edges with a solid line.</p>
+<p>For example, if you set both sides to “match constraints”, click <strong>Toggle Aspect Ratio Constraint</strong> twice to set the width be a ratio of the height. Now the entire size is dictated by the height of the view (which can be defined in any way).</p>
+<h2 id="调整控件的默认边距"><a href="#调整控件的默认边距" class="headerlink" title="调整控件的默认边距"></a>调整控件的默认边距</h2><p>通过下面的工具来修改边距值的默认值，当你新增一个控件，为该控件添加约束时，默认的边距即为该值。</p>
+<p><img src="https://developer.android.com/training/constraint-layout/images/layout-editor-margin-callout_2x.png" height="30"></p>
+<p>随后，你可以在属性面板中修改该边距值。</p>
+<h2 id="双向约束-链"><a href="#双向约束-链" class="headerlink" title="双向约束 - 链"></a>双向约束 - 链</h2><p>建立双向关系的控件组，我们称之为链。如右图， A 和 B 之间建立了水平链。</p>
+<p><img src="https://developer.android.com/training/constraint-layout/images/constraint-chain_2x.png" width="300"></p>
+<p>要在控件间建立双向关联，可以选中你要关联的链，右键 -&gt; Chain -&gt; Create Horizontal Chain，如图：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../assets/images/constraint-layout/horizontal-chain.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>还可以在选中之后，右键 -&gt; Center -&gt; Center Horizontally。垂直链的建立同理。</p>
+<video width="400" controls><br>  <source src="https://storage.googleapis.com/androiddevelopers/videos/studio/constraint-chains.mp4" type="video/mp4"><br></video>
+
+<p>A、B 之间的那条链就是所谓的双向关联，左右两边的约束是普通的约束。我们观察控件间的水平空隙，除下左右两边的边距，中间的空隙是平均分布的。没错，链就是用来分配空白的。</p>
+<p>如何分配空白是由属性 <code>layout_constraintHorizontal_chainStyle</code> 决定的，默认是平均分布空白区域，这个属性的默认值为 <code>Spread</code>，该属性的可选值为：</p>
+<p><img src="https://developer.android.com/training/constraint-layout/images/constraint-chain-styles_2x.png" width="400" style="float: left; margin-right: 20px"></p>
+<p><span class="callout1">1</span>  <strong>Spread:</strong> 默认值，平均分配边距外的空白.</p>
+<p><span class="callout1">2</span>  <strong>Spread inside:</strong> 第一个控件的左侧和最后一个控件的右侧不分配空白，然后再平均分配。</p>
+<p><span class="callout1">3</span>  <strong>Weighted:</strong> <code>layout_constraintHorizontal_chainStyle</code> 并没有这个值，它是通过当链模式的是 <strong>spread</strong> or <strong>spread inside</strong> 时，通过扩展控件的长度来填充剩余空白。</p>
+<p>如果只有一个控件的长度设置为 “match constraints”(<code>0dp</code>)，该控件的长度边长，充满剩余空白。当有多个控件设置为 0dp 时，默认扩展这多个控件的长度平均分配剩余空间。可以通过修改 <code>layout_constraintHorizontal_weight</code> 属性来调整对剩余空间的分配比例，工作原理类似于 LinearLayout 中的 <code>layout_weight</code> 属性。</p>
+<p><span class="callout1">4</span> <strong>Packed:</strong> 所有的控件挨在一起，左右两边默认平均分配剩余空白，可以通过在属性面板中调整偏差来调整左右两边对剩余空白的占比。</p>
+<p>调整链模式的方法是，选择链中的任意一个控件，选择控件下方出现的 <img src="https://developer.android.com/studio/images/buttons/layout-editor-action-chain.png" width="20"> 来调整模式。也可以修改属性 <code>layout_constraintHorizontal_chainStyle</code>  来调整。</p>
+<p>在使用链的时候有几点要注意：</p>
+<ul>
+<li>控件可以同时组成水平链和垂直链，可以轻松构建成表格布局。</li>
+<li>只能在同一轴上建立链，比如只能在水平约束点或者垂直约束点之间建链。</li>
+<li>链只管水平或者垂直方向的剩余空间的分配，并没有约束位置的功能。</li>
+</ul>
+<p><strong>练习：</strong> 你可以试着建立九宫格计算器，这个计算器可移植性要强。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../assets/images/constraint-layout/constraint-computer.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="自动连接和自动推荐约束"><a href="#自动连接和自动推荐约束" class="headerlink" title="自动连接和自动推荐约束"></a>自动连接和自动推荐约束</h2><p>Android Studio 还提供了两个工具，自动连接和自动约束，都是用来帮开发者自动找到约束。</p>
+<p>选定一个控件的时候，可以点击 <img height="20px" src="https://developer.android.com/studio/images/buttons/layout-editor-infer.png"> 来让 IDE 帮我们推测一下。</p>
+<p>自动连接 <img src="https://developer.android.com/studio/images/buttons/layout-editor-autoconnect-on.png" height="20px"> 默认是关闭的，可以点击打开。当拖拽新控件到设计器的时候，会自动添加约束，如果它能推测出来的话。</p>
+<p>个人认为这两个工具都是玩具级别的，玩玩即可。</p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="重叠"><a href="#重叠" class="headerlink" title="重叠"></a>重叠</h3><p>当需要达到重叠效果时，因该如何控制 z 轴。答案是通过 <code>android:elevation</code> 属性。</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/27216080/how-to-bring-imageview-in-front-of-button-in-android-5/27216368#27216368" target="_blank" rel="external">How to bring ImageView in front of Button in android 5? - Stack Overflow</a></li>
+<li><a href="http://yifeng.studio/2017/02/26/android-elevation-and-shadow/" target="_blank" rel="external">Android 视图高度和阴影的那点事儿</a></li>
+</ul>
+<h2 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h2><p>官方教程：</p>
+<ul>
+<li><a href="https://developer.android.com/training/constraint-layout/index.html" target="_blank" rel="external">Build a Responsive UI with ConstraintLayout</a></li>
+<li><a href="https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html" target="_blank" rel="external">ConstraintLayout</a></li>
+</ul>
+<details><br><summary>再提供三个视屏</summary><br><iframe width="560" height="315" src="https://www.youtube.com/embed/z53Ed0ddxgM?rel=0" frameborder="0" allowfullscreen></iframe><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/CTYf1qwrXuw" frameborder="0" allowfullscreen></iframe><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/yT22cqCGjQQ" frameborder="0" allowfullscreen></iframe><br></details>
+
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-12-21T14:54:04.000Z" itemprop="dateUpdated">2017-12-21 22:54:04</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2017-11-10-android-ui-constraint-layout.html" target="_blank" rel="external">http://blog.inching.org/Android/2017-11-10-android-ui-constraint-layout.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/layout/">layout</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ui/">ui</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-11-10-android-ui-constraint-layout.html&title=《Android Constraint Layout》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-11-10-android-ui-constraint-layout.html&title=《Android Constraint Layout》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-11-10-android-ui-constraint-layout.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Constraint Layout》 — Balance&url=http://blog.inching.org/Android/2017-11-10-android-ui-constraint-layout.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-11-10-android-ui-constraint-layout.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2017-11-16-android-archetecture-component-room.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android Architecture Component</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2017-11-10-android-ui-frame-layout.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Frame Layout</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2017</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2017-11-10-android-ui-constraint-layout.html&title=《Android Constraint Layout》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2017-11-10-android-ui-constraint-layout.html&title=《Android Constraint Layout》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2017-11-10-android-ui-constraint-layout.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Constraint Layout》 — Balance&url=http://blog.inching.org/Android/2017-11-10-android-ui-constraint-layout.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2017-11-10-android-ui-constraint-layout.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACq0lEQVR42u3aS27DMAwFwNz/0u22RRPn8aPAKEaroLFljQtIDMnHIx5fP0by91ffJte/+suruxYGHh4e3mDpf8f1Qq9nuL4yf3r+xCevAA8PD+8Y73qbzqfOX8pk6fnRgoeHh3cfXv75OtZNrsfDw8P7r7zqXfnIXwceHh7eJ3mTEDY/BvJkxDzsxsPDwzvHy6tI9/l8pL6Hh4eHN66q5xvudWAdBb6t9bxZLR4eHt4BXjXl2tuyt8Lf3jrx8PDwdnmTVqrqRt8ra+WtV0+uwcPDwzvAm2zKk4aqvDz2oewLHh4eXouXP6w6z/XRstUu8GadeHh4eKu8ZNPvpQaO5E4mRwIeHh7eKi9vikpeSm/O5Inl1is8PDy8Vd5kc8/D7t0ERKFZAQ8PD+8Ab3Iw5IFvns6oltwKWRY8PDy8JV6ecu2V/xN2r/kgOkLw8PDwDvAmyLwBq3ow9FIPy/9DPDw8vJhXTdHmpDx1Ww27o2QEHh4e3gFeteCUHw+9pqs8mI5SEnh4eHhLvPImO27JmiR282TEr9YBPDw8vFVefumk9DXBV9sL8PDw8E7zqgncSYtAL1AevTI8PDy8w7xeW0BeGEu+zdPKeHh4ePfhJRt3dYZ5I0L13ichNR4eHt4Sr/cjv/mYeBzJteDh4eF9hDdZXLU5YOtZhV8GeHh4eGNeszDfKmj10sfVkB0PDw/vNK8ZsLbSr9VweXRg4OHh4a3yvoqj12SQv5QktVFoAsPDw8M7wNtKreZFsnnwXS3I4eHh4Z3g9aZOtv7JzNWwvpCMwMPDw1viTYLd67vy4HiSgHhzMODh4eHdhlfFJMncXlkODw8P7868SUNV9UiYJIjx8PDwTvMmy6qmGKrJ4qRBYSHXgoeHh1e7q/4jf5ywqIIf5wYeHh5eOr4By6p9giPjqwoAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

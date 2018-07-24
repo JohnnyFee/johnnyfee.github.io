@@ -45,3 +45,8 @@ a CSS Framework based on Material Design.
 ## Compare
 
 - [Bootstrap vs Polymer vs Material Design Lite Stackup](http://stackshare.io/stackups/bootstrap-vs-polymer-vs-material-design-lite#more)
+
+## Design Resource
+
+- [Material Design UI Kit [free]](https://www.uxpin.com/material-design-ui-kit)
+- [Material Design Kit](https://materialdesignkit.com/)

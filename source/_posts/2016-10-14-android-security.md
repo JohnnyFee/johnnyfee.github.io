@@ -12,3 +12,4 @@ tags: [android, security]
 ## Library
 
 - [guardianproject / NetCipher](https://github.com/guardianproject/NetCipher) Android Library Project for Multi-Layer Network Connections (Better TLS/SSL and Tor).
+- [infinum/Android-Goldfinger: Android library to simplify Fingerprint authentication implementation.](https://github.com/infinum/Android-Goldfinger)

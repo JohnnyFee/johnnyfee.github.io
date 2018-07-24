@@ -480,3 +480,4 @@ Aside from the class docs, there's a nice discussion of all of this [here](http:
 - [Android: Looper, Handler, HandlerThread. Part I.](https://blog.nikitaog.me/2014/10/11/android-looper-handler-handlerthread-i/)
 - [深入了解Looper、Handler、Message之间关系 - 简书](http://www.jianshu.com/p/36a978b6cacc)
 - [android的消息处理机制（图+源码分析）——Looper,Handler,Message - CodingMyWorld](http://www.cnblogs.com/codingmyworld/archive/2011/09/12/2174255.html)
+- [Understanding Android Core: Looper, Handler, and HandlerThread](https://medium.com/mindorks/android-core-looper-handler-and-handlerthread-bd54d69fe91a)

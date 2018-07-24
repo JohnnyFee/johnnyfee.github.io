@@ -1342,6 +1342,7 @@ mWebView.getSettings().setAppCacheEnabled(true);
 - [Android WebView使用](http://trinea.iteye.com/blog/1152557)
 - [第二十九讲：WebView学习指南 « { Android学习指南 }](http://android.yaohuiji.com/archives/734#comments)
 - [What WebKit version is in what Android version?](http://jimbergman.net/webkit-version-in-android-version/)
+- [Tencent/VasSonic: VasSonic is a lightweight and high-performance Hybrid framework developed by tencent VAS team, which is intended to speed up the first screen of websites working on Android and iOS platform.](https://github.com/Tencent/VasSonic)
 
 ### 内核
 

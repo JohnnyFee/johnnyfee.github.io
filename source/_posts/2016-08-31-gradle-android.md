@@ -114,6 +114,7 @@ See [Configure Your Build](https://developer.android.com/studio/build/index.html
 ## FAQ
 
 - [Android Studio集成 crashlytics 后无法编译的问题](http://blog.csdn.net/zhuobattle/article/details/50555393)
+- [Renaming Your Gradle Build Files](http://www.developerphil.com/renaming-your-gradle-build-files)
 
 ## Tutorial
 
@@ -127,6 +128,7 @@ See [Configure Your Build](https://developer.android.com/studio/build/index.html
 
 - [Gradle - Plugins](https://plugins.gradle.org/)
 - [platan/idea-gradle-dependencies-formatter](https://github.com/platan/idea-gradle-dependencies-formatter) Gradle dependencies formatter for IntelliJ IDEA.
+- [galex/name-that-color-intellij-plugin: "Name That Color" as an Android Studio/IntelliJ Plugin](https://github.com/galex/name-that-color-intellij-plugin) 
 
 ## UserGuide
 

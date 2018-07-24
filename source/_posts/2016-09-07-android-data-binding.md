@@ -1,4 +1,5 @@
 layout: post
+layout: post
 title: "Android Data Binding"
 description: ""
 category: Android
@@ -808,3 +809,5 @@ Android Studio为数据绑定支持许多的代码编辑。例如，它支持以
 ## Library
 
 - [Ilhasoft/data-binding-validator: Android fields validation library based on data binding adapters.](https://github.com/Ilhasoft/data-binding-validator)
+- [Android Data Binding: 2-way Your Way – Google Developers – Medium](https://medium.com/google-developers/android-data-binding-2-way-your-way-ccac20f6313)
+

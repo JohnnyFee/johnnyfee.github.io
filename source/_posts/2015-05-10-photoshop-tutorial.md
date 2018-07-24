@@ -4,39 +4,37 @@ category: PhotoShop
 tags: [ps]
 ---
 
+## Design Resource
+
+- [设计导航 - 精选最好的设计网站大全](http://hao.shejidaren.com/)
+
 ## Tutorial
 
-- [Designer's guide to DPI](http://sebastien-gabriel.com/designers-guide-to-dpi/home)
-- [Photoshop CC 2014最新版软件下载及安装破解教程（含苹果MAC跟win64位&32位） – 三人行PS学堂](http://www.ren3.cn/14573.htm)
+- [PS 中的7种投影技巧](http://www.shejidaren.com/7-zhong-ps-tou-ying-ji-qiao.html)
 
 <!-- more -->
 
-## 素材
+## Logo
 
-- 
+- [Instant Logo Search](http://instantlogosearch.com/)
 
-## 软件协作
+## 配色
 
-See [<#15_软件协作>文字教程](http://www.99ut.com/text/photoshop/basic/15/pss15_01.html)
+- [Instant Logo Search](http://instantlogosearch.com/)
 
-## 常见的协作流程
+## 背景
 
-See [<#15_常见的协作流程>文字教程](http://www.99ut.com/text/photoshop/basic/15/pss15_02.html)
-
-## 关于网页设计和网站策划
-
-See [<#15_关于网页设计和网站策划>文字教程](http://www.99ut.com/text/photoshop/basic/15/pss15_03.html)
+- [uiGradients - Beautiful colored gradients](https://uigradients.com/#Instagram) 渐变色
+- [多边形背景](http://www.lowpolygonart.com/)
 
 ## FAQ
 
 ### Remove WaterMark
 
 - [How To Add (and Remove!) Watermarks, Text, or Logos To And From Images](http://www.howtogeek.com/102128/how-to-add-and-remove-watermarks-text-or-logos-to-and-from-images/)
-- [How to remove watermark from an image or picture](http://www.instantfundas.com/2010/04/how-to-remove-watermark-from-image-or.html)
 
 ## Demo
 
-- [16个创意Photoshop图像处理教程](http://www.shejidaren.com/photoshop-image-processing-tutorials.html)
 - [UI设计师的Photoshop配置技巧](http://www.shejidaren.com/photoshop-configuration-tips-for-ui-designer.html)
 - [21款强大高效的Photoshop扩展插件](http://www.shejidaren.com/21-photoshop-plugins-for-designer.html)
 - [PS黄金分割工具：黄金螺旋 黄金三角 黄金比例 三分法](http://www.shejidaren.com/photoshop-huang-jin-fen-ge.html)
@@ -50,11 +48,6 @@ See [<#15_关于网页设计和网站策划>文字教程](http://www.99ut.com/te
 - [5种实用的移动手机APP导航菜单设计方案](http://www.shejidaren.com/mobile-app-menus-design.html)
 - [优秀设计资源与教程分享 2014-9月](http://www.shejidaren.com/design-resources-september-2014.html)
 - [Ready For Retina HD: Create Pixel-Perfect Assets For Multiple Scale Factors](http://www.smashingmagazine.com/2014/10/15/create-assets-for-multiple-scale-factors)
-
-## Design Resource
-
-- [站酷](http://www.zcool.com.cn/gfxs/)
-
 
 ## Web Design
 

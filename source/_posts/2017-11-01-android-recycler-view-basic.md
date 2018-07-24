@@ -171,3 +171,8 @@ If you have any feedback, please comment below.
 ## Tutorial
 
 - [StanKocken/EfficientAdapter](https://github.com/StanKocken/EfficientAdapter) An efficient adapter to make the use of RecyclerView much easier for Android.
+- [RecyclerView — More Animations with Less Code using Support Library ListAdapter](https://medium.com/@trionkidnapper/recyclerview-more-animations-with-less-code-using-support-library-listadapter-62e65126acdb)
+
+## Library
+
+- [davideas/FlexibleAdapter: Fast and versatile Adapter for RecyclerView which regroups several features into one library to considerably improve the user experience :-)](https://github.com/davideas/FlexibleAdapter)

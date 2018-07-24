@@ -266,3 +266,4 @@ key.store.password=MyPassword
 
 * [official adb reference site](http://developer.android.com/tools/help/adb.html).
 * [Get database from an Android app (Android 4.3+)](https://gist.github.com/ignasi/8706888)
+* [ADB Commands — Part III – ProAndroidDev](https://proandroiddev.com/adb-commands-part-iii-997f97c03546)

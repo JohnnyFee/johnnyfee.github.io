@@ -24,6 +24,7 @@ tags: [android, tutorial]
 - [github / android](https://github.com/github/android) Android client for Github.
 - [Anki-Android](https://github.com/nicolas-raoul/Anki-Android) 注明的单词学习卡片。
 - [ahorn / android-rss](https://github.com/ahorn/android-rss)Lightweight Android library to read parts of RSS 2.0 feeds.
+- [20+ Awesome Open-Source Android Apps To Boost Your Development Skills](https://blog.aritraroy.in/20-awesome-open-source-android-apps-to-boost-your-development-skills-b62832cf0fa4)
 
 ## Books
 

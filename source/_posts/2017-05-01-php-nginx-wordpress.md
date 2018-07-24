@@ -9,7 +9,8 @@ WordPress is the most widely used open source web blogging and content managemen
 
 ## **Step #1 Prerequisite:**
 
-You’ll need to have a LEMP (Linux, Nginx, MySQL, and PHP) installed on your CentOS/RHEL server. If LEMP hasn’t installed or configured on server, you can use below articles to install LEMP.
+You’ll need to have a LEMP (Linux, Nginx, MySQL, and PHP) installed on your CentOS/RHEL server. If LEMP hasn’t installed or configured on server, you c
+an use below articles to install LEMP.
 
 **On RHEL/CentOS 7**
 
@@ -233,7 +234,7 @@ If you are running on a hosting company that gives you root access, or you have 
 The easiest way to do this is to find out what user apache is running as and change ownership of the entire WordPress directory to that user. For example, if apache is running as ‘httpd’, you could use the following commands on your WordPress installation directory:
 
 <pre>
-# chown -R httpd: wordpress
+# chown -R apache: wordpress
 </pre>
 
 Note that not all versions of `chown` are equal. If that command does not work, see your local `chown` man page for usage information.

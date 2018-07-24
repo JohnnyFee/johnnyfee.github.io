@@ -1,5 +1,5 @@
 layout: post
-title: Android Material UI
+title: Android Material Theme & Style
 tags: [android, ui, material]
 category: Android
 ---

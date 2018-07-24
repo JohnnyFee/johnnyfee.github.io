@@ -13,6 +13,7 @@ tags : [js, doc]
 - [visionmedia/dox](https://github.com/visionmedia/dox) JavaScript documentation generator for node using markdown and jsdoc.
 - [JacksonTian/doxmate](https://github.com/JacksonTian/doxmate) 过去通常要自己维护API文档，这会是一件比较蛋疼的事情。所幸我们有dox，dox可以帮我们解析注解。但是dox不能帮我们任意生成文档。于是就有了doxmate，doxmate基于dox的注解对象，加入模板。在遵循Github和CommonJS的约定后，doxmate可以帮你的模块包快速生成文档。
 	+ [文档伴侣](http://html5ify.com/doxmate)
+- [Docz](https://www.docz.site/)
 
 
 粗略地对比了一下：

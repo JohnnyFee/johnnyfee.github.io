@@ -31,4 +31,7 @@ tags: [design, android]
 - [Material Design Spinner - CodePen](http://codepen.io/mrrocks/pen/EiplA)
 - [Material design buttons - CodePen](http://codepen.io/Fischaela/pen/ahgIy)
 
+## Apps
+
+- [klinker24/talon-for-twitter-android: The Material Design version of my popular Android Talon for Twitter app, 100% open-source](https://github.com/klinker24/talon-for-twitter-android)
 

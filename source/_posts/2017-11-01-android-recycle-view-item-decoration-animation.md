@@ -121,3 +121,7 @@ if (position != RecyclerView.NO_POSITION) {
 Checkout the DefaultItemAnimator class for more info. If you want to use custom animations subclass either DefaultItemAnimator or ItemAnimator class. Or else, use this awesome library https://github.com/wasabeef/recyclerview-animatorsCheckout the source code [here](https://github.com/sjthn/RecyclerViewDemo/tree/decorator-and-animator).
 
 If you have any feedback use the comments section below. In the next post we’ll see some advanced RecyclerView use-cases.
+
+## Resources
+
+- [RecyclerView Animations – Changing Items – Styling Android](https://blog.stylingandroid.com/recyclerview-animations-changing-items)

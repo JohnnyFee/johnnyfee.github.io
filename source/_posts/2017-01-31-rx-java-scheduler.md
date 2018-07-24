@@ -591,3 +591,8 @@ button.setOnClickListener(new View.OnClickListener() {
 ```
 
 When all transformations are done, we invoke a UI update only on the main thread because we want to carry out as little processing as possible there.
+
+## Tutorial
+
+- [RxJava — Schedulers — What, when and how to use it?](https://android.jlelse.eu/rxjava-schedulers-what-when-and-how-to-use-it-6cfc27293add)
+- [Coroutines and RxJava — An Asynchronicity Comparison (Part 2): Cancelling Execution](https://medium.com/@manuelvicnt/coroutines-and-rxjava-an-asynchronicity-comparison-part-2-cancelling-execution-199485cdf068)

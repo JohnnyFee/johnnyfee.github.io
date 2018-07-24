@@ -189,7 +189,7 @@ As you would have guessed, the [circle](https://developer.mozilla.org/en-US/Web/
 
 - [FWeinb/grunt-svgstore](https://github.com/FWeinb/grunt-svgstore)
 - [svg/svgo: Nodejs-based tool for optimizing SVG vector graphics files.](https://github.com/svg/svgo)
-
+- [免费的SVG图标管理工具: SVGSUS，可直接转换成图标代码！](http://www.shejidaren.com/svgsus.html)
 ## Library
 
 - [alexk111/SVG-Morpheus](https://github.com/alexk111/SVG-Morpheus) JavaScript library enabling SVG icons to morph from one to the other. It implements Material Design's Delightful Details transitions.

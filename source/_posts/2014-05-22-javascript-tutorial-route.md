@@ -28,6 +28,7 @@ tags: [javascript]
 - [JavaScript事件代理和委托（Delegation） / Owen Chen](http://owenchen.duapp.com/index.php/javascript-event-delegation-and-delegates-delegation/)
 - [跟着 8 张思维导图学习 Javascript - WEB开发者](http://www.admin10000.com/document/5110.html)
 - [【探讨】javascript事件机制底层实现原理 - 叶小钗 - 博客园](http://www.cnblogs.com/yexiaochai/p/3477715.html#_h2_12)
+- [What is JavaScript? Complete Introduction with Hello World! Example](https://www.guru99.com/introduction-to-javascript.html)
 
 <!-- more -->
 

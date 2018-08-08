@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Gradle 打包 APK 的一些小技巧和 productFlavor 配置 | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,gradle,productFlavor">
+    <meta name="description" content="前言在使用Gradle来打包Android应用之前，Android自动化打包通常会选择使用ant，ant是一种一步一步来执行任务的工具，通常打包一个apk要经过一个复杂的过程，ant工具通过一步一步完成这些过程来生成一个apk。如果要实现一个复杂一点的打包过程，它的xml配置文件的长度也是足以让你崩溃的。Gradle的出现让打包过程变得十分轻松，而且配置起来也是简单易懂。以前需要写好几天的配置文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gradle 打包 APK 的一些小技巧和 productFlavor 配置">
+<meta property="og:url" content="http://blog.inching.org/Android/2018-07-27-2018-1-18-android-productFlavor.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="前言在使用Gradle来打包Android应用之前，Android自动化打包通常会选择使用ant，ant是一种一步一步来执行任务的工具，通常打包一个apk要经过一个复杂的过程，ant工具通过一步一步完成这些过程来生成一个apk。如果要实现一个复杂一点的打包过程，它的xml配置文件的长度也是足以让你崩溃的。Gradle的出现让打包过程变得十分轻松，而且配置起来也是简单易懂。以前需要写好几天的配置文件">
+<meta property="og:image" content="https://github.com/junyuecao/private-static/blob/master/20160301a.png?raw=true">
+<meta property="og:image" content="https://github.com/junyuecao/private-static/blob/master/20160301b.png?raw=true">
+<meta property="og:image" content="https://github.com/junyuecao/private-static/blob/master/20160301c.png?raw=true">
+<meta property="og:updated_time" content="2018-07-27T14:52:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gradle 打包 APK 的一些小技巧和 productFlavor 配置">
+<meta name="twitter:description" content="前言在使用Gradle来打包Android应用之前，Android自动化打包通常会选择使用ant，ant是一种一步一步来执行任务的工具，通常打包一个apk要经过一个复杂的过程，ant工具通过一步一步完成这些过程来生成一个apk。如果要实现一个复杂一点的打包过程，它的xml配置文件的长度也是足以让你崩溃的。Gradle的出现让打包过程变得十分轻松，而且配置起来也是简单易懂。以前需要写好几天的配置文件">
+<meta name="twitter:image" content="https://github.com/junyuecao/private-static/blob/master/20160301a.png?raw=true">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/style/style.css?v=1.6.17">
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2846834382442028",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Gradle 打包 APK 的一些小技巧和 productFlavor 配置</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Gradle 打包 APK 的一些小技巧和 productFlavor 配置</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-07-27T14:52:01.000Z" itemprop="datePublished" class="page-time">
+  2018-07-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本的build-gradle"><span class="post-toc-text">基本的build.gradle</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#BuildVariants"><span class="post-toc-text">BuildVariants</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#productFlavors的维度"><span class="post-toc-text">productFlavors的维度</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定义渠道"><span class="post-toc-text">定义渠道</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如果我每个flavor都有点特别呢？"><span class="post-toc-text">如果我每个flavor都有点特别呢？</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#其他Gradle小技巧"><span class="post-toc-text">其他Gradle小技巧</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Provider名称"><span class="post-toc-text">Provider名称</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Manifest-占位符"><span class="post-toc-text">Manifest 占位符</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tutorial"><span class="post-toc-text">Tutorial</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-2018-1-18-android-productFlavor"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Gradle 打包 APK 的一些小技巧和 productFlavor 配置</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-07-27 22:52:01" datetime="2018-07-27T14:52:01.000Z"  itemprop="datePublished">2018-07-27</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在使用Gradle来打包Android应用之前，Android自动化打包通常会选择使用ant，ant是一种一步一步来执行任务的工具，通常打包一个apk要经过一个复杂的过程，ant工具通过一步一步完成这些过程来生成一个apk。如果要实现一个复杂一点的打包过程，它的xml配置文件的长度也是足以让你崩溃的。Gradle的出现让打包过程变得十分轻松，而且配置起来也是简单易懂。以前需要写好几天的配置文件现在只要简单的几步就能完成，配合Android Studio更加得心应手。</p>
+<p>一个完整的打包流程如下：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://github.com/junyuecao/private-static/blob/master/20160301a.png?raw=true" alt="pic" title="">
+                </div>
+                <div class="image-caption">pic</div>
+            </figure></p>
+<h2 id="基本的build-gradle"><a href="#基本的build-gradle" class="headerlink" title="基本的build.gradle"></a>基本的build.gradle</h2><p>如果你用Android Studio生成一个项目的话，在app模块中你会看到一个build.gradle文件，这个文件就是配置这个模块的地方，大致文件结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">apply plugin: &apos;com.android.application&apos;</div><div class="line"></div><div class="line">android &#123;</div><div class="line">    compileSdkVersion 23</div><div class="line">    buildToolsVersion &quot;23.0.2&quot;</div><div class="line"></div><div class="line">    defaultConfig &#123;</div><div class="line">        minSdkVersion 8</div><div class="line">        targetSdkVersion 23</div><div class="line">        versionCode 1</div><div class="line">        versionName &quot;1.0&quot;</div><div class="line">    &#125;</div><div class="line">    buildTypes &#123;</div><div class="line">        release &#123;</div><div class="line">            minifyEnabled true</div><div class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">dependencies &#123;</div><div class="line">    compile fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</div><div class="line">    compile &apos;com.android.support:appcompat-v7:19.0.1&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里就不一行行地解释了，关于Gradle的语法可以自行Google。</p>
+<p>这里主要有<strong>两个小技巧</strong>：</p>
+<ol>
+<li><p><strong>签名</strong>：开发App时经常遇到Release版和Debug版共存问题，由于默认的签名不同，经常要卸载Debug版安装Release版，非常麻烦。有两种方法可以避免这种情况：1. <strong>使用同一个签名</strong>;2. <strong>使用不同包名</strong>。</p>
+<pre><code>// 方法1 (签名配置方法可以Google)
+android {
+   buildTypes {
+       debug {signingConfig signingConfigs.myConfig}
+       release {signingConfig signingConfigs.myConfig}
+   }
+}
+
+// 方法2 
+android {
+   buildTypes {
+       debug {packageNameSuffix &quot;.debug&quot;}
+   }
+}
+</code></pre></li>
+<li><p><strong>Release版打包的apk文件名</strong>：通过下面的代码可以自动为生成的apk文件附加上版本和build日期，这里可以根据你的需求添加各种信息上去。</p>
+<pre><code>android {
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;
+
+            def today = new Date()
+            if (variant.buildType.getName().equals(&quot;release&quot;)) {
+                println &quot;Change output apk name&quot;
+                variant.outputs.each { output -&gt;
+                    output.outputFile = new File(
+                            output.outputFile.parent,
+                            output.outputFile.name.replace(&quot;.apk&quot;, &quot;-&quot; + defaultConfig.versionName + &quot;-&quot; + today.format(&apos;yyyyMMdd&apos;) + &quot;.apk&quot;))
+                }
+            }
+        }
+    }
+}
+</code></pre></li>
+</ol>
+<h2 id="BuildVariants"><a href="#BuildVariants" class="headerlink" title="BuildVariants"></a>BuildVariants</h2><p>Gradle的Android插件中有个BuildVariants的概念，其实简单来说其实就是buildTypes＋productFlavors，buildType前面我们看到过了，主要就是debug和release的分别。而productFlavors就是我们用来打包不同版本app的主要方式。从字面意思来翻译指的就是不同的“产品特点”。</p>
+<p>Android Studio会自动根据build.gradle 生成对应的BuildVariants。比如以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    productFlavors &#123;</div><div class="line">        free &#123;&#125;</div><div class="line">        paid &#123;&#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>会生成以下的BuildVariants：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://github.com/junyuecao/private-static/blob/master/20160301b.png?raw=true" alt="pic" title="">
+                </div>
+                <div class="image-caption">pic</div>
+            </figure>
+<h2 id="productFlavors的维度"><a href="#productFlavors的维度" class="headerlink" title="productFlavors的维度"></a>productFlavors的维度</h2><p>productFlavors可以是多维的，听起来好像很难理解，这里举个栗子，有如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    flavorDimensions(&quot;isfree&quot;, &quot;channel&quot;)</div><div class="line">    productFlavors &#123;</div><div class="line">        free &#123;dimension &quot;isfree&quot;&#125;</div><div class="line">        paid &#123;dimension &quot;isfree&quot;&#125;</div><div class="line"></div><div class="line">        googleplay &#123;dimension &quot;channel&quot;&#125;</div><div class="line">        wandoujia &#123;dimension &quot;channel&quot;&#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>能够生成如下的BuildVariants：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://github.com/junyuecao/private-static/blob/master/20160301c.png?raw=true" alt="pic" title="">
+                </div>
+                <div class="image-caption">pic</div>
+            </figure>
+<p>这里我们就可以看到，我们有两个维度，一个是是否免费，另一个是渠道，我们能够生成2*2＝4种Flavor，并且每个Flavor都有debug和release，总共就有8种不同的APK。所以理论上来说通过组合Flavor，我们可以做到各种不同的分类。</p>
+<p>接下来我们来看看productFlavors能做什么？</p>
+<h3 id="定义渠道"><a href="#定义渠道" class="headerlink" title="定义渠道"></a>定义渠道</h3><p>在国外一般来说开发者不太需要去管渠道的问题，他们的App只需要发往GooglePlay就可以了，但是在中国，我们有众多的APK分发平台，我们的APK需要发往各种地方，在做APP统计的时候我们就需要在APK里写入一些特征变量，发送到统计平台，以区分不同的渠道，在过去用ant打包的时代，我们通常的做法就是用不同的渠道名来重复ant任务一遍一遍地打包。</p>
+<p>如果用gradle：我们可以通过增加一个名为channel的dimension来给每一个渠道一个特殊标示，代码就是我们之前看到的。但是你可能会问，我怎么在统计的时候获取这个渠道名呢？其实很简单，Android Studio会为我们生成一个名叫BuildConfig的类，这个类有一些关于打包的静态变量，下面是一个示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">BuildConfig</span> </span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> DEBUG = Boolean.parseBoolean(<span class="string">"true"</span>);</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String APPLICATION_ID = <span class="string">"me.zheteng.android.example"</span>;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String BUILD_TYPE = <span class="string">"debug"</span>;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String FLAVOR = <span class="string">"freeGoogleplay"</span>;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> VERSION_CODE = <span class="number">1</span>;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String VERSION_NAME = <span class="string">"1.0"</span>;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String FLAVOR_isfree = <span class="string">"free"</span>;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String FLAVOR_channel = <span class="string">"googleplay"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其实不止是渠道，通过这个类我们还可以很方便地获得这个APK的各种信息。相信大家一眼就能看出来每个字段的意思。（我们甚至还可以自定义字段）。</p>
+<p>如果渠道非常多，你也可以通过读配置文件的方式动态生成不同的flavors。</p>
+<h3 id="如果我每个flavor都有点特别呢？"><a href="#如果我每个flavor都有点特别呢？" class="headerlink" title="如果我每个flavor都有点特别呢？"></a>如果我每个flavor都有点特别呢？</h3><p>有的时候我们每个flavor可能不只是一个渠道名这么简单，我的ICON可能给每个渠道的有所不同，我的包名也可能有所不同。所有这些，都可以直接在这个flavor中重新定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    productFlavors &#123;</div><div class="line">        googleplay &#123;</div><div class="line">            applicationId &quot;me.zheteng.android.example.googleplay&quot;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果需要不同的源代码或资源文件，可以在app/src下新建一个名为“flavor名”的目录（这里就是googleplay）。也就是app/src/googleplay，然后这个目录下的结构和app/src/main中是一样的，打包的时候会优先使用当前flavor下的文件。</p>
+<h2 id="其他Gradle小技巧"><a href="#其他Gradle小技巧" class="headerlink" title="其他Gradle小技巧"></a>其他Gradle小技巧</h2><h3 id="Provider名称"><a href="#Provider名称" class="headerlink" title="Provider名称"></a>Provider名称</h3><p>我们知道Provider的authority是系统中全局唯一的，有时候我们要为不同的flavor将authority改成不同的，通过gradle你可以这样实现：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">provider</span></span></div><div class="line">    <span class="attr">android:exported</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">"com.path.to.my.Provider"</span></div><div class="line">    <span class="attr">android:authorities</span>=<span class="string">"$&#123;applicationId&#125;.provider"</span>/&gt;</div></pre></td></tr></table></figure>
+<p>你问我Java代码中怎么获取？难道你忘了BuildConfig了嘛？</p>
+<h3 id="Manifest-占位符"><a href="#Manifest-占位符" class="headerlink" title="Manifest 占位符"></a>Manifest 占位符</h3><p>有些SDK会把配置在Manifest文件中的meta信息里，而不同的flavor这个信息不一样，这是我们可以通过Manifest 占位符来实现：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:value</span>=<span class="string">"$&#123;UMENG_APPKEY&#125;"</span> <span class="attr">android:name</span>=<span class="string">"UMENG_APPKEY"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    productFlavors &#123;</div><div class="line">        googleplay &#123;</div><div class="line">            applicationId &quot;me.zheteng.android.example.googleplay&quot;</div><div class="line">            manifestPlaceholders = [UMENG_APPKEY: &quot;我的友盟KEY&quot;]</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Gradle的灵活程度超乎想象，如果基本功能无法满足你，你还可以通过自己编写Groovy插件或者task来实现无穷的可能性，欢迎将你的思路分享出来～</p>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="https://www.jianshu.com/p/1ae5c85d2ff2" target="_blank" rel="external">Android productFlavors实现差异化打包 - 简书</a></li>
+<li><a href="https://www.jianshu.com/p/969996a662c8" target="_blank" rel="external">美团多渠道打包原理以及使用 - 简书</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-07-27T14:52:01.000Z" itemprop="dateUpdated">2018-07-27 22:52:01</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Android/2018-07-27-2018-1-18-android-productFlavor.html" target="_blank" rel="external">http://blog.inching.org/Android/2018-07-27-2018-1-18-android-productFlavor.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gradle/">gradle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/productFlavor/">productFlavor</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2018-07-27-2018-1-18-android-productFlavor.html&title=《Gradle 打包 APK 的一些小技巧和 productFlavor 配置》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2018-07-27-2018-1-18-android-productFlavor.html&title=《Gradle 打包 APK 的一些小技巧和 productFlavor 配置》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2018-07-27-2018-1-18-android-productFlavor.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Gradle 打包 APK 的一些小技巧和 productFlavor 配置》 — Balance&url=http://blog.inching.org/Android/2018-07-27-2018-1-18-android-productFlavor.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2018-07-27-2018-1-18-android-productFlavor.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Tools/2018-07-27-2018-7-5-vs-code.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">VS Code</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2018-07-27-2018-3-8-android-ui-view-page.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android View Page</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2018</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Android/2018-07-27-2018-1-18-android-productFlavor.html&title=《Gradle 打包 APK 的一些小技巧和 productFlavor 配置》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Android/2018-07-27-2018-1-18-android-productFlavor.html&title=《Gradle 打包 APK 的一些小技巧和 productFlavor 配置》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Android/2018-07-27-2018-1-18-android-productFlavor.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Gradle 打包 APK 的一些小技巧和 productFlavor 配置》 — Balance&url=http://blog.inching.org/Android/2018-07-27-2018-1-18-android-productFlavor.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Android/2018-07-27-2018-1-18-android-productFlavor.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrElEQVR42u3aQW7DMAwEwPz/0+k1QBNnSYppCoxPhRvbGh0secnbLT7uD8fjmd5/r5+S3PPwgYeHhzcY+u/j1W+SIeaDvn769X3ejA0PDw9vjZe8ppMhXk9HPkHJYpNMLh4eHt738JJr8yUkuQ8eHh7e/+Ulj+8FGdWAAw8PD+9veUkYkUcDyf17v1nMWvDw8PBiXl5F+p6/V+p7eHh4eOOq+tmi1zwgLo8WDw8Pb4GXv3Dz0KFaEuu1fBV+iYeHh3eUN2kCSEjVIll+tyjkxcPDw1vjTUr+vTg43zqPogo8PDy8NV41SujFDdVJ6TUWPPlWwMPDw/sgr3o+WTyqk9iLifHw8PA+w+ttcydBQ7Kt7wUlb+p7eHh4eAPe9fY33wQnm+k8tE3AhRgFDw8P7yivekH0Io4HdHY6nlyFh4eHt8CbtFXNY9/emWaogYeHh3eId28dp9qtkr9H7QV4eHh4a7yNB59qac1H8iZlwcPDw1vjVYv681aDQqAQN8vi4eHh7fF6Za35Kz4PGnoLWDnGxcPDw2vx8jg1OfLmg3nU28yq8fDw8Fq8/IJT1ByWLxJR0xUeHh7eIV5eWKqeyYfeO5Oz8fDw8M7y8qh0soRM9vi9heRl6wAeHh7emJcsD5NGgXzDnU9i8nQ8PDy8bV4y9HzQk2nqtQtEXwx4eHh4H+TlpaxeOT9fGHqbdTw8PLzP8Dai3nnrQG+bjoeHh3eWdy8eefEp35RXY47CxOHh4eEt8PYap6qLQR5eVLsC8PDw8DZ41Vv38NWt9qTw9uSLAQ8PD2+Bl5eXqsWqalRx+MDDw8P7Ml5vG309Eck4C1ttPDw8vC/jVQdd3bLnbQ1R0xUeHh7eUV4vCMgbpHqR8TwmxsPDw9vgVb/oJyFCb2GoNi7g4eHhrfF+ABYBVLnhzFGyAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

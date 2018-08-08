@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="web,realtime">
+    <meta name="description" content="1. 前言Web端即时通讯技术因受限于浏览器的设计限制，一直以来实现起来并不容易，主流的Web端即时通讯方案大致有4种：传统Ajax短轮询、Comet技术、WebSocket技术、SSE（Server-sent Events）。本文将简要介绍这4种技术的原理，并指出各自的异同点、优缺点等。
+2. 学习交流
+更多即时通讯技术资料：http://www.52im.net/forum.php?mod=c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2018-08-08-2018-8-7-web-realtime.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="1. 前言Web端即时通讯技术因受限于浏览器的设计限制，一直以来实现起来并不容易，主流的Web端即时通讯方案大致有4种：传统Ajax短轮询、Comet技术、WebSocket技术、SSE（Server-sent Events）。本文将简要介绍这4种技术的原理，并指出各自的异同点、优缺点等。
+2. 学习交流
+更多即时通讯技术资料：http://www.52im.net/forum.php?mod=c">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1500839-5229dbcdd6f3bcca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/511">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1500839-32e566970193adbf.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/358">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1500839-d84d4439f354ef5a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/328">
+<meta property="og:updated_time" content="2018-08-08T14:36:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE">
+<meta name="twitter:description" content="1. 前言Web端即时通讯技术因受限于浏览器的设计限制，一直以来实现起来并不容易，主流的Web端即时通讯方案大致有4种：传统Ajax短轮询、Comet技术、WebSocket技术、SSE（Server-sent Events）。本文将简要介绍这4种技术的原理，并指出各自的异同点、优缺点等。
+2. 学习交流
+更多即时通讯技术资料：http://www.52im.net/forum.php?mod=c">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1500839-5229dbcdd6f3bcca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/511">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/style/style.css?v=1.6.17">
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2846834382442028",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-08T14:36:49.000Z" itemprop="datePublished" class="page-time">
+  2018-08-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-前言"><span class="post-toc-text">1. 前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-学习交流"><span class="post-toc-text">2. 学习交流</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-概述"><span class="post-toc-text">3. 概述</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#4-Ajax短轮询：脚本发送的http请求"><span class="post-toc-text">4. Ajax短轮询：脚本发送的http请求</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#5-Comet：一种hack技术"><span class="post-toc-text">5. Comet：一种hack技术</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-1-基于Ajax的长轮询（long-polling）方式"><span class="post-toc-text">5.1 基于Ajax的长轮询（long-polling）方式</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-2-基于-Iframe-及-htmlfile-的流（http-streaming）方式"><span class="post-toc-text">5.2 基于 Iframe 及 htmlfile 的流（http streaming）方式</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#6-Websocket：未来的解决方案1"><span class="post-toc-text">6. Websocket：未来的解决方案1</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#7-SSE：未来的解决方案2"><span class="post-toc-text">7. SSE：未来的解决方案2</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#8-系列资料"><span class="post-toc-text">8. 系列资料</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-2018-8-7-web-realtime"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-08 22:36:49" datetime="2018-08-08T14:36:49.000Z"  itemprop="datePublished">2018-08-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a><strong>1. 前言</strong></h1><p>Web端即时通讯技术因受限于浏览器的设计限制，一直以来实现起来并不容易，主流的Web端即时通讯方案大致有4种：传统Ajax短轮询、Comet技术、WebSocket技术、SSE（Server-sent Events）。本文将简要介绍这4种技术的原理，并指出各自的异同点、优缺点等。</p>
+<h1 id="2-学习交流"><a href="#2-学习交流" class="headerlink" title="2. 学习交流"></a><strong>2. 学习交流</strong></h1><ul>
+<li><p>更多即时通讯技术资料：<a href="https://link.jianshu.com/?t=http://www.52im.net/forum.php?mod=collection&amp;op=all" target="_blank" rel="external">http://www.52im.net/forum.php?mod=collection&amp;op=all</a></p>
+</li>
+<li><p>即时通讯开发交流群：<a href="https://link.jianshu.com/?t=http://shang.qq.com/wpa/qunwpa?idkey=4cc788473d261129ab3ded26fbb22168d0fa52c799d28f92a8f193dc36865bcb" target="_blank" rel="external">215891622</a>[推荐]</p>
+</li>
+</ul>
+<h1 id="3-概述"><a href="#3-概述" class="headerlink" title="3. 概述"></a><strong>3. 概述</strong></h1><p>1996年IETF  HTTP工作组发布了HTTP协议的1.0版本 ，到现在普遍使用的版本1.1，HTTP协议经历了17 年的发展。这种分布式、无状态、基于TCP的请求/响应式、在互联网盛行的今天得到广泛应用的协议，相对于互联网的迅猛发展，它似乎进步地很慢。互联网从兴起到现在，经历了门户网站盛行的web1.0时代，而后随着ajax技术的出现，发展为web应用盛行的web2.0时代，如今又朝着web3.0的方向迈进。反观http协议，从版本1.0发展到1.1，除了默认长连接之外就是缓存处理、带宽优化和安全性等方面的不痛不痒的改进。它一直保留着无状态、请求/响应模式，似乎从来没意识到这应该有所改变。</p>
+<p>好在HTML5的时代已经到来，为Web端即时通讯的实现带来了WebSocket和SSE（Server-sent Events）两种技术方案。</p>
+<h1 id="4-Ajax短轮询：脚本发送的http请求"><a href="#4-Ajax短轮询：脚本发送的http请求" class="headerlink" title="4. Ajax短轮询：脚本发送的http请求"></a><strong>4. Ajax短轮询：脚本发送的http请求</strong></h1><p>传统的web应用要想与服务器交互，必须提交一个表单（form），服务器接收并处理传来的表单，然后返回全新的页面，因为前后两个页面的数据大部分都是相同的，这个过程传输了很多冗余的数据、浪费了带宽。于是Ajax技术便应运而生。</p>
+<p>Ajax是Asynchronous JavaScript and XML的简称，由Jesse James Garrett 首先提出。这种技术开创性地允许浏览器脚本（JS）发送http请求。Outlook Web Access小组于98年使用，并很快成为IE4.0的一部分，但是这个技术一直很小众，直到2005年初，google在他的goole groups、gmail等交互式应用中广泛使用此种技术，才使得Ajax迅速被大家所接受。</p>
+<p>Ajax的出现使客户端与服务器端传输数据少了很多，也快了很多，也满足了以丰富用户体验为特点的web2.0时代 初期发展的需要，但是慢慢地也暴露了他的弊端。比如无法满足即时通信等富交互式应用的实时更新数据的要求。这种浏览器端的小技术毕竟还是基于http协议，http协议要求的请求/响应的模式也是无法改变的，除非http协议本身有所改变。</p>
+<h1 id="5-Comet：一种hack技术"><a href="#5-Comet：一种hack技术" class="headerlink" title="5. Comet：一种hack技术"></a><strong>5. Comet：一种hack技术</strong></h1><p>以即时通信为代表的web应用程序对数据的Low Latency要求，传统的基于轮询的方式已经无法满足，而且也会带来不好的用户体验。于是一种基于http长连接的“服务器推”技术便被hack出来。这种技术被命名为<a href="https://link.jianshu.com/?t=http://en.wikipedia.org/wiki/Comet_(programming" target="_blank" rel="external">Comet</a>)，这个术语由Dojo Toolkit 的项目主管Alex Russell在博文<a href="https://link.jianshu.com/?t=http://alex.dojotoolkit.org/?p=545" target="_blank" rel="external">Comet: Low Latency Data for the Browser</a>首次提出，并沿用下来。</p>
+<p>其实，服务器推很早就存在了，在经典的client/server模型中有广泛使用，只是浏览器太懒了，并没有对这种技术提供很好的支持。但是Ajax的出现使这种技术在浏览器上实现成为可能， google的gmail和gtalk的整合首先使用了这种技术。随着一些关键问题的解决（比如 IE 的加载显示问题），很快这种技术得到了认可，目前已经有很多成熟的开源Comet框架。</p>
+<p>以下是典型的Ajax和Comet数据传输方式的对比，区别简单明了。典型的Ajax通信方式也是http协议的经典使用方式，要想取得数据，必须首先发送请求。在Low Latency要求比较高的web应用中，只能增加服务器请求的频率。Comet则不同，客户端与服务器端保持一个长连接，只有客户端需要的数据更新时，服务器才主动将数据推送给客户端。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/1500839-5229dbcdd6f3bcca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/511" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>Comet的实现主要有两种方式，基于Ajax的长轮询（long-polling）方式和基于 Iframe 及 htmlfile 的流（http streaming）方式。</p>
+<p>有关Comet技术的详细介绍文章请参见：《<a href="https://link.jianshu.com/?t=http://www.52im.net/thread-334-1-1.html" target="_blank" rel="external">Comet技术详解：基于HTTP长连接的Web端实时通信技术</a>》、《<a href="https://link.jianshu.com/?t=http://www.52im.net/thread-224-1-1.html" target="_blank" rel="external">WEB端即时通讯：HTTP长连接、长轮询（long polling）详解</a>》、《<a href="https://link.jianshu.com/?t=http://www.52im.net/thread-296-1-1.html" target="_blank" rel="external">WEB端即时通讯：不用WebSocket也一样能搞定消息的即时性</a>》、《<a href="https://link.jianshu.com/?t=http://www.52im.net/thread-330-1-1.html" target="_blank" rel="external">开源Comet服务器iComet：支持百万并发的Web端即时通讯方案</a>》。</p>
+<h4 id="5-1-基于Ajax的长轮询（long-polling）方式"><a href="#5-1-基于Ajax的长轮询（long-polling）方式" class="headerlink" title="5.1 基于Ajax的长轮询（long-polling）方式"></a><strong>5.1 基于Ajax的长轮询（long-polling）方式</strong></h4><p>浏览器发出XMLHttpRequest 请求，服务器端接收到请求后，会阻塞请求直到有数据或者超时才返回，浏览器JS在处理请求返回信息（超时或有效数据）后再次发出请求，重新建立连接。在此期间服务器端可能已经有新的数据到达，服务器会选择把数据保存，直到重新建立连接，浏览器会把所有数据一次性取回。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/1500839-32e566970193adbf.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/358" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h4 id="5-2-基于-Iframe-及-htmlfile-的流（http-streaming）方式"><a href="#5-2-基于-Iframe-及-htmlfile-的流（http-streaming）方式" class="headerlink" title="5.2 基于 Iframe 及 htmlfile 的流（http streaming）方式"></a><strong>5.2 基于 Iframe 及 htmlfile 的流（http streaming）方式</strong></h4><p>Iframe是html标记，这个标记的src属性会保持对指定服务器的长连接请求，服务器端则可以不停地返回数据，相对于第一种方式，这种方式跟传统的服务器推则更接近。  </p>
+<p>在第一种方式中，浏览器在收到数据后会直接调用JS回调函数，但是这种方式该如何响应数据呢？可以通过在返回数据中嵌入JS脚本的方式，如“”，服务器端将返回的数据作为回调函数的参数，浏览器在收到数据后就会执行这段JS脚本。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/1500839-d84d4439f354ef5a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/328" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>但是这种方式有一个明显的不足之处：IE、Morzilla Firefox 下端的进度栏都会显示加载没有完成，而且 IE 上方的图标会不停的转动，表示加载正在进行。Google 的天才们使用一个称为“<a href="https://link.jianshu.com/?t=http://infrequently.org/2006/02/what-else-is-burried-down-in-the-depths-of-googles-amazing-javascript/" target="_blank" rel="external">htmlfile</a>”的 ActiveX 解决了在 IE 中的加载显示问题，并将这种方法应用到了 gmail+gtalk 产品中。</p>
+<h1 id="6-Websocket：未来的解决方案1"><a href="#6-Websocket：未来的解决方案1" class="headerlink" title="6. Websocket：未来的解决方案1"></a><strong>6. Websocket：未来的解决方案1</strong></h1><p>如果说Ajax的出现是互联网发展的必然，那么Comet技术的出现则更多透露出一种无奈，仅仅作为一种hack技术，因为没有更好的解决方案。Comet解决的问题应该由谁来解决才是合理的呢？浏览器，html标准，还是http标准？主角应该是谁呢？本质上讲，这涉及到数据传输方式，http协议应首当其冲，是时候改变一下这个懒惰的协议的请求/响应模式了。</p>
+<p>W3C给出了答案，在新一代html标准html5中提供了一种浏览器和服务器间进行全双工通讯的网络技术Websocket。从Websocket草案得知，Websocket是一个全新的、独立的协议，基于TCP协议，与http协议兼容、却不会融入http协议，仅仅作为html5的一部分。于是乎脚本又被赋予了另一种能力：发起websocket请求。这种方式我们应该很熟悉，因为Ajax就是这么做的，所不同的是，Ajax发起的是http请求而已。</p>
+<p>与http协议不同的请求/响应模式不同，Websocket在建立连接之前有一个Handshake（Opening Handshake）过程，在关闭连接前也有一个Handshake（Closing Handshake）过程，建立连接之后，双方即可双向通信。</p>
+<p>有关WebSocket的详细介，请参见即时通讯网有关WebSocket的系列文章：《<a href="https://link.jianshu.com/?t=http://www.52im.net/forum.php?mod=viewthread&amp;tid=331&amp;ctid=15" target="_blank" rel="external">WebSocket详解（一）：初步认识WebSocket技术</a>》、《<a href="https://link.jianshu.com/?t=http://www.52im.net/forum.php?mod=viewthread&amp;tid=326&amp;ctid=15" target="_blank" rel="external">WebSocket详解（二）：技术原理、代码演示和应用案例</a>》、《<a href="https://link.jianshu.com/?t=http://www.52im.net/forum.php?mod=viewthread&amp;tid=332&amp;ctid=15" target="_blank" rel="external">WebSocket详解（三）：深入WebSocket通信协议细节</a>》。</p>
+<p>从浏览器支持角度来看，WebSocket已经近在眼前，但仍有一段较长的路要走，特别是在中国这个IE6、7、8依然盛行的国家，旧版本浏览器的消亡需要很长一段时间，在完全实现浏览器全兼容前，Comet技术可能仍然是最好的解决方案。不过，当前也已存在一些比较成熟的封装方案来解决这种兼容性限制，比如：开源的Socket.io，详见《<a href="https://link.jianshu.com/?t=http://www.52im.net/forum.php?mod=viewthread&amp;tid=190&amp;ctid=15" target="_blank" rel="external">Socket.IO介绍：支持WebSocket、用于WEB端的即时通讯的框架</a>》。</p>
+<h1 id="7-SSE：未来的解决方案2"><a href="#7-SSE：未来的解决方案2" class="headerlink" title="7. SSE：未来的解决方案2"></a><strong>7. SSE：未来的解决方案2</strong></h1><p>SSE（Server-Sent Event，服务端推送事件）是一种允许服务端向客户端推送新数据的HTML5技术。与由客户端每隔几秒从服务端轮询拉取新数据相比，这是一种更优的解决方案。</p>
+<p>与WebSocket相比，它也能从服务端向客户端推送数据。那如何决定你是用SSE还是WebSocket呢？概括来说，WebSocket能做的，SSE也能做，反之亦然，但在完成某些任务方面，它们各有千秋。</p>
+<p>WebSocket是一种更为复杂的服务端实现技术，但它是真正的双向传输技术，既能从服务端向客户端推送数据，也能从客户端向服务端推送数据。</p>
+<p>WebSocket和SSE的浏览器支持率差不多，大多数主流桌面浏览器两者都支持。在Android 4.3以及更早的版本中，系统默认浏览器两者都不支持，Firefox和Chrome则完全支持；Android 4.4中，系统默认浏览器两者都支持；Safari从5.0开始支持SSE（iOS系统从4.0开始），但直到6.0才正确地支持WebSocket（6.0之前的Safari所实现的WebSocket协议存在安全问题，所以一些主流浏览器已经禁用了基于这个协议的实现）。</p>
+<p>与WebSocket相比，SSE有一些显著的优势。个人认为它最大的优势就是便利：不需要添加任何新组件，用任何你习惯的后端语言和框架就能继续使用。你不用为新建虚拟机、弄一个新的IP或新的端口号而劳神，就像在现有网站中新增一个页面那样简单。我喜欢把这称为既存基础设施优势。</p>
+<p>SSE的第二个优势是服务端的简洁。相对而言，WebSocket则很复杂，不借助辅助类库基本搞不定（我试过，令人痛苦）。</p>
+<p>因为SSE能在现有的HTTP/HTTPS协议上运作，所以它能直接运行于现有的代理服务器和认证技术。而对WebSocket而言，代理服务器需要做一些开发（或其他工作）才能支持，在写这本书时，很多服务器还没有（虽然这种状况会改善）。SSE还有一个优势：它是一种文本协议，脚本调试非常容易。事实上，在本书中，我们会在开发和测试时用curl，甚至直接在命令行中运行后端脚本。</p>
+<p>不过，这就引出了WebSocket相较SSE的一个潜在优势：WebSocket是二进制协议，而SSE是文本协议（通常使用UTF-8编码）。当然，我们可以通过SSE连接传输二进制数据：在SSE中，只有两个具有特殊意义的字符，它们是CR和LF，而对它们进行转码并不难。但用SSE传输二进制数据时数据会变大，如果需要从服务端到客户端传输大量的二进制数据，最好还是用WebSocket。</p>
+<p>WebSocket相较SSE最大的优势在于它是双向交流的，这意味向服务端发送数据就像从服务端接收数据一样简单。用SSE时，一般通过一个独立的Ajax请求从客户端向服务端传送数据。相对于WebSocket，这样使用Ajax会增加开销，但也就多一点点而已。如此一来，问题就变成了“什么时候需要关心这个差异？”如果需要以1次/秒或者更快的频率向服务端传输数据，那应该用WebSocket。0.2次/秒到1次/秒的频率是一个灰色地带，用WebSocket和用SSE差别不大；但如果你期望重负载，那就有必要确定基准点。频率低于0.2次/秒左右时，两者差别不大。</p>
+<p>从服务端向客户端传输数据的性能如何？如果是文本数据而非二进制数据（如前文所提到的），SSE和WebSocket没什么区别。它们都用TCP/IP套接字，都是轻量级协议。延迟、带宽、服务器负载等都没有区别，除非……呃？除非什么？</p>
+<p>当你在享用SSE的既存基础设施优势，并在客户端和服务端脚本之间设了一个网络服务器，区别就显现出来了。一个SSE连接不仅使用一个套接字，还会占用一个Apache线程或进程，如果用PHP，它会为这个连接专门创建一个PHP新实例。Apache和PHP会使用大量的内存，这会限制服务器所能支持的并行连接数。所以，要做到用SSE在数据传输性能上和WebSocket完全一样，需要写一个自己的后端服务器，当然，那些在任何情况下都会用自己的服务器并使用Node.js的人，会觉得这有什么稀奇的。</p>
+<p>说一下WebSocket在旧版本浏览器上的兼容。当前，大约超过2/3的浏览器支持这些新技术，移动端浏览器的支持率会低一些。依惯例，每当需要双向套接字时，就会用到Flash，并且WebSocket的向后兼容通常是用Flash来做，这已经相当复杂了，如果浏览器上没有Flash，情况更糟。概括来说，WebSocket难兼容，SSE易兼容。有关SSE的专项介绍文章请参见：《<a href="https://link.jianshu.com/?t=http://www.52im.net/thread-335-1-1.html" target="_blank" rel="external">SSE技术详解：一种全新的HTML5服务器推送事件技术</a>》。</p>
+<p>（本文同步发布于：<a href="https://link.jianshu.com/?t=http://www.52im.net/thread-336-1-1.html" target="_blank" rel="external">http://www.52im.net/thread-336-1-1.html</a>）</p>
+<h1 id="8-系列资料"><a href="#8-系列资料" class="headerlink" title="8. 系列资料"></a><strong>8. 系列资料</strong></h1><p><strong>Web端即时通讯新手入门贴：</strong></p>
+<p>《<a href="https://link.jianshu.com/?t=http://www.52im.net/thread-338-1-1.html" target="_blank" rel="external">新手入门贴：详解Web端即时通讯技术的原理</a>》</p>
+<p><strong>关于Ajax短轮询：</strong></p>
+<p>找这方面的资料没什么意义，除非忽悠客户，否则请考虑其它3种方案即可。</p>
+<p><strong>有关Comet技术的详细介绍请参见：</strong></p>
+<p>《<a href="https://link.jianshu.com/?t=http://www.52im.net/thread-334-1-1.html" target="_blank" rel="external">Comet技术详解：基于HTTP长连接的Web端实时通信技术</a>》</p>
+<p>《<a href="https://link.jianshu.com/?t=http://www.52im.net/thread-224-1-1.html" target="_blank" rel="external">WEB端即时通讯：HTTP长连接、长轮询（long polling）详解</a>》</p>
+<p>《<a href="https://link.jianshu.com/?t=http://www.52im.net/thread-296-1-1.html" target="_blank" rel="external">WEB端即时通讯：不用WebSocket也一样能搞定消息的即时性</a>》</p>
+<p>《<a href="https://link.jianshu.com/?t=http://www.52im.net/thread-330-1-1.html" target="_blank" rel="external">开源Comet服务器iComet：支持百万并发的Web端即时通讯方案</a>》</p>
+<p><strong>有关WebSocket的详细介绍请参见：</strong></p>
+<p>《<a href="https://link.jianshu.com/?t=http://www.52im.net/forum.php?mod=viewthread&amp;tid=331&amp;ctid=15" target="_blank" rel="external">WebSocket详解（一）：初步认识WebSocket技术</a>》</p>
+<p>《<a href="https://link.jianshu.com/?t=http://www.52im.net/forum.php?mod=viewthread&amp;tid=326&amp;ctid=15" target="_blank" rel="external">WebSocket详解（二）：技术原理、代码演示和应用案例</a>》</p>
+<p>《<a href="https://link.jianshu.com/?t=http://www.52im.net/forum.php?mod=viewthread&amp;tid=332&amp;ctid=15" target="_blank" rel="external">WebSocket详解（三）：深入WebSocket通信协议细节</a>》</p>
+<p>《<a href="https://link.jianshu.com/?t=http://www.52im.net/forum.php?mod=viewthread&amp;tid=190&amp;ctid=15" target="_blank" rel="external">Socket.IO介绍：支持WebSocket、用于WEB端的即时通讯的框架</a>》</p>
+<p>《<a href="https://link.jianshu.com/?t=http://www.52im.net/forum.php?mod=viewthread&amp;tid=189&amp;ctid=15" target="_blank" rel="external">socket.io和websocket 之间是什么关系？有什么区别？</a>》</p>
+<p><strong>有关SSE的详细介绍文章请参见：</strong></p>
+<p>《<a href="https://link.jianshu.com/?t=http://www.52im.net/thread-335-1-1.html" target="_blank" rel="external">SSE技术详解：一种全新的HTML5服务器推送事件技术</a>》</p>
+<p><strong>更多WEB端即时通讯文章请见：</strong></p>
+<p><a href="https://link.jianshu.com/?t=http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=15" target="_blank" rel="external">http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=15</a></p>
+<p>From: <a href="https://www.jianshu.com/p/4aa085b9984b" target="_blank" rel="external">Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE - 简书</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-08-08T14:36:49.000Z" itemprop="dateUpdated">2018-08-08 22:36:49</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2018-08-08-2018-8-7-web-realtime.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2018-08-08-2018-8-7-web-realtime.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/realtime/">realtime</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/">web</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2018-08-08-2018-8-7-web-realtime.html&title=《Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2018-08-08-2018-8-7-web-realtime.html&title=《Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2018-08-08-2018-8-7-web-realtime.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE》 — Balance&url=http://blog.inching.org/JavaScript/2018-08-08-2018-8-7-web-realtime.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2018-08-08-2018-8-7-web-realtime.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2018-08-08-2018-8-7-javascript-performance.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JavaScript Performance</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/HTTP/2018-08-08-2018-8-7-http-https-ssl-protocal.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">HTTPS SSL Protocal</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2018</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2018-08-08-2018-8-7-web-realtime.html&title=《Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2018-08-08-2018-8-7-web-realtime.html&title=《Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2018-08-08-2018-8-7-web-realtime.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Web端即时通讯技术盘点：短轮询、Comet、Websocket、SSE》 — Balance&url=http://blog.inching.org/JavaScript/2018-08-08-2018-8-7-web-realtime.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2018-08-08-2018-8-7-web-realtime.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvElEQVR42u3a0WojMQwF0P7/T3ehT4VunCvJSlo48xTSYcbHBdu50sdHfH1+Xd8/f7/y+893nr959IQLFx4eHl5r6I+u8z35sH4+LZms6nj+MwV4eHh4a7zq4t5b7pMlPp+U5L14eHh47+Uln5NF/Dxl+bEeDw8P72/xksggv6cXcODh4eG9l5eEEcmA8qgiZ+djwMPDw3sNr1cAe+/n9foeHh4eXquq3it35W/pTV9htHh4eHgLvLzglByCe01XvekojAcPDw9vgTeJAyaNBXmprLohPfkf4uHh4Q14yevz76vPmUS6UYENDw8Pb5mXY/YC4uSb/HiNh4eH9xpe9Wd/tViVvKXahvUkgMDDw8O7ystjhSQsOG8t89aoXgkNDw8P7y4vj2XvLve9o3b5r3h4eHgLvGpZazKgfOLOG0m5IQwPDw9vgZccWHtLc6+UNS+Alc/jeHh4eC1eHh9UW+2bhf/BobzwP8TDw8Mr8qptpknUm4e/vZJb4Zl4eHh4C7y82j5/TbUVINlsmrEIHh4e3oCX9xf0htu7qk1XD7cQPDw8vAVesiVUh543bPWW+3wTwsPDw9vg5UfYZCGuHqzzCW02MeDh4eEt8PJB56lGHlVU39iLmPHw8PDu8nrH2fP9vWV93pj1JMbFw8PDu8SbF8B6IW8vjOgd6/Hw8PDu8vKmpd4yfZ6mfEFPpgMPDw/v9/CqsWy+oCcT13svHh4e3h7vbjg7P0zPW7jKvxjw8PDwirzP4nX+8V+9c6OchoeHh7fNqy648xJXr5ErH0MeB+Ph4eFNeJMlvjdz1fijeuzGw8PDew2vuhlcSz4mPQ7JkRoPDw/vrby8TWreqlU9yj+cDjw8PLxfyetFDL2mgfL3eHh4eGu8PIyYBLvzFqtygxceHh7eAm9eAKuWwSaRxK32LDw8PLwW7x/4888UvfgghwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,5 +1,4 @@
 layout: post
-layout: post
 title: "Android Data Binding"
 description: ""
 category: Android

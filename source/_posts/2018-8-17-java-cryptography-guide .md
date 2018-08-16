@@ -92,11 +92,15 @@ public static void main(String args[]) throws Exception{
 
 一般人见到"Lipps Asvph!"，能否猜出是“Hello World!”？我们可以通过暴力破解把0-25都试一遍，也可以通过统计手段进行破解。
 
+See also [常见的安全算法 - 简书](https://www.jianshu.com/p/2196a601d444)
+
 ## Java对称加密-DES算法
 
 本实例给出Java中创建对称密钥的步骤，并通过对象序列化方式保存在文件中。
 
-### 获取密钥生成器  
+### 生成密钥
+
+#### 获取密钥生成器  
 
     KeyGenerator kg=KeyGenerator.getInstance("DESede");  
 
@@ -113,7 +117,7 @@ public static void main(String args[]) throws Exception{
 
 这些算法都可以实现加密，这里我们不关心这些算法的细节，只要知道其使用上的特点即可。其中`DES` 是目前最常用的对称加密算法，但安全性较差。针对DES安全性的改进产生了能满足当前安全需要的 `TripleDES` 算法，即 `DESede`。`Blowfish` 的密钥长度可达448位，安全性很好。`AES`是一种替代DES算法的新算法，可提供很好的安全性。
 
-### 初始化密钥生成器  
+#### 初始化密钥生成器  
 
     kg.init(168);  
 
@@ -125,13 +129,13 @@ public static void main(String args[]) throws Exception{
 - `Blowfish`，则可以是32至448之间可以被8整除的数；
 - `HmacMD5` 和`HmacSHA1`默认的密钥长度都是64个字节。
 
-### 生成密钥  
+#### 生成密钥  
 
     SecretKey k=kg.generateKey( );  
 
 分析：使用第一步获得的KeyGenerator类型的对象中`generateKey()`方法可以获得密钥。其类型为SecretKey类型，可用于以后的加密和解密。
 
-### 通过对象序列化方式将密钥保存在文件中  
+__通过对象序列化方式将密钥保存在文件中__
 
 ```
 FileOutputStream f=new FileOutputStream("key1.dat");  
@@ -222,7 +226,7 @@ public class Skey_kb{
 
 读者运行时肯定结果和上面会有所不同,每次运行时生成的密钥都不会相同，这就保证了密钥的唯一性。作为对称密钥，只要保证若加密某段文字用的是某个密钥，则解密这段密文时用同样的密钥即可。
 
-### 使用对称密钥进行加密和解密
+### 加密
 
 本实例的输入是面生成并以对象方式保存在文件key1.dat中的密钥，以及需要加密的一段最简单的字符串"Hello World!"，使用密钥对"Hello World!"进行加密，加密后的信息保存在文件中。
 
@@ -258,24 +262,24 @@ byte ptext[]=s.getBytes("UTF8");
 ```
 分析：Cipher对象所作的操作是针对字节数组的，因此需要将要加密的内容转换成字节数组。本例中要加密的是一个字符串s，可以使用字符串的 `getBytes()` 方法获得对应的字节数组。`getBytes()` 方法中必须使用参数"UTF8"指定。
 
-（5） 执行加密
+#### 执行加密
 
-```hljs
+```java
 byte ctext[]=cp.doFinal(ptext);
 ```
 
 分析：执行Cipher对象的doFinal( )方法，该方法的参数中传入待加密的明文，从而按照前面几步设置的算法及各种模式对所传入的明文进行加密操作，该方法返回加密的结果。
 
-（6） 处理加密结果
+__处理加密结果__
 
-```hljs
+```java
 FileOutputStream f2=new FileOutputStream("SEnc.dat");
 f2.write(ctext);
 ```
 
 分析：第5步得到的加密结果是字节数组，对其可作各种处理，如在网上传递、保存在文件中等。这里将其保存在文件Senc.dat中。
 
-```hljs
+```java
 import java.io.*;
 import java.security.*;
 import javax.crypto.*;
@@ -308,24 +312,26 @@ public class SEnc{
 
 输入java SEnc运行程序，在程序的当前目录中将产生文件名为SEnc.dat的文件，屏幕输出如下：
 
-```hljs
+```
 72,101,108,108,111,32,87,111,114,108,100,33,
 -57,119,0,-45,-9,23,37,-56,-60,-34,-99,105,99,113,-17,76,
 ```
 
-其中第一行为字符串"Hello World!"的字节数组编码方式，第二行为加密后的内容，第二行的内容会随着密钥的不同而不同。
+其中第一行为字符串 "Hello World!"的字节数组编码方式，第二行为加密后的内容，第二行的内容会随着密钥的不同而不同。
 
 第一行的内容没有加过密，任何人若得到第一行数据，只要将其用二进制方式写入文本文件，用文本编辑器打开文件就可以看到对应的字符串“Hello World!”。而第二行的内容由于是加密过的，没有密钥的人即使得到第二行的内容也无法知道其内容。
 
 密文同时保存在SEnc.dat文件中，将其提供给需要的人时，需要同时提供加密时使用的密钥（key1.dat，或keykb1.dat），这样收到SEnc.dat中密文的人才能够解密文件中的内容。
 
+### 解密
+
 前面加密后的密文SEnc.dat，以及加密时所使用的密钥key1.dat或keykb1.dat，本实例对SEnc.dat中的密文进行解密，得到明文。
 
 首先要从文件中获取加密时使用的密钥，然后考虑如何使用密钥进行解密。其主要步骤为：
 
-（1） 获取密文
+#### 获取密文
 
-```hljs
+```java
 FileInputStream f=new FileInputStream("SEnc.dat");
         int num=f.available();
         byte[ ] ctext=new byte[num];          
@@ -334,9 +340,9 @@ FileInputStream f=new FileInputStream("SEnc.dat");
 
 分析：密文存放在文件SEnc.dat中，由于解密是针对字节数组进行操作的，因此要先将密文从文件中读入字节数组。首先创建文件输入流，然后使用文件输入流的available( )方法判断密文将占用多少字节，从而创建相应大小的字节数组ctext，最后使用文件输入流的read( )方法一次性读入数组ctext。
 
-（2） 获取密钥
+#### 获取密钥
 
-```hljs
+```java
 FileInputStream  f2=new FileInputStream("keykb1.dat");
 int num2=f2.available();
 byte[ ] keykb=new byte[num2];          
@@ -346,18 +352,19 @@ SecretKeySpec k=new  SecretKeySpec(keykb,"DESede");
 
 SecretKeySpec类的构造器中第2个参数则指定加密算法。由于keykb1.dat中的密钥原来使用的是DESede算法，因此这里仍旧使用字符串“DESede”作为参数。
 
-（3） 创建密码器（Cipher对象）
+#### 创建密码器（Cipher对象）
 
-Cipher cp=Cipher.getInstance("DESede");
+    Cipher cp=Cipher.getInstance("DESede");
 
-（4） 初始化密码器  
-cp.init(Cipher.DECRYPT_MODE, k);
+#### 初始化密码器  
 
-（5） 执行解密
+    cp.init(Cipher.DECRYPT_MODE, k);
 
-byte []ptext=cp.doFinal(ctext);
+#### 执行解密
 
-```hljs
+    byte []ptext=cp.doFinal(ctext);
+
+```java
 import java.io.*;
 import java.security.*;
 import javax.crypto.*;
@@ -400,24 +407,38 @@ public class SDec{
 
 Java的KeyPairGenerator类提供了一些方法来创建密钥对以便用于非对称加密，密钥对创建好后封装在KeyPair类型的对象中，在KeyPair类中提供了获取公钥和私钥的方法。具体步骤如下：
 
-（1） 创建密钥对生成器  
-KeyPairGenerator kpg=KeyPairGenerator.getInstance("RSA");  
+See also [Java 安全加密算法](http://www.cnblogs.com/jingmoxukong/p/5688306.html)
+
+### 生成密钥对
+
+__创建密钥对生成器__
+
+    KeyPairGenerator kpg=KeyPairGenerator.getInstance("RSA");  
+
 分析：密钥对生成器即KeyPairGenerator类型的对象，和2.2.1小节的第1步中介绍的KeyGenerator类一样，KeyPairGenerator类是一个工厂类，它通过其中预定义的一个静态方法`getInstance()`获取KeyPairGenerator类型的对象。`getInstance()`方法的参数是一个字符串，指定非对称加密所使用的算法，常用的有RSA，DSA等。
 
-（2） 初始化密钥生成器  
-kpg.initialize(1024);  
+__初始化密钥生成器__
+
+    kpg.initialize(1024);  
+
 分析：对于密钥长度。对于RSA算法，这里指定的其实是RSA算法中所用的模的位数。可以在512到2048之间。
 
-（3） 生成密钥对  
-KeyPair kp=kpg.genKeyPair( );  
+__生成密钥对__
+
+    KeyPair kp=kpg.genKeyPair( );  
+
 分析：使用KeyPairGenerator类的genKeyPair( )方法生成密钥对，其中包含了一对公钥和私钥的信息。
 
-（4） 获取公钥和私钥  
+__获取公钥和私钥__
+
+```java
 PublicKey pbkey=kp.getPublic( );  
 PrivateKey prkey=kp.getPrivate( );  
+```
+
 分析：使用KeyPair类的getPublic( )和getPrivate( )方法获得公钥和私钥对象。
 
-```hljs
+```java
 import java.io.*;
 import java.security.*;
 import javax.crypto.*;
@@ -433,11 +454,11 @@ public class Skey_RSA{
         //  保存公钥        
         FileOutputStream  f1=new FileOutputStream("Skey_RSA_pub.dat");
         ObjectOutputStream b1=new  ObjectOutputStream(f1);
-b1.writeObject(pbkey);
+        b1.writeObject(pbkey);
         //  保存私钥
         FileOutputStream  f2=new FileOutputStream("Skey_RSA_priv.dat");
         ObjectOutputStream b2=new  ObjectOutputStream(f2);
-b2.writeObject(prkey);
+        b2.writeObject(prkey);
    }
 }
 ```
@@ -448,17 +469,17 @@ b2.writeObject(prkey);
 
 输入java Skey_RSA运行程序，当前目录下将生成两个文件：Skey_RSA_pub.dat和Skey_RSA_priv.dat，前者保存着公钥，后者保存着私钥。将文件Skey_RSA_pub.dat对外公布（如放在Web服务器上给大家下载，或者直接拷贝给所有需要的人），而Skey_RSA_priv.dat秘密保存。
 
-以加密一串最简单的字符串“Hello World!”为例，演示了如何使用上面生成的RSA公钥文件Skey_RSA_pub.dat进行加密。
+### 加密
 
-编程思路：
+以加密一串最简单的字符串“Hello World!”为例，演示了如何使用上面生成的RSA公钥文件Skey_RSA_pub.dat进行加密。
 
 使用RSA公钥进行加密的代码和使用DESede进行加密其实没什么大的区别，只是Cipher类的getInstance( )方法的参数中应该指定使用RSA。但由于J2SDK1.4中只实现了RSA密钥的创建，没有实现RSA算法，因此需要安装其他加密提供者软件才能直接使用Cipher类执行加密解密。其实有了RSA公钥和私钥后，自己编写程序从底层实现RSA算法也并不复杂。本实例给出简单的例子实现了RSA加密，使读者只使用J2SDK1.4便能直观地了解非对称加密算法。
 
 RSA算法是使用整数进行加密运算的，在RSA公钥中包含了两个信息：公钥对应的整数e和用于取模的整数n。对于明文数字m，计算密文的公式是：me mod n。因此，编程步骤如下：
 
-（1） 获取公钥
+__获取公钥__
 
-```hljs
+```java
 FileInputStream f=new FileInputStream("Skey_RSA_pub.dat");
       ObjectInputStream b=new ObjectInputStream(f);
       RSAPublicKey  pbk=(RSAPublicKey)b.readObject( );
@@ -466,24 +487,35 @@ FileInputStream f=new FileInputStream("Skey_RSA_pub.dat");
 
 分析： 从公钥文件Skey_RSA_pub.dat中读取公钥，由于生成使用的是RSA算法，因此从文件读取公钥对象后强制转换为RSAPublicKey类型，以便后面读取RSA算法所需要的参数。
 
-（2） 获取公钥的参数(e, n)  
+__获取公钥的参数(e, n)__
+
+```
 BigInteger e=pbk.getPublicExponent();  
-BigInteger n=pbk.getModulus();  
+BigInteger n=pbk.getModulus();
+```
+
 分析：使用RSAPublicKey类的getPublicExponent( )和getModulus( )方法可以分别获得公始中e和n的值。由于密钥很长，因此对应的整数值非常大，无法使用一般的整型来存储，Java中定义了BigInteger类来存储这类很大的整数并可进行各种运算。
 
-（3） 获取明文整数(m)  
+__获取明文整数(m)__
+
+```
 String s="Hello World!";  
 byte ptext[]=s.getBytes("UTF8");  
 BigInteger m=new BigInteger(ptext);
+```
 
 分析：明文是一个字符串，为了用整数表达这个字符串，先使用字符串的getBytes( )方法将其转换为byte类型数组，它其实是字符串中各个字符的二进制表达方式，这一串二进制数转换为一个整数将非常大，因此仍旧使用BigInteger类将这个二进制串转换为整型。  
 本实例中出于简化，将整个字符串转换为一个整数。实际使用中，应该对明文进行分组，因为RSA算法要求整型数m的值必须小于n。
 
-（4） 执行计算  
-BigInteger c=m.modPow(e,n);  
+__执行计算__
+
+```
+BigInteger c=m.modPow(e,n);
+```
+
 分析：计算前面的公式：me mod n。BigInteger类中已经提供了方法modPow( )来执行这个计算。底数m执行这个方法，方法modPow( )的第一个参数即指数e，第二个参数即模n。方法返回的结果即公式me mod n的计算结果，即密文。
 
-```hljs
+```java
 import java.security.*;
 import java.security.spec.*;
 import javax.crypto.*;
@@ -529,16 +561,17 @@ public class Enc_RSA{
 
 其中显示了公钥中的参数以及加密的结果c，这些都是很大的整数，n和c多达上百位。程序运行后密文c以字符串形式保存在文件Enc_RSA.dat中。
 
+### 解密
+
 下面实例使用私钥文件Skey_RSA_priv.dat，对密文文件Enc_RSA.dat进行解密。
 
-* 编程思路：
-
 使用RSA私钥进行解密的代码也可以在Cipher类的getInstance( )方法的参数中指定使用RSA，使用解密模式进行解密。但需要安装其他加密提供者软件才能直接使用Cipher类执行加密解密。本实例给出简单的例子从底层实现RSA解密，以便只使用J2SDK1.4便能直观地了解非对称加密算法。  
+
 RSA算法的解密和加密类似，在RSA私钥中包含了两个信息：私钥对应的整数d和用于取模的整数n。其中的n和加密时的n完全相同。对于密文数字c，计算明文的公式是：cd mod n，之所以加密时由公式me mod n得到的密文c通过这个公式计算一下就可以反过来得到原来的明文m，有其本身的数学规律决定。从编程角度只需要知道这个结果就行了。编程步骤如下：
 
-（1） 读取密文
+__读取密文__
 
-```hljs
+```java
 BufferedReader in= 
           new BufferedReader(new InputStreamReader(
 new FileInputStream("Enc_RSA.dat")));
@@ -548,9 +581,9 @@ BigInteger c=new BigInteger(ctext);
 
 分析： 从密文文件Enc_RSA.dat中读取密文，由于保存的只是一行字符串，因此只要一条readLine( )语句即可。由于这一行字符串表示的是一个很大的整型数，因此使用BigInteger类来表示这个整型数。
 
-（2） 获取私钥
+__获取私钥__
 
-```hljs
+```java
 FileInputStream f=new FileInputStream("Skey_RSA_priv.dat");
 ObjectInputStream b=new ObjectInputStream(f);
 RSAPrivateKey prk=(RSAPrivateKey)b.readObject( );
@@ -558,24 +591,24 @@ RSAPrivateKey prk=(RSAPrivateKey)b.readObject( );
 
 分析： 从私钥文件Skey_RSA_priv.dat中读取公钥，由于使用的是RSA算法，因此从文件读取公钥对象后强制转换为RSAPrivateKey类型，以便后面读取RSA算法所需要的参数。
 
-（3） 获取私钥的参数(d, n)
+__获取私钥的参数(d, n)__
 
-```hljs
+```java
 BigInteger d=prk.getPrivateExponent( );
 BigInteger n=prk.getModulus( );
 ```
 
 分析：使用RSAPrivateKey类的getPrivateExponent( )和getModulus( )方法可以分别获得公始中d和n的值。
 
-（4） 执行计算
+__执行计算__
 
-BigInteger m=c.modPow(d,n);
+    BigInteger m=c.modPow(d,n);
 
 分析：使用BigInteger的modPow( )方法计算前面的公式：cd mod n。方法返回的结果即公式cd mod n的计算结果，即明文对应的整型数m。
 
-（5） 计算明文整型数对应的字符串
+__计算明文整型数对应的字符串__
 
-```hljs
+```java
 byte[] mt=m.toByteArray();
 for(int i=0;i<mt.length;i++){
        System.out.print((char) mt[i]);
@@ -584,7 +617,7 @@ for(int i=0;i<mt.length;i++){
 
 分析：RSA算法解密的结果m是一个很大的整数，为了计算出其对应的字符串的值，先使用BigInteger类的toByteArray( )方法得到代表该整型数的字节数组，然后将数组中每个元素转换为字符，组成字符串。
 
-```hljs
+```java
 import java.security.*;
 import java.security.spec.*;
 import javax.crypto.*;
@@ -634,17 +667,15 @@ new FileInputStream("Enc_RSA.dat")));
 
 除了这种方式以外，还可以使用密钥协定来交换对称密钥。执行密钥协定的标准算法是DH算法（Diffie-Hellman算法），本节介绍在Java中如何使用DH算法来交换共享密钥。
 
-* 创建DH公钥和私钥
+### 创建DH公钥和私钥
 
 DH算法是建立在DH公钥和私钥的基础上的， A需要和B共享密钥时，A和B各自生成DH公钥和私钥，公钥对外公布而私钥各自秘密保存。本实例将介绍Java中如何创建并部署DH公钥和私钥，以便后面一小节利用它创建共享密钥。
-
-程思路：
 
 和上面使用KeyPairGenerator类创建RSA公钥和私钥类似，只是其参数中指定“DH”，此外在初始化时需要为DH指定特定的参数。
 
 代码与分析：
 
-```hljs
+```java
 import java.io.*;
 import java.math.*;
 import java.security.*;
@@ -694,12 +725,13 @@ public class Key_DH{
     };
     // The SKIP 1024 bit modulus
     private static final BigInteger skip1024Modulus
-              = new BigInteger(1, skip1024ModulusBytes);
+        = new BigInteger(1, skip1024ModulusBytes);
+
     // The base used with the SKIP 1024 bit modulus
     private static final BigInteger skip1024Base = BigInteger.valueOf(2);
-public static void main(String args[ ]) throws Exception{
-    DHParameterSpec DHP=
-new DHParameterSpec(skip1024Modulus,skip1024Base);
+    public static void main(String args[ ]) throws Exception{
+    
+    DHParameterSpec DHP= new DHParameterSpec(skip1024Modulus,skip1024Base);
 
      KeyPairGenerator kpg= KeyPairGenerator.getInstance("DH");
      kpg.initialize(DHP);
@@ -707,10 +739,12 @@ new DHParameterSpec(skip1024Modulus,skip1024Base);
 
      PublicKey pbk=kp.getPublic();
      PrivateKey prk=kp.getPrivate();
+     
      // 保存公钥
      FileOutputStream  f1=new FileOutputStream(args[0]);
      ObjectOutputStream b1=new  ObjectOutputStream(f1);
      b1.writeObject(pbk);
+     
      // 保存私钥
      FileOutputStream  f2=new FileOutputStream(args[1]);
      ObjectOutputStream b2=new  ObjectOutputStream(f2);
@@ -730,7 +764,7 @@ new DHParameterSpec(skip1024Modulus,skip1024Base);
 最后发布公钥，A将Apub.dat拷贝到B目录，B将Bpub.dat拷贝到A的目录。  
 这样，A、B双方的DH公钥和私钥已经创建并部署完毕。
 
-* 创建共享密钥
+### 创建共享密钥
 
 DH算法中，A可以用自己的密钥和B的公钥按照一定方法生成一个密钥，B也可以用自己的密钥和A的公钥按照一定方法生成一个密钥，由于一些数学规律，这两个密钥完全相同。这样，A和B间就有了一个共同的密钥可以用于各种加密。本实例介绍Java中在上一小节的基础上如何利用DH公钥和私钥各自创建共享密钥。
 
@@ -738,9 +772,9 @@ DH算法中，A可以用自己的密钥和B的公钥按照一定方法生成一�
 
 Java中KeyAgreement类实现了密钥协定，它使用init( )方法传入自己的私钥，使用doPhase（ ）方法传入对方的公钥，进而可以使用generateSecret( )方法生成共享的信息具体步骤如下：
 
-（1） 读取自己的DH私钥和对方的DH公钥
+__读取自己的DH私钥和对方的DH公钥__
 
-```hljs
+```java
 FileInputStream f1=new FileInputStream(args[0]);
 ObjectInputStream b1=new ObjectInputStream(f1);
 PublicKey  pbk=(PublicKey)b1.readObject( );
@@ -751,33 +785,33 @@ PrivateKey  prk=(PrivateKey)b2.readObject( );
 
 分析：从文件中获取密钥。只是分为公钥和私钥两个文件，通过命令行参数传入公钥和私钥文件名，第一个命令行参数为对方的公钥文件名，第二个命令行参数为自己的私钥文件名。
 
-（2） 创建密钥协定对象
+__创建密钥协定对象__
 
-```hljs
+```java
 KeyAgreement ka=KeyAgreement.getInstance("DH");
 ```
 
 分析：密钥协定对象即KeyAgreement类型的对象，和KeyPairGenerator类类似，KeyAgreement类是一个工厂类，通过其中预定义的一个静态方法`getInstance()`获取KeyAgreement类型的对象。`getInstance()`方法的参数指定为“DH”。
 
-（3） 初始化密钥协定对象
+__初始化密钥协定对象__
 
-```hljs
+```java
 ka.init(prk);
 ```
 
 分析：执行密钥协定对象的init()方法，传入第1步获得的自己的私钥，它在第1步中通过第2个命令行参数提供。
 
-（4） 执行密钥协定
+__执行密钥协定__
 
-```hljs
+```java
 ka.doPhase(pbk,true);
 ```
 
 分析：执行密钥协定对象的doPhase()方法，其第一个参数中传入对方的公钥。在本实例中，只有A、B两方需要共享密钥，因此对方只有一个，因此第二个参数设置为true。如果有A、B、C三方需要共享密钥，则对方有两个，doPhase（）方法要写两次，每次在第1个参数中传入一个公钥，第2个参数最初设置为false，最后一次设置为true。例如C方应该执行ka.doPhase(pbk_of_A,false); ka.doPhase(pbk_of_B,true);。一次类推，可以用密钥协定实现多方共享一个密钥。
 
-（5） 生成共享信息
+__生成共享信息__
 
-```hljs
+```java
 byte[ ] sb=ka.generateSecret();
 ```
 
@@ -785,7 +819,7 @@ byte[ ] sb=ka.generateSecret();
 
 代码与分析：
 
-```hljs
+```java
 import java.io.*;
 import java.math.*;
 import java.security.*;
@@ -796,23 +830,26 @@ import javax.crypto.interfaces.*;
 
 public class KeyAgree{
    public static void main(String args[ ]) throws Exception{
-      // 读取对方的DH公钥
-      FileInputStream f1=new FileInputStream(args[0]);
-      ObjectInputStream b1=new ObjectInputStream(f1);
-      PublicKey  pbk=(PublicKey)b1.readObject( );
-//读取自己的DH私钥
-      FileInputStream f2=new FileInputStream(args[1]);
-      ObjectInputStream b2=new ObjectInputStream(f2);
-      PrivateKey  prk=(PrivateKey)b2.readObject( );
-      // 执行密钥协定
-     KeyAgreement ka=KeyAgreement.getInstance("DH");
-     ka.init(prk);
-     ka.doPhase(pbk,true);
-     //生成共享信息
-     byte[ ] sb=ka.generateSecret();
-     for(int i=0;i<sb.length;i++){
+    // 读取对方的DH公钥
+    FileInputStream f1=new FileInputStream(args[0]);
+    ObjectInputStream b1=new ObjectInputStream(f1);
+    PublicKey  pbk=(PublicKey)b1.readObject( );
+      
+    //读取自己的DH私钥
+    FileInputStream f2=new FileInputStream(args[1]);
+    ObjectInputStream b2=new ObjectInputStream(f2);
+    PrivateKey  prk=(PrivateKey)b2.readObject( );
+
+    // 执行密钥协定
+    KeyAgreement ka=KeyAgreement.getInstance("DH");
+    ka.init(prk);
+    ka.doPhase(pbk,true);
+    
+    //生成共享信息
+    byte[ ] sb=ka.generateSecret();
+    for(int i=0;i<sb.length;i++){
         System.out.print(sb[i]+",");
-     }
+    }
     SecretKeySpec k=new  SecretKeySpec(sb,"DESede")；
   }
 }
@@ -822,29 +859,36 @@ public class KeyAgree{
 
 将程序KeyAgree编译后分别拷贝在A和B两个目录，首先在A目录输入“java KeyAgree Bpub.dat Apri.dat”运行程序，它使用文件Bpub.dat中对方的公钥和文件Apri.dat中自己的私钥创建了一段共享的字节数组。
 
-## Java摘要算法- MD5
+## 摘要算法- MD5
 
 使用Java计算指定字符串的消息摘要。  
 java.security包中的MessageDigest类提供了计算消息摘要的方法，
 
 首先生成对象，执行其update()方法可以将原始数据传递给该对象，然后执行其digest( )方法即可得到消息摘要。具体步骤如下：
 
-（1） 生成MessageDigest对象  
-MessageDigest m=MessageDigest.getInstance("MD5");  
+__生成MessageDigest对象__
+
+    MessageDigest m=MessageDigest.getInstance("MD5");  
+
 分析：和2.2.1小节的KeyGenerator类一样。MessageDigest类也是一个工厂类，其构造器是受保护的，不允许直接使用new MessageDigist( )来创建对象，而必须通过其静态方法getInstance( )生成MessageDigest对象。其中传入的参数指定计算消息摘要所使用的算法，常用的有"MD5"，"SHA"等。若对MD5算法的细节感兴趣可参考http://www.ietf.org/rfc/rfc1321.txt。
 
-（2） 传入需要计算的字符串  
-m.update(x.getBytes("UTF8" ));  
+__传入需要计算的字符串__
+
+    m.update(x.getBytes("UTF8" ));  
+
 分析：x为需要计算的字符串，update传入的参数是字节类型或字节类型数组，对于字符串，需要先使用getBytes( )方法生成字符串数组。
 
-（3） 计算消息摘要  
-byte s[ ]=m.digest( );  
+__计算消息摘要__
+
+    byte s[ ]=m.digest( );  
+
 分析：执行MessageDigest对象的digest( )方法完成计算，计算的结果通过字节类型的数组返回。
 
-（4） 处理计算结果  
+__处理计算结果__
+
 必要的话可以使用如下代码将计算结果s转换为字符串。
 
-```hljs
+```java
 String result="";
 for (int i=0; i<s.length; i++){
        result+=Integer.toHexString((0x000000ff & s[i]) | 0xffffff00).substring(6);
@@ -853,7 +897,7 @@ for (int i=0; i<s.length; i++){
 
 代码如下：
 
-```hljs
+```java
 import java.security.*;
 public class DigestPass{
      public static void main(String args[ ]) throws Exception{
@@ -874,3 +918,8 @@ public class DigestPass{
 运行程序
 
 输入java DigestCalc abc来运行程序，其中命令行参数abc是原始数据，屏幕输出计算后的消息摘要：900150983cd24fb0d6963f7d28e17f72。
+
+## See
+
+- [Java 密码学算法](https://www.cnblogs.com/rocedu/p/6683948.html)
+- [Java Security 总纲](http://joshuasabrina.iteye.com/blog/1798245)

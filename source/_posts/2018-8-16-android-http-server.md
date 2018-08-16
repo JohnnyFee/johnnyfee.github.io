@@ -155,3 +155,7 @@ A question that may come up from the code above is why the JSON transformation? 
 Please let me know if there is any other part of the AndroidAsync that you want me to cover in a future post.
 
 You can also find the complete code [ here ](https://github.com/andreivisan/AndroidAsyncHttpServer).
+
+## See also
+
+- [基于AndroidAsync框架搭建android http server - 简书](https://www.jianshu.com/p/1c74b5116cd0)

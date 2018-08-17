@@ -22,7 +22,7 @@ This is an antipattern in RxJava, operators should be nonblocking, fast, and as 
 
 A marble diagram illustrates how various operators work. Most of the time you will see two horizontal axes representing time flying by from left to right. Shapes on these diagrams (the aforementioned marbles) visualize events. Between the top and bottom axes there is an operator in question that somehow alters the sequence of events coming from the source `Observable` (upstream) to form the resulting `Observable` (downstream), as demonstrated in the following graphic:
 
-![](../uploads/rprx_03in01.png)
+![](../resources/rprx_03in01.png)
 
 ## Core Operators: Filtering
 

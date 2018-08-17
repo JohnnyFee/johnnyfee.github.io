@@ -148,15 +148,15 @@ HMAC-SHA256例子如下：
 
     明文是：
 
-    ![](../../resources/images/anroid-security-normal.png)
+    ![](../resources/images/anroid-security-normal.png)
 
     用ECB加密模式后：
 
-    ![](../../resources/images/android-security-ecb.png)
+    ![](../resources/images/android-security-ecb.png)
 
     用CBC加密模式后：
 
-    ![](../../resources/images/android-security-cbc.png)
+    ![](../resources/images/android-security-cbc.png)
 
     想更深入的了解关于对CBC加密模式的攻击，可参看：《SSL/TLS协议安全系列：CBC 模式的弱安全性介绍(一)》http://drops.wooyun.org/tips/6619
 

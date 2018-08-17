@@ -10,13 +10,13 @@ Sometimes, however, you _want_ your views to overlap. As an example, suppose you
 
 If you want a layout whose views can overlap, a simple option is to use a **frame layout**. Instead of displaying its views in a single row or column, it stacks them on top of each other. This allows you to, for example, display text on top of an image.
 
-![](../../resources/images/android/00399.jpeg)
+![](../resources/images/android/00399.jpeg)
 
 ## How you define a frame layout
 
 You define a frame layout using the `<FrameLayout>` element like this:
 
-![](../../resources/images/android/00400.jpeg)
+![](../resources/images/android/00400.jpeg)
 
 Just like a linear layout, the `android:layout_width` and `android:layout_height` attributes are mandatory and specify the layout’s width and height.
 
@@ -24,11 +24,11 @@ Just like a linear layout, the `android:layout_width` and `android:layout_height
 
 We’re going to change _activity_main.xml_ so that it uses a frame layout containing an image view (a view that displays an image) and a text view. To do this, replace the code in your version of _activity_main.xml_ with ours below:
 
-![](../../resources/images/android/00403.jpeg)
+![](../resources/images/android/00403.jpeg)
 
 When you define a frame layout, you add views to the layout in the order in which you want them to be stacked. The first view is displayed first, the second is stacked on top of it, and so on. In our case, we’ve added an image view followed by a text view, so the text view appears on top of the image view:
 
-![](../../resources/images/android/00405.jpeg)
+![](../resources/images/android/00405.jpeg)
 
 ## Position views in the layout using layout_gravity
 
@@ -36,10 +36,10 @@ By default, any views you add to a frame layout appear in the top-left corner. Y
 
 As an example, here’s how you would move the text view to the bottom-end corner of the image:
 
-![](../../resources/images/android/00406.jpeg)
+![](../resources/images/android/00406.jpeg)
 
 ## You can nest layouts
 
 One of the disadvantages of using a frame layout is that it’s easy for views to overlap one another when you don’t want them to. As an example, you may want to display two text views in the bottom-end corner, one above the other:
 
-![](../../resources/images/android/00411.jpeg)
+![](../resources/images/android/00411.jpeg)

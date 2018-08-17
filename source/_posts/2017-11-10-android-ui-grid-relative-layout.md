@@ -12,13 +12,13 @@ A relative layout allows you to position views relative to their parent layout, 
 
 You define a relative layout using the `<RelativeLayout>` element like this:
 
-![](../../resources/images/android/01803.jpeg)
+![](../resources/images/android/01803.jpeg)
 
 ### Positioning views relative to the parent layout
 
 If you want a view to always appear in a particular position on the screen, irrespective of the screen size or orientation, you need to position the view relative to its parent. As an example, here’s how you’d make sure a button always appears in the top-center of the layout:
 
-![](../../resources/images/android/01804.jpeg)
+![](../resources/images/android/01804.jpeg)
 
 
 The lines of code:
@@ -36,7 +36,7 @@ You can also position a view to the left or right of the parent layout. There ar
 
 The first way is to explicitly position the view on the left or right using:
 
-![](../../resources/images/android/01805.jpeg)
+![](../resources/images/android/01805.jpeg)
 
 
 <pre id="pro_id00157" data-type="programlisting" class="calibre34">
@@ -71,7 +71,7 @@ or:
 
 `android:layout_alignParentEnd="true"` aligns the end edge of the view with that of its parent. The end edge is on the right for languages that are read from left to right, and the left edge for languages that are read from right to left.
 
-![](../../resources/images/android/01806.jpeg)
+![](../resources/images/android/01806.jpeg)
 
 ### Attributes for positioning views relative to the parent layout
 
@@ -81,7 +81,7 @@ Here are some of the most common attributes for positioning views relative to th
 android:attribute="true"
 ```
 
-![](../../resources/images/android/01807.jpeg)
+![](../resources/images/android/01807.jpeg)
 
 ### Positioning views relative to other views
 
@@ -97,27 +97,27 @@ The syntax “`@+id`” tells Android to include the ID as a resource in its res
 
 Here’s how you create a layout with two buttons, with one button centered in the middle of the layout, and the second button positioned underneath the first:
 
-![](../../resources/images/android/01808.jpeg)
+![](../resources/images/android/01808.jpeg)
 
 The lines:
 
-![](../../resources/images/android/01809.jpeg)
+![](../resources/images/android/01809.jpeg)
 
 ensure that the second button has its start edge aligned to the start edge of the first button, and is always positioned beneath it.
 
 **Attributes for positioning views relative to other views**
 
-![](../../resources/images/android/01810.jpeg)
+![](../resources/images/android/01810.jpeg)
 
 ## A grid layout displays views in a grid
 
 A grid layout splits the screen up into a grid of rows and columns, and allocates views to cells:
 
-![](../../resources/images/android/01811.jpeg)
+![](../resources/images/android/01811.jpeg)
 
 You define a grid layout in a similar way to how you define the other types of layout, this time using the **`<GridLayout>`** element:
 
-![](../../resources/images/android/01812.jpeg)
+![](../resources/images/android/01812.jpeg)
 
 You specify how many columns you want the grid layout to have using:
 
@@ -164,11 +164,11 @@ The downside of this approach is that if you remove one of your views from the l
 
 ### Let’s create a new grid layout
 
-![](../../resources/images/android/01814.jpeg)
+![](../resources/images/android/01814.jpeg)
 
 The first thing we’ll do to create our new layout is sketch it out. That way we can see how many rows and columns we need, where each view should be positioned, and how many columns each view should span.
 
-![](../../resources/images/android/01815.jpeg)
+![](../resources/images/android/01815.jpeg)
 
 The grid layout needs two columns:
 
@@ -189,25 +189,25 @@ Now that we have the basic grid layout defined, we can start adding views.
 
 ### Row 0: add views to specific rows and columns
 
-![](../../resources/images/android/01816.gif)
+![](../resources/images/android/01816.gif)
 
 
 The first row of the grid layout is composed of a text view in the first column, and an editable text field in the second column. You start by adding the views to the layout:
 
 > **You can use android:gravity and android:layout_gravity attributes with grid layouts.**
 
-    ![](../../resources/images/android/01817.jpeg)
+    ![](../resources/images/android/01817.jpeg)
 
 
 Then you use the `android:layout_row` and `android:layout_column` attributes to say which row and column you want each view to appear in. The row and column indices start from 0, so if you want a view to appear in the first column and first row, you use:
 
-![](../../resources/images/android/01818.jpeg)
+![](../resources/images/android/01818.jpeg)
 
 Let’s apply this to our layout code by putting the text view in column 0, and the editable text field in column 1.
 
 > **Row and column indices start at 0. layout_column=“n” refers to column n+1 in the display.**
 
-![](../../resources/images/android/01819.jpeg)
+![](../resources/images/android/01819.jpeg)
 
 ### Row 1: make a view span multiple columns
 
@@ -220,7 +220,7 @@ android:layout_row="1"
 android:layout_column="0"
 </pre>
 
-![](../../resources/images/android/01820.gif)
+![](../resources/images/android/01820.gif)
 
 
 We want our view to go across two columns, and we can do this using the `android:layout_columnSpan` attribute like this:
@@ -237,7 +237,7 @@ where `number` is the number of columns we want the view to span across. In our 
 
 Putting it all together, here’s the code for the message view:
 
-![](../../resources/images/android/01821.jpeg)
+![](../resources/images/android/01821.jpeg)
 
 Now that we’ve added the views for the first two rows, all we need to do is add the button.
 
@@ -245,16 +245,16 @@ Now that we’ve added the views for the first two rows, all we need to do is ad
 
 We need the button to be centered horizontally across the two columns like this:
 
-![](../../resources/images/android/01822.gif)
+![](../resources/images/android/01822.gif)
 
 We wrote some code to center the Send button in the third row of the grid layout, but a sudden breeze blew some of it away. See if you can reconstruct the code using the magnets below.
 
-![](../../resources/images/android/01824.jpeg)
+![](../resources/images/android/01824.jpeg)
 
 ### The full code for the grid layout
 
 Here’s the full code for the grid layout.
 
-![](../../resources/images/android/01825.jpeg)
+![](../resources/images/android/01825.jpeg)
 
-![](../../resources/images/android/01826.jpeg)
+![](../resources/images/android/01826.jpeg)

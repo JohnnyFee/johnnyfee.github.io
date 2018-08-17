@@ -46,7 +46,7 @@ List<Person> people = peopleBlocking.single();
 
 `peopleList.toList()` will buffer all `Person` events and keep them in memory until the `onCompleted()` event is received.
 
-![](../uploads/rprx_04in01.png)
+![](../resources/images/rxjava/rprx_04in01.png)
 
 `toList()` is asynchronous; it doesn’t wait for all events to arrive but instead lazily buffers all values.
 

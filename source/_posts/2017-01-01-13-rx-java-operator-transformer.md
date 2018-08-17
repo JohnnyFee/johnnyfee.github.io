@@ -26,7 +26,7 @@ A marble diagram illustrates how various operators work. Most of the time you wi
 
 ## Core Operators: Filtering
 
-![](../uploads/rprx_03in02.png)
+![](../resources/images/rxjava/rprx_03in02.png)
 
 It is also a common practice to `filter()` the same `Observable` multiple times, each time with a different predicate. We can apply several filters on original `Observable` and even chain them (`filter(p1).filter(p2).filter(p3)`), effectively implementing logical conjunction (`filter(p1 && p2 && p3)`).
 
@@ -41,7 +41,7 @@ Observable<String> empty = strings.filter(String::isBlank);
 
 Mappings are used to perform certain transformation on each event. This can be decoding from  JSON to Java object (or vice versa), enriching, wrapping, extracting from the event, and so on.
 
-![](../uploads/rprx_03in03.png)
+![](../resources/images/rxjava/rprx_03in03.png)
 
 ```java
 import rx.functions.Func1;
@@ -82,7 +82,7 @@ Technically, `doOnNext()` can mutate the event. However, having mutable events c
 
 `flatMap()` first constructs `Observable<Observable<R>>` replacing all upstream values of type `T` with `Observable<R>` (just like `map()`). However, it does not stop there: it automatically subscribes to these inner `Observable<R>` streams to produce a single stream of type `R`, containing all values from all inner streams, as they come.
 
-![](../uploads/mergeMap.png)
+![](../resources/images/rxjava/mergeMap.png)
 
 `flatMap()` is the most fundamental operator in RxJava, using it one can easily implement `map()` or `filter()`:
 
@@ -129,7 +129,7 @@ Observable<Order> orders = customers
         .flatMapIterable(Customer::getOrders);
 ```
 
-![](../uploads/mergeMapIterable.png)
+![](../resources/images/rxjava/mergeMapIterable.png)
 
 If `getOrders()` was not a simple getter but an expensive operation in terms of run time, it is better to implement `getOrders()` to explicitly return `Observable<Order>`.
 
@@ -292,7 +292,7 @@ When `flatMap()` encounters Sunday in the upstream, it immediately invokes `load
 
 ### Preserving Order Using concatMap()
 
-![](../uploads/concatMap.png)
+![](../resources/images/rxjava/concatMap.png)
 
 There is a handy `concatMap()` operator that has the exact same syntax as `flatMap()` but works quite differently:
 
@@ -369,7 +369,7 @@ I hope this is clear: we generate an artificial event from `timer()` that we com
 
 The `merge()` operator is used extensively when you want to treat multiple sources of events of the same type as a single source. Also, if you have just two `Observable`s you want to `merge()`, you can use `obs1.mergeWith(obs2)` instance method.
 
-![](../uploads/rprx_03in05.png)
+![](../resources/images/rxjava/rprx_03in05.png)
 
 The order of `Observable`s passed to `merge()` is rather arbitrary. No matter which one emits a value first, it will be forwarded to the `Observer` of `all`.
 
@@ -389,7 +389,7 @@ Zipping is the act of taking two (or more) streams and combining them with each 
 
 However if one of the streams outperforms the other even slightly, events from the faster `Observable` will need to wait longer and longer for the lagging stream.
 
-![](../uploads/rprx_03in06.png)
+![](../resources/images/rxjava/rprx_03in06.png)
 
 `zip()` completes early if any of the upstream `Observable`s complete, discarding other streams early.
 
@@ -446,7 +446,7 @@ When streams are synchronized, this value oscillates around zero. However, if we
 
 ### combineLatest() 
 
-![](../uploads/rprx_03in07.png)
+![](../resources/images/rxjava/rprx_03in07.png)
 
 Take the following artificial example. One stream produces `S0`, `S1`, `S2` values every 17 milliseconds whereas the other `F0`, `F1`, `F2` every 10 milliseconds (considerably faster):
 
@@ -486,7 +486,7 @@ RxJava notices the new event on the fast stream so takes whatever the latest val
 
 ### withLatestFrom()
 
-![](../uploads/withLatestFrom.png)
+![](../resources/images/rxjava/withLatestFrom.png)
 
 It is similar to combineLatest, but only emits items when the single source Observable emits an item. Events from the second stream do not trigger a downstream event; they are used only when first stream emits.
 
@@ -551,7 +551,7 @@ Observable
 
 ### amb()
 
-![](../uploads/rprx_03in08.png)
+![](../resources/images/rxjava/rprx_03in08.png)
 
 amb() (together with ambWith()) waits for the very first item emitted. When one of the `Observable`s emits the first event, `amb()` discards all other streams and just keep forwarding events from the first `Observable` that woke up.
 
@@ -596,7 +596,7 @@ The `slow` stream produces events less frequently, but the first event appears a
 
 `scan()` is like a bulldozer, going through the source (upstream) `Observable` and accumulating items. 
 
-![](../uploads/scan.png)
+![](../resources/images/rxjava/scan.png)
 
 `scan()` takes two parameters: the last generated value (known as the _accumulator_) and current value from upstream `Observable`. In the first iteration, `total` is simply the first item from `progress`, whereas in the second iteration it becomes the result of `scan()` from the previous one.
 
@@ -618,7 +618,7 @@ Observable<BigInteger> factorials = Observable
 
 `scab`  care about intermediate results, but `reduce` just the final one.
 
-![](../uploads/reduce.png)
+![](../resources/images/rxjava/reduce.png)
 
 `reduce()` is implemented using `scan().takeLast(1).single()`.
 
@@ -655,7 +655,7 @@ public <R> Observable<R> reduce(
 
 The `collect` operator is similar to `reduce` but is specialized for the purpose of collecting the whole set of items emitted by the source Observable into a single mutable data structure to be emitted by the resulting Observable.
 
-![](../uploads/collect.png)
+![](../resources/images/rxjava/collect.png)
 
 ```java
 Observable<List<Integer>> all = Observable
@@ -697,7 +697,7 @@ Suppress duplicate items emitted by an Observable. The Distinct operator filters
 
 The comparison happens by means of `equals()` and `hashCode()`, so ensure that you implement them according to Java guidelines (two equal objects _must_ have the same hash code). 
 
-![](../uploads/distinct.png)
+![](../resources/images/rxjava/distinct.png)
 
 ```java
 Observable.just(1, 2, 1, 1, 2, 3)
@@ -706,7 +706,7 @@ Observable.just(1, 2, 1, 1, 2, 3)
 
 In practice, `distinctUntilChanged()` is often more reasonable. In the case of `distinctUntilChanged()`, any given event is discarded only if the previous event was the same (by default using `equals()` for comparison). `distinctUntilChanged()` works best when we receive a steady stream of some measurements and we want to be notified only when the measured value actually changed.
 
-![](../uploads/distinctUntilChanged.png)
+![](../resources/images/rxjava/distinctUntilChanged.png)
 
 We experimented with `Observable<Weather>`, with `Weather` having two attributes: `Temperature` and `Wind`. A new `Weather` event can appear once every minute, but the weather does not change that often, so we would like to drop duplicated events and focus only on changes:
 
@@ -776,11 +776,11 @@ The `takeFirst(predicate)` operator can be expressed by `filter(predicate).take(
 
 `takeUntil()` emits values from the source `Observable` but completes and unsubscribes after emitting the very first value _matching_ `predicate`. 
 
-![](../uploads/takeUntil.png)
+![](../resources/images/rxjava/takeUntil.png)
 
 `takeWhile()`, conversely, emits values as long as they match a given predicate. 
 
-![](../uploads/takeWhile.png)
+![](../resources/images/rxjava/takeWhile.png)
 
 So the only difference is that `takeUntil()` will emit the first nonmatching value, whereas `takeWhile()` will not. These operators are quite important because they provide a means of conditionally unsubscribing from an `Observable` based on the events being emitted. Otherwise, the operator would need to somehow interact with the `Subscription` instance, which is not available when the operator is invoked.
 
@@ -793,7 +793,7 @@ Observable.range(1, 5).takeWhile(x -> x != 3);  // [1, 2]
 
 Extracting a specific item by index is rather uncommon, but you can use the built-in `elementAt(n)` operator for that. It is quite strict, and it can result in an `IndexOutOfBoundsException` being emitted when upstream `Observable` is not long enough or the index is negative. Of course, it returns `Observable<T>` of the same type `T` as upstream.
 
-![](../uploads/elementAt.png)
+![](../resources/images/rxjava/elementAt.png)
 
 ### `…OrDefault()` operators
 
@@ -858,7 +858,7 @@ We can finally see how `concat()`, `merge()`, and `switchOnNext()` differ.
 
 `concat()` (and instance method  `concatWith()`) allow joining together two `Observable`s: when the first one completes, `concat()` subscribes to the second one. Importantly, `concat()` will subscribe to the second `Observable` if, and only if, the first one is completed.
 
-![](../uploads/concat.png)
+![](../resources/images/rxjava/concat.png)
 
 `concat()` is providing fallback value when first stream did not emit anything:
 
@@ -879,7 +879,7 @@ Observable<Car> found = Observable
 
 `merge()` subscribes to words of each person immediately and forwards them downstream, no matter which person is speaking. If two streams emit an event at more or less the same time, they are both forwarded right away. There is no buffering or halting events within this operator.
 
-![](../uploads/merge.png)
+![](../resources/images/rxjava/merge.png)
 
 ```java
 Observable
@@ -973,7 +973,7 @@ Jane:  philosophy
 
 ### switchOnNext
 
-![](../uploads/switchDo.png)
+![](../resources/images/rxjava/switchDo.png)
 
 `switchOnNext()` begins by subscribing to an outer `Observable<Observable<T>>`, which emits inner `Observable<T>`s. As soon as the first inner `Observable<T>` appears, this operator subscribes to it and begins pushing events of type `T` downstream. Now what happens if next inner `Observable<T>` appears? `switchOnNext()` discards the first `Observable<T>` by unsubscribing from it and switches to the next one (thus, the name). In other words, when we have a stream of streams, `switchOnNext()` always forwards downstream events from the last inner stream, even if older streams keep forwarding fresh events.
 
@@ -1037,15 +1037,15 @@ In the case of delaying only events in every inner `Observable` (variant _A_) th
 
 Periodically gather items emitted by an Observable into bundles and emit these bundles rather than emitting the items one at a time.
 
-![](../uploads/buffer3.png)
+![](../resources/images/rxjava/buffer3.png)
 
-![](../uploads/buffer4.png)
+![](../resources/images/rxjava/buffer4.png)
 
 ## Criteria-Based Splitting of Stream Using groupBy()
 
 Divide an Observable into a set of Observables that each emit a different subset of items from the original Observable.
 
-![](../uploads/groupBy.png)
+![](../resources/images/rxjava/groupBy.png)
 
 ```java
 Observable<ReservationEvent> facts = factStore.observe();
@@ -1273,7 +1273,7 @@ TODO ch06 for more.
 
 Window is similar to [Buffer](http://reactivex.io/documentation/operators/buffer.html), but rather than emitting packets of items from the source Observable, it emits Observables, each one of which emits a subset of items from the source Observable and then terminates with an `onCompleted` notification.
 
-![](../uploads/window3.png)
+![](../resources/images/rxjava/window3.png)
 
 ```java
 Observable<KeyEvent> keyEvents = //...

@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Java Cryptography - ECC | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="ECC很多人都听说过加密算法，包括ECC、ECDH或者ECDSA。ECC是Elliptic Curve Cryptography的缩写，就是椭圆加密算法，ECDH和ECDSA是ECC的不同实现。
+椭圆加密算法的应用范围很广，主要的三个技术 TLS、PGP以及SSH 都在使用它，更别提比特币以及其他加密数字货币了。
+在椭圆加密算法流行之前，绝大多数的公钥加密算法都是基于RSA、DSA以及DH这些基于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Cryptography - ECC">
+<meta property="og:url" content="http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="ECC很多人都听说过加密算法，包括ECC、ECDH或者ECDSA。ECC是Elliptic Curve Cryptography的缩写，就是椭圆加密算法，ECDH和ECDSA是ECC的不同实现。
+椭圆加密算法的应用范围很广，主要的三个技术 TLS、PGP以及SSH 都在使用它，更别提比特币以及其他加密数字货币了。
+在椭圆加密算法流行之前，绝大多数的公钥加密算法都是基于RSA、DSA以及DH这些基于">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-8ee3bbea234a8538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/165">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/785822-6c9ac5e2d832271e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-e5a23063156c261b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/440">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-ada1cd71cb2934d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-01a7671c7b8b3028.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/488">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-44d41eb2a2d7917c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-ea55d7f664296250.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/287">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-85f0ed4e61c77f27.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-b67b787448fc72d4.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-e9777c7fcafca805.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/104">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-fed9da41ba13d3e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/110">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-64d2f81fa9a952f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/130">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-ab46380833155f96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/253">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-c9ee32ebd18a685c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/205">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-b7bfa44d4aefee3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/438">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-18093086d6b2cc2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/445">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-e0d532a0c86d80b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/135">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-8ed662547eb47738.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/233">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-52209bffece45d64.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/445">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-dd08aba62c8d2e19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/192">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-a05354232c519c65.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/673">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/785822-b95a001e969cad78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/377">
+<meta property="og:updated_time" content="2018-08-19T02:44:58.281Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Cryptography - ECC">
+<meta name="twitter:description" content="ECC很多人都听说过加密算法，包括ECC、ECDH或者ECDSA。ECC是Elliptic Curve Cryptography的缩写，就是椭圆加密算法，ECDH和ECDSA是ECC的不同实现。
+椭圆加密算法的应用范围很广，主要的三个技术 TLS、PGP以及SSH 都在使用它，更别提比特币以及其他加密数字货币了。
+在椭圆加密算法流行之前，绝大多数的公钥加密算法都是基于RSA、DSA以及DH这些基于">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/785822-8ee3bbea234a8538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/165">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/style/style.css?v=1.6.17">
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2846834382442028",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Java Cryptography - ECC</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Java Cryptography - ECC</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-19T02:44:58.281Z" itemprop="datePublished" class="page-time">
+  2018-08-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/">Cryptography</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/Java/">Java</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/Java/Android/">Android</a></li></ul></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ECC"><span class="post-toc-text">ECC</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#椭圆曲线"><span class="post-toc-text">椭圆曲线</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#群-Groups"><span class="post-toc-text">群(Groups)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#椭圆曲线里的群公理"><span class="post-toc-text">椭圆曲线里的群公理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#几何学上的加法"><span class="post-toc-text">几何学上的加法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代数上的加法"><span class="post-toc-text">代数上的加法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#标量乘法"><span class="post-toc-text">标量乘法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#对数"><span class="post-toc-text">对数</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-2018-8-17-cryptography-guide-ecc"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Java Cryptography - ECC</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-19 10:44:58" datetime="2018-08-19T02:44:58.281Z"  itemprop="datePublished">2018-08-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/">Cryptography</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/Java/">Java</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/Java/Android/">Android</a></li></ul></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="ECC"><a href="#ECC" class="headerlink" title="ECC"></a>ECC</h2><p>很多人都听说过加密算法，包括ECC、ECDH或者ECDSA。ECC是Elliptic Curve Cryptography的缩写，就是椭圆加密算法，ECDH和ECDSA是ECC的不同实现。</p>
+<p>椭圆加密算法的应用范围很广，主要的三个技术 <a href="https://link.jianshu.com/?t=https%3A%2F%2Ftools.ietf.org%2Fhtml%2Frfc4492" target="_blank" rel="external">TLS</a>、<a href="https://link.jianshu.com/?t=https%3A%2F%2Ftools.ietf.org%2Fhtml%2Frfc6637" target="_blank" rel="external">PGP</a>以及<a href="https://link.jianshu.com/?t=https%3A%2F%2Ftools.ietf.org%2Fhtml%2Frfc5656" target="_blank" rel="external">SSH</a> 都在使用它，更别提<a href="https://link.jianshu.com/?t=https%3A%2F%2Fen.bitcoin.it%2Fwiki%2FSecp256k1" target="_blank" rel="external">比特币</a>以及其他加密数字货币了。</p>
+<p>在椭圆加密算法流行之前，绝大多数的公钥加密算法都是基于RSA、DSA以及DH这些基于模运算的替代加密系统。这些加密算法在今天依然占据非常重要的位置。然而，尽管ECC背后的这些算法很容易理解而且广泛使用，但是对于绝大多数人来说，这些算法是一个谜团。</p>
+<h2 id="椭圆曲线"><a href="#椭圆曲线" class="headerlink" title="椭圆曲线"></a>椭圆曲线</h2><p>首先：什么是椭圆曲线？Wolfram MathWorld给出了个准确非凡的定义<a href="https://link.jianshu.com/?t=http%3A%2F%2Fmathworld.wolfram.com%2FEllipticCurve.html" target="_blank" rel="external">椭圆曲线</a>。但对于目前的我们来说，椭圆曲线可以暂时简单的理解为<strong>描述了特定点的集合的公式</strong>：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-8ee3bbea234a8538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/165" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>该公式在椭圆曲线里面称为<em>Weierstrass normal form</em>  </p>
+<p>其中， <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/785822-6c9ac5e2d832271e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>以下是a和b参数的变化对应的图形的示例：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-e5a23063156c261b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/440" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>b=1，a取值范围从2到-3</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-ada1cd71cb2934d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>特殊曲线：左边参数是a=b=0，右边参数是a=-3，b=2.这两条都不是符合标准的曲线</p>
+<p>a和b的取值变化决定了曲线在坐标系上的不同形状。从图中可以看到，椭圆曲线是相对X轴对称。</p>
+<p>为了达到我们的目的，我们还要定义一个<strong><a href="https://link.jianshu.com/?t=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FPoint_at_infinity" target="_blank" rel="external">无穷大的点</a></strong>（也可以成为理想点），从现在开始，我们以符号0，也就是零表示该点。</p>
+<p>把上面几个点结合起来，我们的椭圆曲线公式就变成了</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-01a7671c7b8b3028.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/488" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="群-Groups"><a href="#群-Groups" class="headerlink" title="群(Groups)"></a>群(Groups)</h2><p>数学上，群(Groups)指的是我们定义了二元操作“运算”并且用符号+表示的一个集合。假定我们要操作的群用 𝔾表示，那么我们在这个群上面要定义的“运算”必须符合以下几个属性：</p>
+<ul>
+<li><strong>闭包</strong>。如果a和b都是𝔾的成员，那么a+b也是𝔾的成员。</li>
+<li><strong>组合性</strong>。(a+b)+c=a+(b+c)</li>
+<li><strong>单位元</strong>。存在确切的一个值，称之为单位元，0可以保证该等式成立 a+0=0+a=a</li>
+<li><strong>逆元</strong>。每个成员都有一个相反数：对于任意值a必定存在b使得a+b=0</li>
+</ul>
+<p>如果加上第五条这要求：</p>
+<ul>
+<li><strong>交换性</strong>a+b=b+a</li>
+</ul>
+<p>这样的群我们称之为 <a href="https://link.jianshu.com/?t=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%25E9%2598%25BF%25E8%25B2%259D%25E7%2588%25BE%25E7%25BE%25A4" target="_blank" rel="external">阿贝尔群</a>。</p>
+<p>根据以上的定义，我们很容易得知，整数集合 ℤ 是一个群，也可以称之为  <a href="https://link.jianshu.com/?t=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%25E9%2598%25BF%25E8%25B2%259D%25E7%2588%25BE%25E7%25BE%25A4" target="_blank" rel="external">阿贝尔群</a>。自然数集合  ℕ 却不是一个群，因为不符合第四个属性（自然数都是整数，不存在a+b=0）。</p>
+<p>根据组的这四个属性，我们很容易可以推导出其他属性。比如：第三个属性的确切的值0是唯一的；相反数也是唯一的，也就意味着a+b=0，a的相反数b也是唯一的。这些属性有助于我们接下去的数学逻辑推理。</p>
+<h2 id="椭圆曲线里的群公理"><a href="#椭圆曲线里的群公理" class="headerlink" title="椭圆曲线里的群公理"></a>椭圆曲线里的群公理</h2><p>如上文所说，我们可以基于椭圆曲线定义一个群。特别要指出的是：</p>
+<ul>
+<li>群里的元素都在椭圆曲线上</li>
+<li>椭圆上的单位元指的是无限远点</li>
+<li>椭圆上的点P的逆元与P关于X轴轴对称</li>
+<li>定义+运算：给定三个非零的点 P，Q和R，则P+Q+R=0（无限远点）成立</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-44d41eb2a2d7917c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>P+Q+R=0（无限远点）</p>
+<p>注意：最后一条公理里，给出了三个点，但是没有限定顺序，也就意味着P+(Q+R)=Q+(P+R)=R+(P+Q)=⋯=0。这就充分表明了，这里定义的+运算符符合群公理的组合性和交换性，也就意味着椭圆曲线符合阿贝尔群。</p>
+<p>到目前为止，一切都推理挺顺利的，对吧。那么问题来了，我们要如何计算两个任意点之和呢？</p>
+<h2 id="几何学上的加法"><a href="#几何学上的加法" class="headerlink" title="几何学上的加法"></a>几何学上的加法</h2><p>因为椭圆曲线是阿贝尔群，所以公式P+Q+R=0  以及 P+Q=−R成立。根据这些公式，我们可以从几何学的角度去计算点P+点Q的值：在椭圆曲线上画出点P和点Q，连直线穿过P和Q，该直线会与椭圆曲线相较于第三个点，称之为R。根据R取得R的逆元-R，P+Q=-R。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-ea55d7f664296250.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/287" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>运用几何学的方法很容易得到我们要的结果，但是我们需要再对一些更精确的解释。特别是有一些问题需要考虑：</p>
+<ul>
+<li>如果P=0或者Q=0(0是无穷远点)呢？我们当然无法画出该直线，因为无穷远点无法体现在直角坐标系里。但是既然已经定义了无穷远点0，那么对于任意给定的P或者Q，P+0=P以及0+Q=Q都是成立的。</li>
+<li>如果P=-Q呢？这种情况下该直线是与X轴是垂直的，并且不会与椭圆曲线相交于第三个点。 根据公理，P就是Q的逆元，P+Q=P+(-P)=0。</li>
+<li><p>如果P=Q呢？这种情况下，存在无数条线穿过这个点。这里要用到极限的思维。假设线上有另外一个点Q1，让Q1不断靠近P，会怎么样？</p>
+<p>  <img src="https://upload-images.jianshu.io/upload_images/785822-85f0ed4e61c77f27.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt=""></p>
+<p>  随着两个点的不断靠近，最终产生的线跟椭圆曲线是切线关系</p>
+<p>  随着Q1不断靠近P，最终Q1无限靠近P，产生了一条直线与椭圆曲线相切。那么可以得到 P+P=-R, 在这里R就是该直线与椭圆曲线的另外一个交点。</p>
+</li>
+<li><p>如果P≠Q，但是不存在第三个交点R呢？这种情况和上一个情况很类似。实际上，这种情况下该直线跟椭圆曲线是相切的关系。</p>
+<p>  <img src="https://upload-images.jianshu.io/upload_images/785822-b67b787448fc72d4.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt=""></p>
+<p>  假设P就是相切的点。在上一个情况里，有该等式P+P=-Q。而在这里变成了P+Q=-P。另一方面，如果Q是相切的点，那么P+Q=-Q。</p>
+</li>
+</ul>
+<p>我们需要了解的几何学只是已经差不多涵盖了所有情况了。只要给我们笔和尺子，我们就能在椭圆曲线上执行加法。<strong>如果有兴趣，可以到</strong><a href="https://link.jianshu.com/?t=https%3A%2F%2Fcdn.rawgit.com%2Fandreacorbellini%2Fecc%2F920b29a%2Finteractive%2Freals-add.html" target="_blank" rel="external">HTML5/JavaScript visual tool</a><strong>计算椭圆曲线上的加法</strong></p>
+<h2 id="代数上的加法"><a href="#代数上的加法" class="headerlink" title="代数上的加法"></a>代数上的加法</h2><p>要计算点的加法的话，我们必须把前面的几何学的讨论转到代数上的讨论。最直接的方法是把上面的公理用代数上的公式表示出来，但是这件事情会很乏味而且需要解决一些三次方程。所以在这里我就只给出结果吧。</p>
+<p>首先，声明下我们暂时不讨论一些特殊情况。比如我们已经知道了P+(-P)=0，P+0=0+P=P，所以，接下去我们不考虑这两种情况。我们考虑的是 <strong>非0，非对称的点 P和Q，如下图</strong></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-e9777c7fcafca805.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/104" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-fed9da41ba13d3e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/110" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><strong>[声明下，因为编辑器的问题，下文中将用P=(xP,yP)(P是下标)来表示这种等式，否则一直贴图排版很累]</strong></p>
+<p>如果xP≠xQ(P和Q是下标)，那么该直线的斜率是：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-64d2f81fa9a952f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/130" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>该直线与椭圆曲线相交的第三个点R(xR,yR)(R是下标)：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-ab46380833155f96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/253" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>或者也可以写成：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-c9ee32ebd18a685c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/205" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>特别强调一下  (xP,yP)+(xQ,yQ)=(xR,−yR)（P，Q，R都是下标）。<br>如果要检查结果是否正确，我们需要检查R是否在椭圆曲线上，以及P，Q和R是否都在直线上。检查这些点是否在直线上是显而易见的，然而检查R是否属于椭圆曲线并不是，因为我们不得不解决一个一点都不有趣的三次方程问题。</p>
+<p>考虑这么一个例子：根据我们给出的<a href="https://link.jianshu.com/?t=https%3A%2F%2Fcdn.rawgit.com%2Fandreacorbellini%2Fecc%2F920b29a%2Finteractive%2Freals-add.html" target="_blank" rel="external">visual tool</a>，给定的P=（1，2）和Q=（3，4）都在曲线上y2=x3−7x+10（y的2次方，x的3次方），那么P+Q=-R=（-3，2）。反过来去根据我们前面的公式验证该结果是否正确：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-b7bfa44d4aefee3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/438" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>验证正确！</p>
+<p>注意，即使P或者Q是切点，该等式依然成立。拿P=(-1,4) Q=(1,2)尝试下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-18093086d6b2cc2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/445" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>得到的结果是P+Q=(1,-2)，该结果与用该工具<a href="https://link.jianshu.com/?t=https%3A%2F%2Fcdn.rawgit.com%2Fandreacorbellini%2Fecc%2F920b29a%2Finteractive%2Freals-add.html%3Fpx%3D-1%26py%3D4%26qx%3D1%26qy%3D2" target="_blank" rel="external">visual tool</a>计算是一样的。</p>
+<p><strong>另一种情况P=Q则需要另外处理了</strong>：关于xR以及yR的公式是一样的，但是针对直线的斜率必须用另外的方式处理：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-e0d532a0c86d80b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/135" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>注意，该公式是由一下公式推导出来的：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-8ed662547eb47738.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/233" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>为了证明该公式的正确性，有必要验证R是否属于椭圆曲线上，以及P和R连成的直线与椭圆曲线有且仅有2个交点。但是在这里，我们不作证明，先做个测试：P=Q=(1,2)</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-52209bffece45d64.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/445" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>所以得出 P+P=-R=(-1, -4)。<a href="https://link.jianshu.com/?t=https%3A%2F%2Fcdn.rawgit.com%2Fandreacorbellini%2Fecc%2F920b29a%2Finteractive%2Freals-add.html%3Fpx%3D1%26py%3D2%26qx%3D1%26qy%3D2" target="_blank" rel="external">正确</a></p>
+<h2 id="标量乘法"><a href="#标量乘法" class="headerlink" title="标量乘法"></a>标量乘法</h2><p>除了加法之外，我们定义另外一个运算：标量乘法：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-dd08aba62c8d2e19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/192" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>在这里n是一个自然数。嗯，我写了个<strong><a href="https://link.jianshu.com/?t=https%3A%2F%2Fcdn.rawgit.com%2Fandreacorbellini%2Fecc%2F920b29a%2Finteractive%2Freals-mul.html" target="_blank" rel="external">visual tool</a></strong>用来玩标量乘法，有兴趣点击去试试吧。</p>
+<p>该公式看起来计算nP需要计算n次加法。如果n是k个二进制位，那么该算法复杂度是O(2k)（2的k次方），计算量有点大。但是其实存在更快速的方案。</p>
+<p>其中一个就是<strong>先做倍数再做加法</strong>。要了解基本原理还是直接看例子会比较快。假设n=151，其对应的二进制是10010111。而该二进制数字可以转化为：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-a05354232c519c65.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/673" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>所以我们可以这么写：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload-images.jianshu.io/upload_images/785822-b95a001e969cad78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/377" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>所以，该运算过程是这样的：</p>
+<ul>
+<li>获取P</li>
+<li>取P的2倍，得到2P</li>
+<li>2P加上P</li>
+<li>把2P再取2倍，得到4P</li>
+<li>4P加上2P加上P</li>
+<li>4P再取2倍，得到8P</li>
+<li>不取8P做运算</li>
+<li>8P取2倍，得到16P</li>
+<li>16P加上4P加上2P加上P</li>
+<li><p>……  </p>
+<p>  最终，要得到151P我们只是做了一些简单的倍数以及加法。</p>
+</li>
+</ul>
+<p>如果还是不清楚，可以看看下面的Python代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">bits</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    Generates the binary digits of n, starting</div><div class="line">    from the least significant bit.</div><div class="line"></div><div class="line">    bits(151) -&gt; 1, 1, 1, 0, 1, 0, 0, 1</div><div class="line">    """</div><div class="line">    <span class="keyword">while</span> n:</div><div class="line">        <span class="keyword">yield</span> n &amp; <span class="number">1</span></div><div class="line">        n &gt;&gt;= <span class="number">1</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">double_and_add</span><span class="params">(n, x)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    Returns the result of n * x, computed using</div><div class="line">    the double and add algorithm.</div><div class="line">    """</div><div class="line">    result = <span class="number">0</span></div><div class="line">    addend = x</div><div class="line"></div><div class="line">    <span class="keyword">for</span> bit <span class="keyword">in</span> bits(n):</div><div class="line">        <span class="keyword">if</span> bit == <span class="number">1</span>:</div><div class="line">            result += addend</div><div class="line">        addend *= <span class="number">2</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<p>如果倍数和加法都是复杂度为O(1)的运算，那么该算法的复杂度就是O(log n)（或者O(k)）（考虑到k个bit的长度）。依然比O(n)的复杂度要好。</p>
+<h2 id="对数"><a href="#对数" class="headerlink" title="对数"></a>对数</h2><p>给定n和P，我们运算Q=nP至少需要一个多项式时间。但是如果反过来呢？<strong>如果我们知道Q和P，要反过来得到n呢？</strong>该问题被认为是对数问题。为了与其他加密算法保持一致性，我们称该问题为“对数”问题而非“除法”。</p>
+<p>我并不清楚什么是“简单”的问题，但是从<a href="https://link.jianshu.com/?t=https%3A%2F%2Fcdn.rawgit.com%2Fandreacorbellini%2Fecc%2F920b29a%2Finteractive%2Freals-mul.html%3Fa%3D-3%26b%3D1%26px%3D0%26py%3D1" target="_blank" rel="external">该链接里的乘法</a>，很容易看出一些规则。举个例子，假设该曲线是  y2=x3−3x+1（y的2次方，x的3次方），P点是（0，1）。我们很容易验证得到，如果n是奇数，nP是在左半边坐标轴里，如果n是偶数，nP在右半边坐标轴里。如果做更多实验，甚至发现更多规则，最终可以写出算法让我们计算曲线可以更高效。</p>
+<p>但是还有个算法问题：离散数学问题。在下篇文章里，我们会讨论如果我们减少椭圆曲线的域，标量乘法依然是个“简单”的数学问题，然而离散数学变成一个“困难”的数学问题。这种二元性就是椭圆加密算法的核心。</p>
+<p>注：该文章翻译自<a href="https://link.jianshu.com/?t=http%3A%2F%2Fandrea.corbellini.name%2F2015%2F05%2F17%2Felliptic-curve-cryptography-a-gentle-introduction%2F" target="_blank" rel="external">这里</a>，如果有翻译不当的地方，请指正。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-08-19T02:44:58.281Z" itemprop="dateUpdated">2018-08-19 10:44:58</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html" target="_blank" rel="external">http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html&title=《Java Cryptography - ECC》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html&title=《Java Cryptography - ECC》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java Cryptography - ECC》 — Balance&url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Java Cryptography Guide</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2018</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html&title=《Java Cryptography - ECC》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html&title=《Java Cryptography - ECC》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java Cryptography - ECC》 — Balance&url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADNUlEQVR42u3awW7bQAwE0Pz/T7vXFoWdGVJBrPXTqRAcad8K6IDkfn3F1yO4/v/l33eePfPZndm7Lr6wsbGxb8JuX5DDnmFeI6/a9Ge/wcbGxj6V3S43j6hnL87v/0RYYmNjY38yu11iUirMtqZdJzY2NjZ23hJqi5C2OJl9HmxsbOyz2Xnb6HXMtAVG3pb6tV4aNjY29tuz86no+//7R+bb2NjY2G/MfpTX/lTM/vzMbOX/PA0bGxv7IHYeAHmZMRvcbg79DMcP2NjY2AexN+2YnxgbzIbEwxIFGxsb++bs149uwe0z8yOVsw2KKjBsbGzsm7OT5W4A7fa1pU6+QdHBHWxsbOybs9s2zew1m4FBHk51JGNjY2Pflp1EQtLu38fbsJCYFUXY2NjYH8CeRVHy+6tSN9mIp0/GxsbGPo6dlxl5pG2WmI8QhmUSNjY29sew20Z/HoGzw0CzY0AXPxobGxv7Ldltmz4vOTZb1vZ/irdjY2NjH8Rul5VE0ayomB2mnI0ZsLGxsc9jP4IrD5VkEW1MRt+tHEJgY2Njn8eeLXd/+GbfPMoP99RzY2xsbOy3Z+9LhQQzKxvaAmnYSMLGxsa+ObuNsYTRDhtmjf62HIp6adjY2Ni3Zc+OPG6iblYIXRWf2NjY2Oex2zIgWXrdrB/VC8n9b0IRGxsb++bs2Xh1E2n5RudbUzewsLGxsQ9ibxo6s1ZOcr/t4beDDWxsbOzz2EkLvgiGOLo2xcx+o7GxsbHPYOdlRn4Uph0GtC2kfCAxbCphY2Nj34q9acTnUdQOaNvPkLScosTGxsbGvi27/a9/ExXtcZy2XCkOaGJjY2Mfyr5qKcmT84XmEVh8JGxsbOyPYW8O08wOd+btp/woTx1g2NjY2DdhP8orHwlvxgxtlNaTbWxsbOyD2LP42YwQZkvcNJtWeGxsbOybsNsQyps4eUzOWkv5X33tsxcbGxv77dl5W2fTvk9CaDZgqNtM2NjY2B/MbgcGSYGRB2FbhBTTA2xsbOyPYc8a8Tny2jHzN00lbGxs7IPYbeMmL1TyMGubUG3Rgo2NjX0qe3OQMQm/zfHKnLoplrCxsbFvy/4DDgyH882Q3gwAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

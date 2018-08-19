@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Java Cryptography Guide | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="Java与密码学Java安全体系结构总共分为4个部分：
+
+JCA（ Java Cryptography Architecture， Java加密体系结构）：JCA提供基本的加密框架， 如证书、 数字签名、消息摘要和密钥对产生器。
+JCE（ Java Cryptography Extension， Java加密扩展包）：JCE在JCA的基础上作了扩展， 提供了各种加密算法、 消息摘要算法和密钥管理等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Cryptography Guide">
+<meta property="og:url" content="http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="Java与密码学Java安全体系结构总共分为4个部分：
+
+JCA（ Java Cryptography Architecture， Java加密体系结构）：JCA提供基本的加密框架， 如证书、 数字签名、消息摘要和密钥对产生器。
+JCE（ Java Cryptography Extension， Java加密扩展包）：JCE在JCA的基础上作了扩展， 提供了各种加密算法、 消息摘要算法和密钥管理等">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/741560/201704/741560-20170409082229050-386019464.png">
+<meta property="og:updated_time" content="2018-08-19T02:44:58.283Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Cryptography Guide">
+<meta name="twitter:description" content="Java与密码学Java安全体系结构总共分为4个部分：
+
+JCA（ Java Cryptography Architecture， Java加密体系结构）：JCA提供基本的加密框架， 如证书、 数字签名、消息摘要和密钥对产生器。
+JCE（ Java Cryptography Extension， Java加密扩展包）：JCE在JCA的基础上作了扩展， 提供了各种加密算法、 消息摘要算法和密钥管理等">
+<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/741560/201704/741560-20170409082229050-386019464.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/style/style.css?v=1.6.17">
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2846834382442028",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Java Cryptography Guide</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Java Cryptography Guide</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-19T02:44:58.281Z" itemprop="datePublished" class="page-time">
+  2018-08-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/">Cryptography</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/Java/">Java</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/Java/Android/">Android</a></li></ul></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java与密码学"><span class="post-toc-text">Java与密码学</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#体验加解密—凯撒密码"><span class="post-toc-text">体验加解密—凯撒密码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java对称加密-DES算法"><span class="post-toc-text">Java对称加密-DES算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#生成密钥"><span class="post-toc-text">生成密钥</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#获取密钥生成器"><span class="post-toc-text">获取密钥生成器</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#初始化密钥生成器"><span class="post-toc-text">初始化密钥生成器</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#生成密钥-1"><span class="post-toc-text">生成密钥</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#加密"><span class="post-toc-text">加密</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#从文件中获取密钥"><span class="post-toc-text">从文件中获取密钥</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#创建密码器（Cipher对象）"><span class="post-toc-text">创建密码器（Cipher对象）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#初始化密码器"><span class="post-toc-text">初始化密码器</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#获取等待加密的明文"><span class="post-toc-text">获取等待加密的明文</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#执行加密"><span class="post-toc-text">执行加密</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解密"><span class="post-toc-text">解密</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#获取密文"><span class="post-toc-text">获取密文</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#获取密钥"><span class="post-toc-text">获取密钥</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#创建密码器（Cipher对象）-1"><span class="post-toc-text">创建密码器（Cipher对象）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#初始化密码器-1"><span class="post-toc-text">初始化密码器</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#执行解密"><span class="post-toc-text">执行解密</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java非对称加密-RSA算法"><span class="post-toc-text">Java非对称加密-RSA算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#生成密钥对"><span class="post-toc-text">生成密钥对</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#加密-1"><span class="post-toc-text">加密</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解密-1"><span class="post-toc-text">解密</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用密钥协定创建共享密钥"><span class="post-toc-text">使用密钥协定创建共享密钥</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建DH公钥和私钥"><span class="post-toc-text">创建DH公钥和私钥</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建共享密钥"><span class="post-toc-text">创建共享密钥</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要算法-MD5"><span class="post-toc-text">摘要算法- MD5</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#See"><span class="post-toc-text">See</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-2018-8-17-java-cryptography-guide"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Java Cryptography Guide</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-19 10:44:58" datetime="2018-08-19T02:44:58.281Z"  itemprop="datePublished">2018-08-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/">Cryptography</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/Java/">Java</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/Java/Android/">Android</a></li></ul></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Java与密码学"><a href="#Java与密码学" class="headerlink" title="Java与密码学"></a>Java与密码学</h2><p>Java安全体系结构总共分为4个部分：</p>
+<ul>
+<li>JCA（ Java Cryptography Architecture， Java加密体系结构）：JCA提供基本的加密框架， 如证书、 数字签名、消息摘要和密钥对产生器。</li>
+<li>JCE（ Java Cryptography Extension， Java加密扩展包）：JCE在JCA的基础上作了扩展， 提供了各种加密算法、 消息摘要算法和密钥管理等功能。JCE的实现主要在javax.crypto包（ 及其子包） 中</li>
+<li>JSSE（ Java Secure Sockets Extension， Java安全套接字扩展包）：JSSE提供了基于SSL（ Secure Sockets Layer，安全套接字层） 的加密功能。 在网络的传输过程中， 信息会经过多个主机（很有可能其中一台就被窃听） ， 最终传送给接收者， 这是不安全的。这种确保网络通信安全的服务就是由JSSE来提供的。</li>
+<li>JAAS（ Java Authentication and Authentication Service， Java鉴别与安全服务）：JAAS提供了在Java平台上进行用户身份鉴别的功能。</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://images2015.cnblogs.com/blog/741560/201704/741560-20170409082229050-386019464.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>JCA和JCE是Java平台提供的用于安全和加密服务的两组API。它们并不执行任何算法，它们只是连接应用和实际算法实现程序的一组接口。 软件开发商可以根据JCE接口（ 又称安全提供者接口） 将各种算法实现后，打包成一个Provider（ 安全提供者） ， 动态地加载到Java运行环境中。 根据美国出口限制规定， JCA可出口， 但JCE对部分国家是限制出口的。 因此， 要实现一个完整的安全结构， 就需要一个或多个第三方厂商提供的JCE产品， 称为安全提供者。 BouncyCastle JCE就是其中的一个安全提供 者。</p>
+<p>安全提供者是承担特定安全机制实现的第三方。 有些提供者是完全免费的， 而另一些提供者则需要付费。 提供安全提供者的公司有Sun、 Bouncy Castle等， Sun（Oracle）提供了如何开发安全提供者的细节。 Bouncy Castle提供了可以在J2ME/J2EE/J2SE平台得到支持的API， 而且Bouncy Castle的API是免费的。JDK 1.4版本及其后续版本中包含了上述扩展包，无须进行配置。</p>
+<h2 id="体验加解密—凯撒密码"><a href="#体验加解密—凯撒密码" class="headerlink" title="体验加解密—凯撒密码"></a>体验加解密—凯撒密码</h2><p>密码学是在战争中发家的，即使最简单的凯撒密码也不例外。凯撒密码是罗马扩张时期朱利斯•凯撒（Julius Caesar）创造的，用于加密通过信使传递的作战命令。它将字母表中的字母移动一定位置而实现加密。</p>
+<p>在密码学中存在着各种各样的置换方式，但所有不同的置换方式都包含2个相同的元素。密钥和协议(算法)。凯撒密码的密钥是3，算法是将普通字母表中的字母用密钥对应的字母替换。置换加密的优点就在于它易于实施却难于破解. 发送方和接收方很容易事先商量好一个密钥，然后通过密钥从明文中生成密文，即是敌人若获取密文，通过密文直接猜测其代表的意义，在实践中是不可能的。</p>
+<p>凯撒密码的加密算法极其简单。其加密过程如下：</p>
+<p>在这里，我们做此约定：明文记为m，密文记为c，加密变换记为E(k1,m)（其中k1为密钥），解密变换记为D(k2,m)（k2为解密密钥）（在这里k1=k2,不妨记为k）。凯撒密码的加密过程可记为如下一个变换：</p>
+<p>c≡m+k mod n （其中n为基本字符个数）</p>
+<p>同样，解密过程可表示为：m≡c+k mod n （其中n为基本字符个数）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">    String s=args[<span class="number">0</span>];</div><div class="line">    <span class="keyword">int</span> key=Integer.parseInt(args[<span class="number">1</span>]);</div><div class="line">    String es=<span class="string">""</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length( );i++)&#123;  <span class="keyword">char</span> c=s.charAt(i);</div><div class="line">        <span class="keyword">if</span>(c&gt;=<span class="string">'a'</span> &amp;&amp; c&lt;=<span class="string">'z'</span>)&#123; <span class="comment">// 是小写字母</span></div><div class="line">            c+=key%<span class="number">26</span>;  <span class="comment">//移动key%26位</span></div><div class="line">            <span class="keyword">if</span>(c&lt;<span class="string">'a'</span>) c+=<span class="number">26</span>;  <span class="comment">//向左超界</span></div><div class="line">            <span class="keyword">if</span>(c&gt;<span class="string">'z'</span>) c-=<span class="number">26</span>;  <span class="comment">//向右超界</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(c&gt;=<span class="string">'A'</span> &amp;&amp; c&lt;=<span class="string">'Z'</span>)&#123; <span class="comment">// 是大写字母</span></div><div class="line">            c+=key%<span class="number">26</span>;</div><div class="line">            <span class="keyword">if</span>(c&lt;<span class="string">'A'</span>) c+=<span class="number">26</span>;</div><div class="line">            <span class="keyword">if</span>(c&gt;<span class="string">'Z'</span>) c-=<span class="number">26</span>;</div><div class="line">        &#125;</div><div class="line">       </div><div class="line">       es+=c;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    System.out.println(es);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该程序既可用于加密又可用于解密：</p>
+<pre><code>java Caesar 明文（要加密的字符串） 密钥（移动的位数）
+</code></pre><p>在密钥前面加上负号即可解密</p>
+<pre><code>java Caesar 明文（要加密的字符串） -密钥（移动的位数）
+</code></pre><p>如为了加密字符串“Hello World!”，可随意取一个密钥如 4，运行：</p>
+<pre><code>java Caesar &quot;Hello World!&quot; 4
+</code></pre><p>将输出“Lipps Asvph!”。这里“Hello World!”是明文，“Lipps Asvph!”是密文。</p>
+<p>如果密钥大于26，程序中移位前会和26取模而将其调整到26以下。因此运行：</p>
+<pre><code>java Caesar &quot;Hello World!&quot; 30
+</code></pre><p>同样将输出“Lipps Asvph!”。</p>
+<p>为了将密文“Lipps Asvph!”解密，需要知道加密该密文所用的密钥4，这样，执行：</p>
+<pre><code>java Caesar &quot;Lipps Asvph!&quot; -4
+</code></pre><p>将得到明文“Hello World!”。</p>
+<p>如果密钥和加密时所用的不同，则解密时将得到无意义的输出，如运行</p>
+<pre><code>java Caesar &quot;Lipps Asvph!&quot; –3
+</code></pre><p>程序将输出“Ifmmp Xpsme!”。这样，只有知道密钥才能得到原来的密文。</p>
+<p>一般人见到”Lipps Asvph!”，能否猜出是“Hello World!”？我们可以通过暴力破解把0-25都试一遍，也可以通过统计手段进行破解。</p>
+<p>See also <a href="https://www.jianshu.com/p/2196a601d444" target="_blank" rel="external">常见的安全算法 - 简书</a></p>
+<h2 id="Java对称加密-DES算法"><a href="#Java对称加密-DES算法" class="headerlink" title="Java对称加密-DES算法"></a>Java对称加密-DES算法</h2><p>本实例给出Java中创建对称密钥的步骤，并通过对象序列化方式保存在文件中。</p>
+<h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><h4 id="获取密钥生成器"><a href="#获取密钥生成器" class="headerlink" title="获取密钥生成器"></a>获取密钥生成器</h4><pre><code>KeyGenerator kg=KeyGenerator.getInstance(&quot;DESede&quot;);  
+</code></pre><p>分析：Java中 <code>KeyGenerator</code> 类中提供了创建对称密钥的方法。Java中的类一般使用new操作符通过构造器创建对象，但KeyGenerator类不是这样，它预定义了一个静态方法 <code>getInstance()</code>，通过它获得KeyGenerator类型的对象。这种类成为工厂类或工厂。  </p>
+<p>方法 <code>getInstance()</code>的参数为字符串类型，指定加密算法的名称。可以是</p>
+<ul>
+<li><code>Blowfish</code></li>
+<li><code>DES</code></li>
+<li><code>DESede</code></li>
+<li><code>HmacMD5</code></li>
+<li><code>HmacSHA1</code></li>
+<li>…</li>
+</ul>
+<p>这些算法都可以实现加密，这里我们不关心这些算法的细节，只要知道其使用上的特点即可。其中<code>DES</code> 是目前最常用的对称加密算法，但安全性较差。针对DES安全性的改进产生了能满足当前安全需要的 <code>TripleDES</code> 算法，即 <code>DESede</code>。<code>Blowfish</code> 的密钥长度可达448位，安全性很好。<code>AES</code>是一种替代DES算法的新算法，可提供很好的安全性。</p>
+<h4 id="初始化密钥生成器"><a href="#初始化密钥生成器" class="headerlink" title="初始化密钥生成器"></a>初始化密钥生成器</h4><pre><code>kg.init(168);  
+</code></pre><p>分析：该步骤一般指定密钥的长度。如果该步骤省略的话，会根据算法自动使用默认的密钥长度。</p>
+<ul>
+<li><code>DES</code>，则密钥长度必须是56位</li>
+<li><code>DESede</code>，则可以是112或168位，其中112位有效；</li>
+<li><code>AES</code>，可以是128, 192或256位；</li>
+<li><code>Blowfish</code>，则可以是32至448之间可以被8整除的数；</li>
+<li><code>HmacMD5</code> 和<code>HmacSHA1</code>默认的密钥长度都是64个字节。</li>
+</ul>
+<h4 id="生成密钥-1"><a href="#生成密钥-1" class="headerlink" title="生成密钥"></a>生成密钥</h4><pre><code>SecretKey k=kg.generateKey( );  
+</code></pre><p>分析：使用第一步获得的KeyGenerator类型的对象中<code>generateKey()</code>方法可以获得密钥。其类型为SecretKey类型，可用于以后的加密和解密。</p>
+<p><strong>通过对象序列化方式将密钥保存在文件中</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FileOutputStream f=new FileOutputStream(&quot;key1.dat&quot;);  </div><div class="line">ObjectOutputStream b=new ObjectOutputStream(f);  </div><div class="line">b.writeObject(k);</div></pre></td></tr></table></figure>
+<p>分析：ObjectOutputStream类中提供的writeObject方法可以将对象序列化，以流的方式进行处理。这里将文件输出流作为参数传递给ObjectOutputStream类的构造器，这样创建好的密钥将保存在文件key1.data中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.*;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Skey_DES</span></span>&#123; </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">        KeyGenerator kg=KeyGenerator.getInstance(<span class="string">"DESede"</span>);</div><div class="line">        kg.init(<span class="number">168</span>); </div><div class="line">        SecretKey k=kg.generateKey( );</div><div class="line">        FileOutputStream  f=<span class="keyword">new</span> FileOutputStream(<span class="string">"key1.dat"</span>);</div><div class="line">        ObjectOutputStream b=<span class="keyword">new</span>  ObjectOutputStream(f);</div><div class="line">        b.writeObject(k);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行java Skey_DES，在当前目录下将生成文件 <code>key1.dat</code>，其中包含的密钥可以用于使用Triple-DES算法的加密和解密。</p>
+<p>上面的示例将密钥通过对象序列化方式保存在文件中，在文件中保存的是对象，本实例以另一种方式保存在文件中，即以字节保存在文件中。</p>
+<p>Java中所有的密钥类都有一个 <code>getEncoded()</code>方法，通过它可以从密钥对象中获取主要编码格式，其返回值是字节数组。其主要步骤为：</p>
+<p><strong>读取密钥</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FileInputStream f=<span class="keyword">new</span> FileInputStream(<span class="string">"key1.dat"</span>);</div><div class="line">ObjectInputStream b=<span class="keyword">new</span> ObjectInputStream(f);</div><div class="line">Key k=(Key)b.readObject( );</div></pre></td></tr></table></figure>
+<p>分析：首先创建文件输入流，然后将其作为参数传递给对象输入流，最后执行对象输入流的 <code>readObject()</code> 方法读取密钥对象。由于 <code>readObject()</code>返回的是Object类型，因此需要强制转换成Key类型。</p>
+<p><strong>获取主要编码格式</strong></p>
+<pre><code>byte[] kb=k.getEncoded( );
+</code></pre><p>分析：执行SecretKey类型的对象k的getEncoded( )方法，返回的编码放在byte类型的数组中。</p>
+<p><strong>保存密钥编码格式</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">FileOutputStream f2=<span class="keyword">new</span> FileOutputStream(<span class="string">"keykb1.dat"</span>);  </div><div class="line">f2.write(kb);</div></pre></td></tr></table></figure>
+<p>分析：先创建文件输出流对象，在其参数中指定文件名，如keykb1.dat。然后执行文件输出流的write( )方法将第2步中得到的字节数组中的内容写入文件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.security.*;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Skey_kb</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">        FileInputStream f=<span class="keyword">new</span> FileInputStream(<span class="string">"key1.dat"</span>);</div><div class="line">        ObjectInputStream b=<span class="keyword">new</span> ObjectInputStream(f);</div><div class="line">        Key k=(Key)b.readObject( );</div><div class="line">        <span class="keyword">byte</span>[ ] kb=k.getEncoded( );</div><div class="line">        FileOutputStream  f2=<span class="keyword">new</span> FileOutputStream(<span class="string">"keykb1.dat"</span>);</div><div class="line">       f2.write(kb);</div><div class="line">        <span class="comment">// 打印密钥编码中的内容</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;kb.length;i++)&#123;</div><div class="line">                 System.out.print(kb[i]+<span class="string">","</span>);</div><div class="line">        &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序中在保存了密钥编码后，又使用循环语句将字节数组中的内容打印出来。这样可以较为直观地看到密钥编码的内容。</p>
+<p>运行程序</p>
+<p>输入java Skey_kb 运行程序，在程序的当前目录中将产生文件名为keykb1.dat的文件，屏幕输出如下：</p>
+<blockquote>
+<p>11,-105,-119,50,4,-105,16,38,-14,-111,21,-95,70,-15,76,-74,67,-88,59,-71,55,-125,104,42,</p>
+</blockquote>
+<p>此即程序中创建的密钥的编码内容，如果用文本编辑器打开keykb1.dat，看到的不是上面的数字而是类似下面的字符：</p>
+<blockquote>
+<p>棄2 ?&amp;驊 馤禖??僪*</p>
+</blockquote>
+<p>这是因为keykb1.dat是一个二进制文件，存放的是任意二进制数。</p>
+<p>读者运行时肯定结果和上面会有所不同,每次运行时生成的密钥都不会相同，这就保证了密钥的唯一性。作为对称密钥，只要保证若加密某段文字用的是某个密钥，则解密这段密文时用同样的密钥即可。</p>
+<h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><p>本实例的输入是面生成并以对象方式保存在文件key1.dat中的密钥，以及需要加密的一段最简单的字符串”Hello World!”，使用密钥对”Hello World!”进行加密，加密后的信息保存在文件中。</p>
+<p>首先要从文件中获取已经生成的密钥，然后考虑如何使用密钥进行加密。这涉及到各种算法。Java中已经提供了常用的加密算法，我们执行Java中Cipher类的各个方法就可以完成加密过程，其主要步骤为：</p>
+<h4 id="从文件中获取密钥"><a href="#从文件中获取密钥" class="headerlink" title="从文件中获取密钥"></a>从文件中获取密钥</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FileInputStream f=<span class="keyword">new</span> FileInputStream(<span class="string">"key1.dat"</span>);  </div><div class="line">ObjectInputStream b=<span class="keyword">new</span> ObjectInputStream(f);  </div><div class="line">Key k=(Key)b.readObject( );</div></pre></td></tr></table></figure>
+<h4 id="创建密码器（Cipher对象）"><a href="#创建密码器（Cipher对象）" class="headerlink" title="创建密码器（Cipher对象）"></a>创建密码器（Cipher对象）</h4><pre><code>Cipher cp=Cipher.getInstance(&quot;DESede&quot;);
+</code></pre><p>分析：和KeyGenerator类一样，Cipher类是一个工厂类，它不是通过new方法创建对象，而是通过其中预定义的一个静态方法 <code>getInstance()</code>获取Cipher对象。</p>
+<p><code>getInstance()</code> 方法的参数是一个字符串，该字符串给出Cipher对象应该执行哪些操作，因此把传入的字符串称为转换（transformation）。通常通过它指定加密算法或解密所用的算法的名字，如本例的”DESede”。此外还可以同时指定反馈模式及填充方案等，如 “DESede/ECB/PKCS5Padding”。</p>
+<h4 id="初始化密码器"><a href="#初始化密码器" class="headerlink" title="初始化密码器"></a>初始化密码器</h4><pre><code>cp.init(Cipher.ENCRYPT_MODE, k);  
+</code></pre><p>分析：该步骤执行Cipher对象的<code>init()</code>方法对Cipher对象进行初始化。该方法包括两个参数，第一个参数指定密码器准备进行加密还是解密，若传入 <code>Cipher.ENCRYPT_MODE</code> 则进入加密模式。第二个参数则传入加密或解密所使用的密钥，即第1步从文件中读取的密钥对象k。</p>
+<h4 id="获取等待加密的明文"><a href="#获取等待加密的明文" class="headerlink" title="获取等待加密的明文"></a>获取等待加密的明文</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String s=<span class="string">"Hello World!"</span>;</div><div class="line"><span class="keyword">byte</span> ptext[]=s.getBytes(<span class="string">"UTF8"</span>);</div></pre></td></tr></table></figure>
+<p>分析：Cipher对象所作的操作是针对字节数组的，因此需要将要加密的内容转换成字节数组。本例中要加密的是一个字符串s，可以使用字符串的 <code>getBytes()</code> 方法获得对应的字节数组。<code>getBytes()</code> 方法中必须使用参数”UTF8”指定。</p>
+<h4 id="执行加密"><a href="#执行加密" class="headerlink" title="执行加密"></a>执行加密</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">byte</span> ctext[]=cp.doFinal(ptext);</div></pre></td></tr></table></figure>
+<p>分析：执行Cipher对象的doFinal( )方法，该方法的参数中传入待加密的明文，从而按照前面几步设置的算法及各种模式对所传入的明文进行加密操作，该方法返回加密的结果。</p>
+<p><strong>处理加密结果</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">FileOutputStream f2=<span class="keyword">new</span> FileOutputStream(<span class="string">"SEnc.dat"</span>);</div><div class="line">f2.write(ctext);</div></pre></td></tr></table></figure>
+<p>分析：第5步得到的加密结果是字节数组，对其可作各种处理，如在网上传递、保存在文件中等。这里将其保存在文件Senc.dat中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.security.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.*;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SEnc</span></span>&#123;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">     String s=<span class="string">"Hello World!"</span>;</div><div class="line">    FileInputStream f=<span class="keyword">new</span> FileInputStream(<span class="string">"key1.dat"</span>);</div><div class="line">    ObjectInputStream b=<span class="keyword">new</span> ObjectInputStream(f);</div><div class="line">    Key k=(Key)b.readObject( );</div><div class="line">        Cipher cp=Cipher.getInstance(<span class="string">"DESede"</span>);</div><div class="line">        cp.init(Cipher.ENCRYPT_MODE, k);</div><div class="line">        <span class="keyword">byte</span> ptext[]=s.getBytes(<span class="string">"UTF8"</span>);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;ptext.length;i++)&#123;</div><div class="line">            System.out.print(ptext[i]+<span class="string">","</span>);</div><div class="line">        &#125;</div><div class="line">        System.out.println(<span class="string">""</span>);</div><div class="line">        <span class="keyword">byte</span> ctext[]=cp.doFinal(ptext);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;ctext.length;i++)&#123;</div><div class="line">             System.out.print(ctext[i] +<span class="string">","</span>);</div><div class="line">        &#125;</div><div class="line">        FileOutputStream f2=<span class="keyword">new</span> FileOutputStream(<span class="string">"SEnc.dat"</span>);</div><div class="line">        f2.write(ctext);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序中使用两个循环语句将字节数组加密前后加密后的内容打印出来，可作为对比。</p>
+<p>当前目录下必须有前面生成的密钥文件key1.dat，</p>
+<p>输入java SEnc运行程序，在程序的当前目录中将产生文件名为SEnc.dat的文件，屏幕输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">72,101,108,108,111,32,87,111,114,108,100,33,</div><div class="line">-57,119,0,-45,-9,23,37,-56,-60,-34,-99,105,99,113,-17,76,</div></pre></td></tr></table></figure>
+<p>其中第一行为字符串 “Hello World!”的字节数组编码方式，第二行为加密后的内容，第二行的内容会随着密钥的不同而不同。</p>
+<p>第一行的内容没有加过密，任何人若得到第一行数据，只要将其用二进制方式写入文本文件，用文本编辑器打开文件就可以看到对应的字符串“Hello World!”。而第二行的内容由于是加密过的，没有密钥的人即使得到第二行的内容也无法知道其内容。</p>
+<p>密文同时保存在SEnc.dat文件中，将其提供给需要的人时，需要同时提供加密时使用的密钥（key1.dat，或keykb1.dat），这样收到SEnc.dat中密文的人才能够解密文件中的内容。</p>
+<h3 id="解密"><a href="#解密" class="headerlink" title="解密"></a>解密</h3><p>前面加密后的密文SEnc.dat，以及加密时所使用的密钥key1.dat或keykb1.dat，本实例对SEnc.dat中的密文进行解密，得到明文。</p>
+<p>首先要从文件中获取加密时使用的密钥，然后考虑如何使用密钥进行解密。其主要步骤为：</p>
+<h4 id="获取密文"><a href="#获取密文" class="headerlink" title="获取密文"></a>获取密文</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">FileInputStream f=<span class="keyword">new</span> FileInputStream(<span class="string">"SEnc.dat"</span>);</div><div class="line">        <span class="keyword">int</span> num=f.available();</div><div class="line">        <span class="keyword">byte</span>[ ] ctext=<span class="keyword">new</span> <span class="keyword">byte</span>[num];          </div><div class="line">        f.read(ctext);</div></pre></td></tr></table></figure>
+<p>分析：密文存放在文件SEnc.dat中，由于解密是针对字节数组进行操作的，因此要先将密文从文件中读入字节数组。首先创建文件输入流，然后使用文件输入流的available( )方法判断密文将占用多少字节，从而创建相应大小的字节数组ctext，最后使用文件输入流的read( )方法一次性读入数组ctext。</p>
+<h4 id="获取密钥"><a href="#获取密钥" class="headerlink" title="获取密钥"></a>获取密钥</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">FileInputStream  f2=<span class="keyword">new</span> FileInputStream(<span class="string">"keykb1.dat"</span>);</div><div class="line"><span class="keyword">int</span> num2=f2.available();</div><div class="line"><span class="keyword">byte</span>[ ] keykb=<span class="keyword">new</span> <span class="keyword">byte</span>[num2];          </div><div class="line">f2.read(keykb);</div><div class="line">SecretKeySpec k=<span class="keyword">new</span>  SecretKeySpec(keykb,<span class="string">"DESede"</span>);</div></pre></td></tr></table></figure>
+<p>SecretKeySpec类的构造器中第2个参数则指定加密算法。由于keykb1.dat中的密钥原来使用的是DESede算法，因此这里仍旧使用字符串“DESede”作为参数。</p>
+<h4 id="创建密码器（Cipher对象）-1"><a href="#创建密码器（Cipher对象）-1" class="headerlink" title="创建密码器（Cipher对象）"></a>创建密码器（Cipher对象）</h4><pre><code>Cipher cp=Cipher.getInstance(&quot;DESede&quot;);
+</code></pre><h4 id="初始化密码器-1"><a href="#初始化密码器-1" class="headerlink" title="初始化密码器"></a>初始化密码器</h4><pre><code>cp.init(Cipher.DECRYPT_MODE, k);
+</code></pre><h4 id="执行解密"><a href="#执行解密" class="headerlink" title="执行解密"></a>执行解密</h4><pre><code>byte []ptext=cp.doFinal(ctext);
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.security.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.spec.*;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SDec</span></span>&#123;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">        <span class="comment">// 获取密文</span></div><div class="line">        FileInputStream f=<span class="keyword">new</span> FileInputStream(<span class="string">"SEnc.dat"</span>);</div><div class="line">        <span class="keyword">int</span> num=f.available();</div><div class="line">        <span class="keyword">byte</span>[ ] ctext=<span class="keyword">new</span> <span class="keyword">byte</span>[num];          </div><div class="line">        f.read(ctext);</div><div class="line">        <span class="comment">// 获取密钥</span></div><div class="line">        FileInputStream  f2=<span class="keyword">new</span> FileInputStream(<span class="string">"keykb1.dat"</span>);</div><div class="line">        <span class="keyword">int</span> num2=f2.available();</div><div class="line">        <span class="keyword">byte</span>[ ] keykb=<span class="keyword">new</span> <span class="keyword">byte</span>[num2];          </div><div class="line">        f2.read(keykb);</div><div class="line">        SecretKeySpec k=<span class="keyword">new</span>  SecretKeySpec(keykb,<span class="string">"DESede"</span>);</div><div class="line">        <span class="comment">// 解密</span></div><div class="line">        Cipher cp=Cipher.getInstance(<span class="string">"DESede"</span>);</div><div class="line">        cp.init(Cipher.DECRYPT_MODE, k);</div><div class="line">        <span class="keyword">byte</span> []ptext=cp.doFinal(ctext);</div><div class="line">         <span class="comment">// 显示明文</span></div><div class="line">        String p=<span class="keyword">new</span> String(ptext,<span class="string">"UTF8"</span>);</div><div class="line">        System.out.println(p);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序中最后将明文生成字符串加以显示。</p>
+<p>运行程序</p>
+<p>当前目录下必须有前面生成的密钥文件keykb1.dat，以及密文文件SEnc.dat。</p>
+<p>输入java SDec运行程序，将输出明文字符串“Hello World!”。</p>
+<h2 id="Java非对称加密-RSA算法"><a href="#Java非对称加密-RSA算法" class="headerlink" title="Java非对称加密-RSA算法"></a>Java非对称加密-RSA算法</h2><p>下面演示如何使用Java中定义好的类创建RSA公钥和私钥。</p>
+<p>Java的KeyPairGenerator类提供了一些方法来创建密钥对以便用于非对称加密，密钥对创建好后封装在KeyPair类型的对象中，在KeyPair类中提供了获取公钥和私钥的方法。具体步骤如下：</p>
+<p>See also <a href="http://www.cnblogs.com/jingmoxukong/p/5688306.html" target="_blank" rel="external">Java 安全加密算法</a></p>
+<h3 id="生成密钥对"><a href="#生成密钥对" class="headerlink" title="生成密钥对"></a>生成密钥对</h3><p><strong>创建密钥对生成器</strong></p>
+<pre><code>KeyPairGenerator kpg=KeyPairGenerator.getInstance(&quot;RSA&quot;);  
+</code></pre><p>分析：密钥对生成器即KeyPairGenerator类型的对象，和2.2.1小节的第1步中介绍的KeyGenerator类一样，KeyPairGenerator类是一个工厂类，它通过其中预定义的一个静态方法<code>getInstance()</code>获取KeyPairGenerator类型的对象。<code>getInstance()</code>方法的参数是一个字符串，指定非对称加密所使用的算法，常用的有RSA，DSA等。</p>
+<p><strong>初始化密钥生成器</strong></p>
+<pre><code>kpg.initialize(1024);  
+</code></pre><p>分析：对于密钥长度。对于RSA算法，这里指定的其实是RSA算法中所用的模的位数。可以在512到2048之间。</p>
+<p><strong>生成密钥对</strong></p>
+<pre><code>KeyPair kp=kpg.genKeyPair( );  
+</code></pre><p>分析：使用KeyPairGenerator类的genKeyPair( )方法生成密钥对，其中包含了一对公钥和私钥的信息。</p>
+<p><strong>获取公钥和私钥</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">PublicKey pbkey=kp.getPublic( );  </div><div class="line">PrivateKey prkey=kp.getPrivate( );</div></pre></td></tr></table></figure>
+<p>分析：使用KeyPair类的getPublic( )和getPrivate( )方法获得公钥和私钥对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.security.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.spec.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Skey_RSA</span></span>&#123;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">        KeyPairGenerator kpg=KeyPairGenerator.getInstance(<span class="string">"RSA"</span>);</div><div class="line">        kpg.initialize(<span class="number">1024</span>);</div><div class="line">        KeyPair kp=kpg.genKeyPair();</div><div class="line">        PublicKey pbkey=kp.getPublic();</div><div class="line">        PrivateKey prkey=kp.getPrivate();</div><div class="line">        <span class="comment">//  保存公钥        </span></div><div class="line">        FileOutputStream  f1=<span class="keyword">new</span> FileOutputStream(<span class="string">"Skey_RSA_pub.dat"</span>);</div><div class="line">        ObjectOutputStream b1=<span class="keyword">new</span>  ObjectOutputStream(f1);</div><div class="line">        b1.writeObject(pbkey);</div><div class="line">        <span class="comment">//  保存私钥</span></div><div class="line">        FileOutputStream  f2=<span class="keyword">new</span> FileOutputStream(<span class="string">"Skey_RSA_priv.dat"</span>);</div><div class="line">        ObjectOutputStream b2=<span class="keyword">new</span>  ObjectOutputStream(f2);</div><div class="line">        b2.writeObject(prkey);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>分析：使用对象流将密钥保存在文件中，加密所用的公钥和解密所用的私钥分开保存。将公钥对外公布，供其他人加密使用，而把私钥秘密保存，在需要解密时使用。</p>
+<p>运行程序</p>
+<p>输入java Skey_RSA运行程序，当前目录下将生成两个文件：Skey_RSA_pub.dat和Skey_RSA_priv.dat，前者保存着公钥，后者保存着私钥。将文件Skey_RSA_pub.dat对外公布（如放在Web服务器上给大家下载，或者直接拷贝给所有需要的人），而Skey_RSA_priv.dat秘密保存。</p>
+<h3 id="加密-1"><a href="#加密-1" class="headerlink" title="加密"></a>加密</h3><p>以加密一串最简单的字符串“Hello World!”为例，演示了如何使用上面生成的RSA公钥文件Skey_RSA_pub.dat进行加密。</p>
+<p>使用RSA公钥进行加密的代码和使用DESede进行加密其实没什么大的区别，只是Cipher类的getInstance( )方法的参数中应该指定使用RSA。但由于J2SDK1.4中只实现了RSA密钥的创建，没有实现RSA算法，因此需要安装其他加密提供者软件才能直接使用Cipher类执行加密解密。其实有了RSA公钥和私钥后，自己编写程序从底层实现RSA算法也并不复杂。本实例给出简单的例子实现了RSA加密，使读者只使用J2SDK1.4便能直观地了解非对称加密算法。</p>
+<p>RSA算法是使用整数进行加密运算的，在RSA公钥中包含了两个信息：公钥对应的整数e和用于取模的整数n。对于明文数字m，计算密文的公式是：me mod n。因此，编程步骤如下：</p>
+<p><strong>获取公钥</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FileInputStream f=<span class="keyword">new</span> FileInputStream(<span class="string">"Skey_RSA_pub.dat"</span>);</div><div class="line">      ObjectInputStream b=<span class="keyword">new</span> ObjectInputStream(f);</div><div class="line">      RSAPublicKey  pbk=(RSAPublicKey)b.readObject( );</div></pre></td></tr></table></figure>
+<p>分析： 从公钥文件Skey_RSA_pub.dat中读取公钥，由于生成使用的是RSA算法，因此从文件读取公钥对象后强制转换为RSAPublicKey类型，以便后面读取RSA算法所需要的参数。</p>
+<p><strong>获取公钥的参数(e, n)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">BigInteger e=pbk.getPublicExponent();  </div><div class="line">BigInteger n=pbk.getModulus();</div></pre></td></tr></table></figure>
+<p>分析：使用RSAPublicKey类的getPublicExponent( )和getModulus( )方法可以分别获得公始中e和n的值。由于密钥很长，因此对应的整数值非常大，无法使用一般的整型来存储，Java中定义了BigInteger类来存储这类很大的整数并可进行各种运算。</p>
+<p><strong>获取明文整数(m)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">String s=&quot;Hello World!&quot;;  </div><div class="line">byte ptext[]=s.getBytes(&quot;UTF8&quot;);  </div><div class="line">BigInteger m=new BigInteger(ptext);</div></pre></td></tr></table></figure>
+<p>分析：明文是一个字符串，为了用整数表达这个字符串，先使用字符串的getBytes( )方法将其转换为byte类型数组，它其实是字符串中各个字符的二进制表达方式，这一串二进制数转换为一个整数将非常大，因此仍旧使用BigInteger类将这个二进制串转换为整型。<br>本实例中出于简化，将整个字符串转换为一个整数。实际使用中，应该对明文进行分组，因为RSA算法要求整型数m的值必须小于n。</p>
+<p><strong>执行计算</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">BigInteger c=m.modPow(e,n);</div></pre></td></tr></table></figure>
+<p>分析：计算前面的公式：me mod n。BigInteger类中已经提供了方法modPow( )来执行这个计算。底数m执行这个方法，方法modPow( )的第一个参数即指数e，第二个参数即模n。方法返回的结果即公式me mod n的计算结果，即密文。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.security.*;</div><div class="line"><span class="keyword">import</span> java.security.spec.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.spec.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.interfaces.*;</div><div class="line"><span class="keyword">import</span> java.security.interfaces.*;</div><div class="line"><span class="keyword">import</span> java.math.*;</div><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Enc_RSA</span></span>&#123;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">        String s=<span class="string">"Hello World!"</span>;</div><div class="line">        <span class="comment">// 获取公钥及参数e,n</span></div><div class="line">        FileInputStream f=<span class="keyword">new</span> FileInputStream(<span class="string">"Skey_RSA_pub.dat"</span>);</div><div class="line">        ObjectInputStream b=<span class="keyword">new</span> ObjectInputStream(f);</div><div class="line">        RSAPublicKey  pbk=(RSAPublicKey)b.readObject( );</div><div class="line">        BigInteger e=pbk.getPublicExponent();</div><div class="line">        BigInteger n=pbk.getModulus();</div><div class="line">        System.out.println(<span class="string">"e= "</span>+e);</div><div class="line">        System.out.println(<span class="string">"n= "</span>+n);</div><div class="line">        <span class="comment">// 明文 m</span></div><div class="line">        <span class="keyword">byte</span> ptext[]=s.getBytes(<span class="string">"UTF8"</span>);</div><div class="line">        BigInteger m=<span class="keyword">new</span> BigInteger(ptext);</div><div class="line">        <span class="comment">// 计算密文c,打印</span></div><div class="line">        BigInteger c=m.modPow(e,n);</div><div class="line">        System.out.println(<span class="string">"c= "</span>+c);</div><div class="line">       <span class="comment">// 保存密文</span></div><div class="line">        String cs=c.toString( );</div><div class="line">        BufferedWriter out= </div><div class="line">             <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> OutputStreamWriter(</div><div class="line">                <span class="keyword">new</span> FileOutputStream(<span class="string">"Enc_RSA.dat"</span>)));</div><div class="line">        out.write(cs,<span class="number">0</span>,cs.length( ));</div><div class="line">        out.close( );</div><div class="line"></div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序最后将密文c打印出来，并以字符串形式保存在文件中。</p>
+<p>运行程序</p>
+<p>输入java Enc_RSA运行程序，得到如下结果：</p>
+<p>其中显示了公钥中的参数以及加密的结果c，这些都是很大的整数，n和c多达上百位。程序运行后密文c以字符串形式保存在文件Enc_RSA.dat中。</p>
+<h3 id="解密-1"><a href="#解密-1" class="headerlink" title="解密"></a>解密</h3><p>下面实例使用私钥文件Skey_RSA_priv.dat，对密文文件Enc_RSA.dat进行解密。</p>
+<p>使用RSA私钥进行解密的代码也可以在Cipher类的getInstance( )方法的参数中指定使用RSA，使用解密模式进行解密。但需要安装其他加密提供者软件才能直接使用Cipher类执行加密解密。本实例给出简单的例子从底层实现RSA解密，以便只使用J2SDK1.4便能直观地了解非对称加密算法。  </p>
+<p>RSA算法的解密和加密类似，在RSA私钥中包含了两个信息：私钥对应的整数d和用于取模的整数n。其中的n和加密时的n完全相同。对于密文数字c，计算明文的公式是：cd mod n，之所以加密时由公式me mod n得到的密文c通过这个公式计算一下就可以反过来得到原来的明文m，有其本身的数学规律决定。从编程角度只需要知道这个结果就行了。编程步骤如下：</p>
+<p><strong>读取密文</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">BufferedReader in= </div><div class="line">          <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(</div><div class="line"><span class="keyword">new</span> FileInputStream(<span class="string">"Enc_RSA.dat"</span>)));</div><div class="line">String ctext=in.readLine();</div><div class="line">BigInteger c=<span class="keyword">new</span> BigInteger(ctext);</div></pre></td></tr></table></figure>
+<p>分析： 从密文文件Enc_RSA.dat中读取密文，由于保存的只是一行字符串，因此只要一条readLine( )语句即可。由于这一行字符串表示的是一个很大的整型数，因此使用BigInteger类来表示这个整型数。</p>
+<p><strong>获取私钥</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FileInputStream f=<span class="keyword">new</span> FileInputStream(<span class="string">"Skey_RSA_priv.dat"</span>);</div><div class="line">ObjectInputStream b=<span class="keyword">new</span> ObjectInputStream(f);</div><div class="line">RSAPrivateKey prk=(RSAPrivateKey)b.readObject( );</div></pre></td></tr></table></figure>
+<p>分析： 从私钥文件Skey_RSA_priv.dat中读取公钥，由于使用的是RSA算法，因此从文件读取公钥对象后强制转换为RSAPrivateKey类型，以便后面读取RSA算法所需要的参数。</p>
+<p><strong>获取私钥的参数(d, n)</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">BigInteger d=prk.getPrivateExponent( );</div><div class="line">BigInteger n=prk.getModulus( );</div></pre></td></tr></table></figure>
+<p>分析：使用RSAPrivateKey类的getPrivateExponent( )和getModulus( )方法可以分别获得公始中d和n的值。</p>
+<p><strong>执行计算</strong></p>
+<pre><code>BigInteger m=c.modPow(d,n);
+</code></pre><p>分析：使用BigInteger的modPow( )方法计算前面的公式：cd mod n。方法返回的结果即公式cd mod n的计算结果，即明文对应的整型数m。</p>
+<p><strong>计算明文整型数对应的字符串</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">byte</span>[] mt=m.toByteArray();</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;mt.length;i++)&#123;</div><div class="line">       System.out.print((<span class="keyword">char</span>) mt[i]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>分析：RSA算法解密的结果m是一个很大的整数，为了计算出其对应的字符串的值，先使用BigInteger类的toByteArray( )方法得到代表该整型数的字节数组，然后将数组中每个元素转换为字符，组成字符串。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.security.*;</div><div class="line"><span class="keyword">import</span> java.security.spec.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.spec.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.interfaces.*;</div><div class="line"><span class="keyword">import</span> java.security.interfaces.*;</div><div class="line"><span class="keyword">import</span> java.math.*;</div><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dec_RSA</span></span>&#123;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">       <span class="comment">//读取密文</span></div><div class="line">        BufferedReader in= </div><div class="line">                <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(</div><div class="line"><span class="keyword">new</span> FileInputStream(<span class="string">"Enc_RSA.dat"</span>)));</div><div class="line">        String ctext=in.readLine();</div><div class="line">        BigInteger c=<span class="keyword">new</span> BigInteger(ctext);</div><div class="line">       <span class="comment">//读取私钥</span></div><div class="line">        FileInputStream f=<span class="keyword">new</span> FileInputStream(<span class="string">"Skey_RSA_priv.dat"</span>);</div><div class="line">        ObjectInputStream b=<span class="keyword">new</span> ObjectInputStream(f);</div><div class="line">        RSAPrivateKey prk=(RSAPrivateKey)b.readObject( );</div><div class="line">        BigInteger d=prk.getPrivateExponent();</div><div class="line">       <span class="comment">//获取私钥参数及解密 </span></div><div class="line">        BigInteger n=prk.getModulus();</div><div class="line">        System.out.println(<span class="string">"d= "</span>+d);</div><div class="line">        System.out.println(<span class="string">"n= "</span>+n);</div><div class="line">        BigInteger m=c.modPow(d,n);</div><div class="line">       <span class="comment">//显示解密结果</span></div><div class="line">        System.out.println(<span class="string">"m= "</span>+m);</div><div class="line">        <span class="keyword">byte</span>[] mt=m.toByteArray();</div><div class="line">        System.out.println(<span class="string">"PlainText is "</span>);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;mt.length;i++)&#123;</div><div class="line">             System.out.print((<span class="keyword">char</span>) mt[i]);</div><div class="line">       &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行程序输入java Dec_RSA运行程序，得到如下结果：</p>
+<p>其中显示了私钥中的参数以及解密的结果，其中整型的明文转换后显示出字符串“Hello World!”。</p>
+<h2 id="使用密钥协定创建共享密钥"><a href="#使用密钥协定创建共享密钥" class="headerlink" title="使用密钥协定创建共享密钥"></a>使用密钥协定创建共享密钥</h2><p>非对称加密解决了密钥分发的难题，但其计算量比对称密钥大，因此一般并不使用非对称加密加密大量数据。常见的做法是：主要数据通过对称密钥加密，而使用非对称加密来分发对称密钥，这样就将两者的优势结合了起来。</p>
+<p>例如若A和B之间想秘密传送大量数据，一方（如A）先创建公私钥对，公钥对外公布，另一方（如B）创建对称密钥，然后使用A的公钥加密对称密钥，传递给A，A收到后用自己的私钥解密，得到对称密钥，以后A和B之间就可以使用对称密钥加密通信了。</p>
+<p>除了这种方式以外，还可以使用密钥协定来交换对称密钥。执行密钥协定的标准算法是DH算法（Diffie-Hellman算法），本节介绍在Java中如何使用DH算法来交换共享密钥。</p>
+<h3 id="创建DH公钥和私钥"><a href="#创建DH公钥和私钥" class="headerlink" title="创建DH公钥和私钥"></a>创建DH公钥和私钥</h3><p>DH算法是建立在DH公钥和私钥的基础上的， A需要和B共享密钥时，A和B各自生成DH公钥和私钥，公钥对外公布而私钥各自秘密保存。本实例将介绍Java中如何创建并部署DH公钥和私钥，以便后面一小节利用它创建共享密钥。</p>
+<p>和上面使用KeyPairGenerator类创建RSA公钥和私钥类似，只是其参数中指定“DH”，此外在初始化时需要为DH指定特定的参数。</p>
+<p>代码与分析：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.math.*;</div><div class="line"><span class="keyword">import</span> java.security.*;</div><div class="line"><span class="keyword">import</span> java.security.spec.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.spec.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.interfaces.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Key_DH</span></span>&#123;</div><div class="line">       <span class="comment">//三个静态变量的定义从</span></div><div class="line"><span class="comment">// C:\j2sdk-1_4_0-doc\docs\guide\security\jce\JCERefGuide.html</span></div><div class="line"><span class="comment">// 拷贝而来</span></div><div class="line"><span class="comment">// The 1024 bit Diffie-Hellman modulus values used by SKIP</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> skip1024ModulusBytes[] = &#123;</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0xF4</span>, (<span class="keyword">byte</span>)<span class="number">0x88</span>, (<span class="keyword">byte</span>)<span class="number">0xFD</span>, (<span class="keyword">byte</span>)<span class="number">0x58</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x4E</span>, (<span class="keyword">byte</span>)<span class="number">0x49</span>, (<span class="keyword">byte</span>)<span class="number">0xDB</span>, (<span class="keyword">byte</span>)<span class="number">0xCD</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x20</span>, (<span class="keyword">byte</span>)<span class="number">0xB4</span>, (<span class="keyword">byte</span>)<span class="number">0x9D</span>, (<span class="keyword">byte</span>)<span class="number">0xE4</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x91</span>, (<span class="keyword">byte</span>)<span class="number">0x07</span>, (<span class="keyword">byte</span>)<span class="number">0x36</span>, (<span class="keyword">byte</span>)<span class="number">0x6B</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x33</span>, (<span class="keyword">byte</span>)<span class="number">0x6C</span>, (<span class="keyword">byte</span>)<span class="number">0x38</span>, (<span class="keyword">byte</span>)<span class="number">0x0D</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x45</span>, (<span class="keyword">byte</span>)<span class="number">0x1D</span>, (<span class="keyword">byte</span>)<span class="number">0x0F</span>, (<span class="keyword">byte</span>)<span class="number">0x7C</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x88</span>, (<span class="keyword">byte</span>)<span class="number">0xB3</span>, (<span class="keyword">byte</span>)<span class="number">0x1C</span>, (<span class="keyword">byte</span>)<span class="number">0x7C</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x5B</span>, (<span class="keyword">byte</span>)<span class="number">0x2D</span>, (<span class="keyword">byte</span>)<span class="number">0x8E</span>, (<span class="keyword">byte</span>)<span class="number">0xF6</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0xF3</span>, (<span class="keyword">byte</span>)<span class="number">0xC9</span>, (<span class="keyword">byte</span>)<span class="number">0x23</span>, (<span class="keyword">byte</span>)<span class="number">0xC0</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x43</span>, (<span class="keyword">byte</span>)<span class="number">0xF0</span>, (<span class="keyword">byte</span>)<span class="number">0xA5</span>, (<span class="keyword">byte</span>)<span class="number">0x5B</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x18</span>, (<span class="keyword">byte</span>)<span class="number">0x8D</span>, (<span class="keyword">byte</span>)<span class="number">0x8E</span>, (<span class="keyword">byte</span>)<span class="number">0xBB</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x55</span>, (<span class="keyword">byte</span>)<span class="number">0x8C</span>, (<span class="keyword">byte</span>)<span class="number">0xB8</span>, (<span class="keyword">byte</span>)<span class="number">0x5D</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x38</span>, (<span class="keyword">byte</span>)<span class="number">0xD3</span>, (<span class="keyword">byte</span>)<span class="number">0x34</span>, (<span class="keyword">byte</span>)<span class="number">0xFD</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x7C</span>, (<span class="keyword">byte</span>)<span class="number">0x17</span>, (<span class="keyword">byte</span>)<span class="number">0x57</span>, (<span class="keyword">byte</span>)<span class="number">0x43</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0xA3</span>, (<span class="keyword">byte</span>)<span class="number">0x1D</span>, (<span class="keyword">byte</span>)<span class="number">0x18</span>, (<span class="keyword">byte</span>)<span class="number">0x6C</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0xDE</span>, (<span class="keyword">byte</span>)<span class="number">0x33</span>, (<span class="keyword">byte</span>)<span class="number">0x21</span>, (<span class="keyword">byte</span>)<span class="number">0x2C</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0xB5</span>, (<span class="keyword">byte</span>)<span class="number">0x2A</span>, (<span class="keyword">byte</span>)<span class="number">0xFF</span>, (<span class="keyword">byte</span>)<span class="number">0x3C</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0xE1</span>, (<span class="keyword">byte</span>)<span class="number">0xB1</span>, (<span class="keyword">byte</span>)<span class="number">0x29</span>, (<span class="keyword">byte</span>)<span class="number">0x40</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x18</span>, (<span class="keyword">byte</span>)<span class="number">0x11</span>, (<span class="keyword">byte</span>)<span class="number">0x8D</span>, (<span class="keyword">byte</span>)<span class="number">0x7C</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x84</span>, (<span class="keyword">byte</span>)<span class="number">0xA7</span>, (<span class="keyword">byte</span>)<span class="number">0x0A</span>, (<span class="keyword">byte</span>)<span class="number">0x72</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0xD6</span>, (<span class="keyword">byte</span>)<span class="number">0x86</span>, (<span class="keyword">byte</span>)<span class="number">0xC4</span>, (<span class="keyword">byte</span>)<span class="number">0x03</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x19</span>, (<span class="keyword">byte</span>)<span class="number">0xC8</span>, (<span class="keyword">byte</span>)<span class="number">0x07</span>, (<span class="keyword">byte</span>)<span class="number">0x29</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x7A</span>, (<span class="keyword">byte</span>)<span class="number">0xCA</span>, (<span class="keyword">byte</span>)<span class="number">0x95</span>, (<span class="keyword">byte</span>)<span class="number">0x0C</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0xD9</span>, (<span class="keyword">byte</span>)<span class="number">0x96</span>, (<span class="keyword">byte</span>)<span class="number">0x9F</span>, (<span class="keyword">byte</span>)<span class="number">0xAB</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0xD0</span>, (<span class="keyword">byte</span>)<span class="number">0x0A</span>, (<span class="keyword">byte</span>)<span class="number">0x50</span>, (<span class="keyword">byte</span>)<span class="number">0x9B</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x02</span>, (<span class="keyword">byte</span>)<span class="number">0x46</span>, (<span class="keyword">byte</span>)<span class="number">0xD3</span>, (<span class="keyword">byte</span>)<span class="number">0x08</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x3D</span>, (<span class="keyword">byte</span>)<span class="number">0x66</span>, (<span class="keyword">byte</span>)<span class="number">0xA4</span>, (<span class="keyword">byte</span>)<span class="number">0x5D</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x41</span>, (<span class="keyword">byte</span>)<span class="number">0x9F</span>, (<span class="keyword">byte</span>)<span class="number">0x9C</span>, (<span class="keyword">byte</span>)<span class="number">0x7C</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0xBD</span>, (<span class="keyword">byte</span>)<span class="number">0x89</span>, (<span class="keyword">byte</span>)<span class="number">0x4B</span>, (<span class="keyword">byte</span>)<span class="number">0x22</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0x19</span>, (<span class="keyword">byte</span>)<span class="number">0x26</span>, (<span class="keyword">byte</span>)<span class="number">0xBA</span>, (<span class="keyword">byte</span>)<span class="number">0xAB</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0xA2</span>, (<span class="keyword">byte</span>)<span class="number">0x5E</span>, (<span class="keyword">byte</span>)<span class="number">0xC3</span>, (<span class="keyword">byte</span>)<span class="number">0x55</span>,</div><div class="line">        (<span class="keyword">byte</span>)<span class="number">0xE9</span>, (<span class="keyword">byte</span>)<span class="number">0x2F</span>, (<span class="keyword">byte</span>)<span class="number">0x78</span>, (<span class="keyword">byte</span>)<span class="number">0xC7</span></div><div class="line">    &#125;;</div><div class="line">    <span class="comment">// The SKIP 1024 bit modulus</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> BigInteger skip1024Modulus</div><div class="line">        = <span class="keyword">new</span> BigInteger(<span class="number">1</span>, skip1024ModulusBytes);</div><div class="line"></div><div class="line">    <span class="comment">// The base used with the SKIP 1024 bit modulus</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> BigInteger skip1024Base = BigInteger.valueOf(<span class="number">2</span>);</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[ ])</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">    </div><div class="line">    DHParameterSpec DHP= <span class="keyword">new</span> DHParameterSpec(skip1024Modulus,skip1024Base);</div><div class="line"></div><div class="line">     KeyPairGenerator kpg= KeyPairGenerator.getInstance(<span class="string">"DH"</span>);</div><div class="line">     kpg.initialize(DHP);</div><div class="line">     KeyPair kp=kpg.genKeyPair();</div><div class="line"></div><div class="line">     PublicKey pbk=kp.getPublic();</div><div class="line">     PrivateKey prk=kp.getPrivate();</div><div class="line">     </div><div class="line">     <span class="comment">// 保存公钥</span></div><div class="line">     FileOutputStream  f1=<span class="keyword">new</span> FileOutputStream(args[<span class="number">0</span>]);</div><div class="line">     ObjectOutputStream b1=<span class="keyword">new</span>  ObjectOutputStream(f1);</div><div class="line">     b1.writeObject(pbk);</div><div class="line">     </div><div class="line">     <span class="comment">// 保存私钥</span></div><div class="line">     FileOutputStream  f2=<span class="keyword">new</span> FileOutputStream(args[<span class="number">1</span>]);</div><div class="line">     ObjectOutputStream b2=<span class="keyword">new</span>  ObjectOutputStream(f2);</div><div class="line">     b2.writeObject(prk);</div><div class="line">   &#125;      </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序最后将公钥和私钥以对象流的形式保存在文件中，文件名通过命令行参数指定，第一个命令行参数对应的文件保存公钥，第二个命令行参数对应的文件保存私钥。</p>
+<p>运行程序:</p>
+<p>建立两个目录A和B，模拟需要秘密通信的A、B双方，由于DH算法需要A和B各自生成DH公钥和私钥，因此在这两个目录下都拷贝编译后文件Key_DH。</p>
+<p>首先由A创建自己的公钥和私钥，即在A目录下输入“java Key_DH Apub.dat Apri.dat”运行程序，这时在目录A下将产生文件Apub.dat和Apri.dat，前者保存着A的公钥，后者保存着A的私钥。<br>然后由B创建自己的公钥和私钥，即在B目录下输入“java Key_DH Bpub.dat Bpri.dat”运行程序，这时在目录B下将产生文件Bpub.dat和Bpri.dat，前者保存着B的公钥，后者保存着B的私钥。<br>最后发布公钥，A将Apub.dat拷贝到B目录，B将Bpub.dat拷贝到A的目录。<br>这样，A、B双方的DH公钥和私钥已经创建并部署完毕。</p>
+<h3 id="创建共享密钥"><a href="#创建共享密钥" class="headerlink" title="创建共享密钥"></a>创建共享密钥</h3><p>DH算法中，A可以用自己的密钥和B的公钥按照一定方法生成一个密钥，B也可以用自己的密钥和A的公钥按照一定方法生成一个密钥，由于一些数学规律，这两个密钥完全相同。这样，A和B间就有了一个共同的密钥可以用于各种加密。本实例介绍Java中在上一小节的基础上如何利用DH公钥和私钥各自创建共享密钥。</p>
+<p>编程思路：</p>
+<p>Java中KeyAgreement类实现了密钥协定，它使用init( )方法传入自己的私钥，使用doPhase（ ）方法传入对方的公钥，进而可以使用generateSecret( )方法生成共享的信息具体步骤如下：</p>
+<p><strong>读取自己的DH私钥和对方的DH公钥</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">FileInputStream f1=<span class="keyword">new</span> FileInputStream(args[<span class="number">0</span>]);</div><div class="line">ObjectInputStream b1=<span class="keyword">new</span> ObjectInputStream(f1);</div><div class="line">PublicKey  pbk=(PublicKey)b1.readObject( );</div><div class="line">FileInputStream f2=<span class="keyword">new</span> FileInputStream(args[<span class="number">1</span>]);</div><div class="line">ObjectInputStream b2=<span class="keyword">new</span> ObjectInputStream(f2);</div><div class="line">PrivateKey  prk=(PrivateKey)b2.readObject( );</div></pre></td></tr></table></figure>
+<p>分析：从文件中获取密钥。只是分为公钥和私钥两个文件，通过命令行参数传入公钥和私钥文件名，第一个命令行参数为对方的公钥文件名，第二个命令行参数为自己的私钥文件名。</p>
+<p><strong>创建密钥协定对象</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">KeyAgreement ka=KeyAgreement.getInstance(<span class="string">"DH"</span>);</div></pre></td></tr></table></figure>
+<p>分析：密钥协定对象即KeyAgreement类型的对象，和KeyPairGenerator类类似，KeyAgreement类是一个工厂类，通过其中预定义的一个静态方法<code>getInstance()</code>获取KeyAgreement类型的对象。<code>getInstance()</code>方法的参数指定为“DH”。</p>
+<p><strong>初始化密钥协定对象</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ka.init(prk);</div></pre></td></tr></table></figure>
+<p>分析：执行密钥协定对象的init()方法，传入第1步获得的自己的私钥，它在第1步中通过第2个命令行参数提供。</p>
+<p><strong>执行密钥协定</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ka.doPhase(pbk,<span class="keyword">true</span>);</div></pre></td></tr></table></figure>
+<p>分析：执行密钥协定对象的doPhase()方法，其第一个参数中传入对方的公钥。在本实例中，只有A、B两方需要共享密钥，因此对方只有一个，因此第二个参数设置为true。如果有A、B、C三方需要共享密钥，则对方有两个，doPhase（）方法要写两次，每次在第1个参数中传入一个公钥，第2个参数最初设置为false，最后一次设置为true。例如C方应该执行ka.doPhase(pbk_of_A,false); ka.doPhase(pbk_of_B,true);。一次类推，可以用密钥协定实现多方共享一个密钥。</p>
+<p><strong>生成共享信息</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">byte</span>[ ] sb=ka.generateSecret();</div></pre></td></tr></table></figure>
+<p>分析：执行密钥协定对象的generateSecret()方法，返回字节类型的数组。A、B双方得到的该数组的内容完全相同，用它创建密钥也各方完全相同。如可使用SecretKeySpec k=new SecretKeySpec(sb,”DESede”);创建密钥。</p>
+<p>代码与分析：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.math.*;</div><div class="line"><span class="keyword">import</span> java.security.*;</div><div class="line"><span class="keyword">import</span> java.security.spec.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.spec.*;</div><div class="line"><span class="keyword">import</span> javax.crypto.interfaces.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KeyAgree</span></span>&#123;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[ ])</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">    <span class="comment">// 读取对方的DH公钥</span></div><div class="line">    FileInputStream f1=<span class="keyword">new</span> FileInputStream(args[<span class="number">0</span>]);</div><div class="line">    ObjectInputStream b1=<span class="keyword">new</span> ObjectInputStream(f1);</div><div class="line">    PublicKey  pbk=(PublicKey)b1.readObject( );</div><div class="line">      </div><div class="line">    <span class="comment">//读取自己的DH私钥</span></div><div class="line">    FileInputStream f2=<span class="keyword">new</span> FileInputStream(args[<span class="number">1</span>]);</div><div class="line">    ObjectInputStream b2=<span class="keyword">new</span> ObjectInputStream(f2);</div><div class="line">    PrivateKey  prk=(PrivateKey)b2.readObject( );</div><div class="line"></div><div class="line">    <span class="comment">// 执行密钥协定</span></div><div class="line">    KeyAgreement ka=KeyAgreement.getInstance(<span class="string">"DH"</span>);</div><div class="line">    ka.init(prk);</div><div class="line">    ka.doPhase(pbk,<span class="keyword">true</span>);</div><div class="line">    </div><div class="line">    <span class="comment">//生成共享信息</span></div><div class="line">    <span class="keyword">byte</span>[ ] sb=ka.generateSecret();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;sb.length;i++)&#123;</div><div class="line">        System.out.print(sb[i]+<span class="string">","</span>);</div><div class="line">    &#125;</div><div class="line">    SecretKeySpec k=<span class="keyword">new</span>  SecretKeySpec(sb,<span class="string">"DESede"</span>)；</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序最后将共享信息打印了出来，以便直观地对比A和B得到的信息是否相同。</p>
+<p>将程序KeyAgree编译后分别拷贝在A和B两个目录，首先在A目录输入“java KeyAgree Bpub.dat Apri.dat”运行程序，它使用文件Bpub.dat中对方的公钥和文件Apri.dat中自己的私钥创建了一段共享的字节数组。</p>
+<h2 id="摘要算法-MD5"><a href="#摘要算法-MD5" class="headerlink" title="摘要算法- MD5"></a>摘要算法- MD5</h2><p>使用Java计算指定字符串的消息摘要。<br>java.security包中的MessageDigest类提供了计算消息摘要的方法，</p>
+<p>首先生成对象，执行其update()方法可以将原始数据传递给该对象，然后执行其digest( )方法即可得到消息摘要。具体步骤如下：</p>
+<p><strong>生成MessageDigest对象</strong></p>
+<pre><code>MessageDigest m=MessageDigest.getInstance(&quot;MD5&quot;);  
+</code></pre><p>分析：和2.2.1小节的KeyGenerator类一样。MessageDigest类也是一个工厂类，其构造器是受保护的，不允许直接使用new MessageDigist( )来创建对象，而必须通过其静态方法getInstance( )生成MessageDigest对象。其中传入的参数指定计算消息摘要所使用的算法，常用的有”MD5”，”SHA”等。若对MD5算法的细节感兴趣可参考<a href="http://www.ietf.org/rfc/rfc1321.txt。" target="_blank" rel="external">http://www.ietf.org/rfc/rfc1321.txt。</a></p>
+<p><strong>传入需要计算的字符串</strong></p>
+<pre><code>m.update(x.getBytes(&quot;UTF8&quot; ));  
+</code></pre><p>分析：x为需要计算的字符串，update传入的参数是字节类型或字节类型数组，对于字符串，需要先使用getBytes( )方法生成字符串数组。</p>
+<p><strong>计算消息摘要</strong></p>
+<pre><code>byte s[ ]=m.digest( );  
+</code></pre><p>分析：执行MessageDigest对象的digest( )方法完成计算，计算的结果通过字节类型的数组返回。</p>
+<p><strong>处理计算结果</strong></p>
+<p>必要的话可以使用如下代码将计算结果s转换为字符串。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">String result=<span class="string">""</span>;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;s.length; i++)&#123;</div><div class="line">       result+=Integer.toHexString((<span class="number">0x000000ff</span> &amp; s[i]) | <span class="number">0xffffff00</span>).substring(<span class="number">6</span>);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.security.*;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DigestPass</span></span>&#123;</div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[ ])</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">         String x=args[<span class="number">0</span>];</div><div class="line">         MessageDigest m=MessageDigest.getInstance(<span class="string">"MD5"</span>);</div><div class="line">         m.update(x.getBytes(<span class="string">"UTF8"</span>));</div><div class="line">         <span class="keyword">byte</span> s[ ]=m.digest( );</div><div class="line">         String result=<span class="string">""</span>;</div><div class="line">         <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;s.length; i++)&#123;</div><div class="line">            result+=Integer.toHexString((<span class="number">0x000000ff</span> &amp; s[i]) | </div><div class="line"><span class="number">0xffffff00</span>).substring(<span class="number">6</span>);</div><div class="line">         &#125;</div><div class="line">         System.out.println(result);</div><div class="line">      &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行程序</p>
+<p>输入java DigestCalc abc来运行程序，其中命令行参数abc是原始数据，屏幕输出计算后的消息摘要：900150983cd24fb0d6963f7d28e17f72。</p>
+<h2 id="See"><a href="#See" class="headerlink" title="See"></a>See</h2><ul>
+<li><a href="https://www.cnblogs.com/rocedu/p/6683948.html" target="_blank" rel="external">Java 密码学算法</a></li>
+<li><a href="http://joshuasabrina.iteye.com/blog/1798245" target="_blank" rel="external">Java Security 总纲</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-08-19T02:44:58.283Z" itemprop="dateUpdated">2018-08-19 10:44:58</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html" target="_blank" rel="external">http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html&title=《Java Cryptography Guide》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html&title=《Java Cryptography Guide》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java Cryptography Guide》 — Balance&url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Cryptography/Java/Android/2018-08-19-2018-8-17-cryptography-guide-ecc.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Java Cryptography - ECC</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Android/2018-08-19-2018-8-16-android-security-bouncy-castle.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Security Library - Bouncy Castle Guide</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2018</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html&title=《Java Cryptography Guide》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html&title=《Java Cryptography Guide》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java Cryptography Guide》 — Balance&url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Cryptography/Java/Android/2018-08-19-2018-8-17-java-cryptography-guide.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADLElEQVR42u3aQW7jQAwEQP//095rFoHlJikjEl06GUqsmZoAy2VTj0d8PX9cx/efv66f96vfPX7Oq12ddmFjY2PfhJ0vliyfH9DvnyYHlO/zeD/Y2NjY+9jzrSTfyp+cr1VdERsbGxs7bwnywpYUxbyUYmNjY2Pnj+t9K9l0HhhhY2NjY89D+Wo7UT3WP87SsLGxsS/PnpSlq33+yHwbGxsb+8LsZ/HqHVDyhEkRLSuwsbGxF7HzAlBtAJImpHoo8+AJGxsbeyu7F/304vvqcHcyHii0KNjY2NiL2J+LliYv5UxGFH88JMDGxsb+MHsSKvW2m4dQx4Dk/svP2NjY2EvZvf/Kz5F5jFUNuV7+kbCxsbEXsXuxTr5YdYuTZqM5EsDGxsa+OfusdiIpbJPEKz/i6A+DjY2NvYjdawPmQ4W8KFafM2l+sLGxse/LPguWNwbVFy4nQ+jHWQtgY2NjX5KdxD3zlyzz9uasMcCbvWFjY2MvYlfDoF643xsGJNWnej+akGBjY2PfkD0f9CYD2uR+b8DcHFpjY2Njr2PnL8dUX5SZjI2Pv5sf2WOyUWxsbOwLs/My0GsMzipp5w4zsLGxsfexq+3EWcc0Cfqrw4z/7mNjY2OvY+fRTI6sRkXViL8XRZXrNjY2Nvbl2dWiUi1v1TYjaZlOa2OwsbGxF7HzkUDvN/PSkjc/eSP05jnY2NjYK9j5P/fJVuaDgeoz87XevLKDjY2NvY5dbTN6Pz3+/erRFCIwbGxs7EXs3vJJO5FvbhJF5XEVNjY29lZ29WWd+bC2h8zHCYVQCRsbG3sRO1+yGjadNRjoDR6iDgwbGxt7ETs/iLxsVMOgvNkYHRA2Njb217CbY9RxFNU77nwIgY2Njb2D/SxekxCnPHwttkn5fWxsbOxN7F7InrcN1fs9QFImm3hsbGzsm7B744E8MKoOEqptT3J/VBuxsbGxb8Kuvog5if7zzZUxecyEjY2N/cXs6gs0zalFaw+F0AobGxv769n5UHbe3swL2MtQCRsbG3sRu9ow9D7nEX915FwdHmBjY2NvYk/ahklslGyoN06oPgcbGxv7tux/PPGRzXS1SLQAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

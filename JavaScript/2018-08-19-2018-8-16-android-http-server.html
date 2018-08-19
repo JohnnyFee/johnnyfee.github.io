@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Android Http Server | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,http server">
+    <meta name="description" content="目前在 Android 上启用 HTTP Server 的开源库有两个：
+
+koush/AndroidAsync 
+NanoHttpd/nanohttpd: Tiny, easily embeddable HTTP server in Java.
+
+AndroidAsync 更易用写，封装更好，而且功能也比较多些。
+One of the main difference between the tw">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Http Server">
+<meta property="og:url" content="http://blog.inching.org/JavaScript/2018-08-19-2018-8-16-android-http-server.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="目前在 Android 上启用 HTTP Server 的开源库有两个：
+
+koush/AndroidAsync 
+NanoHttpd/nanohttpd: Tiny, easily embeddable HTTP server in Java.
+
+AndroidAsync 更易用写，封装更好，而且功能也比较多些。
+One of the main difference between the tw">
+<meta property="og:updated_time" content="2018-08-19T02:44:58.280Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Http Server">
+<meta name="twitter:description" content="目前在 Android 上启用 HTTP Server 的开源库有两个：
+
+koush/AndroidAsync 
+NanoHttpd/nanohttpd: Tiny, easily embeddable HTTP server in Java.
+
+AndroidAsync 更易用写，封装更好，而且功能也比较多些。
+One of the main difference between the tw">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/style/style.css?v=1.6.17">
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2846834382442028",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android Http Server</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android Http Server</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-19T02:44:58.280Z" itemprop="datePublished" class="page-time">
+  2018-08-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Get-started"><span class="post-toc-text">Get started</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Processing-request-body-with-AndroidAsync"><span class="post-toc-text">Processing request body with AndroidAsync</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#See-also"><span class="post-toc-text">See also</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-2018-8-16-android-http-server"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android Http Server</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-19 10:44:58" datetime="2018-08-19T02:44:58.280Z"  itemprop="datePublished">2018-08-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>目前在 Android 上启用 HTTP Server 的开源库有两个：</p>
+<ul>
+<li><a href="https://github.com/koush/AndroidAsync" target="_blank" rel="external">koush/AndroidAsync</a> </li>
+<li><del><a href="https://github.com/NanoHttpd/nanohttpd" target="_blank" rel="external">NanoHttpd/nanohttpd: Tiny, easily embeddable HTTP server in Java.</a></del></li>
+</ul>
+<p>AndroidAsync 更易用写，封装更好，而且功能也比较多些。</p>
+<p>One of the main difference between the two is that NanoHTTPD is using threads while AndroidAsync is based on NIO. I can’t tell you which one is better in terms of speed as I didn’t test this yet, but I will let you know as soon as I have more data on both.</p>
+<h2 id="Get-started"><a href="#Get-started" class="headerlink" title="Get started"></a>Get started</h2><p>Let’s start coding<br>Before starting the exciting coding make sure you add the following code to your AndroidManifest.xml file:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_WIFI_STATE"</span>&gt;</span><span class="tag">&lt;/<span class="name">uses-permission</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span>&gt;</span><span class="tag">&lt;/<span class="name">uses-permission</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>For this project I also used Gradle. So in order to add <a href="https://github.com/koush/AndroidAsync" target="_blank" rel="external">AndroidAsync</a> to your project add the following line to your build.gradle file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile &apos;com.koushikdutta.async:androidasync:2.+&apos;</div></pre></td></tr></table></figure>
+<p>Now let’s modify MainActivity.java accordingly:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</div><div class="line"><span class="keyword">import</span> android.view.Menu;</div><div class="line"><span class="keyword">import</span> android.view.MenuItem;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.koushikdutta.async.AsyncServer;</div><div class="line"><span class="keyword">import</span> com.koushikdutta.async.http.server.AsyncHttpServer;</div><div class="line"><span class="keyword">import</span> com.koushikdutta.async.http.server.AsyncHttpServerRequest;</div><div class="line"><span class="keyword">import</span> com.koushikdutta.async.http.server.AsyncHttpServerResponse;</div><div class="line"><span class="keyword">import</span> com.koushikdutta.async.http.server.HttpServerRequestCallback;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> AsyncHttpServer server = <span class="keyword">new</span> AsyncHttpServer();</div><div class="line">    <span class="keyword">private</span> AsyncServer mAsyncServer = <span class="keyword">new</span> AsyncServer();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>&#123;</div><div class="line">        getMenuInflater().inflate(R.menu.menu_main, menu);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> id = item.getItemId();</div><div class="line">        <span class="keyword">if</span>(id == R.id.action_settings) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onOptionsItemSelected(item);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onResume();</div><div class="line">        startServer();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">startServer</span><span class="params">()</span> </span>&#123;</div><div class="line">        server.get(<span class="string">"/"</span>, <span class="keyword">new</span> HttpServerRequestCallback() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequest</span><span class="params">(AsyncHttpServerRequest request, AsyncHttpServerResponse response)</span> </span>&#123;</div><div class="line">                response.send(<span class="string">"Hello!!!"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        server.listen(mAsyncServer, <span class="number">8080</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Now start the application and after go to your device’s browser or to your emulator’s browser and type <a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> and you should see:<br><strong>Hello!!!</strong></p>
+<p>I assume the code above is pretty self explanatory and it doesn’t need too much description. But what I did was to add a new AsyncHttpServer and handled a GET request to which we respond with the String “Hello!!!”. Also we made our server to listen on port 8080. You can choose any port you want.</p>
+<p>I suggest you create a separate class that handles all the server methods. In this case I have added it in the MainActivity.java for convenience purposes.<br>In order to stop the server you have to call the following methods:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">server.stop();</div><div class="line">mAsyncServer.stop();</div></pre></td></tr></table></figure>
+<p>That’s about it. If you need further examples using <a href="https://github.com/NanoHttpd/nanohttpd" target="_blank" rel="external"> NanoHTTPD </a> or <a href="https://github.com/koush/AndroidAsync" target="_blank" rel="external">AndroidAsync</a> please let me know in the comments bellow and will come with more in detail examples.<br>You can find the full project on GitHub <a href="https://github.com/andreivisan/AndroidAsyncHttpServer" target="_blank" rel="external"> here.</a></p>
+<h2 id="Processing-request-body-with-AndroidAsync"><a href="#Processing-request-body-with-AndroidAsync" class="headerlink" title="Processing request body with AndroidAsync"></a>Processing request body with AndroidAsync</h2><p>Another challenge of using it would be how to parse the request body of a request coming from a REST client.</p>
+<p>Preparation<br>In order to test the code I recommend installing RESTClient for Firefox or any REST client for the browser that you use. This will help us send the request to our server that we have <a href="http://programminglife.io/android-http-server-with-androidasync/" target="_blank" rel="external"> previously </a> created.<br>Lets also send as a JSON request the example bellow:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="attr">"menu"</span>: &#123;</div><div class="line">  <span class="attr">"id"</span>: <span class="string">"file"</span>,</div><div class="line">  <span class="attr">"value"</span>: <span class="string">"File"</span>,</div><div class="line">  <span class="attr">"popup"</span>: &#123;</div><div class="line">    <span class="attr">"menuitem"</span>: [</div><div class="line">      &#123;<span class="attr">"value"</span>: <span class="string">"New"</span>, <span class="attr">"onclick"</span>: <span class="string">"CreateNewDoc()"</span>&#125;,</div><div class="line">      &#123;<span class="attr">"value"</span>: <span class="string">"Open"</span>, <span class="attr">"onclick"</span>: <span class="string">"OpenDoc()"</span>&#125;,</div><div class="line">      &#123;<span class="attr">"value"</span>: <span class="string">"Close"</span>, <span class="attr">"onclick"</span>: <span class="string">"CloseDoc()"</span>&#125;</div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">&#125;&#125;</div></pre></td></tr></table></figure>
+<p><strong>The Solution</strong><br>Let’s add the following piece of code to the startServer() method that we created:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">server.post(<span class="string">"/testJson"</span>, <span class="keyword">new</span> HttpServerRequestCallback() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequest</span><span class="params">(AsyncHttpServerRequest asyncHttpServerRequest, </span></span></div><div class="line">                          AsyncHttpServerResponse asyncHttpServerResponse) &#123;</div><div class="line">        AsyncHttpRequestBody requestBody = asyncHttpServerRequest.getBody();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            asyncHttpServerResponse.code(<span class="number">200</span>);</div><div class="line">            asyncHttpServerResponse.send(</div><div class="line">                <span class="keyword">new</span> JSONObject(requestBody.toString()).getJSONObject(<span class="string">"menu"</span>).getString(<span class="string">"value"</span>));</div><div class="line">        &#125; <span class="keyword">catch</span> (JSONException e) &#123;</div><div class="line">            Log.e(<span class="string">"MainActivity"</span>, e.getMessage(), e);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Now go open your browser, enter the REST client and type in: your.tablet.ip:8080/testJSON, with HTTP method POST and in the request body paste the JSON object above. If all works well you should see in the Response field the value <strong>File</strong>.</p>
+<p><strong>The Explanation</strong></p>
+<p>A question that may come up from the code above is why the JSON transformation? Well, JSON is a format that is very easy to work with and I find it very practical to work with JSON objects. On the other hand the method above is performant and makes sense only if you know for sure that you will receive JSON format on you request object. If not use the parsing methods in the  <strong>AsyncHttpRequestBody</strong>  class.</p>
+<p>Please let me know if there is any other part of the AndroidAsync that you want me to cover in a future post.</p>
+<p>You can also find the complete code <a href="https://github.com/andreivisan/AndroidAsyncHttpServer" target="_blank" rel="external"> here </a>.</p>
+<h2 id="See-also"><a href="#See-also" class="headerlink" title="See also"></a>See also</h2><ul>
+<li><a href="https://www.jianshu.com/p/1c74b5116cd0" target="_blank" rel="external">基于AndroidAsync框架搭建android http server - 简书</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-08-19T02:44:58.280Z" itemprop="dateUpdated">2018-08-19 10:44:58</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/JavaScript/2018-08-19-2018-8-16-android-http-server.html" target="_blank" rel="external">http://blog.inching.org/JavaScript/2018-08-19-2018-8-16-android-http-server.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http-server/">http server</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2018-08-19-2018-8-16-android-http-server.html&title=《Android Http Server》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2018-08-19-2018-8-16-android-http-server.html&title=《Android Http Server》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2018-08-19-2018-8-16-android-http-server.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Http Server》 — Balance&url=http://blog.inching.org/JavaScript/2018-08-19-2018-8-16-android-http-server.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2018-08-19-2018-8-16-android-http-server.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/Android/2018-08-19-2018-8-16-android-security-bouncy-castle.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android Security Library - Bouncy Castle Guide</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Database/2018-08-19-2009-8-11-oracle-guide.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Oragle Guide</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2018</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/JavaScript/2018-08-19-2018-8-16-android-http-server.html&title=《Android Http Server》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/JavaScript/2018-08-19-2018-8-16-android-http-server.html&title=《Android Http Server》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/JavaScript/2018-08-19-2018-8-16-android-http-server.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Http Server》 — Balance&url=http://blog.inching.org/JavaScript/2018-08-19-2018-8-16-android-http-server.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/JavaScript/2018-08-19-2018-8-16-android-http-server.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACwElEQVR42u3aQW7jQAwEQP//015gT3uR3c0ZbnIonQJDkVQyMEM3+XrFx/vv8fRJ8ve/nyTH0/mvjQMPDw9v9OjJbT6fn1/t6e7Js9V3wcPDw1vjfd4M8sX66czkXu1LTDYwPDw8vJ/lzbaH9sptEY+Hh4f3m3l5KXwSZMxiDjw8PLz/z2sX+rbYzcvx/C6XsxY8PDy8Lk0tGmC/4e/F/h4eHh7eQVe9DVJn5W97ZvGceHh4eAu8NlbI44Y2dMifpC3i8fDw8DZ4+eI7g80+aaPeL2A8PDy8Bd5sdOBWdJu/ss/bSbG94eHh4R3zzptMbVRxa4mvS2o8PDy8S7z232bl72yAoH1leHh4eHu8k+W+HdU6H43KS/PH/h4eHh7eMS+JcWdBat7Wyl9B3h4rGmB4eHh4x7xZbDoLfPPXNGxx4eHh4S3wZs2ntuXfMtrAot4M8PDw8Bb66bcaV+1IQbudfPkcDw8Pb4E3i1DzgYOkWG+vWQe4eHh4eMu8d3zkEWobZ8zGBaItAQ8PD+8SbxYBzK6wsY99QeLh4eEt8E4K2bw11ca4s9cRDV3h4eHhrfGiYaaysG5HtfJ+VvFbAQ8PD++Ad1L+trFFHiK038/jOXh4eHjLvPzf2oeeRRvtS48mI/Dw8PCOee0ynccQ7XYyXPrzlBoPDw/vKq+NHtoyOg9eo4eLR7vw8PDw9nj5Ij5rU+VLebvlHIW5eHh4eMe8tvnUvqA8gHiVR11A4+Hh4R3w3uUx+/Gfx7X5q4m2Cjw8PLwF3vnim190NhwwO/N1a2/Bw8PDG1WesxGB/Donja4oAsbDw8Nb47VL+d3Y93wH+zIZgYeHh/ejvNl4wWxQYLgZnP8awMPDw7vEm40FJNechb9RCw0PDw9vjdc2vfLle68oLyYj8PDw8K7yNhpgSck7W/rzrwQPDw9vgfcHYEKxhkIPeRsAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

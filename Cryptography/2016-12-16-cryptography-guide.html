@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-43567748-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Cryptography Guide | Balance | 大道至简</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="密码学我们遇到的安全问题可以归结为安全的三个属性（CIA金三角）：
+
+机密性（Confidentiality）：确保数据仅能被合法的用户访问， 即数据不能被未授权的第三方使用。
+完整性（Integrity）：主要确保数据只能由授权方或以授权的方式进行修改，即数据在传输过程中不能被未授权方修改。
+可用性（Availability）：主要确保所有数据仅在适当的时候可以由授权方访问。
+
+其他安全技术目标">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cryptography Guide">
+<meta property="og:url" content="http://blog.inching.org/Cryptography/2016-12-16-cryptography-guide.html">
+<meta property="og:site_name" content="Balance">
+<meta property="og:description" content="密码学我们遇到的安全问题可以归结为安全的三个属性（CIA金三角）：
+
+机密性（Confidentiality）：确保数据仅能被合法的用户访问， 即数据不能被未授权的第三方使用。
+完整性（Integrity）：主要确保数据只能由授权方或以授权的方式进行修改，即数据在传输过程中不能被未授权方修改。
+可用性（Availability）：主要确保所有数据仅在适当的时候可以由授权方访问。
+
+其他安全技术目标">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/741560/201704/741560-20170409080102613-370301312.png">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/741560/201704/741560-20170409081100378-499460044.png">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/741560/201704/741560-20170409081108253-262350919.png">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/741560/201704/741560-20170409081115457-1840479222.png">
+<meta property="og:updated_time" content="2018-08-19T02:44:58.275Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cryptography Guide">
+<meta name="twitter:description" content="密码学我们遇到的安全问题可以归结为安全的三个属性（CIA金三角）：
+
+机密性（Confidentiality）：确保数据仅能被合法的用户访问， 即数据不能被未授权的第三方使用。
+完整性（Integrity）：主要确保数据只能由授权方或以授权的方式进行修改，即数据在传输过程中不能被未授权方修改。
+可用性（Availability）：主要确保所有数据仅在适当的时候可以由授权方访问。
+
+其他安全技术目标">
+<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/741560/201704/741560-20170409080102613-370301312.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Balance" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/style/style.css?v=1.6.17">
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2846834382442028",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Cody Fei</h5>
+          <a href="mailto:inchingcode@gmail.com" title="inchingcode@gmail.com" class="mail">inchingcode@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/android"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/Android/"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/inchingorg" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/CodyFee" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.inesoi.com" target="_blank" >
+                <i class="icon icon-lg icon-shopping-bag"></i>
+                Shopping Bag
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Cryptography Guide</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Cryptography Guide</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-15T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-12-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/">Cryptography</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#密码学"><span class="post-toc-text">密码学</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#密钥"><span class="post-toc-text">密钥</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#对称密钥"><span class="post-toc-text">对称密钥</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DES"><span class="post-toc-text">DES</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三重-DES"><span class="post-toc-text">三重 DES</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#AES"><span class="post-toc-text">AES</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#密码分组模式"><span class="post-toc-text">密码分组模式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#填充模式-Padding"><span class="post-toc-text">填充模式 Padding</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#位填充-Bit-padding-ISO-IEC-9797-1-Padding-Method-2"><span class="post-toc-text">位填充 Bit padding/ISO/IEC 9797-1 Padding Method 2</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#字节填充"><span class="post-toc-text">字节填充</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ANSI-X-923"><span class="post-toc-text">ANSI X.923</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ISO-10126"><span class="post-toc-text">ISO 10126</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#PKCS7-PKCS5"><span class="post-toc-text">PKCS7/PKCS5</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Zero-padding"><span class="post-toc-text">Zero padding</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ISO-IEC-7816-4"><span class="post-toc-text">ISO/IEC 7816-4</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#公钥密码"><span class="post-toc-text">公钥密码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RSA"><span class="post-toc-text">RSA</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#RSA-加密"><span class="post-toc-text">RSA 加密</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#RSA-解密"><span class="post-toc-text">RSA 解密</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#生成秘钥的方法"><span class="post-toc-text">生成秘钥的方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#RSA-攻击"><span class="post-toc-text">RSA 攻击</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#其他公钥密码"><span class="post-toc-text">其他公钥密码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#密码强度"><span class="post-toc-text">密码强度</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#混合密码系统"><span class="post-toc-text">混合密码系统</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单向散列函数"><span class="post-toc-text">单向散列函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#单向散列函数的实际应用"><span class="post-toc-text">单向散列函数的实际应用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#算法实现"><span class="post-toc-text">算法实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#MD4、MD5"><span class="post-toc-text">MD4、MD5</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#SHA-1、SHA-256、SHA-384、SHA-512"><span class="post-toc-text">SHA-1、SHA-256、SHA-384、SHA-512</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#RIPEMD-160"><span class="post-toc-text">RIPEMD-160</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#消息认证码-MAC"><span class="post-toc-text">消息认证码 MAC</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#附录"><span class="post-toc-text">附录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#术语"><span class="post-toc-text">术语</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Books"><span class="post-toc-text">Books</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tools"><span class="post-toc-text">Tools</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-cryptography-guide"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Cryptography Guide</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-12-16 00:00:00" datetime="2016-12-15T16:00:00.000Z"  itemprop="datePublished">2016-12-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Cryptography/">Cryptography</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="密码学"><a href="#密码学" class="headerlink" title="密码学"></a>密码学</h2><p>我们遇到的安全问题可以归结为安全的三个属性（CIA金三角）：</p>
+<ul>
+<li>机密性（Confidentiality）：确保数据仅能被合法的用户访问， 即数据不能被未授权的第三方使用。</li>
+<li>完整性（Integrity）：主要确保数据只能由授权方或以授权的方式进行修改，即数据在传输过程中不能被未授权方修改。</li>
+<li>可用性（Availability）：主要确保所有数据仅在适当的时候可以由授权方访问。</li>
+</ul>
+<p>其他安全技术目标：</p>
+<ul>
+<li>可靠性： 主要确保系统能在规定条件下、 规定时间内、 完成规定功能时具有稳定的概率。</li>
+<li>抗否认性： 又称抗抵赖性， 主要确保发送方与接收方在执行各自操作后， 对所做的操作不可否认。</li>
+<li>可控性： 主要是对信息及信息系统实施安全监控。</li>
+<li>可审查性： 主要是通过审计、 监控、 抗否认性等安全机制， 确保数据访问者（ 包括合法用户、 攻击者、 破坏者、 抵赖者） 的行为有证可查， 当网络出现安全问 题时， 提供调查依据和手段。</li>
+<li>认证（ 鉴别） ： 主要确保数据访问者和信息服务者的身份真实有效。</li>
+<li>访问控制： 主要确保数据不被非授权方或以未授权方式使用。</li>
+</ul>
+<p>密码学逐步发展成为一门学科，那么什么是密码学呢？</p>
+<blockquote>
+<p>密码学： 主要是研究保密通信和信息保密的学科， 包括信息保密传输和信息加密存储等。</p>
+</blockquote>
+<p>密码学包含密码编码学（ Cryptography） 和密码分析学（Cryptanalyst） 两个分支。 编码学与分析学相互促<br>进， 又相互制约。 一方面， 两者在加强密码分析的安全上相互促进； 另一方面，两者在实施更为有效的攻击方面也相互影响。</p>
+<p>密码学包含密码编码学（ Cryptography） 和密码分析学（Cryptanalyst） 两个分支。 编码学与分析学相互促<br>进， 又相互制约。 一方面， 两者在加强密码分析的安全上相互促进； 另一方面，两者在实施更为有效的攻击方面也相互影响。</p>
+<ul>
+<li>密码编码学： 主要研究如何对信息进行编码， 如何实现对信息的隐蔽， 是密码学理论的基础， 也是保密系统设计的基础。</li>
+<li>密码分析学： 主要研究加密消息的破译或消息的伪造， 是检验密码体制安全性最为直接的手段， 只有通过实际密码分析考验的密码体制，才是真正可用的。</li>
+</ul>
+<p>密码学家工具箱中 6 个重要的工具为：</p>
+<ul>
+<li>对称密码</li>
+<li>公钥密码</li>
+<li>单向散列函数</li>
+<li>消息认证码</li>
+<li>数字签名</li>
+<li>伪随机数生成器</li>
+</ul>
+<p>我们将信息安全所面临的威胁与用来应对这些威胁的密码技术之间的关系用一张图表来表示出来：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://images2015.cnblogs.com/blog/741560/201704/741560-20170409080102613-370301312.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="密钥"><a href="#密钥" class="headerlink" title="密钥"></a>密钥</h2><p>根据密钥的使用方法，可以将密钥分为对称密钥和非对称密钥。</p>
+<ul>
+<li><strong>对称密钥</strong> （symmetric scypotography） 指的是加密和解密时使用同一密钥的方式。又称为公共密钥密码 (common-key crypotography)、传统密码（conventional cryptography）、私钥密钥（secret cryptography）、共享密钥密码（shared-key cryptography）。</li>
+<li><strong>公钥密钥</strong> （public-key scypotography） 是指加密和解密时使用不同密钥的方式。又称为非对称密钥 (asymmetric cryptography)。</li>
+</ul>
+<p>历史上有几种比较著名的密码：</p>
+<ul>
+<li>凯撒密码。通过将明文中所用到的字母表按照一定的字数 “平移” 来进行加密。在日语（平假名）或者汉语（汉语拼音）也可以用同样的思路来实现凯撒密码。</li>
+<li>简单密码替换。蒋明文中使用的字母表替换为另一套字母表的密码。凯撒密码也可以说是简单替换密码的一种。</li>
+<li>Enigma。二次大战中俄国使用的一种密码机。是一种由键盘、齿轮、电池和灯泡所组成的机器。</li>
+</ul>
+<p>对应的破译方法为：</p>
+<ul>
+<li>暴力攻击</li>
+<li>频率分析</li>
+</ul>
+<h2 id="对称密钥"><a href="#对称密钥" class="headerlink" title="对称密钥"></a>对称密钥</h2><p>主要包括：</p>
+<ul>
+<li>一次性密码本，也称为维纳密码（Vernam Cipher）。将明文和遗传随机的比特序列进行 XOR 运算，是绝对不会被破译的密码。这里说的无法破译，即便能够解出明文，也无法判断它是否是正确的明文。在一次性密码中是绝对不能重用过去用过的随机比特序列的。</li>
+<li>DES。1977 年美国联邦信息处理标准（FIPS）中所采用的一种对称密码。DES 已经能够被暴力破解。由于 DES 的密文可以在短时间内被破译，因此除了用它来破解以前的密文之外，不应该再使用 DES 了。</li>
+<li>三重 DES</li>
+<li>AES</li>
+</ul>
+<h3 id="DES"><a href="#DES" class="headerlink" title="DES"></a>DES</h3><p>DES/3DES 是以 64 比特（8 字节）的明文（比特序列）为一个单位来进行加密的，这个 64 比特的单位称为<strong>分组</strong>。一个分组的比特数称为<strong>分组长度</strong><br>。</p>
+<p>当最后一个明文分组的内容小于分组长度时，需要用一些特定的数据进行<strong>填充</strong>（padding）。</p>
+<p>DES/3DES 的密钥长度是 64 比特，但由于每隔 7 比特会设置一个用于错误检查的比特，因此实际上其密钥长度是 56 比特。</p>
+<p>一般来说，以分组为单位进行处理的密码算法称为<strong>分组密码</strong>（block cipher）。DES 和 3DES 均属于分组密码。</p>
+<p><strong>流密码</strong>（stream cipher）是对数据流进行连续处理的一类密码算法。流密码中一般以 1 比特、8 比特或者 32 比特等为单位进行加密和解密。</p>
+<p>分组密码处理完一个分组就结束了，因此不需要通过内部状态来记录加密的进度，相对的，流密码是对一串数据流进行连续处理，因此需要保持内部状态。</p>
+<p>DES 每次只能加密 64 比特的数据，如果要加密的明文比较长，就需要对 DES 加密进行迭代（反复），而迭代的具体方式就称为<strong>模式</strong> （mode）。</p>
+<p>DES 的基本结构是由 Horst Feistel 设计的，称为 Feistel 网络（Feistal network）。具体参考 《图解密码技术》 Ch3.5。DES 是一种 16 轮循环的 Feistel 网格。在 Feistel 网络中，每一轮都需要使用一个不同的子密钥，这些子密钥由主要生成。</p>
+<h3 id="三重-DES"><a href="#三重-DES" class="headerlink" title="三重 DES"></a>三重 DES</h3><p>三重 DES(triple-des) 是为了增加 DES 的强度，将 DES 重复 3 次所得到的一种密码算法，缩写为 3DES。</p>
+<p>3DES 算法并不是进行 3 次 DES 加密（加密-&gt;加密-&gt;加密），而是加密-&gt;解密-&gt;加密，目的是让 3DES 能够兼容普通的 DES。当 3DES 中多有的密钥都相同时，3 DES 也就等同于普通的 DES 了，这是因为前两部加密-&gt;解密之后，得到的就是最初的明文。</p>
+<p>如果秘钥 1 和秘钥 3 使用相同的秘钥，而秘钥 2 使用不同的秘钥，这种 3DES 称为 DES-EDE2，EDE表示的是加密-&gt;解密-&gt;加密（Encryption-&gt;Decryption-&gt;Encryption）。</p>
+<p>具体加解密过程 具体参考 《图解密码技术》 Ch3.6。</p>
+<p>尽管 3DES 目前还被银行等机构使用，但其处理速度不高，二球在安全性方面也逐渐显现出一些问题。</p>
+<h3 id="AES"><a href="#AES" class="headerlink" title="AES"></a>AES</h3><p>AES(Advance Encryption Standard)是取代其前任标准（DES）而称为新标准的一种对称密码算法。全世界企业和密码学家提交了多个对称秘钥算法微微 AES 候选，最终在 2000 年中这些候选算法中选出了一种名为 Rijndaeal 对对称密码算法，并将其确认为 AES。</p>
+<p>Rjindael 的分组长度为 128 比特，16 字节，秘钥长度可以以 32 比特（4 字节）为单位，在 128 比特（16 字节）到 256 比特（32 字节）的范围内选择。不过，在 AES 的规格中，密码程度只有 16 字节、24 字节、32 字节三种。</p>
+<p>Rjindael 算法也是有多个轮所构成，使用的是 SPN 结构。</p>
+<p>今后大家都应该使用的算法是 AES，因为它安全、快速，而且能够在各种平台上工作。</p>
+<h3 id="密码分组模式"><a href="#密码分组模式" class="headerlink" title="密码分组模式"></a>密码分组模式</h3><p>分组密码的主要模式有以下 5 中：</p>
+<ul>
+<li><p>ECB 模式： Electronic Codebook mode(电子密码本模式)。将明文分组加密之后的结果将直接成为密文分组。</p>
+<p>  ECB 模式是所有模式中最简单的一种。明文分组和密文分组是一一对应的关系。因此，ECB 模式存在一定的风险。</p>
+<p>  攻击者无须破译密码就能够操纵电文，只需要知道哪个分组记录了什么样的数据（即电文格式）就可以了。</p>
+</li>
+<li><p>CBC 模式：Cipher Block Chaining mode(密码分组链接模式)。</p>
+<p>  密文分组 = (明文分组 XOR 前一个密文分组) 加密。</p>
+<p>  第一个密文分组为 <strong>初始化向量</strong>（initialization vector），通常缩写为 IV。一般来说，每次加密时都会随机产生一个不同的布特序列作为初始化向量。</p>
+<p>  在 CBC 模式中，无法单独对一个中间的明文进行加密。</p>
+<p>  对 CBC 的攻击为对初始化向量的比特反转。</p>
+</li>
+<li><p>CFB 模式：Cipher Feedback mode（密文反馈模式）。</p>
+<p>  明文分组和前一个密文分组加密后的结果做 XOR 运算得到密文分组。也就是说前一个密文分组会被送回到密码算法的输入端。</p>
+<p>  密文分组 = 明文分组 XOR （前一个密文分组 加密）</p>
+<p>  第一个密文分组为初始化向量。明文分组并没有通过密码算法来直接加密，而只有一个 XOR 运算。</p>
+<p>  对 CFB 的攻击为重放攻击。</p>
+</li>
+<li><p>OFB 模式：Output FeedBack mode（输出反馈模式）。</p>
+<p>  密文分组 = 明文分组 XOR (前一个密文 加密)</p>
+<p>  第一个密文的 IV，第二个密文为 IV 的加密…</p>
+<p>  OFB 模式也为流密码。</p>
+</li>
+<li><p>CTR 模式：CounTex mode（计算器模式）。通过将逐次累加的计数器进行加密来生成密钥流的流密码。</p>
+<p>  密文分组N = 明文分组N XOR 计数器N  加密 </p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>优点</th>
+<th>缺点</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ECB</td>
+<td><li>简单</li><li>快速</li><li>支持并行计算</li></td>
+<td><li>不能抵御重放攻击</li></td>
+<td>不应使用</td>
+</tr>
+<tr>
+<td>CBC</td>
+<td><li>支持并行计算</li><li>能够解密任意密文分组</li></td>
+<td><li>不支持并行计算</li></td>
+<td>推荐使用</td>
+</tr>
+<tr>
+<td>CFB</td>
+<td><li>不需要填充</li><li>支持并行计算（仅解密）</li><li>能够解密任意密文分组</li></td>
+<td><li>加密不支持并行计算</li><li>不能抵御重放攻击</li></td>
+<td>现在已不适用，推荐用 CTR 模式替代。</td>
+</tr>
+<tr>
+<td>OFB</td>
+<td><li>不需要填充</li></td>
+<td><li>不支持并行计算</li><li>反转攻击</li></td>
+<td>推荐用 CTR 代替</td>
+</tr>
+<tr>
+<td>CTR</td>
+<td><li>不需要填充</li><li>支持并行计算</li></td>
+<td></td>
+<td>推荐使用</td>
+</tr>
+</tbody>
+</table>
+<h3 id="填充模式-Padding"><a href="#填充模式-Padding" class="headerlink" title="填充模式 Padding"></a>填充模式 Padding</h3><p>如电子密码本（ECB）和密文块链接（CBC）。 为对称密钥加密设计的块密码工作模式要求输入明文长度必须是块长度的整数倍，因此信息必须填充至满足要求。</p>
+<h4 id="位填充-Bit-padding-ISO-IEC-9797-1-Padding-Method-2"><a href="#位填充-Bit-padding-ISO-IEC-9797-1-Padding-Method-2" class="headerlink" title="位填充 Bit padding/ISO/IEC 9797-1 Padding Method 2"></a>位填充 Bit padding/ISO/IEC 9797-1 Padding Method 2</h4><p>位填充可用于任意大小的信息。</p>
+<p>于信息后添加一个“设定”位（“1”），再添加“重设”位（“0”）至要求大小。“重设”位（“0”）的数量取决于信息末尾到块边缘的距离。以比特表示为“1000 … 0000”。</p>
+<p>这个方法可用于填充任何位长度的信息，而不限于整字节长度的信息。比如，一段 23 位的信息可填充 9 位以填满一个 32 位的块：</p>
+<p><code><br>… | 1011 1001 1101 0100 0010 011<strong>1 0000 0000</strong> |<br></code></p>
+<p>This padding is the first step of a two-step padding scheme used in many hash functions including MD5 and SHA. In this context, it is specified by RFC1321 step 3.1.</p>
+<p>This padding scheme is defined by ISO/IEC 9797-1 as Padding Method 2.</p>
+<h4 id="字节填充"><a href="#字节填充" class="headerlink" title="字节填充"></a>字节填充</h4><p>字节填充可用于可编码为整数字节大小的信息。</p>
+<h4 id="ANSI-X-923"><a href="#ANSI-X-923" class="headerlink" title="ANSI X.923"></a>ANSI X.923</h4><p>In ANSI X.923 bytes filled with zeros are padded and the last byte defines the padding boundaries or the number of padded bytes.</p>
+<p>Example: In the following example the block size is 8 bytes, and padding is required for 4 bytes (in hexadecimal format)</p>
+<pre>
+... | DD DD DD DD DD DD DD DD | DD DD DD DD **00 00 00 04** |
+</pre>
+
+<h4 id="ISO-10126"><a href="#ISO-10126" class="headerlink" title="ISO 10126"></a>ISO 10126</h4><p>ISO 10126 (withdrawn, 2007[2][3]) specifies that the padding should be done at the end of that last block with random bytes, and the padding boundary should be specified by the last byte.</p>
+<p>Example: In the following example the block size is 8 bytes and padding is required for 4 bytes</p>
+<pre>
+... | DD DD DD DD DD DD DD DD | DD DD DD DD **81 A6 23 04** |
+</pre>
+
+<h4 id="PKCS7-PKCS5"><a href="#PKCS7-PKCS5" class="headerlink" title="PKCS7/PKCS5"></a>PKCS7/PKCS5</h4><p><a href="https://en.wikipedia.org/wiki/PKCS" title="PKCS" target="_blank" rel="external">PKCS#7</a> is described in <a href="http://tools.ietf.org/html/rfc5652#section-6.3" target="_blank" rel="external">RFC 5652</a>.</p>
+<p>Padding is in whole bytes. The value of each added byte is the number of bytes that are added, i.e. N bytes, each of value N are added. The number of bytes added will depend on the block boundary to which the message needs to be extended.</p>
+<p>The padding will be one of:</p>
+<pre>
+01
+02 02
+03 03 03
+04 04 04 04
+05 05 05 05 05
+etc.
+</pre>
+
+<p>This padding method (as well as the previous two) is well-defined if and only if<br><var style="padding-right: 1px;">N</var> is less than 256.</p>
+<p>Example: In the following example the block size is 8 bytes and padding is required for 4 bytes</p>
+<pre>
+... | DD DD DD DD DD DD DD DD | DD DD DD DD **04 04 04 04** |
+</pre>
+
+<p>If the original data is an integer multiple of N bytes, then an extra block of bytes with value N is added. This is necessary so the deciphering algorithm can determine with certainty whether the last byte of the last block is a pad byte indicating the number of padding bytes added or part of the plaintext message. Consider a plaintext message that is an integer multiple of N bytes with the last byte of plaintext being 01. With no additional information, the deciphering algorithm will not be able to determine whether the last byte is a plaintext byte or a pad byte. However, by adding N bytes each of value N after the 01 plaintext byte, the deciphering algorithm can always treat the last byte as a pad byte and strip the appropriate number of pad bytes off the end of the ciphertext; said number of bytes to be stripped based on the value of the last byte.</p>
+<p>PKCS#5 padding is identical to PKCS#7 padding, except that it has only been defined for block ciphers that use a 64-bit (8 byte) block size. In practice the two can be used interchangeably.</p>
+<h4 id="Zero-padding"><a href="#Zero-padding" class="headerlink" title="Zero padding"></a>Zero padding</h4><p>All the bytes that are required to be padded are padded with zero. The zero padding scheme has not been standardized for encryption,[citation needed] although it is specified for hashes and MACs as Padding Method 1 in ISO/IEC 10118-1[5] and ISO/IEC 9797-1.</p>
+<p>Example: In the following example the block size is 8 bytes and padding is required for 4 bytes</p>
+<pre>
+... | DD DD DD DD DD DD DD DD | DD DD DD DD **00 00 00 00** |
+</pre>
+
+<p>Zero padding may not be reversible if the original file ends with one or more zero bytes, making it impossible to distinguish between plaintext data bytes and padding bytes. It may be used when the length of the message can be derived out-of-band. It is often applied to binary encoded strings as the null character can usually be stripped off as whitespace.</p>
+<p>Zero padding is sometimes also referred to as “null padding” or “zero byte padding”. Some implementations may add an additional block of zero bytes if the plaintext is already divisible by the block size.</p>
+<h4 id="ISO-IEC-7816-4"><a href="#ISO-IEC-7816-4" class="headerlink" title="ISO/IEC 7816-4"></a>ISO/IEC 7816-4</h4><p>ISO/IEC 7816-4:2005[4] is identical to the bit padding scheme, applied to a plain text of N bytes. This means in practice that the first byte is a mandatory byte valued ‘80’ (Hexadecimal) followed, if needed, by 0 to N-1 bytes set to ‘00’, until the end of the block is reached. ISO/IEC 7816-4 itself is a communication standard for smart cards containing a file system, and in itself does not contain any cryptographic specifications.</p>
+<p>Example: In the following example the block size is 8 bytes and padding is required for 4 bytes</p>
+<pre>
+... | DD DD DD DD DD DD DD DD | DD DD DD DD **80 00 00 00** |
+</pre>
+
+<p>The next example shows a padding of just one byte</p>
+<pre>
+... | DD DD DD DD DD DD DD DD | DD DD DD DD DD DD DD **80** |
+</pre>
+
+<h2 id="公钥密码"><a href="#公钥密码" class="headerlink" title="公钥密码"></a>公钥密码</h2><p>公钥密码（pubic-key cryptography）中，密钥分为加密秘钥和解密秘钥。发送者用加密秘钥对消息进行加密，接收者用解密秘钥对密文进行解密。</p>
+<p>公钥密码也成为非对称密码（asymmetric cryptography）。私钥也成为个人秘钥、私有迷药，非公开秘钥等。</p>
+<p>加密秘钥中，加密秘钥一般是公开的，因此成为（public key）；解密秘钥是绝对不能公开的，因此成为私钥(private key)。</p>
+<p>公钥私钥是一一对应的，一堆公钥和私钥统称为秘钥对（key pair）。</p>
+<p>对称秘钥的秘钥配送问题，可以通过使用公钥秘钥来解决。公钥密码的处理速度只有对称秘钥的几百分之一；需要判断所得到的公钥是否正确合法，即共要认证问题。</p>
+<h3 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h3><p>RSA 是一种共要密码算法，它的名字有三维开发者，即 Ron Riwest、Adi Shamir、Leonard Adleman 的姓氏的首字母组成。</p>
+<p>RSA 可以被用于公钥密码和数字签名。</p>
+<h4 id="RSA-加密"><a href="#RSA-加密" class="headerlink" title="RSA 加密"></a>RSA 加密</h4><p><code><br>密文 = 明文<sup>E</sup> mod N<br></code></p>
+<p>RSA 的密文为明文的数字的 E 次方求 mod N 的结果。E 和 N 称为 RSA<br> 加密的秘钥，也就是说，E 和 N 的组合就是公钥，一般写成 公钥（E, N）或者 公钥 {E, N}。E 是加密（Encryption）的首字母，N 是数字（Number）的首字母。</p>
+<h4 id="RSA-解密"><a href="#RSA-解密" class="headerlink" title="RSA 解密"></a>RSA 解密</h4><p><code><br>明文 = 密文<sup>D</sup> mod N<br></code></p>
+<p>对表示密文的数字的 D 次方求 mod N 就得到明文。这里使用的数字 N 和加密时使用的数字 N 是相同的。D 和 N 的组合称为私钥。由于 N 是公钥的一部分，是公开的，因此单独的 D 称为私钥也是可以的。</p>
+<h4 id="生成秘钥的方法"><a href="#生成秘钥的方法" class="headerlink" title="生成秘钥的方法"></a>生成秘钥的方法</h4><ol>
+<li><p>求 N</p>
+<p> 准备好两个很大的指数，如 512 比特大小。</p>
+<pre><code>N = p x q
+</code></pre></li>
+<li><p>求 L。L 尽在生成秘钥对的工程中使用的数。在加密和解密的过程中不出现，只出现在秘钥对的生成过程中。</p>
+<pre><code>L = lcm(p-1, q-1) // L 是 p-1 和 q-1 的最小公倍数。
+</code></pre></li>
+<li><p>求 E</p>
+<pre><code>1 &lt; E &lt; L
+gcd(F, L)=1 // E 和 L 的最大公约数为 1（E 和 L 互质）。保证一定存在解密时需要使用的数 D。
+</code></pre></li>
+<li><p>求 D</p>
+<pre><code>1 &lt; D &lt; L
+E x D mod L = 1/ 
+</code></pre></li>
+</ol>
+<h4 id="RSA-攻击"><a href="#RSA-攻击" class="headerlink" title="RSA 攻击"></a>RSA 攻击</h4><p>通过暴力破解和数学运算都很难破解 RSA 密码。对于 RSA 常用的攻击方法为中间人攻击(man-in-the-middle attack)，这种方法虽不能破译 RSA，但 却是一种针对机密性的有效攻击。</p>
+<p>所谓中间人攻击，就是主攻攻击者（Mallory）混入发送者和接收者中间，对发送者伪装成接收者，对接收者伪装成发送者的攻击方式。在这个过程中，公钥密码并没有被破译，所有的密码算法也都整成的工作。</p>
+<p>主攻攻击者 Mallory 窃听消息发送者 Alice 的内容，获取公钥，通过公钥加密伪造内容，发送给接收者 Bob。Bob 收到消息后，通过私钥解密，得到的是伪造后的内容。同理，攻击者也可以伪造 Bob 的发送内容。</p>
+<p>这种攻击不仅针对 RSA，而是可以针对任何公钥密码。在这种情况下，我们可以使用公钥的 <strong>证书</strong>。</p>
+<h3 id="其他公钥密码"><a href="#其他公钥密码" class="headerlink" title="其他公钥密码"></a>其他公钥密码</h3><p>除了 RSA 之外，还有其他的共要密码，如 EIGamal 方式、Rabin 方式、椭圆曲线密码，都可以被用于一般的加密和数字签名。</p>
+<h3 id="密码强度"><a href="#密码强度" class="headerlink" title="密码强度"></a>密码强度</h3><table>
+<thead>
+<tr>
+<th>对称密码的秘钥长度</th>
+<th>公钥密码的密钥程度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>128 bit</td>
+<td>2304 bit</td>
+</tr>
+<tr>
+<td>112 bit</td>
+<td>1792 bit</td>
+</tr>
+<tr>
+<td>80 bit</td>
+<td>768 bit</td>
+</tr>
+<tr>
+<td>64 bit</td>
+<td>512 bit</td>
+</tr>
+<tr>
+<td>50 bit</td>
+<td>384 bit</td>
+</tr>
+</tbody>
+</table>
+<p>1024 比特的公钥密码与 128 比特的对称秘钥相比，反而 128 比特的对称密码抵御暴力破解的能力更强。</p>
+<h2 id="混合密码系统"><a href="#混合密码系统" class="headerlink" title="混合密码系统"></a>混合密码系统</h2><p>用对称密码提供速度，用公钥密码保护会话秘钥。</p>
+<ul>
+<li>会话秘钥 = 通过伪随机数生成器生成的对称秘钥</li>
+<li>密文消息 = 对称密码 加密 消息。</li>
+<li>会话秘钥密文 = 公钥密码 加密 会话秘钥。会话密钥是对称密码的密钥，同时也是公钥密码的明文。将对称密码和公钥密码两种密码方式相互联系起来的正式会话秘钥。</li>
+<li>混合密码系统的密文 = 将公钥密码加密的会话密钥 + 用对称密码加密的消息</li>
+</ul>
+<p>混合密码系统解决了公钥密码速度慢的问题，并通过公钥密码解决了密钥的配送问题。著名的密码软件 PGP、以及网络上的密码通信所使用的 SSL/TLS 都运用了混合密码系统。</p>
+<p><strong>混合密码系统加密： </strong></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://images2015.cnblogs.com/blog/741560/201704/741560-20170409081100378-499460044.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><strong>混合密码系统解密：</strong></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://images2015.cnblogs.com/blog/741560/201704/741560-20170409081108253-262350919.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>我们在各种系统中输入的“密码”，我们应该叫口令（Password），主要用来身份验证的，加密过程中可以用PBE（Password Based Encryption，基于口令加密）算法，使用口令产生密钥，而口令由用户自己掌管。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://images2015.cnblogs.com/blog/741560/201704/741560-20170409081115457-1840479222.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="单向散列函数"><a href="#单向散列函数" class="headerlink" title="单向散列函数"></a>单向散列函数</h2><p>单向散列函数（one-way hash function）的输入为消息（message，也称为原像），输出为散列值（hash value）。单向散列函数也称为消息摘要函数（message digest function）、哈希函数或者杂凑函数。</p>
+<p>单向散列函数用于获取消息的“指纹”，用于验证消息的完整性（一致性）。</p>
+<p>单向散列函数有如下性质：</p>
+<ul>
+<li>根据任意长度的消息计算出固定长度的散列值。</li>
+<li>能够快速计算出散列值。</li>
+<li><p>消息不同散列值也不同。</p>
+<p>  两个不同的消息产生同一个散列值的情况称为 <strong>碰撞</strong>（collision）。难以发现碰撞的性质称为 <strong>抗碰撞性</strong>（collision resistance）。</p>
+<p>  密码技术中所有事的单向散列函数不仅要具备弱碰撞性，还必须具备强碰撞性。</p>
+</li>
+<li><p>单向性。</p>
+</li>
+</ul>
+<p>单向散列函数能够辨别出 “篡改”，但无法分辨出 “伪装”。要确认消息的真实发送者，还需要进行认证。认证技术包括 <strong>消息验证码</strong> 和 <strong>数字签名</strong>。</p>
+<h3 id="单向散列函数的实际应用"><a href="#单向散列函数的实际应用" class="headerlink" title="单向散列函数的实际应用"></a>单向散列函数的实际应用</h3><ul>
+<li>检测软件是否被篡改。</li>
+<li>基于口令的加密（Password Based Encryption, PBE）。原理就是将口令和盐（salt，通过伪随机数生成器生成的随机值）混合后计算器散列值，然后将这个散列值用作加密的密钥。</li>
+<li>消息认证码。将发送者和接收者之间的共享密钥和消息进行混合计算出的散列值。</li>
+<li>数字签名。</li>
+<li>伪随机数生成器。</li>
+<li>一次性口令(one-time passport)。一次性口令经常被用于服务器对客户端的合法性认证。</li>
+</ul>
+<h3 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h3><h4 id="MD4、MD5"><a href="#MD4、MD5" class="headerlink" title="MD4、MD5"></a>MD4、MD5</h4><ul>
+<li>MD4 生成 128bit 的散列值，已经不安全。</li>
+<li>MD5 能够产生 128bit 的散列值，强坑碰撞性已经被攻破，已经不安全。</li>
+</ul>
+<h4 id="SHA-1、SHA-256、SHA-384、SHA-512"><a href="#SHA-1、SHA-256、SHA-384、SHA-512" class="headerlink" title="SHA-1、SHA-256、SHA-384、SHA-512"></a>SHA-1、SHA-256、SHA-384、SHA-512</h4><p>SHA-1 能够产生 160bit 的散列值，消息存在上限，接近于 2<sup>64</sup>bit。这是个非常巨大的数字，在实际应用中使用没有问题。抢碰撞性已于 2005 年被攻破。</p>
+<p>SHA-256、SHA-384、SHA-512 的散列值长度分别为 256bit、384bit、512bit。这些散列函数统称为 SHA-2，他们的消息长度也存在上限（SHA-256 的消息上限接近于 2<sup>64</sup>，SHA-384 和 SHA-512 的上限接近于 2 <sup>128</sup>bit<br>）。SHA-2 还尚未被攻破。</p>
+<h4 id="RIPEMD-160"><a href="#RIPEMD-160" class="headerlink" title="RIPEMD-160"></a>RIPEMD-160</h4><p>RIPEMD-160 能够产生 160 比特的散列值。RIPEMD-160 是欧盟 RIPE 项目所设计的 RIPEMD 单项散列函数的修订版。</p>
+<p>RIPEMD 的强抗碰撞性已经与 2004 年被攻破，但 RIPEMD-160 还尚未被攻破。</p>
+<h2 id="消息认证码-MAC"><a href="#消息认证码-MAC" class="headerlink" title="消息认证码 MAC"></a>消息认证码 MAC</h2><p>消息认证码（message authentication code）是一种确认完整性并进行认证的技术，取三个单词的首字母，简称为 <strong>MAC</strong>。</p>
+<p>消息认证码的输入包括任意长度的消息和一个发送者和接收者之间共享的秘钥，它可以输出固定长度的数据，这个数据称为 <strong>MAC 值</strong>。</p>
+<p>消息认证码是一种与密钥相关联的散列函数。消息认证码跟单项散列函数一样，能够保证数据的完整性，但是单向散列函数中计算散列值时不需要秘钥，而消息认证码则需要使用发送者和接收者之间的共享的密钥。要计算 MAC 必须持有共享密钥，消息认证码正式利用这一性质来完成的。</p>
+<p>对称密码的秘钥配送问题在消息认证码中也同样会发生，要解决秘钥配送问题，可以使用共享秘钥、Diffe-Hellman 秘钥交换、秘钥分配中心等。</p>
+<p>具体应用实例：</p>
+<ul>
+<li>SWIFT (Society for Worldwide Interbank Financial Telecommunication，环球银行金融电信协会)，其目的是为国际银行间的交易保驾护航。银行和银行间通过 SWIFT 来传递交易，SWIFT中使用了消息认证码来保证消息的完整性和认证。</li>
+<li>IPsec 是对互联网基本通信协议——IP 协议（Internet Protocal）增加安全性的一种方式。</li>
+<li>SSL/TLS。</li>
+</ul>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><ol>
+<li>明文（ Plaintext） ： 指待加密信息。 明文可以是文本文件、 图片文件、 二进制数据等。</li>
+<li>密文（ Ciphertext） ： 指经过加密后的明文。 密文通常以文本、 二进制数据等形式存在。</li>
+<li>发送者（ Sender） ： 指发送消息的人。</li>
+<li>接收者（ Receiver） ： 指接收消息的人。</li>
+<li>加密（ Encryption） ： 指将明文转换为密文的过程。</li>
+<li>加密算法（ Encryption Algorithm） ： 指将明文转换为密文的算法。</li>
+<li>加密密钥（ Encryption Key） ： 指通过加密算法进行加密操作用的密钥。</li>
+<li>解密（ Decryption） ： 指将密文转换成明文的过程。</li>
+<li>解密算法（ Decryption Algorithm） ： 指将密文转换为明文的算法。</li>
+<li>解密密钥（ Decryption Key） ： 指通过解密算法进行解密操作用的密钥。</li>
+<li><p>密码分析（ Cryptanalysis） ： 指截获密文者试图通过分析截获的密文从而推断出原来的明文或密钥的 过程。</p>
+</li>
+<li><p>密码分析者（ Cryptanalyst） ： 等同于密码破译者， 指从事密码分析的人。</p>
+</li>
+<li><p>被动攻击（ Passive Attack） ： 指对一个保密系统采取截获密文并对密文进行分析和攻击的行为。 这种 攻击对密文没有破坏作用。</p>
+</li>
+<li><p>主动攻击（ Active Attack） ： 指攻击者非法入侵密码系统， 采用伪造、 修改、 删除等手段向系统注入 假消息进行欺骗的行为。 这种攻击对密文具有破坏作用。</p>
+</li>
+<li><p>密码体制（ Cipher System） ： 由明文空间、 密文空间、 密钥空间、 加密算法和解密算法五部分构成。</p>
+</li>
+<li>密码协议（ Cryptographic Protocol） ： 有时又称安全协议， 是指以密码学为基础的消息交换的通信协议， 其目的是在网络环境中提供各种安全服务。 密码协议与密码算法同等重要， 是当今密码学研究的两大课题。 密码学是网络安全的基础， 但网络安全不能单纯依靠安全的密码算法。密码协议是网络安全的一个重要组成部分， 通过密码协议可以进行实体之间的认证、 在实体之间安全地分配密钥或其他各种秘密、确认发送和接收的消息的不可否认性等。</li>
+<li>密码系统（ Cryptography） ： 指用于加密和解密的系统。 加密时， 密码系统输入明文和加密密钥， 进行 加密变换后， 输出密文； 解密时， 密码系统输入密文和解密密钥， 进行解密变换后， 输入明文。 一个密码系统由信源、 加密变换、 解密变换、 信宿和攻击者组成。 密码系统强调密码方案的实际应用， 通常应当是一个包含软、 硬件的系统。</li>
+<li><p>柯克霍夫原则（ Kerckhoff’s rinciple） ： 又称柯克霍夫假说、 公理或定律， 是由奥古斯特·柯克霍夫 （ Auguste Kerckhoffs） 在19世纪提出的密码理论， 即数据的安全基于密钥而不是算法的保密。 换句话说， 系统的安全性取决于密钥， 对密钥保密， 对算法公开。 信息论始祖克劳德·艾尔伍德·香农（ Claude Elwood Shannon） 将其改为“ 敌人了解系统” ， 这样的说法称为香农箴言。 柯克霍夫原则是现代密码学设计的基本原则。</p>
+<ul>
+<li>即使非数学上不可破解， 系统也应在实质（ 实用） 程度上无法破解系统内不应含任何机密物， 即使落入敌人手中也不会造成困扰。</li>
+<li>密匙必须易于沟通和记忆， 而无须写下， 且双方可以很容易地改变密匙。</li>
+<li>系统应可以用于电讯。</li>
+<li>系统应可以携带， 不应需要两个人或两个人以上才能使用（ 应只要一个人就能使用） 。</li>
+<li>系统应容易使用， 不致让使用者的脑力过分操劳， 也无须记得长串的规则。</li>
+</ul>
+</li>
+</ol>
+<h2 id="Books"><a href="#Books" class="headerlink" title="Books"></a>Books</h2><ul>
+<li><a href="https://github.com/crypto101/book" target="_blank" rel="external">crypto101/book: Crypto 101, the introductory book on cryptography.</a></li>
+<li>《图解密码技术》 [日]结城浩 著 周自恒 译</li>
+</ul>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><ul>
+<li><a href="http://des.online-domain-tools.com/" target="_blank" rel="external">DES Encryption – Easily encrypt or decrypt strings or files</a></li>
+<li><a href="http://www.emvlab.org/descalc/?key=0123456789ABCDEF&amp;iv=0000000000000000&amp;input=0123456789ABCDEF&amp;mode=ecb&amp;action=Encrypt&amp;output=56CC09E7CFDC4CEF" target="_blank" rel="external">DES Calculator</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-08-19T02:44:58.275Z" itemprop="dateUpdated">2018-08-19 10:44:58</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/Cryptography/2016-12-16-cryptography-guide.html" target="_blank" rel="external">http://blog.inching.org/Cryptography/2016-12-16-cryptography-guide.html</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.inching.org">
+            <img src="/img/avatar.png" alt="Cody Fei">
+            Cody Fei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Cryptography/2016-12-16-cryptography-guide.html&title=《Cryptography Guide》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Cryptography/2016-12-16-cryptography-guide.html&title=《Cryptography Guide》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Cryptography/2016-12-16-cryptography-guide.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Cryptography Guide》 — Balance&url=http://blog.inching.org/Cryptography/2016-12-16-cryptography-guide.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Cryptography/2016-12-16-cryptography-guide.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JavaScript/2016-12-20-how-three-dots-changed-javascript.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">How three dots changed JavaScript</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/RxJava/2016-12-15-rx-java-asynctask-asyncloader.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Replace AsyncTask and AsyncTaskLoader with rx.Observable – RxJava Android Patterns</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.JPG" data-alipay="/img/alipay.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="display:none">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>footer.license</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Cody Fei &copy; 2012 - 2018</span>
+            <span style="display:none">
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.inching.org/Cryptography/2016-12-16-cryptography-guide.html&title=《Cryptography Guide》 — Balance&pic=http://blog.inching.org/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.inching.org/Cryptography/2016-12-16-cryptography-guide.html&title=《Cryptography Guide》 — Balance&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.inching.org/Cryptography/2016-12-16-cryptography-guide.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Cryptography Guide》 — Balance&url=http://blog.inching.org/Cryptography/2016-12-16-cryptography-guide.html&via=http://blog.inching.org" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.inching.org/Cryptography/2016-12-16-cryptography-guide.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACu0lEQVR42u3a204DMQwFwP7/TxeJJ5Do7rEdF5AmT2jpJROk2Nh+POL1/FzzJ9ev/Lqunx9eeHh4eK2tv1pVzPV7r9+V7C3fMx4eHt427/r6vt7i9bvyY+q98saCh4eH96u8athItp6EBDw8PLz/y0uS3Tx4VMsZeHh4eH+Nl1z91Yu+mhY/g7VYa8HDw8OLedUG2F/4ebG/h4eHhzfoqveu6WraXS1MFPaGh4eHt8BLmvd5O3+y6WpJohAw8PDw8I7y8nJA8tt8TCoft+oVcL/FPTw8PLw1XhIeesl07/iqgeRlMo2Hh4e3xpu3oE4NHDTDwCSlxsPDwyt2jpKN5oeSh5ze8zzM4OHh4W3w8m3lpdX80/LjqwaVH/p7eHh4eEd5vZGm5OLOy7JJWEp2eFNrwcPDwxvzel9fHTKoHlDePCuMQeDh4eEt8OZ3aa95dnbA69GLbHh4eHgxr5fa5jXSPHHvlUVunuDh4eEt8Ob3515BIW+z3ewTDw8P7yjv1JdNVpIcNwe58PDw8BZ4SZqbhJA8Cs2DUBKWor8hHh4eXouXlGKTC30yZFAtVSRpOh4eHt4e7+xFPEnQ8yQ+T7Xx8PDw9njVUunkebX4Ww08N6/Hw8PDO8SrJtaFdLbYMMsDTyEs4eHh4b2FV21K5W2qJAidOhQ8PDy8PV7vo6uHMt/6KCDh4eHhHeXlLa7qUFTvk5NXFoIQHh4e3hqv1wybDAfk6ftkJ3h4eHhnec/i6g0QJEWNXun2Jvzg4eHhLfBG8aQF2EjBJyENDw8Pr8fLL+WkJNELJzmg2qjDw8PD2+Plxdk5OAkzk9D1soyLh4eH90u8XkOrOiJQHVAoj1vh4eHhvYWXXNmTKkg+vJUfGR4eHt4er9p8qg5C5QdRbcVFZ4aHh4d3lDf6Vz8+uN7VPzliPDw8vAXeBxaJVLltE3NgAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.17"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.17" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

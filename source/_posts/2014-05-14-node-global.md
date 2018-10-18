@@ -59,3 +59,4 @@ global里定义了一些全局的对象或函数，在node的任何一个模块�
 - [Global Objects Node.js v0.10.29 Manual & Documentation](http://nodejs.org/docs/latest/api/globals.html#globals_dirname)
 - [node.js的global variable，和module.exports](http://blog.csdn.net/kyfxbl/article/details/12587385)
 - [NodeJs：module.filename、__filename、__dirname、process.cwd()和require.main.filename 解惑](http://www.cnblogs.com/happyframework/archive/2013/05/16/3080910.html)
+

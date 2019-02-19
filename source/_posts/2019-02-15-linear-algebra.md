@@ -128,23 +128,20 @@ $$
 
 三元线性方程同理。
 
-## 消元法
+## 转置
 
-> Can I solve Ax=b for every b?
->
-> Do the linear combinations of the columns fill N dimension Space?
+矩阵A的**转置**是另一个矩阵$A^T$，由下列等价动作建立:
 
-符合这两个条件的矩阵 A 称为可逆矩阵或非奇异矩阵。
+- 把*A*的横行写为*A*T的纵列
+- 把*A*的纵列写为*A*T的横行
 
-对于一些方程组，以 3 维为例，每个方程表示一个平面，如何其中两个平面平行，则列向量的任意组合无法充满整个三维空间，改 矩阵即为不可逆的或者是奇异的。
+![](https://upload.wikimedia.org/wikipedia/commons/e/e4/Matrix_transpose.gif)
 
-## 矩阵
-
-### 矩阵乘法
+## 矩阵乘法
 
 A~mxn~·B~n*p~=C~m*p~
 
-#### 点积
+### 点积
 
 计算公式：
 
@@ -179,7 +176,7 @@ $$
 \end{bmatrix}
 $$
 
-#### 列线性组合
+### 列线性组合
 
 矩阵乘以向量 Ax：
 
@@ -234,7 +231,7 @@ $$
 
 Columns of C are combinations of columns A. C 中的每一列相当于 A 中每个列向量的线性组合，即可简化为 Ab=c, b 即为线性组合的解。
 
-#### 行线性组合
+### 行线性组合
 
 Rows of C are combinatitons of rows of B.
 $$
@@ -256,7 +253,7 @@ $$
 \end{bmatrix}
 $$
 
-#### 列乘行
+### 列乘行
 
 (Columns of A)~mx1~ * (Rows of B)~1xp~
 
@@ -311,8 +308,28 @@ $$
 \end{bmatrix}
 $$
 
+### 分块乘法 Block
 
-### 消元法
+$$
+\begin{array}{c|c}
+A_1 & A_2 \\ 
+\hline
+A_3 & A_4
+\end{array}
+\begin{array}{c|c}
+B_1 & B_2 \\ 
+\hline
+B_3 & B_4
+\end{array}
+=
+\begin{array}{c|c}
+A_1B_1+A_2B_3 & ... \\ 
+\hline
+... & ...
+\end{array}
+$$
+
+## 矩阵消元 Emilation
 
 消元法求解任意元的方程组。所有计算机程序使用的都是该方法求解。
 
@@ -423,7 +440,7 @@ $$
 
 在选定 A~2,2~ 为主元时，第三行都变成了 0。
 
-### 矩阵变换 Exchange
+## 矩阵变换 Exchange
 
 在消元法中，矩阵之间的变换使用的是简记法。我们用矩阵变化表示上面的消元过程。
 
@@ -433,12 +450,12 @@ $$
 	1 & 0 & 0\\
 	-3 & 1 & 0\\
 	0 & 0 & 1
-\end{bmatrix}
+\end{bmatrix}_{E_{2,1}}
 \begin{bmatrix}
 	1 & 2 & 1\\
 	3 & 8 & 1\\
 	0 & 4 & 1
-\end{bmatrix}
+\end{bmatrix}_A
 =
 \begin{bmatrix}
 	1 & 2 & 1 \\
@@ -452,7 +469,7 @@ $$
 3. 根据 Row Picture，由于现在需要 Substract 3 * row1 from row2，所以第二行为 [-1, 2, 0]
 4. 消除 A~3,1~ 的元素，已经是 0，不用做。
 
-转化矩阵用 E~2,1~ 来表示
+转化矩阵用 E~2,1~ 来表示，E~2,1~ 称为初等矩阵。
 
 **取主元 A~2,2~，消除 A~3,2~ 的元素： 第 3 行 - 2 * 第  2 行**
 
@@ -461,7 +478,7 @@ $$
 	1 & 0 & 0 \\
 	0 & 1 & 0\\
 	0 & -2 & 1
-\end{bmatrix}
+\end{bmatrix}_{E_{3,2}}
 \begin{bmatrix}
 	1 & 2 & 1 \\
 	0 & 2 & -2\\
@@ -487,10 +504,11 @@ E~3,2~( E~2,1~A)=U
 
 →EA=U
 
-### 矩阵置换 Permutation
+## 矩阵置换 Permutation
+
+在消元过程中，当主元为 0 时，可以需要交换行来使主元非零，继续消元。
 
 用来交换一个矩阵的行或列的矩阵称为交换矩阵。
-
 $$
 \begin{bmatrix}
 	0 & 1\\
@@ -506,9 +524,7 @@ $$
 	a & b           
 \end{bmatrix}
 $$
-
-以上说的都是行变换。加入要进行如下的列变换：
-
+以上说的都是行变换，假如要进行如下的列变换：
 $$
 \begin{bmatrix}
 	a & b\\
@@ -524,11 +540,67 @@ $$
 	d & c           
 \end{bmatrix}
 $$
+对于 3*3 的矩阵，有 6 中变换，每种变换相乘或者取逆的结果仍然是在这个 6 个变换矩阵中。
+$$
+\begin{bmatrix}
+	1 & 0 & 0 \\
+	0 & 1 & 0\\
+	0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+	1 & 0 & 0 \\
+	0 & 0 & 1\\
+	0 & 1 & 0
+\end{bmatrix}
+\begin{bmatrix}
+	0 & 1 & 0 \\
+	1 & 0 & 0\\
+	0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+	0 & 1 & 0 \\
+	0 & 0 & 1\\
+	1 & 0 & 0
+\end{bmatrix}
+\begin{bmatrix}
+	0 & 0 & 1 \\
+	1 & 0 & 0\\
+	0 & 1 & 0
+\end{bmatrix}
+\begin{bmatrix}
+	0 & 0 & 1 \\
+	0 & 1 & 0\\
+	1 & 0 & 0
+\end{bmatrix}
+$$
 
-### 逆 Inverses
+
+性质：置换矩阵的逆等于其转置。
+
+$P^{-1}=P^T$
+$$
+\begin{bmatrix}
+	1 & 0 & 0 \\
+	0 & 0 & 1\\
+	0 & 1 & 0
+\end{bmatrix}
+$$
+
+
+## 逆 Inverses
+
+> Can I solve Ax=b for every b?
+>
+> Do the linear combinations of the columns fill N dimension Space?
+
+符合这两个条件的矩阵 A 称为可逆矩阵或非奇异矩阵。
+
+对于一些方程组，以 3 维为例，每个方程表示一个平面，如何其中两个平面平行，则列向量的任意组合无法充满整个三维空间，改 矩阵即为不可逆的或者是奇异的。
+$$
+A^{-1}A=I=AA^{-1’}
+$$
 
 求以下矩阵的逆：
-
 $$
 \begin{bmatrix}
 	1 & 0 & 0 \\
@@ -547,7 +619,7 @@ $$
 \end{bmatrix}
 \begin{bmatrix}
 	1 & 0 & 0 \\
-	-3 & 1 & 0\\
+	3 & 1 & 0\\
 	0 & 0 & 1
 \end{bmatrix}
 =
@@ -559,6 +631,269 @@ $$
 $$
 
 我们使用行变换的思路，第一行和第三行没变，第二行的意思的 -3 * Row1 + Row2，它的逆其实就是 3* Row1 + Row2。
+
+**If you can find a vector x with Ax=0, x≠0, then the matrix is no inversable(Singular).**
+
+如：
+
+$$
+Ax=
+\begin{bmatrix}
+	1 & 3 \\
+	2 & 6
+\end{bmatrix}
+\begin{bmatrix}
+	3 \\
+	-1
+\end{bmatrix}
+=
+\begin{bmatrix}
+	0 \\
+	0
+\end{bmatrix}
+$$
+
+矩阵 A，存在向量 x，使 Ax=0，所以 A 是奇异的或者不可逆的。
+
+假设要求解以下矩阵的逆，
+
+$$
+\begin{bmatrix}
+	1 & 3 \\
+	2 & 7
+\end{bmatrix}
+\begin{bmatrix}
+	a & c \\
+	b & d
+\end{bmatrix}
+=
+\begin{bmatrix}
+	1 & 0 \\
+	0 & 1
+\end{bmatrix}
+$$
+
+Gausss-Jordan can solves two equations at once. 高斯-若当能同事处理两个方程组。
+
+对于高斯来说，需要求解一下两个方程组：
+
+$$
+\begin{bmatrix}
+	1 & 3 \\
+	2 & 7
+\end{bmatrix}
+\begin{bmatrix}
+	a \\
+	b
+\end{bmatrix}
+=
+\begin{bmatrix}
+	1 \\
+	0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+	1 & 3 \\
+	2 & 7
+\end{bmatrix}
+\begin{bmatrix}
+	c \\
+	d
+\end{bmatrix}
+=
+\begin{bmatrix}
+	0 \\
+	1
+\end{bmatrix}
+$$
+
+若尔当让这两个方程同时求解。
+
+$$
+\begin{array}{c c|c c}
+1 & 3 & 1 & 0 \\ 
+2 & 7 & 0 & 1
+\end{array}
+=
+\begin{array}{c c|c c}
+1 & 3 & 1 & 0 \\ 
+0 & 1 & -2 & 1
+\end{array}
+$$
+
+使用消元法，高斯做到这一步就够了。若尔当继续向上消元：
+
+$$
+\begin{array}{c c|c c}
+1 & 3 & 1 & 0 \\ 
+0 & 1 & -2 & 1
+\end{array}
+=
+\begin{array}{c c|c c}
+1 & 0 & 7 & -3 \\ 
+0 & 1 & -2 & 1
+\end{array}
+$$
+
+A 的逆即为：
+
+$$
+\begin{bmatrix}
+7 & -3 \\ 
+-2 & 1
+\end{bmatrix}
+$$
+
+## A 的 LU 分解
+
+AB 的逆为 B^-1^A^-1^：
+$$
+AB(B^{-1}A^{-1})=I
+$$
+
+A^T^的逆为 A^-1^ 的转置，A 的逆的转置就是 A 转置的逆：
+
+$$
+AA^{-1}=I \\
+
+(A^{-1})^TA^T=I
+$$
+
+矩阵变换 E~2,1~ A=U
+
+$$
+\begin{bmatrix}
+1 & 0 \\ 
+-4 & 0
+\end{bmatrix}_E
+\begin{bmatrix}
+2 & 1 \\ 
+8 & 7
+\end{bmatrix}_A
+=
+\begin{bmatrix}
+2 & 1 \\ 
+0 & 3
+\end{bmatrix}_U
+$$
+
+A=LU 形式
+
+$$
+\begin{bmatrix}
+2 & 1 \\ 
+8 & 7
+\end{bmatrix}_A
+=
+\begin{bmatrix}
+1 & 0 \\ 
+4 & 1
+\end{bmatrix}_L
+\begin{bmatrix}
+2 & 1 \\ 
+0 & 3
+\end{bmatrix}_U
+$$
+
+L 为 E 的逆。
+
+U 表示 Upper，上三角；L 表示 Lower，下三角。L 的对角线均为 1，U 的对角线为主元。
+
+如果将主元单独出来，则变成 A = LDU
+
+$$
+\begin{bmatrix}
+2 & 1 \\ 
+8 & 7
+\end{bmatrix}_A
+=
+\begin{bmatrix}
+1 & 0 \\ 
+4 & 1
+\end{bmatrix}_L
+\begin{bmatrix}
+2 & 0 \\ 
+0 & 3
+\end{bmatrix}_D
+\begin{bmatrix}
+1 & 1/2 \\ 
+0 & 1
+\end{bmatrix}_{U'}
+$$
+
+DU'=U，可以根据列变换来计算出 U'。
+
+假设 A 是三维矩阵，则：
+$$
+E_{32}E_{31}E_{21}A=U
+$$
+假设没有行交换。
+$$
+\begin{align*}
+A &= E_{21}^{-1}E_{32}E_{31}^{-1}E_{32}^{-1}U \\
+&= LU
+\end{align*}
+$$
+假设E~31~ 是单位矩阵，则左边
+$$
+E=E_{32}E_{21}=
+\begin{bmatrix}
+1 & 0 & 0 \\ 
+0 & 1 & 0 \\
+0 & -5 & 1
+\end{bmatrix}_{E_{32}}
+\begin{bmatrix}
+1 & 0 & 0 \\ 
+-2 & 1 & 0 \\
+0 & 0 & 1
+\end{bmatrix}_{E_{21}}
+=
+\begin{bmatrix}
+1 & 0 & 0 \\ 
+-2 & 1 & 0 \\
+10 & -5 & 1
+\end{bmatrix}_{E}\\
+$$
+
+
+使用 LU 的形式：
+$$
+L=E_{21}^{-1}E_{32}^{-1}=
+\begin{bmatrix}
+1 & 0 & 0 \\ 
+2 & 1 & 0 \\
+0 & 0 & 1
+\end{bmatrix}_{E_{21}^{-1}}
+\begin{bmatrix}
+1 & 0 & 0 \\ 
+0 & 1 & 0 \\
+0 & 5 & 1
+\end{bmatrix}_{E_{32}^{-1}}
+=
+\begin{bmatrix}
+1 & 0 & 0 \\ 
+2 & 1 & 0 \\
+0 & 5 & 1
+\end{bmatrix}_L
+$$
+两种形式可以表示为：
+$$
+EA=U\\
+A=LU
+$$
+如果不存在行互换，则消元乘数可以直接写入 L 中，如上例中的 L，而 E 则不具备这样的特性，所以用 LU  来表示消元步骤更先进。
+
+How many operations on n*n martrix A? 解某方程组n为一百万，需要1秒、1小时还是 1周？
+
+对于 100*100 的矩阵，消元的步骤为 99+98+97+...
+
+第一次消元，需要变动的元素个数接近 $100^2$；第二次接近 ；$99^2$...
+
+总的计算次数为：
+$$
+n^2+(n-1)^2+...+1^2=\frac{1}{2}n^3
+$$
+对于 Ax=b，除了A的变换，常量 b 的计算次数为 $n^2​$。
 
 ## 工具
 

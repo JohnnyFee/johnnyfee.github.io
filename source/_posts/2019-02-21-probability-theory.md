@@ -90,6 +90,56 @@ $$
 
 ![image-20190222171350102](https://ws1.sinaimg.cn/large/006tKfTcgy1g0fbhvs45jj30l50apn0j.jpg)
 
+## 条件概率
+
+例：一个家庭中有两个小孩，已知至少一个是女孩，问两个都是女孩的概率是多少？
+
+S = {{兄弟}、{兄妹}、{姐弟}、{姐妹}}
+
+A={{兄妹}、{姐弟}、{姐妹}}
+
+B={{姐妹}}
+
+则：P(B|A)=1/3，P(B|A)表示A发生的条件下，B发生的条件概率。
+
+![image-20190227115803280](https://ws1.sinaimg.cn/large/006tKfTcly1g0kugwxzfpj30pd08pgo0.jpg)
+
+![image-20190227115950664](https://ws2.sinaimg.cn/large/006tKfTcly1g0kuiq43eyj30oz0cnjvw.jpg)
+
+![image-20190227120127146](https://ws4.sinaimg.cn/large/006tKfTcly1g0kukekl1fj30q70blwki.jpg)
+
+![image-20190227133644572](https://ws2.sinaimg.cn/large/006tKfTcly1g0kxbjm3bkj30nh0bvdip.jpg)
+
+![image-20190227133849076](https://ws1.sinaimg.cn/large/006tKfTcly1g0kxdph4znj30qf0ataea.jpg)
+
+## 全概率公式与贝叶斯公式
+
+![image-20190227134732664](https://ws2.sinaimg.cn/large/006tKfTcly1g0kxms5a54j30qa0b0tdq.jpg)
+
+![image-20190227135534656](https://ws2.sinaimg.cn/large/006tKfTcly1g0kxv57878j30oi0ayq6d.jpg)
+
+![image-20190227135556614](https://ws1.sinaimg.cn/large/006tKfTcly1g0kxviyl4fj30ll08840n.jpg)
+
+## 事件独立性
+
+![image-20190227135918557](https://ws1.sinaimg.cn/large/006tKfTcly1g0kxz0tsa0j30pm09ywhz.jpg)
+
+![image-20190227135940780](https://ws2.sinaimg.cn/large/006tKfTcly1g0kxzeumeuj30oy0acads.jpg)
+
+![image-20190227140021607](https://ws4.sinaimg.cn/large/006tKfTcly1g0ky044rdzj30nw0a5juf.jpg)
+
+![image-20190227140101564](https://ws3.sinaimg.cn/large/006tKfTcly1g0ky0tdsr4j30oj0a1q62.jpg)
+
+![image-20190227140145345](https://ws4.sinaimg.cn/large/006tKfTcly1g0ky1kjcztj30n20baq6v.jpg)
+
+![image-20190227140218088](https://ws1.sinaimg.cn/large/006tKfTcly1g0ky24q52xj30mk07y41j.jpg)
+
+![image-20190227140534080](https://ws3.sinaimg.cn/large/006tKfTcly1g0ky5jc8g3j30px0a0gq1.jpg)
+
+![image-20190227140350248](https://ws4.sinaimg.cn/large/006tKfTcly1g0ky3q8cqzj30oo0c1432.jpg)
+
+
+
 ## 工具
 
 - [LaTeX/Mathematics - Wikibooks, open books for an open world](https://en.wikibooks.org/wiki/LaTeX/Mathematics)

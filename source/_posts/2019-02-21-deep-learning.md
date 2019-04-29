@@ -124,13 +124,16 @@ $$
 
 例:
 $$
+\begin{cases}
 x=\begin{bmatrix}3\\ 1\\ 2\end{bmatrix}\\
 W=
 \begin{bmatrix}
 0.4 & 0.6 & 0.5 \\
 0.3 & 0.2 & 0.1
 \end{bmatrix} \\
-Y=wx=\begin{bmatrix}2.8\\ 1.3\end{bmatrix}
+\end{cases}
+→\\
+Y=wx=\begin{bmatrix}2.8 & 1.3\end{bmatrix}
 $$
 
 
@@ -149,11 +152,49 @@ sigmoid 函数：
 
 将 $x=w^tx​$代入方程
 
-![image-20190222134128686](https://ws4.sinaimg.cn/large/006tKfTcgy1g0f5cztzrvj309s05sq3n.jpg)
+![image-20190227144107751](https://ws4.sinaimg.cn/large/006tKfTcly1g0kz6j6s6cj30bn02ejrk.jpg)
+
+我们把上述函数定义为 Y=0 时的概率输出，同理 y =1 时的概率输出为 $h_w(x)$
+
+![image-20190227144211483](https://ws2.sinaimg.cn/large/006tKfTcly1g0kz7n0kk0j308z03d0td.jpg)
+
+以上分母不变，分子不同，我们可以修正计划函数：
+
+![image-20190227144843213](https://ws2.sinaimg.cn/large/006tKfTcly1g0kzefiiilj30ce05ejrp.jpg)
 
 
 
+推广多多分类的逻辑斯蒂回归模型：
 
+![image-20190227145051934](https://ws4.sinaimg.cn/large/006tKfTcly1g0kzgo1t9mj30cq07p3z4.jpg)
+
+对于 k=1,2,3..., K-1
+$$
+P(Y=k|x)=\frac{e^{w}_kx}{1+\sum_1^{k-1}e^{w^T_kx}}
+$$
+对于 k=K
+$$
+P(Y=k|x)=\frac{1}{1+\sum_1^{k-1}e^{w^T_kx}}
+$$
+我们利用上例的结果：
+$$
+Y=\begin{bmatrix}y_0& y_1\end{bmatrix} =wx=\begin{bmatrix}2.8& 1.3\end{bmatrix}\\
+e^Y=[e^{-2.8}, e^{-1.3}]=[0.06, 0.27]\\
+Sum=1+0.06+0.27=1.33\\
+
+P(Y=0|x)=0.06/1.33=0.045\\
+P(Y=1|x)=0.27/1.33=0.203\\
+P(Y=2|x)=1.00/1.33=0.752\\
+$$
+
+## 目标函数
+
+ 目标函数也称为损失函数。
+
+## 应用
+
+- 【链接】NVlabs/stylegan https://github.com/NVlabs/stylegan
+- https://deepfakes.com.cn/
 
 ## 工具
 

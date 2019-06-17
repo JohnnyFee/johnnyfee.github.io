@@ -5,8 +5,6 @@ tags: [marketig]
 category: Marketig
 ---
 
-原文：https://www.lifehack.org/articles/technology/20-tips-use-google-search-efficiently.html
-
 ## Operators
 
 ### 使用引号 ""
@@ -109,36 +107,6 @@ category: Marketig
 在第一个例子中，搜索引擎将会返回`2004年赢得Stanley杯的球队`（的信息）。两个点后跟一个数字将告诉搜索引擎，你不是查找2004年之前或之后的内容。这可以帮你缩小范围到一个特定的数字，以提高搜索的结果。
 
 在第二个例子中，谷歌将搜索数字41、42和43。这是模糊的，但是如果你需要搜索像这种情况的数字，那会很有用。
-
-### 使用网站术语
-
-这是很重要的一点。当人们使用谷歌搜索来上网时，他们通常使用类似平常说话的语言来搜索内容。
-
-遗憾的是，网站不像人们那样交流；相反的，它们试图使用听起来很专业的语言。我们看下下面的例子：
-
-- “repair a flat tire.” 应该替代 “I have a flat tire”
-- “headache relief.” 应该替代 “My head hurts”
-
-上面的这种清单一大堆。当你搜索时，尝试在专业网站上使用专业术语。这将有助你获得更多可靠的结果。
-
-### 谷歌搜索有快捷方式
-
-可输入的许多命令能为你提供即时结果。
-
-就比如上面的数学示例（第8点），谷歌可立即返回你想要的搜索结果，并在（页面）顶部显示所需的信息。这可以为你节省很多时间和精力，避免你点击一堆麻烦的链接。
-
-以下是你可以输入到谷歌的一些命令的示范：
-
-- `Weather *zip code*` - 这将显示给定邮政编码（地区）的天气。你也可以使用城镇或城市的名称而不是区号，但是如果城市中有多个区号，则可能不准确。
-- `What is *celebrity name* Bacon Number` - 这是个很有趣的小故事，它会告诉你任何给定的名人与著名的演员**Kevin Bacon**之间有几重关联。很流行的趣事，**六度分离**指没有哪个演员是和**Kevin Bacon**有超过六层关系联系起来的。`Mark Zuckerberg`（和Kevin Bacon）通过三层关系就可以建立联系。
-- `The math example` 上面讲到的数学例子。
-- `What is the definition of *word* or Define: *word*` - 这将展示一个单词的定义。
-- `Time *place*` - 这将显示你输入地方的时间。
-- 在谷歌中**通过输入股票名来查看股票**。如果你搜索`GOOG`，引擎会查看谷歌的股值。
-
-这些快捷的命令可以代替在网站中的多次点击，将其压缩为单个搜索。这对你（搜索）反复需要的信息带来很大帮助。
-
-> ⚠️ 广义来说：**六度分离（Six Degrees of Kevin Bacon）** - 指世界上任意两个人之间最多通过六个人就能够联系起来。
 
 ### 查找特定文件 filetype:
 
@@ -265,15 +233,11 @@ Not exactly a search operator, but acts as a wildcard for Google Autocomplete.
 
 **Example: apple CEO _ jobs**
 
-![img](../resources/images/hit-and-miss-operators.png)
-
-Here are the ones that are hit and miss, according to my testing:
-
-### #..#
+### # ..#
 
 Search for a range of numbers. In the example below, searches related to “WWDCvideos” are returned for the years 2010–2014, but not for 2015 and beyond.
 
-**Example:** **wwdc video 2010..2014**
+**Example:** **wwdc video 2010 ..2014**
 
 ### inanchor:
 
@@ -287,105 +251,11 @@ Similar to “inanchor,” but only results containing *all* of the specified wo
 
 **Example:** **allinanchor:apple iphone**
 
-### blogurl:
-
-Find blog URLs under a specific domain. This was used in Google blog search, but I’ve found it does return some results in regular search.
-
-**Example:** **blogurl:microsoft.com**
-
-SIDENOTE.
-
-Google blog search discontinued in 2011
-
-### loc:placename
-
-Find results from a given area.
-
-**Example:** **loc:”san francisco” apple**
-
-> SIDENOTE. Not officially deprecated, but results are inconsistent.
-
-### location:
-
-Find news from a certain location in Google News.
-
-**Example:** **loc:”san francisco” apple**
-
-SIDENOTE.
-
- 
-
-Not officially deprecated, but results are inconsistent.
-
-![img](../resources/images/not-working-operators.png)
-
-Here are the Google search operators that have been discontinued and no longer work. 🙁
-
-### +
-
-Force an exact‐match search on a single word or phrase.
-
-**Example:** **jobs +apple**
-
-SIDENOTE. You can do the same thing by using double quotes around your search.
-
-### ~
-
-Include synonyms. Doesn’t work, because Google now includes synonyms by default. *(Hint: Use double quotes to exclude synonyms.)*
-
-**Example:** **~apple**
-
-### inpostauthor:
-
-Find blog posts written by a specific author. This only worked in Google Blog search, not regular Google search.
-
-**Example: inpostauthor:”steve jobs”**
-
-SIDENOTE.  Google blog search was discontinued in 2011.
-
-### allinpostauthor:
-
-Similar to “inpostauthor,” but removes the need for quotes (if you want to search for a specific author, including surname.)
-
-**Example: allinpostauthor:steve jobs**
-
 ### inposttitle:
 
 Find blog posts with specific words in the title. No longer works, as this operator was unique to the discontinued Google blog search.
 
 **Example: intitle:apple iphone**
-
-### link:
-
-Find pages linking to a specific domain or URL. Google killed this operator in 2017, but it does still show some results—they likely aren’t particularly accurate though. *(Deprecated in 2017)*
-
-**Example:** **link:apple.com**
-
-### info:
-
-Find information about a specific page, including the most recent cache, similar pages, etc. *(Deprecated in 2017)*. **Note:** The `id:` operator can also be used—the results are identical.
-
-> SIDENOTE. Although the original functionality of this operator is deprecated, it is still useful for finding the canonical, indexed version of a URL. Thanks to @glenngabe for pointing this one one!
-
-**Example:** **info:apple.com** / **id:apple.com**
-
-### daterange:
-
-Find results from a certain date range. Uses the [Julian date format](http://www.longpelaexpertise.com/toolsJulian.php), for some reason.
-
-**Example:** **daterange:11278–13278**
-
-SIDENOTE.
-
- 
-
-Not officially deprecated, but doesn’t seem to work.
-
-### phonebook:
-
-Find someone’s phone number. *(Deprecated in 2010)*
-
-**Example:** **phonebook:tim cook**
 
 ### #
 
@@ -393,25 +263,15 @@ Searches #hashtags. Introduced for Google+; now deprecated.
 
 **Example:** **#apple**
 
-## 15 Actionable Ways to Use Google Search Operators
-
-Now let’s tackle a few ways to put these operators into action.
-
-My aim here is to show that you can achieve almost anything with Google advanced operators if you know how to use and combine them efficiently.
-
-So don’t be afraid to play around and deviate from the examples below. You might just discover something new.
+## Actionable Ways to Use Operators
 
 BORED OF READING?
 
 Check out 9 actionable Google search operator tips in Sam Oh’s [video](https://www.youtube.com/watch?v=yWLD9139Ipc).
 
-<iframe class="arve-inner lazy-loaded" data-lazy-type="iframe" data-src="//www.youtube.com/embed/yWLD9139Ipc?autohide=1&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;wmode=transparent&amp;autoplay=0" frameborder="0" scrolling="no" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" src="https://www.youtube.com/embed/yWLD9139Ipc?autohide=1&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;wmode=transparent&amp;autoplay=0" style="box-sizing: border-box; position: absolute; top: 0px; left: 0px; bottom: 0px; height: 326.25px; width: 580px; border: 0px;"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yWLD9139Ipc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
-
-Let’s go!
-
-### 1. Find indexation errors
+### Find indexation errors
 
 Google indexation errors exist for most sites.
 
@@ -423,23 +283,7 @@ Let’s use the `site:` operator to see how many pages Google has indexed for *a
 
 ~1,040.
 
-SIDENOTE.
-
- 
-
-Google only gives
-
- 
-
-a rough approximation
-
- when using this operator. For the full picture, check
-
- 
-
-Google Search Console
-
-.
+> SIDENOTE. Google only gives a rough approximation when using this operator. For the full picture, chec Google Search Console.
 
 But how many of these pages are blog posts?
 
@@ -465,13 +309,9 @@ Let’s also narrow the search to subdomains and see what we find.
 
 ![ahrefs index subdomains](../resources/images/ahrefs-index-subdomains.jpg)
 
-SIDENOTE.
-
- 
-
-Here, we’re using the wildcard (*) operator to find all subdomains belonging to the domain, combined with the exclusion operator (-) to exclude regular www results.
-
-~731 results.
+> SIDENOTE. Here, we’re using the wildcard (*) operator to find all subdomains belonging to the domain, combined with the exclusion operator (-) to exclude regular www results. 
+>
+> ~731 results.
 
 Here’s a page residing on a subdomain that *definitely* shouldn’t be indexed. It gives a 404 error for a start.
 
@@ -482,7 +322,7 @@ Here are a few other ways to uncover indexation errors with Google operators:
 - `site:yourblog.com/category` — find WordPress blog category pages;
 - `site:yourblog.com inurl:tag` — find WordPress “tag” pages.
 
-### 2. Find non‐secure pages (non‐https)
+### Find non‐secure pages (non‐https)
 
 HTTPs is a *must* these days, especially for [ecommerce sites](https://ahrefs.com/blog/ecommerce-seo/).
 
@@ -498,11 +338,7 @@ It looks like ASAS don’t currently use SSL—unbelievable for such a large sit
 
 ![asos unsecure](../resources/images/asos-unsecure.jpg)
 
-SIDENOTE.
-
- 
-
-Don’t worry, Asos customers—their checkout pages are secure 🙂
+> SIDENOTE. Don’t worry, Asos customers—their checkout pages are secure 🙂
 
 But here’s another crazy thing:
 
@@ -512,11 +348,7 @@ ASOS is accessible at both the *https* and *http* versions.
 
 And we learned all that from a simple `site:` search!
 
-SIDENOTE.
-
- 
-
-I’ve noticed that sometimes, when using this tactic, pages will be indexed without the https. But when you click‐through, you will be directed to the https version. So don’t assume that your pages are unsecure just because they appear as such in Google’s index. Always click a few of them to double‐check.
+> SIDENOTE. I’ve noticed that sometimes, when using this tactic, pages will be indexed without the https. But when you click‐through, you will be directed to the https version. So don’t assume that your pages are unsecure just because they appear as such in Google’s index. Always click a few of them to double‐check.
 
 FURTHER READING
 
@@ -585,7 +417,7 @@ Most of these are *probably* syndicated content.
 
 Still, it’s worth checking these out to make sure that they do link back to you.
 
-FIND STOLEN CONTENT IN SECONDS
+**FIND STOLEN CONTENT IN SECONDS**
 
 *Content Explorer > In title > enter the title of your page/post > exclude your own site*
 
@@ -607,7 +439,7 @@ You can then reach out to those sites and request the addition of a source link.
 
 FYI, this filter actually looks for links on a domain‐level rather than a page‐level. It is, therefore, possible that the site could be linking to you from another page, rather than the page in question.
 
-### 4. Find odd files on your domain (that you may have forgotten about)
+### Find odd files on your domain (that you may have forgotten about)
 
 Keeping track of everything on your website can be difficult.
 
@@ -647,33 +479,11 @@ By combining a few operators, it’s possible to return results for all supporte
 
 ![filetype operator all types](../resources/images/filetype-operator-all-types.jpg)
 
-SIDENOTE.
-
- 
-
-The filetype operator does also support things like
-
- 
-
-.asp
-
-,
-
- 
-
-.php
-
-,
-
- 
-
-.html
-
-, etc.
+> SIDENOTE. The filetype operator does also support things like .asp, .php, .html, etc.
 
 It’s important to delete or noindex these if you’d prefer people didn’t come across them.
 
-### 5. Find guest post opportunities
+### Find guest post opportunities
 
 Guest post opportunities… there are TONS of ways to find them, such as:
 
@@ -681,11 +491,7 @@ Guest post opportunities… there are TONS of ways to find them, such as:
 
 But you already knew about that method, right!? 😉
 
-SIDENOTE.
-
- 
-
-For those who haven’t seen this one before, it uncovers so‐called “write for us” pages in your niche—the pages many sites create when they’re actively seeking guest contributions.
+> SIDENOTE. For those who haven’t seen this one before, it uncovers so‐called “write for us” pages in your niche—the pages many sites create when they’re actively seeking guest contributions.
 
 So let’s get more creative.
 
@@ -707,15 +513,7 @@ You can search for many of these at once.
 
 ![guest post multi search operator](../resources/images/guest-post-multi-search-operator.jpg)
 
-SIDENOTE.
-
- 
-
-Did you notice I’m using the pipe (“|”) operator instead of “
-
-OR
-
-” this time? Remember, it does the same thing. 🙂
+> SIDENOTE. Did you notice I’m using the pipe (“|”) operator instead of “ OR” this time? Remember, it does the same thing. 🙂
 
 You can even search for multiple footprints AND multiple keywords.
 
@@ -735,13 +533,9 @@ If you know of a serial guest blogger in your niche, try this:
 
 This will find every site that person has written for.
 
-SIDENOTE.
+> SIDENOTE. Don’t forget to exclude their site to keep the results clean!
 
- 
-
-Don’t forget to exclude their site to keep the results clean!
-
-HOW TO FIND EVEN MORE AUTHOR GUEST POSTS
+**HOW TO FIND EVEN MORE AUTHOR GUEST POSTS**
 
 *Content Explorer > author search > exclude their site(s)*
 
@@ -789,13 +583,9 @@ Finally, if you’re wondering whether a specific site accepts guest posts or no
 
 ![specific site guest contribution](../resources/images/specific-site-guest-contribution.jpg)
 
-SIDENOTE.
+> SIDENOTE. You could add even more searches—e.g., “this is a guest article”—to the list of searches included within the parentheses. I kept this simple for demonstration purposes.
 
- 
-
-You could add even more searches—e.g., “this is a guest article”—to the list of searches included within the parentheses. I kept this simple for demonstration purposes.
-
-### 6. Find resource page opportunities
+### Find resource page opportunities
 
 “Resource” pages round‐up the best resources on a topic.
 

@@ -1,13 +1,15 @@
 ---
 layout: post
-title: Google 营销工具
+title: Google 写作
 tags: [marketig]
 category: Marketig
 ---
 
 From [所有市场营销人员应该使用的6款免费Google工具 顾小北的B2C博客](http://www.guxiaobei.com/all-marketers-should-to-know-the-6-of-google-tools-for-free.html)
 
-## Google Adwords – 关键字规划师
+## Google
+
+### Google Adwords – 关键字规划师
 
 比如我输入Content marketing 在搜索框中，如下图所示：
 
@@ -15,7 +17,7 @@ From [所有市场营销人员应该使用的6款免费Google工具 顾小北的
 
 在上面我们可以看到Google除了给我们列出关键字提示，也给我们大致的罗列了每个关键字，每个月的搜索量，以及这个关键字的竞争激烈程度。
 
-## Google Analytics— 谷歌分析工具
+### Google Analytics— 谷歌分析工具
 
 Google 分析工具是我每天早上来公司，必须要打开的一个动作，和登陆QQ差不多。
 
@@ -31,7 +33,7 @@ Google 分析工具是我每天早上来公司，必须要打开的一个动作�
 
 ![](../resources/images/20161107140848_97075.png)
 
-## Google Trends—谷歌趋势
+### Google Trends—谷歌趋势
 
 谷歌趋势类似国内的百度指数，主要功能分为两块，一是查看关键词在Google的搜索次数及变化趋势，一个是查看网站流量。
 
@@ -53,7 +55,7 @@ Google趋势他很直观的显示关键词搜索量大小及随时间的变化�
 
 ![所有市场营销人员应该使用的6款免费Google工具](../resources/images/20161107141151_44411.png)
 
-## Google Business
+### Google Business
 
 这个功能呢就是当用户在搜索你的网站（品牌名）的时候，自动的把你网站的信息标注到右边类目中，上面会显示你这个公司的几个信息：
 
@@ -69,3 +71,7 @@ Google趋势他很直观的显示关键词搜索量大小及随时间的变化�
 权威和信任对于一个独立站来说是非常重要和关键的，因为用户不知道你是不是假的或者诈骗网站，所以在google上面展示公司的详细地址，这个是非常有必要的。
 
 ![](../resources/images/20161107141203_76919.png)
+
+## Form
+
+[Paperform: Online Form Builder And Form Creator](https://paperform.co/)

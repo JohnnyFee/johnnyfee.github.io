@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Google 写作
-tags: [marketig]
+title: 营销工具
+tags: [marketig, tools]
 category: Marketig
 ---
 
@@ -237,8 +237,6 @@ SEO，基本上除了内容营销，就是外链建设。
 - [Visual web optimizer](https://vwo.com/)。这个工具是可以帮助我们调研受众，以及优化，测试等。还是很厉害的。从追踪受众，分析受众，制定策略，测试策略，定位受众一系列的功能，都是为了增加用户的转化率。
 
 	![不打广告，这家Shopify店铺为什么做的这么牛？](../resources/images/20181222143119_84465.jpg)
-
-## 工具
 
 ### Form
 

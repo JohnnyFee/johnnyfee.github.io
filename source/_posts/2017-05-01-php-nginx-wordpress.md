@@ -9,8 +9,7 @@ WordPress is the most widely used open source web blogging and content managemen
 
 ## **Step #1 Prerequisite:**
 
-You’ll need to have a LEMP (Linux, Nginx, MySQL, and PHP) installed on your CentOS/RHEL server. If LEMP hasn’t installed or configured on server, you c
-an use below articles to install LEMP.
+You’ll need to have a LEMP (Linux, Nginx, MySQL, and PHP) installed on your CentOS/RHEL server. If LEMP hasn’t installed or configured on server, you can use below articles to install LEMP.
 
 **On RHEL/CentOS 7**
 
@@ -79,7 +78,7 @@ Now create a mysql database and user for wordpress. Use following set of command
 # mysql -u root -p
 ```
 
-```shell
+```mysql
 mysql> CREATE DATABASE <dbname>; 
 mysql> CREATE USER <username>@localhost IDENTIFIED BY 'password';
 mysql> GRANT ALL PRIVILEGES ON <dbname>.* TO <username>@localhost;
@@ -89,7 +88,7 @@ mysql> quit
 
 如果需要在其他主机也可以访问该数据库，则需要添加 User：
 
-```
+```mysql
 mysql> CREATE USER <username>@'%' IDENTIFIED BY 'password';
 mysql> GRANT ALL PRIVILEGES ON <dbname>.* TO <username>@'%';
 mysql> FLUSH PRIVILEGES;
@@ -104,7 +103,7 @@ Open the Nginx configuration file with “vi” editor and add the following lin
 # vi /etc/nginx/conf.d/blog.techoism.conf
 ```
 
-```
+```nginx
 server {
         listen 80;
         server_name localhost;

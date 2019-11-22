@@ -13,7 +13,7 @@ category: Math
 
 $R^2$ = all 2-dimension real vectors.
 
-​      = x,y 平面
+​      = x, y 平面
 
 ![image-20190220112827552](https://ws1.sinaimg.cn/large/006tKfTcgy1g0cqa11wukj30ay056jto.jpg)
 
@@ -36,9 +36,9 @@ $$
 
 同理：
 
-$R^3​$= all vectors with 3 components.
+$R^3$= all vectors with 3 components.
 
-$R^n​$=all column vectors with n real components.
+$R^n$=all column vectors with n real components.
 
 一个向量空间中的向量经过加法和数乘后仍然在向量空间中，也就是对线性组合封闭。
 

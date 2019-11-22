@@ -7,133 +7,104 @@ category: Math
 
 课程：[麻省理工公开课：线性代数_全35集_网易公开课](http://open.163.com/special/opencourse/daishu.html)
 
+教程：[Linear Algebra – Medium](https://medium.com/linear-algebra)
+
+## 线性方程
+
+[Part 5 : Row Picture and Column Picture - Linear Algebra - Medium](https://medium.com/linear-algebra/part-5-row-picture-and-column-picture-899e6d834564)
+
 线性代数的作用求解线性方程组。
 
 用于表示线性方程组的方法：
 
 - Row Picture
-- **Column Picture**
-- Matrix form
+- Column Picture
 
-给定一下方程
+给定以下方程
+
+
 $$
 \begin{cases}
-    2x-y=0 \\
-    -x+2y=3
+3x-5y = 6 →(1) \\
+x+y = 4 →(2)\\
+3x+y = 0 →(3)
+  \end{cases}\begin{cases}
+3x-5y = 6 →(1) \\
+x+y = 4 →(2)\\
+3x+y = 0 →(3)
   \end{cases}
 $$
 
-**使用矩阵方式表示：**
-$$
-\begin{bmatrix}
-	2 & -1\\
-	-1 & 2           
-\end{bmatrix}
-\begin{bmatrix}
-	x\\
-	y
-\end{bmatrix}
-=
-\begin{bmatrix}
-	0\\
-	3
-\end{bmatrix}
-$$
+### Row Picture
+
+In row picture representation we make a coefficient matrix, a variable matrix and a constant matrix. 
+
+以上线性方式使用 Row Picture 来表示：
+
+![img](../resources/images/1*z-qiGZfJnNVJGFGoZdorKA.png)
+
 即
 $$
 Ax=b
 $$
 
-**Row Picture：**
+### 
+
+The row picture of (1), (2) and (3) could be plotted on graph as （**Row picture on graph**）:
+
+![img](../resources/images/1*x5k7D6D-uYkFbEVwXSikhw-20191122105030444.png)
+
+To find solution of system of linear equations from Row picture, we look at graph and see if there is any one point of intersection for all the lines, that point is called solution for the system of equations.
+
+If there is no common point, then there is no solution for the system of equations (as seen in the case above).
+
+### Cololum Picure
+
+A column picture is where coefficient matrix if formed separately for each variable. After that variables are multiplied with their coefficient matrices ([scalar multiplication](https://cdn-images-1.medium.com/max/800/1*e87O1tDfgJ8PXivwIBtFnA.png)) and added together. Then, it is equated to constant matrix.
+
+Taking the system of linear equations (1), (2) and (3), the column picture would be as follows :
+
+![img ](../resources/images/1*UxQ0SCIhsR0TAkxk-dzzqw.png)
+
+>  “x” and “y” are scalars being multiplied with their corresponding coefficient matrices
+
+Column Picture 的表示方式就是找到正确的系数 x 和  y，来组合向量[3 1 3]^T^ 和 [-5, 1, 1]^T^，从而得到目标向量[6, 4, 0]^T^，即要找到正确的**线性组合（Linear Combination of Columns）**。
+
+
+
+几何形式(**Column picture on graph**)：
+
+To show column picture on graph, we treat individual coefficient matrices as [vectors](https://medium.com/linear-algebra/part-4b-tensors-scalars-and-vectors-68cf6c1f2be) and plot those vectors on graph.
+
+![img](../resources/images/1*plQThMshpk5RvZCqPykcdA.png)
+
+Blue vector is coefficient matrix of X ,Red vector is coefficient matrix of Y and Green Vector is Constant matrix.
+
+为了从 Coloumn Pictire 中找到方程组的解，我们将系数矩阵与变量（x和y）的不同值相乘并将它们相加。 如果结果等于常数矩阵，则x和y的值称为线性方程组的解。对于此示例，如我们在行图片中所见，没有解决方案。 
+
+如下方程组
+
 
 $$
-\begin{bmatrix}
-	1 & 2 & 7\\
-\end{bmatrix}
-\begin{bmatrix}
-	2 & -1\\
-	-1 & 2\\
-	4 & 3
-\end{bmatrix}
-=
-1
-\begin{bmatrix}
-	2 & -1
-\end{bmatrix}
-+
-2
-\begin{bmatrix}
-	-1 & 2
-\end{bmatrix}
-+
-7
-\begin{bmatrix}
-	4 & 3
-\end{bmatrix}
-$$
+\begin{cases}
 
-用几何图形表示：
+2x-y=0 \\
+-x+2y=3
 
-![image-20190215151259926](https://ws3.sinaimg.cn/large/006tKfTcly1g074o77haoj307g05bq4f.jpg)
-
-两条直接的交点即为方程组的解。
-
-**Cololum Picure:**
-$$
-x
-\begin{bmatrix}
-	2 \\
-	-1
-\end{bmatrix}
-+
-y
-\begin{bmatrix}
-	-1 \\
-	2
-\end{bmatrix}
-=
-\begin{bmatrix}
-	0 \\
-	3
-\end{bmatrix}
-$$
-
-Column Picture 的表示方式就是找到正确的系数 x 和  y，来组合向量[2 -1]^T^ 和 [-1, 2]^T^，从而得到目标向量[0, 3]^T^，即要找到正确的**线性组合（Linear Combination of Columns）**。
-
-几何形式：
-
-$$
-1
-\begin{bmatrix}
-	2 \\
-	-1
-\end{bmatrix}
-+
-2
-\begin{bmatrix}
-	-1 \\
-	2
-\end{bmatrix}
-=
-\begin{bmatrix}
-	0 \\
-	3
-\end{bmatrix}
+  \end{cases}
 $$
 
 
-我们先把结果替代进去，向量 [2, -1]^T^+2[-1, 2]^T^表示左移 2，上移 4，得到向量 b=[0, 3]^T^。
+我们先把结果替代进去，向量 [2, -1]^T^+2[-1, 2]^T^ 表示左移 2，上移 4，得到向量 b=[0, 3]^T^。
 
 ![image-20190215163343168](https://ws3.sinaimg.cn/large/006tKfTcly1g07701iz1ij307s05jwfz.jpg)
-
-三元线性方程同理。
 
 ## 转置
 
 矩阵A的**转置**是另一个矩阵$A^T$，由下列等价动作建立:
 
-- 把*A*的横行写为*A*T的纵列
-- 把*A*的纵列写为*A*T的横行
+- 把*A*的横行写为*A*^T^的纵列
+- 把*A*的纵列写为*A*^T^的横行
 
 ![](https://upload.wikimedia.org/wikipedia/commons/e/e4/Matrix_transpose.gif)
 
@@ -187,7 +158,7 @@ $$
 $$
 证明如下：
 $$
-(R^TR)^T=R^T(R^T)^T=(R^TR)^T
+(R^TR)^T=R^T(R^T)^T=R^TR
 $$
 
 

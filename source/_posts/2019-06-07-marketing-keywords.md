@@ -276,7 +276,7 @@ Twitter的Hashtags顾名思义相当于国内微博上的热词，利用这些ha
 
 ![史上最全的关键字工具，手把手教你如何挖掘！](../resources/images/20170524114655_33783.png)
 
-## best seller
+#### Best seller
 
 地址：https://www.amazon.com/Best-Sellers/zgbs
 
@@ -414,7 +414,7 @@ Semrush这个工具大家都应该知道了
 
 ![史上最全的关键字工具，手把手教你如何挖掘！](../resources/images/20170524115209_90367.png)
 
-## keywordtool.io 
+#### keywordtool.io 
 
 **地址：**[http://keywordtool.io/](http://keywordtool.io/)
 
@@ -424,13 +424,9 @@ Semrush这个工具大家都应该知道了
 
 ![史上最全的关键字工具，手把手教你如何挖掘！](../resources/images/20170524114320_43096.png)
 
-
-
 输入关键字，比如headphone，系统会给出一系列的关键字建议，如下图：
 
 ![史上最全的关键字工具，手把手教你如何挖掘！](../resources/images/20170524114350_75437.png)
-
-
 
 你可以刷选需要的关键字，然后可以做表格的导出。使用一段时间之后，如果你觉得还不错，想要查看关键字的搜索量，CPC，以及adwords的竞争程度，你可以付费查看。
 
@@ -463,6 +459,13 @@ Semrush这个工具大家都应该知道了
 - 有些用户的购买意图很强，直接上来就使用，buy，where to buy等购买的词汇
 
 你看用户搜索行为的不同，直接反映了不同的用户意图。我们可以把用户是否具有购买的行为称之为：*Commercial Intent*或者是 *Buy Intent*。
+
+许你可以简单的想到，比如类似：cheap，best，discount，off，buy，review。又比如：
+
+- Best [product name] (online)
+- Best [product name] site
+- Best [product name] website
+- Best + product type + in year.
 
 我们常见的 Commercial Intent 的关键字，可以分为Buy now和Product这两大部分的关键字。
 

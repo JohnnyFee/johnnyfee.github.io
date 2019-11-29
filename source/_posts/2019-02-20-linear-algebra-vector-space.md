@@ -1,15 +1,15 @@
 ---
 layout: post
-title: Linear Algebra 线性代数
+title: Linear Algebra 线性代数-向量空间
 tags: [math]
 category: Math
 ---
 
 课程：[麻省理工公开课：线性代数_全35集_网易公开课](http://open.163.com/special/opencourse/daishu.html)
 
-## 向量空间 Subspaces
+## 向量子空间 Subspaces
 
-向量空间必须满足加法和数乘封闭，v + w and cv are in the space, 或者说 all combinations cv + dw are in the space. **向量空间必须穿过原点。**
+向量空间必须满足加法、数乘封闭，或者说对线性组合封闭。v + w and cv are in the space, then all combinations cv + dw are in the space. **向量空间必须穿过原点。**
 
 $R^2$ = all 2-dimension real vectors.
 
@@ -61,13 +61,24 @@ Subspaces of $R^2$:
 Subspances of $R^3$:
 
 1. $R^3$
-2. 过原点的平面
-3. 过原点的直线
-4. 原点
+2. 过原点的平面 P
+3. 过原点的直线 L
+4. 原点 Z
+
+在 R^3^ 空间内，任意两个不同的子空间的并集 $P \cup L$ 不是子空间, 交集 $P \cap L$ 是子空间。
+
+任意子空间 S 和 T 的交集 $S \cap T$ 仍然是子空间。
+
+
+
+通过矩阵来构造子空间有2中重要方法：
+
+- 列空间
+- 零空间
 
 ## 列空间
 
-可以根据矩阵 A 来构造子空间，其中一种方法，是通过列向量构造。使用下列矩阵构造$R^3$的子空间：
+可以根据矩阵 A 来构造子空间，其中一种方法是通过列向量构造。使用下列矩阵构造$R^3$的子空间：
 $$
 A=
 \begin{bmatrix}
@@ -94,7 +105,7 @@ $$
 
 通过这种方法得到的子空间称为列空间，C(A)。
 
-任意两个不同的子空间的并集 $P \cup L$ 不是子空间, 交集 $P \cap L$ 是子空间。
+
 
 考虑下面这个矩阵的子空间：
 $$
@@ -126,7 +137,7 @@ b_3 \\
 b_4
 \end{bmatrix}
 $$
-那什么 b 能让方程组有解呢？Ax=b有解，当且仅当b属于A的列向量(b in C(A))，除了零向量。
+那什么 b 能让方程组有解呢？Ax=b有解，当且仅当b属于A的列向量空间(b in C(A))，除了零向量。
 
 由于这个矩阵的第三列是第一列和第二列的和，所以第三列可以去除，所以有该矩阵构成的子空间为$R^4$中的二维子空间。
 
@@ -134,7 +145,7 @@ $$
 
 零空间是除列空间外，构建子空间的另外一种方法。
 
-All x solutions to Ax=0.
+Null space of A is All x solutions to Ax=0.
 
 对于以下矩阵
 $$
@@ -181,15 +192,18 @@ c \\
 $$
 A 的零空间属于$R^3$，为三维空间中的一条直线。
 
-Check tat solutions to Ax=0 always give a subspace.
+
+
+**Check that solutions to Ax=0 always give a subspace.**
 
 证明过程：
 
 > Av=0, Aw=0 => A(v+w) = Av+Aw=0
 > Av =0, A(cv)=cAv=0
 
-加入 b 不再是 0 向量，比如：
 
+
+假如 b 不再是 0 向量，比如：
 $$
 \begin{bmatrix}
 	1 & 1 & 2 \\

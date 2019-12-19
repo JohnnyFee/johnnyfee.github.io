@@ -94,7 +94,7 @@ A = \begin{bmatrix}
 \end{bmatrix}\\
 
 R(A)=
-\begin{bmatrix}\\
+\begin{bmatrix}
 1 & 0 & 1 & 1 \\
 0 & 1 & 1 & 0 \\
 0 & 0 & 0 & 0
@@ -102,8 +102,6 @@ R(A)=
 \\
 $$
 $C(R) \neq C(A)$ 经过行变换的矩阵具有不同的列空间，但具有相同的行空间。
-
-
 
 求 $N(A^T)$ 的基：$A^Ty=0$
 
@@ -314,7 +312,9 @@ $$
 
 Row space = all coms of rows = all combs of columns of $A^T$=$C(A^T)$
 
-### A 转置的零空间
+### 左零空间
+
+A 转置的零空间称为左零空间。
 
 Null space of $A^T$ = $N(A^T)$ = left null space of A
 
@@ -429,7 +429,7 @@ $$
 
 下面进一步用简单的方法求出特征解，而不需要使用回代。
 
-#### 4. 简化行阶梯矩阵
+### 4. 简化行阶梯矩阵
 
 将行阶梯矩阵继续向上消元，得到 *简化的行阶梯矩阵 reduced row echoeln form*.
 
@@ -512,9 +512,7 @@ x_{free}
 0 & 1
 \end{bmatrix}
 $$
-其中 I 是维数为自有变量的个数，也即 m - r，其中 m 为 $A_{m,n}$ 的行数，r 为 秩。
-
-
+其中 I 的维数为自有变量的个数，也即 m - r，其中 m 为 $A_{m,n}$ 的行数，r 为 秩。
 
 与第3步中求出的两个特征解相同。
 
@@ -768,6 +766,114 @@ $$
 | 1 solution | 0 or 1 solution                           | 1 or $\infty$ solutions                | 0 or $\infin$                                  |
 
 结论：矩阵的秩决定了方程组解的数目。
+
+## New vector space M
+
+把矩阵看做"向量"，比如把一个 3 * 3 的矩阵看成一个向量，矩阵可以做加法和数乘运算，也就是说能够进行线性组合。相当于把 $R^n$ 延伸到了 $R^{n*n}$。
+
+我们只考虑 $A+B, cA$，不考虑 $AB$ 运算，因为向量空间不关心矩阵乘法。
+
+M 的子空间有：
+
+- 所有上三角矩阵
+- 所有对称矩阵
+- 所有对角矩阵。即以上两种矩阵的交集。
+
+**基:**
+
+所有 3*3 矩阵的基为：
+$$
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{bmatrix},
+\begin{bmatrix}
+0 & 1 & 0 \\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{bmatrix},
+...
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 0 & 0\\
+0 & 0 & 1
+\end{bmatrix}
+$$
+维数为 9。
+
+对称矩阵的基 S，如：
+$$
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{bmatrix},
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 3 & 0\\
+0 & 0 & 0
+\end{bmatrix},
+\begin{bmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0\\
+0 & 0 & 7
+\end{bmatrix}
+$$
+维数为 3 。
+
+## 秩 1 矩阵
+
+给定以下秩为 1 的矩阵：
+$$
+\begin{bmatrix}
+1 & 4 & 5 \\
+2 & 8 & 10
+\end{bmatrix}
+$$
+$dim C(A) = rank = dim C(A^T) = 1$
+
+A 可以用以下形式表示：
+$$
+\begin{bmatrix}
+1 \\
+2
+\end{bmatrix}
+\begin{bmatrix}
+1 & 4 & 5
+\end{bmatrix}
+$$
+所有秩为 1 的矩阵都可以表示为 $A=uv^T$
+
+秩 1 矩阵就像搭建其他矩阵的基本，任何矩阵都可以由秩 1 矩阵构建。
+
+比如秩为 4 的 5*17 矩阵，则需要 4 个秩 1 矩阵即可搭建。
+
+问题：所有 5* 17 中的秩 4 矩阵构成子空间吗？不一定，因为 2 个秩 4 矩阵相加的秩不一定是 4。
+
+**例：**在 $R^4$ 中，$v = \begin{bmatrix} v_1 \\ v_2 \\ v_3 \\ v_4\end{bmatrix}$ ，S = all v in $R^4$ with $v_1 + v_2 + v_3 + v_4 = 0$ ，S是够构成子空间。
+
+$v_1 + v_2 + v_3 + v_4 = 0$ 换成矩阵形式：$Av=0$，$A = \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}$。S 即为 N(A)
+
+S 的维数为 3，因为有 3 个自由变量。rank = 1，dim S = 4-1 = 3。
+
+S 的基为：
+$$
+\begin{bmatrix}
+-1 \\ 1 \\ 0 \\0
+\end{bmatrix},
+\begin{bmatrix}
+-1 \\ 0 \\ 1 \\0
+\end{bmatrix},
+\begin{bmatrix}
+-1 \\ 0 \\ 0 \\1
+\end{bmatrix}
+$$
+
+- $C(A) = R^1$, dim = 1
+- $N(A^T)=\{0\}$, dim = 3
+- $C(A^T)=c \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}$, dim = 1
+- $N(A^T)$ = 空集, dim = 0
 
 ## 工具
 

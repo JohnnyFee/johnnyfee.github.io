@@ -37,7 +37,8 @@ category: AI
 - `\n` 表示回车
 - `+` 连接字符串；`* 数字`，复制字符串。
 - `[index]` 去索引位置的字符，正数表示整形，负数表示反向。
-- [from:to] 截取 [from, to) 之间的字符串，负数表示反向索引；to 省略表示截取到字符串结尾，from 省略表示从字符串开头开始截取。
+- `[from:to]` 截取 `[from, to)` 之间的字符串，负数表示反向索引；to 省略表示截取到字符串结尾，from 省略表示从字符串开头开始截取。
+- `[from:to:step]` 跳步切片。
 
 #### 列表 list
 
@@ -95,18 +96,43 @@ a = [1, 2, 3]
 
 ### 逻辑控制
 
+条件判断
+
 ```python
-if var:
-	statements
+if condition1:
+	pass #空语句
+elif condition2:
 else:
-	statements
+	pass #空语句
 ```
 
+没有 switch 语法。
 
+循环：
 
+```python
+while expression:
+		pass
+else: #当条件不满足 while 条件时执行
+		pass
+```
 
+遍历：
 
+```python
+for target_list in expression_list:
+    pass
+  	# break, continue
+else: # 遍历完成之后执行，break 退出则不会执行
+    pass
+```
 
+执行 10 次：
+
+```python
+for x in range(0, 10) # range(10, 0, -2)
+	pass
+```
 
 ## 运行
 
@@ -147,4 +173,81 @@ else:
 ### 编辑
 
 - `F12` Go to definition; `⌥F12` Peek Definition
+
+## 函数
+
+定义函数：
+
+```python
+def function_name(argument_list):
+  	# 当返回多个值时，会将返回值封装成元组。调用函数时，可以用多个变量接收。
+    # var1 var2 = function_name();
+    return ret1, ret2; 
+
+```
+
+Python 支持命名参数：
+
+```python
+def func(x, y):
+	return x+7
+
+func(y=1, x=2);
+```
+
+参数默认值：
+
+```python
+def func(name, gender="男", age=18): pass
+```
+
+
+
+## 工程结构
+
+- 包：文件夹，内置一个 `__init__.py`
+- 模块：一个文件为一个模块
+- 类
+
+```python
+# 导入模块
+import package1.package2.变量或类或方法 as alias
+
+# 导入变量
+from package import */var_name/a, b, c;
+```
+
+定义模块导出的变量：
+
+```python
+__all__ = ['module1', 'var1']
+```
+
+包和模块不会被重复导入。不能循环引入。
+
+### init 文件
+
+当包被导入时，init 中的代码自动执行。
+
+## 面向对象
+
+```python
+#定义类
+class Student():
+  	# 成员函数
+    name=''
+    age=0
+    
+    # 构造函数，不能用返回值
+    def __init__(self, name, age):
+      self.name = name
+      self.age = age
+      
+    def func(self): # 必须加入一个参数
+			return self.name + self.age
+
+# 实例化和调用
+student = Student()
+student.func()
+```
 

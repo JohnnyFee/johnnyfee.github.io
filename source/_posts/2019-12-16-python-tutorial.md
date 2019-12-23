@@ -234,20 +234,69 @@ __all__ = ['module1', 'var1']
 ```python
 #定义类
 class Student():
-  	# 成员函数
-    name=''
-    age=0
+  	# 类变量，相当于类的静态属性，和具体的实例无关。
+    sum=0
     
-    # 构造函数，不能用返回值
-    def __init__(self, name, age):
+    # 构造函数，不能有返回值
+    def __init__(self, name, age, score):
+      # 实例变量
       self.name = name
       self.age = age
+      # 私有变量
+      self.__score = score
       
+      # 访问类变量有以下两种方式
+      self.__class__.sum++;
+      Student.sum++;
+      
+    # 实例方法，默认为公共方法  
     def func(self): # 必须加入一个参数
 			return self.name + self.age
+    
+    # 私有方法
+    def private_fucntion(self):
+      pass;
+    
+    # 类方法
+    @classmethod
+    def plus_sum(cls):
+      cls.sum++
+    
+    # 静态方法，和类方法类型，不需要默认参数
+    @staticmethod
+    def add(x, y):
+      pass
 
 # 实例化和调用
 student = Student()
 student.func()
+
+# 实例变量字典
+student.__dict__
 ```
+
+继承：
+
+```python
+# 父类
+class Human():
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+    
+  def dohomework(self):
+    pass
+
+# 子类
+class Student(Human):
+  def __init__(self, score, name, age):
+		# 调用父类构造函数
+    # Human.__init__(self, name, age)
+    super(Student, self, name, age)
+    
+  def dohomework(self):
+    super(Student, self).dohomework();
+```
+
+## 正则表达式
 

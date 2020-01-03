@@ -617,6 +617,8 @@ from package import *
 
 ## 面向对象
 
+## 类定义
+
 ```python
 #定义类
 class Student():
@@ -661,7 +663,7 @@ student.func()
 student.__dict__
 ```
 
-继承：
+## 继承
 
 ```python
 # 父类
@@ -683,6 +685,24 @@ class Student(Human):
   def dohomework(self):
     super(Student, self).dohomework();
 ```
+
+- 使用 [`isinstance()`](https://docs.python.org/zh-cn/3/library/functions.html#isinstance) 来检查一个实例的类型: `isinstance(obj, int)` 仅会在 `obj.__class__` 为 [`int`](https://docs.python.org/zh-cn/3/library/functions.html#int) 或某个派生自 [`int`](https://docs.python.org/zh-cn/3/library/functions.html#int) 的类时为 `True`。
+- 使用 [`issubclass()`](https://docs.python.org/zh-cn/3/library/functions.html#issubclass) 来检查类的继承关系: `issubclass(bool, int)` 为 `True`，因为 [`bool`](https://docs.python.org/zh-cn/3/library/functions.html#bool) 是 [`int`](https://docs.python.org/zh-cn/3/library/functions.html#int) 的子类。 但是，`issubclass(float, int)` 为 `False`，因为 [`float`](https://docs.python.org/zh-cn/3/library/functions.html#float) 不是 [`int`](https://docs.python.org/zh-cn/3/library/functions.html#int) 的子类。
+
+多重继承：
+
+```python
+class DerivedClassName(Base1, Base2, Base3):
+    <statement-1>
+    .
+    .
+    .
+    <statement-N>
+```
+
+了解多继承中父类方法的查找策略 [The Python 2.3 Method Resolution Order](https://www.python.org/download/releases/2.3/mro/)。
+
+
 
 ## 高阶语法
 
@@ -892,18 +912,78 @@ x = json.load(f)
 
 ```python
 try:
-    f = open('myfile.txt')
-    s = f.readline()
-    i = int(s.strip())
+    # 抛出异常
+    raise Exception('spam', 'eggs')
 except OSError as err: # 捕获具体异常
     print("OS error: {0}".format(err))
-except ValueError:
-    print("Could not convert data to an integer.")
 except: # 捕获以上未捕获的所有异常
     print("Unexpected error:", sys.exc_info()[0])
     raise
 else: # 不引发异常时调用
     print(arg, 'has', len(f.readlines()), 'lines')
     f.close()
+finally:
+    # 不论是正常和异常情况，最后均会执行 
+    print('Goodbye, world!')
 ```
+
+```python
+# 通过 args 捕获异常实例中的参数
+except Exception as inst:
+    x, y = inst.args     # unpack args
+    print(inst.args)     # arguments stored in .args
+    print(inst) # __str__ allows args to be printed directly,
+                # but may be overridden in exception subclasses
+```
+
+自定义异常应该直接或间接地从 [`Exception`](https://docs.python.org/zh-cn/3/library/exceptions.html#Exception) 类派生。大多数异常都定义为名称以“Error”结尾，类似于标准异常的命名。
+
+```python
+class Error(Exception):
+    """Base class for exceptions in this module."""
+    pass
+
+class InputError(Error):
+    """Exception raised for errors in the input.
+
+    Attributes:
+        expression -- input expression in which the error occurred
+        message -- explanation of the error
+    """
+
+    def __init__(self, expression, message):
+        self.expression = expression
+        self.message = message
+
+class TransitionError(Error):
+    """Raised when an operation attempts a state transition that's not
+    allowed.
+
+    Attributes:
+        previous -- state at beginning of transition
+        next -- attempted new state
+        message -- explanation of why the specific transition is not allowed
+    """
+
+    def __init__(self, previous, next, message):
+        self.previous = previous
+        self.next = next
+        self.message = message
+```
+
+## 标准库
+
+```python
+# 查看模块的所有方法
+dir(os)
+
+# 获取模块的帮助
+help(os)
+```
+
+参考 [标准库简介第一部分](https://docs.python.org/zh-cn/3/tutorial/stdlib.html)、[ 标准库简介 第二部分](https://docs.python.org/zh-cn/3/tutorial/stdlib2.html#multi-threading)
+
+## 包管理
+
+[虚拟环境和包](https://docs.python.org/zh-cn/3/tutorial/venv.html)
 

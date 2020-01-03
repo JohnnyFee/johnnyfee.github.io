@@ -7,7 +7,17 @@ category: AI
 
 ## 机器学习
 
-[Python3入门机器学习_经典算法与应用-慕课网实战](https://coding.imooc.com/class/169.html#Anchor)
+- [Python3入门机器学习_经典算法与应用](https://coding.imooc.com/class/169.html#Anchor) 慕课网课程。
+- [机器学习入门 - Udacity](https://classroom.udacity.com/courses/ud120) Udacity 免费课程。
+- [机器学习-斯坦福吴恩达](https://www.coursera.org/learn/machine-learning/home/welcome) 讲述了机器学习和统计模式识别技术，包括有监督和无监督学习，线性和逻辑回归，正则化和朴素贝叶斯。
+- [Hinton：机器学习神经网络](https://www.youtube.com/watch?list=PLoRl3Ht4JOcdU872GhiYWf6jwrk_SNhz9&v=cbeTc-Urqak) 讲述了神经网络在图像分割、人体运动、建模语言、语音和物体识别等方面的应用。
+- [Google：深度学习](https://classroom.udacity.com/courses/ud187) 深度学习的动机，深度神经网络，卷积网络以及文本和序列的深层模型。比较难。
+- [卡内基梅隆：统计机器学习](https://www.youtube.com/watch?list=PLTB9VQq8WiaCBK2XrtYn5t9uuPdsNm7YE&v=zcMnu-3wkWo) 高级机器学习视频系列讲座，比较难。
+- [微软：机器学习原理](https://www.edx.org/course/principles-of-machine-learning)
+- [亚马逊：机器学习专业化](https://www.coursera.org/specializations/machine-learning)
+- [更多](https://zhuanlan.zhihu.com/p/32081971)
+
+
 
 最早的机器学习应用在垃圾邮件分辨。
 

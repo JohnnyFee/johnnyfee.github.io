@@ -7,6 +7,8 @@ category: AI
 
 ## 算法
 
+https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms
+
 ### kNN
 
 ### 线性回归

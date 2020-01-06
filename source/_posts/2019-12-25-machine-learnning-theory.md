@@ -1,12 +1,13 @@
 ---
 layout: post
-title: Machine Learning for Python
+title: Machine Learning Theory
 tags: [python, language, machine learning]
 category: AI
 ---
 
 ## 机器学习
 
+- [机器学习导航](https://www.mlhub123.com/)
 - [Python3入门机器学习_经典算法与应用](https://coding.imooc.com/class/169.html#Anchor) 慕课网课程。
 - [机器学习入门 - Udacity](https://classroom.udacity.com/courses/ud120) Udacity 免费课程。
 - [机器学习-斯坦福吴恩达](https://www.coursera.org/learn/machine-learning/home/welcome) 讲述了机器学习和统计模式识别技术，包括有监督和无监督学习，线性和逻辑回归，正则化和朴素贝叶斯。
@@ -37,10 +38,6 @@ category: AI
 什么是机器学习：
 
 ![image-20191226155548273](../resources/images/image-20191226155548273.png)
-
-## 开发环境
-
-
 
 ## 数据集 Data Set
 

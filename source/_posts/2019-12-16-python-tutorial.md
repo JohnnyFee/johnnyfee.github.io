@@ -386,6 +386,15 @@ students = {'喜小乐': 18, '石敢当': 20}
 b = {value:key for key, value in students.items()}
 ```
 
+### 数组 Array
+
+```python
+import array
+
+# 第一个参数为元素类型
+arr = array.array('i', [i for i in rage(10)])
+```
+
 
 
 ### 元组 tuple

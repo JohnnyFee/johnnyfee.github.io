@@ -311,15 +311,222 @@ np.linalg.pinv(A)
 
 #### 聚合运算
 
-### 
+```python
+import numpy as np
+l = np.random.random(100)
+X = np.random.random(100).shape(20, -1)
 
+# 一维向量的聚合运算
+# 求和
+np.sum(l)
+# 最小值
+np.min(l)
+# 最大值
+np.max(l)
 
+# 矩阵的聚合运算
+# 求和，axis = 0 表示维度为行，沿着行进行运算，即得到每一列数字的和；axis 表示按列压缩。
+# 如果没有 axis 参数，则对整个矩阵中的数据求和
+np.sum(X, axis=0)
 
+# 所有元素的乘机
+np.prod(X)
+# 平均值
+mp.mean(l)
+# 中位数
+mp.median(l)
+# 百分位
+# 最重要的百分位点为 [0, 25, 50, 75, 100]
+mp.percentile(l, q=50) # 表示 50% 的数都小于求出的值，相当于中位数
+# 方差
+np.var(l)
+# 标准差
+np.std(l)
+```
 
+### 索引与排序
 
+```python
+x = np.random.normal(0, 1, size=100000)
 
+# 向量操作
 
+# 最小值索引
+np.argmin(x)
+# 最大值索引
+np.argmax(x)
 
+x = np.range(16)
+
+# 打乱顺序
+np.random.shuffle(x)
+# 排序
+# 调用 np.sort 不会改变原向量，而调用 x.sort 会修改 x 向量
+np.sort(x)
+# 排序的分区，3 为标定点，3 左边的所有元素小于 3，右侧数据全部大于 3
+np.partition(x, 3)
+# 标定分区索引
+np.argpartition(x, 3)
+
+# 矩阵操作
+
+X = np.random.randint(10, size(4,4))
+# 默认按行排序，与 axis=1 的效果相同，axis=0 表示每列排序
+# 其他方法同理
+np.sort(X, axis=1)
+# 排序后的索引
+np.argsort(x)
+np.argpartition(X, 2, axis=1)
+```
+
+### Fancy Indexing
+
+```python
+x = np.arange(16)
+X = x.reshape(4, -1)
+
+# 向量
+# 得到指定索引的元素
+ind = [3, 5, 8]
+x[ind]
+
+# 按照指定索引得到二维矩阵
+ind = np.array([[0, 2], [1, 3]])
+x[ind]
+
+# 矩阵
+row = np.array([0, 1, 2])
+col = np.array([0, 2, 3])
+# 获得指定行和指定列对应的元素。(0,0), (1, 2), (2, 3)
+X(row, col)
+# 第一行，指定列对应的元素
+X[0, col]
+# 前 2 行，指定列对应的元素
+X[:2, col]
+# 通过 bool 值来指定是否需要列
+col = [True, False, True, True]
+X[1:3, col]
+
+```
+
+### 比较与过滤
+
+```python
+# 向量
+# 获得 bool 数组
+x < 3
+2 * x = 24 - 4 * x
+# 获取非 0 个数
+np.sum(x <= 3)
+np.count_nonzero(x<=3)
+# 任意条件判断
+np.any(x == 0)
+# 所有条件判断
+np.all(x >= 0)
+
+# 矩阵
+X < 6
+np.sum(X % 2 == 0)
+# 每一行有多少偶数
+np.sum(X % 2 ==0, axis = 1)
+np.all(X > 0, axis = 1)
+# 条件组合，需要使用位运算符
+np.sum((x > 3) & (x < 10))
+np.sum((x % 3) | (x > 10))
+np.sum(~(x==0))
+# 得到 <5 的子集
+x[x < 5]
+# 最后一列可以被 3 整除的所有行
+X[X[:, 3] % 3 == 0, :]
+```
+
+## Matplotlib
+
+### 折线图
+
+```python
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+# 绘制正弦曲线
+plt.plot(x, y)
+plt.show()
+```
+
+![image-20200107142216890](../resources/images/image-20200107142216890.png)
+
+```python
+cosy = np.cos(x)
+siny = y.copy()
+
+# 同时绘制 2 条线
+plt.plot(x, siny, label="sin(x)")
+# color 指定颜色，linestyle 指定线的样式
+plt.plot(x, cosy, color="red", linestyle="--", label="cos(x)")
+# 指定 x 的范围
+plt.xlim(-5, 15)
+plt.ylim(0, 1.5)
+# 同时指定 x 和 y 轴的范围
+plt.axis([-1, 11, -2, 2])
+plt.xlabel("x axis")
+plt.ylabel("y axis")
+# 添加图示
+plt.legend()
+plt.title("Welcome to the ML World")
+plt.show()
+```
+
+![image-20200107142226969](../resources/images/image-20200107142226969.png)
+
+### 散点图
+
+通常用语显示二维特征。
+
+```python
+plt.scatter(x, siny)
+plt.scatter(x, cosy, color="red")
+
+x = np.random.normal(0, 1, 1000)
+y = np.random.normal(0, 1, 100)
+# alpha 设置透明度
+plt.scatter(x, y, alpha=0.5)
+plt.show()
+```
+
+![image-20200107142314560](../resources/images/image-20200107142314560.png)
+
+## Sklearn
+
+```python
+from sklearn import datasets
+
+# 加载数据集
+iris = datasets.load_iris()
+# 数据集的关键数据
+iris.keys()
+
+X = iris.data[:, :2]
+# 绘制第 0 列和第 1 列
+plt.scatter(X[:, 0], X[:, 1])
+```
+
+![image-20200107143615557](../resources/images/image-20200107143615557.png)
+
+```python
+y = iris.target
+# color 指定颜色，marker 指定点的样式
+plt.scatter(X[y==0, 0], X[y==0, 1], color="red", marker="0")
+plt.scatter(X[y==1, 0], X[y==1, 1], color="blue", marker="+")
+plt.scatter(X[y==2, 0], X[2==1, 1], color="green", marker="x")
+
+plt.show()
+```
+
+![image-20200107145027394](../resources/images/image-20200107145027394.png)
 
 
 

@@ -17,6 +17,7 @@ category: AI
 - [微软：机器学习原理](https://www.edx.org/course/principles-of-machine-learning)
 - [亚马逊：机器学习专业化](https://www.coursera.org/specializations/machine-learning)
 - [更多](https://zhuanlan.zhihu.com/p/32081971)
+- [一些书籍](https://github.com/KeKe-Li/book/tree/master/AI)
 
 
 

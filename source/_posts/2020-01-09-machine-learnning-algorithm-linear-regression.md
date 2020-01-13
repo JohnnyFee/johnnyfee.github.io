@@ -260,12 +260,6 @@ mean_squared_error(y_test, y_predict)
 mean_absolute_error(y_test, y_predict)
 ```
 
-
-
-
-
-
-
 ## 工具
 
 - [LaTeX/Mathematics - Wikibooks, open books for an open world](https://en.wikibooks.org/wiki/LaTeX/Mathematics)

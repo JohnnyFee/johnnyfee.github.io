@@ -17,11 +17,17 @@ category: AI
 
 线性回归坐标系与 kNN 算法不同的是， 纵轴为样本标记，而kNN中横纵坐标均为样本特征。
 
-当样本特诊只有一个时，我们称为*简单线性回归*。
+当样本特征只有一个时，我们称为*简单线性回归*。
+
+**特点：**
+
+- 线性回归是典型的参数学习，而 kNN 为非参数学习。
+- 线性回归智能解决回归问题，不能解决分类问题。kNN 算法可以同时解决 2 类问题。
+- 在很多分类方法中，线性回归是基础。（如逻辑回归）
+- 线性回归是基于数据之间存在线性关系，但改造后可以处理非线性问题。kNN 对数据没有假设。
 
 **优点：**
 
-- 解决回归问题
 - 思想简单，实现容易
 - 许多强大的非线性模型的基础
 - 结果具有很好的可解释性
@@ -39,7 +45,7 @@ category: AI
 
 对于每一个样本点 $x^{(i)}$，根据直接方程，计算预测值为：$\hat y^{(i)}=ax^{(i)}+b$，对应的真值为 $y^{(i)}$。
 
-$y^{(i)}$ 与 $\dot y^{(i)}$ 的差距为：$(y^{(i)}-\hat y^{(i)})^2$，其实可以用绝对值来表示差距，但因为绝对值并非处处可导，所以优先使用平方来表示距离。所有样本的距离为：
+$y^{(i)}$ 与 $\hat y^{(i)}$ 的差距为：$(y^{(i)}-\hat y^{(i)})^2$，其实可以用绝对值来表示差距，但因为绝对值并非处处可导，所以优先使用平方来表示距离。所有样本的距离为：
 $$
 \sum_{i=1}^m(y^{(i)}-\hat y^{(i)})^2
 $$
@@ -99,6 +105,7 @@ a & = \frac {\sum_{i=1}^m(x^{(i)}y^{(i)}- x^{(i)}\bar y - \bar xy^{(i)} + \bar x
 \end{align*}
 $$
 
+线性回归的时间复杂度为 $O(n^3)$，优化后为 $O(n^{2.4})$。
 
 ## 简单线性回归实现
 
@@ -177,8 +184,27 @@ b = y_mean - a_ * x_mean
 衡量标准有以下两种：
 
 - 均方误差 MSE (Mean Squared Error) ：$\frac 1 m\sum_{i=1}^m(y_{test}^{(i)}-\hat y_{test}^{(i)})^2$
+
 - 均方根误差 RMSE (Root Mean Squared Error) ：$\sqrt{\frac 1 m\sum_{i=1}^m(y_{test}^{(i)}-\hat y_{test}^{(i)})^2}$
+
 - 平均绝对误差 MAE（Mean Absolute Error）：$\frac 1 m\sum_{i=1}^m|y_{test}^{(i)}-\hat y_{test}^{(i)}|$
+
+- R Squared。分类的准确度最好能用 0-1.0 的值来标志，1 最好， 0 最差。这种方法不仅可以直观的看出分类准确度，甚至还可以对比不同数据集的准确度。sklearn 中默认使用这个方法。
+  $$
+  \begin{align*}
+  R^2 &= 1- \frac {SS_{residual}} {SS_{total}} \\
+  &=1- \frac {\sum_i(\hat y^{(i)}-y^{(i)})^2} {\sum_i(\bar y-y^{(i)})^2} \\
+  &=1- \frac {(\sum_i(\hat y^{(i)}-y^{(i)})^2) \frac 1 m} {(\sum_i(\bar y-y^{(i)})^2) \frac 1 m} \\
+  & = 1 - \frac {NSE(\hat y, y)} {Var(y)}
+  \end{align*}
+  $$
+  
+
+  其中，$SS_{residual}$ 表示 Residual Sum of Squares，使用模型预测产生的错误；${SS_{total}}$ 表示 Total Sum of Squares，使用 $y=\bar y$ 预测产生的错误，称为 Baseline Model。$Var(y)$ 表示方差。
+
+  - $R^2 <= 1$。$R^2$ 越大越好，$R^2 = 1$ 时表示模型误差为 0。当我们的预测模型不犯任何错误时，$R^2$ 的值最大。
+  - $R^2 = 0$ 。最差情况，训练模型等于基准模型。
+  - $R^2 < 0$。说明训练模型还不如基准模型，很有可能数据集不存在任何线性关系。
 
 下面以波士顿房价数据集来实现三种平均方法：
 
@@ -250,15 +276,118 @@ rmse_test = sqrt(mse_test)
 mae_test = np.sum(np.absolute(y_predict - y_test))/len(y_test)
 ```
 
-sklearn 中实现了 MSE 和 MAE：
+sklearn 中实现了 MSE、MAE、R Square：
 
 ```python
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_error
 
+# MSE
 mean_squared_error(y_test, y_predict)
+# MAE
 mean_absolute_error(y_test, y_predict)
+# R Square
+mean_squared_error(y_test, y_predict) / np.var(y_test)
 ```
+
+## 多元线性回归
+
+多元线性回归的正规方程解(Normal Equation)：
+$$
+\theta=(X_b^T X_b)^{(-1)}X_b^T y
+$$
+其中，$X_b$ 为 X 前加全 1 列组成的矩阵，T 表示转置，-1 表示逆。$\theta$ 的结果是一个向量：
+$$
+\theta=\begin{bmatrix}\theta_0 \\\theta_1 \\\theta_2 \\ \dots \\\theta_n\end{bmatrix}
+$$
+其中 $\theta_0$  表示截距 intercept，$\theta_1 \dots \theta_n$ 表示系数 coefficients，描述特征对于最终样本的重要程度。实现时，通常分开返回截距和系数。系数如果为正，表示正相关（系数越大，结果越高），如果为负，表示负相关；系数绝对值决定影响的大小。
+
+预测结果为：$\hat y = X_b\cdot \theta$，使用 R Squared 来评价。
+
+自己实现该模型的代码见 [LinearRegression.py](https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms/blob/master/05-Linear-Regression/09-Regression-in-scikit-learn/playML/LinearRegression.py)
+
+sklearn 实现线性回归：
+
+```python
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=666)
+
+lin_reg = LinearRegression()
+lin_reg.fit(X_train, y_train)
+# 系数
+lin_reg.coef_
+# 截距
+lin_reg.intercept_
+```
+
+## kNN 线性回归
+
+kNN 算法也可以实现线性回归问题。
+
+```python
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.model_selection import GridSearchCV
+
+# kNN 线性回归实现
+knn_reg = KNeighborsRegressor()
+knn_reg.fit(X_train_standard, y_train)
+knn_reg.score(X_test_standard, y_test)
+
+# 网格算法找到最佳超参
+param_grid = [
+    {
+        "weights": ["uniform"],
+        "n_neighbors": [i for i in range(1, 11)]
+    },
+    {
+        "weights": ["distance"],
+        "n_neighbors": [i for i in range(1, 11)],
+        "p": [i for i in range(1,6)]
+    }
+]
+
+knn_reg = KNeighborsRegressor()
+grid_search = GridSearchCV(knn_reg, param_grid, n_jobs=-1, verbose=1)
+grid_search.fit(X_train_standard, y_train)
+
+grid_search.best_params_
+grid_search.best_estimator_.score(X_test_standard, y_test)
+```
+
+注意，以上算法没有经过数据归一化处理。
+
+## 数据可解释性
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.linear_model import LinearRegression
+
+boston = datasets.load_boston()
+
+X = boston.data
+y = boston.target
+
+X = X[y < 50.0]
+y = y[y < 50.0]
+
+lin_reg = LinearRegression()
+lin_reg.fit(X, y)
+boston.feature_names[np.argsort(lin_reg.coef_)]
+```
+
+得到的结果
+
+```
+array(['NOX', 'DIS', 'PTRATIO', 'LSTAT', 'CRIM', 'INDUS', 'AGE', 'TAX',
+       'B', 'ZN', 'RAD', 'CHAS', 'RM'], 
+      dtype='<U7')
+```
+
+由此可以看出对于波士顿房价数据的影响特征。 
 
 ## 工具
 

@@ -190,11 +190,11 @@ np.concatenate([A, A], axis=1) # 合并为 2*6 的矩阵，轴为列
 # 合并向量和矩阵
 A2 = np.concatenate([A, z.reshape(1, -1)])
 # 在垂直方向合并
-np.vstatck([A, z]) 
+np.vstack([A, z]) 
 
 B = np.full((2, 2), 100)
 # 在水平方向合并
-np.hstatck([A, B]) #  获得 2*5 矩阵
+np.hstack([A, B]) #  获得 2*5 矩阵
 
 # 堆叠向量，在行向量上堆叠 2 次，列向量堆叠 1 次
 np.tile(v, (2, 1))

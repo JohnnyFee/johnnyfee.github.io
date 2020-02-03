@@ -63,13 +63,13 @@ $$
 
 行列数相同的矩阵才允许做加减法。
 
-![img](../resources/images/1*hUtgcNIxknjUZu-Wewxm1Q.png)
+![img](../resources/images/hUtgcNIxknjUZu-Wewxm1Q.png)
 
 =
 
 
 
-![img](../resources/images/1*eQFxiJSwD6Mohnm5j3qzQg.png)
+![img](../resources/images/eQFxiJSwD6Mohnm5j3qzQg.png)
 
 减法同理。
 
@@ -77,7 +77,7 @@ $$
 
 标量与矩阵相乘，结果为标量与矩阵中的每个元素相乘。
 
-![img](../resources/images/1*e87O1tDfgJ8PXivwIBtFnA.png)
+![img](../resources/images/e87O1tDfgJ8PXivwIBtFnA.png)
 
 标量与矩阵的除法与乘法类似，如：
 
@@ -302,13 +302,13 @@ $$
 
 Taking an example
 
-![img](../resources/images/1*GsW1KrpiaqTqW0sJX72R3Q-20191126112214504.png)
+![img](../resources/images/GsW1KrpiaqTqW0sJX72R3Q-20191126112214504.png)
 
 This is equivalent to multiplication of matrix B with inverse of A.
 
 As
 
-![img](../resources/images/1*MibBJHMxP5jw0rNlauz4sQ.png)
+![img](../resources/images/MibBJHMxP5jw0rNlauz4sQ.png)
 
 ## 矩阵的类型
 
@@ -318,19 +318,19 @@ As
 
 行和列相同的所有元素，形成矩阵的 *对角线（Diagonal of  a matrix）*。如以下矩阵：
 
-![img](../resources/images/1*8RWNMmWLGa4chA5QYwYSwQ.png)
+![img](../resources/images/8RWNMmWLGa4chA5QYwYSwQ.png)
 
 a11, a22, a33 形成上述矩阵的对角线。
 
 矩形矩阵的对角线的查找方法类似：
 
-![img](../resources/images/1*mdTwXCRW1vhjoKH-4kATww.png)
+![img](../resources/images/mdTwXCRW1vhjoKH-4kATww.png)
 
 ### 单位矩阵
 
 对角元素是 1 ，其他元素均为 0 的**方阵**称为 *单位矩阵（Identity matrix）*。用 **I** 表示。如：
 
-![img](../resources/images/1*FoSu_wiKRln_Y_FA-NggFQ.png)
+![img](../resources/images/FoSu_wiKRln_Y_FA-NggFQ.png)
 
 任何方阵乘以相应的单位矩阵结果是该矩阵本身。就像任何数乘以 1，结果不变一样。
 
@@ -424,7 +424,7 @@ Aᵀ = -A
 
 如：
 
-![img](../resources/images/1*k9bNpRHA_QTo4LPpSG-xcQ.png)
+![img](../resources/images/k9bNpRHA_QTo4LPpSG-xcQ.png)
 
 反对称矩阵的对角线元素一定是 0，只有 0 x (-1) 才不会变。
 
@@ -440,21 +440,21 @@ Aᵀ = -A
 
 *0 阶张量（Rank 0 tensor）*：0 维张量。如 数字：
 
-![img](../resources/images/1*NHiz-7zr9KOs-mZAmYC0Mg.png)
+![img](../resources/images/NHiz-7zr9KOs-mZAmYC0Mg.png)
 
 *1 阶张量（Rank 1 tensor）*：仅可以扩展为 1 维的张量。如：
 
-![img](../resources/images/1*5Ve2VqtS3BKvWo-s-D3JDg.png)
+![img](../resources/images/5Ve2VqtS3BKvWo-s-D3JDg.png)
 
-![img](../resources/images/1*aNMwE3t3Sh23q-eytn1lWA.png)
+![img](../resources/images/aNMwE3t3Sh23q-eytn1lWA.png)
 
 *2 级张量（Rank 2 tensor）*：
 
-![img](../resources/images/1*4POSt42PKvTY1yfIV7fo4Q.png)
+![img](../resources/images/4POSt42PKvTY1yfIV7fo4Q.png)
 
 *3 级张量（Rank 3 tensor）*：
 
-![img](../resources/images/1*yrbDX4OZCsvYktC77kDx8Q.png)
+![img](../resources/images/yrbDX4OZCsvYktC77kDx8Q.png)
 
 3 阶张量具有立体空间。
 
@@ -476,7 +476,7 @@ Aᵀ = -A
 
 向量 (0.5, 0.5) 用来来表示为:
 
-![img](../resources/images/1*stk14TMH47aDiwTty_uN_w.png)
+![img](../resources/images/stk14TMH47aDiwTty_uN_w.png)
 
 ### 矩阵
 
@@ -516,7 +516,7 @@ In row picture representation we make a coefficient matrix, a variable matrix an
 
 以上线性方式使用 Row Picture 来表示：
 
-![img](../resources/images/1*z-qiGZfJnNVJGFGoZdorKA.png)
+![img](../resources/images/z-qiGZfJnNVJGFGoZdorKA.png)
 
 即
 $$
@@ -527,7 +527,7 @@ $$
 
 The row picture of (1), (2) and (3) could be plotted on graph as （**Row picture on graph**）:
 
-![img](../resources/images/1*x5k7D6D-uYkFbEVwXSikhw-20191122105030444.png)
+![img](../resources/images/x5k7D6D-uYkFbEVwXSikhw-20191122105030444.png)
 
 To find solution of system of linear equations from Row picture, we look at graph and see if there is any one point of intersection for all the lines, that point is called solution for the system of equations.
 
@@ -539,7 +539,7 @@ A column picture is where coefficient matrix if formed separately for each varia
 
 Taking the system of linear equations (1), (2) and (3), the column picture would be as follows :
 
-![img ](../resources/images/1*UxQ0SCIhsR0TAkxk-dzzqw.png)
+![img ](../resources/images/UxQ0SCIhsR0TAkxk-dzzqw.png)
 
 >  “x” and “y” are scalars being multiplied with their corresponding coefficient matrices
 
@@ -551,7 +551,7 @@ Column Picture 的表示方式就是找到正确的系数 x 和  y，来组合�
 
 To show column picture on graph, we treat individual coefficient matrices as [vectors](https://medium.com/linear-algebra/part-4b-tensors-scalars-and-vectors-68cf6c1f2be) and plot those vectors on graph.
 
-![img](../resources/images/1*plQThMshpk5RvZCqPykcdA.png)
+![img](../resources/images/plQThMshpk5RvZCqPykcdA.png)
 
 > Blue vector is coefficient matrix of X ,Red vector is coefficient matrix of Y and Green Vector is Constant matrix.
 

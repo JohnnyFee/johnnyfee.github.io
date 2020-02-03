@@ -138,11 +138,11 @@ $$
 
 当出现主元为 0 ，无法消元时，可以先进行行交换，然后再进行消元。如：
 
-![img](../resources/images/1*gn6XY-lEnIoET5DgxCYgkw.png)
+![img](../resources/images/gn6XY-lEnIoET5DgxCYgkw.png)
 
-![img](../resources/images/1*71AX5gffOAAd5mAjRasooA.png)
+![img](../resources/images/71AX5gffOAAd5mAjRasooA.png)
 
-![img](../resources/images/1*EVR4Wtd9xcwHTujQX1yivw-20191126111331384.png)
+![img](../resources/images/EVR4Wtd9xcwHTujQX1yivw-20191126111331384.png)
 
 
 
@@ -440,19 +440,19 @@ $$
 
    消除第一列：
 
-   ![img](../resources/images/1*SMCcbgjufcJpc_ApgT_dyw.png)
+   ![img](../resources/images/SMCcbgjufcJpc_ApgT_dyw.png)
 
-   ![img](../resources/images/1*Z3VEmYE0g6gQhH2xp98Ihg-20191126133903948.png)
+   ![img](../resources/images/Z3VEmYE0g6gQhH2xp98Ihg-20191126133903948.png)
 
-   ![img](../resources/images/1*PHYr72kHfzWh5RhsKbAuSQ-20191126133904399.png)
+   ![img](../resources/images/PHYr72kHfzWh5RhsKbAuSQ-20191126133904399.png)
 
    Now, we apply similar operations for column 2.
 
-   ![img](../resources/images/1*WBFs7rGL1hfHKK11FlJ3nw-20191126134036879.png)
+   ![img](../resources/images/WBFs7rGL1hfHKK11FlJ3nw-20191126134036879.png)
 
-   ![img](../resources/images/1*IsydlA3OcsFTxkmgW5uJdw.png)
+   ![img](../resources/images/IsydlA3OcsFTxkmgW5uJdw.png)
 
-   ![img](../resources/images/1*NztnaLbP5E4TEwv2tv0q6A.png)
+   ![img](../resources/images/NztnaLbP5E4TEwv2tv0q6A.png)
 
    If we were doing Gaussian Elimination, we would’ve finished by now and started back substitution but to find inverse we have to take it one step further. We have to find Reduced Row Echelon Form.
 
@@ -460,37 +460,37 @@ $$
 
    从下往上，把主元变成 1。把第 3 行主元变成 1：
 
-   ![img](../resources/images/1*oo-vt9w6deyoJEbcYOdRUA-20191126134415600.png)
+   ![img](../resources/images/oo-vt9w6deyoJEbcYOdRUA-20191126134415600.png)
 
    
-   ![img](../resources/images/1*Hso3ACz0gFDl4XCHv70iqA.png)
+   ![img](../resources/images/Hso3ACz0gFDl4XCHv70iqA.png)
    
    至此，所有主元都变成了 1。
    
    继续消除第 2 行。
    
    
-      ![img](../resources/images/1*hPqXzPaO24GACThKvqpwjQ-20191126134416306.png)
+      ![img](../resources/images/hPqXzPaO24GACThKvqpwjQ-20191126134416306.png)
    
-      ![img](../resources/images/1*w6hQa6tBqdCP7W1vx7yCpA.png)
+      ![img](../resources/images/w6hQa6tBqdCP7W1vx7yCpA.png)
    
    
    
    消除第一行：
    
-      ![img](../resources/images/1*tiQAWvOzCeVL_HWIGXrSNw-20191126134416719.png)
+      ![img](../resources/images/tiQAWvOzCeVL_HWIGXrSNw-20191126134416719.png)
    
-      ![img](../resources/images/1*iR9iI6KSg1PudshL1hNfRQ.png)
+      ![img](../resources/images/iR9iI6KSg1PudshL1hNfRQ.png)
    
-      ![img](../resources/images/1*5OwWDsbOG_muPhnjUuLr_A-20191126134417385.png)
+      ![img](../resources/images/5OwWDsbOG_muPhnjUuLr_A-20191126134417385.png)
    
-      ![img](../resources/images/1*SvPV8_gH2XkAfa62c44fcA-20191126134417864.png)
+      ![img](../resources/images/SvPV8_gH2XkAfa62c44fcA-20191126134417864.png)
    
    
    
 4. 左边是单位矩阵，右边便是矩阵的逆。
 
-      ![img](../resources/images/1*_4J65Cwafc1zb4vZykQCog-20191126134417665.png)
+      ![img](../resources/images/_4J65Cwafc1zb4vZykQCog-20191126134417665.png)
 
    
 

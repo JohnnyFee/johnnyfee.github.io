@@ -1,5 +1,5 @@
 ---
-layout: post
+ layout: post
 title: 机器学习算法 梯度下降法
 tags: [python, language, machine learning]
 category: AI
@@ -35,7 +35,7 @@ $\eta$ 称为学习率（learning rate），特点如下：
 
 对于有多个极值点的情况，除法点不同，找到的解可能只是局部最优解，而非全局最优解。对于这个问题的解决方案是多次运行，随机化初始点。所以初始点也是梯度下降法的一个超参数。
 
-对于多个特征值的情况，梯度代表方向，对应 J 增大最快的方向，对应的变化值为 $-\eta \Delta J$。其中：
+对于多个特 征值的情况，梯度代表方向，对应 J 增大最快的方向，对应的变化值为 $-\eta \Delta J$。其中：
 $$
 \Delta J = (\frac {\delta J} {\delta \theta_0}, \frac {\delta J} {\delta \theta_1}, \dots, \frac {\delta J} {\delta \theta_n})
 $$
@@ -123,9 +123,62 @@ plot_theta_history()
 
 ![image-20200119165038734](../resources/images/image-20200119165038734.png)
 
-## 线性回归中使用梯度下降法
+## 多元线性回归中使用梯度下降法
 
+对于二元函数 $z=x^2 + 2y^2$，使用梯度下降法的过程如下：
 
+![image-20200120093635751](../resources/images/image-20200120093635751.png)
+
+线性回归中的的损失函数 $J=\sum_{i=1} ^m(y^{(i)}-\hat y^{(i)})^2$ ，目标是使改函数尽可能小。
+
+预测值 $\hat y^{(i)}=\theta_0 + \theta_1X_1^{(i)} + \theta_2X_2^{(i)} + \dots + \theta_nX_n^{(i)}$，也即使 $\sum_{i=1}^m(y^{(i)}-\theta_0 + \theta_1X_1^{(i)} - \theta_2X_2^{(i)} - \dots - \theta_nX_n^{(i)})$ 尽可能小。
+$$
+\Delta J(\theta)=
+\begin{bmatrix}
+\frac {\delta J} {\delta \theta_0} \\
+\frac {\delta J} {\delta \theta_1} \\
+\frac {\delta J} {\delta \theta_2} \\
+\dots 
+\frac {\delta J} {\delta \theta_n} \\
+\end{bmatrix} =
+\begin{bmatrix}
+\sum _{i=1}^m2(y^{(i)}-X_b^{(i)}\theta)(-1) \\
+\sum _{i=1}^m2(y^{(i)}-X_b^{(i)}\theta)(-X_1^{(i)}) \\
+\sum _{i=1}^m2(y^{(i)}-X_b^{(i)}\theta)(-X_2^{(i)}) \\
+\dots \\
+\sum _{i=1}^m2(y^{(i)}-X_b^{(i)}\theta)(-X_n^{(i)}) \\
+\end{bmatrix}=
+2\begin{bmatrix}
+\sum _{i=1}^m(X_b^{(i)-y^{(i)}}\theta) \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_1^{(i)} \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_2^{(i)} \\
+\dots \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_n^{(i)} \\
+\end{bmatrix}
+$$
+为了使梯度 $\Delta J$ 与特征数量无关，我们将损失函数变为 $J=\frac 1 m \sum_{i=1} ^m(y^{(i)}-\hat y^{(i)})^2=MSE(y, \hat y)$，则对应的
+$$
+\Delta J(\theta)=
+\frac 2 m\begin{bmatrix}
+\sum _{i=1}^m(X_b^{(i)}-y^{(i)})\theta \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_1^{(i)} \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_2^{(i)} \\
+\dots \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_n^{(i)} \\
+\end{bmatrix}
+$$
+有时取 $J(\theta)=\frac 1 {2m}\sum_{i=1} ^m(y^{(i)}-\hat y^{(i)})^2$，则 
+$$
+\Delta J(\theta)=
+\frac 1 m\begin{bmatrix}
+\sum _{i=1}^m(X_b^{(i)-y^{(i)}})\theta) \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_1^{(i)} \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_2^{(i)} \\
+\dots \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_n^{(i)} \\
+\end{bmatrix}
+$$
+2 倍的差距对实际结果的影响不大。
 
 ## 工具
 

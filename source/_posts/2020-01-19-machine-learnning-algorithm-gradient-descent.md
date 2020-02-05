@@ -1,5 +1,5 @@
 ---
- layout: post
+layout: post
 title: 机器学习算法 梯度下降法
 tags: [python, language, machine learning]
 category: AI
@@ -129,9 +129,9 @@ plot_theta_history()
 
 ![image-20200120093635751](../resources/images/image-20200120093635751.png)
 
-线性回归中的的损失函数 $J=\sum_{i=1} ^m(y^{(i)}-\hat y^{(i)})^2$ ，目标是使改函数尽可能小。
+线性回归中的的损失函数 $J=\sum_{i=1} ^m(y^{(i)}-\hat y^{(i)})^2$ ，目标是使该函数尽可能小。
 
-预测值 $\hat y^{(i)}=\theta_0 + \theta_1X_1^{(i)} + \theta_2X_2^{(i)} + \dots + \theta_nX_n^{(i)}$，也即使 $\sum_{i=1}^m(y^{(i)}-\theta_0 + \theta_1X_1^{(i)} - \theta_2X_2^{(i)} - \dots - \theta_nX_n^{(i)})$ 尽可能小。
+预测值 $\hat y^{(i)}=\theta_0 + \theta_1X_1^{(i)} + \theta_2X_2^{(i)} + \dots + \theta_nX_n^{(i)}$，即使 $\sum_{i=1}^m(y^{(i)}-\theta_0 + \theta_1X_1^{(i)} - \theta_2X_2^{(i)} - \dots - \theta_nX_n^{(i)})^2$ 尽可能小。
 $$
 \Delta J(\theta)=
 \begin{bmatrix}
@@ -149,7 +149,7 @@ $$
 \sum _{i=1}^m2(y^{(i)}-X_b^{(i)}\theta)(-X_n^{(i)}) \\
 \end{bmatrix}=
 2\begin{bmatrix}
-\sum _{i=1}^m(X_b^{(i)-y^{(i)}}\theta) \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)}) \\
 \sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_1^{(i)} \\
 \sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_2^{(i)} \\
 \dots \\
@@ -160,7 +160,7 @@ $$
 $$
 \Delta J(\theta)=
 \frac 2 m\begin{bmatrix}
-\sum _{i=1}^m(X_b^{(i)}-y^{(i)})\theta \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)}) \\
 \sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_1^{(i)} \\
 \sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_2^{(i)} \\
 \dots \\
@@ -171,7 +171,7 @@ $$
 $$
 \Delta J(\theta)=
 \frac 1 m\begin{bmatrix}
-\sum _{i=1}^m(X_b^{(i)-y^{(i)}})\theta) \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})) \\
 \sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_1^{(i)} \\
 \sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_2^{(i)} \\
 \dots \\

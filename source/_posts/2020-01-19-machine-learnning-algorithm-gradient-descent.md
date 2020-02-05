@@ -123,7 +123,7 @@ plot_theta_history()
 
 ![image-20200119165038734](../resources/images/image-20200119165038734.png)
 
-## 多元线性回归中使用梯度下降法
+## 线性回归中使用梯度下降法
 
 对于二元函数 $z=x^2 + 2y^2$，使用梯度下降法的过程如下：
 
@@ -179,6 +179,46 @@ $$
 \end{bmatrix}
 $$
 2 倍的差距对实际结果的影响不大。
+
+
+
+下面我们以 $y=3x+4$ 为原型，利用梯度下降法来推导出 a 和 b。
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 生成只有一个特征向量的 x，以及对应的 y
+np.random.seed(666)
+x = 2 * np.random.random(size=100)
+X = x.reshape(-1, 1)
+y = x * 3. + 4. + np.random.normal(size=100)
+
+# 散点绘制
+plt.scatter(x, y)
+plt.show()
+```
+
+![image-20200205163502650](../resources/images/image-20200205163502650.png)
+
+```python
+# 定义 J = MSE
+def J(theta, X_b, y):
+    try:
+        return np.sum((y - X_b.dot(theta))**2) / len(X_b)
+    except:
+        return float('inf')
+
+# 定义 Delta(J)
+def dJ(theta, X_b, y):
+    res = np.empty(len(theta))
+    res[0] = np.sum(X_b.dot(theta) - y)
+    for i in range(1, len(theta)):
+        res[i] = (X_b.dot(theta) - y).dot(X_b[:,i])
+    return res * 2 / len(X_b)
+```
+
+
 
 ## 工具
 

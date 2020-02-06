@@ -390,6 +390,8 @@ lin_reg3.score(X_test_standard, y_test)
 
 在线性回归中不需要数据归一化是因为我们将线性回归的求解模型变成了数学公式， 数据公式涉及的中间搜索过程比较少。而梯度下降法中，如果特征数据不再同一个维度会影响梯度的结果，与 $\eta$ 相乘的结果为移动的步长，可能太大，也可能太小，从而影响结果收敛或者影响效率。
 
+
+
 ## 梯度下降法的优势
 
 构造一个 1000 个样本数量，5000 个特征的数据集，来比较线性回归与梯度下降的性能。
@@ -419,9 +421,163 @@ big_reg2 = LinearRegression()
 
 对于比较大的矩阵，正规方程的耗时比梯度下降法要高；但要注意，对于样本数量较多的时候，梯度下降法的耗时也不低，我们可以通过随机梯度下降法来解决这个问题。 
 
-## 批量梯度下降法
+## 随机梯度下降法
+
+在上面的梯度下降法中，我们用的梯度公式为：
+$$
+\begin{align*}
+\Delta J(\theta) & =
+\frac 2 m\begin{bmatrix}
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)}))X_0^{(i)} \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_1^{(i)} \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_2^{(i)} \\
+\dots \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_n^{(i)} \\
+\end{bmatrix} \\
+& = \frac 2 m \cdot X_b^T \cdot (X_b\theta - y)
+\end{align*}
+$$
+每次都是对整个样本空间进行计算，我们称之为批量梯度下降法 Batch Gradient Descent。
+
+如果我们不是每次都对整个样本空间进行梯度计算，而是只对一行进行计算，相应的公式为：
+$$
+2\begin{bmatrix}
+(X_b^{(i)}\theta-y^{(i)}))X_0^{(i)} \\
+(X_b^{(i)}\theta-y^{(i)})X_1^{(i)} \\
+(X_b^{(i)}\theta-y^{(i)})X_2^{(i)} \\
+\dots \\
+(X_b^{(i)}\theta-y^{(i)})X_n^{(i)} \\
+\end{bmatrix}
+= 2\cdot (X_b^{(i)})^T \cdot ((X_b)^{(i)}\theta - y^{(i)})
+$$
+该算式并非是梯度函数的公式，所以不能当做梯度的方向，但是可以作为搜索的方向。我们随机取一行 i，以该行的计算结果作为搜索方向，我们称这种方法为随机梯度下降法 Stochastic Gradient Descent。
+
+批量梯度下降法与随机梯度下降法的搜索过程如下：
+
+<img src="../resources/images/image-20200206114521600.png" alt="image-20200206114521600" style="zoom: 70%;" /> <img src="../resources/images/image-20200206102256159.png" style="zoom: 45%;" />
+
+随机梯度下降法不能保证每次都是沿着梯度下降的方向移动，所以损失函数的结果不一定一直沿着减小的方向移动，中间过程存在增大的现象。但实验结果表明，最终能够得到损失函数最小的 $\theta$ 值。
+
+由于随机过程可能不稳定，我们让 $\eta$ 值随着循环的次数增大而减小，而非固定值，这样可能保证在损失函数越接近最小值，$\eta$ 值越小。
+$$
+\eta = \frac a {i\_iters + b}
+$$
+其中，b 可以防止循环次数 `i_iters`$ 较小时，$$\eta$ 变换太大，而 `i_iters​` 较大时，$\eta$ 变化太小。b 通常取值为 50。a 也是为了让 $\eta$ 的变化更加稳定，通常可以取值为 5。
+
+结合模拟退火的思想，冷却函数和时间 t 相关，则 $eta$ 的值可以变为：
+$$
+\eta = \frac {t_0} {i\_iters + t_1}
+$$
+
+## 简单随机下降法的实现
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 样本数量
+m = 100000
+
+# 构建样本空间
+x = np.random.normal(size=m)
+X = x.reshape(-1,1)
+y = 4.*x + 3. + np.random.normal(0, 3, size=m)
+```
+
+```python
+# 散点图显示
+plt.scatter(x, y)
+plt.show()
+```
+
+![image-20200206110550450](../resources/images/image-20200206110550450.png)
+
+```python
+# 搜索梯度（方向）
+def dJ_sgd(theta, X_b_i, y_i):
+    return 2 * X_b_i.T.dot(X_b_i.dot(theta) - y_i)
+
+# 随机梯度下降法
+def sgd(X_b, y, initial_theta, n_iters):
+	# eta 变化函数
+    t0, t1 = 5, 50
+    def learning_rate(t):
+        return t0 / (t + t1)
+
+    theta = initial_theta
+    # 相对批量梯度下降，for 循环中不需要损失函数的最小变化判断。
+    # 因为随机梯度的变化是随机的，不能保证损失函数变化最小，得到的就是最小损失函数
+    for cur_iter in range(n_iters):
+        # 随机取样本行
+        rand_i = np.random.randint(len(X_b))
+        # 梯度值
+        gradient = dJ_sgd(theta, X_b[rand_i], y[rand_i])
+        # theta 变化
+        theta = theta - learning_rate(cur_iter) * gradient
+
+    return theta
+```
+
+```python
+# 取样本空间 1/3 的数据，仍然可以搜索到相对最佳的 theta 值。
+%%time
+X_b = np.hstack([np.ones((len(X), 1)), X])
+initial_theta = np.zeros(X_b.shape[1])
+# array([ 3.04732375,  4.03214249])
+theta = sgd(X_b, y, initial_theta, n_iters=m//3)
+# CPU times: user 559 ms, sys: 22.6 ms, total: 582 ms
+#   Wall time: 647 ms
+```
+
+封装方法参考 [fit_sgd](https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms/blob/master/06-Gradient-Descent/07-SGD-in-scikit-learn/playML/LinearRegression.py#L64)，代码内容为：
+
+```python
+# n_iters 指的是遍历样本空间的次数，而非循环次数。
+# 在之前的实现中，我们并没有将所有的样本空间至少浏览一遍，所以并没有考虑所有样本的信息。
+# 所以我们将 n_iters 定义为将样本空间浏览几遍。
+def fit_sgd(self, X_train, y_train, n_iters=50, t0=5, t1=50):
+        """根据训练数据集X_train, y_train, 使用梯度下降法训练Linear Regression模型"""
+        assert X_train.shape[0] == y_train.shape[0], \
+            "the size of X_train must be equal to the size of y_train"
+        assert n_iters >= 1
+
+        # 梯度方向，无变化
+        def dJ_sgd(theta, X_b_i, y_i):
+            return X_b_i * (X_b_i.dot(theta) - y_i) * 2.
+		
+        # 随机梯度下降
+        def sgd(X_b, y, initial_theta, n_iters=5, t0=5, t1=50):
+
+            def learning_rate(t):
+                return t0 / (t + t1)
+
+            theta = initial_theta
+            m = len(X_b)
+            for i_iter in range(n_iters):
+                indexes = np.random.permutation(m)
+                X_b_new = X_b[indexes,:]
+                y_new = y[indexes]
+                for i in range(m):
+                    gradient = dJ_sgd(theta, X_b_new[i], y_new[i])
+                    theta = theta - learning_rate(i_iter * m + i) * gradient
+
+            return theta
+
+        X_b = np.hstack([np.ones((len(X_train), 1)), X_train])
+        initial_theta = np.random.randn(X_b.shape[1])
+        self._theta = sgd(X_b, y_train, initial_theta, n_iters, t0, t1)
+
+        self.intercept_ = self._theta[0]
+        self.coef_ = self._theta[1:]
+
+        return self
+```
+
+
+
+
 
 ## 工具
 
 - [LaTeX/Mathematics - Wikibooks, open books for an open world](https://en.wikibooks.org/wiki/LaTeX/Mathematics)
-- https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms
+- [Play-with-Machine-Learning-Algorithms: Code of my MOOC Course](https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms)

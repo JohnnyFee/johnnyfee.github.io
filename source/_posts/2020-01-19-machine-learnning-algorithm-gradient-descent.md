@@ -44,12 +44,14 @@ $$
 **梯度下降法的特点：**
 
 - 不是机器学习算法。不能直接解决分类问题和回归问题。
-- 是一种基于搜索的最优化的方法。对于线性回归我们求出了最小化损失函数对应的数学解，但是对于其他一些模型，我们找不多对应的数学界，则需要基于搜索策略来找到最优解。
+- 是一种基于搜索的最优化的方法。对于线性回归我们求出了最小化损失函数对应的数学解，但是对于其他一些模型，我们找不多对应的数学解，则需要基于搜索策略来找到最优解。
 - 梯度下降法的作用是最小化一个损失函数；而如果想最大化效用函数，则应该使用相应的梯度上升法。
 
 在线性回归中使用梯度下降法的目标是使 $\sum_{i=1} ^m(y^{(i)}-\hat y^{(i)})^2$ 尽可能小，该损失函数具有唯一的最优解。
 
 ## 模拟梯度下降法
+
+我们以 $y=(x-2.5)^2-1$ 为损失函数原型来求解 theta 值，使该损失函数的值最小。我们使用梯度下降法来模拟该过程。
 
 ```python
 import numpy as np
@@ -125,11 +127,15 @@ plot_theta_history()
 
 有可能因为 $\eta$ 取值太大，导致结果不收敛；因为 $\eta$ 太小导致计算速度太慢。
 
-## 线性回归中使用梯度下降法
-
-对于二元函数 $z=x^2 + 2y^2$，使用梯度下降法的过程如下：
+对于二元损失函数 $z=x^2 + 2y^2$，使用梯度下降法的过程如下：
 
 ![image-20200120093635751](../resources/images/image-20200120093635751.png)
+
+## 线性回归中使用梯度下降法
+
+对于多元线性回归问题，除了使用标准方差来得到 $\theta$ 值，还可以使用梯度下降法来求解。
+
+### 损失函数的梯度
 
 线性回归中的的损失函数 $J=\sum_{i=1} ^m(y^{(i)}-\hat y^{(i)})^2$ ，目标是使该函数尽可能小。
 
@@ -272,7 +278,7 @@ def dJ(theta, X_b, y):
 
 更新后的 [fit_gd](https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms/blob/master/06-Gradient-Descent/05-Vectorize-Gradient-Descent/playML/LinearRegression.py#L25)。
 
-## 数据归一化
+### 数据归一化
 
 我们基于波士顿房价数据，使用梯度下降法来预测。
 
@@ -370,13 +376,9 @@ X_train_standard = standardScaler.transform(X_train)
 
 lin_reg3 = LinearRegression()
 %time lin_reg3.fit_gd(X_train_standard, y_train)
-```
 
-计算时间为：
-
-```
-CPU times: user 237 ms, sys: 4.37 ms, total: 242 ms
-Wall time: 258 ms
+# CPU times: user 237 ms, sys: 4.37 ms, total: 242 ms
+#Wall time: 258 ms
 ```
 
 评分为 0.81298806201222351 ：
@@ -390,9 +392,7 @@ lin_reg3.score(X_test_standard, y_test)
 
 在线性回归中不需要数据归一化是因为我们将线性回归的求解模型变成了数学公式， 数据公式涉及的中间搜索过程比较少。而梯度下降法中，如果特征数据不再同一个维度会影响梯度的结果，与 $\eta$ 相乘的结果为移动的步长，可能太大，也可能太小，从而影响结果收敛或者影响效率。
 
-
-
-## 梯度下降法的优势
+### 梯度下降法的优势
 
 构造一个 1000 个样本数量，5000 个特征的数据集，来比较线性回归与梯度下降的性能。
 
@@ -421,7 +421,7 @@ big_reg2 = LinearRegression()
 
 对于比较大的矩阵，正规方程的耗时比梯度下降法要高；但要注意，对于样本数量较多的时候，梯度下降法的耗时也不低，我们可以通过随机梯度下降法来解决这个问题。 
 
-## 随机梯度下降法
+### 随机梯度下降法
 
 在上面的梯度下降法中，我们用的梯度公式为：
 $$
@@ -437,9 +437,9 @@ $$
 & = \frac 2 m \cdot X_b^T \cdot (X_b\theta - y)
 \end{align*}
 $$
-每次都是对整个样本空间进行计算，我们称之为批量梯度下降法 Batch Gradient Descent。
+每次都是使用整个样本空间来计算梯度，我们称之为 *批量梯度下降法* Batch Gradient Descent。如果我们不是每次都对整个样本空间进行梯度计算，而是随机根据某一行来计算梯度，这种方法为随机梯度下降法 Stochastic Gradient Descent。
 
-如果我们不是每次都对整个样本空间进行梯度计算，而是只对一行进行计算，相应的公式为：
+相应的公式为：
 $$
 2\begin{bmatrix}
 (X_b^{(i)}\theta-y^{(i)}))X_0^{(i)} \\
@@ -450,7 +450,7 @@ $$
 \end{bmatrix}
 = 2\cdot (X_b^{(i)})^T \cdot ((X_b)^{(i)}\theta - y^{(i)})
 $$
-该算式并非是梯度函数的公式，所以不能当做梯度的方向，但是可以作为搜索的方向。我们随机取一行 i，以该行的计算结果作为搜索方向，我们称这种方法为随机梯度下降法 Stochastic Gradient Descent。
+该算式并非是梯度函数的公式，所以不能当做梯度的方向，但是可以作为搜索的方向。我们随机取一行 i，以该行的计算结果作为搜索方向。
 
 批量梯度下降法与随机梯度下降法的搜索过程如下：
 
@@ -469,7 +469,13 @@ $$
 \eta = \frac {t_0} {i\_iters + t_1}
 $$
 
-## 简单随机下降法的实现
+**随机的特点：**
+
+- 随机可以帮助跳出局部最优解
+- 具有更快的运算速度
+- 机器学习领域很多算法都使用随机地特点，如随机搜索，随机森林。
+
+### 简单随机下降法的实现
 
 ```python
 import numpy as np
@@ -526,7 +532,7 @@ initial_theta = np.zeros(X_b.shape[1])
 # array([ 3.04732375,  4.03214249])
 theta = sgd(X_b, y, initial_theta, n_iters=m//3)
 # CPU times: user 559 ms, sys: 22.6 ms, total: 582 ms
-#   Wall time: 647 ms
+# Wall time: 647 ms
 ```
 
 封装方法参考 [fit_sgd](https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms/blob/master/06-Gradient-Descent/07-SGD-in-scikit-learn/playML/LinearRegression.py#L64)，代码内容为：
@@ -534,7 +540,7 @@ theta = sgd(X_b, y, initial_theta, n_iters=m//3)
 ```python
 # n_iters 指的是遍历样本空间的次数，而非循环次数。
 # 在之前的实现中，我们并没有将所有的样本空间至少浏览一遍，所以并没有考虑所有样本的信息。
-# 所以我们将 n_iters 定义为将样本空间浏览几遍。
+# 所以我们将 n_iters 定义为将样本空间浏览几遍。至少要便利 n_iters * m 遍样本行
 def fit_sgd(self, X_train, y_train, n_iters=50, t0=5, t1=50):
         """根据训练数据集X_train, y_train, 使用梯度下降法训练Linear Regression模型"""
         assert X_train.shape[0] == y_train.shape[0], \
@@ -550,15 +556,19 @@ def fit_sgd(self, X_train, y_train, n_iters=50, t0=5, t1=50):
 
             def learning_rate(t):
                 return t0 / (t + t1)
-
+			
             theta = initial_theta
             m = len(X_b)
+            # 每个样本都被随机地看了 n_iters 遍
             for i_iter in range(n_iters):
+                # 先将样本索引随机化
                 indexes = np.random.permutation(m)
                 X_b_new = X_b[indexes,:]
                 y_new = y[indexes]
+                # 遍历所有样本，因为如果直接随机使用 n_iters * m 个样本，很难保证所有样本都能遍历到
                 for i in range(m):
                     gradient = dJ_sgd(theta, X_b_new[i], y_new[i])
+                    # 根据总的遍历次数调整 theta 值
                     theta = theta - learning_rate(i_iter * m + i) * gradient
 
             return theta
@@ -573,9 +583,176 @@ def fit_sgd(self, X_train, y_train, n_iters=50, t0=5, t1=50):
         return self
 ```
 
+使用优化后的随机梯度下降法来预测波士顿房价：
 
+```python
+from sklearn import datasets
+from sklearn.preprocessing import StandardScaler
+from playML.model_selection import train_test_split
 
+# 数据预处理
+boston = datasets.load_boston()
+X = boston.data
+y = boston.target
+X = X[y < 50.0]
+y = y[y < 50.0]
 
+# 分离
+X_train, X_test, y_train, y_test = train_test_split(X, y, seed=666)
+
+# 数据归一化
+standardScaler = StandardScaler()
+standardScaler.fit(X_train)
+X_train_standard = standardScaler.transform(X_train)
+X_test_standard = standardScaler.transform(X_test)
+```
+
+```python
+from playML.LinearRegression import LinearRegression
+
+lin_reg = LinearRegression()
+%time lin_reg.fit_sgd(X_train_standard, y_train, n_iters=2)
+lin_reg.score(X_test_standard, y_test)
+
+# CPU times: user 11.9 ms, sys: 4.13 ms, total: 16.1 ms
+# Wall time: 13.5 ms
+# 0.78651716204682975
+```
+
+如果调整遍历次数为 50，score 值会有所上升。
+
+### Sklearn 中的 SGD
+
+```python
+from sklearn.linear_model import SGDRegressor
+
+# n_iters 默认为 5
+sgd_reg = SGDRegressor(n_iters=50)
+%time sgd_reg.fit(X_train_standard, y_train)
+sgd_reg.score(X_test_standard, y_test)
+# CPU times: user 4.5 ms, sys: 1.04 ms, total: 5.54 ms
+# Wall time: 3.94 ms
+# 0.81199073931878407
+```
+
+sklearn 使用了更复杂的算法以及更优的性能。
+
+## 梯度的调试
+
+在梯度下降法中，梯度函数的求解是关键步骤，如何调试梯度函数的正确行呢？我们可以用高等数学中导数的推导方法来计算某一点的导数。
+
+![image-20200206141354931](../resources/images/image-20200206141354931.png)
+
+我们在目标点 $\theta$ 的分别加上和减去一个很小的值 $\epsilon$ ，这两点的斜率可以近似等于 $\theta$ 点的斜率。公式为：
+$$
+\frac {dJ} {d\theta} = \frac {J(\theta + \epsilon) - J(\theta - \epsilon)} {2\epsilon}
+$$
+同为的场景同理。
+$$
+\begin{align*}
+\theta &= (\theta_0, \theta_1, \theta_2, \dots, \theta_n) \\
+\frac {\delta J}{\delta \theta} &= 
+\begin{bmatrix}
+\frac {\delta J} {\delta \theta_0} \\
+\frac {\delta J} {\delta \theta_1} \\
+\frac {\delta J} {\delta \theta_2} \\
+\dots \\
+\frac {\delta J} {\delta \theta_n} \\
+\end{bmatrix}
+\end{align*}
+$$
+$\theta_0$ 的斜率计算方法：
+$$
+\theta_0^+ = (\theta_0 + \epsilon, \theta_1, \theta_2, \dots, \theta_n) \\
+\theta_0^- = (\theta_0 - \epsilon, \theta_1, \theta_2, \dots, \theta_n) \\
+$$
+则 $\frac {\delta J} {\delta \theta_0}=\frac {J(\theta_0^+)-J(\theta_0^-)} {2 \epsilon}$。其他 $\theta$ 值的求解同理。
+
+这种求法会带来一定程度的性能消耗，但可作为调试手段。
+
+用代码来实现：
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 生成 theta 值
+np.random.seed(666)
+true_theta = np.arange(1, 12, dtype=float)
+
+# 生成样本空间
+X = np.random.random(size=(1000, 10))
+X_b = np.hstack([np.ones((len(X), 1)), X])
+y = X_b.dot(true_theta) + np.random.normal(size=1000)
+```
+
+```python
+# 损失函数
+def J(theta, X_b, y):
+    try:
+        return np.sum((y - X_b.dot(theta))**2) / len(X_b)
+    except:
+        return float('inf')
+
+# 梯度函数公式
+def dJ_math(theta, X_b, y):
+    return X_b.T.dot(X_b.dot(theta) - y) * 2. / len(y)
+
+# 调试梯度
+def dJ_debug(theta, X_b, y, epsilon=0.01):
+    res = np.empty(len(theta))
+    for i in range(len(theta)):
+        theta_1 = theta.copy()
+        theta_1[i] += epsilon
+        theta_2 = theta.copy()
+        theta_2[i] -= epsilon
+        res[i] = (J(theta_1, X_b, y) - J(theta_2, X_b, y)) / (2 * epsilon)
+    return res
+```
+
+```python
+# 梯度下降法
+def gradient_descent(dJ, X_b, y, initial_theta, eta, n_iters = 1e4, epsilon=1e-8):
+    
+    theta = initial_theta
+    cur_iter = 0
+
+    while cur_iter < n_iters:
+        gradient = dJ(theta, X_b, y)
+        last_theta = theta
+        theta = theta - eta * gradient
+        if(abs(J(theta, X_b, y) - J(last_theta, X_b, y)) < epsilon):
+            break
+            
+        cur_iter += 1
+
+    return theta
+```
+
+```python
+# 初始化参数
+X_b = np.hstack([np.ones((len(X), 1)), X])
+initial_theta = np.zeros(X_b.shape[1])
+eta = 0.01
+
+# 梯度 debug 计算结果
+%time theta = gradient_descent(dJ_debug, X_b, y, initial_theta, eta)
+theta
+#CPU times: user 13.8 s, sys: 283 ms, total: 14.1 s
+#Wall time: 7.6 s
+
+# 数学公式梯度
+%time theta = gradient_descent(dJ_math, X_b, y, initial_theta, eta)
+theta
+#PU times: user 1.57 s, sys: 30.6 ms, total: 1.6 s
+#ll time: 856 ms
+```
+
+如果计算得到的结果近似或一样，则可认为数学梯度公式正确。在实际应用中，可以从样本中抽出一部分数据来验证梯度公式的正确性。
+
+## 小批量梯度下降法
+
+批量梯度下降法计算 $\theta$ 值时使用整个样本空间，而随机梯度下降法只是用一个样本行，小批量梯度下降法（Mini-Batch Gradient Descent）结合两种方法，每次使用一个小的样本空间。小批量梯度下降法可以解决批梯度下降法的训练速度慢，以及随机梯度下降法的准确性的问题。这样会带来一个新的超参数，分组大小。
 
 ## 工具
 

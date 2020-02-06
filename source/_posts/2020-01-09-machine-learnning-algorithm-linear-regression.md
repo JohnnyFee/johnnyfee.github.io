@@ -233,7 +233,7 @@ plt.show()
 ![image-20200110171907260](../resources/images/image-20200110171907260.png)
 
 ```python
-from playML.model_selection import train_test_split
+from sklearn.model_selection import train_test_split
 from playML.SimpleLinearRegression import SimpleLinearRegression
 
 # 分离数据

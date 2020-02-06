@@ -123,6 +123,8 @@ plot_theta_history()
 
 ![image-20200119165038734](../resources/images/image-20200119165038734.png)
 
+有可能因为 $\eta$ 取值太大，导致结果不收敛；因为 $\eta$ 太小导致计算速度太慢。
+
 ## 线性回归中使用梯度下降法
 
 对于二元函数 $z=x^2 + 2y^2$，使用梯度下降法的过程如下：
@@ -191,7 +193,6 @@ import matplotlib.pyplot as plt
 # 生成只有一个特征向量的 x，以及对应的 y
 np.random.seed(666)
 x = 2 * np.random.random(size=100)
-X = x.reshape(-1, 1)
 y = x * 3. + 4. + np.random.normal(size=100)
 
 # 散点绘制
@@ -209,16 +210,216 @@ def J(theta, X_b, y):
     except:
         return float('inf')
 
-# 定义 Delta(J)
+# 定义 Delta(J)，参考上面的公式
 def dJ(theta, X_b, y):
     res = np.empty(len(theta))
     res[0] = np.sum(X_b.dot(theta) - y)
     for i in range(1, len(theta)):
         res[i] = (X_b.dot(theta) - y).dot(X_b[:,i])
     return res * 2 / len(X_b)
+
+# 梯度下降法实现
+def gradient_descent(X_b, y, initial_theta, eta, n_iters = 1e4, epsilon=1e-8):
+    theta = initial_theta
+    cur_iter = 0
+
+    while cur_iter < n_iters:
+        gradient = dJ(theta, X_b, y)
+        last_theta = theta
+        theta = theta - eta * gradient
+        if(abs(J(theta, X_b, y) - J(last_theta, X_b, y)) < epsilon):
+            break
+            
+        cur_iter += 1
+
+    return theta
+```
+
+```python
+# 梯度下降求 theta 值
+X_b = np.hstack([np.ones((len(x), 1)), x.reshape(-1,1)])
+initial_theta = np.zeros(X_b.shape[1])
+eta = 0.01
+
+theta = gradient_descent(X_b, y, initial_theta, eta)
+```
+
+可以将上述过程封装为 [fit_gd](https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms/blob/master/06-Gradient-Descent/04-Implement-Gradient-Descent-in-Linear-Regression/playML/LinearRegression.py#L25)。
+
+
+
+我们可以将上述 $\Delta J$ 的求法向量化：
+$$
+\begin{align*}
+\Delta J(\theta) & =
+\frac 2 m\begin{bmatrix}
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})) \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_1^{(i)} \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_2^{(i)} \\
+\dots \\
+\sum _{i=1}^m(X_b^{(i)}\theta-y^{(i)})X_n^{(i)} \\
+\end{bmatrix} \\
+& = \frac 2 m \cdot ((X_b\theta - y)^T\cdot X_b)^T \\
+& = \frac 2 m \cdot X_b^T \cdot (X_b\theta - y)
+\end{align*}
+$$
+修改 $\Delta J$ 的实现：
+
+```python
+def dJ(theta, X_b, y):
+	return X_b.T.dot(X_b.dot(theta) - y) * 2. / len(y)
+```
+
+更新后的 [fit_gd](https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms/blob/master/06-Gradient-Descent/05-Vectorize-Gradient-Descent/playML/LinearRegression.py#L25)。
+
+## 数据归一化
+
+我们基于波士顿房价数据，使用梯度下降法来预测。
+
+```python
+import numpy as np
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from playML.LinearRegression import LinearRegression
+
+# 数据准备
+boston = datasets.load_boston()
+X = boston.data
+y = boston.target
+X = X[y < 50.0]
+y = y[y < 50.0]
+X_train, X_test, y_train, y_test = train_test_split(X, y, seed=666)
+
+# 使用线性回归发计算
+lin_reg1 = LinearRegression()
+%time lin_reg1.fit_normal(X_train, y_train)
+lin_reg1.score(X_test, y_test)
+```
+
+其中 [LinearRegression](https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms/blob/master/06-Gradient-Descent/05-Vectorize-Gradient-Descent/playML/LinearRegression.py)。
+
+得到时间和得分：
+
+```
+CPU times: user 45.6 ms, sys: 5.74 ms, total: 51.3 ms
+Wall time: 56.4 ms
+
+0.81298026026584658
+```
+
+```python
+# 使用梯度下降法
+lin_reg2 = LinearRegression()
+lin_reg2.fit_gd(X_train, y_train)
+```
+
+引发异常警告：
+
+```
+RuntimeWarning: overflow encountered in square
+RuntimeWarning: invalid value encountered in double_scalars
+  if (abs(J(theta, X_b, y) - J(last_theta, X_b, y)) < epsilon):
+```
+
+并输出得到的系数全部为 `nan`。这是由于特征向量的数据分布起伏太大，导致结果不收敛。
+
+通过缩小 $\eta$ 来可以避免这个异常：
+
+```
+lin_reg2.fit_gd(X_train, y_train, eta=0.000001)
+```
+
+响应的评分 0.27556634853389195：
+
+```
+lin_reg2.score(X_test, y_test)
+```
+
+循环次数有可能影响到比较的精度，将比较次数增加到百万次：
+
+```python
+%time lin_reg2.fit_gd(X_train, y_train, eta=0.000001, n_iters=1e6)
+```
+
+计算时间：
+
+```
+CPU times: user 48.4 s, sys: 265 ms, total: 48.6 s
+Wall time: 49.9 s
+```
+
+评分为 0.75418523539807636：
+
+```
+lin_reg2.score(X_test, y_test)
+```
+
+大大降低效率，而且评分也不如线性回归。
+
+
+
+解决该问题的方法为将数据归一化：
+
+```python
+from sklearn.preprocessing import StandardScaler
+
+# 标准化训练数据
+standardScaler = StandardScaler()
+standardScaler.fit(X_train)
+X_train_standard = standardScaler.transform(X_train)
+
+lin_reg3 = LinearRegression()
+%time lin_reg3.fit_gd(X_train_standard, y_train)
+```
+
+计算时间为：
+
+```
+CPU times: user 237 ms, sys: 4.37 ms, total: 242 ms
+Wall time: 258 ms
+```
+
+评分为 0.81298806201222351 ：
+
+```
+X_test_standard = standardScaler.transform(X_test)
+lin_reg3.score(X_test_standard, y_test)
 ```
 
 
+
+在线性回归中不需要数据归一化是因为我们将线性回归的求解模型变成了数学公式， 数据公式涉及的中间搜索过程比较少。而梯度下降法中，如果特征数据不再同一个维度会影响梯度的结果，与 $\eta$ 相乘的结果为移动的步长，可能太大，也可能太小，从而影响结果收敛或者影响效率。
+
+## 梯度下降法的优势
+
+构造一个 1000 个样本数量，5000 个特征的数据集，来比较线性回归与梯度下降的性能。
+
+```python
+# 构建数据集
+m = 1000
+n = 5000
+big_X = np.random.normal(size=(m, n))
+true_theta = np.random.uniform(0.0, 100.0, size=n+1)
+big_y = big_X.dot(true_theta[1:]) + true_theta[0] + np.random.normal(0., 10., size=m)
+```
+
+通过正规方程的计算时间为 10.9s：
+
+```python
+big_reg1 = LinearRegression()
+%time big_reg1.fit_normal(big_X, big_y)
+```
+
+而通过梯度下降的时间为 5.76s：
+
+```python
+big_reg2 = LinearRegression()
+%time big_reg2.fit_gd(big_X, big_y)
+```
+
+对于比较大的矩阵，正规方程的耗时比梯度下降法要高；但要注意，对于样本数量较多的时候，梯度下降法的耗时也不低，我们可以通过随机梯度下降法来解决这个问题。 
+
+## 批量梯度下降法
 
 ## 工具
 

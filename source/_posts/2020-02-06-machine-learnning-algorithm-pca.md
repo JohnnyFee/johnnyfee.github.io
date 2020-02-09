@@ -516,6 +516,73 @@ plt.show()
 
 ![image-20200208225800709](../resources/images/image-20200208225800709.png)
 
+## MNIST 数据集
+
+我们通过 kNN 来训练真实的 MNIST 数据，并通过 PCA 来提高性能 。
+
+```python
+import numpy as np 
+from sklearn.datasets import fetch_mldata
+
+# 从 mldata.org 获取 MINST original 数据集
+mnist = fetch_mldata('MNIST original')
+
+# 准备数据
+# 数据集的前 6 万个是训练数据，后 1 万个是测试数据。
+X, y = mnist['data'], mnist['target']
+X_train = np.array(X[:60000], dtype=float)
+y_train = np.array(y[:60000], dtype=float)
+X_test = np.array(X[60000:], dtype=float)
+y_test = np.array(y[60000:], dtype=float)
+```
+
+```python
+from sklearn.neighbors import KNeighborsClassifier
+
+# 使用 kNN 算法训练数据
+knn_clf = KNeighborsClassifier()
+%time knn_clf.fit(X_train, y_train)
+
+#CPU times: user 57.6 s, sys: 681 ms, total: 58.3 s
+#Wall time: 59.4 s
+
+# 预测数据的准确度
+%time knn_clf.score(X_test, y_test)
+# CPU times: user 14min 20s, sys: 4.3 s, total: 14min 24s
+# Wall time: 14min 29s
+# 0.96879999999999999
+```
+
+```python
+from sklearn.decomposition import PCA
+
+# PCA 降维，保留 90% 的方差信息
+pca = PCA(0.90)
+pca.fit(X_train)
+X_train_reduction = pca.transform(X_train)
+X_test_reduction = pca.transform(X_test)
+
+# 从 784 维降到 87 维
+X_train_reduction.shape
+# (60000, 87)
+
+# kNN 训练
+# 降维之后性能大幅提升，而准确度还有所上升，这是因为通过降维降低了数据噪音。
+knn_clf = KNeighborsClassifier()
+%time knn_clf.fit(X_train_reduction, y_train)
+# CPU times: user 57.6 s, sys: 681 ms, total: 58.3 s
+# Wall time: 59.4 s
+
+%time knn_clf.score(X_test_reduction, y_test)
+# CPU times: user 14min 20s, sys: 4.3 s, total: 14min 24s
+# Wall time: 14min 29s
+# 0.9728
+```
+
+## PCA 降噪
+
+我们通过wz  di
+
 ## 工具
 
 - [LaTeX/Mathematics - Wikibooks, open books for an open world](https://en.wikibooks.org/wiki/LaTeX/Mathematics)

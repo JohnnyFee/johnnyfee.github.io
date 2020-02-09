@@ -581,7 +581,132 @@ knn_clf = KNeighborsClassifier()
 
 ## PCA 降噪
 
-我们通过wz  di
+我们通过给手写字体数据集添加一个噪音，然后又通过降噪来优化数据集。
+
+```python
+from sklearn import datasets
+import numpy as np
+
+digits = datasets.load_digits()
+X = digits.data
+y = digits.target
+
+# 添加噪音
+noisy_digits = X + np.random.normal(0, 4, size=X.shape)
+
+# 每个数字取 10 个样本，组成一个新的数据集
+def subset(nrows)
+	example_digits = noisy_digits[y==0,:][:10]
+	for num in range(1,10):
+    example_digits = np.vstack([example_digits, noisy_digits[y==num,:][:10]]) 	
+
+```
+
+```python
+# 绘制 100 个样品图片
+def plot_digits(data):
+    fig, axes = plt.subplots(10, 10, figsize=(10, 10),
+                             subplot_kw={'xticks':[], 'yticks':[]},
+    gridspec_kw=dict(hspace=0.1, wspace=0.1)) 
+    for i, ax in enumerate(axes.flat):
+        ax.imshow(data[i].reshape(8, 8),
+                  cmap='binary', interpolation='nearest',
+                  clim=(0, 16))
+
+    plt.show()
+    
+plot_digits(example_digits)
+```
+
+![image-20200209174502821](../resources/images/image-20200209174502821.png)
+
+```python
+# PCA 降噪
+pca = PCA(0.5).fit(noisy_digits)
+pca.n_components_ # 12
+
+# 映射数据，在还原数据集
+components = pca.transform(example_digits)
+filtered_digits = pca.inverse_transform(components)
+plot_digits(filtered_digits)
+```
+
+PCA 降噪之后数据相对清晰一些。
+
+![image-20200209175044719](../resources/images/image-20200209175044719.png)
+
+## 人脸识别与特征脸
+
+$$
+X \cdot X_k^T = X_k
+$$
+
+对于人脸识别领域，如果 X 表示一张脸的数据，则  $X_k$ 为特征脸，有主成分组成，对应矩阵中的特征值。$X_k$ 每一行均表示人脸的一个主要特征，越靠前越能表示人脸的特征。
+
+下面我们使用 [The Labeled Faces in the Wild face recognition](https://scikit-learn.org/stable/datasets/index.html#labeled-faces-in-the-wild-dataset) 数据库
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import fetch_lfw_people
+
+# 获取数据集
+faces = fetch_lfw_people()
+faces.images.shape # (13233, 62, 47) 每个样本是一个 2 维数组
+faces.data.shape # (13233, 2914) 13233 * 2914 维的矩阵
+
+# 随机去 36张脸
+random_indexes = np.random.permutation(len(faces.data))
+X = faces.data[random_indexes]
+example_faces = X[:36,:]
+example_faces.shape # (36, 2914)
+```
+
+```python
+# 显示 36 张脸
+def plot_faces(faces):
+    
+    fig, axes = plt.subplots(6, 6, figsize=(10, 10),
+			subplot_kw={'xticks':[], 'yticks':[]}, gridspec_kw=dict(hspace=0.1, wspace=0.1)) 
+    for i, ax in enumerate(axes.flat):
+        ax.imshow(faces[i].reshape(62, 47), cmap='bone')
+    plt.show()
+    
+plot_faces(example_faces)
+```
+
+![image-20200209220155552](../resources/images/image-20200209220155552.png)
+
+
+
+```python
+# 特征脸
+# PCA 
+%%time
+from sklearn.decomposition import PCA
+
+# 用随机的方式求解 PCA，svd_solver ?
+pca = PCA(svd_solver='randomized')
+pca.fit(X)
+# CPU times: user 3min 24s, sys: 8.6 s, total: 3min 33s
+# Wall time: 2min 2s
+
+pca.components_.shape # (2914, 2914) 2914 个主成分，每个主成分是一个62 * 47 的图像
+```
+
+```python
+# 绘制特征脸
+plot_faces(pca.components_[:36,:])
+```
+
+![image-20200209222025753](../resources/images/image-20200209222025753.png)
+
+每一张人脸是这些特征脸的线性组合。
+
+```python
+# 可以取出每个人至少有 60 张人脸的人脸数据，来做一些识别实验
+faces2 = fetch_lfw_people(min_faces_per_person=60)
+```
 
 ## 工具
 

@@ -20,7 +20,7 @@ PCA 是主成分分析法，为 Principal Component Analysis 的缩写，是数�
 
  以下是一个二维特征集：
 
-![image-20200206232143428](../resources/images/image-20200206232143428.png)
+<img src="../resources/images/image-20200206232143428.png" alt="image-20200206232143428" style="zoom:50%;" />
 
 假如我们对其降维，降成一维特征集。如果我们简单处理，只保留其中一个。只保留特征 2 和特征 1 后的映射：
 
@@ -28,7 +28,7 @@ PCA 是主成分分析法，为 Principal Component Analysis 的缩写，是数�
 
 相对而言，图 2 的方案是比较好的降维方案。因为点和点之间的间隔比较大，拥有更高的可区分度，更好地保持了原来的点和点之间的距离。我们再来看一另一种映射方案：
 
-![image-20200206232844665](../resources/images/image-20200206232844665.png)
+<img src="../resources/images/image-20200206232844665.png" alt="image-20200206232844665" style="zoom:50%;" />
 
 上述方案将所有点映射到一条斜线上，这比方案2的点间距更大，也更能体现原点之间的原理。  
 
@@ -38,11 +38,11 @@ PCA 是主成分分析法，为 Principal Component Analysis 的缩写，是数�
 
 问题转化为找到一个轴，使得样本空间的所有点映射到这个轴的方差最大。  
 
-![image-20200206234436734](../resources/images/image-20200206234436734.png)
+<img src="../resources/images/image-20200206234436734.png" alt="image-20200206234436734" style="zoom:50%;" />
 
 为了求解最大方差值，我们首先将样本的均值归零，该过程称为 demean。即所有的样本减去样本的均值。相当于将坐标轴的原点移动到特向量的均值位置：
 
-![image-20200206234942121](../resources/images/image-20200206234942121.png)
+<img src="../resources/images/image-20200206234942121.png" alt="image-20200206234942121" style="zoom:50%;" />
 
 问题转化为将所有样本映射到 w 后，使得方差最大，即：
 $$
@@ -77,7 +77,7 @@ $$
 
 在前面的线性回归算法中求解 MSE 时，也有类似样本点与目标直线的问题，但在线性回归中，求解的是样本点到直线的垂直距离，而 PCA 中是投射距离。
 
-![image-20200207113924886](../resources/images/image-20200207113924886.png)
+<img src="../resources/images/image-20200207113924886.png" alt="image-20200207113924886" style="zoom:50%;" />
 
 ## 梯度上升法解决 PCA 问题
 

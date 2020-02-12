@@ -143,7 +143,7 @@ def kNN_classify(k, X_train, y_train, x):
 
 ![image-20200108162445862](../resources/images/image-20200108162445862.png)
 
-## Sklearn 的 kNN 算法
+## sklearn 的 kNN 算法
 
 使用 Scikit-learn 封装的 kNN 算法：
 

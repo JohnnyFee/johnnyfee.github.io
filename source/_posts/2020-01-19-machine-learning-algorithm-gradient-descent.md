@@ -146,7 +146,7 @@ $$
 \frac {\delta J} {\delta \theta_0} \\
 \frac {\delta J} {\delta \theta_1} \\
 \frac {\delta J} {\delta \theta_2} \\
-\dots 
+\dots \\
 \frac {\delta J} {\delta \theta_n} \\
 \end{bmatrix} =
 \begin{bmatrix}

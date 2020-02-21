@@ -1,5 +1,5 @@
 ---
-layout: post
+  layout: post
 title: 机器学习算法 - 分类算法评价
 tags: [python, language, machine learning]
 category: AI

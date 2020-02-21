@@ -419,7 +419,7 @@ Fitting 3 folds for each of 45 candidates, totalling 135 fits
 
 <img src="../resources/images/image-20200210211853415.png" alt="image-20200210211853415" style="zoom:50%;" />
 
-### 岭回归
+### 岭回归 L2
 
 在之前的线性回归中，我们对应的使目标函数$J(\theta)=\sum_{i=1}^m(y^{(i)}-\theta_0 + \theta_1X_1^{(i)} - \theta_2X_2^{(i)} - \dots - \theta_nX_n^{(i)})^2 = MSE(y, \hat y;\theta)$尽可能小，为了避免 $\theta$ 过大，我们加入模型正规化，将目标函数转变为：
 $$
@@ -464,7 +464,7 @@ plot_model(ridge1_reg)
 
 <img src="../resources/images/image-20200212140855568.png" alt="image-20200212140855568" style="zoom:50%;" />
 
-### LASSO 回归
+### LASSO 回归 L1
 
 LASSO 回归与岭回归类似，区别是描述 $\theta$ 的大小的方法不同。LASSO 回归中使用绝对值的和来描述 $\theta$ 的大小。LASSO 是 Least Absolute Shrinkage and Selection Operator Regression 的缩写。
 $$
@@ -502,7 +502,7 @@ plot_model(lasso1_reg)
 
 <img src="../resources/images/image-20200212143820139.png" alt="image-20200212143820139" style="zoom:50%;" />
 
-## Ridge 和 LASSO
+### Ridge 和 LASSO
 
 LASSO 趋向于是的一部分 $\theta$ 值变为0，可以作为特征选择用。所以 LASSO 最终可以辩证一条斜线或者很平滑的曲线；而 Ridge 始终是曲线。
 

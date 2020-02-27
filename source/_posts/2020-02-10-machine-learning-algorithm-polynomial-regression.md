@@ -331,8 +331,6 @@ plot_learning_curve(poly20_reg, X_train, X_test, y_train, y_test)
 
 欠拟合，训练数据和测试数据的拟合误差均比较大；过拟合，训练数据的误差比较小，但测试数据的误差比较大，两条曲线相隔比较开。
 
-![image-20200211130935769](../resources/images/image-20200211130935769.png)
-
 ## 交叉验证
 
 在之前的例子中，我们通过训练数据集来判断模型的好坏，但获取到的模型可能对特定测试数据过拟合，不一定是最佳模型。为了尽可能避免过拟合，我们将训练数据集随机分成训练数据集和验证数据集，用来训练模型和调整参数；模型训练之后，用测试数据来评判模型的最终性能；
@@ -387,7 +385,7 @@ Fitting 3 folds for each of 45 candidates, totalling 135 fits
 
 下面打把的例子很好地解释了均差和方差的区别：
 
-<img src="../resources/images/image-20200211214940038.png" alt="image-20200211214940038" style="zoom:50%;" />
+<img src="../resources/images/image-20200211214940038.png" alt="image-20200211214940038" style="zoom:80%;" />
 
 模型的误差 = 偏差 + 方差 + 不可避免的误差。不可避免的误差如数据本身的噪音。 
 

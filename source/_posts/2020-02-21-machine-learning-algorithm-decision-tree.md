@@ -21,6 +21,8 @@ category: AI
 
 上面这棵树的深度为 3，最多通过 3 次判断可以判定决策结果。
 
+在决策树算法中，决策标准有两个，一个是信息熵，一个是基尼系数。信息熵的计算比基尼系数稍慢，因为信息熵公式中存在一个非线性函数 log，而基尼系数中只有一个多项式计算。sklearn 中默认为基尼系数。大多数时候，两者的效果没有特别的优劣之分。
+
 ## 信息熵
 
 信息熵是信息论的一个概念，用来度量随机变量的不确定度。熵越大，数据的不确定越高；熵越小，数据的不确定性越低。熵的概念来源于物理热力学，熵越大，例子的无规则运动越剧烈，不确定性越高；熵越小，例子越趋于静止。
@@ -169,7 +171,154 @@ entropy(y2_r) # 0.10473243910508653
 
 我们可以用二叉树构建这颗决策树。
 
-## 基尼系数
+## 基于基尼系数的最优划分
+
+与信息熵类似，基尼系统是另一种决策指标，公式为：
+$$
+G = 1 - \sum_{i=1}^k{p_i^2}
+$$
+基尼系数与信息熵的公式具有相同的性质。基尼系数越高，不确定性越高；否则同理。
+
+比例为${\frac 1 3, \frac 1 3, \frac 1 3 }$ 的基尼系数 $G=1-(\frac 1 3)^2=0.6666$；比例为 ${\frac 1 {10}, \frac 2 {10}, \frac 7 {10}}$ 的基尼系数 $G=1-(\frac 1 {10}) - (\frac 2 {10}) - (\frac 7 {10})=0.46$；比例为 ${1, 0, 0}$ 的基尼系数为 $G = 0$。
+
+对于二分类，基尼系数公式简化为：
+$$
+\begin{align*}
+G & = 1-x^2-(1-x)^2 \\
+&= 1- x^2-1+2x-x^2 \\
+&=-2x^2+2x
+\end{align*}
+$$
+变化曲线与信息熵类似，是一个开口向下的抛物线，在 x = 0.5 时，达到最大值。
+
+我们针对鸢尾花数据，使用基尼系数重新训练：
+
+```python
+
+from sklearn.tree import DecisionTreeClassifier
+
+dt_clf = DecisionTreeClassifier(max_depth=2, criterion="gini", random_state=42)
+dt_clf.fit(X, y)
+```
+
+对应的决策边界与信息熵一样：
+
+![image-20200222105016883](../resources/images/image-20200222105016883.png)
+
+## CART
+
+CART 是 Classification and Regression Tree 的缩写，特点是根据某个维度 d 和这个维度上的阈值 v 进行二分，最终得到一个二叉树。sklearn 使用 CART 实现决策树，其他实现方式有 ID3，C4.5，C5.0。
+
+CART 决策树的高度为 $logm$，所以预测的时间复杂度为 $O(logm)$；训练复杂度为 $O(n*m*logm)$，因为具有 $logm$ 层，每一层均要做  $m*n$ 次遍历。
+
+决策树属于非参数学习算法，比较容易产生过拟合，可以通过剪枝来较低复杂度，从而解决过拟合。
+
+剪枝的参数即为 CART 决策树的超参数，超参数包括：
+
+- `min_samples_spli`
+- `min_samples_leaf`
+- `min_weight_fraction_leaf`
+- `max_depth`
+- `max_leaf_nodes`
+- `min_features`
+
+下面基于 make_moons 数据集，利用决策树的超参数来解决过拟合问题。
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import datasets
+
+X, y = datasets.make_moons(noise=0.25, random_state=666)
+```
+
+![image-20200222114741755](../resources/images/image-20200222114741755.png)
+
+```python
+from sklearn.tree import DecisionTreeClassifier
+
+dt_clf = DecisionTreeClassifier()
+dt_clf.fit(X, y)
+```
+
+什么超参数都不传，对应的决策边界为：
+
+![image-20200222114934803](../resources/images/image-20200222114934803.png)
+
+可以通过数的深度 `max_depth` 来控制树的深度：
+
+```python
+dt_clf2 = DecisionTreeClassifier(max_depth=2)
+dt_clf2.fit(X, y)
+```
+
+![image-20200222115039277](../resources/images/image-20200222115039277.png)
+
+可以通过 `min_samples_split` 控制一个节点继续拆分的最少样本数据：
+
+![image-20200222115555160](../resources/images/image-20200222115555160.png)
+
+可以通过 `min_samples_leaf` 控制叶子节点至少应该具有的样本数量：
+
+```python
+dt_clf4 = DecisionTreeClassifier(min_samples_leaf=6)
+dt_clf4.fit(X, y)
+```
+
+![image-20200222115831336](../resources/images/image-20200222115831336.png)
+
+可以通过 `max_leaf_nodes` 叶子节点数的最大值。
+
+```python
+dt_clf5 = DecisionTreeClassifier(max_leaf_nodes=4)
+dt_clf5.fit(X, y)
+```
+
+## 回归问题
+
+利用决策树来解决问题问题的原理与解决分类问题类似，区别在于分类问题是将叶子节点中占比比较多的样本作为该叶子节点的类别，而在回归问题中，将样本数据的平均值作为该叶子节点的值。
+
+
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+
+boston = datasets.load_boston()
+X = boston.data
+y = boston.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=666)
+```
+
+```python
+from sklearn.tree import DecisionTreeRegressor
+
+# 参数与 DecisionTreeClassifier 完全一直
+dt_reg = DecisionTreeRegressor()
+dt_reg.fit(X_train, y_train)
+```
+
+```
+dt_reg.score(X_test, y_test) # 0.58605479243964098
+dt_reg.score(X_train, y_train) # 1.0
+```
+
+在不加任何参数的情况下，预测评分比较低，而样本数据的评分很高，出现过拟合。
+
+## 局限性
+
+决策树得到的决策边界为横平竖直的，如果决策边界本应该是一条斜线，则决策树的得不到理解的结果。
+
+![image-20200222105016883](../resources/images/image-20200222105016883.png)
+
+比如对于以下样本，可能得到的决策边界为：
+
+<img src="../resources/images/image-20200222134654290.png" alt="image-20200222134654290" style="zoom:30%;" />
+
+另外一个局限性是多数非参数学习的局限性，即对个别数据敏感。具体可参考这个[示例](https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms/blob/master/12-Decision-Tree/07-Problems-of-Decision-Tree/07-Problems-of-Decision-Tree.ipynb)。
 
 ## 工具
 

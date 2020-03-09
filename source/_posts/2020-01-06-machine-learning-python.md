@@ -129,7 +129,7 @@ np.random.normal(0, 1, (3, 5))
 ### 基本属性
 
 ```python
-x=np.arange(10) # 一位数组
+x=np.arange(10) # 一维数组
 X=np.arange(15).reshape(3, 5) # 3*5 矩阵
 x.ndim # 数组的维数
 X.shape # 返回元组，返回所有的维度
@@ -158,7 +158,7 @@ X[:, 0]
 在 Numpy 中，子矩阵默认是原矩阵的引用，修改子矩阵的元素会影响原矩阵。如果要获取独立的子矩阵，则需要调用 `copy` 函数。
 
 ```python
-subX = X[:2, :3],copy()
+subX = X[:2, :3].copy()
 ```
 
 ### 维度转变
@@ -183,20 +183,21 @@ z = np.array([4, 5, 6])
 np.concatenate([x, y]) # 将三个数组合并成一个
 
 # 二维数组的合并
-A = np.array([1, 2, 3], [4, 5, 6])
+A = np.array([[1, 2, 3], [4, 5, 6]])
 np.concatenate([A, A]) # 合并为 4*3 的矩阵，默认轴为行
 np.concatenate([A, A], axis=1) # 合并为 2*6 的矩阵，轴为列
 
 # 合并向量和矩阵
 A2 = np.concatenate([A, z.reshape(1, -1)])
 # 在垂直方向合并
-np.vstack([A, z]) 
+np.vstack([A, z]) # 3 * 2
 
 B = np.full((2, 2), 100)
 # 在水平方向合并
 np.hstack([A, B]) #  获得 2*5 矩阵
 
 # 堆叠向量，在行向量上堆叠 2 次，列向量堆叠 1 次
+v=np.array([1,2,3])
 np.tile(v, (2, 1))
 ```
 

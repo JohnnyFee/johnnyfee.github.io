@@ -1,5 +1,6 @@
 layout: "post"
 title: "Cryptography Guide"
+
 categories: Cryptography
 ---
 
@@ -96,7 +97,7 @@ DES 的基本结构是由 Horst Feistel 设计的，称为 Feistel 网络（Feis
 
 三重 DES(triple-des) 是为了增加 DES 的强度，将 DES 重复 3 次所得到的一种密码算法，缩写为 3DES。
 
-3DES 算法并不是进行 3 次 DES 加密（加密->加密->加密），而是加密->解密->加密，目的是让 3DES 能够兼容普通的 DES。当 3DES 中多有的密钥都相同时，3 DES 也就等同于普通的 DES 了，这是因为前两部加密->解密之后，得到的就是最初的明文。
+3DES 算法并不是进行 3 次 DES 加密（加密->加密->加密），而是加密->解密->加密，目的是让 3DES 能够兼容普通的 DES。当 3DES 中所有的密钥都相同时，3 DES 也就等同于普通的 DES 了，这是因为前两部加密->解密之后，得到的就是最初的明文。
 
 如果秘钥 1 和秘钥 3 使用相同的秘钥，而秘钥 2 使用不同的秘钥，这种 3DES 称为 DES-EDE2，EDE表示的是加密->解密->加密（Encryption->Decryption->Encryption）。
 
@@ -128,7 +129,7 @@ Rjindael 算法也是有多个轮所构成，使用的是 SPN 结构。
 
     密文分组 = (明文分组 XOR 前一个密文分组) 加密。
 
-    第一个密文分组为 **初始化向量**（initialization vector），通常缩写为 IV。一般来说，每次加密时都会随机产生一个不同的布特序列作为初始化向量。
+    第一个密文分组为 **初始化向量**（initialization vector），通常缩写为 IV。一般来说，每次加密时都会随机产生一个不同的比特序列作为初始化向量。
 
     在 CBC 模式中，无法单独对一个中间的明文进行加密。
 

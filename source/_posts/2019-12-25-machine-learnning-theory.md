@@ -20,6 +20,12 @@ category: AI
 - [一些书籍](https://github.com/KeKe-Li/book/tree/master/AI)
 - [金天的个人博客](http://ai.loliloli.pro/)
 
+大公司的产品：
+
+- [Google Cloud AI ](https://cloud.google.com/products/ai/)；
+- [亚马逊机器学习](https://aws.amazon.com/machine-learning/)；
+- [Azure 机器学习](https://azure.microsoft.com/en-us/services/machine-learning-service/)；
+
 
 
 最早的机器学习应用在垃圾邮件分辨。

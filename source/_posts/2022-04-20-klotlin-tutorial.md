@@ -547,7 +547,7 @@ The variable `groupedNumbers` now contains a `Map<String, List<Int>>`. The map h
 
 A sequence differs from an iterator in a similar way. An iterator is a way of getting each element from an existing collection exactly once.
 
-Sequences are backed by *generators*. A generator is a function that will provide the next item in the sequence. 
+Sequences are backed by *generators*. A generator is a function that will provide the next item in the sequence. Sequences are appropriate when getting the next element is very expensive, or even on collections of unbounded size.
 
 Because sequences are lazy—only generating the next element when it is needed—they can be very, very useful in optimizing operations, even on collections with fixed content.
 
@@ -573,11 +573,452 @@ val catPage = sequenceOf(
 
 only the first page will be downloaded. The sequence will provide the first URL, the `map` function will fetch it, and the `first` function will be satisfied. None of the other pages will be downloaded.
 
-## Android Fundamentals
+# Android Fundamentals
+
+Android applications are programs translated from a source language (Java or Kotlin) into a transportable intermediate language, DEX. The DEX code is installed on a device and interpreted by the ART VM, when the application is run.
+
+Android supports four types of components:
+
+- Activity
+- Service
+- Broadcast receiver
+- Content provider
+
+The application components (not some overarching application) are the basic units of the Android app. 
+
+The lifecycles of Android application components are managed by the Android framework, which creates and destroys them according to its needs. Application code must *never* create a new instance of a component.
+
+## Intents and Intent Filters
+
+In Android, components are started with `Intent`s. An `Intent` is a small packet that names the component that it targets. It has some extra room in which it can indicate a specific action that it would like the receiving component to take and a few parameters to the request.
+
+```kotlin
+context.startActivity(
+  Intent(context, MembersListActivity::class.java)))
+```
+
+The `Intent` fired by this line of code is called an *explicit intent* because it names a specific, unique class, in a unique application (identified by a `Context`, discussed in a moment), to which the `Intent` is to be delivered.
+
+The `Intent`’s constructor uses the `context` passed as its first argument to get a unique name for the application to which the `context` belongs: this call starts an `Activity` that belongs to this application.
+
+The `Intent`’s constructor uses the `context` passed as its first argument to get a unique name for the application to which the `context` belongs: this call starts an `Activity` that belongs to this application.
+
+Let's take an implicit example:
+
+```kotlin
+val intent = Intent(Intent.ACTION_EDIT))
+intent.setDataAndType(textToEditUri, textMimeType);
+startActivityForResult(intent, reqId);
+```
+
+The target specified in this intention is *not* explicit. The `Intent` specifies neither a `Context` nor the fully qualified name of a component within a context. The intent is *implicit* and Android will allow any component at all to register to handle it.
+
+Components register for implicit intents using an `IntentFilter`:
+
+```xml
+<manifest ...>
+  <application
+    android:label="@string/awesome_code_editor">
+    ...>
+    <activity
+      android:name=".EditorActivity"
+      android:label="@string/editor">
+      <intent-filter>
+        <action
+          android:name="android.intent.action.EDIT" />
+        <category
+          android:name="android.intent.category.TEXT" />
+      </intent-filter>
+    </activity>
+  </application>
+</manifest>
+```
+
+the `EditorActivity` claims to be able to handle an `EDIT` action for the category `android.intent.category.TEXT`.
+
+## Context
+
+The `Context` is an abstract class that provides access to various resources, including:
+
+- Starting other components
+- Accessing system services
+- Accessing `SharedPreferences`, resources, and files
+
+ In addition to being `Context`s, they are also components that the Android container expects to manage. This can lead to problems, all of which are variations.
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+  companion object {
+    var context: Context? = null;
+  }
+
+  override fun onCreate() {
+    if (context == null) {
+      context = this  // NO!
+    }
+  }
+  // ...
+}
+```
+
+There are two things that could go wrong, one bad and the other horrible. Bad is when the Android framework knows that the `Activity` is no longer needed, and would like to free it up for garbage collection, but it cannot do so. The reference in that companion object will prevent the `Activity` from being released, for the entire lifetime of the application. The `Activity` has been leaked. `Activity`s are large objects and leaking their memory is no small matter.
+
+The second (far worse) thing, that could go wrong is that a call to a method on the cached `Activity` could fail catastrophically. As we will explain shortly, once the framework decides that an `Activity` is no longer being used, it discards it. It is done with it and will never use it again. As a result, the object may be put into an inconsistent state. Calling methods on it may lead to failures that are both difficult to diagnose and reproduce.
+
+**Application context** instance is a `Context` and, though it has a lifecycle, that lifecycle is essentially congruent with the lifecycle of the application. 
+
+Because it is long-lived, it is quite safe to hold references to it in other long-lived places:
+
+```kotlin
+class SafeApp : Application() {
+  companion object {
+    var context: Context? = null;
+  }
+
+  override fun onCreate() {
+    if (context == null) {
+      context = this
+    }
+  }
+  // ...
+}
+```
+
+You cannot launch `Activity` from an `ApplicationContext`. There is a `startActivity` method on `ApplicationContext`, but it simply generates an error message in all but a very limited set of circumstances.
+
+## Activity
+
+An `Activity` component manages a single page of an application’s UI. The lifecycle of Activity is shown as the following state machine:
+
+<img src="../resources/images/2022-04-20-klotlin-tutorial/image-20220429144703777.png" alt="image-20220429144703777" style="zoom:30%;" />
+
+The methods are called strictly in order. After a call to `onStart`, for instance, Android will make only one of two possible calls: `onResume`, to enter the next state, or `onStop`, to revert to the previous state.
+
+The `onCreate` method is the ideal place to do any initialization that an `Activity` needs to do only once. This almost always includes setting up the view hierarchy (usually by inflating an XML layout), installing view controllers or presenters, and wiring up text and touch listeners.
+
+the `onDestroy` method is not necessarily the best place to perform essential finalization! Android calls `onDestroy` only on a best-effort basis. It is entirely possible that an application will be terminated before all of an `Activity`s’. `onDestroy` methods have completed.
+
+An `Activity` can be destroyed from within its own program by calling its `finish()` method.
+
+The next pair of methods are `onStart` and `onStop`. The former, `onStart`, will only ever be called on an `Activity` that is in the created state. It moves the `Activity` to its on-deck state, called *started*. A started `Activity` may be partially visible behind a dialog or another app that only incompletely fills the screen. In started state, an `Activity` should be completely painted but should not expect user input. A well-written `Activity` will not run animations or other resource-hogging tasks while it is in the started state.
+
+The `onStop` method will only be called on a started `Activity`. It returns it to the created state.
+
+The final pair of methods are `onResume` and `onPause`. Between them, an `Activity`’s page is in focus on the device and the target of user input. It is said to be *running*. Again, these methods will only be called on an `Activity` that is in the started or running state, respectively.
+
+It is a good practice to respect the pairing of these methods: a beginning method and an end method. If you start something running in the beginning method of the pair, stop it in the end method of the same pair. Trying to start, say, network polling in `onResume` and stop it in `onStop` is a recipe for hard-to-find bugs.
+
+**Fragments**
+
+`Fragment`s are not `Context`s. Though they hold a reference to an underlying `Activity` for most of their lifecycle, `Fragment`s are not registered in the manifest. They are instantiated in application code and cannot be started with `Intent`s. 
+
+`Fragment`s have lifecycles that are similar to (though more complex than) those of an `Activity`. However, a `Fragment` is only useful when it is attached to an `Activity`.
+
+<img src="../resources/images/2022-04-20-klotlin-tutorial/image-20220429145737533.png" alt="image-20220429145737533" style="zoom:50%;" />
+
+**The back stack**
+
+Android supports a navigation paradigm sometimes called *card-deck* navigation. Navigating to a new page stacks that page on top of the previous page. When a user presses a back button the current page is popped from the stack to reveal the one that previously held the screen. 
+
+![image-20220429150140021](../resources/images/2022-04-20-klotlin-tutorial/image-20220429150140021.png)
+
+`Fragment`s can also go on the back stack as part of a fragment transaction, as shown:
+
+![image-20220429150214852](../resources/images/2022-04-20-klotlin-tutorial/image-20220429150214852.png)
+
+Adding a fragment to the back stack can be particularly useful when combined with tagging, as shown in the following code:
+
+```kotlin
+// Add the new tab fragment
+supportFragmentManager.beginTransaction()
+    .replace(
+        R.id.fragment_container,
+        SomeFragment.newInstance())
+    .addToBackStack(FRAGMENT_TAG)
+    .commit()
+```
+
+This code creates a new instance of `SomeFragment` and adds it to the back stack, tagged with the identifier `FRAGMENT_TAG` (a string constant). As shown in the following code, you can use `supportFragmentManager` to pop *everything* off the back stack, all the way to the tag:
+
+```kotlin
+manager.popBackStack(
+    FRAGMENT_TAG,
+    FragmentManager.POP_BACK_STACK_INCLUSIVE)
+```
+
+When the back stack is empty, pushing the back button returns the user to the Launcher.
+
+## Service
+
+A `Service` is an Android component that is, almost exactly, an `Activity` with no UI. 
+
+There are, actually, two different kinds of `Service`: *bound* and *started*. Despite the fact that the `Service` base class is, confusingly, the template for both, the two types are completely orthogonal. A single `Service` can be either or both.
+
+### Started Services
+
+A *started* `Service` is initiated by sending it an `Intent`. 
+
+The service receives the intent as the argument to a call from the Android framework, to the method `Service.onStart`. Note that this is not done in the “background”! The `onStart` method runs on the main/UI thread. 
+
+### Bound Services
+
+A *bound* `Service` is Android’s IPC mechanism.
+
+<img src="../resources/images/2022-04-20-klotlin-tutorial/image-20220429154059354.png" alt="image-20220429154059354" style="zoom:40%;" />
 
 
 
-## Tip
+An instance of the class `ServiceConnection` represents a connection to a bound service. The following code demonstrates its use:
+
+```kotlin
+abstract class BoundService<T : Service> : ServiceConnection {
+    abstract class LocalBinder<out T : Service> : Binder() {
+        abstract val service: T?
+    }
+
+    private var service: T? = null
+
+    protected abstract val intent: Intent?
+
+    fun bind(ctxt: Context) {
+        ctxt.bindService(intent, this, Context.BIND_AUTO_CREATE)
+    }
+
+    fun unbind(ctxt: Context) {
+        service = null
+        ctxt.unbindService(this)
+    }
+
+    override fun onServiceConnected(name: ComponentName, binder: IBinder) {
+        service = (binder as? LocalBinder<T>)?.service
+        Log.d("BS", "bound: ${service}")
+    }
+
+    override fun onServiceDisconnected(name: ComponentName) {
+        service = null
+    }
+}
+```
+
+A subclass of `BoundService` provides the type of the service that will be bound, and an `Intent` that targets it.
+
+The client side initiates a connection using the `bind` call. In response, the framework initiates a connection to the remote bound service object. The remote framework calls the bound service’s `onBind` method with the intent. The bound service creates and returns an implementation of `IBinder` that is also an implementation of the interface the client requested. Note that this is often a reference to the bound service itself. In other words, the `Service` is often not only the factory but also the implementation.
+
+The service side uses the implementation provided by the bound service to create the remote-side stub. It then notifies the client side that it’s ready. The client-side framework creates the proxy and then finally calls the `ServiceConnection`’s `onServiceConnected` method. The client now holds a live connection to the remote service. Profit!
+
+As one might guess from the presence of an `onServiceDisconnected` method, a client can lose the connection to a bound service at any time. Though the notification is usually immediate, it is definitely possible for a client call to a service to fail even before it receives a disconnect notification.
+
+Like a started service, bound service code does not run in the background. Unless explicitly made to do otherwise, bound service code runs on the application’s main thread. This can be confusing, though, because a bound service might run on the main thread of a *different* application.
+
+If the code in a service implementation must run on a background thread, it is the service implementation that is responsible for arranging that. 
+
+Services, like every other component, must be registered in the application manifest:
+
+```kotlin
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <application...>
+    <service android:name=".PollService"/>
+  </application>
+</manifest>
+```
+
+# Concurrency in Android
+
+## Memory Leaks
+
+Consider offloading a task to a worker thread like this:
+
+```kotlin
+override fun onViewCreated(
+    view: View,
+    savedInstanceState: Bundle?
+) {
+    // DO NOT DO THIS EITHER!
+    myButton.setOnClickListener {
+        Thread {
+            val status = doTimeConsumingThing()
+            view.post {
+                view.findViewById<TextView>(R.id.textview_second)
+                    .setText(status)
+            }
+        }
+            .start()
+    }
+}
+```
+
+`doTimeConsumingThing` is a method on an `Activity` (or `Fragment`), the thread, newly created in the click listener, holds an *implicit* reference to that `Activity`.
+
+![NeatReader-1651219651308](../resources/images/2022-04-20-klotlin-tutorial/NeatReader-1651219651308.png)
+
+Now the `Activity` instance cannot be garbage-collected as long as the `Runnable` running on the worker thread holds a reference to it. If the thread runs for any significant amount of time, `Activity` memory has leaked.
+
+## Tools for Managing Threads
+
+A best practice for applications is a thread policy: an application-wide strategy based on the number of threads that is actually useful, that controls how many threads are running at any given time. A smart application maintains one or more pools of threads, each with a particular purpose, and each fronted by a queue. Client code, with work to be done, enqueues tasks to be executed by the pool threads and, if necessary, recovers the task results.
+
+Java and Android provide several language-level threading primitives:
+
+- A `Looper`/`Handler` is a queue of tasks serviced by a single, dedicated thread.
+- `Executor`s and `ExecutionService`s are Java constructs for implementing an application-wide thread-management policy.
+
+### Looper/Handler
+
+The `Looper`/`Handler` is a framework of cooperating classes: a `Looper`, a `MessageQueue` and the `Message`s enqueued on it, and one or more `Handler`s.
+
+A `Looper` is simply a Java `Thread` that is initialized by calling the methods `Looper.prepare()` and `Looper.start()` from its `run` method, like this:
+
+```
+var looper = Thread {
+    Looper.prepare()
+    Looper.loop()
+}
+looper.start()
+```
+
+The second method, `Looper.loop()`, causes the thread to enter a tight loop in which it checks its `MessageQueue` for tasks, removes them one by one, and executes them. If there are no tasks to be executed, the thread sleeps until a new task is enqueued.
+
+Android’s UI thread is simply a `Looper` created from the application process’s main thread.
+
+A `Handler` is the mechanism used to enqueue tasks on a `Looper`’s queue, for processing. You create a `Handler` like this:
+
+```
+var handler = new Handler(someLooper);
+```
+
+The main thread’s `Looper` is always accessible using the method `Looper.getMainLooper`. Creating a `Handler` that posts tasks to the UI thread, then, is as simple as this:
+
+```
+var handler = new Handler(Looper.getMainLooper);
+```
+
+In fact, this is exactly how the `post()` method, shown in the preceding example, works.
+
+`Handler`s are interesting because they handle both ends of the `Looper`’s queue. In order to see how this works, let’s follow a single task through the `Looper`/`Handler` framework.
+
+There are several `Handler` methods for enqueuing a task. Here are two of them:
+
+- `post(task: Runnable)`
+- `send(task: Message)`
+
+These two methods define two slightly different ways of enqueuing a task: sending messages and posting `Runnable`s. Actually, the `Handler` always enqueues a `Message`. For convenience, though, the `post...()` group of methods attach a `Runnable` to the `Message` for special handling.
+
+![NeatReader-1651220014106](../resources/images/2022-04-20-klotlin-tutorial/NeatReader-1651220014106.png)
+
+The `MessageQueue` is, actually, a sorted queue. 
+
+Two other methods, though, allow tasks to be enqueued to be run at some time in the future:
+
+- `postDelayed(runnable, delayMillis)`
+- `sendMessageDelayed(message, delayMillis)`
+
+Because a `Looper` is single-threaded, a task that is only run on one particular `Looper` need not be thread-safe.
+
+### Executors and ExecutorServices
+
+An `Executor` is, as its name suggests, a utility that executes tasks submitted to it. Its contract is the single method `execute(Runnable)`.
+
+Java provides several implementations of the interface, each with a different execution strategy and purpose. The simplest of these is available using the method `Executors.newSingleThreadExecutor`.
+
+A single-threaded executor is very similar to the `Looper`/`Handler` examined in the previous section: it is an unbounded queue in front of a single thread. 
+
+A generalization of the single-threaded `Executor` is the `FixedThreadPoolExecutor`: instead of a single thread, its unbounded queue is serviced by a fixed number of threads. A `FixedThreadPoolExecutor` does not guarantee task order, though, and will execute tasks simultaneously, hardware permitting.
+
+The `ForkJoinPool`. Fork-join pools exist because of the observation that sometimes a single problem can be broken down into multiple subproblems which can be executed concurrently.
+
+## Tools for Managing Jobs
+
+Android 8.0 (API 26+) introduced limits on application resource consumption. Included in these limitations are the following:
+
+- An application is in the foreground only when it has a visible activity or is running a foreground service. Bound and started `Service`s no longer prevent an application from being killed.
+- Applications cannot use their manifest to register for implicit broadcasts. There are also limitations on sending broadcasts.
+
+These constraints can make it difficult for an application to perform “background” tasks: synching with a remote, recording location, and so on. In most cases, the constraints can be mitigated using the `JobScheduler` or Jetpack’s `WorkManager`.
+
+Android offers the architectural components `JobScheduler` and `WorkManager` to schedule tasks efficiently.
+
+### JobScheduler
+
+The `JobScheduler` is Android’s tool for scheduling tasks—possibly repeating tasks—in the future. It is quite adaptable and, in addition to optimizing battery life, provides access to details of system state that applications used to have to infer from heuristics.
+
+A `JobScheduler` job is, actually, a bound service. An application declares a special service in its manifest to make it visible to the Android system. It then schedules tasks for the service using `JobInfo`.
+
+The first step in creating a `JobScheduler` task is registering it in the application manifest. That is done as shown here:
+
+```
+<service
+    android:name=".RecurringTask"
+    android:permission="android.permission.BIND_JOB_SERVICE"/>
+```
+
+The important thing in this declaration is the permission. Unless the service is declared with *exactly* the `android.permission.BIND_JOB_SERVICE` permission, the `JobScheduler` will not be able to find it.
+
+Note that the task service is not visible to other applications. 
+
+The next step in setting up a `JobScheduler` task is scheduling it, as shown here, in the method `schedulePeriodically`:
+
+```kotlin
+const val TASK_ID = 8954
+const val SYNC_INTERVAL = 30L
+const val PARAM_TASK_TYPE = "task"
+const val SAMPLE_TASK = 22158
+
+class RecurringTask() : JobService() {
+    companion object {
+        fun schedulePeriodically(context: Context) {
+            val extras = PersistableBundle()
+            extras.putInt(PARAM_TASK_TYPE, SAMPLE_TASK)
+
+            (context.getSystemService(Context.JOB_SCHEDULER_SERVICE)
+                as JobScheduler)
+                .schedule(
+                    JobInfo.Builder(
+                        TASK_ID,
+                        ComponentName(
+                            context,
+                            RecurringTask::class.java
+                        )
+                    )
+                        .setPeriodic(SYNC_INTERVAL)
+                        .setRequiresStorageNotLow(true)
+                        .setRequiresCharging(true)
+                        .setExtras(extras)
+                        .build()
+                )
+        }
+    }
+
+    override fun onStartJob(params: JobParameters?): Boolean {
+        // do stuff
+        return true;
+    }
+
+    override fun onStopJob(params: JobParameters?): Boolean {
+        // stop doing stuff
+        return true;
+    }
+}
+```
+
+The `onStartJob` method is run on the main (UI) thread. 
+
+If `onStartJob` returns `true`, the system will allow the application to run until either it calls `jobFinished` or the conditions described in the `JobInfo` are no longer satisfied. 
+
+If `onStopJob()` returns `false`, the task will not be scheduled again, even if the criteria in its `JobInfo` are met: the job has been cancelled. A recurring task should always return `true`.
+
+### WorkManager
+
+The `WorkManager` is an Android Jetpack library that wraps the `JobScheduler`. It allows a single codebase to make optimal use of modern versions of Android—those that support the `JobScheduler`—and still work on legacy versions of Android that do not.
+
+Where the `JobScheduler` encodes the difference between a task that repeats periodically and one that runs once in the `Boolean` return from the `onStopJob` method, the `WorkManager` makes it explicit; there are two types of tasks: a `OneTimeWorkRequest` and a `PeriodicWorkRequest`.
+
+Enqueuing a work request always returns a token, a `WorkRequest` that can be used to cancel the task, when it is no longer necessary.
+
+# Android Pattens
+
+On a `MutableLiveData` instance, you use either the `setValue` or the `postValue` method. The difference between the two is that you’re only allowed to use `setValue` if you’re calling it from the main thread. When this isn’t the case, using `postValue` adds the new value into a queue that the `MutableLiveData` will process on the next frame of the main thread. This is an implementation of the work queue pattern, and a thread-safe way to assign a new value to a `MutableLiveData`.
+
+# Tip
 
 ## Find the types 
 

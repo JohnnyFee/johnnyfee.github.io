@@ -1961,6 +1961,10 @@ A `Channel` also has nonsuspending counterparts: `trySend` and `tryReceive`. The
 
 `Channel`s are thread-safe. Several threads can concurrently invoke `send` and `receive` methods in a thread-safe way.
 
+Channels are communication primitives between coroutines. They are specifically designed to distribute values so that every value is received by only one receiver. It’s not possible to use channels to broadcast values to multiple receivers. We don’t have handy operators such as `map` or `filter` to transform them. The designers of coroutines have created `Flow`s specifically for asynchronous data streams on which we can use transformation operators. 
+
+Channel is hot. A new coroutine is started and immediately starts producing elements and sending them to the returned channel even if no coroutine is consuming those elements. If you know RxJava, this is the same concept as hot observables: they emit values independently of individual subscriptions. 
+
 ## Channel Flavors
 
 Like queues, `Channel`s come in several flavors. 
@@ -2176,6 +2180,215 @@ fun CoroutineScope.collectImages(imagesOutput: SendChannel<Image>) {
     }
 }
 ```
+
+## Communicating Sequential Processes
+
+Let's write an example: 
+
+![High-level architecture](../resources/images/2022-04-20-klotlin-tutorial/pawk_0904.png)
+
+The `ShapeCollector` follows a simple process:
+
+```
+               fetchData
+Location ---------------------> ShapeData
+```
+
+As the coroutine `collectShapes` will be receiving `Location`s from the view-model, we declare the `Channel` as a `ReceiveChannel`:
+
+```kotlin
+private fun CoroutineScope.collectShapes(
+     locations: ReceiveChannel<Location>
+) = launch {
+     val locationsBeingProcessed = mutableListOf<Location>()
+
+     for (loc in locations) {
+         if (!locationsBeingProcessed.contains(loc) {
+              launch(Dispatchers.IO) {
+                   // fetch the corresponding `ShapeData`
+              }
+         }
+    }
+}
+```
+
+You see, for each received location, we start a new coroutine. Potentially, this code might start a lot of coroutines if the `locations` channel debits a lot of items. For this reason, this situation is also called *unlimited* *concurrency*. 
+
+So we’ll have to find a way to limit concurrency. Instead of a thread pool, we’ll create a *coroutine pool*, which we’ll name *worker pool*. Each coroutine from this worker pool will perform the actual fetch of `ShapeData` for a given location. 
+
+![Limit Concurrency](../resources/images/2022-04-20-klotlin-tutorial/pawk_0905.png)
+
+```kotlin
+private fun CoroutineScope.collectShapes(
+     locations: ReceiveChannel<Location>,
+     locationsToProcess: SendChannel<Location>,
+) = launch {
+     val locationsBeingProcessed = mutableListOf<Location>()
+
+     for (loc in locations) {
+         if (!locationsBeingProcessed.contains(loc) {
+              launch(Dispatchers.IO) {
+                   locationsToProcess.send(loc)
+              }
+         }
+    }
+}
+```
+
+Now, `collectShapes` sends a location to the `locationsToProcess` channel, only if the location isn’t in the list of locations currently being processed.  To communicate with this worker pool, `collectShapes` should use this channel `locationsToProcess` to send locations to the worker pool:
+
+```kotlin
+private fun CoroutineScope.worker(
+    locationsToProcess: ReceiveChannel<Location>,
+    locationsProcessed: SendChannel<Location>,
+    shapesOutput: SendChannel<Shape>
+) = launch(Dispatchers.IO) {
+    for (loc in locationsToProcess) {
+        try {
+            val data = getShapeData(loc)
+            val shape = Shape(loc, data)
+            shapesOutput.send(shape)
+        } finally {
+            locationsProcessed.send(loc)
+        }
+    }
+}
+
+private suspend fun getShapeData(
+    location: Location
+): ShapeData = withContext(Dispatchers.IO) {
+        /* Simulate some remote API delay */
+        delay(10)
+        ShapeData()
+}
+```
+
+Thanks to the iteration on the `locationsToProcess` channel, each individual `worker`coroutine will receive its own location without interfering with the others. No matter how many workers we’ll start, a location sent from `collectShapes` to the `locationsToProcess` channel will only be received by one worker. 
+
+In message-oriented software, this pattern, which implies delivery of a message to multiple destinations, is called *fan-out*.
+
+Once the location is processed, the result is send to `shapesOutput` channel and the processed location is sent to `localtionProcessed`. It’ll be a `ReceiveChannel` from the `collectShapes`perspective:
+
+```kotlin
+private fun CoroutineScope.collectShapes(
+     locations: ReceiveChannel<Location>,
+     locationsToProcess: SendChannel<Location>,
+     locationsProcessed: ReceiveChannel<Location>
+): Job = launch {
+     ...
+     for (loc in locations) {
+          // same implementation, hidden for brevity
+     }
+     // but.. how do we iterate over locationsProcessed?
+}
+```
+
+Now we have a problem. How can you receive elements from multiple `ReceiveChannel`s at the same time? If we add another `for`loop right below the `locations` channel iteration, it wouldn’t work as intended as the first iteration only ends when the `locations`channel is closed.
+
+For that purpose, you can use the `select` expression. The `select` expression waits for the result of multiple suspending functions simultaneously, which are specified using *clauses* in the body of this select invocation. The caller is suspended until one of the clauses is either *selected* or *fails*.
+
+```kotlin
+private fun CoroutineScope.collectShapes(
+    locations: ReceiveChannel<Location>,
+    locationsToProcess: SendChannel<Location>,
+    locationsProcessed: ReceiveChannel<Location>
+) = launch(Dispatchers.Default) {
+
+    val locationsBeingProcessed = mutableListOf<Location>()
+
+    while (true) {
+        select<Unit> {
+            locationsProcessed.onReceive {                     
+                locationsBeingProcessed.remove(it)
+            }
+            locations.onReceive {                              
+                if (!locationsBeingProcessed.any { loc ->
+                    loc == it }) {
+                    /* Add it to the list of locations being processed */
+                    locationsBeingProcessed.add(it)
+
+                    /* Now download the shape at location */
+                    locationsToProcess.send(it)
+                }
+            }
+        }
+    }
+}
+```
+
+If the `select` expression could talk, it would say: “Whenever the `locations` channel receives an element, I’ll do action 1. Or, if the `locationsProcessed` channel receives something, I’ll do action 2. I can’t do both actions at the same time. By the way, I’m returning `Unit`.”
+
+Since `select` is an expression, it returns a result. The result type is inferred by the return type of the lambdas we provide for each case of the `select`—pretty much like the `when` expression. In this particular example, we don’t want any result, so the return type is `Unit`.
+
+As`select` returns after either the `locations` or `locationsProcessed`channel receives an element, it doesn’t iterate over channels like our previous `for` loop. Consequently, we have to wrap it inside a `while(true)`. 
+
+```kotlin
+private fun CoroutineScope.collectShapes(
+    locations: ReceiveChannel<Location>,
+    locationsToProcess: SendChannel<Location>,
+    locationsProcessed: ReceiveChannel<Location>
+) = launch(Dispatchers.Default) {
+
+    val locationsBeingProcessed = mutableListOf<Location>()
+
+    while (true) {
+        select<Unit> {
+            locationsProcessed.onReceive {                     1
+                locationsBeingProcessed.remove(it)
+            }
+            locations.onReceive {                              2
+                if (!locationsBeingProcessed.any { loc ->
+                    loc == it }) {
+                    /* Add it to the list of locations being processed */
+                    locationsBeingProcessed.add(it)
+
+                    /* Now download the shape at location */
+                    locationsToProcess.send(it)
+                }
+            }
+        }
+    }
+}
+```
+
+The final architecture of the `ShapeCollector` takes shape:
+
+![Final Architecture](../resources/images/2022-04-20-klotlin-tutorial/pawk_0906.png)
+
+Let's put it all together:
+
+```
+class ShapeCollector(private val workerCount: Int) {
+    fun CoroutineScope.start(
+        locations: ReceiveChannel<Location>,
+      shapesOutput: SendChannel<Shape>
+    ) {
+        val locationsToProcess = Channel<Location>()
+        val locationsProcessed = Channel<Location>(capacity = 1)
+
+        repeat(workerCount) {
+             worker(locationsToProcess, locationsProcessed, shapesOutput)
+        }
+        collectShapes(locations, locationsToProcess, locationsProcessed)
+    }
+
+    private fun CoroutineScope.collectShapes // already implemented
+
+    private fun CoroutineScope.worker        // already implemented
+
+    private suspend fun getShapeData         // already implemented
+}
+```
+
+This `start` method is responsible for starting the whole shape collection machinery. 
+
+The two channels that are exclusively used inside the `ShapeCollector` are created: `locationsToProcess` and `locationsProcessed`. We are not explicitly creating `ReceiveChannel` or `SendChannel` instances here. We’re creating them as `Channel`instances because they’ll further be used either as `ReceiveChannel`or `SendChannel`. 
+
+Then the worker pool is created and started, by calling the `worker` method as many times as `workerCount` was set. It’s achieved using the `repeat` function from the standard library.
+
+Finally, we call `collectShapes` once. Overall, we started `workerCount + 1` coroutines in this `start` method.
+
+# Flows
 
 
 

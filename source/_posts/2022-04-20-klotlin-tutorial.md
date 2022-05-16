@@ -2390,7 +2390,214 @@ Finally, we call `collectShapes` once. Overall, we started `workerCount + 1` cor
 
 # Flows
 
+`Flow`s are similar to `Sequence`s, except that each step of a `Flow` can be asynchronous. It is also easy to integrate flows in structured concurrency, to avoid leaking resources.
 
+You’ll see how *cold* flows can be a better choice when you want to make sure never to leak any resources. On the other hand, *hot* flows serve a different purpose such as when you need a “publish-subscribe” relationship between entities in your app. For example, you can implement an event bus using hot flows.
+
+## An Introduction to Flows
+
+You define in the `flow` block the emission of values. When invoked, the `numbers` function quickly returns a `Flow` instance without running anything in the background.
+
+```kotlin
+fun numbers(): Flow<Int> = flow {
+    emit(1)
+    emit(2)
+    // emit other values
+}
+
+fun main() = runBlocking {
+    val flow = numbers()      
+    flow.collect {            
+        println(it)
+    }
+}
+```
+
+Once we get a flow, instead of looping over it (like we would with a channel), we use the `collect`function which, in flows parlance, is called a *terminal operator*. It consumes the flow; for example, iterate over the flow and execute the given lambda on each element of the flow.
+
+Take a more realistic example.
+
+You need to produce a stream of `TokenData` objects. This stream requires first establishing a database connection, then performing asynchronous queries for retrieving tokens and getting associated data. You choose how many tokens you need. After you’ve processed all the tokens, you disconnect and release underlying database connection resources. 
+
+![Implementing the flow for retrieving token data](../resources/images/2022-04-20-klotlin-tutorial/pawk_1001.png)
+
+ [source code in GitHub](https://oreil.ly/dU4uZ)
+
+- Creating a connection to the database and closing it on completion is completely transparent to the client code that consumes the flow. Client code only sees a flow of `TokenData`.
+- All operations inside the flow are sequential. For example, once we get the first token (say, “token1”), the flow invokes `getData("token1")` and suspends until it gets the result (say, “data1”). Then the flow emits the first `TokenData("token1," "data1")`. Only after that does the execution proceed with “token2,” etc.
+- Invoking the `getDataFlow` function does nothing on its own. It simply returns a flow. The code inside the flow executes only when a coroutine collects the flow,
+
+```kotlin
+fun main() = runBlocking<Unit> {
+    val flow = getDataFlow(3) // Nothing runs at initialization
+
+    // A coroutine collects the flow
+    launch {
+        flow.collect { data ->
+            println(data)
+        }
+    }
+}
+```
+
+If the coroutine that collects the flow gets cancelled or reaches the end of the flow, the code inside the `onCompletion` block executes. This guarantees that we properly release the connection to the database.
+
+## Operators
+
+The coroutines library provides functions such as `map`, `filter`, `debounce`, `buffer`, `onCompletion`, etc. Those functions are called *flow operators* or *intermediate operators*, because they operate on a flow and return another flow.
+
+```kotlin
+fun main() = runBlocking<Unit> {
+    val numbers: Flow<Int> = // implementation hidden for brevity
+
+    val newFlow: Flow<String> = numbers().map {
+        transform(it)
+    }
+}
+
+suspend fun transform(i :Int): String = withContext(Dispatchers.Default) {
+    delay(10) // simulate real work
+    "${i + 1}"
+}
+```
+
+The interesting bit here is that `map` turns a `Flow<Int>` into a `Flow<String>`. The `map` flow operator is conceptually really close to the `map` extension function on collections. There’s a noticeable difference, though: the lambda passed to the `map` flow operator can be a suspending function.
+
+### Terminal Operators
+
+A terminal operator can be easily distinguished from other regular operators since it’s a suspending function that starts the collection of the flow. 
+
+Other terminal operators are available, like `toList`, `collectLatest`, `first`, etc. Here is a brief description of those terminal operators:
+
+- `toList` collects the given flow and returns a `List` containing all collected elements.`collectLatest` collects the given flow with a provided action. The difference from `collect` is that when the original flow emits a new value, the action block for the previous value is cancelled.
+- `first` returns the first element emitted by the flow and then cancels the flow’s collection. It throws a `NoSuchElementException` if the flow was empty. There’s also a variant, `firstOrNull`, which returns `null` if the flow was empty.
+
+### Context Preservation
+
+Suppose that you want to translate all messages from a given user in a different language  on a background thread.
+
+```kotlin
+fun getMessagesFromUser(user: String, language: String): Flow<Message> {
+    return getMessageFlow()
+        .filter { it.user == user }           1
+        .map { it.translate(language) }       2
+        .flowOn(Dispatchers.Default)          3
+}
+```
+
+the `flowOn` operator changes the context of the flow it is operating on. It changes the coroutine context of the upstream flow, while not affecting the downstream flow. Consequently, steps `1` and `2` are done using the dispatcher `Dispatchers.Default`.
+
+This is a very important property of flows, called *context preservation*. 
+
+Under the hood, `flowOn` starts a new coroutine when it detects that the context is about to change. This new coroutine interacts with the rest of the flow through a channel that is internally managed.
+
+If you wanted to only perform message translation using `Dispatchers.Default` (and not message filtering), you could remove the `flowOn` operator and declare the `translate` function like so:
+
+```kotlin
+private suspend fun Message.translate(
+    language: String
+): Message  = withContext(Dispatchers.Default) {
+    // this is a dummy implementation
+    copy(content = "translated content")
+}
+```
+
+### Convert Callback to Flow
+
+The message factory has a *publish/subscribe* mechanism—we can register or unregister observers for new incoming messages, as shown in the following:
+
+```kotlin
+abstract class MessageFactory : Thread() {
+    /* The internal list of observers must be thread-safe */
+    private val observers = Collections.synchronizedList(
+        mutableListOf<MessageObserver>())
+    private var isActive = true
+
+    override fun run() = runBlocking {
+        while(isActive) {
+            val message = fetchMessage()
+            for (observer in observers) {
+                observer.onMessage(message)
+            }
+            delay(1000)
+        }
+    }
+
+    abstract fun fetchMessage(): Message
+
+    fun registerObserver(observer: MessageObserver) {
+        observers.add(observer)
+    }
+
+    fun unregisterObserver(observer: MessageObserver) {
+        observers.removeAll { it == observer }
+    }
+
+    fun cancel() {
+        isActive = false
+        observers.forEach {
+            it.onCancelled()
+        }
+        observers.clear()
+    }
+
+    interface MessageObserver {
+        fun onMessage(msg: Message)
+        fun onCancelled()
+        fun onError(cause: Throwable)
+    }
+}
+```
+
+ `MessageFactory` is also said to be *callback-based*, because it holds references to`MessageObserver` instances and calls methods on those instances when new messages are retrieved. To bridge the flow world with the “callback” world, you can use the `callbackFlow` flow builder:
+
+```kotlin
+fun getMessageFlow(factory: MessageFactory) = callbackFlow<Message> {
+    val observer = object : MessageFactory.MessageObserver {
+        override fun onMessage(msg: Message) {
+            trySend(msg)
+        }
+
+        override fun onCancelled() {
+            channel.close()
+        }
+
+        override fun onError(cause: Throwable) {
+            cancel(CancellationException("Message factory error", cause))
+        }
+    }
+
+    factory.registerObserver(observer)
+    awaitClose {
+        factory.unregisterObserver(observer)
+    }
+}
+```
+
+`callbackFlow` is a parameterized function which returns a `Flow` of the given type. It’s always done in three steps:
+
+```kotlin
+callbackFlow {
+    /*
+    1. Instantiate the "callback." In this case, it's an observer.
+    2. Register that callback using the available api.
+    3. Listen for close event using `awaitClose`, and provide a
+       relevant action to take in this case. Most probably,
+       you'll have to unregister the callback.
+    */
+}
+public inline fun <T> callbackFlow(
+    @BuilderInference noinline block: suspend ProducerScope<T>.() -> Unit
+): Flow<T>
+```
+
+`callbackFlow` takes a suspending function with `ProducerScope`receiver as the argument. 
+
+```
+public interface ProducerScope<in E> : CoroutineScope, SendChannel<E>
+```
+
+So a `ProducerScope` is a `SendChannel`. And that’s what you should remember: `callbackFlow` provides you with an instance of `SendChannel`, which you can use inside your implementation. You send the object instances you get from your callback to this channel. 
 
 # Android Patterns
 

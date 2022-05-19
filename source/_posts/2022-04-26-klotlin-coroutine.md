@@ -87,7 +87,7 @@ The result is:
 
 - By calling the method `await` on each `Deferred<Int>` instance, the program waits for the result of each coroutine.
 
-## CoroutineScope and CoroutineContext
+### CoroutineScope and CoroutineContext
 
 A `CoroutineScope` controls the lifecycle of a coroutine within a well-defined scope or lifecycle. It’s an object that plays the role of the parent in structured concurrency—its purpose is to manage and monitor the coroutines you create inside it. 
 
@@ -196,7 +196,7 @@ In the previous example, there are two context in `launch` coroutine, one from t
 
 ![NeatReader-1651898602483](../resources/images/2022-04-20-klotlin-tutorial/NeatReader-1651898602483.png)
 
-## Structured Concurrency
+### Structured Concurrency
 
 Coroutine has parent-child relationship:
 
@@ -208,7 +208,7 @@ If the parent fails or is cancelled, then all its children are also cancelled. I
 
 Both  `CoroutineScope`s  and  `CoroutineContext`s  play  the  role  of  the parent, while Coroutines, on play the role of the children.
 
-## Suspending Functions
+### Suspending Functions
 
 A task, or more precisely, a coroutine, can suspend if it makes use of at least one *suspending function*. 
 
@@ -346,11 +346,11 @@ Applied to our example, if `fetchWind` fails, the scope provided by `coroutineSc
 
 `coroutineScope` really shines when you need to *perform several tasks concurrently*.
 
-## Cancellation
+### Cancellation
 
 Your coroutines should be cooperative with cancellation. All suspending functions from the *kotlinx.coroutines* package are cancellable. This notably includes `withContext`. If you’re implementing your own suspending function, make sure it is cancellable by checking `isActive` or calling `ensureActive()` or `yield()` at appropriate steps.
 
-### Coroutine Lifecycle
+#### Coroutine Lifecycle
 
 To understand how cancellation works, you need to be aware that a coroutine has a lifecycle:
 
@@ -368,11 +368,11 @@ val job = scope.launch(start = CoroutineStart.LAZY) { ... }
 job.start()
 ```
 
-### Coroutine cancellation
+#### Coroutine cancellation
 
 While in `Active` or `Completing` state, if an exception is thrown or the logic calls `cancel()`, the coroutine transitions to `Cancelling` state. If required, this is when you perform necessary cleanup. The coroutine remains in this `Cancelling` state until the cleanup job is done with its work. Only then will the coroutine transition to the `Cancelled` state.
 
-### Turn to a cancellable suspend function
+#### Turn to a cancellable suspend function
 
 The following is a snippet taken from the *okHttp* official documentation, to perform an synchronous GET:
 
@@ -503,7 +503,7 @@ suspend fun wasteCpu() = withContext(Dispatchers.Default) {
 
 A suspending function made with `suspendCancellableCoroutine` also throws a `CancellationException` when cancelled.
 
-### delay Is Cancellable
+#### delay Is Cancellable
 
 If we replace checking `ative` with delay in the previous example, we can also cancel the job successfully:
 
@@ -532,7 +532,7 @@ suspend fun compute() = withContext(Dispatchers.Default) {
 }
 ```
 
-### Handling Cancellation
+#### Handling Cancellation
 
 it will fail if you call another suspend functions in catch block:
 
@@ -635,7 +635,7 @@ Child 1 was cancelled
 Caught original java.io.IOException
 ```
 
-## Supervision
+### Supervision
 
 There are two categories of coroutine scope: the scopes using `Job` and the ones using `SupervisorJob` (also called supervisor scopes). They differ in how cancellation is performed and in exception handling. If the failure of a child should also cancel other children, use a regular scope. Otherwise, use a supervisor scope.
 
@@ -682,9 +682,9 @@ We’ve installed a CEH in the context of the scope. The first child throws an e
 
 Just like `coroutineScope`, it waits for all children to complete. One crucial difference with `coroutineScope` is that it only propagates cancellation downward, and **cancels all children only if it has failed itself**. 
 
-## Exception Handling
+### Exception Handling
 
-### Before coroutine
+Before coroutine
 
 If you catch an exception *before* it is handled by a coroutine builder, everything works as usual—you catch it, so the coroutine machinery isn’t aware of it. The following shows an example with `launch` and `try`/`catch`:
 
@@ -737,7 +737,7 @@ scope.launch {
 
 Some extension functions are defined on the `Result` and available out of the box, like `getOrDefault` which returns the encapsulated value of the `Result` instance if `Result.isSuccess` is `true` or a provided default value otherwise.
 
-### Unhandled Versus Exposed Exceptions
+#### Unhandled Versus Exposed Exceptions
 
 When it comes to exception propagation, uncaught exceptions can be treated by the coroutine machinery as on of the following:
 
@@ -754,7 +754,7 @@ In this matter, we can distinguish two categories of coroutine builders based on
 
 If a coroutine fails because of an uncaught exception, it gets cancelled along with all of its children and the exceptions propagate up.
 
-### Exposed Exceptions
+#### Exposed Exceptions
 
 As we stated before, you can catch *exposed* exceptions using built-in language support: `try`/`catch`. 
 
@@ -836,7 +836,7 @@ From this you can learn that **inside a `coroutineScope`, `async` *exposes* unca
 
 If you don’t call `task2.await()`, the program still crashes because `coroutineScope` fails and *exposes* to its parent the exception that caused its failure. Then, `scope.launch` treats this exception as *unhandled*.
 
-### Unhandled Exceptions
+#### Unhandled Exceptions
 
 The coroutine framework treats unhandled exceptions in a specific way: it tries to use a CEH if the coroutine context has one. If not, it delegates to the *global handler*. This handler calls a customizable set of CEH *and* calls the standard mechanism of unhandled exceptions: `Thread.uncaughtExceptionHandler`. 
 
@@ -929,7 +929,7 @@ A CEH only works when registered to:
   ```
 
 
-# Channel
+## Channel
 
 Channels are communication primitives that provide a way to transfer streams of values between coroutines.
 
@@ -949,7 +949,7 @@ Channels are communication primitives between coroutines. They are specifically 
 
 Channel is hot. A new coroutine is started and immediately starts producing elements and sending them to the returned channel even if no coroutine is consuming those elements. If you know RxJava, this is the same concept as hot observables: they emit values independently of individual subscriptions. 
 
-## Channel Flavors
+### Channel Flavors
 
 Like queues, `Channel`s come in several flavors. 
 
@@ -966,7 +966,7 @@ public fun <E> Channel(capacity: Int = RENDEZVOUS): Channel<E> =
     }
 ```
 
-### Rendezvous Channel
+#### Rendezvous Channel
 
 A rendezvous channel does not have any buffer at all. An element is transferred from sender to receiver only when `send` and `receive` invocations meet in time (rendezvous), so `send` suspends until another coroutine invokes `receive`, and `receive` suspends until another coroutine invokes `send`.
 
@@ -1056,11 +1056,11 @@ fun main() = runBlocking {
 
 The output is: Done!
 
-### Unlimited Channel
+#### Unlimited Channel
 
 An *unlimited* channel has a buffer that is only limited by the amount of available memory. 
 
-### Conflated Channel
+#### Conflated Channel
 
 This channel has a buffer of size 1, and only keeps the last sent element. To create a *conflated* channel, you invoke `Channel<T>(Channel.CONFLATED)`. For example:
 
@@ -1087,7 +1087,7 @@ Last value was: two
 
 The first sent element is “one.” When “two” is sent, it replaces “one” in the channel. We wait until the coroutine-sending elements complete, using `job.join()`. Then we read the value `two` from the channel.
 
-### Buffered Channel
+#### Buffered Channel
 
 A *buffered* channel is a `Channel` with a fixed capacity—an integer greater than 0. Senders to this channel don’t suspend unless the buffer is full, and receivers from this channel don’t suspend unless the buffer is empty. 
 
@@ -1129,7 +1129,7 @@ Received 4
 
 In this example, we’ve defined a `Channel` with a fixed capacity of 2. A coroutine attempts to send five integers, while another coroutine consumes elements from the channel. The sender coroutine manages to send 0 and 1 in one go, then attempts to send 3. The `println("Send $i")` is executed for the value 3 but the sender coroutine gets suspended in the `send` call. The same reasoning applies for the consumer coroutine: two elements are received consecutively with an additional print before suspending.
 
-## Channel Producers
+### Channel Producers
 
 Sometimes you might want to be more explicit about how a channel should be used for either sending or receiving. When you’re implementing a `Channel` that is meant to be read only by other coroutines, you can use the `produce` builder:
 
@@ -1165,7 +1165,7 @@ fun CoroutineScope.collectImages(imagesOutput: SendChannel<Image>) {
 }
 ```
 
-## Communicating Sequential Processes
+### Communicating Sequential Processes
 
 Let's write an example: 
 
@@ -1372,13 +1372,13 @@ Then the worker pool is created and started, by calling the `worker` method as m
 
 Finally, we call `collectShapes` once. Overall, we started `workerCount + 1` coroutines in this `start` method.
 
-# Flows
+## Flows
 
 `Flow`s are similar to `Sequence`s, except that each step of a `Flow` can be asynchronous. It is also easy to integrate flows in structured concurrency, to avoid leaking resources.
 
 You’ll see how *cold* flows can be a better choice when you want to make sure never to leak any resources. On the other hand, *hot* flows serve a different purpose such as when you need a “publish-subscribe” relationship between entities in your app. For example, you can implement an event bus using hot flows.
 
-## An Introduction to Flows
+### An Introduction to Flows
 
 You define in the `flow` block the emission of values. When invoked, the `numbers` function quickly returns a `Flow` instance without running anything in the background.
 
@@ -1426,7 +1426,7 @@ fun main() = runBlocking<Unit> {
 
 If the coroutine that collects the flow gets cancelled or reaches the end of the flow, the code inside the `onCompletion` block executes. This guarantees that we properly release the connection to the database.
 
-## Operators
+### Operators
 
 The coroutines library provides functions such as `map`, `filter`, `debounce`, `buffer`, `onCompletion`, etc. Those functions are called *flow operators* or *intermediate operators*, because they operate on a flow and return another flow.
 
@@ -1447,7 +1447,7 @@ suspend fun transform(i :Int): String = withContext(Dispatchers.Default) {
 
 The interesting bit here is that `map` turns a `Flow<Int>` into a `Flow<String>`. The `map` flow operator is conceptually really close to the `map` extension function on collections. There’s a noticeable difference, though: the lambda passed to the `map` flow operator can be a suspending function.
 
-### Terminal Operators
+Terminal Operators
 
 A terminal operator can be easily distinguished from other regular operators since it’s a suspending function that starts the collection of the flow. 
 
@@ -1652,14 +1652,14 @@ The output is:
 
 As you can see, the upstream flow is emitting numbers from 1 to 100, with a delay of 10 ms between each emission. We set a timeout of 50 ms, and each emitted list can contain at most five numbers.
 
-## Error Handling
+### Error Handling
 
 Using flows, you can handle errors using a combination of techniques, involving:
 
 - The classic `try`/`catch` block.
 - The `catch` operator—we’ll cover this new operator right after we discuss the `try`/`catch` block.
 
-### The try/catch Block
+#### The try/catch Block
 
 If we define a dummy upstream flow made of only three `Int`s, and purposely throw an exception inside the `collect{}` block, we can catch the exception by wrapping the whole chain in a `try`/`catch` block:
 
@@ -1738,7 +1738,7 @@ A flow should always be *transparent to exceptions*: it should propagate excepti
 
 **The  `try`/`catch`  block  should  *only*  be  used  to  surround  the  collector**,  to  handle  exceptions raised from the collector itself, or (possibly, although it’s not ideal) to handle exceptions raised from the flow. To handle exceptions inside the flow, you should use the `catch` operator.
 
-### The catch Operator
+#### The catch Operator
 
 By all exceptions, we mean that it even catches `Throwable`s. Since it only catches upstream exceptions, the `catch`operator doesn’t have the exception issue of the `try`/`catch` block.
 
@@ -1794,7 +1794,7 @@ fun main() = runBlocking {
 }
 ```
 
-### Materialize Your Exceptions
+#### Materialize Your Exceptions
 
 *Materializing exceptions* is the process of catching exceptions and emitting special values or objects that represent those exceptions.
 
@@ -1842,7 +1842,7 @@ Fetching url-retry..
 Results: [Success(image=Image(url=url-1)), Success(image=Image(url=url-2)), Error(url=url-retry)]
 ```
 
-## Hot Flows with SharedFlow
+### Hot Flows with SharedFlow
 
 What if you need to *share* emitted values among several collectors? For example, say an event like a file download completes in your app. You might want to directly notify various components, such as some view-models, repositories, or even some views. Your file downloader might not have to be aware of the existence of other parts of your app. A good separation of concerns starts with a loose coupling of classes, and the ***event bus*** is one architecture pattern that helps in this situation.
 
@@ -1852,7 +1852,7 @@ What if you need to *share* emitted values among several collectors? For example
 
 A `SharedFlow` broadcasts events to all its subscribers. Actually,`SharedFlow` really is a toolbox that can be used in many situations—not just to implement an event bus.
 
-### Create a SharedFlow
+#### Create a SharedFlow
 
 A common pattern when creating a `SharedFlow`is to create a private mutable version and a public nonmutable one using `asSharedFlow()`, as shown in the following:
 
@@ -1863,7 +1863,7 @@ val sharedFlow: SharedFlow<Data> = _sharedFlow.asSharedFlow()
 
 This pattern is useful when you ensure that subscribers will only be able to *read* the flow (e.g., not send values).
 
-### Register a Subscriber
+#### Register a Subscriber
 
 A subscriber registers when it starts collecting the `SharedFlow`—preferably the public nonmutable version:
 
@@ -1877,7 +1877,7 @@ scope.launch {
 
 A subscriber can only live in a scope, because the `collect` terminal operator is a suspending function. This is good for structured concurrency: if the scope is cancelled, so is the subscriber.
 
-### Send Values to the SharedFlow
+#### Send Values to the SharedFlow
 
 A `MutableSharedFlow` exposes two methods to emit values—`emit` and`tryEmit`:
 
@@ -1969,7 +1969,7 @@ AnotherViewModel receives News(content=news content 6)
 
 You can see that the other view-model *missed* the first two news entries. This is because, at the time the shared flow emits the first two news entries, the first view-model is the only subscriber. The second view-model comes after and only receives subsequent news.
 
-### Replay values
+#### Replay values
 
 A shared flow can *optionally* cache values so that new subscribers receive the last *n* cached values. In our case, if we want the shared flow to replay the last two news entries, all we have to do is to update the line in the repository:
 
@@ -1983,7 +1983,7 @@ A shared flow with `replay` > `0` internally uses a cache that works similarly t
 
 By default, when the replay cache is full, `emit` suspends until all subscribers start processing the oldest value in the cache. As for`tryEmit`, it returns `false` since it can’t add the value to the cache. If you don’t keep track of that fourth value yourself, this value is lost.
 
-### Buffer values
+#### Buffer values
 
 In addition to being able to replay values, a shared flow can *buffer*values without replaying them, allowing slow subscribers to lag behind other, faster subscribers. The size of the buffer is customizable, as shown in the following:
 
@@ -1997,7 +1997,7 @@ By default, `extraBufferCapacity` equals zero. When you set a strictly positive 
 
 You might be wondering in what situations `extraBufferCapacity` can be useful. One immediate consequence of creating a shared flow with, for example, `extraBufferCapacity` `=` `1` and `onBufferOverflow` `=``BufferOverflow.DROP_OLDEST`, is that you’re guaranteed that `tryEmit`will *always* successfully insert a value into the shared flow. It’s sometimes really convenient to insert values in a shared flow from nonsuspending code. A good example of such a use case is when using a shared flow as an event bus.
 
-### Using SharedFlow as an Event Bus
+#### Using SharedFlow as an Event Bus
 
 You need an event bus when all the following conditions are met:
 
